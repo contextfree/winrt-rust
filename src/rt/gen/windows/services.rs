@@ -56,7 +56,7 @@ impl ICortanaActionableInsights {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CortanaActionableInsights: ICortanaActionableInsights}
+RT_CLASS!{class CortanaActionableInsights: ICortanaActionableInsights ["Windows.Services.Cortana.CortanaActionableInsights"]}
 impl RtActivatable<ICortanaActionableInsightsStatics> for CortanaActionableInsights {}
 impl CortanaActionableInsights {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<CortanaActionableInsights>>> {
@@ -94,7 +94,7 @@ impl ICortanaActionableInsightsOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CortanaActionableInsightsOptions: ICortanaActionableInsightsOptions}
+RT_CLASS!{class CortanaActionableInsightsOptions: ICortanaActionableInsightsOptions ["Windows.Services.Cortana.CortanaActionableInsightsOptions"]}
 impl RtActivatable<IActivationFactory> for CortanaActionableInsightsOptions {}
 DEFINE_CLSID!(CortanaActionableInsightsOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,67,111,114,116,97,110,97,46,67,111,114,116,97,110,97,65,99,116,105,111,110,97,98,108,101,73,110,115,105,103,104,116,115,79,112,116,105,111,110,115,0]) [CLSID_CortanaActionableInsightsOptions]);
 DEFINE_IID!(IID_ICortanaActionableInsightsStatics, 3051279378, 40239, 23733, 155, 5, 53, 106, 11, 131, 108, 16);
@@ -114,10 +114,10 @@ impl ICortanaActionableInsightsStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CortanaPermission: i32 {
+RT_ENUM! { enum CortanaPermission: i32 ["Windows.Services.Cortana.CortanaPermission"] {
     BrowsingHistory (CortanaPermission_BrowsingHistory) = 0, Calendar (CortanaPermission_Calendar) = 1, CallHistory (CortanaPermission_CallHistory) = 2, Contacts (CortanaPermission_Contacts) = 3, Email (CortanaPermission_Email) = 4, InputPersonalization (CortanaPermission_InputPersonalization) = 5, Location (CortanaPermission_Location) = 6, Messaging (CortanaPermission_Messaging) = 7, Microphone (CortanaPermission_Microphone) = 8, Personalization (CortanaPermission_Personalization) = 9, PhoneCall (CortanaPermission_PhoneCall) = 10,
 }}
-RT_ENUM! { enum CortanaPermissionsChangeResult: i32 {
+RT_ENUM! { enum CortanaPermissionsChangeResult: i32 ["Windows.Services.Cortana.CortanaPermissionsChangeResult"] {
     Success (CortanaPermissionsChangeResult_Success) = 0, Unavailable (CortanaPermissionsChangeResult_Unavailable) = 1, DisabledByPolicy (CortanaPermissionsChangeResult_DisabledByPolicy) = 2,
 }}
 DEFINE_IID!(IID_ICortanaPermissionsManager, 420688096, 34453, 17290, 149, 69, 61, 164, 232, 34, 221, 180);
@@ -149,7 +149,7 @@ impl ICortanaPermissionsManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CortanaPermissionsManager: ICortanaPermissionsManager}
+RT_CLASS!{class CortanaPermissionsManager: ICortanaPermissionsManager ["Windows.Services.Cortana.CortanaPermissionsManager"]}
 impl RtActivatable<ICortanaPermissionsManagerStatics> for CortanaPermissionsManager {}
 impl CortanaPermissionsManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<CortanaPermissionsManager>>> {
@@ -190,7 +190,7 @@ impl ICortanaSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CortanaSettings: ICortanaSettings}
+RT_CLASS!{class CortanaSettings: ICortanaSettings ["Windows.Services.Cortana.CortanaSettings"]}
 impl RtActivatable<ICortanaSettingsStatics> for CortanaSettings {}
 impl CortanaSettings {
     #[inline] pub fn is_supported() -> Result<bool> {
@@ -239,7 +239,7 @@ impl IEnhancedWaypoint {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EnhancedWaypoint: IEnhancedWaypoint}
+RT_CLASS!{class EnhancedWaypoint: IEnhancedWaypoint ["Windows.Services.Maps.EnhancedWaypoint"]}
 impl RtActivatable<IEnhancedWaypointFactory> for EnhancedWaypoint {}
 impl EnhancedWaypoint {
     #[cfg(feature="windows-devices")] #[inline] pub fn create(point: &super::super::devices::geolocation::Geopoint, kind: WaypointKind) -> Result<ComPtr<EnhancedWaypoint>> {
@@ -275,11 +275,11 @@ impl IManeuverWarning {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ManeuverWarning: IManeuverWarning}
-RT_ENUM! { enum ManeuverWarningKind: i32 {
+RT_CLASS!{class ManeuverWarning: IManeuverWarning ["Windows.Services.Maps.ManeuverWarning"]}
+RT_ENUM! { enum ManeuverWarningKind: i32 ["Windows.Services.Maps.ManeuverWarningKind"] {
     None (ManeuverWarningKind_None) = 0, Accident (ManeuverWarningKind_Accident) = 1, AdministrativeDivisionChange (ManeuverWarningKind_AdministrativeDivisionChange) = 2, Alert (ManeuverWarningKind_Alert) = 3, BlockedRoad (ManeuverWarningKind_BlockedRoad) = 4, CheckTimetable (ManeuverWarningKind_CheckTimetable) = 5, Congestion (ManeuverWarningKind_Congestion) = 6, Construction (ManeuverWarningKind_Construction) = 7, CountryChange (ManeuverWarningKind_CountryChange) = 8, DisabledVehicle (ManeuverWarningKind_DisabledVehicle) = 9, GateAccess (ManeuverWarningKind_GateAccess) = 10, GetOffTransit (ManeuverWarningKind_GetOffTransit) = 11, GetOnTransit (ManeuverWarningKind_GetOnTransit) = 12, IllegalUTurn (ManeuverWarningKind_IllegalUTurn) = 13, MassTransit (ManeuverWarningKind_MassTransit) = 14, Miscellaneous (ManeuverWarningKind_Miscellaneous) = 15, NoIncident (ManeuverWarningKind_NoIncident) = 16, Other (ManeuverWarningKind_Other) = 17, OtherNews (ManeuverWarningKind_OtherNews) = 18, OtherTrafficIncidents (ManeuverWarningKind_OtherTrafficIncidents) = 19, PlannedEvent (ManeuverWarningKind_PlannedEvent) = 20, PrivateRoad (ManeuverWarningKind_PrivateRoad) = 21, RestrictedTurn (ManeuverWarningKind_RestrictedTurn) = 22, RoadClosures (ManeuverWarningKind_RoadClosures) = 23, RoadHazard (ManeuverWarningKind_RoadHazard) = 24, ScheduledConstruction (ManeuverWarningKind_ScheduledConstruction) = 25, SeasonalClosures (ManeuverWarningKind_SeasonalClosures) = 26, Tollbooth (ManeuverWarningKind_Tollbooth) = 27, TollRoad (ManeuverWarningKind_TollRoad) = 28, TollZoneEnter (ManeuverWarningKind_TollZoneEnter) = 29, TollZoneExit (ManeuverWarningKind_TollZoneExit) = 30, TrafficFlow (ManeuverWarningKind_TrafficFlow) = 31, TransitLineChange (ManeuverWarningKind_TransitLineChange) = 32, UnpavedRoad (ManeuverWarningKind_UnpavedRoad) = 33, UnscheduledConstruction (ManeuverWarningKind_UnscheduledConstruction) = 34, Weather (ManeuverWarningKind_Weather) = 35,
 }}
-RT_ENUM! { enum ManeuverWarningSeverity: i32 {
+RT_ENUM! { enum ManeuverWarningSeverity: i32 ["Windows.Services.Maps.ManeuverWarningSeverity"] {
     None (ManeuverWarningSeverity_None) = 0, LowImpact (ManeuverWarningSeverity_LowImpact) = 1, Minor (ManeuverWarningSeverity_Minor) = 2, Moderate (ManeuverWarningSeverity_Moderate) = 3, Serious (ManeuverWarningSeverity_Serious) = 4,
 }}
 DEFINE_IID!(IID_IMapAddress, 3483871603, 41908, 17556, 179, 255, 203, 169, 77, 182, 150, 153);
@@ -377,7 +377,7 @@ impl IMapAddress {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MapAddress: IMapAddress}
+RT_CLASS!{class MapAddress: IMapAddress ["Windows.Services.Maps.MapAddress"]}
 DEFINE_IID!(IID_IMapAddress2, 1976397297, 58797, 17833, 191, 64, 108, 242, 86, 193, 221, 19);
 RT_INTERFACE!{interface IMapAddress2(IMapAddress2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapAddress2] {
     fn get_FormattedAddress(&self, out: *mut HSTRING) -> HRESULT
@@ -419,8 +419,8 @@ impl IMapLocation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MapLocation: IMapLocation}
-RT_ENUM! { enum MapLocationDesiredAccuracy: i32 {
+RT_CLASS!{class MapLocation: IMapLocation ["Windows.Services.Maps.MapLocation"]}
+RT_ENUM! { enum MapLocationDesiredAccuracy: i32 ["Windows.Services.Maps.MapLocationDesiredAccuracy"] {
     High (MapLocationDesiredAccuracy_High) = 0, Low (MapLocationDesiredAccuracy_Low) = 1,
 }}
 RT_CLASS!{static class MapLocationFinder}
@@ -458,7 +458,7 @@ impl IMapLocationFinderResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MapLocationFinderResult: IMapLocationFinderResult}
+RT_CLASS!{class MapLocationFinderResult: IMapLocationFinderResult ["Windows.Services.Maps.MapLocationFinderResult"]}
 DEFINE_IID!(IID_IMapLocationFinderStatics, 831183709, 7261, 20277, 162, 223, 170, 202, 148, 149, 149, 23);
 RT_INTERFACE!{static interface IMapLocationFinderStatics(IMapLocationFinderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMapLocationFinderStatics] {
     #[cfg(feature="windows-devices")] fn FindLocationsAtAsync(&self, queryPoint: *mut super::super::devices::geolocation::Geopoint, out: *mut *mut foundation::IAsyncOperation<MapLocationFinderResult>) -> HRESULT,
@@ -493,7 +493,7 @@ impl IMapLocationFinderStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MapLocationFinderStatus: i32 {
+RT_ENUM! { enum MapLocationFinderStatus: i32 ["Windows.Services.Maps.MapLocationFinderStatus"] {
     Success (MapLocationFinderStatus_Success) = 0, UnknownError (MapLocationFinderStatus_UnknownError) = 1, InvalidCredentials (MapLocationFinderStatus_InvalidCredentials) = 2, BadLocation (MapLocationFinderStatus_BadLocation) = 3, IndexFailure (MapLocationFinderStatus_IndexFailure) = 4, NetworkFailure (MapLocationFinderStatus_NetworkFailure) = 5, NotSupported (MapLocationFinderStatus_NotSupported) = 6,
 }}
 RT_CLASS!{static class MapManager}
@@ -522,7 +522,7 @@ impl IMapManagerStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MapManeuverNotices: u32 {
+RT_ENUM! { enum MapManeuverNotices: u32 ["Windows.Services.Maps.MapManeuverNotices"] {
     None (MapManeuverNotices_None) = 0, Toll (MapManeuverNotices_Toll) = 1, Unpaved (MapManeuverNotices_Unpaved) = 2,
 }}
 DEFINE_IID!(IID_IMapRoute, 4211586866, 22605, 17795, 156, 96, 100, 31, 234, 39, 67, 73);
@@ -568,7 +568,7 @@ impl IMapRoute {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MapRoute: IMapRoute}
+RT_CLASS!{class MapRoute: IMapRoute ["Windows.Services.Maps.MapRoute"]}
 DEFINE_IID!(IID_IMapRoute2, 3519403020, 8723, 19120, 162, 96, 70, 179, 129, 105, 190, 172);
 RT_INTERFACE!{interface IMapRoute2(IMapRoute2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRoute2] {
     fn get_ViolatedRestrictions(&self, out: *mut MapRouteRestrictions) -> HRESULT,
@@ -663,7 +663,7 @@ impl IMapRouteDrivingOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MapRouteDrivingOptions: IMapRouteDrivingOptions}
+RT_CLASS!{class MapRouteDrivingOptions: IMapRouteDrivingOptions ["Windows.Services.Maps.MapRouteDrivingOptions"]}
 impl RtActivatable<IActivationFactory> for MapRouteDrivingOptions {}
 DEFINE_CLSID!(MapRouteDrivingOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,77,97,112,82,111,117,116,101,68,114,105,118,105,110,103,79,112,116,105,111,110,115,0]) [CLSID_MapRouteDrivingOptions]);
 DEFINE_IID!(IID_IMapRouteDrivingOptions2, 903644784, 49816, 18640, 181, 173, 130, 84, 96, 100, 86, 3);
@@ -745,7 +745,7 @@ impl IMapRouteFinderResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MapRouteFinderResult: IMapRouteFinderResult}
+RT_CLASS!{class MapRouteFinderResult: IMapRouteFinderResult ["Windows.Services.Maps.MapRouteFinderResult"]}
 DEFINE_IID!(IID_IMapRouteFinderResult2, 544250989, 55564, 18120, 145, 198, 125, 75, 228, 239, 178, 21);
 RT_INTERFACE!{interface IMapRouteFinderResult2(IMapRouteFinderResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteFinderResult2] {
     fn get_AlternateRoutes(&self, out: *mut *mut foundation::collections::IVectorView<MapRoute>) -> HRESULT
@@ -850,7 +850,7 @@ impl IMapRouteFinderStatics3 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MapRouteFinderStatus: i32 {
+RT_ENUM! { enum MapRouteFinderStatus: i32 ["Windows.Services.Maps.MapRouteFinderStatus"] {
     Success (MapRouteFinderStatus_Success) = 0, UnknownError (MapRouteFinderStatus_UnknownError) = 1, InvalidCredentials (MapRouteFinderStatus_InvalidCredentials) = 2, NoRouteFound (MapRouteFinderStatus_NoRouteFound) = 3, NoRouteFoundWithGivenOptions (MapRouteFinderStatus_NoRouteFoundWithGivenOptions) = 4, StartPointNotFound (MapRouteFinderStatus_StartPointNotFound) = 5, EndPointNotFound (MapRouteFinderStatus_EndPointNotFound) = 6, NoPedestrianRouteFound (MapRouteFinderStatus_NoPedestrianRouteFound) = 7, NetworkFailure (MapRouteFinderStatus_NetworkFailure) = 8, NotSupported (MapRouteFinderStatus_NotSupported) = 9,
 }}
 DEFINE_IID!(IID_IMapRouteLeg, 2532881142, 23482, 19735, 157, 182, 26, 38, 63, 236, 116, 113);
@@ -890,7 +890,7 @@ impl IMapRouteLeg {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MapRouteLeg: IMapRouteLeg}
+RT_CLASS!{class MapRouteLeg: IMapRouteLeg ["Windows.Services.Maps.MapRouteLeg"]}
 DEFINE_IID!(IID_IMapRouteLeg2, 48367149, 51654, 17848, 142, 84, 26, 16, 181, 122, 23, 232);
 RT_INTERFACE!{interface IMapRouteLeg2(IMapRouteLeg2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteLeg2] {
     fn get_DurationWithoutTraffic(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -950,7 +950,7 @@ impl IMapRouteManeuver {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MapRouteManeuver: IMapRouteManeuver}
+RT_CLASS!{class MapRouteManeuver: IMapRouteManeuver ["Windows.Services.Maps.MapRouteManeuver"]}
 DEFINE_IID!(IID_IMapRouteManeuver2, 1568394652, 31899, 16863, 131, 139, 234, 226, 30, 75, 5, 169);
 RT_INTERFACE!{interface IMapRouteManeuver2(IMapRouteManeuver2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteManeuver2] {
     fn get_StartHeading(&self, out: *mut f64) -> HRESULT,
@@ -985,13 +985,13 @@ impl IMapRouteManeuver3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MapRouteManeuverKind: i32 {
+RT_ENUM! { enum MapRouteManeuverKind: i32 ["Windows.Services.Maps.MapRouteManeuverKind"] {
     None (MapRouteManeuverKind_None) = 0, Start (MapRouteManeuverKind_Start) = 1, Stopover (MapRouteManeuverKind_Stopover) = 2, StopoverResume (MapRouteManeuverKind_StopoverResume) = 3, End (MapRouteManeuverKind_End) = 4, GoStraight (MapRouteManeuverKind_GoStraight) = 5, UTurnLeft (MapRouteManeuverKind_UTurnLeft) = 6, UTurnRight (MapRouteManeuverKind_UTurnRight) = 7, TurnKeepLeft (MapRouteManeuverKind_TurnKeepLeft) = 8, TurnKeepRight (MapRouteManeuverKind_TurnKeepRight) = 9, TurnLightLeft (MapRouteManeuverKind_TurnLightLeft) = 10, TurnLightRight (MapRouteManeuverKind_TurnLightRight) = 11, TurnLeft (MapRouteManeuverKind_TurnLeft) = 12, TurnRight (MapRouteManeuverKind_TurnRight) = 13, TurnHardLeft (MapRouteManeuverKind_TurnHardLeft) = 14, TurnHardRight (MapRouteManeuverKind_TurnHardRight) = 15, FreewayEnterLeft (MapRouteManeuverKind_FreewayEnterLeft) = 16, FreewayEnterRight (MapRouteManeuverKind_FreewayEnterRight) = 17, FreewayLeaveLeft (MapRouteManeuverKind_FreewayLeaveLeft) = 18, FreewayLeaveRight (MapRouteManeuverKind_FreewayLeaveRight) = 19, FreewayContinueLeft (MapRouteManeuverKind_FreewayContinueLeft) = 20, FreewayContinueRight (MapRouteManeuverKind_FreewayContinueRight) = 21, TrafficCircleLeft (MapRouteManeuverKind_TrafficCircleLeft) = 22, TrafficCircleRight (MapRouteManeuverKind_TrafficCircleRight) = 23, TakeFerry (MapRouteManeuverKind_TakeFerry) = 24,
 }}
-RT_ENUM! { enum MapRouteOptimization: i32 {
+RT_ENUM! { enum MapRouteOptimization: i32 ["Windows.Services.Maps.MapRouteOptimization"] {
     Time (MapRouteOptimization_Time) = 0, Distance (MapRouteOptimization_Distance) = 1, TimeWithTraffic (MapRouteOptimization_TimeWithTraffic) = 2, Scenic (MapRouteOptimization_Scenic) = 3,
 }}
-RT_ENUM! { enum MapRouteRestrictions: u32 {
+RT_ENUM! { enum MapRouteRestrictions: u32 ["Windows.Services.Maps.MapRouteRestrictions"] {
     None (MapRouteRestrictions_None) = 0, Highways (MapRouteRestrictions_Highways) = 1, TollRoads (MapRouteRestrictions_TollRoads) = 2, Ferries (MapRouteRestrictions_Ferries) = 4, Tunnels (MapRouteRestrictions_Tunnels) = 8, DirtRoads (MapRouteRestrictions_DirtRoads) = 16, Motorail (MapRouteRestrictions_Motorail) = 32,
 }}
 RT_CLASS!{static class MapService}
@@ -1020,7 +1020,7 @@ impl MapService {
     }
 }
 DEFINE_CLSID!(MapService(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,77,97,112,83,101,114,118,105,99,101,0]) [CLSID_MapService]);
-RT_ENUM! { enum MapServiceDataUsagePreference: i32 {
+RT_ENUM! { enum MapServiceDataUsagePreference: i32 ["Windows.Services.Maps.MapServiceDataUsagePreference"] {
     Default (MapServiceDataUsagePreference_Default) = 0, OfflineMapDataOnly (MapServiceDataUsagePreference_OfflineMapDataOnly) = 1,
 }}
 DEFINE_IID!(IID_IMapServiceStatics, 21278085, 49228, 19677, 135, 26, 160, 114, 109, 9, 124, 212);
@@ -1117,7 +1117,7 @@ impl IPlaceInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlaceInfo: IPlaceInfo}
+RT_CLASS!{class PlaceInfo: IPlaceInfo ["Windows.Services.Maps.PlaceInfo"]}
 impl RtActivatable<IPlaceInfoStatics> for PlaceInfo {}
 impl RtActivatable<IPlaceInfoStatics2> for PlaceInfo {}
 impl PlaceInfo {
@@ -1174,7 +1174,7 @@ impl IPlaceInfoCreateOptions {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlaceInfoCreateOptions: IPlaceInfoCreateOptions}
+RT_CLASS!{class PlaceInfoCreateOptions: IPlaceInfoCreateOptions ["Windows.Services.Maps.PlaceInfoCreateOptions"]}
 impl RtActivatable<IActivationFactory> for PlaceInfoCreateOptions {}
 DEFINE_CLSID!(PlaceInfoCreateOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,80,108,97,99,101,73,110,102,111,67,114,101,97,116,101,79,112,116,105,111,110,115,0]) [CLSID_PlaceInfoCreateOptions]);
 DEFINE_IID!(IID_IPlaceInfoStatics, 2193227633, 27856, 18596, 175, 217, 94, 216, 32, 151, 147, 107);
@@ -1238,18 +1238,18 @@ impl IPlaceInfoStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum TrafficCongestion: i32 {
+RT_ENUM! { enum TrafficCongestion: i32 ["Windows.Services.Maps.TrafficCongestion"] {
     Unknown (TrafficCongestion_Unknown) = 0, Light (TrafficCongestion_Light) = 1, Mild (TrafficCongestion_Mild) = 2, Medium (TrafficCongestion_Medium) = 3, Heavy (TrafficCongestion_Heavy) = 4,
 }}
-RT_ENUM! { enum WaypointKind: i32 {
+RT_ENUM! { enum WaypointKind: i32 ["Windows.Services.Maps.WaypointKind"] {
     Stop (WaypointKind_Stop) = 0, Via (WaypointKind_Via) = 1,
 }}
 pub mod guidance { // Windows.Services.Maps.Guidance
 use ::prelude::*;
-RT_ENUM! { enum GuidanceAudioMeasurementSystem: i32 {
+RT_ENUM! { enum GuidanceAudioMeasurementSystem: i32 ["Windows.Services.Maps.Guidance.GuidanceAudioMeasurementSystem"] {
     Meters (GuidanceAudioMeasurementSystem_Meters) = 0, MilesAndYards (GuidanceAudioMeasurementSystem_MilesAndYards) = 1, MilesAndFeet (GuidanceAudioMeasurementSystem_MilesAndFeet) = 2,
 }}
-RT_ENUM! { enum GuidanceAudioNotificationKind: i32 {
+RT_ENUM! { enum GuidanceAudioNotificationKind: i32 ["Windows.Services.Maps.Guidance.GuidanceAudioNotificationKind"] {
     Maneuver (GuidanceAudioNotificationKind_Maneuver) = 0, Route (GuidanceAudioNotificationKind_Route) = 1, Gps (GuidanceAudioNotificationKind_Gps) = 2, SpeedLimit (GuidanceAudioNotificationKind_SpeedLimit) = 3, Traffic (GuidanceAudioNotificationKind_Traffic) = 4, TrafficCamera (GuidanceAudioNotificationKind_TrafficCamera) = 5,
 }}
 DEFINE_IID!(IID_IGuidanceAudioNotificationRequestedEventArgs, 3391791690, 51138, 19788, 157, 124, 73, 149, 118, 188, 237, 219);
@@ -1275,8 +1275,8 @@ impl IGuidanceAudioNotificationRequestedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GuidanceAudioNotificationRequestedEventArgs: IGuidanceAudioNotificationRequestedEventArgs}
-RT_ENUM! { enum GuidanceAudioNotifications: u32 {
+RT_CLASS!{class GuidanceAudioNotificationRequestedEventArgs: IGuidanceAudioNotificationRequestedEventArgs ["Windows.Services.Maps.Guidance.GuidanceAudioNotificationRequestedEventArgs"]}
+RT_ENUM! { enum GuidanceAudioNotifications: u32 ["Windows.Services.Maps.Guidance.GuidanceAudioNotifications"] {
     None (GuidanceAudioNotifications_None) = 0, Maneuver (GuidanceAudioNotifications_Maneuver) = 1, Route (GuidanceAudioNotifications_Route) = 2, Gps (GuidanceAudioNotifications_Gps) = 4, SpeedLimit (GuidanceAudioNotifications_SpeedLimit) = 8, Traffic (GuidanceAudioNotifications_Traffic) = 16, TrafficCamera (GuidanceAudioNotifications_TrafficCamera) = 32,
 }}
 DEFINE_IID!(IID_IGuidanceLaneInfo, 2214908180, 25985, 17335, 172, 21, 201, 7, 155, 249, 13, 241);
@@ -1296,8 +1296,8 @@ impl IGuidanceLaneInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GuidanceLaneInfo: IGuidanceLaneInfo}
-RT_ENUM! { enum GuidanceLaneMarkers: u32 {
+RT_CLASS!{class GuidanceLaneInfo: IGuidanceLaneInfo ["Windows.Services.Maps.Guidance.GuidanceLaneInfo"]}
+RT_ENUM! { enum GuidanceLaneMarkers: u32 ["Windows.Services.Maps.Guidance.GuidanceLaneMarkers"] {
     None (GuidanceLaneMarkers_None) = 0, LightRight (GuidanceLaneMarkers_LightRight) = 1, Right (GuidanceLaneMarkers_Right) = 2, HardRight (GuidanceLaneMarkers_HardRight) = 4, Straight (GuidanceLaneMarkers_Straight) = 8, UTurnLeft (GuidanceLaneMarkers_UTurnLeft) = 16, HardLeft (GuidanceLaneMarkers_HardLeft) = 32, Left (GuidanceLaneMarkers_Left) = 64, LightLeft (GuidanceLaneMarkers_LightLeft) = 128, UTurnRight (GuidanceLaneMarkers_UTurnRight) = 256, Unknown (GuidanceLaneMarkers_Unknown) = 4294967295,
 }}
 DEFINE_IID!(IID_IGuidanceManeuver, 4228461164, 60617, 18728, 162, 161, 114, 50, 185, 155, 148, 161);
@@ -1378,8 +1378,8 @@ impl IGuidanceManeuver {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GuidanceManeuver: IGuidanceManeuver}
-RT_ENUM! { enum GuidanceManeuverKind: i32 {
+RT_CLASS!{class GuidanceManeuver: IGuidanceManeuver ["Windows.Services.Maps.Guidance.GuidanceManeuver"]}
+RT_ENUM! { enum GuidanceManeuverKind: i32 ["Windows.Services.Maps.Guidance.GuidanceManeuverKind"] {
     None (GuidanceManeuverKind_None) = 0, GoStraight (GuidanceManeuverKind_GoStraight) = 1, UTurnRight (GuidanceManeuverKind_UTurnRight) = 2, UTurnLeft (GuidanceManeuverKind_UTurnLeft) = 3, TurnKeepRight (GuidanceManeuverKind_TurnKeepRight) = 4, TurnLightRight (GuidanceManeuverKind_TurnLightRight) = 5, TurnRight (GuidanceManeuverKind_TurnRight) = 6, TurnHardRight (GuidanceManeuverKind_TurnHardRight) = 7, KeepMiddle (GuidanceManeuverKind_KeepMiddle) = 8, TurnKeepLeft (GuidanceManeuverKind_TurnKeepLeft) = 9, TurnLightLeft (GuidanceManeuverKind_TurnLightLeft) = 10, TurnLeft (GuidanceManeuverKind_TurnLeft) = 11, TurnHardLeft (GuidanceManeuverKind_TurnHardLeft) = 12, FreewayEnterRight (GuidanceManeuverKind_FreewayEnterRight) = 13, FreewayEnterLeft (GuidanceManeuverKind_FreewayEnterLeft) = 14, FreewayLeaveRight (GuidanceManeuverKind_FreewayLeaveRight) = 15, FreewayLeaveLeft (GuidanceManeuverKind_FreewayLeaveLeft) = 16, FreewayKeepRight (GuidanceManeuverKind_FreewayKeepRight) = 17, FreewayKeepLeft (GuidanceManeuverKind_FreewayKeepLeft) = 18, TrafficCircleRight1 (GuidanceManeuverKind_TrafficCircleRight1) = 19, TrafficCircleRight2 (GuidanceManeuverKind_TrafficCircleRight2) = 20, TrafficCircleRight3 (GuidanceManeuverKind_TrafficCircleRight3) = 21, TrafficCircleRight4 (GuidanceManeuverKind_TrafficCircleRight4) = 22, TrafficCircleRight5 (GuidanceManeuverKind_TrafficCircleRight5) = 23, TrafficCircleRight6 (GuidanceManeuverKind_TrafficCircleRight6) = 24, TrafficCircleRight7 (GuidanceManeuverKind_TrafficCircleRight7) = 25, TrafficCircleRight8 (GuidanceManeuverKind_TrafficCircleRight8) = 26, TrafficCircleRight9 (GuidanceManeuverKind_TrafficCircleRight9) = 27, TrafficCircleRight10 (GuidanceManeuverKind_TrafficCircleRight10) = 28, TrafficCircleRight11 (GuidanceManeuverKind_TrafficCircleRight11) = 29, TrafficCircleRight12 (GuidanceManeuverKind_TrafficCircleRight12) = 30, TrafficCircleLeft1 (GuidanceManeuverKind_TrafficCircleLeft1) = 31, TrafficCircleLeft2 (GuidanceManeuverKind_TrafficCircleLeft2) = 32, TrafficCircleLeft3 (GuidanceManeuverKind_TrafficCircleLeft3) = 33, TrafficCircleLeft4 (GuidanceManeuverKind_TrafficCircleLeft4) = 34, TrafficCircleLeft5 (GuidanceManeuverKind_TrafficCircleLeft5) = 35, TrafficCircleLeft6 (GuidanceManeuverKind_TrafficCircleLeft6) = 36, TrafficCircleLeft7 (GuidanceManeuverKind_TrafficCircleLeft7) = 37, TrafficCircleLeft8 (GuidanceManeuverKind_TrafficCircleLeft8) = 38, TrafficCircleLeft9 (GuidanceManeuverKind_TrafficCircleLeft9) = 39, TrafficCircleLeft10 (GuidanceManeuverKind_TrafficCircleLeft10) = 40, TrafficCircleLeft11 (GuidanceManeuverKind_TrafficCircleLeft11) = 41, TrafficCircleLeft12 (GuidanceManeuverKind_TrafficCircleLeft12) = 42, Start (GuidanceManeuverKind_Start) = 43, End (GuidanceManeuverKind_End) = 44, TakeFerry (GuidanceManeuverKind_TakeFerry) = 45, PassTransitStation (GuidanceManeuverKind_PassTransitStation) = 46, LeaveTransitStation (GuidanceManeuverKind_LeaveTransitStation) = 47,
 }}
 DEFINE_IID!(IID_IGuidanceMapMatchedCoordinate, 3081548136, 10514, 19097, 175, 241, 121, 134, 9, 185, 129, 254);
@@ -1418,8 +1418,8 @@ impl IGuidanceMapMatchedCoordinate {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GuidanceMapMatchedCoordinate: IGuidanceMapMatchedCoordinate}
-RT_ENUM! { enum GuidanceMode: i32 {
+RT_CLASS!{class GuidanceMapMatchedCoordinate: IGuidanceMapMatchedCoordinate ["Windows.Services.Maps.Guidance.GuidanceMapMatchedCoordinate"]}
+RT_ENUM! { enum GuidanceMode: i32 ["Windows.Services.Maps.Guidance.GuidanceMode"] {
     None (GuidanceMode_None) = 0, Simulation (GuidanceMode_Simulation) = 1, Navigation (GuidanceMode_Navigation) = 2, Tracking (GuidanceMode_Tracking) = 3,
 }}
 DEFINE_IID!(IID_IGuidanceNavigator, 150044407, 36415, 19866, 190, 138, 16, 143, 154, 1, 44, 103);
@@ -1576,7 +1576,7 @@ impl IGuidanceNavigator {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GuidanceNavigator: IGuidanceNavigator}
+RT_CLASS!{class GuidanceNavigator: IGuidanceNavigator ["Windows.Services.Maps.Guidance.GuidanceNavigator"]}
 impl RtActivatable<IGuidanceNavigatorStatics> for GuidanceNavigator {}
 impl RtActivatable<IGuidanceNavigatorStatics2> for GuidanceNavigator {}
 impl GuidanceNavigator {
@@ -1648,7 +1648,7 @@ impl IGuidanceReroutedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GuidanceReroutedEventArgs: IGuidanceReroutedEventArgs}
+RT_CLASS!{class GuidanceReroutedEventArgs: IGuidanceReroutedEventArgs ["Windows.Services.Maps.Guidance.GuidanceReroutedEventArgs"]}
 DEFINE_IID!(IID_IGuidanceRoadSegment, 3005700262, 48760, 19555, 175, 231, 108, 41, 87, 71, 155, 62);
 RT_INTERFACE!{interface IGuidanceRoadSegment(IGuidanceRoadSegmentVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceRoadSegment] {
     fn get_RoadName(&self, out: *mut HSTRING) -> HRESULT,
@@ -1709,7 +1709,7 @@ impl IGuidanceRoadSegment {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GuidanceRoadSegment: IGuidanceRoadSegment}
+RT_CLASS!{class GuidanceRoadSegment: IGuidanceRoadSegment ["Windows.Services.Maps.Guidance.GuidanceRoadSegment"]}
 DEFINE_IID!(IID_IGuidanceRoadSegment2, 611624477, 5923, 18929, 137, 91, 71, 162, 196, 170, 156, 85);
 RT_INTERFACE!{interface IGuidanceRoadSegment2(IGuidanceRoadSegment2Vtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceRoadSegment2] {
     fn get_IsScenic(&self, out: *mut bool) -> HRESULT
@@ -1758,7 +1758,7 @@ impl IGuidanceRoadSignpost {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GuidanceRoadSignpost: IGuidanceRoadSignpost}
+RT_CLASS!{class GuidanceRoadSignpost: IGuidanceRoadSignpost ["Windows.Services.Maps.Guidance.GuidanceRoadSignpost"]}
 DEFINE_IID!(IID_IGuidanceRoute, 974410845, 32794, 16573, 162, 134, 175, 178, 1, 12, 206, 108);
 RT_INTERFACE!{interface IGuidanceRoute(IGuidanceRouteVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceRoute] {
     fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -1808,7 +1808,7 @@ impl IGuidanceRoute {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GuidanceRoute: IGuidanceRoute}
+RT_CLASS!{class GuidanceRoute: IGuidanceRoute ["Windows.Services.Maps.Guidance.GuidanceRoute"]}
 impl RtActivatable<IGuidanceRouteStatics> for GuidanceRoute {}
 impl GuidanceRoute {
     #[inline] pub fn can_create_from_map_route(mapRoute: &super::MapRoute) -> Result<bool> {
@@ -1879,7 +1879,7 @@ impl IGuidanceTelemetryCollector {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GuidanceTelemetryCollector: IGuidanceTelemetryCollector}
+RT_CLASS!{class GuidanceTelemetryCollector: IGuidanceTelemetryCollector ["Windows.Services.Maps.Guidance.GuidanceTelemetryCollector"]}
 impl RtActivatable<IGuidanceTelemetryCollectorStatics> for GuidanceTelemetryCollector {}
 impl GuidanceTelemetryCollector {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<GuidanceTelemetryCollector>>> {
@@ -1987,7 +1987,7 @@ impl IGuidanceUpdatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GuidanceUpdatedEventArgs: IGuidanceUpdatedEventArgs}
+RT_CLASS!{class GuidanceUpdatedEventArgs: IGuidanceUpdatedEventArgs ["Windows.Services.Maps.Guidance.GuidanceUpdatedEventArgs"]}
 } // Windows.Services.Maps.Guidance
 pub mod localsearch { // Windows.Services.Maps.LocalSearch
 use ::prelude::*;
@@ -2121,7 +2121,7 @@ impl ILocalLocation {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LocalLocation: ILocalLocation}
+RT_CLASS!{class LocalLocation: ILocalLocation ["Windows.Services.Maps.LocalSearch.LocalLocation"]}
 DEFINE_IID!(IID_ILocalLocation2, 1855860860, 60597, 20476, 187, 140, 186, 80, 186, 140, 45, 198);
 RT_INTERFACE!{interface ILocalLocation2(ILocalLocation2Vtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocation2] {
     fn get_Category(&self, out: *mut HSTRING) -> HRESULT,
@@ -2170,7 +2170,7 @@ impl ILocalLocationFinderResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LocalLocationFinderResult: ILocalLocationFinderResult}
+RT_CLASS!{class LocalLocationFinderResult: ILocalLocationFinderResult ["Windows.Services.Maps.LocalSearch.LocalLocationFinderResult"]}
 DEFINE_IID!(IID_ILocalLocationFinderStatics, 3538907972, 41182, 18634, 129, 168, 7, 199, 220, 253, 55, 171);
 RT_INTERFACE!{static interface ILocalLocationFinderStatics(ILocalLocationFinderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationFinderStatics] {
     #[cfg(feature="windows-devices")] fn FindLocalLocationsAsync(&self, searchTerm: HSTRING, searchArea: *mut ::rt::gen::windows::devices::geolocation::Geocircle, localCategory: HSTRING, maxResults: u32, out: *mut *mut foundation::IAsyncOperation<LocalLocationFinderResult>) -> HRESULT
@@ -2182,7 +2182,7 @@ impl ILocalLocationFinderStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum LocalLocationFinderStatus: i32 {
+RT_ENUM! { enum LocalLocationFinderStatus: i32 ["Windows.Services.Maps.LocalSearch.LocalLocationFinderStatus"] {
     Success (LocalLocationFinderStatus_Success) = 0, UnknownError (LocalLocationFinderStatus_UnknownError) = 1, InvalidCredentials (LocalLocationFinderStatus_InvalidCredentials) = 2, InvalidCategory (LocalLocationFinderStatus_InvalidCategory) = 3, InvalidSearchTerm (LocalLocationFinderStatus_InvalidSearchTerm) = 4, InvalidSearchArea (LocalLocationFinderStatus_InvalidSearchArea) = 5, NetworkFailure (LocalLocationFinderStatus_NetworkFailure) = 6, NotSupported (LocalLocationFinderStatus_NotSupported) = 7,
 }}
 DEFINE_IID!(IID_ILocalLocationHoursOfOperationItem, 592743538, 41415, 17393, 164, 240, 16, 145, 195, 158, 198, 64);
@@ -2209,7 +2209,7 @@ impl ILocalLocationHoursOfOperationItem {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LocalLocationHoursOfOperationItem: ILocalLocationHoursOfOperationItem}
+RT_CLASS!{class LocalLocationHoursOfOperationItem: ILocalLocationHoursOfOperationItem ["Windows.Services.Maps.LocalSearch.LocalLocationHoursOfOperationItem"]}
 DEFINE_IID!(IID_ILocalLocationRatingInfo, 3407719254, 13140, 17169, 139, 192, 162, 212, 213, 235, 128, 110);
 RT_INTERFACE!{interface ILocalLocationRatingInfo(ILocalLocationRatingInfoVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationRatingInfo] {
     fn get_AggregateRating(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT,
@@ -2233,7 +2233,7 @@ impl ILocalLocationRatingInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LocalLocationRatingInfo: ILocalLocationRatingInfo}
+RT_CLASS!{class LocalLocationRatingInfo: ILocalLocationRatingInfo ["Windows.Services.Maps.LocalSearch.LocalLocationRatingInfo"]}
 RT_CLASS!{static class PlaceInfoHelper}
 impl RtActivatable<IPlaceInfoHelperStatics> for PlaceInfoHelper {}
 impl PlaceInfoHelper {
@@ -2302,7 +2302,7 @@ impl IOfflineMapPackage {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OfflineMapPackage: IOfflineMapPackage}
+RT_CLASS!{class OfflineMapPackage: IOfflineMapPackage ["Windows.Services.Maps.OfflineMaps.OfflineMapPackage"]}
 impl RtActivatable<IOfflineMapPackageStatics> for OfflineMapPackage {}
 impl OfflineMapPackage {
     #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_async(queryPoint: &::rt::gen::windows::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> {
@@ -2333,8 +2333,8 @@ impl IOfflineMapPackageQueryResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OfflineMapPackageQueryResult: IOfflineMapPackageQueryResult}
-RT_ENUM! { enum OfflineMapPackageQueryStatus: i32 {
+RT_CLASS!{class OfflineMapPackageQueryResult: IOfflineMapPackageQueryResult ["Windows.Services.Maps.OfflineMaps.OfflineMapPackageQueryResult"]}
+RT_ENUM! { enum OfflineMapPackageQueryStatus: i32 ["Windows.Services.Maps.OfflineMaps.OfflineMapPackageQueryStatus"] {
     Success (OfflineMapPackageQueryStatus_Success) = 0, UnknownError (OfflineMapPackageQueryStatus_UnknownError) = 1, InvalidCredentials (OfflineMapPackageQueryStatus_InvalidCredentials) = 2, NetworkFailure (OfflineMapPackageQueryStatus_NetworkFailure) = 3,
 }}
 DEFINE_IID!(IID_IOfflineMapPackageStartDownloadResult, 3647322392, 54486, 19198, 147, 120, 62, 199, 30, 241, 28, 61);
@@ -2348,8 +2348,8 @@ impl IOfflineMapPackageStartDownloadResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OfflineMapPackageStartDownloadResult: IOfflineMapPackageStartDownloadResult}
-RT_ENUM! { enum OfflineMapPackageStartDownloadStatus: i32 {
+RT_CLASS!{class OfflineMapPackageStartDownloadResult: IOfflineMapPackageStartDownloadResult ["Windows.Services.Maps.OfflineMaps.OfflineMapPackageStartDownloadResult"]}
+RT_ENUM! { enum OfflineMapPackageStartDownloadStatus: i32 ["Windows.Services.Maps.OfflineMaps.OfflineMapPackageStartDownloadStatus"] {
     Success (OfflineMapPackageStartDownloadStatus_Success) = 0, UnknownError (OfflineMapPackageStartDownloadStatus_UnknownError) = 1, InvalidCredentials (OfflineMapPackageStartDownloadStatus_InvalidCredentials) = 2, DeniedWithoutCapability (OfflineMapPackageStartDownloadStatus_DeniedWithoutCapability) = 3,
 }}
 DEFINE_IID!(IID_IOfflineMapPackageStatics, 408844578, 43057, 19120, 148, 31, 105, 152, 250, 146, 146, 133);
@@ -2375,7 +2375,7 @@ impl IOfflineMapPackageStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum OfflineMapPackageStatus: i32 {
+RT_ENUM! { enum OfflineMapPackageStatus: i32 ["Windows.Services.Maps.OfflineMaps.OfflineMapPackageStatus"] {
     NotDownloaded (OfflineMapPackageStatus_NotDownloaded) = 0, Downloading (OfflineMapPackageStatus_Downloading) = 1, Downloaded (OfflineMapPackageStatus_Downloaded) = 2, Deleting (OfflineMapPackageStatus_Deleting) = 3,
 }}
 } // Windows.Services.Maps.OfflineMaps
@@ -2399,7 +2399,7 @@ impl IStoreAcquireLicenseResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreAcquireLicenseResult: IStoreAcquireLicenseResult}
+RT_CLASS!{class StoreAcquireLicenseResult: IStoreAcquireLicenseResult ["Windows.Services.Store.StoreAcquireLicenseResult"]}
 DEFINE_IID!(IID_IStoreAppLicense, 4085905886, 29632, 17870, 155, 171, 178, 254, 62, 94, 175, 211);
 RT_INTERFACE!{interface IStoreAppLicense(IStoreAppLicenseVtbl): IInspectable(IInspectableVtbl) [IID_IStoreAppLicense] {
     fn get_SkuStoreId(&self, out: *mut HSTRING) -> HRESULT,
@@ -2459,7 +2459,7 @@ impl IStoreAppLicense {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreAppLicense: IStoreAppLicense}
+RT_CLASS!{class StoreAppLicense: IStoreAppLicense ["Windows.Services.Store.StoreAppLicense"]}
 DEFINE_IID!(IID_IStoreAppLicense2, 3026611857, 17475, 16563, 153, 63, 40, 144, 68, 53, 189, 198);
 RT_INTERFACE!{interface IStoreAppLicense2(IStoreAppLicense2Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreAppLicense2] {
     fn get_IsDiscLicense(&self, out: *mut bool) -> HRESULT
@@ -2512,7 +2512,7 @@ impl IStoreAvailability {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreAvailability: IStoreAvailability}
+RT_CLASS!{class StoreAvailability: IStoreAvailability ["Windows.Services.Store.StoreAvailability"]}
 DEFINE_IID!(IID_IStoreCanAcquireLicenseResult, 979975603, 136, 18479, 134, 213, 189, 70, 82, 38, 99, 173);
 RT_INTERFACE!{interface IStoreCanAcquireLicenseResult(IStoreCanAcquireLicenseResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreCanAcquireLicenseResult] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
@@ -2536,8 +2536,8 @@ impl IStoreCanAcquireLicenseResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreCanAcquireLicenseResult: IStoreCanAcquireLicenseResult}
-RT_ENUM! { enum StoreCanLicenseStatus: i32 {
+RT_CLASS!{class StoreCanAcquireLicenseResult: IStoreCanAcquireLicenseResult ["Windows.Services.Store.StoreCanAcquireLicenseResult"]}
+RT_ENUM! { enum StoreCanLicenseStatus: i32 ["Windows.Services.Store.StoreCanLicenseStatus"] {
     NotLicensableToUser (StoreCanLicenseStatus_NotLicensableToUser) = 0, Licensable (StoreCanLicenseStatus_Licensable) = 1, LicenseActionNotApplicableToProduct (StoreCanLicenseStatus_LicenseActionNotApplicableToProduct) = 2, NetworkError (StoreCanLicenseStatus_NetworkError) = 3, ServerError (StoreCanLicenseStatus_ServerError) = 4,
 }}
 DEFINE_IID!(IID_IStoreCollectionData, 2326053811, 23475, 17434, 42, 180, 77, 171, 115, 213, 206, 103);
@@ -2593,7 +2593,7 @@ impl IStoreCollectionData {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreCollectionData: IStoreCollectionData}
+RT_CLASS!{class StoreCollectionData: IStoreCollectionData ["Windows.Services.Store.StoreCollectionData"]}
 DEFINE_IID!(IID_IStoreConsumableResult, 3932007282, 27136, 16466, 190, 91, 191, 218, 180, 67, 51, 82);
 RT_INTERFACE!{interface IStoreConsumableResult(IStoreConsumableResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreConsumableResult] {
     fn get_Status(&self, out: *mut StoreConsumableStatus) -> HRESULT,
@@ -2623,8 +2623,8 @@ impl IStoreConsumableResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreConsumableResult: IStoreConsumableResult}
-RT_ENUM! { enum StoreConsumableStatus: i32 {
+RT_CLASS!{class StoreConsumableResult: IStoreConsumableResult ["Windows.Services.Store.StoreConsumableResult"]}
+RT_ENUM! { enum StoreConsumableStatus: i32 ["Windows.Services.Store.StoreConsumableStatus"] {
     Succeeded (StoreConsumableStatus_Succeeded) = 0, InsufficentQuantity (StoreConsumableStatus_InsufficentQuantity) = 1, NetworkError (StoreConsumableStatus_NetworkError) = 2, ServerError (StoreConsumableStatus_ServerError) = 3,
 }}
 DEFINE_IID!(IID_IStoreContext, 2895689406, 62717, 18706, 186, 189, 80, 53, 229, 232, 188, 171);
@@ -2759,7 +2759,7 @@ impl IStoreContext {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreContext: IStoreContext}
+RT_CLASS!{class StoreContext: IStoreContext ["Windows.Services.Store.StoreContext"]}
 impl RtActivatable<IStoreContextStatics> for StoreContext {}
 impl StoreContext {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<StoreContext>>> {
@@ -2907,7 +2907,7 @@ impl IStoreContextStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum StoreDurationUnit: i32 {
+RT_ENUM! { enum StoreDurationUnit: i32 ["Windows.Services.Store.StoreDurationUnit"] {
     Minute (StoreDurationUnit_Minute) = 0, Hour (StoreDurationUnit_Hour) = 1, Day (StoreDurationUnit_Day) = 2, Week (StoreDurationUnit_Week) = 3, Month (StoreDurationUnit_Month) = 4, Year (StoreDurationUnit_Year) = 5,
 }}
 DEFINE_IID!(IID_IStoreImage, 136303176, 44468, 19300, 169, 147, 120, 71, 137, 146, 110, 213);
@@ -2945,7 +2945,7 @@ impl IStoreImage {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreImage: IStoreImage}
+RT_CLASS!{class StoreImage: IStoreImage ["Windows.Services.Store.StoreImage"]}
 DEFINE_IID!(IID_IStoreLicense, 651990393, 19535, 20272, 188, 137, 100, 159, 96, 227, 96, 85);
 RT_INTERFACE!{interface IStoreLicense(IStoreLicenseVtbl): IInspectable(IInspectableVtbl) [IID_IStoreLicense] {
     fn get_SkuStoreId(&self, out: *mut HSTRING) -> HRESULT,
@@ -2981,7 +2981,7 @@ impl IStoreLicense {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreLicense: IStoreLicense}
+RT_CLASS!{class StoreLicense: IStoreLicense ["Windows.Services.Store.StoreLicense"]}
 DEFINE_IID!(IID_IStorePackageInstallOptions, 490562316, 3277, 17629, 140, 89, 128, 129, 10, 114, 153, 115);
 RT_INTERFACE!{interface IStorePackageInstallOptions(IStorePackageInstallOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IStorePackageInstallOptions] {
     fn get_AllowForcedAppRestart(&self, out: *mut bool) -> HRESULT,
@@ -2998,7 +2998,7 @@ impl IStorePackageInstallOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorePackageInstallOptions: IStorePackageInstallOptions}
+RT_CLASS!{class StorePackageInstallOptions: IStorePackageInstallOptions ["Windows.Services.Store.StorePackageInstallOptions"]}
 impl RtActivatable<IActivationFactory> for StorePackageInstallOptions {}
 DEFINE_CLSID!(StorePackageInstallOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,83,116,111,114,101,46,83,116,111,114,101,80,97,99,107,97,103,101,73,110,115,116,97,108,108,79,112,116,105,111,110,115,0]) [CLSID_StorePackageInstallOptions]);
 DEFINE_IID!(IID_IStorePackageLicense, 205936404, 5345, 18803, 189, 20, 247, 119, 36, 39, 30, 153);
@@ -3035,7 +3035,7 @@ impl IStorePackageLicense {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorePackageLicense: IStorePackageLicense}
+RT_CLASS!{class StorePackageLicense: IStorePackageLicense ["Windows.Services.Store.StorePackageLicense"]}
 DEFINE_IID!(IID_IStorePackageUpdate, 336568656, 15551, 18997, 185, 31, 72, 39, 28, 49, 176, 114);
 RT_INTERFACE!{interface IStorePackageUpdate(IStorePackageUpdateVtbl): IInspectable(IInspectableVtbl) [IID_IStorePackageUpdate] {
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy0(&self) -> (),
@@ -3054,7 +3054,7 @@ impl IStorePackageUpdate {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorePackageUpdate: IStorePackageUpdate}
+RT_CLASS!{class StorePackageUpdate: IStorePackageUpdate ["Windows.Services.Store.StorePackageUpdate"]}
 DEFINE_IID!(IID_IStorePackageUpdateResult, 3885056749, 25081, 18579, 180, 254, 207, 25, 22, 3, 175, 123);
 RT_INTERFACE!{interface IStorePackageUpdateResult(IStorePackageUpdateResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorePackageUpdateResult] {
     fn get_OverallState(&self, out: *mut StorePackageUpdateState) -> HRESULT,
@@ -3072,7 +3072,7 @@ impl IStorePackageUpdateResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorePackageUpdateResult: IStorePackageUpdateResult}
+RT_CLASS!{class StorePackageUpdateResult: IStorePackageUpdateResult ["Windows.Services.Store.StorePackageUpdateResult"]}
 DEFINE_IID!(IID_IStorePackageUpdateResult2, 119341358, 48226, 20270, 135, 234, 153, 216, 1, 174, 175, 152);
 RT_INTERFACE!{interface IStorePackageUpdateResult2(IStorePackageUpdateResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorePackageUpdateResult2] {
     fn get_StoreQueueItems(&self, out: *mut *mut foundation::collections::IVectorView<StoreQueueItem>) -> HRESULT
@@ -3084,10 +3084,10 @@ impl IStorePackageUpdateResult2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum StorePackageUpdateState: i32 {
+RT_ENUM! { enum StorePackageUpdateState: i32 ["Windows.Services.Store.StorePackageUpdateState"] {
     Pending (StorePackageUpdateState_Pending) = 0, Downloading (StorePackageUpdateState_Downloading) = 1, Deploying (StorePackageUpdateState_Deploying) = 2, Completed (StorePackageUpdateState_Completed) = 3, Canceled (StorePackageUpdateState_Canceled) = 4, OtherError (StorePackageUpdateState_OtherError) = 5, ErrorLowBattery (StorePackageUpdateState_ErrorLowBattery) = 6, ErrorWiFiRecommended (StorePackageUpdateState_ErrorWiFiRecommended) = 7, ErrorWiFiRequired (StorePackageUpdateState_ErrorWiFiRequired) = 8,
 }}
-RT_STRUCT! { struct StorePackageUpdateStatus {
+RT_STRUCT! { struct StorePackageUpdateStatus ["Windows.Services.Store.StorePackageUpdateStatus"] {
     PackageFamilyName: HSTRING, PackageDownloadSizeInBytes: u64, PackageBytesDownloaded: u64, PackageDownloadProgress: f64, TotalDownloadProgress: f64, PackageUpdateState: StorePackageUpdateState,
 }}
 DEFINE_IID!(IID_IStorePrice, 1438291140, 5617, 16508, 143, 6, 0, 99, 128, 244, 223, 11);
@@ -3131,7 +3131,7 @@ impl IStorePrice {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorePrice: IStorePrice}
+RT_CLASS!{class StorePrice: IStorePrice ["Windows.Services.Store.StorePrice"]}
 DEFINE_IID!(IID_IStoreProduct, 839789650, 55136, 17674, 164, 43, 103, 209, 233, 1, 172, 144);
 RT_INTERFACE!{interface IStoreProduct(IStoreProductVtbl): IInspectable(IInspectableVtbl) [IID_IStoreProduct] {
     fn get_StoreId(&self, out: *mut HSTRING) -> HRESULT,
@@ -3245,7 +3245,7 @@ impl IStoreProduct {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreProduct: IStoreProduct}
+RT_CLASS!{class StoreProduct: IStoreProduct ["Windows.Services.Store.StoreProduct"]}
 DEFINE_IID!(IID_IStoreProductOptions, 1530175737, 41235, 18449, 131, 38, 22, 25, 156, 146, 127, 49);
 RT_INTERFACE!{interface IStoreProductOptions(IStoreProductOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IStoreProductOptions] {
     fn get_ActionFilters(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT
@@ -3257,7 +3257,7 @@ impl IStoreProductOptions {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreProductOptions: IStoreProductOptions}
+RT_CLASS!{class StoreProductOptions: IStoreProductOptions ["Windows.Services.Store.StoreProductOptions"]}
 impl RtActivatable<IActivationFactory> for StoreProductOptions {}
 DEFINE_CLSID!(StoreProductOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,83,116,111,114,101,46,83,116,111,114,101,80,114,111,100,117,99,116,79,112,116,105,111,110,115,0]) [CLSID_StoreProductOptions]);
 DEFINE_IID!(IID_IStoreProductPagedQueryResult, 3374782661, 19925, 18537, 164, 98, 236, 198, 135, 46, 67, 197);
@@ -3289,7 +3289,7 @@ impl IStoreProductPagedQueryResult {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreProductPagedQueryResult: IStoreProductPagedQueryResult}
+RT_CLASS!{class StoreProductPagedQueryResult: IStoreProductPagedQueryResult ["Windows.Services.Store.StoreProductPagedQueryResult"]}
 DEFINE_IID!(IID_IStoreProductQueryResult, 3624265413, 54358, 20470, 128, 73, 144, 118, 213, 22, 95, 115);
 RT_INTERFACE!{interface IStoreProductQueryResult(IStoreProductQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreProductQueryResult] {
     fn get_Products(&self, out: *mut *mut foundation::collections::IMapView<HString, StoreProduct>) -> HRESULT,
@@ -3307,7 +3307,7 @@ impl IStoreProductQueryResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreProductQueryResult: IStoreProductQueryResult}
+RT_CLASS!{class StoreProductQueryResult: IStoreProductQueryResult ["Windows.Services.Store.StoreProductQueryResult"]}
 DEFINE_IID!(IID_IStoreProductResult, 3077001075, 15495, 20193, 130, 1, 244, 40, 53, 155, 211, 175);
 RT_INTERFACE!{interface IStoreProductResult(IStoreProductResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreProductResult] {
     fn get_Product(&self, out: *mut *mut StoreProduct) -> HRESULT,
@@ -3325,7 +3325,7 @@ impl IStoreProductResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreProductResult: IStoreProductResult}
+RT_CLASS!{class StoreProductResult: IStoreProductResult ["Windows.Services.Store.StoreProductResult"]}
 DEFINE_IID!(IID_IStorePurchaseProperties, 2204268787, 65415, 17252, 165, 180, 253, 33, 83, 235, 228, 59);
 RT_INTERFACE!{interface IStorePurchaseProperties(IStorePurchasePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorePurchaseProperties] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -3353,7 +3353,7 @@ impl IStorePurchaseProperties {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorePurchaseProperties: IStorePurchaseProperties}
+RT_CLASS!{class StorePurchaseProperties: IStorePurchaseProperties ["Windows.Services.Store.StorePurchaseProperties"]}
 impl RtActivatable<IStorePurchasePropertiesFactory> for StorePurchaseProperties {}
 impl RtActivatable<IActivationFactory> for StorePurchaseProperties {}
 impl StorePurchaseProperties {
@@ -3390,8 +3390,8 @@ impl IStorePurchaseResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorePurchaseResult: IStorePurchaseResult}
-RT_ENUM! { enum StorePurchaseStatus: i32 {
+RT_CLASS!{class StorePurchaseResult: IStorePurchaseResult ["Windows.Services.Store.StorePurchaseResult"]}
+RT_ENUM! { enum StorePurchaseStatus: i32 ["Windows.Services.Store.StorePurchaseStatus"] {
     Succeeded (StorePurchaseStatus_Succeeded) = 0, AlreadyPurchased (StorePurchaseStatus_AlreadyPurchased) = 1, NotPurchased (StorePurchaseStatus_NotPurchased) = 2, NetworkError (StorePurchaseStatus_NetworkError) = 3, ServerError (StorePurchaseStatus_ServerError) = 4,
 }}
 DEFINE_IID!(IID_IStoreQueueItem, 1456849707, 63536, 17043, 145, 136, 202, 210, 220, 222, 115, 87);
@@ -3445,7 +3445,7 @@ impl IStoreQueueItem {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreQueueItem: IStoreQueueItem}
+RT_CLASS!{class StoreQueueItem: IStoreQueueItem ["Windows.Services.Store.StoreQueueItem"]}
 DEFINE_IID!(IID_IStoreQueueItem2, 1766399144, 6868, 17532, 173, 140, 169, 80, 53, 246, 77, 130);
 RT_INTERFACE!{interface IStoreQueueItem2(IStoreQueueItem2Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreQueueItem2] {
     fn CancelInstallAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -3480,14 +3480,14 @@ impl IStoreQueueItemCompletedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreQueueItemCompletedEventArgs: IStoreQueueItemCompletedEventArgs}
-RT_ENUM! { enum StoreQueueItemExtendedState: i32 {
+RT_CLASS!{class StoreQueueItemCompletedEventArgs: IStoreQueueItemCompletedEventArgs ["Windows.Services.Store.StoreQueueItemCompletedEventArgs"]}
+RT_ENUM! { enum StoreQueueItemExtendedState: i32 ["Windows.Services.Store.StoreQueueItemExtendedState"] {
     ActivePending (StoreQueueItemExtendedState_ActivePending) = 0, ActiveStarting (StoreQueueItemExtendedState_ActiveStarting) = 1, ActiveAcquiringLicense (StoreQueueItemExtendedState_ActiveAcquiringLicense) = 2, ActiveDownloading (StoreQueueItemExtendedState_ActiveDownloading) = 3, ActiveRestoringData (StoreQueueItemExtendedState_ActiveRestoringData) = 4, ActiveInstalling (StoreQueueItemExtendedState_ActiveInstalling) = 5, Completed (StoreQueueItemExtendedState_Completed) = 6, Canceled (StoreQueueItemExtendedState_Canceled) = 7, Paused (StoreQueueItemExtendedState_Paused) = 8, Error (StoreQueueItemExtendedState_Error) = 9, PausedPackagesInUse (StoreQueueItemExtendedState_PausedPackagesInUse) = 10, PausedLowBattery (StoreQueueItemExtendedState_PausedLowBattery) = 11, PausedWiFiRecommended (StoreQueueItemExtendedState_PausedWiFiRecommended) = 12, PausedWiFiRequired (StoreQueueItemExtendedState_PausedWiFiRequired) = 13, PausedReadyToInstall (StoreQueueItemExtendedState_PausedReadyToInstall) = 14,
 }}
-RT_ENUM! { enum StoreQueueItemKind: i32 {
+RT_ENUM! { enum StoreQueueItemKind: i32 ["Windows.Services.Store.StoreQueueItemKind"] {
     Install (StoreQueueItemKind_Install) = 0, Update (StoreQueueItemKind_Update) = 1, Repair (StoreQueueItemKind_Repair) = 2,
 }}
-RT_ENUM! { enum StoreQueueItemState: i32 {
+RT_ENUM! { enum StoreQueueItemState: i32 ["Windows.Services.Store.StoreQueueItemState"] {
     Active (StoreQueueItemState_Active) = 0, Completed (StoreQueueItemState_Completed) = 1, Canceled (StoreQueueItemState_Canceled) = 2, Error (StoreQueueItemState_Error) = 3, Paused (StoreQueueItemState_Paused) = 4,
 }}
 DEFINE_IID!(IID_IStoreQueueItemStatus, 2614524271, 40131, 20163, 178, 239, 123, 228, 51, 179, 1, 116);
@@ -3519,7 +3519,7 @@ impl IStoreQueueItemStatus {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreQueueItemStatus: IStoreQueueItemStatus}
+RT_CLASS!{class StoreQueueItemStatus: IStoreQueueItemStatus ["Windows.Services.Store.StoreQueueItemStatus"]}
 DEFINE_IID!(IID_IStoreRateAndReviewResult, 2636160342, 42677, 16673, 155, 97, 238, 109, 15, 189, 189, 187);
 RT_INTERFACE!{interface IStoreRateAndReviewResult(IStoreRateAndReviewResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreRateAndReviewResult] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
@@ -3549,8 +3549,8 @@ impl IStoreRateAndReviewResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreRateAndReviewResult: IStoreRateAndReviewResult}
-RT_ENUM! { enum StoreRateAndReviewStatus: i32 {
+RT_CLASS!{class StoreRateAndReviewResult: IStoreRateAndReviewResult ["Windows.Services.Store.StoreRateAndReviewResult"]}
+RT_ENUM! { enum StoreRateAndReviewStatus: i32 ["Windows.Services.Store.StoreRateAndReviewStatus"] {
     Succeeded (StoreRateAndReviewStatus_Succeeded) = 0, CanceledByUser (StoreRateAndReviewStatus_CanceledByUser) = 1, NetworkError (StoreRateAndReviewStatus_NetworkError) = 2, Error (StoreRateAndReviewStatus_Error) = 3,
 }}
 RT_CLASS!{static class StoreRequestHelper}
@@ -3589,7 +3589,7 @@ impl IStoreSendRequestResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreSendRequestResult: IStoreSendRequestResult}
+RT_CLASS!{class StoreSendRequestResult: IStoreSendRequestResult ["Windows.Services.Store.StoreSendRequestResult"]}
 DEFINE_IID!(IID_IStoreSendRequestResult2, 687941999, 49328, 18896, 142, 141, 170, 148, 10, 249, 193, 11);
 RT_INTERFACE!{interface IStoreSendRequestResult2(IStoreSendRequestResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreSendRequestResult2] {
     #[cfg(feature="windows-web")] fn get_HttpStatusCode(&self, out: *mut super::super::web::http::HttpStatusCode) -> HRESULT
@@ -3720,7 +3720,7 @@ impl IStoreSku {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreSku: IStoreSku}
+RT_CLASS!{class StoreSku: IStoreSku ["Windows.Services.Store.StoreSku"]}
 DEFINE_IID!(IID_IStoreSubscriptionInfo, 1099528042, 1369, 17324, 169, 198, 58, 176, 1, 31, 184, 235);
 RT_INTERFACE!{interface IStoreSubscriptionInfo(IStoreSubscriptionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IStoreSubscriptionInfo] {
     fn get_BillingPeriod(&self, out: *mut u32) -> HRESULT,
@@ -3756,7 +3756,7 @@ impl IStoreSubscriptionInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreSubscriptionInfo: IStoreSubscriptionInfo}
+RT_CLASS!{class StoreSubscriptionInfo: IStoreSubscriptionInfo ["Windows.Services.Store.StoreSubscriptionInfo"]}
 DEFINE_IID!(IID_IStoreUninstallStorePackageResult, 2680830461, 4719, 19674, 184, 1, 19, 70, 184, 208, 162, 96);
 RT_INTERFACE!{interface IStoreUninstallStorePackageResult(IStoreUninstallStorePackageResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreUninstallStorePackageResult] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
@@ -3774,8 +3774,8 @@ impl IStoreUninstallStorePackageResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreUninstallStorePackageResult: IStoreUninstallStorePackageResult}
-RT_ENUM! { enum StoreUninstallStorePackageStatus: i32 {
+RT_CLASS!{class StoreUninstallStorePackageResult: IStoreUninstallStorePackageResult ["Windows.Services.Store.StoreUninstallStorePackageResult"]}
+RT_ENUM! { enum StoreUninstallStorePackageStatus: i32 ["Windows.Services.Store.StoreUninstallStorePackageStatus"] {
     Succeeded (StoreUninstallStorePackageStatus_Succeeded) = 0, CanceledByUser (StoreUninstallStorePackageStatus_CanceledByUser) = 1, NetworkError (StoreUninstallStorePackageStatus_NetworkError) = 2, UninstallNotApplicable (StoreUninstallStorePackageStatus_UninstallNotApplicable) = 3, Error (StoreUninstallStorePackageStatus_Error) = 4,
 }}
 DEFINE_IID!(IID_IStoreVideo, 4067209604, 28510, 19906, 136, 108, 60, 99, 8, 60, 47, 148);
@@ -3819,7 +3819,7 @@ impl IStoreVideo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreVideo: IStoreVideo}
+RT_CLASS!{class StoreVideo: IStoreVideo ["Windows.Services.Store.StoreVideo"]}
 } // Windows.Services.Store
 pub mod targetedcontent { // Windows.Services.TargetedContent
 use ::prelude::*;
@@ -3834,11 +3834,11 @@ impl ITargetedContentAction {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetedContentAction: ITargetedContentAction}
-RT_ENUM! { enum TargetedContentAppInstallationState: i32 {
+RT_CLASS!{class TargetedContentAction: ITargetedContentAction ["Windows.Services.TargetedContent.TargetedContentAction"]}
+RT_ENUM! { enum TargetedContentAppInstallationState: i32 ["Windows.Services.TargetedContent.TargetedContentAppInstallationState"] {
     NotApplicable (TargetedContentAppInstallationState_NotApplicable) = 0, NotInstalled (TargetedContentAppInstallationState_NotInstalled) = 1, Installed (TargetedContentAppInstallationState_Installed) = 2,
 }}
-RT_ENUM! { enum TargetedContentAvailability: i32 {
+RT_ENUM! { enum TargetedContentAvailability: i32 ["Windows.Services.TargetedContent.TargetedContentAvailability"] {
     None (TargetedContentAvailability_None) = 0, Partial (TargetedContentAvailability_Partial) = 1, All (TargetedContentAvailability_All) = 2,
 }}
 DEFINE_IID!(IID_ITargetedContentAvailabilityChangedEventArgs, 3774192934, 22823, 17488, 150, 92, 28, 235, 123, 236, 222, 101);
@@ -3852,7 +3852,7 @@ impl ITargetedContentAvailabilityChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetedContentAvailabilityChangedEventArgs: ITargetedContentAvailabilityChangedEventArgs}
+RT_CLASS!{class TargetedContentAvailabilityChangedEventArgs: ITargetedContentAvailabilityChangedEventArgs ["Windows.Services.TargetedContent.TargetedContentAvailabilityChangedEventArgs"]}
 DEFINE_IID!(IID_ITargetedContentChangedEventArgs, 2580842697, 22654, 17798, 142, 247, 181, 76, 169, 69, 58, 22);
 RT_INTERFACE!{interface ITargetedContentChangedEventArgs(ITargetedContentChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentChangedEventArgs] {
     fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT,
@@ -3870,7 +3870,7 @@ impl ITargetedContentChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetedContentChangedEventArgs: ITargetedContentChangedEventArgs}
+RT_CLASS!{class TargetedContentChangedEventArgs: ITargetedContentChangedEventArgs ["Windows.Services.TargetedContent.TargetedContentChangedEventArgs"]}
 DEFINE_IID!(IID_ITargetedContentCollection, 759916229, 61795, 17594, 159, 110, 225, 164, 194, 187, 85, 157);
 RT_INTERFACE!{interface ITargetedContentCollection(ITargetedContentCollectionVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentCollection] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -3916,7 +3916,7 @@ impl ITargetedContentCollection {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetedContentCollection: ITargetedContentCollection}
+RT_CLASS!{class TargetedContentCollection: ITargetedContentCollection ["Windows.Services.TargetedContent.TargetedContentCollection"]}
 DEFINE_IID!(IID_ITargetedContentContainer, 3156513993, 34871, 18370, 133, 15, 215, 157, 100, 89, 89, 38);
 RT_INTERFACE!{interface ITargetedContentContainer(ITargetedContentContainerVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentContainer] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -3952,7 +3952,7 @@ impl ITargetedContentContainer {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetedContentContainer: ITargetedContentContainer}
+RT_CLASS!{class TargetedContentContainer: ITargetedContentContainer ["Windows.Services.TargetedContent.TargetedContentContainer"]}
 impl RtActivatable<ITargetedContentContainerStatics> for TargetedContentContainer {}
 impl TargetedContentContainer {
     #[inline] pub fn get_async(contentId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<TargetedContentContainer>>> {
@@ -3971,8 +3971,8 @@ impl ITargetedContentContainerStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-#[cfg(feature="windows-storage")] RT_CLASS!{class TargetedContentFile: super::super::storage::streams::IRandomAccessStreamReference}
-#[cfg(not(feature="windows-storage"))] RT_CLASS!{class TargetedContentFile: IInspectable}
+#[cfg(feature="windows-storage")] RT_CLASS!{class TargetedContentFile: super::super::storage::streams::IRandomAccessStreamReference ["Windows.Services.TargetedContent.TargetedContentFile"]}
+#[cfg(not(feature="windows-storage"))] RT_CLASS!{class TargetedContentFile: IInspectable ["Windows.Services.TargetedContent.TargetedContentFile"]}
 DEFINE_IID!(IID_ITargetedContentImage, 2812642777, 30623, 19230, 187, 177, 142, 175, 83, 251, 234, 178);
 RT_INTERFACE!{interface ITargetedContentImage(ITargetedContentImageVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentImage] {
     fn get_Height(&self, out: *mut u32) -> HRESULT,
@@ -3990,8 +3990,8 @@ impl ITargetedContentImage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetedContentImage: ITargetedContentImage}
-RT_ENUM! { enum TargetedContentInteraction: i32 {
+RT_CLASS!{class TargetedContentImage: ITargetedContentImage ["Windows.Services.TargetedContent.TargetedContentImage"]}
+RT_ENUM! { enum TargetedContentInteraction: i32 ["Windows.Services.TargetedContent.TargetedContentInteraction"] {
     Impression (TargetedContentInteraction_Impression) = 0, ClickThrough (TargetedContentInteraction_ClickThrough) = 1, Hover (TargetedContentInteraction_Hover) = 2, Like (TargetedContentInteraction_Like) = 3, Dislike (TargetedContentInteraction_Dislike) = 4, Dismiss (TargetedContentInteraction_Dismiss) = 5, Ineligible (TargetedContentInteraction_Ineligible) = 6, Accept (TargetedContentInteraction_Accept) = 7, Decline (TargetedContentInteraction_Decline) = 8, Defer (TargetedContentInteraction_Defer) = 9, Canceled (TargetedContentInteraction_Canceled) = 10, Conversion (TargetedContentInteraction_Conversion) = 11, Opportunity (TargetedContentInteraction_Opportunity) = 12,
 }}
 DEFINE_IID!(IID_ITargetedContentItem, 941002180, 10092, 19506, 150, 186, 86, 92, 110, 64, 110, 116);
@@ -4033,7 +4033,7 @@ impl ITargetedContentItem {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetedContentItem: ITargetedContentItem}
+RT_CLASS!{class TargetedContentItem: ITargetedContentItem ["Windows.Services.TargetedContent.TargetedContentItem"]}
 DEFINE_IID!(IID_ITargetedContentItemState, 1939035220, 19557, 19271, 164, 65, 71, 45, 229, 60, 121, 182);
 RT_INTERFACE!{interface ITargetedContentItemState(ITargetedContentItemStateVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentItemState] {
     fn get_ShouldDisplay(&self, out: *mut bool) -> HRESULT,
@@ -4051,7 +4051,7 @@ impl ITargetedContentItemState {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetedContentItemState: ITargetedContentItemState}
+RT_CLASS!{class TargetedContentItemState: ITargetedContentItemState ["Windows.Services.TargetedContent.TargetedContentItemState"]}
 DEFINE_IID!(IID_ITargetedContentObject, 69040489, 8722, 17105, 157, 250, 136, 168, 227, 3, 58, 163);
 RT_INTERFACE!{interface ITargetedContentObject(ITargetedContentObjectVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentObject] {
     fn get_ObjectKind(&self, out: *mut TargetedContentObjectKind) -> HRESULT,
@@ -4081,8 +4081,8 @@ impl ITargetedContentObject {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetedContentObject: ITargetedContentObject}
-RT_ENUM! { enum TargetedContentObjectKind: i32 {
+RT_CLASS!{class TargetedContentObject: ITargetedContentObject ["Windows.Services.TargetedContent.TargetedContentObject"]}
+RT_ENUM! { enum TargetedContentObjectKind: i32 ["Windows.Services.TargetedContent.TargetedContentObjectKind"] {
     Collection (TargetedContentObjectKind_Collection) = 0, Item (TargetedContentObjectKind_Item) = 1, Value (TargetedContentObjectKind_Value) = 2,
 }}
 DEFINE_IID!(IID_ITargetedContentStateChangedEventArgs, 2585587517, 32883, 17430, 141, 242, 84, 104, 53, 166, 65, 79);
@@ -4096,7 +4096,7 @@ impl ITargetedContentStateChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetedContentStateChangedEventArgs: ITargetedContentStateChangedEventArgs}
+RT_CLASS!{class TargetedContentStateChangedEventArgs: ITargetedContentStateChangedEventArgs ["Windows.Services.TargetedContent.TargetedContentStateChangedEventArgs"]}
 DEFINE_IID!(IID_ITargetedContentSubscription, 2284596297, 50770, 19578, 172, 173, 31, 127, 162, 152, 108, 115);
 RT_INTERFACE!{interface ITargetedContentSubscription(ITargetedContentSubscriptionVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentSubscription] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -4147,7 +4147,7 @@ impl ITargetedContentSubscription {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetedContentSubscription: ITargetedContentSubscription}
+RT_CLASS!{class TargetedContentSubscription: ITargetedContentSubscription ["Windows.Services.TargetedContent.TargetedContentSubscription"]}
 impl RtActivatable<ITargetedContentSubscriptionStatics> for TargetedContentSubscription {}
 impl TargetedContentSubscription {
     #[inline] pub fn get_async(subscriptionId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<TargetedContentSubscription>>> {
@@ -4197,7 +4197,7 @@ impl ITargetedContentSubscriptionOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetedContentSubscriptionOptions: ITargetedContentSubscriptionOptions}
+RT_CLASS!{class TargetedContentSubscriptionOptions: ITargetedContentSubscriptionOptions ["Windows.Services.TargetedContent.TargetedContentSubscriptionOptions"]}
 DEFINE_IID!(IID_ITargetedContentSubscriptionStatics, 4208852608, 13837, 18710, 181, 60, 126, 162, 112, 144, 208, 42);
 RT_INTERFACE!{static interface ITargetedContentSubscriptionStatics(ITargetedContentSubscriptionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentSubscriptionStatics] {
     fn GetAsync(&self, subscriptionId: HSTRING, out: *mut *mut foundation::IAsyncOperation<TargetedContentSubscription>) -> HRESULT,
@@ -4316,8 +4316,8 @@ impl ITargetedContentValue {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetedContentValue: ITargetedContentValue}
-RT_ENUM! { enum TargetedContentValueKind: i32 {
+RT_CLASS!{class TargetedContentValue: ITargetedContentValue ["Windows.Services.TargetedContent.TargetedContentValue"]}
+RT_ENUM! { enum TargetedContentValueKind: i32 ["Windows.Services.TargetedContent.TargetedContentValueKind"] {
     String (TargetedContentValueKind_String) = 0, Uri (TargetedContentValueKind_Uri) = 1, Number (TargetedContentValueKind_Number) = 2, Boolean (TargetedContentValueKind_Boolean) = 3, File (TargetedContentValueKind_File) = 4, ImageFile (TargetedContentValueKind_ImageFile) = 5, Action (TargetedContentValueKind_Action) = 6, Strings (TargetedContentValueKind_Strings) = 7, Uris (TargetedContentValueKind_Uris) = 8, Numbers (TargetedContentValueKind_Numbers) = 9, Booleans (TargetedContentValueKind_Booleans) = 10, Files (TargetedContentValueKind_Files) = 11, ImageFiles (TargetedContentValueKind_ImageFiles) = 12, Actions (TargetedContentValueKind_Actions) = 13,
 }}
 } // Windows.Services.TargetedContent

@@ -625,7 +625,7 @@ impl ICalendar {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Calendar: ICalendar}
+RT_CLASS!{class Calendar: ICalendar ["Windows.Globalization.Calendar"]}
 impl RtActivatable<ICalendarFactory> for Calendar {}
 impl RtActivatable<ICalendarFactory2> for Calendar {}
 impl RtActivatable<IActivationFactory> for Calendar {}
@@ -2334,7 +2334,7 @@ impl ICurrencyIdentifiersStatics3 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DayOfWeek: i32 {
+RT_ENUM! { enum DayOfWeek: i32 ["Windows.Globalization.DayOfWeek"] {
     Sunday (DayOfWeek_Sunday) = 0, Monday (DayOfWeek_Monday) = 1, Tuesday (DayOfWeek_Tuesday) = 2, Wednesday (DayOfWeek_Wednesday) = 3, Thursday (DayOfWeek_Thursday) = 4, Friday (DayOfWeek_Friday) = 5, Saturday (DayOfWeek_Saturday) = 6,
 }}
 DEFINE_IID!(IID_IGeographicRegion, 32089633, 19044, 20185, 149, 79, 158, 222, 176, 123, 217, 3);
@@ -2384,7 +2384,7 @@ impl IGeographicRegion {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GeographicRegion: IGeographicRegion}
+RT_CLASS!{class GeographicRegion: IGeographicRegion ["Windows.Globalization.GeographicRegion"]}
 impl RtActivatable<IGeographicRegionFactory> for GeographicRegion {}
 impl RtActivatable<IGeographicRegionStatics> for GeographicRegion {}
 impl RtActivatable<IActivationFactory> for GeographicRegion {}
@@ -2442,7 +2442,7 @@ impl IJapanesePhoneme {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class JapanesePhoneme: IJapanesePhoneme}
+RT_CLASS!{class JapanesePhoneme: IJapanesePhoneme ["Windows.Globalization.JapanesePhoneme"]}
 RT_CLASS!{static class JapanesePhoneticAnalyzer}
 impl RtActivatable<IJapanesePhoneticAnalyzerStatics> for JapanesePhoneticAnalyzer {}
 impl JapanesePhoneticAnalyzer {
@@ -2500,7 +2500,7 @@ impl ILanguage {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Language: ILanguage}
+RT_CLASS!{class Language: ILanguage ["Windows.Globalization.Language"]}
 impl RtActivatable<ILanguageFactory> for Language {}
 impl RtActivatable<ILanguageStatics> for Language {}
 impl RtActivatable<ILanguageStatics2> for Language {}
@@ -2552,7 +2552,7 @@ impl ILanguageFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum LanguageLayoutDirection: i32 {
+RT_ENUM! { enum LanguageLayoutDirection: i32 ["Windows.Globalization.LanguageLayoutDirection"] {
     Ltr (LanguageLayoutDirection_Ltr) = 0, Rtl (LanguageLayoutDirection_Rtl) = 1, TtbLtr (LanguageLayoutDirection_TtbLtr) = 2, TtbRtl (LanguageLayoutDirection_TtbRtl) = 3,
 }}
 DEFINE_IID!(IID_ILanguageStatics, 2990331223, 2149, 18132, 137, 184, 213, 155, 232, 153, 15, 13);
@@ -3078,7 +3078,7 @@ impl ICharacterGrouping {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CharacterGrouping: ICharacterGrouping}
+RT_CLASS!{class CharacterGrouping: ICharacterGrouping ["Windows.Globalization.Collation.CharacterGrouping"]}
 DEFINE_IID!(IID_ICharacterGroupings, 3100772981, 54479, 16469, 128, 229, 206, 22, 156, 34, 100, 150);
 RT_INTERFACE!{interface ICharacterGroupings(ICharacterGroupingsVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGroupings] {
     fn Lookup(&self, text: HSTRING, out: *mut HSTRING) -> HRESULT
@@ -3090,7 +3090,7 @@ impl ICharacterGroupings {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CharacterGroupings: ICharacterGroupings}
+RT_CLASS!{class CharacterGroupings: ICharacterGroupings ["Windows.Globalization.Collation.CharacterGroupings"]}
 impl RtActivatable<ICharacterGroupingsFactory> for CharacterGroupings {}
 impl RtActivatable<IActivationFactory> for CharacterGroupings {}
 impl CharacterGroupings {
@@ -3225,7 +3225,7 @@ impl IDateTimeFormatter {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DateTimeFormatter: IDateTimeFormatter}
+RT_CLASS!{class DateTimeFormatter: IDateTimeFormatter ["Windows.Globalization.DateTimeFormatting.DateTimeFormatter"]}
 impl RtActivatable<IDateTimeFormatterFactory> for DateTimeFormatter {}
 impl RtActivatable<IDateTimeFormatterStatics> for DateTimeFormatter {}
 impl DateTimeFormatter {
@@ -3351,25 +3351,25 @@ impl IDateTimeFormatterStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DayFormat: i32 {
+RT_ENUM! { enum DayFormat: i32 ["Windows.Globalization.DateTimeFormatting.DayFormat"] {
     None (DayFormat_None) = 0, Default (DayFormat_Default) = 1,
 }}
-RT_ENUM! { enum DayOfWeekFormat: i32 {
+RT_ENUM! { enum DayOfWeekFormat: i32 ["Windows.Globalization.DateTimeFormatting.DayOfWeekFormat"] {
     None (DayOfWeekFormat_None) = 0, Default (DayOfWeekFormat_Default) = 1, Abbreviated (DayOfWeekFormat_Abbreviated) = 2, Full (DayOfWeekFormat_Full) = 3,
 }}
-RT_ENUM! { enum HourFormat: i32 {
+RT_ENUM! { enum HourFormat: i32 ["Windows.Globalization.DateTimeFormatting.HourFormat"] {
     None (HourFormat_None) = 0, Default (HourFormat_Default) = 1,
 }}
-RT_ENUM! { enum MinuteFormat: i32 {
+RT_ENUM! { enum MinuteFormat: i32 ["Windows.Globalization.DateTimeFormatting.MinuteFormat"] {
     None (MinuteFormat_None) = 0, Default (MinuteFormat_Default) = 1,
 }}
-RT_ENUM! { enum MonthFormat: i32 {
+RT_ENUM! { enum MonthFormat: i32 ["Windows.Globalization.DateTimeFormatting.MonthFormat"] {
     None (MonthFormat_None) = 0, Default (MonthFormat_Default) = 1, Abbreviated (MonthFormat_Abbreviated) = 2, Full (MonthFormat_Full) = 3, Numeric (MonthFormat_Numeric) = 4,
 }}
-RT_ENUM! { enum SecondFormat: i32 {
+RT_ENUM! { enum SecondFormat: i32 ["Windows.Globalization.DateTimeFormatting.SecondFormat"] {
     None (SecondFormat_None) = 0, Default (SecondFormat_Default) = 1,
 }}
-RT_ENUM! { enum YearFormat: i32 {
+RT_ENUM! { enum YearFormat: i32 ["Windows.Globalization.DateTimeFormatting.YearFormat"] {
     None (YearFormat_None) = 0, Default (YearFormat_Default) = 1, Abbreviated (YearFormat_Abbreviated) = 2, Full (YearFormat_Full) = 3,
 }}
 } // Windows.Globalization.DateTimeFormatting
@@ -3413,7 +3413,7 @@ impl ILanguageFont {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LanguageFont: ILanguageFont}
+RT_CLASS!{class LanguageFont: ILanguageFont ["Windows.Globalization.Fonts.LanguageFont"]}
 DEFINE_IID!(IID_ILanguageFontGroup, 4080697283, 14940, 19178, 185, 255, 179, 159, 178, 66, 247, 246);
 RT_INTERFACE!{interface ILanguageFontGroup(ILanguageFontGroupVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroup] {
     fn get_UITextFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
@@ -3485,7 +3485,7 @@ impl ILanguageFontGroup {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LanguageFontGroup: ILanguageFontGroup}
+RT_CLASS!{class LanguageFontGroup: ILanguageFontGroup ["Windows.Globalization.Fonts.LanguageFontGroup"]}
 impl RtActivatable<ILanguageFontGroupFactory> for LanguageFontGroup {}
 impl LanguageFontGroup {
     #[inline] pub fn create_language_font_group(languageTag: &HStringArg) -> Result<ComPtr<LanguageFontGroup>> {
@@ -3523,7 +3523,7 @@ impl ICurrencyFormatter {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CurrencyFormatter: ICurrencyFormatter}
+RT_CLASS!{class CurrencyFormatter: ICurrencyFormatter ["Windows.Globalization.NumberFormatting.CurrencyFormatter"]}
 impl RtActivatable<ICurrencyFormatterFactory> for CurrencyFormatter {}
 impl CurrencyFormatter {
     #[inline] pub fn create_currency_formatter_code(currencyCode: &HStringArg) -> Result<ComPtr<CurrencyFormatter>> {
@@ -3572,10 +3572,10 @@ impl ICurrencyFormatterFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CurrencyFormatterMode: i32 {
+RT_ENUM! { enum CurrencyFormatterMode: i32 ["Windows.Globalization.NumberFormatting.CurrencyFormatterMode"] {
     UseSymbol (CurrencyFormatterMode_UseSymbol) = 0, UseCurrencyCode (CurrencyFormatterMode_UseCurrencyCode) = 1,
 }}
-RT_CLASS!{class DecimalFormatter: INumberFormatter}
+RT_CLASS!{class DecimalFormatter: INumberFormatter ["Windows.Globalization.NumberFormatting.DecimalFormatter"]}
 impl RtActivatable<IDecimalFormatterFactory> for DecimalFormatter {}
 impl RtActivatable<IActivationFactory> for DecimalFormatter {}
 impl DecimalFormatter {
@@ -3622,7 +3622,7 @@ impl IIncrementNumberRounder {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class IncrementNumberRounder: INumberRounder}
+RT_CLASS!{class IncrementNumberRounder: INumberRounder ["Windows.Globalization.NumberFormatting.IncrementNumberRounder"]}
 impl RtActivatable<IActivationFactory> for IncrementNumberRounder {}
 DEFINE_CLSID!(IncrementNumberRounder(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,73,110,99,114,101,109,101,110,116,78,117,109,98,101,114,82,111,117,110,100,101,114,0]) [CLSID_IncrementNumberRounder]);
 DEFINE_IID!(IID_INumberFormatter, 2768272457, 30326, 19895, 134, 49, 27, 111, 242, 101, 202, 169);
@@ -3869,7 +3869,7 @@ impl INumeralSystemTranslator {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NumeralSystemTranslator: INumeralSystemTranslator}
+RT_CLASS!{class NumeralSystemTranslator: INumeralSystemTranslator ["Windows.Globalization.NumberFormatting.NumeralSystemTranslator"]}
 impl RtActivatable<INumeralSystemTranslatorFactory> for NumeralSystemTranslator {}
 impl RtActivatable<IActivationFactory> for NumeralSystemTranslator {}
 impl NumeralSystemTranslator {
@@ -3889,7 +3889,7 @@ impl INumeralSystemTranslatorFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PercentFormatter: INumberFormatter}
+RT_CLASS!{class PercentFormatter: INumberFormatter ["Windows.Globalization.NumberFormatting.PercentFormatter"]}
 impl RtActivatable<IPercentFormatterFactory> for PercentFormatter {}
 impl RtActivatable<IActivationFactory> for PercentFormatter {}
 impl PercentFormatter {
@@ -3909,7 +3909,7 @@ impl IPercentFormatterFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PermilleFormatter: INumberFormatter}
+RT_CLASS!{class PermilleFormatter: INumberFormatter ["Windows.Globalization.NumberFormatting.PermilleFormatter"]}
 impl RtActivatable<IPermilleFormatterFactory> for PermilleFormatter {}
 impl RtActivatable<IActivationFactory> for PermilleFormatter {}
 impl PermilleFormatter {
@@ -3929,7 +3929,7 @@ impl IPermilleFormatterFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RoundingAlgorithm: i32 {
+RT_ENUM! { enum RoundingAlgorithm: i32 ["Windows.Globalization.NumberFormatting.RoundingAlgorithm"] {
     None (RoundingAlgorithm_None) = 0, RoundDown (RoundingAlgorithm_RoundDown) = 1, RoundUp (RoundingAlgorithm_RoundUp) = 2, RoundTowardsZero (RoundingAlgorithm_RoundTowardsZero) = 3, RoundAwayFromZero (RoundingAlgorithm_RoundAwayFromZero) = 4, RoundHalfDown (RoundingAlgorithm_RoundHalfDown) = 5, RoundHalfUp (RoundingAlgorithm_RoundHalfUp) = 6, RoundHalfTowardsZero (RoundingAlgorithm_RoundHalfTowardsZero) = 7, RoundHalfAwayFromZero (RoundingAlgorithm_RoundHalfAwayFromZero) = 8, RoundHalfToEven (RoundingAlgorithm_RoundHalfToEven) = 9, RoundHalfToOdd (RoundingAlgorithm_RoundHalfToOdd) = 10,
 }}
 DEFINE_IID!(IID_ISignedZeroOption, 4246527281, 2620, 18884, 166, 66, 150, 161, 86, 79, 79, 48);
@@ -3975,7 +3975,7 @@ impl ISignificantDigitsNumberRounder {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SignificantDigitsNumberRounder: INumberRounder}
+RT_CLASS!{class SignificantDigitsNumberRounder: INumberRounder ["Windows.Globalization.NumberFormatting.SignificantDigitsNumberRounder"]}
 impl RtActivatable<IActivationFactory> for SignificantDigitsNumberRounder {}
 DEFINE_CLSID!(SignificantDigitsNumberRounder(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,83,105,103,110,105,102,105,99,97,110,116,68,105,103,105,116,115,78,117,109,98,101,114,82,111,117,110,100,101,114,0]) [CLSID_SignificantDigitsNumberRounder]);
 DEFINE_IID!(IID_ISignificantDigitsOption, 491650269, 11587, 20200, 187, 241, 193, 178, 106, 113, 26, 88);
@@ -3997,7 +3997,7 @@ impl ISignificantDigitsOption {
 } // Windows.Globalization.NumberFormatting
 pub mod phonenumberformatting { // Windows.Globalization.PhoneNumberFormatting
 use ::prelude::*;
-RT_ENUM! { enum PhoneNumberFormat: i32 {
+RT_ENUM! { enum PhoneNumberFormat: i32 ["Windows.Globalization.PhoneNumberFormatting.PhoneNumberFormat"] {
     E164 (PhoneNumberFormat_E164) = 0, International (PhoneNumberFormat_International) = 1, National (PhoneNumberFormat_National) = 2, Rfc3966 (PhoneNumberFormat_Rfc3966) = 3,
 }}
 DEFINE_IID!(IID_IPhoneNumberFormatter, 358003870, 47828, 19274, 144, 13, 68, 7, 173, 183, 201, 129);
@@ -4035,7 +4035,7 @@ impl IPhoneNumberFormatter {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneNumberFormatter: IPhoneNumberFormatter}
+RT_CLASS!{class PhoneNumberFormatter: IPhoneNumberFormatter ["Windows.Globalization.PhoneNumberFormatting.PhoneNumberFormatter"]}
 impl RtActivatable<IPhoneNumberFormatterStatics> for PhoneNumberFormatter {}
 impl RtActivatable<IActivationFactory> for PhoneNumberFormatter {}
 impl PhoneNumberFormatter {
@@ -4135,7 +4135,7 @@ impl IPhoneNumberInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneNumberInfo: IPhoneNumberInfo}
+RT_CLASS!{class PhoneNumberInfo: IPhoneNumberInfo ["Windows.Globalization.PhoneNumberFormatting.PhoneNumberInfo"]}
 impl RtActivatable<IPhoneNumberInfoFactory> for PhoneNumberInfo {}
 impl RtActivatable<IPhoneNumberInfoStatics> for PhoneNumberInfo {}
 impl PhoneNumberInfo {
@@ -4178,13 +4178,13 @@ impl IPhoneNumberInfoStatics {
         if hr == S_OK { Ok((ComPtr::wrap_optional(phoneNumber), out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PhoneNumberMatchResult: i32 {
+RT_ENUM! { enum PhoneNumberMatchResult: i32 ["Windows.Globalization.PhoneNumberFormatting.PhoneNumberMatchResult"] {
     NoMatch (PhoneNumberMatchResult_NoMatch) = 0, ShortNationalSignificantNumberMatch (PhoneNumberMatchResult_ShortNationalSignificantNumberMatch) = 1, NationalSignificantNumberMatch (PhoneNumberMatchResult_NationalSignificantNumberMatch) = 2, ExactMatch (PhoneNumberMatchResult_ExactMatch) = 3,
 }}
-RT_ENUM! { enum PhoneNumberParseResult: i32 {
+RT_ENUM! { enum PhoneNumberParseResult: i32 ["Windows.Globalization.PhoneNumberFormatting.PhoneNumberParseResult"] {
     Valid (PhoneNumberParseResult_Valid) = 0, NotANumber (PhoneNumberParseResult_NotANumber) = 1, InvalidCountryCode (PhoneNumberParseResult_InvalidCountryCode) = 2, TooShort (PhoneNumberParseResult_TooShort) = 3, TooLong (PhoneNumberParseResult_TooLong) = 4,
 }}
-RT_ENUM! { enum PredictedPhoneNumberKind: i32 {
+RT_ENUM! { enum PredictedPhoneNumberKind: i32 ["Windows.Globalization.PhoneNumberFormatting.PredictedPhoneNumberKind"] {
     FixedLine (PredictedPhoneNumberKind_FixedLine) = 0, Mobile (PredictedPhoneNumberKind_Mobile) = 1, FixedLineOrMobile (PredictedPhoneNumberKind_FixedLineOrMobile) = 2, TollFree (PredictedPhoneNumberKind_TollFree) = 3, PremiumRate (PredictedPhoneNumberKind_PremiumRate) = 4, SharedCost (PredictedPhoneNumberKind_SharedCost) = 5, Voip (PredictedPhoneNumberKind_Voip) = 6, PersonalNumber (PredictedPhoneNumberKind_PersonalNumber) = 7, Pager (PredictedPhoneNumberKind_Pager) = 8, UniversalAccountNumber (PredictedPhoneNumberKind_UniversalAccountNumber) = 9, Voicemail (PredictedPhoneNumberKind_Voicemail) = 10, Unknown (PredictedPhoneNumberKind_Unknown) = 11,
 }}
 } // Windows.Globalization.PhoneNumberFormatting

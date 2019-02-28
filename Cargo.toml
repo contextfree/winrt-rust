@@ -14,6 +14,7 @@ exclude = ["Generator/**"]
 
 [dependencies]
 winapi = { version = "0.3", features = ["winnt", "combaseapi", "oleauto", "roapi", "roerrorapi", "hstring", "winstring", "winerror", "restrictederrorinfo"] }
+uuid = { version = "0.7", features = ["v5"] }
 
 [features]
 nightly = []

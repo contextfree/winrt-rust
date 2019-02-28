@@ -16,7 +16,7 @@ impl IPerceptionTimestamp {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionTimestamp: IPerceptionTimestamp}
+RT_CLASS!{class PerceptionTimestamp: IPerceptionTimestamp ["Windows.Perception.PerceptionTimestamp"]}
 DEFINE_IID!(IID_IPerceptionTimestamp2, 3813980141, 11217, 16823, 158, 208, 116, 161, 92, 53, 69, 55);
 RT_INTERFACE!{interface IPerceptionTimestamp2(IPerceptionTimestamp2Vtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionTimestamp2] {
     fn get_SystemRelativeTargetTime(&self, out: *mut foundation::TimeSpan) -> HRESULT
@@ -110,7 +110,7 @@ impl IHeadPose {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HeadPose: IHeadPose}
+RT_CLASS!{class HeadPose: IHeadPose ["Windows.Perception.People.HeadPose"]}
 } // Windows.Perception.People
 pub mod spatial { // Windows.Perception.Spatial
 use ::prelude::*;
@@ -142,7 +142,7 @@ impl ISpatialAnchor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialAnchor: ISpatialAnchor}
+RT_CLASS!{class SpatialAnchor: ISpatialAnchor ["Windows.Perception.Spatial.SpatialAnchor"]}
 impl RtActivatable<ISpatialAnchorStatics> for SpatialAnchor {}
 impl SpatialAnchor {
     #[inline] pub fn try_create_relative_to(coordinateSystem: &SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialAnchor>>> {
@@ -184,7 +184,7 @@ impl ISpatialAnchorExporter {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialAnchorExporter: ISpatialAnchorExporter}
+RT_CLASS!{class SpatialAnchorExporter: ISpatialAnchorExporter ["Windows.Perception.Spatial.SpatialAnchorExporter"]}
 impl RtActivatable<ISpatialAnchorExporterStatics> for SpatialAnchorExporter {}
 impl SpatialAnchorExporter {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<SpatialAnchorExporter>>> {
@@ -212,7 +212,7 @@ impl ISpatialAnchorExporterStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SpatialAnchorExportPurpose: i32 {
+RT_ENUM! { enum SpatialAnchorExportPurpose: i32 ["Windows.Perception.Spatial.SpatialAnchorExportPurpose"] {
     Relocalization (SpatialAnchorExportPurpose_Relocalization) = 0, Sharing (SpatialAnchorExportPurpose_Sharing) = 1,
 }}
 DEFINE_IID!(IID_ISpatialAnchorExportSufficiency, 2009226027, 13321, 16520, 185, 27, 253, 253, 5, 209, 100, 143);
@@ -238,7 +238,7 @@ impl ISpatialAnchorExportSufficiency {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialAnchorExportSufficiency: ISpatialAnchorExportSufficiency}
+RT_CLASS!{class SpatialAnchorExportSufficiency: ISpatialAnchorExportSufficiency ["Windows.Perception.Spatial.SpatialAnchorExportSufficiency"]}
 RT_CLASS!{static class SpatialAnchorManager}
 impl RtActivatable<ISpatialAnchorManagerStatics> for SpatialAnchorManager {}
 impl SpatialAnchorManager {
@@ -269,7 +269,7 @@ impl ISpatialAnchorRawCoordinateSystemAdjustedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialAnchorRawCoordinateSystemAdjustedEventArgs: ISpatialAnchorRawCoordinateSystemAdjustedEventArgs}
+RT_CLASS!{class SpatialAnchorRawCoordinateSystemAdjustedEventArgs: ISpatialAnchorRawCoordinateSystemAdjustedEventArgs ["Windows.Perception.Spatial.SpatialAnchorRawCoordinateSystemAdjustedEventArgs"]}
 DEFINE_IID!(IID_ISpatialAnchorStatics, 2844952130, 372, 12572, 174, 121, 14, 81, 7, 102, 159, 22);
 RT_INTERFACE!{static interface ISpatialAnchorStatics(ISpatialAnchorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorStatics] {
     fn TryCreateRelativeTo(&self, coordinateSystem: *mut SpatialCoordinateSystem, out: *mut *mut SpatialAnchor) -> HRESULT,
@@ -320,7 +320,7 @@ impl ISpatialAnchorStore {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialAnchorStore: ISpatialAnchorStore}
+RT_CLASS!{class SpatialAnchorStore: ISpatialAnchorStore ["Windows.Perception.Spatial.SpatialAnchorStore"]}
 RT_CLASS!{static class SpatialAnchorTransferManager}
 impl RtActivatable<ISpatialAnchorTransferManagerStatics> for SpatialAnchorTransferManager {}
 impl SpatialAnchorTransferManager {
@@ -360,23 +360,23 @@ impl ISpatialAnchorTransferManagerStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct SpatialBoundingBox {
+RT_STRUCT! { struct SpatialBoundingBox ["Windows.Perception.Spatial.SpatialBoundingBox"] {
     Center: foundation::numerics::Vector3, Extents: foundation::numerics::Vector3,
 }}
-RT_STRUCT! { struct SpatialBoundingFrustum {
+RT_STRUCT! { struct SpatialBoundingFrustum ["Windows.Perception.Spatial.SpatialBoundingFrustum"] {
     Near: foundation::numerics::Plane, Far: foundation::numerics::Plane, Right: foundation::numerics::Plane, Left: foundation::numerics::Plane, Top: foundation::numerics::Plane, Bottom: foundation::numerics::Plane,
 }}
-RT_STRUCT! { struct SpatialBoundingOrientedBox {
+RT_STRUCT! { struct SpatialBoundingOrientedBox ["Windows.Perception.Spatial.SpatialBoundingOrientedBox"] {
     Center: foundation::numerics::Vector3, Extents: foundation::numerics::Vector3, Orientation: foundation::numerics::Quaternion,
 }}
-RT_STRUCT! { struct SpatialBoundingSphere {
+RT_STRUCT! { struct SpatialBoundingSphere ["Windows.Perception.Spatial.SpatialBoundingSphere"] {
     Center: foundation::numerics::Vector3, Radius: f32,
 }}
 DEFINE_IID!(IID_ISpatialBoundingVolume, 4213204442, 26819, 13279, 183, 175, 76, 120, 114, 7, 153, 156);
 RT_INTERFACE!{interface ISpatialBoundingVolume(ISpatialBoundingVolumeVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialBoundingVolume] {
     
 }}
-RT_CLASS!{class SpatialBoundingVolume: ISpatialBoundingVolume}
+RT_CLASS!{class SpatialBoundingVolume: ISpatialBoundingVolume ["Windows.Perception.Spatial.SpatialBoundingVolume"]}
 impl RtActivatable<ISpatialBoundingVolumeStatics> for SpatialBoundingVolume {}
 impl SpatialBoundingVolume {
     #[inline] pub fn from_box(coordinateSystem: &SpatialCoordinateSystem, box_: SpatialBoundingBox) -> Result<Option<ComPtr<SpatialBoundingVolume>>> {
@@ -433,7 +433,7 @@ impl ISpatialCoordinateSystem {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialCoordinateSystem: ISpatialCoordinateSystem}
+RT_CLASS!{class SpatialCoordinateSystem: ISpatialCoordinateSystem ["Windows.Perception.Spatial.SpatialCoordinateSystem"]}
 DEFINE_IID!(IID_ISpatialEntity, 376301909, 57835, 17740, 186, 8, 230, 192, 102, 141, 220, 101);
 RT_INTERFACE!{interface ISpatialEntity(ISpatialEntityVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntity] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -457,7 +457,7 @@ impl ISpatialEntity {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialEntity: ISpatialEntity}
+RT_CLASS!{class SpatialEntity: ISpatialEntity ["Windows.Perception.Spatial.SpatialEntity"]}
 impl RtActivatable<ISpatialEntityFactory> for SpatialEntity {}
 impl SpatialEntity {
     #[inline] pub fn create_with_spatial_anchor(spatialAnchor: &SpatialAnchor) -> Result<ComPtr<SpatialEntity>> {
@@ -479,7 +479,7 @@ impl ISpatialEntityAddedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialEntityAddedEventArgs: ISpatialEntityAddedEventArgs}
+RT_CLASS!{class SpatialEntityAddedEventArgs: ISpatialEntityAddedEventArgs ["Windows.Perception.Spatial.SpatialEntityAddedEventArgs"]}
 DEFINE_IID!(IID_ISpatialEntityFactory, 3790725925, 13471, 16933, 162, 243, 75, 1, 193, 95, 224, 86);
 RT_INTERFACE!{static interface ISpatialEntityFactory(ISpatialEntityFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntityFactory] {
     fn CreateWithSpatialAnchor(&self, spatialAnchor: *mut SpatialAnchor, out: *mut *mut SpatialEntity) -> HRESULT,
@@ -508,7 +508,7 @@ impl ISpatialEntityRemovedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialEntityRemovedEventArgs: ISpatialEntityRemovedEventArgs}
+RT_CLASS!{class SpatialEntityRemovedEventArgs: ISpatialEntityRemovedEventArgs ["Windows.Perception.Spatial.SpatialEntityRemovedEventArgs"]}
 DEFINE_IID!(IID_ISpatialEntityStore, 848791738, 58643, 20230, 136, 157, 27, 227, 14, 207, 67, 230);
 RT_INTERFACE!{interface ISpatialEntityStore(ISpatialEntityStoreVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntityStore] {
     fn SaveAsync(&self, entity: *mut SpatialEntity, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -532,7 +532,7 @@ impl ISpatialEntityStore {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialEntityStore: ISpatialEntityStore}
+RT_CLASS!{class SpatialEntityStore: ISpatialEntityStore ["Windows.Perception.Spatial.SpatialEntityStore"]}
 impl RtActivatable<ISpatialEntityStoreStatics> for SpatialEntityStore {}
 impl SpatialEntityStore {
     #[inline] pub fn get_is_supported() -> Result<bool> {
@@ -571,7 +571,7 @@ impl ISpatialEntityUpdatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialEntityUpdatedEventArgs: ISpatialEntityUpdatedEventArgs}
+RT_CLASS!{class SpatialEntityUpdatedEventArgs: ISpatialEntityUpdatedEventArgs ["Windows.Perception.Spatial.SpatialEntityUpdatedEventArgs"]}
 DEFINE_IID!(IID_ISpatialEntityWatcher, 3015204768, 27998, 19388, 128, 93, 95, 229, 185, 186, 25, 89);
 RT_INTERFACE!{interface ISpatialEntityWatcher(ISpatialEntityWatcherVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntityWatcher] {
     fn get_Status(&self, out: *mut SpatialEntityWatcherStatus) -> HRESULT,
@@ -637,11 +637,11 @@ impl ISpatialEntityWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialEntityWatcher: ISpatialEntityWatcher}
-RT_ENUM! { enum SpatialEntityWatcherStatus: i32 {
+RT_CLASS!{class SpatialEntityWatcher: ISpatialEntityWatcher ["Windows.Perception.Spatial.SpatialEntityWatcher"]}
+RT_ENUM! { enum SpatialEntityWatcherStatus: i32 ["Windows.Perception.Spatial.SpatialEntityWatcherStatus"] {
     Created (SpatialEntityWatcherStatus_Created) = 0, Started (SpatialEntityWatcherStatus_Started) = 1, EnumerationCompleted (SpatialEntityWatcherStatus_EnumerationCompleted) = 2, Stopping (SpatialEntityWatcherStatus_Stopping) = 3, Stopped (SpatialEntityWatcherStatus_Stopped) = 4, Aborted (SpatialEntityWatcherStatus_Aborted) = 5,
 }}
-RT_ENUM! { enum SpatialLocatability: i32 {
+RT_ENUM! { enum SpatialLocatability: i32 ["Windows.Perception.Spatial.SpatialLocatability"] {
     Unavailable (SpatialLocatability_Unavailable) = 0, OrientationOnly (SpatialLocatability_OrientationOnly) = 1, PositionalTrackingActivating (SpatialLocatability_PositionalTrackingActivating) = 2, PositionalTrackingActive (SpatialLocatability_PositionalTrackingActive) = 3, PositionalTrackingInhibited (SpatialLocatability_PositionalTrackingInhibited) = 4,
 }}
 DEFINE_IID!(IID_ISpatialLocation, 495047325, 9377, 14293, 143, 161, 57, 180, 249, 173, 103, 226);
@@ -685,7 +685,7 @@ impl ISpatialLocation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialLocation: ISpatialLocation}
+RT_CLASS!{class SpatialLocation: ISpatialLocation ["Windows.Perception.Spatial.SpatialLocation"]}
 DEFINE_IID!(IID_ISpatialLocation2, 293544982, 14503, 18968, 180, 4, 171, 143, 171, 225, 215, 139);
 RT_INTERFACE!{interface ISpatialLocation2(ISpatialLocation2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialLocation2] {
     fn get_AbsoluteAngularVelocityAxisAngle(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
@@ -790,7 +790,7 @@ impl ISpatialLocator {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialLocator: ISpatialLocator}
+RT_CLASS!{class SpatialLocator: ISpatialLocator ["Windows.Perception.Spatial.SpatialLocator"]}
 impl RtActivatable<ISpatialLocatorStatics> for SpatialLocator {}
 impl SpatialLocator {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<SpatialLocator>>> {
@@ -842,7 +842,7 @@ impl ISpatialLocatorAttachedFrameOfReference {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialLocatorAttachedFrameOfReference: ISpatialLocatorAttachedFrameOfReference}
+RT_CLASS!{class SpatialLocatorAttachedFrameOfReference: ISpatialLocatorAttachedFrameOfReference ["Windows.Perception.Spatial.SpatialLocatorAttachedFrameOfReference"]}
 DEFINE_IID!(IID_ISpatialLocatorPositionalTrackingDeactivatingEventArgs, 3098034275, 58356, 13963, 144, 97, 158, 169, 209, 214, 204, 22);
 RT_INTERFACE!{interface ISpatialLocatorPositionalTrackingDeactivatingEventArgs(ISpatialLocatorPositionalTrackingDeactivatingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialLocatorPositionalTrackingDeactivatingEventArgs] {
     fn get_Canceled(&self, out: *mut bool) -> HRESULT,
@@ -859,7 +859,7 @@ impl ISpatialLocatorPositionalTrackingDeactivatingEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialLocatorPositionalTrackingDeactivatingEventArgs: ISpatialLocatorPositionalTrackingDeactivatingEventArgs}
+RT_CLASS!{class SpatialLocatorPositionalTrackingDeactivatingEventArgs: ISpatialLocatorPositionalTrackingDeactivatingEventArgs ["Windows.Perception.Spatial.SpatialLocatorPositionalTrackingDeactivatingEventArgs"]}
 DEFINE_IID!(IID_ISpatialLocatorStatics, 3077452608, 42946, 13851, 187, 130, 86, 233, 59, 137, 177, 187);
 RT_INTERFACE!{static interface ISpatialLocatorStatics(ISpatialLocatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialLocatorStatics] {
     fn GetDefault(&self, out: *mut *mut SpatialLocator) -> HRESULT
@@ -871,13 +871,13 @@ impl ISpatialLocatorStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SpatialLookDirectionRange: i32 {
+RT_ENUM! { enum SpatialLookDirectionRange: i32 ["Windows.Perception.Spatial.SpatialLookDirectionRange"] {
     ForwardOnly (SpatialLookDirectionRange_ForwardOnly) = 0, Omnidirectional (SpatialLookDirectionRange_Omnidirectional) = 1,
 }}
-RT_ENUM! { enum SpatialMovementRange: i32 {
+RT_ENUM! { enum SpatialMovementRange: i32 ["Windows.Perception.Spatial.SpatialMovementRange"] {
     NoMovement (SpatialMovementRange_NoMovement) = 0, Bounded (SpatialMovementRange_Bounded) = 1,
 }}
-RT_ENUM! { enum SpatialPerceptionAccessStatus: i32 {
+RT_ENUM! { enum SpatialPerceptionAccessStatus: i32 ["Windows.Perception.Spatial.SpatialPerceptionAccessStatus"] {
     Unspecified (SpatialPerceptionAccessStatus_Unspecified) = 0, Allowed (SpatialPerceptionAccessStatus_Allowed) = 1, DeniedByUser (SpatialPerceptionAccessStatus_DeniedByUser) = 2, DeniedBySystem (SpatialPerceptionAccessStatus_DeniedBySystem) = 3,
 }}
 DEFINE_IID!(IID_ISpatialStageFrameOfReference, 2055877732, 44301, 17808, 171, 134, 51, 6, 43, 103, 73, 38);
@@ -915,7 +915,7 @@ impl ISpatialStageFrameOfReference {
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialStageFrameOfReference: ISpatialStageFrameOfReference}
+RT_CLASS!{class SpatialStageFrameOfReference: ISpatialStageFrameOfReference ["Windows.Perception.Spatial.SpatialStageFrameOfReference"]}
 impl RtActivatable<ISpatialStageFrameOfReferenceStatics> for SpatialStageFrameOfReference {}
 impl SpatialStageFrameOfReference {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<SpatialStageFrameOfReference>>> {
@@ -971,7 +971,7 @@ impl ISpatialStationaryFrameOfReference {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialStationaryFrameOfReference: ISpatialStationaryFrameOfReference}
+RT_CLASS!{class SpatialStationaryFrameOfReference: ISpatialStationaryFrameOfReference ["Windows.Perception.Spatial.SpatialStationaryFrameOfReference"]}
 pub mod preview { // Windows.Perception.Spatial.Preview
 use ::prelude::*;
 RT_CLASS!{static class SpatialGraphInteropPreview}
@@ -1058,7 +1058,7 @@ impl ISpatialSurfaceInfo {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialSurfaceInfo: ISpatialSurfaceInfo}
+RT_CLASS!{class SpatialSurfaceInfo: ISpatialSurfaceInfo ["Windows.Perception.Spatial.Surfaces.SpatialSurfaceInfo"]}
 DEFINE_IID!(IID_ISpatialSurfaceMesh, 277829593, 57101, 14672, 160, 253, 249, 114, 199, 124, 39, 180);
 RT_INTERFACE!{interface ISpatialSurfaceMesh(ISpatialSurfaceMeshVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceMesh] {
     fn get_SurfaceInfo(&self, out: *mut *mut SpatialSurfaceInfo) -> HRESULT,
@@ -1100,7 +1100,7 @@ impl ISpatialSurfaceMesh {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialSurfaceMesh: ISpatialSurfaceMesh}
+RT_CLASS!{class SpatialSurfaceMesh: ISpatialSurfaceMesh ["Windows.Perception.Spatial.Surfaces.SpatialSurfaceMesh"]}
 DEFINE_IID!(IID_ISpatialSurfaceMeshBuffer, 2479839712, 34591, 13304, 152, 178, 3, 209, 1, 69, 143, 111);
 RT_INTERFACE!{interface ISpatialSurfaceMeshBuffer(ISpatialSurfaceMeshBufferVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceMeshBuffer] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
@@ -1131,7 +1131,7 @@ impl ISpatialSurfaceMeshBuffer {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialSurfaceMeshBuffer: ISpatialSurfaceMeshBuffer}
+RT_CLASS!{class SpatialSurfaceMeshBuffer: ISpatialSurfaceMeshBuffer ["Windows.Perception.Spatial.Surfaces.SpatialSurfaceMeshBuffer"]}
 DEFINE_IID!(IID_ISpatialSurfaceMeshOptions, 3530923913, 13682, 15661, 161, 13, 95, 238, 147, 148, 170, 55);
 RT_INTERFACE!{interface ISpatialSurfaceMeshOptions(ISpatialSurfaceMeshOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceMeshOptions] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
@@ -1187,7 +1187,7 @@ impl ISpatialSurfaceMeshOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialSurfaceMeshOptions: ISpatialSurfaceMeshOptions}
+RT_CLASS!{class SpatialSurfaceMeshOptions: ISpatialSurfaceMeshOptions ["Windows.Perception.Spatial.Surfaces.SpatialSurfaceMeshOptions"]}
 impl RtActivatable<ISpatialSurfaceMeshOptionsStatics> for SpatialSurfaceMeshOptions {}
 impl RtActivatable<IActivationFactory> for SpatialSurfaceMeshOptions {}
 impl SpatialSurfaceMeshOptions {
@@ -1257,7 +1257,7 @@ impl ISpatialSurfaceObserver {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialSurfaceObserver: ISpatialSurfaceObserver}
+RT_CLASS!{class SpatialSurfaceObserver: ISpatialSurfaceObserver ["Windows.Perception.Spatial.Surfaces.SpatialSurfaceObserver"]}
 impl RtActivatable<ISpatialSurfaceObserverStatics> for SpatialSurfaceObserver {}
 impl RtActivatable<ISpatialSurfaceObserverStatics2> for SpatialSurfaceObserver {}
 impl RtActivatable<IActivationFactory> for SpatialSurfaceObserver {}

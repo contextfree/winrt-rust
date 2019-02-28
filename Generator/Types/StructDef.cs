@@ -35,9 +35,10 @@ namespace Generator.Types
 
         public override void Emit()
         {
+            string fullname = '"' + Type.FullName + '"';
             // TODO: derive(Eq) whenever possible?
             Module.Append($@"
-RT_STRUCT! {{ struct { DefinitionName } {{
+RT_STRUCT! {{ struct { DefinitionName } [{ fullname }] {{
     { string.Join(", ", fields) }{ (fields.Any() ? "," : "") }
 }}}}");
         }

@@ -16,7 +16,7 @@ impl IAppActivationResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppActivationResult: IAppActivationResult}
+RT_CLASS!{class AppActivationResult: IAppActivationResult ["Windows.System.AppActivationResult"]}
 DEFINE_IID!(IID_IAppDiagnosticInfo, 3813189274, 34953, 19619, 190, 7, 213, 255, 255, 95, 8, 4);
 RT_INTERFACE!{interface IAppDiagnosticInfo(IAppDiagnosticInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppDiagnosticInfo] {
     #[cfg(feature="windows-applicationmodel")] fn get_AppInfo(&self, out: *mut *mut super::applicationmodel::AppInfo) -> HRESULT
@@ -28,7 +28,7 @@ impl IAppDiagnosticInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppDiagnosticInfo: IAppDiagnosticInfo}
+RT_CLASS!{class AppDiagnosticInfo: IAppDiagnosticInfo ["Windows.System.AppDiagnosticInfo"]}
 impl RtActivatable<IAppDiagnosticInfoStatics> for AppDiagnosticInfo {}
 impl RtActivatable<IAppDiagnosticInfoStatics2> for AppDiagnosticInfo {}
 impl AppDiagnosticInfo {
@@ -191,7 +191,7 @@ impl IAppDiagnosticInfoWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppDiagnosticInfoWatcher: IAppDiagnosticInfoWatcher}
+RT_CLASS!{class AppDiagnosticInfoWatcher: IAppDiagnosticInfoWatcher ["Windows.System.AppDiagnosticInfoWatcher"]}
 DEFINE_IID!(IID_IAppDiagnosticInfoWatcherEventArgs, 1880606486, 57818, 19557, 153, 223, 4, 109, 255, 91, 231, 26);
 RT_INTERFACE!{interface IAppDiagnosticInfoWatcherEventArgs(IAppDiagnosticInfoWatcherEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppDiagnosticInfoWatcherEventArgs] {
     fn get_AppDiagnosticInfo(&self, out: *mut *mut AppDiagnosticInfo) -> HRESULT
@@ -203,8 +203,8 @@ impl IAppDiagnosticInfoWatcherEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppDiagnosticInfoWatcherEventArgs: IAppDiagnosticInfoWatcherEventArgs}
-RT_ENUM! { enum AppDiagnosticInfoWatcherStatus: i32 {
+RT_CLASS!{class AppDiagnosticInfoWatcherEventArgs: IAppDiagnosticInfoWatcherEventArgs ["Windows.System.AppDiagnosticInfoWatcherEventArgs"]}
+RT_ENUM! { enum AppDiagnosticInfoWatcherStatus: i32 ["Windows.System.AppDiagnosticInfoWatcherStatus"] {
     Created (AppDiagnosticInfoWatcherStatus_Created) = 0, Started (AppDiagnosticInfoWatcherStatus_Started) = 1, EnumerationCompleted (AppDiagnosticInfoWatcherStatus_EnumerationCompleted) = 2, Stopping (AppDiagnosticInfoWatcherStatus_Stopping) = 3, Stopped (AppDiagnosticInfoWatcherStatus_Stopped) = 4, Aborted (AppDiagnosticInfoWatcherStatus_Aborted) = 5,
 }}
 DEFINE_IID!(IID_IAppExecutionStateChangeResult, 1862507504, 63771, 19960, 174, 119, 48, 51, 204, 182, 145, 20);
@@ -218,7 +218,7 @@ impl IAppExecutionStateChangeResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppExecutionStateChangeResult: IAppExecutionStateChangeResult}
+RT_CLASS!{class AppExecutionStateChangeResult: IAppExecutionStateChangeResult ["Windows.System.AppExecutionStateChangeResult"]}
 DEFINE_IID!(IID_IAppMemoryReport, 1835348891, 19823, 17852, 156, 94, 228, 155, 63, 242, 117, 141);
 RT_INTERFACE!{interface IAppMemoryReport(IAppMemoryReportVtbl): IInspectable(IInspectableVtbl) [IID_IAppMemoryReport] {
     fn get_PrivateCommitUsage(&self, out: *mut u64) -> HRESULT,
@@ -248,7 +248,7 @@ impl IAppMemoryReport {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppMemoryReport: IAppMemoryReport}
+RT_CLASS!{class AppMemoryReport: IAppMemoryReport ["Windows.System.AppMemoryReport"]}
 DEFINE_IID!(IID_IAppMemoryReport2, 1602172728, 20919, 17116, 183, 237, 121, 186, 70, 210, 136, 87);
 RT_INTERFACE!{interface IAppMemoryReport2(IAppMemoryReport2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppMemoryReport2] {
     fn get_ExpectedTotalCommitLimit(&self, out: *mut u64) -> HRESULT
@@ -260,7 +260,7 @@ impl IAppMemoryReport2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppMemoryUsageLevel: i32 {
+RT_ENUM! { enum AppMemoryUsageLevel: i32 ["Windows.System.AppMemoryUsageLevel"] {
     Low (AppMemoryUsageLevel_Low) = 0, Medium (AppMemoryUsageLevel_Medium) = 1, High (AppMemoryUsageLevel_High) = 2, OverLimit (AppMemoryUsageLevel_OverLimit) = 3,
 }}
 DEFINE_IID!(IID_IAppMemoryUsageLimitChangingEventArgs, 2046322276, 65226, 19877, 158, 64, 43, 198, 62, 253, 201, 121);
@@ -280,7 +280,7 @@ impl IAppMemoryUsageLimitChangingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppMemoryUsageLimitChangingEventArgs: IAppMemoryUsageLimitChangingEventArgs}
+RT_CLASS!{class AppMemoryUsageLimitChangingEventArgs: IAppMemoryUsageLimitChangingEventArgs ["Windows.System.AppMemoryUsageLimitChangingEventArgs"]}
 DEFINE_IID!(IID_IAppResourceGroupBackgroundTaskReport, 627500878, 45149, 16578, 157, 193, 26, 79, 3, 158, 161, 32);
 RT_INTERFACE!{interface IAppResourceGroupBackgroundTaskReport(IAppResourceGroupBackgroundTaskReportVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupBackgroundTaskReport] {
     fn get_TaskId(&self, out: *mut Guid) -> HRESULT,
@@ -310,11 +310,11 @@ impl IAppResourceGroupBackgroundTaskReport {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppResourceGroupBackgroundTaskReport: IAppResourceGroupBackgroundTaskReport}
-RT_ENUM! { enum AppResourceGroupEnergyQuotaState: i32 {
+RT_CLASS!{class AppResourceGroupBackgroundTaskReport: IAppResourceGroupBackgroundTaskReport ["Windows.System.AppResourceGroupBackgroundTaskReport"]}
+RT_ENUM! { enum AppResourceGroupEnergyQuotaState: i32 ["Windows.System.AppResourceGroupEnergyQuotaState"] {
     Unknown (AppResourceGroupEnergyQuotaState_Unknown) = 0, Over (AppResourceGroupEnergyQuotaState_Over) = 1, Under (AppResourceGroupEnergyQuotaState_Under) = 2,
 }}
-RT_ENUM! { enum AppResourceGroupExecutionState: i32 {
+RT_ENUM! { enum AppResourceGroupExecutionState: i32 ["Windows.System.AppResourceGroupExecutionState"] {
     Unknown (AppResourceGroupExecutionState_Unknown) = 0, Running (AppResourceGroupExecutionState_Running) = 1, Suspending (AppResourceGroupExecutionState_Suspending) = 2, Suspended (AppResourceGroupExecutionState_Suspended) = 3, NotRunning (AppResourceGroupExecutionState_NotRunning) = 4,
 }}
 DEFINE_IID!(IID_IAppResourceGroupInfo, 3105093498, 59399, 18932, 132, 94, 123, 139, 220, 254, 142, 231);
@@ -358,7 +358,7 @@ impl IAppResourceGroupInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppResourceGroupInfo: IAppResourceGroupInfo}
+RT_CLASS!{class AppResourceGroupInfo: IAppResourceGroupInfo ["Windows.System.AppResourceGroupInfo"]}
 DEFINE_IID!(IID_IAppResourceGroupInfo2, 4003144557, 54021, 19819, 146, 247, 106, 253, 173, 114, 222, 220);
 RT_INTERFACE!{interface IAppResourceGroupInfo2(IAppResourceGroupInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupInfo2] {
     fn StartSuspendAsync(&self, out: *mut *mut foundation::IAsyncOperation<AppExecutionStateChangeResult>) -> HRESULT,
@@ -458,7 +458,7 @@ impl IAppResourceGroupInfoWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppResourceGroupInfoWatcher: IAppResourceGroupInfoWatcher}
+RT_CLASS!{class AppResourceGroupInfoWatcher: IAppResourceGroupInfoWatcher ["Windows.System.AppResourceGroupInfoWatcher"]}
 DEFINE_IID!(IID_IAppResourceGroupInfoWatcherEventArgs, 2054714935, 25346, 19759, 191, 137, 28, 18, 208, 178, 166, 185);
 RT_INTERFACE!{interface IAppResourceGroupInfoWatcherEventArgs(IAppResourceGroupInfoWatcherEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupInfoWatcherEventArgs] {
     fn get_AppDiagnosticInfos(&self, out: *mut *mut foundation::collections::IVectorView<AppDiagnosticInfo>) -> HRESULT,
@@ -476,7 +476,7 @@ impl IAppResourceGroupInfoWatcherEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppResourceGroupInfoWatcherEventArgs: IAppResourceGroupInfoWatcherEventArgs}
+RT_CLASS!{class AppResourceGroupInfoWatcherEventArgs: IAppResourceGroupInfoWatcherEventArgs ["Windows.System.AppResourceGroupInfoWatcherEventArgs"]}
 DEFINE_IID!(IID_IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs, 467398103, 65254, 20436, 152, 221, 233, 42, 44, 194, 153, 243);
 RT_INTERFACE!{interface IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs(IAppResourceGroupInfoWatcherExecutionStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs] {
     fn get_AppDiagnosticInfos(&self, out: *mut *mut foundation::collections::IVectorView<AppDiagnosticInfo>) -> HRESULT,
@@ -494,8 +494,8 @@ impl IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppResourceGroupInfoWatcherExecutionStateChangedEventArgs: IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs}
-RT_ENUM! { enum AppResourceGroupInfoWatcherStatus: i32 {
+RT_CLASS!{class AppResourceGroupInfoWatcherExecutionStateChangedEventArgs: IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs ["Windows.System.AppResourceGroupInfoWatcherExecutionStateChangedEventArgs"]}
+RT_ENUM! { enum AppResourceGroupInfoWatcherStatus: i32 ["Windows.System.AppResourceGroupInfoWatcherStatus"] {
     Created (AppResourceGroupInfoWatcherStatus_Created) = 0, Started (AppResourceGroupInfoWatcherStatus_Started) = 1, EnumerationCompleted (AppResourceGroupInfoWatcherStatus_EnumerationCompleted) = 2, Stopping (AppResourceGroupInfoWatcherStatus_Stopping) = 3, Stopped (AppResourceGroupInfoWatcherStatus_Stopped) = 4, Aborted (AppResourceGroupInfoWatcherStatus_Aborted) = 5,
 }}
 DEFINE_IID!(IID_IAppResourceGroupMemoryReport, 747374257, 32177, 19537, 162, 37, 127, 174, 45, 73, 228, 49);
@@ -527,7 +527,7 @@ impl IAppResourceGroupMemoryReport {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppResourceGroupMemoryReport: IAppResourceGroupMemoryReport}
+RT_CLASS!{class AppResourceGroupMemoryReport: IAppResourceGroupMemoryReport ["Windows.System.AppResourceGroupMemoryReport"]}
 DEFINE_IID!(IID_IAppResourceGroupStateReport, 1384423192, 12144, 16950, 171, 64, 208, 77, 176, 199, 185, 49);
 RT_INTERFACE!{interface IAppResourceGroupStateReport(IAppResourceGroupStateReportVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupStateReport] {
     fn get_ExecutionState(&self, out: *mut AppResourceGroupExecutionState) -> HRESULT,
@@ -545,7 +545,7 @@ impl IAppResourceGroupStateReport {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppResourceGroupStateReport: IAppResourceGroupStateReport}
+RT_CLASS!{class AppResourceGroupStateReport: IAppResourceGroupStateReport ["Windows.System.AppResourceGroupStateReport"]}
 DEFINE_IID!(IID_IAppUriHandlerHost, 1565575877, 37586, 21513, 181, 111, 127, 115, 225, 14, 164, 195);
 RT_INTERFACE!{interface IAppUriHandlerHost(IAppUriHandlerHostVtbl): IInspectable(IInspectableVtbl) [IID_IAppUriHandlerHost] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -562,7 +562,7 @@ impl IAppUriHandlerHost {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppUriHandlerHost: IAppUriHandlerHost}
+RT_CLASS!{class AppUriHandlerHost: IAppUriHandlerHost ["Windows.System.AppUriHandlerHost"]}
 impl RtActivatable<IAppUriHandlerHostFactory> for AppUriHandlerHost {}
 impl RtActivatable<IActivationFactory> for AppUriHandlerHost {}
 impl AppUriHandlerHost {
@@ -611,7 +611,7 @@ impl IAppUriHandlerRegistration {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppUriHandlerRegistration: IAppUriHandlerRegistration}
+RT_CLASS!{class AppUriHandlerRegistration: IAppUriHandlerRegistration ["Windows.System.AppUriHandlerRegistration"]}
 DEFINE_IID!(IID_IAppUriHandlerRegistrationManager, 3861682770, 44180, 22352, 172, 27, 108, 251, 111, 37, 2, 99);
 RT_INTERFACE!{interface IAppUriHandlerRegistrationManager(IAppUriHandlerRegistrationManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAppUriHandlerRegistrationManager] {
     fn get_User(&self, out: *mut *mut User) -> HRESULT,
@@ -629,7 +629,7 @@ impl IAppUriHandlerRegistrationManager {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppUriHandlerRegistrationManager: IAppUriHandlerRegistrationManager}
+RT_CLASS!{class AppUriHandlerRegistrationManager: IAppUriHandlerRegistrationManager ["Windows.System.AppUriHandlerRegistrationManager"]}
 impl RtActivatable<IAppUriHandlerRegistrationManagerStatics> for AppUriHandlerRegistrationManager {}
 impl AppUriHandlerRegistrationManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<AppUriHandlerRegistrationManager>>> {
@@ -657,7 +657,7 @@ impl IAppUriHandlerRegistrationManagerStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AutoUpdateTimeZoneStatus: i32 {
+RT_ENUM! { enum AutoUpdateTimeZoneStatus: i32 ["Windows.System.AutoUpdateTimeZoneStatus"] {
     Attempted (AutoUpdateTimeZoneStatus_Attempted) = 0, TimedOut (AutoUpdateTimeZoneStatus_TimedOut) = 1, Failed (AutoUpdateTimeZoneStatus_Failed) = 2,
 }}
 RT_CLASS!{static class DateTimeSettings}
@@ -678,7 +678,7 @@ impl IDateTimeSettingsStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DiagnosticAccessStatus: i32 {
+RT_ENUM! { enum DiagnosticAccessStatus: i32 ["Windows.System.DiagnosticAccessStatus"] {
     Unspecified (DiagnosticAccessStatus_Unspecified) = 0, Denied (DiagnosticAccessStatus_Denied) = 1, Limited (DiagnosticAccessStatus_Limited) = 2, Allowed (DiagnosticAccessStatus_Allowed) = 3,
 }}
 DEFINE_IID!(IID_IDispatcherQueue, 1614711012, 41784, 20478, 164, 87, 165, 207, 185, 206, 184, 153);
@@ -726,7 +726,7 @@ impl IDispatcherQueue {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DispatcherQueue: IDispatcherQueue}
+RT_CLASS!{class DispatcherQueue: IDispatcherQueue ["Windows.System.DispatcherQueue"]}
 impl RtActivatable<IDispatcherQueueStatics> for DispatcherQueue {}
 impl DispatcherQueue {
     #[inline] pub fn get_for_current_thread() -> Result<Option<ComPtr<DispatcherQueue>>> {
@@ -751,7 +751,7 @@ impl IDispatcherQueueController {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DispatcherQueueController: IDispatcherQueueController}
+RT_CLASS!{class DispatcherQueueController: IDispatcherQueueController ["Windows.System.DispatcherQueueController"]}
 impl RtActivatable<IDispatcherQueueControllerStatics> for DispatcherQueueController {}
 impl DispatcherQueueController {
     #[inline] pub fn create_on_dedicated_thread() -> Result<Option<ComPtr<DispatcherQueueController>>> {
@@ -780,7 +780,7 @@ impl DispatcherQueueHandler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DispatcherQueuePriority: i32 {
+RT_ENUM! { enum DispatcherQueuePriority: i32 ["Windows.System.DispatcherQueuePriority"] {
     Low (DispatcherQueuePriority_Low) = -10, Normal (DispatcherQueuePriority_Normal) = 0, High (DispatcherQueuePriority_High) = 10,
 }}
 DEFINE_IID!(IID_IDispatcherQueueShutdownStartingEventArgs, 3295824972, 65431, 16576, 162, 38, 204, 10, 170, 84, 94, 137);
@@ -794,7 +794,7 @@ impl IDispatcherQueueShutdownStartingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DispatcherQueueShutdownStartingEventArgs: IDispatcherQueueShutdownStartingEventArgs}
+RT_CLASS!{class DispatcherQueueShutdownStartingEventArgs: IDispatcherQueueShutdownStartingEventArgs ["Windows.System.DispatcherQueueShutdownStartingEventArgs"]}
 DEFINE_IID!(IID_IDispatcherQueueStatics, 2842526679, 37745, 17687, 146, 69, 208, 130, 74, 193, 44, 116);
 RT_INTERFACE!{static interface IDispatcherQueueStatics(IDispatcherQueueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDispatcherQueueStatics] {
     fn GetForCurrentThread(&self, out: *mut *mut DispatcherQueue) -> HRESULT
@@ -860,7 +860,7 @@ impl IDispatcherQueueTimer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DispatcherQueueTimer: IDispatcherQueueTimer}
+RT_CLASS!{class DispatcherQueueTimer: IDispatcherQueueTimer ["Windows.System.DispatcherQueueTimer"]}
 DEFINE_IID!(IID_IFolderLauncherOptions, 3146891901, 27527, 17194, 189, 4, 119, 108, 111, 95, 178, 171);
 RT_INTERFACE!{interface IFolderLauncherOptions(IFolderLauncherOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IFolderLauncherOptions] {
     #[cfg(feature="windows-storage")] fn get_ItemsToSelect(&self, out: *mut *mut foundation::collections::IVector<super::storage::IStorageItem>) -> HRESULT
@@ -872,7 +872,7 @@ impl IFolderLauncherOptions {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FolderLauncherOptions: IFolderLauncherOptions}
+RT_CLASS!{class FolderLauncherOptions: IFolderLauncherOptions ["Windows.System.FolderLauncherOptions"]}
 impl RtActivatable<IActivationFactory> for FolderLauncherOptions {}
 DEFINE_CLSID!(FolderLauncherOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,70,111,108,100,101,114,76,97,117,110,99,104,101,114,79,112,116,105,111,110,115,0]) [CLSID_FolderLauncherOptions]);
 RT_CLASS!{static class KnownUserProperties}
@@ -1136,7 +1136,7 @@ impl ILauncherOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LauncherOptions: ILauncherOptions}
+RT_CLASS!{class LauncherOptions: ILauncherOptions ["Windows.System.LauncherOptions"]}
 impl RtActivatable<IActivationFactory> for LauncherOptions {}
 DEFINE_CLSID!(LauncherOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,76,97,117,110,99,104,101,114,79,112,116,105,111,110,115,0]) [CLSID_LauncherOptions]);
 DEFINE_IID!(IID_ILauncherOptions2, 1000378036, 28224, 19918, 161, 163, 47, 83, 149, 10, 251, 73);
@@ -1434,7 +1434,7 @@ impl ILauncherUIOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LauncherUIOptions: ILauncherUIOptions}
+RT_CLASS!{class LauncherUIOptions: ILauncherUIOptions ["Windows.System.LauncherUIOptions"]}
 DEFINE_IID!(IID_ILauncherViewOptions, 2325424625, 31911, 18910, 155, 211, 60, 91, 113, 132, 246, 22);
 RT_INTERFACE!{interface ILauncherViewOptions(ILauncherViewOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ILauncherViewOptions] {
     #[cfg(feature="windows-ui")] fn get_DesiredRemainingView(&self, out: *mut super::ui::viewmanagement::ViewSizePreference) -> HRESULT,
@@ -1451,13 +1451,13 @@ impl ILauncherViewOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum LaunchFileStatus: i32 {
+RT_ENUM! { enum LaunchFileStatus: i32 ["Windows.System.LaunchFileStatus"] {
     Success (LaunchFileStatus_Success) = 0, AppUnavailable (LaunchFileStatus_AppUnavailable) = 1, DeniedByPolicy (LaunchFileStatus_DeniedByPolicy) = 2, FileTypeNotSupported (LaunchFileStatus_FileTypeNotSupported) = 3, Unknown (LaunchFileStatus_Unknown) = 4,
 }}
-RT_ENUM! { enum LaunchQuerySupportStatus: i32 {
+RT_ENUM! { enum LaunchQuerySupportStatus: i32 ["Windows.System.LaunchQuerySupportStatus"] {
     Available (LaunchQuerySupportStatus_Available) = 0, AppNotInstalled (LaunchQuerySupportStatus_AppNotInstalled) = 1, AppUnavailable (LaunchQuerySupportStatus_AppUnavailable) = 2, NotSupported (LaunchQuerySupportStatus_NotSupported) = 3, Unknown (LaunchQuerySupportStatus_Unknown) = 4,
 }}
-RT_ENUM! { enum LaunchQuerySupportType: i32 {
+RT_ENUM! { enum LaunchQuerySupportType: i32 ["Windows.System.LaunchQuerySupportType"] {
     Uri (LaunchQuerySupportType_Uri) = 0, UriForResults (LaunchQuerySupportType_UriForResults) = 1,
 }}
 DEFINE_IID!(IID_ILaunchUriResult, 3962022111, 63189, 17866, 145, 58, 112, 164, 12, 92, 130, 33);
@@ -1477,8 +1477,8 @@ impl ILaunchUriResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LaunchUriResult: ILaunchUriResult}
-RT_ENUM! { enum LaunchUriStatus: i32 {
+RT_CLASS!{class LaunchUriResult: ILaunchUriResult ["Windows.System.LaunchUriResult"]}
+RT_ENUM! { enum LaunchUriStatus: i32 ["Windows.System.LaunchUriStatus"] {
     Success (LaunchUriStatus_Success) = 0, AppUnavailable (LaunchUriStatus_AppUnavailable) = 1, ProtocolUnavailable (LaunchUriStatus_ProtocolUnavailable) = 2, Unknown (LaunchUriStatus_Unknown) = 3,
 }}
 RT_CLASS!{static class MemoryManager}
@@ -1623,7 +1623,7 @@ impl IMemoryManagerStatics4 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PowerState: i32 {
+RT_ENUM! { enum PowerState: i32 ["Windows.System.PowerState"] {
     ConnectedStandby (PowerState_ConnectedStandby) = 0, SleepS3 (PowerState_SleepS3) = 1,
 }}
 RT_CLASS!{static class ProcessLauncher}
@@ -1692,7 +1692,7 @@ impl IProcessLauncherOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProcessLauncherOptions: IProcessLauncherOptions}
+RT_CLASS!{class ProcessLauncherOptions: IProcessLauncherOptions ["Windows.System.ProcessLauncherOptions"]}
 impl RtActivatable<IActivationFactory> for ProcessLauncherOptions {}
 DEFINE_CLSID!(ProcessLauncherOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,99,101,115,115,76,97,117,110,99,104,101,114,79,112,116,105,111,110,115,0]) [CLSID_ProcessLauncherOptions]);
 DEFINE_IID!(IID_IProcessLauncherResult, 1414302004, 34520, 18833, 142, 117, 236, 232, 164, 59, 107, 109);
@@ -1706,7 +1706,7 @@ impl IProcessLauncherResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProcessLauncherResult: IProcessLauncherResult}
+RT_CLASS!{class ProcessLauncherResult: IProcessLauncherResult ["Windows.System.ProcessLauncherResult"]}
 DEFINE_IID!(IID_IProcessLauncherStatics, 866871015, 11534, 17547, 166, 160, 193, 60, 56, 54, 208, 156);
 RT_INTERFACE!{static interface IProcessLauncherStatics(IProcessLauncherStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IProcessLauncherStatics] {
     fn RunToCompletionAsync(&self, fileName: HSTRING, args: HSTRING, out: *mut *mut foundation::IAsyncOperation<ProcessLauncherResult>) -> HRESULT,
@@ -1741,8 +1741,8 @@ impl IProcessMemoryReport {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProcessMemoryReport: IProcessMemoryReport}
-RT_ENUM! { enum ProcessorArchitecture: i32 {
+RT_CLASS!{class ProcessMemoryReport: IProcessMemoryReport ["Windows.System.ProcessMemoryReport"]}
+RT_ENUM! { enum ProcessorArchitecture: i32 ["Windows.System.ProcessorArchitecture"] {
     X86 (ProcessorArchitecture_X86) = 0, Arm (ProcessorArchitecture_Arm) = 5, X64 (ProcessorArchitecture_X64) = 9, Neutral (ProcessorArchitecture_Neutral) = 11, Unknown (ProcessorArchitecture_Unknown) = 65535,
 }}
 DEFINE_IID!(IID_IProtocolForResultsOperation, 3582011706, 28137, 19752, 147, 120, 248, 103, 130, 225, 130, 187);
@@ -1755,7 +1755,7 @@ impl IProtocolForResultsOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProtocolForResultsOperation: IProtocolForResultsOperation}
+RT_CLASS!{class ProtocolForResultsOperation: IProtocolForResultsOperation ["Windows.System.ProtocolForResultsOperation"]}
 RT_CLASS!{static class RemoteLauncher}
 impl RtActivatable<IRemoteLauncherStatics> for RemoteLauncher {}
 impl RemoteLauncher {
@@ -1792,7 +1792,7 @@ impl IRemoteLauncherOptions {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteLauncherOptions: IRemoteLauncherOptions}
+RT_CLASS!{class RemoteLauncherOptions: IRemoteLauncherOptions ["Windows.System.RemoteLauncherOptions"]}
 impl RtActivatable<IActivationFactory> for RemoteLauncherOptions {}
 DEFINE_CLSID!(RemoteLauncherOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,76,97,117,110,99,104,101,114,79,112,116,105,111,110,115,0]) [CLSID_RemoteLauncherOptions]);
 DEFINE_IID!(IID_IRemoteLauncherStatics, 3621485203, 41740, 18615, 159, 33, 5, 16, 38, 164, 229, 23);
@@ -1818,10 +1818,10 @@ impl IRemoteLauncherStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RemoteLaunchUriStatus: i32 {
+RT_ENUM! { enum RemoteLaunchUriStatus: i32 ["Windows.System.RemoteLaunchUriStatus"] {
     Unknown (RemoteLaunchUriStatus_Unknown) = 0, Success (RemoteLaunchUriStatus_Success) = 1, AppUnavailable (RemoteLaunchUriStatus_AppUnavailable) = 2, ProtocolUnavailable (RemoteLaunchUriStatus_ProtocolUnavailable) = 3, RemoteSystemUnavailable (RemoteLaunchUriStatus_RemoteSystemUnavailable) = 4, ValueSetTooLarge (RemoteLaunchUriStatus_ValueSetTooLarge) = 5, DeniedByLocalSystem (RemoteLaunchUriStatus_DeniedByLocalSystem) = 6, DeniedByRemoteSystem (RemoteLaunchUriStatus_DeniedByRemoteSystem) = 7,
 }}
-RT_ENUM! { enum ShutdownKind: i32 {
+RT_ENUM! { enum ShutdownKind: i32 ["Windows.System.ShutdownKind"] {
     Shutdown (ShutdownKind_Shutdown) = 0, Restart (ShutdownKind_Restart) = 1,
 }}
 RT_CLASS!{static class ShutdownManager}
@@ -1982,7 +1982,7 @@ impl IUser {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class User: IUser}
+RT_CLASS!{class User: IUser ["Windows.System.User"]}
 impl RtActivatable<IUserStatics> for User {}
 impl User {
     #[inline] pub fn create_watcher() -> Result<Option<ComPtr<UserWatcher>>> {
@@ -2002,7 +2002,7 @@ impl User {
     }
 }
 DEFINE_CLSID!(User(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,0]) [CLSID_User]);
-RT_ENUM! { enum UserAuthenticationStatus: i32 {
+RT_ENUM! { enum UserAuthenticationStatus: i32 ["Windows.System.UserAuthenticationStatus"] {
     Unauthenticated (UserAuthenticationStatus_Unauthenticated) = 0, LocallyAuthenticated (UserAuthenticationStatus_LocallyAuthenticated) = 1, RemotelyAuthenticated (UserAuthenticationStatus_RemotelyAuthenticated) = 2,
 }}
 DEFINE_IID!(IID_IUserAuthenticationStatusChangeDeferral, 2293601640, 47920, 17147, 162, 112, 233, 144, 46, 64, 239, 167);
@@ -2015,7 +2015,7 @@ impl IUserAuthenticationStatusChangeDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserAuthenticationStatusChangeDeferral: IUserAuthenticationStatusChangeDeferral}
+RT_CLASS!{class UserAuthenticationStatusChangeDeferral: IUserAuthenticationStatusChangeDeferral ["Windows.System.UserAuthenticationStatusChangeDeferral"]}
 DEFINE_IID!(IID_IUserAuthenticationStatusChangingEventArgs, 2349010728, 42769, 19486, 171, 72, 4, 23, 156, 21, 147, 143);
 RT_INTERFACE!{interface IUserAuthenticationStatusChangingEventArgs(IUserAuthenticationStatusChangingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserAuthenticationStatusChangingEventArgs] {
     fn GetDeferral(&self, out: *mut *mut UserAuthenticationStatusChangeDeferral) -> HRESULT,
@@ -2045,7 +2045,7 @@ impl IUserAuthenticationStatusChangingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserAuthenticationStatusChangingEventArgs: IUserAuthenticationStatusChangingEventArgs}
+RT_CLASS!{class UserAuthenticationStatusChangingEventArgs: IUserAuthenticationStatusChangingEventArgs ["Windows.System.UserAuthenticationStatusChangingEventArgs"]}
 DEFINE_IID!(IID_IUserChangedEventArgs, 140794332, 6342, 18651, 188, 153, 114, 79, 185, 32, 60, 204);
 RT_INTERFACE!{interface IUserChangedEventArgs(IUserChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserChangedEventArgs] {
     fn get_User(&self, out: *mut *mut User) -> HRESULT
@@ -2057,7 +2057,7 @@ impl IUserChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserChangedEventArgs: IUserChangedEventArgs}
+RT_CLASS!{class UserChangedEventArgs: IUserChangedEventArgs ["Windows.System.UserChangedEventArgs"]}
 RT_CLASS!{static class UserDeviceAssociation}
 impl RtActivatable<IUserDeviceAssociationStatics> for UserDeviceAssociation {}
 impl UserDeviceAssociation {
@@ -2095,7 +2095,7 @@ impl IUserDeviceAssociationChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDeviceAssociationChangedEventArgs: IUserDeviceAssociationChangedEventArgs}
+RT_CLASS!{class UserDeviceAssociationChangedEventArgs: IUserDeviceAssociationChangedEventArgs ["Windows.System.UserDeviceAssociationChangedEventArgs"]}
 DEFINE_IID!(IID_IUserDeviceAssociationStatics, 2118721044, 63578, 19463, 141, 169, 127, 227, 208, 84, 35, 67);
 RT_INTERFACE!{static interface IUserDeviceAssociationStatics(IUserDeviceAssociationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDeviceAssociationStatics] {
     fn FindUserFromDeviceId(&self, deviceId: HSTRING, out: *mut *mut User) -> HRESULT,
@@ -2151,7 +2151,7 @@ impl IUserPicker {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserPicker: IUserPicker}
+RT_CLASS!{class UserPicker: IUserPicker ["Windows.System.UserPicker"]}
 impl RtActivatable<IUserPickerStatics> for UserPicker {}
 impl RtActivatable<IActivationFactory> for UserPicker {}
 impl UserPicker {
@@ -2171,7 +2171,7 @@ impl IUserPickerStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UserPictureSize: i32 {
+RT_ENUM! { enum UserPictureSize: i32 ["Windows.System.UserPictureSize"] {
     Size64x64 (UserPictureSize_Size64x64) = 0, Size208x208 (UserPictureSize_Size208x208) = 1, Size424x424 (UserPictureSize_Size424x424) = 2, Size1080x1080 (UserPictureSize_Size1080x1080) = 3,
 }}
 DEFINE_IID!(IID_IUserStatics, 358527547, 9258, 17888, 162, 233, 49, 113, 252, 106, 127, 221);
@@ -2209,7 +2209,7 @@ impl IUserStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UserType: i32 {
+RT_ENUM! { enum UserType: i32 ["Windows.System.UserType"] {
     LocalUser (UserType_LocalUser) = 0, RemoteUser (UserType_RemoteUser) = 1, LocalGuest (UserType_LocalGuest) = 2, RemoteGuest (UserType_RemoteGuest) = 3,
 }}
 DEFINE_IID!(IID_IUserWatcher, 358527547, 9258, 17888, 162, 233, 49, 113, 252, 106, 127, 187);
@@ -2310,14 +2310,14 @@ impl IUserWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserWatcher: IUserWatcher}
-RT_ENUM! { enum UserWatcherStatus: i32 {
+RT_CLASS!{class UserWatcher: IUserWatcher ["Windows.System.UserWatcher"]}
+RT_ENUM! { enum UserWatcherStatus: i32 ["Windows.System.UserWatcherStatus"] {
     Created (UserWatcherStatus_Created) = 0, Started (UserWatcherStatus_Started) = 1, EnumerationCompleted (UserWatcherStatus_EnumerationCompleted) = 2, Stopping (UserWatcherStatus_Stopping) = 3, Stopped (UserWatcherStatus_Stopped) = 4, Aborted (UserWatcherStatus_Aborted) = 5,
 }}
-RT_ENUM! { enum VirtualKey: i32 {
+RT_ENUM! { enum VirtualKey: i32 ["Windows.System.VirtualKey"] {
     None (VirtualKey_None) = 0, LeftButton (VirtualKey_LeftButton) = 1, RightButton (VirtualKey_RightButton) = 2, Cancel (VirtualKey_Cancel) = 3, MiddleButton (VirtualKey_MiddleButton) = 4, XButton1 (VirtualKey_XButton1) = 5, XButton2 (VirtualKey_XButton2) = 6, Back (VirtualKey_Back) = 8, Tab (VirtualKey_Tab) = 9, Clear (VirtualKey_Clear) = 12, Enter (VirtualKey_Enter) = 13, Shift (VirtualKey_Shift) = 16, Control (VirtualKey_Control) = 17, Menu (VirtualKey_Menu) = 18, Pause (VirtualKey_Pause) = 19, CapitalLock (VirtualKey_CapitalLock) = 20, Kana (VirtualKey_Kana) = 21, Hangul (VirtualKey_Hangul) = 21, Junja (VirtualKey_Junja) = 23, Final (VirtualKey_Final) = 24, Hanja (VirtualKey_Hanja) = 25, Kanji (VirtualKey_Kanji) = 25, Escape (VirtualKey_Escape) = 27, Convert (VirtualKey_Convert) = 28, NonConvert (VirtualKey_NonConvert) = 29, Accept (VirtualKey_Accept) = 30, ModeChange (VirtualKey_ModeChange) = 31, Space (VirtualKey_Space) = 32, PageUp (VirtualKey_PageUp) = 33, PageDown (VirtualKey_PageDown) = 34, End (VirtualKey_End) = 35, Home (VirtualKey_Home) = 36, Left (VirtualKey_Left) = 37, Up (VirtualKey_Up) = 38, Right (VirtualKey_Right) = 39, Down (VirtualKey_Down) = 40, Select (VirtualKey_Select) = 41, Print (VirtualKey_Print) = 42, Execute (VirtualKey_Execute) = 43, Snapshot (VirtualKey_Snapshot) = 44, Insert (VirtualKey_Insert) = 45, Delete (VirtualKey_Delete) = 46, Help (VirtualKey_Help) = 47, Number0 (VirtualKey_Number0) = 48, Number1 (VirtualKey_Number1) = 49, Number2 (VirtualKey_Number2) = 50, Number3 (VirtualKey_Number3) = 51, Number4 (VirtualKey_Number4) = 52, Number5 (VirtualKey_Number5) = 53, Number6 (VirtualKey_Number6) = 54, Number7 (VirtualKey_Number7) = 55, Number8 (VirtualKey_Number8) = 56, Number9 (VirtualKey_Number9) = 57, A (VirtualKey_A) = 65, B (VirtualKey_B) = 66, C (VirtualKey_C) = 67, D (VirtualKey_D) = 68, E (VirtualKey_E) = 69, F (VirtualKey_F) = 70, G (VirtualKey_G) = 71, H (VirtualKey_H) = 72, I (VirtualKey_I) = 73, J (VirtualKey_J) = 74, K (VirtualKey_K) = 75, L (VirtualKey_L) = 76, M (VirtualKey_M) = 77, N (VirtualKey_N) = 78, O (VirtualKey_O) = 79, P (VirtualKey_P) = 80, Q (VirtualKey_Q) = 81, R (VirtualKey_R) = 82, S (VirtualKey_S) = 83, T (VirtualKey_T) = 84, U (VirtualKey_U) = 85, V (VirtualKey_V) = 86, W (VirtualKey_W) = 87, X (VirtualKey_X) = 88, Y (VirtualKey_Y) = 89, Z (VirtualKey_Z) = 90, LeftWindows (VirtualKey_LeftWindows) = 91, RightWindows (VirtualKey_RightWindows) = 92, Application (VirtualKey_Application) = 93, Sleep (VirtualKey_Sleep) = 95, NumberPad0 (VirtualKey_NumberPad0) = 96, NumberPad1 (VirtualKey_NumberPad1) = 97, NumberPad2 (VirtualKey_NumberPad2) = 98, NumberPad3 (VirtualKey_NumberPad3) = 99, NumberPad4 (VirtualKey_NumberPad4) = 100, NumberPad5 (VirtualKey_NumberPad5) = 101, NumberPad6 (VirtualKey_NumberPad6) = 102, NumberPad7 (VirtualKey_NumberPad7) = 103, NumberPad8 (VirtualKey_NumberPad8) = 104, NumberPad9 (VirtualKey_NumberPad9) = 105, Multiply (VirtualKey_Multiply) = 106, Add (VirtualKey_Add) = 107, Separator (VirtualKey_Separator) = 108, Subtract (VirtualKey_Subtract) = 109, Decimal (VirtualKey_Decimal) = 110, Divide (VirtualKey_Divide) = 111, F1 (VirtualKey_F1) = 112, F2 (VirtualKey_F2) = 113, F3 (VirtualKey_F3) = 114, F4 (VirtualKey_F4) = 115, F5 (VirtualKey_F5) = 116, F6 (VirtualKey_F6) = 117, F7 (VirtualKey_F7) = 118, F8 (VirtualKey_F8) = 119, F9 (VirtualKey_F9) = 120, F10 (VirtualKey_F10) = 121, F11 (VirtualKey_F11) = 122, F12 (VirtualKey_F12) = 123, F13 (VirtualKey_F13) = 124, F14 (VirtualKey_F14) = 125, F15 (VirtualKey_F15) = 126, F16 (VirtualKey_F16) = 127, F17 (VirtualKey_F17) = 128, F18 (VirtualKey_F18) = 129, F19 (VirtualKey_F19) = 130, F20 (VirtualKey_F20) = 131, F21 (VirtualKey_F21) = 132, F22 (VirtualKey_F22) = 133, F23 (VirtualKey_F23) = 134, F24 (VirtualKey_F24) = 135, NavigationView (VirtualKey_NavigationView) = 136, NavigationMenu (VirtualKey_NavigationMenu) = 137, NavigationUp (VirtualKey_NavigationUp) = 138, NavigationDown (VirtualKey_NavigationDown) = 139, NavigationLeft (VirtualKey_NavigationLeft) = 140, NavigationRight (VirtualKey_NavigationRight) = 141, NavigationAccept (VirtualKey_NavigationAccept) = 142, NavigationCancel (VirtualKey_NavigationCancel) = 143, NumberKeyLock (VirtualKey_NumberKeyLock) = 144, Scroll (VirtualKey_Scroll) = 145, LeftShift (VirtualKey_LeftShift) = 160, RightShift (VirtualKey_RightShift) = 161, LeftControl (VirtualKey_LeftControl) = 162, RightControl (VirtualKey_RightControl) = 163, LeftMenu (VirtualKey_LeftMenu) = 164, RightMenu (VirtualKey_RightMenu) = 165, GoBack (VirtualKey_GoBack) = 166, GoForward (VirtualKey_GoForward) = 167, Refresh (VirtualKey_Refresh) = 168, Stop (VirtualKey_Stop) = 169, Search (VirtualKey_Search) = 170, Favorites (VirtualKey_Favorites) = 171, GoHome (VirtualKey_GoHome) = 172, GamepadA (VirtualKey_GamepadA) = 195, GamepadB (VirtualKey_GamepadB) = 196, GamepadX (VirtualKey_GamepadX) = 197, GamepadY (VirtualKey_GamepadY) = 198, GamepadRightShoulder (VirtualKey_GamepadRightShoulder) = 199, GamepadLeftShoulder (VirtualKey_GamepadLeftShoulder) = 200, GamepadLeftTrigger (VirtualKey_GamepadLeftTrigger) = 201, GamepadRightTrigger (VirtualKey_GamepadRightTrigger) = 202, GamepadDPadUp (VirtualKey_GamepadDPadUp) = 203, GamepadDPadDown (VirtualKey_GamepadDPadDown) = 204, GamepadDPadLeft (VirtualKey_GamepadDPadLeft) = 205, GamepadDPadRight (VirtualKey_GamepadDPadRight) = 206, GamepadMenu (VirtualKey_GamepadMenu) = 207, GamepadView (VirtualKey_GamepadView) = 208, GamepadLeftThumbstickButton (VirtualKey_GamepadLeftThumbstickButton) = 209, GamepadRightThumbstickButton (VirtualKey_GamepadRightThumbstickButton) = 210, GamepadLeftThumbstickUp (VirtualKey_GamepadLeftThumbstickUp) = 211, GamepadLeftThumbstickDown (VirtualKey_GamepadLeftThumbstickDown) = 212, GamepadLeftThumbstickRight (VirtualKey_GamepadLeftThumbstickRight) = 213, GamepadLeftThumbstickLeft (VirtualKey_GamepadLeftThumbstickLeft) = 214, GamepadRightThumbstickUp (VirtualKey_GamepadRightThumbstickUp) = 215, GamepadRightThumbstickDown (VirtualKey_GamepadRightThumbstickDown) = 216, GamepadRightThumbstickRight (VirtualKey_GamepadRightThumbstickRight) = 217, GamepadRightThumbstickLeft (VirtualKey_GamepadRightThumbstickLeft) = 218,
 }}
-RT_ENUM! { enum VirtualKeyModifiers: u32 {
+RT_ENUM! { enum VirtualKeyModifiers: u32 ["Windows.System.VirtualKeyModifiers"] {
     None (VirtualKeyModifiers_None) = 0, Control (VirtualKeyModifiers_Control) = 1, Menu (VirtualKeyModifiers_Menu) = 2, Shift (VirtualKeyModifiers_Shift) = 4, Windows (VirtualKeyModifiers_Windows) = 8,
 }}
 pub mod diagnostics { // Windows.System.Diagnostics
@@ -2339,8 +2339,8 @@ impl IDiagnosticActionResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DiagnosticActionResult: IDiagnosticActionResult}
-RT_ENUM! { enum DiagnosticActionState: i32 {
+RT_CLASS!{class DiagnosticActionResult: IDiagnosticActionResult ["Windows.System.Diagnostics.DiagnosticActionResult"]}
+RT_ENUM! { enum DiagnosticActionState: i32 ["Windows.System.Diagnostics.DiagnosticActionState"] {
     Initializing (DiagnosticActionState_Initializing) = 0, Downloading (DiagnosticActionState_Downloading) = 1, VerifyingTrust (DiagnosticActionState_VerifyingTrust) = 2, Detecting (DiagnosticActionState_Detecting) = 3, Resolving (DiagnosticActionState_Resolving) = 4, VerifyingResolution (DiagnosticActionState_VerifyingResolution) = 5,
 }}
 DEFINE_IID!(IID_IDiagnosticInvoker, 410724106, 739, 20358, 132, 252, 253, 216, 146, 181, 148, 15);
@@ -2354,7 +2354,7 @@ impl IDiagnosticInvoker {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DiagnosticInvoker: IDiagnosticInvoker}
+RT_CLASS!{class DiagnosticInvoker: IDiagnosticInvoker ["Windows.System.Diagnostics.DiagnosticInvoker"]}
 impl RtActivatable<IDiagnosticInvokerStatics> for DiagnosticInvoker {}
 impl DiagnosticInvoker {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<DiagnosticInvoker>>> {
@@ -2413,7 +2413,7 @@ impl IProcessCpuUsage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProcessCpuUsage: IProcessCpuUsage}
+RT_CLASS!{class ProcessCpuUsage: IProcessCpuUsage ["Windows.System.Diagnostics.ProcessCpuUsage"]}
 DEFINE_IID!(IID_IProcessCpuUsageReport, 2322439340, 14727, 20015, 161, 25, 107, 95, 162, 20, 241, 180);
 RT_INTERFACE!{interface IProcessCpuUsageReport(IProcessCpuUsageReportVtbl): IInspectable(IInspectableVtbl) [IID_IProcessCpuUsageReport] {
     fn get_KernelTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -2431,7 +2431,7 @@ impl IProcessCpuUsageReport {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProcessCpuUsageReport: IProcessCpuUsageReport}
+RT_CLASS!{class ProcessCpuUsageReport: IProcessCpuUsageReport ["Windows.System.Diagnostics.ProcessCpuUsageReport"]}
 DEFINE_IID!(IID_IProcessDiagnosticInfo, 3895504971, 12302, 20198, 160, 171, 91, 95, 82, 49, 180, 52);
 RT_INTERFACE!{interface IProcessDiagnosticInfo(IProcessDiagnosticInfoVtbl): IInspectable(IInspectableVtbl) [IID_IProcessDiagnosticInfo] {
     fn get_ProcessId(&self, out: *mut u32) -> HRESULT,
@@ -2479,7 +2479,7 @@ impl IProcessDiagnosticInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProcessDiagnosticInfo: IProcessDiagnosticInfo}
+RT_CLASS!{class ProcessDiagnosticInfo: IProcessDiagnosticInfo ["Windows.System.Diagnostics.ProcessDiagnosticInfo"]}
 impl RtActivatable<IProcessDiagnosticInfoStatics> for ProcessDiagnosticInfo {}
 impl RtActivatable<IProcessDiagnosticInfoStatics2> for ProcessDiagnosticInfo {}
 impl ProcessDiagnosticInfo {
@@ -2550,7 +2550,7 @@ impl IProcessDiskUsage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProcessDiskUsage: IProcessDiskUsage}
+RT_CLASS!{class ProcessDiskUsage: IProcessDiskUsage ["Windows.System.Diagnostics.ProcessDiskUsage"]}
 DEFINE_IID!(IID_IProcessDiskUsageReport, 1075193853, 21341, 19487, 129, 184, 218, 84, 225, 190, 99, 94);
 RT_INTERFACE!{interface IProcessDiskUsageReport(IProcessDiskUsageReportVtbl): IInspectable(IInspectableVtbl) [IID_IProcessDiskUsageReport] {
     fn get_ReadOperationCount(&self, out: *mut i64) -> HRESULT,
@@ -2592,7 +2592,7 @@ impl IProcessDiskUsageReport {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProcessDiskUsageReport: IProcessDiskUsageReport}
+RT_CLASS!{class ProcessDiskUsageReport: IProcessDiskUsageReport ["Windows.System.Diagnostics.ProcessDiskUsageReport"]}
 DEFINE_IID!(IID_IProcessMemoryUsage, 4111147675, 33404, 17079, 176, 124, 14, 50, 98, 126, 107, 62);
 RT_INTERFACE!{interface IProcessMemoryUsage(IProcessMemoryUsageVtbl): IInspectable(IInspectableVtbl) [IID_IProcessMemoryUsage] {
     fn GetReport(&self, out: *mut *mut ProcessMemoryUsageReport) -> HRESULT
@@ -2604,7 +2604,7 @@ impl IProcessMemoryUsage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProcessMemoryUsage: IProcessMemoryUsage}
+RT_CLASS!{class ProcessMemoryUsage: IProcessMemoryUsage ["Windows.System.Diagnostics.ProcessMemoryUsage"]}
 DEFINE_IID!(IID_IProcessMemoryUsageReport, 3267853498, 6481, 18053, 133, 50, 126, 116, 158, 207, 142, 235);
 RT_INTERFACE!{interface IProcessMemoryUsageReport(IProcessMemoryUsageReportVtbl): IInspectable(IInspectableVtbl) [IID_IProcessMemoryUsageReport] {
     fn get_NonPagedPoolSizeInBytes(&self, out: *mut u64) -> HRESULT,
@@ -2682,7 +2682,7 @@ impl IProcessMemoryUsageReport {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProcessMemoryUsageReport: IProcessMemoryUsageReport}
+RT_CLASS!{class ProcessMemoryUsageReport: IProcessMemoryUsageReport ["Windows.System.Diagnostics.ProcessMemoryUsageReport"]}
 DEFINE_IID!(IID_ISystemCpuUsage, 1614263212, 726, 16948, 131, 98, 127, 227, 173, 200, 31, 95);
 RT_INTERFACE!{interface ISystemCpuUsage(ISystemCpuUsageVtbl): IInspectable(IInspectableVtbl) [IID_ISystemCpuUsage] {
     fn GetReport(&self, out: *mut *mut SystemCpuUsageReport) -> HRESULT
@@ -2694,7 +2694,7 @@ impl ISystemCpuUsage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemCpuUsage: ISystemCpuUsage}
+RT_CLASS!{class SystemCpuUsage: ISystemCpuUsage ["Windows.System.Diagnostics.SystemCpuUsage"]}
 DEFINE_IID!(IID_ISystemCpuUsageReport, 740741298, 38019, 20322, 171, 87, 130, 178, 157, 151, 25, 184);
 RT_INTERFACE!{interface ISystemCpuUsageReport(ISystemCpuUsageReportVtbl): IInspectable(IInspectableVtbl) [IID_ISystemCpuUsageReport] {
     fn get_KernelTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -2718,7 +2718,7 @@ impl ISystemCpuUsageReport {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemCpuUsageReport: ISystemCpuUsageReport}
+RT_CLASS!{class SystemCpuUsageReport: ISystemCpuUsageReport ["Windows.System.Diagnostics.SystemCpuUsageReport"]}
 DEFINE_IID!(IID_ISystemDiagnosticInfo, 2727411205, 57331, 16511, 154, 27, 11, 43, 49, 124, 168, 0);
 RT_INTERFACE!{interface ISystemDiagnosticInfo(ISystemDiagnosticInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISystemDiagnosticInfo] {
     fn get_MemoryUsage(&self, out: *mut *mut SystemMemoryUsage) -> HRESULT,
@@ -2736,7 +2736,7 @@ impl ISystemDiagnosticInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemDiagnosticInfo: ISystemDiagnosticInfo}
+RT_CLASS!{class SystemDiagnosticInfo: ISystemDiagnosticInfo ["Windows.System.Diagnostics.SystemDiagnosticInfo"]}
 impl RtActivatable<ISystemDiagnosticInfoStatics> for SystemDiagnosticInfo {}
 impl SystemDiagnosticInfo {
     #[inline] pub fn get_for_current_system() -> Result<Option<ComPtr<SystemDiagnosticInfo>>> {
@@ -2766,7 +2766,7 @@ impl ISystemMemoryUsage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemMemoryUsage: ISystemMemoryUsage}
+RT_CLASS!{class SystemMemoryUsage: ISystemMemoryUsage ["Windows.System.Diagnostics.SystemMemoryUsage"]}
 DEFINE_IID!(IID_ISystemMemoryUsageReport, 946224263, 10911, 16442, 189, 25, 44, 243, 232, 22, 149, 0);
 RT_INTERFACE!{interface ISystemMemoryUsageReport(ISystemMemoryUsageReportVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMemoryUsageReport] {
     fn get_TotalPhysicalSizeInBytes(&self, out: *mut u64) -> HRESULT,
@@ -2790,7 +2790,7 @@ impl ISystemMemoryUsageReport {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemMemoryUsageReport: ISystemMemoryUsageReport}
+RT_CLASS!{class SystemMemoryUsageReport: ISystemMemoryUsageReport ["Windows.System.Diagnostics.SystemMemoryUsageReport"]}
 pub mod deviceportal { // Windows.System.Diagnostics.DevicePortal
 use ::prelude::*;
 DEFINE_IID!(IID_IDevicePortalConnection, 256147281, 4504, 19873, 141, 84, 189, 239, 57, 62, 9, 182);
@@ -2820,7 +2820,7 @@ impl IDevicePortalConnection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DevicePortalConnection: IDevicePortalConnection}
+RT_CLASS!{class DevicePortalConnection: IDevicePortalConnection ["Windows.System.Diagnostics.DevicePortal.DevicePortalConnection"]}
 impl RtActivatable<IDevicePortalConnectionStatics> for DevicePortalConnection {}
 impl DevicePortalConnection {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_for_app_service_connection(appServiceConnection: &::rt::gen::windows::applicationmodel::appservice::AppServiceConnection) -> Result<Option<ComPtr<DevicePortalConnection>>> {
@@ -2839,8 +2839,8 @@ impl IDevicePortalConnectionClosedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DevicePortalConnectionClosedEventArgs: IDevicePortalConnectionClosedEventArgs}
-RT_ENUM! { enum DevicePortalConnectionClosedReason: i32 {
+RT_CLASS!{class DevicePortalConnectionClosedEventArgs: IDevicePortalConnectionClosedEventArgs ["Windows.System.Diagnostics.DevicePortal.DevicePortalConnectionClosedEventArgs"]}
+RT_ENUM! { enum DevicePortalConnectionClosedReason: i32 ["Windows.System.Diagnostics.DevicePortal.DevicePortalConnectionClosedReason"] {
     Unknown (DevicePortalConnectionClosedReason_Unknown) = 0, ResourceLimitsExceeded (DevicePortalConnectionClosedReason_ResourceLimitsExceeded) = 1, ProtocolError (DevicePortalConnectionClosedReason_ProtocolError) = 2, NotAuthorized (DevicePortalConnectionClosedReason_NotAuthorized) = 3, UserNotPresent (DevicePortalConnectionClosedReason_UserNotPresent) = 4, ServiceTerminated (DevicePortalConnectionClosedReason_ServiceTerminated) = 5,
 }}
 DEFINE_IID!(IID_IDevicePortalConnectionRequestReceivedEventArgs, 1692065861, 28634, 17497, 158, 189, 236, 206, 34, 227, 133, 89);
@@ -2860,7 +2860,7 @@ impl IDevicePortalConnectionRequestReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DevicePortalConnectionRequestReceivedEventArgs: IDevicePortalConnectionRequestReceivedEventArgs}
+RT_CLASS!{class DevicePortalConnectionRequestReceivedEventArgs: IDevicePortalConnectionRequestReceivedEventArgs ["Windows.System.Diagnostics.DevicePortal.DevicePortalConnectionRequestReceivedEventArgs"]}
 DEFINE_IID!(IID_IDevicePortalConnectionStatics, 1270755815, 59833, 17989, 143, 237, 165, 62, 234, 14, 219, 214);
 RT_INTERFACE!{static interface IDevicePortalConnectionStatics(IDevicePortalConnectionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalConnectionStatics] {
     #[cfg(feature="windows-applicationmodel")] fn GetForAppServiceConnection(&self, appServiceConnection: *mut ::rt::gen::windows::applicationmodel::appservice::AppServiceConnection, out: *mut *mut DevicePortalConnection) -> HRESULT
@@ -2972,7 +2972,7 @@ impl IPlatformTelemetryRegistrationResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlatformTelemetryRegistrationResult: IPlatformTelemetryRegistrationResult}
+RT_CLASS!{class PlatformTelemetryRegistrationResult: IPlatformTelemetryRegistrationResult ["Windows.System.Diagnostics.Telemetry.PlatformTelemetryRegistrationResult"]}
 DEFINE_IID!(IID_IPlatformTelemetryRegistrationSettings, 2174387586, 51737, 16734, 187, 121, 156, 34, 75, 250, 58, 115);
 RT_INTERFACE!{interface IPlatformTelemetryRegistrationSettings(IPlatformTelemetryRegistrationSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IPlatformTelemetryRegistrationSettings] {
     fn get_StorageSize(&self, out: *mut u32) -> HRESULT,
@@ -3000,10 +3000,10 @@ impl IPlatformTelemetryRegistrationSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlatformTelemetryRegistrationSettings: IPlatformTelemetryRegistrationSettings}
+RT_CLASS!{class PlatformTelemetryRegistrationSettings: IPlatformTelemetryRegistrationSettings ["Windows.System.Diagnostics.Telemetry.PlatformTelemetryRegistrationSettings"]}
 impl RtActivatable<IActivationFactory> for PlatformTelemetryRegistrationSettings {}
 DEFINE_CLSID!(PlatformTelemetryRegistrationSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,84,101,108,101,109,101,116,114,121,46,80,108,97,116,102,111,114,109,84,101,108,101,109,101,116,114,121,82,101,103,105,115,116,114,97,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_PlatformTelemetryRegistrationSettings]);
-RT_ENUM! { enum PlatformTelemetryRegistrationStatus: i32 {
+RT_ENUM! { enum PlatformTelemetryRegistrationStatus: i32 ["Windows.System.Diagnostics.Telemetry.PlatformTelemetryRegistrationStatus"] {
     Success (PlatformTelemetryRegistrationStatus_Success) = 0, SettingsOutOfRange (PlatformTelemetryRegistrationStatus_SettingsOutOfRange) = 1, UnknownFailure (PlatformTelemetryRegistrationStatus_UnknownFailure) = 2,
 }}
 } // Windows.System.Diagnostics.Telemetry
@@ -3091,13 +3091,13 @@ impl IPlatformDiagnosticActionsStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PlatformDiagnosticActionState: i32 {
+RT_ENUM! { enum PlatformDiagnosticActionState: i32 ["Windows.System.Diagnostics.TraceReporting.PlatformDiagnosticActionState"] {
     Success (PlatformDiagnosticActionState_Success) = 0, FreeNetworkNotAvailable (PlatformDiagnosticActionState_FreeNetworkNotAvailable) = 1, ACPowerNotAvailable (PlatformDiagnosticActionState_ACPowerNotAvailable) = 2,
 }}
-RT_ENUM! { enum PlatformDiagnosticEscalationType: i32 {
+RT_ENUM! { enum PlatformDiagnosticEscalationType: i32 ["Windows.System.Diagnostics.TraceReporting.PlatformDiagnosticEscalationType"] {
     OnCompletion (PlatformDiagnosticEscalationType_OnCompletion) = 0, OnFailure (PlatformDiagnosticEscalationType_OnFailure) = 1,
 }}
-RT_ENUM! { enum PlatformDiagnosticEventBufferLatencies: u32 {
+RT_ENUM! { enum PlatformDiagnosticEventBufferLatencies: u32 ["Windows.System.Diagnostics.TraceReporting.PlatformDiagnosticEventBufferLatencies"] {
     Normal (PlatformDiagnosticEventBufferLatencies_Normal) = 1, CostDeferred (PlatformDiagnosticEventBufferLatencies_CostDeferred) = 2, Realtime (PlatformDiagnosticEventBufferLatencies_Realtime) = 4,
 }}
 DEFINE_IID!(IID_IPlatformDiagnosticTraceInfo, 4168150423, 54679, 19447, 136, 220, 207, 92, 125, 194, 161, 210);
@@ -3141,8 +3141,8 @@ impl IPlatformDiagnosticTraceInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlatformDiagnosticTraceInfo: IPlatformDiagnosticTraceInfo}
-RT_ENUM! { enum PlatformDiagnosticTracePriority: i32 {
+RT_CLASS!{class PlatformDiagnosticTraceInfo: IPlatformDiagnosticTraceInfo ["Windows.System.Diagnostics.TraceReporting.PlatformDiagnosticTraceInfo"]}
+RT_ENUM! { enum PlatformDiagnosticTracePriority: i32 ["Windows.System.Diagnostics.TraceReporting.PlatformDiagnosticTracePriority"] {
     Normal (PlatformDiagnosticTracePriority_Normal) = 0, UserElevated (PlatformDiagnosticTracePriority_UserElevated) = 1,
 }}
 DEFINE_IID!(IID_IPlatformDiagnosticTraceRuntimeInfo, 1028480557, 472, 18280, 133, 84, 30, 177, 202, 97, 9, 134);
@@ -3162,11 +3162,11 @@ impl IPlatformDiagnosticTraceRuntimeInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlatformDiagnosticTraceRuntimeInfo: IPlatformDiagnosticTraceRuntimeInfo}
-RT_ENUM! { enum PlatformDiagnosticTraceSlotState: i32 {
+RT_CLASS!{class PlatformDiagnosticTraceRuntimeInfo: IPlatformDiagnosticTraceRuntimeInfo ["Windows.System.Diagnostics.TraceReporting.PlatformDiagnosticTraceRuntimeInfo"]}
+RT_ENUM! { enum PlatformDiagnosticTraceSlotState: i32 ["Windows.System.Diagnostics.TraceReporting.PlatformDiagnosticTraceSlotState"] {
     NotRunning (PlatformDiagnosticTraceSlotState_NotRunning) = 0, Running (PlatformDiagnosticTraceSlotState_Running) = 1, Throttled (PlatformDiagnosticTraceSlotState_Throttled) = 2,
 }}
-RT_ENUM! { enum PlatformDiagnosticTraceSlotType: i32 {
+RT_ENUM! { enum PlatformDiagnosticTraceSlotType: i32 ["Windows.System.Diagnostics.TraceReporting.PlatformDiagnosticTraceSlotType"] {
     Alternative (PlatformDiagnosticTraceSlotType_Alternative) = 0, AlwaysOn (PlatformDiagnosticTraceSlotType_AlwaysOn) = 1, Mini (PlatformDiagnosticTraceSlotType_Mini) = 2,
 }}
 } // Windows.System.Diagnostics.TraceReporting
@@ -3188,7 +3188,7 @@ impl IDisplayRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayRequest: IDisplayRequest}
+RT_CLASS!{class DisplayRequest: IDisplayRequest ["Windows.System.Display.DisplayRequest"]}
 impl RtActivatable<IActivationFactory> for DisplayRequest {}
 DEFINE_CLSID!(DisplayRequest(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,115,112,108,97,121,46,68,105,115,112,108,97,121,82,101,113,117,101,115,116,0]) [CLSID_DisplayRequest]);
 } // Windows.System.Display
@@ -3223,7 +3223,7 @@ impl IInstalledDesktopApp {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InstalledDesktopApp: IInstalledDesktopApp}
+RT_CLASS!{class InstalledDesktopApp: IInstalledDesktopApp ["Windows.System.Inventory.InstalledDesktopApp"]}
 impl RtActivatable<IInstalledDesktopAppStatics> for InstalledDesktopApp {}
 impl InstalledDesktopApp {
     #[inline] pub fn get_inventory_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<InstalledDesktopApp>>>> {
@@ -3361,10 +3361,10 @@ impl IBackgroundEnergyManagerStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BatteryStatus: i32 {
+RT_ENUM! { enum BatteryStatus: i32 ["Windows.System.Power.BatteryStatus"] {
     NotPresent (BatteryStatus_NotPresent) = 0, Discharging (BatteryStatus_Discharging) = 1, Idle (BatteryStatus_Idle) = 2, Charging (BatteryStatus_Charging) = 3,
 }}
-RT_ENUM! { enum EnergySaverStatus: i32 {
+RT_ENUM! { enum EnergySaverStatus: i32 ["Windows.System.Power.EnergySaverStatus"] {
     Disabled (EnergySaverStatus_Disabled) = 0, Off (EnergySaverStatus_Off) = 1, On (EnergySaverStatus_On) = 2,
 }}
 RT_CLASS!{static class ForegroundEnergyManager}
@@ -3605,7 +3605,7 @@ impl IPowerManagerStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PowerSupplyStatus: i32 {
+RT_ENUM! { enum PowerSupplyStatus: i32 ["Windows.System.Power.PowerSupplyStatus"] {
     NotPresent (PowerSupplyStatus_NotPresent) = 0, Inadequate (PowerSupplyStatus_Inadequate) = 1, Adequate (PowerSupplyStatus_Adequate) = 2,
 }}
 pub mod diagnostics { // Windows.System.Power.Diagnostics
@@ -3686,7 +3686,7 @@ impl IForegroundEnergyDiagnosticsStatics {
 } // Windows.System.Power
 pub mod preview { // Windows.System.Preview
 use ::prelude::*;
-RT_ENUM! { enum HingeState: i32 {
+RT_ENUM! { enum HingeState: i32 ["Windows.System.Preview.HingeState"] {
     Unknown (HingeState_Unknown) = 0, Closed (HingeState_Closed) = 1, Concave (HingeState_Concave) = 2, Flat (HingeState_Flat) = 3, Convex (HingeState_Convex) = 4, Full (HingeState_Full) = 5,
 }}
 DEFINE_IID!(IID_ITwoPanelHingedDevicePosturePreview, 1914985521, 19257, 17062, 142, 115, 114, 53, 173, 225, 104, 83);
@@ -3711,7 +3711,7 @@ impl ITwoPanelHingedDevicePosturePreview {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TwoPanelHingedDevicePosturePreview: ITwoPanelHingedDevicePosturePreview}
+RT_CLASS!{class TwoPanelHingedDevicePosturePreview: ITwoPanelHingedDevicePosturePreview ["Windows.System.Preview.TwoPanelHingedDevicePosturePreview"]}
 impl RtActivatable<ITwoPanelHingedDevicePosturePreviewStatics> for TwoPanelHingedDevicePosturePreview {}
 impl TwoPanelHingedDevicePosturePreview {
     #[inline] pub fn get_default_async() -> Result<ComPtr<foundation::IAsyncOperation<TwoPanelHingedDevicePosturePreview>>> {
@@ -3762,7 +3762,7 @@ impl ITwoPanelHingedDevicePosturePreviewReading {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TwoPanelHingedDevicePosturePreviewReading: ITwoPanelHingedDevicePosturePreviewReading}
+RT_CLASS!{class TwoPanelHingedDevicePosturePreviewReading: ITwoPanelHingedDevicePosturePreviewReading ["Windows.System.Preview.TwoPanelHingedDevicePosturePreviewReading"]}
 DEFINE_IID!(IID_ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs, 757930950, 718, 18250, 165, 86, 167, 91, 28, 249, 58, 3);
 RT_INTERFACE!{interface ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs(ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs] {
     fn get_Reading(&self, out: *mut *mut TwoPanelHingedDevicePosturePreviewReading) -> HRESULT
@@ -3774,7 +3774,7 @@ impl ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TwoPanelHingedDevicePosturePreviewReadingChangedEventArgs: ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs}
+RT_CLASS!{class TwoPanelHingedDevicePosturePreviewReadingChangedEventArgs: ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs ["Windows.System.Preview.TwoPanelHingedDevicePosturePreviewReadingChangedEventArgs"]}
 DEFINE_IID!(IID_ITwoPanelHingedDevicePosturePreviewStatics, 205992914, 22496, 16768, 189, 94, 243, 26, 33, 56, 66, 62);
 RT_INTERFACE!{static interface ITwoPanelHingedDevicePosturePreviewStatics(ITwoPanelHingedDevicePosturePreviewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITwoPanelHingedDevicePosturePreviewStatics] {
     fn GetDefaultAsync(&self, out: *mut *mut foundation::IAsyncOperation<TwoPanelHingedDevicePosturePreview>) -> HRESULT
@@ -3849,7 +3849,7 @@ impl IAnalyticsVersionInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AnalyticsVersionInfo: IAnalyticsVersionInfo}
+RT_CLASS!{class AnalyticsVersionInfo: IAnalyticsVersionInfo ["Windows.System.Profile.AnalyticsVersionInfo"]}
 RT_CLASS!{static class EducationSettings}
 impl RtActivatable<IEducationSettingsStatics> for EducationSettings {}
 impl EducationSettings {
@@ -3911,7 +3911,7 @@ impl IHardwareToken {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HardwareToken: IHardwareToken}
+RT_CLASS!{class HardwareToken: IHardwareToken ["Windows.System.Profile.HardwareToken"]}
 RT_CLASS!{static class KnownRetailInfoProperties}
 impl RtActivatable<IKnownRetailInfoPropertiesStatics> for KnownRetailInfoProperties {}
 impl KnownRetailInfoProperties {
@@ -4120,7 +4120,7 @@ impl IKnownRetailInfoPropertiesStatics {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PlatformDataCollectionLevel: i32 {
+RT_ENUM! { enum PlatformDataCollectionLevel: i32 ["Windows.System.Profile.PlatformDataCollectionLevel"] {
     Security (PlatformDataCollectionLevel_Security) = 0, Basic (PlatformDataCollectionLevel_Basic) = 1, Enhanced (PlatformDataCollectionLevel_Enhanced) = 2, Full (PlatformDataCollectionLevel_Full) = 3,
 }}
 RT_CLASS!{static class PlatformDiagnosticsAndUsageDataSettings}
@@ -4259,8 +4259,8 @@ impl ISystemIdentificationInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemIdentificationInfo: ISystemIdentificationInfo}
-RT_ENUM! { enum SystemIdentificationSource: i32 {
+RT_CLASS!{class SystemIdentificationInfo: ISystemIdentificationInfo ["Windows.System.Profile.SystemIdentificationInfo"]}
+RT_ENUM! { enum SystemIdentificationSource: i32 ["Windows.System.Profile.SystemIdentificationSource"] {
     None (SystemIdentificationSource_None) = 0, Tpm (SystemIdentificationSource_Tpm) = 1, Uefi (SystemIdentificationSource_Uefi) = 2, Registry (SystemIdentificationSource_Registry) = 3,
 }}
 DEFINE_IID!(IID_ISystemIdentificationStatics, 1434580010, 54239, 19859, 163, 125, 196, 26, 97, 108, 109, 1);
@@ -4280,7 +4280,7 @@ impl ISystemIdentificationStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SystemOutOfBoxExperienceState: i32 {
+RT_ENUM! { enum SystemOutOfBoxExperienceState: i32 ["Windows.System.Profile.SystemOutOfBoxExperienceState"] {
     NotStarted (SystemOutOfBoxExperienceState_NotStarted) = 0, InProgress (SystemOutOfBoxExperienceState_InProgress) = 1, Completed (SystemOutOfBoxExperienceState_Completed) = 2,
 }}
 RT_CLASS!{static class SystemSetupInfo}
@@ -4407,7 +4407,7 @@ impl IOemSupportInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OemSupportInfo: IOemSupportInfo}
+RT_CLASS!{class OemSupportInfo: IOemSupportInfo ["Windows.System.Profile.SystemManufacturers.OemSupportInfo"]}
 RT_CLASS!{static class SmbiosInformation}
 impl RtActivatable<ISmbiosInformationStatics> for SmbiosInformation {}
 impl SmbiosInformation {
@@ -4474,7 +4474,7 @@ impl ISystemSupportDeviceInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemSupportDeviceInfo: ISystemSupportDeviceInfo}
+RT_CLASS!{class SystemSupportDeviceInfo: ISystemSupportDeviceInfo ["Windows.System.Profile.SystemManufacturers.SystemSupportDeviceInfo"]}
 RT_CLASS!{static class SystemSupportInfo}
 impl RtActivatable<ISystemSupportInfoStatics> for SystemSupportInfo {}
 impl RtActivatable<ISystemSupportInfoStatics2> for SystemSupportInfo {}
@@ -4625,7 +4625,7 @@ impl IRemoteSystem {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystem: IRemoteSystem}
+RT_CLASS!{class RemoteSystem: IRemoteSystem ["Windows.System.RemoteSystems.RemoteSystem"]}
 impl RtActivatable<IRemoteSystemStatics> for RemoteSystem {}
 impl RtActivatable<IRemoteSystemStatics2> for RemoteSystem {}
 impl RemoteSystem {
@@ -4702,7 +4702,7 @@ impl IRemoteSystem5 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RemoteSystemAccessStatus: i32 {
+RT_ENUM! { enum RemoteSystemAccessStatus: i32 ["Windows.System.RemoteSystems.RemoteSystemAccessStatus"] {
     Unspecified (RemoteSystemAccessStatus_Unspecified) = 0, Allowed (RemoteSystemAccessStatus_Allowed) = 1, DeniedByUser (RemoteSystemAccessStatus_DeniedByUser) = 2, DeniedBySystem (RemoteSystemAccessStatus_DeniedBySystem) = 3,
 }}
 DEFINE_IID!(IID_IRemoteSystemAddedEventArgs, 2402899471, 58676, 18071, 136, 54, 122, 190, 161, 81, 81, 110);
@@ -4716,7 +4716,7 @@ impl IRemoteSystemAddedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemAddedEventArgs: IRemoteSystemAddedEventArgs}
+RT_CLASS!{class RemoteSystemAddedEventArgs: IRemoteSystemAddedEventArgs ["Windows.System.RemoteSystems.RemoteSystemAddedEventArgs"]}
 DEFINE_IID!(IID_IRemoteSystemApp, 2162539709, 54605, 16817, 155, 22, 104, 16, 168, 113, 237, 79);
 RT_INTERFACE!{interface IRemoteSystemApp(IRemoteSystemAppVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemApp] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -4752,7 +4752,7 @@ impl IRemoteSystemApp {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemApp: IRemoteSystemApp}
+RT_CLASS!{class RemoteSystemApp: IRemoteSystemApp ["Windows.System.RemoteSystems.RemoteSystemApp"]}
 DEFINE_IID!(IID_IRemoteSystemAppRegistration, 3027847093, 28725, 19034, 184, 223, 150, 45, 143, 132, 49, 244);
 RT_INTERFACE!{interface IRemoteSystemAppRegistration(IRemoteSystemAppRegistrationVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemAppRegistration] {
     fn get_User(&self, out: *mut *mut super::User) -> HRESULT,
@@ -4776,7 +4776,7 @@ impl IRemoteSystemAppRegistration {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemAppRegistration: IRemoteSystemAppRegistration}
+RT_CLASS!{class RemoteSystemAppRegistration: IRemoteSystemAppRegistration ["Windows.System.RemoteSystems.RemoteSystemAppRegistration"]}
 impl RtActivatable<IRemoteSystemAppRegistrationStatics> for RemoteSystemAppRegistration {}
 impl RemoteSystemAppRegistration {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<RemoteSystemAppRegistration>>> {
@@ -4804,7 +4804,7 @@ impl IRemoteSystemAppRegistrationStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RemoteSystemAuthorizationKind: i32 {
+RT_ENUM! { enum RemoteSystemAuthorizationKind: i32 ["Windows.System.RemoteSystems.RemoteSystemAuthorizationKind"] {
     SameUser (RemoteSystemAuthorizationKind_SameUser) = 0, Anonymous (RemoteSystemAuthorizationKind_Anonymous) = 1,
 }}
 DEFINE_IID!(IID_IRemoteSystemAuthorizationKindFilter, 1796071054, 1232, 16628, 162, 127, 194, 172, 187, 214, 183, 52);
@@ -4818,7 +4818,7 @@ impl IRemoteSystemAuthorizationKindFilter {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemAuthorizationKindFilter: IRemoteSystemAuthorizationKindFilter}
+RT_CLASS!{class RemoteSystemAuthorizationKindFilter: IRemoteSystemAuthorizationKindFilter ["Windows.System.RemoteSystems.RemoteSystemAuthorizationKindFilter"]}
 impl RtActivatable<IRemoteSystemAuthorizationKindFilterFactory> for RemoteSystemAuthorizationKindFilter {}
 impl RemoteSystemAuthorizationKindFilter {
     #[inline] pub fn create(remoteSystemAuthorizationKind: RemoteSystemAuthorizationKind) -> Result<ComPtr<RemoteSystemAuthorizationKindFilter>> {
@@ -4848,7 +4848,7 @@ impl IRemoteSystemConnectionInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemConnectionInfo: IRemoteSystemConnectionInfo}
+RT_CLASS!{class RemoteSystemConnectionInfo: IRemoteSystemConnectionInfo ["Windows.System.RemoteSystems.RemoteSystemConnectionInfo"]}
 impl RtActivatable<IRemoteSystemConnectionInfoStatics> for RemoteSystemConnectionInfo {}
 impl RemoteSystemConnectionInfo {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn try_create_from_app_service_connection(connection: &super::super::applicationmodel::appservice::AppServiceConnection) -> Result<Option<ComPtr<RemoteSystemConnectionInfo>>> {
@@ -4878,7 +4878,7 @@ impl IRemoteSystemConnectionRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemConnectionRequest: IRemoteSystemConnectionRequest}
+RT_CLASS!{class RemoteSystemConnectionRequest: IRemoteSystemConnectionRequest ["Windows.System.RemoteSystems.RemoteSystemConnectionRequest"]}
 impl RtActivatable<IRemoteSystemConnectionRequestFactory> for RemoteSystemConnectionRequest {}
 impl RtActivatable<IRemoteSystemConnectionRequestStatics> for RemoteSystemConnectionRequest {}
 impl RemoteSystemConnectionRequest {
@@ -4923,7 +4923,7 @@ impl IRemoteSystemConnectionRequestStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RemoteSystemDiscoveryType: i32 {
+RT_ENUM! { enum RemoteSystemDiscoveryType: i32 ["Windows.System.RemoteSystems.RemoteSystemDiscoveryType"] {
     Any (RemoteSystemDiscoveryType_Any) = 0, Proximal (RemoteSystemDiscoveryType_Proximal) = 1, Cloud (RemoteSystemDiscoveryType_Cloud) = 2, SpatiallyProximal (RemoteSystemDiscoveryType_SpatiallyProximal) = 3,
 }}
 DEFINE_IID!(IID_IRemoteSystemDiscoveryTypeFilter, 1121518623, 61018, 17370, 172, 106, 111, 238, 37, 70, 7, 65);
@@ -4937,7 +4937,7 @@ impl IRemoteSystemDiscoveryTypeFilter {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemDiscoveryTypeFilter: IRemoteSystemDiscoveryTypeFilter}
+RT_CLASS!{class RemoteSystemDiscoveryTypeFilter: IRemoteSystemDiscoveryTypeFilter ["Windows.System.RemoteSystems.RemoteSystemDiscoveryTypeFilter"]}
 impl RtActivatable<IRemoteSystemDiscoveryTypeFilterFactory> for RemoteSystemDiscoveryTypeFilter {}
 impl RemoteSystemDiscoveryTypeFilter {
     #[inline] pub fn create(discoveryType: RemoteSystemDiscoveryType) -> Result<ComPtr<RemoteSystemDiscoveryTypeFilter>> {
@@ -4960,7 +4960,7 @@ DEFINE_IID!(IID_IRemoteSystemEnumerationCompletedEventArgs, 3337108831, 16432, 1
 RT_INTERFACE!{interface IRemoteSystemEnumerationCompletedEventArgs(IRemoteSystemEnumerationCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemEnumerationCompletedEventArgs] {
     
 }}
-RT_CLASS!{class RemoteSystemEnumerationCompletedEventArgs: IRemoteSystemEnumerationCompletedEventArgs}
+RT_CLASS!{class RemoteSystemEnumerationCompletedEventArgs: IRemoteSystemEnumerationCompletedEventArgs ["Windows.System.RemoteSystems.RemoteSystemEnumerationCompletedEventArgs"]}
 DEFINE_IID!(IID_IRemoteSystemFilter, 1245424100, 39403, 17899, 186, 22, 3, 103, 114, 143, 243, 116);
 RT_INTERFACE!{interface IRemoteSystemFilter(IRemoteSystemFilterVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemFilter] {
     
@@ -4976,7 +4976,7 @@ impl IRemoteSystemKindFilter {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemKindFilter: IRemoteSystemKindFilter}
+RT_CLASS!{class RemoteSystemKindFilter: IRemoteSystemKindFilter ["Windows.System.RemoteSystems.RemoteSystemKindFilter"]}
 impl RtActivatable<IRemoteSystemKindFilterFactory> for RemoteSystemKindFilter {}
 impl RemoteSystemKindFilter {
     #[inline] pub fn create(remoteSystemKinds: &foundation::collections::IIterable<HString>) -> Result<ComPtr<RemoteSystemKindFilter>> {
@@ -5083,7 +5083,7 @@ impl IRemoteSystemKindStatics2 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RemoteSystemPlatform: i32 {
+RT_ENUM! { enum RemoteSystemPlatform: i32 ["Windows.System.RemoteSystems.RemoteSystemPlatform"] {
     Unknown (RemoteSystemPlatform_Unknown) = 0, Windows (RemoteSystemPlatform_Windows) = 1, Android (RemoteSystemPlatform_Android) = 2, Ios (RemoteSystemPlatform_Ios) = 3, Linux (RemoteSystemPlatform_Linux) = 4,
 }}
 DEFINE_IID!(IID_IRemoteSystemRemovedEventArgs, 2336036539, 29446, 18922, 183, 223, 103, 213, 113, 76, 176, 19);
@@ -5097,7 +5097,7 @@ impl IRemoteSystemRemovedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemRemovedEventArgs: IRemoteSystemRemovedEventArgs}
+RT_CLASS!{class RemoteSystemRemovedEventArgs: IRemoteSystemRemovedEventArgs ["Windows.System.RemoteSystems.RemoteSystemRemovedEventArgs"]}
 DEFINE_IID!(IID_IRemoteSystemSession, 1766287873, 39642, 18703, 149, 73, 211, 28, 177, 76, 158, 149);
 RT_INTERFACE!{interface IRemoteSystemSession(IRemoteSystemSessionVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSession] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -5144,7 +5144,7 @@ impl IRemoteSystemSession {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSession: IRemoteSystemSession}
+RT_CLASS!{class RemoteSystemSession: IRemoteSystemSession ["Windows.System.RemoteSystems.RemoteSystemSession"]}
 impl RtActivatable<IRemoteSystemSessionStatics> for RemoteSystemSession {}
 impl RemoteSystemSession {
     #[inline] pub fn create_watcher() -> Result<Option<ComPtr<RemoteSystemSessionWatcher>>> {
@@ -5163,7 +5163,7 @@ impl IRemoteSystemSessionAddedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionAddedEventArgs: IRemoteSystemSessionAddedEventArgs}
+RT_CLASS!{class RemoteSystemSessionAddedEventArgs: IRemoteSystemSessionAddedEventArgs ["Windows.System.RemoteSystems.RemoteSystemSessionAddedEventArgs"]}
 DEFINE_IID!(IID_IRemoteSystemSessionController, 3834326482, 26656, 18535, 180, 37, 216, 156, 10, 62, 247, 186);
 RT_INTERFACE!{interface IRemoteSystemSessionController(IRemoteSystemSessionControllerVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionController] {
     fn add_JoinRequested(&self, handler: *mut foundation::TypedEventHandler<RemoteSystemSessionController, RemoteSystemSessionJoinRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5192,7 +5192,7 @@ impl IRemoteSystemSessionController {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionController: IRemoteSystemSessionController}
+RT_CLASS!{class RemoteSystemSessionController: IRemoteSystemSessionController ["Windows.System.RemoteSystems.RemoteSystemSessionController"]}
 impl RtActivatable<IRemoteSystemSessionControllerFactory> for RemoteSystemSessionController {}
 impl RemoteSystemSessionController {
     #[inline] pub fn create_controller(displayName: &HStringArg) -> Result<ComPtr<RemoteSystemSessionController>> {
@@ -5237,8 +5237,8 @@ impl IRemoteSystemSessionCreationResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionCreationResult: IRemoteSystemSessionCreationResult}
-RT_ENUM! { enum RemoteSystemSessionCreationStatus: i32 {
+RT_CLASS!{class RemoteSystemSessionCreationResult: IRemoteSystemSessionCreationResult ["Windows.System.RemoteSystems.RemoteSystemSessionCreationResult"]}
+RT_ENUM! { enum RemoteSystemSessionCreationStatus: i32 ["Windows.System.RemoteSystems.RemoteSystemSessionCreationStatus"] {
     Success (RemoteSystemSessionCreationStatus_Success) = 0, SessionLimitsExceeded (RemoteSystemSessionCreationStatus_SessionLimitsExceeded) = 1, OperationAborted (RemoteSystemSessionCreationStatus_OperationAborted) = 2,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionDisconnectedEventArgs, 3725313691, 30661, 17948, 130, 9, 124, 108, 93, 49, 17, 171);
@@ -5252,8 +5252,8 @@ impl IRemoteSystemSessionDisconnectedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionDisconnectedEventArgs: IRemoteSystemSessionDisconnectedEventArgs}
-RT_ENUM! { enum RemoteSystemSessionDisconnectedReason: i32 {
+RT_CLASS!{class RemoteSystemSessionDisconnectedEventArgs: IRemoteSystemSessionDisconnectedEventArgs ["Windows.System.RemoteSystems.RemoteSystemSessionDisconnectedEventArgs"]}
+RT_ENUM! { enum RemoteSystemSessionDisconnectedReason: i32 ["Windows.System.RemoteSystems.RemoteSystemSessionDisconnectedReason"] {
     SessionUnavailable (RemoteSystemSessionDisconnectedReason_SessionUnavailable) = 0, RemovedByController (RemoteSystemSessionDisconnectedReason_RemovedByController) = 1, SessionClosed (RemoteSystemSessionDisconnectedReason_SessionClosed) = 2,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionInfo, 4283299400, 35594, 20122, 153, 5, 105, 228, 184, 65, 197, 136);
@@ -5279,7 +5279,7 @@ impl IRemoteSystemSessionInfo {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionInfo: IRemoteSystemSessionInfo}
+RT_CLASS!{class RemoteSystemSessionInfo: IRemoteSystemSessionInfo ["Windows.System.RemoteSystems.RemoteSystemSessionInfo"]}
 DEFINE_IID!(IID_IRemoteSystemSessionInvitation, 1043516561, 20951, 18278, 161, 33, 37, 81, 108, 59, 130, 148);
 RT_INTERFACE!{interface IRemoteSystemSessionInvitation(IRemoteSystemSessionInvitationVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionInvitation] {
     fn get_Sender(&self, out: *mut *mut RemoteSystem) -> HRESULT,
@@ -5297,7 +5297,7 @@ impl IRemoteSystemSessionInvitation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionInvitation: IRemoteSystemSessionInvitation}
+RT_CLASS!{class RemoteSystemSessionInvitation: IRemoteSystemSessionInvitation ["Windows.System.RemoteSystems.RemoteSystemSessionInvitation"]}
 DEFINE_IID!(IID_IRemoteSystemSessionInvitationListener, 150208575, 48241, 18913, 135, 74, 49, 221, 255, 154, 39, 185);
 RT_INTERFACE!{interface IRemoteSystemSessionInvitationListener(IRemoteSystemSessionInvitationListenerVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionInvitationListener] {
     fn add_InvitationReceived(&self, handler: *mut foundation::TypedEventHandler<RemoteSystemSessionInvitationListener, RemoteSystemSessionInvitationReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5314,7 +5314,7 @@ impl IRemoteSystemSessionInvitationListener {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionInvitationListener: IRemoteSystemSessionInvitationListener}
+RT_CLASS!{class RemoteSystemSessionInvitationListener: IRemoteSystemSessionInvitationListener ["Windows.System.RemoteSystems.RemoteSystemSessionInvitationListener"]}
 impl RtActivatable<IActivationFactory> for RemoteSystemSessionInvitationListener {}
 DEFINE_CLSID!(RemoteSystemSessionInvitationListener(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,73,110,118,105,116,97,116,105,111,110,76,105,115,116,101,110,101,114,0]) [CLSID_RemoteSystemSessionInvitationListener]);
 DEFINE_IID!(IID_IRemoteSystemSessionInvitationReceivedEventArgs, 1586907693, 41229, 20187, 141, 234, 84, 210, 10, 193, 149, 67);
@@ -5328,7 +5328,7 @@ impl IRemoteSystemSessionInvitationReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionInvitationReceivedEventArgs: IRemoteSystemSessionInvitationReceivedEventArgs}
+RT_CLASS!{class RemoteSystemSessionInvitationReceivedEventArgs: IRemoteSystemSessionInvitationReceivedEventArgs ["Windows.System.RemoteSystems.RemoteSystemSessionInvitationReceivedEventArgs"]}
 DEFINE_IID!(IID_IRemoteSystemSessionJoinRequest, 543162472, 31124, 17201, 134, 209, 216, 157, 136, 37, 133, 238);
 RT_INTERFACE!{interface IRemoteSystemSessionJoinRequest(IRemoteSystemSessionJoinRequestVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionJoinRequest] {
     fn get_Participant(&self, out: *mut *mut RemoteSystemSessionParticipant) -> HRESULT,
@@ -5345,7 +5345,7 @@ impl IRemoteSystemSessionJoinRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionJoinRequest: IRemoteSystemSessionJoinRequest}
+RT_CLASS!{class RemoteSystemSessionJoinRequest: IRemoteSystemSessionJoinRequest ["Windows.System.RemoteSystems.RemoteSystemSessionJoinRequest"]}
 DEFINE_IID!(IID_IRemoteSystemSessionJoinRequestedEventArgs, 3687468995, 33465, 18454, 156, 36, 228, 14, 97, 119, 75, 216);
 RT_INTERFACE!{interface IRemoteSystemSessionJoinRequestedEventArgs(IRemoteSystemSessionJoinRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionJoinRequestedEventArgs] {
     fn get_JoinRequest(&self, out: *mut *mut RemoteSystemSessionJoinRequest) -> HRESULT,
@@ -5363,7 +5363,7 @@ impl IRemoteSystemSessionJoinRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionJoinRequestedEventArgs: IRemoteSystemSessionJoinRequestedEventArgs}
+RT_CLASS!{class RemoteSystemSessionJoinRequestedEventArgs: IRemoteSystemSessionJoinRequestedEventArgs ["Windows.System.RemoteSystems.RemoteSystemSessionJoinRequestedEventArgs"]}
 DEFINE_IID!(IID_IRemoteSystemSessionJoinResult, 3464175364, 41022, 16804, 144, 11, 30, 121, 50, 140, 18, 103);
 RT_INTERFACE!{interface IRemoteSystemSessionJoinResult(IRemoteSystemSessionJoinResultVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionJoinResult] {
     fn get_Status(&self, out: *mut RemoteSystemSessionJoinStatus) -> HRESULT,
@@ -5381,8 +5381,8 @@ impl IRemoteSystemSessionJoinResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionJoinResult: IRemoteSystemSessionJoinResult}
-RT_ENUM! { enum RemoteSystemSessionJoinStatus: i32 {
+RT_CLASS!{class RemoteSystemSessionJoinResult: IRemoteSystemSessionJoinResult ["Windows.System.RemoteSystems.RemoteSystemSessionJoinResult"]}
+RT_ENUM! { enum RemoteSystemSessionJoinStatus: i32 ["Windows.System.RemoteSystems.RemoteSystemSessionJoinStatus"] {
     Success (RemoteSystemSessionJoinStatus_Success) = 0, SessionLimitsExceeded (RemoteSystemSessionJoinStatus_SessionLimitsExceeded) = 1, OperationAborted (RemoteSystemSessionJoinStatus_OperationAborted) = 2, SessionUnavailable (RemoteSystemSessionJoinStatus_SessionUnavailable) = 3, RejectedByController (RemoteSystemSessionJoinStatus_RejectedByController) = 4,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionMessageChannel, 2502218026, 29657, 19472, 183, 81, 194, 103, 132, 67, 113, 39);
@@ -5425,7 +5425,7 @@ impl IRemoteSystemSessionMessageChannel {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionMessageChannel: IRemoteSystemSessionMessageChannel}
+RT_CLASS!{class RemoteSystemSessionMessageChannel: IRemoteSystemSessionMessageChannel ["Windows.System.RemoteSystems.RemoteSystemSessionMessageChannel"]}
 impl RtActivatable<IRemoteSystemSessionMessageChannelFactory> for RemoteSystemSessionMessageChannel {}
 impl RemoteSystemSessionMessageChannel {
     #[inline] pub fn create(session: &RemoteSystemSession, channelName: &HStringArg) -> Result<ComPtr<RemoteSystemSessionMessageChannel>> {
@@ -5453,7 +5453,7 @@ impl IRemoteSystemSessionMessageChannelFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RemoteSystemSessionMessageChannelReliability: i32 {
+RT_ENUM! { enum RemoteSystemSessionMessageChannelReliability: i32 ["Windows.System.RemoteSystems.RemoteSystemSessionMessageChannelReliability"] {
     Reliable (RemoteSystemSessionMessageChannelReliability_Reliable) = 0, Unreliable (RemoteSystemSessionMessageChannelReliability_Unreliable) = 1,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionOptions, 1947129685, 33816, 20225, 147, 83, 226, 28, 158, 204, 108, 252);
@@ -5472,7 +5472,7 @@ impl IRemoteSystemSessionOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionOptions: IRemoteSystemSessionOptions}
+RT_CLASS!{class RemoteSystemSessionOptions: IRemoteSystemSessionOptions ["Windows.System.RemoteSystems.RemoteSystemSessionOptions"]}
 impl RtActivatable<IActivationFactory> for RemoteSystemSessionOptions {}
 DEFINE_CLSID!(RemoteSystemSessionOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,79,112,116,105,111,110,115,0]) [CLSID_RemoteSystemSessionOptions]);
 DEFINE_IID!(IID_IRemoteSystemSessionParticipant, 2123367820, 44281, 18217, 138, 23, 68, 231, 186, 237, 93, 204);
@@ -5492,7 +5492,7 @@ impl IRemoteSystemSessionParticipant {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionParticipant: IRemoteSystemSessionParticipant}
+RT_CLASS!{class RemoteSystemSessionParticipant: IRemoteSystemSessionParticipant ["Windows.System.RemoteSystems.RemoteSystemSessionParticipant"]}
 DEFINE_IID!(IID_IRemoteSystemSessionParticipantAddedEventArgs, 3545913304, 51617, 19383, 182, 176, 121, 187, 145, 173, 249, 61);
 RT_INTERFACE!{interface IRemoteSystemSessionParticipantAddedEventArgs(IRemoteSystemSessionParticipantAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionParticipantAddedEventArgs] {
     fn get_Participant(&self, out: *mut *mut RemoteSystemSessionParticipant) -> HRESULT
@@ -5504,7 +5504,7 @@ impl IRemoteSystemSessionParticipantAddedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionParticipantAddedEventArgs: IRemoteSystemSessionParticipantAddedEventArgs}
+RT_CLASS!{class RemoteSystemSessionParticipantAddedEventArgs: IRemoteSystemSessionParticipantAddedEventArgs ["Windows.System.RemoteSystems.RemoteSystemSessionParticipantAddedEventArgs"]}
 DEFINE_IID!(IID_IRemoteSystemSessionParticipantRemovedEventArgs, 2255417480, 56936, 19135, 136, 161, 249, 13, 22, 39, 65, 146);
 RT_INTERFACE!{interface IRemoteSystemSessionParticipantRemovedEventArgs(IRemoteSystemSessionParticipantRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionParticipantRemovedEventArgs] {
     fn get_Participant(&self, out: *mut *mut RemoteSystemSessionParticipant) -> HRESULT
@@ -5516,7 +5516,7 @@ impl IRemoteSystemSessionParticipantRemovedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionParticipantRemovedEventArgs: IRemoteSystemSessionParticipantRemovedEventArgs}
+RT_CLASS!{class RemoteSystemSessionParticipantRemovedEventArgs: IRemoteSystemSessionParticipantRemovedEventArgs ["Windows.System.RemoteSystems.RemoteSystemSessionParticipantRemovedEventArgs"]}
 DEFINE_IID!(IID_IRemoteSystemSessionParticipantWatcher, 3705471692, 43655, 19833, 182, 204, 68, 89, 179, 233, 32, 117);
 RT_INTERFACE!{interface IRemoteSystemSessionParticipantWatcher(IRemoteSystemSessionParticipantWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionParticipantWatcher] {
     fn Start(&self) -> HRESULT,
@@ -5571,8 +5571,8 @@ impl IRemoteSystemSessionParticipantWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionParticipantWatcher: IRemoteSystemSessionParticipantWatcher}
-RT_ENUM! { enum RemoteSystemSessionParticipantWatcherStatus: i32 {
+RT_CLASS!{class RemoteSystemSessionParticipantWatcher: IRemoteSystemSessionParticipantWatcher ["Windows.System.RemoteSystems.RemoteSystemSessionParticipantWatcher"]}
+RT_ENUM! { enum RemoteSystemSessionParticipantWatcherStatus: i32 ["Windows.System.RemoteSystems.RemoteSystemSessionParticipantWatcherStatus"] {
     Created (RemoteSystemSessionParticipantWatcherStatus_Created) = 0, Started (RemoteSystemSessionParticipantWatcherStatus_Started) = 1, EnumerationCompleted (RemoteSystemSessionParticipantWatcherStatus_EnumerationCompleted) = 2, Stopping (RemoteSystemSessionParticipantWatcherStatus_Stopping) = 3, Stopped (RemoteSystemSessionParticipantWatcherStatus_Stopped) = 4, Aborted (RemoteSystemSessionParticipantWatcherStatus_Aborted) = 5,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionRemovedEventArgs, 2944569678, 14753, 19946, 157, 99, 67, 121, 141, 91, 187, 208);
@@ -5586,7 +5586,7 @@ impl IRemoteSystemSessionRemovedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionRemovedEventArgs: IRemoteSystemSessionRemovedEventArgs}
+RT_CLASS!{class RemoteSystemSessionRemovedEventArgs: IRemoteSystemSessionRemovedEventArgs ["Windows.System.RemoteSystems.RemoteSystemSessionRemovedEventArgs"]}
 DEFINE_IID!(IID_IRemoteSystemSessionStatics, 2233764255, 64800, 17635, 149, 101, 231, 90, 59, 20, 198, 110);
 RT_INTERFACE!{static interface IRemoteSystemSessionStatics(IRemoteSystemSessionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionStatics] {
     fn CreateWatcher(&self, out: *mut *mut RemoteSystemSessionWatcher) -> HRESULT
@@ -5609,7 +5609,7 @@ impl IRemoteSystemSessionUpdatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionUpdatedEventArgs: IRemoteSystemSessionUpdatedEventArgs}
+RT_CLASS!{class RemoteSystemSessionUpdatedEventArgs: IRemoteSystemSessionUpdatedEventArgs ["Windows.System.RemoteSystems.RemoteSystemSessionUpdatedEventArgs"]}
 DEFINE_IID!(IID_IRemoteSystemSessionValueSetReceivedEventArgs, 116594565, 11685, 20056, 167, 143, 158, 141, 7, 132, 238, 37);
 RT_INTERFACE!{interface IRemoteSystemSessionValueSetReceivedEventArgs(IRemoteSystemSessionValueSetReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionValueSetReceivedEventArgs] {
     fn get_Sender(&self, out: *mut *mut RemoteSystemSessionParticipant) -> HRESULT,
@@ -5627,7 +5627,7 @@ impl IRemoteSystemSessionValueSetReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionValueSetReceivedEventArgs: IRemoteSystemSessionValueSetReceivedEventArgs}
+RT_CLASS!{class RemoteSystemSessionValueSetReceivedEventArgs: IRemoteSystemSessionValueSetReceivedEventArgs ["Windows.System.RemoteSystems.RemoteSystemSessionValueSetReceivedEventArgs"]}
 DEFINE_IID!(IID_IRemoteSystemSessionWatcher, 2147738432, 3137, 19042, 182, 215, 189, 190, 43, 25, 190, 45);
 RT_INTERFACE!{interface IRemoteSystemSessionWatcher(IRemoteSystemSessionWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionWatcher] {
     fn Start(&self) -> HRESULT,
@@ -5682,8 +5682,8 @@ impl IRemoteSystemSessionWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemSessionWatcher: IRemoteSystemSessionWatcher}
-RT_ENUM! { enum RemoteSystemSessionWatcherStatus: i32 {
+RT_CLASS!{class RemoteSystemSessionWatcher: IRemoteSystemSessionWatcher ["Windows.System.RemoteSystems.RemoteSystemSessionWatcher"]}
+RT_ENUM! { enum RemoteSystemSessionWatcherStatus: i32 ["Windows.System.RemoteSystems.RemoteSystemSessionWatcherStatus"] {
     Created (RemoteSystemSessionWatcherStatus_Created) = 0, Started (RemoteSystemSessionWatcherStatus_Started) = 1, EnumerationCompleted (RemoteSystemSessionWatcherStatus_EnumerationCompleted) = 2, Stopping (RemoteSystemSessionWatcherStatus_Stopping) = 3, Stopped (RemoteSystemSessionWatcherStatus_Stopped) = 4, Aborted (RemoteSystemSessionWatcherStatus_Aborted) = 5,
 }}
 DEFINE_IID!(IID_IRemoteSystemStatics, 2760225682, 65323, 19271, 190, 98, 116, 63, 47, 20, 15, 48);
@@ -5727,10 +5727,10 @@ impl IRemoteSystemStatics2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RemoteSystemStatus: i32 {
+RT_ENUM! { enum RemoteSystemStatus: i32 ["Windows.System.RemoteSystems.RemoteSystemStatus"] {
     Unavailable (RemoteSystemStatus_Unavailable) = 0, DiscoveringAvailability (RemoteSystemStatus_DiscoveringAvailability) = 1, Available (RemoteSystemStatus_Available) = 2, Unknown (RemoteSystemStatus_Unknown) = 3,
 }}
-RT_ENUM! { enum RemoteSystemStatusType: i32 {
+RT_ENUM! { enum RemoteSystemStatusType: i32 ["Windows.System.RemoteSystems.RemoteSystemStatusType"] {
     Any (RemoteSystemStatusType_Any) = 0, Available (RemoteSystemStatusType_Available) = 1,
 }}
 DEFINE_IID!(IID_IRemoteSystemStatusTypeFilter, 205082958, 52150, 18295, 133, 52, 46, 12, 82, 26, 255, 162);
@@ -5744,7 +5744,7 @@ impl IRemoteSystemStatusTypeFilter {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemStatusTypeFilter: IRemoteSystemStatusTypeFilter}
+RT_CLASS!{class RemoteSystemStatusTypeFilter: IRemoteSystemStatusTypeFilter ["Windows.System.RemoteSystems.RemoteSystemStatusTypeFilter"]}
 impl RtActivatable<IRemoteSystemStatusTypeFilterFactory> for RemoteSystemStatusTypeFilter {}
 impl RemoteSystemStatusTypeFilter {
     #[inline] pub fn create(remoteSystemStatusType: RemoteSystemStatusType) -> Result<ComPtr<RemoteSystemStatusTypeFilter>> {
@@ -5774,7 +5774,7 @@ impl IRemoteSystemUpdatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemUpdatedEventArgs: IRemoteSystemUpdatedEventArgs}
+RT_CLASS!{class RemoteSystemUpdatedEventArgs: IRemoteSystemUpdatedEventArgs ["Windows.System.RemoteSystems.RemoteSystemUpdatedEventArgs"]}
 DEFINE_IID!(IID_IRemoteSystemWatcher, 1566575742, 11271, 18629, 136, 156, 69, 93, 43, 9, 151, 113);
 RT_INTERFACE!{interface IRemoteSystemWatcher(IRemoteSystemWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemWatcher] {
     fn Start(&self) -> HRESULT,
@@ -5823,7 +5823,7 @@ impl IRemoteSystemWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemWatcher: IRemoteSystemWatcher}
+RT_CLASS!{class RemoteSystemWatcher: IRemoteSystemWatcher ["Windows.System.RemoteSystems.RemoteSystemWatcher"]}
 DEFINE_IID!(IID_IRemoteSystemWatcher2, 1933797120, 6602, 18681, 164, 205, 120, 15, 122, 213, 140, 113);
 RT_INTERFACE!{interface IRemoteSystemWatcher2(IRemoteSystemWatcher2Vtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemWatcher2] {
     fn add_EnumerationCompleted(&self, handler: *mut foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemEnumerationCompletedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5851,7 +5851,7 @@ impl IRemoteSystemWatcher2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RemoteSystemWatcherError: i32 {
+RT_ENUM! { enum RemoteSystemWatcherError: i32 ["Windows.System.RemoteSystems.RemoteSystemWatcherError"] {
     Unknown (RemoteSystemWatcherError_Unknown) = 0, InternetNotAvailable (RemoteSystemWatcherError_InternetNotAvailable) = 1, AuthenticationError (RemoteSystemWatcherError_AuthenticationError) = 2,
 }}
 DEFINE_IID!(IID_IRemoteSystemWatcherErrorOccurredEventArgs, 1959118511, 20756, 17446, 146, 22, 32, 216, 31, 133, 25, 174);
@@ -5865,7 +5865,7 @@ impl IRemoteSystemWatcherErrorOccurredEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemWatcherErrorOccurredEventArgs: IRemoteSystemWatcherErrorOccurredEventArgs}
+RT_CLASS!{class RemoteSystemWatcherErrorOccurredEventArgs: IRemoteSystemWatcherErrorOccurredEventArgs ["Windows.System.RemoteSystems.RemoteSystemWatcherErrorOccurredEventArgs"]}
 DEFINE_IID!(IID_IRemoteSystemWebAccountFilter, 1068980339, 34760, 23951, 151, 126, 246, 159, 150, 214, 114, 56);
 RT_INTERFACE!{interface IRemoteSystemWebAccountFilter(IRemoteSystemWebAccountFilterVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemWebAccountFilter] {
     #[cfg(feature="windows-security")] fn get_Account(&self, out: *mut *mut super::super::security::credentials::WebAccount) -> HRESULT
@@ -5877,7 +5877,7 @@ impl IRemoteSystemWebAccountFilter {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteSystemWebAccountFilter: IRemoteSystemWebAccountFilter}
+RT_CLASS!{class RemoteSystemWebAccountFilter: IRemoteSystemWebAccountFilter ["Windows.System.RemoteSystems.RemoteSystemWebAccountFilter"]}
 impl RtActivatable<IRemoteSystemWebAccountFilterFactory> for RemoteSystemWebAccountFilter {}
 impl RemoteSystemWebAccountFilter {
     #[cfg(feature="windows-security")] #[inline] pub fn create(account: &super::super::security::credentials::WebAccount) -> Result<ComPtr<RemoteSystemWebAccountFilter>> {
@@ -5958,7 +5958,7 @@ impl IThreadPoolTimer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ThreadPoolTimer: IThreadPoolTimer}
+RT_CLASS!{class ThreadPoolTimer: IThreadPoolTimer ["Windows.System.Threading.ThreadPoolTimer"]}
 impl RtActivatable<IThreadPoolTimerStatics> for ThreadPoolTimer {}
 impl ThreadPoolTimer {
     #[inline] pub fn create_periodic_timer(handler: &TimerElapsedHandler, period: foundation::TimeSpan) -> Result<Option<ComPtr<ThreadPoolTimer>>> {
@@ -6034,10 +6034,10 @@ impl WorkItemHandler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WorkItemOptions: u32 {
+RT_ENUM! { enum WorkItemOptions: u32 ["Windows.System.Threading.WorkItemOptions"] {
     None (WorkItemOptions_None) = 0, TimeSliced (WorkItemOptions_TimeSliced) = 1,
 }}
-RT_ENUM! { enum WorkItemPriority: i32 {
+RT_ENUM! { enum WorkItemPriority: i32 ["Windows.System.Threading.WorkItemPriority"] {
     Low (WorkItemPriority_Low) = -1, Normal (WorkItemPriority_Normal) = 0, High (WorkItemPriority_High) = 1,
 }}
 pub mod core { // Windows.System.Threading.Core
@@ -6053,7 +6053,7 @@ impl IPreallocatedWorkItem {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PreallocatedWorkItem: IPreallocatedWorkItem}
+RT_CLASS!{class PreallocatedWorkItem: IPreallocatedWorkItem ["Windows.System.Threading.Core.PreallocatedWorkItem"]}
 impl RtActivatable<IPreallocatedWorkItemFactory> for PreallocatedWorkItem {}
 impl PreallocatedWorkItem {
     #[inline] pub fn create_work_item(handler: &super::WorkItemHandler) -> Result<ComPtr<PreallocatedWorkItem>> {
@@ -6115,7 +6115,7 @@ impl ISignalNotifier {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SignalNotifier: ISignalNotifier}
+RT_CLASS!{class SignalNotifier: ISignalNotifier ["Windows.System.Threading.Core.SignalNotifier"]}
 impl RtActivatable<ISignalNotifierStatics> for SignalNotifier {}
 impl SignalNotifier {
     #[inline] pub fn attach_to_event(name: &HStringArg, handler: &SignalHandler) -> Result<Option<ComPtr<SignalNotifier>>> {
@@ -6165,7 +6165,7 @@ impl ISignalNotifierStatics {
 } // Windows.System.Threading
 pub mod update { // Windows.System.Update
 use ::prelude::*;
-RT_ENUM! { enum SystemUpdateAttentionRequiredReason: i32 {
+RT_ENUM! { enum SystemUpdateAttentionRequiredReason: i32 ["Windows.System.Update.SystemUpdateAttentionRequiredReason"] {
     None (SystemUpdateAttentionRequiredReason_None) = 0, NetworkRequired (SystemUpdateAttentionRequiredReason_NetworkRequired) = 1, InsufficientDiskSpace (SystemUpdateAttentionRequiredReason_InsufficientDiskSpace) = 2, InsufficientBattery (SystemUpdateAttentionRequiredReason_InsufficientBattery) = 3, UpdateBlocked (SystemUpdateAttentionRequiredReason_UpdateBlocked) = 4,
 }}
 DEFINE_IID!(IID_ISystemUpdateItem, 2006401259, 22052, 20894, 168, 226, 9, 233, 23, 59, 63, 183);
@@ -6221,8 +6221,8 @@ impl ISystemUpdateItem {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemUpdateItem: ISystemUpdateItem}
-RT_ENUM! { enum SystemUpdateItemState: i32 {
+RT_CLASS!{class SystemUpdateItem: ISystemUpdateItem ["Windows.System.Update.SystemUpdateItem"]}
+RT_ENUM! { enum SystemUpdateItemState: i32 ["Windows.System.Update.SystemUpdateItemState"] {
     NotStarted (SystemUpdateItemState_NotStarted) = 0, Initializing (SystemUpdateItemState_Initializing) = 1, Preparing (SystemUpdateItemState_Preparing) = 2, Calculating (SystemUpdateItemState_Calculating) = 3, Downloading (SystemUpdateItemState_Downloading) = 4, Installing (SystemUpdateItemState_Installing) = 5, Completed (SystemUpdateItemState_Completed) = 6, RebootRequired (SystemUpdateItemState_RebootRequired) = 7, Error (SystemUpdateItemState_Error) = 8,
 }}
 DEFINE_IID!(IID_ISystemUpdateLastErrorInfo, 2129168375, 35396, 23406, 189, 7, 122, 236, 228, 17, 110, 169);
@@ -6248,7 +6248,7 @@ impl ISystemUpdateLastErrorInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemUpdateLastErrorInfo: ISystemUpdateLastErrorInfo}
+RT_CLASS!{class SystemUpdateLastErrorInfo: ISystemUpdateLastErrorInfo ["Windows.System.Update.SystemUpdateLastErrorInfo"]}
 RT_CLASS!{static class SystemUpdateManager}
 impl RtActivatable<ISystemUpdateManagerStatics> for SystemUpdateManager {}
 impl SystemUpdateManager {
@@ -6326,7 +6326,7 @@ impl SystemUpdateManager {
     }
 }
 DEFINE_CLSID!(SystemUpdateManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,112,100,97,116,101,46,83,121,115,116,101,109,85,112,100,97,116,101,77,97,110,97,103,101,114,0]) [CLSID_SystemUpdateManager]);
-RT_ENUM! { enum SystemUpdateManagerState: i32 {
+RT_ENUM! { enum SystemUpdateManagerState: i32 ["Windows.System.Update.SystemUpdateManagerState"] {
     Idle (SystemUpdateManagerState_Idle) = 0, Detecting (SystemUpdateManagerState_Detecting) = 1, ReadyToDownload (SystemUpdateManagerState_ReadyToDownload) = 2, Downloading (SystemUpdateManagerState_Downloading) = 3, ReadyToInstall (SystemUpdateManagerState_ReadyToInstall) = 4, Installing (SystemUpdateManagerState_Installing) = 5, RebootRequired (SystemUpdateManagerState_RebootRequired) = 6, ReadyToFinalize (SystemUpdateManagerState_ReadyToFinalize) = 7, Finalizing (SystemUpdateManagerState_Finalizing) = 8, Completed (SystemUpdateManagerState_Completed) = 9, AttentionRequired (SystemUpdateManagerState_AttentionRequired) = 10, Error (SystemUpdateManagerState_Error) = 11,
 }}
 DEFINE_IID!(IID_ISystemUpdateManagerStatics, 3000237295, 10609, 20926, 180, 26, 139, 215, 3, 187, 112, 26);
@@ -6474,13 +6474,13 @@ impl ISystemUpdateManagerStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SystemUpdateStartInstallAction: i32 {
+RT_ENUM! { enum SystemUpdateStartInstallAction: i32 ["Windows.System.Update.SystemUpdateStartInstallAction"] {
     UpToReboot (SystemUpdateStartInstallAction_UpToReboot) = 0, AllowReboot (SystemUpdateStartInstallAction_AllowReboot) = 1,
 }}
 } // Windows.System.Update
 pub mod userprofile { // Windows.System.UserProfile
 use ::prelude::*;
-RT_ENUM! { enum AccountPictureKind: i32 {
+RT_ENUM! { enum AccountPictureKind: i32 ["Windows.System.UserProfile.AccountPictureKind"] {
     SmallImage (AccountPictureKind_SmallImage) = 0, LargeImage (AccountPictureKind_LargeImage) = 1, Video (AccountPictureKind_Video) = 2,
 }}
 RT_CLASS!{static class AdvertisingManager}
@@ -6512,7 +6512,7 @@ impl IAdvertisingManagerForUser {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdvertisingManagerForUser: IAdvertisingManagerForUser}
+RT_CLASS!{class AdvertisingManagerForUser: IAdvertisingManagerForUser ["Windows.System.UserProfile.AdvertisingManagerForUser"]}
 DEFINE_IID!(IID_IAdvertisingManagerStatics, 2916304524, 41587, 18635, 179, 70, 53, 68, 82, 45, 85, 129);
 RT_INTERFACE!{static interface IAdvertisingManagerStatics(IAdvertisingManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAdvertisingManagerStatics] {
     fn get_AdvertisingId(&self, out: *mut HSTRING) -> HRESULT
@@ -6558,7 +6558,7 @@ impl IAssignedAccessSettings {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AssignedAccessSettings: IAssignedAccessSettings}
+RT_CLASS!{class AssignedAccessSettings: IAssignedAccessSettings ["Windows.System.UserProfile.AssignedAccessSettings"]}
 impl RtActivatable<IAssignedAccessSettingsStatics> for AssignedAccessSettings {}
 impl AssignedAccessSettings {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<AssignedAccessSettings>>> {
@@ -6603,7 +6603,7 @@ impl IDiagnosticsSettings {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DiagnosticsSettings: IDiagnosticsSettings}
+RT_CLASS!{class DiagnosticsSettings: IDiagnosticsSettings ["Windows.System.UserProfile.DiagnosticsSettings"]}
 impl RtActivatable<IDiagnosticsSettingsStatics> for DiagnosticsSettings {}
 impl DiagnosticsSettings {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<DiagnosticsSettings>>> {
@@ -6635,7 +6635,7 @@ DEFINE_IID!(IID_IFirstSignInSettings, 1049907539, 14942, 17710, 166, 1, 245, 186
 RT_INTERFACE!{interface IFirstSignInSettings(IFirstSignInSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IFirstSignInSettings] {
     
 }}
-RT_CLASS!{class FirstSignInSettings: IFirstSignInSettings}
+RT_CLASS!{class FirstSignInSettings: IFirstSignInSettings ["Windows.System.UserProfile.FirstSignInSettings"]}
 impl RtActivatable<IFirstSignInSettingsStatics> for FirstSignInSettings {}
 impl FirstSignInSettings {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<FirstSignInSettings>>> {
@@ -6735,7 +6735,7 @@ impl IGlobalizationPreferencesForUser {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GlobalizationPreferencesForUser: IGlobalizationPreferencesForUser}
+RT_CLASS!{class GlobalizationPreferencesForUser: IGlobalizationPreferencesForUser ["Windows.System.UserProfile.GlobalizationPreferencesForUser"]}
 DEFINE_IID!(IID_IGlobalizationPreferencesStatics, 29311782, 60727, 20118, 176, 233, 193, 52, 13, 30, 161, 88);
 RT_INTERFACE!{static interface IGlobalizationPreferencesStatics(IGlobalizationPreferencesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalizationPreferencesStatics] {
     fn get_Calendars(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
@@ -6875,10 +6875,10 @@ impl ILockScreenStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SetAccountPictureResult: i32 {
+RT_ENUM! { enum SetAccountPictureResult: i32 ["Windows.System.UserProfile.SetAccountPictureResult"] {
     Success (SetAccountPictureResult_Success) = 0, ChangeDisabled (SetAccountPictureResult_ChangeDisabled) = 1, LargeOrDynamicError (SetAccountPictureResult_LargeOrDynamicError) = 2, VideoFrameSizeError (SetAccountPictureResult_VideoFrameSizeError) = 3, FileSizeError (SetAccountPictureResult_FileSizeError) = 4, Failure (SetAccountPictureResult_Failure) = 5,
 }}
-RT_ENUM! { enum SetImageFeedResult: i32 {
+RT_ENUM! { enum SetImageFeedResult: i32 ["Windows.System.UserProfile.SetImageFeedResult"] {
     Success (SetImageFeedResult_Success) = 0, ChangeDisabled (SetImageFeedResult_ChangeDisabled) = 1, UserCanceled (SetImageFeedResult_UserCanceled) = 2,
 }}
 RT_CLASS!{static class UserInformation}
@@ -7047,7 +7047,7 @@ impl IUserProfilePersonalizationSettings {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserProfilePersonalizationSettings: IUserProfilePersonalizationSettings}
+RT_CLASS!{class UserProfilePersonalizationSettings: IUserProfilePersonalizationSettings ["Windows.System.UserProfile.UserProfilePersonalizationSettings"]}
 impl RtActivatable<IUserProfilePersonalizationSettingsStatics> for UserProfilePersonalizationSettings {}
 impl UserProfilePersonalizationSettings {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<UserProfilePersonalizationSettings>>> {

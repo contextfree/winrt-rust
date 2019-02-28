@@ -53,7 +53,7 @@ pub unsafe extern "system" fn ComReprHandler_QueryInterface<T, I>(this_: *mut IU
     //println!("QueryInterface called with GUID {:?}", guid);
 
     // IAgileObject is only supported for Send objects
-    if guid != *IUnknown::iid() && guid != *IAgileObject::iid() && guid != *<I as ComIid>::iid() { 
+    if guid != IUnknown::iid() && guid != IAgileObject::iid() && guid != <I as ComIid>::iid() { 
         *ppv = ::std::ptr::null_mut();
         return E_NOINTERFACE;
     }

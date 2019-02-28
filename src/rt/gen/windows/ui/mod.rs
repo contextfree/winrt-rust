@@ -1,12 +1,12 @@
 use ::prelude::*;
-RT_STRUCT! { struct Color {
+RT_STRUCT! { struct Color ["Windows.UI.Color"] {
     A: u8, R: u8, G: u8, B: u8,
 }}
 DEFINE_IID!(IID_IColorHelper, 423427047, 26055, 17728, 173, 8, 98, 131, 186, 118, 135, 154);
 RT_INTERFACE!{interface IColorHelper(IColorHelperVtbl): IInspectable(IInspectableVtbl) [IID_IColorHelper] {
     
 }}
-RT_CLASS!{class ColorHelper: IColorHelper}
+RT_CLASS!{class ColorHelper: IColorHelper ["Windows.UI.ColorHelper"]}
 impl RtActivatable<IColorHelperStatics> for ColorHelper {}
 impl RtActivatable<IColorHelperStatics2> for ColorHelper {}
 impl ColorHelper {
@@ -44,7 +44,7 @@ DEFINE_IID!(IID_IColors, 2609681190, 19622, 19685, 137, 148, 158, 255, 101, 202,
 RT_INTERFACE!{interface IColors(IColorsVtbl): IInspectable(IInspectableVtbl) [IID_IColors] {
     
 }}
-RT_CLASS!{class Colors: IColors}
+RT_CLASS!{class Colors: IColors ["Windows.UI.Colors"]}
 impl RtActivatable<IColorsStatics> for Colors {}
 impl Colors {
     #[inline] pub fn get_alice_blue() -> Result<Color> {
@@ -1342,7 +1342,7 @@ impl IScreenReaderPositionChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ScreenReaderPositionChangedEventArgs: IScreenReaderPositionChangedEventArgs}
+RT_CLASS!{class ScreenReaderPositionChangedEventArgs: IScreenReaderPositionChangedEventArgs ["Windows.UI.Accessibility.ScreenReaderPositionChangedEventArgs"]}
 DEFINE_IID!(IID_IScreenReaderService, 424104999, 60096, 20691, 189, 217, 155, 72, 122, 34, 98, 86);
 RT_INTERFACE!{interface IScreenReaderService(IScreenReaderServiceVtbl): IInspectable(IInspectableVtbl) [IID_IScreenReaderService] {
     fn get_CurrentScreenReaderPosition(&self, out: *mut *mut ScreenReaderPositionChangedEventArgs) -> HRESULT,
@@ -1365,7 +1365,7 @@ impl IScreenReaderService {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ScreenReaderService: IScreenReaderService}
+RT_CLASS!{class ScreenReaderService: IScreenReaderService ["Windows.UI.Accessibility.ScreenReaderService"]}
 impl RtActivatable<IActivationFactory> for ScreenReaderService {}
 DEFINE_CLSID!(ScreenReaderService(&[87,105,110,100,111,119,115,46,85,73,46,65,99,99,101,115,115,105,98,105,108,105,116,121,46,83,99,114,101,101,110,82,101,97,100,101,114,83,101,114,118,105,99,101,0]) [CLSID_ScreenReaderService]);
 } // Windows.UI.Accessibility
@@ -1387,7 +1387,7 @@ impl IAccountsSettingsPane {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AccountsSettingsPane: IAccountsSettingsPane}
+RT_CLASS!{class AccountsSettingsPane: IAccountsSettingsPane ["Windows.UI.ApplicationSettings.AccountsSettingsPane"]}
 impl RtActivatable<IAccountsSettingsPaneStatics> for AccountsSettingsPane {}
 impl RtActivatable<IAccountsSettingsPaneStatics2> for AccountsSettingsPane {}
 impl RtActivatable<IAccountsSettingsPaneStatics3> for AccountsSettingsPane {}
@@ -1458,7 +1458,7 @@ impl IAccountsSettingsPaneCommandsRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AccountsSettingsPaneCommandsRequestedEventArgs: IAccountsSettingsPaneCommandsRequestedEventArgs}
+RT_CLASS!{class AccountsSettingsPaneCommandsRequestedEventArgs: IAccountsSettingsPaneCommandsRequestedEventArgs ["Windows.UI.ApplicationSettings.AccountsSettingsPaneCommandsRequestedEventArgs"]}
 DEFINE_IID!(IID_IAccountsSettingsPaneCommandsRequestedEventArgs2, 909081517, 20023, 18791, 140, 64, 231, 142, 231, 161, 229, 187);
 RT_INTERFACE!{interface IAccountsSettingsPaneCommandsRequestedEventArgs2(IAccountsSettingsPaneCommandsRequestedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IAccountsSettingsPaneCommandsRequestedEventArgs2] {
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
@@ -1480,7 +1480,7 @@ impl IAccountsSettingsPaneEventDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AccountsSettingsPaneEventDeferral: IAccountsSettingsPaneEventDeferral}
+RT_CLASS!{class AccountsSettingsPaneEventDeferral: IAccountsSettingsPaneEventDeferral ["Windows.UI.ApplicationSettings.AccountsSettingsPaneEventDeferral"]}
 DEFINE_IID!(IID_IAccountsSettingsPaneStatics, 1444907872, 45292, 16720, 168, 220, 32, 142, 228, 75, 6, 138);
 RT_INTERFACE!{static interface IAccountsSettingsPaneStatics(IAccountsSettingsPaneStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAccountsSettingsPaneStatics] {
     fn GetForCurrentView(&self, out: *mut *mut AccountsSettingsPane) -> HRESULT,
@@ -1549,7 +1549,7 @@ impl ICredentialCommand {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CredentialCommand: ICredentialCommand}
+RT_CLASS!{class CredentialCommand: ICredentialCommand ["Windows.UI.ApplicationSettings.CredentialCommand"]}
 impl RtActivatable<ICredentialCommandFactory> for CredentialCommand {}
 impl CredentialCommand {
     #[cfg(feature="windows-security")] #[inline] pub fn create_credential_command(passwordCredential: &super::super::security::credentials::PasswordCredential) -> Result<ComPtr<CredentialCommand>> {
@@ -1587,7 +1587,7 @@ impl ICredentialCommandFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SettingsCommand: super::popups::IUICommand}
+RT_CLASS!{class SettingsCommand: super::popups::IUICommand ["Windows.UI.ApplicationSettings.SettingsCommand"]}
 impl RtActivatable<ISettingsCommandFactory> for SettingsCommand {}
 impl RtActivatable<ISettingsCommandStatics> for SettingsCommand {}
 impl SettingsCommand {
@@ -1621,7 +1621,7 @@ impl ISettingsCommandStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SettingsEdgeLocation: i32 {
+RT_ENUM! { enum SettingsEdgeLocation: i32 ["Windows.UI.ApplicationSettings.SettingsEdgeLocation"] {
     Right (SettingsEdgeLocation_Right) = 0, Left (SettingsEdgeLocation_Left) = 1,
 }}
 DEFINE_IID!(IID_ISettingsPane, 2983004466, 17776, 19561, 141, 56, 137, 68, 101, 97, 172, 224);
@@ -1640,7 +1640,7 @@ impl ISettingsPane {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SettingsPane: ISettingsPane}
+RT_CLASS!{class SettingsPane: ISettingsPane ["Windows.UI.ApplicationSettings.SettingsPane"]}
 impl RtActivatable<ISettingsPaneStatics> for SettingsPane {}
 impl SettingsPane {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<SettingsPane>>> {
@@ -1665,7 +1665,7 @@ impl ISettingsPaneCommandsRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SettingsPaneCommandsRequest: ISettingsPaneCommandsRequest}
+RT_CLASS!{class SettingsPaneCommandsRequest: ISettingsPaneCommandsRequest ["Windows.UI.ApplicationSettings.SettingsPaneCommandsRequest"]}
 DEFINE_IID!(IID_ISettingsPaneCommandsRequestedEventArgs, 543120676, 6984, 17961, 166, 202, 47, 223, 237, 175, 183, 93);
 RT_INTERFACE!{interface ISettingsPaneCommandsRequestedEventArgs(ISettingsPaneCommandsRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISettingsPaneCommandsRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut SettingsPaneCommandsRequest) -> HRESULT
@@ -1677,7 +1677,7 @@ impl ISettingsPaneCommandsRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SettingsPaneCommandsRequestedEventArgs: ISettingsPaneCommandsRequestedEventArgs}
+RT_CLASS!{class SettingsPaneCommandsRequestedEventArgs: ISettingsPaneCommandsRequestedEventArgs ["Windows.UI.ApplicationSettings.SettingsPaneCommandsRequestedEventArgs"]}
 DEFINE_IID!(IID_ISettingsPaneStatics, 476730053, 65305, 18203, 186, 107, 248, 243, 86, 148, 173, 154);
 RT_INTERFACE!{static interface ISettingsPaneStatics(ISettingsPaneStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISettingsPaneStatics] {
     fn GetForCurrentView(&self, out: *mut *mut SettingsPane) -> HRESULT,
@@ -1700,10 +1700,10 @@ impl ISettingsPaneStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SupportedWebAccountActions: u32 {
+RT_ENUM! { enum SupportedWebAccountActions: u32 ["Windows.UI.ApplicationSettings.SupportedWebAccountActions"] {
     None (SupportedWebAccountActions_None) = 0, Reconnect (SupportedWebAccountActions_Reconnect) = 1, Remove (SupportedWebAccountActions_Remove) = 2, ViewDetails (SupportedWebAccountActions_ViewDetails) = 4, Manage (SupportedWebAccountActions_Manage) = 8, More (SupportedWebAccountActions_More) = 16,
 }}
-RT_ENUM! { enum WebAccountAction: i32 {
+RT_ENUM! { enum WebAccountAction: i32 ["Windows.UI.ApplicationSettings.WebAccountAction"] {
     Reconnect (WebAccountAction_Reconnect) = 0, Remove (WebAccountAction_Remove) = 1, ViewDetails (WebAccountAction_ViewDetails) = 2, Manage (WebAccountAction_Manage) = 3, More (WebAccountAction_More) = 4,
 }}
 DEFINE_IID!(IID_IWebAccountCommand, 3399717784, 40186, 16966, 176, 196, 169, 19, 163, 137, 101, 65);
@@ -1730,7 +1730,7 @@ impl IWebAccountCommand {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountCommand: IWebAccountCommand}
+RT_CLASS!{class WebAccountCommand: IWebAccountCommand ["Windows.UI.ApplicationSettings.WebAccountCommand"]}
 impl RtActivatable<IWebAccountCommandFactory> for WebAccountCommand {}
 impl WebAccountCommand {
     #[cfg(feature="windows-security")] #[inline] pub fn create_web_account_command(webAccount: &super::super::security::credentials::WebAccount, invoked: &WebAccountCommandInvokedHandler, actions: SupportedWebAccountActions) -> Result<ComPtr<WebAccountCommand>> {
@@ -1770,7 +1770,7 @@ impl IWebAccountInvokedArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountInvokedArgs: IWebAccountInvokedArgs}
+RT_CLASS!{class WebAccountInvokedArgs: IWebAccountInvokedArgs ["Windows.UI.ApplicationSettings.WebAccountInvokedArgs"]}
 DEFINE_IID!(IID_IWebAccountProviderCommand, 3600539034, 41126, 20123, 136, 220, 199, 30, 117, 122, 53, 1);
 RT_INTERFACE!{interface IWebAccountProviderCommand(IWebAccountProviderCommandVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderCommand] {
     #[cfg(not(feature="windows-security"))] fn __Dummy0(&self) -> (),
@@ -1789,7 +1789,7 @@ impl IWebAccountProviderCommand {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountProviderCommand: IWebAccountProviderCommand}
+RT_CLASS!{class WebAccountProviderCommand: IWebAccountProviderCommand ["Windows.UI.ApplicationSettings.WebAccountProviderCommand"]}
 impl RtActivatable<IWebAccountProviderCommandFactory> for WebAccountProviderCommand {}
 impl WebAccountProviderCommand {
     #[cfg(feature="windows-security")] #[inline] pub fn create_web_account_provider_command(webAccountProvider: &super::super::security::credentials::WebAccountProvider, invoked: &WebAccountProviderCommandInvokedHandler) -> Result<ComPtr<WebAccountProviderCommand>> {
@@ -1837,7 +1837,7 @@ impl IAmbientLight {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AmbientLight: IAmbientLight}
+RT_CLASS!{class AmbientLight: IAmbientLight ["Windows.UI.Composition.AmbientLight"]}
 DEFINE_IID!(IID_IAmbientLight2, 996452031, 24471, 19604, 134, 229, 4, 45, 211, 134, 178, 125);
 RT_INTERFACE!{interface IAmbientLight2(IAmbientLight2Vtbl): IInspectable(IInspectableVtbl) [IID_IAmbientLight2] {
     fn get_Intensity(&self, out: *mut f32) -> HRESULT,
@@ -1902,7 +1902,7 @@ impl IAnimationController {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AnimationController: IAnimationController}
+RT_CLASS!{class AnimationController: IAnimationController ["Windows.UI.Composition.AnimationController"]}
 impl RtActivatable<IAnimationControllerStatics> for AnimationController {}
 impl AnimationController {
     #[inline] pub fn get_max_playback_rate() -> Result<f32> {
@@ -1913,7 +1913,7 @@ impl AnimationController {
     }
 }
 DEFINE_CLSID!(AnimationController(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,65,110,105,109,97,116,105,111,110,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_AnimationController]);
-RT_ENUM! { enum AnimationControllerProgressBehavior: i32 {
+RT_ENUM! { enum AnimationControllerProgressBehavior: i32 ["Windows.UI.Composition.AnimationControllerProgressBehavior"] {
     Default (AnimationControllerProgressBehavior_Default) = 0, IncludesDelayTime (AnimationControllerProgressBehavior_IncludesDelayTime) = 1,
 }}
 DEFINE_IID!(IID_IAnimationControllerStatics, 3876676831, 25883, 18432, 185, 229, 106, 59, 207, 237, 51, 101);
@@ -1933,13 +1933,13 @@ impl IAnimationControllerStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AnimationDelayBehavior: i32 {
+RT_ENUM! { enum AnimationDelayBehavior: i32 ["Windows.UI.Composition.AnimationDelayBehavior"] {
     SetInitialValueAfterDelay (AnimationDelayBehavior_SetInitialValueAfterDelay) = 0, SetInitialValueBeforeDelay (AnimationDelayBehavior_SetInitialValueBeforeDelay) = 1,
 }}
-RT_ENUM! { enum AnimationDirection: i32 {
+RT_ENUM! { enum AnimationDirection: i32 ["Windows.UI.Composition.AnimationDirection"] {
     Normal (AnimationDirection_Normal) = 0, Reverse (AnimationDirection_Reverse) = 1, Alternate (AnimationDirection_Alternate) = 2, AlternateReverse (AnimationDirection_AlternateReverse) = 3,
 }}
-RT_ENUM! { enum AnimationIterationBehavior: i32 {
+RT_ENUM! { enum AnimationIterationBehavior: i32 ["Windows.UI.Composition.AnimationIterationBehavior"] {
     Count (AnimationIterationBehavior_Count) = 0, Forever (AnimationIterationBehavior_Forever) = 1,
 }}
 DEFINE_IID!(IID_IAnimationObject, 3876855306, 1208, 20421, 164, 220, 25, 83, 146, 229, 120, 7);
@@ -1952,7 +1952,7 @@ impl IAnimationObject {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AnimationPropertyAccessMode: i32 {
+RT_ENUM! { enum AnimationPropertyAccessMode: i32 ["Windows.UI.Composition.AnimationPropertyAccessMode"] {
     None (AnimationPropertyAccessMode_None) = 0, ReadOnly (AnimationPropertyAccessMode_ReadOnly) = 1, WriteOnly (AnimationPropertyAccessMode_WriteOnly) = 2, ReadWrite (AnimationPropertyAccessMode_ReadWrite) = 3,
 }}
 DEFINE_IID!(IID_IAnimationPropertyInfo, 4101074693, 60791, 20028, 179, 40, 92, 57, 133, 179, 115, 143);
@@ -1971,8 +1971,8 @@ impl IAnimationPropertyInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AnimationPropertyInfo: IAnimationPropertyInfo}
-RT_ENUM! { enum AnimationStopBehavior: i32 {
+RT_CLASS!{class AnimationPropertyInfo: IAnimationPropertyInfo ["Windows.UI.Composition.AnimationPropertyInfo"]}
+RT_ENUM! { enum AnimationStopBehavior: i32 ["Windows.UI.Composition.AnimationStopBehavior"] {
     LeaveCurrentValue (AnimationStopBehavior_LeaveCurrentValue) = 0, SetToInitialValue (AnimationStopBehavior_SetToInitialValue) = 1, SetToFinalValue (AnimationStopBehavior_SetToFinalValue) = 2,
 }}
 DEFINE_IID!(IID_IBooleanKeyFrameAnimation, 2514631176, 53748, 18802, 151, 112, 62, 254, 104, 216, 46, 20);
@@ -1985,7 +1985,7 @@ impl IBooleanKeyFrameAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BooleanKeyFrameAnimation: IBooleanKeyFrameAnimation}
+RT_CLASS!{class BooleanKeyFrameAnimation: IBooleanKeyFrameAnimation ["Windows.UI.Composition.BooleanKeyFrameAnimation"]}
 DEFINE_IID!(IID_IBounceScalarNaturalMotionAnimation, 3131248076, 42547, 17944, 155, 6, 127, 124, 114, 200, 124, 255);
 RT_INTERFACE!{interface IBounceScalarNaturalMotionAnimation(IBounceScalarNaturalMotionAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IBounceScalarNaturalMotionAnimation] {
     fn get_Acceleration(&self, out: *mut f32) -> HRESULT,
@@ -2013,7 +2013,7 @@ impl IBounceScalarNaturalMotionAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BounceScalarNaturalMotionAnimation: IBounceScalarNaturalMotionAnimation}
+RT_CLASS!{class BounceScalarNaturalMotionAnimation: IBounceScalarNaturalMotionAnimation ["Windows.UI.Composition.BounceScalarNaturalMotionAnimation"]}
 DEFINE_IID!(IID_IBounceVector2NaturalMotionAnimation, 3660857750, 8532, 19260, 136, 170, 71, 54, 18, 4, 236, 205);
 RT_INTERFACE!{interface IBounceVector2NaturalMotionAnimation(IBounceVector2NaturalMotionAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IBounceVector2NaturalMotionAnimation] {
     fn get_Acceleration(&self, out: *mut f32) -> HRESULT,
@@ -2041,7 +2041,7 @@ impl IBounceVector2NaturalMotionAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BounceVector2NaturalMotionAnimation: IBounceVector2NaturalMotionAnimation}
+RT_CLASS!{class BounceVector2NaturalMotionAnimation: IBounceVector2NaturalMotionAnimation ["Windows.UI.Composition.BounceVector2NaturalMotionAnimation"]}
 DEFINE_IID!(IID_IBounceVector3NaturalMotionAnimation, 1205517361, 4307, 17688, 134, 241, 9, 202, 247, 66, 209, 19);
 RT_INTERFACE!{interface IBounceVector3NaturalMotionAnimation(IBounceVector3NaturalMotionAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IBounceVector3NaturalMotionAnimation] {
     fn get_Acceleration(&self, out: *mut f32) -> HRESULT,
@@ -2069,7 +2069,7 @@ impl IBounceVector3NaturalMotionAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BounceVector3NaturalMotionAnimation: IBounceVector3NaturalMotionAnimation}
+RT_CLASS!{class BounceVector3NaturalMotionAnimation: IBounceVector3NaturalMotionAnimation ["Windows.UI.Composition.BounceVector3NaturalMotionAnimation"]}
 DEFINE_IID!(IID_IColorKeyFrameAnimation, 2477635049, 36357, 17811, 132, 163, 220, 161, 82, 120, 30, 86);
 RT_INTERFACE!{interface IColorKeyFrameAnimation(IColorKeyFrameAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IColorKeyFrameAnimation] {
     fn get_InterpolationColorSpace(&self, out: *mut CompositionColorSpace) -> HRESULT,
@@ -2096,7 +2096,7 @@ impl IColorKeyFrameAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ColorKeyFrameAnimation: IColorKeyFrameAnimation}
+RT_CLASS!{class ColorKeyFrameAnimation: IColorKeyFrameAnimation ["Windows.UI.Composition.ColorKeyFrameAnimation"]}
 DEFINE_IID!(IID_ICompositionAnimation, 1179405356, 7338, 16481, 155, 64, 225, 63, 222, 21, 3, 202);
 RT_INTERFACE!{interface ICompositionAnimation(ICompositionAnimationVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionAnimation] {
     fn ClearAllParameters(&self) -> HRESULT,
@@ -2157,7 +2157,7 @@ impl ICompositionAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionAnimation: ICompositionAnimation}
+RT_CLASS!{class CompositionAnimation: ICompositionAnimation ["Windows.UI.Composition.CompositionAnimation"]}
 DEFINE_IID!(IID_ICompositionAnimation2, 916152382, 43023, 18760, 147, 227, 237, 35, 251, 56, 198, 203);
 RT_INTERFACE!{interface ICompositionAnimation2(ICompositionAnimation2Vtbl): IInspectable(IInspectableVtbl) [IID_ICompositionAnimation2] {
     fn SetBooleanParameter(&self, key: HSTRING, value: bool) -> HRESULT,
@@ -2234,34 +2234,34 @@ impl ICompositionAnimationGroup {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionAnimationGroup: ICompositionAnimationGroup}
+RT_CLASS!{class CompositionAnimationGroup: ICompositionAnimationGroup ["Windows.UI.Composition.CompositionAnimationGroup"]}
 DEFINE_IID!(IID_ICompositionBackdropBrush, 3316428376, 14488, 18846, 141, 127, 34, 78, 145, 40, 106, 93);
 RT_INTERFACE!{interface ICompositionBackdropBrush(ICompositionBackdropBrushVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionBackdropBrush] {
     
 }}
-RT_CLASS!{class CompositionBackdropBrush: ICompositionBackdropBrush}
-RT_ENUM! { enum CompositionBackfaceVisibility: i32 {
+RT_CLASS!{class CompositionBackdropBrush: ICompositionBackdropBrush ["Windows.UI.Composition.CompositionBackdropBrush"]}
+RT_ENUM! { enum CompositionBackfaceVisibility: i32 ["Windows.UI.Composition.CompositionBackfaceVisibility"] {
     Inherit (CompositionBackfaceVisibility_Inherit) = 0, Visible (CompositionBackfaceVisibility_Visible) = 1, Hidden (CompositionBackfaceVisibility_Hidden) = 2,
 }}
 DEFINE_IID!(IID_ICompositionBatchCompletedEventArgs, 218159824, 37988, 17674, 165, 98, 46, 38, 152, 176, 168, 18);
 RT_INTERFACE!{interface ICompositionBatchCompletedEventArgs(ICompositionBatchCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionBatchCompletedEventArgs] {
     
 }}
-RT_CLASS!{class CompositionBatchCompletedEventArgs: ICompositionBatchCompletedEventArgs}
-RT_ENUM! { enum CompositionBatchTypes: u32 {
+RT_CLASS!{class CompositionBatchCompletedEventArgs: ICompositionBatchCompletedEventArgs ["Windows.UI.Composition.CompositionBatchCompletedEventArgs"]}
+RT_ENUM! { enum CompositionBatchTypes: u32 ["Windows.UI.Composition.CompositionBatchTypes"] {
     None (CompositionBatchTypes_None) = 0, Animation (CompositionBatchTypes_Animation) = 1, Effect (CompositionBatchTypes_Effect) = 2, InfiniteAnimation (CompositionBatchTypes_InfiniteAnimation) = 4, AllAnimations (CompositionBatchTypes_AllAnimations) = 5,
 }}
-RT_ENUM! { enum CompositionBitmapInterpolationMode: i32 {
+RT_ENUM! { enum CompositionBitmapInterpolationMode: i32 ["Windows.UI.Composition.CompositionBitmapInterpolationMode"] {
     NearestNeighbor (CompositionBitmapInterpolationMode_NearestNeighbor) = 0, Linear (CompositionBitmapInterpolationMode_Linear) = 1,
 }}
-RT_ENUM! { enum CompositionBorderMode: i32 {
+RT_ENUM! { enum CompositionBorderMode: i32 ["Windows.UI.Composition.CompositionBorderMode"] {
     Inherit (CompositionBorderMode_Inherit) = 0, Soft (CompositionBorderMode_Soft) = 1, Hard (CompositionBorderMode_Hard) = 2,
 }}
 DEFINE_IID!(IID_ICompositionBrush, 2869786120, 12480, 16617, 181, 104, 182, 10, 107, 209, 251, 70);
 RT_INTERFACE!{interface ICompositionBrush(ICompositionBrushVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionBrush] {
     
 }}
-RT_CLASS!{class CompositionBrush: ICompositionBrush}
+RT_CLASS!{class CompositionBrush: ICompositionBrush ["Windows.UI.Composition.CompositionBrush"]}
 DEFINE_IID!(IID_ICompositionBrushFactory, 3662936908, 18000, 18372, 173, 118, 118, 83, 121, 96, 126, 214);
 RT_INTERFACE!{interface ICompositionBrushFactory(ICompositionBrushFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionBrushFactory] {
     
@@ -2294,7 +2294,7 @@ impl ICompositionCapabilities {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionCapabilities: ICompositionCapabilities}
+RT_CLASS!{class CompositionCapabilities: ICompositionCapabilities ["Windows.UI.Composition.CompositionCapabilities"]}
 impl RtActivatable<ICompositionCapabilitiesStatics> for CompositionCapabilities {}
 impl CompositionCapabilities {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<CompositionCapabilities>>> {
@@ -2317,7 +2317,7 @@ DEFINE_IID!(IID_ICompositionClip, 483207762, 53191, 19150, 153, 131, 20, 107, 18
 RT_INTERFACE!{interface ICompositionClip(ICompositionClipVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionClip] {
     
 }}
-RT_CLASS!{class CompositionClip: ICompositionClip}
+RT_CLASS!{class CompositionClip: ICompositionClip ["Windows.UI.Composition.CompositionClip"]}
 DEFINE_IID!(IID_ICompositionClip2, 1486086249, 13590, 16609, 137, 224, 91, 169, 36, 146, 114, 53);
 RT_INTERFACE!{interface ICompositionClip2(ICompositionClip2Vtbl): IInspectable(IInspectableVtbl) [IID_ICompositionClip2] {
     fn get_AnchorPoint(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
@@ -2420,7 +2420,7 @@ impl ICompositionColorBrush {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionColorBrush: ICompositionColorBrush}
+RT_CLASS!{class CompositionColorBrush: ICompositionColorBrush ["Windows.UI.Composition.CompositionColorBrush"]}
 DEFINE_IID!(IID_ICompositionColorGradientStop, 1862322834, 51201, 20033, 154, 143, 165, 62, 32, 245, 119, 120);
 RT_INTERFACE!{interface ICompositionColorGradientStop(ICompositionColorGradientStopVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionColorGradientStop] {
     fn get_Color(&self, out: *mut super::Color) -> HRESULT,
@@ -2448,13 +2448,13 @@ impl ICompositionColorGradientStop {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionColorGradientStop: ICompositionColorGradientStop}
+RT_CLASS!{class CompositionColorGradientStop: ICompositionColorGradientStop ["Windows.UI.Composition.CompositionColorGradientStop"]}
 DEFINE_IID!(IID_ICompositionColorGradientStopCollection, 2669486316, 31492, 19229, 144, 188, 159, 163, 44, 12, 253, 38);
 RT_INTERFACE!{interface ICompositionColorGradientStopCollection(ICompositionColorGradientStopCollectionVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionColorGradientStopCollection] {
     
 }}
-RT_CLASS!{class CompositionColorGradientStopCollection: ICompositionColorGradientStopCollection}
-RT_ENUM! { enum CompositionColorSpace: i32 {
+RT_CLASS!{class CompositionColorGradientStopCollection: ICompositionColorGradientStopCollection ["Windows.UI.Composition.CompositionColorGradientStopCollection"]}
+RT_ENUM! { enum CompositionColorSpace: i32 ["Windows.UI.Composition.CompositionColorSpace"] {
     Auto (CompositionColorSpace_Auto) = 0, Hsl (CompositionColorSpace_Hsl) = 1, Rgb (CompositionColorSpace_Rgb) = 2, HslLinear (CompositionColorSpace_HslLinear) = 3, RgbLinear (CompositionColorSpace_RgbLinear) = 4,
 }}
 DEFINE_IID!(IID_ICompositionCommitBatch, 218159824, 51719, 17408, 140, 142, 203, 93, 176, 133, 89, 204);
@@ -2485,8 +2485,8 @@ impl ICompositionCommitBatch {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionCommitBatch: ICompositionCommitBatch}
-RT_ENUM! { enum CompositionCompositeMode: i32 {
+RT_CLASS!{class CompositionCommitBatch: ICompositionCommitBatch ["Windows.UI.Composition.CompositionCommitBatch"]}
+RT_ENUM! { enum CompositionCompositeMode: i32 ["Windows.UI.Composition.CompositionCompositeMode"] {
     Inherit (CompositionCompositeMode_Inherit) = 0, SourceOver (CompositionCompositeMode_SourceOver) = 1, DestinationInvert (CompositionCompositeMode_DestinationInvert) = 2, MinBlend (CompositionCompositeMode_MinBlend) = 3,
 }}
 DEFINE_IID!(IID_ICompositionContainerShape, 1331594651, 11867, 17576, 152, 44, 170, 15, 105, 193, 96, 89);
@@ -2500,7 +2500,7 @@ impl ICompositionContainerShape {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionContainerShape: ICompositionContainerShape}
+RT_CLASS!{class CompositionContainerShape: ICompositionContainerShape ["Windows.UI.Composition.CompositionContainerShape"]}
 DEFINE_IID!(IID_ICompositionDrawingSurface, 2707866368, 64208, 19729, 158, 103, 228, 51, 22, 47, 244, 158);
 RT_INTERFACE!{interface ICompositionDrawingSurface(ICompositionDrawingSurfaceVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionDrawingSurface] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
@@ -2526,7 +2526,7 @@ impl ICompositionDrawingSurface {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionDrawingSurface: ICompositionDrawingSurface}
+RT_CLASS!{class CompositionDrawingSurface: ICompositionDrawingSurface ["Windows.UI.Composition.CompositionDrawingSurface"]}
 DEFINE_IID!(IID_ICompositionDrawingSurface2, 4207995019, 58196, 17640, 142, 61, 196, 136, 13, 90, 33, 63);
 RT_INTERFACE!{interface ICompositionDrawingSurface2(ICompositionDrawingSurface2Vtbl): IInspectable(IInspectableVtbl) [IID_ICompositionDrawingSurface2] {
     #[cfg(feature="windows-graphics")] fn get_SizeInt32(&self, out: *mut super::super::graphics::SizeInt32) -> HRESULT,
@@ -2567,14 +2567,14 @@ DEFINE_IID!(IID_ICompositionDrawingSurfaceFactory, 2492968970, 12589, 18105, 157
 RT_INTERFACE!{interface ICompositionDrawingSurfaceFactory(ICompositionDrawingSurfaceFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionDrawingSurfaceFactory] {
     
 }}
-RT_ENUM! { enum CompositionDropShadowSourcePolicy: i32 {
+RT_ENUM! { enum CompositionDropShadowSourcePolicy: i32 ["Windows.UI.Composition.CompositionDropShadowSourcePolicy"] {
     Default (CompositionDropShadowSourcePolicy_Default) = 0, InheritFromVisualContent (CompositionDropShadowSourcePolicy_InheritFromVisualContent) = 1,
 }}
 DEFINE_IID!(IID_ICompositionEasingFunction, 1363534678, 49017, 20136, 140, 194, 107, 91, 71, 46, 108, 154);
 RT_INTERFACE!{interface ICompositionEasingFunction(ICompositionEasingFunctionVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionEasingFunction] {
     
 }}
-RT_CLASS!{class CompositionEasingFunction: ICompositionEasingFunction}
+RT_CLASS!{class CompositionEasingFunction: ICompositionEasingFunction ["Windows.UI.Composition.CompositionEasingFunction"]}
 DEFINE_IID!(IID_ICompositionEasingFunctionFactory, 1619265396, 15776, 18761, 130, 0, 114, 6, 192, 1, 144, 160);
 RT_INTERFACE!{interface ICompositionEasingFunctionFactory(ICompositionEasingFunctionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionEasingFunctionFactory] {
     
@@ -2595,7 +2595,7 @@ impl ICompositionEffectBrush {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionEffectBrush: ICompositionEffectBrush}
+RT_CLASS!{class CompositionEffectBrush: ICompositionEffectBrush ["Windows.UI.Composition.CompositionEffectBrush"]}
 DEFINE_IID!(IID_ICompositionEffectFactory, 3193316527, 47742, 17680, 152, 80, 65, 192, 180, 255, 116, 223);
 RT_INTERFACE!{interface ICompositionEffectFactory(ICompositionEffectFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionEffectFactory] {
     fn CreateBrush(&self, out: *mut *mut CompositionEffectBrush) -> HRESULT,
@@ -2619,8 +2619,8 @@ impl ICompositionEffectFactory {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionEffectFactory: ICompositionEffectFactory}
-RT_ENUM! { enum CompositionEffectFactoryLoadStatus: i32 {
+RT_CLASS!{class CompositionEffectFactory: ICompositionEffectFactory ["Windows.UI.Composition.CompositionEffectFactory"]}
+RT_ENUM! { enum CompositionEffectFactoryLoadStatus: i32 ["Windows.UI.Composition.CompositionEffectFactoryLoadStatus"] {
     Success (CompositionEffectFactoryLoadStatus_Success) = 0, EffectTooComplex (CompositionEffectFactoryLoadStatus_EffectTooComplex) = 1, Pending (CompositionEffectFactoryLoadStatus_Pending) = 2, Other (CompositionEffectFactoryLoadStatus_Other) = -1,
 }}
 DEFINE_IID!(IID_ICompositionEffectSourceParameter, 2240459066, 12946, 20046, 179, 187, 43, 108, 101, 68, 166, 238);
@@ -2634,7 +2634,7 @@ impl ICompositionEffectSourceParameter {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionEffectSourceParameter: ICompositionEffectSourceParameter}
+RT_CLASS!{class CompositionEffectSourceParameter: ICompositionEffectSourceParameter ["Windows.UI.Composition.CompositionEffectSourceParameter"]}
 impl RtActivatable<ICompositionEffectSourceParameterFactory> for CompositionEffectSourceParameter {}
 impl CompositionEffectSourceParameter {
     #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<CompositionEffectSourceParameter>> {
@@ -2680,7 +2680,7 @@ impl ICompositionEllipseGeometry {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionEllipseGeometry: ICompositionEllipseGeometry}
+RT_CLASS!{class CompositionEllipseGeometry: ICompositionEllipseGeometry ["Windows.UI.Composition.CompositionEllipseGeometry"]}
 DEFINE_IID!(IID_ICompositionGeometricClip, 3359683969, 33225, 17476, 162, 193, 204, 174, 206, 58, 80, 229);
 RT_INTERFACE!{interface ICompositionGeometricClip(ICompositionGeometricClipVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionGeometricClip] {
     fn get_Geometry(&self, out: *mut *mut CompositionGeometry) -> HRESULT,
@@ -2708,7 +2708,7 @@ impl ICompositionGeometricClip {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionGeometricClip: ICompositionGeometricClip}
+RT_CLASS!{class CompositionGeometricClip: ICompositionGeometricClip ["Windows.UI.Composition.CompositionGeometricClip"]}
 DEFINE_IID!(IID_ICompositionGeometry, 3917816188, 27159, 16903, 171, 216, 95, 211, 221, 97, 42, 157);
 RT_INTERFACE!{interface ICompositionGeometry(ICompositionGeometryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionGeometry] {
     fn get_TrimEnd(&self, out: *mut f32) -> HRESULT,
@@ -2747,12 +2747,12 @@ impl ICompositionGeometry {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionGeometry: ICompositionGeometry}
+RT_CLASS!{class CompositionGeometry: ICompositionGeometry ["Windows.UI.Composition.CompositionGeometry"]}
 DEFINE_IID!(IID_ICompositionGeometryFactory, 3221143521, 35877, 18443, 159, 86, 254, 214, 178, 136, 5, 93);
 RT_INTERFACE!{interface ICompositionGeometryFactory(ICompositionGeometryFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionGeometryFactory] {
     
 }}
-RT_ENUM! { enum CompositionGetValueStatus: i32 {
+RT_ENUM! { enum CompositionGetValueStatus: i32 ["Windows.UI.Composition.CompositionGetValueStatus"] {
     Succeeded (CompositionGetValueStatus_Succeeded) = 0, TypeMismatch (CompositionGetValueStatus_TypeMismatch) = 1, NotFound (CompositionGetValueStatus_NotFound) = 2,
 }}
 DEFINE_IID!(IID_ICompositionGradientBrush, 496437728, 65478, 19470, 169, 171, 52, 20, 77, 76, 144, 152);
@@ -2865,7 +2865,7 @@ impl ICompositionGradientBrush {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionGradientBrush: ICompositionGradientBrush}
+RT_CLASS!{class CompositionGradientBrush: ICompositionGradientBrush ["Windows.UI.Composition.CompositionGradientBrush"]}
 DEFINE_IID!(IID_ICompositionGradientBrush2, 2308822433, 46279, 19251, 161, 182, 38, 74, 221, 194, 109, 16);
 RT_INTERFACE!{interface ICompositionGradientBrush2(ICompositionGradientBrush2Vtbl): IInspectable(IInspectableVtbl) [IID_ICompositionGradientBrush2] {
     fn get_MappingMode(&self, out: *mut CompositionMappingMode) -> HRESULT,
@@ -2886,7 +2886,7 @@ DEFINE_IID!(IID_ICompositionGradientBrushFactory, 1456956887, 61833, 18633, 156,
 RT_INTERFACE!{interface ICompositionGradientBrushFactory(ICompositionGradientBrushFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionGradientBrushFactory] {
     
 }}
-RT_ENUM! { enum CompositionGradientExtendMode: i32 {
+RT_ENUM! { enum CompositionGradientExtendMode: i32 ["Windows.UI.Composition.CompositionGradientExtendMode"] {
     Clamp (CompositionGradientExtendMode_Clamp) = 0, Wrap (CompositionGradientExtendMode_Wrap) = 1, Mirror (CompositionGradientExtendMode_Mirror) = 2,
 }}
 DEFINE_IID!(IID_ICompositionGraphicsDevice, 4213360353, 32930, 18023, 153, 54, 219, 234, 246, 238, 254, 149);
@@ -2912,7 +2912,7 @@ impl ICompositionGraphicsDevice {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionGraphicsDevice: ICompositionGraphicsDevice}
+RT_CLASS!{class CompositionGraphicsDevice: ICompositionGraphicsDevice ["Windows.UI.Composition.CompositionGraphicsDevice"]}
 DEFINE_IID!(IID_ICompositionGraphicsDevice2, 263765494, 49392, 19404, 159, 184, 8, 73, 130, 73, 13, 125);
 RT_INTERFACE!{interface ICompositionGraphicsDevice2(ICompositionGraphicsDevice2Vtbl): IInspectable(IInspectableVtbl) [IID_ICompositionGraphicsDevice2] {
     #[cfg(feature="windows-graphics")] fn CreateDrawingSurface2(&self, sizePixels: super::super::graphics::SizeInt32, pixelFormat: super::super::graphics::directx::DirectXPixelFormat, alphaMode: super::super::graphics::directx::DirectXAlphaMode, out: *mut *mut CompositionDrawingSurface) -> HRESULT,
@@ -2941,7 +2941,7 @@ impl ICompositionLight {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionLight: ICompositionLight}
+RT_CLASS!{class CompositionLight: ICompositionLight ["Windows.UI.Composition.CompositionLight"]}
 DEFINE_IID!(IID_ICompositionLight2, 2814171762, 62301, 16989, 155, 152, 35, 244, 32, 95, 102, 105);
 RT_INTERFACE!{interface ICompositionLight2(ICompositionLight2Vtbl): IInspectable(IInspectableVtbl) [IID_ICompositionLight2] {
     fn get_ExclusionsFromTargets(&self, out: *mut *mut VisualUnorderedCollection) -> HRESULT
@@ -3000,7 +3000,7 @@ impl ICompositionLinearGradientBrush {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionLinearGradientBrush: ICompositionLinearGradientBrush}
+RT_CLASS!{class CompositionLinearGradientBrush: ICompositionLinearGradientBrush ["Windows.UI.Composition.CompositionLinearGradientBrush"]}
 DEFINE_IID!(IID_ICompositionLineGeometry, 3715503524, 3226, 19303, 141, 206, 68, 10, 91, 249, 205, 236);
 RT_INTERFACE!{interface ICompositionLineGeometry(ICompositionLineGeometryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionLineGeometry] {
     fn get_Start(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
@@ -3028,8 +3028,8 @@ impl ICompositionLineGeometry {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionLineGeometry: ICompositionLineGeometry}
-RT_ENUM! { enum CompositionMappingMode: i32 {
+RT_CLASS!{class CompositionLineGeometry: ICompositionLineGeometry ["Windows.UI.Composition.CompositionLineGeometry"]}
+RT_ENUM! { enum CompositionMappingMode: i32 ["Windows.UI.Composition.CompositionMappingMode"] {
     Absolute (CompositionMappingMode_Absolute) = 0, Relative (CompositionMappingMode_Relative) = 1,
 }}
 DEFINE_IID!(IID_ICompositionMaskBrush, 1378676894, 48747, 20289, 190, 73, 249, 34, 109, 71, 27, 74);
@@ -3059,7 +3059,7 @@ impl ICompositionMaskBrush {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionMaskBrush: ICompositionMaskBrush}
+RT_CLASS!{class CompositionMaskBrush: ICompositionMaskBrush ["Windows.UI.Composition.CompositionMaskBrush"]}
 DEFINE_IID!(IID_ICompositionNineGridBrush, 4065416420, 48268, 19431, 184, 15, 134, 133, 184, 60, 1, 134);
 RT_INTERFACE!{interface ICompositionNineGridBrush(ICompositionNineGridBrushVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionNineGridBrush] {
     fn get_BottomInset(&self, out: *mut f32) -> HRESULT,
@@ -3195,7 +3195,7 @@ impl ICompositionNineGridBrush {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionNineGridBrush: ICompositionNineGridBrush}
+RT_CLASS!{class CompositionNineGridBrush: ICompositionNineGridBrush ["Windows.UI.Composition.CompositionNineGridBrush"]}
 DEFINE_IID!(IID_ICompositionObject, 3165957445, 30217, 17744, 147, 79, 22, 0, 42, 104, 253, 237);
 RT_INTERFACE!{interface ICompositionObject(ICompositionObjectVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionObject] {
     fn get_Compositor(&self, out: *mut *mut Compositor) -> HRESULT,
@@ -3229,7 +3229,7 @@ impl ICompositionObject {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionObject: ICompositionObject}
+RT_CLASS!{class CompositionObject: ICompositionObject ["Windows.UI.Composition.CompositionObject"]}
 impl RtActivatable<ICompositionObjectStatics> for CompositionObject {}
 impl CompositionObject {
     #[inline] pub fn start_animation_with_ianimationobject(target: &IAnimationObject, propertyName: &HStringArg, animation: &CompositionAnimation) -> Result<()> {
@@ -3322,7 +3322,7 @@ DEFINE_IID!(IID_ICompositionPath, 1725570399, 11792, 20258, 138, 6, 10, 129, 81,
 RT_INTERFACE!{interface ICompositionPath(ICompositionPathVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionPath] {
     
 }}
-RT_CLASS!{class CompositionPath: ICompositionPath}
+RT_CLASS!{class CompositionPath: ICompositionPath ["Windows.UI.Composition.CompositionPath"]}
 impl RtActivatable<ICompositionPathFactory> for CompositionPath {}
 impl CompositionPath {
     #[cfg(feature="windows-graphics")] #[inline] pub fn create(source: &super::super::graphics::IGeometrySource2D) -> Result<ComPtr<CompositionPath>> {
@@ -3357,7 +3357,7 @@ impl ICompositionPathGeometry {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionPathGeometry: ICompositionPathGeometry}
+RT_CLASS!{class CompositionPathGeometry: ICompositionPathGeometry ["Windows.UI.Composition.CompositionPathGeometry"]}
 DEFINE_IID!(IID_ICompositionPropertySet, 3386298882, 24423, 17491, 145, 23, 158, 173, 212, 48, 211, 194);
 RT_INTERFACE!{interface ICompositionPropertySet(ICompositionPropertySetVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionPropertySet] {
     fn InsertColor(&self, propertyName: HSTRING, value: super::Color) -> HRESULT,
@@ -3451,7 +3451,7 @@ impl ICompositionPropertySet {
         if hr == S_OK { Ok((value, out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionPropertySet: ICompositionPropertySet}
+RT_CLASS!{class CompositionPropertySet: ICompositionPropertySet ["Windows.UI.Composition.CompositionPropertySet"]}
 DEFINE_IID!(IID_ICompositionPropertySet2, 3732960030, 41489, 17493, 136, 128, 125, 15, 63, 106, 68, 253);
 RT_INTERFACE!{interface ICompositionPropertySet2(ICompositionPropertySet2Vtbl): IInspectable(IInspectableVtbl) [IID_ICompositionPropertySet2] {
     fn InsertBoolean(&self, propertyName: HSTRING, value: bool) -> HRESULT,
@@ -3495,7 +3495,7 @@ impl ICompositionRectangleGeometry {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionRectangleGeometry: ICompositionRectangleGeometry}
+RT_CLASS!{class CompositionRectangleGeometry: ICompositionRectangleGeometry ["Windows.UI.Composition.CompositionRectangleGeometry"]}
 DEFINE_IID!(IID_ICompositionRoundedRectangleGeometry, 2272315426, 7504, 19339, 176, 19, 124, 154, 14, 70, 147, 95);
 RT_INTERFACE!{interface ICompositionRoundedRectangleGeometry(ICompositionRoundedRectangleGeometryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionRoundedRectangleGeometry] {
     fn get_CornerRadius(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
@@ -3534,7 +3534,7 @@ impl ICompositionRoundedRectangleGeometry {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionRoundedRectangleGeometry: ICompositionRoundedRectangleGeometry}
+RT_CLASS!{class CompositionRoundedRectangleGeometry: ICompositionRoundedRectangleGeometry ["Windows.UI.Composition.CompositionRoundedRectangleGeometry"]}
 DEFINE_IID!(IID_ICompositionScopedBatch, 218159824, 64263, 18173, 140, 114, 98, 128, 209, 163, 209, 221);
 RT_INTERFACE!{interface ICompositionScopedBatch(ICompositionScopedBatchVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionScopedBatch] {
     fn get_IsActive(&self, out: *mut bool) -> HRESULT,
@@ -3578,12 +3578,12 @@ impl ICompositionScopedBatch {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionScopedBatch: ICompositionScopedBatch}
+RT_CLASS!{class CompositionScopedBatch: ICompositionScopedBatch ["Windows.UI.Composition.CompositionScopedBatch"]}
 DEFINE_IID!(IID_ICompositionShadow, 849236706, 17205, 18892, 177, 74, 55, 120, 45, 16, 240, 196);
 RT_INTERFACE!{interface ICompositionShadow(ICompositionShadowVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionShadow] {
     
 }}
-RT_CLASS!{class CompositionShadow: ICompositionShadow}
+RT_CLASS!{class CompositionShadow: ICompositionShadow ["Windows.UI.Composition.CompositionShadow"]}
 DEFINE_IID!(IID_ICompositionShadowFactory, 572475695, 56506, 19345, 153, 158, 29, 194, 23, 160, 21, 48);
 RT_INTERFACE!{interface ICompositionShadowFactory(ICompositionShadowFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionShadowFactory] {
     
@@ -3659,8 +3659,8 @@ impl ICompositionShape {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionShape: ICompositionShape}
-RT_CLASS!{class CompositionShapeCollection: foundation::collections::IVector<CompositionShape>}
+RT_CLASS!{class CompositionShape: ICompositionShape ["Windows.UI.Composition.CompositionShape"]}
+RT_CLASS!{class CompositionShapeCollection: foundation::collections::IVector<CompositionShape> ["Windows.UI.Composition.CompositionShapeCollection"]}
 DEFINE_IID!(IID_ICompositionShapeFactory, 503068368, 45146, 17647, 130, 176, 18, 17, 139, 205, 76, 208);
 RT_INTERFACE!{interface ICompositionShapeFactory(ICompositionShapeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionShapeFactory] {
     
@@ -3797,15 +3797,15 @@ impl ICompositionSpriteShape {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionSpriteShape: ICompositionSpriteShape}
-RT_ENUM! { enum CompositionStretch: i32 {
+RT_CLASS!{class CompositionSpriteShape: ICompositionSpriteShape ["Windows.UI.Composition.CompositionSpriteShape"]}
+RT_ENUM! { enum CompositionStretch: i32 ["Windows.UI.Composition.CompositionStretch"] {
     None (CompositionStretch_None) = 0, Fill (CompositionStretch_Fill) = 1, Uniform (CompositionStretch_Uniform) = 2, UniformToFill (CompositionStretch_UniformToFill) = 3,
 }}
-RT_ENUM! { enum CompositionStrokeCap: i32 {
+RT_ENUM! { enum CompositionStrokeCap: i32 ["Windows.UI.Composition.CompositionStrokeCap"] {
     Flat (CompositionStrokeCap_Flat) = 0, Square (CompositionStrokeCap_Square) = 1, Round (CompositionStrokeCap_Round) = 2, Triangle (CompositionStrokeCap_Triangle) = 3,
 }}
-RT_CLASS!{class CompositionStrokeDashArray: foundation::collections::IVector<f32>}
-RT_ENUM! { enum CompositionStrokeLineJoin: i32 {
+RT_CLASS!{class CompositionStrokeDashArray: foundation::collections::IVector<f32> ["Windows.UI.Composition.CompositionStrokeDashArray"]}
+RT_ENUM! { enum CompositionStrokeLineJoin: i32 ["Windows.UI.Composition.CompositionStrokeLineJoin"] {
     Miter (CompositionStrokeLineJoin_Miter) = 0, Bevel (CompositionStrokeLineJoin_Bevel) = 1, Round (CompositionStrokeLineJoin_Round) = 2, MiterOrBevel (CompositionStrokeLineJoin_MiterOrBevel) = 3,
 }}
 DEFINE_IID!(IID_ICompositionSurface, 354898957, 17095, 18342, 164, 8, 102, 143, 121, 169, 13, 251);
@@ -3872,7 +3872,7 @@ impl ICompositionSurfaceBrush {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionSurfaceBrush: ICompositionSurfaceBrush}
+RT_CLASS!{class CompositionSurfaceBrush: ICompositionSurfaceBrush ["Windows.UI.Composition.CompositionSurfaceBrush"]}
 DEFINE_IID!(IID_ICompositionSurfaceBrush2, 3530650837, 25845, 18066, 157, 199, 113, 182, 29, 126, 88, 128);
 RT_INTERFACE!{interface ICompositionSurfaceBrush2(ICompositionSurfaceBrush2Vtbl): IInspectable(IInspectableVtbl) [IID_ICompositionSurfaceBrush2] {
     fn get_AnchorPoint(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
@@ -3971,7 +3971,7 @@ impl ICompositionTarget {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionTarget: ICompositionTarget}
+RT_CLASS!{class CompositionTarget: ICompositionTarget ["Windows.UI.Composition.CompositionTarget"]}
 DEFINE_IID!(IID_ICompositionTargetFactory, 2479725867, 34070, 19220, 168, 206, 244, 158, 33, 25, 236, 66);
 RT_INTERFACE!{interface ICompositionTargetFactory(ICompositionTargetFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionTargetFactory] {
     
@@ -4036,7 +4036,7 @@ impl ICompositionViewBox {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionViewBox: ICompositionViewBox}
+RT_CLASS!{class CompositionViewBox: ICompositionViewBox ["Windows.UI.Composition.CompositionViewBox"]}
 DEFINE_IID!(IID_ICompositionVirtualDrawingSurface, 2848163035, 34624, 20372, 139, 157, 182, 133, 33, 231, 134, 61);
 RT_INTERFACE!{interface ICompositionVirtualDrawingSurface(ICompositionVirtualDrawingSurfaceVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionVirtualDrawingSurface] {
     #[cfg(feature="windows-graphics")] fn Trim(&self, rectsSize: u32, rects: *mut super::super::graphics::RectInt32) -> HRESULT
@@ -4047,7 +4047,7 @@ impl ICompositionVirtualDrawingSurface {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionVirtualDrawingSurface: ICompositionVirtualDrawingSurface}
+RT_CLASS!{class CompositionVirtualDrawingSurface: ICompositionVirtualDrawingSurface ["Windows.UI.Composition.CompositionVirtualDrawingSurface"]}
 DEFINE_IID!(IID_ICompositionVirtualDrawingSurfaceFactory, 1734742124, 54635, 19017, 177, 223, 80, 118, 160, 98, 7, 104);
 RT_INTERFACE!{interface ICompositionVirtualDrawingSurfaceFactory(ICompositionVirtualDrawingSurfaceFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionVirtualDrawingSurfaceFactory] {
     
@@ -4203,7 +4203,7 @@ impl ICompositor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Compositor: ICompositor}
+RT_CLASS!{class Compositor: ICompositor ["Windows.UI.Composition.Compositor"]}
 impl RtActivatable<ICompositorStatics> for Compositor {}
 impl RtActivatable<IActivationFactory> for Compositor {}
 impl Compositor {
@@ -4536,7 +4536,7 @@ impl IContainerVisual {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContainerVisual: IContainerVisual}
+RT_CLASS!{class ContainerVisual: IContainerVisual ["Windows.UI.Composition.ContainerVisual"]}
 DEFINE_IID!(IID_IContainerVisualFactory, 56862299, 51162, 19866, 149, 244, 105, 181, 200, 223, 103, 11);
 RT_INTERFACE!{interface IContainerVisualFactory(IContainerVisualFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IContainerVisualFactory] {
     
@@ -4558,7 +4558,7 @@ impl ICubicBezierEasingFunction {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CubicBezierEasingFunction: ICubicBezierEasingFunction}
+RT_CLASS!{class CubicBezierEasingFunction: ICubicBezierEasingFunction ["Windows.UI.Composition.CubicBezierEasingFunction"]}
 DEFINE_IID!(IID_IDistantLight, 831322876, 23779, 19285, 171, 93, 7, 160, 3, 83, 172, 153);
 RT_INTERFACE!{interface IDistantLight(IDistantLightVtbl): IInspectable(IInspectableVtbl) [IID_IDistantLight] {
     fn get_Color(&self, out: *mut super::Color) -> HRESULT,
@@ -4597,7 +4597,7 @@ impl IDistantLight {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DistantLight: IDistantLight}
+RT_CLASS!{class DistantLight: IDistantLight ["Windows.UI.Composition.DistantLight"]}
 DEFINE_IID!(IID_IDistantLight2, 3687688732, 10571, 18647, 182, 14, 118, 223, 100, 170, 57, 43);
 RT_INTERFACE!{interface IDistantLight2(IDistantLight2Vtbl): IInspectable(IInspectableVtbl) [IID_IDistantLight2] {
     fn get_Intensity(&self, out: *mut f32) -> HRESULT,
@@ -4674,7 +4674,7 @@ impl IDropShadow {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DropShadow: IDropShadow}
+RT_CLASS!{class DropShadow: IDropShadow ["Windows.UI.Composition.DropShadow"]}
 DEFINE_IID!(IID_IDropShadow2, 1816271036, 5561, 19501, 141, 74, 7, 103, 223, 17, 151, 122);
 RT_INTERFACE!{interface IDropShadow2(IDropShadow2Vtbl): IInspectable(IInspectableVtbl) [IID_IDropShadow2] {
     fn get_SourcePolicy(&self, out: *mut CompositionDropShadowSourcePolicy) -> HRESULT,
@@ -4707,13 +4707,13 @@ impl IExpressionAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ExpressionAnimation: IExpressionAnimation}
+RT_CLASS!{class ExpressionAnimation: IExpressionAnimation ["Windows.UI.Composition.ExpressionAnimation"]}
 DEFINE_IID!(IID_IImplicitAnimationCollection, 93889535, 2706, 19613, 164, 39, 178, 85, 25, 37, 13, 191);
 RT_INTERFACE!{interface IImplicitAnimationCollection(IImplicitAnimationCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IImplicitAnimationCollection] {
     
 }}
-RT_CLASS!{class ImplicitAnimationCollection: IImplicitAnimationCollection}
-RT_CLASS!{class InitialValueExpressionCollection: foundation::collections::IMap<HString, HString>}
+RT_CLASS!{class ImplicitAnimationCollection: IImplicitAnimationCollection ["Windows.UI.Composition.ImplicitAnimationCollection"]}
+RT_CLASS!{class InitialValueExpressionCollection: foundation::collections::IMap<HString, HString> ["Windows.UI.Composition.InitialValueExpressionCollection"]}
 DEFINE_IID!(IID_IInsetClip, 510912071, 33991, 18298, 180, 116, 88, 128, 224, 68, 46, 21);
 RT_INTERFACE!{interface IInsetClip(IInsetClipVtbl): IInspectable(IInspectableVtbl) [IID_IInsetClip] {
     fn get_BottomInset(&self, out: *mut f32) -> HRESULT,
@@ -4763,7 +4763,7 @@ impl IInsetClip {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InsetClip: IInsetClip}
+RT_CLASS!{class InsetClip: IInsetClip ["Windows.UI.Composition.InsetClip"]}
 DEFINE_IID!(IID_IKeyFrameAnimation, 309231394, 15081, 17728, 154, 138, 222, 174, 138, 74, 74, 132);
 RT_INTERFACE!{interface IKeyFrameAnimation(IKeyFrameAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IKeyFrameAnimation] {
     fn get_DelayTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -4840,7 +4840,7 @@ impl IKeyFrameAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class KeyFrameAnimation: IKeyFrameAnimation}
+RT_CLASS!{class KeyFrameAnimation: IKeyFrameAnimation ["Windows.UI.Composition.KeyFrameAnimation"]}
 DEFINE_IID!(IID_IKeyFrameAnimation2, 4105472187, 10560, 20160, 164, 26, 235, 109, 128, 26, 47, 24);
 RT_INTERFACE!{interface IKeyFrameAnimation2(IKeyFrameAnimation2Vtbl): IInspectable(IInspectableVtbl) [IID_IKeyFrameAnimation2] {
     fn get_Direction(&self, out: *mut AnimationDirection) -> HRESULT,
@@ -4893,7 +4893,7 @@ impl ILayerVisual {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LayerVisual: ILayerVisual}
+RT_CLASS!{class LayerVisual: ILayerVisual ["Windows.UI.Composition.LayerVisual"]}
 DEFINE_IID!(IID_ILayerVisual2, 2566500075, 28451, 18929, 144, 177, 31, 89, 161, 79, 188, 227);
 RT_INTERFACE!{interface ILayerVisual2(ILayerVisual2Vtbl): IInspectable(IInspectableVtbl) [IID_ILayerVisual2] {
     fn get_Shadow(&self, out: *mut *mut CompositionShadow) -> HRESULT,
@@ -4914,7 +4914,7 @@ DEFINE_IID!(IID_ILinearEasingFunction, 2483066714, 51110, 18099, 172, 247, 26, 3
 RT_INTERFACE!{interface ILinearEasingFunction(ILinearEasingFunctionVtbl): IInspectable(IInspectableVtbl) [IID_ILinearEasingFunction] {
     
 }}
-RT_CLASS!{class LinearEasingFunction: ILinearEasingFunction}
+RT_CLASS!{class LinearEasingFunction: ILinearEasingFunction ["Windows.UI.Composition.LinearEasingFunction"]}
 DEFINE_IID!(IID_INaturalMotionAnimation, 1133371693, 30363, 18465, 169, 73, 40, 74, 101, 71, 232, 115);
 RT_INTERFACE!{interface INaturalMotionAnimation(INaturalMotionAnimationVtbl): IInspectable(IInspectableVtbl) [IID_INaturalMotionAnimation] {
     fn get_DelayBehavior(&self, out: *mut AnimationDelayBehavior) -> HRESULT,
@@ -4953,7 +4953,7 @@ impl INaturalMotionAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NaturalMotionAnimation: INaturalMotionAnimation}
+RT_CLASS!{class NaturalMotionAnimation: INaturalMotionAnimation ["Windows.UI.Composition.NaturalMotionAnimation"]}
 DEFINE_IID!(IID_INaturalMotionAnimationFactory, 4114270982, 53098, 17287, 163, 254, 82, 33, 243, 231, 224, 224);
 RT_INTERFACE!{interface INaturalMotionAnimationFactory(INaturalMotionAnimationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INaturalMotionAnimationFactory] {
     
@@ -4973,7 +4973,7 @@ impl IPathKeyFrameAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PathKeyFrameAnimation: IPathKeyFrameAnimation}
+RT_CLASS!{class PathKeyFrameAnimation: IPathKeyFrameAnimation ["Windows.UI.Composition.PathKeyFrameAnimation"]}
 DEFINE_IID!(IID_IPointLight, 2978301363, 3162, 19120, 190, 220, 79, 53, 70, 148, 130, 114);
 RT_INTERFACE!{interface IPointLight(IPointLightVtbl): IInspectable(IInspectableVtbl) [IID_IPointLight] {
     fn get_Color(&self, out: *mut super::Color) -> HRESULT,
@@ -5045,7 +5045,7 @@ impl IPointLight {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PointLight: IPointLight}
+RT_CLASS!{class PointLight: IPointLight ["Windows.UI.Composition.PointLight"]}
 DEFINE_IID!(IID_IPointLight2, 4025061164, 1656, 20329, 177, 100, 168, 16, 217, 149, 188, 183);
 RT_INTERFACE!{interface IPointLight2(IPointLight2Vtbl): IInspectable(IInspectableVtbl) [IID_IPointLight2] {
     fn get_Intensity(&self, out: *mut f32) -> HRESULT,
@@ -5104,7 +5104,7 @@ impl IQuaternionKeyFrameAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class QuaternionKeyFrameAnimation: IQuaternionKeyFrameAnimation}
+RT_CLASS!{class QuaternionKeyFrameAnimation: IQuaternionKeyFrameAnimation ["Windows.UI.Composition.QuaternionKeyFrameAnimation"]}
 DEFINE_IID!(IID_IRedirectVisual, 2361844544, 35701, 21538, 176, 111, 9, 255, 233, 248, 97, 126);
 RT_INTERFACE!{interface IRedirectVisual(IRedirectVisualVtbl): IInspectable(IInspectableVtbl) [IID_IRedirectVisual] {
     fn get_Source(&self, out: *mut *mut Visual) -> HRESULT,
@@ -5121,7 +5121,7 @@ impl IRedirectVisual {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RedirectVisual: IRedirectVisual}
+RT_CLASS!{class RedirectVisual: IRedirectVisual ["Windows.UI.Composition.RedirectVisual"]}
 DEFINE_IID!(IID_IRenderingDeviceReplacedEventArgs, 976333949, 10431, 20090, 133, 36, 113, 103, 157, 72, 15, 56);
 RT_INTERFACE!{interface IRenderingDeviceReplacedEventArgs(IRenderingDeviceReplacedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRenderingDeviceReplacedEventArgs] {
     fn get_GraphicsDevice(&self, out: *mut *mut CompositionGraphicsDevice) -> HRESULT
@@ -5133,7 +5133,7 @@ impl IRenderingDeviceReplacedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RenderingDeviceReplacedEventArgs: IRenderingDeviceReplacedEventArgs}
+RT_CLASS!{class RenderingDeviceReplacedEventArgs: IRenderingDeviceReplacedEventArgs ["Windows.UI.Composition.RenderingDeviceReplacedEventArgs"]}
 DEFINE_IID!(IID_IScalarKeyFrameAnimation, 2921893801, 9516, 19349, 167, 37, 191, 133, 227, 128, 0, 161);
 RT_INTERFACE!{interface IScalarKeyFrameAnimation(IScalarKeyFrameAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IScalarKeyFrameAnimation] {
     fn InsertKeyFrame(&self, normalizedProgressKey: f32, value: f32) -> HRESULT,
@@ -5149,7 +5149,7 @@ impl IScalarKeyFrameAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ScalarKeyFrameAnimation: IScalarKeyFrameAnimation}
+RT_CLASS!{class ScalarKeyFrameAnimation: IScalarKeyFrameAnimation ["Windows.UI.Composition.ScalarKeyFrameAnimation"]}
 DEFINE_IID!(IID_IScalarNaturalMotionAnimation, 2494121345, 49042, 18779, 181, 189, 210, 198, 89, 67, 7, 55);
 RT_INTERFACE!{interface IScalarNaturalMotionAnimation(IScalarNaturalMotionAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IScalarNaturalMotionAnimation] {
     fn get_FinalValue(&self, out: *mut *mut foundation::IReference<f32>) -> HRESULT,
@@ -5188,7 +5188,7 @@ impl IScalarNaturalMotionAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ScalarNaturalMotionAnimation: IScalarNaturalMotionAnimation}
+RT_CLASS!{class ScalarNaturalMotionAnimation: IScalarNaturalMotionAnimation ["Windows.UI.Composition.ScalarNaturalMotionAnimation"]}
 DEFINE_IID!(IID_IScalarNaturalMotionAnimationFactory, 2203755772, 26396, 16861, 175, 72, 174, 141, 239, 139, 21, 41);
 RT_INTERFACE!{interface IScalarNaturalMotionAnimationFactory(IScalarNaturalMotionAnimationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IScalarNaturalMotionAnimationFactory] {
     
@@ -5215,7 +5215,7 @@ impl IShapeVisual {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ShapeVisual: IShapeVisual}
+RT_CLASS!{class ShapeVisual: IShapeVisual ["Windows.UI.Composition.ShapeVisual"]}
 DEFINE_IID!(IID_ISpotLight, 1520427635, 17569, 20373, 164, 34, 143, 165, 17, 107, 219, 68);
 RT_INTERFACE!{interface ISpotLight(ISpotLightVtbl): IInspectable(IInspectableVtbl) [IID_ISpotLight] {
     fn get_ConstantAttenuation(&self, out: *mut f32) -> HRESULT,
@@ -5353,7 +5353,7 @@ impl ISpotLight {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpotLight: ISpotLight}
+RT_CLASS!{class SpotLight: ISpotLight ["Windows.UI.Composition.SpotLight"]}
 DEFINE_IID!(IID_ISpotLight2, 1693344094, 1670, 19946, 169, 232, 188, 58, 140, 112, 20, 89);
 RT_INTERFACE!{interface ISpotLight2(ISpotLight2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpotLight2] {
     fn get_InnerConeIntensity(&self, out: *mut f32) -> HRESULT,
@@ -5435,7 +5435,7 @@ impl ISpringScalarNaturalMotionAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpringScalarNaturalMotionAnimation: ISpringScalarNaturalMotionAnimation}
+RT_CLASS!{class SpringScalarNaturalMotionAnimation: ISpringScalarNaturalMotionAnimation ["Windows.UI.Composition.SpringScalarNaturalMotionAnimation"]}
 DEFINE_IID!(IID_ISpringVector2NaturalMotionAnimation, 603231413, 61043, 20239, 164, 35, 64, 43, 148, 109, 244, 179);
 RT_INTERFACE!{interface ISpringVector2NaturalMotionAnimation(ISpringVector2NaturalMotionAnimationVtbl): IInspectable(IInspectableVtbl) [IID_ISpringVector2NaturalMotionAnimation] {
     fn get_DampingRatio(&self, out: *mut f32) -> HRESULT,
@@ -5463,7 +5463,7 @@ impl ISpringVector2NaturalMotionAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpringVector2NaturalMotionAnimation: ISpringVector2NaturalMotionAnimation}
+RT_CLASS!{class SpringVector2NaturalMotionAnimation: ISpringVector2NaturalMotionAnimation ["Windows.UI.Composition.SpringVector2NaturalMotionAnimation"]}
 DEFINE_IID!(IID_ISpringVector3NaturalMotionAnimation, 1820805599, 54651, 18324, 142, 45, 206, 203, 17, 225, 148, 229);
 RT_INTERFACE!{interface ISpringVector3NaturalMotionAnimation(ISpringVector3NaturalMotionAnimationVtbl): IInspectable(IInspectableVtbl) [IID_ISpringVector3NaturalMotionAnimation] {
     fn get_DampingRatio(&self, out: *mut f32) -> HRESULT,
@@ -5491,7 +5491,7 @@ impl ISpringVector3NaturalMotionAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpringVector3NaturalMotionAnimation: ISpringVector3NaturalMotionAnimation}
+RT_CLASS!{class SpringVector3NaturalMotionAnimation: ISpringVector3NaturalMotionAnimation ["Windows.UI.Composition.SpringVector3NaturalMotionAnimation"]}
 DEFINE_IID!(IID_ISpriteVisual, 148919681, 6865, 20375, 151, 87, 64, 45, 118, 228, 35, 59);
 RT_INTERFACE!{interface ISpriteVisual(ISpriteVisualVtbl): IInspectable(IInspectableVtbl) [IID_ISpriteVisual] {
     fn get_Brush(&self, out: *mut *mut CompositionBrush) -> HRESULT,
@@ -5508,7 +5508,7 @@ impl ISpriteVisual {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpriteVisual: ISpriteVisual}
+RT_CLASS!{class SpriteVisual: ISpriteVisual ["Windows.UI.Composition.SpriteVisual"]}
 DEFINE_IID!(IID_ISpriteVisual2, 1485608548, 39290, 18512, 145, 254, 83, 203, 88, 248, 28, 233);
 RT_INTERFACE!{interface ISpriteVisual2(ISpriteVisual2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpriteVisual2] {
     fn get_Shadow(&self, out: *mut *mut CompositionShadow) -> HRESULT,
@@ -5585,7 +5585,7 @@ impl IStepEasingFunction {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StepEasingFunction: IStepEasingFunction}
+RT_CLASS!{class StepEasingFunction: IStepEasingFunction ["Windows.UI.Composition.StepEasingFunction"]}
 DEFINE_IID!(IID_IVector2KeyFrameAnimation, 3745596693, 20009, 20241, 181, 94, 191, 42, 110, 179, 98, 148);
 RT_INTERFACE!{interface IVector2KeyFrameAnimation(IVector2KeyFrameAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IVector2KeyFrameAnimation] {
     fn InsertKeyFrame(&self, normalizedProgressKey: f32, value: foundation::numerics::Vector2) -> HRESULT,
@@ -5601,7 +5601,7 @@ impl IVector2KeyFrameAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Vector2KeyFrameAnimation: IVector2KeyFrameAnimation}
+RT_CLASS!{class Vector2KeyFrameAnimation: IVector2KeyFrameAnimation ["Windows.UI.Composition.Vector2KeyFrameAnimation"]}
 DEFINE_IID!(IID_IVector2NaturalMotionAnimation, 255724413, 58642, 18333, 160, 12, 119, 201, 58, 48, 163, 149);
 RT_INTERFACE!{interface IVector2NaturalMotionAnimation(IVector2NaturalMotionAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IVector2NaturalMotionAnimation] {
     fn get_FinalValue(&self, out: *mut *mut foundation::IReference<foundation::numerics::Vector2>) -> HRESULT,
@@ -5640,7 +5640,7 @@ impl IVector2NaturalMotionAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Vector2NaturalMotionAnimation: IVector2NaturalMotionAnimation}
+RT_CLASS!{class Vector2NaturalMotionAnimation: IVector2NaturalMotionAnimation ["Windows.UI.Composition.Vector2NaturalMotionAnimation"]}
 DEFINE_IID!(IID_IVector2NaturalMotionAnimationFactory, 2356477793, 1889, 18594, 189, 219, 106, 252, 197, 43, 137, 216);
 RT_INTERFACE!{interface IVector2NaturalMotionAnimationFactory(IVector2NaturalMotionAnimationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVector2NaturalMotionAnimationFactory] {
     
@@ -5660,7 +5660,7 @@ impl IVector3KeyFrameAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Vector3KeyFrameAnimation: IVector3KeyFrameAnimation}
+RT_CLASS!{class Vector3KeyFrameAnimation: IVector3KeyFrameAnimation ["Windows.UI.Composition.Vector3KeyFrameAnimation"]}
 DEFINE_IID!(IID_IVector3NaturalMotionAnimation, 2618754092, 58058, 17837, 150, 158, 78, 120, 183, 185, 173, 65);
 RT_INTERFACE!{interface IVector3NaturalMotionAnimation(IVector3NaturalMotionAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IVector3NaturalMotionAnimation] {
     fn get_FinalValue(&self, out: *mut *mut foundation::IReference<foundation::numerics::Vector3>) -> HRESULT,
@@ -5699,7 +5699,7 @@ impl IVector3NaturalMotionAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Vector3NaturalMotionAnimation: IVector3NaturalMotionAnimation}
+RT_CLASS!{class Vector3NaturalMotionAnimation: IVector3NaturalMotionAnimation ["Windows.UI.Composition.Vector3NaturalMotionAnimation"]}
 DEFINE_IID!(IID_IVector3NaturalMotionAnimationFactory, 564665647, 2176, 17787, 172, 135, 182, 9, 1, 140, 135, 109);
 RT_INTERFACE!{interface IVector3NaturalMotionAnimationFactory(IVector3NaturalMotionAnimationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVector3NaturalMotionAnimationFactory] {
     
@@ -5719,7 +5719,7 @@ impl IVector4KeyFrameAnimation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Vector4KeyFrameAnimation: IVector4KeyFrameAnimation}
+RT_CLASS!{class Vector4KeyFrameAnimation: IVector4KeyFrameAnimation ["Windows.UI.Composition.Vector4KeyFrameAnimation"]}
 DEFINE_IID!(IID_IVisual, 293478445, 43097, 19593, 135, 59, 194, 170, 86, 103, 136, 227);
 RT_INTERFACE!{interface IVisual(IVisualVtbl): IInspectable(IInspectableVtbl) [IID_IVisual] {
     fn get_AnchorPoint(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
@@ -5907,7 +5907,7 @@ impl IVisual {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Visual: IVisual}
+RT_CLASS!{class Visual: IVisual ["Windows.UI.Composition.Visual"]}
 DEFINE_IID!(IID_IVisual2, 810726929, 22211, 19518, 139, 243, 246, 225, 173, 71, 63, 6);
 RT_INTERFACE!{interface IVisual2(IVisual2Vtbl): IInspectable(IInspectableVtbl) [IID_IVisual2] {
     fn get_ParentForTransform(&self, out: *mut *mut Visual) -> HRESULT,
@@ -5987,7 +5987,7 @@ impl IVisualCollection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VisualCollection: IVisualCollection}
+RT_CLASS!{class VisualCollection: IVisualCollection ["Windows.UI.Composition.VisualCollection"]}
 DEFINE_IID!(IID_IVisualFactory, 2903505214, 46338, 20149, 135, 180, 154, 56, 167, 29, 1, 55);
 RT_INTERFACE!{interface IVisualFactory(IVisualFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVisualFactory] {
     
@@ -6018,7 +6018,7 @@ impl IVisualUnorderedCollection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VisualUnorderedCollection: IVisualUnorderedCollection}
+RT_CLASS!{class VisualUnorderedCollection: IVisualUnorderedCollection ["Windows.UI.Composition.VisualUnorderedCollection"]}
 pub mod core { // Windows.UI.Composition.Core
 use ::prelude::*;
 DEFINE_IID!(IID_ICompositorController, 762704730, 28839, 17301, 186, 45, 206, 240, 177, 131, 153, 249);
@@ -6054,7 +6054,7 @@ impl ICompositorController {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositorController: ICompositorController}
+RT_CLASS!{class CompositorController: ICompositorController ["Windows.UI.Composition.Core.CompositorController"]}
 impl RtActivatable<IActivationFactory> for CompositorController {}
 DEFINE_CLSID!(CompositorController(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,67,111,114,101,46,67,111,109,112,111,115,105,116,111,114,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_CompositorController]);
 } // Windows.UI.Composition.Core
@@ -6071,7 +6071,7 @@ impl IDesktopWindowTarget {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DesktopWindowTarget: IDesktopWindowTarget}
+RT_CLASS!{class DesktopWindowTarget: IDesktopWindowTarget ["Windows.UI.Composition.Desktop.DesktopWindowTarget"]}
 } // Windows.UI.Composition.Desktop
 pub mod diagnostics { // Windows.UI.Composition.Diagnostics
 use ::prelude::*;
@@ -6100,8 +6100,8 @@ impl ICompositionDebugHeatMaps {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionDebugHeatMaps: ICompositionDebugHeatMaps}
-RT_ENUM! { enum CompositionDebugOverdrawContentKinds: u32 {
+RT_CLASS!{class CompositionDebugHeatMaps: ICompositionDebugHeatMaps ["Windows.UI.Composition.Diagnostics.CompositionDebugHeatMaps"]}
+RT_ENUM! { enum CompositionDebugOverdrawContentKinds: u32 ["Windows.UI.Composition.Diagnostics.CompositionDebugOverdrawContentKinds"] {
     None (CompositionDebugOverdrawContentKinds_None) = 0, OffscreenRendered (CompositionDebugOverdrawContentKinds_OffscreenRendered) = 1, Colors (CompositionDebugOverdrawContentKinds_Colors) = 2, Effects (CompositionDebugOverdrawContentKinds_Effects) = 4, Shadows (CompositionDebugOverdrawContentKinds_Shadows) = 8, Lights (CompositionDebugOverdrawContentKinds_Lights) = 16, Surfaces (CompositionDebugOverdrawContentKinds_Surfaces) = 32, SwapChains (CompositionDebugOverdrawContentKinds_SwapChains) = 64, All (CompositionDebugOverdrawContentKinds_All) = 4294967295,
 }}
 DEFINE_IID!(IID_ICompositionDebugSettings, 674338942, 7554, 19768, 183, 183, 239, 209, 28, 123, 195, 209);
@@ -6115,7 +6115,7 @@ impl ICompositionDebugSettings {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionDebugSettings: ICompositionDebugSettings}
+RT_CLASS!{class CompositionDebugSettings: ICompositionDebugSettings ["Windows.UI.Composition.Diagnostics.CompositionDebugSettings"]}
 impl RtActivatable<ICompositionDebugSettingsStatics> for CompositionDebugSettings {}
 impl CompositionDebugSettings {
     #[inline] pub fn try_get_settings(compositor: &super::Compositor) -> Result<Option<ComPtr<CompositionDebugSettings>>> {
@@ -6199,7 +6199,7 @@ impl ISceneLightingEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SceneLightingEffect: ISceneLightingEffect}
+RT_CLASS!{class SceneLightingEffect: ISceneLightingEffect ["Windows.UI.Composition.Effects.SceneLightingEffect"]}
 impl RtActivatable<IActivationFactory> for SceneLightingEffect {}
 DEFINE_CLSID!(SceneLightingEffect(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,69,102,102,101,99,116,115,46,83,99,101,110,101,76,105,103,104,116,105,110,103,69,102,102,101,99,116,0]) [CLSID_SceneLightingEffect]);
 DEFINE_IID!(IID_ISceneLightingEffect2, 2653359745, 29424, 19548, 149, 248, 138, 110, 0, 36, 244, 9);
@@ -6218,7 +6218,7 @@ impl ISceneLightingEffect2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SceneLightingEffectReflectanceModel: i32 {
+RT_ENUM! { enum SceneLightingEffectReflectanceModel: i32 ["Windows.UI.Composition.Effects.SceneLightingEffectReflectanceModel"] {
     BlinnPhong (SceneLightingEffectReflectanceModel_BlinnPhong) = 0, PhysicallyBasedBlinnPhong (SceneLightingEffectReflectanceModel_PhysicallyBasedBlinnPhong) = 1,
 }}
 } // Windows.UI.Composition.Effects
@@ -6251,7 +6251,7 @@ impl ICompositionConditionalValue {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionConditionalValue: ICompositionConditionalValue}
+RT_CLASS!{class CompositionConditionalValue: ICompositionConditionalValue ["Windows.UI.Composition.Interactions.CompositionConditionalValue"]}
 impl RtActivatable<ICompositionConditionalValueStatics> for CompositionConditionalValue {}
 impl CompositionConditionalValue {
     #[inline] pub fn create(compositor: &super::Compositor) -> Result<Option<ComPtr<CompositionConditionalValue>>> {
@@ -6300,8 +6300,8 @@ impl ICompositionInteractionSourceCollection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositionInteractionSourceCollection: ICompositionInteractionSourceCollection}
-RT_ENUM! { enum InteractionChainingMode: i32 {
+RT_CLASS!{class CompositionInteractionSourceCollection: ICompositionInteractionSourceCollection ["Windows.UI.Composition.Interactions.CompositionInteractionSourceCollection"]}
+RT_ENUM! { enum InteractionChainingMode: i32 ["Windows.UI.Composition.Interactions.InteractionChainingMode"] {
     Auto (InteractionChainingMode_Auto) = 0, Always (InteractionChainingMode_Always) = 1, Never (InteractionChainingMode_Never) = 2,
 }}
 DEFINE_IID!(IID_IInteractionSourceConfiguration, 2810398693, 43473, 19714, 152, 94, 185, 48, 205, 11, 157, 164);
@@ -6342,11 +6342,11 @@ impl IInteractionSourceConfiguration {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InteractionSourceConfiguration: IInteractionSourceConfiguration}
-RT_ENUM! { enum InteractionSourceMode: i32 {
+RT_CLASS!{class InteractionSourceConfiguration: IInteractionSourceConfiguration ["Windows.UI.Composition.Interactions.InteractionSourceConfiguration"]}
+RT_ENUM! { enum InteractionSourceMode: i32 ["Windows.UI.Composition.Interactions.InteractionSourceMode"] {
     Disabled (InteractionSourceMode_Disabled) = 0, EnabledWithInertia (InteractionSourceMode_EnabledWithInertia) = 1, EnabledWithoutInertia (InteractionSourceMode_EnabledWithoutInertia) = 2,
 }}
-RT_ENUM! { enum InteractionSourceRedirectionMode: i32 {
+RT_ENUM! { enum InteractionSourceRedirectionMode: i32 ["Windows.UI.Composition.Interactions.InteractionSourceRedirectionMode"] {
     Disabled (InteractionSourceRedirectionMode_Disabled) = 0, Enabled (InteractionSourceRedirectionMode_Enabled) = 1,
 }}
 DEFINE_IID!(IID_IInteractionTracker, 713985201, 4096, 17430, 131, 99, 204, 39, 251, 135, 115, 8);
@@ -6541,7 +6541,7 @@ impl IInteractionTracker {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InteractionTracker: IInteractionTracker}
+RT_CLASS!{class InteractionTracker: IInteractionTracker ["Windows.UI.Composition.Interactions.InteractionTracker"]}
 impl RtActivatable<IInteractionTrackerStatics> for InteractionTracker {}
 impl InteractionTracker {
     #[inline] pub fn create(compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTracker>>> {
@@ -6600,7 +6600,7 @@ impl IInteractionTracker4 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum InteractionTrackerClampingOption: i32 {
+RT_ENUM! { enum InteractionTrackerClampingOption: i32 ["Windows.UI.Composition.Interactions.InteractionTrackerClampingOption"] {
     Auto (InteractionTrackerClampingOption_Auto) = 0, Disabled (InteractionTrackerClampingOption_Disabled) = 1,
 }}
 DEFINE_IID!(IID_IInteractionTrackerCustomAnimationStateEnteredArgs, 2367458545, 55216, 17228, 165, 210, 45, 118, 17, 134, 72, 52);
@@ -6614,7 +6614,7 @@ impl IInteractionTrackerCustomAnimationStateEnteredArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InteractionTrackerCustomAnimationStateEnteredArgs: IInteractionTrackerCustomAnimationStateEnteredArgs}
+RT_CLASS!{class InteractionTrackerCustomAnimationStateEnteredArgs: IInteractionTrackerCustomAnimationStateEnteredArgs ["Windows.UI.Composition.Interactions.InteractionTrackerCustomAnimationStateEnteredArgs"]}
 DEFINE_IID!(IID_IInteractionTrackerIdleStateEnteredArgs, 1342255018, 5392, 16706, 161, 165, 1, 155, 9, 248, 133, 123);
 RT_INTERFACE!{interface IInteractionTrackerIdleStateEnteredArgs(IInteractionTrackerIdleStateEnteredArgsVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTrackerIdleStateEnteredArgs] {
     fn get_RequestId(&self, out: *mut i32) -> HRESULT
@@ -6626,12 +6626,12 @@ impl IInteractionTrackerIdleStateEnteredArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InteractionTrackerIdleStateEnteredArgs: IInteractionTrackerIdleStateEnteredArgs}
+RT_CLASS!{class InteractionTrackerIdleStateEnteredArgs: IInteractionTrackerIdleStateEnteredArgs ["Windows.UI.Composition.Interactions.InteractionTrackerIdleStateEnteredArgs"]}
 DEFINE_IID!(IID_IInteractionTrackerInertiaModifier, 2699217184, 9908, 19874, 139, 97, 94, 104, 57, 121, 187, 226);
 RT_INTERFACE!{interface IInteractionTrackerInertiaModifier(IInteractionTrackerInertiaModifierVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTrackerInertiaModifier] {
     
 }}
-RT_CLASS!{class InteractionTrackerInertiaModifier: IInteractionTrackerInertiaModifier}
+RT_CLASS!{class InteractionTrackerInertiaModifier: IInteractionTrackerInertiaModifier ["Windows.UI.Composition.Interactions.InteractionTrackerInertiaModifier"]}
 DEFINE_IID!(IID_IInteractionTrackerInertiaModifierFactory, 2570590462, 51534, 19334, 135, 243, 146, 38, 101, 186, 70, 185);
 RT_INTERFACE!{interface IInteractionTrackerInertiaModifierFactory(IInteractionTrackerInertiaModifierFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTrackerInertiaModifierFactory] {
     
@@ -6663,7 +6663,7 @@ impl IInteractionTrackerInertiaMotion {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InteractionTrackerInertiaMotion: IInteractionTrackerInertiaMotion}
+RT_CLASS!{class InteractionTrackerInertiaMotion: IInteractionTrackerInertiaMotion ["Windows.UI.Composition.Interactions.InteractionTrackerInertiaMotion"]}
 impl RtActivatable<IInteractionTrackerInertiaMotionStatics> for InteractionTrackerInertiaMotion {}
 impl InteractionTrackerInertiaMotion {
     #[inline] pub fn create(compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTrackerInertiaMotion>>> {
@@ -6709,7 +6709,7 @@ impl IInteractionTrackerInertiaNaturalMotion {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InteractionTrackerInertiaNaturalMotion: IInteractionTrackerInertiaNaturalMotion}
+RT_CLASS!{class InteractionTrackerInertiaNaturalMotion: IInteractionTrackerInertiaNaturalMotion ["Windows.UI.Composition.Interactions.InteractionTrackerInertiaNaturalMotion"]}
 impl RtActivatable<IInteractionTrackerInertiaNaturalMotionStatics> for InteractionTrackerInertiaNaturalMotion {}
 impl InteractionTrackerInertiaNaturalMotion {
     #[inline] pub fn create(compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTrackerInertiaNaturalMotion>>> {
@@ -6755,7 +6755,7 @@ impl IInteractionTrackerInertiaRestingValue {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InteractionTrackerInertiaRestingValue: IInteractionTrackerInertiaRestingValue}
+RT_CLASS!{class InteractionTrackerInertiaRestingValue: IInteractionTrackerInertiaRestingValue ["Windows.UI.Composition.Interactions.InteractionTrackerInertiaRestingValue"]}
 impl RtActivatable<IInteractionTrackerInertiaRestingValueStatics> for InteractionTrackerInertiaRestingValue {}
 impl InteractionTrackerInertiaRestingValue {
     #[inline] pub fn create(compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTrackerInertiaRestingValue>>> {
@@ -6821,7 +6821,7 @@ impl IInteractionTrackerInertiaStateEnteredArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InteractionTrackerInertiaStateEnteredArgs: IInteractionTrackerInertiaStateEnteredArgs}
+RT_CLASS!{class InteractionTrackerInertiaStateEnteredArgs: IInteractionTrackerInertiaStateEnteredArgs ["Windows.UI.Composition.Interactions.InteractionTrackerInertiaStateEnteredArgs"]}
 DEFINE_IID!(IID_IInteractionTrackerInertiaStateEnteredArgs2, 2984981238, 49772, 16886, 161, 137, 250, 188, 34, 179, 35, 204);
 RT_INTERFACE!{interface IInteractionTrackerInertiaStateEnteredArgs2(IInteractionTrackerInertiaStateEnteredArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTrackerInertiaStateEnteredArgs2] {
     fn get_IsInertiaFromImpulse(&self, out: *mut bool) -> HRESULT
@@ -6844,7 +6844,7 @@ impl IInteractionTrackerInteractingStateEnteredArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InteractionTrackerInteractingStateEnteredArgs: IInteractionTrackerInteractingStateEnteredArgs}
+RT_CLASS!{class InteractionTrackerInteractingStateEnteredArgs: IInteractionTrackerInteractingStateEnteredArgs ["Windows.UI.Composition.Interactions.InteractionTrackerInteractingStateEnteredArgs"]}
 DEFINE_IID!(IID_IInteractionTrackerOwner, 3677260531, 19947, 20051, 178, 156, 176, 108, 159, 150, 214, 81);
 RT_INTERFACE!{interface IInteractionTrackerOwner(IInteractionTrackerOwnerVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTrackerOwner] {
     fn CustomAnimationStateEntered(&self, sender: *mut InteractionTracker, args: *mut InteractionTrackerCustomAnimationStateEnteredArgs) -> HRESULT,
@@ -6891,7 +6891,7 @@ impl IInteractionTrackerRequestIgnoredArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InteractionTrackerRequestIgnoredArgs: IInteractionTrackerRequestIgnoredArgs}
+RT_CLASS!{class InteractionTrackerRequestIgnoredArgs: IInteractionTrackerRequestIgnoredArgs ["Windows.UI.Composition.Interactions.InteractionTrackerRequestIgnoredArgs"]}
 DEFINE_IID!(IID_IInteractionTrackerStatics, 3148208055, 26000, 17560, 141, 108, 235, 98, 181, 20, 201, 42);
 RT_INTERFACE!{static interface IInteractionTrackerStatics(IInteractionTrackerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTrackerStatics] {
     fn Create(&self, compositor: *mut super::Compositor, out: *mut *mut InteractionTracker) -> HRESULT,
@@ -6932,12 +6932,12 @@ impl IInteractionTrackerValuesChangedArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InteractionTrackerValuesChangedArgs: IInteractionTrackerValuesChangedArgs}
+RT_CLASS!{class InteractionTrackerValuesChangedArgs: IInteractionTrackerValuesChangedArgs ["Windows.UI.Composition.Interactions.InteractionTrackerValuesChangedArgs"]}
 DEFINE_IID!(IID_IInteractionTrackerVector2InertiaModifier, 2279639728, 12422, 18515, 164, 183, 119, 136, 42, 213, 215, 227);
 RT_INTERFACE!{interface IInteractionTrackerVector2InertiaModifier(IInteractionTrackerVector2InertiaModifierVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTrackerVector2InertiaModifier] {
     
 }}
-RT_CLASS!{class InteractionTrackerVector2InertiaModifier: IInteractionTrackerVector2InertiaModifier}
+RT_CLASS!{class InteractionTrackerVector2InertiaModifier: IInteractionTrackerVector2InertiaModifier ["Windows.UI.Composition.Interactions.InteractionTrackerVector2InertiaModifier"]}
 DEFINE_IID!(IID_IInteractionTrackerVector2InertiaModifierFactory, 1946277572, 27757, 18655, 188, 62, 23, 30, 34, 126, 125, 127);
 RT_INTERFACE!{interface IInteractionTrackerVector2InertiaModifierFactory(IInteractionTrackerVector2InertiaModifierFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTrackerVector2InertiaModifierFactory] {
     
@@ -6969,7 +6969,7 @@ impl IInteractionTrackerVector2InertiaNaturalMotion {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InteractionTrackerVector2InertiaNaturalMotion: IInteractionTrackerVector2InertiaNaturalMotion}
+RT_CLASS!{class InteractionTrackerVector2InertiaNaturalMotion: IInteractionTrackerVector2InertiaNaturalMotion ["Windows.UI.Composition.Interactions.InteractionTrackerVector2InertiaNaturalMotion"]}
 impl RtActivatable<IInteractionTrackerVector2InertiaNaturalMotionStatics> for InteractionTrackerVector2InertiaNaturalMotion {}
 impl InteractionTrackerVector2InertiaNaturalMotion {
     #[inline] pub fn create(compositor: &super::Compositor) -> Result<Option<ComPtr<InteractionTrackerVector2InertiaNaturalMotion>>> {
@@ -7103,7 +7103,7 @@ impl IVisualInteractionSource {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VisualInteractionSource: IVisualInteractionSource}
+RT_CLASS!{class VisualInteractionSource: IVisualInteractionSource ["Windows.UI.Composition.Interactions.VisualInteractionSource"]}
 impl RtActivatable<IVisualInteractionSourceStatics> for VisualInteractionSource {}
 impl VisualInteractionSource {
     #[inline] pub fn create(source: &super::Visual) -> Result<Option<ComPtr<VisualInteractionSource>>> {
@@ -7192,7 +7192,7 @@ DEFINE_IID!(IID_IVisualInteractionSourceObjectFactory, 2999619964, 59786, 16882,
 RT_INTERFACE!{interface IVisualInteractionSourceObjectFactory(IVisualInteractionSourceObjectFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVisualInteractionSourceObjectFactory] {
     
 }}
-RT_ENUM! { enum VisualInteractionSourceRedirectionMode: i32 {
+RT_ENUM! { enum VisualInteractionSourceRedirectionMode: i32 ["Windows.UI.Composition.Interactions.VisualInteractionSourceRedirectionMode"] {
     Off (VisualInteractionSourceRedirectionMode_Off) = 0, CapableTouchpadOnly (VisualInteractionSourceRedirectionMode_CapableTouchpadOnly) = 1, PointerWheelOnly (VisualInteractionSourceRedirectionMode_PointerWheelOnly) = 2, CapableTouchpadAndPointerWheel (VisualInteractionSourceRedirectionMode_CapableTouchpadAndPointerWheel) = 3,
 }}
 DEFINE_IID!(IID_IVisualInteractionSourceStatics, 916022753, 34373, 20341, 186, 0, 100, 121, 205, 16, 200, 230);
@@ -7234,7 +7234,7 @@ impl IAcceleratorKeyEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AcceleratorKeyEventArgs: IAcceleratorKeyEventArgs}
+RT_CLASS!{class AcceleratorKeyEventArgs: IAcceleratorKeyEventArgs ["Windows.UI.Core.AcceleratorKeyEventArgs"]}
 DEFINE_IID!(IID_IAcceleratorKeyEventArgs2, 3540036086, 12158, 18547, 165, 85, 22, 110, 89, 110, 225, 197);
 RT_INTERFACE!{interface IAcceleratorKeyEventArgs2(IAcceleratorKeyEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IAcceleratorKeyEventArgs2] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT
@@ -7246,7 +7246,7 @@ impl IAcceleratorKeyEventArgs2 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppViewBackButtonVisibility: i32 {
+RT_ENUM! { enum AppViewBackButtonVisibility: i32 ["Windows.UI.Core.AppViewBackButtonVisibility"] {
     Visible (AppViewBackButtonVisibility_Visible) = 0, Collapsed (AppViewBackButtonVisibility_Collapsed) = 1, Disabled (AppViewBackButtonVisibility_Disabled) = 2,
 }}
 DEFINE_IID!(IID_IAutomationProviderRequestedEventArgs, 2518676056, 8639, 19266, 162, 152, 250, 71, 157, 76, 82, 226);
@@ -7265,7 +7265,7 @@ impl IAutomationProviderRequestedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AutomationProviderRequestedEventArgs: IAutomationProviderRequestedEventArgs}
+RT_CLASS!{class AutomationProviderRequestedEventArgs: IAutomationProviderRequestedEventArgs ["Windows.UI.Core.AutomationProviderRequestedEventArgs"]}
 DEFINE_IID!(IID_IBackRequestedEventArgs, 3590574730, 58385, 19022, 186, 65, 106, 50, 122, 134, 117, 188);
 RT_INTERFACE!{interface IBackRequestedEventArgs(IBackRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBackRequestedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -7282,7 +7282,7 @@ impl IBackRequestedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackRequestedEventArgs: IBackRequestedEventArgs}
+RT_CLASS!{class BackRequestedEventArgs: IBackRequestedEventArgs ["Windows.UI.Core.BackRequestedEventArgs"]}
 DEFINE_IID!(IID_ICharacterReceivedEventArgs, 3313788319, 39346, 19404, 189, 51, 4, 230, 63, 66, 144, 46);
 RT_INTERFACE!{interface ICharacterReceivedEventArgs(ICharacterReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterReceivedEventArgs] {
     fn get_KeyCode(&self, out: *mut u32) -> HRESULT,
@@ -7300,7 +7300,7 @@ impl ICharacterReceivedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CharacterReceivedEventArgs: ICharacterReceivedEventArgs}
+RT_CLASS!{class CharacterReceivedEventArgs: ICharacterReceivedEventArgs ["Windows.UI.Core.CharacterReceivedEventArgs"]}
 DEFINE_IID!(IID_IClosestInteractiveBoundsRequestedEventArgs, 880546263, 63224, 16611, 178, 159, 174, 80, 211, 232, 100, 134);
 RT_INTERFACE!{interface IClosestInteractiveBoundsRequestedEventArgs(IClosestInteractiveBoundsRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IClosestInteractiveBoundsRequestedEventArgs] {
     fn get_PointerPosition(&self, out: *mut foundation::Point) -> HRESULT,
@@ -7329,8 +7329,8 @@ impl IClosestInteractiveBoundsRequestedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ClosestInteractiveBoundsRequestedEventArgs: IClosestInteractiveBoundsRequestedEventArgs}
-RT_ENUM! { enum CoreAcceleratorKeyEventType: i32 {
+RT_CLASS!{class ClosestInteractiveBoundsRequestedEventArgs: IClosestInteractiveBoundsRequestedEventArgs ["Windows.UI.Core.ClosestInteractiveBoundsRequestedEventArgs"]}
+RT_ENUM! { enum CoreAcceleratorKeyEventType: i32 ["Windows.UI.Core.CoreAcceleratorKeyEventType"] {
     Character (CoreAcceleratorKeyEventType_Character) = 2, DeadCharacter (CoreAcceleratorKeyEventType_DeadCharacter) = 3, KeyDown (CoreAcceleratorKeyEventType_KeyDown) = 0, KeyUp (CoreAcceleratorKeyEventType_KeyUp) = 1, SystemCharacter (CoreAcceleratorKeyEventType_SystemCharacter) = 6, SystemDeadCharacter (CoreAcceleratorKeyEventType_SystemDeadCharacter) = 7, SystemKeyDown (CoreAcceleratorKeyEventType_SystemKeyDown) = 4, SystemKeyUp (CoreAcceleratorKeyEventType_SystemKeyUp) = 5, UnicodeCharacter (CoreAcceleratorKeyEventType_UnicodeCharacter) = 8,
 }}
 DEFINE_IID!(IID_ICoreAcceleratorKeys, 2684221429, 47305, 20208, 183, 210, 29, 230, 38, 86, 31, 200);
@@ -7349,7 +7349,7 @@ impl ICoreAcceleratorKeys {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreAcceleratorKeys: ICoreAcceleratorKeys}
+RT_CLASS!{class CoreAcceleratorKeys: ICoreAcceleratorKeys ["Windows.UI.Core.CoreAcceleratorKeys"]}
 DEFINE_IID!(IID_ICoreClosestInteractiveBoundsRequested, 4077061178, 59583, 20110, 174, 105, 201, 218, 221, 87, 161, 20);
 RT_INTERFACE!{interface ICoreClosestInteractiveBoundsRequested(ICoreClosestInteractiveBoundsRequestedVtbl): IInspectable(IInspectableVtbl) [IID_ICoreClosestInteractiveBoundsRequested] {
     fn add_ClosestInteractiveBoundsRequested(&self, handler: *mut foundation::TypedEventHandler<CoreComponentInputSource, ClosestInteractiveBoundsRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -7399,7 +7399,7 @@ impl ICoreComponentFocusable {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreComponentInputSource: ICoreInputSourceBase}
+RT_CLASS!{class CoreComponentInputSource: ICoreInputSourceBase ["Windows.UI.Core.CoreComponentInputSource"]}
 DEFINE_IID!(IID_ICoreCursor, 2525575887, 4381, 17452, 138, 119, 184, 121, 146, 248, 226, 214);
 RT_INTERFACE!{interface ICoreCursor(ICoreCursorVtbl): IInspectable(IInspectableVtbl) [IID_ICoreCursor] {
     fn get_Id(&self, out: *mut u32) -> HRESULT,
@@ -7417,7 +7417,7 @@ impl ICoreCursor {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreCursor: ICoreCursor}
+RT_CLASS!{class CoreCursor: ICoreCursor ["Windows.UI.Core.CoreCursor"]}
 impl RtActivatable<ICoreCursorFactory> for CoreCursor {}
 impl CoreCursor {
     #[inline] pub fn create_cursor(type_: CoreCursorType, id: u32) -> Result<ComPtr<CoreCursor>> {
@@ -7436,7 +7436,7 @@ impl ICoreCursorFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CoreCursorType: i32 {
+RT_ENUM! { enum CoreCursorType: i32 ["Windows.UI.Core.CoreCursorType"] {
     Arrow (CoreCursorType_Arrow) = 0, Cross (CoreCursorType_Cross) = 1, Custom (CoreCursorType_Custom) = 2, Hand (CoreCursorType_Hand) = 3, Help (CoreCursorType_Help) = 4, IBeam (CoreCursorType_IBeam) = 5, SizeAll (CoreCursorType_SizeAll) = 6, SizeNortheastSouthwest (CoreCursorType_SizeNortheastSouthwest) = 7, SizeNorthSouth (CoreCursorType_SizeNorthSouth) = 8, SizeNorthwestSoutheast (CoreCursorType_SizeNorthwestSoutheast) = 9, SizeWestEast (CoreCursorType_SizeWestEast) = 10, UniversalNo (CoreCursorType_UniversalNo) = 11, UpArrow (CoreCursorType_UpArrow) = 12, Wait (CoreCursorType_Wait) = 13, Pin (CoreCursorType_Pin) = 14, Person (CoreCursorType_Person) = 15,
 }}
 DEFINE_IID!(IID_ICoreDispatcher, 1624977320, 46853, 20446, 167, 214, 235, 187, 24, 145, 211, 158);
@@ -7467,7 +7467,7 @@ impl ICoreDispatcher {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreDispatcher: ICoreDispatcher}
+RT_CLASS!{class CoreDispatcher: ICoreDispatcher ["Windows.UI.Core.CoreDispatcher"]}
 DEFINE_IID!(IID_ICoreDispatcher2, 1868456903, 58282, 20142, 176, 224, 220, 243, 33, 202, 75, 47);
 RT_INTERFACE!{interface ICoreDispatcher2(ICoreDispatcher2Vtbl): IInspectable(IInspectableVtbl) [IID_ICoreDispatcher2] {
     fn TryRunAsync(&self, priority: CoreDispatcherPriority, agileCallback: *mut DispatchedHandler, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
@@ -7485,7 +7485,7 @@ impl ICoreDispatcher2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CoreDispatcherPriority: i32 {
+RT_ENUM! { enum CoreDispatcherPriority: i32 ["Windows.UI.Core.CoreDispatcherPriority"] {
     Idle (CoreDispatcherPriority_Idle) = -2, Low (CoreDispatcherPriority_Low) = -1, Normal (CoreDispatcherPriority_Normal) = 0, High (CoreDispatcherPriority_High) = 1,
 }}
 DEFINE_IID!(IID_ICoreDispatcherWithTaskPriority, 3137006765, 18509, 16830, 186, 128, 29, 88, 198, 82, 99, 234);
@@ -7521,8 +7521,8 @@ impl ICoreDispatcherWithTaskPriority {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreIndependentInputSource: ICoreInputSourceBase}
-RT_ENUM! { enum CoreInputDeviceTypes: u32 {
+RT_CLASS!{class CoreIndependentInputSource: ICoreInputSourceBase ["Windows.UI.Core.CoreIndependentInputSource"]}
+RT_ENUM! { enum CoreInputDeviceTypes: u32 ["Windows.UI.Core.CoreInputDeviceTypes"] {
     None (CoreInputDeviceTypes_None) = 0, Touch (CoreInputDeviceTypes_Touch) = 1, Pen (CoreInputDeviceTypes_Pen) = 2, Mouse (CoreInputDeviceTypes_Mouse) = 4,
 }}
 DEFINE_IID!(IID_ICoreInputSourceBase, 2672330759, 17792, 19432, 190, 104, 146, 169, 49, 23, 19, 187);
@@ -7614,7 +7614,7 @@ impl ICoreKeyboardInputSource2 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct CorePhysicalKeyStatus {
+RT_STRUCT! { struct CorePhysicalKeyStatus ["Windows.UI.Core.CorePhysicalKeyStatus"] {
     RepeatCount: u32, ScanCode: u32, IsExtendedKey: bool, IsMenuKeyDown: bool, WasKeyDown: bool, IsKeyReleased: bool,
 }}
 DEFINE_IID!(IID_ICorePointerInputSource, 3153181464, 58490, 18667, 136, 7, 248, 248, 211, 234, 69, 81);
@@ -7781,13 +7781,13 @@ impl ICorePointerRedirector {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CoreProcessEventsOption: i32 {
+RT_ENUM! { enum CoreProcessEventsOption: i32 ["Windows.UI.Core.CoreProcessEventsOption"] {
     ProcessOneAndAllPending (CoreProcessEventsOption_ProcessOneAndAllPending) = 0, ProcessOneIfPresent (CoreProcessEventsOption_ProcessOneIfPresent) = 1, ProcessUntilQuit (CoreProcessEventsOption_ProcessUntilQuit) = 2, ProcessAllIfPresent (CoreProcessEventsOption_ProcessAllIfPresent) = 3,
 }}
-RT_STRUCT! { struct CoreProximityEvaluation {
+RT_STRUCT! { struct CoreProximityEvaluation ["Windows.UI.Core.CoreProximityEvaluation"] {
     Score: i32, AdjustedPoint: foundation::Point,
 }}
-RT_ENUM! { enum CoreProximityEvaluationScore: i32 {
+RT_ENUM! { enum CoreProximityEvaluationScore: i32 ["Windows.UI.Core.CoreProximityEvaluationScore"] {
     Closest (CoreProximityEvaluationScore_Closest) = 0, Farthest (CoreProximityEvaluationScore_Farthest) = 2147483647,
 }}
 DEFINE_IID!(IID_ICoreTouchHitTesting, 2983764617, 15055, 16676, 159, 163, 234, 138, 186, 53, 60, 33);
@@ -7806,7 +7806,7 @@ impl ICoreTouchHitTesting {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CoreVirtualKeyStates: u32 {
+RT_ENUM! { enum CoreVirtualKeyStates: u32 ["Windows.UI.Core.CoreVirtualKeyStates"] {
     None (CoreVirtualKeyStates_None) = 0, Down (CoreVirtualKeyStates_Down) = 1, Locked (CoreVirtualKeyStates_Locked) = 2,
 }}
 DEFINE_IID!(IID_ICoreWindow, 2042222066, 34718, 19337, 183, 152, 121, 228, 117, 152, 3, 12);
@@ -8104,7 +8104,7 @@ impl ICoreWindow {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreWindow: ICoreWindow}
+RT_CLASS!{class CoreWindow: ICoreWindow ["Windows.UI.Core.CoreWindow"]}
 impl RtActivatable<ICoreWindowStatic> for CoreWindow {}
 impl CoreWindow {
     #[inline] pub fn get_for_current_thread() -> Result<Option<ComPtr<CoreWindow>>> {
@@ -8189,10 +8189,10 @@ impl ICoreWindow5 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CoreWindowActivationMode: i32 {
+RT_ENUM! { enum CoreWindowActivationMode: i32 ["Windows.UI.Core.CoreWindowActivationMode"] {
     None (CoreWindowActivationMode_None) = 0, Deactivated (CoreWindowActivationMode_Deactivated) = 1, ActivatedNotForeground (CoreWindowActivationMode_ActivatedNotForeground) = 2, ActivatedInForeground (CoreWindowActivationMode_ActivatedInForeground) = 3,
 }}
-RT_ENUM! { enum CoreWindowActivationState: i32 {
+RT_ENUM! { enum CoreWindowActivationState: i32 ["Windows.UI.Core.CoreWindowActivationState"] {
     CodeActivated (CoreWindowActivationState_CodeActivated) = 0, Deactivated (CoreWindowActivationState_Deactivated) = 1, PointerActivated (CoreWindowActivationState_PointerActivated) = 2,
 }}
 DEFINE_IID!(IID_ICoreWindowDialog, 3879283936, 51085, 17022, 139, 44, 1, 255, 66, 12, 105, 213);
@@ -8290,7 +8290,7 @@ impl ICoreWindowDialog {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreWindowDialog: ICoreWindowDialog}
+RT_CLASS!{class CoreWindowDialog: ICoreWindowDialog ["Windows.UI.Core.CoreWindowDialog"]}
 impl RtActivatable<ICoreWindowDialogFactory> for CoreWindowDialog {}
 impl RtActivatable<IActivationFactory> for CoreWindowDialog {}
 impl CoreWindowDialog {
@@ -8326,8 +8326,8 @@ impl ICoreWindowEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreWindowEventArgs: ICoreWindowEventArgs}
-RT_ENUM! { enum CoreWindowFlowDirection: i32 {
+RT_CLASS!{class CoreWindowEventArgs: ICoreWindowEventArgs ["Windows.UI.Core.CoreWindowEventArgs"]}
+RT_ENUM! { enum CoreWindowFlowDirection: i32 ["Windows.UI.Core.CoreWindowFlowDirection"] {
     LeftToRight (CoreWindowFlowDirection_LeftToRight) = 0, RightToLeft (CoreWindowFlowDirection_RightToLeft) = 1,
 }}
 DEFINE_IID!(IID_ICoreWindowFlyout, 3902637389, 8272, 16571, 179, 68, 246, 243, 85, 238, 179, 20);
@@ -8414,7 +8414,7 @@ impl ICoreWindowFlyout {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreWindowFlyout: ICoreWindowFlyout}
+RT_CLASS!{class CoreWindowFlyout: ICoreWindowFlyout ["Windows.UI.Core.CoreWindowFlyout"]}
 impl RtActivatable<ICoreWindowFlyoutFactory> for CoreWindowFlyout {}
 impl CoreWindowFlyout {
     #[inline] pub fn create(position: foundation::Point) -> Result<ComPtr<CoreWindowFlyout>> {
@@ -8452,7 +8452,7 @@ impl ICoreWindowPopupShowingEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreWindowPopupShowingEventArgs: ICoreWindowPopupShowingEventArgs}
+RT_CLASS!{class CoreWindowPopupShowingEventArgs: ICoreWindowPopupShowingEventArgs ["Windows.UI.Core.CoreWindowPopupShowingEventArgs"]}
 DEFINE_IID!(IID_ICoreWindowResizeManager, 3102783781, 45904, 18611, 161, 152, 92, 26, 132, 112, 2, 67);
 RT_INTERFACE!{interface ICoreWindowResizeManager(ICoreWindowResizeManagerVtbl): IInspectable(IInspectableVtbl) [IID_ICoreWindowResizeManager] {
     fn NotifyLayoutCompleted(&self) -> HRESULT
@@ -8463,7 +8463,7 @@ impl ICoreWindowResizeManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreWindowResizeManager: ICoreWindowResizeManager}
+RT_CLASS!{class CoreWindowResizeManager: ICoreWindowResizeManager ["Windows.UI.Core.CoreWindowResizeManager"]}
 impl RtActivatable<ICoreWindowResizeManagerStatics> for CoreWindowResizeManager {}
 impl CoreWindowResizeManager {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<CoreWindowResizeManager>>> {
@@ -8540,7 +8540,7 @@ impl IIdleDispatchedHandlerArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class IdleDispatchedHandlerArgs: IIdleDispatchedHandlerArgs}
+RT_CLASS!{class IdleDispatchedHandlerArgs: IIdleDispatchedHandlerArgs ["Windows.UI.Core.IdleDispatchedHandlerArgs"]}
 DEFINE_IID!(IID_IInitializeWithCoreWindow, 412033238, 39027, 17994, 172, 229, 87, 224, 16, 244, 101, 230);
 RT_INTERFACE!{interface IInitializeWithCoreWindow(IInitializeWithCoreWindowVtbl): IInspectable(IInspectableVtbl) [IID_IInitializeWithCoreWindow] {
     fn Initialize(&self, window: *mut CoreWindow) -> HRESULT
@@ -8562,7 +8562,7 @@ impl IInputEnabledEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InputEnabledEventArgs: IInputEnabledEventArgs}
+RT_CLASS!{class InputEnabledEventArgs: IInputEnabledEventArgs ["Windows.UI.Core.InputEnabledEventArgs"]}
 DEFINE_IID!(IID_IKeyEventArgs, 1609951536, 9540, 18967, 189, 120, 31, 47, 222, 187, 16, 107);
 RT_INTERFACE!{interface IKeyEventArgs(IKeyEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyEventArgs] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
@@ -8581,7 +8581,7 @@ impl IKeyEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class KeyEventArgs: IKeyEventArgs}
+RT_CLASS!{class KeyEventArgs: IKeyEventArgs ["Windows.UI.Core.KeyEventArgs"]}
 DEFINE_IID!(IID_IKeyEventArgs2, 1480252824, 1936, 17777, 155, 18, 100, 94, 249, 215, 158, 66);
 RT_INTERFACE!{interface IKeyEventArgs2(IKeyEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IKeyEventArgs2] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT
@@ -8617,7 +8617,7 @@ impl IPointerEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PointerEventArgs: IPointerEventArgs}
+RT_CLASS!{class PointerEventArgs: IPointerEventArgs ["Windows.UI.Core.PointerEventArgs"]}
 DEFINE_IID!(IID_ISystemNavigationManager, 2466394392, 53072, 17062, 151, 6, 105, 16, 127, 161, 34, 225);
 RT_INTERFACE!{interface ISystemNavigationManager(ISystemNavigationManagerVtbl): IInspectable(IInspectableVtbl) [IID_ISystemNavigationManager] {
     fn add_BackRequested(&self, handler: *mut foundation::EventHandler<BackRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -8634,7 +8634,7 @@ impl ISystemNavigationManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemNavigationManager: ISystemNavigationManager}
+RT_CLASS!{class SystemNavigationManager: ISystemNavigationManager ["Windows.UI.Core.SystemNavigationManager"]}
 impl RtActivatable<ISystemNavigationManagerStatics> for SystemNavigationManager {}
 impl SystemNavigationManager {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<SystemNavigationManager>>> {
@@ -8709,7 +8709,7 @@ impl ITouchHitTestingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TouchHitTestingEventArgs: ITouchHitTestingEventArgs}
+RT_CLASS!{class TouchHitTestingEventArgs: ITouchHitTestingEventArgs ["Windows.UI.Core.TouchHitTestingEventArgs"]}
 DEFINE_IID!(IID_IVisibilityChangedEventArgs, 3214481642, 55297, 17764, 164, 149, 177, 232, 79, 138, 208, 133);
 RT_INTERFACE!{interface IVisibilityChangedEventArgs(IVisibilityChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVisibilityChangedEventArgs] {
     fn get_Visible(&self, out: *mut bool) -> HRESULT
@@ -8721,7 +8721,7 @@ impl IVisibilityChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VisibilityChangedEventArgs: IVisibilityChangedEventArgs}
+RT_CLASS!{class VisibilityChangedEventArgs: IVisibilityChangedEventArgs ["Windows.UI.Core.VisibilityChangedEventArgs"]}
 DEFINE_IID!(IID_IWindowActivatedEventArgs, 396191207, 18008, 19638, 170, 19, 65, 208, 148, 234, 37, 94);
 RT_INTERFACE!{interface IWindowActivatedEventArgs(IWindowActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWindowActivatedEventArgs] {
     fn get_WindowActivationState(&self, out: *mut CoreWindowActivationState) -> HRESULT
@@ -8733,7 +8733,7 @@ impl IWindowActivatedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WindowActivatedEventArgs: IWindowActivatedEventArgs}
+RT_CLASS!{class WindowActivatedEventArgs: IWindowActivatedEventArgs ["Windows.UI.Core.WindowActivatedEventArgs"]}
 DEFINE_IID!(IID_IWindowSizeChangedEventArgs, 1512050375, 1062, 18396, 184, 108, 111, 71, 89, 21, 228, 81);
 RT_INTERFACE!{interface IWindowSizeChangedEventArgs(IWindowSizeChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWindowSizeChangedEventArgs] {
     fn get_Size(&self, out: *mut foundation::Size) -> HRESULT
@@ -8745,7 +8745,7 @@ impl IWindowSizeChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WindowSizeChangedEventArgs: IWindowSizeChangedEventArgs}
+RT_CLASS!{class WindowSizeChangedEventArgs: IWindowSizeChangedEventArgs ["Windows.UI.Core.WindowSizeChangedEventArgs"]}
 pub mod animationmetrics { // Windows.UI.Core.AnimationMetrics
 use ::prelude::*;
 DEFINE_IID!(IID_IAnimationDescription, 2098308425, 48701, 16862, 176, 129, 5, 193, 73, 150, 47, 155);
@@ -8783,7 +8783,7 @@ impl IAnimationDescription {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AnimationDescription: IAnimationDescription}
+RT_CLASS!{class AnimationDescription: IAnimationDescription ["Windows.UI.Core.AnimationMetrics.AnimationDescription"]}
 impl RtActivatable<IAnimationDescriptionFactory> for AnimationDescription {}
 impl AnimationDescription {
     #[inline] pub fn create_instance(effect: AnimationEffect, target: AnimationEffectTarget) -> Result<ComPtr<AnimationDescription>> {
@@ -8802,10 +8802,10 @@ impl IAnimationDescriptionFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AnimationEffect: i32 {
+RT_ENUM! { enum AnimationEffect: i32 ["Windows.UI.Core.AnimationMetrics.AnimationEffect"] {
     Expand (AnimationEffect_Expand) = 0, Collapse (AnimationEffect_Collapse) = 1, Reposition (AnimationEffect_Reposition) = 2, FadeIn (AnimationEffect_FadeIn) = 3, FadeOut (AnimationEffect_FadeOut) = 4, AddToList (AnimationEffect_AddToList) = 5, DeleteFromList (AnimationEffect_DeleteFromList) = 6, AddToGrid (AnimationEffect_AddToGrid) = 7, DeleteFromGrid (AnimationEffect_DeleteFromGrid) = 8, AddToSearchGrid (AnimationEffect_AddToSearchGrid) = 9, DeleteFromSearchGrid (AnimationEffect_DeleteFromSearchGrid) = 10, AddToSearchList (AnimationEffect_AddToSearchList) = 11, DeleteFromSearchList (AnimationEffect_DeleteFromSearchList) = 12, ShowEdgeUI (AnimationEffect_ShowEdgeUI) = 13, ShowPanel (AnimationEffect_ShowPanel) = 14, HideEdgeUI (AnimationEffect_HideEdgeUI) = 15, HidePanel (AnimationEffect_HidePanel) = 16, ShowPopup (AnimationEffect_ShowPopup) = 17, HidePopup (AnimationEffect_HidePopup) = 18, PointerDown (AnimationEffect_PointerDown) = 19, PointerUp (AnimationEffect_PointerUp) = 20, DragSourceStart (AnimationEffect_DragSourceStart) = 21, DragSourceEnd (AnimationEffect_DragSourceEnd) = 22, TransitionContent (AnimationEffect_TransitionContent) = 23, Reveal (AnimationEffect_Reveal) = 24, Hide (AnimationEffect_Hide) = 25, DragBetweenEnter (AnimationEffect_DragBetweenEnter) = 26, DragBetweenLeave (AnimationEffect_DragBetweenLeave) = 27, SwipeSelect (AnimationEffect_SwipeSelect) = 28, SwipeDeselect (AnimationEffect_SwipeDeselect) = 29, SwipeReveal (AnimationEffect_SwipeReveal) = 30, EnterPage (AnimationEffect_EnterPage) = 31, TransitionPage (AnimationEffect_TransitionPage) = 32, CrossFade (AnimationEffect_CrossFade) = 33, Peek (AnimationEffect_Peek) = 34, UpdateBadge (AnimationEffect_UpdateBadge) = 35,
 }}
-RT_ENUM! { enum AnimationEffectTarget: i32 {
+RT_ENUM! { enum AnimationEffectTarget: i32 ["Windows.UI.Core.AnimationMetrics.AnimationEffectTarget"] {
     Primary (AnimationEffectTarget_Primary) = 0, Added (AnimationEffectTarget_Added) = 1, Affected (AnimationEffectTarget_Affected) = 2, Background (AnimationEffectTarget_Background) = 3, Content (AnimationEffectTarget_Content) = 4, Deleted (AnimationEffectTarget_Deleted) = 5, Deselected (AnimationEffectTarget_Deselected) = 6, DragSource (AnimationEffectTarget_DragSource) = 7, Hidden (AnimationEffectTarget_Hidden) = 8, Incoming (AnimationEffectTarget_Incoming) = 9, Outgoing (AnimationEffectTarget_Outgoing) = 10, Outline (AnimationEffectTarget_Outline) = 11, Remaining (AnimationEffectTarget_Remaining) = 12, Revealed (AnimationEffectTarget_Revealed) = 13, RowIn (AnimationEffectTarget_RowIn) = 14, RowOut (AnimationEffectTarget_RowOut) = 15, Selected (AnimationEffectTarget_Selected) = 16, Selection (AnimationEffectTarget_Selection) = 17, Shown (AnimationEffectTarget_Shown) = 18, Tapped (AnimationEffectTarget_Tapped) = 19,
 }}
 DEFINE_IID!(IID_IOpacityAnimation, 2151328741, 61054, 17759, 132, 233, 37, 6, 175, 184, 210, 180);
@@ -8825,7 +8825,7 @@ impl IOpacityAnimation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OpacityAnimation: IOpacityAnimation}
+RT_CLASS!{class OpacityAnimation: IOpacityAnimation ["Windows.UI.Core.AnimationMetrics.OpacityAnimation"]}
 DEFINE_IID!(IID_IPropertyAnimation, 973190362, 19852, 16670, 182, 21, 26, 222, 104, 58, 153, 3);
 RT_INTERFACE!{interface IPropertyAnimation(IPropertyAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IPropertyAnimation] {
     fn get_Type(&self, out: *mut PropertyAnimationType) -> HRESULT,
@@ -8861,8 +8861,8 @@ impl IPropertyAnimation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PropertyAnimation: IPropertyAnimation}
-RT_ENUM! { enum PropertyAnimationType: i32 {
+RT_CLASS!{class PropertyAnimation: IPropertyAnimation ["Windows.UI.Core.AnimationMetrics.PropertyAnimation"]}
+RT_ENUM! { enum PropertyAnimationType: i32 ["Windows.UI.Core.AnimationMetrics.PropertyAnimationType"] {
     Scale (PropertyAnimationType_Scale) = 0, Translation (PropertyAnimationType_Translation) = 1, Opacity (PropertyAnimationType_Opacity) = 2,
 }}
 DEFINE_IID!(IID_IScaleAnimation, 37049031, 29099, 17036, 156, 159, 211, 23, 128, 150, 73, 149);
@@ -8900,8 +8900,8 @@ impl IScaleAnimation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ScaleAnimation: IScaleAnimation}
-RT_CLASS!{class TranslationAnimation: IPropertyAnimation}
+RT_CLASS!{class ScaleAnimation: IScaleAnimation ["Windows.UI.Core.AnimationMetrics.ScaleAnimation"]}
+RT_CLASS!{class TranslationAnimation: IPropertyAnimation ["Windows.UI.Core.AnimationMetrics.TranslationAnimation"]}
 } // Windows.UI.Core.AnimationMetrics
 pub mod preview { // Windows.UI.Core.Preview
 use ::prelude::*;
@@ -8927,7 +8927,7 @@ impl ISystemNavigationCloseRequestedPreviewEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemNavigationCloseRequestedPreviewEventArgs: ISystemNavigationCloseRequestedPreviewEventArgs}
+RT_CLASS!{class SystemNavigationCloseRequestedPreviewEventArgs: ISystemNavigationCloseRequestedPreviewEventArgs ["Windows.UI.Core.Preview.SystemNavigationCloseRequestedPreviewEventArgs"]}
 DEFINE_IID!(IID_ISystemNavigationManagerPreview, 3965650056, 25637, 18295, 165, 54, 203, 86, 52, 66, 127, 13);
 RT_INTERFACE!{interface ISystemNavigationManagerPreview(ISystemNavigationManagerPreviewVtbl): IInspectable(IInspectableVtbl) [IID_ISystemNavigationManagerPreview] {
     fn add_CloseRequested(&self, handler: *mut foundation::EventHandler<SystemNavigationCloseRequestedPreviewEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -8944,7 +8944,7 @@ impl ISystemNavigationManagerPreview {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemNavigationManagerPreview: ISystemNavigationManagerPreview}
+RT_CLASS!{class SystemNavigationManagerPreview: ISystemNavigationManagerPreview ["Windows.UI.Core.Preview.SystemNavigationManagerPreview"]}
 impl RtActivatable<ISystemNavigationManagerPreviewStatics> for SystemNavigationManagerPreview {}
 impl SystemNavigationManagerPreview {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<SystemNavigationManagerPreview>>> {
@@ -8967,7 +8967,7 @@ impl ISystemNavigationManagerPreviewStatics {
 } // Windows.UI.Core
 pub mod input { // Windows.UI.Input
 use ::prelude::*;
-RT_STRUCT! { struct CrossSlideThresholds {
+RT_STRUCT! { struct CrossSlideThresholds ["Windows.UI.Input.CrossSlideThresholds"] {
     SelectionStart: f32, SpeedBumpStart: f32, SpeedBumpEnd: f32, RearrangeStart: f32,
 }}
 DEFINE_IID!(IID_ICrossSlidingEventArgs, 3912714040, 28552, 16857, 135, 32, 120, 224, 142, 57, 131, 73);
@@ -8994,8 +8994,8 @@ impl ICrossSlidingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CrossSlidingEventArgs: ICrossSlidingEventArgs}
-RT_ENUM! { enum CrossSlidingState: i32 {
+RT_CLASS!{class CrossSlidingEventArgs: ICrossSlidingEventArgs ["Windows.UI.Input.CrossSlidingEventArgs"]}
+RT_ENUM! { enum CrossSlidingState: i32 ["Windows.UI.Input.CrossSlidingState"] {
     Started (CrossSlidingState_Started) = 0, Dragging (CrossSlidingState_Dragging) = 1, Selecting (CrossSlidingState_Selecting) = 2, SelectSpeedBumping (CrossSlidingState_SelectSpeedBumping) = 3, SpeedBumping (CrossSlidingState_SpeedBumping) = 4, Rearranging (CrossSlidingState_Rearranging) = 5, Completed (CrossSlidingState_Completed) = 6,
 }}
 DEFINE_IID!(IID_IDraggingEventArgs, 479220612, 2108, 19411, 181, 89, 23, 156, 221, 235, 51, 236);
@@ -9022,8 +9022,8 @@ impl IDraggingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DraggingEventArgs: IDraggingEventArgs}
-RT_ENUM! { enum DraggingState: i32 {
+RT_CLASS!{class DraggingEventArgs: IDraggingEventArgs ["Windows.UI.Input.DraggingEventArgs"]}
+RT_ENUM! { enum DraggingState: i32 ["Windows.UI.Input.DraggingState"] {
     Started (DraggingState_Started) = 0, Continuing (DraggingState_Continuing) = 1, Completed (DraggingState_Completed) = 2,
 }}
 DEFINE_IID!(IID_IEdgeGesture, 1477268114, 10929, 18858, 167, 240, 51, 189, 63, 141, 249, 241);
@@ -9064,7 +9064,7 @@ impl IEdgeGesture {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EdgeGesture: IEdgeGesture}
+RT_CLASS!{class EdgeGesture: IEdgeGesture ["Windows.UI.Input.EdgeGesture"]}
 impl RtActivatable<IEdgeGestureStatics> for EdgeGesture {}
 impl EdgeGesture {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<EdgeGesture>>> {
@@ -9083,8 +9083,8 @@ impl IEdgeGestureEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EdgeGestureEventArgs: IEdgeGestureEventArgs}
-RT_ENUM! { enum EdgeGestureKind: i32 {
+RT_CLASS!{class EdgeGestureEventArgs: IEdgeGestureEventArgs ["Windows.UI.Input.EdgeGestureEventArgs"]}
+RT_ENUM! { enum EdgeGestureKind: i32 ["Windows.UI.Input.EdgeGestureKind"] {
     Touch (EdgeGestureKind_Touch) = 0, Keyboard (EdgeGestureKind_Keyboard) = 1, Mouse (EdgeGestureKind_Mouse) = 2,
 }}
 DEFINE_IID!(IID_IEdgeGestureStatics, 3161097497, 6382, 16451, 152, 57, 79, 197, 132, 214, 10, 20);
@@ -9421,10 +9421,10 @@ impl IGestureRecognizer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GestureRecognizer: IGestureRecognizer}
+RT_CLASS!{class GestureRecognizer: IGestureRecognizer ["Windows.UI.Input.GestureRecognizer"]}
 impl RtActivatable<IActivationFactory> for GestureRecognizer {}
 DEFINE_CLSID!(GestureRecognizer(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,71,101,115,116,117,114,101,82,101,99,111,103,110,105,122,101,114,0]) [CLSID_GestureRecognizer]);
-RT_ENUM! { enum GestureSettings: u32 {
+RT_ENUM! { enum GestureSettings: u32 ["Windows.UI.Input.GestureSettings"] {
     None (GestureSettings_None) = 0, Tap (GestureSettings_Tap) = 1, DoubleTap (GestureSettings_DoubleTap) = 2, Hold (GestureSettings_Hold) = 4, HoldWithMouse (GestureSettings_HoldWithMouse) = 8, RightTap (GestureSettings_RightTap) = 16, Drag (GestureSettings_Drag) = 32, ManipulationTranslateX (GestureSettings_ManipulationTranslateX) = 64, ManipulationTranslateY (GestureSettings_ManipulationTranslateY) = 128, ManipulationTranslateRailsX (GestureSettings_ManipulationTranslateRailsX) = 256, ManipulationTranslateRailsY (GestureSettings_ManipulationTranslateRailsY) = 512, ManipulationRotate (GestureSettings_ManipulationRotate) = 1024, ManipulationScale (GestureSettings_ManipulationScale) = 2048, ManipulationTranslateInertia (GestureSettings_ManipulationTranslateInertia) = 4096, ManipulationRotateInertia (GestureSettings_ManipulationRotateInertia) = 8192, ManipulationScaleInertia (GestureSettings_ManipulationScaleInertia) = 16384, CrossSlide (GestureSettings_CrossSlide) = 32768, ManipulationMultipleFingerPanning (GestureSettings_ManipulationMultipleFingerPanning) = 65536,
 }}
 DEFINE_IID!(IID_IHoldingEventArgs, 737629637, 59289, 16820, 187, 64, 36, 47, 64, 149, 155, 113);
@@ -9451,8 +9451,8 @@ impl IHoldingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HoldingEventArgs: IHoldingEventArgs}
-RT_ENUM! { enum HoldingState: i32 {
+RT_CLASS!{class HoldingEventArgs: IHoldingEventArgs ["Windows.UI.Input.HoldingEventArgs"]}
+RT_ENUM! { enum HoldingState: i32 ["Windows.UI.Input.HoldingState"] {
     Started (HoldingState_Started) = 0, Completed (HoldingState_Completed) = 1, Canceled (HoldingState_Canceled) = 2,
 }}
 DEFINE_IID!(IID_IKeyboardDeliveryInterceptor, 3032150120, 36681, 17516, 141, 181, 140, 15, 254, 133, 204, 158);
@@ -9493,7 +9493,7 @@ impl IKeyboardDeliveryInterceptor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class KeyboardDeliveryInterceptor: IKeyboardDeliveryInterceptor}
+RT_CLASS!{class KeyboardDeliveryInterceptor: IKeyboardDeliveryInterceptor ["Windows.UI.Input.KeyboardDeliveryInterceptor"]}
 impl RtActivatable<IKeyboardDeliveryInterceptorStatics> for KeyboardDeliveryInterceptor {}
 impl KeyboardDeliveryInterceptor {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<KeyboardDeliveryInterceptor>>> {
@@ -9542,8 +9542,8 @@ impl IManipulationCompletedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ManipulationCompletedEventArgs: IManipulationCompletedEventArgs}
-RT_STRUCT! { struct ManipulationDelta {
+RT_CLASS!{class ManipulationCompletedEventArgs: IManipulationCompletedEventArgs ["Windows.UI.Input.ManipulationCompletedEventArgs"]}
+RT_STRUCT! { struct ManipulationDelta ["Windows.UI.Input.ManipulationDelta"] {
     Translation: foundation::Point, Scale: f32, Rotation: f32, Expansion: f32,
 }}
 DEFINE_IID!(IID_IManipulationInertiaStartingEventArgs, 3711412376, 9919, 18042, 156, 229, 204, 243, 251, 17, 55, 30);
@@ -9582,7 +9582,7 @@ impl IManipulationInertiaStartingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ManipulationInertiaStartingEventArgs: IManipulationInertiaStartingEventArgs}
+RT_CLASS!{class ManipulationInertiaStartingEventArgs: IManipulationInertiaStartingEventArgs ["Windows.UI.Input.ManipulationInertiaStartingEventArgs"]}
 DEFINE_IID!(IID_IManipulationStartedEventArgs, 3723265854, 53198, 18738, 140, 29, 60, 61, 1, 26, 52, 192);
 RT_INTERFACE!{interface IManipulationStartedEventArgs(IManipulationStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IManipulationStartedEventArgs] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
@@ -9607,7 +9607,7 @@ impl IManipulationStartedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ManipulationStartedEventArgs: IManipulationStartedEventArgs}
+RT_CLASS!{class ManipulationStartedEventArgs: IManipulationStartedEventArgs ["Windows.UI.Input.ManipulationStartedEventArgs"]}
 DEFINE_IID!(IID_IManipulationUpdatedEventArgs, 3409267941, 43960, 20383, 179, 206, 129, 129, 170, 97, 173, 130);
 RT_INTERFACE!{interface IManipulationUpdatedEventArgs(IManipulationUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IManipulationUpdatedEventArgs] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
@@ -9644,8 +9644,8 @@ impl IManipulationUpdatedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ManipulationUpdatedEventArgs: IManipulationUpdatedEventArgs}
-RT_STRUCT! { struct ManipulationVelocities {
+RT_CLASS!{class ManipulationUpdatedEventArgs: IManipulationUpdatedEventArgs ["Windows.UI.Input.ManipulationUpdatedEventArgs"]}
+RT_STRUCT! { struct ManipulationVelocities ["Windows.UI.Input.ManipulationVelocities"] {
     Linear: foundation::Point, Angular: f32, Expansion: f32,
 }}
 DEFINE_IID!(IID_IMouseWheelParameters, 3939551812, 40429, 16439, 129, 73, 94, 76, 194, 86, 68, 104);
@@ -9697,7 +9697,7 @@ impl IMouseWheelParameters {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MouseWheelParameters: IMouseWheelParameters}
+RT_CLASS!{class MouseWheelParameters: IMouseWheelParameters ["Windows.UI.Input.MouseWheelParameters"]}
 DEFINE_IID!(IID_IPointerPoint, 3918868861, 29334, 17113, 130, 51, 197, 190, 115, 183, 74, 74);
 RT_INTERFACE!{interface IPointerPoint(IPointerPointVtbl): IInspectable(IInspectableVtbl) [IID_IPointerPoint] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
@@ -9752,7 +9752,7 @@ impl IPointerPoint {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PointerPoint: IPointerPoint}
+RT_CLASS!{class PointerPoint: IPointerPoint ["Windows.UI.Input.PointerPoint"]}
 impl RtActivatable<IPointerPointStatics> for PointerPoint {}
 impl PointerPoint {
     #[inline] pub fn get_current_point(pointerId: u32) -> Result<Option<ComPtr<PointerPoint>>> {
@@ -9918,7 +9918,7 @@ impl IPointerPointProperties {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PointerPointProperties: IPointerPointProperties}
+RT_CLASS!{class PointerPointProperties: IPointerPointProperties ["Windows.UI.Input.PointerPointProperties"]}
 DEFINE_IID!(IID_IPointerPointProperties2, 583222074, 51259, 16832, 162, 150, 94, 35, 45, 100, 214, 175);
 RT_INTERFACE!{interface IPointerPointProperties2(IPointerPointProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IPointerPointProperties2] {
     fn get_ZDistance(&self, out: *mut *mut foundation::IReference<f32>) -> HRESULT
@@ -9982,7 +9982,7 @@ impl IPointerPointTransform {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PointerUpdateKind: i32 {
+RT_ENUM! { enum PointerUpdateKind: i32 ["Windows.UI.Input.PointerUpdateKind"] {
     Other (PointerUpdateKind_Other) = 0, LeftButtonPressed (PointerUpdateKind_LeftButtonPressed) = 1, LeftButtonReleased (PointerUpdateKind_LeftButtonReleased) = 2, RightButtonPressed (PointerUpdateKind_RightButtonPressed) = 3, RightButtonReleased (PointerUpdateKind_RightButtonReleased) = 4, MiddleButtonPressed (PointerUpdateKind_MiddleButtonPressed) = 5, MiddleButtonReleased (PointerUpdateKind_MiddleButtonReleased) = 6, XButton1Pressed (PointerUpdateKind_XButton1Pressed) = 7, XButton1Released (PointerUpdateKind_XButton1Released) = 8, XButton2Pressed (PointerUpdateKind_XButton2Pressed) = 9, XButton2Released (PointerUpdateKind_XButton2Released) = 10,
 }}
 DEFINE_IID!(IID_IPointerVisualizationSettings, 1293837409, 34039, 18845, 189, 145, 42, 54, 226, 183, 170, 162);
@@ -10012,7 +10012,7 @@ impl IPointerVisualizationSettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PointerVisualizationSettings: IPointerVisualizationSettings}
+RT_CLASS!{class PointerVisualizationSettings: IPointerVisualizationSettings ["Windows.UI.Input.PointerVisualizationSettings"]}
 impl RtActivatable<IPointerVisualizationSettingsStatics> for PointerVisualizationSettings {}
 impl PointerVisualizationSettings {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<PointerVisualizationSettings>>> {
@@ -10141,7 +10141,7 @@ impl IRadialController {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialController: IRadialController}
+RT_CLASS!{class RadialController: IRadialController ["Windows.UI.Input.RadialController"]}
 impl RtActivatable<IRadialControllerStatics> for RadialController {}
 impl RadialController {
     #[inline] pub fn is_supported() -> Result<bool> {
@@ -10201,7 +10201,7 @@ impl IRadialControllerButtonClickedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerButtonClickedEventArgs: IRadialControllerButtonClickedEventArgs}
+RT_CLASS!{class RadialControllerButtonClickedEventArgs: IRadialControllerButtonClickedEventArgs ["Windows.UI.Input.RadialControllerButtonClickedEventArgs"]}
 DEFINE_IID!(IID_IRadialControllerButtonClickedEventArgs2, 1029144307, 15598, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{interface IRadialControllerButtonClickedEventArgs2(IRadialControllerButtonClickedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerButtonClickedEventArgs2] {
     #[cfg(feature="windows-devices")] fn get_SimpleHapticsController(&self, out: *mut *mut super::super::devices::haptics::SimpleHapticsController) -> HRESULT
@@ -10230,7 +10230,7 @@ impl IRadialControllerButtonHoldingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerButtonHoldingEventArgs: IRadialControllerButtonHoldingEventArgs}
+RT_CLASS!{class RadialControllerButtonHoldingEventArgs: IRadialControllerButtonHoldingEventArgs ["Windows.UI.Input.RadialControllerButtonHoldingEventArgs"]}
 DEFINE_IID!(IID_IRadialControllerButtonPressedEventArgs, 1029144301, 19694, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{interface IRadialControllerButtonPressedEventArgs(IRadialControllerButtonPressedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerButtonPressedEventArgs] {
     fn get_Contact(&self, out: *mut *mut RadialControllerScreenContact) -> HRESULT,
@@ -10248,7 +10248,7 @@ impl IRadialControllerButtonPressedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerButtonPressedEventArgs: IRadialControllerButtonPressedEventArgs}
+RT_CLASS!{class RadialControllerButtonPressedEventArgs: IRadialControllerButtonPressedEventArgs ["Windows.UI.Input.RadialControllerButtonPressedEventArgs"]}
 DEFINE_IID!(IID_IRadialControllerButtonReleasedEventArgs, 1029144303, 15598, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{interface IRadialControllerButtonReleasedEventArgs(IRadialControllerButtonReleasedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerButtonReleasedEventArgs] {
     fn get_Contact(&self, out: *mut *mut RadialControllerScreenContact) -> HRESULT,
@@ -10266,7 +10266,7 @@ impl IRadialControllerButtonReleasedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerButtonReleasedEventArgs: IRadialControllerButtonReleasedEventArgs}
+RT_CLASS!{class RadialControllerButtonReleasedEventArgs: IRadialControllerButtonReleasedEventArgs ["Windows.UI.Input.RadialControllerButtonReleasedEventArgs"]}
 DEFINE_IID!(IID_IRadialControllerConfiguration, 2797051595, 27218, 17456, 145, 12, 86, 55, 10, 157, 107, 66);
 RT_INTERFACE!{interface IRadialControllerConfiguration(IRadialControllerConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerConfiguration] {
     fn SetDefaultMenuItems(&self, buttons: *mut foundation::collections::IIterable<RadialControllerSystemMenuItemKind>) -> HRESULT,
@@ -10288,7 +10288,7 @@ impl IRadialControllerConfiguration {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerConfiguration: IRadialControllerConfiguration}
+RT_CLASS!{class RadialControllerConfiguration: IRadialControllerConfiguration ["Windows.UI.Input.RadialControllerConfiguration"]}
 impl RtActivatable<IRadialControllerConfigurationStatics> for RadialControllerConfiguration {}
 impl RtActivatable<IRadialControllerConfigurationStatics2> for RadialControllerConfiguration {}
 impl RadialControllerConfiguration {
@@ -10385,7 +10385,7 @@ impl IRadialControllerControlAcquiredEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerControlAcquiredEventArgs: IRadialControllerControlAcquiredEventArgs}
+RT_CLASS!{class RadialControllerControlAcquiredEventArgs: IRadialControllerControlAcquiredEventArgs ["Windows.UI.Input.RadialControllerControlAcquiredEventArgs"]}
 DEFINE_IID!(IID_IRadialControllerControlAcquiredEventArgs2, 1029144308, 15598, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{interface IRadialControllerControlAcquiredEventArgs2(IRadialControllerControlAcquiredEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerControlAcquiredEventArgs2] {
     fn get_IsButtonPressed(&self, out: *mut bool) -> HRESULT,
@@ -10442,7 +10442,7 @@ impl IRadialControllerMenu {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerMenu: IRadialControllerMenu}
+RT_CLASS!{class RadialControllerMenu: IRadialControllerMenu ["Windows.UI.Input.RadialControllerMenu"]}
 DEFINE_IID!(IID_IRadialControllerMenuItem, 3356477837, 44299, 19612, 143, 47, 19, 106, 35, 115, 166, 186);
 RT_INTERFACE!{interface IRadialControllerMenuItem(IRadialControllerMenuItemVtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerMenuItem] {
     fn get_DisplayText(&self, out: *mut HSTRING) -> HRESULT,
@@ -10476,7 +10476,7 @@ impl IRadialControllerMenuItem {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerMenuItem: IRadialControllerMenuItem}
+RT_CLASS!{class RadialControllerMenuItem: IRadialControllerMenuItem ["Windows.UI.Input.RadialControllerMenuItem"]}
 impl RtActivatable<IRadialControllerMenuItemStatics> for RadialControllerMenuItem {}
 impl RtActivatable<IRadialControllerMenuItemStatics2> for RadialControllerMenuItem {}
 impl RadialControllerMenuItem {
@@ -10529,7 +10529,7 @@ impl IRadialControllerMenuItemStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RadialControllerMenuKnownIcon: i32 {
+RT_ENUM! { enum RadialControllerMenuKnownIcon: i32 ["Windows.UI.Input.RadialControllerMenuKnownIcon"] {
     Scroll (RadialControllerMenuKnownIcon_Scroll) = 0, Zoom (RadialControllerMenuKnownIcon_Zoom) = 1, UndoRedo (RadialControllerMenuKnownIcon_UndoRedo) = 2, Volume (RadialControllerMenuKnownIcon_Volume) = 3, NextPreviousTrack (RadialControllerMenuKnownIcon_NextPreviousTrack) = 4, Ruler (RadialControllerMenuKnownIcon_Ruler) = 5, InkColor (RadialControllerMenuKnownIcon_InkColor) = 6, InkThickness (RadialControllerMenuKnownIcon_InkThickness) = 7, PenType (RadialControllerMenuKnownIcon_PenType) = 8,
 }}
 DEFINE_IID!(IID_IRadialControllerRotationChangedEventArgs, 543859765, 58961, 4581, 191, 98, 44, 39, 215, 64, 78, 133);
@@ -10549,7 +10549,7 @@ impl IRadialControllerRotationChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerRotationChangedEventArgs: IRadialControllerRotationChangedEventArgs}
+RT_CLASS!{class RadialControllerRotationChangedEventArgs: IRadialControllerRotationChangedEventArgs ["Windows.UI.Input.RadialControllerRotationChangedEventArgs"]}
 DEFINE_IID!(IID_IRadialControllerRotationChangedEventArgs2, 1029144300, 19694, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{interface IRadialControllerRotationChangedEventArgs2(IRadialControllerRotationChangedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerRotationChangedEventArgs2] {
     fn get_IsButtonPressed(&self, out: *mut bool) -> HRESULT,
@@ -10584,7 +10584,7 @@ impl IRadialControllerScreenContact {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerScreenContact: IRadialControllerScreenContact}
+RT_CLASS!{class RadialControllerScreenContact: IRadialControllerScreenContact ["Windows.UI.Input.RadialControllerScreenContact"]}
 DEFINE_IID!(IID_IRadialControllerScreenContactContinuedEventArgs, 543859767, 58961, 4581, 191, 98, 44, 39, 215, 64, 78, 133);
 RT_INTERFACE!{interface IRadialControllerScreenContactContinuedEventArgs(IRadialControllerScreenContactContinuedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerScreenContactContinuedEventArgs] {
     fn get_Contact(&self, out: *mut *mut RadialControllerScreenContact) -> HRESULT
@@ -10596,7 +10596,7 @@ impl IRadialControllerScreenContactContinuedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerScreenContactContinuedEventArgs: IRadialControllerScreenContactContinuedEventArgs}
+RT_CLASS!{class RadialControllerScreenContactContinuedEventArgs: IRadialControllerScreenContactContinuedEventArgs ["Windows.UI.Input.RadialControllerScreenContactContinuedEventArgs"]}
 DEFINE_IID!(IID_IRadialControllerScreenContactContinuedEventArgs2, 1029144305, 15598, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{interface IRadialControllerScreenContactContinuedEventArgs2(IRadialControllerScreenContactContinuedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerScreenContactContinuedEventArgs2] {
     fn get_IsButtonPressed(&self, out: *mut bool) -> HRESULT,
@@ -10631,7 +10631,7 @@ impl IRadialControllerScreenContactEndedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerScreenContactEndedEventArgs: IRadialControllerScreenContactEndedEventArgs}
+RT_CLASS!{class RadialControllerScreenContactEndedEventArgs: IRadialControllerScreenContactEndedEventArgs ["Windows.UI.Input.RadialControllerScreenContactEndedEventArgs"]}
 DEFINE_IID!(IID_IRadialControllerScreenContactStartedEventArgs, 543859766, 58961, 4581, 191, 98, 44, 39, 215, 64, 78, 133);
 RT_INTERFACE!{interface IRadialControllerScreenContactStartedEventArgs(IRadialControllerScreenContactStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerScreenContactStartedEventArgs] {
     fn get_Contact(&self, out: *mut *mut RadialControllerScreenContact) -> HRESULT
@@ -10643,7 +10643,7 @@ impl IRadialControllerScreenContactStartedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerScreenContactStartedEventArgs: IRadialControllerScreenContactStartedEventArgs}
+RT_CLASS!{class RadialControllerScreenContactStartedEventArgs: IRadialControllerScreenContactStartedEventArgs ["Windows.UI.Input.RadialControllerScreenContactStartedEventArgs"]}
 DEFINE_IID!(IID_IRadialControllerScreenContactStartedEventArgs2, 1029144304, 15598, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{interface IRadialControllerScreenContactStartedEventArgs2(IRadialControllerScreenContactStartedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerScreenContactStartedEventArgs2] {
     fn get_IsButtonPressed(&self, out: *mut bool) -> HRESULT,
@@ -10678,7 +10678,7 @@ impl IRadialControllerStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RadialControllerSystemMenuItemKind: i32 {
+RT_ENUM! { enum RadialControllerSystemMenuItemKind: i32 ["Windows.UI.Input.RadialControllerSystemMenuItemKind"] {
     Scroll (RadialControllerSystemMenuItemKind_Scroll) = 0, Zoom (RadialControllerSystemMenuItemKind_Zoom) = 1, UndoRedo (RadialControllerSystemMenuItemKind_UndoRedo) = 2, Volume (RadialControllerSystemMenuItemKind_Volume) = 3, NextPreviousTrack (RadialControllerSystemMenuItemKind_NextPreviousTrack) = 4,
 }}
 DEFINE_IID!(IID_IRightTappedEventArgs, 1287602365, 44922, 18998, 148, 118, 177, 220, 225, 65, 112, 154);
@@ -10699,7 +10699,7 @@ impl IRightTappedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RightTappedEventArgs: IRightTappedEventArgs}
+RT_CLASS!{class RightTappedEventArgs: IRightTappedEventArgs ["Windows.UI.Input.RightTappedEventArgs"]}
 DEFINE_IID!(IID_ITappedEventArgs, 3483444964, 9530, 19516, 149, 59, 57, 92, 55, 174, 211, 9);
 RT_INTERFACE!{interface ITappedEventArgs(ITappedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITappedEventArgs] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
@@ -10724,7 +10724,7 @@ impl ITappedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TappedEventArgs: ITappedEventArgs}
+RT_CLASS!{class TappedEventArgs: ITappedEventArgs ["Windows.UI.Input.TappedEventArgs"]}
 pub mod core { // Windows.UI.Input.Core
 use ::prelude::*;
 DEFINE_IID!(IID_IRadialControllerIndependentInputSource, 1029144310, 19694, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
@@ -10744,7 +10744,7 @@ impl IRadialControllerIndependentInputSource {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RadialControllerIndependentInputSource: IRadialControllerIndependentInputSource}
+RT_CLASS!{class RadialControllerIndependentInputSource: IRadialControllerIndependentInputSource ["Windows.UI.Input.Core.RadialControllerIndependentInputSource"]}
 impl RtActivatable<IRadialControllerIndependentInputSourceStatics> for RadialControllerIndependentInputSource {}
 impl RadialControllerIndependentInputSource {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn create_for_view(view: &::rt::gen::windows::applicationmodel::core::CoreApplicationView) -> Result<Option<ComPtr<RadialControllerIndependentInputSource>>> {
@@ -10777,7 +10777,7 @@ impl IRadialControllerIndependentInputSourceStatics {
 } // Windows.UI.Input.Core
 pub mod inking { // Windows.UI.Input.Inking
 use ::prelude::*;
-RT_ENUM! { enum HandwritingLineHeight: i32 {
+RT_ENUM! { enum HandwritingLineHeight: i32 ["Windows.UI.Input.Inking.HandwritingLineHeight"] {
     Small (HandwritingLineHeight_Small) = 0, Medium (HandwritingLineHeight_Medium) = 1, Large (HandwritingLineHeight_Large) = 2,
 }}
 DEFINE_IID!(IID_IInkDrawingAttributes, 2543982444, 26484, 18605, 132, 240, 72, 245, 169, 190, 116, 249);
@@ -10840,7 +10840,7 @@ impl IInkDrawingAttributes {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkDrawingAttributes: IInkDrawingAttributes}
+RT_CLASS!{class InkDrawingAttributes: IInkDrawingAttributes ["Windows.UI.Input.Inking.InkDrawingAttributes"]}
 impl RtActivatable<IInkDrawingAttributesStatics> for InkDrawingAttributes {}
 impl RtActivatable<IActivationFactory> for InkDrawingAttributes {}
 impl InkDrawingAttributes {
@@ -10920,7 +10920,7 @@ impl IInkDrawingAttributes5 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum InkDrawingAttributesKind: i32 {
+RT_ENUM! { enum InkDrawingAttributesKind: i32 ["Windows.UI.Input.Inking.InkDrawingAttributesKind"] {
     Default (InkDrawingAttributesKind_Default) = 0, Pencil (InkDrawingAttributesKind_Pencil) = 1,
 }}
 DEFINE_IID!(IID_IInkDrawingAttributesPencilProperties, 1327838411, 11654, 16827, 176, 232, 228, 194, 160, 37, 60, 82);
@@ -10939,7 +10939,7 @@ impl IInkDrawingAttributesPencilProperties {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkDrawingAttributesPencilProperties: IInkDrawingAttributesPencilProperties}
+RT_CLASS!{class InkDrawingAttributesPencilProperties: IInkDrawingAttributesPencilProperties ["Windows.UI.Input.Inking.InkDrawingAttributesPencilProperties"]}
 DEFINE_IID!(IID_IInkDrawingAttributesStatics, 4147241023, 6757, 18530, 150, 203, 110, 22, 101, 225, 127, 109);
 RT_INTERFACE!{static interface IInkDrawingAttributesStatics(IInkDrawingAttributesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IInkDrawingAttributesStatics] {
     fn CreateForPencil(&self, out: *mut *mut InkDrawingAttributes) -> HRESULT
@@ -10951,7 +10951,7 @@ impl IInkDrawingAttributesStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum InkHighContrastAdjustment: i32 {
+RT_ENUM! { enum InkHighContrastAdjustment: i32 ["Windows.UI.Input.Inking.InkHighContrastAdjustment"] {
     UseSystemColorsWhenNecessary (InkHighContrastAdjustment_UseSystemColorsWhenNecessary) = 0, UseSystemColors (InkHighContrastAdjustment_UseSystemColors) = 1, UseOriginalColors (InkHighContrastAdjustment_UseOriginalColors) = 2,
 }}
 DEFINE_IID!(IID_IInkInputConfiguration, 2477166020, 2939, 18903, 179, 79, 153, 1, 229, 36, 220, 242);
@@ -10981,7 +10981,7 @@ impl IInkInputConfiguration {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkInputConfiguration: IInkInputConfiguration}
+RT_CLASS!{class InkInputConfiguration: IInkInputConfiguration ["Windows.UI.Input.Inking.InkInputConfiguration"]}
 DEFINE_IID!(IID_IInkInputProcessingConfiguration, 662231134, 13258, 19206, 166, 211, 172, 57, 69, 17, 109, 55);
 RT_INTERFACE!{interface IInkInputProcessingConfiguration(IInkInputProcessingConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IInkInputProcessingConfiguration] {
     fn get_Mode(&self, out: *mut InkInputProcessingMode) -> HRESULT,
@@ -11009,11 +11009,11 @@ impl IInkInputProcessingConfiguration {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkInputProcessingConfiguration: IInkInputProcessingConfiguration}
-RT_ENUM! { enum InkInputProcessingMode: i32 {
+RT_CLASS!{class InkInputProcessingConfiguration: IInkInputProcessingConfiguration ["Windows.UI.Input.Inking.InkInputProcessingConfiguration"]}
+RT_ENUM! { enum InkInputProcessingMode: i32 ["Windows.UI.Input.Inking.InkInputProcessingMode"] {
     None (InkInputProcessingMode_None) = 0, Inking (InkInputProcessingMode_Inking) = 1, Erasing (InkInputProcessingMode_Erasing) = 2,
 }}
-RT_ENUM! { enum InkInputRightDragAction: i32 {
+RT_ENUM! { enum InkInputRightDragAction: i32 ["Windows.UI.Input.Inking.InkInputRightDragAction"] {
     LeaveUnprocessed (InkInputRightDragAction_LeaveUnprocessed) = 0, AllowProcessing (InkInputRightDragAction_AllowProcessing) = 1,
 }}
 DEFINE_IID!(IID_IInkManager, 1195668349, 26395, 16739, 156, 149, 78, 141, 122, 3, 95, 225);
@@ -11060,10 +11060,10 @@ impl IInkManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkManager: IInkManager}
+RT_CLASS!{class InkManager: IInkManager ["Windows.UI.Input.Inking.InkManager"]}
 impl RtActivatable<IActivationFactory> for InkManager {}
 DEFINE_CLSID!(InkManager(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,73,110,107,77,97,110,97,103,101,114,0]) [CLSID_InkManager]);
-RT_ENUM! { enum InkManipulationMode: i32 {
+RT_ENUM! { enum InkManipulationMode: i32 ["Windows.UI.Input.Inking.InkManipulationMode"] {
     Inking (InkManipulationMode_Inking) = 0, Erasing (InkManipulationMode_Erasing) = 1, Selecting (InkManipulationMode_Selecting) = 2,
 }}
 DEFINE_IID!(IID_IInkModelerAttributes, 3134398247, 3289, 19453, 182, 243, 158, 3, 186, 141, 116, 84);
@@ -11093,8 +11093,8 @@ impl IInkModelerAttributes {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkModelerAttributes: IInkModelerAttributes}
-RT_ENUM! { enum InkPersistenceFormat: i32 {
+RT_CLASS!{class InkModelerAttributes: IInkModelerAttributes ["Windows.UI.Input.Inking.InkModelerAttributes"]}
+RT_ENUM! { enum InkPersistenceFormat: i32 ["Windows.UI.Input.Inking.InkPersistenceFormat"] {
     GifWithEmbeddedIsf (InkPersistenceFormat_GifWithEmbeddedIsf) = 0, Isf (InkPersistenceFormat_Isf) = 1,
 }}
 DEFINE_IID!(IID_IInkPoint, 2676434731, 34188, 18085, 155, 65, 209, 149, 151, 4, 89, 253);
@@ -11114,7 +11114,7 @@ impl IInkPoint {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkPoint: IInkPoint}
+RT_CLASS!{class InkPoint: IInkPoint ["Windows.UI.Input.Inking.InkPoint"]}
 impl RtActivatable<IInkPointFactory> for InkPoint {}
 impl RtActivatable<IInkPointFactory2> for InkPoint {}
 impl InkPoint {
@@ -11271,7 +11271,7 @@ impl IInkPresenter {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkPresenter: IInkPresenter}
+RT_CLASS!{class InkPresenter: IInkPresenter ["Windows.UI.Input.Inking.InkPresenter"]}
 DEFINE_IID!(IID_IInkPresenter2, 3478382098, 39476, 4582, 159, 51, 162, 79, 192, 217, 100, 156);
 RT_INTERFACE!{interface IInkPresenter2(IInkPresenter2Vtbl): IInspectable(IInspectableVtbl) [IID_IInkPresenter2] {
     fn get_HighContrastAdjustment(&self, out: *mut InkHighContrastAdjustment) -> HRESULT,
@@ -11299,7 +11299,7 @@ impl IInkPresenter3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum InkPresenterPredefinedConfiguration: i32 {
+RT_ENUM! { enum InkPresenterPredefinedConfiguration: i32 ["Windows.UI.Input.Inking.InkPresenterPredefinedConfiguration"] {
     SimpleSinglePointer (InkPresenterPredefinedConfiguration_SimpleSinglePointer) = 0, SimpleMultiplePointer (InkPresenterPredefinedConfiguration_SimpleMultiplePointer) = 1,
 }}
 DEFINE_IID!(IID_IInkPresenterProtractor, 2112090794, 61292, 20113, 167, 59, 91, 112, 213, 111, 189, 23);
@@ -11384,7 +11384,7 @@ impl IInkPresenterProtractor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkPresenterProtractor: IInkPresenterProtractor}
+RT_CLASS!{class InkPresenterProtractor: IInkPresenterProtractor ["Windows.UI.Input.Inking.InkPresenterProtractor"]}
 impl RtActivatable<IInkPresenterProtractorFactory> for InkPresenterProtractor {}
 impl InkPresenterProtractor {
     #[inline] pub fn create(inkPresenter: &InkPresenter) -> Result<ComPtr<InkPresenterProtractor>> {
@@ -11430,7 +11430,7 @@ impl IInkPresenterRuler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkPresenterRuler: IInkPresenterRuler}
+RT_CLASS!{class InkPresenterRuler: IInkPresenterRuler ["Windows.UI.Input.Inking.InkPresenterRuler"]}
 impl RtActivatable<IInkPresenterRulerFactory> for InkPresenterRuler {}
 impl InkPresenterRuler {
     #[inline] pub fn create(inkPresenter: &InkPresenter) -> Result<ComPtr<InkPresenterRuler>> {
@@ -11531,7 +11531,7 @@ impl IInkPresenterStencil {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum InkPresenterStencilKind: i32 {
+RT_ENUM! { enum InkPresenterStencilKind: i32 ["Windows.UI.Input.Inking.InkPresenterStencilKind"] {
     Other (InkPresenterStencilKind_Other) = 0, Ruler (InkPresenterStencilKind_Ruler) = 1, Protractor (InkPresenterStencilKind_Protractor) = 2,
 }}
 DEFINE_IID!(IID_IInkRecognitionResult, 910563988, 20584, 16623, 138, 5, 44, 47, 182, 9, 8, 162);
@@ -11557,8 +11557,8 @@ impl IInkRecognitionResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkRecognitionResult: IInkRecognitionResult}
-RT_ENUM! { enum InkRecognitionTarget: i32 {
+RT_CLASS!{class InkRecognitionResult: IInkRecognitionResult ["Windows.UI.Input.Inking.InkRecognitionResult"]}
+RT_ENUM! { enum InkRecognitionTarget: i32 ["Windows.UI.Input.Inking.InkRecognitionTarget"] {
     All (InkRecognitionTarget_All) = 0, Selected (InkRecognitionTarget_Selected) = 1, Recent (InkRecognitionTarget_Recent) = 2,
 }}
 DEFINE_IID!(IID_IInkRecognizer, 125619875, 36941, 17450, 177, 81, 170, 202, 54, 49, 196, 59);
@@ -11572,7 +11572,7 @@ impl IInkRecognizer {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkRecognizer: IInkRecognizer}
+RT_CLASS!{class InkRecognizer: IInkRecognizer ["Windows.UI.Input.Inking.InkRecognizer"]}
 DEFINE_IID!(IID_IInkRecognizerContainer, 2806880817, 32839, 18072, 169, 18, 248, 42, 80, 133, 1, 47);
 RT_INTERFACE!{interface IInkRecognizerContainer(IInkRecognizerContainerVtbl): IInspectable(IInspectableVtbl) [IID_IInkRecognizerContainer] {
     fn SetDefaultRecognizer(&self, recognizer: *mut InkRecognizer) -> HRESULT,
@@ -11595,7 +11595,7 @@ impl IInkRecognizerContainer {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkRecognizerContainer: IInkRecognizerContainer}
+RT_CLASS!{class InkRecognizerContainer: IInkRecognizerContainer ["Windows.UI.Input.Inking.InkRecognizerContainer"]}
 impl RtActivatable<IActivationFactory> for InkRecognizerContainer {}
 DEFINE_CLSID!(InkRecognizerContainer(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,73,110,107,82,101,99,111,103,110,105,122,101,114,67,111,110,116,97,105,110,101,114,0]) [CLSID_InkRecognizerContainer]);
 DEFINE_IID!(IID_IInkStroke, 353652064, 52451, 20431, 157, 82, 17, 81, 138, 182, 175, 212);
@@ -11649,7 +11649,7 @@ impl IInkStroke {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkStroke: IInkStroke}
+RT_CLASS!{class InkStroke: IInkStroke ["Windows.UI.Input.Inking.InkStroke"]}
 DEFINE_IID!(IID_IInkStroke2, 1572463860, 47866, 19937, 137, 211, 32, 27, 30, 215, 216, 155);
 RT_INTERFACE!{interface IInkStroke2(IInkStroke2Vtbl): IInspectable(IInspectableVtbl) [IID_IInkStroke2] {
     fn get_PointTransform(&self, out: *mut foundation::numerics::Matrix3x2) -> HRESULT,
@@ -11738,7 +11738,7 @@ impl IInkStrokeBuilder {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkStrokeBuilder: IInkStrokeBuilder}
+RT_CLASS!{class InkStrokeBuilder: IInkStrokeBuilder ["Windows.UI.Input.Inking.InkStrokeBuilder"]}
 impl RtActivatable<IActivationFactory> for InkStrokeBuilder {}
 DEFINE_CLSID!(InkStrokeBuilder(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,73,110,107,83,116,114,111,107,101,66,117,105,108,100,101,114,0]) [CLSID_InkStrokeBuilder]);
 DEFINE_IID!(IID_IInkStrokeBuilder2, 3179461671, 29471, 19644, 187, 191, 109, 70, 128, 68, 241, 229);
@@ -11851,7 +11851,7 @@ impl IInkStrokeContainer {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkStrokeContainer: IInkStrokeContainer}
+RT_CLASS!{class InkStrokeContainer: IInkStrokeContainer ["Windows.UI.Input.Inking.InkStrokeContainer"]}
 impl RtActivatable<IActivationFactory> for InkStrokeContainer {}
 DEFINE_CLSID!(InkStrokeContainer(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,73,110,107,83,116,114,111,107,101,67,111,110,116,97,105,110,101,114,0]) [CLSID_InkStrokeContainer]);
 DEFINE_IID!(IID_IInkStrokeContainer2, 2298598244, 55862, 19407, 158, 92, 209, 149, 130, 89, 149, 180);
@@ -11942,7 +11942,7 @@ impl IInkStrokeInput {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkStrokeInput: IInkStrokeInput}
+RT_CLASS!{class InkStrokeInput: IInkStrokeInput ["Windows.UI.Input.Inking.InkStrokeInput"]}
 DEFINE_IID!(IID_IInkStrokeRenderingSegment, 1750142751, 35043, 18298, 162, 250, 86, 159, 95, 31, 155, 213);
 RT_INTERFACE!{interface IInkStrokeRenderingSegment(IInkStrokeRenderingSegmentVtbl): IInspectable(IInspectableVtbl) [IID_IInkStrokeRenderingSegment] {
     fn get_Position(&self, out: *mut foundation::Point) -> HRESULT,
@@ -11990,7 +11990,7 @@ impl IInkStrokeRenderingSegment {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkStrokeRenderingSegment: IInkStrokeRenderingSegment}
+RT_CLASS!{class InkStrokeRenderingSegment: IInkStrokeRenderingSegment ["Windows.UI.Input.Inking.InkStrokeRenderingSegment"]}
 DEFINE_IID!(IID_IInkStrokesCollectedEventArgs, 3304321577, 6456, 18780, 180, 217, 109, 228, 176, 141, 72, 17);
 RT_INTERFACE!{interface IInkStrokesCollectedEventArgs(IInkStrokesCollectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IInkStrokesCollectedEventArgs] {
     fn get_Strokes(&self, out: *mut *mut foundation::collections::IVectorView<InkStroke>) -> HRESULT
@@ -12002,7 +12002,7 @@ impl IInkStrokesCollectedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkStrokesCollectedEventArgs: IInkStrokesCollectedEventArgs}
+RT_CLASS!{class InkStrokesCollectedEventArgs: IInkStrokesCollectedEventArgs ["Windows.UI.Input.Inking.InkStrokesCollectedEventArgs"]}
 DEFINE_IID!(IID_IInkStrokesErasedEventArgs, 2753653282, 5379, 20159, 143, 245, 45, 232, 69, 132, 168, 170);
 RT_INTERFACE!{interface IInkStrokesErasedEventArgs(IInkStrokesErasedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IInkStrokesErasedEventArgs] {
     fn get_Strokes(&self, out: *mut *mut foundation::collections::IVectorView<InkStroke>) -> HRESULT
@@ -12014,7 +12014,7 @@ impl IInkStrokesErasedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkStrokesErasedEventArgs: IInkStrokesErasedEventArgs}
+RT_CLASS!{class InkStrokesErasedEventArgs: IInkStrokesErasedEventArgs ["Windows.UI.Input.Inking.InkStrokesErasedEventArgs"]}
 DEFINE_IID!(IID_IInkSynchronizer, 2610864480, 44699, 17913, 132, 7, 75, 73, 59, 22, 54, 97);
 RT_INTERFACE!{interface IInkSynchronizer(IInkSynchronizerVtbl): IInspectable(IInspectableVtbl) [IID_IInkSynchronizer] {
     fn BeginDry(&self, out: *mut *mut foundation::collections::IVectorView<InkStroke>) -> HRESULT,
@@ -12031,7 +12031,7 @@ impl IInkSynchronizer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkSynchronizer: IInkSynchronizer}
+RT_CLASS!{class InkSynchronizer: IInkSynchronizer ["Windows.UI.Input.Inking.InkSynchronizer"]}
 DEFINE_IID!(IID_IInkUnprocessedInput, 3678684640, 33688, 18721, 172, 59, 171, 151, 140, 91, 162, 86);
 RT_INTERFACE!{interface IInkUnprocessedInput(IInkUnprocessedInputVtbl): IInspectable(IInspectableVtbl) [IID_IInkUnprocessedInput] {
     fn add_PointerEntered(&self, handler: *mut foundation::TypedEventHandler<InkUnprocessedInput, super::super::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -12120,7 +12120,7 @@ impl IInkUnprocessedInput {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkUnprocessedInput: IInkUnprocessedInput}
+RT_CLASS!{class InkUnprocessedInput: IInkUnprocessedInput ["Windows.UI.Input.Inking.InkUnprocessedInput"]}
 DEFINE_IID!(IID_IPenAndInkSettings, 3157060495, 102, 17576, 187, 122, 184, 57, 179, 222, 184, 245);
 RT_INTERFACE!{interface IPenAndInkSettings(IPenAndInkSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IPenAndInkSettings] {
     fn get_IsHandwritingDirectlyIntoTextFieldEnabled(&self, out: *mut bool) -> HRESULT,
@@ -12162,7 +12162,7 @@ impl IPenAndInkSettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PenAndInkSettings: IPenAndInkSettings}
+RT_CLASS!{class PenAndInkSettings: IPenAndInkSettings ["Windows.UI.Input.Inking.PenAndInkSettings"]}
 impl RtActivatable<IPenAndInkSettingsStatics> for PenAndInkSettings {}
 impl PenAndInkSettings {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<PenAndInkSettings>>> {
@@ -12181,15 +12181,15 @@ impl IPenAndInkSettingsStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PenHandedness: i32 {
+RT_ENUM! { enum PenHandedness: i32 ["Windows.UI.Input.Inking.PenHandedness"] {
     Right (PenHandedness_Right) = 0, Left (PenHandedness_Left) = 1,
 }}
-RT_ENUM! { enum PenTipShape: i32 {
+RT_ENUM! { enum PenTipShape: i32 ["Windows.UI.Input.Inking.PenTipShape"] {
     Circle (PenTipShape_Circle) = 0, Rectangle (PenTipShape_Rectangle) = 1,
 }}
 pub mod analysis { // Windows.UI.Input.Inking.Analysis
 use ::prelude::*;
-RT_ENUM! { enum InkAnalysisDrawingKind: i32 {
+RT_ENUM! { enum InkAnalysisDrawingKind: i32 ["Windows.UI.Input.Inking.Analysis.InkAnalysisDrawingKind"] {
     Drawing (InkAnalysisDrawingKind_Drawing) = 0, Circle (InkAnalysisDrawingKind_Circle) = 1, Ellipse (InkAnalysisDrawingKind_Ellipse) = 2, Triangle (InkAnalysisDrawingKind_Triangle) = 3, IsoscelesTriangle (InkAnalysisDrawingKind_IsoscelesTriangle) = 4, EquilateralTriangle (InkAnalysisDrawingKind_EquilateralTriangle) = 5, RightTriangle (InkAnalysisDrawingKind_RightTriangle) = 6, Quadrilateral (InkAnalysisDrawingKind_Quadrilateral) = 7, Rectangle (InkAnalysisDrawingKind_Rectangle) = 8, Square (InkAnalysisDrawingKind_Square) = 9, Diamond (InkAnalysisDrawingKind_Diamond) = 10, Trapezoid (InkAnalysisDrawingKind_Trapezoid) = 11, Parallelogram (InkAnalysisDrawingKind_Parallelogram) = 12, Pentagon (InkAnalysisDrawingKind_Pentagon) = 13, Hexagon (InkAnalysisDrawingKind_Hexagon) = 14,
 }}
 DEFINE_IID!(IID_IInkAnalysisInkBullet, 3993277288, 24848, 16694, 149, 249, 238, 128, 159, 194, 0, 48);
@@ -12203,7 +12203,7 @@ impl IInkAnalysisInkBullet {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkAnalysisInkBullet: IInkAnalysisInkBullet}
+RT_CLASS!{class InkAnalysisInkBullet: IInkAnalysisInkBullet ["Windows.UI.Input.Inking.Analysis.InkAnalysisInkBullet"]}
 DEFINE_IID!(IID_IInkAnalysisInkDrawing, 1787161887, 8164, 19989, 137, 140, 142, 17, 35, 119, 224, 33);
 RT_INTERFACE!{interface IInkAnalysisInkDrawing(IInkAnalysisInkDrawingVtbl): IInspectable(IInspectableVtbl) [IID_IInkAnalysisInkDrawing] {
     fn get_DrawingKind(&self, out: *mut InkAnalysisDrawingKind) -> HRESULT,
@@ -12227,7 +12227,7 @@ impl IInkAnalysisInkDrawing {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkAnalysisInkDrawing: IInkAnalysisInkDrawing}
+RT_CLASS!{class InkAnalysisInkDrawing: IInkAnalysisInkDrawing ["Windows.UI.Input.Inking.Analysis.InkAnalysisInkDrawing"]}
 DEFINE_IID!(IID_IInkAnalysisInkWord, 1272064173, 33711, 16436, 143, 59, 248, 104, 125, 255, 244, 54);
 RT_INTERFACE!{interface IInkAnalysisInkWord(IInkAnalysisInkWordVtbl): IInspectable(IInspectableVtbl) [IID_IInkAnalysisInkWord] {
     fn get_RecognizedText(&self, out: *mut HSTRING) -> HRESULT,
@@ -12245,7 +12245,7 @@ impl IInkAnalysisInkWord {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkAnalysisInkWord: IInkAnalysisInkWord}
+RT_CLASS!{class InkAnalysisInkWord: IInkAnalysisInkWord ["Windows.UI.Input.Inking.Analysis.InkAnalysisInkWord"]}
 DEFINE_IID!(IID_IInkAnalysisLine, 2691499149, 11149, 18260, 173, 90, 208, 135, 17, 147, 169, 86);
 RT_INTERFACE!{interface IInkAnalysisLine(IInkAnalysisLineVtbl): IInspectable(IInspectableVtbl) [IID_IInkAnalysisLine] {
     fn get_RecognizedText(&self, out: *mut HSTRING) -> HRESULT,
@@ -12263,7 +12263,7 @@ impl IInkAnalysisLine {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkAnalysisLine: IInkAnalysisLine}
+RT_CLASS!{class InkAnalysisLine: IInkAnalysisLine ["Windows.UI.Input.Inking.Analysis.InkAnalysisLine"]}
 DEFINE_IID!(IID_IInkAnalysisListItem, 3034825279, 50371, 19514, 161, 166, 157, 133, 84, 126, 229, 134);
 RT_INTERFACE!{interface IInkAnalysisListItem(IInkAnalysisListItemVtbl): IInspectable(IInspectableVtbl) [IID_IInkAnalysisListItem] {
     fn get_RecognizedText(&self, out: *mut HSTRING) -> HRESULT
@@ -12275,7 +12275,7 @@ impl IInkAnalysisListItem {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkAnalysisListItem: IInkAnalysisListItem}
+RT_CLASS!{class InkAnalysisListItem: IInkAnalysisListItem ["Windows.UI.Input.Inking.Analysis.InkAnalysisListItem"]}
 DEFINE_IID!(IID_IInkAnalysisNode, 813899525, 24420, 18988, 186, 55, 79, 72, 135, 135, 149, 116);
 RT_INTERFACE!{interface IInkAnalysisNode(IInkAnalysisNodeVtbl): IInspectable(IInspectableVtbl) [IID_IInkAnalysisNode] {
     fn get_Id(&self, out: *mut u32) -> HRESULT,
@@ -12323,8 +12323,8 @@ impl IInkAnalysisNode {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkAnalysisNode: IInkAnalysisNode}
-RT_ENUM! { enum InkAnalysisNodeKind: i32 {
+RT_CLASS!{class InkAnalysisNode: IInkAnalysisNode ["Windows.UI.Input.Inking.Analysis.InkAnalysisNode"]}
+RT_ENUM! { enum InkAnalysisNodeKind: i32 ["Windows.UI.Input.Inking.Analysis.InkAnalysisNodeKind"] {
     UnclassifiedInk (InkAnalysisNodeKind_UnclassifiedInk) = 0, Root (InkAnalysisNodeKind_Root) = 1, WritingRegion (InkAnalysisNodeKind_WritingRegion) = 2, Paragraph (InkAnalysisNodeKind_Paragraph) = 3, Line (InkAnalysisNodeKind_Line) = 4, InkWord (InkAnalysisNodeKind_InkWord) = 5, InkBullet (InkAnalysisNodeKind_InkBullet) = 6, InkDrawing (InkAnalysisNodeKind_InkDrawing) = 7, ListItem (InkAnalysisNodeKind_ListItem) = 8,
 }}
 DEFINE_IID!(IID_IInkAnalysisParagraph, 3651994716, 3281, 19924, 166, 139, 235, 31, 18, 179, 215, 39);
@@ -12338,7 +12338,7 @@ impl IInkAnalysisParagraph {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkAnalysisParagraph: IInkAnalysisParagraph}
+RT_CLASS!{class InkAnalysisParagraph: IInkAnalysisParagraph ["Windows.UI.Input.Inking.Analysis.InkAnalysisParagraph"]}
 DEFINE_IID!(IID_IInkAnalysisResult, 2303244921, 41539, 19107, 162, 148, 31, 152, 189, 15, 245, 128);
 RT_INTERFACE!{interface IInkAnalysisResult(IInkAnalysisResultVtbl): IInspectable(IInspectableVtbl) [IID_IInkAnalysisResult] {
     fn get_Status(&self, out: *mut InkAnalysisStatus) -> HRESULT
@@ -12350,7 +12350,7 @@ impl IInkAnalysisResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkAnalysisResult: IInkAnalysisResult}
+RT_CLASS!{class InkAnalysisResult: IInkAnalysisResult ["Windows.UI.Input.Inking.Analysis.InkAnalysisResult"]}
 DEFINE_IID!(IID_IInkAnalysisRoot, 1068934084, 12254, 16481, 133, 2, 169, 15, 50, 84, 91, 132);
 RT_INTERFACE!{interface IInkAnalysisRoot(IInkAnalysisRootVtbl): IInspectable(IInspectableVtbl) [IID_IInkAnalysisRoot] {
     fn get_RecognizedText(&self, out: *mut HSTRING) -> HRESULT,
@@ -12368,11 +12368,11 @@ impl IInkAnalysisRoot {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkAnalysisRoot: IInkAnalysisRoot}
-RT_ENUM! { enum InkAnalysisStatus: i32 {
+RT_CLASS!{class InkAnalysisRoot: IInkAnalysisRoot ["Windows.UI.Input.Inking.Analysis.InkAnalysisRoot"]}
+RT_ENUM! { enum InkAnalysisStatus: i32 ["Windows.UI.Input.Inking.Analysis.InkAnalysisStatus"] {
     Updated (InkAnalysisStatus_Updated) = 0, Unchanged (InkAnalysisStatus_Unchanged) = 1,
 }}
-RT_ENUM! { enum InkAnalysisStrokeKind: i32 {
+RT_ENUM! { enum InkAnalysisStrokeKind: i32 ["Windows.UI.Input.Inking.Analysis.InkAnalysisStrokeKind"] {
     Auto (InkAnalysisStrokeKind_Auto) = 0, Writing (InkAnalysisStrokeKind_Writing) = 1, Drawing (InkAnalysisStrokeKind_Drawing) = 2,
 }}
 DEFINE_IID!(IID_IInkAnalysisWritingRegion, 3714933297, 48406, 18019, 181, 174, 148, 29, 48, 67, 239, 91);
@@ -12386,7 +12386,7 @@ impl IInkAnalysisWritingRegion {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkAnalysisWritingRegion: IInkAnalysisWritingRegion}
+RT_CLASS!{class InkAnalysisWritingRegion: IInkAnalysisWritingRegion ["Windows.UI.Input.Inking.Analysis.InkAnalysisWritingRegion"]}
 DEFINE_IID!(IID_IInkAnalyzer, 4046163861, 2150, 19909, 140, 119, 248, 134, 20, 223, 227, 140);
 RT_INTERFACE!{interface IInkAnalyzer(IInkAnalyzerVtbl): IInspectable(IInspectableVtbl) [IID_IInkAnalyzer] {
     fn get_AnalysisRoot(&self, out: *mut *mut InkAnalysisRoot) -> HRESULT,
@@ -12445,7 +12445,7 @@ impl IInkAnalyzer {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkAnalyzer: IInkAnalyzer}
+RT_CLASS!{class InkAnalyzer: IInkAnalyzer ["Windows.UI.Input.Inking.Analysis.InkAnalyzer"]}
 impl RtActivatable<IActivationFactory> for InkAnalyzer {}
 DEFINE_CLSID!(InkAnalyzer(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,65,110,97,108,121,115,105,115,46,73,110,107,65,110,97,108,121,122,101,114,0]) [CLSID_InkAnalyzer]);
 DEFINE_IID!(IID_IInkAnalyzerFactory, 689145478, 6499, 18904, 149, 137, 225, 67, 132, 199, 105, 227);
@@ -12497,7 +12497,7 @@ impl ICoreIncrementalInkStroke {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreIncrementalInkStroke: ICoreIncrementalInkStroke}
+RT_CLASS!{class CoreIncrementalInkStroke: ICoreIncrementalInkStroke ["Windows.UI.Input.Inking.Core.CoreIncrementalInkStroke"]}
 impl RtActivatable<ICoreIncrementalInkStrokeFactory> for CoreIncrementalInkStroke {}
 impl CoreIncrementalInkStroke {
     #[inline] pub fn create(drawingAttributes: &super::InkDrawingAttributes, pointTransform: foundation::numerics::Matrix3x2) -> Result<ComPtr<CoreIncrementalInkStroke>> {
@@ -12604,7 +12604,7 @@ impl ICoreInkIndependentInputSource {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreInkIndependentInputSource: ICoreInkIndependentInputSource}
+RT_CLASS!{class CoreInkIndependentInputSource: ICoreInkIndependentInputSource ["Windows.UI.Input.Inking.Core.CoreInkIndependentInputSource"]}
 impl RtActivatable<ICoreInkIndependentInputSourceStatics> for CoreInkIndependentInputSource {}
 impl CoreInkIndependentInputSource {
     #[inline] pub fn create(inkPresenter: &super::InkPresenter) -> Result<Option<ComPtr<CoreInkIndependentInputSource>>> {
@@ -12645,10 +12645,10 @@ impl ICoreInkPresenterHost {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreInkPresenterHost: ICoreInkPresenterHost}
+RT_CLASS!{class CoreInkPresenterHost: ICoreInkPresenterHost ["Windows.UI.Input.Inking.Core.CoreInkPresenterHost"]}
 impl RtActivatable<IActivationFactory> for CoreInkPresenterHost {}
 DEFINE_CLSID!(CoreInkPresenterHost(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,67,111,114,101,46,67,111,114,101,73,110,107,80,114,101,115,101,110,116,101,114,72,111,115,116,0]) [CLSID_CoreInkPresenterHost]);
-RT_ENUM! { enum CoreWetStrokeDisposition: i32 {
+RT_ENUM! { enum CoreWetStrokeDisposition: i32 ["Windows.UI.Input.Inking.Core.CoreWetStrokeDisposition"] {
     Inking (CoreWetStrokeDisposition_Inking) = 0, Completed (CoreWetStrokeDisposition_Completed) = 1, Canceled (CoreWetStrokeDisposition_Canceled) = 2,
 }}
 DEFINE_IID!(IID_ICoreWetStrokeUpdateEventArgs, 4211593548, 13184, 17786, 169, 135, 153, 19, 87, 137, 108, 27);
@@ -12679,7 +12679,7 @@ impl ICoreWetStrokeUpdateEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreWetStrokeUpdateEventArgs: ICoreWetStrokeUpdateEventArgs}
+RT_CLASS!{class CoreWetStrokeUpdateEventArgs: ICoreWetStrokeUpdateEventArgs ["Windows.UI.Input.Inking.Core.CoreWetStrokeUpdateEventArgs"]}
 DEFINE_IID!(IID_ICoreWetStrokeUpdateSource, 527535650, 61010, 19968, 130, 9, 76, 62, 91, 33, 163, 204);
 RT_INTERFACE!{interface ICoreWetStrokeUpdateSource(ICoreWetStrokeUpdateSourceVtbl): IInspectable(IInspectableVtbl) [IID_ICoreWetStrokeUpdateSource] {
     fn add_WetStrokeStarting(&self, handler: *mut foundation::TypedEventHandler<CoreWetStrokeUpdateSource, CoreWetStrokeUpdateEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -12746,7 +12746,7 @@ impl ICoreWetStrokeUpdateSource {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreWetStrokeUpdateSource: ICoreWetStrokeUpdateSource}
+RT_CLASS!{class CoreWetStrokeUpdateSource: ICoreWetStrokeUpdateSource ["Windows.UI.Input.Inking.Core.CoreWetStrokeUpdateSource"]}
 impl RtActivatable<ICoreWetStrokeUpdateSourceStatics> for CoreWetStrokeUpdateSource {}
 impl CoreWetStrokeUpdateSource {
     #[inline] pub fn create(inkPresenter: &super::InkPresenter) -> Result<Option<ComPtr<CoreWetStrokeUpdateSource>>> {
@@ -12772,7 +12772,7 @@ DEFINE_IID!(IID_IPalmRejectionDelayZonePreview, 1656002251, 21405, 21315, 166, 9
 RT_INTERFACE!{interface IPalmRejectionDelayZonePreview(IPalmRejectionDelayZonePreviewVtbl): IInspectable(IInspectableVtbl) [IID_IPalmRejectionDelayZonePreview] {
     
 }}
-RT_CLASS!{class PalmRejectionDelayZonePreview: IPalmRejectionDelayZonePreview}
+RT_CLASS!{class PalmRejectionDelayZonePreview: IPalmRejectionDelayZonePreview ["Windows.UI.Input.Inking.Preview.PalmRejectionDelayZonePreview"]}
 impl RtActivatable<IPalmRejectionDelayZonePreviewStatics> for PalmRejectionDelayZonePreview {}
 impl PalmRejectionDelayZonePreview {
     #[inline] pub fn create_for_visual(inputPanelVisual: &super::super::super::composition::Visual, inputPanelRect: foundation::Rect) -> Result<Option<ComPtr<PalmRejectionDelayZonePreview>>> {
@@ -12805,7 +12805,7 @@ impl IPalmRejectionDelayZonePreviewStatics {
 pub mod preview { // Windows.UI.Input.Preview
 pub mod injection { // Windows.UI.Input.Preview.Injection
 use ::prelude::*;
-RT_ENUM! { enum InjectedInputButtonChangeKind: i32 {
+RT_ENUM! { enum InjectedInputButtonChangeKind: i32 ["Windows.UI.Input.Preview.Injection.InjectedInputButtonChangeKind"] {
     None (InjectedInputButtonChangeKind_None) = 0, FirstButtonDown (InjectedInputButtonChangeKind_FirstButtonDown) = 1, FirstButtonUp (InjectedInputButtonChangeKind_FirstButtonUp) = 2, SecondButtonDown (InjectedInputButtonChangeKind_SecondButtonDown) = 3, SecondButtonUp (InjectedInputButtonChangeKind_SecondButtonUp) = 4, ThirdButtonDown (InjectedInputButtonChangeKind_ThirdButtonDown) = 5, ThirdButtonUp (InjectedInputButtonChangeKind_ThirdButtonUp) = 6, FourthButtonDown (InjectedInputButtonChangeKind_FourthButtonDown) = 7, FourthButtonUp (InjectedInputButtonChangeKind_FourthButtonUp) = 8, FifthButtonDown (InjectedInputButtonChangeKind_FifthButtonDown) = 9, FifthButtonUp (InjectedInputButtonChangeKind_FifthButtonUp) = 10,
 }}
 DEFINE_IID!(IID_IInjectedInputGamepadInfo, 548313663, 57105, 17778, 169, 171, 215, 91, 138, 94, 72, 173);
@@ -12892,7 +12892,7 @@ impl IInjectedInputGamepadInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InjectedInputGamepadInfo: IInjectedInputGamepadInfo}
+RT_CLASS!{class InjectedInputGamepadInfo: IInjectedInputGamepadInfo ["Windows.UI.Input.Preview.Injection.InjectedInputGamepadInfo"]}
 impl RtActivatable<IInjectedInputGamepadInfoFactory> for InjectedInputGamepadInfo {}
 impl RtActivatable<IActivationFactory> for InjectedInputGamepadInfo {}
 impl InjectedInputGamepadInfo {
@@ -12950,10 +12950,10 @@ impl IInjectedInputKeyboardInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InjectedInputKeyboardInfo: IInjectedInputKeyboardInfo}
+RT_CLASS!{class InjectedInputKeyboardInfo: IInjectedInputKeyboardInfo ["Windows.UI.Input.Preview.Injection.InjectedInputKeyboardInfo"]}
 impl RtActivatable<IActivationFactory> for InjectedInputKeyboardInfo {}
 DEFINE_CLSID!(InjectedInputKeyboardInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,75,101,121,98,111,97,114,100,73,110,102,111,0]) [CLSID_InjectedInputKeyboardInfo]);
-RT_ENUM! { enum InjectedInputKeyOptions: u32 {
+RT_ENUM! { enum InjectedInputKeyOptions: u32 ["Windows.UI.Input.Preview.Injection.InjectedInputKeyOptions"] {
     None (InjectedInputKeyOptions_None) = 0, ExtendedKey (InjectedInputKeyOptions_ExtendedKey) = 1, KeyUp (InjectedInputKeyOptions_KeyUp) = 2, ScanCode (InjectedInputKeyOptions_ScanCode) = 8, Unicode (InjectedInputKeyOptions_Unicode) = 4,
 }}
 DEFINE_IID!(IID_IInjectedInputMouseInfo, 2532666987, 58490, 23796, 65, 141, 138, 95, 185, 103, 12, 125);
@@ -13016,13 +13016,13 @@ impl IInjectedInputMouseInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InjectedInputMouseInfo: IInjectedInputMouseInfo}
+RT_CLASS!{class InjectedInputMouseInfo: IInjectedInputMouseInfo ["Windows.UI.Input.Preview.Injection.InjectedInputMouseInfo"]}
 impl RtActivatable<IActivationFactory> for InjectedInputMouseInfo {}
 DEFINE_CLSID!(InjectedInputMouseInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,77,111,117,115,101,73,110,102,111,0]) [CLSID_InjectedInputMouseInfo]);
-RT_ENUM! { enum InjectedInputMouseOptions: u32 {
+RT_ENUM! { enum InjectedInputMouseOptions: u32 ["Windows.UI.Input.Preview.Injection.InjectedInputMouseOptions"] {
     None (InjectedInputMouseOptions_None) = 0, Move (InjectedInputMouseOptions_Move) = 1, LeftDown (InjectedInputMouseOptions_LeftDown) = 2, LeftUp (InjectedInputMouseOptions_LeftUp) = 4, RightDown (InjectedInputMouseOptions_RightDown) = 8, RightUp (InjectedInputMouseOptions_RightUp) = 16, MiddleDown (InjectedInputMouseOptions_MiddleDown) = 32, MiddleUp (InjectedInputMouseOptions_MiddleUp) = 64, XDown (InjectedInputMouseOptions_XDown) = 128, XUp (InjectedInputMouseOptions_XUp) = 256, Wheel (InjectedInputMouseOptions_Wheel) = 2048, HWheel (InjectedInputMouseOptions_HWheel) = 4096, MoveNoCoalesce (InjectedInputMouseOptions_MoveNoCoalesce) = 8192, VirtualDesk (InjectedInputMouseOptions_VirtualDesk) = 16384, Absolute (InjectedInputMouseOptions_Absolute) = 32768,
 }}
-RT_ENUM! { enum InjectedInputPenButtons: u32 {
+RT_ENUM! { enum InjectedInputPenButtons: u32 ["Windows.UI.Input.Preview.Injection.InjectedInputPenButtons"] {
     None (InjectedInputPenButtons_None) = 0, Barrel (InjectedInputPenButtons_Barrel) = 1, Inverted (InjectedInputPenButtons_Inverted) = 2, Eraser (InjectedInputPenButtons_Eraser) = 4,
 }}
 DEFINE_IID!(IID_IInjectedInputPenInfo, 1799400707, 51742, 21799, 126, 2, 40, 40, 84, 11, 177, 212);
@@ -13107,25 +13107,25 @@ impl IInjectedInputPenInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InjectedInputPenInfo: IInjectedInputPenInfo}
+RT_CLASS!{class InjectedInputPenInfo: IInjectedInputPenInfo ["Windows.UI.Input.Preview.Injection.InjectedInputPenInfo"]}
 impl RtActivatable<IActivationFactory> for InjectedInputPenInfo {}
 DEFINE_CLSID!(InjectedInputPenInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,80,101,110,73,110,102,111,0]) [CLSID_InjectedInputPenInfo]);
-RT_ENUM! { enum InjectedInputPenParameters: u32 {
+RT_ENUM! { enum InjectedInputPenParameters: u32 ["Windows.UI.Input.Preview.Injection.InjectedInputPenParameters"] {
     None (InjectedInputPenParameters_None) = 0, Pressure (InjectedInputPenParameters_Pressure) = 1, Rotation (InjectedInputPenParameters_Rotation) = 2, TiltX (InjectedInputPenParameters_TiltX) = 4, TiltY (InjectedInputPenParameters_TiltY) = 8,
 }}
-RT_STRUCT! { struct InjectedInputPoint {
+RT_STRUCT! { struct InjectedInputPoint ["Windows.UI.Input.Preview.Injection.InjectedInputPoint"] {
     PositionX: i32, PositionY: i32,
 }}
-RT_STRUCT! { struct InjectedInputPointerInfo {
+RT_STRUCT! { struct InjectedInputPointerInfo ["Windows.UI.Input.Preview.Injection.InjectedInputPointerInfo"] {
     PointerId: u32, PointerOptions: InjectedInputPointerOptions, PixelLocation: InjectedInputPoint, TimeOffsetInMilliseconds: u32, PerformanceCount: u64,
 }}
-RT_ENUM! { enum InjectedInputPointerOptions: u32 {
+RT_ENUM! { enum InjectedInputPointerOptions: u32 ["Windows.UI.Input.Preview.Injection.InjectedInputPointerOptions"] {
     None (InjectedInputPointerOptions_None) = 0, New (InjectedInputPointerOptions_New) = 1, InRange (InjectedInputPointerOptions_InRange) = 2, InContact (InjectedInputPointerOptions_InContact) = 4, FirstButton (InjectedInputPointerOptions_FirstButton) = 16, SecondButton (InjectedInputPointerOptions_SecondButton) = 32, Primary (InjectedInputPointerOptions_Primary) = 8192, Confidence (InjectedInputPointerOptions_Confidence) = 16384, Canceled (InjectedInputPointerOptions_Canceled) = 32768, PointerDown (InjectedInputPointerOptions_PointerDown) = 65536, Update (InjectedInputPointerOptions_Update) = 131072, PointerUp (InjectedInputPointerOptions_PointerUp) = 262144, CaptureChanged (InjectedInputPointerOptions_CaptureChanged) = 2097152,
 }}
-RT_STRUCT! { struct InjectedInputRectangle {
+RT_STRUCT! { struct InjectedInputRectangle ["Windows.UI.Input.Preview.Injection.InjectedInputRectangle"] {
     Left: i32, Top: i32, Bottom: i32, Right: i32,
 }}
-RT_ENUM! { enum InjectedInputShortcut: i32 {
+RT_ENUM! { enum InjectedInputShortcut: i32 ["Windows.UI.Input.Preview.Injection.InjectedInputShortcut"] {
     Back (InjectedInputShortcut_Back) = 0, Start (InjectedInputShortcut_Start) = 1, Search (InjectedInputShortcut_Search) = 2,
 }}
 DEFINE_IID!(IID_IInjectedInputTouchInfo, 575656415, 17384, 24309, 81, 10, 105, 202, 140, 155, 76, 40);
@@ -13188,13 +13188,13 @@ impl IInjectedInputTouchInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InjectedInputTouchInfo: IInjectedInputTouchInfo}
+RT_CLASS!{class InjectedInputTouchInfo: IInjectedInputTouchInfo ["Windows.UI.Input.Preview.Injection.InjectedInputTouchInfo"]}
 impl RtActivatable<IActivationFactory> for InjectedInputTouchInfo {}
 DEFINE_CLSID!(InjectedInputTouchInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,84,111,117,99,104,73,110,102,111,0]) [CLSID_InjectedInputTouchInfo]);
-RT_ENUM! { enum InjectedInputTouchParameters: u32 {
+RT_ENUM! { enum InjectedInputTouchParameters: u32 ["Windows.UI.Input.Preview.Injection.InjectedInputTouchParameters"] {
     None (InjectedInputTouchParameters_None) = 0, Contact (InjectedInputTouchParameters_Contact) = 1, Orientation (InjectedInputTouchParameters_Orientation) = 2, Pressure (InjectedInputTouchParameters_Pressure) = 4,
 }}
-RT_ENUM! { enum InjectedInputVisualizationMode: i32 {
+RT_ENUM! { enum InjectedInputVisualizationMode: i32 ["Windows.UI.Input.Preview.Injection.InjectedInputVisualizationMode"] {
     None (InjectedInputVisualizationMode_None) = 0, Default (InjectedInputVisualizationMode_Default) = 1, Indirect (InjectedInputVisualizationMode_Indirect) = 2,
 }}
 DEFINE_IID!(IID_IInputInjector, 2395107204, 2818, 19410, 173, 122, 61, 70, 88, 190, 62, 24);
@@ -13247,7 +13247,7 @@ impl IInputInjector {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InputInjector: IInputInjector}
+RT_CLASS!{class InputInjector: IInputInjector ["Windows.UI.Input.Preview.Injection.InputInjector"]}
 impl RtActivatable<IInputInjectorStatics> for InputInjector {}
 impl RtActivatable<IInputInjectorStatics2> for InputInjector {}
 impl InputInjector {
@@ -13486,7 +13486,7 @@ impl ISpatialGestureRecognizer {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialGestureRecognizer: ISpatialGestureRecognizer}
+RT_CLASS!{class SpatialGestureRecognizer: ISpatialGestureRecognizer ["Windows.UI.Input.Spatial.SpatialGestureRecognizer"]}
 impl RtActivatable<ISpatialGestureRecognizerFactory> for SpatialGestureRecognizer {}
 impl SpatialGestureRecognizer {
     #[inline] pub fn create(settings: SpatialGestureSettings) -> Result<ComPtr<SpatialGestureRecognizer>> {
@@ -13505,7 +13505,7 @@ impl ISpatialGestureRecognizerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SpatialGestureSettings: u32 {
+RT_ENUM! { enum SpatialGestureSettings: u32 ["Windows.UI.Input.Spatial.SpatialGestureSettings"] {
     None (SpatialGestureSettings_None) = 0, Tap (SpatialGestureSettings_Tap) = 1, DoubleTap (SpatialGestureSettings_DoubleTap) = 2, Hold (SpatialGestureSettings_Hold) = 4, ManipulationTranslate (SpatialGestureSettings_ManipulationTranslate) = 8, NavigationX (SpatialGestureSettings_NavigationX) = 16, NavigationY (SpatialGestureSettings_NavigationY) = 32, NavigationZ (SpatialGestureSettings_NavigationZ) = 64, NavigationRailsX (SpatialGestureSettings_NavigationRailsX) = 128, NavigationRailsY (SpatialGestureSettings_NavigationRailsY) = 256, NavigationRailsZ (SpatialGestureSettings_NavigationRailsZ) = 512,
 }}
 DEFINE_IID!(IID_ISpatialHoldCanceledEventArgs, 1576842855, 19626, 16531, 140, 53, 182, 1, 168, 57, 243, 27);
@@ -13519,7 +13519,7 @@ impl ISpatialHoldCanceledEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialHoldCanceledEventArgs: ISpatialHoldCanceledEventArgs}
+RT_CLASS!{class SpatialHoldCanceledEventArgs: ISpatialHoldCanceledEventArgs ["Windows.UI.Input.Spatial.SpatialHoldCanceledEventArgs"]}
 DEFINE_IID!(IID_ISpatialHoldCompletedEventArgs, 1063536395, 19709, 17370, 141, 196, 230, 69, 82, 23, 57, 113);
 RT_INTERFACE!{interface ISpatialHoldCompletedEventArgs(ISpatialHoldCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialHoldCompletedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT
@@ -13531,7 +13531,7 @@ impl ISpatialHoldCompletedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialHoldCompletedEventArgs: ISpatialHoldCompletedEventArgs}
+RT_CLASS!{class SpatialHoldCompletedEventArgs: ISpatialHoldCompletedEventArgs ["Windows.UI.Input.Spatial.SpatialHoldCompletedEventArgs"]}
 DEFINE_IID!(IID_ISpatialHoldStartedEventArgs, 2385788281, 44214, 16708, 134, 21, 44, 251, 168, 163, 203, 63);
 RT_INTERFACE!{interface ISpatialHoldStartedEventArgs(ISpatialHoldStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialHoldStartedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
@@ -13549,7 +13549,7 @@ impl ISpatialHoldStartedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialHoldStartedEventArgs: ISpatialHoldStartedEventArgs}
+RT_CLASS!{class SpatialHoldStartedEventArgs: ISpatialHoldStartedEventArgs ["Windows.UI.Input.Spatial.SpatialHoldStartedEventArgs"]}
 DEFINE_IID!(IID_ISpatialInteraction, 4237719097, 35046, 17990, 145, 18, 67, 68, 170, 236, 157, 250);
 RT_INTERFACE!{interface ISpatialInteraction(ISpatialInteractionVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteraction] {
     fn get_SourceState(&self, out: *mut *mut SpatialInteractionSourceState) -> HRESULT
@@ -13561,7 +13561,7 @@ impl ISpatialInteraction {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialInteraction: ISpatialInteraction}
+RT_CLASS!{class SpatialInteraction: ISpatialInteraction ["Windows.UI.Input.Spatial.SpatialInteraction"]}
 DEFINE_IID!(IID_ISpatialInteractionController, 1594776483, 2388, 20119, 134, 197, 231, 243, 11, 17, 77, 253);
 RT_INTERFACE!{interface ISpatialInteractionController(ISpatialInteractionControllerVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionController] {
     fn get_HasTouchpad(&self, out: *mut bool) -> HRESULT,
@@ -13604,7 +13604,7 @@ impl ISpatialInteractionController {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialInteractionController: ISpatialInteractionController}
+RT_CLASS!{class SpatialInteractionController: ISpatialInteractionController ["Windows.UI.Input.Spatial.SpatialInteractionController"]}
 DEFINE_IID!(IID_ISpatialInteractionController2, 901175588, 51106, 18871, 183, 46, 84, 54, 178, 251, 143, 156);
 RT_INTERFACE!{interface ISpatialInteractionController2(ISpatialInteractionController2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionController2] {
     #[cfg(feature="windows-storage")] fn TryGetRenderableModelAsync(&self, out: *mut *mut foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType>) -> HRESULT
@@ -13674,7 +13674,7 @@ impl ISpatialInteractionControllerProperties {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialInteractionControllerProperties: ISpatialInteractionControllerProperties}
+RT_CLASS!{class SpatialInteractionControllerProperties: ISpatialInteractionControllerProperties ["Windows.UI.Input.Spatial.SpatialInteractionControllerProperties"]}
 DEFINE_IID!(IID_ISpatialInteractionDetectedEventArgs, 123238628, 22881, 15169, 157, 251, 206, 165, 216, 156, 195, 138);
 RT_INTERFACE!{interface ISpatialInteractionDetectedEventArgs(ISpatialInteractionDetectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionDetectedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
@@ -13699,7 +13699,7 @@ impl ISpatialInteractionDetectedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialInteractionDetectedEventArgs: ISpatialInteractionDetectedEventArgs}
+RT_CLASS!{class SpatialInteractionDetectedEventArgs: ISpatialInteractionDetectedEventArgs ["Windows.UI.Input.Spatial.SpatialInteractionDetectedEventArgs"]}
 DEFINE_IID!(IID_ISpatialInteractionDetectedEventArgs2, 2066103955, 24339, 16796, 151, 213, 131, 70, 120, 38, 106, 166);
 RT_INTERFACE!{interface ISpatialInteractionDetectedEventArgs2(ISpatialInteractionDetectedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionDetectedEventArgs2] {
     fn get_InteractionSource(&self, out: *mut *mut SpatialInteractionSource) -> HRESULT
@@ -13788,7 +13788,7 @@ impl ISpatialInteractionManager {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialInteractionManager: ISpatialInteractionManager}
+RT_CLASS!{class SpatialInteractionManager: ISpatialInteractionManager ["Windows.UI.Input.Spatial.SpatialInteractionManager"]}
 impl RtActivatable<ISpatialInteractionManagerStatics> for SpatialInteractionManager {}
 impl SpatialInteractionManager {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<SpatialInteractionManager>>> {
@@ -13807,7 +13807,7 @@ impl ISpatialInteractionManagerStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SpatialInteractionPressKind: i32 {
+RT_ENUM! { enum SpatialInteractionPressKind: i32 ["Windows.UI.Input.Spatial.SpatialInteractionPressKind"] {
     None (SpatialInteractionPressKind_None) = 0, Select (SpatialInteractionPressKind_Select) = 1, Menu (SpatialInteractionPressKind_Menu) = 2, Grasp (SpatialInteractionPressKind_Grasp) = 3, Touchpad (SpatialInteractionPressKind_Touchpad) = 4, Thumbstick (SpatialInteractionPressKind_Thumbstick) = 5,
 }}
 DEFINE_IID!(IID_ISpatialInteractionSource, 4216599482, 45235, 12616, 159, 59, 233, 245, 222, 86, 143, 93);
@@ -13827,7 +13827,7 @@ impl ISpatialInteractionSource {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialInteractionSource: ISpatialInteractionSource}
+RT_CLASS!{class SpatialInteractionSource: ISpatialInteractionSource ["Windows.UI.Input.Spatial.SpatialInteractionSource"]}
 DEFINE_IID!(IID_ISpatialInteractionSource2, 3838162700, 1136, 16424, 136, 192, 160, 235, 68, 211, 78, 254);
 RT_INTERFACE!{interface ISpatialInteractionSource2(ISpatialInteractionSource2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionSource2] {
     fn get_IsPointingSupported(&self, out: *mut bool) -> HRESULT,
@@ -13885,7 +13885,7 @@ impl ISpatialInteractionSourceEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialInteractionSourceEventArgs: ISpatialInteractionSourceEventArgs}
+RT_CLASS!{class SpatialInteractionSourceEventArgs: ISpatialInteractionSourceEventArgs ["Windows.UI.Input.Spatial.SpatialInteractionSourceEventArgs"]}
 DEFINE_IID!(IID_ISpatialInteractionSourceEventArgs2, 3635721319, 58952, 19794, 171, 73, 224, 210, 39, 25, 159, 99);
 RT_INTERFACE!{interface ISpatialInteractionSourceEventArgs2(ISpatialInteractionSourceEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionSourceEventArgs2] {
     fn get_PressKind(&self, out: *mut SpatialInteractionPressKind) -> HRESULT
@@ -13897,10 +13897,10 @@ impl ISpatialInteractionSourceEventArgs2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SpatialInteractionSourceHandedness: i32 {
+RT_ENUM! { enum SpatialInteractionSourceHandedness: i32 ["Windows.UI.Input.Spatial.SpatialInteractionSourceHandedness"] {
     Unspecified (SpatialInteractionSourceHandedness_Unspecified) = 0, Left (SpatialInteractionSourceHandedness_Left) = 1, Right (SpatialInteractionSourceHandedness_Right) = 2,
 }}
-RT_ENUM! { enum SpatialInteractionSourceKind: i32 {
+RT_ENUM! { enum SpatialInteractionSourceKind: i32 ["Windows.UI.Input.Spatial.SpatialInteractionSourceKind"] {
     Other (SpatialInteractionSourceKind_Other) = 0, Hand (SpatialInteractionSourceKind_Hand) = 1, Voice (SpatialInteractionSourceKind_Voice) = 2, Controller (SpatialInteractionSourceKind_Controller) = 3,
 }}
 DEFINE_IID!(IID_ISpatialInteractionSourceLocation, 3930494660, 32395, 12490, 188, 197, 199, 113, 137, 206, 163, 10);
@@ -13920,7 +13920,7 @@ impl ISpatialInteractionSourceLocation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialInteractionSourceLocation: ISpatialInteractionSourceLocation}
+RT_CLASS!{class SpatialInteractionSourceLocation: ISpatialInteractionSourceLocation ["Windows.UI.Input.Spatial.SpatialInteractionSourceLocation"]}
 DEFINE_IID!(IID_ISpatialInteractionSourceLocation2, 1281822789, 14615, 16636, 169, 172, 49, 201, 207, 95, 249, 27);
 RT_INTERFACE!{interface ISpatialInteractionSourceLocation2(ISpatialInteractionSourceLocation2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionSourceLocation2] {
     fn get_Orientation(&self, out: *mut *mut foundation::IReference<foundation::numerics::Quaternion>) -> HRESULT
@@ -13955,7 +13955,7 @@ impl ISpatialInteractionSourceLocation3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SpatialInteractionSourcePositionAccuracy: i32 {
+RT_ENUM! { enum SpatialInteractionSourcePositionAccuracy: i32 ["Windows.UI.Input.Spatial.SpatialInteractionSourcePositionAccuracy"] {
     High (SpatialInteractionSourcePositionAccuracy_High) = 0, Approximate (SpatialInteractionSourcePositionAccuracy_Approximate) = 1,
 }}
 DEFINE_IID!(IID_ISpatialInteractionSourceProperties, 90195266, 16119, 12834, 159, 83, 99, 201, 203, 126, 59, 199);
@@ -13981,7 +13981,7 @@ impl ISpatialInteractionSourceProperties {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialInteractionSourceProperties: ISpatialInteractionSourceProperties}
+RT_CLASS!{class SpatialInteractionSourceProperties: ISpatialInteractionSourceProperties ["Windows.UI.Input.Spatial.SpatialInteractionSourceProperties"]}
 DEFINE_IID!(IID_ISpatialInteractionSourceState, 3586422255, 19299, 14316, 152, 185, 159, 198, 82, 185, 210, 242);
 RT_INTERFACE!{interface ISpatialInteractionSourceState(ISpatialInteractionSourceStateVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionSourceState] {
     fn get_Source(&self, out: *mut *mut SpatialInteractionSource) -> HRESULT,
@@ -14017,7 +14017,7 @@ impl ISpatialInteractionSourceState {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialInteractionSourceState: ISpatialInteractionSourceState}
+RT_CLASS!{class SpatialInteractionSourceState: ISpatialInteractionSourceState ["Windows.UI.Input.Spatial.SpatialInteractionSourceState"]}
 DEFINE_IID!(IID_ISpatialInteractionSourceState2, 1173803197, 6003, 18734, 155, 163, 138, 193, 203, 231, 124, 8);
 RT_INTERFACE!{interface ISpatialInteractionSourceState2(ISpatialInteractionSourceState2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionSourceState2] {
     fn get_IsSelectPressed(&self, out: *mut bool) -> HRESULT,
@@ -14064,7 +14064,7 @@ impl ISpatialManipulationCanceledEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialManipulationCanceledEventArgs: ISpatialManipulationCanceledEventArgs}
+RT_CLASS!{class SpatialManipulationCanceledEventArgs: ISpatialManipulationCanceledEventArgs ["Windows.UI.Input.Spatial.SpatialManipulationCanceledEventArgs"]}
 DEFINE_IID!(IID_ISpatialManipulationCompletedEventArgs, 84436994, 62209, 17219, 146, 80, 47, 186, 165, 248, 122, 55);
 RT_INTERFACE!{interface ISpatialManipulationCompletedEventArgs(ISpatialManipulationCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialManipulationCompletedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
@@ -14082,7 +14082,7 @@ impl ISpatialManipulationCompletedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialManipulationCompletedEventArgs: ISpatialManipulationCompletedEventArgs}
+RT_CLASS!{class SpatialManipulationCompletedEventArgs: ISpatialManipulationCompletedEventArgs ["Windows.UI.Input.Spatial.SpatialManipulationCompletedEventArgs"]}
 DEFINE_IID!(IID_ISpatialManipulationDelta, 2817300090, 53539, 14977, 161, 91, 153, 41, 35, 220, 190, 145);
 RT_INTERFACE!{interface ISpatialManipulationDelta(ISpatialManipulationDeltaVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialManipulationDelta] {
     fn get_Translation(&self, out: *mut foundation::numerics::Vector3) -> HRESULT
@@ -14094,7 +14094,7 @@ impl ISpatialManipulationDelta {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialManipulationDelta: ISpatialManipulationDelta}
+RT_CLASS!{class SpatialManipulationDelta: ISpatialManipulationDelta ["Windows.UI.Input.Spatial.SpatialManipulationDelta"]}
 DEFINE_IID!(IID_ISpatialManipulationStartedEventArgs, 2715204558, 17061, 14203, 173, 166, 210, 142, 61, 56, 71, 55);
 RT_INTERFACE!{interface ISpatialManipulationStartedEventArgs(ISpatialManipulationStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialManipulationStartedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
@@ -14112,7 +14112,7 @@ impl ISpatialManipulationStartedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialManipulationStartedEventArgs: ISpatialManipulationStartedEventArgs}
+RT_CLASS!{class SpatialManipulationStartedEventArgs: ISpatialManipulationStartedEventArgs ["Windows.UI.Input.Spatial.SpatialManipulationStartedEventArgs"]}
 DEFINE_IID!(IID_ISpatialManipulationUpdatedEventArgs, 1596132251, 24774, 19910, 189, 201, 159, 74, 111, 21, 254, 73);
 RT_INTERFACE!{interface ISpatialManipulationUpdatedEventArgs(ISpatialManipulationUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialManipulationUpdatedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
@@ -14130,7 +14130,7 @@ impl ISpatialManipulationUpdatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialManipulationUpdatedEventArgs: ISpatialManipulationUpdatedEventArgs}
+RT_CLASS!{class SpatialManipulationUpdatedEventArgs: ISpatialManipulationUpdatedEventArgs ["Windows.UI.Input.Spatial.SpatialManipulationUpdatedEventArgs"]}
 DEFINE_IID!(IID_ISpatialNavigationCanceledEventArgs, 3461365468, 59557, 18160, 146, 212, 60, 18, 43, 53, 17, 42);
 RT_INTERFACE!{interface ISpatialNavigationCanceledEventArgs(ISpatialNavigationCanceledEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialNavigationCanceledEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT
@@ -14142,7 +14142,7 @@ impl ISpatialNavigationCanceledEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialNavigationCanceledEventArgs: ISpatialNavigationCanceledEventArgs}
+RT_CLASS!{class SpatialNavigationCanceledEventArgs: ISpatialNavigationCanceledEventArgs ["Windows.UI.Input.Spatial.SpatialNavigationCanceledEventArgs"]}
 DEFINE_IID!(IID_ISpatialNavigationCompletedEventArgs, 19824823, 44859, 17090, 158, 65, 186, 170, 14, 114, 31, 58);
 RT_INTERFACE!{interface ISpatialNavigationCompletedEventArgs(ISpatialNavigationCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialNavigationCompletedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
@@ -14160,7 +14160,7 @@ impl ISpatialNavigationCompletedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialNavigationCompletedEventArgs: ISpatialNavigationCompletedEventArgs}
+RT_CLASS!{class SpatialNavigationCompletedEventArgs: ISpatialNavigationCompletedEventArgs ["Windows.UI.Input.Spatial.SpatialNavigationCompletedEventArgs"]}
 DEFINE_IID!(IID_ISpatialNavigationStartedEventArgs, 1967797386, 64356, 18006, 142, 189, 157, 238, 202, 175, 228, 117);
 RT_INTERFACE!{interface ISpatialNavigationStartedEventArgs(ISpatialNavigationStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialNavigationStartedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
@@ -14197,7 +14197,7 @@ impl ISpatialNavigationStartedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialNavigationStartedEventArgs: ISpatialNavigationStartedEventArgs}
+RT_CLASS!{class SpatialNavigationStartedEventArgs: ISpatialNavigationStartedEventArgs ["Windows.UI.Input.Spatial.SpatialNavigationStartedEventArgs"]}
 DEFINE_IID!(IID_ISpatialNavigationUpdatedEventArgs, 2607890391, 33693, 19060, 135, 50, 69, 70, 111, 192, 68, 181);
 RT_INTERFACE!{interface ISpatialNavigationUpdatedEventArgs(ISpatialNavigationUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialNavigationUpdatedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
@@ -14215,7 +14215,7 @@ impl ISpatialNavigationUpdatedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialNavigationUpdatedEventArgs: ISpatialNavigationUpdatedEventArgs}
+RT_CLASS!{class SpatialNavigationUpdatedEventArgs: ISpatialNavigationUpdatedEventArgs ["Windows.UI.Input.Spatial.SpatialNavigationUpdatedEventArgs"]}
 DEFINE_IID!(IID_ISpatialPointerInteractionSourcePose, 2802860807, 11307, 19770, 146, 167, 128, 206, 215, 196, 160, 208);
 RT_INTERFACE!{interface ISpatialPointerInteractionSourcePose(ISpatialPointerInteractionSourcePoseVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialPointerInteractionSourcePose] {
     fn get_Position(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
@@ -14239,7 +14239,7 @@ impl ISpatialPointerInteractionSourcePose {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialPointerInteractionSourcePose: ISpatialPointerInteractionSourcePose}
+RT_CLASS!{class SpatialPointerInteractionSourcePose: ISpatialPointerInteractionSourcePose ["Windows.UI.Input.Spatial.SpatialPointerInteractionSourcePose"]}
 DEFINE_IID!(IID_ISpatialPointerInteractionSourcePose2, 3972892344, 21211, 18079, 158, 63, 128, 196, 127, 116, 188, 233);
 RT_INTERFACE!{interface ISpatialPointerInteractionSourcePose2(ISpatialPointerInteractionSourcePose2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialPointerInteractionSourcePose2] {
     fn get_Orientation(&self, out: *mut foundation::numerics::Quaternion) -> HRESULT,
@@ -14274,7 +14274,7 @@ impl ISpatialPointerPose {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialPointerPose: ISpatialPointerPose}
+RT_CLASS!{class SpatialPointerPose: ISpatialPointerPose ["Windows.UI.Input.Spatial.SpatialPointerPose"]}
 impl RtActivatable<ISpatialPointerPoseStatics> for SpatialPointerPose {}
 impl SpatialPointerPose {
     #[cfg(feature="windows-perception")] #[inline] pub fn try_get_at_timestamp(coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, timestamp: &::rt::gen::windows::perception::PerceptionTimestamp) -> Result<Option<ComPtr<SpatialPointerPose>>> {
@@ -14315,7 +14315,7 @@ impl ISpatialRecognitionEndedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialRecognitionEndedEventArgs: ISpatialRecognitionEndedEventArgs}
+RT_CLASS!{class SpatialRecognitionEndedEventArgs: ISpatialRecognitionEndedEventArgs ["Windows.UI.Input.Spatial.SpatialRecognitionEndedEventArgs"]}
 DEFINE_IID!(IID_ISpatialRecognitionStartedEventArgs, 618271375, 8, 19053, 170, 80, 42, 118, 249, 207, 178, 100);
 RT_INTERFACE!{interface ISpatialRecognitionStartedEventArgs(ISpatialRecognitionStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialRecognitionStartedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
@@ -14340,7 +14340,7 @@ impl ISpatialRecognitionStartedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialRecognitionStartedEventArgs: ISpatialRecognitionStartedEventArgs}
+RT_CLASS!{class SpatialRecognitionStartedEventArgs: ISpatialRecognitionStartedEventArgs ["Windows.UI.Input.Spatial.SpatialRecognitionStartedEventArgs"]}
 DEFINE_IID!(IID_ISpatialTappedEventArgs, 695043038, 62532, 19105, 178, 191, 157, 200, 141, 86, 125, 166);
 RT_INTERFACE!{interface ISpatialTappedEventArgs(ISpatialTappedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialTappedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
@@ -14365,7 +14365,7 @@ impl ISpatialTappedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialTappedEventArgs: ISpatialTappedEventArgs}
+RT_CLASS!{class SpatialTappedEventArgs: ISpatialTappedEventArgs ["Windows.UI.Input.Spatial.SpatialTappedEventArgs"]}
 } // Windows.UI.Input.Spatial
 } // Windows.UI.Input
 pub mod notifications { // Windows.UI.Notifications
@@ -14387,7 +14387,7 @@ impl IAdaptiveNotificationContent {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AdaptiveNotificationContentKind: i32 {
+RT_ENUM! { enum AdaptiveNotificationContentKind: i32 ["Windows.UI.Notifications.AdaptiveNotificationContentKind"] {
     Text (AdaptiveNotificationContentKind_Text) = 0,
 }}
 DEFINE_IID!(IID_IAdaptiveNotificationText, 1188340670, 24730, 17190, 164, 11, 191, 222, 135, 32, 52, 163);
@@ -14417,7 +14417,7 @@ impl IAdaptiveNotificationText {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveNotificationText: IAdaptiveNotificationText}
+RT_CLASS!{class AdaptiveNotificationText: IAdaptiveNotificationText ["Windows.UI.Notifications.AdaptiveNotificationText"]}
 impl RtActivatable<IActivationFactory> for AdaptiveNotificationText {}
 DEFINE_CLSID!(AdaptiveNotificationText(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,65,100,97,112,116,105,118,101,78,111,116,105,102,105,99,97,116,105,111,110,84,101,120,116,0]) [CLSID_AdaptiveNotificationText]);
 DEFINE_IID!(IID_IBadgeNotification, 123516106, 53386, 20015, 146, 51, 126, 40, 156, 31, 119, 34);
@@ -14443,7 +14443,7 @@ impl IBadgeNotification {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BadgeNotification: IBadgeNotification}
+RT_CLASS!{class BadgeNotification: IBadgeNotification ["Windows.UI.Notifications.BadgeNotification"]}
 impl RtActivatable<IBadgeNotificationFactory> for BadgeNotification {}
 impl BadgeNotification {
     #[cfg(feature="windows-data")] #[inline] pub fn create_badge_notification(content: &super::super::data::xml::dom::XmlDocument) -> Result<ComPtr<BadgeNotification>> {
@@ -14462,7 +14462,7 @@ impl IBadgeNotificationFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BadgeTemplateType: i32 {
+RT_ENUM! { enum BadgeTemplateType: i32 ["Windows.UI.Notifications.BadgeTemplateType"] {
     BadgeGlyph (BadgeTemplateType_BadgeGlyph) = 0, BadgeNumber (BadgeTemplateType_BadgeNumber) = 1,
 }}
 RT_CLASS!{static class BadgeUpdateManager}
@@ -14515,7 +14515,7 @@ impl IBadgeUpdateManagerForUser {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BadgeUpdateManagerForUser: IBadgeUpdateManagerForUser}
+RT_CLASS!{class BadgeUpdateManagerForUser: IBadgeUpdateManagerForUser ["Windows.UI.Notifications.BadgeUpdateManagerForUser"]}
 DEFINE_IID!(IID_IBadgeUpdateManagerStatics, 859836330, 28117, 16645, 174, 188, 155, 80, 252, 164, 146, 218);
 RT_INTERFACE!{static interface IBadgeUpdateManagerStatics(IBadgeUpdateManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBadgeUpdateManagerStatics] {
     fn CreateBadgeUpdaterForApplication(&self, out: *mut *mut BadgeUpdater) -> HRESULT,
@@ -14586,7 +14586,7 @@ impl IBadgeUpdater {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BadgeUpdater: IBadgeUpdater}
+RT_CLASS!{class BadgeUpdater: IBadgeUpdater ["Windows.UI.Notifications.BadgeUpdater"]}
 RT_CLASS!{static class KnownAdaptiveNotificationHints}
 impl RtActivatable<IKnownAdaptiveNotificationHintsStatics> for KnownAdaptiveNotificationHints {}
 impl KnownAdaptiveNotificationHints {
@@ -14878,7 +14878,7 @@ impl INotification {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Notification: INotification}
+RT_CLASS!{class Notification: INotification ["Windows.UI.Notifications.Notification"]}
 impl RtActivatable<IActivationFactory> for Notification {}
 DEFINE_CLSID!(Notification(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,78,111,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_Notification]);
 DEFINE_IID!(IID_INotificationBinding, 4070460293, 880, 19155, 180, 234, 218, 158, 53, 231, 234, 191);
@@ -14920,7 +14920,7 @@ impl INotificationBinding {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NotificationBinding: INotificationBinding}
+RT_CLASS!{class NotificationBinding: INotificationBinding ["Windows.UI.Notifications.NotificationBinding"]}
 DEFINE_IID!(IID_INotificationData, 2684166930, 40298, 19119, 182, 172, 255, 23, 240, 193, 242, 128);
 RT_INTERFACE!{interface INotificationData(INotificationDataVtbl): IInspectable(IInspectableVtbl) [IID_INotificationData] {
     fn get_Values(&self, out: *mut *mut foundation::collections::IMap<HString, HString>) -> HRESULT,
@@ -14943,7 +14943,7 @@ impl INotificationData {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NotificationData: INotificationData}
+RT_CLASS!{class NotificationData: INotificationData ["Windows.UI.Notifications.NotificationData"]}
 impl RtActivatable<INotificationDataFactory> for NotificationData {}
 impl RtActivatable<IActivationFactory> for NotificationData {}
 impl NotificationData {
@@ -14972,16 +14972,16 @@ impl INotificationDataFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum NotificationKinds: u32 {
+RT_ENUM! { enum NotificationKinds: u32 ["Windows.UI.Notifications.NotificationKinds"] {
     Unknown (NotificationKinds_Unknown) = 0, Toast (NotificationKinds_Toast) = 1,
 }}
-RT_ENUM! { enum NotificationMirroring: i32 {
+RT_ENUM! { enum NotificationMirroring: i32 ["Windows.UI.Notifications.NotificationMirroring"] {
     Allowed (NotificationMirroring_Allowed) = 0, Disabled (NotificationMirroring_Disabled) = 1,
 }}
-RT_ENUM! { enum NotificationSetting: i32 {
+RT_ENUM! { enum NotificationSetting: i32 ["Windows.UI.Notifications.NotificationSetting"] {
     Enabled (NotificationSetting_Enabled) = 0, DisabledForApplication (NotificationSetting_DisabledForApplication) = 1, DisabledForUser (NotificationSetting_DisabledForUser) = 2, DisabledByGroupPolicy (NotificationSetting_DisabledByGroupPolicy) = 3, DisabledByManifest (NotificationSetting_DisabledByManifest) = 4,
 }}
-RT_ENUM! { enum NotificationUpdateResult: i32 {
+RT_ENUM! { enum NotificationUpdateResult: i32 ["Windows.UI.Notifications.NotificationUpdateResult"] {
     Succeeded (NotificationUpdateResult_Succeeded) = 0, Failed (NotificationUpdateResult_Failed) = 1, NotificationNotFound (NotificationUpdateResult_NotificationNotFound) = 2,
 }}
 DEFINE_IID!(IID_INotificationVisual, 1753439118, 43606, 19985, 134, 211, 95, 154, 105, 87, 188, 91);
@@ -15012,8 +15012,8 @@ impl INotificationVisual {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NotificationVisual: INotificationVisual}
-RT_ENUM! { enum PeriodicUpdateRecurrence: i32 {
+RT_CLASS!{class NotificationVisual: INotificationVisual ["Windows.UI.Notifications.NotificationVisual"]}
+RT_ENUM! { enum PeriodicUpdateRecurrence: i32 ["Windows.UI.Notifications.PeriodicUpdateRecurrence"] {
     HalfHour (PeriodicUpdateRecurrence_HalfHour) = 0, Hour (PeriodicUpdateRecurrence_Hour) = 1, SixHours (PeriodicUpdateRecurrence_SixHours) = 2, TwelveHours (PeriodicUpdateRecurrence_TwelveHours) = 3, Daily (PeriodicUpdateRecurrence_Daily) = 4,
 }}
 DEFINE_IID!(IID_IScheduledTileNotification, 180135637, 39388, 19576, 161, 28, 201, 231, 248, 109, 126, 247);
@@ -15067,7 +15067,7 @@ impl IScheduledTileNotification {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ScheduledTileNotification: IScheduledTileNotification}
+RT_CLASS!{class ScheduledTileNotification: IScheduledTileNotification ["Windows.UI.Notifications.ScheduledTileNotification"]}
 impl RtActivatable<IScheduledTileNotificationFactory> for ScheduledTileNotification {}
 impl ScheduledTileNotification {
     #[cfg(feature="windows-data")] #[inline] pub fn create_scheduled_tile_notification(content: &super::super::data::xml::dom::XmlDocument, deliveryTime: foundation::DateTime) -> Result<ComPtr<ScheduledTileNotification>> {
@@ -15127,7 +15127,7 @@ impl IScheduledToastNotification {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ScheduledToastNotification: IScheduledToastNotification}
+RT_CLASS!{class ScheduledToastNotification: IScheduledToastNotification ["Windows.UI.Notifications.ScheduledToastNotification"]}
 impl RtActivatable<IScheduledToastNotificationFactory> for ScheduledToastNotification {}
 impl ScheduledToastNotification {
     #[cfg(feature="windows-data")] #[inline] pub fn create_scheduled_toast_notification(content: &super::super::data::xml::dom::XmlDocument, deliveryTime: foundation::DateTime) -> Result<ComPtr<ScheduledToastNotification>> {
@@ -15264,7 +15264,7 @@ impl IScheduledToastNotificationShowingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ScheduledToastNotificationShowingEventArgs: IScheduledToastNotificationShowingEventArgs}
+RT_CLASS!{class ScheduledToastNotificationShowingEventArgs: IScheduledToastNotificationShowingEventArgs ["Windows.UI.Notifications.ScheduledToastNotificationShowingEventArgs"]}
 DEFINE_IID!(IID_IShownTileNotification, 875399560, 23282, 18458, 166, 163, 242, 253, 199, 141, 232, 142);
 RT_INTERFACE!{interface IShownTileNotification(IShownTileNotificationVtbl): IInspectable(IInspectableVtbl) [IID_IShownTileNotification] {
     fn get_Arguments(&self, out: *mut HSTRING) -> HRESULT
@@ -15276,7 +15276,7 @@ impl IShownTileNotification {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ShownTileNotification: IShownTileNotification}
+RT_CLASS!{class ShownTileNotification: IShownTileNotification ["Windows.UI.Notifications.ShownTileNotification"]}
 DEFINE_IID!(IID_ITileFlyoutNotification, 2589176417, 50956, 17086, 178, 243, 244, 42, 169, 125, 52, 229);
 RT_INTERFACE!{interface ITileFlyoutNotification(ITileFlyoutNotificationVtbl): IInspectable(IInspectableVtbl) [IID_ITileFlyoutNotification] {
     #[cfg(not(feature="windows-data"))] fn __Dummy0(&self) -> (),
@@ -15300,7 +15300,7 @@ impl ITileFlyoutNotification {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TileFlyoutNotification: ITileFlyoutNotification}
+RT_CLASS!{class TileFlyoutNotification: ITileFlyoutNotification ["Windows.UI.Notifications.TileFlyoutNotification"]}
 impl RtActivatable<ITileFlyoutNotificationFactory> for TileFlyoutNotification {}
 impl TileFlyoutNotification {
     #[cfg(feature="windows-data")] #[inline] pub fn create_tile_flyout_notification(content: &super::super::data::xml::dom::XmlDocument) -> Result<ComPtr<TileFlyoutNotification>> {
@@ -15319,7 +15319,7 @@ impl ITileFlyoutNotificationFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum TileFlyoutTemplateType: i32 {
+RT_ENUM! { enum TileFlyoutTemplateType: i32 ["Windows.UI.Notifications.TileFlyoutTemplateType"] {
     TileFlyoutTemplate01 (TileFlyoutTemplateType_TileFlyoutTemplate01) = 0,
 }}
 RT_CLASS!{static class TileFlyoutUpdateManager}
@@ -15404,7 +15404,7 @@ impl ITileFlyoutUpdater {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TileFlyoutUpdater: ITileFlyoutUpdater}
+RT_CLASS!{class TileFlyoutUpdater: ITileFlyoutUpdater ["Windows.UI.Notifications.TileFlyoutUpdater"]}
 DEFINE_IID!(IID_ITileNotification, 3954100474, 20716, 19480, 180, 208, 58, 240, 46, 85, 64, 171);
 RT_INTERFACE!{interface ITileNotification(ITileNotificationVtbl): IInspectable(IInspectableVtbl) [IID_ITileNotification] {
     #[cfg(not(feature="windows-data"))] fn __Dummy0(&self) -> (),
@@ -15439,7 +15439,7 @@ impl ITileNotification {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TileNotification: ITileNotification}
+RT_CLASS!{class TileNotification: ITileNotification ["Windows.UI.Notifications.TileNotification"]}
 impl RtActivatable<ITileNotificationFactory> for TileNotification {}
 impl TileNotification {
     #[cfg(feature="windows-data")] #[inline] pub fn create_tile_notification(content: &super::super::data::xml::dom::XmlDocument) -> Result<ComPtr<TileNotification>> {
@@ -15458,7 +15458,7 @@ impl ITileNotificationFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum TileTemplateType: i32 {
+RT_ENUM! { enum TileTemplateType: i32 ["Windows.UI.Notifications.TileTemplateType"] {
     TileSquareImage (TileTemplateType_TileSquareImage) = 0, TileSquareBlock (TileTemplateType_TileSquareBlock) = 1, TileSquareText01 (TileTemplateType_TileSquareText01) = 2, TileSquareText02 (TileTemplateType_TileSquareText02) = 3, TileSquareText03 (TileTemplateType_TileSquareText03) = 4, TileSquareText04 (TileTemplateType_TileSquareText04) = 5, TileSquarePeekImageAndText01 (TileTemplateType_TileSquarePeekImageAndText01) = 6, TileSquarePeekImageAndText02 (TileTemplateType_TileSquarePeekImageAndText02) = 7, TileSquarePeekImageAndText03 (TileTemplateType_TileSquarePeekImageAndText03) = 8, TileSquarePeekImageAndText04 (TileTemplateType_TileSquarePeekImageAndText04) = 9, TileWideImage (TileTemplateType_TileWideImage) = 10, TileWideImageCollection (TileTemplateType_TileWideImageCollection) = 11, TileWideImageAndText01 (TileTemplateType_TileWideImageAndText01) = 12, TileWideImageAndText02 (TileTemplateType_TileWideImageAndText02) = 13, TileWideBlockAndText01 (TileTemplateType_TileWideBlockAndText01) = 14, TileWideBlockAndText02 (TileTemplateType_TileWideBlockAndText02) = 15, TileWidePeekImageCollection01 (TileTemplateType_TileWidePeekImageCollection01) = 16, TileWidePeekImageCollection02 (TileTemplateType_TileWidePeekImageCollection02) = 17, TileWidePeekImageCollection03 (TileTemplateType_TileWidePeekImageCollection03) = 18, TileWidePeekImageCollection04 (TileTemplateType_TileWidePeekImageCollection04) = 19, TileWidePeekImageCollection05 (TileTemplateType_TileWidePeekImageCollection05) = 20, TileWidePeekImageCollection06 (TileTemplateType_TileWidePeekImageCollection06) = 21, TileWidePeekImageAndText01 (TileTemplateType_TileWidePeekImageAndText01) = 22, TileWidePeekImageAndText02 (TileTemplateType_TileWidePeekImageAndText02) = 23, TileWidePeekImage01 (TileTemplateType_TileWidePeekImage01) = 24, TileWidePeekImage02 (TileTemplateType_TileWidePeekImage02) = 25, TileWidePeekImage03 (TileTemplateType_TileWidePeekImage03) = 26, TileWidePeekImage04 (TileTemplateType_TileWidePeekImage04) = 27, TileWidePeekImage05 (TileTemplateType_TileWidePeekImage05) = 28, TileWidePeekImage06 (TileTemplateType_TileWidePeekImage06) = 29, TileWideSmallImageAndText01 (TileTemplateType_TileWideSmallImageAndText01) = 30, TileWideSmallImageAndText02 (TileTemplateType_TileWideSmallImageAndText02) = 31, TileWideSmallImageAndText03 (TileTemplateType_TileWideSmallImageAndText03) = 32, TileWideSmallImageAndText04 (TileTemplateType_TileWideSmallImageAndText04) = 33, TileWideSmallImageAndText05 (TileTemplateType_TileWideSmallImageAndText05) = 34, TileWideText01 (TileTemplateType_TileWideText01) = 35, TileWideText02 (TileTemplateType_TileWideText02) = 36, TileWideText03 (TileTemplateType_TileWideText03) = 37, TileWideText04 (TileTemplateType_TileWideText04) = 38, TileWideText05 (TileTemplateType_TileWideText05) = 39, TileWideText06 (TileTemplateType_TileWideText06) = 40, TileWideText07 (TileTemplateType_TileWideText07) = 41, TileWideText08 (TileTemplateType_TileWideText08) = 42, TileWideText09 (TileTemplateType_TileWideText09) = 43, TileWideText10 (TileTemplateType_TileWideText10) = 44, TileWideText11 (TileTemplateType_TileWideText11) = 45, TileSquare150x150Image (TileTemplateType_TileSquare150x150Image) = 0, TileSquare150x150Block (TileTemplateType_TileSquare150x150Block) = 1, TileSquare150x150Text01 (TileTemplateType_TileSquare150x150Text01) = 2, TileSquare150x150Text02 (TileTemplateType_TileSquare150x150Text02) = 3, TileSquare150x150Text03 (TileTemplateType_TileSquare150x150Text03) = 4, TileSquare150x150Text04 (TileTemplateType_TileSquare150x150Text04) = 5, TileSquare150x150PeekImageAndText01 (TileTemplateType_TileSquare150x150PeekImageAndText01) = 6, TileSquare150x150PeekImageAndText02 (TileTemplateType_TileSquare150x150PeekImageAndText02) = 7, TileSquare150x150PeekImageAndText03 (TileTemplateType_TileSquare150x150PeekImageAndText03) = 8, TileSquare150x150PeekImageAndText04 (TileTemplateType_TileSquare150x150PeekImageAndText04) = 9, TileWide310x150Image (TileTemplateType_TileWide310x150Image) = 10, TileWide310x150ImageCollection (TileTemplateType_TileWide310x150ImageCollection) = 11, TileWide310x150ImageAndText01 (TileTemplateType_TileWide310x150ImageAndText01) = 12, TileWide310x150ImageAndText02 (TileTemplateType_TileWide310x150ImageAndText02) = 13, TileWide310x150BlockAndText01 (TileTemplateType_TileWide310x150BlockAndText01) = 14, TileWide310x150BlockAndText02 (TileTemplateType_TileWide310x150BlockAndText02) = 15, TileWide310x150PeekImageCollection01 (TileTemplateType_TileWide310x150PeekImageCollection01) = 16, TileWide310x150PeekImageCollection02 (TileTemplateType_TileWide310x150PeekImageCollection02) = 17, TileWide310x150PeekImageCollection03 (TileTemplateType_TileWide310x150PeekImageCollection03) = 18, TileWide310x150PeekImageCollection04 (TileTemplateType_TileWide310x150PeekImageCollection04) = 19, TileWide310x150PeekImageCollection05 (TileTemplateType_TileWide310x150PeekImageCollection05) = 20, TileWide310x150PeekImageCollection06 (TileTemplateType_TileWide310x150PeekImageCollection06) = 21, TileWide310x150PeekImageAndText01 (TileTemplateType_TileWide310x150PeekImageAndText01) = 22, TileWide310x150PeekImageAndText02 (TileTemplateType_TileWide310x150PeekImageAndText02) = 23, TileWide310x150PeekImage01 (TileTemplateType_TileWide310x150PeekImage01) = 24, TileWide310x150PeekImage02 (TileTemplateType_TileWide310x150PeekImage02) = 25, TileWide310x150PeekImage03 (TileTemplateType_TileWide310x150PeekImage03) = 26, TileWide310x150PeekImage04 (TileTemplateType_TileWide310x150PeekImage04) = 27, TileWide310x150PeekImage05 (TileTemplateType_TileWide310x150PeekImage05) = 28, TileWide310x150PeekImage06 (TileTemplateType_TileWide310x150PeekImage06) = 29, TileWide310x150SmallImageAndText01 (TileTemplateType_TileWide310x150SmallImageAndText01) = 30, TileWide310x150SmallImageAndText02 (TileTemplateType_TileWide310x150SmallImageAndText02) = 31, TileWide310x150SmallImageAndText03 (TileTemplateType_TileWide310x150SmallImageAndText03) = 32, TileWide310x150SmallImageAndText04 (TileTemplateType_TileWide310x150SmallImageAndText04) = 33, TileWide310x150SmallImageAndText05 (TileTemplateType_TileWide310x150SmallImageAndText05) = 34, TileWide310x150Text01 (TileTemplateType_TileWide310x150Text01) = 35, TileWide310x150Text02 (TileTemplateType_TileWide310x150Text02) = 36, TileWide310x150Text03 (TileTemplateType_TileWide310x150Text03) = 37, TileWide310x150Text04 (TileTemplateType_TileWide310x150Text04) = 38, TileWide310x150Text05 (TileTemplateType_TileWide310x150Text05) = 39, TileWide310x150Text06 (TileTemplateType_TileWide310x150Text06) = 40, TileWide310x150Text07 (TileTemplateType_TileWide310x150Text07) = 41, TileWide310x150Text08 (TileTemplateType_TileWide310x150Text08) = 42, TileWide310x150Text09 (TileTemplateType_TileWide310x150Text09) = 43, TileWide310x150Text10 (TileTemplateType_TileWide310x150Text10) = 44, TileWide310x150Text11 (TileTemplateType_TileWide310x150Text11) = 45, TileSquare310x310BlockAndText01 (TileTemplateType_TileSquare310x310BlockAndText01) = 46, TileSquare310x310BlockAndText02 (TileTemplateType_TileSquare310x310BlockAndText02) = 47, TileSquare310x310Image (TileTemplateType_TileSquare310x310Image) = 48, TileSquare310x310ImageAndText01 (TileTemplateType_TileSquare310x310ImageAndText01) = 49, TileSquare310x310ImageAndText02 (TileTemplateType_TileSquare310x310ImageAndText02) = 50, TileSquare310x310ImageAndTextOverlay01 (TileTemplateType_TileSquare310x310ImageAndTextOverlay01) = 51, TileSquare310x310ImageAndTextOverlay02 (TileTemplateType_TileSquare310x310ImageAndTextOverlay02) = 52, TileSquare310x310ImageAndTextOverlay03 (TileTemplateType_TileSquare310x310ImageAndTextOverlay03) = 53, TileSquare310x310ImageCollectionAndText01 (TileTemplateType_TileSquare310x310ImageCollectionAndText01) = 54, TileSquare310x310ImageCollectionAndText02 (TileTemplateType_TileSquare310x310ImageCollectionAndText02) = 55, TileSquare310x310ImageCollection (TileTemplateType_TileSquare310x310ImageCollection) = 56, TileSquare310x310SmallImagesAndTextList01 (TileTemplateType_TileSquare310x310SmallImagesAndTextList01) = 57, TileSquare310x310SmallImagesAndTextList02 (TileTemplateType_TileSquare310x310SmallImagesAndTextList02) = 58, TileSquare310x310SmallImagesAndTextList03 (TileTemplateType_TileSquare310x310SmallImagesAndTextList03) = 59, TileSquare310x310SmallImagesAndTextList04 (TileTemplateType_TileSquare310x310SmallImagesAndTextList04) = 60, TileSquare310x310Text01 (TileTemplateType_TileSquare310x310Text01) = 61, TileSquare310x310Text02 (TileTemplateType_TileSquare310x310Text02) = 62, TileSquare310x310Text03 (TileTemplateType_TileSquare310x310Text03) = 63, TileSquare310x310Text04 (TileTemplateType_TileSquare310x310Text04) = 64, TileSquare310x310Text05 (TileTemplateType_TileSquare310x310Text05) = 65, TileSquare310x310Text06 (TileTemplateType_TileSquare310x310Text06) = 66, TileSquare310x310Text07 (TileTemplateType_TileSquare310x310Text07) = 67, TileSquare310x310Text08 (TileTemplateType_TileSquare310x310Text08) = 68, TileSquare310x310TextList01 (TileTemplateType_TileSquare310x310TextList01) = 69, TileSquare310x310TextList02 (TileTemplateType_TileSquare310x310TextList02) = 70, TileSquare310x310TextList03 (TileTemplateType_TileSquare310x310TextList03) = 71, TileSquare310x310SmallImageAndText01 (TileTemplateType_TileSquare310x310SmallImageAndText01) = 72, TileSquare310x310SmallImagesAndTextList05 (TileTemplateType_TileSquare310x310SmallImagesAndTextList05) = 73, TileSquare310x310Text09 (TileTemplateType_TileSquare310x310Text09) = 74, TileSquare71x71IconWithBadge (TileTemplateType_TileSquare71x71IconWithBadge) = 75, TileSquare150x150IconWithBadge (TileTemplateType_TileSquare150x150IconWithBadge) = 76, TileWide310x150IconWithBadgeAndText (TileTemplateType_TileWide310x150IconWithBadgeAndText) = 77, TileSquare71x71Image (TileTemplateType_TileSquare71x71Image) = 78, TileTall150x310Image (TileTemplateType_TileTall150x310Image) = 79,
 }}
 RT_CLASS!{static class TileUpdateManager}
@@ -15511,7 +15511,7 @@ impl ITileUpdateManagerForUser {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TileUpdateManagerForUser: ITileUpdateManagerForUser}
+RT_CLASS!{class TileUpdateManagerForUser: ITileUpdateManagerForUser ["Windows.UI.Notifications.TileUpdateManagerForUser"]}
 DEFINE_IID!(IID_ITileUpdateManagerStatics, 3658849885, 16041, 18822, 141, 132, 176, 157, 94, 18, 39, 109);
 RT_INTERFACE!{static interface ITileUpdateManagerStatics(ITileUpdateManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITileUpdateManagerStatics] {
     fn CreateTileUpdaterForApplication(&self, out: *mut *mut TileUpdater) -> HRESULT,
@@ -15619,7 +15619,7 @@ impl ITileUpdater {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TileUpdater: ITileUpdater}
+RT_CLASS!{class TileUpdater: ITileUpdater ["Windows.UI.Notifications.TileUpdater"]}
 DEFINE_IID!(IID_ITileUpdater2, 2720427538, 5614, 17389, 131, 245, 101, 179, 82, 187, 26, 132);
 RT_INTERFACE!{interface ITileUpdater2(ITileUpdater2Vtbl): IInspectable(IInspectableVtbl) [IID_ITileUpdater2] {
     fn EnableNotificationQueueForSquare150x150(&self, enable: bool) -> HRESULT,
@@ -15651,7 +15651,7 @@ impl IToastActivatedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastActivatedEventArgs: IToastActivatedEventArgs}
+RT_CLASS!{class ToastActivatedEventArgs: IToastActivatedEventArgs ["Windows.UI.Notifications.ToastActivatedEventArgs"]}
 DEFINE_IID!(IID_IToastCollection, 176931760, 57534, 18520, 188, 42, 137, 223, 224, 179, 40, 99);
 RT_INTERFACE!{interface IToastCollection(IToastCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IToastCollection] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -15696,7 +15696,7 @@ impl IToastCollection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastCollection: IToastCollection}
+RT_CLASS!{class ToastCollection: IToastCollection ["Windows.UI.Notifications.ToastCollection"]}
 impl RtActivatable<IToastCollectionFactory> for ToastCollection {}
 impl ToastCollection {
     #[inline] pub fn create_instance(collectionId: &HStringArg, displayName: &HStringArg, launchArgs: &HStringArg, iconUri: &foundation::Uri) -> Result<ComPtr<ToastCollection>> {
@@ -15763,8 +15763,8 @@ impl IToastCollectionManager {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastCollectionManager: IToastCollectionManager}
-RT_ENUM! { enum ToastDismissalReason: i32 {
+RT_CLASS!{class ToastCollectionManager: IToastCollectionManager ["Windows.UI.Notifications.ToastCollectionManager"]}
+RT_ENUM! { enum ToastDismissalReason: i32 ["Windows.UI.Notifications.ToastDismissalReason"] {
     UserCanceled (ToastDismissalReason_UserCanceled) = 0, ApplicationHidden (ToastDismissalReason_ApplicationHidden) = 1, TimedOut (ToastDismissalReason_TimedOut) = 2,
 }}
 DEFINE_IID!(IID_IToastDismissedEventArgs, 1065998645, 55755, 17720, 160, 240, 255, 231, 101, 153, 56, 248);
@@ -15778,7 +15778,7 @@ impl IToastDismissedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastDismissedEventArgs: IToastDismissedEventArgs}
+RT_CLASS!{class ToastDismissedEventArgs: IToastDismissedEventArgs ["Windows.UI.Notifications.ToastDismissedEventArgs"]}
 DEFINE_IID!(IID_IToastFailedEventArgs, 890726498, 53204, 17656, 173, 100, 245, 0, 253, 137, 108, 59);
 RT_INTERFACE!{interface IToastFailedEventArgs(IToastFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IToastFailedEventArgs] {
     fn get_ErrorCode(&self, out: *mut foundation::HResult) -> HRESULT
@@ -15790,8 +15790,8 @@ impl IToastFailedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastFailedEventArgs: IToastFailedEventArgs}
-RT_ENUM! { enum ToastHistoryChangedType: i32 {
+RT_CLASS!{class ToastFailedEventArgs: IToastFailedEventArgs ["Windows.UI.Notifications.ToastFailedEventArgs"]}
+RT_ENUM! { enum ToastHistoryChangedType: i32 ["Windows.UI.Notifications.ToastHistoryChangedType"] {
     Cleared (ToastHistoryChangedType_Cleared) = 0, Removed (ToastHistoryChangedType_Removed) = 1, Expired (ToastHistoryChangedType_Expired) = 2, Added (ToastHistoryChangedType_Added) = 3,
 }}
 DEFINE_IID!(IID_IToastNotification, 2575181429, 1438, 20064, 139, 6, 23, 96, 145, 124, 139, 128);
@@ -15850,7 +15850,7 @@ impl IToastNotification {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastNotification: IToastNotification}
+RT_CLASS!{class ToastNotification: IToastNotification ["Windows.UI.Notifications.ToastNotification"]}
 impl RtActivatable<IToastNotificationFactory> for ToastNotification {}
 impl ToastNotification {
     #[cfg(feature="windows-data")] #[inline] pub fn create_toast_notification(content: &super::super::data::xml::dom::XmlDocument) -> Result<ComPtr<ToastNotification>> {
@@ -15967,7 +15967,7 @@ impl IToastNotificationActionTriggerDetail {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastNotificationActionTriggerDetail: IToastNotificationActionTriggerDetail}
+RT_CLASS!{class ToastNotificationActionTriggerDetail: IToastNotificationActionTriggerDetail ["Windows.UI.Notifications.ToastNotificationActionTriggerDetail"]}
 DEFINE_IID!(IID_IToastNotificationFactory, 68307744, 33478, 16937, 177, 9, 253, 158, 212, 102, 43, 83);
 RT_INTERFACE!{static interface IToastNotificationFactory(IToastNotificationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IToastNotificationFactory] {
     #[cfg(feature="windows-data")] fn CreateToastNotification(&self, content: *mut super::super::data::xml::dom::XmlDocument, out: *mut *mut ToastNotification) -> HRESULT
@@ -16019,7 +16019,7 @@ impl IToastNotificationHistory {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastNotificationHistory: IToastNotificationHistory}
+RT_CLASS!{class ToastNotificationHistory: IToastNotificationHistory ["Windows.UI.Notifications.ToastNotificationHistory"]}
 DEFINE_IID!(IID_IToastNotificationHistory2, 1002689107, 12081, 16530, 145, 41, 138, 213, 171, 240, 103, 218);
 RT_INTERFACE!{interface IToastNotificationHistory2(IToastNotificationHistory2Vtbl): IInspectable(IInspectableVtbl) [IID_IToastNotificationHistory2] {
     fn GetHistory(&self, out: *mut *mut foundation::collections::IVectorView<ToastNotification>) -> HRESULT,
@@ -16048,7 +16048,7 @@ impl IToastNotificationHistoryChangedTriggerDetail {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastNotificationHistoryChangedTriggerDetail: IToastNotificationHistoryChangedTriggerDetail}
+RT_CLASS!{class ToastNotificationHistoryChangedTriggerDetail: IToastNotificationHistoryChangedTriggerDetail ["Windows.UI.Notifications.ToastNotificationHistoryChangedTriggerDetail"]}
 DEFINE_IID!(IID_IToastNotificationHistoryChangedTriggerDetail2, 188148098, 51313, 18939, 186, 187, 37, 189, 188, 76, 196, 91);
 RT_INTERFACE!{interface IToastNotificationHistoryChangedTriggerDetail2(IToastNotificationHistoryChangedTriggerDetail2Vtbl): IInspectable(IInspectableVtbl) [IID_IToastNotificationHistoryChangedTriggerDetail2] {
     fn get_CollectionId(&self, out: *mut HSTRING) -> HRESULT
@@ -16118,7 +16118,7 @@ impl IToastNotificationManagerForUser {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastNotificationManagerForUser: IToastNotificationManagerForUser}
+RT_CLASS!{class ToastNotificationManagerForUser: IToastNotificationManagerForUser ["Windows.UI.Notifications.ToastNotificationManagerForUser"]}
 DEFINE_IID!(IID_IToastNotificationManagerForUser2, 1738302647, 33195, 17090, 136, 25, 201, 88, 118, 119, 83, 244);
 RT_INTERFACE!{interface IToastNotificationManagerForUser2(IToastNotificationManagerForUser2Vtbl): IInspectable(IInspectableVtbl) [IID_IToastNotificationManagerForUser2] {
     fn GetToastNotifierForToastCollectionIdAsync(&self, collectionId: HSTRING, out: *mut *mut foundation::IAsyncOperation<ToastNotifier>) -> HRESULT,
@@ -16210,7 +16210,7 @@ impl IToastNotificationManagerStatics5 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ToastNotificationPriority: i32 {
+RT_ENUM! { enum ToastNotificationPriority: i32 ["Windows.UI.Notifications.ToastNotificationPriority"] {
     Default (ToastNotificationPriority_Default) = 0, High (ToastNotificationPriority_High) = 1,
 }}
 DEFINE_IID!(IID_IToastNotifier, 1972534163, 1011, 16876, 145, 211, 110, 91, 172, 27, 56, 231);
@@ -16250,7 +16250,7 @@ impl IToastNotifier {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastNotifier: IToastNotifier}
+RT_CLASS!{class ToastNotifier: IToastNotifier ["Windows.UI.Notifications.ToastNotifier"]}
 DEFINE_IID!(IID_IToastNotifier2, 893618630, 31745, 19413, 156, 32, 96, 67, 64, 205, 43, 116);
 RT_INTERFACE!{interface IToastNotifier2(IToastNotifier2Vtbl): IInspectable(IInspectableVtbl) [IID_IToastNotifier2] {
     fn UpdateWithTagAndGroup(&self, data: *mut NotificationData, tag: HSTRING, group: HSTRING, out: *mut NotificationUpdateResult) -> HRESULT,
@@ -16284,7 +16284,7 @@ impl IToastNotifier3 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ToastTemplateType: i32 {
+RT_ENUM! { enum ToastTemplateType: i32 ["Windows.UI.Notifications.ToastTemplateType"] {
     ToastImageAndText01 (ToastTemplateType_ToastImageAndText01) = 0, ToastImageAndText02 (ToastTemplateType_ToastImageAndText02) = 1, ToastImageAndText03 (ToastTemplateType_ToastImageAndText03) = 2, ToastImageAndText04 (ToastTemplateType_ToastImageAndText04) = 3, ToastText01 (ToastTemplateType_ToastText01) = 4, ToastText02 (ToastTemplateType_ToastText02) = 5, ToastText03 (ToastTemplateType_ToastText03) = 6, ToastText04 (ToastTemplateType_ToastText04) = 7,
 }}
 DEFINE_IID!(IID_IUserNotification, 2918704431, 20051, 17109, 156, 51, 235, 94, 165, 21, 178, 62);
@@ -16317,7 +16317,7 @@ impl IUserNotification {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserNotification: IUserNotification}
+RT_CLASS!{class UserNotification: IUserNotification ["Windows.UI.Notifications.UserNotification"]}
 DEFINE_IID!(IID_IUserNotificationChangedEventArgs, 3065866297, 31183, 19237, 130, 192, 12, 225, 238, 248, 31, 140);
 RT_INTERFACE!{interface IUserNotificationChangedEventArgs(IUserNotificationChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserNotificationChangedEventArgs] {
     fn get_ChangeKind(&self, out: *mut UserNotificationChangedKind) -> HRESULT,
@@ -16335,8 +16335,8 @@ impl IUserNotificationChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserNotificationChangedEventArgs: IUserNotificationChangedEventArgs}
-RT_ENUM! { enum UserNotificationChangedKind: i32 {
+RT_CLASS!{class UserNotificationChangedEventArgs: IUserNotificationChangedEventArgs ["Windows.UI.Notifications.UserNotificationChangedEventArgs"]}
+RT_ENUM! { enum UserNotificationChangedKind: i32 ["Windows.UI.Notifications.UserNotificationChangedKind"] {
     Added (UserNotificationChangedKind_Added) = 0, Removed (UserNotificationChangedKind_Removed) = 1,
 }}
 pub mod management { // Windows.UI.Notifications.Management
@@ -16391,7 +16391,7 @@ impl IUserNotificationListener {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserNotificationListener: IUserNotificationListener}
+RT_CLASS!{class UserNotificationListener: IUserNotificationListener ["Windows.UI.Notifications.Management.UserNotificationListener"]}
 impl RtActivatable<IUserNotificationListenerStatics> for UserNotificationListener {}
 impl UserNotificationListener {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<UserNotificationListener>>> {
@@ -16399,7 +16399,7 @@ impl UserNotificationListener {
     }
 }
 DEFINE_CLSID!(UserNotificationListener(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,77,97,110,97,103,101,109,101,110,116,46,85,115,101,114,78,111,116,105,102,105,99,97,116,105,111,110,76,105,115,116,101,110,101,114,0]) [CLSID_UserNotificationListener]);
-RT_ENUM! { enum UserNotificationListenerAccessStatus: i32 {
+RT_ENUM! { enum UserNotificationListenerAccessStatus: i32 ["Windows.UI.Notifications.Management.UserNotificationListenerAccessStatus"] {
     Unspecified (UserNotificationListenerAccessStatus_Unspecified) = 0, Allowed (UserNotificationListenerAccessStatus_Allowed) = 1, Denied (UserNotificationListenerAccessStatus_Denied) = 2,
 }}
 DEFINE_IID!(IID_IUserNotificationListenerStatics, 4284556239, 17286, 19107, 183, 61, 184, 4, 229, 182, 59, 35);
@@ -16489,7 +16489,7 @@ impl IMessageDialog {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MessageDialog: IMessageDialog}
+RT_CLASS!{class MessageDialog: IMessageDialog ["Windows.UI.Popups.MessageDialog"]}
 impl RtActivatable<IMessageDialogFactory> for MessageDialog {}
 impl MessageDialog {
     #[inline] pub fn create(content: &HStringArg) -> Result<ComPtr<MessageDialog>> {
@@ -16517,10 +16517,10 @@ impl IMessageDialogFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MessageDialogOptions: u32 {
+RT_ENUM! { enum MessageDialogOptions: u32 ["Windows.UI.Popups.MessageDialogOptions"] {
     None (MessageDialogOptions_None) = 0, AcceptUserInputAfterDelay (MessageDialogOptions_AcceptUserInputAfterDelay) = 1,
 }}
-RT_ENUM! { enum Placement: i32 {
+RT_ENUM! { enum Placement: i32 ["Windows.UI.Popups.Placement"] {
     Default (Placement_Default) = 0, Above (Placement_Above) = 1, Below (Placement_Below) = 2, Left (Placement_Left) = 3, Right (Placement_Right) = 4,
 }}
 DEFINE_IID!(IID_IPopupMenu, 1318831836, 34829, 18428, 160, 161, 114, 182, 57, 230, 37, 89);
@@ -16552,7 +16552,7 @@ impl IPopupMenu {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PopupMenu: IPopupMenu}
+RT_CLASS!{class PopupMenu: IPopupMenu ["Windows.UI.Popups.PopupMenu"]}
 impl RtActivatable<IActivationFactory> for PopupMenu {}
 DEFINE_CLSID!(PopupMenu(&[87,105,110,100,111,119,115,46,85,73,46,80,111,112,117,112,115,46,80,111,112,117,112,77,101,110,117,0]) [CLSID_PopupMenu]);
 DEFINE_IID!(IID_IUICommand, 1341733493, 16709, 18431, 172, 127, 223, 241, 193, 250, 91, 15);
@@ -16593,7 +16593,7 @@ impl IUICommand {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UICommand: IUICommand}
+RT_CLASS!{class UICommand: IUICommand ["Windows.UI.Popups.UICommand"]}
 impl RtActivatable<IUICommandFactory> for UICommand {}
 impl RtActivatable<IActivationFactory> for UICommand {}
 impl UICommand {
@@ -16641,7 +16641,7 @@ impl UICommandInvokedHandler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UICommandSeparator: IUICommand}
+RT_CLASS!{class UICommandSeparator: IUICommand ["Windows.UI.Popups.UICommandSeparator"]}
 impl RtActivatable<IActivationFactory> for UICommandSeparator {}
 DEFINE_CLSID!(UICommandSeparator(&[87,105,110,100,111,119,115,46,85,73,46,80,111,112,117,112,115,46,85,73,67,111,109,109,97,110,100,83,101,112,97,114,97,116,111,114,0]) [CLSID_UICommandSeparator]);
 } // Windows.UI.Popups
@@ -16677,7 +16677,7 @@ impl IAdaptiveCardBuilderStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SecurityAppKind: i32 {
+RT_ENUM! { enum SecurityAppKind: i32 ["Windows.UI.Shell.SecurityAppKind"] {
     WebProtection (SecurityAppKind_WebProtection) = 0,
 }}
 DEFINE_IID!(IID_ISecurityAppManager, 2527875084, 44756, 22045, 189, 232, 149, 53, 32, 52, 58, 45);
@@ -16701,13 +16701,13 @@ impl ISecurityAppManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SecurityAppManager: ISecurityAppManager}
+RT_CLASS!{class SecurityAppManager: ISecurityAppManager ["Windows.UI.Shell.SecurityAppManager"]}
 impl RtActivatable<IActivationFactory> for SecurityAppManager {}
 DEFINE_CLSID!(SecurityAppManager(&[87,105,110,100,111,119,115,46,85,73,46,83,104,101,108,108,46,83,101,99,117,114,105,116,121,65,112,112,77,97,110,97,103,101,114,0]) [CLSID_SecurityAppManager]);
-RT_ENUM! { enum SecurityAppState: i32 {
+RT_ENUM! { enum SecurityAppState: i32 ["Windows.UI.Shell.SecurityAppState"] {
     Disabled (SecurityAppState_Disabled) = 0, Enabled (SecurityAppState_Enabled) = 1,
 }}
-RT_ENUM! { enum SecurityAppSubstatus: i32 {
+RT_ENUM! { enum SecurityAppSubstatus: i32 ["Windows.UI.Shell.SecurityAppSubstatus"] {
     Undetermined (SecurityAppSubstatus_Undetermined) = 0, NoActionNeeded (SecurityAppSubstatus_NoActionNeeded) = 1, ActionRecommended (SecurityAppSubstatus_ActionRecommended) = 2, ActionNeeded (SecurityAppSubstatus_ActionNeeded) = 3,
 }}
 DEFINE_IID!(IID_ITaskbarManager, 2269710873, 6873, 18932, 178, 232, 134, 115, 141, 197, 172, 64);
@@ -16751,7 +16751,7 @@ impl ITaskbarManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TaskbarManager: ITaskbarManager}
+RT_CLASS!{class TaskbarManager: ITaskbarManager ["Windows.UI.Shell.TaskbarManager"]}
 impl RtActivatable<ITaskbarManagerStatics> for TaskbarManager {}
 impl TaskbarManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<TaskbarManager>>> {
@@ -16796,7 +16796,7 @@ impl ITaskbarManagerStatics {
 } // Windows.UI.Shell
 pub mod startscreen { // Windows.UI.StartScreen
 use ::prelude::*;
-RT_ENUM! { enum ForegroundText: i32 {
+RT_ENUM! { enum ForegroundText: i32 ["Windows.UI.StartScreen.ForegroundText"] {
     Dark (ForegroundText_Dark) = 0, Light (ForegroundText_Light) = 1,
 }}
 DEFINE_IID!(IID_IJumpList, 2955103294, 52591, 19638, 166, 17, 97, 253, 80, 95, 62, 209);
@@ -16827,7 +16827,7 @@ impl IJumpList {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class JumpList: IJumpList}
+RT_CLASS!{class JumpList: IJumpList ["Windows.UI.StartScreen.JumpList"]}
 impl RtActivatable<IJumpListStatics> for JumpList {}
 impl JumpList {
     #[inline] pub fn load_current_async() -> Result<ComPtr<foundation::IAsyncOperation<JumpList>>> {
@@ -16905,7 +16905,7 @@ impl IJumpListItem {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class JumpListItem: IJumpListItem}
+RT_CLASS!{class JumpListItem: IJumpListItem ["Windows.UI.StartScreen.JumpListItem"]}
 impl RtActivatable<IJumpListItemStatics> for JumpListItem {}
 impl JumpListItem {
     #[inline] pub fn create_with_arguments(arguments: &HStringArg, displayName: &HStringArg) -> Result<Option<ComPtr<JumpListItem>>> {
@@ -16916,7 +16916,7 @@ impl JumpListItem {
     }
 }
 DEFINE_CLSID!(JumpListItem(&[87,105,110,100,111,119,115,46,85,73,46,83,116,97,114,116,83,99,114,101,101,110,46,74,117,109,112,76,105,115,116,73,116,101,109,0]) [CLSID_JumpListItem]);
-RT_ENUM! { enum JumpListItemKind: i32 {
+RT_ENUM! { enum JumpListItemKind: i32 ["Windows.UI.StartScreen.JumpListItemKind"] {
     Arguments (JumpListItemKind_Arguments) = 0, Separator (JumpListItemKind_Separator) = 1,
 }}
 DEFINE_IID!(IID_IJumpListItemStatics, 4055876840, 51114, 18891, 141, 222, 236, 252, 205, 122, 215, 228);
@@ -16953,7 +16953,7 @@ impl IJumpListStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum JumpListSystemGroupKind: i32 {
+RT_ENUM! { enum JumpListSystemGroupKind: i32 ["Windows.UI.StartScreen.JumpListSystemGroupKind"] {
     None (JumpListSystemGroupKind_None) = 0, Frequent (JumpListSystemGroupKind_Frequent) = 1, Recent (JumpListSystemGroupKind_Recent) = 2,
 }}
 DEFINE_IID!(IID_ISecondaryTile, 2661175776, 11189, 19392, 187, 141, 66, 178, 58, 188, 200, 141);
@@ -17147,7 +17147,7 @@ impl ISecondaryTile {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SecondaryTile: ISecondaryTile}
+RT_CLASS!{class SecondaryTile: ISecondaryTile ["Windows.UI.StartScreen.SecondaryTile"]}
 impl RtActivatable<ISecondaryTileFactory> for SecondaryTile {}
 impl RtActivatable<ISecondaryTileFactory2> for SecondaryTile {}
 impl RtActivatable<ISecondaryTileStatics> for SecondaryTile {}
@@ -17401,7 +17401,7 @@ impl ISecondaryTileVisualElements {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SecondaryTileVisualElements: ISecondaryTileVisualElements}
+RT_CLASS!{class SecondaryTileVisualElements: ISecondaryTileVisualElements ["Windows.UI.StartScreen.SecondaryTileVisualElements"]}
 DEFINE_IID!(IID_ISecondaryTileVisualElements2, 4247663056, 22492, 18324, 142, 207, 86, 130, 245, 243, 230, 239);
 RT_INTERFACE!{interface ISecondaryTileVisualElements2(ISecondaryTileVisualElements2Vtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryTileVisualElements2] {
     fn put_Square71x71Logo(&self, value: *mut foundation::Uri) -> HRESULT,
@@ -17475,7 +17475,7 @@ impl IStartScreenManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StartScreenManager: IStartScreenManager}
+RT_CLASS!{class StartScreenManager: IStartScreenManager ["Windows.UI.StartScreen.StartScreenManager"]}
 impl RtActivatable<IStartScreenManagerStatics> for StartScreenManager {}
 impl StartScreenManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<StartScreenManager>>> {
@@ -17547,7 +17547,7 @@ impl ITileMixedRealityModel {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TileMixedRealityModel: ITileMixedRealityModel}
+RT_CLASS!{class TileMixedRealityModel: ITileMixedRealityModel ["Windows.UI.StartScreen.TileMixedRealityModel"]}
 DEFINE_IID!(IID_ITileMixedRealityModel2, 1133801650, 55237, 16651, 131, 25, 148, 134, 162, 123, 108, 103);
 RT_INTERFACE!{interface ITileMixedRealityModel2(ITileMixedRealityModel2Vtbl): IInspectable(IInspectableVtbl) [IID_ITileMixedRealityModel2] {
     fn put_ActivationBehavior(&self, value: TileMixedRealityModelActivationBehavior) -> HRESULT,
@@ -17564,13 +17564,13 @@ impl ITileMixedRealityModel2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum TileMixedRealityModelActivationBehavior: i32 {
+RT_ENUM! { enum TileMixedRealityModelActivationBehavior: i32 ["Windows.UI.StartScreen.TileMixedRealityModelActivationBehavior"] {
     Default (TileMixedRealityModelActivationBehavior_Default) = 0, None (TileMixedRealityModelActivationBehavior_None) = 1,
 }}
-RT_ENUM! { enum TileOptions: u32 {
+RT_ENUM! { enum TileOptions: u32 ["Windows.UI.StartScreen.TileOptions"] {
     None (TileOptions_None) = 0, ShowNameOnLogo (TileOptions_ShowNameOnLogo) = 1, ShowNameOnWideLogo (TileOptions_ShowNameOnWideLogo) = 2, CopyOnDeployment (TileOptions_CopyOnDeployment) = 4,
 }}
-RT_ENUM! { enum TileSize: i32 {
+RT_ENUM! { enum TileSize: i32 ["Windows.UI.StartScreen.TileSize"] {
     Default (TileSize_Default) = 0, Square30x30 (TileSize_Square30x30) = 1, Square70x70 (TileSize_Square70x70) = 2, Square150x150 (TileSize_Square150x150) = 3, Wide310x150 (TileSize_Wide310x150) = 4, Square310x310 (TileSize_Square310x310) = 5, Square71x71 (TileSize_Square71x71) = 6, Square44x44 (TileSize_Square44x44) = 7,
 }}
 DEFINE_IID!(IID_IVisualElementsRequest, 3241685818, 37640, 16498, 136, 204, 208, 104, 219, 52, 124, 104);
@@ -17602,7 +17602,7 @@ impl IVisualElementsRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VisualElementsRequest: IVisualElementsRequest}
+RT_CLASS!{class VisualElementsRequest: IVisualElementsRequest ["Windows.UI.StartScreen.VisualElementsRequest"]}
 DEFINE_IID!(IID_IVisualElementsRequestDeferral, 2707779248, 294, 17239, 130, 4, 189, 130, 187, 42, 4, 109);
 RT_INTERFACE!{interface IVisualElementsRequestDeferral(IVisualElementsRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IVisualElementsRequestDeferral] {
     fn Complete(&self) -> HRESULT
@@ -17613,7 +17613,7 @@ impl IVisualElementsRequestDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VisualElementsRequestDeferral: IVisualElementsRequestDeferral}
+RT_CLASS!{class VisualElementsRequestDeferral: IVisualElementsRequestDeferral ["Windows.UI.StartScreen.VisualElementsRequestDeferral"]}
 DEFINE_IID!(IID_IVisualElementsRequestedEventArgs, 2070923650, 14861, 20174, 175, 150, 205, 23, 225, 176, 11, 45);
 RT_INTERFACE!{interface IVisualElementsRequestedEventArgs(IVisualElementsRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVisualElementsRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut VisualElementsRequest) -> HRESULT
@@ -17625,11 +17625,11 @@ impl IVisualElementsRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VisualElementsRequestedEventArgs: IVisualElementsRequestedEventArgs}
+RT_CLASS!{class VisualElementsRequestedEventArgs: IVisualElementsRequestedEventArgs ["Windows.UI.StartScreen.VisualElementsRequestedEventArgs"]}
 } // Windows.UI.StartScreen
 pub mod text { // Windows.UI.Text
 use ::prelude::*;
-RT_ENUM! { enum CaretType: i32 {
+RT_ENUM! { enum CaretType: i32 ["Windows.UI.Text.CaretType"] {
     Normal (CaretType_Normal) = 0, Null (CaretType_Null) = 1,
 }}
 DEFINE_IID!(IID_IContentLinkInfo, 517285157, 7263, 18635, 179, 53, 120, 181, 10, 46, 230, 66);
@@ -17692,26 +17692,26 @@ impl IContentLinkInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContentLinkInfo: IContentLinkInfo}
+RT_CLASS!{class ContentLinkInfo: IContentLinkInfo ["Windows.UI.Text.ContentLinkInfo"]}
 impl RtActivatable<IActivationFactory> for ContentLinkInfo {}
 DEFINE_CLSID!(ContentLinkInfo(&[87,105,110,100,111,119,115,46,85,73,46,84,101,120,116,46,67,111,110,116,101,110,116,76,105,110,107,73,110,102,111,0]) [CLSID_ContentLinkInfo]);
-RT_ENUM! { enum FindOptions: u32 {
+RT_ENUM! { enum FindOptions: u32 ["Windows.UI.Text.FindOptions"] {
     None (FindOptions_None) = 0, Word (FindOptions_Word) = 2, Case (FindOptions_Case) = 4,
 }}
-RT_ENUM! { enum FontStretch: i32 {
+RT_ENUM! { enum FontStretch: i32 ["Windows.UI.Text.FontStretch"] {
     Undefined (FontStretch_Undefined) = 0, UltraCondensed (FontStretch_UltraCondensed) = 1, ExtraCondensed (FontStretch_ExtraCondensed) = 2, Condensed (FontStretch_Condensed) = 3, SemiCondensed (FontStretch_SemiCondensed) = 4, Normal (FontStretch_Normal) = 5, SemiExpanded (FontStretch_SemiExpanded) = 6, Expanded (FontStretch_Expanded) = 7, ExtraExpanded (FontStretch_ExtraExpanded) = 8, UltraExpanded (FontStretch_UltraExpanded) = 9,
 }}
-RT_ENUM! { enum FontStyle: i32 {
+RT_ENUM! { enum FontStyle: i32 ["Windows.UI.Text.FontStyle"] {
     Normal (FontStyle_Normal) = 0, Oblique (FontStyle_Oblique) = 1, Italic (FontStyle_Italic) = 2,
 }}
-RT_STRUCT! { struct FontWeight {
+RT_STRUCT! { struct FontWeight ["Windows.UI.Text.FontWeight"] {
     Weight: u16,
 }}
 DEFINE_IID!(IID_IFontWeights, 2021696580, 427, 18839, 133, 23, 223, 130, 42, 12, 69, 241);
 RT_INTERFACE!{interface IFontWeights(IFontWeightsVtbl): IInspectable(IInspectableVtbl) [IID_IFontWeights] {
     
 }}
-RT_CLASS!{class FontWeights: IFontWeights}
+RT_CLASS!{class FontWeights: IFontWeights ["Windows.UI.Text.FontWeights"]}
 impl RtActivatable<IFontWeightsStatics> for FontWeights {}
 impl FontWeights {
     #[inline] pub fn get_black() -> Result<FontWeight> {
@@ -17820,43 +17820,43 @@ impl IFontWeightsStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum FormatEffect: i32 {
+RT_ENUM! { enum FormatEffect: i32 ["Windows.UI.Text.FormatEffect"] {
     Off (FormatEffect_Off) = 0, On (FormatEffect_On) = 1, Toggle (FormatEffect_Toggle) = 2, Undefined (FormatEffect_Undefined) = 3,
 }}
-RT_ENUM! { enum HorizontalCharacterAlignment: i32 {
+RT_ENUM! { enum HorizontalCharacterAlignment: i32 ["Windows.UI.Text.HorizontalCharacterAlignment"] {
     Left (HorizontalCharacterAlignment_Left) = 0, Right (HorizontalCharacterAlignment_Right) = 1, Center (HorizontalCharacterAlignment_Center) = 2,
 }}
-RT_ENUM! { enum LetterCase: i32 {
+RT_ENUM! { enum LetterCase: i32 ["Windows.UI.Text.LetterCase"] {
     Lower (LetterCase_Lower) = 0, Upper (LetterCase_Upper) = 1,
 }}
-RT_ENUM! { enum LineSpacingRule: i32 {
+RT_ENUM! { enum LineSpacingRule: i32 ["Windows.UI.Text.LineSpacingRule"] {
     Undefined (LineSpacingRule_Undefined) = 0, Single (LineSpacingRule_Single) = 1, OneAndHalf (LineSpacingRule_OneAndHalf) = 2, Double (LineSpacingRule_Double) = 3, AtLeast (LineSpacingRule_AtLeast) = 4, Exactly (LineSpacingRule_Exactly) = 5, Multiple (LineSpacingRule_Multiple) = 6, Percent (LineSpacingRule_Percent) = 7,
 }}
-RT_ENUM! { enum LinkType: i32 {
+RT_ENUM! { enum LinkType: i32 ["Windows.UI.Text.LinkType"] {
     Undefined (LinkType_Undefined) = 0, NotALink (LinkType_NotALink) = 1, ClientLink (LinkType_ClientLink) = 2, FriendlyLinkName (LinkType_FriendlyLinkName) = 3, FriendlyLinkAddress (LinkType_FriendlyLinkAddress) = 4, AutoLink (LinkType_AutoLink) = 5, AutoLinkEmail (LinkType_AutoLinkEmail) = 6, AutoLinkPhone (LinkType_AutoLinkPhone) = 7, AutoLinkPath (LinkType_AutoLinkPath) = 8,
 }}
-RT_ENUM! { enum MarkerAlignment: i32 {
+RT_ENUM! { enum MarkerAlignment: i32 ["Windows.UI.Text.MarkerAlignment"] {
     Undefined (MarkerAlignment_Undefined) = 0, Left (MarkerAlignment_Left) = 1, Center (MarkerAlignment_Center) = 2, Right (MarkerAlignment_Right) = 3,
 }}
-RT_ENUM! { enum MarkerStyle: i32 {
+RT_ENUM! { enum MarkerStyle: i32 ["Windows.UI.Text.MarkerStyle"] {
     Undefined (MarkerStyle_Undefined) = 0, Parenthesis (MarkerStyle_Parenthesis) = 1, Parentheses (MarkerStyle_Parentheses) = 2, Period (MarkerStyle_Period) = 3, Plain (MarkerStyle_Plain) = 4, Minus (MarkerStyle_Minus) = 5, NoNumber (MarkerStyle_NoNumber) = 6,
 }}
-RT_ENUM! { enum MarkerType: i32 {
+RT_ENUM! { enum MarkerType: i32 ["Windows.UI.Text.MarkerType"] {
     Undefined (MarkerType_Undefined) = 0, None (MarkerType_None) = 1, Bullet (MarkerType_Bullet) = 2, Arabic (MarkerType_Arabic) = 3, LowercaseEnglishLetter (MarkerType_LowercaseEnglishLetter) = 4, UppercaseEnglishLetter (MarkerType_UppercaseEnglishLetter) = 5, LowercaseRoman (MarkerType_LowercaseRoman) = 6, UppercaseRoman (MarkerType_UppercaseRoman) = 7, UnicodeSequence (MarkerType_UnicodeSequence) = 8, CircledNumber (MarkerType_CircledNumber) = 9, BlackCircleWingding (MarkerType_BlackCircleWingding) = 10, WhiteCircleWingding (MarkerType_WhiteCircleWingding) = 11, ArabicWide (MarkerType_ArabicWide) = 12, SimplifiedChinese (MarkerType_SimplifiedChinese) = 13, TraditionalChinese (MarkerType_TraditionalChinese) = 14, JapanSimplifiedChinese (MarkerType_JapanSimplifiedChinese) = 15, JapanKorea (MarkerType_JapanKorea) = 16, ArabicDictionary (MarkerType_ArabicDictionary) = 17, ArabicAbjad (MarkerType_ArabicAbjad) = 18, Hebrew (MarkerType_Hebrew) = 19, ThaiAlphabetic (MarkerType_ThaiAlphabetic) = 20, ThaiNumeric (MarkerType_ThaiNumeric) = 21, DevanagariVowel (MarkerType_DevanagariVowel) = 22, DevanagariConsonant (MarkerType_DevanagariConsonant) = 23, DevanagariNumeric (MarkerType_DevanagariNumeric) = 24,
 }}
-RT_ENUM! { enum ParagraphAlignment: i32 {
+RT_ENUM! { enum ParagraphAlignment: i32 ["Windows.UI.Text.ParagraphAlignment"] {
     Undefined (ParagraphAlignment_Undefined) = 0, Left (ParagraphAlignment_Left) = 1, Center (ParagraphAlignment_Center) = 2, Right (ParagraphAlignment_Right) = 3, Justify (ParagraphAlignment_Justify) = 4,
 }}
-RT_ENUM! { enum ParagraphStyle: i32 {
+RT_ENUM! { enum ParagraphStyle: i32 ["Windows.UI.Text.ParagraphStyle"] {
     Undefined (ParagraphStyle_Undefined) = 0, None (ParagraphStyle_None) = 1, Normal (ParagraphStyle_Normal) = 2, Heading1 (ParagraphStyle_Heading1) = 3, Heading2 (ParagraphStyle_Heading2) = 4, Heading3 (ParagraphStyle_Heading3) = 5, Heading4 (ParagraphStyle_Heading4) = 6, Heading5 (ParagraphStyle_Heading5) = 7, Heading6 (ParagraphStyle_Heading6) = 8, Heading7 (ParagraphStyle_Heading7) = 9, Heading8 (ParagraphStyle_Heading8) = 10, Heading9 (ParagraphStyle_Heading9) = 11,
 }}
-RT_ENUM! { enum PointOptions: u32 {
+RT_ENUM! { enum PointOptions: u32 ["Windows.UI.Text.PointOptions"] {
     None (PointOptions_None) = 0, IncludeInset (PointOptions_IncludeInset) = 1, Start (PointOptions_Start) = 32, ClientCoordinates (PointOptions_ClientCoordinates) = 256, AllowOffClient (PointOptions_AllowOffClient) = 512, Transform (PointOptions_Transform) = 1024, NoHorizontalScroll (PointOptions_NoHorizontalScroll) = 65536, NoVerticalScroll (PointOptions_NoVerticalScroll) = 262144,
 }}
-RT_ENUM! { enum RangeGravity: i32 {
+RT_ENUM! { enum RangeGravity: i32 ["Windows.UI.Text.RangeGravity"] {
     UIBehavior (RangeGravity_UIBehavior) = 0, Backward (RangeGravity_Backward) = 1, Forward (RangeGravity_Forward) = 2, Inward (RangeGravity_Inward) = 3, Outward (RangeGravity_Outward) = 4,
 }}
-RT_CLASS!{class RichEditTextDocument: ITextDocument}
+RT_CLASS!{class RichEditTextDocument: ITextDocument ["Windows.UI.Text.RichEditTextDocument"]}
 DEFINE_IID!(IID_IRichEditTextRange, 927872277, 47754, 19054, 140, 89, 13, 222, 61, 12, 245, 205);
 RT_INTERFACE!{interface IRichEditTextRange(IRichEditTextRangeVtbl): IInspectable(IInspectableVtbl) [IID_IRichEditTextRange] {
     fn get_ContentLinkInfo(&self, out: *mut *mut ContentLinkInfo) -> HRESULT,
@@ -17873,17 +17873,17 @@ impl IRichEditTextRange {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RichEditTextRange: ITextRange}
-RT_ENUM! { enum SelectionOptions: u32 {
+RT_CLASS!{class RichEditTextRange: ITextRange ["Windows.UI.Text.RichEditTextRange"]}
+RT_ENUM! { enum SelectionOptions: u32 ["Windows.UI.Text.SelectionOptions"] {
     StartActive (SelectionOptions_StartActive) = 1, AtEndOfLine (SelectionOptions_AtEndOfLine) = 2, Overtype (SelectionOptions_Overtype) = 4, Active (SelectionOptions_Active) = 8, Replace (SelectionOptions_Replace) = 16,
 }}
-RT_ENUM! { enum SelectionType: i32 {
+RT_ENUM! { enum SelectionType: i32 ["Windows.UI.Text.SelectionType"] {
     None (SelectionType_None) = 0, InsertionPoint (SelectionType_InsertionPoint) = 1, Normal (SelectionType_Normal) = 2, InlineShape (SelectionType_InlineShape) = 7, Shape (SelectionType_Shape) = 8,
 }}
-RT_ENUM! { enum TabAlignment: i32 {
+RT_ENUM! { enum TabAlignment: i32 ["Windows.UI.Text.TabAlignment"] {
     Left (TabAlignment_Left) = 0, Center (TabAlignment_Center) = 1, Right (TabAlignment_Right) = 2, Decimal (TabAlignment_Decimal) = 3, Bar (TabAlignment_Bar) = 4,
 }}
-RT_ENUM! { enum TabLeader: i32 {
+RT_ENUM! { enum TabLeader: i32 ["Windows.UI.Text.TabLeader"] {
     Spaces (TabLeader_Spaces) = 0, Dots (TabLeader_Dots) = 1, Dashes (TabLeader_Dashes) = 2, Lines (TabLeader_Lines) = 3, ThickLines (TabLeader_ThickLines) = 4, Equals (TabLeader_Equals) = 5,
 }}
 DEFINE_IID!(IID_ITextCharacterFormat, 1524560859, 1531, 17453, 128, 101, 100, 42, 254, 160, 44, 237);
@@ -18249,7 +18249,7 @@ impl ITextConstantsStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum TextDecorations: u32 {
+RT_ENUM! { enum TextDecorations: u32 ["Windows.UI.Text.TextDecorations"] {
     None (TextDecorations_None) = 0, Underline (TextDecorations_Underline) = 1, Strikethrough (TextDecorations_Strikethrough) = 2,
 }}
 DEFINE_IID!(IID_ITextDocument, 3203288539, 37042, 16524, 162, 246, 10, 10, 195, 30, 51, 228);
@@ -18446,7 +18446,7 @@ impl ITextDocument3 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum TextGetOptions: u32 {
+RT_ENUM! { enum TextGetOptions: u32 ["Windows.UI.Text.TextGetOptions"] {
     None (TextGetOptions_None) = 0, AdjustCrlf (TextGetOptions_AdjustCrlf) = 1, UseCrlf (TextGetOptions_UseCrlf) = 2, UseObjectText (TextGetOptions_UseObjectText) = 4, AllowFinalEop (TextGetOptions_AllowFinalEop) = 8, NoHidden (TextGetOptions_NoHidden) = 32, IncludeNumbering (TextGetOptions_IncludeNumbering) = 64, FormatRtf (TextGetOptions_FormatRtf) = 8192, UseLf (TextGetOptions_UseLf) = 16777216,
 }}
 DEFINE_IID!(IID_ITextParagraphFormat, 754503590, 18038, 18826, 147, 245, 187, 219, 252, 11, 216, 131);
@@ -19016,10 +19016,10 @@ impl ITextRange {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum TextRangeUnit: i32 {
+RT_ENUM! { enum TextRangeUnit: i32 ["Windows.UI.Text.TextRangeUnit"] {
     Character (TextRangeUnit_Character) = 0, Word (TextRangeUnit_Word) = 1, Sentence (TextRangeUnit_Sentence) = 2, Paragraph (TextRangeUnit_Paragraph) = 3, Line (TextRangeUnit_Line) = 4, Story (TextRangeUnit_Story) = 5, Screen (TextRangeUnit_Screen) = 6, Section (TextRangeUnit_Section) = 7, Window (TextRangeUnit_Window) = 8, CharacterFormat (TextRangeUnit_CharacterFormat) = 9, ParagraphFormat (TextRangeUnit_ParagraphFormat) = 10, Object (TextRangeUnit_Object) = 11, HardParagraph (TextRangeUnit_HardParagraph) = 12, Cluster (TextRangeUnit_Cluster) = 13, Bold (TextRangeUnit_Bold) = 14, Italic (TextRangeUnit_Italic) = 15, Underline (TextRangeUnit_Underline) = 16, Strikethrough (TextRangeUnit_Strikethrough) = 17, ProtectedText (TextRangeUnit_ProtectedText) = 18, Link (TextRangeUnit_Link) = 19, SmallCaps (TextRangeUnit_SmallCaps) = 20, AllCaps (TextRangeUnit_AllCaps) = 21, Hidden (TextRangeUnit_Hidden) = 22, Outline (TextRangeUnit_Outline) = 23, Shadow (TextRangeUnit_Shadow) = 24, Imprint (TextRangeUnit_Imprint) = 25, Disabled (TextRangeUnit_Disabled) = 26, Revised (TextRangeUnit_Revised) = 27, Subscript (TextRangeUnit_Subscript) = 28, Superscript (TextRangeUnit_Superscript) = 29, FontBound (TextRangeUnit_FontBound) = 30, LinkProtected (TextRangeUnit_LinkProtected) = 31, ContentLink (TextRangeUnit_ContentLink) = 32,
 }}
-RT_ENUM! { enum TextScript: i32 {
+RT_ENUM! { enum TextScript: i32 ["Windows.UI.Text.TextScript"] {
     Undefined (TextScript_Undefined) = 0, Ansi (TextScript_Ansi) = 1, EastEurope (TextScript_EastEurope) = 2, Cyrillic (TextScript_Cyrillic) = 3, Greek (TextScript_Greek) = 4, Turkish (TextScript_Turkish) = 5, Hebrew (TextScript_Hebrew) = 6, Arabic (TextScript_Arabic) = 7, Baltic (TextScript_Baltic) = 8, Vietnamese (TextScript_Vietnamese) = 9, Default (TextScript_Default) = 10, Symbol (TextScript_Symbol) = 11, Thai (TextScript_Thai) = 12, ShiftJis (TextScript_ShiftJis) = 13, GB2312 (TextScript_GB2312) = 14, Hangul (TextScript_Hangul) = 15, Big5 (TextScript_Big5) = 16, PC437 (TextScript_PC437) = 17, Oem (TextScript_Oem) = 18, Mac (TextScript_Mac) = 19, Armenian (TextScript_Armenian) = 20, Syriac (TextScript_Syriac) = 21, Thaana (TextScript_Thaana) = 22, Devanagari (TextScript_Devanagari) = 23, Bengali (TextScript_Bengali) = 24, Gurmukhi (TextScript_Gurmukhi) = 25, Gujarati (TextScript_Gujarati) = 26, Oriya (TextScript_Oriya) = 27, Tamil (TextScript_Tamil) = 28, Telugu (TextScript_Telugu) = 29, Kannada (TextScript_Kannada) = 30, Malayalam (TextScript_Malayalam) = 31, Sinhala (TextScript_Sinhala) = 32, Lao (TextScript_Lao) = 33, Tibetan (TextScript_Tibetan) = 34, Myanmar (TextScript_Myanmar) = 35, Georgian (TextScript_Georgian) = 36, Jamo (TextScript_Jamo) = 37, Ethiopic (TextScript_Ethiopic) = 38, Cherokee (TextScript_Cherokee) = 39, Aboriginal (TextScript_Aboriginal) = 40, Ogham (TextScript_Ogham) = 41, Runic (TextScript_Runic) = 42, Khmer (TextScript_Khmer) = 43, Mongolian (TextScript_Mongolian) = 44, Braille (TextScript_Braille) = 45, Yi (TextScript_Yi) = 46, Limbu (TextScript_Limbu) = 47, TaiLe (TextScript_TaiLe) = 48, NewTaiLue (TextScript_NewTaiLue) = 49, SylotiNagri (TextScript_SylotiNagri) = 50, Kharoshthi (TextScript_Kharoshthi) = 51, Kayahli (TextScript_Kayahli) = 52, UnicodeSymbol (TextScript_UnicodeSymbol) = 53, Emoji (TextScript_Emoji) = 54, Glagolitic (TextScript_Glagolitic) = 55, Lisu (TextScript_Lisu) = 56, Vai (TextScript_Vai) = 57, NKo (TextScript_NKo) = 58, Osmanya (TextScript_Osmanya) = 59, PhagsPa (TextScript_PhagsPa) = 60, Gothic (TextScript_Gothic) = 61, Deseret (TextScript_Deseret) = 62, Tifinagh (TextScript_Tifinagh) = 63,
 }}
 DEFINE_IID!(IID_ITextSelection, 2798872356, 62095, 17162, 178, 207, 195, 67, 103, 30, 192, 233);
@@ -19085,13 +19085,13 @@ impl ITextSelection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum TextSetOptions: u32 {
+RT_ENUM! { enum TextSetOptions: u32 ["Windows.UI.Text.TextSetOptions"] {
     None (TextSetOptions_None) = 0, UnicodeBidi (TextSetOptions_UnicodeBidi) = 1, Unlink (TextSetOptions_Unlink) = 8, Unhide (TextSetOptions_Unhide) = 16, CheckTextLimit (TextSetOptions_CheckTextLimit) = 32, FormatRtf (TextSetOptions_FormatRtf) = 8192, ApplyRtfDocumentDefaults (TextSetOptions_ApplyRtfDocumentDefaults) = 16384,
 }}
-RT_ENUM! { enum UnderlineType: i32 {
+RT_ENUM! { enum UnderlineType: i32 ["Windows.UI.Text.UnderlineType"] {
     Undefined (UnderlineType_Undefined) = 0, None (UnderlineType_None) = 1, Single (UnderlineType_Single) = 2, Words (UnderlineType_Words) = 3, Double (UnderlineType_Double) = 4, Dotted (UnderlineType_Dotted) = 5, Dash (UnderlineType_Dash) = 6, DashDot (UnderlineType_DashDot) = 7, DashDotDot (UnderlineType_DashDotDot) = 8, Wave (UnderlineType_Wave) = 9, Thick (UnderlineType_Thick) = 10, Thin (UnderlineType_Thin) = 11, DoubleWave (UnderlineType_DoubleWave) = 12, HeavyWave (UnderlineType_HeavyWave) = 13, LongDash (UnderlineType_LongDash) = 14, ThickDash (UnderlineType_ThickDash) = 15, ThickDashDot (UnderlineType_ThickDashDot) = 16, ThickDashDotDot (UnderlineType_ThickDashDotDot) = 17, ThickDotted (UnderlineType_ThickDotted) = 18, ThickLongDash (UnderlineType_ThickLongDash) = 19,
 }}
-RT_ENUM! { enum VerticalCharacterAlignment: i32 {
+RT_ENUM! { enum VerticalCharacterAlignment: i32 ["Windows.UI.Text.VerticalCharacterAlignment"] {
     Top (VerticalCharacterAlignment_Top) = 0, Baseline (VerticalCharacterAlignment_Baseline) = 1, Bottom (VerticalCharacterAlignment_Bottom) = 2,
 }}
 pub mod core { // Windows.UI.Text.Core
@@ -19119,7 +19119,7 @@ impl ICoreTextCompositionCompletedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextCompositionCompletedEventArgs: ICoreTextCompositionCompletedEventArgs}
+RT_CLASS!{class CoreTextCompositionCompletedEventArgs: ICoreTextCompositionCompletedEventArgs ["Windows.UI.Text.Core.CoreTextCompositionCompletedEventArgs"]}
 DEFINE_IID!(IID_ICoreTextCompositionSegment, 2003594201, 20141, 19879, 143, 71, 58, 136, 181, 35, 204, 52);
 RT_INTERFACE!{interface ICoreTextCompositionSegment(ICoreTextCompositionSegmentVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextCompositionSegment] {
     fn get_PreconversionString(&self, out: *mut HSTRING) -> HRESULT,
@@ -19137,7 +19137,7 @@ impl ICoreTextCompositionSegment {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextCompositionSegment: ICoreTextCompositionSegment}
+RT_CLASS!{class CoreTextCompositionSegment: ICoreTextCompositionSegment ["Windows.UI.Text.Core.CoreTextCompositionSegment"]}
 DEFINE_IID!(IID_ICoreTextCompositionStartedEventArgs, 661329577, 25831, 19120, 188, 75, 160, 45, 115, 131, 91, 251);
 RT_INTERFACE!{interface ICoreTextCompositionStartedEventArgs(ICoreTextCompositionStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextCompositionStartedEventArgs] {
     fn get_IsCanceled(&self, out: *mut bool) -> HRESULT,
@@ -19155,7 +19155,7 @@ impl ICoreTextCompositionStartedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextCompositionStartedEventArgs: ICoreTextCompositionStartedEventArgs}
+RT_CLASS!{class CoreTextCompositionStartedEventArgs: ICoreTextCompositionStartedEventArgs ["Windows.UI.Text.Core.CoreTextCompositionStartedEventArgs"]}
 DEFINE_IID!(IID_ICoreTextEditContext, 3211135151, 16449, 18371, 178, 99, 169, 24, 235, 94, 174, 242);
 RT_INTERFACE!{interface ICoreTextEditContext(ICoreTextEditContextVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextEditContext] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -19329,7 +19329,7 @@ impl ICoreTextEditContext {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextEditContext: ICoreTextEditContext}
+RT_CLASS!{class CoreTextEditContext: ICoreTextEditContext ["Windows.UI.Text.Core.CoreTextEditContext"]}
 DEFINE_IID!(IID_ICoreTextEditContext2, 2978381243, 2107, 18913, 178, 129, 43, 53, 214, 43, 244, 102);
 RT_INTERFACE!{interface ICoreTextEditContext2(ICoreTextEditContext2Vtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextEditContext2] {
     fn add_NotifyFocusLeaveCompleted(&self, handler: *mut foundation::TypedEventHandler<CoreTextEditContext, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -19410,17 +19410,17 @@ impl ICoreTextFormatUpdatingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextFormatUpdatingEventArgs: ICoreTextFormatUpdatingEventArgs}
-RT_ENUM! { enum CoreTextFormatUpdatingReason: i32 {
+RT_CLASS!{class CoreTextFormatUpdatingEventArgs: ICoreTextFormatUpdatingEventArgs ["Windows.UI.Text.Core.CoreTextFormatUpdatingEventArgs"]}
+RT_ENUM! { enum CoreTextFormatUpdatingReason: i32 ["Windows.UI.Text.Core.CoreTextFormatUpdatingReason"] {
     None (CoreTextFormatUpdatingReason_None) = 0, CompositionUnconverted (CoreTextFormatUpdatingReason_CompositionUnconverted) = 1, CompositionConverted (CoreTextFormatUpdatingReason_CompositionConverted) = 2, CompositionTargetUnconverted (CoreTextFormatUpdatingReason_CompositionTargetUnconverted) = 3, CompositionTargetConverted (CoreTextFormatUpdatingReason_CompositionTargetConverted) = 4,
 }}
-RT_ENUM! { enum CoreTextFormatUpdatingResult: i32 {
+RT_ENUM! { enum CoreTextFormatUpdatingResult: i32 ["Windows.UI.Text.Core.CoreTextFormatUpdatingResult"] {
     Succeeded (CoreTextFormatUpdatingResult_Succeeded) = 0, Failed (CoreTextFormatUpdatingResult_Failed) = 1,
 }}
-RT_ENUM! { enum CoreTextInputPaneDisplayPolicy: i32 {
+RT_ENUM! { enum CoreTextInputPaneDisplayPolicy: i32 ["Windows.UI.Text.Core.CoreTextInputPaneDisplayPolicy"] {
     Automatic (CoreTextInputPaneDisplayPolicy_Automatic) = 0, Manual (CoreTextInputPaneDisplayPolicy_Manual) = 1,
 }}
-RT_ENUM! { enum CoreTextInputScope: i32 {
+RT_ENUM! { enum CoreTextInputScope: i32 ["Windows.UI.Text.Core.CoreTextInputScope"] {
     Default (CoreTextInputScope_Default) = 0, Url (CoreTextInputScope_Url) = 1, FilePath (CoreTextInputScope_FilePath) = 2, FileName (CoreTextInputScope_FileName) = 3, EmailUserName (CoreTextInputScope_EmailUserName) = 4, EmailAddress (CoreTextInputScope_EmailAddress) = 5, UserName (CoreTextInputScope_UserName) = 6, PersonalFullName (CoreTextInputScope_PersonalFullName) = 7, PersonalNamePrefix (CoreTextInputScope_PersonalNamePrefix) = 8, PersonalGivenName (CoreTextInputScope_PersonalGivenName) = 9, PersonalMiddleName (CoreTextInputScope_PersonalMiddleName) = 10, PersonalSurname (CoreTextInputScope_PersonalSurname) = 11, PersonalNameSuffix (CoreTextInputScope_PersonalNameSuffix) = 12, Address (CoreTextInputScope_Address) = 13, AddressPostalCode (CoreTextInputScope_AddressPostalCode) = 14, AddressStreet (CoreTextInputScope_AddressStreet) = 15, AddressStateOrProvince (CoreTextInputScope_AddressStateOrProvince) = 16, AddressCity (CoreTextInputScope_AddressCity) = 17, AddressCountryName (CoreTextInputScope_AddressCountryName) = 18, AddressCountryShortName (CoreTextInputScope_AddressCountryShortName) = 19, CurrencyAmountAndSymbol (CoreTextInputScope_CurrencyAmountAndSymbol) = 20, CurrencyAmount (CoreTextInputScope_CurrencyAmount) = 21, Date (CoreTextInputScope_Date) = 22, DateMonth (CoreTextInputScope_DateMonth) = 23, DateDay (CoreTextInputScope_DateDay) = 24, DateYear (CoreTextInputScope_DateYear) = 25, DateMonthName (CoreTextInputScope_DateMonthName) = 26, DateDayName (CoreTextInputScope_DateDayName) = 27, Number (CoreTextInputScope_Number) = 29, SingleCharacter (CoreTextInputScope_SingleCharacter) = 30, Password (CoreTextInputScope_Password) = 31, TelephoneNumber (CoreTextInputScope_TelephoneNumber) = 32, TelephoneCountryCode (CoreTextInputScope_TelephoneCountryCode) = 33, TelephoneAreaCode (CoreTextInputScope_TelephoneAreaCode) = 34, TelephoneLocalNumber (CoreTextInputScope_TelephoneLocalNumber) = 35, Time (CoreTextInputScope_Time) = 36, TimeHour (CoreTextInputScope_TimeHour) = 37, TimeMinuteOrSecond (CoreTextInputScope_TimeMinuteOrSecond) = 38, NumberFullWidth (CoreTextInputScope_NumberFullWidth) = 39, AlphanumericHalfWidth (CoreTextInputScope_AlphanumericHalfWidth) = 40, AlphanumericFullWidth (CoreTextInputScope_AlphanumericFullWidth) = 41, CurrencyChinese (CoreTextInputScope_CurrencyChinese) = 42, Bopomofo (CoreTextInputScope_Bopomofo) = 43, Hiragana (CoreTextInputScope_Hiragana) = 44, KatakanaHalfWidth (CoreTextInputScope_KatakanaHalfWidth) = 45, KatakanaFullWidth (CoreTextInputScope_KatakanaFullWidth) = 46, Hanja (CoreTextInputScope_Hanja) = 47, HangulHalfWidth (CoreTextInputScope_HangulHalfWidth) = 48, HangulFullWidth (CoreTextInputScope_HangulFullWidth) = 49, Search (CoreTextInputScope_Search) = 50, Formula (CoreTextInputScope_Formula) = 51, SearchIncremental (CoreTextInputScope_SearchIncremental) = 52, ChineseHalfWidth (CoreTextInputScope_ChineseHalfWidth) = 53, ChineseFullWidth (CoreTextInputScope_ChineseFullWidth) = 54, NativeScript (CoreTextInputScope_NativeScript) = 55, Text (CoreTextInputScope_Text) = 57, Chat (CoreTextInputScope_Chat) = 58, NameOrPhoneNumber (CoreTextInputScope_NameOrPhoneNumber) = 59, EmailUserNameOrAddress (CoreTextInputScope_EmailUserNameOrAddress) = 60, Private (CoreTextInputScope_Private) = 61, Maps (CoreTextInputScope_Maps) = 62, PasswordNumeric (CoreTextInputScope_PasswordNumeric) = 63, FormulaNumber (CoreTextInputScope_FormulaNumber) = 67, ChatWithoutEmoji (CoreTextInputScope_ChatWithoutEmoji) = 68, Digits (CoreTextInputScope_Digits) = 28, PinNumeric (CoreTextInputScope_PinNumeric) = 64, PinAlphanumeric (CoreTextInputScope_PinAlphanumeric) = 65,
 }}
 DEFINE_IID!(IID_ICoreTextLayoutBounds, 3916614004, 17462, 18711, 128, 208, 165, 37, 228, 202, 103, 128);
@@ -19450,7 +19450,7 @@ impl ICoreTextLayoutBounds {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextLayoutBounds: ICoreTextLayoutBounds}
+RT_CLASS!{class CoreTextLayoutBounds: ICoreTextLayoutBounds ["Windows.UI.Text.Core.CoreTextLayoutBounds"]}
 DEFINE_IID!(IID_ICoreTextLayoutRequest, 626370764, 20989, 20227, 152, 191, 172, 120, 23, 77, 104, 224);
 RT_INTERFACE!{interface ICoreTextLayoutRequest(ICoreTextLayoutRequestVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextLayoutRequest] {
     fn get_Range(&self, out: *mut CoreTextRange) -> HRESULT,
@@ -19480,7 +19480,7 @@ impl ICoreTextLayoutRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextLayoutRequest: ICoreTextLayoutRequest}
+RT_CLASS!{class CoreTextLayoutRequest: ICoreTextLayoutRequest ["Windows.UI.Text.Core.CoreTextLayoutRequest"]}
 DEFINE_IID!(IID_ICoreTextLayoutRequest2, 1735255588, 52541, 19405, 191, 1, 127, 113, 16, 149, 69, 17);
 RT_INTERFACE!{interface ICoreTextLayoutRequest2(ICoreTextLayoutRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextLayoutRequest2] {
     fn get_LayoutBoundsVisualPixels(&self, out: *mut *mut CoreTextLayoutBounds) -> HRESULT
@@ -19503,8 +19503,8 @@ impl ICoreTextLayoutRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextLayoutRequestedEventArgs: ICoreTextLayoutRequestedEventArgs}
-RT_STRUCT! { struct CoreTextRange {
+RT_CLASS!{class CoreTextLayoutRequestedEventArgs: ICoreTextLayoutRequestedEventArgs ["Windows.UI.Text.Core.CoreTextLayoutRequestedEventArgs"]}
+RT_STRUCT! { struct CoreTextRange ["Windows.UI.Text.Core.CoreTextRange"] {
     StartCaretPosition: i32, EndCaretPosition: i32,
 }}
 DEFINE_IID!(IID_ICoreTextSelectionRequest, 4037477379, 8331, 17153, 136, 60, 116, 202, 116, 133, 253, 141);
@@ -19535,7 +19535,7 @@ impl ICoreTextSelectionRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextSelectionRequest: ICoreTextSelectionRequest}
+RT_CLASS!{class CoreTextSelectionRequest: ICoreTextSelectionRequest ["Windows.UI.Text.Core.CoreTextSelectionRequest"]}
 DEFINE_IID!(IID_ICoreTextSelectionRequestedEventArgs, 331769899, 62996, 16922, 143, 75, 158, 200, 165, 163, 127, 205);
 RT_INTERFACE!{interface ICoreTextSelectionRequestedEventArgs(ICoreTextSelectionRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextSelectionRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut CoreTextSelectionRequest) -> HRESULT
@@ -19547,7 +19547,7 @@ impl ICoreTextSelectionRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextSelectionRequestedEventArgs: ICoreTextSelectionRequestedEventArgs}
+RT_CLASS!{class CoreTextSelectionRequestedEventArgs: ICoreTextSelectionRequestedEventArgs ["Windows.UI.Text.Core.CoreTextSelectionRequestedEventArgs"]}
 DEFINE_IID!(IID_ICoreTextSelectionUpdatingEventArgs, 3561325471, 65151, 19413, 138, 38, 9, 34, 193, 179, 230, 57);
 RT_INTERFACE!{interface ICoreTextSelectionUpdatingEventArgs(ICoreTextSelectionUpdatingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextSelectionUpdatingEventArgs] {
     fn get_Selection(&self, out: *mut CoreTextRange) -> HRESULT,
@@ -19582,8 +19582,8 @@ impl ICoreTextSelectionUpdatingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextSelectionUpdatingEventArgs: ICoreTextSelectionUpdatingEventArgs}
-RT_ENUM! { enum CoreTextSelectionUpdatingResult: i32 {
+RT_CLASS!{class CoreTextSelectionUpdatingEventArgs: ICoreTextSelectionUpdatingEventArgs ["Windows.UI.Text.Core.CoreTextSelectionUpdatingEventArgs"]}
+RT_ENUM! { enum CoreTextSelectionUpdatingResult: i32 ["Windows.UI.Text.Core.CoreTextSelectionUpdatingResult"] {
     Succeeded (CoreTextSelectionUpdatingResult_Succeeded) = 0, Failed (CoreTextSelectionUpdatingResult_Failed) = 1,
 }}
 RT_CLASS!{static class CoreTextServicesConstants}
@@ -19623,7 +19623,7 @@ impl ICoreTextServicesManager {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextServicesManager: ICoreTextServicesManager}
+RT_CLASS!{class CoreTextServicesManager: ICoreTextServicesManager ["Windows.UI.Text.Core.CoreTextServicesManager"]}
 impl RtActivatable<ICoreTextServicesManagerStatics> for CoreTextServicesManager {}
 impl CoreTextServicesManager {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<CoreTextServicesManager>>> {
@@ -19687,7 +19687,7 @@ impl ICoreTextTextRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextTextRequest: ICoreTextTextRequest}
+RT_CLASS!{class CoreTextTextRequest: ICoreTextTextRequest ["Windows.UI.Text.Core.CoreTextTextRequest"]}
 DEFINE_IID!(IID_ICoreTextTextRequestedEventArgs, 4036403920, 16838, 19458, 139, 26, 217, 83, 176, 12, 171, 179);
 RT_INTERFACE!{interface ICoreTextTextRequestedEventArgs(ICoreTextTextRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextTextRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut CoreTextTextRequest) -> HRESULT
@@ -19699,7 +19699,7 @@ impl ICoreTextTextRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextTextRequestedEventArgs: ICoreTextTextRequestedEventArgs}
+RT_CLASS!{class CoreTextTextRequestedEventArgs: ICoreTextTextRequestedEventArgs ["Windows.UI.Text.Core.CoreTextTextRequestedEventArgs"]}
 DEFINE_IID!(IID_ICoreTextTextUpdatingEventArgs, 4003959181, 52267, 20227, 143, 246, 2, 253, 33, 125, 180, 80);
 RT_INTERFACE!{interface ICoreTextTextUpdatingEventArgs(ICoreTextTextUpdatingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextTextUpdatingEventArgs] {
     fn get_Range(&self, out: *mut CoreTextRange) -> HRESULT,
@@ -19753,8 +19753,8 @@ impl ICoreTextTextUpdatingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreTextTextUpdatingEventArgs: ICoreTextTextUpdatingEventArgs}
-RT_ENUM! { enum CoreTextTextUpdatingResult: i32 {
+RT_CLASS!{class CoreTextTextUpdatingEventArgs: ICoreTextTextUpdatingEventArgs ["Windows.UI.Text.Core.CoreTextTextUpdatingEventArgs"]}
+RT_ENUM! { enum CoreTextTextUpdatingResult: i32 ["Windows.UI.Text.Core.CoreTextTextUpdatingResult"] {
     Succeeded (CoreTextTextUpdatingResult_Succeeded) = 0, Failed (CoreTextTextUpdatingResult_Failed) = 1,
 }}
 } // Windows.UI.Text.Core
@@ -19789,7 +19789,7 @@ impl IAccessibilitySettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AccessibilitySettings: IAccessibilitySettings}
+RT_CLASS!{class AccessibilitySettings: IAccessibilitySettings ["Windows.UI.ViewManagement.AccessibilitySettings"]}
 impl RtActivatable<IActivationFactory> for AccessibilitySettings {}
 DEFINE_CLSID!(AccessibilitySettings(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,65,99,99,101,115,115,105,98,105,108,105,116,121,83,101,116,116,105,110,103,115,0]) [CLSID_AccessibilitySettings]);
 DEFINE_IID!(IID_IActivationViewSwitcher, 3701939126, 29520, 18731, 170, 199, 200, 161, 61, 114, 36, 173);
@@ -19815,7 +19815,7 @@ impl IActivationViewSwitcher {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ActivationViewSwitcher: IActivationViewSwitcher}
+RT_CLASS!{class ActivationViewSwitcher: IActivationViewSwitcher ["Windows.UI.ViewManagement.ActivationViewSwitcher"]}
 DEFINE_IID!(IID_IApplicationView, 3525498137, 17249, 17694, 150, 196, 96, 244, 249, 116, 45, 176);
 RT_INTERFACE!{interface IApplicationView(IApplicationViewVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationView] {
     fn get_Orientation(&self, out: *mut ApplicationViewOrientation) -> HRESULT,
@@ -19890,7 +19890,7 @@ impl IApplicationView {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ApplicationView: IApplicationView}
+RT_CLASS!{class ApplicationView: IApplicationView ["Windows.UI.ViewManagement.ApplicationView"]}
 impl RtActivatable<IApplicationViewFullscreenStatics> for ApplicationView {}
 impl RtActivatable<IApplicationViewInteropStatics> for ApplicationView {}
 impl RtActivatable<IApplicationViewStatics> for ApplicationView {}
@@ -20067,7 +20067,7 @@ impl IApplicationView4 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ApplicationViewBoundsMode: i32 {
+RT_ENUM! { enum ApplicationViewBoundsMode: i32 ["Windows.UI.ViewManagement.ApplicationViewBoundsMode"] {
     UseVisible (ApplicationViewBoundsMode_UseVisible) = 0, UseCoreWindow (ApplicationViewBoundsMode_UseCoreWindow) = 1,
 }}
 DEFINE_IID!(IID_IApplicationViewConsolidatedEventArgs, 1363429868, 32418, 19943, 166, 166, 125, 251, 170, 235, 182, 251);
@@ -20081,7 +20081,7 @@ impl IApplicationViewConsolidatedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ApplicationViewConsolidatedEventArgs: IApplicationViewConsolidatedEventArgs}
+RT_CLASS!{class ApplicationViewConsolidatedEventArgs: IApplicationViewConsolidatedEventArgs ["Windows.UI.ViewManagement.ApplicationViewConsolidatedEventArgs"]}
 DEFINE_IID!(IID_IApplicationViewConsolidatedEventArgs2, 471441100, 28097, 16628, 175, 238, 7, 217, 234, 41, 100, 48);
 RT_INTERFACE!{interface IApplicationViewConsolidatedEventArgs2(IApplicationViewConsolidatedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IApplicationViewConsolidatedEventArgs2] {
     fn get_IsAppInitiated(&self, out: *mut bool) -> HRESULT
@@ -20115,17 +20115,17 @@ impl IApplicationViewInteropStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ApplicationViewMode: i32 {
+RT_ENUM! { enum ApplicationViewMode: i32 ["Windows.UI.ViewManagement.ApplicationViewMode"] {
     Default (ApplicationViewMode_Default) = 0, CompactOverlay (ApplicationViewMode_CompactOverlay) = 1,
 }}
-RT_ENUM! { enum ApplicationViewOrientation: i32 {
+RT_ENUM! { enum ApplicationViewOrientation: i32 ["Windows.UI.ViewManagement.ApplicationViewOrientation"] {
     Landscape (ApplicationViewOrientation_Landscape) = 0, Portrait (ApplicationViewOrientation_Portrait) = 1,
 }}
 DEFINE_IID!(IID_IApplicationViewScaling, 487447587, 9203, 19245, 132, 254, 116, 191, 55, 180, 139, 102);
 RT_INTERFACE!{interface IApplicationViewScaling(IApplicationViewScalingVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationViewScaling] {
     
 }}
-RT_CLASS!{class ApplicationViewScaling: IApplicationViewScaling}
+RT_CLASS!{class ApplicationViewScaling: IApplicationViewScaling ["Windows.UI.ViewManagement.ApplicationViewScaling"]}
 impl RtActivatable<IApplicationViewScalingStatics> for ApplicationViewScaling {}
 impl ApplicationViewScaling {
     #[inline] pub fn get_disable_layout_scaling() -> Result<bool> {
@@ -20153,7 +20153,7 @@ impl IApplicationViewScalingStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ApplicationViewState: i32 {
+RT_ENUM! { enum ApplicationViewState: i32 ["Windows.UI.ViewManagement.ApplicationViewState"] {
     FullScreenLandscape (ApplicationViewState_FullScreenLandscape) = 0, Filled (ApplicationViewState_Filled) = 1, Snapped (ApplicationViewState_Snapped) = 2, FullScreenPortrait (ApplicationViewState_FullScreenPortrait) = 3,
 }}
 DEFINE_IID!(IID_IApplicationViewStatics, 17457926, 50227, 17637, 169, 242, 189, 132, 212, 3, 10, 149);
@@ -20341,7 +20341,7 @@ impl IApplicationViewSwitcherStatics3 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ApplicationViewSwitchingOptions: u32 {
+RT_ENUM! { enum ApplicationViewSwitchingOptions: u32 ["Windows.UI.ViewManagement.ApplicationViewSwitchingOptions"] {
     Default (ApplicationViewSwitchingOptions_Default) = 0, SkipAnimation (ApplicationViewSwitchingOptions_SkipAnimation) = 1, ConsolidateViews (ApplicationViewSwitchingOptions_ConsolidateViews) = 2,
 }}
 DEFINE_IID!(IID_IApplicationViewTitleBar, 9587392, 37675, 19051, 156, 75, 220, 56, 200, 36, 120, 206);
@@ -20481,7 +20481,7 @@ impl IApplicationViewTitleBar {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ApplicationViewTitleBar: IApplicationViewTitleBar}
+RT_CLASS!{class ApplicationViewTitleBar: IApplicationViewTitleBar ["Windows.UI.ViewManagement.ApplicationViewTitleBar"]}
 DEFINE_IID!(IID_IApplicationViewTransferContext, 2239020131, 15383, 16526, 148, 8, 138, 26, 158, 168, 27, 250);
 RT_INTERFACE!{interface IApplicationViewTransferContext(IApplicationViewTransferContextVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationViewTransferContext] {
     fn get_ViewId(&self, out: *mut i32) -> HRESULT,
@@ -20498,7 +20498,7 @@ impl IApplicationViewTransferContext {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ApplicationViewTransferContext: IApplicationViewTransferContext}
+RT_CLASS!{class ApplicationViewTransferContext: IApplicationViewTransferContext ["Windows.UI.ViewManagement.ApplicationViewTransferContext"]}
 impl RtActivatable<IApplicationViewTransferContextStatics> for ApplicationViewTransferContext {}
 impl RtActivatable<IActivationFactory> for ApplicationViewTransferContext {}
 impl ApplicationViewTransferContext {
@@ -20518,13 +20518,13 @@ impl IApplicationViewTransferContextStatics {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ApplicationViewWindowingMode: i32 {
+RT_ENUM! { enum ApplicationViewWindowingMode: i32 ["Windows.UI.ViewManagement.ApplicationViewWindowingMode"] {
     Auto (ApplicationViewWindowingMode_Auto) = 0, PreferredLaunchViewSize (ApplicationViewWindowingMode_PreferredLaunchViewSize) = 1, FullScreen (ApplicationViewWindowingMode_FullScreen) = 2, CompactOverlay (ApplicationViewWindowingMode_CompactOverlay) = 3, Maximized (ApplicationViewWindowingMode_Maximized) = 4,
 }}
-RT_ENUM! { enum FullScreenSystemOverlayMode: i32 {
+RT_ENUM! { enum FullScreenSystemOverlayMode: i32 ["Windows.UI.ViewManagement.FullScreenSystemOverlayMode"] {
     Standard (FullScreenSystemOverlayMode_Standard) = 0, Minimal (FullScreenSystemOverlayMode_Minimal) = 1,
 }}
-RT_ENUM! { enum HandPreference: i32 {
+RT_ENUM! { enum HandPreference: i32 ["Windows.UI.ViewManagement.HandPreference"] {
     LeftHanded (HandPreference_LeftHanded) = 0, RightHanded (HandPreference_RightHanded) = 1,
 }}
 DEFINE_IID!(IID_IInputPane, 1678432880, 1779, 19591, 166, 120, 152, 41, 201, 18, 124, 40);
@@ -20560,7 +20560,7 @@ impl IInputPane {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InputPane: IInputPane}
+RT_CLASS!{class InputPane: IInputPane ["Windows.UI.ViewManagement.InputPane"]}
 impl RtActivatable<IInputPaneStatics> for InputPane {}
 impl InputPane {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<InputPane>>> {
@@ -20634,7 +20634,7 @@ impl IInputPaneVisibilityEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InputPaneVisibilityEventArgs: IInputPaneVisibilityEventArgs}
+RT_CLASS!{class InputPaneVisibilityEventArgs: IInputPaneVisibilityEventArgs ["Windows.UI.ViewManagement.InputPaneVisibilityEventArgs"]}
 RT_CLASS!{static class ProjectionManager}
 impl RtActivatable<IProjectionManagerStatics> for ProjectionManager {}
 impl RtActivatable<IProjectionManagerStatics2> for ProjectionManager {}
@@ -20741,10 +20741,10 @@ impl IProjectionManagerStatics2 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UIColorType: i32 {
+RT_ENUM! { enum UIColorType: i32 ["Windows.UI.ViewManagement.UIColorType"] {
     Background (UIColorType_Background) = 0, Foreground (UIColorType_Foreground) = 1, AccentDark3 (UIColorType_AccentDark3) = 2, AccentDark2 (UIColorType_AccentDark2) = 3, AccentDark1 (UIColorType_AccentDark1) = 4, Accent (UIColorType_Accent) = 5, AccentLight1 (UIColorType_AccentLight1) = 6, AccentLight2 (UIColorType_AccentLight2) = 7, AccentLight3 (UIColorType_AccentLight3) = 8, Complement (UIColorType_Complement) = 9,
 }}
-RT_ENUM! { enum UIElementType: i32 {
+RT_ENUM! { enum UIElementType: i32 ["Windows.UI.ViewManagement.UIElementType"] {
     ActiveCaption (UIElementType_ActiveCaption) = 0, Background (UIElementType_Background) = 1, ButtonFace (UIElementType_ButtonFace) = 2, ButtonText (UIElementType_ButtonText) = 3, CaptionText (UIElementType_CaptionText) = 4, GrayText (UIElementType_GrayText) = 5, Highlight (UIElementType_Highlight) = 6, HighlightText (UIElementType_HighlightText) = 7, Hotlight (UIElementType_Hotlight) = 8, InactiveCaption (UIElementType_InactiveCaption) = 9, InactiveCaptionText (UIElementType_InactiveCaptionText) = 10, Window (UIElementType_Window) = 11, WindowText (UIElementType_WindowText) = 12, AccentColor (UIElementType_AccentColor) = 1000, TextHigh (UIElementType_TextHigh) = 1001, TextMedium (UIElementType_TextMedium) = 1002, TextLow (UIElementType_TextLow) = 1003, TextContrastWithHigh (UIElementType_TextContrastWithHigh) = 1004, NonTextHigh (UIElementType_NonTextHigh) = 1005, NonTextMediumHigh (UIElementType_NonTextMediumHigh) = 1006, NonTextMedium (UIElementType_NonTextMedium) = 1007, NonTextMediumLow (UIElementType_NonTextMediumLow) = 1008, NonTextLow (UIElementType_NonTextLow) = 1009, PageBackground (UIElementType_PageBackground) = 1010, PopupBackground (UIElementType_PopupBackground) = 1011, OverlayOutsidePopup (UIElementType_OverlayOutsidePopup) = 1012,
 }}
 DEFINE_IID!(IID_IUISettings, 2234914304, 7267, 17959, 188, 177, 58, 137, 224, 188, 156, 85);
@@ -20830,7 +20830,7 @@ impl IUISettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UISettings: IUISettings}
+RT_CLASS!{class UISettings: IUISettings ["Windows.UI.ViewManagement.UISettings"]}
 impl RtActivatable<IActivationFactory> for UISettings {}
 DEFINE_CLSID!(UISettings(&[87,105,110,100,111,119,115,46,85,73,46,86,105,101,119,77,97,110,97,103,101,109,101,110,116,46,85,73,83,101,116,116,105,110,103,115,0]) [CLSID_UISettings]);
 DEFINE_IID!(IID_IUISettings2, 3134727169, 10017, 17657, 187, 145, 43, 178, 40, 190, 68, 47);
@@ -20910,7 +20910,7 @@ impl IUIViewSettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UIViewSettings: IUIViewSettings}
+RT_CLASS!{class UIViewSettings: IUIViewSettings ["Windows.UI.ViewManagement.UIViewSettings"]}
 impl RtActivatable<IUIViewSettingsStatics> for UIViewSettings {}
 impl UIViewSettings {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<UIViewSettings>>> {
@@ -20929,7 +20929,7 @@ impl IUIViewSettingsStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UserInteractionMode: i32 {
+RT_ENUM! { enum UserInteractionMode: i32 ["Windows.UI.ViewManagement.UserInteractionMode"] {
     Mouse (UserInteractionMode_Mouse) = 0, Touch (UserInteractionMode_Touch) = 1,
 }}
 DEFINE_IID!(IID_IViewModePreferences, 2274348346, 2969, 17097, 132, 208, 211, 241, 212, 3, 85, 75);
@@ -20959,7 +20959,7 @@ impl IViewModePreferences {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ViewModePreferences: IViewModePreferences}
+RT_CLASS!{class ViewModePreferences: IViewModePreferences ["Windows.UI.ViewManagement.ViewModePreferences"]}
 impl RtActivatable<IViewModePreferencesStatics> for ViewModePreferences {}
 impl ViewModePreferences {
     #[inline] pub fn create_default(mode: ApplicationViewMode) -> Result<Option<ComPtr<ViewModePreferences>>> {
@@ -20978,7 +20978,7 @@ impl IViewModePreferencesStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ViewSizePreference: i32 {
+RT_ENUM! { enum ViewSizePreference: i32 ["Windows.UI.ViewManagement.ViewSizePreference"] {
     Default (ViewSizePreference_Default) = 0, UseLess (ViewSizePreference_UseLess) = 1, UseHalf (ViewSizePreference_UseHalf) = 2, UseMore (ViewSizePreference_UseMore) = 3, UseMinimum (ViewSizePreference_UseMinimum) = 4, UseNone (ViewSizePreference_UseNone) = 5, Custom (ViewSizePreference_Custom) = 6,
 }}
 pub mod core { // Windows.UI.ViewManagement.Core
@@ -21017,7 +21017,7 @@ impl ICoreInputView {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreInputView: ICoreInputView}
+RT_CLASS!{class CoreInputView: ICoreInputView ["Windows.UI.ViewManagement.Core.CoreInputView"]}
 impl RtActivatable<ICoreInputViewStatics> for CoreInputView {}
 impl CoreInputView {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<CoreInputView>>> {
@@ -21081,7 +21081,7 @@ impl ICoreInputView3 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CoreInputViewKind: i32 {
+RT_ENUM! { enum CoreInputViewKind: i32 ["Windows.UI.ViewManagement.Core.CoreInputViewKind"] {
     Default (CoreInputViewKind_Default) = 0, Keyboard (CoreInputViewKind_Keyboard) = 1, Handwriting (CoreInputViewKind_Handwriting) = 2, Emoji (CoreInputViewKind_Emoji) = 3,
 }}
 DEFINE_IID!(IID_ICoreInputViewOcclusion, 3426143750, 14437, 16759, 181, 245, 139, 101, 224, 185, 206, 132);
@@ -21101,8 +21101,8 @@ impl ICoreInputViewOcclusion {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreInputViewOcclusion: ICoreInputViewOcclusion}
-RT_ENUM! { enum CoreInputViewOcclusionKind: i32 {
+RT_CLASS!{class CoreInputViewOcclusion: ICoreInputViewOcclusion ["Windows.UI.ViewManagement.Core.CoreInputViewOcclusion"]}
+RT_ENUM! { enum CoreInputViewOcclusionKind: i32 ["Windows.UI.ViewManagement.Core.CoreInputViewOcclusionKind"] {
     Docked (CoreInputViewOcclusionKind_Docked) = 0, Floating (CoreInputViewOcclusionKind_Floating) = 1, Overlay (CoreInputViewOcclusionKind_Overlay) = 2,
 }}
 DEFINE_IID!(IID_ICoreInputViewOcclusionsChangedEventArgs, 3188729832, 46062, 19959, 149, 84, 137, 205, 198, 96, 130, 194);
@@ -21127,7 +21127,7 @@ impl ICoreInputViewOcclusionsChangedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreInputViewOcclusionsChangedEventArgs: ICoreInputViewOcclusionsChangedEventArgs}
+RT_CLASS!{class CoreInputViewOcclusionsChangedEventArgs: ICoreInputViewOcclusionsChangedEventArgs ["Windows.UI.ViewManagement.Core.CoreInputViewOcclusionsChangedEventArgs"]}
 DEFINE_IID!(IID_ICoreInputViewStatics, 2107348941, 60862, 18895, 165, 79, 51, 125, 224, 82, 144, 127);
 RT_INTERFACE!{static interface ICoreInputViewStatics(ICoreInputViewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreInputViewStatics] {
     fn GetForCurrentView(&self, out: *mut *mut CoreInputView) -> HRESULT
@@ -21178,8 +21178,8 @@ impl ICoreInputViewTransferringXYFocusEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreInputViewTransferringXYFocusEventArgs: ICoreInputViewTransferringXYFocusEventArgs}
-RT_ENUM! { enum CoreInputViewXYFocusTransferDirection: i32 {
+RT_CLASS!{class CoreInputViewTransferringXYFocusEventArgs: ICoreInputViewTransferringXYFocusEventArgs ["Windows.UI.ViewManagement.Core.CoreInputViewTransferringXYFocusEventArgs"]}
+RT_ENUM! { enum CoreInputViewXYFocusTransferDirection: i32 ["Windows.UI.ViewManagement.Core.CoreInputViewXYFocusTransferDirection"] {
     Up (CoreInputViewXYFocusTransferDirection_Up) = 0, Right (CoreInputViewXYFocusTransferDirection_Right) = 1, Down (CoreInputViewXYFocusTransferDirection_Down) = 2, Left (CoreInputViewXYFocusTransferDirection_Left) = 3,
 }}
 } // Windows.UI.ViewManagement.Core
@@ -21196,7 +21196,7 @@ impl IActivatedDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ActivatedDeferral: IActivatedDeferral}
+RT_CLASS!{class ActivatedDeferral: IActivatedDeferral ["Windows.UI.WebUI.ActivatedDeferral"]}
 DEFINE_IID!(IID_IActivatedEventArgsDeferral, 3396165492, 25538, 17574, 185, 123, 217, 160, 60, 32, 188, 155);
 RT_INTERFACE!{interface IActivatedEventArgsDeferral(IActivatedEventArgsDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IActivatedEventArgsDeferral] {
     fn get_ActivatedOperation(&self, out: *mut *mut ActivatedOperation) -> HRESULT
@@ -21229,9 +21229,9 @@ impl IActivatedOperation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ActivatedOperation: IActivatedOperation}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class BackgroundActivatedEventArgs: super::super::applicationmodel::activation::IBackgroundActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class BackgroundActivatedEventArgs: IInspectable}
+RT_CLASS!{class ActivatedOperation: IActivatedOperation ["Windows.UI.WebUI.ActivatedOperation"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class BackgroundActivatedEventArgs: super::super::applicationmodel::activation::IBackgroundActivatedEventArgs ["Windows.UI.WebUI.BackgroundActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class BackgroundActivatedEventArgs: IInspectable ["Windows.UI.WebUI.BackgroundActivatedEventArgs"]}
 DEFINE_IID!(IID_BackgroundActivatedEventHandler, 3987840955, 1889, 18380, 154, 119, 36, 215, 7, 41, 101, 202);
 RT_DELEGATE!{delegate BackgroundActivatedEventHandler(BackgroundActivatedEventHandlerVtbl, BackgroundActivatedEventHandlerImpl) [IID_BackgroundActivatedEventHandler] {
     #[cfg(feature="windows-applicationmodel")] fn Invoke(&self, sender: *mut IInspectable, eventArgs: *mut super::super::applicationmodel::activation::IBackgroundActivatedEventArgs) -> HRESULT
@@ -21242,8 +21242,8 @@ impl BackgroundActivatedEventHandler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class EnteredBackgroundEventArgs: super::super::applicationmodel::IEnteredBackgroundEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class EnteredBackgroundEventArgs: IInspectable}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class EnteredBackgroundEventArgs: super::super::applicationmodel::IEnteredBackgroundEventArgs ["Windows.UI.WebUI.EnteredBackgroundEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class EnteredBackgroundEventArgs: IInspectable ["Windows.UI.WebUI.EnteredBackgroundEventArgs"]}
 DEFINE_IID!(IID_EnteredBackgroundEventHandler, 722051443, 46734, 19951, 136, 193, 141, 232, 78, 90, 171, 47);
 RT_DELEGATE!{delegate EnteredBackgroundEventHandler(EnteredBackgroundEventHandlerVtbl, EnteredBackgroundEventHandlerImpl) [IID_EnteredBackgroundEventHandler] {
     #[cfg(feature="windows-applicationmodel")] fn Invoke(&self, sender: *mut IInspectable, e: *mut super::super::applicationmodel::IEnteredBackgroundEventArgs) -> HRESULT
@@ -21359,9 +21359,9 @@ impl IHtmlPrintDocumentSource {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HtmlPrintDocumentSource: IHtmlPrintDocumentSource}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class LeavingBackgroundEventArgs: super::super::applicationmodel::ILeavingBackgroundEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class LeavingBackgroundEventArgs: IInspectable}
+RT_CLASS!{class HtmlPrintDocumentSource: IHtmlPrintDocumentSource ["Windows.UI.WebUI.HtmlPrintDocumentSource"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class LeavingBackgroundEventArgs: super::super::applicationmodel::ILeavingBackgroundEventArgs ["Windows.UI.WebUI.LeavingBackgroundEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class LeavingBackgroundEventArgs: IInspectable ["Windows.UI.WebUI.LeavingBackgroundEventArgs"]}
 DEFINE_IID!(IID_LeavingBackgroundEventHandler, 11848921, 31388, 19307, 154, 196, 19, 71, 79, 38, 139, 196);
 RT_DELEGATE!{delegate LeavingBackgroundEventHandler(LeavingBackgroundEventHandlerVtbl, LeavingBackgroundEventHandlerImpl) [IID_LeavingBackgroundEventHandler] {
     #[cfg(feature="windows-applicationmodel")] fn Invoke(&self, sender: *mut IInspectable, e: *mut super::super::applicationmodel::ILeavingBackgroundEventArgs) -> HRESULT
@@ -21412,8 +21412,8 @@ impl INewWebUIViewCreatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NewWebUIViewCreatedEventArgs: INewWebUIViewCreatedEventArgs}
-RT_ENUM! { enum PrintContent: i32 {
+RT_CLASS!{class NewWebUIViewCreatedEventArgs: INewWebUIViewCreatedEventArgs ["Windows.UI.WebUI.NewWebUIViewCreatedEventArgs"]}
+RT_ENUM! { enum PrintContent: i32 ["Windows.UI.WebUI.PrintContent"] {
     AllPages (PrintContent_AllPages) = 0, CurrentPage (PrintContent_CurrentPage) = 1, CustomPageRange (PrintContent_CustomPageRange) = 2, CurrentSelection (PrintContent_CurrentSelection) = 3,
 }}
 DEFINE_IID!(IID_ResumingEventHandler, 643406761, 41517, 18438, 167, 40, 172, 173, 193, 208, 117, 250);
@@ -21426,10 +21426,10 @@ impl ResumingEventHandler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class SuspendingDeferral: super::super::applicationmodel::ISuspendingDeferral}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class SuspendingDeferral: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class SuspendingEventArgs: super::super::applicationmodel::ISuspendingEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class SuspendingEventArgs: IInspectable}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class SuspendingDeferral: super::super::applicationmodel::ISuspendingDeferral ["Windows.UI.WebUI.SuspendingDeferral"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class SuspendingDeferral: IInspectable ["Windows.UI.WebUI.SuspendingDeferral"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class SuspendingEventArgs: super::super::applicationmodel::ISuspendingEventArgs ["Windows.UI.WebUI.SuspendingEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class SuspendingEventArgs: IInspectable ["Windows.UI.WebUI.SuspendingEventArgs"]}
 DEFINE_IID!(IID_SuspendingEventHandler, 1352417948, 30946, 18563, 171, 200, 137, 96, 220, 222, 27, 92);
 RT_DELEGATE!{delegate SuspendingEventHandler(SuspendingEventHandlerVtbl, SuspendingEventHandlerImpl) [IID_SuspendingEventHandler] {
     #[cfg(feature="windows-applicationmodel")] fn Invoke(&self, sender: *mut IInspectable, e: *mut super::super::applicationmodel::ISuspendingEventArgs) -> HRESULT
@@ -21440,8 +21440,8 @@ impl SuspendingEventHandler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class SuspendingOperation: super::super::applicationmodel::ISuspendingOperation}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class SuspendingOperation: IInspectable}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class SuspendingOperation: super::super::applicationmodel::ISuspendingOperation ["Windows.UI.WebUI.SuspendingOperation"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class SuspendingOperation: IInspectable ["Windows.UI.WebUI.SuspendingOperation"]}
 DEFINE_IID!(IID_IWebUIActivationStatics, 890996413, 17331, 18475, 133, 219, 53, 216, 123, 81, 122, 217);
 RT_INTERFACE!{static interface IWebUIActivationStatics(IWebUIActivationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebUIActivationStatics] {
     fn add_Activated(&self, handler: *mut ActivatedEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -21633,16 +21633,16 @@ impl WebUIApplication {
     }
 }
 DEFINE_CLSID!(WebUIApplication(&[87,105,110,100,111,119,115,46,85,73,46,87,101,98,85,73,46,87,101,98,85,73,65,112,112,108,105,99,97,116,105,111,110,0]) [CLSID_WebUIApplication]);
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIAppointmentsProviderAddAppointmentActivatedEventArgs: super::super::applicationmodel::activation::IAppointmentsProviderAddAppointmentActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIAppointmentsProviderAddAppointmentActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIAppointmentsProviderRemoveAppointmentActivatedEventArgs: super::super::applicationmodel::activation::IAppointmentsProviderRemoveAppointmentActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIAppointmentsProviderRemoveAppointmentActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIAppointmentsProviderReplaceAppointmentActivatedEventArgs: super::super::applicationmodel::activation::IAppointmentsProviderReplaceAppointmentActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIAppointmentsProviderReplaceAppointmentActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIAppointmentsProviderShowAppointmentDetailsActivatedEventArgs: super::super::applicationmodel::activation::IAppointmentsProviderShowAppointmentDetailsActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIAppointmentsProviderShowAppointmentDetailsActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIAppointmentsProviderShowTimeFrameActivatedEventArgs: super::super::applicationmodel::activation::IAppointmentsProviderShowTimeFrameActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIAppointmentsProviderShowTimeFrameActivatedEventArgs: IInspectable}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIAppointmentsProviderAddAppointmentActivatedEventArgs: super::super::applicationmodel::activation::IAppointmentsProviderAddAppointmentActivatedEventArgs ["Windows.UI.WebUI.WebUIAppointmentsProviderAddAppointmentActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIAppointmentsProviderAddAppointmentActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIAppointmentsProviderAddAppointmentActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIAppointmentsProviderRemoveAppointmentActivatedEventArgs: super::super::applicationmodel::activation::IAppointmentsProviderRemoveAppointmentActivatedEventArgs ["Windows.UI.WebUI.WebUIAppointmentsProviderRemoveAppointmentActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIAppointmentsProviderRemoveAppointmentActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIAppointmentsProviderRemoveAppointmentActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIAppointmentsProviderReplaceAppointmentActivatedEventArgs: super::super::applicationmodel::activation::IAppointmentsProviderReplaceAppointmentActivatedEventArgs ["Windows.UI.WebUI.WebUIAppointmentsProviderReplaceAppointmentActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIAppointmentsProviderReplaceAppointmentActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIAppointmentsProviderReplaceAppointmentActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIAppointmentsProviderShowAppointmentDetailsActivatedEventArgs: super::super::applicationmodel::activation::IAppointmentsProviderShowAppointmentDetailsActivatedEventArgs ["Windows.UI.WebUI.WebUIAppointmentsProviderShowAppointmentDetailsActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIAppointmentsProviderShowAppointmentDetailsActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIAppointmentsProviderShowAppointmentDetailsActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIAppointmentsProviderShowTimeFrameActivatedEventArgs: super::super::applicationmodel::activation::IAppointmentsProviderShowTimeFrameActivatedEventArgs ["Windows.UI.WebUI.WebUIAppointmentsProviderShowTimeFrameActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIAppointmentsProviderShowTimeFrameActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIAppointmentsProviderShowTimeFrameActivatedEventArgs"]}
 DEFINE_IID!(IID_IWebUIBackgroundTaskInstance, 603008037, 58103, 18241, 188, 156, 57, 69, 149, 222, 36, 220);
 RT_INTERFACE!{interface IWebUIBackgroundTaskInstance(IWebUIBackgroundTaskInstanceVtbl): IInspectable(IInspectableVtbl) [IID_IWebUIBackgroundTaskInstance] {
     fn get_Succeeded(&self, out: *mut bool) -> HRESULT,
@@ -21667,7 +21667,7 @@ impl WebUIBackgroundTaskInstance {
     }
 }
 DEFINE_CLSID!(WebUIBackgroundTaskInstance(&[87,105,110,100,111,119,115,46,85,73,46,87,101,98,85,73,46,87,101,98,85,73,66,97,99,107,103,114,111,117,110,100,84,97,115,107,73,110,115,116,97,110,99,101,0]) [CLSID_WebUIBackgroundTaskInstance]);
-RT_CLASS!{class WebUIBackgroundTaskInstanceRuntimeClass: IWebUIBackgroundTaskInstance}
+RT_CLASS!{class WebUIBackgroundTaskInstanceRuntimeClass: IWebUIBackgroundTaskInstance ["Windows.UI.WebUI.WebUIBackgroundTaskInstanceRuntimeClass"]}
 DEFINE_IID!(IID_IWebUIBackgroundTaskInstanceStatics, 2625262225, 6574, 19619, 185, 75, 254, 78, 199, 68, 167, 64);
 RT_INTERFACE!{static interface IWebUIBackgroundTaskInstanceStatics(IWebUIBackgroundTaskInstanceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebUIBackgroundTaskInstanceStatics] {
     fn get_Current(&self, out: *mut *mut IWebUIBackgroundTaskInstance) -> HRESULT
@@ -21679,54 +21679,54 @@ impl IWebUIBackgroundTaskInstanceStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIBarcodeScannerPreviewActivatedEventArgs: super::super::applicationmodel::activation::IBarcodeScannerPreviewActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIBarcodeScannerPreviewActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUICachedFileUpdaterActivatedEventArgs: super::super::applicationmodel::activation::ICachedFileUpdaterActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUICachedFileUpdaterActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUICameraSettingsActivatedEventArgs: super::super::applicationmodel::activation::ICameraSettingsActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUICameraSettingsActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUICommandLineActivatedEventArgs: super::super::applicationmodel::activation::ICommandLineActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUICommandLineActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactCallActivatedEventArgs: super::super::applicationmodel::activation::IContactCallActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactCallActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactMapActivatedEventArgs: super::super::applicationmodel::activation::IContactMapActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactMapActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactMessageActivatedEventArgs: super::super::applicationmodel::activation::IContactMessageActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactMessageActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactPanelActivatedEventArgs: super::super::applicationmodel::activation::IContactPanelActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactPanelActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactPickerActivatedEventArgs: super::super::applicationmodel::activation::IContactPickerActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactPickerActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactPostActivatedEventArgs: super::super::applicationmodel::activation::IContactPostActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactPostActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactVideoCallActivatedEventArgs: super::super::applicationmodel::activation::IContactVideoCallActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactVideoCallActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIDeviceActivatedEventArgs: super::super::applicationmodel::activation::IDeviceActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIDeviceActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIDevicePairingActivatedEventArgs: super::super::applicationmodel::activation::IDevicePairingActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIDevicePairingActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIDialReceiverActivatedEventArgs: super::super::applicationmodel::activation::IDialReceiverActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIDialReceiverActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIFileActivatedEventArgs: super::super::applicationmodel::activation::IFileActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIFileActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIFileOpenPickerActivatedEventArgs: super::super::applicationmodel::activation::IFileOpenPickerActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIFileOpenPickerActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIFileOpenPickerContinuationEventArgs: super::super::applicationmodel::activation::IFileOpenPickerContinuationEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIFileOpenPickerContinuationEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIFileSavePickerActivatedEventArgs: super::super::applicationmodel::activation::IFileSavePickerActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIFileSavePickerActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIFileSavePickerContinuationEventArgs: super::super::applicationmodel::activation::IFileSavePickerContinuationEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIFileSavePickerContinuationEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIFolderPickerContinuationEventArgs: super::super::applicationmodel::activation::IFolderPickerContinuationEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIFolderPickerContinuationEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUILaunchActivatedEventArgs: super::super::applicationmodel::activation::ILaunchActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUILaunchActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUILockScreenActivatedEventArgs: super::super::applicationmodel::activation::ILockScreenActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUILockScreenActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUILockScreenCallActivatedEventArgs: super::super::applicationmodel::activation::ILockScreenCallActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUILockScreenCallActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUILockScreenComponentActivatedEventArgs: super::super::applicationmodel::activation::IActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUILockScreenComponentActivatedEventArgs: IInspectable}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIBarcodeScannerPreviewActivatedEventArgs: super::super::applicationmodel::activation::IBarcodeScannerPreviewActivatedEventArgs ["Windows.UI.WebUI.WebUIBarcodeScannerPreviewActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIBarcodeScannerPreviewActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIBarcodeScannerPreviewActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUICachedFileUpdaterActivatedEventArgs: super::super::applicationmodel::activation::ICachedFileUpdaterActivatedEventArgs ["Windows.UI.WebUI.WebUICachedFileUpdaterActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUICachedFileUpdaterActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUICachedFileUpdaterActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUICameraSettingsActivatedEventArgs: super::super::applicationmodel::activation::ICameraSettingsActivatedEventArgs ["Windows.UI.WebUI.WebUICameraSettingsActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUICameraSettingsActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUICameraSettingsActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUICommandLineActivatedEventArgs: super::super::applicationmodel::activation::ICommandLineActivatedEventArgs ["Windows.UI.WebUI.WebUICommandLineActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUICommandLineActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUICommandLineActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactCallActivatedEventArgs: super::super::applicationmodel::activation::IContactCallActivatedEventArgs ["Windows.UI.WebUI.WebUIContactCallActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactCallActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIContactCallActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactMapActivatedEventArgs: super::super::applicationmodel::activation::IContactMapActivatedEventArgs ["Windows.UI.WebUI.WebUIContactMapActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactMapActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIContactMapActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactMessageActivatedEventArgs: super::super::applicationmodel::activation::IContactMessageActivatedEventArgs ["Windows.UI.WebUI.WebUIContactMessageActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactMessageActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIContactMessageActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactPanelActivatedEventArgs: super::super::applicationmodel::activation::IContactPanelActivatedEventArgs ["Windows.UI.WebUI.WebUIContactPanelActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactPanelActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIContactPanelActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactPickerActivatedEventArgs: super::super::applicationmodel::activation::IContactPickerActivatedEventArgs ["Windows.UI.WebUI.WebUIContactPickerActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactPickerActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIContactPickerActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactPostActivatedEventArgs: super::super::applicationmodel::activation::IContactPostActivatedEventArgs ["Windows.UI.WebUI.WebUIContactPostActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactPostActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIContactPostActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIContactVideoCallActivatedEventArgs: super::super::applicationmodel::activation::IContactVideoCallActivatedEventArgs ["Windows.UI.WebUI.WebUIContactVideoCallActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIContactVideoCallActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIContactVideoCallActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIDeviceActivatedEventArgs: super::super::applicationmodel::activation::IDeviceActivatedEventArgs ["Windows.UI.WebUI.WebUIDeviceActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIDeviceActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIDeviceActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIDevicePairingActivatedEventArgs: super::super::applicationmodel::activation::IDevicePairingActivatedEventArgs ["Windows.UI.WebUI.WebUIDevicePairingActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIDevicePairingActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIDevicePairingActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIDialReceiverActivatedEventArgs: super::super::applicationmodel::activation::IDialReceiverActivatedEventArgs ["Windows.UI.WebUI.WebUIDialReceiverActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIDialReceiverActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIDialReceiverActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIFileActivatedEventArgs: super::super::applicationmodel::activation::IFileActivatedEventArgs ["Windows.UI.WebUI.WebUIFileActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIFileActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIFileActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIFileOpenPickerActivatedEventArgs: super::super::applicationmodel::activation::IFileOpenPickerActivatedEventArgs ["Windows.UI.WebUI.WebUIFileOpenPickerActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIFileOpenPickerActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIFileOpenPickerActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIFileOpenPickerContinuationEventArgs: super::super::applicationmodel::activation::IFileOpenPickerContinuationEventArgs ["Windows.UI.WebUI.WebUIFileOpenPickerContinuationEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIFileOpenPickerContinuationEventArgs: IInspectable ["Windows.UI.WebUI.WebUIFileOpenPickerContinuationEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIFileSavePickerActivatedEventArgs: super::super::applicationmodel::activation::IFileSavePickerActivatedEventArgs ["Windows.UI.WebUI.WebUIFileSavePickerActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIFileSavePickerActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIFileSavePickerActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIFileSavePickerContinuationEventArgs: super::super::applicationmodel::activation::IFileSavePickerContinuationEventArgs ["Windows.UI.WebUI.WebUIFileSavePickerContinuationEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIFileSavePickerContinuationEventArgs: IInspectable ["Windows.UI.WebUI.WebUIFileSavePickerContinuationEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIFolderPickerContinuationEventArgs: super::super::applicationmodel::activation::IFolderPickerContinuationEventArgs ["Windows.UI.WebUI.WebUIFolderPickerContinuationEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIFolderPickerContinuationEventArgs: IInspectable ["Windows.UI.WebUI.WebUIFolderPickerContinuationEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUILaunchActivatedEventArgs: super::super::applicationmodel::activation::ILaunchActivatedEventArgs ["Windows.UI.WebUI.WebUILaunchActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUILaunchActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUILaunchActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUILockScreenActivatedEventArgs: super::super::applicationmodel::activation::ILockScreenActivatedEventArgs ["Windows.UI.WebUI.WebUILockScreenActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUILockScreenActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUILockScreenActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUILockScreenCallActivatedEventArgs: super::super::applicationmodel::activation::ILockScreenCallActivatedEventArgs ["Windows.UI.WebUI.WebUILockScreenCallActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUILockScreenCallActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUILockScreenCallActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUILockScreenComponentActivatedEventArgs: super::super::applicationmodel::activation::IActivatedEventArgs ["Windows.UI.WebUI.WebUILockScreenComponentActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUILockScreenComponentActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUILockScreenComponentActivatedEventArgs"]}
 DEFINE_IID!(IID_IWebUINavigatedDeferral, 3624149069, 33567, 18146, 180, 50, 58, 252, 226, 17, 249, 98);
 RT_INTERFACE!{interface IWebUINavigatedDeferral(IWebUINavigatedDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IWebUINavigatedDeferral] {
     fn Complete(&self) -> HRESULT
@@ -21737,7 +21737,7 @@ impl IWebUINavigatedDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebUINavigatedDeferral: IWebUINavigatedDeferral}
+RT_CLASS!{class WebUINavigatedDeferral: IWebUINavigatedDeferral ["Windows.UI.WebUI.WebUINavigatedDeferral"]}
 DEFINE_IID!(IID_IWebUINavigatedEventArgs, 2807579064, 9369, 16432, 166, 157, 21, 210, 217, 207, 229, 36);
 RT_INTERFACE!{interface IWebUINavigatedEventArgs(IWebUINavigatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebUINavigatedEventArgs] {
     fn get_NavigatedOperation(&self, out: *mut *mut WebUINavigatedOperation) -> HRESULT
@@ -21749,7 +21749,7 @@ impl IWebUINavigatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebUINavigatedEventArgs: IWebUINavigatedEventArgs}
+RT_CLASS!{class WebUINavigatedEventArgs: IWebUINavigatedEventArgs ["Windows.UI.WebUI.WebUINavigatedEventArgs"]}
 DEFINE_IID!(IID_IWebUINavigatedOperation, 2056675080, 33154, 19081, 171, 103, 132, 146, 232, 117, 13, 75);
 RT_INTERFACE!{interface IWebUINavigatedOperation(IWebUINavigatedOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebUINavigatedOperation] {
     fn GetDeferral(&self, out: *mut *mut WebUINavigatedDeferral) -> HRESULT
@@ -21761,29 +21761,29 @@ impl IWebUINavigatedOperation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebUINavigatedOperation: IWebUINavigatedOperation}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIPrint3DWorkflowActivatedEventArgs: super::super::applicationmodel::activation::IPrint3DWorkflowActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIPrint3DWorkflowActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIPrintTaskSettingsActivatedEventArgs: super::super::applicationmodel::activation::IPrintTaskSettingsActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIPrintTaskSettingsActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIPrintWorkflowForegroundTaskActivatedEventArgs: super::super::applicationmodel::activation::IActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIPrintWorkflowForegroundTaskActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIProtocolActivatedEventArgs: super::super::applicationmodel::activation::IProtocolActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIProtocolActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIProtocolForResultsActivatedEventArgs: super::super::applicationmodel::activation::IProtocolForResultsActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIProtocolForResultsActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIRestrictedLaunchActivatedEventArgs: super::super::applicationmodel::activation::IRestrictedLaunchActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIRestrictedLaunchActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUISearchActivatedEventArgs: super::super::applicationmodel::activation::ISearchActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUISearchActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIShareTargetActivatedEventArgs: super::super::applicationmodel::activation::IShareTargetActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIShareTargetActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIStartupTaskActivatedEventArgs: super::super::applicationmodel::activation::IStartupTaskActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIStartupTaskActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIToastNotificationActivatedEventArgs: super::super::applicationmodel::activation::IToastNotificationActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIToastNotificationActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIUserDataAccountProviderActivatedEventArgs: super::super::applicationmodel::activation::IUserDataAccountProviderActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIUserDataAccountProviderActivatedEventArgs: IInspectable}
+RT_CLASS!{class WebUINavigatedOperation: IWebUINavigatedOperation ["Windows.UI.WebUI.WebUINavigatedOperation"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIPrint3DWorkflowActivatedEventArgs: super::super::applicationmodel::activation::IPrint3DWorkflowActivatedEventArgs ["Windows.UI.WebUI.WebUIPrint3DWorkflowActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIPrint3DWorkflowActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIPrint3DWorkflowActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIPrintTaskSettingsActivatedEventArgs: super::super::applicationmodel::activation::IPrintTaskSettingsActivatedEventArgs ["Windows.UI.WebUI.WebUIPrintTaskSettingsActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIPrintTaskSettingsActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIPrintTaskSettingsActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIPrintWorkflowForegroundTaskActivatedEventArgs: super::super::applicationmodel::activation::IActivatedEventArgs ["Windows.UI.WebUI.WebUIPrintWorkflowForegroundTaskActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIPrintWorkflowForegroundTaskActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIPrintWorkflowForegroundTaskActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIProtocolActivatedEventArgs: super::super::applicationmodel::activation::IProtocolActivatedEventArgs ["Windows.UI.WebUI.WebUIProtocolActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIProtocolActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIProtocolActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIProtocolForResultsActivatedEventArgs: super::super::applicationmodel::activation::IProtocolForResultsActivatedEventArgs ["Windows.UI.WebUI.WebUIProtocolForResultsActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIProtocolForResultsActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIProtocolForResultsActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIRestrictedLaunchActivatedEventArgs: super::super::applicationmodel::activation::IRestrictedLaunchActivatedEventArgs ["Windows.UI.WebUI.WebUIRestrictedLaunchActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIRestrictedLaunchActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIRestrictedLaunchActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUISearchActivatedEventArgs: super::super::applicationmodel::activation::ISearchActivatedEventArgs ["Windows.UI.WebUI.WebUISearchActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUISearchActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUISearchActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIShareTargetActivatedEventArgs: super::super::applicationmodel::activation::IShareTargetActivatedEventArgs ["Windows.UI.WebUI.WebUIShareTargetActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIShareTargetActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIShareTargetActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIStartupTaskActivatedEventArgs: super::super::applicationmodel::activation::IStartupTaskActivatedEventArgs ["Windows.UI.WebUI.WebUIStartupTaskActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIStartupTaskActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIStartupTaskActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIToastNotificationActivatedEventArgs: super::super::applicationmodel::activation::IToastNotificationActivatedEventArgs ["Windows.UI.WebUI.WebUIToastNotificationActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIToastNotificationActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIToastNotificationActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIUserDataAccountProviderActivatedEventArgs: super::super::applicationmodel::activation::IUserDataAccountProviderActivatedEventArgs ["Windows.UI.WebUI.WebUIUserDataAccountProviderActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIUserDataAccountProviderActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIUserDataAccountProviderActivatedEventArgs"]}
 DEFINE_IID!(IID_IWebUIView, 1736701519, 21210, 20439, 190, 105, 142, 246, 40, 75, 66, 60);
 RT_INTERFACE!{interface IWebUIView(IWebUIViewVtbl): IInspectable(IInspectableVtbl) [IID_IWebUIView] {
     fn get_ApplicationViewId(&self, out: *mut i32) -> HRESULT,
@@ -21829,7 +21829,7 @@ impl IWebUIView {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebUIView: IWebUIView}
+RT_CLASS!{class WebUIView: IWebUIView ["Windows.UI.WebUI.WebUIView"]}
 impl RtActivatable<IWebUIViewStatics> for WebUIView {}
 impl WebUIView {
     #[inline] pub fn create_async() -> Result<ComPtr<foundation::IAsyncOperation<WebUIView>>> {
@@ -21857,13 +21857,13 @@ impl IWebUIViewStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIVoiceCommandActivatedEventArgs: super::super::applicationmodel::activation::IVoiceCommandActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIVoiceCommandActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIWalletActionActivatedEventArgs: super::super::applicationmodel::activation::IWalletActionActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIWalletActionActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIWebAccountProviderActivatedEventArgs: super::super::applicationmodel::activation::IWebAccountProviderActivatedEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIWebAccountProviderActivatedEventArgs: IInspectable}
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIWebAuthenticationBrokerContinuationEventArgs: super::super::applicationmodel::activation::IWebAuthenticationBrokerContinuationEventArgs}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIWebAuthenticationBrokerContinuationEventArgs: IInspectable}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIVoiceCommandActivatedEventArgs: super::super::applicationmodel::activation::IVoiceCommandActivatedEventArgs ["Windows.UI.WebUI.WebUIVoiceCommandActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIVoiceCommandActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIVoiceCommandActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIWalletActionActivatedEventArgs: super::super::applicationmodel::activation::IWalletActionActivatedEventArgs ["Windows.UI.WebUI.WebUIWalletActionActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIWalletActionActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIWalletActionActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIWebAccountProviderActivatedEventArgs: super::super::applicationmodel::activation::IWebAccountProviderActivatedEventArgs ["Windows.UI.WebUI.WebUIWebAccountProviderActivatedEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIWebAccountProviderActivatedEventArgs: IInspectable ["Windows.UI.WebUI.WebUIWebAccountProviderActivatedEventArgs"]}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebUIWebAuthenticationBrokerContinuationEventArgs: super::super::applicationmodel::activation::IWebAuthenticationBrokerContinuationEventArgs ["Windows.UI.WebUI.WebUIWebAuthenticationBrokerContinuationEventArgs"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebUIWebAuthenticationBrokerContinuationEventArgs: IInspectable ["Windows.UI.WebUI.WebUIWebAuthenticationBrokerContinuationEventArgs"]}
 } // Windows.UI.WebUI
 #[cfg(feature="windows-ui-xaml")] pub mod xaml; // Windows.UI.Xaml

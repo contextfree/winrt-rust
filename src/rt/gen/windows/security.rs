@@ -36,7 +36,7 @@ impl IEnterpriseKeyCredentialRegistrationInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EnterpriseKeyCredentialRegistrationInfo: IEnterpriseKeyCredentialRegistrationInfo}
+RT_CLASS!{class EnterpriseKeyCredentialRegistrationInfo: IEnterpriseKeyCredentialRegistrationInfo ["Windows.Security.Authentication.Identity.EnterpriseKeyCredentialRegistrationInfo"]}
 DEFINE_IID!(IID_IEnterpriseKeyCredentialRegistrationManager, 2213789247, 41567, 19642, 187, 142, 189, 195, 45, 3, 194, 151);
 RT_INTERFACE!{interface IEnterpriseKeyCredentialRegistrationManager(IEnterpriseKeyCredentialRegistrationManagerVtbl): IInspectable(IInspectableVtbl) [IID_IEnterpriseKeyCredentialRegistrationManager] {
     fn GetRegistrationsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<EnterpriseKeyCredentialRegistrationInfo>>) -> HRESULT
@@ -48,7 +48,7 @@ impl IEnterpriseKeyCredentialRegistrationManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EnterpriseKeyCredentialRegistrationManager: IEnterpriseKeyCredentialRegistrationManager}
+RT_CLASS!{class EnterpriseKeyCredentialRegistrationManager: IEnterpriseKeyCredentialRegistrationManager ["Windows.Security.Authentication.Identity.EnterpriseKeyCredentialRegistrationManager"]}
 impl RtActivatable<IEnterpriseKeyCredentialRegistrationManagerStatics> for EnterpriseKeyCredentialRegistrationManager {}
 impl EnterpriseKeyCredentialRegistrationManager {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<EnterpriseKeyCredentialRegistrationManager>>> {
@@ -134,7 +134,7 @@ impl IMicrosoftAccountMultiFactorAuthenticationManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MicrosoftAccountMultiFactorAuthenticationManager: IMicrosoftAccountMultiFactorAuthenticationManager}
+RT_CLASS!{class MicrosoftAccountMultiFactorAuthenticationManager: IMicrosoftAccountMultiFactorAuthenticationManager ["Windows.Security.Authentication.Identity.Core.MicrosoftAccountMultiFactorAuthenticationManager"]}
 impl RtActivatable<IMicrosoftAccountMultiFactorAuthenticatorStatics> for MicrosoftAccountMultiFactorAuthenticationManager {}
 impl MicrosoftAccountMultiFactorAuthenticationManager {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<MicrosoftAccountMultiFactorAuthenticationManager>>> {
@@ -142,7 +142,7 @@ impl MicrosoftAccountMultiFactorAuthenticationManager {
     }
 }
 DEFINE_CLSID!(MicrosoftAccountMultiFactorAuthenticationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,67,111,114,101,46,77,105,99,114,111,115,111,102,116,65,99,99,111,117,110,116,77,117,108,116,105,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MicrosoftAccountMultiFactorAuthenticationManager]);
-RT_ENUM! { enum MicrosoftAccountMultiFactorAuthenticationType: i32 {
+RT_ENUM! { enum MicrosoftAccountMultiFactorAuthenticationType: i32 ["Windows.Security.Authentication.Identity.Core.MicrosoftAccountMultiFactorAuthenticationType"] {
     User (MicrosoftAccountMultiFactorAuthenticationType_User) = 0, Device (MicrosoftAccountMultiFactorAuthenticationType_Device) = 1,
 }}
 DEFINE_IID!(IID_IMicrosoftAccountMultiFactorAuthenticatorStatics, 3647259366, 62534, 19569, 139, 121, 110, 164, 2, 74, 169, 184);
@@ -173,7 +173,7 @@ impl IMicrosoftAccountMultiFactorGetSessionsResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MicrosoftAccountMultiFactorGetSessionsResult: IMicrosoftAccountMultiFactorGetSessionsResult}
+RT_CLASS!{class MicrosoftAccountMultiFactorGetSessionsResult: IMicrosoftAccountMultiFactorGetSessionsResult ["Windows.Security.Authentication.Identity.Core.MicrosoftAccountMultiFactorGetSessionsResult"]}
 DEFINE_IID!(IID_IMicrosoftAccountMultiFactorOneTimeCodedInfo, 2193237579, 55420, 18024, 169, 118, 64, 207, 174, 84, 125, 8);
 RT_INTERFACE!{interface IMicrosoftAccountMultiFactorOneTimeCodedInfo(IMicrosoftAccountMultiFactorOneTimeCodedInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorOneTimeCodedInfo] {
     fn get_Code(&self, out: *mut HSTRING) -> HRESULT,
@@ -203,14 +203,14 @@ impl IMicrosoftAccountMultiFactorOneTimeCodedInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MicrosoftAccountMultiFactorOneTimeCodedInfo: IMicrosoftAccountMultiFactorOneTimeCodedInfo}
-RT_ENUM! { enum MicrosoftAccountMultiFactorServiceResponse: i32 {
+RT_CLASS!{class MicrosoftAccountMultiFactorOneTimeCodedInfo: IMicrosoftAccountMultiFactorOneTimeCodedInfo ["Windows.Security.Authentication.Identity.Core.MicrosoftAccountMultiFactorOneTimeCodedInfo"]}
+RT_ENUM! { enum MicrosoftAccountMultiFactorServiceResponse: i32 ["Windows.Security.Authentication.Identity.Core.MicrosoftAccountMultiFactorServiceResponse"] {
     Success (MicrosoftAccountMultiFactorServiceResponse_Success) = 0, Error (MicrosoftAccountMultiFactorServiceResponse_Error) = 1, NoNetworkConnection (MicrosoftAccountMultiFactorServiceResponse_NoNetworkConnection) = 2, ServiceUnavailable (MicrosoftAccountMultiFactorServiceResponse_ServiceUnavailable) = 3, TotpSetupDenied (MicrosoftAccountMultiFactorServiceResponse_TotpSetupDenied) = 4, NgcNotSetup (MicrosoftAccountMultiFactorServiceResponse_NgcNotSetup) = 5, SessionAlreadyDenied (MicrosoftAccountMultiFactorServiceResponse_SessionAlreadyDenied) = 6, SessionAlreadyApproved (MicrosoftAccountMultiFactorServiceResponse_SessionAlreadyApproved) = 7, SessionExpired (MicrosoftAccountMultiFactorServiceResponse_SessionExpired) = 8, NgcNonceExpired (MicrosoftAccountMultiFactorServiceResponse_NgcNonceExpired) = 9, InvalidSessionId (MicrosoftAccountMultiFactorServiceResponse_InvalidSessionId) = 10, InvalidSessionType (MicrosoftAccountMultiFactorServiceResponse_InvalidSessionType) = 11, InvalidOperation (MicrosoftAccountMultiFactorServiceResponse_InvalidOperation) = 12, InvalidStateTransition (MicrosoftAccountMultiFactorServiceResponse_InvalidStateTransition) = 13, DeviceNotFound (MicrosoftAccountMultiFactorServiceResponse_DeviceNotFound) = 14, FlowDisabled (MicrosoftAccountMultiFactorServiceResponse_FlowDisabled) = 15, SessionNotApproved (MicrosoftAccountMultiFactorServiceResponse_SessionNotApproved) = 16, OperationCanceledByUser (MicrosoftAccountMultiFactorServiceResponse_OperationCanceledByUser) = 17, NgcDisabledByServer (MicrosoftAccountMultiFactorServiceResponse_NgcDisabledByServer) = 18, NgcKeyNotFoundOnServer (MicrosoftAccountMultiFactorServiceResponse_NgcKeyNotFoundOnServer) = 19, UIRequired (MicrosoftAccountMultiFactorServiceResponse_UIRequired) = 20, DeviceIdChanged (MicrosoftAccountMultiFactorServiceResponse_DeviceIdChanged) = 21,
 }}
-RT_ENUM! { enum MicrosoftAccountMultiFactorSessionApprovalStatus: i32 {
+RT_ENUM! { enum MicrosoftAccountMultiFactorSessionApprovalStatus: i32 ["Windows.Security.Authentication.Identity.Core.MicrosoftAccountMultiFactorSessionApprovalStatus"] {
     Pending (MicrosoftAccountMultiFactorSessionApprovalStatus_Pending) = 0, Approved (MicrosoftAccountMultiFactorSessionApprovalStatus_Approved) = 1, Denied (MicrosoftAccountMultiFactorSessionApprovalStatus_Denied) = 2,
 }}
-RT_ENUM! { enum MicrosoftAccountMultiFactorSessionAuthenticationStatus: i32 {
+RT_ENUM! { enum MicrosoftAccountMultiFactorSessionAuthenticationStatus: i32 ["Windows.Security.Authentication.Identity.Core.MicrosoftAccountMultiFactorSessionAuthenticationStatus"] {
     Authenticated (MicrosoftAccountMultiFactorSessionAuthenticationStatus_Authenticated) = 0, Unauthenticated (MicrosoftAccountMultiFactorSessionAuthenticationStatus_Unauthenticated) = 1,
 }}
 DEFINE_IID!(IID_IMicrosoftAccountMultiFactorSessionInfo, 1602137012, 41592, 17973, 183, 101, 180, 148, 235, 38, 10, 244);
@@ -260,7 +260,7 @@ impl IMicrosoftAccountMultiFactorSessionInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MicrosoftAccountMultiFactorSessionInfo: IMicrosoftAccountMultiFactorSessionInfo}
+RT_CLASS!{class MicrosoftAccountMultiFactorSessionInfo: IMicrosoftAccountMultiFactorSessionInfo ["Windows.Security.Authentication.Identity.Core.MicrosoftAccountMultiFactorSessionInfo"]}
 DEFINE_IID!(IID_IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo, 2860434939, 55871, 16520, 162, 13, 86, 24, 175, 173, 178, 229);
 RT_INTERFACE!{interface IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo(IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo] {
     fn get_Sessions(&self, out: *mut *mut foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>) -> HRESULT,
@@ -284,7 +284,7 @@ impl IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo: IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo}
+RT_CLASS!{class MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo: IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo ["Windows.Security.Authentication.Identity.Core.MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo"]}
 } // Windows.Security.Authentication.Identity.Core
 pub mod provider { // Windows.Security.Authentication.Identity.Provider
 use ::prelude::*;
@@ -334,7 +334,7 @@ impl ISecondaryAuthenticationFactorAuthentication {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SecondaryAuthenticationFactorAuthentication: ISecondaryAuthenticationFactorAuthentication}
+RT_CLASS!{class SecondaryAuthenticationFactorAuthentication: ISecondaryAuthenticationFactorAuthentication ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorAuthentication"]}
 impl RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics> for SecondaryAuthenticationFactorAuthentication {}
 impl SecondaryAuthenticationFactorAuthentication {
     #[inline] pub fn show_notification_message_async(deviceName: &HStringArg, message: SecondaryAuthenticationFactorAuthenticationMessage) -> Result<ComPtr<foundation::IAsyncAction>> {
@@ -354,7 +354,7 @@ impl SecondaryAuthenticationFactorAuthentication {
     }
 }
 DEFINE_CLSID!(SecondaryAuthenticationFactorAuthentication(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,80,114,111,118,105,100,101,114,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,0]) [CLSID_SecondaryAuthenticationFactorAuthentication]);
-RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationMessage: i32 {
+RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationMessage: i32 ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorAuthenticationMessage"] {
     Invalid (SecondaryAuthenticationFactorAuthenticationMessage_Invalid) = 0, SwipeUpWelcome (SecondaryAuthenticationFactorAuthenticationMessage_SwipeUpWelcome) = 1, TapWelcome (SecondaryAuthenticationFactorAuthenticationMessage_TapWelcome) = 2, DeviceNeedsAttention (SecondaryAuthenticationFactorAuthenticationMessage_DeviceNeedsAttention) = 3, LookingForDevice (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevice) = 4, LookingForDevicePluggedin (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevicePluggedin) = 5, BluetoothIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_BluetoothIsDisabled) = 6, NfcIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_NfcIsDisabled) = 7, WiFiIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_WiFiIsDisabled) = 8, ExtraTapIsRequired (SecondaryAuthenticationFactorAuthenticationMessage_ExtraTapIsRequired) = 9, DisabledByPolicy (SecondaryAuthenticationFactorAuthenticationMessage_DisabledByPolicy) = 10, TapOnDeviceRequired (SecondaryAuthenticationFactorAuthenticationMessage_TapOnDeviceRequired) = 11, HoldFinger (SecondaryAuthenticationFactorAuthenticationMessage_HoldFinger) = 12, ScanFinger (SecondaryAuthenticationFactorAuthenticationMessage_ScanFinger) = 13, UnauthorizedUser (SecondaryAuthenticationFactorAuthenticationMessage_UnauthorizedUser) = 14, ReregisterRequired (SecondaryAuthenticationFactorAuthenticationMessage_ReregisterRequired) = 15, TryAgain (SecondaryAuthenticationFactorAuthenticationMessage_TryAgain) = 16, SayPassphrase (SecondaryAuthenticationFactorAuthenticationMessage_SayPassphrase) = 17, ReadyToSignIn (SecondaryAuthenticationFactorAuthenticationMessage_ReadyToSignIn) = 18, UseAnotherSignInOption (SecondaryAuthenticationFactorAuthenticationMessage_UseAnotherSignInOption) = 19, ConnectionRequired (SecondaryAuthenticationFactorAuthenticationMessage_ConnectionRequired) = 20, TimeLimitExceeded (SecondaryAuthenticationFactorAuthenticationMessage_TimeLimitExceeded) = 21, CanceledByUser (SecondaryAuthenticationFactorAuthenticationMessage_CanceledByUser) = 22, CenterHand (SecondaryAuthenticationFactorAuthenticationMessage_CenterHand) = 23, MoveHandCloser (SecondaryAuthenticationFactorAuthenticationMessage_MoveHandCloser) = 24, MoveHandFarther (SecondaryAuthenticationFactorAuthenticationMessage_MoveHandFarther) = 25, PlaceHandAbove (SecondaryAuthenticationFactorAuthenticationMessage_PlaceHandAbove) = 26, RecognitionFailed (SecondaryAuthenticationFactorAuthenticationMessage_RecognitionFailed) = 27, DeviceUnavailable (SecondaryAuthenticationFactorAuthenticationMessage_DeviceUnavailable) = 28,
 }}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationResult, 2629523847, 61293, 19394, 191, 73, 70, 23, 81, 90, 15, 154);
@@ -374,11 +374,11 @@ impl ISecondaryAuthenticationFactorAuthenticationResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationResult: ISecondaryAuthenticationFactorAuthenticationResult}
-RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationScenario: i32 {
+RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationResult: ISecondaryAuthenticationFactorAuthenticationResult ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorAuthenticationResult"]}
+RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationScenario: i32 ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorAuthenticationScenario"] {
     SignIn (SecondaryAuthenticationFactorAuthenticationScenario_SignIn) = 0, CredentialPrompt (SecondaryAuthenticationFactorAuthenticationScenario_CredentialPrompt) = 1,
 }}
-RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationStage: i32 {
+RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationStage: i32 ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorAuthenticationStage"] {
     NotStarted (SecondaryAuthenticationFactorAuthenticationStage_NotStarted) = 0, WaitingForUserConfirmation (SecondaryAuthenticationFactorAuthenticationStage_WaitingForUserConfirmation) = 1, CollectingCredential (SecondaryAuthenticationFactorAuthenticationStage_CollectingCredential) = 2, SuspendingAuthentication (SecondaryAuthenticationFactorAuthenticationStage_SuspendingAuthentication) = 3, CredentialCollected (SecondaryAuthenticationFactorAuthenticationStage_CredentialCollected) = 4, CredentialAuthenticated (SecondaryAuthenticationFactorAuthenticationStage_CredentialAuthenticated) = 5, StoppingAuthentication (SecondaryAuthenticationFactorAuthenticationStage_StoppingAuthentication) = 6, ReadyForLock (SecondaryAuthenticationFactorAuthenticationStage_ReadyForLock) = 7, CheckingDevicePresence (SecondaryAuthenticationFactorAuthenticationStage_CheckingDevicePresence) = 8,
 }}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs, 3567644246, 29329, 16499, 188, 31, 204, 184, 245, 175, 223, 150);
@@ -392,7 +392,7 @@ impl ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs: ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs}
+RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs: ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs"]}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationStageInfo, 1459536523, 59562, 19471, 142, 76, 165, 89, 231, 58, 221, 136);
 RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationStageInfo(ISecondaryAuthenticationFactorAuthenticationStageInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationStageInfo] {
     fn get_Stage(&self, out: *mut SecondaryAuthenticationFactorAuthenticationStage) -> HRESULT,
@@ -416,7 +416,7 @@ impl ISecondaryAuthenticationFactorAuthenticationStageInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationStageInfo: ISecondaryAuthenticationFactorAuthenticationStageInfo}
+RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationStageInfo: ISecondaryAuthenticationFactorAuthenticationStageInfo ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorAuthenticationStageInfo"]}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationStatics, 1062741590, 10488, 19983, 174, 140, 88, 152, 185, 174, 36, 105);
 RT_INTERFACE!{static interface ISecondaryAuthenticationFactorAuthenticationStatics(ISecondaryAuthenticationFactorAuthenticationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationStatics] {
     fn ShowNotificationMessageAsync(&self, deviceName: HSTRING, message: SecondaryAuthenticationFactorAuthenticationMessage, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -452,19 +452,19 @@ impl ISecondaryAuthenticationFactorAuthenticationStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationStatus: i32 {
+RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationStatus: i32 ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorAuthenticationStatus"] {
     Failed (SecondaryAuthenticationFactorAuthenticationStatus_Failed) = 0, Started (SecondaryAuthenticationFactorAuthenticationStatus_Started) = 1, UnknownDevice (SecondaryAuthenticationFactorAuthenticationStatus_UnknownDevice) = 2, DisabledByPolicy (SecondaryAuthenticationFactorAuthenticationStatus_DisabledByPolicy) = 3, InvalidAuthenticationStage (SecondaryAuthenticationFactorAuthenticationStatus_InvalidAuthenticationStage) = 4,
 }}
-RT_ENUM! { enum SecondaryAuthenticationFactorDeviceCapabilities: u32 {
+RT_ENUM! { enum SecondaryAuthenticationFactorDeviceCapabilities: u32 ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorDeviceCapabilities"] {
     None (SecondaryAuthenticationFactorDeviceCapabilities_None) = 0, SecureStorage (SecondaryAuthenticationFactorDeviceCapabilities_SecureStorage) = 1, StoreKeys (SecondaryAuthenticationFactorDeviceCapabilities_StoreKeys) = 2, ConfirmUserIntentToAuthenticate (SecondaryAuthenticationFactorDeviceCapabilities_ConfirmUserIntentToAuthenticate) = 4, SupportSecureUserPresenceCheck (SecondaryAuthenticationFactorDeviceCapabilities_SupportSecureUserPresenceCheck) = 8, TransmittedDataIsEncrypted (SecondaryAuthenticationFactorDeviceCapabilities_TransmittedDataIsEncrypted) = 16, HMacSha256 (SecondaryAuthenticationFactorDeviceCapabilities_HMacSha256) = 32, CloseRangeDataTransmission (SecondaryAuthenticationFactorDeviceCapabilities_CloseRangeDataTransmission) = 64,
 }}
-RT_ENUM! { enum SecondaryAuthenticationFactorDeviceFindScope: i32 {
+RT_ENUM! { enum SecondaryAuthenticationFactorDeviceFindScope: i32 ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorDeviceFindScope"] {
     User (SecondaryAuthenticationFactorDeviceFindScope_User) = 0, AllUsers (SecondaryAuthenticationFactorDeviceFindScope_AllUsers) = 1,
 }}
-RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresence: i32 {
+RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresence: i32 ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorDevicePresence"] {
     Absent (SecondaryAuthenticationFactorDevicePresence_Absent) = 0, Present (SecondaryAuthenticationFactorDevicePresence_Present) = 1,
 }}
-RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresenceMonitoringMode: i32 {
+RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresenceMonitoringMode: i32 ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorDevicePresenceMonitoringMode"] {
     Unsupported (SecondaryAuthenticationFactorDevicePresenceMonitoringMode_Unsupported) = 0, AppManaged (SecondaryAuthenticationFactorDevicePresenceMonitoringMode_AppManaged) = 1, SystemManaged (SecondaryAuthenticationFactorDevicePresenceMonitoringMode_SystemManaged) = 2,
 }}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics, 2420742681, 32498, 17699, 149, 28, 164, 23, 162, 74, 207, 147);
@@ -497,10 +497,10 @@ impl ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus: i32 {
+RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus: i32 ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus"] {
     Unsupported (SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus_Unsupported) = 0, Succeeded (SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus_Succeeded) = 1, DisabledByPolicy (SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus_DisabledByPolicy) = 2,
 }}
-RT_ENUM! { enum SecondaryAuthenticationFactorFinishAuthenticationStatus: i32 {
+RT_ENUM! { enum SecondaryAuthenticationFactorFinishAuthenticationStatus: i32 ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorFinishAuthenticationStatus"] {
     Failed (SecondaryAuthenticationFactorFinishAuthenticationStatus_Failed) = 0, Completed (SecondaryAuthenticationFactorFinishAuthenticationStatus_Completed) = 1, NonceExpired (SecondaryAuthenticationFactorFinishAuthenticationStatus_NonceExpired) = 2,
 }}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorInfo, 506177633, 34099, 20430, 131, 155, 236, 183, 36, 16, 172, 20);
@@ -532,7 +532,7 @@ impl ISecondaryAuthenticationFactorInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SecondaryAuthenticationFactorInfo: ISecondaryAuthenticationFactorInfo}
+RT_CLASS!{class SecondaryAuthenticationFactorInfo: ISecondaryAuthenticationFactorInfo ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorInfo"]}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorInfo2, 349798819, 64550, 20471, 171, 195, 72, 232, 42, 81, 42, 10);
 RT_INTERFACE!{interface ISecondaryAuthenticationFactorInfo2(ISecondaryAuthenticationFactorInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorInfo2] {
     fn get_PresenceMonitoringMode(&self, out: *mut SecondaryAuthenticationFactorDevicePresenceMonitoringMode) -> HRESULT,
@@ -574,7 +574,7 @@ impl ISecondaryAuthenticationFactorRegistration {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SecondaryAuthenticationFactorRegistration: ISecondaryAuthenticationFactorRegistration}
+RT_CLASS!{class SecondaryAuthenticationFactorRegistration: ISecondaryAuthenticationFactorRegistration ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorRegistration"]}
 impl RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics> for SecondaryAuthenticationFactorRegistration {}
 impl RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics> for SecondaryAuthenticationFactorRegistration {}
 impl SecondaryAuthenticationFactorRegistration {
@@ -621,7 +621,7 @@ impl ISecondaryAuthenticationFactorRegistrationResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SecondaryAuthenticationFactorRegistrationResult: ISecondaryAuthenticationFactorRegistrationResult}
+RT_CLASS!{class SecondaryAuthenticationFactorRegistrationResult: ISecondaryAuthenticationFactorRegistrationResult ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorRegistrationResult"]}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorRegistrationStatics, 450826085, 58295, 16725, 153, 127, 183, 86, 239, 101, 190, 186);
 RT_INTERFACE!{static interface ISecondaryAuthenticationFactorRegistrationStatics(ISecondaryAuthenticationFactorRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorRegistrationStatics] {
     #[cfg(feature="windows-storage")] fn RequestStartRegisteringDeviceAsync(&self, deviceId: HSTRING, capabilities: SecondaryAuthenticationFactorDeviceCapabilities, deviceFriendlyName: HSTRING, deviceModelNumber: HSTRING, deviceKey: *mut ::rt::gen::windows::storage::streams::IBuffer, mutualAuthenticationKey: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<SecondaryAuthenticationFactorRegistrationResult>) -> HRESULT,
@@ -651,14 +651,14 @@ impl ISecondaryAuthenticationFactorRegistrationStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SecondaryAuthenticationFactorRegistrationStatus: i32 {
+RT_ENUM! { enum SecondaryAuthenticationFactorRegistrationStatus: i32 ["Windows.Security.Authentication.Identity.Provider.SecondaryAuthenticationFactorRegistrationStatus"] {
     Failed (SecondaryAuthenticationFactorRegistrationStatus_Failed) = 0, Started (SecondaryAuthenticationFactorRegistrationStatus_Started) = 1, CanceledByUser (SecondaryAuthenticationFactorRegistrationStatus_CanceledByUser) = 2, PinSetupRequired (SecondaryAuthenticationFactorRegistrationStatus_PinSetupRequired) = 3, DisabledByPolicy (SecondaryAuthenticationFactorRegistrationStatus_DisabledByPolicy) = 4,
 }}
 } // Windows.Security.Authentication.Identity.Provider
 } // Windows.Security.Authentication.Identity
 pub mod onlineid { // Windows.Security.Authentication.OnlineId
 use ::prelude::*;
-RT_ENUM! { enum CredentialPromptType: i32 {
+RT_ENUM! { enum CredentialPromptType: i32 ["Windows.Security.Authentication.OnlineId.CredentialPromptType"] {
     PromptIfNeeded (CredentialPromptType_PromptIfNeeded) = 0, RetypeCredentials (CredentialPromptType_RetypeCredentials) = 1, DoNotPrompt (CredentialPromptType_DoNotPrompt) = 2,
 }}
 DEFINE_IID!(IID_IOnlineIdAuthenticator, 2684614026, 10667, 18455, 184, 132, 215, 81, 109, 173, 24, 185);
@@ -707,7 +707,7 @@ impl IOnlineIdAuthenticator {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OnlineIdAuthenticator: IOnlineIdAuthenticator}
+RT_CLASS!{class OnlineIdAuthenticator: IOnlineIdAuthenticator ["Windows.Security.Authentication.OnlineId.OnlineIdAuthenticator"]}
 impl RtActivatable<IActivationFactory> for OnlineIdAuthenticator {}
 DEFINE_CLSID!(OnlineIdAuthenticator(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,65,117,116,104,101,110,116,105,99,97,116,111,114,0]) [CLSID_OnlineIdAuthenticator]);
 DEFINE_IID!(IID_IOnlineIdServiceTicket, 3378271359, 55169, 19092, 172, 184, 197, 152, 116, 35, 140, 38);
@@ -733,7 +733,7 @@ impl IOnlineIdServiceTicket {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OnlineIdServiceTicket: IOnlineIdServiceTicket}
+RT_CLASS!{class OnlineIdServiceTicket: IOnlineIdServiceTicket ["Windows.Security.Authentication.OnlineId.OnlineIdServiceTicket"]}
 DEFINE_IID!(IID_IOnlineIdServiceTicketRequest, 695485907, 64355, 16693, 137, 9, 78, 53, 76, 6, 20, 102);
 RT_INTERFACE!{interface IOnlineIdServiceTicketRequest(IOnlineIdServiceTicketRequestVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdServiceTicketRequest] {
     fn get_Service(&self, out: *mut HSTRING) -> HRESULT,
@@ -751,7 +751,7 @@ impl IOnlineIdServiceTicketRequest {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OnlineIdServiceTicketRequest: IOnlineIdServiceTicketRequest}
+RT_CLASS!{class OnlineIdServiceTicketRequest: IOnlineIdServiceTicketRequest ["Windows.Security.Authentication.OnlineId.OnlineIdServiceTicketRequest"]}
 impl RtActivatable<IOnlineIdServiceTicketRequestFactory> for OnlineIdServiceTicketRequest {}
 impl OnlineIdServiceTicketRequest {
     #[inline] pub fn create_online_id_service_ticket_request(service: &HStringArg, policy: &HStringArg) -> Result<ComPtr<OnlineIdServiceTicketRequest>> {
@@ -818,7 +818,7 @@ impl IOnlineIdSystemAuthenticatorForUser {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OnlineIdSystemAuthenticatorForUser: IOnlineIdSystemAuthenticatorForUser}
+RT_CLASS!{class OnlineIdSystemAuthenticatorForUser: IOnlineIdSystemAuthenticatorForUser ["Windows.Security.Authentication.OnlineId.OnlineIdSystemAuthenticatorForUser"]}
 DEFINE_IID!(IID_IOnlineIdSystemAuthenticatorStatics, 2231662482, 63028, 16867, 150, 164, 81, 100, 233, 2, 199, 64);
 RT_INTERFACE!{static interface IOnlineIdSystemAuthenticatorStatics(IOnlineIdSystemAuthenticatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemAuthenticatorStatics] {
     fn get_Default(&self, out: *mut *mut OnlineIdSystemAuthenticatorForUser) -> HRESULT,
@@ -853,7 +853,7 @@ impl IOnlineIdSystemIdentity {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OnlineIdSystemIdentity: IOnlineIdSystemIdentity}
+RT_CLASS!{class OnlineIdSystemIdentity: IOnlineIdSystemIdentity ["Windows.Security.Authentication.OnlineId.OnlineIdSystemIdentity"]}
 DEFINE_IID!(IID_IOnlineIdSystemTicketResult, 3674890232, 45208, 19149, 157, 19, 158, 100, 6, 82, 181, 182);
 RT_INTERFACE!{interface IOnlineIdSystemTicketResult(IOnlineIdSystemTicketResultVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemTicketResult] {
     fn get_Identity(&self, out: *mut *mut OnlineIdSystemIdentity) -> HRESULT,
@@ -877,12 +877,12 @@ impl IOnlineIdSystemTicketResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OnlineIdSystemTicketResult: IOnlineIdSystemTicketResult}
-RT_ENUM! { enum OnlineIdSystemTicketStatus: i32 {
+RT_CLASS!{class OnlineIdSystemTicketResult: IOnlineIdSystemTicketResult ["Windows.Security.Authentication.OnlineId.OnlineIdSystemTicketResult"]}
+RT_ENUM! { enum OnlineIdSystemTicketStatus: i32 ["Windows.Security.Authentication.OnlineId.OnlineIdSystemTicketStatus"] {
     Success (OnlineIdSystemTicketStatus_Success) = 0, Error (OnlineIdSystemTicketStatus_Error) = 1, ServiceConnectionError (OnlineIdSystemTicketStatus_ServiceConnectionError) = 2,
 }}
-RT_CLASS!{class SignOutUserOperation: foundation::IAsyncAction}
-RT_CLASS!{class UserAuthenticationOperation: foundation::IAsyncOperation<UserIdentity>}
+RT_CLASS!{class SignOutUserOperation: foundation::IAsyncAction ["Windows.Security.Authentication.OnlineId.SignOutUserOperation"]}
+RT_CLASS!{class UserAuthenticationOperation: foundation::IAsyncOperation<UserIdentity> ["Windows.Security.Authentication.OnlineId.UserAuthenticationOperation"]}
 DEFINE_IID!(IID_IUserIdentity, 558291405, 1858, 19427, 138, 28, 124, 122, 230, 121, 170, 136);
 RT_INTERFACE!{interface IUserIdentity(IUserIdentityVtbl): IInspectable(IInspectableVtbl) [IID_IUserIdentity] {
     fn get_Tickets(&self, out: *mut *mut foundation::collections::IVectorView<OnlineIdServiceTicket>) -> HRESULT,
@@ -936,11 +936,11 @@ impl IUserIdentity {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserIdentity: IUserIdentity}
+RT_CLASS!{class UserIdentity: IUserIdentity ["Windows.Security.Authentication.OnlineId.UserIdentity"]}
 } // Windows.Security.Authentication.OnlineId
 pub mod web { // Windows.Security.Authentication.Web
 use ::prelude::*;
-RT_ENUM! { enum TokenBindingKeyType: i32 {
+RT_ENUM! { enum TokenBindingKeyType: i32 ["Windows.Security.Authentication.Web.TokenBindingKeyType"] {
     Rsa2048 (TokenBindingKeyType_Rsa2048) = 0, EcdsaP256 (TokenBindingKeyType_EcdsaP256) = 1, AnyExisting (TokenBindingKeyType_AnyExisting) = 2,
 }}
 RT_CLASS!{static class WebAuthenticationBroker}
@@ -1028,7 +1028,7 @@ impl IWebAuthenticationBrokerStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WebAuthenticationOptions: u32 {
+RT_ENUM! { enum WebAuthenticationOptions: u32 ["Windows.Security.Authentication.Web.WebAuthenticationOptions"] {
     None (WebAuthenticationOptions_None) = 0, SilentMode (WebAuthenticationOptions_SilentMode) = 1, UseTitle (WebAuthenticationOptions_UseTitle) = 2, UseHttpPost (WebAuthenticationOptions_UseHttpPost) = 4, UseCorporateNetwork (WebAuthenticationOptions_UseCorporateNetwork) = 8,
 }}
 DEFINE_IID!(IID_IWebAuthenticationResult, 1677732683, 60905, 18186, 165, 205, 3, 35, 250, 246, 226, 98);
@@ -1054,8 +1054,8 @@ impl IWebAuthenticationResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAuthenticationResult: IWebAuthenticationResult}
-RT_ENUM! { enum WebAuthenticationStatus: i32 {
+RT_CLASS!{class WebAuthenticationResult: IWebAuthenticationResult ["Windows.Security.Authentication.Web.WebAuthenticationResult"]}
+RT_ENUM! { enum WebAuthenticationStatus: i32 ["Windows.Security.Authentication.Web.WebAuthenticationStatus"] {
     Success (WebAuthenticationStatus_Success) = 0, UserCancel (WebAuthenticationStatus_UserCancel) = 1, ErrorHttp (WebAuthenticationStatus_ErrorHttp) = 2,
 }}
 pub mod core { // Windows.Security.Authentication.Web.Core
@@ -1083,8 +1083,8 @@ impl IFindAllAccountsResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FindAllAccountsResult: IFindAllAccountsResult}
-RT_ENUM! { enum FindAllWebAccountsStatus: i32 {
+RT_CLASS!{class FindAllAccountsResult: IFindAllAccountsResult ["Windows.Security.Authentication.Web.Core.FindAllAccountsResult"]}
+RT_ENUM! { enum FindAllWebAccountsStatus: i32 ["Windows.Security.Authentication.Web.Core.FindAllWebAccountsStatus"] {
     Success (FindAllWebAccountsStatus_Success) = 0, NotAllowedByProvider (FindAllWebAccountsStatus_NotAllowedByProvider) = 1, NotSupportedByProvider (FindAllWebAccountsStatus_NotSupportedByProvider) = 2, ProviderError (FindAllWebAccountsStatus_ProviderError) = 3,
 }}
 DEFINE_IID!(IID_IWebAccountEventArgs, 1874264957, 16974, 17644, 151, 124, 239, 36, 21, 70, 42, 90);
@@ -1098,7 +1098,7 @@ impl IWebAccountEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountEventArgs: IWebAccountEventArgs}
+RT_CLASS!{class WebAccountEventArgs: IWebAccountEventArgs ["Windows.Security.Authentication.Web.Core.WebAccountEventArgs"]}
 DEFINE_IID!(IID_IWebAccountMonitor, 1950742013, 43677, 17945, 141, 93, 193, 56, 164, 237, 227, 229);
 RT_INTERFACE!{interface IWebAccountMonitor(IWebAccountMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountMonitor] {
     fn add_Updated(&self, handler: *mut foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -1137,7 +1137,7 @@ impl IWebAccountMonitor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountMonitor: IWebAccountMonitor}
+RT_CLASS!{class WebAccountMonitor: IWebAccountMonitor ["Windows.Security.Authentication.Web.Core.WebAccountMonitor"]}
 RT_CLASS!{static class WebAuthenticationCoreManager}
 impl RtActivatable<IWebAuthenticationCoreManagerStatics> for WebAuthenticationCoreManager {}
 impl RtActivatable<IWebAuthenticationCoreManagerStatics2> for WebAuthenticationCoreManager {}
@@ -1315,7 +1315,7 @@ impl IWebProviderError {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebProviderError: IWebProviderError}
+RT_CLASS!{class WebProviderError: IWebProviderError ["Windows.Security.Authentication.Web.Core.WebProviderError"]}
 impl RtActivatable<IWebProviderErrorFactory> for WebProviderError {}
 impl WebProviderError {
     #[inline] pub fn create(errorCode: u32, errorMessage: &HStringArg) -> Result<ComPtr<WebProviderError>> {
@@ -1369,7 +1369,7 @@ impl IWebTokenRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebTokenRequest: IWebTokenRequest}
+RT_CLASS!{class WebTokenRequest: IWebTokenRequest ["Windows.Security.Authentication.Web.Core.WebTokenRequest"]}
 impl RtActivatable<IWebTokenRequestFactory> for WebTokenRequest {}
 impl WebTokenRequest {
     #[inline] pub fn create(provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg) -> Result<ComPtr<WebTokenRequest>> {
@@ -1442,7 +1442,7 @@ impl IWebTokenRequestFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WebTokenRequestPromptType: i32 {
+RT_ENUM! { enum WebTokenRequestPromptType: i32 ["Windows.Security.Authentication.Web.Core.WebTokenRequestPromptType"] {
     Default (WebTokenRequestPromptType_Default) = 0, ForceAuthentication (WebTokenRequestPromptType_ForceAuthentication) = 1,
 }}
 DEFINE_IID!(IID_IWebTokenRequestResult, 3240788741, 53752, 17539, 141, 84, 56, 254, 41, 39, 132, 255);
@@ -1474,8 +1474,8 @@ impl IWebTokenRequestResult {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebTokenRequestResult: IWebTokenRequestResult}
-RT_ENUM! { enum WebTokenRequestStatus: i32 {
+RT_CLASS!{class WebTokenRequestResult: IWebTokenRequestResult ["Windows.Security.Authentication.Web.Core.WebTokenRequestResult"]}
+RT_ENUM! { enum WebTokenRequestStatus: i32 ["Windows.Security.Authentication.Web.Core.WebTokenRequestStatus"] {
     Success (WebTokenRequestStatus_Success) = 0, UserCancel (WebTokenRequestStatus_UserCancel) = 1, AccountSwitch (WebTokenRequestStatus_AccountSwitch) = 2, UserInteractionRequired (WebTokenRequestStatus_UserInteractionRequired) = 3, AccountProviderNotAvailable (WebTokenRequestStatus_AccountProviderNotAvailable) = 4, ProviderError (WebTokenRequestStatus_ProviderError) = 5,
 }}
 DEFINE_IID!(IID_IWebTokenResponse, 1739048394, 33782, 17606, 163, 177, 14, 182, 158, 65, 250, 138);
@@ -1507,7 +1507,7 @@ impl IWebTokenResponse {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebTokenResponse: IWebTokenResponse}
+RT_CLASS!{class WebTokenResponse: IWebTokenResponse ["Windows.Security.Authentication.Web.Core.WebTokenResponse"]}
 impl RtActivatable<IWebTokenResponseFactory> for WebTokenResponse {}
 impl RtActivatable<IActivationFactory> for WebTokenResponse {}
 impl WebTokenResponse {
@@ -1571,7 +1571,7 @@ impl IWebAccountClientView {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountClientView: IWebAccountClientView}
+RT_CLASS!{class WebAccountClientView: IWebAccountClientView ["Windows.Security.Authentication.Web.Provider.WebAccountClientView"]}
 impl RtActivatable<IWebAccountClientViewFactory> for WebAccountClientView {}
 impl WebAccountClientView {
     #[inline] pub fn create(viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri) -> Result<ComPtr<WebAccountClientView>> {
@@ -1599,7 +1599,7 @@ impl IWebAccountClientViewFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WebAccountClientViewType: i32 {
+RT_ENUM! { enum WebAccountClientViewType: i32 ["Windows.Security.Authentication.Web.Provider.WebAccountClientViewType"] {
     IdOnly (WebAccountClientViewType_IdOnly) = 0, IdAndProperties (WebAccountClientViewType_IdAndProperties) = 1,
 }}
 RT_CLASS!{static class WebAccountManager}
@@ -1847,7 +1847,7 @@ impl IWebAccountProviderAddAccountOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountProviderAddAccountOperation: IWebAccountProviderAddAccountOperation}
+RT_CLASS!{class WebAccountProviderAddAccountOperation: IWebAccountProviderAddAccountOperation ["Windows.Security.Authentication.Web.Provider.WebAccountProviderAddAccountOperation"]}
 DEFINE_IID!(IID_IWebAccountProviderBaseReportOperation, 3148131515, 39227, 19799, 187, 228, 20, 33, 227, 102, 139, 76);
 RT_INTERFACE!{interface IWebAccountProviderBaseReportOperation(IWebAccountProviderBaseReportOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderBaseReportOperation] {
     fn ReportCompleted(&self) -> HRESULT,
@@ -1874,8 +1874,8 @@ impl IWebAccountProviderDeleteAccountOperation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountProviderDeleteAccountOperation: IWebAccountProviderDeleteAccountOperation}
-RT_CLASS!{class WebAccountProviderGetTokenSilentOperation: IWebAccountProviderTokenOperation}
+RT_CLASS!{class WebAccountProviderDeleteAccountOperation: IWebAccountProviderDeleteAccountOperation ["Windows.Security.Authentication.Web.Provider.WebAccountProviderDeleteAccountOperation"]}
+RT_CLASS!{class WebAccountProviderGetTokenSilentOperation: IWebAccountProviderTokenOperation ["Windows.Security.Authentication.Web.Provider.WebAccountProviderGetTokenSilentOperation"]}
 DEFINE_IID!(IID_IWebAccountProviderManageAccountOperation, 3978353756, 53787, 17982, 169, 183, 193, 253, 14, 218, 233, 120);
 RT_INTERFACE!{interface IWebAccountProviderManageAccountOperation(IWebAccountProviderManageAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderManageAccountOperation] {
     fn get_WebAccount(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT,
@@ -1892,7 +1892,7 @@ impl IWebAccountProviderManageAccountOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountProviderManageAccountOperation: IWebAccountProviderManageAccountOperation}
+RT_CLASS!{class WebAccountProviderManageAccountOperation: IWebAccountProviderManageAccountOperation ["Windows.Security.Authentication.Web.Provider.WebAccountProviderManageAccountOperation"]}
 DEFINE_IID!(IID_IWebAccountProviderOperation, 1834820646, 4273, 16794, 164, 78, 249, 197, 22, 21, 116, 230);
 RT_INTERFACE!{interface IWebAccountProviderOperation(IWebAccountProviderOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderOperation] {
     fn get_Kind(&self, out: *mut WebAccountProviderOperationKind) -> HRESULT
@@ -1904,10 +1904,10 @@ impl IWebAccountProviderOperation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WebAccountProviderOperationKind: i32 {
+RT_ENUM! { enum WebAccountProviderOperationKind: i32 ["Windows.Security.Authentication.Web.Provider.WebAccountProviderOperationKind"] {
     RequestToken (WebAccountProviderOperationKind_RequestToken) = 0, GetTokenSilently (WebAccountProviderOperationKind_GetTokenSilently) = 1, AddAccount (WebAccountProviderOperationKind_AddAccount) = 2, ManageAccount (WebAccountProviderOperationKind_ManageAccount) = 3, DeleteAccount (WebAccountProviderOperationKind_DeleteAccount) = 4, RetrieveCookies (WebAccountProviderOperationKind_RetrieveCookies) = 5, SignOutAccount (WebAccountProviderOperationKind_SignOutAccount) = 6,
 }}
-RT_CLASS!{class WebAccountProviderRequestTokenOperation: IWebAccountProviderTokenOperation}
+RT_CLASS!{class WebAccountProviderRequestTokenOperation: IWebAccountProviderTokenOperation ["Windows.Security.Authentication.Web.Provider.WebAccountProviderRequestTokenOperation"]}
 DEFINE_IID!(IID_IWebAccountProviderRetrieveCookiesOperation, 1510212673, 4003, 19121, 160, 28, 32, 177, 16, 53, 133, 148);
 RT_INTERFACE!{interface IWebAccountProviderRetrieveCookiesOperation(IWebAccountProviderRetrieveCookiesOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderRetrieveCookiesOperation] {
     fn get_Context(&self, out: *mut *mut foundation::Uri) -> HRESULT,
@@ -1943,7 +1943,7 @@ impl IWebAccountProviderRetrieveCookiesOperation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountProviderRetrieveCookiesOperation: IWebAccountProviderRetrieveCookiesOperation}
+RT_CLASS!{class WebAccountProviderRetrieveCookiesOperation: IWebAccountProviderRetrieveCookiesOperation ["Windows.Security.Authentication.Web.Provider.WebAccountProviderRetrieveCookiesOperation"]}
 DEFINE_IID!(IID_IWebAccountProviderSignOutAccountOperation, 3096502813, 3157, 18364, 140, 114, 4, 166, 252, 124, 172, 7);
 RT_INTERFACE!{interface IWebAccountProviderSignOutAccountOperation(IWebAccountProviderSignOutAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderSignOutAccountOperation] {
     fn get_WebAccount(&self, out: *mut *mut super::super::super::credentials::WebAccount) -> HRESULT,
@@ -1967,7 +1967,7 @@ impl IWebAccountProviderSignOutAccountOperation {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountProviderSignOutAccountOperation: IWebAccountProviderSignOutAccountOperation}
+RT_CLASS!{class WebAccountProviderSignOutAccountOperation: IWebAccountProviderSignOutAccountOperation ["Windows.Security.Authentication.Web.Provider.WebAccountProviderSignOutAccountOperation"]}
 DEFINE_IID!(IID_IWebAccountProviderSilentReportOperation, 3769976312, 15119, 17626, 146, 76, 123, 24, 186, 170, 98, 169);
 RT_INTERFACE!{interface IWebAccountProviderSilentReportOperation(IWebAccountProviderSilentReportOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderSilentReportOperation] {
     fn ReportUserInteractionRequired(&self) -> HRESULT,
@@ -2033,7 +2033,7 @@ impl IWebAccountProviderTokenOperation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountProviderTriggerDetails: IWebAccountProviderTokenObjects}
+RT_CLASS!{class WebAccountProviderTriggerDetails: IWebAccountProviderTokenObjects ["Windows.Security.Authentication.Web.Provider.WebAccountProviderTriggerDetails"]}
 DEFINE_IID!(IID_IWebAccountProviderUIReportOperation, 687837907, 36736, 17147, 148, 79, 178, 16, 123, 189, 66, 230);
 RT_INTERFACE!{interface IWebAccountProviderUIReportOperation(IWebAccountProviderUIReportOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderUIReportOperation] {
     fn ReportUserCanceled(&self) -> HRESULT
@@ -2044,7 +2044,7 @@ impl IWebAccountProviderUIReportOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WebAccountScope: i32 {
+RT_ENUM! { enum WebAccountScope: i32 ["Windows.Security.Authentication.Web.Provider.WebAccountScope"] {
     PerUser (WebAccountScope_PerUser) = 0, PerApplication (WebAccountScope_PerApplication) = 1,
 }}
 DEFINE_IID!(IID_IWebAccountScopeManagerStatics, 1550639996, 4786, 16954, 191, 61, 133, 184, 215, 229, 54, 86);
@@ -2070,7 +2070,7 @@ impl IWebAccountScopeManagerStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WebAccountSelectionOptions: u32 {
+RT_ENUM! { enum WebAccountSelectionOptions: u32 ["Windows.Security.Authentication.Web.Provider.WebAccountSelectionOptions"] {
     Default (WebAccountSelectionOptions_Default) = 0, New (WebAccountSelectionOptions_New) = 1,
 }}
 DEFINE_IID!(IID_IWebProviderTokenRequest, 504919947, 34821, 17739, 159, 17, 70, 141, 42, 241, 9, 90);
@@ -2108,7 +2108,7 @@ impl IWebProviderTokenRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebProviderTokenRequest: IWebProviderTokenRequest}
+RT_CLASS!{class WebProviderTokenRequest: IWebProviderTokenRequest ["Windows.Security.Authentication.Web.Provider.WebProviderTokenRequest"]}
 DEFINE_IID!(IID_IWebProviderTokenRequest2, 3050778188, 4273, 19110, 136, 177, 11, 108, 158, 12, 30, 70);
 RT_INTERFACE!{interface IWebProviderTokenRequest2(IWebProviderTokenRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenRequest2] {
     #[cfg(feature="windows-storage")] fn GetApplicationTokenBindingKeyIdAsync(&self, keyType: super::TokenBindingKeyType, target: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IBuffer>) -> HRESULT
@@ -2154,7 +2154,7 @@ impl IWebProviderTokenResponse {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebProviderTokenResponse: IWebProviderTokenResponse}
+RT_CLASS!{class WebProviderTokenResponse: IWebProviderTokenResponse ["Windows.Security.Authentication.Web.Provider.WebProviderTokenResponse"]}
 impl RtActivatable<IWebProviderTokenResponseFactory> for WebProviderTokenResponse {}
 impl WebProviderTokenResponse {
     #[inline] pub fn create(webTokenResponse: &super::core::WebTokenResponse) -> Result<ComPtr<WebProviderTokenResponse>> {
@@ -2227,7 +2227,7 @@ impl IKeyCredential {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class KeyCredential: IKeyCredential}
+RT_CLASS!{class KeyCredential: IKeyCredential ["Windows.Security.Credentials.KeyCredential"]}
 DEFINE_IID!(IID_IKeyCredentialAttestationResult, 2024453025, 41921, 16643, 182, 204, 71, 44, 68, 23, 28, 187);
 RT_INTERFACE!{interface IKeyCredentialAttestationResult(IKeyCredentialAttestationResultVtbl): IInspectable(IInspectableVtbl) [IID_IKeyCredentialAttestationResult] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -2253,11 +2253,11 @@ impl IKeyCredentialAttestationResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class KeyCredentialAttestationResult: IKeyCredentialAttestationResult}
-RT_ENUM! { enum KeyCredentialAttestationStatus: i32 {
+RT_CLASS!{class KeyCredentialAttestationResult: IKeyCredentialAttestationResult ["Windows.Security.Credentials.KeyCredentialAttestationResult"]}
+RT_ENUM! { enum KeyCredentialAttestationStatus: i32 ["Windows.Security.Credentials.KeyCredentialAttestationStatus"] {
     Success (KeyCredentialAttestationStatus_Success) = 0, UnknownError (KeyCredentialAttestationStatus_UnknownError) = 1, NotSupported (KeyCredentialAttestationStatus_NotSupported) = 2, TemporaryFailure (KeyCredentialAttestationStatus_TemporaryFailure) = 3,
 }}
-RT_ENUM! { enum KeyCredentialCreationOption: i32 {
+RT_ENUM! { enum KeyCredentialCreationOption: i32 ["Windows.Security.Credentials.KeyCredentialCreationOption"] {
     ReplaceExisting (KeyCredentialCreationOption_ReplaceExisting) = 0, FailIfExists (KeyCredentialCreationOption_FailIfExists) = 1,
 }}
 RT_CLASS!{static class KeyCredentialManager}
@@ -2333,7 +2333,7 @@ impl IKeyCredentialOperationResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class KeyCredentialOperationResult: IKeyCredentialOperationResult}
+RT_CLASS!{class KeyCredentialOperationResult: IKeyCredentialOperationResult ["Windows.Security.Credentials.KeyCredentialOperationResult"]}
 DEFINE_IID!(IID_IKeyCredentialRetrievalResult, 1489860355, 36231, 16969, 155, 88, 246, 89, 140, 201, 100, 78);
 RT_INTERFACE!{interface IKeyCredentialRetrievalResult(IKeyCredentialRetrievalResultVtbl): IInspectable(IInspectableVtbl) [IID_IKeyCredentialRetrievalResult] {
     fn get_Credential(&self, out: *mut *mut KeyCredential) -> HRESULT,
@@ -2351,8 +2351,8 @@ impl IKeyCredentialRetrievalResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class KeyCredentialRetrievalResult: IKeyCredentialRetrievalResult}
-RT_ENUM! { enum KeyCredentialStatus: i32 {
+RT_CLASS!{class KeyCredentialRetrievalResult: IKeyCredentialRetrievalResult ["Windows.Security.Credentials.KeyCredentialRetrievalResult"]}
+RT_ENUM! { enum KeyCredentialStatus: i32 ["Windows.Security.Credentials.KeyCredentialStatus"] {
     Success (KeyCredentialStatus_Success) = 0, UnknownError (KeyCredentialStatus_UnknownError) = 1, NotFound (KeyCredentialStatus_NotFound) = 2, UserCanceled (KeyCredentialStatus_UserCanceled) = 3, UserPrefersPassword (KeyCredentialStatus_UserPrefersPassword) = 4, CredentialAlreadyExists (KeyCredentialStatus_CredentialAlreadyExists) = 5, SecurityDeviceLocked (KeyCredentialStatus_SecurityDeviceLocked) = 6,
 }}
 DEFINE_IID!(IID_IPasswordCredential, 1790019977, 50976, 16807, 166, 193, 254, 173, 179, 99, 41, 160);
@@ -2404,7 +2404,7 @@ impl IPasswordCredential {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PasswordCredential: IPasswordCredential}
+RT_CLASS!{class PasswordCredential: IPasswordCredential ["Windows.Security.Credentials.PasswordCredential"]}
 impl RtActivatable<ICredentialFactory> for PasswordCredential {}
 impl RtActivatable<IActivationFactory> for PasswordCredential {}
 impl PasswordCredential {
@@ -2413,7 +2413,7 @@ impl PasswordCredential {
     }
 }
 DEFINE_CLSID!(PasswordCredential(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,80,97,115,115,119,111,114,100,67,114,101,100,101,110,116,105,97,108,0]) [CLSID_PasswordCredential]);
-RT_CLASS!{class PasswordCredentialPropertyStore: foundation::collections::IPropertySet}
+RT_CLASS!{class PasswordCredentialPropertyStore: foundation::collections::IPropertySet ["Windows.Security.Credentials.PasswordCredentialPropertyStore"]}
 impl RtActivatable<IActivationFactory> for PasswordCredentialPropertyStore {}
 DEFINE_CLSID!(PasswordCredentialPropertyStore(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,80,97,115,115,119,111,114,100,67,114,101,100,101,110,116,105,97,108,80,114,111,112,101,114,116,121,83,116,111,114,101,0]) [CLSID_PasswordCredentialPropertyStore]);
 DEFINE_IID!(IID_IPasswordVault, 1643981835, 51412, 18625, 165, 79, 188, 90, 100, 32, 90, 242);
@@ -2455,7 +2455,7 @@ impl IPasswordVault {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PasswordVault: IPasswordVault}
+RT_CLASS!{class PasswordVault: IPasswordVault ["Windows.Security.Credentials.PasswordVault"]}
 impl RtActivatable<IActivationFactory> for PasswordVault {}
 DEFINE_CLSID!(PasswordVault(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,80,97,115,115,119,111,114,100,86,97,117,108,116,0]) [CLSID_PasswordVault]);
 DEFINE_IID!(IID_IWebAccount, 1766276786, 32817, 18878, 128, 187, 150, 203, 70, 217, 154, 186);
@@ -2481,7 +2481,7 @@ impl IWebAccount {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccount: IWebAccount}
+RT_CLASS!{class WebAccount: IWebAccount ["Windows.Security.Credentials.WebAccount"]}
 impl RtActivatable<IWebAccountFactory> for WebAccount {}
 impl WebAccount {
     #[inline] pub fn create_web_account(webAccountProvider: &WebAccountProvider, userName: &HStringArg, state: WebAccountState) -> Result<ComPtr<WebAccount>> {
@@ -2536,7 +2536,7 @@ impl IWebAccountFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WebAccountPictureSize: i32 {
+RT_ENUM! { enum WebAccountPictureSize: i32 ["Windows.Security.Credentials.WebAccountPictureSize"] {
     Size64x64 (WebAccountPictureSize_Size64x64) = 64, Size208x208 (WebAccountPictureSize_Size208x208) = 208, Size424x424 (WebAccountPictureSize_Size424x424) = 424, Size1080x1080 (WebAccountPictureSize_Size1080x1080) = 1080,
 }}
 DEFINE_IID!(IID_IWebAccountProvider, 702335171, 31417, 19068, 163, 54, 185, 66, 249, 219, 247, 199);
@@ -2562,7 +2562,7 @@ impl IWebAccountProvider {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountProvider: IWebAccountProvider}
+RT_CLASS!{class WebAccountProvider: IWebAccountProvider ["Windows.Security.Credentials.WebAccountProvider"]}
 impl RtActivatable<IWebAccountProviderFactory> for WebAccountProvider {}
 impl WebAccountProvider {
     #[inline] pub fn create_web_account_provider(id: &HStringArg, displayName: &HStringArg, iconUri: &foundation::Uri) -> Result<ComPtr<WebAccountProvider>> {
@@ -2620,12 +2620,12 @@ impl IWebAccountProviderFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WebAccountState: i32 {
+RT_ENUM! { enum WebAccountState: i32 ["Windows.Security.Credentials.WebAccountState"] {
     None (WebAccountState_None) = 0, Connected (WebAccountState_Connected) = 1, Error (WebAccountState_Error) = 2,
 }}
 pub mod ui { // Windows.Security.Credentials.UI
 use ::prelude::*;
-RT_ENUM! { enum AuthenticationProtocol: i32 {
+RT_ENUM! { enum AuthenticationProtocol: i32 ["Windows.Security.Credentials.UI.AuthenticationProtocol"] {
     Basic (AuthenticationProtocol_Basic) = 0, Digest (AuthenticationProtocol_Digest) = 1, Ntlm (AuthenticationProtocol_Ntlm) = 2, Kerberos (AuthenticationProtocol_Kerberos) = 3, Negotiate (AuthenticationProtocol_Negotiate) = 4, CredSsp (AuthenticationProtocol_CredSsp) = 5, Custom (AuthenticationProtocol_Custom) = 6,
 }}
 RT_CLASS!{static class CredentialPicker}
@@ -2759,7 +2759,7 @@ impl ICredentialPickerOptions {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CredentialPickerOptions: ICredentialPickerOptions}
+RT_CLASS!{class CredentialPickerOptions: ICredentialPickerOptions ["Windows.Security.Credentials.UI.CredentialPickerOptions"]}
 impl RtActivatable<IActivationFactory> for CredentialPickerOptions {}
 DEFINE_CLSID!(CredentialPickerOptions(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,85,73,46,67,114,101,100,101,110,116,105,97,108,80,105,99,107,101,114,79,112,116,105,111,110,115,0]) [CLSID_CredentialPickerOptions]);
 DEFINE_IID!(IID_ICredentialPickerResults, 424212890, 52272, 16652, 156, 56, 204, 8, 132, 197, 179, 215);
@@ -2810,7 +2810,7 @@ impl ICredentialPickerResults {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CredentialPickerResults: ICredentialPickerResults}
+RT_CLASS!{class CredentialPickerResults: ICredentialPickerResults ["Windows.Security.Credentials.UI.CredentialPickerResults"]}
 DEFINE_IID!(IID_ICredentialPickerStatics, 2855951475, 51690, 18306, 153, 251, 230, 215, 233, 56, 225, 45);
 RT_INTERFACE!{static interface ICredentialPickerStatics(ICredentialPickerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICredentialPickerStatics] {
     fn PickWithOptionsAsync(&self, options: *mut CredentialPickerOptions, out: *mut *mut foundation::IAsyncOperation<CredentialPickerResults>) -> HRESULT,
@@ -2834,10 +2834,10 @@ impl ICredentialPickerStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CredentialSaveOption: i32 {
+RT_ENUM! { enum CredentialSaveOption: i32 ["Windows.Security.Credentials.UI.CredentialSaveOption"] {
     Unselected (CredentialSaveOption_Unselected) = 0, Selected (CredentialSaveOption_Selected) = 1, Hidden (CredentialSaveOption_Hidden) = 2,
 }}
-RT_ENUM! { enum UserConsentVerificationResult: i32 {
+RT_ENUM! { enum UserConsentVerificationResult: i32 ["Windows.Security.Credentials.UI.UserConsentVerificationResult"] {
     Verified (UserConsentVerificationResult_Verified) = 0, DeviceNotPresent (UserConsentVerificationResult_DeviceNotPresent) = 1, NotConfiguredForUser (UserConsentVerificationResult_NotConfiguredForUser) = 2, DisabledByPolicy (UserConsentVerificationResult_DisabledByPolicy) = 3, DeviceBusy (UserConsentVerificationResult_DeviceBusy) = 4, RetriesExhausted (UserConsentVerificationResult_RetriesExhausted) = 5, Canceled (UserConsentVerificationResult_Canceled) = 6,
 }}
 RT_CLASS!{static class UserConsentVerifier}
@@ -2851,7 +2851,7 @@ impl UserConsentVerifier {
     }
 }
 DEFINE_CLSID!(UserConsentVerifier(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,85,73,46,85,115,101,114,67,111,110,115,101,110,116,86,101,114,105,102,105,101,114,0]) [CLSID_UserConsentVerifier]);
-RT_ENUM! { enum UserConsentVerifierAvailability: i32 {
+RT_ENUM! { enum UserConsentVerifierAvailability: i32 ["Windows.Security.Credentials.UI.UserConsentVerifierAvailability"] {
     Available (UserConsentVerifierAvailability_Available) = 0, DeviceNotPresent (UserConsentVerifierAvailability_DeviceNotPresent) = 1, NotConfiguredForUser (UserConsentVerifierAvailability_NotConfiguredForUser) = 2, DisabledByPolicy (UserConsentVerifierAvailability_DisabledByPolicy) = 3, DeviceBusy (UserConsentVerifierAvailability_DeviceBusy) = 4,
 }}
 DEFINE_IID!(IID_IUserConsentVerifierStatics, 2941206417, 22092, 19932, 184, 181, 151, 52, 71, 98, 124, 101);
@@ -2875,7 +2875,7 @@ impl IUserConsentVerifierStatics {
 } // Windows.Security.Credentials
 pub mod cryptography { // Windows.Security.Cryptography
 use ::prelude::*;
-RT_ENUM! { enum BinaryStringEncoding: i32 {
+RT_ENUM! { enum BinaryStringEncoding: i32 ["Windows.Security.Cryptography.BinaryStringEncoding"] {
     Utf8 (BinaryStringEncoding_Utf8) = 0, Utf16LE (BinaryStringEncoding_Utf16LE) = 1, Utf16BE (BinaryStringEncoding_Utf16BE) = 2,
 }}
 RT_CLASS!{static class CryptographicBuffer}
@@ -3084,7 +3084,7 @@ impl ICertificate {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Certificate: ICertificate}
+RT_CLASS!{class Certificate: ICertificate ["Windows.Security.Cryptography.Certificates.Certificate"]}
 impl RtActivatable<ICertificateFactory> for Certificate {}
 impl Certificate {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_certificate(certBlob: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<Certificate>> {
@@ -3179,8 +3179,8 @@ impl ICertificateChain {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CertificateChain: ICertificateChain}
-RT_ENUM! { enum CertificateChainPolicy: i32 {
+RT_CLASS!{class CertificateChain: ICertificateChain ["Windows.Security.Cryptography.Certificates.CertificateChain"]}
+RT_ENUM! { enum CertificateChainPolicy: i32 ["Windows.Security.Cryptography.Certificates.CertificateChainPolicy"] {
     Base (CertificateChainPolicy_Base) = 0, Ssl (CertificateChainPolicy_Ssl) = 1, NTAuthentication (CertificateChainPolicy_NTAuthentication) = 2, MicrosoftRoot (CertificateChainPolicy_MicrosoftRoot) = 3,
 }}
 RT_CLASS!{static class CertificateEnrollmentManager}
@@ -3302,7 +3302,7 @@ impl ICertificateExtension {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CertificateExtension: ICertificateExtension}
+RT_CLASS!{class CertificateExtension: ICertificateExtension ["Windows.Security.Cryptography.Certificates.CertificateExtension"]}
 impl RtActivatable<IActivationFactory> for CertificateExtension {}
 DEFINE_CLSID!(CertificateExtension(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,69,120,116,101,110,115,105,111,110,0]) [CLSID_CertificateExtension]);
 DEFINE_IID!(IID_ICertificateFactory, 397681180, 19375, 17570, 150, 8, 4, 251, 98, 177, 105, 66);
@@ -3409,7 +3409,7 @@ impl ICertificateKeyUsages {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CertificateKeyUsages: ICertificateKeyUsages}
+RT_CLASS!{class CertificateKeyUsages: ICertificateKeyUsages ["Windows.Security.Cryptography.Certificates.CertificateKeyUsages"]}
 impl RtActivatable<IActivationFactory> for CertificateKeyUsages {}
 DEFINE_CLSID!(CertificateKeyUsages(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,75,101,121,85,115,97,103,101,115,0]) [CLSID_CertificateKeyUsages]);
 DEFINE_IID!(IID_ICertificateQuery, 1527261745, 42792, 18710, 181, 238, 255, 203, 138, 207, 36, 23);
@@ -3467,7 +3467,7 @@ impl ICertificateQuery {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CertificateQuery: ICertificateQuery}
+RT_CLASS!{class CertificateQuery: ICertificateQuery ["Windows.Security.Cryptography.Certificates.CertificateQuery"]}
 impl RtActivatable<IActivationFactory> for CertificateQuery {}
 DEFINE_CLSID!(CertificateQuery(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,81,117,101,114,121,0]) [CLSID_CertificateQuery]);
 DEFINE_IID!(IID_ICertificateQuery2, 2472151799, 3033, 20341, 184, 194, 226, 122, 127, 116, 238, 205);
@@ -3612,7 +3612,7 @@ impl ICertificateRequestProperties {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CertificateRequestProperties: ICertificateRequestProperties}
+RT_CLASS!{class CertificateRequestProperties: ICertificateRequestProperties ["Windows.Security.Cryptography.Certificates.CertificateRequestProperties"]}
 impl RtActivatable<IActivationFactory> for CertificateRequestProperties {}
 DEFINE_CLSID!(CertificateRequestProperties(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,82,101,113,117,101,115,116,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_CertificateRequestProperties]);
 DEFINE_IID!(IID_ICertificateRequestProperties2, 1033947476, 55103, 20467, 160, 166, 6, 119, 192, 173, 160, 91);
@@ -3751,7 +3751,7 @@ impl ICertificateStore {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CertificateStore: ICertificateStore}
+RT_CLASS!{class CertificateStore: ICertificateStore ["Windows.Security.Cryptography.Certificates.CertificateStore"]}
 DEFINE_IID!(IID_ICertificateStore2, 3353775690, 16765, 19738, 186, 189, 21, 104, 126, 84, 153, 116);
 RT_INTERFACE!{interface ICertificateStore2(ICertificateStore2Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificateStore2] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT
@@ -3905,7 +3905,7 @@ impl IChainBuildingParameters {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChainBuildingParameters: IChainBuildingParameters}
+RT_CLASS!{class ChainBuildingParameters: IChainBuildingParameters ["Windows.Security.Cryptography.Certificates.ChainBuildingParameters"]}
 impl RtActivatable<IActivationFactory> for ChainBuildingParameters {}
 DEFINE_CLSID!(ChainBuildingParameters(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,104,97,105,110,66,117,105,108,100,105,110,103,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_ChainBuildingParameters]);
 DEFINE_IID!(IID_IChainValidationParameters, 3295951690, 32432, 19286, 160, 64, 185, 200, 230, 85, 221, 243);
@@ -3935,10 +3935,10 @@ impl IChainValidationParameters {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChainValidationParameters: IChainValidationParameters}
+RT_CLASS!{class ChainValidationParameters: IChainValidationParameters ["Windows.Security.Cryptography.Certificates.ChainValidationParameters"]}
 impl RtActivatable<IActivationFactory> for ChainValidationParameters {}
 DEFINE_CLSID!(ChainValidationParameters(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,104,97,105,110,86,97,108,105,100,97,116,105,111,110,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_ChainValidationParameters]);
-RT_ENUM! { enum ChainValidationResult: i32 {
+RT_ENUM! { enum ChainValidationResult: i32 ["Windows.Security.Cryptography.Certificates.ChainValidationResult"] {
     Success (ChainValidationResult_Success) = 0, Untrusted (ChainValidationResult_Untrusted) = 1, Revoked (ChainValidationResult_Revoked) = 2, Expired (ChainValidationResult_Expired) = 3, IncompleteChain (ChainValidationResult_IncompleteChain) = 4, InvalidSignature (ChainValidationResult_InvalidSignature) = 5, WrongUsage (ChainValidationResult_WrongUsage) = 6, InvalidName (ChainValidationResult_InvalidName) = 7, InvalidCertificateAuthorityPolicy (ChainValidationResult_InvalidCertificateAuthorityPolicy) = 8, BasicConstraintsError (ChainValidationResult_BasicConstraintsError) = 9, UnknownCriticalExtension (ChainValidationResult_UnknownCriticalExtension) = 10, RevocationInformationMissing (ChainValidationResult_RevocationInformationMissing) = 11, RevocationFailure (ChainValidationResult_RevocationFailure) = 12, OtherErrors (ChainValidationResult_OtherErrors) = 13,
 }}
 DEFINE_IID!(IID_ICmsAttachedSignature, 1636408733, 14167, 20171, 189, 220, 12, 163, 87, 215, 169, 54);
@@ -3970,7 +3970,7 @@ impl ICmsAttachedSignature {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CmsAttachedSignature: ICmsAttachedSignature}
+RT_CLASS!{class CmsAttachedSignature: ICmsAttachedSignature ["Windows.Security.Cryptography.Certificates.CmsAttachedSignature"]}
 impl RtActivatable<ICmsAttachedSignatureFactory> for CmsAttachedSignature {}
 impl RtActivatable<ICmsAttachedSignatureStatics> for CmsAttachedSignature {}
 impl CmsAttachedSignature {
@@ -4027,7 +4027,7 @@ impl ICmsDetachedSignature {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CmsDetachedSignature: ICmsDetachedSignature}
+RT_CLASS!{class CmsDetachedSignature: ICmsDetachedSignature ["Windows.Security.Cryptography.Certificates.CmsDetachedSignature"]}
 impl RtActivatable<ICmsDetachedSignatureFactory> for CmsDetachedSignature {}
 impl RtActivatable<ICmsDetachedSignatureStatics> for CmsDetachedSignature {}
 impl CmsDetachedSignature {
@@ -4094,7 +4094,7 @@ impl ICmsSignerInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CmsSignerInfo: ICmsSignerInfo}
+RT_CLASS!{class CmsSignerInfo: ICmsSignerInfo ["Windows.Security.Cryptography.Certificates.CmsSignerInfo"]}
 impl RtActivatable<IActivationFactory> for CmsSignerInfo {}
 DEFINE_CLSID!(CmsSignerInfo(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,109,115,83,105,103,110,101,114,73,110,102,111,0]) [CLSID_CmsSignerInfo]);
 DEFINE_IID!(IID_ICmsTimestampInfo, 794755314, 11288, 20360, 132, 53, 197, 52, 8, 96, 118, 245);
@@ -4120,14 +4120,14 @@ impl ICmsTimestampInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CmsTimestampInfo: ICmsTimestampInfo}
-RT_ENUM! { enum EnrollKeyUsages: u32 {
+RT_CLASS!{class CmsTimestampInfo: ICmsTimestampInfo ["Windows.Security.Cryptography.Certificates.CmsTimestampInfo"]}
+RT_ENUM! { enum EnrollKeyUsages: u32 ["Windows.Security.Cryptography.Certificates.EnrollKeyUsages"] {
     None (EnrollKeyUsages_None) = 0, Decryption (EnrollKeyUsages_Decryption) = 1, Signing (EnrollKeyUsages_Signing) = 2, KeyAgreement (EnrollKeyUsages_KeyAgreement) = 4, All (EnrollKeyUsages_All) = 16777215,
 }}
-RT_ENUM! { enum ExportOption: i32 {
+RT_ENUM! { enum ExportOption: i32 ["Windows.Security.Cryptography.Certificates.ExportOption"] {
     NotExportable (ExportOption_NotExportable) = 0, Exportable (ExportOption_Exportable) = 1,
 }}
-RT_ENUM! { enum InstallOptions: u32 {
+RT_ENUM! { enum InstallOptions: u32 ["Windows.Security.Cryptography.Certificates.InstallOptions"] {
     None (InstallOptions_None) = 0, DeleteExpired (InstallOptions_DeleteExpired) = 1,
 }}
 RT_CLASS!{static class KeyAlgorithmNames}
@@ -4279,10 +4279,10 @@ impl IKeyAttestationHelperStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum KeyProtectionLevel: i32 {
+RT_ENUM! { enum KeyProtectionLevel: i32 ["Windows.Security.Cryptography.Certificates.KeyProtectionLevel"] {
     NoConsent (KeyProtectionLevel_NoConsent) = 0, ConsentOnly (KeyProtectionLevel_ConsentOnly) = 1, ConsentWithPassword (KeyProtectionLevel_ConsentWithPassword) = 2, ConsentWithFingerprint (KeyProtectionLevel_ConsentWithFingerprint) = 3,
 }}
-RT_ENUM! { enum KeySize: i32 {
+RT_ENUM! { enum KeySize: i32 ["Windows.Security.Cryptography.Certificates.KeySize"] {
     Invalid (KeySize_Invalid) = 0, Rsa2048 (KeySize_Rsa2048) = 2048, Rsa4096 (KeySize_Rsa4096) = 4096,
 }}
 RT_CLASS!{static class KeyStorageProviderNames}
@@ -4419,10 +4419,10 @@ impl IPfxImportParameters {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PfxImportParameters: IPfxImportParameters}
+RT_CLASS!{class PfxImportParameters: IPfxImportParameters ["Windows.Security.Cryptography.Certificates.PfxImportParameters"]}
 impl RtActivatable<IActivationFactory> for PfxImportParameters {}
 DEFINE_CLSID!(PfxImportParameters(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,80,102,120,73,109,112,111,114,116,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_PfxImportParameters]);
-RT_ENUM! { enum SignatureValidationResult: i32 {
+RT_ENUM! { enum SignatureValidationResult: i32 ["Windows.Security.Cryptography.Certificates.SignatureValidationResult"] {
     Success (SignatureValidationResult_Success) = 0, InvalidParameter (SignatureValidationResult_InvalidParameter) = 1, BadMessage (SignatureValidationResult_BadMessage) = 2, InvalidSignature (SignatureValidationResult_InvalidSignature) = 3, OtherErrors (SignatureValidationResult_OtherErrors) = 4,
 }}
 RT_CLASS!{static class StandardCertificateStoreNames}
@@ -4503,7 +4503,7 @@ impl ISubjectAlternativeNameInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SubjectAlternativeNameInfo: ISubjectAlternativeNameInfo}
+RT_CLASS!{class SubjectAlternativeNameInfo: ISubjectAlternativeNameInfo ["Windows.Security.Cryptography.Certificates.SubjectAlternativeNameInfo"]}
 impl RtActivatable<IActivationFactory> for SubjectAlternativeNameInfo {}
 DEFINE_CLSID!(SubjectAlternativeNameInfo(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,83,117,98,106,101,99,116,65,108,116,101,114,110,97,116,105,118,101,78,97,109,101,73,110,102,111,0]) [CLSID_SubjectAlternativeNameInfo]);
 DEFINE_IID!(IID_ISubjectAlternativeNameInfo2, 1132099782, 7249, 16874, 179, 74, 61, 101, 67, 152, 163, 112);
@@ -4582,7 +4582,7 @@ impl IUserCertificateEnrollmentManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserCertificateEnrollmentManager: IUserCertificateEnrollmentManager}
+RT_CLASS!{class UserCertificateEnrollmentManager: IUserCertificateEnrollmentManager ["Windows.Security.Cryptography.Certificates.UserCertificateEnrollmentManager"]}
 DEFINE_IID!(IID_IUserCertificateEnrollmentManager2, 229481649, 26078, 18730, 184, 109, 252, 92, 72, 44, 55, 71);
 RT_INTERFACE!{interface IUserCertificateEnrollmentManager2(IUserCertificateEnrollmentManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IUserCertificateEnrollmentManager2] {
     fn ImportPfxDataToKspWithParametersAsync(&self, pfxData: HSTRING, password: HSTRING, pfxImportParameters: *mut PfxImportParameters, out: *mut *mut foundation::IAsyncAction) -> HRESULT
@@ -4617,7 +4617,7 @@ impl IUserCertificateStore {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserCertificateStore: IUserCertificateStore}
+RT_CLASS!{class UserCertificateStore: IUserCertificateStore ["Windows.Security.Cryptography.Certificates.UserCertificateStore"]}
 } // Windows.Security.Cryptography.Certificates
 pub mod core { // Windows.Security.Cryptography.Core
 use ::prelude::*;
@@ -4867,7 +4867,7 @@ impl IAsymmetricKeyAlgorithmProvider {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AsymmetricKeyAlgorithmProvider: IAsymmetricKeyAlgorithmProvider}
+RT_CLASS!{class AsymmetricKeyAlgorithmProvider: IAsymmetricKeyAlgorithmProvider ["Windows.Security.Cryptography.Core.AsymmetricKeyAlgorithmProvider"]}
 impl RtActivatable<IAsymmetricKeyAlgorithmProviderStatics> for AsymmetricKeyAlgorithmProvider {}
 impl AsymmetricKeyAlgorithmProvider {
     #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<AsymmetricKeyAlgorithmProvider>>> {
@@ -4903,7 +4903,7 @@ impl IAsymmetricKeyAlgorithmProviderStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum Capi1KdfTargetAlgorithm: i32 {
+RT_ENUM! { enum Capi1KdfTargetAlgorithm: i32 ["Windows.Security.Cryptography.Core.Capi1KdfTargetAlgorithm"] {
     NotAes (Capi1KdfTargetAlgorithm_NotAes) = 0, Aes (Capi1KdfTargetAlgorithm_Aes) = 1,
 }}
 RT_CLASS!{static class CryptographicEngine}
@@ -5030,7 +5030,7 @@ impl ICryptographicEngineStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CryptographicHash: IHashComputation}
+RT_CLASS!{class CryptographicHash: IHashComputation ["Windows.Security.Cryptography.Core.CryptographicHash"]}
 DEFINE_IID!(IID_ICryptographicKey, 3978967920, 36475, 16393, 132, 1, 255, 209, 166, 46, 235, 39);
 RT_INTERFACE!{interface ICryptographicKey(ICryptographicKeyVtbl): IInspectable(IInspectableVtbl) [IID_ICryptographicKey] {
     fn get_KeySize(&self, out: *mut u32) -> HRESULT,
@@ -5066,14 +5066,14 @@ impl ICryptographicKey {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CryptographicKey: ICryptographicKey}
-RT_ENUM! { enum CryptographicPadding: i32 {
+RT_CLASS!{class CryptographicKey: ICryptographicKey ["Windows.Security.Cryptography.Core.CryptographicKey"]}
+RT_ENUM! { enum CryptographicPadding: i32 ["Windows.Security.Cryptography.Core.CryptographicPadding"] {
     None (CryptographicPadding_None) = 0, RsaOaep (CryptographicPadding_RsaOaep) = 1, RsaPkcs1V15 (CryptographicPadding_RsaPkcs1V15) = 2, RsaPss (CryptographicPadding_RsaPss) = 3,
 }}
-RT_ENUM! { enum CryptographicPrivateKeyBlobType: i32 {
+RT_ENUM! { enum CryptographicPrivateKeyBlobType: i32 ["Windows.Security.Cryptography.Core.CryptographicPrivateKeyBlobType"] {
     Pkcs8RawPrivateKeyInfo (CryptographicPrivateKeyBlobType_Pkcs8RawPrivateKeyInfo) = 0, Pkcs1RsaPrivateKey (CryptographicPrivateKeyBlobType_Pkcs1RsaPrivateKey) = 1, BCryptPrivateKey (CryptographicPrivateKeyBlobType_BCryptPrivateKey) = 2, Capi1PrivateKey (CryptographicPrivateKeyBlobType_Capi1PrivateKey) = 3, BCryptEccFullPrivateKey (CryptographicPrivateKeyBlobType_BCryptEccFullPrivateKey) = 4,
 }}
-RT_ENUM! { enum CryptographicPublicKeyBlobType: i32 {
+RT_ENUM! { enum CryptographicPublicKeyBlobType: i32 ["Windows.Security.Cryptography.Core.CryptographicPublicKeyBlobType"] {
     X509SubjectPublicKeyInfo (CryptographicPublicKeyBlobType_X509SubjectPublicKeyInfo) = 0, Pkcs1RsaPublicKey (CryptographicPublicKeyBlobType_Pkcs1RsaPublicKey) = 1, BCryptPublicKey (CryptographicPublicKeyBlobType_BCryptPublicKey) = 2, Capi1PublicKey (CryptographicPublicKeyBlobType_Capi1PublicKey) = 3, BCryptEccFullPublicKey (CryptographicPublicKeyBlobType_BCryptEccFullPublicKey) = 4,
 }}
 RT_CLASS!{static class EccCurveNames}
@@ -5517,7 +5517,7 @@ impl IEncryptedAndAuthenticatedData {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EncryptedAndAuthenticatedData: IEncryptedAndAuthenticatedData}
+RT_CLASS!{class EncryptedAndAuthenticatedData: IEncryptedAndAuthenticatedData ["Windows.Security.Cryptography.Core.EncryptedAndAuthenticatedData"]}
 RT_CLASS!{static class HashAlgorithmNames}
 impl RtActivatable<IHashAlgorithmNamesStatics> for HashAlgorithmNames {}
 impl HashAlgorithmNames {
@@ -5603,7 +5603,7 @@ impl IHashAlgorithmProvider {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HashAlgorithmProvider: IHashAlgorithmProvider}
+RT_CLASS!{class HashAlgorithmProvider: IHashAlgorithmProvider ["Windows.Security.Cryptography.Core.HashAlgorithmProvider"]}
 impl RtActivatable<IHashAlgorithmProviderStatics> for HashAlgorithmProvider {}
 impl HashAlgorithmProvider {
     #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<HashAlgorithmProvider>>> {
@@ -5851,7 +5851,7 @@ impl IKeyDerivationAlgorithmProvider {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class KeyDerivationAlgorithmProvider: IKeyDerivationAlgorithmProvider}
+RT_CLASS!{class KeyDerivationAlgorithmProvider: IKeyDerivationAlgorithmProvider ["Windows.Security.Cryptography.Core.KeyDerivationAlgorithmProvider"]}
 impl RtActivatable<IKeyDerivationAlgorithmProviderStatics> for KeyDerivationAlgorithmProvider {}
 impl KeyDerivationAlgorithmProvider {
     #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<KeyDerivationAlgorithmProvider>>> {
@@ -5894,7 +5894,7 @@ impl IKeyDerivationParameters {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class KeyDerivationParameters: IKeyDerivationParameters}
+RT_CLASS!{class KeyDerivationParameters: IKeyDerivationParameters ["Windows.Security.Cryptography.Core.KeyDerivationParameters"]}
 impl RtActivatable<IKeyDerivationParametersStatics> for KeyDerivationParameters {}
 impl RtActivatable<IKeyDerivationParametersStatics2> for KeyDerivationParameters {}
 impl KeyDerivationParameters {
@@ -6049,7 +6049,7 @@ impl IMacAlgorithmProvider {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MacAlgorithmProvider: IMacAlgorithmProvider}
+RT_CLASS!{class MacAlgorithmProvider: IMacAlgorithmProvider ["Windows.Security.Cryptography.Core.MacAlgorithmProvider"]}
 impl RtActivatable<IMacAlgorithmProviderStatics> for MacAlgorithmProvider {}
 impl MacAlgorithmProvider {
     #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<MacAlgorithmProvider>>> {
@@ -6311,7 +6311,7 @@ impl ISymmetricKeyAlgorithmProvider {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SymmetricKeyAlgorithmProvider: ISymmetricKeyAlgorithmProvider}
+RT_CLASS!{class SymmetricKeyAlgorithmProvider: ISymmetricKeyAlgorithmProvider ["Windows.Security.Cryptography.Core.SymmetricKeyAlgorithmProvider"]}
 impl RtActivatable<ISymmetricKeyAlgorithmProviderStatics> for SymmetricKeyAlgorithmProvider {}
 impl SymmetricKeyAlgorithmProvider {
     #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<SymmetricKeyAlgorithmProvider>>> {
@@ -6362,7 +6362,7 @@ impl IDataProtectionProvider {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataProtectionProvider: IDataProtectionProvider}
+RT_CLASS!{class DataProtectionProvider: IDataProtectionProvider ["Windows.Security.Cryptography.DataProtection.DataProtectionProvider"]}
 impl RtActivatable<IDataProtectionProviderFactory> for DataProtectionProvider {}
 impl RtActivatable<IActivationFactory> for DataProtectionProvider {}
 impl DataProtectionProvider {
@@ -6404,7 +6404,7 @@ impl IBufferProtectUnprotectResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BufferProtectUnprotectResult: IBufferProtectUnprotectResult}
+RT_CLASS!{class BufferProtectUnprotectResult: IBufferProtectUnprotectResult ["Windows.Security.EnterpriseData.BufferProtectUnprotectResult"]}
 DEFINE_IID!(IID_IDataProtectionInfo, 2216734913, 24113, 17413, 149, 64, 63, 148, 58, 240, 203, 38);
 RT_INTERFACE!{interface IDataProtectionInfo(IDataProtectionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IDataProtectionInfo] {
     fn get_Status(&self, out: *mut DataProtectionStatus) -> HRESULT,
@@ -6422,7 +6422,7 @@ impl IDataProtectionInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataProtectionInfo: IDataProtectionInfo}
+RT_CLASS!{class DataProtectionInfo: IDataProtectionInfo ["Windows.Security.EnterpriseData.DataProtectionInfo"]}
 RT_CLASS!{static class DataProtectionManager}
 impl RtActivatable<IDataProtectionManagerStatics> for DataProtectionManager {}
 impl DataProtectionManager {
@@ -6487,10 +6487,10 @@ impl IDataProtectionManagerStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DataProtectionStatus: i32 {
+RT_ENUM! { enum DataProtectionStatus: i32 ["Windows.Security.EnterpriseData.DataProtectionStatus"] {
     ProtectedToOtherIdentity (DataProtectionStatus_ProtectedToOtherIdentity) = 0, Protected (DataProtectionStatus_Protected) = 1, Revoked (DataProtectionStatus_Revoked) = 2, Unprotected (DataProtectionStatus_Unprotected) = 3, LicenseExpired (DataProtectionStatus_LicenseExpired) = 4, AccessSuspended (DataProtectionStatus_AccessSuspended) = 5,
 }}
-RT_ENUM! { enum EnforcementLevel: i32 {
+RT_ENUM! { enum EnforcementLevel: i32 ["Windows.Security.EnterpriseData.EnforcementLevel"] {
     NoProtection (EnforcementLevel_NoProtection) = 0, Silent (EnforcementLevel_Silent) = 1, Override (EnforcementLevel_Override) = 2, Block (EnforcementLevel_Block) = 3,
 }}
 DEFINE_IID!(IID_IFileProtectionInfo, 1323918470, 5246, 19920, 143, 175, 82, 83, 237, 145, 173, 12);
@@ -6516,7 +6516,7 @@ impl IFileProtectionInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileProtectionInfo: IFileProtectionInfo}
+RT_CLASS!{class FileProtectionInfo: IFileProtectionInfo ["Windows.Security.EnterpriseData.FileProtectionInfo"]}
 DEFINE_IID!(IID_IFileProtectionInfo2, 2182232652, 21882, 18829, 142, 148, 148, 76, 213, 131, 100, 50);
 RT_INTERFACE!{interface IFileProtectionInfo2(IFileProtectionInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IFileProtectionInfo2] {
     fn get_IsProtectWhileOpenSupported(&self, out: *mut bool) -> HRESULT
@@ -6658,7 +6658,7 @@ impl IFileProtectionManagerStatics3 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum FileProtectionStatus: i32 {
+RT_ENUM! { enum FileProtectionStatus: i32 ["Windows.Security.EnterpriseData.FileProtectionStatus"] {
     Undetermined (FileProtectionStatus_Undetermined) = 0, Unknown (FileProtectionStatus_Unknown) = 0, Unprotected (FileProtectionStatus_Unprotected) = 1, Revoked (FileProtectionStatus_Revoked) = 2, Protected (FileProtectionStatus_Protected) = 3, ProtectedByOtherUser (FileProtectionStatus_ProtectedByOtherUser) = 4, ProtectedToOtherEnterprise (FileProtectionStatus_ProtectedToOtherEnterprise) = 5, NotProtectable (FileProtectionStatus_NotProtectable) = 6, ProtectedToOtherIdentity (FileProtectionStatus_ProtectedToOtherIdentity) = 7, LicenseExpired (FileProtectionStatus_LicenseExpired) = 8, AccessSuspended (FileProtectionStatus_AccessSuspended) = 9, FileInUse (FileProtectionStatus_FileInUse) = 10,
 }}
 RT_CLASS!{static class FileRevocationManager}
@@ -6722,7 +6722,7 @@ impl IFileUnprotectOptions {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileUnprotectOptions: IFileUnprotectOptions}
+RT_CLASS!{class FileUnprotectOptions: IFileUnprotectOptions ["Windows.Security.EnterpriseData.FileUnprotectOptions"]}
 impl RtActivatable<IFileUnprotectOptionsFactory> for FileUnprotectOptions {}
 impl FileUnprotectOptions {
     #[inline] pub fn create(audit: bool) -> Result<ComPtr<FileUnprotectOptions>> {
@@ -6752,7 +6752,7 @@ impl IProtectedAccessResumedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProtectedAccessResumedEventArgs: IProtectedAccessResumedEventArgs}
+RT_CLASS!{class ProtectedAccessResumedEventArgs: IProtectedAccessResumedEventArgs ["Windows.Security.EnterpriseData.ProtectedAccessResumedEventArgs"]}
 DEFINE_IID!(IID_IProtectedAccessSuspendingEventArgs, 1973523424, 41796, 17055, 185, 117, 4, 252, 31, 136, 193, 133);
 RT_INTERFACE!{interface IProtectedAccessSuspendingEventArgs(IProtectedAccessSuspendingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IProtectedAccessSuspendingEventArgs] {
     fn get_Identities(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
@@ -6776,7 +6776,7 @@ impl IProtectedAccessSuspendingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProtectedAccessSuspendingEventArgs: IProtectedAccessSuspendingEventArgs}
+RT_CLASS!{class ProtectedAccessSuspendingEventArgs: IProtectedAccessSuspendingEventArgs ["Windows.Security.EnterpriseData.ProtectedAccessSuspendingEventArgs"]}
 DEFINE_IID!(IID_IProtectedContainerExportResult, 961081237, 63483, 19266, 175, 176, 223, 112, 180, 21, 67, 193);
 RT_INTERFACE!{interface IProtectedContainerExportResult(IProtectedContainerExportResultVtbl): IInspectable(IInspectableVtbl) [IID_IProtectedContainerExportResult] {
     fn get_Status(&self, out: *mut ProtectedImportExportStatus) -> HRESULT,
@@ -6794,7 +6794,7 @@ impl IProtectedContainerExportResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProtectedContainerExportResult: IProtectedContainerExportResult}
+RT_CLASS!{class ProtectedContainerExportResult: IProtectedContainerExportResult ["Windows.Security.EnterpriseData.ProtectedContainerExportResult"]}
 DEFINE_IID!(IID_IProtectedContainerImportResult, 3451355345, 59323, 19738, 147, 57, 52, 220, 65, 20, 159, 155);
 RT_INTERFACE!{interface IProtectedContainerImportResult(IProtectedContainerImportResultVtbl): IInspectable(IInspectableVtbl) [IID_IProtectedContainerImportResult] {
     fn get_Status(&self, out: *mut ProtectedImportExportStatus) -> HRESULT,
@@ -6812,7 +6812,7 @@ impl IProtectedContainerImportResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProtectedContainerImportResult: IProtectedContainerImportResult}
+RT_CLASS!{class ProtectedContainerImportResult: IProtectedContainerImportResult ["Windows.Security.EnterpriseData.ProtectedContainerImportResult"]}
 DEFINE_IID!(IID_IProtectedContentRevokedEventArgs, 1667786785, 22713, 18414, 147, 217, 240, 247, 65, 207, 67, 240);
 RT_INTERFACE!{interface IProtectedContentRevokedEventArgs(IProtectedContentRevokedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IProtectedContentRevokedEventArgs] {
     fn get_Identities(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
@@ -6824,7 +6824,7 @@ impl IProtectedContentRevokedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProtectedContentRevokedEventArgs: IProtectedContentRevokedEventArgs}
+RT_CLASS!{class ProtectedContentRevokedEventArgs: IProtectedContentRevokedEventArgs ["Windows.Security.EnterpriseData.ProtectedContentRevokedEventArgs"]}
 DEFINE_IID!(IID_IProtectedFileCreateResult, 686026090, 59879, 18947, 159, 83, 189, 177, 97, 114, 105, 155);
 RT_INTERFACE!{interface IProtectedFileCreateResult(IProtectedFileCreateResultVtbl): IInspectable(IInspectableVtbl) [IID_IProtectedFileCreateResult] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -6850,11 +6850,11 @@ impl IProtectedFileCreateResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProtectedFileCreateResult: IProtectedFileCreateResult}
-RT_ENUM! { enum ProtectedImportExportStatus: i32 {
+RT_CLASS!{class ProtectedFileCreateResult: IProtectedFileCreateResult ["Windows.Security.EnterpriseData.ProtectedFileCreateResult"]}
+RT_ENUM! { enum ProtectedImportExportStatus: i32 ["Windows.Security.EnterpriseData.ProtectedImportExportStatus"] {
     Ok (ProtectedImportExportStatus_Ok) = 0, Undetermined (ProtectedImportExportStatus_Undetermined) = 1, Unprotected (ProtectedImportExportStatus_Unprotected) = 2, Revoked (ProtectedImportExportStatus_Revoked) = 3, NotRoamable (ProtectedImportExportStatus_NotRoamable) = 4, ProtectedToOtherIdentity (ProtectedImportExportStatus_ProtectedToOtherIdentity) = 5, LicenseExpired (ProtectedImportExportStatus_LicenseExpired) = 6, AccessSuspended (ProtectedImportExportStatus_AccessSuspended) = 7,
 }}
-RT_ENUM! { enum ProtectionPolicyAuditAction: i32 {
+RT_ENUM! { enum ProtectionPolicyAuditAction: i32 ["Windows.Security.EnterpriseData.ProtectionPolicyAuditAction"] {
     Decrypt (ProtectionPolicyAuditAction_Decrypt) = 0, CopyToLocation (ProtectionPolicyAuditAction_CopyToLocation) = 1, SendToRecipient (ProtectionPolicyAuditAction_SendToRecipient) = 2, Other (ProtectionPolicyAuditAction_Other) = 3,
 }}
 DEFINE_IID!(IID_IProtectionPolicyAuditInfo, 1113241572, 65207, 17660, 179, 187, 195, 196, 215, 236, 190, 187);
@@ -6906,7 +6906,7 @@ impl IProtectionPolicyAuditInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProtectionPolicyAuditInfo: IProtectionPolicyAuditInfo}
+RT_CLASS!{class ProtectionPolicyAuditInfo: IProtectionPolicyAuditInfo ["Windows.Security.EnterpriseData.ProtectionPolicyAuditInfo"]}
 impl RtActivatable<IProtectionPolicyAuditInfoFactory> for ProtectionPolicyAuditInfo {}
 impl ProtectionPolicyAuditInfo {
     #[inline] pub fn create(action: ProtectionPolicyAuditAction, dataDescription: &HStringArg, sourceDescription: &HStringArg, targetDescription: &HStringArg) -> Result<ComPtr<ProtectionPolicyAuditInfo>> {
@@ -6934,7 +6934,7 @@ impl IProtectionPolicyAuditInfoFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ProtectionPolicyEvaluationResult: i32 {
+RT_ENUM! { enum ProtectionPolicyEvaluationResult: i32 ["Windows.Security.EnterpriseData.ProtectionPolicyEvaluationResult"] {
     Allowed (ProtectionPolicyEvaluationResult_Allowed) = 0, Blocked (ProtectionPolicyEvaluationResult_Blocked) = 1, ConsentRequired (ProtectionPolicyEvaluationResult_ConsentRequired) = 2,
 }}
 DEFINE_IID!(IID_IProtectionPolicyManager, 3580902936, 41101, 18406, 162, 64, 153, 52, 215, 22, 94, 181);
@@ -6953,7 +6953,7 @@ impl IProtectionPolicyManager {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProtectionPolicyManager: IProtectionPolicyManager}
+RT_CLASS!{class ProtectionPolicyManager: IProtectionPolicyManager ["Windows.Security.EnterpriseData.ProtectionPolicyManager"]}
 impl RtActivatable<IProtectionPolicyManagerStatics> for ProtectionPolicyManager {}
 impl RtActivatable<IProtectionPolicyManagerStatics2> for ProtectionPolicyManager {}
 impl RtActivatable<IProtectionPolicyManagerStatics3> for ProtectionPolicyManager {}
@@ -7357,14 +7357,14 @@ impl IProtectionPolicyManagerStatics4 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ProtectionPolicyRequestAccessBehavior: i32 {
+RT_ENUM! { enum ProtectionPolicyRequestAccessBehavior: i32 ["Windows.Security.EnterpriseData.ProtectionPolicyRequestAccessBehavior"] {
     Decrypt (ProtectionPolicyRequestAccessBehavior_Decrypt) = 0, TreatOverridePolicyAsBlock (ProtectionPolicyRequestAccessBehavior_TreatOverridePolicyAsBlock) = 1,
 }}
 DEFINE_IID!(IID_IThreadNetworkContext, 4199459049, 61203, 16474, 177, 44, 215, 52, 140, 111, 65, 252);
 RT_INTERFACE!{interface IThreadNetworkContext(IThreadNetworkContextVtbl): IInspectable(IInspectableVtbl) [IID_IThreadNetworkContext] {
     
 }}
-RT_CLASS!{class ThreadNetworkContext: IThreadNetworkContext}
+RT_CLASS!{class ThreadNetworkContext: IThreadNetworkContext ["Windows.Security.EnterpriseData.ThreadNetworkContext"]}
 } // Windows.Security.EnterpriseData
 pub mod exchangeactivesyncprovisioning { // Windows.Security.ExchangeActiveSyncProvisioning
 use ::prelude::*;
@@ -7409,7 +7409,7 @@ impl IEasClientDeviceInformation {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EasClientDeviceInformation: IEasClientDeviceInformation}
+RT_CLASS!{class EasClientDeviceInformation: IEasClientDeviceInformation ["Windows.Security.ExchangeActiveSyncProvisioning.EasClientDeviceInformation"]}
 impl RtActivatable<IActivationFactory> for EasClientDeviceInformation {}
 DEFINE_CLSID!(EasClientDeviceInformation(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,120,99,104,97,110,103,101,65,99,116,105,118,101,83,121,110,99,80,114,111,118,105,115,105,111,110,105,110,103,46,69,97,115,67,108,105,101,110,116,68,101,118,105,99,101,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_EasClientDeviceInformation]);
 DEFINE_IID!(IID_IEasClientDeviceInformation2, 4289943843, 47910, 19818, 129, 188, 22, 90, 238, 10, 215, 84);
@@ -7534,7 +7534,7 @@ impl IEasClientSecurityPolicy {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EasClientSecurityPolicy: IEasClientSecurityPolicy}
+RT_CLASS!{class EasClientSecurityPolicy: IEasClientSecurityPolicy ["Windows.Security.ExchangeActiveSyncProvisioning.EasClientSecurityPolicy"]}
 impl RtActivatable<IActivationFactory> for EasClientSecurityPolicy {}
 DEFINE_CLSID!(EasClientSecurityPolicy(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,120,99,104,97,110,103,101,65,99,116,105,118,101,83,121,110,99,80,114,111,118,105,115,105,111,110,105,110,103,46,69,97,115,67,108,105,101,110,116,83,101,99,117,114,105,116,121,80,111,108,105,99,121,0]) [CLSID_EasClientSecurityPolicy]);
 DEFINE_IID!(IID_IEasComplianceResults, 1178347932, 32537, 19558, 180, 3, 203, 69, 221, 87, 162, 179);
@@ -7596,7 +7596,7 @@ impl IEasComplianceResults {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EasComplianceResults: IEasComplianceResults}
+RT_CLASS!{class EasComplianceResults: IEasComplianceResults ["Windows.Security.ExchangeActiveSyncProvisioning.EasComplianceResults"]}
 DEFINE_IID!(IID_IEasComplianceResults2, 801005769, 6824, 18421, 136, 187, 203, 62, 240, 191, 251, 21);
 RT_INTERFACE!{interface IEasComplianceResults2(IEasComplianceResults2Vtbl): IInspectable(IInspectableVtbl) [IID_IEasComplianceResults2] {
     fn get_EncryptionProviderType(&self, out: *mut EasEncryptionProviderType) -> HRESULT
@@ -7608,31 +7608,31 @@ impl IEasComplianceResults2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum EasDisallowConvenienceLogonResult: i32 {
+RT_ENUM! { enum EasDisallowConvenienceLogonResult: i32 ["Windows.Security.ExchangeActiveSyncProvisioning.EasDisallowConvenienceLogonResult"] {
     NotEvaluated (EasDisallowConvenienceLogonResult_NotEvaluated) = 0, Compliant (EasDisallowConvenienceLogonResult_Compliant) = 1, CanBeCompliant (EasDisallowConvenienceLogonResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasDisallowConvenienceLogonResult_RequestedPolicyIsStricter) = 3,
 }}
-RT_ENUM! { enum EasEncryptionProviderType: i32 {
+RT_ENUM! { enum EasEncryptionProviderType: i32 ["Windows.Security.ExchangeActiveSyncProvisioning.EasEncryptionProviderType"] {
     NotEvaluated (EasEncryptionProviderType_NotEvaluated) = 0, WindowsEncryption (EasEncryptionProviderType_WindowsEncryption) = 1, OtherEncryption (EasEncryptionProviderType_OtherEncryption) = 2,
 }}
-RT_ENUM! { enum EasMaxInactivityTimeLockResult: i32 {
+RT_ENUM! { enum EasMaxInactivityTimeLockResult: i32 ["Windows.Security.ExchangeActiveSyncProvisioning.EasMaxInactivityTimeLockResult"] {
     NotEvaluated (EasMaxInactivityTimeLockResult_NotEvaluated) = 0, Compliant (EasMaxInactivityTimeLockResult_Compliant) = 1, CanBeCompliant (EasMaxInactivityTimeLockResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasMaxInactivityTimeLockResult_RequestedPolicyIsStricter) = 3, InvalidParameter (EasMaxInactivityTimeLockResult_InvalidParameter) = 4,
 }}
-RT_ENUM! { enum EasMaxPasswordFailedAttemptsResult: i32 {
+RT_ENUM! { enum EasMaxPasswordFailedAttemptsResult: i32 ["Windows.Security.ExchangeActiveSyncProvisioning.EasMaxPasswordFailedAttemptsResult"] {
     NotEvaluated (EasMaxPasswordFailedAttemptsResult_NotEvaluated) = 0, Compliant (EasMaxPasswordFailedAttemptsResult_Compliant) = 1, CanBeCompliant (EasMaxPasswordFailedAttemptsResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasMaxPasswordFailedAttemptsResult_RequestedPolicyIsStricter) = 3, InvalidParameter (EasMaxPasswordFailedAttemptsResult_InvalidParameter) = 4,
 }}
-RT_ENUM! { enum EasMinPasswordComplexCharactersResult: i32 {
+RT_ENUM! { enum EasMinPasswordComplexCharactersResult: i32 ["Windows.Security.ExchangeActiveSyncProvisioning.EasMinPasswordComplexCharactersResult"] {
     NotEvaluated (EasMinPasswordComplexCharactersResult_NotEvaluated) = 0, Compliant (EasMinPasswordComplexCharactersResult_Compliant) = 1, CanBeCompliant (EasMinPasswordComplexCharactersResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasMinPasswordComplexCharactersResult_RequestedPolicyIsStricter) = 3, RequestedPolicyNotEnforceable (EasMinPasswordComplexCharactersResult_RequestedPolicyNotEnforceable) = 4, InvalidParameter (EasMinPasswordComplexCharactersResult_InvalidParameter) = 5, CurrentUserHasBlankPassword (EasMinPasswordComplexCharactersResult_CurrentUserHasBlankPassword) = 6, AdminsHaveBlankPassword (EasMinPasswordComplexCharactersResult_AdminsHaveBlankPassword) = 7, UserCannotChangePassword (EasMinPasswordComplexCharactersResult_UserCannotChangePassword) = 8, AdminsCannotChangePassword (EasMinPasswordComplexCharactersResult_AdminsCannotChangePassword) = 9, LocalControlledUsersCannotChangePassword (EasMinPasswordComplexCharactersResult_LocalControlledUsersCannotChangePassword) = 10, ConnectedAdminsProviderPolicyIsWeak (EasMinPasswordComplexCharactersResult_ConnectedAdminsProviderPolicyIsWeak) = 11, ConnectedUserProviderPolicyIsWeak (EasMinPasswordComplexCharactersResult_ConnectedUserProviderPolicyIsWeak) = 12, ChangeConnectedAdminsPassword (EasMinPasswordComplexCharactersResult_ChangeConnectedAdminsPassword) = 13, ChangeConnectedUserPassword (EasMinPasswordComplexCharactersResult_ChangeConnectedUserPassword) = 14,
 }}
-RT_ENUM! { enum EasMinPasswordLengthResult: i32 {
+RT_ENUM! { enum EasMinPasswordLengthResult: i32 ["Windows.Security.ExchangeActiveSyncProvisioning.EasMinPasswordLengthResult"] {
     NotEvaluated (EasMinPasswordLengthResult_NotEvaluated) = 0, Compliant (EasMinPasswordLengthResult_Compliant) = 1, CanBeCompliant (EasMinPasswordLengthResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasMinPasswordLengthResult_RequestedPolicyIsStricter) = 3, RequestedPolicyNotEnforceable (EasMinPasswordLengthResult_RequestedPolicyNotEnforceable) = 4, InvalidParameter (EasMinPasswordLengthResult_InvalidParameter) = 5, CurrentUserHasBlankPassword (EasMinPasswordLengthResult_CurrentUserHasBlankPassword) = 6, AdminsHaveBlankPassword (EasMinPasswordLengthResult_AdminsHaveBlankPassword) = 7, UserCannotChangePassword (EasMinPasswordLengthResult_UserCannotChangePassword) = 8, AdminsCannotChangePassword (EasMinPasswordLengthResult_AdminsCannotChangePassword) = 9, LocalControlledUsersCannotChangePassword (EasMinPasswordLengthResult_LocalControlledUsersCannotChangePassword) = 10, ConnectedAdminsProviderPolicyIsWeak (EasMinPasswordLengthResult_ConnectedAdminsProviderPolicyIsWeak) = 11, ConnectedUserProviderPolicyIsWeak (EasMinPasswordLengthResult_ConnectedUserProviderPolicyIsWeak) = 12, ChangeConnectedAdminsPassword (EasMinPasswordLengthResult_ChangeConnectedAdminsPassword) = 13, ChangeConnectedUserPassword (EasMinPasswordLengthResult_ChangeConnectedUserPassword) = 14,
 }}
-RT_ENUM! { enum EasPasswordExpirationResult: i32 {
+RT_ENUM! { enum EasPasswordExpirationResult: i32 ["Windows.Security.ExchangeActiveSyncProvisioning.EasPasswordExpirationResult"] {
     NotEvaluated (EasPasswordExpirationResult_NotEvaluated) = 0, Compliant (EasPasswordExpirationResult_Compliant) = 1, CanBeCompliant (EasPasswordExpirationResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasPasswordExpirationResult_RequestedPolicyIsStricter) = 3, RequestedExpirationIncompatible (EasPasswordExpirationResult_RequestedExpirationIncompatible) = 4, InvalidParameter (EasPasswordExpirationResult_InvalidParameter) = 5, UserCannotChangePassword (EasPasswordExpirationResult_UserCannotChangePassword) = 6, AdminsCannotChangePassword (EasPasswordExpirationResult_AdminsCannotChangePassword) = 7, LocalControlledUsersCannotChangePassword (EasPasswordExpirationResult_LocalControlledUsersCannotChangePassword) = 8,
 }}
-RT_ENUM! { enum EasPasswordHistoryResult: i32 {
+RT_ENUM! { enum EasPasswordHistoryResult: i32 ["Windows.Security.ExchangeActiveSyncProvisioning.EasPasswordHistoryResult"] {
     NotEvaluated (EasPasswordHistoryResult_NotEvaluated) = 0, Compliant (EasPasswordHistoryResult_Compliant) = 1, CanBeCompliant (EasPasswordHistoryResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasPasswordHistoryResult_RequestedPolicyIsStricter) = 3, InvalidParameter (EasPasswordHistoryResult_InvalidParameter) = 4,
 }}
-RT_ENUM! { enum EasRequireEncryptionResult: i32 {
+RT_ENUM! { enum EasRequireEncryptionResult: i32 ["Windows.Security.ExchangeActiveSyncProvisioning.EasRequireEncryptionResult"] {
     NotEvaluated (EasRequireEncryptionResult_NotEvaluated) = 0, Compliant (EasRequireEncryptionResult_Compliant) = 1, CanBeCompliant (EasRequireEncryptionResult_CanBeCompliant) = 2, NotProvisionedOnAllVolumes (EasRequireEncryptionResult_NotProvisionedOnAllVolumes) = 3, DeFixedDataNotSupported (EasRequireEncryptionResult_DeFixedDataNotSupported) = 4, FixedDataNotSupported (EasRequireEncryptionResult_FixedDataNotSupported) = 4, DeHardwareNotCompliant (EasRequireEncryptionResult_DeHardwareNotCompliant) = 5, HardwareNotCompliant (EasRequireEncryptionResult_HardwareNotCompliant) = 5, DeWinReNotConfigured (EasRequireEncryptionResult_DeWinReNotConfigured) = 6, LockNotConfigured (EasRequireEncryptionResult_LockNotConfigured) = 6, DeProtectionSuspended (EasRequireEncryptionResult_DeProtectionSuspended) = 7, ProtectionSuspended (EasRequireEncryptionResult_ProtectionSuspended) = 7, DeOsVolumeNotProtected (EasRequireEncryptionResult_DeOsVolumeNotProtected) = 8, OsVolumeNotProtected (EasRequireEncryptionResult_OsVolumeNotProtected) = 8, DeProtectionNotYetEnabled (EasRequireEncryptionResult_DeProtectionNotYetEnabled) = 9, ProtectionNotYetEnabled (EasRequireEncryptionResult_ProtectionNotYetEnabled) = 9, NoFeatureLicense (EasRequireEncryptionResult_NoFeatureLicense) = 10, OsNotProtected (EasRequireEncryptionResult_OsNotProtected) = 11, UnexpectedFailure (EasRequireEncryptionResult_UnexpectedFailure) = 12,
 }}
 } // Windows.Security.ExchangeActiveSyncProvisioning

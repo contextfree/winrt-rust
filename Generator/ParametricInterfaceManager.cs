@@ -10,8 +10,6 @@ namespace Generator
 {
     public class ParametricInterfaceManager
     {
-        private static Guid Namespace = new Guid("11F47AD5-7B73-42C0-ABAE-878B1E16ADEE");
-
         private static IEnumerable<Type> baseTypes = new List<Type>
         {
             //typeof(void),

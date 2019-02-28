@@ -86,15 +86,16 @@ namespace Generator.Types
             {
                 var dependsOnAssemblies = new List<string>(ForeignAssemblyDependencies.GroupBy(t => t.Module.Assembly.Name.Name).Select(g => g.Key));
                 var features = new FeatureConditions(dependsOnAssemblies);
+                string fullname = '"' + Type.FullName + '"';
 
                 Module.Append($@"
-{ features.GetAttribute() }RT_CLASS!{{class { DefinitionName }: { aliasedType }}}");
+{ features.GetAttribute() }RT_CLASS!{{class { DefinitionName }: { aliasedType } [{ fullname }]}}");
                 if (!features.IsEmpty)
                 {
                     // if the aliased type is from a different assembly that is not included, just use IInspectable instead
                     // otherwise types depending on this class would transitively depend on the aliased type
                     Module.Append($@"
-{ features.GetInvertedAttribute() }RT_CLASS!{{class { DefinitionName }: IInspectable}}");
+{ features.GetInvertedAttribute() }RT_CLASS!{{class { DefinitionName }: IInspectable [{ fullname }]}}");
                 }
 
                 foreach (var factory in factories.OrderBy(f => f))

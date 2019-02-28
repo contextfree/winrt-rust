@@ -17,7 +17,7 @@ impl IArcadeStick {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ArcadeStick: IArcadeStick}
+RT_CLASS!{class ArcadeStick: IArcadeStick ["Windows.Gaming.Input.ArcadeStick"]}
 impl RtActivatable<IArcadeStickStatics> for ArcadeStick {}
 impl RtActivatable<IArcadeStickStatics2> for ArcadeStick {}
 impl ArcadeStick {
@@ -41,10 +41,10 @@ impl ArcadeStick {
     }
 }
 DEFINE_CLSID!(ArcadeStick(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,65,114,99,97,100,101,83,116,105,99,107,0]) [CLSID_ArcadeStick]);
-RT_ENUM! { enum ArcadeStickButtons: u32 {
+RT_ENUM! { enum ArcadeStickButtons: u32 ["Windows.Gaming.Input.ArcadeStickButtons"] {
     None (ArcadeStickButtons_None) = 0, StickUp (ArcadeStickButtons_StickUp) = 1, StickDown (ArcadeStickButtons_StickDown) = 2, StickLeft (ArcadeStickButtons_StickLeft) = 4, StickRight (ArcadeStickButtons_StickRight) = 8, Action1 (ArcadeStickButtons_Action1) = 16, Action2 (ArcadeStickButtons_Action2) = 32, Action3 (ArcadeStickButtons_Action3) = 64, Action4 (ArcadeStickButtons_Action4) = 128, Action5 (ArcadeStickButtons_Action5) = 256, Action6 (ArcadeStickButtons_Action6) = 512, Special1 (ArcadeStickButtons_Special1) = 1024, Special2 (ArcadeStickButtons_Special2) = 2048,
 }}
-RT_STRUCT! { struct ArcadeStickReading {
+RT_STRUCT! { struct ArcadeStickReading ["Windows.Gaming.Input.ArcadeStickReading"] {
     Timestamp: u64, Buttons: ArcadeStickButtons,
 }}
 DEFINE_IID!(IID_IArcadeStickStatics, 1547155656, 14257, 19160, 148, 88, 32, 15, 26, 48, 1, 142);
@@ -114,7 +114,7 @@ impl IFlightStick {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FlightStick: IFlightStick}
+RT_CLASS!{class FlightStick: IFlightStick ["Windows.Gaming.Input.FlightStick"]}
 impl RtActivatable<IFlightStickStatics> for FlightStick {}
 impl FlightStick {
     #[inline] pub fn add_flight_stick_added(value: &foundation::EventHandler<FlightStick>) -> Result<foundation::EventRegistrationToken> {
@@ -137,10 +137,10 @@ impl FlightStick {
     }
 }
 DEFINE_CLSID!(FlightStick(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,108,105,103,104,116,83,116,105,99,107,0]) [CLSID_FlightStick]);
-RT_ENUM! { enum FlightStickButtons: u32 {
+RT_ENUM! { enum FlightStickButtons: u32 ["Windows.Gaming.Input.FlightStickButtons"] {
     None (FlightStickButtons_None) = 0, FirePrimary (FlightStickButtons_FirePrimary) = 1, FireSecondary (FlightStickButtons_FireSecondary) = 2,
 }}
-RT_STRUCT! { struct FlightStickReading {
+RT_STRUCT! { struct FlightStickReading ["Windows.Gaming.Input.FlightStickReading"] {
     Timestamp: u64, Buttons: FlightStickButtons, HatSwitch: GameControllerSwitchPosition, Roll: f64, Pitch: f64, Yaw: f64, Throttle: f64,
 }}
 DEFINE_IID!(IID_IFlightStickStatics, 1427411530, 65228, 17246, 131, 220, 92, 236, 138, 24, 165, 32);
@@ -249,13 +249,13 @@ impl IGameControllerBatteryInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GameControllerButtonLabel: i32 {
+RT_ENUM! { enum GameControllerButtonLabel: i32 ["Windows.Gaming.Input.GameControllerButtonLabel"] {
     None (GameControllerButtonLabel_None) = 0, XboxBack (GameControllerButtonLabel_XboxBack) = 1, XboxStart (GameControllerButtonLabel_XboxStart) = 2, XboxMenu (GameControllerButtonLabel_XboxMenu) = 3, XboxView (GameControllerButtonLabel_XboxView) = 4, XboxUp (GameControllerButtonLabel_XboxUp) = 5, XboxDown (GameControllerButtonLabel_XboxDown) = 6, XboxLeft (GameControllerButtonLabel_XboxLeft) = 7, XboxRight (GameControllerButtonLabel_XboxRight) = 8, XboxA (GameControllerButtonLabel_XboxA) = 9, XboxB (GameControllerButtonLabel_XboxB) = 10, XboxX (GameControllerButtonLabel_XboxX) = 11, XboxY (GameControllerButtonLabel_XboxY) = 12, XboxLeftBumper (GameControllerButtonLabel_XboxLeftBumper) = 13, XboxLeftTrigger (GameControllerButtonLabel_XboxLeftTrigger) = 14, XboxLeftStickButton (GameControllerButtonLabel_XboxLeftStickButton) = 15, XboxRightBumper (GameControllerButtonLabel_XboxRightBumper) = 16, XboxRightTrigger (GameControllerButtonLabel_XboxRightTrigger) = 17, XboxRightStickButton (GameControllerButtonLabel_XboxRightStickButton) = 18, XboxPaddle1 (GameControllerButtonLabel_XboxPaddle1) = 19, XboxPaddle2 (GameControllerButtonLabel_XboxPaddle2) = 20, XboxPaddle3 (GameControllerButtonLabel_XboxPaddle3) = 21, XboxPaddle4 (GameControllerButtonLabel_XboxPaddle4) = 22, Mode (GameControllerButtonLabel_Mode) = 23, Select (GameControllerButtonLabel_Select) = 24, Menu (GameControllerButtonLabel_Menu) = 25, View (GameControllerButtonLabel_View) = 26, Back (GameControllerButtonLabel_Back) = 27, Start (GameControllerButtonLabel_Start) = 28, Options (GameControllerButtonLabel_Options) = 29, Share (GameControllerButtonLabel_Share) = 30, Up (GameControllerButtonLabel_Up) = 31, Down (GameControllerButtonLabel_Down) = 32, Left (GameControllerButtonLabel_Left) = 33, Right (GameControllerButtonLabel_Right) = 34, LetterA (GameControllerButtonLabel_LetterA) = 35, LetterB (GameControllerButtonLabel_LetterB) = 36, LetterC (GameControllerButtonLabel_LetterC) = 37, LetterL (GameControllerButtonLabel_LetterL) = 38, LetterR (GameControllerButtonLabel_LetterR) = 39, LetterX (GameControllerButtonLabel_LetterX) = 40, LetterY (GameControllerButtonLabel_LetterY) = 41, LetterZ (GameControllerButtonLabel_LetterZ) = 42, Cross (GameControllerButtonLabel_Cross) = 43, Circle (GameControllerButtonLabel_Circle) = 44, Square (GameControllerButtonLabel_Square) = 45, Triangle (GameControllerButtonLabel_Triangle) = 46, LeftBumper (GameControllerButtonLabel_LeftBumper) = 47, LeftTrigger (GameControllerButtonLabel_LeftTrigger) = 48, LeftStickButton (GameControllerButtonLabel_LeftStickButton) = 49, Left1 (GameControllerButtonLabel_Left1) = 50, Left2 (GameControllerButtonLabel_Left2) = 51, Left3 (GameControllerButtonLabel_Left3) = 52, RightBumper (GameControllerButtonLabel_RightBumper) = 53, RightTrigger (GameControllerButtonLabel_RightTrigger) = 54, RightStickButton (GameControllerButtonLabel_RightStickButton) = 55, Right1 (GameControllerButtonLabel_Right1) = 56, Right2 (GameControllerButtonLabel_Right2) = 57, Right3 (GameControllerButtonLabel_Right3) = 58, Paddle1 (GameControllerButtonLabel_Paddle1) = 59, Paddle2 (GameControllerButtonLabel_Paddle2) = 60, Paddle3 (GameControllerButtonLabel_Paddle3) = 61, Paddle4 (GameControllerButtonLabel_Paddle4) = 62, Plus (GameControllerButtonLabel_Plus) = 63, Minus (GameControllerButtonLabel_Minus) = 64, DownLeftArrow (GameControllerButtonLabel_DownLeftArrow) = 65, DialLeft (GameControllerButtonLabel_DialLeft) = 66, DialRight (GameControllerButtonLabel_DialRight) = 67, Suspension (GameControllerButtonLabel_Suspension) = 68,
 }}
-RT_ENUM! { enum GameControllerSwitchKind: i32 {
+RT_ENUM! { enum GameControllerSwitchKind: i32 ["Windows.Gaming.Input.GameControllerSwitchKind"] {
     TwoWay (GameControllerSwitchKind_TwoWay) = 0, FourWay (GameControllerSwitchKind_FourWay) = 1, EightWay (GameControllerSwitchKind_EightWay) = 2,
 }}
-RT_ENUM! { enum GameControllerSwitchPosition: i32 {
+RT_ENUM! { enum GameControllerSwitchPosition: i32 ["Windows.Gaming.Input.GameControllerSwitchPosition"] {
     Center (GameControllerSwitchPosition_Center) = 0, Up (GameControllerSwitchPosition_Up) = 1, UpRight (GameControllerSwitchPosition_UpRight) = 2, Right (GameControllerSwitchPosition_Right) = 3, DownRight (GameControllerSwitchPosition_DownRight) = 4, Down (GameControllerSwitchPosition_Down) = 5, DownLeft (GameControllerSwitchPosition_DownLeft) = 6, Left (GameControllerSwitchPosition_Left) = 7, UpLeft (GameControllerSwitchPosition_UpLeft) = 8,
 }}
 DEFINE_IID!(IID_IGamepad, 3162223676, 2665, 14595, 158, 157, 165, 15, 134, 164, 93, 229);
@@ -280,7 +280,7 @@ impl IGamepad {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Gamepad: IGamepad}
+RT_CLASS!{class Gamepad: IGamepad ["Windows.Gaming.Input.Gamepad"]}
 impl RtActivatable<IGamepadStatics> for Gamepad {}
 impl RtActivatable<IGamepadStatics2> for Gamepad {}
 impl Gamepad {
@@ -315,10 +315,10 @@ impl IGamepad2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GamepadButtons: u32 {
+RT_ENUM! { enum GamepadButtons: u32 ["Windows.Gaming.Input.GamepadButtons"] {
     None (GamepadButtons_None) = 0, Menu (GamepadButtons_Menu) = 1, View (GamepadButtons_View) = 2, A (GamepadButtons_A) = 4, B (GamepadButtons_B) = 8, X (GamepadButtons_X) = 16, Y (GamepadButtons_Y) = 32, DPadUp (GamepadButtons_DPadUp) = 64, DPadDown (GamepadButtons_DPadDown) = 128, DPadLeft (GamepadButtons_DPadLeft) = 256, DPadRight (GamepadButtons_DPadRight) = 512, LeftShoulder (GamepadButtons_LeftShoulder) = 1024, RightShoulder (GamepadButtons_RightShoulder) = 2048, LeftThumbstick (GamepadButtons_LeftThumbstick) = 4096, RightThumbstick (GamepadButtons_RightThumbstick) = 8192, Paddle1 (GamepadButtons_Paddle1) = 16384, Paddle2 (GamepadButtons_Paddle2) = 32768, Paddle3 (GamepadButtons_Paddle3) = 65536, Paddle4 (GamepadButtons_Paddle4) = 131072,
 }}
-RT_STRUCT! { struct GamepadReading {
+RT_STRUCT! { struct GamepadReading ["Windows.Gaming.Input.GamepadReading"] {
     Timestamp: u64, Buttons: GamepadButtons, LeftTrigger: f64, RightTrigger: f64, LeftThumbstickX: f64, LeftThumbstickY: f64, RightThumbstickX: f64, RightThumbstickY: f64,
 }}
 DEFINE_IID!(IID_IGamepadStatics, 2344412457, 54428, 14825, 149, 96, 228, 125, 222, 150, 183, 200);
@@ -365,7 +365,7 @@ impl IGamepadStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct GamepadVibration {
+RT_STRUCT! { struct GamepadVibration ["Windows.Gaming.Input.GamepadVibration"] {
     LeftMotor: f64, RightMotor: f64, LeftTrigger: f64, RightTrigger: f64,
 }}
 DEFINE_IID!(IID_IHeadset, 1070683887, 26917, 16296, 145, 129, 2, 156, 82, 35, 174, 59);
@@ -385,8 +385,8 @@ impl IHeadset {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Headset: IHeadset}
-RT_ENUM! { enum OptionalUINavigationButtons: u32 {
+RT_CLASS!{class Headset: IHeadset ["Windows.Gaming.Input.Headset"]}
+RT_ENUM! { enum OptionalUINavigationButtons: u32 ["Windows.Gaming.Input.OptionalUINavigationButtons"] {
     None (OptionalUINavigationButtons_None) = 0, Context1 (OptionalUINavigationButtons_Context1) = 1, Context2 (OptionalUINavigationButtons_Context2) = 2, Context3 (OptionalUINavigationButtons_Context3) = 4, Context4 (OptionalUINavigationButtons_Context4) = 8, PageUp (OptionalUINavigationButtons_PageUp) = 16, PageDown (OptionalUINavigationButtons_PageDown) = 32, PageLeft (OptionalUINavigationButtons_PageLeft) = 64, PageRight (OptionalUINavigationButtons_PageRight) = 128, ScrollUp (OptionalUINavigationButtons_ScrollUp) = 256, ScrollDown (OptionalUINavigationButtons_ScrollDown) = 512, ScrollLeft (OptionalUINavigationButtons_ScrollLeft) = 1024, ScrollRight (OptionalUINavigationButtons_ScrollRight) = 2048,
 }}
 DEFINE_IID!(IID_IRacingWheel, 4115031407, 57606, 19586, 169, 15, 85, 64, 18, 144, 75, 133);
@@ -442,7 +442,7 @@ impl IRacingWheel {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RacingWheel: IRacingWheel}
+RT_CLASS!{class RacingWheel: IRacingWheel ["Windows.Gaming.Input.RacingWheel"]}
 impl RtActivatable<IRacingWheelStatics> for RacingWheel {}
 impl RtActivatable<IRacingWheelStatics2> for RacingWheel {}
 impl RacingWheel {
@@ -466,10 +466,10 @@ impl RacingWheel {
     }
 }
 DEFINE_CLSID!(RacingWheel(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,82,97,99,105,110,103,87,104,101,101,108,0]) [CLSID_RacingWheel]);
-RT_ENUM! { enum RacingWheelButtons: u32 {
+RT_ENUM! { enum RacingWheelButtons: u32 ["Windows.Gaming.Input.RacingWheelButtons"] {
     None (RacingWheelButtons_None) = 0, PreviousGear (RacingWheelButtons_PreviousGear) = 1, NextGear (RacingWheelButtons_NextGear) = 2, DPadUp (RacingWheelButtons_DPadUp) = 4, DPadDown (RacingWheelButtons_DPadDown) = 8, DPadLeft (RacingWheelButtons_DPadLeft) = 16, DPadRight (RacingWheelButtons_DPadRight) = 32, Button1 (RacingWheelButtons_Button1) = 64, Button2 (RacingWheelButtons_Button2) = 128, Button3 (RacingWheelButtons_Button3) = 256, Button4 (RacingWheelButtons_Button4) = 512, Button5 (RacingWheelButtons_Button5) = 1024, Button6 (RacingWheelButtons_Button6) = 2048, Button7 (RacingWheelButtons_Button7) = 4096, Button8 (RacingWheelButtons_Button8) = 8192, Button9 (RacingWheelButtons_Button9) = 16384, Button10 (RacingWheelButtons_Button10) = 32768, Button11 (RacingWheelButtons_Button11) = 65536, Button12 (RacingWheelButtons_Button12) = 131072, Button13 (RacingWheelButtons_Button13) = 262144, Button14 (RacingWheelButtons_Button14) = 524288, Button15 (RacingWheelButtons_Button15) = 1048576, Button16 (RacingWheelButtons_Button16) = 2097152,
 }}
-RT_STRUCT! { struct RacingWheelReading {
+RT_STRUCT! { struct RacingWheelReading ["Windows.Gaming.Input.RacingWheelReading"] {
     Timestamp: u64, Buttons: RacingWheelButtons, PatternShifterGear: i32, Wheel: f64, Throttle: f64, Brake: f64, Clutch: f64, Handbrake: f64,
 }}
 DEFINE_IID!(IID_IRacingWheelStatics, 985738453, 22555, 18742, 159, 148, 105, 241, 230, 81, 76, 125);
@@ -575,7 +575,7 @@ impl IRawGameController {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RawGameController: IRawGameController}
+RT_CLASS!{class RawGameController: IRawGameController ["Windows.Gaming.Input.RawGameController"]}
 impl RtActivatable<IRawGameControllerStatics> for RawGameController {}
 impl RawGameController {
     #[inline] pub fn add_raw_game_controller_added(value: &foundation::EventHandler<RawGameController>) -> Result<foundation::EventRegistrationToken> {
@@ -661,7 +661,7 @@ impl IRawGameControllerStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RequiredUINavigationButtons: u32 {
+RT_ENUM! { enum RequiredUINavigationButtons: u32 ["Windows.Gaming.Input.RequiredUINavigationButtons"] {
     None (RequiredUINavigationButtons_None) = 0, Menu (RequiredUINavigationButtons_Menu) = 1, View (RequiredUINavigationButtons_View) = 2, Accept (RequiredUINavigationButtons_Accept) = 4, Cancel (RequiredUINavigationButtons_Cancel) = 8, Up (RequiredUINavigationButtons_Up) = 16, Down (RequiredUINavigationButtons_Down) = 32, Left (RequiredUINavigationButtons_Left) = 64, Right (RequiredUINavigationButtons_Right) = 128,
 }}
 DEFINE_IID!(IID_IUINavigationController, 3853447133, 62734, 19029, 140, 220, 211, 50, 41, 84, 129, 117);
@@ -687,7 +687,7 @@ impl IUINavigationController {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UINavigationController: IUINavigationController}
+RT_CLASS!{class UINavigationController: IUINavigationController ["Windows.Gaming.Input.UINavigationController"]}
 impl RtActivatable<IUINavigationControllerStatics> for UINavigationController {}
 impl RtActivatable<IUINavigationControllerStatics2> for UINavigationController {}
 impl UINavigationController {
@@ -755,7 +755,7 @@ impl IUINavigationControllerStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct UINavigationReading {
+RT_STRUCT! { struct UINavigationReading ["Windows.Gaming.Input.UINavigationReading"] {
     Timestamp: u64, RequiredButtons: RequiredUINavigationButtons, OptionalButtons: OptionalUINavigationButtons,
 }}
 pub mod custom { // Windows.Gaming.Input.Custom
@@ -880,10 +880,10 @@ impl IGameControllerProvider {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct GameControllerVersionInfo {
+RT_STRUCT! { struct GameControllerVersionInfo ["Windows.Gaming.Input.Custom.GameControllerVersionInfo"] {
     Major: u16, Minor: u16, Build: u16, Revision: u16,
 }}
-RT_STRUCT! { struct GipFirmwareUpdateProgress {
+RT_STRUCT! { struct GipFirmwareUpdateProgress ["Windows.Gaming.Input.Custom.GipFirmwareUpdateProgress"] {
     PercentCompleted: f64, CurrentComponentId: u32,
 }}
 DEFINE_IID!(IID_IGipFirmwareUpdateResult, 1803111730, 34131, 17042, 142, 3, 225, 102, 81, 162, 248, 188);
@@ -909,8 +909,8 @@ impl IGipFirmwareUpdateResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GipFirmwareUpdateResult: IGipFirmwareUpdateResult}
-RT_ENUM! { enum GipFirmwareUpdateStatus: i32 {
+RT_CLASS!{class GipFirmwareUpdateResult: IGipFirmwareUpdateResult ["Windows.Gaming.Input.Custom.GipFirmwareUpdateResult"]}
+RT_ENUM! { enum GipFirmwareUpdateStatus: i32 ["Windows.Gaming.Input.Custom.GipFirmwareUpdateStatus"] {
     Completed (GipFirmwareUpdateStatus_Completed) = 0, UpToDate (GipFirmwareUpdateStatus_UpToDate) = 1, Failed (GipFirmwareUpdateStatus_Failed) = 2,
 }}
 DEFINE_IID!(IID_IGipGameControllerInputSink, 2718993087, 2545, 17340, 161, 64, 128, 248, 153, 236, 54, 251);
@@ -949,8 +949,8 @@ impl IGipGameControllerProvider {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GipGameControllerProvider: IGipGameControllerProvider}
-RT_ENUM! { enum GipMessageClass: i32 {
+RT_CLASS!{class GipGameControllerProvider: IGipGameControllerProvider ["Windows.Gaming.Input.Custom.GipGameControllerProvider"]}
+RT_ENUM! { enum GipMessageClass: i32 ["Windows.Gaming.Input.Custom.GipMessageClass"] {
     Command (GipMessageClass_Command) = 0, LowLatency (GipMessageClass_LowLatency) = 1, StandardLatency (GipMessageClass_StandardLatency) = 2,
 }}
 DEFINE_IID!(IID_IHidGameControllerInputSink, 4149527330, 6189, 16612, 161, 38, 252, 238, 79, 250, 30, 49);
@@ -995,11 +995,11 @@ impl IHidGameControllerProvider {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HidGameControllerProvider: IHidGameControllerProvider}
-RT_ENUM! { enum XusbDeviceSubtype: i32 {
+RT_CLASS!{class HidGameControllerProvider: IHidGameControllerProvider ["Windows.Gaming.Input.Custom.HidGameControllerProvider"]}
+RT_ENUM! { enum XusbDeviceSubtype: i32 ["Windows.Gaming.Input.Custom.XusbDeviceSubtype"] {
     Unknown (XusbDeviceSubtype_Unknown) = 0, Gamepad (XusbDeviceSubtype_Gamepad) = 1, ArcadePad (XusbDeviceSubtype_ArcadePad) = 2, ArcadeStick (XusbDeviceSubtype_ArcadeStick) = 3, FlightStick (XusbDeviceSubtype_FlightStick) = 4, Wheel (XusbDeviceSubtype_Wheel) = 5, Guitar (XusbDeviceSubtype_Guitar) = 6, GuitarAlternate (XusbDeviceSubtype_GuitarAlternate) = 7, GuitarBass (XusbDeviceSubtype_GuitarBass) = 8, DrumKit (XusbDeviceSubtype_DrumKit) = 9, DancePad (XusbDeviceSubtype_DancePad) = 10,
 }}
-RT_ENUM! { enum XusbDeviceType: i32 {
+RT_ENUM! { enum XusbDeviceType: i32 ["Windows.Gaming.Input.Custom.XusbDeviceType"] {
     Unknown (XusbDeviceType_Unknown) = 0, Gamepad (XusbDeviceType_Gamepad) = 1,
 }}
 DEFINE_IID!(IID_IXusbGameControllerInputSink, 2997624213, 28363, 17075, 138, 171, 2, 84, 1, 202, 71, 18);
@@ -1022,7 +1022,7 @@ impl IXusbGameControllerProvider {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XusbGameControllerProvider: IXusbGameControllerProvider}
+RT_CLASS!{class XusbGameControllerProvider: IXusbGameControllerProvider ["Windows.Gaming.Input.Custom.XusbGameControllerProvider"]}
 } // Windows.Gaming.Input.Custom
 pub mod forcefeedback { // Windows.Gaming.Input.ForceFeedback
 use ::prelude::*;
@@ -1042,7 +1042,7 @@ impl IConditionForceEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ConditionForceEffect: IForceFeedbackEffect}
+RT_CLASS!{class ConditionForceEffect: IForceFeedbackEffect ["Windows.Gaming.Input.ForceFeedback.ConditionForceEffect"]}
 impl RtActivatable<IConditionForceEffectFactory> for ConditionForceEffect {}
 impl ConditionForceEffect {
     #[inline] pub fn create_instance(effectKind: ConditionForceEffectKind) -> Result<ComPtr<ConditionForceEffect>> {
@@ -1061,7 +1061,7 @@ impl IConditionForceEffectFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ConditionForceEffectKind: i32 {
+RT_ENUM! { enum ConditionForceEffectKind: i32 ["Windows.Gaming.Input.ForceFeedback.ConditionForceEffectKind"] {
     Spring (ConditionForceEffectKind_Spring) = 0, Damper (ConditionForceEffectKind_Damper) = 1, Inertia (ConditionForceEffectKind_Inertia) = 2, Friction (ConditionForceEffectKind_Friction) = 3,
 }}
 DEFINE_IID!(IID_IConstantForceEffect, 2616852800, 62407, 16732, 176, 104, 15, 6, 135, 52, 188, 224);
@@ -1079,7 +1079,7 @@ impl IConstantForceEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ConstantForceEffect: IForceFeedbackEffect}
+RT_CLASS!{class ConstantForceEffect: IForceFeedbackEffect ["Windows.Gaming.Input.ForceFeedback.ConstantForceEffect"]}
 impl RtActivatable<IActivationFactory> for ConstantForceEffect {}
 DEFINE_CLSID!(ConstantForceEffect(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,111,114,99,101,70,101,101,100,98,97,99,107,46,67,111,110,115,116,97,110,116,70,111,114,99,101,69,102,102,101,99,116,0]) [CLSID_ConstantForceEffect]);
 DEFINE_IID!(IID_IForceFeedbackEffect, 2709502476, 10980, 18626, 128, 99, 234, 189, 7, 119, 203, 137);
@@ -1114,13 +1114,13 @@ impl IForceFeedbackEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ForceFeedbackEffectAxes: u32 {
+RT_ENUM! { enum ForceFeedbackEffectAxes: u32 ["Windows.Gaming.Input.ForceFeedback.ForceFeedbackEffectAxes"] {
     None (ForceFeedbackEffectAxes_None) = 0, X (ForceFeedbackEffectAxes_X) = 1, Y (ForceFeedbackEffectAxes_Y) = 2, Z (ForceFeedbackEffectAxes_Z) = 4,
 }}
-RT_ENUM! { enum ForceFeedbackEffectState: i32 {
+RT_ENUM! { enum ForceFeedbackEffectState: i32 ["Windows.Gaming.Input.ForceFeedback.ForceFeedbackEffectState"] {
     Stopped (ForceFeedbackEffectState_Stopped) = 0, Running (ForceFeedbackEffectState_Running) = 1, Paused (ForceFeedbackEffectState_Paused) = 2, Faulted (ForceFeedbackEffectState_Faulted) = 3,
 }}
-RT_ENUM! { enum ForceFeedbackLoadEffectResult: i32 {
+RT_ENUM! { enum ForceFeedbackLoadEffectResult: i32 ["Windows.Gaming.Input.ForceFeedback.ForceFeedbackLoadEffectResult"] {
     Succeeded (ForceFeedbackLoadEffectResult_Succeeded) = 0, EffectStorageFull (ForceFeedbackLoadEffectResult_EffectStorageFull) = 1, EffectNotSupported (ForceFeedbackLoadEffectResult_EffectNotSupported) = 2,
 }}
 DEFINE_IID!(IID_IForceFeedbackMotor, 2369601916, 42474, 17686, 128, 38, 43, 0, 247, 78, 246, 229);
@@ -1202,7 +1202,7 @@ impl IForceFeedbackMotor {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ForceFeedbackMotor: IForceFeedbackMotor}
+RT_CLASS!{class ForceFeedbackMotor: IForceFeedbackMotor ["Windows.Gaming.Input.ForceFeedback.ForceFeedbackMotor"]}
 DEFINE_IID!(IID_IPeriodicForceEffect, 1548826839, 64629, 19794, 154, 10, 239, 228, 202, 181, 254, 100);
 RT_INTERFACE!{interface IPeriodicForceEffect(IPeriodicForceEffectVtbl): IInspectable(IInspectableVtbl) [IID_IPeriodicForceEffect] {
     fn get_Kind(&self, out: *mut PeriodicForceEffectKind) -> HRESULT,
@@ -1224,7 +1224,7 @@ impl IPeriodicForceEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PeriodicForceEffect: IForceFeedbackEffect}
+RT_CLASS!{class PeriodicForceEffect: IForceFeedbackEffect ["Windows.Gaming.Input.ForceFeedback.PeriodicForceEffect"]}
 impl RtActivatable<IPeriodicForceEffectFactory> for PeriodicForceEffect {}
 impl PeriodicForceEffect {
     #[inline] pub fn create_instance(effectKind: PeriodicForceEffectKind) -> Result<ComPtr<PeriodicForceEffect>> {
@@ -1243,7 +1243,7 @@ impl IPeriodicForceEffectFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PeriodicForceEffectKind: i32 {
+RT_ENUM! { enum PeriodicForceEffectKind: i32 ["Windows.Gaming.Input.ForceFeedback.PeriodicForceEffectKind"] {
     SquareWave (PeriodicForceEffectKind_SquareWave) = 0, SineWave (PeriodicForceEffectKind_SineWave) = 1, TriangleWave (PeriodicForceEffectKind_TriangleWave) = 2, SawtoothWaveUp (PeriodicForceEffectKind_SawtoothWaveUp) = 3, SawtoothWaveDown (PeriodicForceEffectKind_SawtoothWaveDown) = 4,
 }}
 DEFINE_IID!(IID_IRampForceEffect, 4059566681, 7334, 16512, 181, 109, 180, 63, 51, 84, 208, 82);
@@ -1261,7 +1261,7 @@ impl IRampForceEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RampForceEffect: IForceFeedbackEffect}
+RT_CLASS!{class RampForceEffect: IForceFeedbackEffect ["Windows.Gaming.Input.ForceFeedback.RampForceEffect"]}
 impl RtActivatable<IActivationFactory> for RampForceEffect {}
 DEFINE_CLSID!(RampForceEffect(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,111,114,99,101,70,101,101,100,98,97,99,107,46,82,97,109,112,70,111,114,99,101,69,102,102,101,99,116,0]) [CLSID_RampForceEffect]);
 } // Windows.Gaming.Input.ForceFeedback
@@ -1336,7 +1336,7 @@ impl GameList {
     }
 }
 DEFINE_CLSID!(GameList(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,80,114,101,118,105,101,119,46,71,97,109,101,115,69,110,117,109,101,114,97,116,105,111,110,46,71,97,109,101,76,105,115,116,0]) [CLSID_GameList]);
-RT_ENUM! { enum GameListCategory: i32 {
+RT_ENUM! { enum GameListCategory: i32 ["Windows.Gaming.Preview.GamesEnumeration.GameListCategory"] {
     Candidate (GameListCategory_Candidate) = 0, ConfirmedBySystem (GameListCategory_ConfirmedBySystem) = 1, ConfirmedByUser (GameListCategory_ConfirmedByUser) = 2,
 }}
 DEFINE_IID!(IID_GameListChangedEventHandler, 636920865, 55541, 19857, 180, 14, 83, 213, 232, 111, 222, 100);
@@ -1385,7 +1385,7 @@ impl IGameListEntry {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameListEntry: IGameListEntry}
+RT_CLASS!{class GameListEntry: IGameListEntry ["Windows.Gaming.Preview.GamesEnumeration.GameListEntry"]}
 DEFINE_IID!(IID_IGameListEntry2, 3628765067, 34633, 18981, 144, 211, 246, 197, 164, 39, 136, 109);
 RT_INTERFACE!{interface IGameListEntry2(IGameListEntry2Vtbl): IInspectable(IInspectableVtbl) [IID_IGameListEntry2] {
     fn get_LaunchableState(&self, out: *mut GameListEntryLaunchableState) -> HRESULT,
@@ -1442,7 +1442,7 @@ impl IGameListEntry2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GameListEntryLaunchableState: i32 {
+RT_ENUM! { enum GameListEntryLaunchableState: i32 ["Windows.Gaming.Preview.GamesEnumeration.GameListEntryLaunchableState"] {
     NotLaunchable (GameListEntryLaunchableState_NotLaunchable) = 0, ByLastRunningFullPath (GameListEntryLaunchableState_ByLastRunningFullPath) = 1, ByUserProvidedPath (GameListEntryLaunchableState_ByUserProvidedPath) = 2, ByTile (GameListEntryLaunchableState_ByTile) = 3,
 }}
 DEFINE_IID!(IID_GameListRemovedEventHandler, 281371791, 27791, 18194, 155, 56, 71, 75, 194, 46, 118, 216);
@@ -1627,7 +1627,7 @@ impl IGameModeConfiguration {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameModeConfiguration: IGameModeConfiguration}
+RT_CLASS!{class GameModeConfiguration: IGameModeConfiguration ["Windows.Gaming.Preview.GamesEnumeration.GameModeConfiguration"]}
 DEFINE_IID!(IID_IGameModeUserConfiguration, 1926449908, 30059, 18191, 160, 194, 186, 98, 169, 7, 149, 219);
 RT_INTERFACE!{interface IGameModeUserConfiguration(IGameModeUserConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IGameModeUserConfiguration] {
     fn get_GamingRelatedProcessNames(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
@@ -1645,7 +1645,7 @@ impl IGameModeUserConfiguration {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameModeUserConfiguration: IGameModeUserConfiguration}
+RT_CLASS!{class GameModeUserConfiguration: IGameModeUserConfiguration ["Windows.Gaming.Preview.GamesEnumeration.GameModeUserConfiguration"]}
 impl RtActivatable<IGameModeUserConfigurationStatics> for GameModeUserConfiguration {}
 impl GameModeUserConfiguration {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<GameModeUserConfiguration>>> {
@@ -1730,7 +1730,7 @@ impl IGameBarStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GameChatMessageOrigin: i32 {
+RT_ENUM! { enum GameChatMessageOrigin: i32 ["Windows.Gaming.UI.GameChatMessageOrigin"] {
     Voice (GameChatMessageOrigin_Voice) = 0, Text (GameChatMessageOrigin_Text) = 1,
 }}
 DEFINE_IID!(IID_IGameChatMessageReceivedEventArgs, 2726429169, 16313, 20034, 164, 3, 122, 252, 226, 2, 59, 30);
@@ -1768,7 +1768,7 @@ impl IGameChatMessageReceivedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameChatMessageReceivedEventArgs: IGameChatMessageReceivedEventArgs}
+RT_CLASS!{class GameChatMessageReceivedEventArgs: IGameChatMessageReceivedEventArgs ["Windows.Gaming.UI.GameChatMessageReceivedEventArgs"]}
 DEFINE_IID!(IID_IGameChatOverlay, 4224075877, 63228, 19016, 174, 7, 3, 172, 110, 212, 55, 4);
 RT_INTERFACE!{interface IGameChatOverlay(IGameChatOverlayVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatOverlay] {
     fn get_DesiredPosition(&self, out: *mut GameChatOverlayPosition) -> HRESULT,
@@ -1790,7 +1790,7 @@ impl IGameChatOverlay {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameChatOverlay: IGameChatOverlay}
+RT_CLASS!{class GameChatOverlay: IGameChatOverlay ["Windows.Gaming.UI.GameChatOverlay"]}
 impl RtActivatable<IGameChatOverlayStatics> for GameChatOverlay {}
 impl GameChatOverlay {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<GameChatOverlay>>> {
@@ -1819,10 +1819,10 @@ impl IGameChatOverlayMessageSource {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameChatOverlayMessageSource: IGameChatOverlayMessageSource}
+RT_CLASS!{class GameChatOverlayMessageSource: IGameChatOverlayMessageSource ["Windows.Gaming.UI.GameChatOverlayMessageSource"]}
 impl RtActivatable<IActivationFactory> for GameChatOverlayMessageSource {}
 DEFINE_CLSID!(GameChatOverlayMessageSource(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,67,104,97,116,79,118,101,114,108,97,121,77,101,115,115,97,103,101,83,111,117,114,99,101,0]) [CLSID_GameChatOverlayMessageSource]);
-RT_ENUM! { enum GameChatOverlayPosition: i32 {
+RT_ENUM! { enum GameChatOverlayPosition: i32 ["Windows.Gaming.UI.GameChatOverlayPosition"] {
     BottomCenter (GameChatOverlayPosition_BottomCenter) = 0, BottomLeft (GameChatOverlayPosition_BottomLeft) = 1, BottomRight (GameChatOverlayPosition_BottomRight) = 2, MiddleRight (GameChatOverlayPosition_MiddleRight) = 3, MiddleLeft (GameChatOverlayPosition_MiddleLeft) = 4, TopCenter (GameChatOverlayPosition_TopCenter) = 5, TopLeft (GameChatOverlayPosition_TopLeft) = 6, TopRight (GameChatOverlayPosition_TopRight) = 7,
 }}
 DEFINE_IID!(IID_IGameChatOverlayStatics, 2309813780, 30823, 18935, 150, 135, 37, 217, 219, 244, 68, 209);
@@ -1852,7 +1852,7 @@ impl IGameUIProviderActivatedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameUIProviderActivatedEventArgs: IGameUIProviderActivatedEventArgs}
+RT_CLASS!{class GameUIProviderActivatedEventArgs: IGameUIProviderActivatedEventArgs ["Windows.Gaming.UI.GameUIProviderActivatedEventArgs"]}
 } // Windows.Gaming.UI
 pub mod xboxlive { // Windows.Gaming.XboxLive
 pub mod storage { // Windows.Gaming.XboxLive.Storage
@@ -1874,7 +1874,7 @@ impl IGameSaveBlobGetResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameSaveBlobGetResult: IGameSaveBlobGetResult}
+RT_CLASS!{class GameSaveBlobGetResult: IGameSaveBlobGetResult ["Windows.Gaming.XboxLive.Storage.GameSaveBlobGetResult"]}
 DEFINE_IID!(IID_IGameSaveBlobInfo, 2916319284, 47856, 17989, 182, 208, 70, 237, 175, 251, 60, 43);
 RT_INTERFACE!{interface IGameSaveBlobInfo(IGameSaveBlobInfoVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobInfo] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -1892,7 +1892,7 @@ impl IGameSaveBlobInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameSaveBlobInfo: IGameSaveBlobInfo}
+RT_CLASS!{class GameSaveBlobInfo: IGameSaveBlobInfo ["Windows.Gaming.XboxLive.Storage.GameSaveBlobInfo"]}
 DEFINE_IID!(IID_IGameSaveBlobInfoGetResult, 3344401794, 13975, 17087, 152, 156, 102, 93, 146, 59, 82, 49);
 RT_INTERFACE!{interface IGameSaveBlobInfoGetResult(IGameSaveBlobInfoGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobInfoGetResult] {
     fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
@@ -1910,7 +1910,7 @@ impl IGameSaveBlobInfoGetResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameSaveBlobInfoGetResult: IGameSaveBlobInfoGetResult}
+RT_CLASS!{class GameSaveBlobInfoGetResult: IGameSaveBlobInfoGetResult ["Windows.Gaming.XboxLive.Storage.GameSaveBlobInfoGetResult"]}
 DEFINE_IID!(IID_IGameSaveBlobInfoQuery, 2682090674, 61166, 17531, 169, 210, 127, 150, 192, 248, 50, 8);
 RT_INTERFACE!{interface IGameSaveBlobInfoQuery(IGameSaveBlobInfoQueryVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobInfoQuery] {
     fn GetBlobInfoAsync(&self, out: *mut *mut foundation::IAsyncOperation<GameSaveBlobInfoGetResult>) -> HRESULT,
@@ -1934,7 +1934,7 @@ impl IGameSaveBlobInfoQuery {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameSaveBlobInfoQuery: IGameSaveBlobInfoQuery}
+RT_CLASS!{class GameSaveBlobInfoQuery: IGameSaveBlobInfoQuery ["Windows.Gaming.XboxLive.Storage.GameSaveBlobInfoQuery"]}
 DEFINE_IID!(IID_IGameSaveContainer, 3284176777, 22079, 20173, 156, 111, 51, 253, 14, 50, 61, 16);
 RT_INTERFACE!{interface IGameSaveContainer(IGameSaveContainerVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainer] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -1984,7 +1984,7 @@ impl IGameSaveContainer {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameSaveContainer: IGameSaveContainer}
+RT_CLASS!{class GameSaveContainer: IGameSaveContainer ["Windows.Gaming.XboxLive.Storage.GameSaveContainer"]}
 DEFINE_IID!(IID_IGameSaveContainerInfo, 3085071104, 5469, 19380, 178, 186, 147, 3, 6, 243, 145, 181);
 RT_INTERFACE!{interface IGameSaveContainerInfo(IGameSaveContainerInfoVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainerInfo] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -2020,7 +2020,7 @@ impl IGameSaveContainerInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameSaveContainerInfo: IGameSaveContainerInfo}
+RT_CLASS!{class GameSaveContainerInfo: IGameSaveContainerInfo ["Windows.Gaming.XboxLive.Storage.GameSaveContainerInfo"]}
 DEFINE_IID!(IID_IGameSaveContainerInfoGetResult, 4291104116, 50561, 20381, 158, 57, 48, 161, 12, 30, 76, 80);
 RT_INTERFACE!{interface IGameSaveContainerInfoGetResult(IGameSaveContainerInfoGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainerInfoGetResult] {
     fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
@@ -2038,7 +2038,7 @@ impl IGameSaveContainerInfoGetResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameSaveContainerInfoGetResult: IGameSaveContainerInfoGetResult}
+RT_CLASS!{class GameSaveContainerInfoGetResult: IGameSaveContainerInfoGetResult ["Windows.Gaming.XboxLive.Storage.GameSaveContainerInfoGetResult"]}
 DEFINE_IID!(IID_IGameSaveContainerInfoQuery, 1016391779, 28544, 17191, 147, 39, 255, 193, 26, 253, 66, 179);
 RT_INTERFACE!{interface IGameSaveContainerInfoQuery(IGameSaveContainerInfoQueryVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainerInfoQuery] {
     fn GetContainerInfoAsync(&self, out: *mut *mut foundation::IAsyncOperation<GameSaveContainerInfoGetResult>) -> HRESULT,
@@ -2062,8 +2062,8 @@ impl IGameSaveContainerInfoQuery {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameSaveContainerInfoQuery: IGameSaveContainerInfoQuery}
-RT_ENUM! { enum GameSaveErrorStatus: i32 {
+RT_CLASS!{class GameSaveContainerInfoQuery: IGameSaveContainerInfoQuery ["Windows.Gaming.XboxLive.Storage.GameSaveContainerInfoQuery"]}
+RT_ENUM! { enum GameSaveErrorStatus: i32 ["Windows.Gaming.XboxLive.Storage.GameSaveErrorStatus"] {
     Ok (GameSaveErrorStatus_Ok) = 0, Abort (GameSaveErrorStatus_Abort) = -2147467260, InvalidContainerName (GameSaveErrorStatus_InvalidContainerName) = -2138898431, NoAccess (GameSaveErrorStatus_NoAccess) = -2138898430, OutOfLocalStorage (GameSaveErrorStatus_OutOfLocalStorage) = -2138898429, UserCanceled (GameSaveErrorStatus_UserCanceled) = -2138898428, UpdateTooBig (GameSaveErrorStatus_UpdateTooBig) = -2138898427, QuotaExceeded (GameSaveErrorStatus_QuotaExceeded) = -2138898426, ProvidedBufferTooSmall (GameSaveErrorStatus_ProvidedBufferTooSmall) = -2138898425, BlobNotFound (GameSaveErrorStatus_BlobNotFound) = -2138898424, NoXboxLiveInfo (GameSaveErrorStatus_NoXboxLiveInfo) = -2138898423, ContainerNotInSync (GameSaveErrorStatus_ContainerNotInSync) = -2138898422, ContainerSyncFailed (GameSaveErrorStatus_ContainerSyncFailed) = -2138898421, UserHasNoXboxLiveInfo (GameSaveErrorStatus_UserHasNoXboxLiveInfo) = -2138898420, ObjectExpired (GameSaveErrorStatus_ObjectExpired) = -2138898419,
 }}
 DEFINE_IID!(IID_IGameSaveOperationResult, 3473873413, 9376, 17794, 154, 85, 177, 187, 187, 147, 136, 216);
@@ -2077,7 +2077,7 @@ impl IGameSaveOperationResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameSaveOperationResult: IGameSaveOperationResult}
+RT_CLASS!{class GameSaveOperationResult: IGameSaveOperationResult ["Windows.Gaming.XboxLive.Storage.GameSaveOperationResult"]}
 DEFINE_IID!(IID_IGameSaveProvider, 2426798996, 33022, 16913, 151, 248, 165, 222, 20, 221, 149, 210);
 RT_INTERFACE!{interface IGameSaveProvider(IGameSaveProviderVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProvider] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
@@ -2126,7 +2126,7 @@ impl IGameSaveProvider {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameSaveProvider: IGameSaveProvider}
+RT_CLASS!{class GameSaveProvider: IGameSaveProvider ["Windows.Gaming.XboxLive.Storage.GameSaveProvider"]}
 impl RtActivatable<IGameSaveProviderStatics> for GameSaveProvider {}
 impl GameSaveProvider {
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
@@ -2154,7 +2154,7 @@ impl IGameSaveProviderGetResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameSaveProviderGetResult: IGameSaveProviderGetResult}
+RT_CLASS!{class GameSaveProviderGetResult: IGameSaveProviderGetResult ["Windows.Gaming.XboxLive.Storage.GameSaveProviderGetResult"]}
 DEFINE_IID!(IID_IGameSaveProviderStatics, 3491577552, 31491, 17565, 140, 189, 52, 2, 132, 42, 16, 72);
 RT_INTERFACE!{static interface IGameSaveProviderStatics(IGameSaveProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProviderStatics] {
     #[cfg(feature="windows-system")] fn GetForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT,

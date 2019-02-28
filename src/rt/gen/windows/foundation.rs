@@ -200,7 +200,7 @@ impl<TResult: RtType, TProgress: RtType> AsyncOperationWithProgressCompletedHand
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AsyncStatus: i32 {
+RT_ENUM! { enum AsyncStatus: i32 ["Windows.Foundation.AsyncStatus"] {
     Canceled (AsyncStatus_Canceled) = 2, Completed (AsyncStatus_Completed) = 1, Error (AsyncStatus_Error) = 3, Started (AsyncStatus_Started) = 0,
 }}
 DEFINE_IID!(IID_IClosable, 819308585, 32676, 16422, 131, 187, 215, 91, 174, 78, 169, 158);
@@ -213,7 +213,7 @@ impl IClosable {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct DateTime {
+RT_STRUCT! { struct DateTime ["Windows.Foundation.DateTime"] {
     UniversalTime: i64,
 }}
 DEFINE_IID!(IID_IDeferral, 3592853298, 15231, 18087, 180, 11, 79, 220, 162, 162, 198, 147);
@@ -226,7 +226,7 @@ impl IDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Deferral: IDeferral}
+RT_CLASS!{class Deferral: IDeferral ["Windows.Foundation.Deferral"]}
 impl RtActivatable<IDeferralFactory> for Deferral {}
 impl Deferral {
     #[inline] pub fn create(handler: &DeferralCompletedHandler) -> Result<ComPtr<Deferral>> {
@@ -265,7 +265,7 @@ impl<T: RtType> EventHandler<T> {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct EventRegistrationToken {
+RT_STRUCT! { struct EventRegistrationToken ["Windows.Foundation.EventRegistrationToken"] {
     Value: i64,
 }}
 DEFINE_IID!(IID_IGetActivationFactory, 1323011810, 38621, 18855, 148, 247, 70, 7, 221, 171, 142, 60);
@@ -316,7 +316,7 @@ impl IGuidHelperStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct HResult {
+RT_STRUCT! { struct HResult ["Windows.Foundation.HResult"] {
     Value: i32,
 }}
 DEFINE_IID!(IID_IMemoryBuffer, 4223982890, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
@@ -330,7 +330,7 @@ impl IMemoryBuffer {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MemoryBuffer: IMemoryBuffer}
+RT_CLASS!{class MemoryBuffer: IMemoryBuffer ["Windows.Foundation.MemoryBuffer"]}
 impl RtActivatable<IMemoryBufferFactory> for MemoryBuffer {}
 impl MemoryBuffer {
     #[inline] pub fn create(capacity: u32) -> Result<ComPtr<MemoryBuffer>> {
@@ -371,10 +371,10 @@ impl IMemoryBufferReference {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct Point {
+RT_STRUCT! { struct Point ["Windows.Foundation.Point"] {
     X: f32, Y: f32,
 }}
-RT_ENUM! { enum PropertyType: i32 {
+RT_ENUM! { enum PropertyType: i32 ["Windows.Foundation.PropertyType"] {
     Empty (PropertyType_Empty) = 0, UInt8 (PropertyType_UInt8) = 1, Int16 (PropertyType_Int16) = 2, UInt16 (PropertyType_UInt16) = 3, Int32 (PropertyType_Int32) = 4, UInt32 (PropertyType_UInt32) = 5, Int64 (PropertyType_Int64) = 6, UInt64 (PropertyType_UInt64) = 7, Single (PropertyType_Single) = 8, Double (PropertyType_Double) = 9, Char16 (PropertyType_Char16) = 10, Boolean (PropertyType_Boolean) = 11, String (PropertyType_String) = 12, Inspectable (PropertyType_Inspectable) = 13, DateTime (PropertyType_DateTime) = 14, TimeSpan (PropertyType_TimeSpan) = 15, Guid (PropertyType_Guid) = 16, Point (PropertyType_Point) = 17, Size (PropertyType_Size) = 18, Rect (PropertyType_Rect) = 19, OtherType (PropertyType_OtherType) = 20, UInt8Array (PropertyType_UInt8Array) = 1025, Int16Array (PropertyType_Int16Array) = 1026, UInt16Array (PropertyType_UInt16Array) = 1027, Int32Array (PropertyType_Int32Array) = 1028, UInt32Array (PropertyType_UInt32Array) = 1029, Int64Array (PropertyType_Int64Array) = 1030, UInt64Array (PropertyType_UInt64Array) = 1031, SingleArray (PropertyType_SingleArray) = 1032, DoubleArray (PropertyType_DoubleArray) = 1033, Char16Array (PropertyType_Char16Array) = 1034, BooleanArray (PropertyType_BooleanArray) = 1035, StringArray (PropertyType_StringArray) = 1036, InspectableArray (PropertyType_InspectableArray) = 1037, DateTimeArray (PropertyType_DateTimeArray) = 1038, TimeSpanArray (PropertyType_TimeSpanArray) = 1039, GuidArray (PropertyType_GuidArray) = 1040, PointArray (PropertyType_PointArray) = 1041, SizeArray (PropertyType_SizeArray) = 1042, RectArray (PropertyType_RectArray) = 1043, OtherTypeArray (PropertyType_OtherTypeArray) = 1044,
 }}
 DEFINE_IID!(IID_IPropertyValue, 1272349405, 30036, 16617, 154, 155, 130, 101, 78, 222, 126, 98);
@@ -977,7 +977,7 @@ impl IPropertyValueStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct Rect {
+RT_STRUCT! { struct Rect ["Windows.Foundation.Rect"] {
     X: f32, Y: f32, Width: f32, Height: f32,
 }}
 DEFINE_IID!(IID_IReference, 1640068870, 11621, 4576, 154, 232, 212, 133, 100, 1, 84, 114);
@@ -1002,7 +1002,7 @@ impl<T: RtType> IReferenceArray<T> {
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct Size {
+RT_STRUCT! { struct Size ["Windows.Foundation.Size"] {
     Width: f32, Height: f32,
 }}
 DEFINE_IID!(IID_IStringable, 2520162132, 36534, 18672, 171, 206, 193, 178, 17, 230, 39, 195);
@@ -1016,7 +1016,7 @@ impl IStringable {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct TimeSpan {
+RT_STRUCT! { struct TimeSpan ["Windows.Foundation.TimeSpan"] {
     Duration: i64,
 }}
 DEFINE_IID!(IID_TypedEventHandler, 2648818996, 27361, 4576, 132, 225, 24, 169, 5, 188, 197, 63);
@@ -1029,7 +1029,7 @@ impl<TSender: RtType, TResult: RtType> TypedEventHandler<TSender, TResult> {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Uri: IUriRuntimeClass}
+RT_CLASS!{class Uri: IUriRuntimeClass ["Windows.Foundation.Uri"]}
 impl RtActivatable<IUriRuntimeClassFactory> for Uri {}
 impl RtActivatable<IUriEscapeStatics> for Uri {}
 impl Uri {
@@ -1205,7 +1205,7 @@ impl IUriRuntimeClassWithAbsoluteCanonicalUri {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WwwFormUrlDecoder: IWwwFormUrlDecoderRuntimeClass}
+RT_CLASS!{class WwwFormUrlDecoder: IWwwFormUrlDecoderRuntimeClass ["Windows.Foundation.WwwFormUrlDecoder"]}
 impl RtActivatable<IWwwFormUrlDecoderRuntimeClassFactory> for WwwFormUrlDecoder {}
 impl WwwFormUrlDecoder {
     #[inline] pub fn create_www_form_url_decoder(query: &HStringArg) -> Result<ComPtr<WwwFormUrlDecoder>> {
@@ -1230,7 +1230,7 @@ impl IWwwFormUrlDecoderEntry {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WwwFormUrlDecoderEntry: IWwwFormUrlDecoderEntry}
+RT_CLASS!{class WwwFormUrlDecoderEntry: IWwwFormUrlDecoderEntry ["Windows.Foundation.WwwFormUrlDecoderEntry"]}
 DEFINE_IID!(IID_IWwwFormUrlDecoderRuntimeClass, 3562669137, 61989, 17730, 146, 150, 14, 29, 245, 210, 84, 223);
 RT_INTERFACE!{interface IWwwFormUrlDecoderRuntimeClass(IWwwFormUrlDecoderRuntimeClassVtbl): IInspectable(IInspectableVtbl) [IID_IWwwFormUrlDecoderRuntimeClass] {
     fn GetFirstValueByName(&self, name: HSTRING, out: *mut HSTRING) -> HRESULT
@@ -3408,7 +3408,7 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for TypedEventHandler<super::web::ui::IWebViewControl, super::web::ui::WebViewControlWebResourceRequestedEventArgs> => [0x3a6ed2bc,0x032b,0x5ec7,0xa2,0x0a,0xc1,0xef,0x49,0x25,0x0c,0x3c] as IID_TypedEventHandler_2_Windows_Web_UI_IWebViewControl_Windows_Web_UI_WebViewControlWebResourceRequestedEventArgs }
 pub mod collections { // Windows.Foundation.Collections
 use ::prelude::*;
-RT_ENUM! { enum CollectionChange: i32 {
+RT_ENUM! { enum CollectionChange: i32 ["Windows.Foundation.Collections.CollectionChange"] {
     Reset (CollectionChange_Reset) = 0, ItemInserted (CollectionChange_ItemInserted) = 1, ItemRemoved (CollectionChange_ItemRemoved) = 2, ItemChanged (CollectionChange_ItemChanged) = 3,
 }}
 DEFINE_IID!(IID_IIterable, 4205151722, 25108, 16919, 175, 218, 127, 70, 222, 88, 105, 179);
@@ -3606,13 +3606,13 @@ DEFINE_IID!(IID_IPropertySet, 2319707551, 62694, 17441, 172, 249, 29, 171, 41, 1
 RT_INTERFACE!{interface IPropertySet(IPropertySetVtbl): IInspectable(IInspectableVtbl) [IID_IPropertySet] {
     
 }}
-RT_CLASS!{class PropertySet: IPropertySet}
+RT_CLASS!{class PropertySet: IPropertySet ["Windows.Foundation.Collections.PropertySet"]}
 impl RtActivatable<IActivationFactory> for PropertySet {}
 DEFINE_CLSID!(PropertySet(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,67,111,108,108,101,99,116,105,111,110,115,46,80,114,111,112,101,114,116,121,83,101,116,0]) [CLSID_PropertySet]);
-RT_CLASS!{class StringMap: IMap<HString, HString>}
+RT_CLASS!{class StringMap: IMap<HString, HString> ["Windows.Foundation.Collections.StringMap"]}
 impl RtActivatable<IActivationFactory> for StringMap {}
 DEFINE_CLSID!(StringMap(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,67,111,108,108,101,99,116,105,111,110,115,46,83,116,114,105,110,103,77,97,112,0]) [CLSID_StringMap]);
-RT_CLASS!{class ValueSet: IPropertySet}
+RT_CLASS!{class ValueSet: IPropertySet ["Windows.Foundation.Collections.ValueSet"]}
 impl RtActivatable<IActivationFactory> for ValueSet {}
 DEFINE_CLSID!(ValueSet(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,67,111,108,108,101,99,116,105,111,110,115,46,86,97,108,117,101,83,101,116,0]) [CLSID_ValueSet]);
 DEFINE_IID!(IID_IVector, 2436052969, 4513, 17221, 163, 162, 78, 127, 149, 110, 34, 45);
@@ -5745,16 +5745,16 @@ impl IAsyncCausalityTracerStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CausalityRelation: i32 {
+RT_ENUM! { enum CausalityRelation: i32 ["Windows.Foundation.Diagnostics.CausalityRelation"] {
     AssignDelegate (CausalityRelation_AssignDelegate) = 0, Join (CausalityRelation_Join) = 1, Choice (CausalityRelation_Choice) = 2, Cancel (CausalityRelation_Cancel) = 3, Error (CausalityRelation_Error) = 4,
 }}
-RT_ENUM! { enum CausalitySource: i32 {
+RT_ENUM! { enum CausalitySource: i32 ["Windows.Foundation.Diagnostics.CausalitySource"] {
     Application (CausalitySource_Application) = 0, Library (CausalitySource_Library) = 1, System (CausalitySource_System) = 2,
 }}
-RT_ENUM! { enum CausalitySynchronousWork: i32 {
+RT_ENUM! { enum CausalitySynchronousWork: i32 ["Windows.Foundation.Diagnostics.CausalitySynchronousWork"] {
     CompletionNotification (CausalitySynchronousWork_CompletionNotification) = 0, ProgressNotification (CausalitySynchronousWork_ProgressNotification) = 1, Execution (CausalitySynchronousWork_Execution) = 2,
 }}
-RT_ENUM! { enum CausalityTraceLevel: i32 {
+RT_ENUM! { enum CausalityTraceLevel: i32 ["Windows.Foundation.Diagnostics.CausalityTraceLevel"] {
     Required (CausalityTraceLevel_Required) = 0, Important (CausalityTraceLevel_Important) = 1, Verbose (CausalityTraceLevel_Verbose) = 2,
 }}
 DEFINE_IID!(IID_IErrorDetails, 931969793, 11465, 17039, 140, 85, 44, 153, 13, 70, 62, 143);
@@ -5780,7 +5780,7 @@ impl IErrorDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ErrorDetails: IErrorDetails}
+RT_CLASS!{class ErrorDetails: IErrorDetails ["Windows.Foundation.Diagnostics.ErrorDetails"]}
 impl RtActivatable<IErrorDetailsStatics> for ErrorDetails {}
 impl ErrorDetails {
     #[inline] pub fn create_from_hresult_async(errorCode: i32) -> Result<ComPtr<super::IAsyncOperation<ErrorDetails>>> {
@@ -5799,7 +5799,7 @@ impl IErrorDetailsStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ErrorOptions: u32 {
+RT_ENUM! { enum ErrorOptions: u32 ["Windows.Foundation.Diagnostics.ErrorOptions"] {
     None (ErrorOptions_None) = 0, SuppressExceptions (ErrorOptions_SuppressExceptions) = 1, ForceExceptions (ErrorOptions_ForceExceptions) = 2, UseSetErrorInfo (ErrorOptions_UseSetErrorInfo) = 4, SuppressSetErrorInfo (ErrorOptions_SuppressSetErrorInfo) = 8,
 }}
 DEFINE_IID!(IID_IErrorReportingSettings, 372676498, 45118, 19361, 139, 184, 210, 143, 74, 180, 210, 192);
@@ -5862,7 +5862,7 @@ impl IFileLoggingSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileLoggingSession: IFileLoggingSession}
+RT_CLASS!{class FileLoggingSession: IFileLoggingSession ["Windows.Foundation.Diagnostics.FileLoggingSession"]}
 impl RtActivatable<IFileLoggingSessionFactory> for FileLoggingSession {}
 impl FileLoggingSession {
     #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<FileLoggingSession>> {
@@ -5892,7 +5892,7 @@ impl ILogFileGeneratedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LogFileGeneratedEventArgs: ILogFileGeneratedEventArgs}
+RT_CLASS!{class LogFileGeneratedEventArgs: ILogFileGeneratedEventArgs ["Windows.Foundation.Diagnostics.LogFileGeneratedEventArgs"]}
 DEFINE_IID!(IID_ILoggingActivity, 3154323777, 46950, 19637, 152, 72, 151, 172, 107, 166, 214, 12);
 RT_INTERFACE!{interface ILoggingActivity(ILoggingActivityVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivity] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -5910,7 +5910,7 @@ impl ILoggingActivity {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LoggingActivity: ILoggingActivity}
+RT_CLASS!{class LoggingActivity: ILoggingActivity ["Windows.Foundation.Diagnostics.LoggingActivity"]}
 impl RtActivatable<ILoggingActivityFactory> for LoggingActivity {}
 impl LoggingActivity {
     #[inline] pub fn create_logging_activity(activityName: &HStringArg, loggingChannel: &ILoggingChannel) -> Result<ComPtr<LoggingActivity>> {
@@ -6018,7 +6018,7 @@ impl ILoggingChannel {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LoggingChannel: ILoggingChannel}
+RT_CLASS!{class LoggingChannel: ILoggingChannel ["Windows.Foundation.Diagnostics.LoggingChannel"]}
 impl RtActivatable<ILoggingChannelFactory> for LoggingChannel {}
 impl RtActivatable<ILoggingChannelFactory2> for LoggingChannel {}
 impl LoggingChannel {
@@ -6088,7 +6088,7 @@ impl ILoggingChannelOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LoggingChannelOptions: ILoggingChannelOptions}
+RT_CLASS!{class LoggingChannelOptions: ILoggingChannelOptions ["Windows.Foundation.Diagnostics.LoggingChannelOptions"]}
 impl RtActivatable<ILoggingChannelOptionsFactory> for LoggingChannelOptions {}
 impl RtActivatable<IActivationFactory> for LoggingChannelOptions {}
 impl LoggingChannelOptions {
@@ -6108,7 +6108,7 @@ impl ILoggingChannelOptionsFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum LoggingFieldFormat: i32 {
+RT_ENUM! { enum LoggingFieldFormat: i32 ["Windows.Foundation.Diagnostics.LoggingFieldFormat"] {
     Default (LoggingFieldFormat_Default) = 0, Hidden (LoggingFieldFormat_Hidden) = 1, String (LoggingFieldFormat_String) = 2, Boolean (LoggingFieldFormat_Boolean) = 3, Hexadecimal (LoggingFieldFormat_Hexadecimal) = 4, ProcessId (LoggingFieldFormat_ProcessId) = 5, ThreadId (LoggingFieldFormat_ThreadId) = 6, Port (LoggingFieldFormat_Port) = 7, Ipv4Address (LoggingFieldFormat_Ipv4Address) = 8, Ipv6Address (LoggingFieldFormat_Ipv6Address) = 9, SocketAddress (LoggingFieldFormat_SocketAddress) = 10, Xml (LoggingFieldFormat_Xml) = 11, Json (LoggingFieldFormat_Json) = 12, Win32Error (LoggingFieldFormat_Win32Error) = 13, NTStatus (LoggingFieldFormat_NTStatus) = 14, HResult (LoggingFieldFormat_HResult) = 15, FileTime (LoggingFieldFormat_FileTime) = 16, Signed (LoggingFieldFormat_Signed) = 17, Unsigned (LoggingFieldFormat_Unsigned) = 18,
 }}
 DEFINE_IID!(IID_ILoggingFields, 3623270319, 30253, 17785, 131, 189, 82, 194, 59, 195, 51, 188);
@@ -6691,13 +6691,13 @@ impl ILoggingFields {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LoggingFields: ILoggingFields}
+RT_CLASS!{class LoggingFields: ILoggingFields ["Windows.Foundation.Diagnostics.LoggingFields"]}
 impl RtActivatable<IActivationFactory> for LoggingFields {}
 DEFINE_CLSID!(LoggingFields(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,70,105,101,108,100,115,0]) [CLSID_LoggingFields]);
-RT_ENUM! { enum LoggingLevel: i32 {
+RT_ENUM! { enum LoggingLevel: i32 ["Windows.Foundation.Diagnostics.LoggingLevel"] {
     Verbose (LoggingLevel_Verbose) = 0, Information (LoggingLevel_Information) = 1, Warning (LoggingLevel_Warning) = 2, Error (LoggingLevel_Error) = 3, Critical (LoggingLevel_Critical) = 4,
 }}
-RT_ENUM! { enum LoggingOpcode: i32 {
+RT_ENUM! { enum LoggingOpcode: i32 ["Windows.Foundation.Diagnostics.LoggingOpcode"] {
     Info (LoggingOpcode_Info) = 0, Start (LoggingOpcode_Start) = 1, Stop (LoggingOpcode_Stop) = 2, Reply (LoggingOpcode_Reply) = 6, Resume (LoggingOpcode_Resume) = 7, Suspend (LoggingOpcode_Suspend) = 8, Send (LoggingOpcode_Send) = 9,
 }}
 DEFINE_IID!(IID_ILoggingOptions, 2428270672, 402, 20317, 172, 38, 0, 106, 218, 202, 18, 216);
@@ -6771,7 +6771,7 @@ impl ILoggingOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LoggingOptions: ILoggingOptions}
+RT_CLASS!{class LoggingOptions: ILoggingOptions ["Windows.Foundation.Diagnostics.LoggingOptions"]}
 impl RtActivatable<ILoggingOptionsFactory> for LoggingOptions {}
 impl RtActivatable<IActivationFactory> for LoggingOptions {}
 impl LoggingOptions {
@@ -6824,7 +6824,7 @@ impl ILoggingSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LoggingSession: ILoggingSession}
+RT_CLASS!{class LoggingSession: ILoggingSession ["Windows.Foundation.Diagnostics.LoggingSession"]}
 impl RtActivatable<ILoggingSessionFactory> for LoggingSession {}
 impl LoggingSession {
     #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<LoggingSession>> {
@@ -6910,7 +6910,7 @@ impl ILoggingTarget {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RuntimeBrokerErrorSettings: IErrorReportingSettings}
+RT_CLASS!{class RuntimeBrokerErrorSettings: IErrorReportingSettings ["Windows.Foundation.Diagnostics.RuntimeBrokerErrorSettings"]}
 impl RtActivatable<IActivationFactory> for RuntimeBrokerErrorSettings {}
 DEFINE_CLSID!(RuntimeBrokerErrorSettings(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,82,117,110,116,105,109,101,66,114,111,107,101,114,69,114,114,111,114,83,101,116,116,105,110,103,115,0]) [CLSID_RuntimeBrokerErrorSettings]);
 DEFINE_IID!(IID_ITracingStatusChangedEventArgs, 1091270417, 65339, 18303, 156, 154, 210, 239, 218, 48, 45, 195);
@@ -6930,7 +6930,7 @@ impl ITracingStatusChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TracingStatusChangedEventArgs: ITracingStatusChangedEventArgs}
+RT_CLASS!{class TracingStatusChangedEventArgs: ITracingStatusChangedEventArgs ["Windows.Foundation.Diagnostics.TracingStatusChangedEventArgs"]}
 } // Windows.Foundation.Diagnostics
 pub mod metadata { // Windows.Foundation.Metadata
 use ::prelude::*;
@@ -7034,55 +7034,55 @@ impl IApiInformationStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AttributeTargets: u32 {
+RT_ENUM! { enum AttributeTargets: u32 ["Windows.Foundation.Metadata.AttributeTargets"] {
     All (AttributeTargets_All) = 4294967295, Delegate (AttributeTargets_Delegate) = 1, Enum (AttributeTargets_Enum) = 2, Event (AttributeTargets_Event) = 4, Field (AttributeTargets_Field) = 8, Interface (AttributeTargets_Interface) = 16, Method (AttributeTargets_Method) = 64, Parameter (AttributeTargets_Parameter) = 128, Property (AttributeTargets_Property) = 256, RuntimeClass (AttributeTargets_RuntimeClass) = 512, Struct (AttributeTargets_Struct) = 1024, InterfaceImpl (AttributeTargets_InterfaceImpl) = 2048, ApiContract (AttributeTargets_ApiContract) = 8192,
 }}
-RT_ENUM! { enum CompositionType: i32 {
+RT_ENUM! { enum CompositionType: i32 ["Windows.Foundation.Metadata.CompositionType"] {
     Protected (CompositionType_Protected) = 1, Public (CompositionType_Public) = 2,
 }}
-RT_ENUM! { enum DeprecationType: i32 {
+RT_ENUM! { enum DeprecationType: i32 ["Windows.Foundation.Metadata.DeprecationType"] {
     Deprecate (DeprecationType_Deprecate) = 0, Remove (DeprecationType_Remove) = 1,
 }}
-RT_ENUM! { enum FeatureStage: i32 {
+RT_ENUM! { enum FeatureStage: i32 ["Windows.Foundation.Metadata.FeatureStage"] {
     AlwaysDisabled (FeatureStage_AlwaysDisabled) = 0, DisabledByDefault (FeatureStage_DisabledByDefault) = 1, EnabledByDefault (FeatureStage_EnabledByDefault) = 2, AlwaysEnabled (FeatureStage_AlwaysEnabled) = 3,
 }}
-RT_ENUM! { enum GCPressureAmount: i32 {
+RT_ENUM! { enum GCPressureAmount: i32 ["Windows.Foundation.Metadata.GCPressureAmount"] {
     Low (GCPressureAmount_Low) = 0, Medium (GCPressureAmount_Medium) = 1, High (GCPressureAmount_High) = 2,
 }}
-RT_ENUM! { enum MarshalingType: i32 {
+RT_ENUM! { enum MarshalingType: i32 ["Windows.Foundation.Metadata.MarshalingType"] {
     None (MarshalingType_None) = 1, Agile (MarshalingType_Agile) = 2, Standard (MarshalingType_Standard) = 3, InvalidMarshaling (MarshalingType_InvalidMarshaling) = 0,
 }}
-RT_ENUM! { enum Platform: i32 {
+RT_ENUM! { enum Platform: i32 ["Windows.Foundation.Metadata.Platform"] {
     Windows (Platform_Windows) = 0, WindowsPhone (Platform_WindowsPhone) = 1,
 }}
-RT_ENUM! { enum ThreadingModel: i32 {
+RT_ENUM! { enum ThreadingModel: i32 ["Windows.Foundation.Metadata.ThreadingModel"] {
     STA (ThreadingModel_STA) = 1, MTA (ThreadingModel_MTA) = 2, Both (ThreadingModel_Both) = 3, InvalidThreading (ThreadingModel_InvalidThreading) = 0,
 }}
 } // Windows.Foundation.Metadata
 pub mod numerics { // Windows.Foundation.Numerics
 use ::prelude::*;
-RT_STRUCT! { struct Matrix3x2 {
+RT_STRUCT! { struct Matrix3x2 ["Windows.Foundation.Numerics.Matrix3x2"] {
     M11: f32, M12: f32, M21: f32, M22: f32, M31: f32, M32: f32,
 }}
-RT_STRUCT! { struct Matrix4x4 {
+RT_STRUCT! { struct Matrix4x4 ["Windows.Foundation.Numerics.Matrix4x4"] {
     M11: f32, M12: f32, M13: f32, M14: f32, M21: f32, M22: f32, M23: f32, M24: f32, M31: f32, M32: f32, M33: f32, M34: f32, M41: f32, M42: f32, M43: f32, M44: f32,
 }}
-RT_STRUCT! { struct Plane {
+RT_STRUCT! { struct Plane ["Windows.Foundation.Numerics.Plane"] {
     Normal: Vector3, D: f32,
 }}
-RT_STRUCT! { struct Quaternion {
+RT_STRUCT! { struct Quaternion ["Windows.Foundation.Numerics.Quaternion"] {
     X: f32, Y: f32, Z: f32, W: f32,
 }}
-RT_STRUCT! { struct Rational {
+RT_STRUCT! { struct Rational ["Windows.Foundation.Numerics.Rational"] {
     Numerator: u32, Denominator: u32,
 }}
-RT_STRUCT! { struct Vector2 {
+RT_STRUCT! { struct Vector2 ["Windows.Foundation.Numerics.Vector2"] {
     X: f32, Y: f32,
 }}
-RT_STRUCT! { struct Vector3 {
+RT_STRUCT! { struct Vector3 ["Windows.Foundation.Numerics.Vector3"] {
     X: f32, Y: f32, Z: f32,
 }}
-RT_STRUCT! { struct Vector4 {
+RT_STRUCT! { struct Vector4 ["Windows.Foundation.Numerics.Vector4"] {
     X: f32, Y: f32, Z: f32, W: f32,
 }}
 } // Windows.Foundation.Numerics

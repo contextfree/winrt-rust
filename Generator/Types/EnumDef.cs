@@ -31,8 +31,9 @@ namespace Generator.Types
 
         public override void Emit()
         {
+            string fullname = '"' + Type.FullName + '"';
             Module.Append($@"
-RT_ENUM! {{ enum { DefinitionName }: { UnderlyingTypeName } {{
+RT_ENUM! {{ enum { DefinitionName }: { UnderlyingTypeName } [{ fullname }] {{
     { String.Join(", ", Type.Fields.Where(f => f.Name != "value__").Select(f => $"{ NameHelpers.PreventKeywords(f.Name) } ({ Type.Name }_{ f.Name }) = { f.Constant }")) },
 }}}}");
         }

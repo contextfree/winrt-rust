@@ -1,7 +1,7 @@
 use std::ops::{Deref, DerefMut};
 use std::fmt;
 use std::ptr;
-use ::{ComIid, ComInterface, RtInterface, RtClassInterface, IInspectable, Guid};
+use ::{ComIid, ComInterface, RtInterface, RtClassInterface, IInspectable};
 
 use w::shared::ntdef::VOID;
 use w::shared::minwindef::LPVOID;
@@ -24,7 +24,7 @@ impl<T> fmt::Pointer for ComPtr<T> {
 // This is a helper method that is not exposed publically by the library
 #[inline]
 pub fn query_interface<T, Target>(interface: &T) -> Option<ComPtr<Target>> where Target: ComIid, T: ComInterface {
-    let iid: &'static Guid = Target::iid();
+    let iid = Target::iid();
     let as_unknown = unsafe { &mut *(interface  as *const T as *mut T as *mut IUnknown) };
     let mut res = ptr::null_mut();
     unsafe {

@@ -57,7 +57,7 @@ impl IJsonArray {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class JsonArray: IJsonArray}
+RT_CLASS!{class JsonArray: IJsonArray ["Windows.Data.Json.JsonArray"]}
 impl RtActivatable<IJsonArrayStatics> for JsonArray {}
 impl RtActivatable<IActivationFactory> for JsonArray {}
 impl JsonArray {
@@ -105,7 +105,7 @@ impl IJsonErrorStatics2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum JsonErrorStatus: i32 {
+RT_ENUM! { enum JsonErrorStatus: i32 ["Windows.Data.Json.JsonErrorStatus"] {
     Unknown (JsonErrorStatus_Unknown) = 0, InvalidJsonString (JsonErrorStatus_InvalidJsonString) = 1, InvalidJsonNumber (JsonErrorStatus_InvalidJsonNumber) = 2, JsonValueNotFound (JsonErrorStatus_JsonValueNotFound) = 3, ImplementationLimit (JsonErrorStatus_ImplementationLimit) = 4,
 }}
 DEFINE_IID!(IID_IJsonObject, 105784541, 10690, 20355, 154, 193, 158, 225, 21, 120, 190, 179);
@@ -154,7 +154,7 @@ impl IJsonObject {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class JsonObject: IJsonObject}
+RT_CLASS!{class JsonObject: IJsonObject ["Windows.Data.Json.JsonObject"]}
 impl RtActivatable<IJsonObjectStatics> for JsonObject {}
 impl RtActivatable<IActivationFactory> for JsonObject {}
 impl JsonObject {
@@ -271,7 +271,7 @@ impl IJsonValue {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class JsonValue: IJsonValue}
+RT_CLASS!{class JsonValue: IJsonValue ["Windows.Data.Json.JsonValue"]}
 impl RtActivatable<IJsonValueStatics> for JsonValue {}
 impl RtActivatable<IJsonValueStatics2> for JsonValue {}
 impl JsonValue {
@@ -341,7 +341,7 @@ impl IJsonValueStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum JsonValueType: i32 {
+RT_ENUM! { enum JsonValueType: i32 ["Windows.Data.Json.JsonValueType"] {
     Null (JsonValueType_Null) = 0, Boolean (JsonValueType_Boolean) = 1, Number (JsonValueType_Number) = 2, String (JsonValueType_String) = 3, Array (JsonValueType_Array) = 4, Object (JsonValueType_Object) = 5,
 }}
 } // Windows.Data.Json
@@ -370,7 +370,7 @@ impl IPdfDocument {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PdfDocument: IPdfDocument}
+RT_CLASS!{class PdfDocument: IPdfDocument ["Windows.Data.Pdf.PdfDocument"]}
 impl RtActivatable<IPdfDocumentStatics> for PdfDocument {}
 impl PdfDocument {
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
@@ -471,7 +471,7 @@ impl IPdfPage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PdfPage: IPdfPage}
+RT_CLASS!{class PdfPage: IPdfPage ["Windows.Data.Pdf.PdfPage"]}
 DEFINE_IID!(IID_IPdfPageDimensions, 571933809, 12606, 17640, 131, 93, 99, 163, 231, 98, 74, 16);
 RT_INTERFACE!{interface IPdfPageDimensions(IPdfPageDimensionsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPageDimensions] {
     fn get_MediaBox(&self, out: *mut foundation::Rect) -> HRESULT,
@@ -507,7 +507,7 @@ impl IPdfPageDimensions {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PdfPageDimensions: IPdfPageDimensions}
+RT_CLASS!{class PdfPageDimensions: IPdfPageDimensions ["Windows.Data.Pdf.PdfPageDimensions"]}
 DEFINE_IID!(IID_IPdfPageRenderOptions, 1016595823, 47055, 19497, 154, 4, 82, 217, 2, 103, 244, 37);
 RT_INTERFACE!{interface IPdfPageRenderOptions(IPdfPageRenderOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPageRenderOptions] {
     fn get_SourceRect(&self, out: *mut foundation::Rect) -> HRESULT,
@@ -581,16 +581,16 @@ impl IPdfPageRenderOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PdfPageRenderOptions: IPdfPageRenderOptions}
+RT_CLASS!{class PdfPageRenderOptions: IPdfPageRenderOptions ["Windows.Data.Pdf.PdfPageRenderOptions"]}
 impl RtActivatable<IActivationFactory> for PdfPageRenderOptions {}
 DEFINE_CLSID!(PdfPageRenderOptions(&[87,105,110,100,111,119,115,46,68,97,116,97,46,80,100,102,46,80,100,102,80,97,103,101,82,101,110,100,101,114,79,112,116,105,111,110,115,0]) [CLSID_PdfPageRenderOptions]);
-RT_ENUM! { enum PdfPageRotation: i32 {
+RT_ENUM! { enum PdfPageRotation: i32 ["Windows.Data.Pdf.PdfPageRotation"] {
     Normal (PdfPageRotation_Normal) = 0, Rotate90 (PdfPageRotation_Rotate90) = 1, Rotate180 (PdfPageRotation_Rotate180) = 2, Rotate270 (PdfPageRotation_Rotate270) = 3,
 }}
 } // Windows.Data.Pdf
 pub mod text { // Windows.Data.Text
 use ::prelude::*;
-RT_ENUM! { enum AlternateNormalizationFormat: i32 {
+RT_ENUM! { enum AlternateNormalizationFormat: i32 ["Windows.Data.Text.AlternateNormalizationFormat"] {
     NotNormalized (AlternateNormalizationFormat_NotNormalized) = 0, Number (AlternateNormalizationFormat_Number) = 1, Currency (AlternateNormalizationFormat_Currency) = 3, Date (AlternateNormalizationFormat_Date) = 4, Time (AlternateNormalizationFormat_Time) = 5,
 }}
 DEFINE_IID!(IID_IAlternateWordForm, 1194945566, 20921, 16903, 145, 70, 36, 142, 99, 106, 29, 29);
@@ -616,7 +616,7 @@ impl IAlternateWordForm {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AlternateWordForm: IAlternateWordForm}
+RT_CLASS!{class AlternateWordForm: IAlternateWordForm ["Windows.Data.Text.AlternateWordForm"]}
 DEFINE_IID!(IID_ISelectableWordSegment, 2439662775, 35495, 19576, 179, 116, 93, 237, 183, 82, 230, 11);
 RT_INTERFACE!{interface ISelectableWordSegment(ISelectableWordSegmentVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordSegment] {
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
@@ -634,7 +634,7 @@ impl ISelectableWordSegment {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SelectableWordSegment: ISelectableWordSegment}
+RT_CLASS!{class SelectableWordSegment: ISelectableWordSegment ["Windows.Data.Text.SelectableWordSegment"]}
 DEFINE_IID!(IID_SelectableWordSegmentsTokenizingHandler, 977140892, 44766, 19911, 158, 108, 65, 192, 68, 189, 53, 146);
 RT_DELEGATE!{delegate SelectableWordSegmentsTokenizingHandler(SelectableWordSegmentsTokenizingHandlerVtbl, SelectableWordSegmentsTokenizingHandlerImpl) [IID_SelectableWordSegmentsTokenizingHandler] {
     fn Invoke(&self, precedingWords: *mut foundation::collections::IIterable<SelectableWordSegment>, words: *mut foundation::collections::IIterable<SelectableWordSegment>) -> HRESULT
@@ -673,7 +673,7 @@ impl ISelectableWordsSegmenter {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SelectableWordsSegmenter: ISelectableWordsSegmenter}
+RT_CLASS!{class SelectableWordsSegmenter: ISelectableWordsSegmenter ["Windows.Data.Text.SelectableWordsSegmenter"]}
 impl RtActivatable<ISelectableWordsSegmenterFactory> for SelectableWordsSegmenter {}
 impl SelectableWordsSegmenter {
     #[inline] pub fn create_with_language(language: &HStringArg) -> Result<ComPtr<SelectableWordsSegmenter>> {
@@ -709,7 +709,7 @@ impl ISemanticTextQuery {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SemanticTextQuery: ISemanticTextQuery}
+RT_CLASS!{class SemanticTextQuery: ISemanticTextQuery ["Windows.Data.Text.SemanticTextQuery"]}
 impl RtActivatable<ISemanticTextQueryFactory> for SemanticTextQuery {}
 impl SemanticTextQuery {
     #[inline] pub fn create(aqsFilter: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> {
@@ -766,7 +766,7 @@ impl ITextConversionGenerator {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TextConversionGenerator: ITextConversionGenerator}
+RT_CLASS!{class TextConversionGenerator: ITextConversionGenerator ["Windows.Data.Text.TextConversionGenerator"]}
 impl RtActivatable<ITextConversionGeneratorFactory> for TextConversionGenerator {}
 impl TextConversionGenerator {
     #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextConversionGenerator>> {
@@ -802,7 +802,7 @@ impl ITextPhoneme {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TextPhoneme: ITextPhoneme}
+RT_CLASS!{class TextPhoneme: ITextPhoneme ["Windows.Data.Text.TextPhoneme"]}
 DEFINE_IID!(IID_ITextPredictionGenerator, 1588374279, 44017, 19638, 157, 158, 50, 111, 43, 70, 135, 86);
 RT_INTERFACE!{interface ITextPredictionGenerator(ITextPredictionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextPredictionGenerator] {
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
@@ -832,7 +832,7 @@ impl ITextPredictionGenerator {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TextPredictionGenerator: ITextPredictionGenerator}
+RT_CLASS!{class TextPredictionGenerator: ITextPredictionGenerator ["Windows.Data.Text.TextPredictionGenerator"]}
 impl RtActivatable<ITextPredictionGeneratorFactory> for TextPredictionGenerator {}
 impl TextPredictionGenerator {
     #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextPredictionGenerator>> {
@@ -879,7 +879,7 @@ impl ITextPredictionGeneratorFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum TextPredictionOptions: u32 {
+RT_ENUM! { enum TextPredictionOptions: u32 ["Windows.Data.Text.TextPredictionOptions"] {
     None (TextPredictionOptions_None) = 0, Predictions (TextPredictionOptions_Predictions) = 1, Corrections (TextPredictionOptions_Corrections) = 2,
 }}
 DEFINE_IID!(IID_ITextReverseConversionGenerator, 1374156052, 40017, 19846, 174, 27, 180, 152, 251, 173, 131, 19);
@@ -905,7 +905,7 @@ impl ITextReverseConversionGenerator {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TextReverseConversionGenerator: ITextReverseConversionGenerator}
+RT_CLASS!{class TextReverseConversionGenerator: ITextReverseConversionGenerator ["Windows.Data.Text.TextReverseConversionGenerator"]}
 impl RtActivatable<ITextReverseConversionGeneratorFactory> for TextReverseConversionGenerator {}
 impl TextReverseConversionGenerator {
     #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextReverseConversionGenerator>> {
@@ -935,7 +935,7 @@ impl ITextReverseConversionGeneratorFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct TextSegment {
+RT_STRUCT! { struct TextSegment ["Windows.Data.Text.TextSegment"] {
     StartPosition: u32, Length: u32,
 }}
 RT_CLASS!{static class UnicodeCharacters}
@@ -1101,10 +1101,10 @@ impl IUnicodeCharactersStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UnicodeGeneralCategory: i32 {
+RT_ENUM! { enum UnicodeGeneralCategory: i32 ["Windows.Data.Text.UnicodeGeneralCategory"] {
     UppercaseLetter (UnicodeGeneralCategory_UppercaseLetter) = 0, LowercaseLetter (UnicodeGeneralCategory_LowercaseLetter) = 1, TitlecaseLetter (UnicodeGeneralCategory_TitlecaseLetter) = 2, ModifierLetter (UnicodeGeneralCategory_ModifierLetter) = 3, OtherLetter (UnicodeGeneralCategory_OtherLetter) = 4, NonspacingMark (UnicodeGeneralCategory_NonspacingMark) = 5, SpacingCombiningMark (UnicodeGeneralCategory_SpacingCombiningMark) = 6, EnclosingMark (UnicodeGeneralCategory_EnclosingMark) = 7, DecimalDigitNumber (UnicodeGeneralCategory_DecimalDigitNumber) = 8, LetterNumber (UnicodeGeneralCategory_LetterNumber) = 9, OtherNumber (UnicodeGeneralCategory_OtherNumber) = 10, SpaceSeparator (UnicodeGeneralCategory_SpaceSeparator) = 11, LineSeparator (UnicodeGeneralCategory_LineSeparator) = 12, ParagraphSeparator (UnicodeGeneralCategory_ParagraphSeparator) = 13, Control (UnicodeGeneralCategory_Control) = 14, Format (UnicodeGeneralCategory_Format) = 15, Surrogate (UnicodeGeneralCategory_Surrogate) = 16, PrivateUse (UnicodeGeneralCategory_PrivateUse) = 17, ConnectorPunctuation (UnicodeGeneralCategory_ConnectorPunctuation) = 18, DashPunctuation (UnicodeGeneralCategory_DashPunctuation) = 19, OpenPunctuation (UnicodeGeneralCategory_OpenPunctuation) = 20, ClosePunctuation (UnicodeGeneralCategory_ClosePunctuation) = 21, InitialQuotePunctuation (UnicodeGeneralCategory_InitialQuotePunctuation) = 22, FinalQuotePunctuation (UnicodeGeneralCategory_FinalQuotePunctuation) = 23, OtherPunctuation (UnicodeGeneralCategory_OtherPunctuation) = 24, MathSymbol (UnicodeGeneralCategory_MathSymbol) = 25, CurrencySymbol (UnicodeGeneralCategory_CurrencySymbol) = 26, ModifierSymbol (UnicodeGeneralCategory_ModifierSymbol) = 27, OtherSymbol (UnicodeGeneralCategory_OtherSymbol) = 28, NotAssigned (UnicodeGeneralCategory_NotAssigned) = 29,
 }}
-RT_ENUM! { enum UnicodeNumericType: i32 {
+RT_ENUM! { enum UnicodeNumericType: i32 ["Windows.Data.Text.UnicodeNumericType"] {
     None (UnicodeNumericType_None) = 0, Decimal (UnicodeNumericType_Decimal) = 1, Digit (UnicodeNumericType_Digit) = 2, Numeric (UnicodeNumericType_Numeric) = 3,
 }}
 DEFINE_IID!(IID_IWordSegment, 3537156717, 39036, 19648, 182, 189, 212, 154, 17, 179, 143, 154);
@@ -1130,7 +1130,7 @@ impl IWordSegment {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WordSegment: IWordSegment}
+RT_CLASS!{class WordSegment: IWordSegment ["Windows.Data.Text.WordSegment"]}
 DEFINE_IID!(IID_WordSegmentsTokenizingHandler, 2782749527, 48938, 19535, 163, 31, 41, 231, 28, 111, 139, 53);
 RT_DELEGATE!{delegate WordSegmentsTokenizingHandler(WordSegmentsTokenizingHandlerVtbl, WordSegmentsTokenizingHandlerImpl) [IID_WordSegmentsTokenizingHandler] {
     fn Invoke(&self, precedingWords: *mut foundation::collections::IIterable<WordSegment>, words: *mut foundation::collections::IIterable<WordSegment>) -> HRESULT
@@ -1169,7 +1169,7 @@ impl IWordsSegmenter {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WordsSegmenter: IWordsSegmenter}
+RT_CLASS!{class WordsSegmenter: IWordsSegmenter ["Windows.Data.Text.WordsSegmenter"]}
 impl RtActivatable<IWordsSegmenterFactory> for WordsSegmenter {}
 impl WordsSegmenter {
     #[inline] pub fn create_with_language(language: &HStringArg) -> Result<ComPtr<WordsSegmenter>> {
@@ -1215,7 +1215,7 @@ impl IDtdEntity {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DtdEntity: IDtdEntity}
+RT_CLASS!{class DtdEntity: IDtdEntity ["Windows.Data.Xml.Dom.DtdEntity"]}
 DEFINE_IID!(IID_IDtdNotation, 2360664141, 27974, 20187, 171, 115, 223, 131, 197, 26, 211, 151);
 RT_INTERFACE!{interface IDtdNotation(IDtdNotationVtbl): IInspectable(IInspectableVtbl) [IID_IDtdNotation] {
     fn get_PublicId(&self, out: *mut *mut IInspectable) -> HRESULT,
@@ -1233,8 +1233,8 @@ impl IDtdNotation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DtdNotation: IDtdNotation}
-RT_ENUM! { enum NodeType: i32 {
+RT_CLASS!{class DtdNotation: IDtdNotation ["Windows.Data.Xml.Dom.DtdNotation"]}
+RT_ENUM! { enum NodeType: i32 ["Windows.Data.Xml.Dom.NodeType"] {
     Invalid (NodeType_Invalid) = 0, ElementNode (NodeType_ElementNode) = 1, AttributeNode (NodeType_AttributeNode) = 2, TextNode (NodeType_TextNode) = 3, DataSectionNode (NodeType_DataSectionNode) = 4, EntityReferenceNode (NodeType_EntityReferenceNode) = 5, EntityNode (NodeType_EntityNode) = 6, ProcessingInstructionNode (NodeType_ProcessingInstructionNode) = 7, CommentNode (NodeType_CommentNode) = 8, DocumentNode (NodeType_DocumentNode) = 9, DocumentTypeNode (NodeType_DocumentTypeNode) = 10, DocumentFragmentNode (NodeType_DocumentFragmentNode) = 11, NotationNode (NodeType_NotationNode) = 12,
 }}
 DEFINE_IID!(IID_IXmlAttribute, 2887010980, 46321, 19894, 178, 6, 138, 34, 195, 8, 219, 10);
@@ -1265,12 +1265,12 @@ impl IXmlAttribute {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XmlAttribute: IXmlAttribute}
+RT_CLASS!{class XmlAttribute: IXmlAttribute ["Windows.Data.Xml.Dom.XmlAttribute"]}
 DEFINE_IID!(IID_IXmlCDataSection, 1292153967, 51389, 17844, 136, 153, 4, 0, 215, 194, 198, 15);
 RT_INTERFACE!{interface IXmlCDataSection(IXmlCDataSectionVtbl): IInspectable(IInspectableVtbl) [IID_IXmlCDataSection] {
     
 }}
-RT_CLASS!{class XmlCDataSection: IXmlCDataSection}
+RT_CLASS!{class XmlCDataSection: IXmlCDataSection ["Windows.Data.Xml.Dom.XmlCDataSection"]}
 DEFINE_IID!(IID_IXmlCharacterData, 321798827, 20022, 19958, 177, 200, 12, 230, 47, 216, 139, 38);
 RT_INTERFACE!{interface IXmlCharacterData(IXmlCharacterDataVtbl): IInspectable(IInspectableVtbl) [IID_IXmlCharacterData] {
     fn get_Data(&self, out: *mut HSTRING) -> HRESULT,
@@ -1323,7 +1323,7 @@ DEFINE_IID!(IID_IXmlComment, 3164894421, 46623, 17937, 156, 172, 46, 146, 227, 7
 RT_INTERFACE!{interface IXmlComment(IXmlCommentVtbl): IInspectable(IInspectableVtbl) [IID_IXmlComment] {
     
 }}
-RT_CLASS!{class XmlComment: IXmlComment}
+RT_CLASS!{class XmlComment: IXmlComment ["Windows.Data.Xml.Dom.XmlComment"]}
 DEFINE_IID!(IID_IXmlDocument, 4159939846, 7815, 17110, 188, 251, 184, 200, 9, 250, 84, 148);
 RT_INTERFACE!{interface IXmlDocument(IXmlDocumentVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocument] {
     fn get_Doctype(&self, out: *mut *mut XmlDocumentType) -> HRESULT,
@@ -1431,7 +1431,7 @@ impl IXmlDocument {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XmlDocument: IXmlDocument}
+RT_CLASS!{class XmlDocument: IXmlDocument ["Windows.Data.Xml.Dom.XmlDocument"]}
 impl RtActivatable<IXmlDocumentStatics> for XmlDocument {}
 impl RtActivatable<IActivationFactory> for XmlDocument {}
 impl XmlDocument {
@@ -1453,7 +1453,7 @@ DEFINE_IID!(IID_IXmlDocumentFragment, 3807013526, 3105, 17573, 139, 201, 158, 74
 RT_INTERFACE!{interface IXmlDocumentFragment(IXmlDocumentFragmentVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentFragment] {
     
 }}
-RT_CLASS!{class XmlDocumentFragment: IXmlDocumentFragment}
+RT_CLASS!{class XmlDocumentFragment: IXmlDocumentFragment ["Windows.Data.Xml.Dom.XmlDocumentFragment"]}
 DEFINE_IID!(IID_IXmlDocumentIO, 1825630030, 61029, 17545, 158, 191, 202, 67, 232, 123, 166, 55);
 RT_INTERFACE!{interface IXmlDocumentIO(IXmlDocumentIOVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentIO] {
     fn LoadXml(&self, xml: HSTRING) -> HRESULT,
@@ -1542,7 +1542,7 @@ impl IXmlDocumentType {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XmlDocumentType: IXmlDocumentType}
+RT_CLASS!{class XmlDocumentType: IXmlDocumentType ["Windows.Data.Xml.Dom.XmlDocumentType"]}
 DEFINE_IID!(IID_IXmlDomImplementation, 1843757362, 61725, 20411, 140, 198, 88, 60, 186, 147, 17, 47);
 RT_INTERFACE!{interface IXmlDomImplementation(IXmlDomImplementationVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDomImplementation] {
     fn HasFeature(&self, feature: HSTRING, version: *mut IInspectable, out: *mut bool) -> HRESULT
@@ -1554,7 +1554,7 @@ impl IXmlDomImplementation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XmlDomImplementation: IXmlDomImplementation}
+RT_CLASS!{class XmlDomImplementation: IXmlDomImplementation ["Windows.Data.Xml.Dom.XmlDomImplementation"]}
 DEFINE_IID!(IID_IXmlElement, 771459615, 27408, 20216, 159, 131, 239, 204, 232, 250, 236, 55);
 RT_INTERFACE!{interface IXmlElement(IXmlElementVtbl): IInspectable(IInspectableVtbl) [IID_IXmlElement] {
     fn get_TagName(&self, out: *mut HSTRING) -> HRESULT,
@@ -1634,12 +1634,12 @@ impl IXmlElement {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XmlElement: IXmlElement}
+RT_CLASS!{class XmlElement: IXmlElement ["Windows.Data.Xml.Dom.XmlElement"]}
 DEFINE_IID!(IID_IXmlEntityReference, 774850492, 50128, 19663, 187, 134, 10, 184, 195, 106, 97, 207);
 RT_INTERFACE!{interface IXmlEntityReference(IXmlEntityReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IXmlEntityReference] {
     
 }}
-RT_CLASS!{class XmlEntityReference: IXmlEntityReference}
+RT_CLASS!{class XmlEntityReference: IXmlEntityReference ["Windows.Data.Xml.Dom.XmlEntityReference"]}
 DEFINE_IID!(IID_IXmlLoadSettings, 1487538088, 65238, 18167, 180, 197, 251, 27, 167, 33, 8, 214);
 RT_INTERFACE!{interface IXmlLoadSettings(IXmlLoadSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IXmlLoadSettings] {
     fn get_MaxElementDepth(&self, out: *mut u32) -> HRESULT,
@@ -1700,7 +1700,7 @@ impl IXmlLoadSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XmlLoadSettings: IXmlLoadSettings}
+RT_CLASS!{class XmlLoadSettings: IXmlLoadSettings ["Windows.Data.Xml.Dom.XmlLoadSettings"]}
 impl RtActivatable<IActivationFactory> for XmlLoadSettings {}
 DEFINE_CLSID!(XmlLoadSettings(&[87,105,110,100,111,119,115,46,68,97,116,97,46,88,109,108,46,68,111,109,46,88,109,108,76,111,97,100,83,101,116,116,105,110,103,115,0]) [CLSID_XmlLoadSettings]);
 DEFINE_IID!(IID_IXmlNamedNodeMap, 3014041264, 43696, 19330, 166, 250, 177, 69, 63, 124, 2, 27);
@@ -1756,7 +1756,7 @@ impl IXmlNamedNodeMap {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XmlNamedNodeMap: IXmlNamedNodeMap}
+RT_CLASS!{class XmlNamedNodeMap: IXmlNamedNodeMap ["Windows.Data.Xml.Dom.XmlNamedNodeMap"]}
 DEFINE_IID!(IID_IXmlNode, 477371737, 8482, 18389, 168, 86, 131, 243, 212, 33, 72, 117);
 RT_INTERFACE!{interface IXmlNode(IXmlNodeVtbl): IInspectable(IInspectableVtbl) [IID_IXmlNode] {
     fn get_NodeValue(&self, out: *mut *mut IInspectable) -> HRESULT,
@@ -1914,7 +1914,7 @@ impl IXmlNodeList {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XmlNodeList: IXmlNodeList}
+RT_CLASS!{class XmlNodeList: IXmlNodeList ["Windows.Data.Xml.Dom.XmlNodeList"]}
 DEFINE_IID!(IID_IXmlNodeSelector, 1675344523, 53467, 20449, 183, 69, 249, 67, 58, 253, 194, 91);
 RT_INTERFACE!{interface IXmlNodeSelector(IXmlNodeSelectorVtbl): IInspectable(IInspectableVtbl) [IID_IXmlNodeSelector] {
     fn SelectSingleNode(&self, xpath: HSTRING, out: *mut *mut IXmlNode) -> HRESULT,
@@ -1988,7 +1988,7 @@ impl IXmlProcessingInstruction {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XmlProcessingInstruction: IXmlProcessingInstruction}
+RT_CLASS!{class XmlProcessingInstruction: IXmlProcessingInstruction ["Windows.Data.Xml.Dom.XmlProcessingInstruction"]}
 DEFINE_IID!(IID_IXmlText, 4180780235, 12429, 18272, 161, 213, 67, 182, 116, 80, 172, 126);
 RT_INTERFACE!{interface IXmlText(IXmlTextVtbl): IInspectable(IInspectableVtbl) [IID_IXmlText] {
     fn SplitText(&self, offset: u32, out: *mut *mut IXmlText) -> HRESULT
@@ -2000,7 +2000,7 @@ impl IXmlText {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XmlText: IXmlText}
+RT_CLASS!{class XmlText: IXmlText ["Windows.Data.Xml.Dom.XmlText"]}
 } // Windows.Data.Xml.Dom
 pub mod xsl { // Windows.Data.Xml.Xsl
 use ::prelude::*;
@@ -2015,7 +2015,7 @@ impl IXsltProcessor {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XsltProcessor: IXsltProcessor}
+RT_CLASS!{class XsltProcessor: IXsltProcessor ["Windows.Data.Xml.Xsl.XsltProcessor"]}
 impl RtActivatable<IXsltProcessorFactory> for XsltProcessor {}
 impl XsltProcessor {
     #[inline] pub fn create_instance(document: &super::dom::XmlDocument) -> Result<ComPtr<XsltProcessor>> {

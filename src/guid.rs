@@ -1,3 +1,5 @@
+extern crate uuid;
+
 use std::{fmt, cmp, mem};
 
 use w::shared::guiddef::GUID;
@@ -43,6 +45,21 @@ impl cmp::PartialEq<Guid> for Guid {
 }
 
 impl cmp::Eq for Guid {}
+
+pub(crate) fn format_for_iid_descriptor(buffer: &mut String, guid: &Guid) { // should be const fn
+    buffer.push_str(&format!("{:08x}-{:04x}-{:04x}-{:02x}{:02x}-{:02x}{:02x}{:02x}{:02x}{:02x}{:02x}",
+            guid.Data1, guid.Data2, guid.Data3,
+            guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3],
+            guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7]));
+}
+
+pub(crate) fn iid_from_descriptor(descriptor: &str) -> Guid {
+    use self::uuid::Uuid;
+    let namespace = Uuid::parse_str("11F47AD5-7B73-42C0-ABAE-878B1E16ADEE").expect("invalid IID namespace UUID");
+    let iid = Uuid::new_v5(&namespace, descriptor.as_bytes());
+    let (p1, p2, p3, p4) = iid.as_fields();
+    Guid { Data1: p1, Data2: p2, Data3: p3, Data4: *p4 }
+}
 
 #[cfg(test)]
 mod tests {

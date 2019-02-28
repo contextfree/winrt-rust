@@ -1,18 +1,18 @@
 use ::prelude::*;
-RT_STRUCT! { struct DisplayAdapterId {
+RT_STRUCT! { struct DisplayAdapterId ["Windows.Graphics.DisplayAdapterId"] {
     LowPart: u32, HighPart: i32,
 }}
 DEFINE_IID!(IID_IGeometrySource2D, 3405740290, 26380, 16769, 166, 36, 218, 151, 114, 3, 184, 69);
 RT_INTERFACE!{interface IGeometrySource2D(IGeometrySource2DVtbl): IInspectable(IInspectableVtbl) [IID_IGeometrySource2D] {
     
 }}
-RT_STRUCT! { struct PointInt32 {
+RT_STRUCT! { struct PointInt32 ["Windows.Graphics.PointInt32"] {
     X: i32, Y: i32,
 }}
-RT_STRUCT! { struct RectInt32 {
+RT_STRUCT! { struct RectInt32 ["Windows.Graphics.RectInt32"] {
     X: i32, Y: i32, Width: i32, Height: i32,
 }}
-RT_STRUCT! { struct SizeInt32 {
+RT_STRUCT! { struct SizeInt32 ["Windows.Graphics.SizeInt32"] {
     Width: i32, Height: i32,
 }}
 pub mod capture { // Windows.Graphics.Capture
@@ -40,7 +40,7 @@ impl IDirect3D11CaptureFrame {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Direct3D11CaptureFrame: IDirect3D11CaptureFrame}
+RT_CLASS!{class Direct3D11CaptureFrame: IDirect3D11CaptureFrame ["Windows.Graphics.Capture.Direct3D11CaptureFrame"]}
 DEFINE_IID!(IID_IDirect3D11CaptureFramePool, 619408674, 6517, 16942, 130, 231, 120, 13, 189, 141, 223, 36);
 RT_INTERFACE!{interface IDirect3D11CaptureFramePool(IDirect3D11CaptureFramePoolVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePool] {
     fn Recreate(&self, device: *mut super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> HRESULT,
@@ -80,7 +80,7 @@ impl IDirect3D11CaptureFramePool {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Direct3D11CaptureFramePool: IDirect3D11CaptureFramePool}
+RT_CLASS!{class Direct3D11CaptureFramePool: IDirect3D11CaptureFramePool ["Windows.Graphics.Capture.Direct3D11CaptureFramePool"]}
 impl RtActivatable<IDirect3D11CaptureFramePoolStatics> for Direct3D11CaptureFramePool {}
 impl RtActivatable<IDirect3D11CaptureFramePoolStatics2> for Direct3D11CaptureFramePool {}
 impl Direct3D11CaptureFramePool {
@@ -142,7 +142,7 @@ impl IGraphicsCaptureItem {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GraphicsCaptureItem: IGraphicsCaptureItem}
+RT_CLASS!{class GraphicsCaptureItem: IGraphicsCaptureItem ["Windows.Graphics.Capture.GraphicsCaptureItem"]}
 impl RtActivatable<IGraphicsCaptureItemStatics> for GraphicsCaptureItem {}
 impl GraphicsCaptureItem {
     #[cfg(feature="windows-ui")] #[inline] pub fn create_from_visual(visual: &super::super::ui::composition::Visual) -> Result<Option<ComPtr<GraphicsCaptureItem>>> {
@@ -172,7 +172,7 @@ impl IGraphicsCapturePicker {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GraphicsCapturePicker: IGraphicsCapturePicker}
+RT_CLASS!{class GraphicsCapturePicker: IGraphicsCapturePicker ["Windows.Graphics.Capture.GraphicsCapturePicker"]}
 impl RtActivatable<IActivationFactory> for GraphicsCapturePicker {}
 DEFINE_CLSID!(GraphicsCapturePicker(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,71,114,97,112,104,105,99,115,67,97,112,116,117,114,101,80,105,99,107,101,114,0]) [CLSID_GraphicsCapturePicker]);
 DEFINE_IID!(IID_IGraphicsCaptureSession, 2169389737, 63247, 19159, 147, 155, 253, 220, 198, 235, 136, 13);
@@ -185,7 +185,7 @@ impl IGraphicsCaptureSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GraphicsCaptureSession: IGraphicsCaptureSession}
+RT_CLASS!{class GraphicsCaptureSession: IGraphicsCaptureSession ["Windows.Graphics.Capture.GraphicsCaptureSession"]}
 impl RtActivatable<IGraphicsCaptureSessionStatics> for GraphicsCaptureSession {}
 impl GraphicsCaptureSession {
     #[inline] pub fn is_supported() -> Result<bool> {
@@ -207,18 +207,18 @@ impl IGraphicsCaptureSessionStatics {
 } // Windows.Graphics.Capture
 pub mod directx { // Windows.Graphics.DirectX
 use ::prelude::*;
-RT_ENUM! { enum DirectXAlphaMode: i32 {
+RT_ENUM! { enum DirectXAlphaMode: i32 ["Windows.Graphics.DirectX.DirectXAlphaMode"] {
     Unspecified (DirectXAlphaMode_Unspecified) = 0, Premultiplied (DirectXAlphaMode_Premultiplied) = 1, Straight (DirectXAlphaMode_Straight) = 2, Ignore (DirectXAlphaMode_Ignore) = 3,
 }}
-RT_ENUM! { enum DirectXColorSpace: i32 {
+RT_ENUM! { enum DirectXColorSpace: i32 ["Windows.Graphics.DirectX.DirectXColorSpace"] {
     RgbFullG22NoneP709 (DirectXColorSpace_RgbFullG22NoneP709) = 0, RgbFullG10NoneP709 (DirectXColorSpace_RgbFullG10NoneP709) = 1, RgbStudioG22NoneP709 (DirectXColorSpace_RgbStudioG22NoneP709) = 2, RgbStudioG22NoneP2020 (DirectXColorSpace_RgbStudioG22NoneP2020) = 3, Reserved (DirectXColorSpace_Reserved) = 4, YccFullG22NoneP709X601 (DirectXColorSpace_YccFullG22NoneP709X601) = 5, YccStudioG22LeftP601 (DirectXColorSpace_YccStudioG22LeftP601) = 6, YccFullG22LeftP601 (DirectXColorSpace_YccFullG22LeftP601) = 7, YccStudioG22LeftP709 (DirectXColorSpace_YccStudioG22LeftP709) = 8, YccFullG22LeftP709 (DirectXColorSpace_YccFullG22LeftP709) = 9, YccStudioG22LeftP2020 (DirectXColorSpace_YccStudioG22LeftP2020) = 10, YccFullG22LeftP2020 (DirectXColorSpace_YccFullG22LeftP2020) = 11, RgbFullG2084NoneP2020 (DirectXColorSpace_RgbFullG2084NoneP2020) = 12, YccStudioG2084LeftP2020 (DirectXColorSpace_YccStudioG2084LeftP2020) = 13, RgbStudioG2084NoneP2020 (DirectXColorSpace_RgbStudioG2084NoneP2020) = 14, YccStudioG22TopLeftP2020 (DirectXColorSpace_YccStudioG22TopLeftP2020) = 15, YccStudioG2084TopLeftP2020 (DirectXColorSpace_YccStudioG2084TopLeftP2020) = 16, RgbFullG22NoneP2020 (DirectXColorSpace_RgbFullG22NoneP2020) = 17, YccStudioGHlgTopLeftP2020 (DirectXColorSpace_YccStudioGHlgTopLeftP2020) = 18, YccFullGHlgTopLeftP2020 (DirectXColorSpace_YccFullGHlgTopLeftP2020) = 19, RgbStudioG24NoneP709 (DirectXColorSpace_RgbStudioG24NoneP709) = 20, RgbStudioG24NoneP2020 (DirectXColorSpace_RgbStudioG24NoneP2020) = 21, YccStudioG24LeftP709 (DirectXColorSpace_YccStudioG24LeftP709) = 22, YccStudioG24LeftP2020 (DirectXColorSpace_YccStudioG24LeftP2020) = 23, YccStudioG24TopLeftP2020 (DirectXColorSpace_YccStudioG24TopLeftP2020) = 24,
 }}
-RT_ENUM! { enum DirectXPixelFormat: i32 {
+RT_ENUM! { enum DirectXPixelFormat: i32 ["Windows.Graphics.DirectX.DirectXPixelFormat"] {
     Unknown (DirectXPixelFormat_Unknown) = 0, R32G32B32A32Typeless (DirectXPixelFormat_R32G32B32A32Typeless) = 1, R32G32B32A32Float (DirectXPixelFormat_R32G32B32A32Float) = 2, R32G32B32A32UInt (DirectXPixelFormat_R32G32B32A32UInt) = 3, R32G32B32A32Int (DirectXPixelFormat_R32G32B32A32Int) = 4, R32G32B32Typeless (DirectXPixelFormat_R32G32B32Typeless) = 5, R32G32B32Float (DirectXPixelFormat_R32G32B32Float) = 6, R32G32B32UInt (DirectXPixelFormat_R32G32B32UInt) = 7, R32G32B32Int (DirectXPixelFormat_R32G32B32Int) = 8, R16G16B16A16Typeless (DirectXPixelFormat_R16G16B16A16Typeless) = 9, R16G16B16A16Float (DirectXPixelFormat_R16G16B16A16Float) = 10, R16G16B16A16UIntNormalized (DirectXPixelFormat_R16G16B16A16UIntNormalized) = 11, R16G16B16A16UInt (DirectXPixelFormat_R16G16B16A16UInt) = 12, R16G16B16A16IntNormalized (DirectXPixelFormat_R16G16B16A16IntNormalized) = 13, R16G16B16A16Int (DirectXPixelFormat_R16G16B16A16Int) = 14, R32G32Typeless (DirectXPixelFormat_R32G32Typeless) = 15, R32G32Float (DirectXPixelFormat_R32G32Float) = 16, R32G32UInt (DirectXPixelFormat_R32G32UInt) = 17, R32G32Int (DirectXPixelFormat_R32G32Int) = 18, R32G8X24Typeless (DirectXPixelFormat_R32G8X24Typeless) = 19, D32FloatS8X24UInt (DirectXPixelFormat_D32FloatS8X24UInt) = 20, R32FloatX8X24Typeless (DirectXPixelFormat_R32FloatX8X24Typeless) = 21, X32TypelessG8X24UInt (DirectXPixelFormat_X32TypelessG8X24UInt) = 22, R10G10B10A2Typeless (DirectXPixelFormat_R10G10B10A2Typeless) = 23, R10G10B10A2UIntNormalized (DirectXPixelFormat_R10G10B10A2UIntNormalized) = 24, R10G10B10A2UInt (DirectXPixelFormat_R10G10B10A2UInt) = 25, R11G11B10Float (DirectXPixelFormat_R11G11B10Float) = 26, R8G8B8A8Typeless (DirectXPixelFormat_R8G8B8A8Typeless) = 27, R8G8B8A8UIntNormalized (DirectXPixelFormat_R8G8B8A8UIntNormalized) = 28, R8G8B8A8UIntNormalizedSrgb (DirectXPixelFormat_R8G8B8A8UIntNormalizedSrgb) = 29, R8G8B8A8UInt (DirectXPixelFormat_R8G8B8A8UInt) = 30, R8G8B8A8IntNormalized (DirectXPixelFormat_R8G8B8A8IntNormalized) = 31, R8G8B8A8Int (DirectXPixelFormat_R8G8B8A8Int) = 32, R16G16Typeless (DirectXPixelFormat_R16G16Typeless) = 33, R16G16Float (DirectXPixelFormat_R16G16Float) = 34, R16G16UIntNormalized (DirectXPixelFormat_R16G16UIntNormalized) = 35, R16G16UInt (DirectXPixelFormat_R16G16UInt) = 36, R16G16IntNormalized (DirectXPixelFormat_R16G16IntNormalized) = 37, R16G16Int (DirectXPixelFormat_R16G16Int) = 38, R32Typeless (DirectXPixelFormat_R32Typeless) = 39, D32Float (DirectXPixelFormat_D32Float) = 40, R32Float (DirectXPixelFormat_R32Float) = 41, R32UInt (DirectXPixelFormat_R32UInt) = 42, R32Int (DirectXPixelFormat_R32Int) = 43, R24G8Typeless (DirectXPixelFormat_R24G8Typeless) = 44, D24UIntNormalizedS8UInt (DirectXPixelFormat_D24UIntNormalizedS8UInt) = 45, R24UIntNormalizedX8Typeless (DirectXPixelFormat_R24UIntNormalizedX8Typeless) = 46, X24TypelessG8UInt (DirectXPixelFormat_X24TypelessG8UInt) = 47, R8G8Typeless (DirectXPixelFormat_R8G8Typeless) = 48, R8G8UIntNormalized (DirectXPixelFormat_R8G8UIntNormalized) = 49, R8G8UInt (DirectXPixelFormat_R8G8UInt) = 50, R8G8IntNormalized (DirectXPixelFormat_R8G8IntNormalized) = 51, R8G8Int (DirectXPixelFormat_R8G8Int) = 52, R16Typeless (DirectXPixelFormat_R16Typeless) = 53, R16Float (DirectXPixelFormat_R16Float) = 54, D16UIntNormalized (DirectXPixelFormat_D16UIntNormalized) = 55, R16UIntNormalized (DirectXPixelFormat_R16UIntNormalized) = 56, R16UInt (DirectXPixelFormat_R16UInt) = 57, R16IntNormalized (DirectXPixelFormat_R16IntNormalized) = 58, R16Int (DirectXPixelFormat_R16Int) = 59, R8Typeless (DirectXPixelFormat_R8Typeless) = 60, R8UIntNormalized (DirectXPixelFormat_R8UIntNormalized) = 61, R8UInt (DirectXPixelFormat_R8UInt) = 62, R8IntNormalized (DirectXPixelFormat_R8IntNormalized) = 63, R8Int (DirectXPixelFormat_R8Int) = 64, A8UIntNormalized (DirectXPixelFormat_A8UIntNormalized) = 65, R1UIntNormalized (DirectXPixelFormat_R1UIntNormalized) = 66, R9G9B9E5SharedExponent (DirectXPixelFormat_R9G9B9E5SharedExponent) = 67, R8G8B8G8UIntNormalized (DirectXPixelFormat_R8G8B8G8UIntNormalized) = 68, G8R8G8B8UIntNormalized (DirectXPixelFormat_G8R8G8B8UIntNormalized) = 69, BC1Typeless (DirectXPixelFormat_BC1Typeless) = 70, BC1UIntNormalized (DirectXPixelFormat_BC1UIntNormalized) = 71, BC1UIntNormalizedSrgb (DirectXPixelFormat_BC1UIntNormalizedSrgb) = 72, BC2Typeless (DirectXPixelFormat_BC2Typeless) = 73, BC2UIntNormalized (DirectXPixelFormat_BC2UIntNormalized) = 74, BC2UIntNormalizedSrgb (DirectXPixelFormat_BC2UIntNormalizedSrgb) = 75, BC3Typeless (DirectXPixelFormat_BC3Typeless) = 76, BC3UIntNormalized (DirectXPixelFormat_BC3UIntNormalized) = 77, BC3UIntNormalizedSrgb (DirectXPixelFormat_BC3UIntNormalizedSrgb) = 78, BC4Typeless (DirectXPixelFormat_BC4Typeless) = 79, BC4UIntNormalized (DirectXPixelFormat_BC4UIntNormalized) = 80, BC4IntNormalized (DirectXPixelFormat_BC4IntNormalized) = 81, BC5Typeless (DirectXPixelFormat_BC5Typeless) = 82, BC5UIntNormalized (DirectXPixelFormat_BC5UIntNormalized) = 83, BC5IntNormalized (DirectXPixelFormat_BC5IntNormalized) = 84, B5G6R5UIntNormalized (DirectXPixelFormat_B5G6R5UIntNormalized) = 85, B5G5R5A1UIntNormalized (DirectXPixelFormat_B5G5R5A1UIntNormalized) = 86, B8G8R8A8UIntNormalized (DirectXPixelFormat_B8G8R8A8UIntNormalized) = 87, B8G8R8X8UIntNormalized (DirectXPixelFormat_B8G8R8X8UIntNormalized) = 88, R10G10B10XRBiasA2UIntNormalized (DirectXPixelFormat_R10G10B10XRBiasA2UIntNormalized) = 89, B8G8R8A8Typeless (DirectXPixelFormat_B8G8R8A8Typeless) = 90, B8G8R8A8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8A8UIntNormalizedSrgb) = 91, B8G8R8X8Typeless (DirectXPixelFormat_B8G8R8X8Typeless) = 92, B8G8R8X8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8X8UIntNormalizedSrgb) = 93, BC6HTypeless (DirectXPixelFormat_BC6HTypeless) = 94, BC6H16UnsignedFloat (DirectXPixelFormat_BC6H16UnsignedFloat) = 95, BC6H16Float (DirectXPixelFormat_BC6H16Float) = 96, BC7Typeless (DirectXPixelFormat_BC7Typeless) = 97, BC7UIntNormalized (DirectXPixelFormat_BC7UIntNormalized) = 98, BC7UIntNormalizedSrgb (DirectXPixelFormat_BC7UIntNormalizedSrgb) = 99, Ayuv (DirectXPixelFormat_Ayuv) = 100, Y410 (DirectXPixelFormat_Y410) = 101, Y416 (DirectXPixelFormat_Y416) = 102, NV12 (DirectXPixelFormat_NV12) = 103, P010 (DirectXPixelFormat_P010) = 104, P016 (DirectXPixelFormat_P016) = 105, Opaque420 (DirectXPixelFormat_Opaque420) = 106, Yuy2 (DirectXPixelFormat_Yuy2) = 107, Y210 (DirectXPixelFormat_Y210) = 108, Y216 (DirectXPixelFormat_Y216) = 109, NV11 (DirectXPixelFormat_NV11) = 110, AI44 (DirectXPixelFormat_AI44) = 111, IA44 (DirectXPixelFormat_IA44) = 112, P8 (DirectXPixelFormat_P8) = 113, A8P8 (DirectXPixelFormat_A8P8) = 114, B4G4R4A4UIntNormalized (DirectXPixelFormat_B4G4R4A4UIntNormalized) = 115, P208 (DirectXPixelFormat_P208) = 130, V208 (DirectXPixelFormat_V208) = 131, V408 (DirectXPixelFormat_V408) = 132,
 }}
 pub mod direct3d11 { // Windows.Graphics.DirectX.Direct3D11
 use ::prelude::*;
-RT_ENUM! { enum Direct3DBindings: u32 {
+RT_ENUM! { enum Direct3DBindings: u32 ["Windows.Graphics.DirectX.Direct3D11.Direct3DBindings"] {
     VertexBuffer (Direct3DBindings_VertexBuffer) = 1, IndexBuffer (Direct3DBindings_IndexBuffer) = 2, ConstantBuffer (Direct3DBindings_ConstantBuffer) = 4, ShaderResource (Direct3DBindings_ShaderResource) = 8, StreamOutput (Direct3DBindings_StreamOutput) = 16, RenderTarget (Direct3DBindings_RenderTarget) = 32, DepthStencil (Direct3DBindings_DepthStencil) = 64, UnorderedAccess (Direct3DBindings_UnorderedAccess) = 128, Decoder (Direct3DBindings_Decoder) = 512, VideoEncoder (Direct3DBindings_VideoEncoder) = 1024,
 }}
 DEFINE_IID!(IID_IDirect3DDevice, 2742428843, 36191, 18000, 157, 62, 158, 174, 61, 155, 198, 112);
@@ -231,7 +231,7 @@ impl IDirect3DDevice {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct Direct3DMultisampleDescription {
+RT_STRUCT! { struct Direct3DMultisampleDescription ["Windows.Graphics.DirectX.Direct3D11.Direct3DMultisampleDescription"] {
     Count: i32, Quality: i32,
 }}
 DEFINE_IID!(IID_IDirect3DSurface, 200581446, 5057, 18068, 190, 227, 122, 191, 21, 234, 245, 134);
@@ -245,10 +245,10 @@ impl IDirect3DSurface {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct Direct3DSurfaceDescription {
+RT_STRUCT! { struct Direct3DSurfaceDescription ["Windows.Graphics.DirectX.Direct3D11.Direct3DSurfaceDescription"] {
     Width: i32, Height: i32, Format: super::DirectXPixelFormat, MultisampleDescription: Direct3DMultisampleDescription,
 }}
-RT_ENUM! { enum Direct3DUsage: i32 {
+RT_ENUM! { enum Direct3DUsage: i32 ["Windows.Graphics.DirectX.Direct3D11.Direct3DUsage"] {
     Default (Direct3DUsage_Default) = 0, Immutable (Direct3DUsage_Immutable) = 1, Dynamic (Direct3DUsage_Dynamic) = 2, Staging (Direct3DUsage_Staging) = 3,
 }}
 } // Windows.Graphics.DirectX.Direct3D11
@@ -326,8 +326,8 @@ impl IAdvancedColorInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdvancedColorInfo: IAdvancedColorInfo}
-RT_ENUM! { enum AdvancedColorKind: i32 {
+RT_CLASS!{class AdvancedColorInfo: IAdvancedColorInfo ["Windows.Graphics.Display.AdvancedColorInfo"]}
+RT_ENUM! { enum AdvancedColorKind: i32 ["Windows.Graphics.Display.AdvancedColorKind"] {
     StandardDynamicRange (AdvancedColorKind_StandardDynamicRange) = 0, WideColorGamut (AdvancedColorKind_WideColorGamut) = 1, HighDynamicRange (AdvancedColorKind_HighDynamicRange) = 2,
 }}
 DEFINE_IID!(IID_IBrightnessOverride, 2529780250, 49475, 17298, 190, 221, 74, 126, 149, 116, 200, 253);
@@ -412,7 +412,7 @@ impl IBrightnessOverride {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BrightnessOverride: IBrightnessOverride}
+RT_CLASS!{class BrightnessOverride: IBrightnessOverride ["Windows.Graphics.Display.BrightnessOverride"]}
 impl RtActivatable<IBrightnessOverrideStatics> for BrightnessOverride {}
 impl BrightnessOverride {
     #[inline] pub fn get_default_for_system() -> Result<Option<ComPtr<BrightnessOverride>>> {
@@ -443,7 +443,7 @@ impl IBrightnessOverrideSettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BrightnessOverrideSettings: IBrightnessOverrideSettings}
+RT_CLASS!{class BrightnessOverrideSettings: IBrightnessOverrideSettings ["Windows.Graphics.Display.BrightnessOverrideSettings"]}
 impl RtActivatable<IBrightnessOverrideSettingsStatics> for BrightnessOverrideSettings {}
 impl BrightnessOverrideSettings {
     #[inline] pub fn create_from_level(level: f64) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> {
@@ -514,7 +514,7 @@ impl IColorOverrideSettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ColorOverrideSettings: IColorOverrideSettings}
+RT_CLASS!{class ColorOverrideSettings: IColorOverrideSettings ["Windows.Graphics.Display.ColorOverrideSettings"]}
 impl RtActivatable<IColorOverrideSettingsStatics> for ColorOverrideSettings {}
 impl ColorOverrideSettings {
     #[inline] pub fn create_from_display_color_override_scenario(overrideScenario: DisplayColorOverrideScenario) -> Result<Option<ComPtr<ColorOverrideSettings>>> {
@@ -533,16 +533,16 @@ impl IColorOverrideSettingsStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DisplayBrightnessOverrideOptions: u32 {
+RT_ENUM! { enum DisplayBrightnessOverrideOptions: u32 ["Windows.Graphics.Display.DisplayBrightnessOverrideOptions"] {
     None (DisplayBrightnessOverrideOptions_None) = 0, UseDimmedPolicyWhenBatteryIsLow (DisplayBrightnessOverrideOptions_UseDimmedPolicyWhenBatteryIsLow) = 1,
 }}
-RT_ENUM! { enum DisplayBrightnessOverrideScenario: i32 {
+RT_ENUM! { enum DisplayBrightnessOverrideScenario: i32 ["Windows.Graphics.Display.DisplayBrightnessOverrideScenario"] {
     IdleBrightness (DisplayBrightnessOverrideScenario_IdleBrightness) = 0, BarcodeReadingBrightness (DisplayBrightnessOverrideScenario_BarcodeReadingBrightness) = 1, FullBrightness (DisplayBrightnessOverrideScenario_FullBrightness) = 2,
 }}
-RT_ENUM! { enum DisplayBrightnessScenario: i32 {
+RT_ENUM! { enum DisplayBrightnessScenario: i32 ["Windows.Graphics.Display.DisplayBrightnessScenario"] {
     DefaultBrightness (DisplayBrightnessScenario_DefaultBrightness) = 0, IdleBrightness (DisplayBrightnessScenario_IdleBrightness) = 1, BarcodeReadingBrightness (DisplayBrightnessScenario_BarcodeReadingBrightness) = 2, FullBrightness (DisplayBrightnessScenario_FullBrightness) = 3,
 }}
-RT_ENUM! { enum DisplayColorOverrideScenario: i32 {
+RT_ENUM! { enum DisplayColorOverrideScenario: i32 ["Windows.Graphics.Display.DisplayColorOverrideScenario"] {
     Accurate (DisplayColorOverrideScenario_Accurate) = 0,
 }}
 DEFINE_IID!(IID_IDisplayEnhancementOverride, 1117099215, 55674, 19202, 164, 40, 92, 66, 146, 247, 245, 34);
@@ -633,7 +633,7 @@ impl IDisplayEnhancementOverride {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayEnhancementOverride: IDisplayEnhancementOverride}
+RT_CLASS!{class DisplayEnhancementOverride: IDisplayEnhancementOverride ["Windows.Graphics.Display.DisplayEnhancementOverride"]}
 impl RtActivatable<IDisplayEnhancementOverrideStatics> for DisplayEnhancementOverride {}
 impl DisplayEnhancementOverride {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<DisplayEnhancementOverride>>> {
@@ -664,7 +664,7 @@ impl IDisplayEnhancementOverrideCapabilities {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayEnhancementOverrideCapabilities: IDisplayEnhancementOverrideCapabilities}
+RT_CLASS!{class DisplayEnhancementOverrideCapabilities: IDisplayEnhancementOverrideCapabilities ["Windows.Graphics.Display.DisplayEnhancementOverrideCapabilities"]}
 DEFINE_IID!(IID_IDisplayEnhancementOverrideCapabilitiesChangedEventArgs, 3680626276, 5626, 18906, 139, 119, 7, 219, 210, 175, 88, 93);
 RT_INTERFACE!{interface IDisplayEnhancementOverrideCapabilitiesChangedEventArgs(IDisplayEnhancementOverrideCapabilitiesChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverrideCapabilitiesChangedEventArgs] {
     fn get_Capabilities(&self, out: *mut *mut DisplayEnhancementOverrideCapabilities) -> HRESULT
@@ -676,7 +676,7 @@ impl IDisplayEnhancementOverrideCapabilitiesChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayEnhancementOverrideCapabilitiesChangedEventArgs: IDisplayEnhancementOverrideCapabilitiesChangedEventArgs}
+RT_CLASS!{class DisplayEnhancementOverrideCapabilitiesChangedEventArgs: IDisplayEnhancementOverrideCapabilitiesChangedEventArgs ["Windows.Graphics.Display.DisplayEnhancementOverrideCapabilitiesChangedEventArgs"]}
 DEFINE_IID!(IID_IDisplayEnhancementOverrideStatics, 3478879937, 38801, 17491, 176, 19, 41, 182, 247, 120, 229, 25);
 RT_INTERFACE!{static interface IDisplayEnhancementOverrideStatics(IDisplayEnhancementOverrideStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverrideStatics] {
     fn GetForCurrentView(&self, out: *mut *mut DisplayEnhancementOverride) -> HRESULT
@@ -786,7 +786,7 @@ impl IDisplayInformation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayInformation: IDisplayInformation}
+RT_CLASS!{class DisplayInformation: IDisplayInformation ["Windows.Graphics.Display.DisplayInformation"]}
 impl RtActivatable<IDisplayInformationStatics> for DisplayInformation {}
 impl DisplayInformation {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<DisplayInformation>>> {
@@ -900,7 +900,7 @@ impl IDisplayInformationStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DisplayOrientations: u32 {
+RT_ENUM! { enum DisplayOrientations: u32 ["Windows.Graphics.Display.DisplayOrientations"] {
     None (DisplayOrientations_None) = 0, Landscape (DisplayOrientations_Landscape) = 1, Portrait (DisplayOrientations_Portrait) = 2, LandscapeFlipped (DisplayOrientations_LandscapeFlipped) = 4, PortraitFlipped (DisplayOrientations_PortraitFlipped) = 8,
 }}
 RT_CLASS!{static class DisplayProperties}
@@ -1080,24 +1080,24 @@ impl IDisplayPropertiesStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum HdrMetadataFormat: i32 {
+RT_ENUM! { enum HdrMetadataFormat: i32 ["Windows.Graphics.Display.HdrMetadataFormat"] {
     Hdr10 (HdrMetadataFormat_Hdr10) = 0, Hdr10Plus (HdrMetadataFormat_Hdr10Plus) = 1,
 }}
-RT_STRUCT! { struct NitRange {
+RT_STRUCT! { struct NitRange ["Windows.Graphics.Display.NitRange"] {
     MinNits: f32, MaxNits: f32, StepSizeNits: f32,
 }}
-RT_ENUM! { enum ResolutionScale: i32 {
+RT_ENUM! { enum ResolutionScale: i32 ["Windows.Graphics.Display.ResolutionScale"] {
     Invalid (ResolutionScale_Invalid) = 0, Scale100Percent (ResolutionScale_Scale100Percent) = 100, Scale120Percent (ResolutionScale_Scale120Percent) = 120, Scale125Percent (ResolutionScale_Scale125Percent) = 125, Scale140Percent (ResolutionScale_Scale140Percent) = 140, Scale150Percent (ResolutionScale_Scale150Percent) = 150, Scale160Percent (ResolutionScale_Scale160Percent) = 160, Scale175Percent (ResolutionScale_Scale175Percent) = 175, Scale180Percent (ResolutionScale_Scale180Percent) = 180, Scale200Percent (ResolutionScale_Scale200Percent) = 200, Scale225Percent (ResolutionScale_Scale225Percent) = 225, Scale250Percent (ResolutionScale_Scale250Percent) = 250, Scale300Percent (ResolutionScale_Scale300Percent) = 300, Scale350Percent (ResolutionScale_Scale350Percent) = 350, Scale400Percent (ResolutionScale_Scale400Percent) = 400, Scale450Percent (ResolutionScale_Scale450Percent) = 450, Scale500Percent (ResolutionScale_Scale500Percent) = 500,
 }}
 pub mod core { // Windows.Graphics.Display.Core
 use ::prelude::*;
-RT_ENUM! { enum HdmiDisplayColorSpace: i32 {
+RT_ENUM! { enum HdmiDisplayColorSpace: i32 ["Windows.Graphics.Display.Core.HdmiDisplayColorSpace"] {
     RgbLimited (HdmiDisplayColorSpace_RgbLimited) = 0, RgbFull (HdmiDisplayColorSpace_RgbFull) = 1, BT2020 (HdmiDisplayColorSpace_BT2020) = 2, BT709 (HdmiDisplayColorSpace_BT709) = 3,
 }}
-RT_STRUCT! { struct HdmiDisplayHdr2086Metadata {
+RT_STRUCT! { struct HdmiDisplayHdr2086Metadata ["Windows.Graphics.Display.Core.HdmiDisplayHdr2086Metadata"] {
     RedPrimaryX: u16, RedPrimaryY: u16, GreenPrimaryX: u16, GreenPrimaryY: u16, BluePrimaryX: u16, BluePrimaryY: u16, WhitePointX: u16, WhitePointY: u16, MaxMasteringLuminance: u16, MinMasteringLuminance: u16, MaxContentLightLevel: u16, MaxFrameAverageLightLevel: u16,
 }}
-RT_ENUM! { enum HdmiDisplayHdrOption: i32 {
+RT_ENUM! { enum HdmiDisplayHdrOption: i32 ["Windows.Graphics.Display.Core.HdmiDisplayHdrOption"] {
     None (HdmiDisplayHdrOption_None) = 0, EotfSdr (HdmiDisplayHdrOption_EotfSdr) = 1, Eotf2084 (HdmiDisplayHdrOption_Eotf2084) = 2, DolbyVisionLowLatency (HdmiDisplayHdrOption_DolbyVisionLowLatency) = 3,
 }}
 DEFINE_IID!(IID_IHdmiDisplayInformation, 319503370, 62821, 18286, 171, 213, 234, 5, 174, 231, 76, 105);
@@ -1152,7 +1152,7 @@ impl IHdmiDisplayInformation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HdmiDisplayInformation: IHdmiDisplayInformation}
+RT_CLASS!{class HdmiDisplayInformation: IHdmiDisplayInformation ["Windows.Graphics.Display.Core.HdmiDisplayInformation"]}
 impl RtActivatable<IHdmiDisplayInformationStatics> for HdmiDisplayInformation {}
 impl HdmiDisplayInformation {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<HdmiDisplayInformation>>> {
@@ -1242,7 +1242,7 @@ impl IHdmiDisplayMode {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HdmiDisplayMode: IHdmiDisplayMode}
+RT_CLASS!{class HdmiDisplayMode: IHdmiDisplayMode ["Windows.Graphics.Display.Core.HdmiDisplayMode"]}
 DEFINE_IID!(IID_IHdmiDisplayMode2, 130895519, 19260, 17080, 132, 231, 137, 83, 104, 113, 138, 242);
 RT_INTERFACE!{interface IHdmiDisplayMode2(IHdmiDisplayMode2Vtbl): IInspectable(IInspectableVtbl) [IID_IHdmiDisplayMode2] {
     fn get_IsDolbyVisionLowLatencySupported(&self, out: *mut bool) -> HRESULT
@@ -1254,7 +1254,7 @@ impl IHdmiDisplayMode2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum HdmiDisplayPixelEncoding: i32 {
+RT_ENUM! { enum HdmiDisplayPixelEncoding: i32 ["Windows.Graphics.Display.Core.HdmiDisplayPixelEncoding"] {
     Rgb444 (HdmiDisplayPixelEncoding_Rgb444) = 0, Ycc444 (HdmiDisplayPixelEncoding_Ycc444) = 1, Ycc422 (HdmiDisplayPixelEncoding_Ycc422) = 2, Ycc420 (HdmiDisplayPixelEncoding_Ycc420) = 3,
 }}
 } // Windows.Graphics.Display.Core
@@ -1284,7 +1284,7 @@ RT_INTERFACE!{interface IGraphicsEffectSource(IGraphicsEffectSourceVtbl): IInspe
 } // Windows.Graphics.Effects
 pub mod holographic { // Windows.Graphics.Holographic
 use ::prelude::*;
-RT_STRUCT! { struct HolographicAdapterId {
+RT_STRUCT! { struct HolographicAdapterId ["Windows.Graphics.Holographic.HolographicAdapterId"] {
     LowPart: u32, HighPart: i32,
 }}
 DEFINE_IID!(IID_IHolographicCamera, 3840508997, 39917, 18816, 155, 160, 232, 118, 128, 209, 203, 116);
@@ -1331,7 +1331,7 @@ impl IHolographicCamera {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicCamera: IHolographicCamera}
+RT_CLASS!{class HolographicCamera: IHolographicCamera ["Windows.Graphics.Holographic.HolographicCamera"]}
 DEFINE_IID!(IID_IHolographicCamera2, 3042680602, 47756, 20356, 173, 121, 46, 126, 30, 36, 80, 243);
 RT_INTERFACE!{interface IHolographicCamera2(IHolographicCamera2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera2] {
     fn get_LeftViewportParameters(&self, out: *mut *mut HolographicCameraViewportParameters) -> HRESULT,
@@ -1472,7 +1472,7 @@ impl IHolographicCameraPose {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicCameraPose: IHolographicCameraPose}
+RT_CLASS!{class HolographicCameraPose: IHolographicCameraPose ["Windows.Graphics.Holographic.HolographicCameraPose"]}
 DEFINE_IID!(IID_IHolographicCameraPose2, 590078067, 23853, 17760, 129, 78, 38, 151, 196, 252, 225, 107);
 RT_INTERFACE!{interface IHolographicCameraPose2(IHolographicCameraPose2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraPose2] {
     #[cfg(not(feature="windows-perception"))] fn __Dummy0(&self) -> (),
@@ -1529,7 +1529,7 @@ impl IHolographicCameraRenderingParameters {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicCameraRenderingParameters: IHolographicCameraRenderingParameters}
+RT_CLASS!{class HolographicCameraRenderingParameters: IHolographicCameraRenderingParameters ["Windows.Graphics.Holographic.HolographicCameraRenderingParameters"]}
 DEFINE_IID!(IID_IHolographicCameraRenderingParameters2, 638742755, 46742, 17972, 148, 214, 190, 6, 129, 100, 53, 153);
 RT_INTERFACE!{interface IHolographicCameraRenderingParameters2(IHolographicCameraRenderingParameters2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraRenderingParameters2] {
     fn get_ReprojectionMode(&self, out: *mut HolographicReprojectionMode) -> HRESULT,
@@ -1584,7 +1584,7 @@ impl IHolographicCameraViewportParameters {
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicCameraViewportParameters: IHolographicCameraViewportParameters}
+RT_CLASS!{class HolographicCameraViewportParameters: IHolographicCameraViewportParameters ["Windows.Graphics.Holographic.HolographicCameraViewportParameters"]}
 DEFINE_IID!(IID_IHolographicDisplay, 2597233684, 7583, 16528, 163, 136, 144, 192, 111, 110, 174, 156);
 RT_INTERFACE!{interface IHolographicDisplay(IHolographicDisplayVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicDisplay] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -1626,7 +1626,7 @@ impl IHolographicDisplay {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicDisplay: IHolographicDisplay}
+RT_CLASS!{class HolographicDisplay: IHolographicDisplay ["Windows.Graphics.Holographic.HolographicDisplay"]}
 impl RtActivatable<IHolographicDisplayStatics> for HolographicDisplay {}
 impl HolographicDisplay {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<HolographicDisplay>>> {
@@ -1713,7 +1713,7 @@ impl IHolographicFrame {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicFrame: IHolographicFrame}
+RT_CLASS!{class HolographicFrame: IHolographicFrame ["Windows.Graphics.Holographic.HolographicFrame"]}
 DEFINE_IID!(IID_IHolographicFrame2, 675231679, 15346, 24209, 102, 51, 135, 5, 116, 230, 242, 23);
 RT_INTERFACE!{interface IHolographicFrame2(IHolographicFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFrame2] {
     fn GetQuadLayerUpdateParameters(&self, layer: *mut HolographicQuadLayer, out: *mut *mut HolographicQuadLayerUpdateParameters) -> HRESULT
@@ -1742,7 +1742,7 @@ impl IHolographicFramePrediction {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicFramePrediction: IHolographicFramePrediction}
+RT_CLASS!{class HolographicFramePrediction: IHolographicFramePrediction ["Windows.Graphics.Holographic.HolographicFramePrediction"]}
 DEFINE_IID!(IID_IHolographicFramePresentationMonitor, 3397854572, 28590, 17038, 187, 131, 37, 223, 238, 81, 19, 107);
 RT_INTERFACE!{interface IHolographicFramePresentationMonitor(IHolographicFramePresentationMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePresentationMonitor] {
     fn ReadReports(&self, out: *mut *mut foundation::collections::IVectorView<HolographicFramePresentationReport>) -> HRESULT
@@ -1754,7 +1754,7 @@ impl IHolographicFramePresentationMonitor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicFramePresentationMonitor: IHolographicFramePresentationMonitor}
+RT_CLASS!{class HolographicFramePresentationMonitor: IHolographicFramePresentationMonitor ["Windows.Graphics.Holographic.HolographicFramePresentationMonitor"]}
 DEFINE_IID!(IID_IHolographicFramePresentationReport, 2159736340, 62196, 19594, 141, 227, 6, 92, 120, 246, 213, 222);
 RT_INTERFACE!{interface IHolographicFramePresentationReport(IHolographicFramePresentationReportVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePresentationReport] {
     fn get_CompositorGpuDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -1790,11 +1790,11 @@ impl IHolographicFramePresentationReport {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicFramePresentationReport: IHolographicFramePresentationReport}
-RT_ENUM! { enum HolographicFramePresentResult: i32 {
+RT_CLASS!{class HolographicFramePresentationReport: IHolographicFramePresentationReport ["Windows.Graphics.Holographic.HolographicFramePresentationReport"]}
+RT_ENUM! { enum HolographicFramePresentResult: i32 ["Windows.Graphics.Holographic.HolographicFramePresentResult"] {
     Success (HolographicFramePresentResult_Success) = 0, DeviceRemoved (HolographicFramePresentResult_DeviceRemoved) = 1,
 }}
-RT_ENUM! { enum HolographicFramePresentWaitBehavior: i32 {
+RT_ENUM! { enum HolographicFramePresentWaitBehavior: i32 ["Windows.Graphics.Holographic.HolographicFramePresentWaitBehavior"] {
     WaitForFrameToFinish (HolographicFramePresentWaitBehavior_WaitForFrameToFinish) = 0, DoNotWaitForFrameToFinish (HolographicFramePresentWaitBehavior_DoNotWaitForFrameToFinish) = 1,
 }}
 DEFINE_IID!(IID_IHolographicQuadLayer, 2419351753, 51673, 23900, 65, 172, 162, 213, 171, 15, 211, 49);
@@ -1814,7 +1814,7 @@ impl IHolographicQuadLayer {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicQuadLayer: IHolographicQuadLayer}
+RT_CLASS!{class HolographicQuadLayer: IHolographicQuadLayer ["Windows.Graphics.Holographic.HolographicQuadLayer"]}
 impl RtActivatable<IHolographicQuadLayerFactory> for HolographicQuadLayer {}
 impl HolographicQuadLayer {
     #[inline] pub fn create(size: foundation::Size) -> Result<ComPtr<HolographicQuadLayer>> {
@@ -1879,7 +1879,7 @@ impl IHolographicQuadLayerUpdateParameters {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicQuadLayerUpdateParameters: IHolographicQuadLayerUpdateParameters}
+RT_CLASS!{class HolographicQuadLayerUpdateParameters: IHolographicQuadLayerUpdateParameters ["Windows.Graphics.Holographic.HolographicQuadLayerUpdateParameters"]}
 DEFINE_IID!(IID_IHolographicQuadLayerUpdateParameters2, 1328796461, 33473, 18113, 137, 128, 60, 183, 13, 152, 24, 43);
 RT_INTERFACE!{interface IHolographicQuadLayerUpdateParameters2(IHolographicQuadLayerUpdateParameters2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayerUpdateParameters2] {
     fn get_CanAcquireWithHardwareProtection(&self, out: *mut bool) -> HRESULT,
@@ -1897,7 +1897,7 @@ impl IHolographicQuadLayerUpdateParameters2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum HolographicReprojectionMode: i32 {
+RT_ENUM! { enum HolographicReprojectionMode: i32 ["Windows.Graphics.Holographic.HolographicReprojectionMode"] {
     PositionAndOrientation (HolographicReprojectionMode_PositionAndOrientation) = 0, OrientationOnly (HolographicReprojectionMode_OrientationOnly) = 1, Disabled (HolographicReprojectionMode_Disabled) = 2,
 }}
 DEFINE_IID!(IID_IHolographicSpace, 1132518310, 24184, 17231, 128, 124, 52, 51, 209, 239, 232, 183);
@@ -1944,7 +1944,7 @@ impl IHolographicSpace {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicSpace: IHolographicSpace}
+RT_CLASS!{class HolographicSpace: IHolographicSpace ["Windows.Graphics.Holographic.HolographicSpace"]}
 impl RtActivatable<IHolographicSpaceStatics> for HolographicSpace {}
 impl RtActivatable<IHolographicSpaceStatics2> for HolographicSpace {}
 impl RtActivatable<IHolographicSpaceStatics3> for HolographicSpace {}
@@ -2024,7 +2024,7 @@ impl IHolographicSpaceCameraAddedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicSpaceCameraAddedEventArgs: IHolographicSpaceCameraAddedEventArgs}
+RT_CLASS!{class HolographicSpaceCameraAddedEventArgs: IHolographicSpaceCameraAddedEventArgs ["Windows.Graphics.Holographic.HolographicSpaceCameraAddedEventArgs"]}
 DEFINE_IID!(IID_IHolographicSpaceCameraRemovedEventArgs, 2153006248, 62126, 12846, 141, 169, 131, 106, 10, 149, 164, 193);
 RT_INTERFACE!{interface IHolographicSpaceCameraRemovedEventArgs(IHolographicSpaceCameraRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceCameraRemovedEventArgs] {
     fn get_Camera(&self, out: *mut *mut HolographicCamera) -> HRESULT
@@ -2036,7 +2036,7 @@ impl IHolographicSpaceCameraRemovedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HolographicSpaceCameraRemovedEventArgs: IHolographicSpaceCameraRemovedEventArgs}
+RT_CLASS!{class HolographicSpaceCameraRemovedEventArgs: IHolographicSpaceCameraRemovedEventArgs ["Windows.Graphics.Holographic.HolographicSpaceCameraRemovedEventArgs"]}
 DEFINE_IID!(IID_IHolographicSpaceStatics, 911106148, 51442, 15265, 131, 145, 102, 184, 72, 158, 103, 253);
 RT_INTERFACE!{static interface IHolographicSpaceStatics(IHolographicSpaceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceStatics] {
     #[cfg(feature="windows-ui")] fn CreateForCoreWindow(&self, window: *mut super::super::ui::core::CoreWindow, out: *mut *mut HolographicSpace) -> HRESULT
@@ -2087,19 +2087,19 @@ impl IHolographicSpaceStatics3 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum HolographicSpaceUserPresence: i32 {
+RT_ENUM! { enum HolographicSpaceUserPresence: i32 ["Windows.Graphics.Holographic.HolographicSpaceUserPresence"] {
     Absent (HolographicSpaceUserPresence_Absent) = 0, PresentPassive (HolographicSpaceUserPresence_PresentPassive) = 1, PresentActive (HolographicSpaceUserPresence_PresentActive) = 2,
 }}
-RT_STRUCT! { struct HolographicStereoTransform {
+RT_STRUCT! { struct HolographicStereoTransform ["Windows.Graphics.Holographic.HolographicStereoTransform"] {
     Left: foundation::numerics::Matrix4x4, Right: foundation::numerics::Matrix4x4,
 }}
 } // Windows.Graphics.Holographic
 pub mod imaging { // Windows.Graphics.Imaging
 use ::prelude::*;
-RT_ENUM! { enum BitmapAlphaMode: i32 {
+RT_ENUM! { enum BitmapAlphaMode: i32 ["Windows.Graphics.Imaging.BitmapAlphaMode"] {
     Premultiplied (BitmapAlphaMode_Premultiplied) = 0, Straight (BitmapAlphaMode_Straight) = 1, Ignore (BitmapAlphaMode_Ignore) = 2,
 }}
-RT_STRUCT! { struct BitmapBounds {
+RT_STRUCT! { struct BitmapBounds ["Windows.Graphics.Imaging.BitmapBounds"] {
     X: u32, Y: u32, Width: u32, Height: u32,
 }}
 DEFINE_IID!(IID_IBitmapBuffer, 2772305092, 14748, 17292, 178, 143, 166, 58, 107, 131, 209, 161);
@@ -2119,8 +2119,8 @@ impl IBitmapBuffer {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BitmapBuffer: IBitmapBuffer}
-RT_ENUM! { enum BitmapBufferAccessMode: i32 {
+RT_CLASS!{class BitmapBuffer: IBitmapBuffer ["Windows.Graphics.Imaging.BitmapBuffer"]}
+RT_ENUM! { enum BitmapBufferAccessMode: i32 ["Windows.Graphics.Imaging.BitmapBufferAccessMode"] {
     Read (BitmapBufferAccessMode_Read) = 0, ReadWrite (BitmapBufferAccessMode_ReadWrite) = 1, Write (BitmapBufferAccessMode_Write) = 2,
 }}
 DEFINE_IID!(IID_IBitmapCodecInformation, 1074572018, 50352, 17298, 163, 176, 111, 111, 155, 169, 92, 180);
@@ -2152,7 +2152,7 @@ impl IBitmapCodecInformation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BitmapCodecInformation: IBitmapCodecInformation}
+RT_CLASS!{class BitmapCodecInformation: IBitmapCodecInformation ["Windows.Graphics.Imaging.BitmapCodecInformation"]}
 DEFINE_IID!(IID_IBitmapDecoder, 2901353146, 7540, 19601, 157, 252, 150, 32, 116, 82, 51, 230);
 RT_INTERFACE!{interface IBitmapDecoder(IBitmapDecoderVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapDecoder] {
     fn get_BitmapContainerProperties(&self, out: *mut *mut BitmapPropertiesView) -> HRESULT,
@@ -2188,7 +2188,7 @@ impl IBitmapDecoder {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BitmapDecoder: IBitmapDecoder}
+RT_CLASS!{class BitmapDecoder: IBitmapDecoder ["Windows.Graphics.Imaging.BitmapDecoder"]}
 impl RtActivatable<IBitmapDecoderStatics> for BitmapDecoder {}
 impl RtActivatable<IBitmapDecoderStatics2> for BitmapDecoder {}
 impl BitmapDecoder {
@@ -2397,7 +2397,7 @@ impl IBitmapEncoder {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BitmapEncoder: IBitmapEncoder}
+RT_CLASS!{class BitmapEncoder: IBitmapEncoder ["Windows.Graphics.Imaging.BitmapEncoder"]}
 impl RtActivatable<IBitmapEncoderStatics> for BitmapEncoder {}
 impl RtActivatable<IBitmapEncoderStatics2> for BitmapEncoder {}
 impl BitmapEncoder {
@@ -2534,7 +2534,7 @@ impl IBitmapEncoderWithSoftwareBitmap {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BitmapFlip: i32 {
+RT_ENUM! { enum BitmapFlip: i32 ["Windows.Graphics.Imaging.BitmapFlip"] {
     None (BitmapFlip_None) = 0, Horizontal (BitmapFlip_Horizontal) = 1, Vertical (BitmapFlip_Vertical) = 2,
 }}
 DEFINE_IID!(IID_IBitmapFrame, 1923389980, 32897, 17293, 145, 188, 148, 236, 252, 129, 133, 198);
@@ -2614,7 +2614,7 @@ impl IBitmapFrame {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BitmapFrame: IBitmapFrame}
+RT_CLASS!{class BitmapFrame: IBitmapFrame ["Windows.Graphics.Imaging.BitmapFrame"]}
 DEFINE_IID!(IID_IBitmapFrameWithSoftwareBitmap, 4264066202, 16908, 18787, 135, 173, 105, 20, 54, 224, 131, 131);
 RT_INTERFACE!{interface IBitmapFrameWithSoftwareBitmap(IBitmapFrameWithSoftwareBitmapVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapFrameWithSoftwareBitmap] {
     fn GetSoftwareBitmapAsync(&self, out: *mut *mut foundation::IAsyncOperation<SoftwareBitmap>) -> HRESULT,
@@ -2638,13 +2638,13 @@ impl IBitmapFrameWithSoftwareBitmap {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BitmapInterpolationMode: i32 {
+RT_ENUM! { enum BitmapInterpolationMode: i32 ["Windows.Graphics.Imaging.BitmapInterpolationMode"] {
     NearestNeighbor (BitmapInterpolationMode_NearestNeighbor) = 0, Linear (BitmapInterpolationMode_Linear) = 1, Cubic (BitmapInterpolationMode_Cubic) = 2, Fant (BitmapInterpolationMode_Fant) = 3,
 }}
-RT_ENUM! { enum BitmapPixelFormat: i32 {
+RT_ENUM! { enum BitmapPixelFormat: i32 ["Windows.Graphics.Imaging.BitmapPixelFormat"] {
     Unknown (BitmapPixelFormat_Unknown) = 0, Rgba16 (BitmapPixelFormat_Rgba16) = 12, Rgba8 (BitmapPixelFormat_Rgba8) = 30, Gray16 (BitmapPixelFormat_Gray16) = 57, Gray8 (BitmapPixelFormat_Gray8) = 62, Bgra8 (BitmapPixelFormat_Bgra8) = 87, Nv12 (BitmapPixelFormat_Nv12) = 103, P010 (BitmapPixelFormat_P010) = 104, Yuy2 (BitmapPixelFormat_Yuy2) = 107,
 }}
-RT_STRUCT! { struct BitmapPlaneDescription {
+RT_STRUCT! { struct BitmapPlaneDescription ["Windows.Graphics.Imaging.BitmapPlaneDescription"] {
     StartIndex: i32, Width: i32, Height: i32, Stride: i32,
 }}
 DEFINE_IID!(IID_IBitmapProperties, 3936309019, 46341, 17488, 164, 209, 232, 202, 148, 82, 157, 141);
@@ -2658,7 +2658,7 @@ impl IBitmapProperties {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BitmapProperties: IBitmapProperties}
+RT_CLASS!{class BitmapProperties: IBitmapProperties ["Windows.Graphics.Imaging.BitmapProperties"]}
 DEFINE_IID!(IID_IBitmapPropertiesView, 2114971770, 14960, 18680, 156, 85, 25, 108, 245, 165, 69, 245);
 RT_INTERFACE!{interface IBitmapPropertiesView(IBitmapPropertiesViewVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapPropertiesView] {
     fn GetPropertiesAsync(&self, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<BitmapPropertySet>) -> HRESULT
@@ -2670,14 +2670,14 @@ impl IBitmapPropertiesView {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BitmapPropertiesView: IBitmapPropertiesView}
-RT_CLASS!{class BitmapPropertySet: foundation::collections::IMap<HString, BitmapTypedValue>}
+RT_CLASS!{class BitmapPropertiesView: IBitmapPropertiesView ["Windows.Graphics.Imaging.BitmapPropertiesView"]}
+RT_CLASS!{class BitmapPropertySet: foundation::collections::IMap<HString, BitmapTypedValue> ["Windows.Graphics.Imaging.BitmapPropertySet"]}
 impl RtActivatable<IActivationFactory> for BitmapPropertySet {}
 DEFINE_CLSID!(BitmapPropertySet(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,80,114,111,112,101,114,116,121,83,101,116,0]) [CLSID_BitmapPropertySet]);
-RT_ENUM! { enum BitmapRotation: i32 {
+RT_ENUM! { enum BitmapRotation: i32 ["Windows.Graphics.Imaging.BitmapRotation"] {
     None (BitmapRotation_None) = 0, Clockwise90Degrees (BitmapRotation_Clockwise90Degrees) = 1, Clockwise180Degrees (BitmapRotation_Clockwise180Degrees) = 2, Clockwise270Degrees (BitmapRotation_Clockwise270Degrees) = 3,
 }}
-RT_STRUCT! { struct BitmapSize {
+RT_STRUCT! { struct BitmapSize ["Windows.Graphics.Imaging.BitmapSize"] {
     Width: u32, Height: u32,
 }}
 DEFINE_IID!(IID_IBitmapTransform, 2926924612, 57960, 19765, 173, 207, 233, 149, 211, 26, 141, 52);
@@ -2751,7 +2751,7 @@ impl IBitmapTransform {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BitmapTransform: IBitmapTransform}
+RT_CLASS!{class BitmapTransform: IBitmapTransform ["Windows.Graphics.Imaging.BitmapTransform"]}
 impl RtActivatable<IActivationFactory> for BitmapTransform {}
 DEFINE_CLSID!(BitmapTransform(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,84,114,97,110,115,102,111,114,109,0]) [CLSID_BitmapTransform]);
 DEFINE_IID!(IID_IBitmapTypedValue, 3447735465, 9283, 16384, 176, 205, 121, 49, 108, 86, 245, 137);
@@ -2771,7 +2771,7 @@ impl IBitmapTypedValue {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BitmapTypedValue: IBitmapTypedValue}
+RT_CLASS!{class BitmapTypedValue: IBitmapTypedValue ["Windows.Graphics.Imaging.BitmapTypedValue"]}
 impl RtActivatable<IBitmapTypedValueFactory> for BitmapTypedValue {}
 impl BitmapTypedValue {
     #[inline] pub fn create(value: &IInspectable, type_: foundation::PropertyType) -> Result<ComPtr<BitmapTypedValue>> {
@@ -2790,15 +2790,15 @@ impl IBitmapTypedValueFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ColorManagementMode: i32 {
+RT_ENUM! { enum ColorManagementMode: i32 ["Windows.Graphics.Imaging.ColorManagementMode"] {
     DoNotColorManage (ColorManagementMode_DoNotColorManage) = 0, ColorManageToSRgb (ColorManagementMode_ColorManageToSRgb) = 1,
 }}
-RT_ENUM! { enum ExifOrientationMode: i32 {
+RT_ENUM! { enum ExifOrientationMode: i32 ["Windows.Graphics.Imaging.ExifOrientationMode"] {
     IgnoreExifOrientation (ExifOrientationMode_IgnoreExifOrientation) = 0, RespectExifOrientation (ExifOrientationMode_RespectExifOrientation) = 1,
 }}
-#[cfg(feature="windows-storage")] RT_CLASS!{class ImageStream: super::super::storage::streams::IRandomAccessStreamWithContentType}
-#[cfg(not(feature="windows-storage"))] RT_CLASS!{class ImageStream: IInspectable}
-RT_ENUM! { enum JpegSubsamplingMode: i32 {
+#[cfg(feature="windows-storage")] RT_CLASS!{class ImageStream: super::super::storage::streams::IRandomAccessStreamWithContentType ["Windows.Graphics.Imaging.ImageStream"]}
+#[cfg(not(feature="windows-storage"))] RT_CLASS!{class ImageStream: IInspectable ["Windows.Graphics.Imaging.ImageStream"]}
+RT_ENUM! { enum JpegSubsamplingMode: i32 ["Windows.Graphics.Imaging.JpegSubsamplingMode"] {
     Default (JpegSubsamplingMode_Default) = 0, Y4Cb2Cr0 (JpegSubsamplingMode_Y4Cb2Cr0) = 1, Y4Cb2Cr2 (JpegSubsamplingMode_Y4Cb2Cr2) = 2, Y4Cb4Cr4 (JpegSubsamplingMode_Y4Cb4Cr4) = 3,
 }}
 DEFINE_IID!(IID_IPixelDataProvider, 3716357925, 6236, 17813, 159, 185, 204, 190, 110, 193, 138, 111);
@@ -2812,8 +2812,8 @@ impl IPixelDataProvider {
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PixelDataProvider: IPixelDataProvider}
-RT_ENUM! { enum PngFilterMode: i32 {
+RT_CLASS!{class PixelDataProvider: IPixelDataProvider ["Windows.Graphics.Imaging.PixelDataProvider"]}
+RT_ENUM! { enum PngFilterMode: i32 ["Windows.Graphics.Imaging.PngFilterMode"] {
     Automatic (PngFilterMode_Automatic) = 0, None (PngFilterMode_None) = 1, Sub (PngFilterMode_Sub) = 2, Up (PngFilterMode_Up) = 3, Average (PngFilterMode_Average) = 4, Paeth (PngFilterMode_Paeth) = 5, Adaptive (PngFilterMode_Adaptive) = 6,
 }}
 DEFINE_IID!(IID_ISoftwareBitmap, 1755186952, 32495, 18495, 150, 63, 218, 147, 136, 24, 224, 115);
@@ -2902,7 +2902,7 @@ impl ISoftwareBitmap {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SoftwareBitmap: ISoftwareBitmap}
+RT_CLASS!{class SoftwareBitmap: ISoftwareBitmap ["Windows.Graphics.Imaging.SoftwareBitmap"]}
 impl RtActivatable<ISoftwareBitmapFactory> for SoftwareBitmap {}
 impl RtActivatable<ISoftwareBitmapStatics> for SoftwareBitmap {}
 impl SoftwareBitmap {
@@ -3001,32 +3001,32 @@ impl ISoftwareBitmapStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum TiffCompressionMode: i32 {
+RT_ENUM! { enum TiffCompressionMode: i32 ["Windows.Graphics.Imaging.TiffCompressionMode"] {
     Automatic (TiffCompressionMode_Automatic) = 0, None (TiffCompressionMode_None) = 1, Ccitt3 (TiffCompressionMode_Ccitt3) = 2, Ccitt4 (TiffCompressionMode_Ccitt4) = 3, Lzw (TiffCompressionMode_Lzw) = 4, Rle (TiffCompressionMode_Rle) = 5, Zip (TiffCompressionMode_Zip) = 6, LzwhDifferencing (TiffCompressionMode_LzwhDifferencing) = 7,
 }}
 } // Windows.Graphics.Imaging
 pub mod printing { // Windows.Graphics.Printing
 use ::prelude::*;
-RT_ENUM! { enum PrintBinding: i32 {
+RT_ENUM! { enum PrintBinding: i32 ["Windows.Graphics.Printing.PrintBinding"] {
     Default (PrintBinding_Default) = 0, NotAvailable (PrintBinding_NotAvailable) = 1, PrinterCustom (PrintBinding_PrinterCustom) = 2, None (PrintBinding_None) = 3, Bale (PrintBinding_Bale) = 4, BindBottom (PrintBinding_BindBottom) = 5, BindLeft (PrintBinding_BindLeft) = 6, BindRight (PrintBinding_BindRight) = 7, BindTop (PrintBinding_BindTop) = 8, Booklet (PrintBinding_Booklet) = 9, EdgeStitchBottom (PrintBinding_EdgeStitchBottom) = 10, EdgeStitchLeft (PrintBinding_EdgeStitchLeft) = 11, EdgeStitchRight (PrintBinding_EdgeStitchRight) = 12, EdgeStitchTop (PrintBinding_EdgeStitchTop) = 13, Fold (PrintBinding_Fold) = 14, JogOffset (PrintBinding_JogOffset) = 15, Trim (PrintBinding_Trim) = 16,
 }}
-RT_ENUM! { enum PrintBordering: i32 {
+RT_ENUM! { enum PrintBordering: i32 ["Windows.Graphics.Printing.PrintBordering"] {
     Default (PrintBordering_Default) = 0, NotAvailable (PrintBordering_NotAvailable) = 1, PrinterCustom (PrintBordering_PrinterCustom) = 2, Bordered (PrintBordering_Bordered) = 3, Borderless (PrintBordering_Borderless) = 4,
 }}
-RT_ENUM! { enum PrintCollation: i32 {
+RT_ENUM! { enum PrintCollation: i32 ["Windows.Graphics.Printing.PrintCollation"] {
     Default (PrintCollation_Default) = 0, NotAvailable (PrintCollation_NotAvailable) = 1, PrinterCustom (PrintCollation_PrinterCustom) = 2, Collated (PrintCollation_Collated) = 3, Uncollated (PrintCollation_Uncollated) = 4,
 }}
-RT_ENUM! { enum PrintColorMode: i32 {
+RT_ENUM! { enum PrintColorMode: i32 ["Windows.Graphics.Printing.PrintColorMode"] {
     Default (PrintColorMode_Default) = 0, NotAvailable (PrintColorMode_NotAvailable) = 1, PrinterCustom (PrintColorMode_PrinterCustom) = 2, Color (PrintColorMode_Color) = 3, Grayscale (PrintColorMode_Grayscale) = 4, Monochrome (PrintColorMode_Monochrome) = 5,
 }}
 DEFINE_IID!(IID_IPrintDocumentSource, 3738962992, 61931, 18399, 170, 230, 237, 84, 39, 81, 31, 1);
 RT_INTERFACE!{interface IPrintDocumentSource(IPrintDocumentSourceVtbl): IInspectable(IInspectableVtbl) [IID_IPrintDocumentSource] {
     
 }}
-RT_ENUM! { enum PrintDuplex: i32 {
+RT_ENUM! { enum PrintDuplex: i32 ["Windows.Graphics.Printing.PrintDuplex"] {
     Default (PrintDuplex_Default) = 0, NotAvailable (PrintDuplex_NotAvailable) = 1, PrinterCustom (PrintDuplex_PrinterCustom) = 2, OneSided (PrintDuplex_OneSided) = 3, TwoSidedShortEdge (PrintDuplex_TwoSidedShortEdge) = 4, TwoSidedLongEdge (PrintDuplex_TwoSidedLongEdge) = 5,
 }}
-RT_ENUM! { enum PrintHolePunch: i32 {
+RT_ENUM! { enum PrintHolePunch: i32 ["Windows.Graphics.Printing.PrintHolePunch"] {
     Default (PrintHolePunch_Default) = 0, NotAvailable (PrintHolePunch_NotAvailable) = 1, PrinterCustom (PrintHolePunch_PrinterCustom) = 2, None (PrintHolePunch_None) = 3, LeftEdge (PrintHolePunch_LeftEdge) = 4, RightEdge (PrintHolePunch_RightEdge) = 5, TopEdge (PrintHolePunch_TopEdge) = 6, BottomEdge (PrintHolePunch_BottomEdge) = 7,
 }}
 DEFINE_IID!(IID_IPrintManager, 4280981140, 35993, 17661, 174, 74, 25, 217, 170, 154, 15, 10);
@@ -3045,7 +3045,7 @@ impl IPrintManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintManager: IPrintManager}
+RT_CLASS!{class PrintManager: IPrintManager ["Windows.Graphics.Printing.PrintManager"]}
 impl RtActivatable<IPrintManagerStatic> for PrintManager {}
 impl RtActivatable<IPrintManagerStatic2> for PrintManager {}
 impl PrintManager {
@@ -3088,16 +3088,16 @@ impl IPrintManagerStatic2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PrintMediaSize: i32 {
+RT_ENUM! { enum PrintMediaSize: i32 ["Windows.Graphics.Printing.PrintMediaSize"] {
     Default (PrintMediaSize_Default) = 0, NotAvailable (PrintMediaSize_NotAvailable) = 1, PrinterCustom (PrintMediaSize_PrinterCustom) = 2, BusinessCard (PrintMediaSize_BusinessCard) = 3, CreditCard (PrintMediaSize_CreditCard) = 4, IsoA0 (PrintMediaSize_IsoA0) = 5, IsoA1 (PrintMediaSize_IsoA1) = 6, IsoA10 (PrintMediaSize_IsoA10) = 7, IsoA2 (PrintMediaSize_IsoA2) = 8, IsoA3 (PrintMediaSize_IsoA3) = 9, IsoA3Extra (PrintMediaSize_IsoA3Extra) = 10, IsoA3Rotated (PrintMediaSize_IsoA3Rotated) = 11, IsoA4 (PrintMediaSize_IsoA4) = 12, IsoA4Extra (PrintMediaSize_IsoA4Extra) = 13, IsoA4Rotated (PrintMediaSize_IsoA4Rotated) = 14, IsoA5 (PrintMediaSize_IsoA5) = 15, IsoA5Extra (PrintMediaSize_IsoA5Extra) = 16, IsoA5Rotated (PrintMediaSize_IsoA5Rotated) = 17, IsoA6 (PrintMediaSize_IsoA6) = 18, IsoA6Rotated (PrintMediaSize_IsoA6Rotated) = 19, IsoA7 (PrintMediaSize_IsoA7) = 20, IsoA8 (PrintMediaSize_IsoA8) = 21, IsoA9 (PrintMediaSize_IsoA9) = 22, IsoB0 (PrintMediaSize_IsoB0) = 23, IsoB1 (PrintMediaSize_IsoB1) = 24, IsoB10 (PrintMediaSize_IsoB10) = 25, IsoB2 (PrintMediaSize_IsoB2) = 26, IsoB3 (PrintMediaSize_IsoB3) = 27, IsoB4 (PrintMediaSize_IsoB4) = 28, IsoB4Envelope (PrintMediaSize_IsoB4Envelope) = 29, IsoB5Envelope (PrintMediaSize_IsoB5Envelope) = 30, IsoB5Extra (PrintMediaSize_IsoB5Extra) = 31, IsoB7 (PrintMediaSize_IsoB7) = 32, IsoB8 (PrintMediaSize_IsoB8) = 33, IsoB9 (PrintMediaSize_IsoB9) = 34, IsoC0 (PrintMediaSize_IsoC0) = 35, IsoC1 (PrintMediaSize_IsoC1) = 36, IsoC10 (PrintMediaSize_IsoC10) = 37, IsoC2 (PrintMediaSize_IsoC2) = 38, IsoC3 (PrintMediaSize_IsoC3) = 39, IsoC3Envelope (PrintMediaSize_IsoC3Envelope) = 40, IsoC4 (PrintMediaSize_IsoC4) = 41, IsoC4Envelope (PrintMediaSize_IsoC4Envelope) = 42, IsoC5 (PrintMediaSize_IsoC5) = 43, IsoC5Envelope (PrintMediaSize_IsoC5Envelope) = 44, IsoC6 (PrintMediaSize_IsoC6) = 45, IsoC6C5Envelope (PrintMediaSize_IsoC6C5Envelope) = 46, IsoC6Envelope (PrintMediaSize_IsoC6Envelope) = 47, IsoC7 (PrintMediaSize_IsoC7) = 48, IsoC8 (PrintMediaSize_IsoC8) = 49, IsoC9 (PrintMediaSize_IsoC9) = 50, IsoDLEnvelope (PrintMediaSize_IsoDLEnvelope) = 51, IsoDLEnvelopeRotated (PrintMediaSize_IsoDLEnvelopeRotated) = 52, IsoSRA3 (PrintMediaSize_IsoSRA3) = 53, Japan2LPhoto (PrintMediaSize_Japan2LPhoto) = 54, JapanChou3Envelope (PrintMediaSize_JapanChou3Envelope) = 55, JapanChou3EnvelopeRotated (PrintMediaSize_JapanChou3EnvelopeRotated) = 56, JapanChou4Envelope (PrintMediaSize_JapanChou4Envelope) = 57, JapanChou4EnvelopeRotated (PrintMediaSize_JapanChou4EnvelopeRotated) = 58, JapanDoubleHagakiPostcard (PrintMediaSize_JapanDoubleHagakiPostcard) = 59, JapanDoubleHagakiPostcardRotated (PrintMediaSize_JapanDoubleHagakiPostcardRotated) = 60, JapanHagakiPostcard (PrintMediaSize_JapanHagakiPostcard) = 61, JapanHagakiPostcardRotated (PrintMediaSize_JapanHagakiPostcardRotated) = 62, JapanKaku2Envelope (PrintMediaSize_JapanKaku2Envelope) = 63, JapanKaku2EnvelopeRotated (PrintMediaSize_JapanKaku2EnvelopeRotated) = 64, JapanKaku3Envelope (PrintMediaSize_JapanKaku3Envelope) = 65, JapanKaku3EnvelopeRotated (PrintMediaSize_JapanKaku3EnvelopeRotated) = 66, JapanLPhoto (PrintMediaSize_JapanLPhoto) = 67, JapanQuadrupleHagakiPostcard (PrintMediaSize_JapanQuadrupleHagakiPostcard) = 68, JapanYou1Envelope (PrintMediaSize_JapanYou1Envelope) = 69, JapanYou2Envelope (PrintMediaSize_JapanYou2Envelope) = 70, JapanYou3Envelope (PrintMediaSize_JapanYou3Envelope) = 71, JapanYou4Envelope (PrintMediaSize_JapanYou4Envelope) = 72, JapanYou4EnvelopeRotated (PrintMediaSize_JapanYou4EnvelopeRotated) = 73, JapanYou6Envelope (PrintMediaSize_JapanYou6Envelope) = 74, JapanYou6EnvelopeRotated (PrintMediaSize_JapanYou6EnvelopeRotated) = 75, JisB0 (PrintMediaSize_JisB0) = 76, JisB1 (PrintMediaSize_JisB1) = 77, JisB10 (PrintMediaSize_JisB10) = 78, JisB2 (PrintMediaSize_JisB2) = 79, JisB3 (PrintMediaSize_JisB3) = 80, JisB4 (PrintMediaSize_JisB4) = 81, JisB4Rotated (PrintMediaSize_JisB4Rotated) = 82, JisB5 (PrintMediaSize_JisB5) = 83, JisB5Rotated (PrintMediaSize_JisB5Rotated) = 84, JisB6 (PrintMediaSize_JisB6) = 85, JisB6Rotated (PrintMediaSize_JisB6Rotated) = 86, JisB7 (PrintMediaSize_JisB7) = 87, JisB8 (PrintMediaSize_JisB8) = 88, JisB9 (PrintMediaSize_JisB9) = 89, NorthAmerica10x11 (PrintMediaSize_NorthAmerica10x11) = 90, NorthAmerica10x12 (PrintMediaSize_NorthAmerica10x12) = 91, NorthAmerica10x14 (PrintMediaSize_NorthAmerica10x14) = 92, NorthAmerica11x17 (PrintMediaSize_NorthAmerica11x17) = 93, NorthAmerica14x17 (PrintMediaSize_NorthAmerica14x17) = 94, NorthAmerica4x6 (PrintMediaSize_NorthAmerica4x6) = 95, NorthAmerica4x8 (PrintMediaSize_NorthAmerica4x8) = 96, NorthAmerica5x7 (PrintMediaSize_NorthAmerica5x7) = 97, NorthAmerica8x10 (PrintMediaSize_NorthAmerica8x10) = 98, NorthAmerica9x11 (PrintMediaSize_NorthAmerica9x11) = 99, NorthAmericaArchitectureASheet (PrintMediaSize_NorthAmericaArchitectureASheet) = 100, NorthAmericaArchitectureBSheet (PrintMediaSize_NorthAmericaArchitectureBSheet) = 101, NorthAmericaArchitectureCSheet (PrintMediaSize_NorthAmericaArchitectureCSheet) = 102, NorthAmericaArchitectureDSheet (PrintMediaSize_NorthAmericaArchitectureDSheet) = 103, NorthAmericaArchitectureESheet (PrintMediaSize_NorthAmericaArchitectureESheet) = 104, NorthAmericaCSheet (PrintMediaSize_NorthAmericaCSheet) = 105, NorthAmericaDSheet (PrintMediaSize_NorthAmericaDSheet) = 106, NorthAmericaESheet (PrintMediaSize_NorthAmericaESheet) = 107, NorthAmericaExecutive (PrintMediaSize_NorthAmericaExecutive) = 108, NorthAmericaGermanLegalFanfold (PrintMediaSize_NorthAmericaGermanLegalFanfold) = 109, NorthAmericaGermanStandardFanfold (PrintMediaSize_NorthAmericaGermanStandardFanfold) = 110, NorthAmericaLegal (PrintMediaSize_NorthAmericaLegal) = 111, NorthAmericaLegalExtra (PrintMediaSize_NorthAmericaLegalExtra) = 112, NorthAmericaLetter (PrintMediaSize_NorthAmericaLetter) = 113, NorthAmericaLetterExtra (PrintMediaSize_NorthAmericaLetterExtra) = 114, NorthAmericaLetterPlus (PrintMediaSize_NorthAmericaLetterPlus) = 115, NorthAmericaLetterRotated (PrintMediaSize_NorthAmericaLetterRotated) = 116, NorthAmericaMonarchEnvelope (PrintMediaSize_NorthAmericaMonarchEnvelope) = 117, NorthAmericaNote (PrintMediaSize_NorthAmericaNote) = 118, NorthAmericaNumber10Envelope (PrintMediaSize_NorthAmericaNumber10Envelope) = 119, NorthAmericaNumber10EnvelopeRotated (PrintMediaSize_NorthAmericaNumber10EnvelopeRotated) = 120, NorthAmericaNumber11Envelope (PrintMediaSize_NorthAmericaNumber11Envelope) = 121, NorthAmericaNumber12Envelope (PrintMediaSize_NorthAmericaNumber12Envelope) = 122, NorthAmericaNumber14Envelope (PrintMediaSize_NorthAmericaNumber14Envelope) = 123, NorthAmericaNumber9Envelope (PrintMediaSize_NorthAmericaNumber9Envelope) = 124, NorthAmericaPersonalEnvelope (PrintMediaSize_NorthAmericaPersonalEnvelope) = 125, NorthAmericaQuarto (PrintMediaSize_NorthAmericaQuarto) = 126, NorthAmericaStatement (PrintMediaSize_NorthAmericaStatement) = 127, NorthAmericaSuperA (PrintMediaSize_NorthAmericaSuperA) = 128, NorthAmericaSuperB (PrintMediaSize_NorthAmericaSuperB) = 129, NorthAmericaTabloid (PrintMediaSize_NorthAmericaTabloid) = 130, NorthAmericaTabloidExtra (PrintMediaSize_NorthAmericaTabloidExtra) = 131, OtherMetricA3Plus (PrintMediaSize_OtherMetricA3Plus) = 132, OtherMetricA4Plus (PrintMediaSize_OtherMetricA4Plus) = 133, OtherMetricFolio (PrintMediaSize_OtherMetricFolio) = 134, OtherMetricInviteEnvelope (PrintMediaSize_OtherMetricInviteEnvelope) = 135, OtherMetricItalianEnvelope (PrintMediaSize_OtherMetricItalianEnvelope) = 136, Prc10Envelope (PrintMediaSize_Prc10Envelope) = 137, Prc10EnvelopeRotated (PrintMediaSize_Prc10EnvelopeRotated) = 138, Prc16K (PrintMediaSize_Prc16K) = 139, Prc16KRotated (PrintMediaSize_Prc16KRotated) = 140, Prc1Envelope (PrintMediaSize_Prc1Envelope) = 141, Prc1EnvelopeRotated (PrintMediaSize_Prc1EnvelopeRotated) = 142, Prc2Envelope (PrintMediaSize_Prc2Envelope) = 143, Prc2EnvelopeRotated (PrintMediaSize_Prc2EnvelopeRotated) = 144, Prc32K (PrintMediaSize_Prc32K) = 145, Prc32KBig (PrintMediaSize_Prc32KBig) = 146, Prc32KRotated (PrintMediaSize_Prc32KRotated) = 147, Prc3Envelope (PrintMediaSize_Prc3Envelope) = 148, Prc3EnvelopeRotated (PrintMediaSize_Prc3EnvelopeRotated) = 149, Prc4Envelope (PrintMediaSize_Prc4Envelope) = 150, Prc4EnvelopeRotated (PrintMediaSize_Prc4EnvelopeRotated) = 151, Prc5Envelope (PrintMediaSize_Prc5Envelope) = 152, Prc5EnvelopeRotated (PrintMediaSize_Prc5EnvelopeRotated) = 153, Prc6Envelope (PrintMediaSize_Prc6Envelope) = 154, Prc6EnvelopeRotated (PrintMediaSize_Prc6EnvelopeRotated) = 155, Prc7Envelope (PrintMediaSize_Prc7Envelope) = 156, Prc7EnvelopeRotated (PrintMediaSize_Prc7EnvelopeRotated) = 157, Prc8Envelope (PrintMediaSize_Prc8Envelope) = 158, Prc8EnvelopeRotated (PrintMediaSize_Prc8EnvelopeRotated) = 159, Prc9Envelope (PrintMediaSize_Prc9Envelope) = 160, Prc9EnvelopeRotated (PrintMediaSize_Prc9EnvelopeRotated) = 161, Roll04Inch (PrintMediaSize_Roll04Inch) = 162, Roll06Inch (PrintMediaSize_Roll06Inch) = 163, Roll08Inch (PrintMediaSize_Roll08Inch) = 164, Roll12Inch (PrintMediaSize_Roll12Inch) = 165, Roll15Inch (PrintMediaSize_Roll15Inch) = 166, Roll18Inch (PrintMediaSize_Roll18Inch) = 167, Roll22Inch (PrintMediaSize_Roll22Inch) = 168, Roll24Inch (PrintMediaSize_Roll24Inch) = 169, Roll30Inch (PrintMediaSize_Roll30Inch) = 170, Roll36Inch (PrintMediaSize_Roll36Inch) = 171, Roll54Inch (PrintMediaSize_Roll54Inch) = 172,
 }}
-RT_ENUM! { enum PrintMediaType: i32 {
+RT_ENUM! { enum PrintMediaType: i32 ["Windows.Graphics.Printing.PrintMediaType"] {
     Default (PrintMediaType_Default) = 0, NotAvailable (PrintMediaType_NotAvailable) = 1, PrinterCustom (PrintMediaType_PrinterCustom) = 2, AutoSelect (PrintMediaType_AutoSelect) = 3, Archival (PrintMediaType_Archival) = 4, BackPrintFilm (PrintMediaType_BackPrintFilm) = 5, Bond (PrintMediaType_Bond) = 6, CardStock (PrintMediaType_CardStock) = 7, Continuous (PrintMediaType_Continuous) = 8, EnvelopePlain (PrintMediaType_EnvelopePlain) = 9, EnvelopeWindow (PrintMediaType_EnvelopeWindow) = 10, Fabric (PrintMediaType_Fabric) = 11, HighResolution (PrintMediaType_HighResolution) = 12, Label (PrintMediaType_Label) = 13, MultiLayerForm (PrintMediaType_MultiLayerForm) = 14, MultiPartForm (PrintMediaType_MultiPartForm) = 15, Photographic (PrintMediaType_Photographic) = 16, PhotographicFilm (PrintMediaType_PhotographicFilm) = 17, PhotographicGlossy (PrintMediaType_PhotographicGlossy) = 18, PhotographicHighGloss (PrintMediaType_PhotographicHighGloss) = 19, PhotographicMatte (PrintMediaType_PhotographicMatte) = 20, PhotographicSatin (PrintMediaType_PhotographicSatin) = 21, PhotographicSemiGloss (PrintMediaType_PhotographicSemiGloss) = 22, Plain (PrintMediaType_Plain) = 23, Screen (PrintMediaType_Screen) = 24, ScreenPaged (PrintMediaType_ScreenPaged) = 25, Stationery (PrintMediaType_Stationery) = 26, TabStockFull (PrintMediaType_TabStockFull) = 27, TabStockPreCut (PrintMediaType_TabStockPreCut) = 28, Transparency (PrintMediaType_Transparency) = 29, TShirtTransfer (PrintMediaType_TShirtTransfer) = 30, None (PrintMediaType_None) = 31,
 }}
-RT_ENUM! { enum PrintOrientation: i32 {
+RT_ENUM! { enum PrintOrientation: i32 ["Windows.Graphics.Printing.PrintOrientation"] {
     Default (PrintOrientation_Default) = 0, NotAvailable (PrintOrientation_NotAvailable) = 1, PrinterCustom (PrintOrientation_PrinterCustom) = 2, Portrait (PrintOrientation_Portrait) = 3, PortraitFlipped (PrintOrientation_PortraitFlipped) = 4, Landscape (PrintOrientation_Landscape) = 5, LandscapeFlipped (PrintOrientation_LandscapeFlipped) = 6,
 }}
-RT_STRUCT! { struct PrintPageDescription {
+RT_STRUCT! { struct PrintPageDescription ["Windows.Graphics.Printing.PrintPageDescription"] {
     PageSize: foundation::Size, ImageableRect: foundation::Rect, DpiX: u32, DpiY: u32,
 }}
 DEFINE_IID!(IID_IPrintPageInfo, 3712739785, 42657, 19162, 147, 14, 218, 135, 42, 79, 35, 211);
@@ -3160,7 +3160,7 @@ impl IPrintPageInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintPageInfo: IPrintPageInfo}
+RT_CLASS!{class PrintPageInfo: IPrintPageInfo ["Windows.Graphics.Printing.PrintPageInfo"]}
 impl RtActivatable<IActivationFactory> for PrintPageInfo {}
 DEFINE_CLSID!(PrintPageInfo(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,80,114,105,110,116,80,97,103,101,73,110,102,111,0]) [CLSID_PrintPageInfo]);
 DEFINE_IID!(IID_IPrintPageRange, 4171263060, 28284, 20933, 87, 253, 6, 96, 194, 215, 21, 19);
@@ -3180,7 +3180,7 @@ impl IPrintPageRange {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintPageRange: IPrintPageRange}
+RT_CLASS!{class PrintPageRange: IPrintPageRange ["Windows.Graphics.Printing.PrintPageRange"]}
 impl RtActivatable<IPrintPageRangeFactory> for PrintPageRange {}
 impl PrintPageRange {
     #[inline] pub fn create(firstPage: i32, lastPage: i32) -> Result<ComPtr<PrintPageRange>> {
@@ -3246,11 +3246,11 @@ impl IPrintPageRangeOptions {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintPageRangeOptions: IPrintPageRangeOptions}
-RT_ENUM! { enum PrintQuality: i32 {
+RT_CLASS!{class PrintPageRangeOptions: IPrintPageRangeOptions ["Windows.Graphics.Printing.PrintPageRangeOptions"]}
+RT_ENUM! { enum PrintQuality: i32 ["Windows.Graphics.Printing.PrintQuality"] {
     Default (PrintQuality_Default) = 0, NotAvailable (PrintQuality_NotAvailable) = 1, PrinterCustom (PrintQuality_PrinterCustom) = 2, Automatic (PrintQuality_Automatic) = 3, Draft (PrintQuality_Draft) = 4, Fax (PrintQuality_Fax) = 5, High (PrintQuality_High) = 6, Normal (PrintQuality_Normal) = 7, Photographic (PrintQuality_Photographic) = 8, Text (PrintQuality_Text) = 9,
 }}
-RT_ENUM! { enum PrintStaple: i32 {
+RT_ENUM! { enum PrintStaple: i32 ["Windows.Graphics.Printing.PrintStaple"] {
     Default (PrintStaple_Default) = 0, NotAvailable (PrintStaple_NotAvailable) = 1, PrinterCustom (PrintStaple_PrinterCustom) = 2, None (PrintStaple_None) = 3, StapleTopLeft (PrintStaple_StapleTopLeft) = 4, StapleTopRight (PrintStaple_StapleTopRight) = 5, StapleBottomLeft (PrintStaple_StapleBottomLeft) = 6, StapleBottomRight (PrintStaple_StapleBottomRight) = 7, StapleDualLeft (PrintStaple_StapleDualLeft) = 8, StapleDualRight (PrintStaple_StapleDualRight) = 9, StapleDualTop (PrintStaple_StapleDualTop) = 10, StapleDualBottom (PrintStaple_StapleDualBottom) = 11, SaddleStitch (PrintStaple_SaddleStitch) = 12,
 }}
 DEFINE_IID!(IID_IPrintTask, 1641546311, 27894, 20397, 132, 226, 165, 232, 46, 45, 76, 235);
@@ -3321,7 +3321,7 @@ impl IPrintTask {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTask: IPrintTask}
+RT_CLASS!{class PrintTask: IPrintTask ["Windows.Graphics.Printing.PrintTask"]}
 DEFINE_IID!(IID_IPrintTask2, 908281975, 15955, 19869, 143, 94, 49, 106, 200, 222, 218, 225);
 RT_INTERFACE!{interface IPrintTask2(IPrintTask2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintTask2] {
     fn put_IsPreviewEnabled(&self, value: bool) -> HRESULT,
@@ -3349,8 +3349,8 @@ impl IPrintTaskCompletedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskCompletedEventArgs: IPrintTaskCompletedEventArgs}
-RT_ENUM! { enum PrintTaskCompletion: i32 {
+RT_CLASS!{class PrintTaskCompletedEventArgs: IPrintTaskCompletedEventArgs ["Windows.Graphics.Printing.PrintTaskCompletedEventArgs"]}
+RT_ENUM! { enum PrintTaskCompletion: i32 ["Windows.Graphics.Printing.PrintTaskCompletion"] {
     Abandoned (PrintTaskCompletion_Abandoned) = 0, Canceled (PrintTaskCompletion_Canceled) = 1, Failed (PrintTaskCompletion_Failed) = 2, Submitted (PrintTaskCompletion_Submitted) = 3,
 }}
 DEFINE_IID!(IID_IPrintTaskOptions, 1510631099, 53897, 16827, 150, 221, 87, 226, 131, 56, 174, 63);
@@ -3375,7 +3375,7 @@ impl IPrintTaskOptions {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskOptions: IPrintTaskOptionsCore}
+RT_CLASS!{class PrintTaskOptions: IPrintTaskOptionsCore ["Windows.Graphics.Printing.PrintTaskOptions"]}
 DEFINE_IID!(IID_IPrintTaskOptions2, 3952809478, 39478, 19289, 134, 23, 178, 23, 132, 146, 98, 225);
 RT_INTERFACE!{interface IPrintTaskOptions2(IPrintTaskOptions2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptions2] {
     fn get_PageRangeOptions(&self, out: *mut *mut PrintPageRangeOptions) -> HRESULT,
@@ -3564,7 +3564,7 @@ impl IPrintTaskProgressingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskProgressingEventArgs: IPrintTaskProgressingEventArgs}
+RT_CLASS!{class PrintTaskProgressingEventArgs: IPrintTaskProgressingEventArgs ["Windows.Graphics.Printing.PrintTaskProgressingEventArgs"]}
 DEFINE_IID!(IID_IPrintTaskRequest, 1878400558, 10018, 16960, 166, 124, 243, 100, 132, 154, 23, 243);
 RT_INTERFACE!{interface IPrintTaskRequest(IPrintTaskRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskRequest] {
     fn get_Deadline(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -3588,7 +3588,7 @@ impl IPrintTaskRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskRequest: IPrintTaskRequest}
+RT_CLASS!{class PrintTaskRequest: IPrintTaskRequest ["Windows.Graphics.Printing.PrintTaskRequest"]}
 DEFINE_IID!(IID_IPrintTaskRequestedDeferral, 3488592880, 52798, 17095, 148, 150, 100, 128, 12, 98, 44, 68);
 RT_INTERFACE!{interface IPrintTaskRequestedDeferral(IPrintTaskRequestedDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskRequestedDeferral] {
     fn Complete(&self) -> HRESULT
@@ -3599,7 +3599,7 @@ impl IPrintTaskRequestedDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskRequestedDeferral: IPrintTaskRequestedDeferral}
+RT_CLASS!{class PrintTaskRequestedDeferral: IPrintTaskRequestedDeferral ["Windows.Graphics.Printing.PrintTaskRequestedDeferral"]}
 DEFINE_IID!(IID_IPrintTaskRequestedEventArgs, 3501193508, 41755, 17740, 167, 182, 93, 12, 197, 34, 252, 22);
 RT_INTERFACE!{interface IPrintTaskRequestedEventArgs(IPrintTaskRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut PrintTaskRequest) -> HRESULT
@@ -3611,7 +3611,7 @@ impl IPrintTaskRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskRequestedEventArgs: IPrintTaskRequestedEventArgs}
+RT_CLASS!{class PrintTaskRequestedEventArgs: IPrintTaskRequestedEventArgs ["Windows.Graphics.Printing.PrintTaskRequestedEventArgs"]}
 DEFINE_IID!(IID_IPrintTaskSourceRequestedArgs, 4193281982, 62550, 16880, 156, 152, 92, 231, 62, 133, 20, 16);
 RT_INTERFACE!{interface IPrintTaskSourceRequestedArgs(IPrintTaskSourceRequestedArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskSourceRequestedArgs] {
     fn get_Deadline(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -3634,7 +3634,7 @@ impl IPrintTaskSourceRequestedArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskSourceRequestedArgs: IPrintTaskSourceRequestedArgs}
+RT_CLASS!{class PrintTaskSourceRequestedArgs: IPrintTaskSourceRequestedArgs ["Windows.Graphics.Printing.PrintTaskSourceRequestedArgs"]}
 DEFINE_IID!(IID_IPrintTaskSourceRequestedDeferral, 1242915025, 27026, 19869, 133, 85, 76, 164, 86, 63, 177, 102);
 RT_INTERFACE!{interface IPrintTaskSourceRequestedDeferral(IPrintTaskSourceRequestedDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskSourceRequestedDeferral] {
     fn Complete(&self) -> HRESULT
@@ -3645,7 +3645,7 @@ impl IPrintTaskSourceRequestedDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskSourceRequestedDeferral: IPrintTaskSourceRequestedDeferral}
+RT_CLASS!{class PrintTaskSourceRequestedDeferral: IPrintTaskSourceRequestedDeferral ["Windows.Graphics.Printing.PrintTaskSourceRequestedDeferral"]}
 DEFINE_IID!(IID_PrintTaskSourceRequestedHandler, 1813028776, 23734, 19258, 134, 99, 243, 156, 176, 45, 201, 180);
 RT_DELEGATE!{delegate PrintTaskSourceRequestedHandler(PrintTaskSourceRequestedHandlerVtbl, PrintTaskSourceRequestedHandlerImpl) [IID_PrintTaskSourceRequestedHandler] {
     fn Invoke(&self, args: *mut PrintTaskSourceRequestedArgs) -> HRESULT
@@ -3869,7 +3869,7 @@ impl IPrintBindingOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintBindingOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintBindingOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintBindingOptionDetails"]}
 DEFINE_IID!(IID_IPrintBorderingOptionDetails, 1299430543, 64339, 20146, 152, 95, 29, 145, 222, 11, 118, 57);
 RT_INTERFACE!{interface IPrintBorderingOptionDetails(IPrintBorderingOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintBorderingOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
@@ -3897,7 +3897,7 @@ impl IPrintBorderingOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintBorderingOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintBorderingOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintBorderingOptionDetails"]}
 DEFINE_IID!(IID_IPrintCollationOptionDetails, 3601576294, 42406, 16604, 172, 195, 115, 159, 40, 241, 229, 211);
 RT_INTERFACE!{interface IPrintCollationOptionDetails(IPrintCollationOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCollationOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
@@ -3925,7 +3925,7 @@ impl IPrintCollationOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintCollationOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintCollationOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintCollationOptionDetails"]}
 DEFINE_IID!(IID_IPrintColorModeOptionDetails, 3685316356, 61910, 18499, 164, 132, 155, 68, 124, 220, 243, 182);
 RT_INTERFACE!{interface IPrintColorModeOptionDetails(IPrintColorModeOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintColorModeOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
@@ -3953,7 +3953,7 @@ impl IPrintColorModeOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintColorModeOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintColorModeOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintColorModeOptionDetails"]}
 DEFINE_IID!(IID_IPrintCopiesOptionDetails, 1107636377, 17209, 17219, 137, 141, 44, 71, 181, 224, 195, 65);
 RT_INTERFACE!{interface IPrintCopiesOptionDetails(IPrintCopiesOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCopiesOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
@@ -3981,7 +3981,7 @@ impl IPrintCopiesOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintCopiesOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintCopiesOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintCopiesOptionDetails"]}
 DEFINE_IID!(IID_IPrintCustomItemDetails, 1459926583, 23610, 17562, 170, 54, 179, 41, 27, 17, 146, 253);
 RT_INTERFACE!{interface IPrintCustomItemDetails(IPrintCustomItemDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomItemDetails] {
     fn get_ItemId(&self, out: *mut HSTRING) -> HRESULT,
@@ -4004,7 +4004,7 @@ impl IPrintCustomItemDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintCustomItemDetails: IPrintCustomItemDetails}
+RT_CLASS!{class PrintCustomItemDetails: IPrintCustomItemDetails ["Windows.Graphics.Printing.OptionDetails.PrintCustomItemDetails"]}
 DEFINE_IID!(IID_IPrintCustomItemListOptionDetails, 2784689544, 22770, 20157, 185, 15, 81, 228, 242, 148, 76, 93);
 RT_INTERFACE!{interface IPrintCustomItemListOptionDetails(IPrintCustomItemListOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomItemListOptionDetails] {
     fn AddItem(&self, itemId: HSTRING, displayName: HSTRING) -> HRESULT
@@ -4015,7 +4015,7 @@ impl IPrintCustomItemListOptionDetails {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintCustomItemListOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintCustomItemListOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintCustomItemListOptionDetails"]}
 DEFINE_IID!(IID_IPrintCustomItemListOptionDetails2, 3386258749, 25884, 19001, 144, 110, 16, 145, 161, 128, 27, 241);
 RT_INTERFACE!{interface IPrintCustomItemListOptionDetails2(IPrintCustomItemListOptionDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomItemListOptionDetails2] {
     #[cfg(feature="windows-storage")] fn AddItem(&self, itemId: HSTRING, displayName: HSTRING, description: HSTRING, icon: *mut ::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType) -> HRESULT
@@ -4085,7 +4085,7 @@ impl IPrintCustomTextOptionDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintCustomTextOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintCustomTextOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintCustomTextOptionDetails"]}
 DEFINE_IID!(IID_IPrintCustomTextOptionDetails2, 3467053908, 47479, 18200, 131, 56, 126, 210, 176, 216, 111, 227);
 RT_INTERFACE!{interface IPrintCustomTextOptionDetails2(IPrintCustomTextOptionDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomTextOptionDetails2] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
@@ -4140,7 +4140,7 @@ impl IPrintCustomToggleOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintCustomToggleOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintCustomToggleOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintCustomToggleOptionDetails"]}
 DEFINE_IID!(IID_IPrintDuplexOptionDetails, 4242097553, 54436, 17658, 179, 254, 66, 224, 186, 40, 213, 173);
 RT_INTERFACE!{interface IPrintDuplexOptionDetails(IPrintDuplexOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintDuplexOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
@@ -4168,7 +4168,7 @@ impl IPrintDuplexOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintDuplexOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintDuplexOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintDuplexOptionDetails"]}
 DEFINE_IID!(IID_IPrintHolePunchOptionDetails, 2799574808, 18476, 18007, 157, 113, 141, 221, 219, 234, 30, 30);
 RT_INTERFACE!{interface IPrintHolePunchOptionDetails(IPrintHolePunchOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintHolePunchOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
@@ -4196,7 +4196,7 @@ impl IPrintHolePunchOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintHolePunchOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintHolePunchOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintHolePunchOptionDetails"]}
 DEFINE_IID!(IID_IPrintItemListOptionDetails, 2585941951, 65121, 17368, 162, 79, 163, 246, 171, 115, 32, 231);
 RT_INTERFACE!{interface IPrintItemListOptionDetails(IPrintItemListOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintItemListOptionDetails] {
     fn get_Items(&self, out: *mut *mut foundation::collections::IVectorView<IInspectable>) -> HRESULT
@@ -4235,7 +4235,7 @@ impl IPrintMediaSizeOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintMediaSizeOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintMediaSizeOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintMediaSizeOptionDetails"]}
 DEFINE_IID!(IID_IPrintMediaTypeOptionDetails, 4173791243, 44019, 19132, 142, 134, 34, 171, 197, 116, 74, 67);
 RT_INTERFACE!{interface IPrintMediaTypeOptionDetails(IPrintMediaTypeOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintMediaTypeOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
@@ -4263,7 +4263,7 @@ impl IPrintMediaTypeOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintMediaTypeOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintMediaTypeOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintMediaTypeOptionDetails"]}
 DEFINE_IID!(IID_IPrintNumberOptionDetails, 1291959215, 25692, 19945, 150, 95, 111, 198, 187, 196, 124, 171);
 RT_INTERFACE!{interface IPrintNumberOptionDetails(IPrintNumberOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintNumberOptionDetails] {
     fn get_MinValue(&self, out: *mut u32) -> HRESULT,
@@ -4332,10 +4332,10 @@ impl IPrintOptionDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PrintOptionStates: u32 {
+RT_ENUM! { enum PrintOptionStates: u32 ["Windows.Graphics.Printing.OptionDetails.PrintOptionStates"] {
     None (PrintOptionStates_None) = 0, Enabled (PrintOptionStates_Enabled) = 1, Constrained (PrintOptionStates_Constrained) = 2,
 }}
-RT_ENUM! { enum PrintOptionType: i32 {
+RT_ENUM! { enum PrintOptionType: i32 ["Windows.Graphics.Printing.OptionDetails.PrintOptionType"] {
     Unknown (PrintOptionType_Unknown) = 0, Number (PrintOptionType_Number) = 1, Text (PrintOptionType_Text) = 2, ItemList (PrintOptionType_ItemList) = 3, Toggle (PrintOptionType_Toggle) = 4,
 }}
 DEFINE_IID!(IID_IPrintOrientationOptionDetails, 1187219577, 26336, 19872, 135, 180, 210, 84, 87, 130, 78, 183);
@@ -4365,7 +4365,7 @@ impl IPrintOrientationOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintOrientationOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintOrientationOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintOrientationOptionDetails"]}
 DEFINE_IID!(IID_IPrintPageRangeOptionDetails, 1511646391, 11240, 19111, 158, 165, 222, 251, 232, 113, 59, 78);
 RT_INTERFACE!{interface IPrintPageRangeOptionDetails(IPrintPageRangeOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintPageRangeOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
@@ -4393,7 +4393,7 @@ impl IPrintPageRangeOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintPageRangeOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintPageRangeOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintPageRangeOptionDetails"]}
 DEFINE_IID!(IID_IPrintQualityOptionDetails, 768633761, 52762, 17638, 132, 249, 58, 146, 234, 30, 48, 68);
 RT_INTERFACE!{interface IPrintQualityOptionDetails(IPrintQualityOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintQualityOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
@@ -4421,7 +4421,7 @@ impl IPrintQualityOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintQualityOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintQualityOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintQualityOptionDetails"]}
 DEFINE_IID!(IID_IPrintStapleOptionDetails, 3560011197, 39947, 17632, 132, 246, 206, 235, 206, 101, 56, 0);
 RT_INTERFACE!{interface IPrintStapleOptionDetails(IPrintStapleOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintStapleOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
@@ -4449,7 +4449,7 @@ impl IPrintStapleOptionDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintStapleOptionDetails: IPrintOptionDetails}
+RT_CLASS!{class PrintStapleOptionDetails: IPrintOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintStapleOptionDetails"]}
 DEFINE_IID!(IID_IPrintTaskOptionChangedEventArgs, 1696169221, 42478, 17159, 148, 7, 154, 202, 209, 71, 103, 156);
 RT_INTERFACE!{interface IPrintTaskOptionChangedEventArgs(IPrintTaskOptionChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionChangedEventArgs] {
     fn get_OptionId(&self, out: *mut *mut IInspectable) -> HRESULT
@@ -4461,7 +4461,7 @@ impl IPrintTaskOptionChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskOptionChangedEventArgs: IPrintTaskOptionChangedEventArgs}
+RT_CLASS!{class PrintTaskOptionChangedEventArgs: IPrintTaskOptionChangedEventArgs ["Windows.Graphics.Printing.OptionDetails.PrintTaskOptionChangedEventArgs"]}
 DEFINE_IID!(IID_IPrintTaskOptionDetails, 4117891825, 43166, 17062, 129, 175, 248, 224, 16, 179, 138, 104);
 RT_INTERFACE!{interface IPrintTaskOptionDetails(IPrintTaskOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionDetails] {
     fn get_Options(&self, out: *mut *mut foundation::collections::IMapView<HString, IPrintOptionDetails>) -> HRESULT,
@@ -4507,7 +4507,7 @@ impl IPrintTaskOptionDetails {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskOptionDetails: IPrintTaskOptionDetails}
+RT_CLASS!{class PrintTaskOptionDetails: IPrintTaskOptionDetails ["Windows.Graphics.Printing.OptionDetails.PrintTaskOptionDetails"]}
 impl RtActivatable<IPrintTaskOptionDetailsStatic> for PrintTaskOptionDetails {}
 impl PrintTaskOptionDetails {
     #[inline] pub fn get_from_print_task_options(printTaskOptions: &super::PrintTaskOptions) -> Result<Option<ComPtr<PrintTaskOptionDetails>>> {
@@ -4677,7 +4677,7 @@ impl IPrintTicketCapabilities {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTicketCapabilities: IPrintTicketCapabilities}
+RT_CLASS!{class PrintTicketCapabilities: IPrintTicketCapabilities ["Windows.Graphics.Printing.PrintTicket.PrintTicketCapabilities"]}
 DEFINE_IID!(IID_IPrintTicketFeature, 3881860458, 23029, 16643, 136, 88, 185, 119, 16, 150, 61, 57);
 RT_INTERFACE!{interface IPrintTicketFeature(IPrintTicketFeatureVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTicketFeature] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -4737,8 +4737,8 @@ impl IPrintTicketFeature {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTicketFeature: IPrintTicketFeature}
-RT_ENUM! { enum PrintTicketFeatureSelectionType: i32 {
+RT_CLASS!{class PrintTicketFeature: IPrintTicketFeature ["Windows.Graphics.Printing.PrintTicket.PrintTicketFeature"]}
+RT_ENUM! { enum PrintTicketFeatureSelectionType: i32 ["Windows.Graphics.Printing.PrintTicket.PrintTicketFeatureSelectionType"] {
     PickOne (PrintTicketFeatureSelectionType_PickOne) = 0, PickMany (PrintTicketFeatureSelectionType_PickMany) = 1,
 }}
 DEFINE_IID!(IID_IPrintTicketOption, 2961624976, 45927, 20043, 189, 72, 156, 120, 160, 187, 49, 206);
@@ -4797,8 +4797,8 @@ impl IPrintTicketOption {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTicketOption: IPrintTicketOption}
-RT_ENUM! { enum PrintTicketParameterDataType: i32 {
+RT_CLASS!{class PrintTicketOption: IPrintTicketOption ["Windows.Graphics.Printing.PrintTicket.PrintTicketOption"]}
+RT_ENUM! { enum PrintTicketParameterDataType: i32 ["Windows.Graphics.Printing.PrintTicket.PrintTicketParameterDataType"] {
     Integer (PrintTicketParameterDataType_Integer) = 0, NumericString (PrintTicketParameterDataType_NumericString) = 1, String (PrintTicketParameterDataType_String) = 2,
 }}
 DEFINE_IID!(IID_IPrintTicketParameterDefinition, 3602560228, 10594, 19457, 183, 243, 154, 146, 148, 235, 131, 53);
@@ -4849,7 +4849,7 @@ impl IPrintTicketParameterDefinition {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTicketParameterDefinition: IPrintTicketParameterDefinition}
+RT_CLASS!{class PrintTicketParameterDefinition: IPrintTicketParameterDefinition ["Windows.Graphics.Printing.PrintTicket.PrintTicketParameterDefinition"]}
 DEFINE_IID!(IID_IPrintTicketParameterInitializer, 1580414395, 41125, 18609, 157, 92, 7, 17, 109, 220, 89, 122);
 RT_INTERFACE!{interface IPrintTicketParameterInitializer(IPrintTicketParameterInitializerVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTicketParameterInitializer] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -4885,7 +4885,7 @@ impl IPrintTicketParameterInitializer {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTicketParameterInitializer: IPrintTicketParameterInitializer}
+RT_CLASS!{class PrintTicketParameterInitializer: IPrintTicketParameterInitializer ["Windows.Graphics.Printing.PrintTicket.PrintTicketParameterInitializer"]}
 DEFINE_IID!(IID_IPrintTicketValue, 1723009586, 9293, 20002, 169, 139, 187, 60, 241, 242, 221, 145);
 RT_INTERFACE!{interface IPrintTicketValue(IPrintTicketValueVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTicketValue] {
     fn get_Type(&self, out: *mut PrintTicketValueType) -> HRESULT,
@@ -4909,8 +4909,8 @@ impl IPrintTicketValue {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTicketValue: IPrintTicketValue}
-RT_ENUM! { enum PrintTicketValueType: i32 {
+RT_CLASS!{class PrintTicketValue: IPrintTicketValue ["Windows.Graphics.Printing.PrintTicket.PrintTicketValue"]}
+RT_ENUM! { enum PrintTicketValueType: i32 ["Windows.Graphics.Printing.PrintTicket.PrintTicketValueType"] {
     Integer (PrintTicketValueType_Integer) = 0, String (PrintTicketValueType_String) = 1, Unknown (PrintTicketValueType_Unknown) = 2,
 }}
 DEFINE_IID!(IID_IWorkflowPrintTicket, 1104487045, 13800, 17550, 168, 197, 228, 182, 162, 207, 130, 108);
@@ -5075,7 +5075,7 @@ impl IWorkflowPrintTicket {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WorkflowPrintTicket: IWorkflowPrintTicket}
+RT_CLASS!{class WorkflowPrintTicket: IWorkflowPrintTicket ["Windows.Graphics.Printing.PrintTicket.WorkflowPrintTicket"]}
 DEFINE_IID!(IID_IWorkflowPrintTicketValidationResult, 181531538, 55931, 18998, 191, 54, 106, 153, 166, 46, 32, 89);
 RT_INTERFACE!{interface IWorkflowPrintTicketValidationResult(IWorkflowPrintTicketValidationResultVtbl): IInspectable(IInspectableVtbl) [IID_IWorkflowPrintTicketValidationResult] {
     fn get_Validated(&self, out: *mut bool) -> HRESULT,
@@ -5093,7 +5093,7 @@ impl IWorkflowPrintTicketValidationResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WorkflowPrintTicketValidationResult: IWorkflowPrintTicketValidationResult}
+RT_CLASS!{class WorkflowPrintTicketValidationResult: IWorkflowPrintTicketValidationResult ["Windows.Graphics.Printing.PrintTicket.WorkflowPrintTicketValidationResult"]}
 } // Windows.Graphics.Printing.PrintTicket
 pub mod workflow { // Windows.Graphics.Printing.Workflow
 use ::prelude::*;
@@ -5135,7 +5135,7 @@ impl IPrintWorkflowBackgroundSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowBackgroundSession: IPrintWorkflowBackgroundSession}
+RT_CLASS!{class PrintWorkflowBackgroundSession: IPrintWorkflowBackgroundSession ["Windows.Graphics.Printing.Workflow.PrintWorkflowBackgroundSession"]}
 DEFINE_IID!(IID_IPrintWorkflowBackgroundSetupRequestedEventArgs, 1139372866, 5968, 22985, 97, 251, 56, 55, 72, 162, 3, 98);
 RT_INTERFACE!{interface IPrintWorkflowBackgroundSetupRequestedEventArgs(IPrintWorkflowBackgroundSetupRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowBackgroundSetupRequestedEventArgs] {
     fn GetUserPrintTicketAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket>) -> HRESULT,
@@ -5164,7 +5164,7 @@ impl IPrintWorkflowBackgroundSetupRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowBackgroundSetupRequestedEventArgs: IPrintWorkflowBackgroundSetupRequestedEventArgs}
+RT_CLASS!{class PrintWorkflowBackgroundSetupRequestedEventArgs: IPrintWorkflowBackgroundSetupRequestedEventArgs ["Windows.Graphics.Printing.Workflow.PrintWorkflowBackgroundSetupRequestedEventArgs"]}
 DEFINE_IID!(IID_IPrintWorkflowConfiguration, 3500852461, 64843, 24053, 75, 182, 141, 13, 21, 158, 190, 63);
 RT_INTERFACE!{interface IPrintWorkflowConfiguration(IPrintWorkflowConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowConfiguration] {
     fn get_SourceAppDisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -5188,7 +5188,7 @@ impl IPrintWorkflowConfiguration {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowConfiguration: IPrintWorkflowConfiguration}
+RT_CLASS!{class PrintWorkflowConfiguration: IPrintWorkflowConfiguration ["Windows.Graphics.Printing.Workflow.PrintWorkflowConfiguration"]}
 DEFINE_IID!(IID_IPrintWorkflowForegroundSession, 3348849616, 63724, 19691, 149, 58, 200, 135, 97, 87, 221, 51);
 RT_INTERFACE!{interface IPrintWorkflowForegroundSession(IPrintWorkflowForegroundSessionVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowForegroundSession] {
     fn add_SetupRequested(&self, setupEventHandler: *mut foundation::TypedEventHandler<PrintWorkflowForegroundSession, PrintWorkflowForegroundSetupRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5227,7 +5227,7 @@ impl IPrintWorkflowForegroundSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowForegroundSession: IPrintWorkflowForegroundSession}
+RT_CLASS!{class PrintWorkflowForegroundSession: IPrintWorkflowForegroundSession ["Windows.Graphics.Printing.Workflow.PrintWorkflowForegroundSession"]}
 DEFINE_IID!(IID_IPrintWorkflowForegroundSetupRequestedEventArgs, 3152249415, 39963, 19923, 155, 43, 200, 4, 104, 217, 65, 179);
 RT_INTERFACE!{interface IPrintWorkflowForegroundSetupRequestedEventArgs(IPrintWorkflowForegroundSetupRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowForegroundSetupRequestedEventArgs] {
     fn GetUserPrintTicketAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket>) -> HRESULT,
@@ -5251,18 +5251,18 @@ impl IPrintWorkflowForegroundSetupRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowForegroundSetupRequestedEventArgs: IPrintWorkflowForegroundSetupRequestedEventArgs}
+RT_CLASS!{class PrintWorkflowForegroundSetupRequestedEventArgs: IPrintWorkflowForegroundSetupRequestedEventArgs ["Windows.Graphics.Printing.Workflow.PrintWorkflowForegroundSetupRequestedEventArgs"]}
 DEFINE_IID!(IID_IPrintWorkflowObjectModelSourceFileContent, 3278670442, 35370, 16794, 179, 195, 32, 144, 230, 191, 171, 47);
 RT_INTERFACE!{interface IPrintWorkflowObjectModelSourceFileContent(IPrintWorkflowObjectModelSourceFileContentVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowObjectModelSourceFileContent] {
     
 }}
-RT_CLASS!{class PrintWorkflowObjectModelSourceFileContent: IPrintWorkflowObjectModelSourceFileContent}
+RT_CLASS!{class PrintWorkflowObjectModelSourceFileContent: IPrintWorkflowObjectModelSourceFileContent ["Windows.Graphics.Printing.Workflow.PrintWorkflowObjectModelSourceFileContent"]}
 DEFINE_IID!(IID_IPrintWorkflowObjectModelTargetPackage, 2107030644, 39764, 19617, 173, 58, 151, 156, 61, 68, 221, 172);
 RT_INTERFACE!{interface IPrintWorkflowObjectModelTargetPackage(IPrintWorkflowObjectModelTargetPackageVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowObjectModelTargetPackage] {
     
 }}
-RT_CLASS!{class PrintWorkflowObjectModelTargetPackage: IPrintWorkflowObjectModelTargetPackage}
-RT_ENUM! { enum PrintWorkflowSessionStatus: i32 {
+RT_CLASS!{class PrintWorkflowObjectModelTargetPackage: IPrintWorkflowObjectModelTargetPackage ["Windows.Graphics.Printing.Workflow.PrintWorkflowObjectModelTargetPackage"]}
+RT_ENUM! { enum PrintWorkflowSessionStatus: i32 ["Windows.Graphics.Printing.Workflow.PrintWorkflowSessionStatus"] {
     Started (PrintWorkflowSessionStatus_Started) = 0, Completed (PrintWorkflowSessionStatus_Completed) = 1, Aborted (PrintWorkflowSessionStatus_Aborted) = 2, Closed (PrintWorkflowSessionStatus_Closed) = 3,
 }}
 DEFINE_IID!(IID_IPrintWorkflowSourceContent, 438879809, 52913, 17715, 187, 115, 251, 230, 62, 239, 219, 24);
@@ -5288,7 +5288,7 @@ impl IPrintWorkflowSourceContent {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowSourceContent: IPrintWorkflowSourceContent}
+RT_CLASS!{class PrintWorkflowSourceContent: IPrintWorkflowSourceContent ["Windows.Graphics.Printing.Workflow.PrintWorkflowSourceContent"]}
 DEFINE_IID!(IID_IPrintWorkflowSpoolStreamContent, 1927634638, 58374, 19316, 132, 225, 63, 243, 253, 205, 175, 112);
 RT_INTERFACE!{interface IPrintWorkflowSpoolStreamContent(IPrintWorkflowSpoolStreamContentVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowSpoolStreamContent] {
     #[cfg(feature="windows-storage")] fn GetInputStream(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IInputStream) -> HRESULT
@@ -5300,7 +5300,7 @@ impl IPrintWorkflowSpoolStreamContent {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowSpoolStreamContent: IPrintWorkflowSpoolStreamContent}
+RT_CLASS!{class PrintWorkflowSpoolStreamContent: IPrintWorkflowSpoolStreamContent ["Windows.Graphics.Printing.Workflow.PrintWorkflowSpoolStreamContent"]}
 DEFINE_IID!(IID_IPrintWorkflowStreamTarget, 2990258820, 34149, 18571, 152, 57, 28, 158, 124, 122, 169, 22);
 RT_INTERFACE!{interface IPrintWorkflowStreamTarget(IPrintWorkflowStreamTargetVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowStreamTarget] {
     #[cfg(feature="windows-storage")] fn GetOutputStream(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IOutputStream) -> HRESULT
@@ -5312,7 +5312,7 @@ impl IPrintWorkflowStreamTarget {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowStreamTarget: IPrintWorkflowStreamTarget}
+RT_CLASS!{class PrintWorkflowStreamTarget: IPrintWorkflowStreamTarget ["Windows.Graphics.Printing.Workflow.PrintWorkflowStreamTarget"]}
 DEFINE_IID!(IID_IPrintWorkflowSubmittedEventArgs, 987564609, 14228, 21865, 92, 135, 64, 232, 255, 114, 15, 131);
 RT_INTERFACE!{interface IPrintWorkflowSubmittedEventArgs(IPrintWorkflowSubmittedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowSubmittedEventArgs] {
     fn get_Operation(&self, out: *mut *mut PrintWorkflowSubmittedOperation) -> HRESULT,
@@ -5336,7 +5336,7 @@ impl IPrintWorkflowSubmittedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowSubmittedEventArgs: IPrintWorkflowSubmittedEventArgs}
+RT_CLASS!{class PrintWorkflowSubmittedEventArgs: IPrintWorkflowSubmittedEventArgs ["Windows.Graphics.Printing.Workflow.PrintWorkflowSubmittedEventArgs"]}
 DEFINE_IID!(IID_IPrintWorkflowSubmittedOperation, 776888854, 15329, 24335, 92, 129, 165, 162, 189, 78, 171, 14);
 RT_INTERFACE!{interface IPrintWorkflowSubmittedOperation(IPrintWorkflowSubmittedOperationVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowSubmittedOperation] {
     fn Complete(&self, status: PrintWorkflowSubmittedStatus) -> HRESULT,
@@ -5359,8 +5359,8 @@ impl IPrintWorkflowSubmittedOperation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowSubmittedOperation: IPrintWorkflowSubmittedOperation}
-RT_ENUM! { enum PrintWorkflowSubmittedStatus: i32 {
+RT_CLASS!{class PrintWorkflowSubmittedOperation: IPrintWorkflowSubmittedOperation ["Windows.Graphics.Printing.Workflow.PrintWorkflowSubmittedOperation"]}
+RT_ENUM! { enum PrintWorkflowSubmittedStatus: i32 ["Windows.Graphics.Printing.Workflow.PrintWorkflowSubmittedStatus"] {
     Succeeded (PrintWorkflowSubmittedStatus_Succeeded) = 0, Canceled (PrintWorkflowSubmittedStatus_Canceled) = 1, Failed (PrintWorkflowSubmittedStatus_Failed) = 2,
 }}
 DEFINE_IID!(IID_IPrintWorkflowTarget, 702162796, 2675, 23277, 79, 61, 151, 13, 50, 81, 240, 87);
@@ -5380,7 +5380,7 @@ impl IPrintWorkflowTarget {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowTarget: IPrintWorkflowTarget}
+RT_CLASS!{class PrintWorkflowTarget: IPrintWorkflowTarget ["Windows.Graphics.Printing.Workflow.PrintWorkflowTarget"]}
 DEFINE_IID!(IID_IPrintWorkflowTriggerDetails, 1463408744, 40326, 16466, 176, 203, 243, 16, 190, 205, 89, 187);
 RT_INTERFACE!{interface IPrintWorkflowTriggerDetails(IPrintWorkflowTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowTriggerDetails] {
     fn get_PrintWorkflowSession(&self, out: *mut *mut PrintWorkflowBackgroundSession) -> HRESULT
@@ -5392,7 +5392,7 @@ impl IPrintWorkflowTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowTriggerDetails: IPrintWorkflowTriggerDetails}
+RT_CLASS!{class PrintWorkflowTriggerDetails: IPrintWorkflowTriggerDetails ["Windows.Graphics.Printing.Workflow.PrintWorkflowTriggerDetails"]}
 DEFINE_IID!(IID_IPrintWorkflowUIActivatedEventArgs, 3163194445, 2539, 22342, 114, 166, 141, 200, 181, 237, 190, 155);
 RT_INTERFACE!{interface IPrintWorkflowUIActivatedEventArgs(IPrintWorkflowUIActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowUIActivatedEventArgs] {
     fn get_PrintWorkflowSession(&self, out: *mut *mut PrintWorkflowForegroundSession) -> HRESULT
@@ -5404,7 +5404,7 @@ impl IPrintWorkflowUIActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowUIActivatedEventArgs: IPrintWorkflowUIActivatedEventArgs}
+RT_CLASS!{class PrintWorkflowUIActivatedEventArgs: IPrintWorkflowUIActivatedEventArgs ["Windows.Graphics.Printing.Workflow.PrintWorkflowUIActivatedEventArgs"]}
 DEFINE_IID!(IID_IPrintWorkflowXpsDataAvailableEventArgs, 1293009713, 21713, 17230, 190, 14, 130, 197, 250, 88, 229, 178);
 RT_INTERFACE!{interface IPrintWorkflowXpsDataAvailableEventArgs(IPrintWorkflowXpsDataAvailableEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowXpsDataAvailableEventArgs] {
     fn get_Operation(&self, out: *mut *mut PrintWorkflowSubmittedOperation) -> HRESULT,
@@ -5422,7 +5422,7 @@ impl IPrintWorkflowXpsDataAvailableEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintWorkflowXpsDataAvailableEventArgs: IPrintWorkflowXpsDataAvailableEventArgs}
+RT_CLASS!{class PrintWorkflowXpsDataAvailableEventArgs: IPrintWorkflowXpsDataAvailableEventArgs ["Windows.Graphics.Printing.Workflow.PrintWorkflowXpsDataAvailableEventArgs"]}
 } // Windows.Graphics.Printing.Workflow
 } // Windows.Graphics.Printing
 pub mod printing3d { // Windows.Graphics.Printing3D
@@ -5443,7 +5443,7 @@ impl IPrint3DManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Print3DManager: IPrint3DManager}
+RT_CLASS!{class Print3DManager: IPrint3DManager ["Windows.Graphics.Printing3D.Print3DManager"]}
 impl RtActivatable<IPrint3DManagerStatics> for Print3DManager {}
 impl Print3DManager {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<Print3DManager>>> {
@@ -5515,7 +5515,7 @@ impl IPrint3DTask {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Print3DTask: IPrint3DTask}
+RT_CLASS!{class Print3DTask: IPrint3DTask ["Windows.Graphics.Printing3D.Print3DTask"]}
 DEFINE_IID!(IID_IPrint3DTaskCompletedEventArgs, 3424195759, 9748, 20253, 172, 204, 214, 252, 79, 218, 84, 85);
 RT_INTERFACE!{interface IPrint3DTaskCompletedEventArgs(IPrint3DTaskCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskCompletedEventArgs] {
     fn get_Completion(&self, out: *mut Print3DTaskCompletion) -> HRESULT,
@@ -5533,11 +5533,11 @@ impl IPrint3DTaskCompletedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Print3DTaskCompletedEventArgs: IPrint3DTaskCompletedEventArgs}
-RT_ENUM! { enum Print3DTaskCompletion: i32 {
+RT_CLASS!{class Print3DTaskCompletedEventArgs: IPrint3DTaskCompletedEventArgs ["Windows.Graphics.Printing3D.Print3DTaskCompletedEventArgs"]}
+RT_ENUM! { enum Print3DTaskCompletion: i32 ["Windows.Graphics.Printing3D.Print3DTaskCompletion"] {
     Abandoned (Print3DTaskCompletion_Abandoned) = 0, Canceled (Print3DTaskCompletion_Canceled) = 1, Failed (Print3DTaskCompletion_Failed) = 2, Slicing (Print3DTaskCompletion_Slicing) = 3, Submitted (Print3DTaskCompletion_Submitted) = 4,
 }}
-RT_ENUM! { enum Print3DTaskDetail: i32 {
+RT_ENUM! { enum Print3DTaskDetail: i32 ["Windows.Graphics.Printing3D.Print3DTaskDetail"] {
     Unknown (Print3DTaskDetail_Unknown) = 0, ModelExceedsPrintBed (Print3DTaskDetail_ModelExceedsPrintBed) = 1, UploadFailed (Print3DTaskDetail_UploadFailed) = 2, InvalidMaterialSelection (Print3DTaskDetail_InvalidMaterialSelection) = 3, InvalidModel (Print3DTaskDetail_InvalidModel) = 4, ModelNotManifold (Print3DTaskDetail_ModelNotManifold) = 5, InvalidPrintTicket (Print3DTaskDetail_InvalidPrintTicket) = 6,
 }}
 DEFINE_IID!(IID_IPrint3DTaskRequest, 630572143, 8773, 19546, 135, 49, 13, 96, 77, 198, 188, 60);
@@ -5551,7 +5551,7 @@ impl IPrint3DTaskRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Print3DTaskRequest: IPrint3DTaskRequest}
+RT_CLASS!{class Print3DTaskRequest: IPrint3DTaskRequest ["Windows.Graphics.Printing3D.Print3DTaskRequest"]}
 DEFINE_IID!(IID_IPrint3DTaskRequestedEventArgs, 353154943, 6341, 16599, 159, 64, 250, 179, 9, 110, 5, 169);
 RT_INTERFACE!{interface IPrint3DTaskRequestedEventArgs(IPrint3DTaskRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut Print3DTaskRequest) -> HRESULT
@@ -5563,7 +5563,7 @@ impl IPrint3DTaskRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Print3DTaskRequestedEventArgs: IPrint3DTaskRequestedEventArgs}
+RT_CLASS!{class Print3DTaskRequestedEventArgs: IPrint3DTaskRequestedEventArgs ["Windows.Graphics.Printing3D.Print3DTaskRequestedEventArgs"]}
 DEFINE_IID!(IID_IPrint3DTaskSourceChangedEventArgs, 1540175023, 9449, 19472, 141, 7, 20, 195, 70, 186, 63, 207);
 RT_INTERFACE!{interface IPrint3DTaskSourceChangedEventArgs(IPrint3DTaskSourceChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskSourceChangedEventArgs] {
     fn get_Source(&self, out: *mut *mut Printing3D3MFPackage) -> HRESULT
@@ -5575,7 +5575,7 @@ impl IPrint3DTaskSourceChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Print3DTaskSourceChangedEventArgs: IPrint3DTaskSourceChangedEventArgs}
+RT_CLASS!{class Print3DTaskSourceChangedEventArgs: IPrint3DTaskSourceChangedEventArgs ["Windows.Graphics.Printing3D.Print3DTaskSourceChangedEventArgs"]}
 DEFINE_IID!(IID_IPrint3DTaskSourceRequestedArgs, 3346832058, 9391, 16973, 163, 191, 146, 37, 12, 53, 86, 2);
 RT_INTERFACE!{interface IPrint3DTaskSourceRequestedArgs(IPrint3DTaskSourceRequestedArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskSourceRequestedArgs] {
     fn SetSource(&self, source: *mut Printing3D3MFPackage) -> HRESULT
@@ -5586,7 +5586,7 @@ impl IPrint3DTaskSourceRequestedArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Print3DTaskSourceRequestedArgs: IPrint3DTaskSourceRequestedArgs}
+RT_CLASS!{class Print3DTaskSourceRequestedArgs: IPrint3DTaskSourceRequestedArgs ["Windows.Graphics.Printing3D.Print3DTaskSourceRequestedArgs"]}
 DEFINE_IID!(IID_Print3DTaskSourceRequestedHandler, 3910622832, 51479, 18142, 187, 81, 217, 169, 77, 179, 113, 31);
 RT_DELEGATE!{delegate Print3DTaskSourceRequestedHandler(Print3DTaskSourceRequestedHandlerVtbl, Print3DTaskSourceRequestedHandlerImpl) [IID_Print3DTaskSourceRequestedHandler] {
     fn Invoke(&self, args: *mut Print3DTaskSourceRequestedArgs) -> HRESULT
@@ -5665,7 +5665,7 @@ impl IPrinting3D3MFPackage {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3D3MFPackage: IPrinting3D3MFPackage}
+RT_CLASS!{class Printing3D3MFPackage: IPrinting3D3MFPackage ["Windows.Graphics.Printing3D.Printing3D3MFPackage"]}
 impl RtActivatable<IPrinting3D3MFPackageStatics> for Printing3D3MFPackage {}
 impl RtActivatable<IActivationFactory> for Printing3D3MFPackage {}
 impl Printing3D3MFPackage {
@@ -5728,7 +5728,7 @@ impl IPrinting3DBaseMaterial {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DBaseMaterial: IPrinting3DBaseMaterial}
+RT_CLASS!{class Printing3DBaseMaterial: IPrinting3DBaseMaterial ["Windows.Graphics.Printing3D.Printing3DBaseMaterial"]}
 impl RtActivatable<IPrinting3DBaseMaterialStatics> for Printing3DBaseMaterial {}
 impl RtActivatable<IActivationFactory> for Printing3DBaseMaterial {}
 impl Printing3DBaseMaterial {
@@ -5757,7 +5757,7 @@ impl IPrinting3DBaseMaterialGroup {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DBaseMaterialGroup: IPrinting3DBaseMaterialGroup}
+RT_CLASS!{class Printing3DBaseMaterialGroup: IPrinting3DBaseMaterialGroup ["Windows.Graphics.Printing3D.Printing3DBaseMaterialGroup"]}
 impl RtActivatable<IPrinting3DBaseMaterialGroupFactory> for Printing3DBaseMaterialGroup {}
 impl Printing3DBaseMaterialGroup {
     #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DBaseMaterialGroup>> {
@@ -5793,10 +5793,10 @@ impl IPrinting3DBaseMaterialStatics {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct Printing3DBufferDescription {
+RT_STRUCT! { struct Printing3DBufferDescription ["Windows.Graphics.Printing3D.Printing3DBufferDescription"] {
     Format: Printing3DBufferFormat, Stride: u32,
 }}
-RT_ENUM! { enum Printing3DBufferFormat: i32 {
+RT_ENUM! { enum Printing3DBufferFormat: i32 ["Windows.Graphics.Printing3D.Printing3DBufferFormat"] {
     Unknown (Printing3DBufferFormat_Unknown) = 0, R32G32B32A32Float (Printing3DBufferFormat_R32G32B32A32Float) = 2, R32G32B32A32UInt (Printing3DBufferFormat_R32G32B32A32UInt) = 3, R32G32B32Float (Printing3DBufferFormat_R32G32B32Float) = 6, R32G32B32UInt (Printing3DBufferFormat_R32G32B32UInt) = 7, Printing3DDouble (Printing3DBufferFormat_Printing3DDouble) = 500, Printing3DUInt (Printing3DBufferFormat_Printing3DUInt) = 501,
 }}
 DEFINE_IID!(IID_IPrinting3DColorMaterial, 3783891240, 31975, 17029, 163, 93, 241, 69, 201, 81, 12, 123);
@@ -5815,7 +5815,7 @@ impl IPrinting3DColorMaterial {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DColorMaterial: IPrinting3DColorMaterial}
+RT_CLASS!{class Printing3DColorMaterial: IPrinting3DColorMaterial ["Windows.Graphics.Printing3D.Printing3DColorMaterial"]}
 impl RtActivatable<IActivationFactory> for Printing3DColorMaterial {}
 DEFINE_CLSID!(Printing3DColorMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,108,111,114,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DColorMaterial]);
 DEFINE_IID!(IID_IPrinting3DColorMaterial2, 4205897810, 2799, 17641, 157, 221, 54, 238, 234, 90, 205, 68);
@@ -5851,7 +5851,7 @@ impl IPrinting3DColorMaterialGroup {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DColorMaterialGroup: IPrinting3DColorMaterialGroup}
+RT_CLASS!{class Printing3DColorMaterialGroup: IPrinting3DColorMaterialGroup ["Windows.Graphics.Printing3D.Printing3DColorMaterialGroup"]}
 impl RtActivatable<IPrinting3DColorMaterialGroupFactory> for Printing3DColorMaterialGroup {}
 impl Printing3DColorMaterialGroup {
     #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DColorMaterialGroup>> {
@@ -5936,7 +5936,7 @@ impl IPrinting3DComponent {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DComponent: IPrinting3DComponent}
+RT_CLASS!{class Printing3DComponent: IPrinting3DComponent ["Windows.Graphics.Printing3D.Printing3DComponent"]}
 impl RtActivatable<IActivationFactory> for Printing3DComponent {}
 DEFINE_CLSID!(Printing3DComponent(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,110,101,110,116,0]) [CLSID_Printing3DComponent]);
 DEFINE_IID!(IID_IPrinting3DComponentWithMatrix, 846852917, 3824, 17771, 154, 33, 73, 190, 190, 139, 81, 194);
@@ -5966,7 +5966,7 @@ impl IPrinting3DComponentWithMatrix {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DComponentWithMatrix: IPrinting3DComponentWithMatrix}
+RT_CLASS!{class Printing3DComponentWithMatrix: IPrinting3DComponentWithMatrix ["Windows.Graphics.Printing3D.Printing3DComponentWithMatrix"]}
 impl RtActivatable<IActivationFactory> for Printing3DComponentWithMatrix {}
 DEFINE_CLSID!(Printing3DComponentWithMatrix(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,110,101,110,116,87,105,116,104,77,97,116,114,105,120,0]) [CLSID_Printing3DComponentWithMatrix]);
 DEFINE_IID!(IID_IPrinting3DCompositeMaterial, 1176647901, 22062, 20332, 136, 45, 244, 216, 65, 253, 99, 199);
@@ -5980,7 +5980,7 @@ impl IPrinting3DCompositeMaterial {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DCompositeMaterial: IPrinting3DCompositeMaterial}
+RT_CLASS!{class Printing3DCompositeMaterial: IPrinting3DCompositeMaterial ["Windows.Graphics.Printing3D.Printing3DCompositeMaterial"]}
 impl RtActivatable<IActivationFactory> for Printing3DCompositeMaterial {}
 DEFINE_CLSID!(Printing3DCompositeMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,115,105,116,101,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DCompositeMaterial]);
 DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroup, 2375314011, 16625, 18797, 165, 251, 52, 10, 90, 103, 142, 48);
@@ -6006,7 +6006,7 @@ impl IPrinting3DCompositeMaterialGroup {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DCompositeMaterialGroup: IPrinting3DCompositeMaterialGroup}
+RT_CLASS!{class Printing3DCompositeMaterialGroup: IPrinting3DCompositeMaterialGroup ["Windows.Graphics.Printing3D.Printing3DCompositeMaterialGroup"]}
 impl RtActivatable<IPrinting3DCompositeMaterialGroupFactory> for Printing3DCompositeMaterialGroup {}
 impl Printing3DCompositeMaterialGroup {
     #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DCompositeMaterialGroup>> {
@@ -6079,7 +6079,7 @@ impl IPrinting3DFaceReductionOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DFaceReductionOptions: IPrinting3DFaceReductionOptions}
+RT_CLASS!{class Printing3DFaceReductionOptions: IPrinting3DFaceReductionOptions ["Windows.Graphics.Printing3D.Printing3DFaceReductionOptions"]}
 impl RtActivatable<IActivationFactory> for Printing3DFaceReductionOptions {}
 DEFINE_CLSID!(Printing3DFaceReductionOptions(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,70,97,99,101,82,101,100,117,99,116,105,111,110,79,112,116,105,111,110,115,0]) [CLSID_Printing3DFaceReductionOptions]);
 DEFINE_IID!(IID_IPrinting3DMaterial, 932033110, 60770, 18770, 184, 91, 3, 86, 125, 124, 70, 94);
@@ -6117,7 +6117,7 @@ impl IPrinting3DMaterial {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DMaterial: IPrinting3DMaterial}
+RT_CLASS!{class Printing3DMaterial: IPrinting3DMaterial ["Windows.Graphics.Printing3D.Printing3DMaterial"]}
 impl RtActivatable<IActivationFactory> for Printing3DMaterial {}
 DEFINE_CLSID!(Printing3DMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DMaterial]);
 DEFINE_IID!(IID_IPrinting3DMesh, 422482140, 552, 11777, 188, 32, 197, 41, 12, 191, 50, 196);
@@ -6257,10 +6257,10 @@ impl IPrinting3DMesh {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DMesh: IPrinting3DMesh}
+RT_CLASS!{class Printing3DMesh: IPrinting3DMesh ["Windows.Graphics.Printing3D.Printing3DMesh"]}
 impl RtActivatable<IActivationFactory> for Printing3DMesh {}
 DEFINE_CLSID!(Printing3DMesh(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,101,115,104,0]) [CLSID_Printing3DMesh]);
-RT_ENUM! { enum Printing3DMeshVerificationMode: i32 {
+RT_ENUM! { enum Printing3DMeshVerificationMode: i32 ["Windows.Graphics.Printing3D.Printing3DMeshVerificationMode"] {
     FindFirstError (Printing3DMeshVerificationMode_FindFirstError) = 0, FindAllErrors (Printing3DMeshVerificationMode_FindAllErrors) = 1,
 }}
 DEFINE_IID!(IID_IPrinting3DMeshVerificationResult, 425095610, 59706, 20106, 164, 111, 222, 168, 232, 82, 25, 126);
@@ -6286,7 +6286,7 @@ impl IPrinting3DMeshVerificationResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DMeshVerificationResult: IPrinting3DMeshVerificationResult}
+RT_CLASS!{class Printing3DMeshVerificationResult: IPrinting3DMeshVerificationResult ["Windows.Graphics.Printing3D.Printing3DMeshVerificationResult"]}
 DEFINE_IID!(IID_IPrinting3DModel, 755052272, 21243, 37274, 119, 176, 75, 26, 59, 128, 50, 79);
 RT_INTERFACE!{interface IPrinting3DModel(IPrinting3DModelVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DModel] {
     fn get_Unit(&self, out: *mut Printing3DModelUnit) -> HRESULT,
@@ -6378,7 +6378,7 @@ impl IPrinting3DModel {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DModel: IPrinting3DModel}
+RT_CLASS!{class Printing3DModel: IPrinting3DModel ["Windows.Graphics.Printing3D.Printing3DModel"]}
 impl RtActivatable<IActivationFactory> for Printing3DModel {}
 DEFINE_CLSID!(Printing3DModel(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,111,100,101,108,0]) [CLSID_Printing3DModel]);
 DEFINE_IID!(IID_IPrinting3DModel2, 3374344647, 51265, 18419, 168, 78, 161, 73, 253, 8, 182, 87);
@@ -6460,10 +6460,10 @@ impl IPrinting3DModelTexture {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DModelTexture: IPrinting3DModelTexture}
+RT_CLASS!{class Printing3DModelTexture: IPrinting3DModelTexture ["Windows.Graphics.Printing3D.Printing3DModelTexture"]}
 impl RtActivatable<IActivationFactory> for Printing3DModelTexture {}
 DEFINE_CLSID!(Printing3DModelTexture(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,111,100,101,108,84,101,120,116,117,114,101,0]) [CLSID_Printing3DModelTexture]);
-RT_ENUM! { enum Printing3DModelUnit: i32 {
+RT_ENUM! { enum Printing3DModelUnit: i32 ["Windows.Graphics.Printing3D.Printing3DModelUnit"] {
     Meter (Printing3DModelUnit_Meter) = 0, Micron (Printing3DModelUnit_Micron) = 1, Millimeter (Printing3DModelUnit_Millimeter) = 2, Centimeter (Printing3DModelUnit_Centimeter) = 3, Inch (Printing3DModelUnit_Inch) = 4, Foot (Printing3DModelUnit_Foot) = 5,
 }}
 DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterial, 631645515, 50921, 18509, 162, 20, 162, 94, 87, 118, 186, 98);
@@ -6477,7 +6477,7 @@ impl IPrinting3DMultiplePropertyMaterial {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DMultiplePropertyMaterial: IPrinting3DMultiplePropertyMaterial}
+RT_CLASS!{class Printing3DMultiplePropertyMaterial: IPrinting3DMultiplePropertyMaterial ["Windows.Graphics.Printing3D.Printing3DMultiplePropertyMaterial"]}
 impl RtActivatable<IActivationFactory> for Printing3DMultiplePropertyMaterial {}
 DEFINE_CLSID!(Printing3DMultiplePropertyMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,117,108,116,105,112,108,101,80,114,111,112,101,114,116,121,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DMultiplePropertyMaterial]);
 DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterialGroup, 4036298009, 44729, 17685, 163, 155, 160, 136, 251, 187, 39, 124);
@@ -6503,7 +6503,7 @@ impl IPrinting3DMultiplePropertyMaterialGroup {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DMultiplePropertyMaterialGroup: IPrinting3DMultiplePropertyMaterialGroup}
+RT_CLASS!{class Printing3DMultiplePropertyMaterialGroup: IPrinting3DMultiplePropertyMaterialGroup ["Windows.Graphics.Printing3D.Printing3DMultiplePropertyMaterialGroup"]}
 impl RtActivatable<IPrinting3DMultiplePropertyMaterialGroupFactory> for Printing3DMultiplePropertyMaterialGroup {}
 impl Printing3DMultiplePropertyMaterialGroup {
     #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DMultiplePropertyMaterialGroup>> {
@@ -6522,10 +6522,10 @@ impl IPrinting3DMultiplePropertyMaterialGroupFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum Printing3DObjectType: i32 {
+RT_ENUM! { enum Printing3DObjectType: i32 ["Windows.Graphics.Printing3D.Printing3DObjectType"] {
     Model (Printing3DObjectType_Model) = 0, Support (Printing3DObjectType_Support) = 1, Others (Printing3DObjectType_Others) = 2,
 }}
-RT_ENUM! { enum Printing3DPackageCompression: i32 {
+RT_ENUM! { enum Printing3DPackageCompression: i32 ["Windows.Graphics.Printing3D.Printing3DPackageCompression"] {
     Low (Printing3DPackageCompression_Low) = 0, Medium (Printing3DPackageCompression_Medium) = 1, High (Printing3DPackageCompression_High) = 2,
 }}
 DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterial, 2374257659, 2025, 18822, 152, 51, 141, 211, 212, 140, 104, 89);
@@ -6566,7 +6566,7 @@ impl IPrinting3DTexture2CoordMaterial {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DTexture2CoordMaterial: IPrinting3DTexture2CoordMaterial}
+RT_CLASS!{class Printing3DTexture2CoordMaterial: IPrinting3DTexture2CoordMaterial ["Windows.Graphics.Printing3D.Printing3DTexture2CoordMaterial"]}
 impl RtActivatable<IActivationFactory> for Printing3DTexture2CoordMaterial {}
 DEFINE_CLSID!(Printing3DTexture2CoordMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,50,67,111,111,114,100,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DTexture2CoordMaterial]);
 DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroup, 1652391079, 28048, 20409, 159, 196, 159, 239, 243, 223, 168, 146);
@@ -6586,7 +6586,7 @@ impl IPrinting3DTexture2CoordMaterialGroup {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DTexture2CoordMaterialGroup: IPrinting3DTexture2CoordMaterialGroup}
+RT_CLASS!{class Printing3DTexture2CoordMaterialGroup: IPrinting3DTexture2CoordMaterialGroup ["Windows.Graphics.Printing3D.Printing3DTexture2CoordMaterialGroup"]}
 impl RtActivatable<IPrinting3DTexture2CoordMaterialGroupFactory> for Printing3DTexture2CoordMaterialGroup {}
 impl Printing3DTexture2CoordMaterialGroup {
     #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DTexture2CoordMaterialGroup>> {
@@ -6621,7 +6621,7 @@ impl IPrinting3DTexture2CoordMaterialGroupFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum Printing3DTextureEdgeBehavior: i32 {
+RT_ENUM! { enum Printing3DTextureEdgeBehavior: i32 ["Windows.Graphics.Printing3D.Printing3DTextureEdgeBehavior"] {
     None (Printing3DTextureEdgeBehavior_None) = 0, Wrap (Printing3DTextureEdgeBehavior_Wrap) = 1, Mirror (Printing3DTextureEdgeBehavior_Mirror) = 2, Clamp (Printing3DTextureEdgeBehavior_Clamp) = 3,
 }}
 DEFINE_IID!(IID_IPrinting3DTextureResource, 2802709293, 27313, 17582, 188, 69, 162, 115, 130, 192, 211, 140);
@@ -6653,7 +6653,7 @@ impl IPrinting3DTextureResource {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Printing3DTextureResource: IPrinting3DTextureResource}
+RT_CLASS!{class Printing3DTextureResource: IPrinting3DTextureResource ["Windows.Graphics.Printing3D.Printing3DTextureResource"]}
 impl RtActivatable<IActivationFactory> for Printing3DTextureResource {}
 DEFINE_CLSID!(Printing3DTextureResource(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,82,101,115,111,117,114,99,101,0]) [CLSID_Printing3DTextureResource]);
 } // Windows.Graphics.Printing3D

@@ -68,6 +68,7 @@ pub use rt::{RtInterface, RtClassInterface, RtNamedClass, RtValueType, RtType, R
              RtDefaultConstructible, IInspectable, IInspectableVtbl, IActivationFactory,
              IMemoryBufferByteAccess, Char, RuntimeContext, IteratorAdaptor};
 pub use rt::async::{RtAsyncAction, RtAsyncOperation};
+pub(crate) use rt::RtIidDescriptor;
 
 mod result;
 pub use result::{Result, Error, HRESULT};

@@ -34,7 +34,7 @@ impl ILowLevelDevicesAggregateProvider {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LowLevelDevicesAggregateProvider: ILowLevelDevicesAggregateProvider}
+RT_CLASS!{class LowLevelDevicesAggregateProvider: ILowLevelDevicesAggregateProvider ["Windows.Devices.LowLevelDevicesAggregateProvider"]}
 impl RtActivatable<ILowLevelDevicesAggregateProviderFactory> for LowLevelDevicesAggregateProvider {}
 impl LowLevelDevicesAggregateProvider {
     #[inline] pub fn create(adc: &adc::provider::IAdcControllerProvider, pwm: &pwm::provider::IPwmControllerProvider, gpio: &gpio::provider::IGpioControllerProvider, i2c: &i2c::provider::II2cControllerProvider, spi: &spi::provider::ISpiControllerProvider) -> Result<ComPtr<LowLevelDevicesAggregateProvider>> {
@@ -57,7 +57,7 @@ DEFINE_IID!(IID_ILowLevelDevicesController, 784481748, 6043, 17886, 155, 57, 58,
 RT_INTERFACE!{interface ILowLevelDevicesController(ILowLevelDevicesControllerVtbl): IInspectable(IInspectableVtbl) [IID_ILowLevelDevicesController] {
     
 }}
-RT_CLASS!{class LowLevelDevicesController: ILowLevelDevicesController}
+RT_CLASS!{class LowLevelDevicesController: ILowLevelDevicesController ["Windows.Devices.LowLevelDevicesController"]}
 impl RtActivatable<ILowLevelDevicesControllerStatics> for LowLevelDevicesController {}
 impl LowLevelDevicesController {
     #[inline] pub fn get_default_provider() -> Result<Option<ComPtr<ILowLevelDevicesAggregateProvider>>> {
@@ -109,8 +109,8 @@ impl IAdcChannel {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdcChannel: IAdcChannel}
-RT_ENUM! { enum AdcChannelMode: i32 {
+RT_CLASS!{class AdcChannel: IAdcChannel ["Windows.Devices.Adc.AdcChannel"]}
+RT_ENUM! { enum AdcChannelMode: i32 ["Windows.Devices.Adc.AdcChannelMode"] {
     SingleEnded (AdcChannelMode_SingleEnded) = 0, Differential (AdcChannelMode_Differential) = 1,
 }}
 DEFINE_IID!(IID_IAdcController, 712434864, 43158, 16921, 134, 182, 234, 140, 220, 233, 143, 86);
@@ -165,7 +165,7 @@ impl IAdcController {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdcController: IAdcController}
+RT_CLASS!{class AdcController: IAdcController ["Windows.Devices.Adc.AdcController"]}
 impl RtActivatable<IAdcControllerStatics> for AdcController {}
 impl RtActivatable<IAdcControllerStatics2> for AdcController {}
 impl AdcController {
@@ -274,7 +274,7 @@ impl IAdcProvider {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ProviderAdcChannelMode: i32 {
+RT_ENUM! { enum ProviderAdcChannelMode: i32 ["Windows.Devices.Adc.Provider.ProviderAdcChannelMode"] {
     SingleEnded (ProviderAdcChannelMode_SingleEnded) = 0, Differential (ProviderAdcChannelMode_Differential) = 1,
 }}
 } // Windows.Devices.Adc.Provider
@@ -403,7 +403,7 @@ impl IAllJoynAboutData {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynAboutData: IAllJoynAboutData}
+RT_CLASS!{class AllJoynAboutData: IAllJoynAboutData ["Windows.Devices.AllJoyn.AllJoynAboutData"]}
 DEFINE_IID!(IID_IAllJoynAboutDataView, 1747128607, 25106, 18740, 156, 72, 225, 156, 164, 152, 66, 136);
 RT_INTERFACE!{interface IAllJoynAboutDataView(IAllJoynAboutDataViewVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynAboutDataView] {
     fn get_Status(&self, out: *mut i32) -> HRESULT,
@@ -507,7 +507,7 @@ impl IAllJoynAboutDataView {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynAboutDataView: IAllJoynAboutDataView}
+RT_CLASS!{class AllJoynAboutDataView: IAllJoynAboutDataView ["Windows.Devices.AllJoyn.AllJoynAboutDataView"]}
 impl RtActivatable<IAllJoynAboutDataViewStatics> for AllJoynAboutDataView {}
 impl AllJoynAboutDataView {
     #[inline] pub fn get_data_by_session_port_async(uniqueName: &HStringArg, busAttachment: &AllJoynBusAttachment, sessionPort: u16) -> Result<ComPtr<foundation::IAsyncOperation<AllJoynAboutDataView>>> {
@@ -585,7 +585,7 @@ impl IAllJoynAcceptSessionJoinerEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynAcceptSessionJoinerEventArgs: IAllJoynAcceptSessionJoinerEventArgs}
+RT_CLASS!{class AllJoynAcceptSessionJoinerEventArgs: IAllJoynAcceptSessionJoinerEventArgs ["Windows.Devices.AllJoyn.AllJoynAcceptSessionJoinerEventArgs"]}
 impl RtActivatable<IAllJoynAcceptSessionJoinerEventArgsFactory> for AllJoynAcceptSessionJoinerEventArgs {}
 impl AllJoynAcceptSessionJoinerEventArgs {
     #[inline] pub fn create(uniqueName: &HStringArg, sessionPort: u16, trafficType: AllJoynTrafficType, proximity: u8, acceptSessionJoiner: &IAllJoynAcceptSessionJoiner) -> Result<ComPtr<AllJoynAcceptSessionJoinerEventArgs>> {
@@ -627,8 +627,8 @@ impl IAllJoynAuthenticationCompleteEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynAuthenticationCompleteEventArgs: IAllJoynAuthenticationCompleteEventArgs}
-RT_ENUM! { enum AllJoynAuthenticationMechanism: i32 {
+RT_CLASS!{class AllJoynAuthenticationCompleteEventArgs: IAllJoynAuthenticationCompleteEventArgs ["Windows.Devices.AllJoyn.AllJoynAuthenticationCompleteEventArgs"]}
+RT_ENUM! { enum AllJoynAuthenticationMechanism: i32 ["Windows.Devices.AllJoyn.AllJoynAuthenticationMechanism"] {
     None (AllJoynAuthenticationMechanism_None) = 0, SrpAnonymous (AllJoynAuthenticationMechanism_SrpAnonymous) = 1, SrpLogon (AllJoynAuthenticationMechanism_SrpLogon) = 2, EcdheNull (AllJoynAuthenticationMechanism_EcdheNull) = 3, EcdhePsk (AllJoynAuthenticationMechanism_EcdhePsk) = 4, EcdheEcdsa (AllJoynAuthenticationMechanism_EcdheEcdsa) = 5, EcdheSpeke (AllJoynAuthenticationMechanism_EcdheSpeke) = 6,
 }}
 DEFINE_IID!(IID_IAllJoynBusAttachment, 4077515091, 7917, 17091, 162, 14, 67, 109, 65, 254, 98, 246);
@@ -726,7 +726,7 @@ impl IAllJoynBusAttachment {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynBusAttachment: IAllJoynBusAttachment}
+RT_CLASS!{class AllJoynBusAttachment: IAllJoynBusAttachment ["Windows.Devices.AllJoyn.AllJoynBusAttachment"]}
 impl RtActivatable<IAllJoynBusAttachmentFactory> for AllJoynBusAttachment {}
 impl RtActivatable<IAllJoynBusAttachmentStatics> for AllJoynBusAttachment {}
 impl RtActivatable<IActivationFactory> for AllJoynBusAttachment {}
@@ -793,7 +793,7 @@ impl IAllJoynBusAttachmentFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AllJoynBusAttachmentState: i32 {
+RT_ENUM! { enum AllJoynBusAttachmentState: i32 ["Windows.Devices.AllJoyn.AllJoynBusAttachmentState"] {
     Disconnected (AllJoynBusAttachmentState_Disconnected) = 0, Connecting (AllJoynBusAttachmentState_Connecting) = 1, Connected (AllJoynBusAttachmentState_Connected) = 2, Disconnecting (AllJoynBusAttachmentState_Disconnecting) = 3,
 }}
 DEFINE_IID!(IID_IAllJoynBusAttachmentStateChangedEventArgs, 3626923508, 49194, 16876, 168, 213, 234, 177, 85, 137, 83, 170);
@@ -813,7 +813,7 @@ impl IAllJoynBusAttachmentStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynBusAttachmentStateChangedEventArgs: IAllJoynBusAttachmentStateChangedEventArgs}
+RT_CLASS!{class AllJoynBusAttachmentStateChangedEventArgs: IAllJoynBusAttachmentStateChangedEventArgs ["Windows.Devices.AllJoyn.AllJoynBusAttachmentStateChangedEventArgs"]}
 DEFINE_IID!(IID_IAllJoynBusAttachmentStatics, 2208124221, 4177, 16599, 135, 42, 141, 1, 65, 17, 91, 31);
 RT_INTERFACE!{static interface IAllJoynBusAttachmentStatics(IAllJoynBusAttachmentStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusAttachmentStatics] {
     fn GetDefault(&self, out: *mut *mut AllJoynBusAttachment) -> HRESULT,
@@ -874,7 +874,7 @@ impl IAllJoynBusObject {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynBusObject: IAllJoynBusObject}
+RT_CLASS!{class AllJoynBusObject: IAllJoynBusObject ["Windows.Devices.AllJoyn.AllJoynBusObject"]}
 impl RtActivatable<IAllJoynBusObjectFactory> for AllJoynBusObject {}
 impl RtActivatable<IActivationFactory> for AllJoynBusObject {}
 impl AllJoynBusObject {
@@ -914,7 +914,7 @@ impl IAllJoynBusObjectStoppedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynBusObjectStoppedEventArgs: IAllJoynBusObjectStoppedEventArgs}
+RT_CLASS!{class AllJoynBusObjectStoppedEventArgs: IAllJoynBusObjectStoppedEventArgs ["Windows.Devices.AllJoyn.AllJoynBusObjectStoppedEventArgs"]}
 impl RtActivatable<IAllJoynBusObjectStoppedEventArgsFactory> for AllJoynBusObjectStoppedEventArgs {}
 impl AllJoynBusObjectStoppedEventArgs {
     #[inline] pub fn create(status: i32) -> Result<ComPtr<AllJoynBusObjectStoppedEventArgs>> {
@@ -981,7 +981,7 @@ impl IAllJoynCredentials {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynCredentials: IAllJoynCredentials}
+RT_CLASS!{class AllJoynCredentials: IAllJoynCredentials ["Windows.Devices.AllJoyn.AllJoynCredentials"]}
 DEFINE_IID!(IID_IAllJoynCredentialsRequestedEventArgs, 1787290446, 45161, 19328, 158, 26, 65, 188, 131, 124, 101, 210);
 RT_INTERFACE!{interface IAllJoynCredentialsRequestedEventArgs(IAllJoynCredentialsRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynCredentialsRequestedEventArgs] {
     fn get_AttemptCount(&self, out: *mut u16) -> HRESULT,
@@ -1017,7 +1017,7 @@ impl IAllJoynCredentialsRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynCredentialsRequestedEventArgs: IAllJoynCredentialsRequestedEventArgs}
+RT_CLASS!{class AllJoynCredentialsRequestedEventArgs: IAllJoynCredentialsRequestedEventArgs ["Windows.Devices.AllJoyn.AllJoynCredentialsRequestedEventArgs"]}
 DEFINE_IID!(IID_IAllJoynCredentialsVerificationRequestedEventArgs, 2148169234, 47109, 17583, 162, 225, 121, 42, 182, 85, 162, 208);
 RT_INTERFACE!{interface IAllJoynCredentialsVerificationRequestedEventArgs(IAllJoynCredentialsVerificationRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynCredentialsVerificationRequestedEventArgs] {
     fn get_AuthenticationMechanism(&self, out: *mut AllJoynAuthenticationMechanism) -> HRESULT,
@@ -1074,7 +1074,7 @@ impl IAllJoynCredentialsVerificationRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynCredentialsVerificationRequestedEventArgs: IAllJoynCredentialsVerificationRequestedEventArgs}
+RT_CLASS!{class AllJoynCredentialsVerificationRequestedEventArgs: IAllJoynCredentialsVerificationRequestedEventArgs ["Windows.Devices.AllJoyn.AllJoynCredentialsVerificationRequestedEventArgs"]}
 DEFINE_IID!(IID_IAllJoynMessageInfo, 4281008423, 11282, 18521, 170, 58, 199, 68, 97, 238, 129, 76);
 RT_INTERFACE!{interface IAllJoynMessageInfo(IAllJoynMessageInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynMessageInfo] {
     fn get_SenderUniqueName(&self, out: *mut HSTRING) -> HRESULT
@@ -1086,7 +1086,7 @@ impl IAllJoynMessageInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynMessageInfo: IAllJoynMessageInfo}
+RT_CLASS!{class AllJoynMessageInfo: IAllJoynMessageInfo ["Windows.Devices.AllJoyn.AllJoynMessageInfo"]}
 impl RtActivatable<IAllJoynMessageInfoFactory> for AllJoynMessageInfo {}
 impl AllJoynMessageInfo {
     #[inline] pub fn create(senderUniqueName: &HStringArg) -> Result<ComPtr<AllJoynMessageInfo>> {
@@ -1126,7 +1126,7 @@ impl IAllJoynProducerStoppedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynProducerStoppedEventArgs: IAllJoynProducerStoppedEventArgs}
+RT_CLASS!{class AllJoynProducerStoppedEventArgs: IAllJoynProducerStoppedEventArgs ["Windows.Devices.AllJoyn.AllJoynProducerStoppedEventArgs"]}
 impl RtActivatable<IAllJoynProducerStoppedEventArgsFactory> for AllJoynProducerStoppedEventArgs {}
 impl AllJoynProducerStoppedEventArgs {
     #[inline] pub fn create(status: i32) -> Result<ComPtr<AllJoynProducerStoppedEventArgs>> {
@@ -1168,7 +1168,7 @@ impl IAllJoynServiceInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynServiceInfo: IAllJoynServiceInfo}
+RT_CLASS!{class AllJoynServiceInfo: IAllJoynServiceInfo ["Windows.Devices.AllJoyn.AllJoynServiceInfo"]}
 impl RtActivatable<IAllJoynServiceInfoFactory> for AllJoynServiceInfo {}
 impl RtActivatable<IAllJoynServiceInfoStatics> for AllJoynServiceInfo {}
 impl AllJoynServiceInfo {
@@ -1202,7 +1202,7 @@ impl IAllJoynServiceInfoRemovedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynServiceInfoRemovedEventArgs: IAllJoynServiceInfoRemovedEventArgs}
+RT_CLASS!{class AllJoynServiceInfoRemovedEventArgs: IAllJoynServiceInfoRemovedEventArgs ["Windows.Devices.AllJoyn.AllJoynServiceInfoRemovedEventArgs"]}
 impl RtActivatable<IAllJoynServiceInfoRemovedEventArgsFactory> for AllJoynServiceInfoRemovedEventArgs {}
 impl AllJoynServiceInfoRemovedEventArgs {
     #[inline] pub fn create(uniqueName: &HStringArg) -> Result<ComPtr<AllJoynServiceInfoRemovedEventArgs>> {
@@ -1288,7 +1288,7 @@ impl IAllJoynSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynSession: IAllJoynSession}
+RT_CLASS!{class AllJoynSession: IAllJoynSession ["Windows.Devices.AllJoyn.AllJoynSession"]}
 impl RtActivatable<IAllJoynSessionStatics> for AllJoynSession {}
 impl AllJoynSession {
     #[inline] pub fn get_from_service_info_async(serviceInfo: &AllJoynServiceInfo) -> Result<ComPtr<foundation::IAsyncOperation<AllJoynSession>>> {
@@ -1310,7 +1310,7 @@ impl IAllJoynSessionJoinedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynSessionJoinedEventArgs: IAllJoynSessionJoinedEventArgs}
+RT_CLASS!{class AllJoynSessionJoinedEventArgs: IAllJoynSessionJoinedEventArgs ["Windows.Devices.AllJoyn.AllJoynSessionJoinedEventArgs"]}
 impl RtActivatable<IAllJoynSessionJoinedEventArgsFactory> for AllJoynSessionJoinedEventArgs {}
 impl AllJoynSessionJoinedEventArgs {
     #[inline] pub fn create(session: &AllJoynSession) -> Result<ComPtr<AllJoynSessionJoinedEventArgs>> {
@@ -1340,7 +1340,7 @@ impl IAllJoynSessionLostEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynSessionLostEventArgs: IAllJoynSessionLostEventArgs}
+RT_CLASS!{class AllJoynSessionLostEventArgs: IAllJoynSessionLostEventArgs ["Windows.Devices.AllJoyn.AllJoynSessionLostEventArgs"]}
 impl RtActivatable<IAllJoynSessionLostEventArgsFactory> for AllJoynSessionLostEventArgs {}
 impl AllJoynSessionLostEventArgs {
     #[inline] pub fn create(reason: AllJoynSessionLostReason) -> Result<ComPtr<AllJoynSessionLostEventArgs>> {
@@ -1359,7 +1359,7 @@ impl IAllJoynSessionLostEventArgsFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AllJoynSessionLostReason: i32 {
+RT_ENUM! { enum AllJoynSessionLostReason: i32 ["Windows.Devices.AllJoyn.AllJoynSessionLostReason"] {
     None (AllJoynSessionLostReason_None) = 0, ProducerLeftSession (AllJoynSessionLostReason_ProducerLeftSession) = 1, ProducerClosedAbruptly (AllJoynSessionLostReason_ProducerClosedAbruptly) = 2, RemovedByProducer (AllJoynSessionLostReason_RemovedByProducer) = 3, LinkTimeout (AllJoynSessionLostReason_LinkTimeout) = 4, Other (AllJoynSessionLostReason_Other) = 5,
 }}
 DEFINE_IID!(IID_IAllJoynSessionMemberAddedEventArgs, 1235384714, 3537, 18113, 156, 214, 39, 25, 14, 80, 58, 94);
@@ -1373,7 +1373,7 @@ impl IAllJoynSessionMemberAddedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynSessionMemberAddedEventArgs: IAllJoynSessionMemberAddedEventArgs}
+RT_CLASS!{class AllJoynSessionMemberAddedEventArgs: IAllJoynSessionMemberAddedEventArgs ["Windows.Devices.AllJoyn.AllJoynSessionMemberAddedEventArgs"]}
 impl RtActivatable<IAllJoynSessionMemberAddedEventArgsFactory> for AllJoynSessionMemberAddedEventArgs {}
 impl AllJoynSessionMemberAddedEventArgs {
     #[inline] pub fn create(uniqueName: &HStringArg) -> Result<ComPtr<AllJoynSessionMemberAddedEventArgs>> {
@@ -1403,7 +1403,7 @@ impl IAllJoynSessionMemberRemovedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynSessionMemberRemovedEventArgs: IAllJoynSessionMemberRemovedEventArgs}
+RT_CLASS!{class AllJoynSessionMemberRemovedEventArgs: IAllJoynSessionMemberRemovedEventArgs ["Windows.Devices.AllJoyn.AllJoynSessionMemberRemovedEventArgs"]}
 impl RtActivatable<IAllJoynSessionMemberRemovedEventArgsFactory> for AllJoynSessionMemberRemovedEventArgs {}
 impl AllJoynSessionMemberRemovedEventArgs {
     #[inline] pub fn create(uniqueName: &HStringArg) -> Result<ComPtr<AllJoynSessionMemberRemovedEventArgs>> {
@@ -1611,7 +1611,7 @@ impl IAllJoynStatusStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AllJoynTrafficType: i32 {
+RT_ENUM! { enum AllJoynTrafficType: i32 ["Windows.Devices.AllJoyn.AllJoynTrafficType"] {
     Unknown (AllJoynTrafficType_Unknown) = 0, Messages (AllJoynTrafficType_Messages) = 1, RawUnreliable (AllJoynTrafficType_RawUnreliable) = 2, RawReliable (AllJoynTrafficType_RawReliable) = 4,
 }}
 DEFINE_IID!(IID_IAllJoynWatcherStoppedEventArgs, 3388776507, 28701, 19112, 151, 221, 162, 187, 10, 143, 95, 163);
@@ -1625,7 +1625,7 @@ impl IAllJoynWatcherStoppedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AllJoynWatcherStoppedEventArgs: IAllJoynWatcherStoppedEventArgs}
+RT_CLASS!{class AllJoynWatcherStoppedEventArgs: IAllJoynWatcherStoppedEventArgs ["Windows.Devices.AllJoyn.AllJoynWatcherStoppedEventArgs"]}
 impl RtActivatable<IAllJoynWatcherStoppedEventArgsFactory> for AllJoynWatcherStoppedEventArgs {}
 impl AllJoynWatcherStoppedEventArgs {
     #[inline] pub fn create(status: i32) -> Result<ComPtr<AllJoynWatcherStoppedEventArgs>> {
@@ -1670,7 +1670,7 @@ impl IDeviceServicingDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceServicingDetails: IDeviceServicingDetails}
+RT_CLASS!{class DeviceServicingDetails: IDeviceServicingDetails ["Windows.Devices.Background.DeviceServicingDetails"]}
 DEFINE_IID!(IID_IDeviceUseDetails, 2102808897, 21886, 16724, 185, 148, 228, 247, 161, 31, 179, 35);
 RT_INTERFACE!{interface IDeviceUseDetails(IDeviceUseDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceUseDetails] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -1688,7 +1688,7 @@ impl IDeviceUseDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceUseDetails: IDeviceUseDetails}
+RT_CLASS!{class DeviceUseDetails: IDeviceUseDetails ["Windows.Devices.Background.DeviceUseDetails"]}
 } // Windows.Devices.Background
 pub mod bluetooth { // Windows.Devices.Bluetooth
 use ::prelude::*;
@@ -1745,7 +1745,7 @@ impl IBluetoothAdapter {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothAdapter: IBluetoothAdapter}
+RT_CLASS!{class BluetoothAdapter: IBluetoothAdapter ["Windows.Devices.Bluetooth.BluetoothAdapter"]}
 impl RtActivatable<IBluetoothAdapterStatics> for BluetoothAdapter {}
 impl BluetoothAdapter {
     #[inline] pub fn get_device_selector() -> Result<HString> {
@@ -1799,10 +1799,10 @@ impl IBluetoothAdapterStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BluetoothAddressType: i32 {
+RT_ENUM! { enum BluetoothAddressType: i32 ["Windows.Devices.Bluetooth.BluetoothAddressType"] {
     Public (BluetoothAddressType_Public) = 0, Random (BluetoothAddressType_Random) = 1, Unspecified (BluetoothAddressType_Unspecified) = 2,
 }}
-RT_ENUM! { enum BluetoothCacheMode: i32 {
+RT_ENUM! { enum BluetoothCacheMode: i32 ["Windows.Devices.Bluetooth.BluetoothCacheMode"] {
     Cached (BluetoothCacheMode_Cached) = 0, Uncached (BluetoothCacheMode_Uncached) = 1,
 }}
 DEFINE_IID!(IID_IBluetoothClassOfDevice, 3594527358, 55255, 18017, 148, 84, 101, 3, 156, 161, 122, 43);
@@ -1834,7 +1834,7 @@ impl IBluetoothClassOfDevice {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothClassOfDevice: IBluetoothClassOfDevice}
+RT_CLASS!{class BluetoothClassOfDevice: IBluetoothClassOfDevice ["Windows.Devices.Bluetooth.BluetoothClassOfDevice"]}
 impl RtActivatable<IBluetoothClassOfDeviceStatics> for BluetoothClassOfDevice {}
 impl BluetoothClassOfDevice {
     #[inline] pub fn from_raw_value(rawValue: u32) -> Result<Option<ComPtr<BluetoothClassOfDevice>>> {
@@ -1862,7 +1862,7 @@ impl IBluetoothClassOfDeviceStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BluetoothConnectionStatus: i32 {
+RT_ENUM! { enum BluetoothConnectionStatus: i32 ["Windows.Devices.Bluetooth.BluetoothConnectionStatus"] {
     Disconnected (BluetoothConnectionStatus_Disconnected) = 0, Connected (BluetoothConnectionStatus_Connected) = 1,
 }}
 DEFINE_IID!(IID_IBluetoothDevice, 590721366, 37074, 18948, 174, 245, 14, 32, 185, 230, 183, 7);
@@ -1953,7 +1953,7 @@ impl IBluetoothDevice {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothDevice: IBluetoothDevice}
+RT_CLASS!{class BluetoothDevice: IBluetoothDevice ["Windows.Devices.Bluetooth.BluetoothDevice"]}
 impl RtActivatable<IBluetoothDeviceStatics> for BluetoothDevice {}
 impl RtActivatable<IBluetoothDeviceStatics2> for BluetoothDevice {}
 impl BluetoothDevice {
@@ -2083,7 +2083,7 @@ impl IBluetoothDeviceId {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothDeviceId: IBluetoothDeviceId}
+RT_CLASS!{class BluetoothDeviceId: IBluetoothDeviceId ["Windows.Devices.Bluetooth.BluetoothDeviceId"]}
 impl RtActivatable<IBluetoothDeviceIdStatics> for BluetoothDeviceId {}
 impl BluetoothDeviceId {
     #[inline] pub fn from_id(deviceId: &HStringArg) -> Result<Option<ComPtr<BluetoothDeviceId>>> {
@@ -2167,7 +2167,7 @@ impl IBluetoothDeviceStatics2 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BluetoothError: i32 {
+RT_ENUM! { enum BluetoothError: i32 ["Windows.Devices.Bluetooth.BluetoothError"] {
     Success (BluetoothError_Success) = 0, RadioNotAvailable (BluetoothError_RadioNotAvailable) = 1, ResourceInUse (BluetoothError_ResourceInUse) = 2, DeviceNotConnected (BluetoothError_DeviceNotConnected) = 3, OtherError (BluetoothError_OtherError) = 4, DisabledByPolicy (BluetoothError_DisabledByPolicy) = 5, NotSupported (BluetoothError_NotSupported) = 6, DisabledByUser (BluetoothError_DisabledByUser) = 7, ConsentRequired (BluetoothError_ConsentRequired) = 8, TransportNotSupported (BluetoothError_TransportNotSupported) = 9,
 }}
 DEFINE_IID!(IID_IBluetoothLEAppearance, 1562409458, 26280, 16984, 152, 94, 2, 180, 217, 80, 159, 24);
@@ -2193,7 +2193,7 @@ impl IBluetoothLEAppearance {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAppearance: IBluetoothLEAppearance}
+RT_CLASS!{class BluetoothLEAppearance: IBluetoothLEAppearance ["Windows.Devices.Bluetooth.BluetoothLEAppearance"]}
 impl RtActivatable<IBluetoothLEAppearanceStatics> for BluetoothLEAppearance {}
 impl BluetoothLEAppearance {
     #[inline] pub fn from_raw_value(rawValue: u16) -> Result<Option<ComPtr<BluetoothLEAppearance>>> {
@@ -2765,7 +2765,7 @@ impl IBluetoothLEDevice {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEDevice: IBluetoothLEDevice}
+RT_CLASS!{class BluetoothLEDevice: IBluetoothLEDevice ["Windows.Devices.Bluetooth.BluetoothLEDevice"]}
 impl RtActivatable<IBluetoothLEDeviceStatics> for BluetoothLEDevice {}
 impl RtActivatable<IBluetoothLEDeviceStatics2> for BluetoothLEDevice {}
 impl BluetoothLEDevice {
@@ -2957,13 +2957,13 @@ impl IBluetoothLEDeviceStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BluetoothMajorClass: i32 {
+RT_ENUM! { enum BluetoothMajorClass: i32 ["Windows.Devices.Bluetooth.BluetoothMajorClass"] {
     Miscellaneous (BluetoothMajorClass_Miscellaneous) = 0, Computer (BluetoothMajorClass_Computer) = 1, Phone (BluetoothMajorClass_Phone) = 2, NetworkAccessPoint (BluetoothMajorClass_NetworkAccessPoint) = 3, AudioVideo (BluetoothMajorClass_AudioVideo) = 4, Peripheral (BluetoothMajorClass_Peripheral) = 5, Imaging (BluetoothMajorClass_Imaging) = 6, Wearable (BluetoothMajorClass_Wearable) = 7, Toy (BluetoothMajorClass_Toy) = 8, Health (BluetoothMajorClass_Health) = 9,
 }}
-RT_ENUM! { enum BluetoothMinorClass: i32 {
+RT_ENUM! { enum BluetoothMinorClass: i32 ["Windows.Devices.Bluetooth.BluetoothMinorClass"] {
     Uncategorized (BluetoothMinorClass_Uncategorized) = 0, ComputerDesktop (BluetoothMinorClass_ComputerDesktop) = 1, ComputerServer (BluetoothMinorClass_ComputerServer) = 2, ComputerLaptop (BluetoothMinorClass_ComputerLaptop) = 3, ComputerHandheld (BluetoothMinorClass_ComputerHandheld) = 4, ComputerPalmSize (BluetoothMinorClass_ComputerPalmSize) = 5, ComputerWearable (BluetoothMinorClass_ComputerWearable) = 6, ComputerTablet (BluetoothMinorClass_ComputerTablet) = 7, PhoneCellular (BluetoothMinorClass_PhoneCellular) = 1, PhoneCordless (BluetoothMinorClass_PhoneCordless) = 2, PhoneSmartPhone (BluetoothMinorClass_PhoneSmartPhone) = 3, PhoneWired (BluetoothMinorClass_PhoneWired) = 4, PhoneIsdn (BluetoothMinorClass_PhoneIsdn) = 5, NetworkFullyAvailable (BluetoothMinorClass_NetworkFullyAvailable) = 0, NetworkUsed01To17Percent (BluetoothMinorClass_NetworkUsed01To17Percent) = 8, NetworkUsed17To33Percent (BluetoothMinorClass_NetworkUsed17To33Percent) = 16, NetworkUsed33To50Percent (BluetoothMinorClass_NetworkUsed33To50Percent) = 24, NetworkUsed50To67Percent (BluetoothMinorClass_NetworkUsed50To67Percent) = 32, NetworkUsed67To83Percent (BluetoothMinorClass_NetworkUsed67To83Percent) = 40, NetworkUsed83To99Percent (BluetoothMinorClass_NetworkUsed83To99Percent) = 48, NetworkNoServiceAvailable (BluetoothMinorClass_NetworkNoServiceAvailable) = 56, AudioVideoWearableHeadset (BluetoothMinorClass_AudioVideoWearableHeadset) = 1, AudioVideoHandsFree (BluetoothMinorClass_AudioVideoHandsFree) = 2, AudioVideoMicrophone (BluetoothMinorClass_AudioVideoMicrophone) = 4, AudioVideoLoudspeaker (BluetoothMinorClass_AudioVideoLoudspeaker) = 5, AudioVideoHeadphones (BluetoothMinorClass_AudioVideoHeadphones) = 6, AudioVideoPortableAudio (BluetoothMinorClass_AudioVideoPortableAudio) = 7, AudioVideoCarAudio (BluetoothMinorClass_AudioVideoCarAudio) = 8, AudioVideoSetTopBox (BluetoothMinorClass_AudioVideoSetTopBox) = 9, AudioVideoHifiAudioDevice (BluetoothMinorClass_AudioVideoHifiAudioDevice) = 10, AudioVideoVcr (BluetoothMinorClass_AudioVideoVcr) = 11, AudioVideoVideoCamera (BluetoothMinorClass_AudioVideoVideoCamera) = 12, AudioVideoCamcorder (BluetoothMinorClass_AudioVideoCamcorder) = 13, AudioVideoVideoMonitor (BluetoothMinorClass_AudioVideoVideoMonitor) = 14, AudioVideoVideoDisplayAndLoudspeaker (BluetoothMinorClass_AudioVideoVideoDisplayAndLoudspeaker) = 15, AudioVideoVideoConferencing (BluetoothMinorClass_AudioVideoVideoConferencing) = 16, AudioVideoGamingOrToy (BluetoothMinorClass_AudioVideoGamingOrToy) = 18, PeripheralJoystick (BluetoothMinorClass_PeripheralJoystick) = 1, PeripheralGamepad (BluetoothMinorClass_PeripheralGamepad) = 2, PeripheralRemoteControl (BluetoothMinorClass_PeripheralRemoteControl) = 3, PeripheralSensing (BluetoothMinorClass_PeripheralSensing) = 4, PeripheralDigitizerTablet (BluetoothMinorClass_PeripheralDigitizerTablet) = 5, PeripheralCardReader (BluetoothMinorClass_PeripheralCardReader) = 6, PeripheralDigitalPen (BluetoothMinorClass_PeripheralDigitalPen) = 7, PeripheralHandheldScanner (BluetoothMinorClass_PeripheralHandheldScanner) = 8, PeripheralHandheldGesture (BluetoothMinorClass_PeripheralHandheldGesture) = 9, WearableWristwatch (BluetoothMinorClass_WearableWristwatch) = 1, WearablePager (BluetoothMinorClass_WearablePager) = 2, WearableJacket (BluetoothMinorClass_WearableJacket) = 3, WearableHelmet (BluetoothMinorClass_WearableHelmet) = 4, WearableGlasses (BluetoothMinorClass_WearableGlasses) = 5, ToyRobot (BluetoothMinorClass_ToyRobot) = 1, ToyVehicle (BluetoothMinorClass_ToyVehicle) = 2, ToyDoll (BluetoothMinorClass_ToyDoll) = 3, ToyController (BluetoothMinorClass_ToyController) = 4, ToyGame (BluetoothMinorClass_ToyGame) = 5, HealthBloodPressureMonitor (BluetoothMinorClass_HealthBloodPressureMonitor) = 1, HealthThermometer (BluetoothMinorClass_HealthThermometer) = 2, HealthWeighingScale (BluetoothMinorClass_HealthWeighingScale) = 3, HealthGlucoseMeter (BluetoothMinorClass_HealthGlucoseMeter) = 4, HealthPulseOximeter (BluetoothMinorClass_HealthPulseOximeter) = 5, HealthHeartRateMonitor (BluetoothMinorClass_HealthHeartRateMonitor) = 6, HealthHealthDataDisplay (BluetoothMinorClass_HealthHealthDataDisplay) = 7, HealthStepCounter (BluetoothMinorClass_HealthStepCounter) = 8, HealthBodyCompositionAnalyzer (BluetoothMinorClass_HealthBodyCompositionAnalyzer) = 9, HealthPeakFlowMonitor (BluetoothMinorClass_HealthPeakFlowMonitor) = 10, HealthMedicationMonitor (BluetoothMinorClass_HealthMedicationMonitor) = 11, HealthKneeProsthesis (BluetoothMinorClass_HealthKneeProsthesis) = 12, HealthAnkleProsthesis (BluetoothMinorClass_HealthAnkleProsthesis) = 13, HealthGenericHealthManager (BluetoothMinorClass_HealthGenericHealthManager) = 14, HealthPersonalMobilityDevice (BluetoothMinorClass_HealthPersonalMobilityDevice) = 15,
 }}
-RT_ENUM! { enum BluetoothServiceCapabilities: u32 {
+RT_ENUM! { enum BluetoothServiceCapabilities: u32 ["Windows.Devices.Bluetooth.BluetoothServiceCapabilities"] {
     None (BluetoothServiceCapabilities_None) = 0, LimitedDiscoverableMode (BluetoothServiceCapabilities_LimitedDiscoverableMode) = 1, PositioningService (BluetoothServiceCapabilities_PositioningService) = 8, NetworkingService (BluetoothServiceCapabilities_NetworkingService) = 16, RenderingService (BluetoothServiceCapabilities_RenderingService) = 32, CapturingService (BluetoothServiceCapabilities_CapturingService) = 64, ObjectTransferService (BluetoothServiceCapabilities_ObjectTransferService) = 128, AudioService (BluetoothServiceCapabilities_AudioService) = 256, TelephoneService (BluetoothServiceCapabilities_TelephoneService) = 512, InformationService (BluetoothServiceCapabilities_InformationService) = 1024,
 }}
 DEFINE_IID!(IID_IBluetoothSignalStrengthFilter, 3749409681, 27573, 19710, 144, 177, 93, 115, 36, 237, 207, 127);
@@ -3015,7 +3015,7 @@ impl IBluetoothSignalStrengthFilter {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothSignalStrengthFilter: IBluetoothSignalStrengthFilter}
+RT_CLASS!{class BluetoothSignalStrengthFilter: IBluetoothSignalStrengthFilter ["Windows.Devices.Bluetooth.BluetoothSignalStrengthFilter"]}
 impl RtActivatable<IActivationFactory> for BluetoothSignalStrengthFilter {}
 DEFINE_CLSID!(BluetoothSignalStrengthFilter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,66,108,117,101,116,111,111,116,104,83,105,103,110,97,108,83,116,114,101,110,103,116,104,70,105,108,116,101,114,0]) [CLSID_BluetoothSignalStrengthFilter]);
 RT_CLASS!{static class BluetoothUuidHelper}
@@ -3105,7 +3105,7 @@ impl IBluetoothLEAdvertisement {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAdvertisement: IBluetoothLEAdvertisement}
+RT_CLASS!{class BluetoothLEAdvertisement: IBluetoothLEAdvertisement ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisement"]}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisement {}
 DEFINE_CLSID!(BluetoothLEAdvertisement(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,0]) [CLSID_BluetoothLEAdvertisement]);
 DEFINE_IID!(IID_IBluetoothLEAdvertisementBytePattern, 4227520498, 47557, 18952, 188, 81, 80, 47, 142, 246, 138, 121);
@@ -3146,7 +3146,7 @@ impl IBluetoothLEAdvertisementBytePattern {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAdvertisementBytePattern: IBluetoothLEAdvertisementBytePattern}
+RT_CLASS!{class BluetoothLEAdvertisementBytePattern: IBluetoothLEAdvertisementBytePattern ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementBytePattern"]}
 impl RtActivatable<IBluetoothLEAdvertisementBytePatternFactory> for BluetoothLEAdvertisementBytePattern {}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementBytePattern {}
 impl BluetoothLEAdvertisementBytePattern {
@@ -3193,7 +3193,7 @@ impl IBluetoothLEAdvertisementDataSection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAdvertisementDataSection: IBluetoothLEAdvertisementDataSection}
+RT_CLASS!{class BluetoothLEAdvertisementDataSection: IBluetoothLEAdvertisementDataSection ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementDataSection"]}
 impl RtActivatable<IBluetoothLEAdvertisementDataSectionFactory> for BluetoothLEAdvertisementDataSection {}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementDataSection {}
 impl BluetoothLEAdvertisementDataSection {
@@ -3443,10 +3443,10 @@ impl IBluetoothLEAdvertisementFilter {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAdvertisementFilter: IBluetoothLEAdvertisementFilter}
+RT_CLASS!{class BluetoothLEAdvertisementFilter: IBluetoothLEAdvertisementFilter ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementFilter"]}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementFilter {}
 DEFINE_CLSID!(BluetoothLEAdvertisementFilter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,70,105,108,116,101,114,0]) [CLSID_BluetoothLEAdvertisementFilter]);
-RT_ENUM! { enum BluetoothLEAdvertisementFlags: u32 {
+RT_ENUM! { enum BluetoothLEAdvertisementFlags: u32 ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementFlags"] {
     None (BluetoothLEAdvertisementFlags_None) = 0, LimitedDiscoverableMode (BluetoothLEAdvertisementFlags_LimitedDiscoverableMode) = 1, GeneralDiscoverableMode (BluetoothLEAdvertisementFlags_GeneralDiscoverableMode) = 2, ClassicNotSupported (BluetoothLEAdvertisementFlags_ClassicNotSupported) = 4, DualModeControllerCapable (BluetoothLEAdvertisementFlags_DualModeControllerCapable) = 8, DualModeHostCapable (BluetoothLEAdvertisementFlags_DualModeHostCapable) = 16,
 }}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementPublisher, 3454542073, 55802, 17366, 162, 100, 221, 216, 183, 218, 139, 120);
@@ -3487,7 +3487,7 @@ impl IBluetoothLEAdvertisementPublisher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAdvertisementPublisher: IBluetoothLEAdvertisementPublisher}
+RT_CLASS!{class BluetoothLEAdvertisementPublisher: IBluetoothLEAdvertisementPublisher ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementPublisher"]}
 impl RtActivatable<IBluetoothLEAdvertisementPublisherFactory> for BluetoothLEAdvertisementPublisher {}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementPublisher {}
 impl BluetoothLEAdvertisementPublisher {
@@ -3507,7 +3507,7 @@ impl IBluetoothLEAdvertisementPublisherFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BluetoothLEAdvertisementPublisherStatus: i32 {
+RT_ENUM! { enum BluetoothLEAdvertisementPublisherStatus: i32 ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementPublisherStatus"] {
     Created (BluetoothLEAdvertisementPublisherStatus_Created) = 0, Waiting (BluetoothLEAdvertisementPublisherStatus_Waiting) = 1, Started (BluetoothLEAdvertisementPublisherStatus_Started) = 2, Stopping (BluetoothLEAdvertisementPublisherStatus_Stopping) = 3, Stopped (BluetoothLEAdvertisementPublisherStatus_Stopped) = 4, Aborted (BluetoothLEAdvertisementPublisherStatus_Aborted) = 5,
 }}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementPublisherStatusChangedEventArgs, 163757471, 11775, 19235, 134, 238, 13, 20, 251, 148, 174, 174);
@@ -3527,7 +3527,7 @@ impl IBluetoothLEAdvertisementPublisherStatusChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAdvertisementPublisherStatusChangedEventArgs: IBluetoothLEAdvertisementPublisherStatusChangedEventArgs}
+RT_CLASS!{class BluetoothLEAdvertisementPublisherStatusChangedEventArgs: IBluetoothLEAdvertisementPublisherStatusChangedEventArgs ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementPublisherStatusChangedEventArgs"]}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementReceivedEventArgs, 664305119, 58774, 16830, 141, 67, 158, 103, 49, 212, 169, 19);
 RT_INTERFACE!{interface IBluetoothLEAdvertisementReceivedEventArgs(IBluetoothLEAdvertisementReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementReceivedEventArgs] {
     fn get_RawSignalStrengthInDBm(&self, out: *mut i16) -> HRESULT,
@@ -3563,8 +3563,8 @@ impl IBluetoothLEAdvertisementReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAdvertisementReceivedEventArgs: IBluetoothLEAdvertisementReceivedEventArgs}
-RT_ENUM! { enum BluetoothLEAdvertisementType: i32 {
+RT_CLASS!{class BluetoothLEAdvertisementReceivedEventArgs: IBluetoothLEAdvertisementReceivedEventArgs ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementReceivedEventArgs"]}
+RT_ENUM! { enum BluetoothLEAdvertisementType: i32 ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementType"] {
     ConnectableUndirected (BluetoothLEAdvertisementType_ConnectableUndirected) = 0, ConnectableDirected (BluetoothLEAdvertisementType_ConnectableDirected) = 1, ScannableUndirected (BluetoothLEAdvertisementType_ScannableUndirected) = 2, NonConnectableUndirected (BluetoothLEAdvertisementType_NonConnectableUndirected) = 3, ScanResponse (BluetoothLEAdvertisementType_ScanResponse) = 4,
 }}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementWatcher, 2796303215, 62419, 17047, 141, 108, 200, 30, 166, 98, 63, 64);
@@ -3667,7 +3667,7 @@ impl IBluetoothLEAdvertisementWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAdvertisementWatcher: IBluetoothLEAdvertisementWatcher}
+RT_CLASS!{class BluetoothLEAdvertisementWatcher: IBluetoothLEAdvertisementWatcher ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementWatcher"]}
 impl RtActivatable<IBluetoothLEAdvertisementWatcherFactory> for BluetoothLEAdvertisementWatcher {}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementWatcher {}
 impl BluetoothLEAdvertisementWatcher {
@@ -3687,7 +3687,7 @@ impl IBluetoothLEAdvertisementWatcherFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BluetoothLEAdvertisementWatcherStatus: i32 {
+RT_ENUM! { enum BluetoothLEAdvertisementWatcherStatus: i32 ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementWatcherStatus"] {
     Created (BluetoothLEAdvertisementWatcherStatus_Created) = 0, Started (BluetoothLEAdvertisementWatcherStatus_Started) = 1, Stopping (BluetoothLEAdvertisementWatcherStatus_Stopping) = 2, Stopped (BluetoothLEAdvertisementWatcherStatus_Stopped) = 3, Aborted (BluetoothLEAdvertisementWatcherStatus_Aborted) = 4,
 }}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementWatcherStoppedEventArgs, 3712022605, 59321, 17379, 156, 4, 6, 133, 208, 133, 253, 140);
@@ -3701,7 +3701,7 @@ impl IBluetoothLEAdvertisementWatcherStoppedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAdvertisementWatcherStoppedEventArgs: IBluetoothLEAdvertisementWatcherStoppedEventArgs}
+RT_CLASS!{class BluetoothLEAdvertisementWatcherStoppedEventArgs: IBluetoothLEAdvertisementWatcherStoppedEventArgs ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEAdvertisementWatcherStoppedEventArgs"]}
 DEFINE_IID!(IID_IBluetoothLEManufacturerData, 2435693080, 26979, 17715, 176, 97, 70, 148, 218, 251, 52, 229);
 RT_INTERFACE!{interface IBluetoothLEManufacturerData(IBluetoothLEManufacturerDataVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEManufacturerData] {
     fn get_CompanyId(&self, out: *mut u16) -> HRESULT,
@@ -3729,7 +3729,7 @@ impl IBluetoothLEManufacturerData {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEManufacturerData: IBluetoothLEManufacturerData}
+RT_CLASS!{class BluetoothLEManufacturerData: IBluetoothLEManufacturerData ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEManufacturerData"]}
 impl RtActivatable<IBluetoothLEManufacturerDataFactory> for BluetoothLEManufacturerData {}
 impl RtActivatable<IActivationFactory> for BluetoothLEManufacturerData {}
 impl BluetoothLEManufacturerData {
@@ -3749,13 +3749,13 @@ impl IBluetoothLEManufacturerDataFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BluetoothLEScanningMode: i32 {
+RT_ENUM! { enum BluetoothLEScanningMode: i32 ["Windows.Devices.Bluetooth.Advertisement.BluetoothLEScanningMode"] {
     Passive (BluetoothLEScanningMode_Passive) = 0, Active (BluetoothLEScanningMode_Active) = 1,
 }}
 } // Windows.Devices.Bluetooth.Advertisement
 pub mod background { // Windows.Devices.Bluetooth.Background
 use ::prelude::*;
-RT_ENUM! { enum BluetoothEventTriggeringMode: i32 {
+RT_ENUM! { enum BluetoothEventTriggeringMode: i32 ["Windows.Devices.Bluetooth.Background.BluetoothEventTriggeringMode"] {
     Serial (BluetoothEventTriggeringMode_Serial) = 0, Batch (BluetoothEventTriggeringMode_Batch) = 1, KeepLatest (BluetoothEventTriggeringMode_KeepLatest) = 2,
 }}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementPublisherTriggerDetails, 1628359302, 13440, 16841, 169, 24, 125, 218, 223, 32, 126, 0);
@@ -3775,7 +3775,7 @@ impl IBluetoothLEAdvertisementPublisherTriggerDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAdvertisementPublisherTriggerDetails: IBluetoothLEAdvertisementPublisherTriggerDetails}
+RT_CLASS!{class BluetoothLEAdvertisementPublisherTriggerDetails: IBluetoothLEAdvertisementPublisherTriggerDetails ["Windows.Devices.Bluetooth.Background.BluetoothLEAdvertisementPublisherTriggerDetails"]}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementWatcherTriggerDetails, 2816170711, 8791, 20073, 151, 132, 254, 230, 69, 193, 220, 224);
 RT_INTERFACE!{interface IBluetoothLEAdvertisementWatcherTriggerDetails(IBluetoothLEAdvertisementWatcherTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementWatcherTriggerDetails] {
     fn get_Error(&self, out: *mut super::BluetoothError) -> HRESULT,
@@ -3799,7 +3799,7 @@ impl IBluetoothLEAdvertisementWatcherTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAdvertisementWatcherTriggerDetails: IBluetoothLEAdvertisementWatcherTriggerDetails}
+RT_CLASS!{class BluetoothLEAdvertisementWatcherTriggerDetails: IBluetoothLEAdvertisementWatcherTriggerDetails ["Windows.Devices.Bluetooth.Background.BluetoothLEAdvertisementWatcherTriggerDetails"]}
 DEFINE_IID!(IID_IGattCharacteristicNotificationTriggerDetails, 2610969368, 4076, 17258, 147, 177, 244, 108, 105, 117, 50, 162);
 RT_INTERFACE!{interface IGattCharacteristicNotificationTriggerDetails(IGattCharacteristicNotificationTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicNotificationTriggerDetails] {
     fn get_Characteristic(&self, out: *mut *mut super::genericattributeprofile::GattCharacteristic) -> HRESULT,
@@ -3817,7 +3817,7 @@ impl IGattCharacteristicNotificationTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattCharacteristicNotificationTriggerDetails: IGattCharacteristicNotificationTriggerDetails}
+RT_CLASS!{class GattCharacteristicNotificationTriggerDetails: IGattCharacteristicNotificationTriggerDetails ["Windows.Devices.Bluetooth.Background.GattCharacteristicNotificationTriggerDetails"]}
 DEFINE_IID!(IID_IGattCharacteristicNotificationTriggerDetails2, 1920618716, 38045, 17738, 177, 146, 152, 52, 103, 227, 213, 15);
 RT_INTERFACE!{interface IGattCharacteristicNotificationTriggerDetails2(IGattCharacteristicNotificationTriggerDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicNotificationTriggerDetails2] {
     fn get_Error(&self, out: *mut super::BluetoothError) -> HRESULT,
@@ -3863,7 +3863,7 @@ impl IGattServiceProviderConnection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattServiceProviderConnection: IGattServiceProviderConnection}
+RT_CLASS!{class GattServiceProviderConnection: IGattServiceProviderConnection ["Windows.Devices.Bluetooth.Background.GattServiceProviderConnection"]}
 impl RtActivatable<IGattServiceProviderConnectionStatics> for GattServiceProviderConnection {}
 impl GattServiceProviderConnection {
     #[inline] pub fn get_all_services() -> Result<Option<ComPtr<foundation::collections::IMapView<HString, GattServiceProviderConnection>>>> {
@@ -3893,7 +3893,7 @@ impl IGattServiceProviderTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattServiceProviderTriggerDetails: IGattServiceProviderTriggerDetails}
+RT_CLASS!{class GattServiceProviderTriggerDetails: IGattServiceProviderTriggerDetails ["Windows.Devices.Bluetooth.Background.GattServiceProviderTriggerDetails"]}
 DEFINE_IID!(IID_IRfcommConnectionTriggerDetails, 4179784525, 11836, 20220, 171, 89, 252, 92, 249, 111, 151, 227);
 RT_INTERFACE!{interface IRfcommConnectionTriggerDetails(IRfcommConnectionTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommConnectionTriggerDetails] {
     #[cfg(not(feature="windows-networking"))] fn __Dummy0(&self) -> (),
@@ -3918,7 +3918,7 @@ impl IRfcommConnectionTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RfcommConnectionTriggerDetails: IRfcommConnectionTriggerDetails}
+RT_CLASS!{class RfcommConnectionTriggerDetails: IRfcommConnectionTriggerDetails ["Windows.Devices.Bluetooth.Background.RfcommConnectionTriggerDetails"]}
 DEFINE_IID!(IID_IRfcommInboundConnectionInformation, 1832809896, 21545, 16473, 146, 227, 30, 139, 101, 82, 135, 7);
 RT_INTERFACE!{interface IRfcommInboundConnectionInformation(IRfcommInboundConnectionInformationVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommInboundConnectionInformation] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -3959,7 +3959,7 @@ impl IRfcommInboundConnectionInformation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RfcommInboundConnectionInformation: IRfcommInboundConnectionInformation}
+RT_CLASS!{class RfcommInboundConnectionInformation: IRfcommInboundConnectionInformation ["Windows.Devices.Bluetooth.Background.RfcommInboundConnectionInformation"]}
 DEFINE_IID!(IID_IRfcommOutboundConnectionInformation, 2962301563, 62516, 19632, 153, 177, 74, 184, 206, 218, 237, 215);
 RT_INTERFACE!{interface IRfcommOutboundConnectionInformation(IRfcommOutboundConnectionInformationVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommOutboundConnectionInformation] {
     fn get_RemoteServiceId(&self, out: *mut *mut super::rfcomm::RfcommServiceId) -> HRESULT,
@@ -3976,7 +3976,7 @@ impl IRfcommOutboundConnectionInformation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RfcommOutboundConnectionInformation: IRfcommOutboundConnectionInformation}
+RT_CLASS!{class RfcommOutboundConnectionInformation: IRfcommOutboundConnectionInformation ["Windows.Devices.Bluetooth.Background.RfcommOutboundConnectionInformation"]}
 } // Windows.Devices.Bluetooth.Background
 pub mod genericattributeprofile { // Windows.Devices.Bluetooth.GenericAttributeProfile
 use ::prelude::*;
@@ -4081,7 +4081,7 @@ impl IGattCharacteristic {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattCharacteristic: IGattCharacteristic}
+RT_CLASS!{class GattCharacteristic: IGattCharacteristic ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattCharacteristic"]}
 impl RtActivatable<IGattCharacteristicStatics> for GattCharacteristic {}
 impl GattCharacteristic {
     #[inline] pub fn convert_short_id_to_uuid(shortId: u16) -> Result<Guid> {
@@ -4155,7 +4155,7 @@ impl IGattCharacteristic3 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GattCharacteristicProperties: u32 {
+RT_ENUM! { enum GattCharacteristicProperties: u32 ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattCharacteristicProperties"] {
     None (GattCharacteristicProperties_None) = 0, Broadcast (GattCharacteristicProperties_Broadcast) = 1, Read (GattCharacteristicProperties_Read) = 2, WriteWithoutResponse (GattCharacteristicProperties_WriteWithoutResponse) = 4, Write (GattCharacteristicProperties_Write) = 8, Notify (GattCharacteristicProperties_Notify) = 16, Indicate (GattCharacteristicProperties_Indicate) = 32, AuthenticatedSignedWrites (GattCharacteristicProperties_AuthenticatedSignedWrites) = 64, ExtendedProperties (GattCharacteristicProperties_ExtendedProperties) = 128, ReliableWrites (GattCharacteristicProperties_ReliableWrites) = 256, WritableAuxiliaries (GattCharacteristicProperties_WritableAuxiliaries) = 512,
 }}
 DEFINE_IID!(IID_IGattCharacteristicsResult, 294949980, 45655, 20286, 157, 183, 246, 139, 201, 169, 174, 242);
@@ -4181,7 +4181,7 @@ impl IGattCharacteristicsResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattCharacteristicsResult: IGattCharacteristicsResult}
+RT_CLASS!{class GattCharacteristicsResult: IGattCharacteristicsResult ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattCharacteristicsResult"]}
 DEFINE_IID!(IID_IGattCharacteristicStatics, 1506496707, 22836, 20328, 161, 152, 235, 134, 79, 164, 78, 107);
 RT_INTERFACE!{static interface IGattCharacteristicStatics(IGattCharacteristicStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicStatics] {
     fn ConvertShortIdToUuid(&self, shortId: u16, out: *mut Guid) -> HRESULT
@@ -4938,7 +4938,7 @@ impl IGattCharacteristicUuidsStatics2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GattClientCharacteristicConfigurationDescriptorValue: i32 {
+RT_ENUM! { enum GattClientCharacteristicConfigurationDescriptorValue: i32 ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattClientCharacteristicConfigurationDescriptorValue"] {
     None (GattClientCharacteristicConfigurationDescriptorValue_None) = 0, Notify (GattClientCharacteristicConfigurationDescriptorValue_Notify) = 1, Indicate (GattClientCharacteristicConfigurationDescriptorValue_Indicate) = 2,
 }}
 DEFINE_IID!(IID_IGattClientNotificationResult, 1349342617, 274, 16794, 142, 59, 174, 33, 175, 171, 210, 194);
@@ -4964,7 +4964,7 @@ impl IGattClientNotificationResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattClientNotificationResult: IGattClientNotificationResult}
+RT_CLASS!{class GattClientNotificationResult: IGattClientNotificationResult ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattClientNotificationResult"]}
 DEFINE_IID!(IID_IGattClientNotificationResult2, 2410595479, 17888, 18814, 149, 130, 41, 161, 254, 40, 26, 213);
 RT_INTERFACE!{interface IGattClientNotificationResult2(IGattClientNotificationResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattClientNotificationResult2] {
     fn get_BytesSent(&self, out: *mut u16) -> HRESULT
@@ -4976,7 +4976,7 @@ impl IGattClientNotificationResult2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GattCommunicationStatus: i32 {
+RT_ENUM! { enum GattCommunicationStatus: i32 ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattCommunicationStatus"] {
     Success (GattCommunicationStatus_Success) = 0, Unreachable (GattCommunicationStatus_Unreachable) = 1, ProtocolError (GattCommunicationStatus_ProtocolError) = 2, AccessDenied (GattCommunicationStatus_AccessDenied) = 3,
 }}
 DEFINE_IID!(IID_IGattDescriptor, 2449825579, 32900, 17220, 180, 194, 40, 77, 225, 154, 133, 6);
@@ -5025,7 +5025,7 @@ impl IGattDescriptor {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattDescriptor: IGattDescriptor}
+RT_CLASS!{class GattDescriptor: IGattDescriptor ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattDescriptor"]}
 impl RtActivatable<IGattDescriptorStatics> for GattDescriptor {}
 impl GattDescriptor {
     #[inline] pub fn convert_short_id_to_uuid(shortId: u16) -> Result<Guid> {
@@ -5067,7 +5067,7 @@ impl IGattDescriptorsResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattDescriptorsResult: IGattDescriptorsResult}
+RT_CLASS!{class GattDescriptorsResult: IGattDescriptorsResult ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattDescriptorsResult"]}
 DEFINE_IID!(IID_IGattDescriptorStatics, 2449825581, 32900, 17220, 180, 194, 40, 77, 225, 154, 133, 6);
 RT_INTERFACE!{static interface IGattDescriptorStatics(IGattDescriptorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattDescriptorStatics] {
     fn ConvertShortIdToUuid(&self, shortId: u16, out: *mut Guid) -> HRESULT
@@ -5178,7 +5178,7 @@ impl IGattDeviceService {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattDeviceService: IGattDeviceService}
+RT_CLASS!{class GattDeviceService: IGattDeviceService ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattDeviceService"]}
 impl RtActivatable<IGattDeviceServiceStatics> for GattDeviceService {}
 impl RtActivatable<IGattDeviceServiceStatics2> for GattDeviceService {}
 impl GattDeviceService {
@@ -5346,7 +5346,7 @@ impl IGattDeviceServicesResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattDeviceServicesResult: IGattDeviceServicesResult}
+RT_CLASS!{class GattDeviceServicesResult: IGattDeviceServicesResult ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattDeviceServicesResult"]}
 DEFINE_IID!(IID_IGattDeviceServiceStatics, 426573858, 64173, 17884, 174, 91, 42, 195, 24, 78, 132, 219);
 RT_INTERFACE!{static interface IGattDeviceServiceStatics(IGattDeviceServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattDeviceServiceStatics] {
     fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GattDeviceService>) -> HRESULT,
@@ -5521,7 +5521,7 @@ impl IGattLocalCharacteristic {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattLocalCharacteristic: IGattLocalCharacteristic}
+RT_CLASS!{class GattLocalCharacteristic: IGattLocalCharacteristic ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattLocalCharacteristic"]}
 DEFINE_IID!(IID_IGattLocalCharacteristicParameters, 4210507188, 19711, 17607, 132, 69, 4, 14, 110, 173, 0, 99);
 RT_INTERFACE!{interface IGattLocalCharacteristicParameters(IGattLocalCharacteristicParametersVtbl): IInspectable(IInspectableVtbl) [IID_IGattLocalCharacteristicParameters] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -5590,7 +5590,7 @@ impl IGattLocalCharacteristicParameters {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattLocalCharacteristicParameters: IGattLocalCharacteristicParameters}
+RT_CLASS!{class GattLocalCharacteristicParameters: IGattLocalCharacteristicParameters ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattLocalCharacteristicParameters"]}
 impl RtActivatable<IActivationFactory> for GattLocalCharacteristicParameters {}
 DEFINE_CLSID!(GattLocalCharacteristicParameters(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,76,111,99,97,108,67,104,97,114,97,99,116,101,114,105,115,116,105,99,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_GattLocalCharacteristicParameters]);
 DEFINE_IID!(IID_IGattLocalCharacteristicResult, 2037767835, 368, 17303, 150, 102, 146, 248, 99, 241, 46, 230);
@@ -5610,7 +5610,7 @@ impl IGattLocalCharacteristicResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattLocalCharacteristicResult: IGattLocalCharacteristicResult}
+RT_CLASS!{class GattLocalCharacteristicResult: IGattLocalCharacteristicResult ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattLocalCharacteristicResult"]}
 DEFINE_IID!(IID_IGattLocalDescriptor, 4102995462, 30877, 19019, 134, 82, 189, 1, 123, 93, 47, 198);
 RT_INTERFACE!{interface IGattLocalDescriptor(IGattLocalDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IGattLocalDescriptor] {
     fn get_Uuid(&self, out: *mut Guid) -> HRESULT,
@@ -5663,7 +5663,7 @@ impl IGattLocalDescriptor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattLocalDescriptor: IGattLocalDescriptor}
+RT_CLASS!{class GattLocalDescriptor: IGattLocalDescriptor ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattLocalDescriptor"]}
 DEFINE_IID!(IID_IGattLocalDescriptorParameters, 1608441450, 62401, 19302, 140, 75, 227, 210, 41, 59, 64, 233);
 RT_INTERFACE!{interface IGattLocalDescriptorParameters(IGattLocalDescriptorParametersVtbl): IInspectable(IInspectableVtbl) [IID_IGattLocalDescriptorParameters] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -5704,7 +5704,7 @@ impl IGattLocalDescriptorParameters {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattLocalDescriptorParameters: IGattLocalDescriptorParameters}
+RT_CLASS!{class GattLocalDescriptorParameters: IGattLocalDescriptorParameters ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattLocalDescriptorParameters"]}
 impl RtActivatable<IActivationFactory> for GattLocalDescriptorParameters {}
 DEFINE_CLSID!(GattLocalDescriptorParameters(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,76,111,99,97,108,68,101,115,99,114,105,112,116,111,114,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_GattLocalDescriptorParameters]);
 DEFINE_IID!(IID_IGattLocalDescriptorResult, 928485822, 12831, 17254, 191, 193, 59, 198, 184, 44, 121, 248);
@@ -5724,7 +5724,7 @@ impl IGattLocalDescriptorResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattLocalDescriptorResult: IGattLocalDescriptorResult}
+RT_CLASS!{class GattLocalDescriptorResult: IGattLocalDescriptorResult ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattLocalDescriptorResult"]}
 DEFINE_IID!(IID_IGattLocalService, 4111721048, 63479, 18690, 184, 3, 87, 252, 199, 214, 254, 131);
 RT_INTERFACE!{interface IGattLocalService(IGattLocalServiceVtbl): IInspectable(IInspectableVtbl) [IID_IGattLocalService] {
     fn get_Uuid(&self, out: *mut Guid) -> HRESULT,
@@ -5748,8 +5748,8 @@ impl IGattLocalService {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattLocalService: IGattLocalService}
-RT_ENUM! { enum GattOpenStatus: i32 {
+RT_CLASS!{class GattLocalService: IGattLocalService ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattLocalService"]}
+RT_ENUM! { enum GattOpenStatus: i32 ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattOpenStatus"] {
     Unspecified (GattOpenStatus_Unspecified) = 0, Success (GattOpenStatus_Success) = 1, AlreadyOpened (GattOpenStatus_AlreadyOpened) = 2, NotFound (GattOpenStatus_NotFound) = 3, SharingViolation (GattOpenStatus_SharingViolation) = 4, AccessDenied (GattOpenStatus_AccessDenied) = 5,
 }}
 DEFINE_IID!(IID_IGattPresentationFormat, 426573857, 64173, 17884, 174, 91, 42, 195, 24, 78, 132, 219);
@@ -5787,7 +5787,7 @@ impl IGattPresentationFormat {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattPresentationFormat: IGattPresentationFormat}
+RT_CLASS!{class GattPresentationFormat: IGattPresentationFormat ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattPresentationFormat"]}
 impl RtActivatable<IGattPresentationFormatStatics> for GattPresentationFormat {}
 impl RtActivatable<IGattPresentationFormatStatics2> for GattPresentationFormat {}
 impl GattPresentationFormat {
@@ -6074,7 +6074,7 @@ impl IGattPresentationFormatTypesStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GattProtectionLevel: i32 {
+RT_ENUM! { enum GattProtectionLevel: i32 ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattProtectionLevel"] {
     Plain (GattProtectionLevel_Plain) = 0, AuthenticationRequired (GattProtectionLevel_AuthenticationRequired) = 1, EncryptionRequired (GattProtectionLevel_EncryptionRequired) = 2, EncryptionAndAuthenticationRequired (GattProtectionLevel_EncryptionAndAuthenticationRequired) = 3,
 }}
 RT_CLASS!{static class GattProtocolError}
@@ -6257,7 +6257,7 @@ impl IGattReadClientCharacteristicConfigurationDescriptorResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattReadClientCharacteristicConfigurationDescriptorResult: IGattReadClientCharacteristicConfigurationDescriptorResult}
+RT_CLASS!{class GattReadClientCharacteristicConfigurationDescriptorResult: IGattReadClientCharacteristicConfigurationDescriptorResult ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattReadClientCharacteristicConfigurationDescriptorResult"]}
 DEFINE_IID!(IID_IGattReadClientCharacteristicConfigurationDescriptorResult2, 468821405, 47693, 17954, 134, 81, 244, 238, 21, 13, 10, 93);
 RT_INTERFACE!{interface IGattReadClientCharacteristicConfigurationDescriptorResult2(IGattReadClientCharacteristicConfigurationDescriptorResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattReadClientCharacteristicConfigurationDescriptorResult2] {
     fn get_ProtocolError(&self, out: *mut *mut foundation::IReference<u8>) -> HRESULT
@@ -6314,7 +6314,7 @@ impl IGattReadRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattReadRequest: IGattReadRequest}
+RT_CLASS!{class GattReadRequest: IGattReadRequest ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattReadRequest"]}
 DEFINE_IID!(IID_IGattReadRequestedEventArgs, 2471064131, 62364, 18507, 138, 182, 153, 107, 164, 134, 207, 163);
 RT_INTERFACE!{interface IGattReadRequestedEventArgs(IGattReadRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGattReadRequestedEventArgs] {
     fn get_Session(&self, out: *mut *mut GattSession) -> HRESULT,
@@ -6338,7 +6338,7 @@ impl IGattReadRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattReadRequestedEventArgs: IGattReadRequestedEventArgs}
+RT_CLASS!{class GattReadRequestedEventArgs: IGattReadRequestedEventArgs ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattReadRequestedEventArgs"]}
 DEFINE_IID!(IID_IGattReadResult, 1671851784, 6890, 19532, 165, 15, 151, 186, 228, 116, 179, 72);
 RT_INTERFACE!{interface IGattReadResult(IGattReadResultVtbl): IInspectable(IInspectableVtbl) [IID_IGattReadResult] {
     fn get_Status(&self, out: *mut GattCommunicationStatus) -> HRESULT,
@@ -6356,7 +6356,7 @@ impl IGattReadResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattReadResult: IGattReadResult}
+RT_CLASS!{class GattReadResult: IGattReadResult ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattReadResult"]}
 DEFINE_IID!(IID_IGattReadResult2, 2702135456, 64323, 18607, 186, 170, 99, 138, 92, 99, 41, 254);
 RT_INTERFACE!{interface IGattReadResult2(IGattReadResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattReadResult2] {
     fn get_ProtocolError(&self, out: *mut *mut foundation::IReference<u8>) -> HRESULT
@@ -6385,7 +6385,7 @@ impl IGattReliableWriteTransaction {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattReliableWriteTransaction: IGattReliableWriteTransaction}
+RT_CLASS!{class GattReliableWriteTransaction: IGattReliableWriteTransaction ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattReliableWriteTransaction"]}
 impl RtActivatable<IActivationFactory> for GattReliableWriteTransaction {}
 DEFINE_CLSID!(GattReliableWriteTransaction(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,82,101,108,105,97,98,108,101,87,114,105,116,101,84,114,97,110,115,97,99,116,105,111,110,0]) [CLSID_GattReliableWriteTransaction]);
 DEFINE_IID!(IID_IGattReliableWriteTransaction2, 1360083335, 61202, 17967, 159, 178, 161, 164, 58, 103, 148, 22);
@@ -6399,7 +6399,7 @@ impl IGattReliableWriteTransaction2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GattRequestState: i32 {
+RT_ENUM! { enum GattRequestState: i32 ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattRequestState"] {
     Pending (GattRequestState_Pending) = 0, Completed (GattRequestState_Completed) = 1, Canceled (GattRequestState_Canceled) = 2,
 }}
 DEFINE_IID!(IID_IGattRequestStateChangedEventArgs, 3895777580, 10174, 17587, 157, 13, 79, 198, 232, 8, 221, 63);
@@ -6419,7 +6419,7 @@ impl IGattRequestStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattRequestStateChangedEventArgs: IGattRequestStateChangedEventArgs}
+RT_CLASS!{class GattRequestStateChangedEventArgs: IGattRequestStateChangedEventArgs ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattRequestStateChangedEventArgs"]}
 DEFINE_IID!(IID_IGattServiceProvider, 2015540173, 10377, 20358, 160, 81, 63, 10, 237, 28, 39, 96);
 RT_INTERFACE!{interface IGattServiceProvider(IGattServiceProviderVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProvider] {
     fn get_Service(&self, out: *mut *mut GattLocalService) -> HRESULT,
@@ -6463,7 +6463,7 @@ impl IGattServiceProvider {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattServiceProvider: IGattServiceProvider}
+RT_CLASS!{class GattServiceProvider: IGattServiceProvider ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattServiceProvider"]}
 impl RtActivatable<IGattServiceProviderStatics> for GattServiceProvider {}
 impl GattServiceProvider {
     #[inline] pub fn create_async(serviceUuid: Guid) -> Result<ComPtr<foundation::IAsyncOperation<GattServiceProviderResult>>> {
@@ -6471,7 +6471,7 @@ impl GattServiceProvider {
     }
 }
 DEFINE_CLSID!(GattServiceProvider(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,83,101,114,118,105,99,101,80,114,111,118,105,100,101,114,0]) [CLSID_GattServiceProvider]);
-RT_ENUM! { enum GattServiceProviderAdvertisementStatus: i32 {
+RT_ENUM! { enum GattServiceProviderAdvertisementStatus: i32 ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattServiceProviderAdvertisementStatus"] {
     Created (GattServiceProviderAdvertisementStatus_Created) = 0, Stopped (GattServiceProviderAdvertisementStatus_Stopped) = 1, Started (GattServiceProviderAdvertisementStatus_Started) = 2, Aborted (GattServiceProviderAdvertisementStatus_Aborted) = 3,
 }}
 DEFINE_IID!(IID_IGattServiceProviderAdvertisementStatusChangedEventArgs, 1504029285, 64033, 20476, 177, 85, 4, 217, 40, 1, 38, 134);
@@ -6491,7 +6491,7 @@ impl IGattServiceProviderAdvertisementStatusChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattServiceProviderAdvertisementStatusChangedEventArgs: IGattServiceProviderAdvertisementStatusChangedEventArgs}
+RT_CLASS!{class GattServiceProviderAdvertisementStatusChangedEventArgs: IGattServiceProviderAdvertisementStatusChangedEventArgs ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattServiceProviderAdvertisementStatusChangedEventArgs"]}
 DEFINE_IID!(IID_IGattServiceProviderAdvertisingParameters, 3805163947, 25365, 19490, 155, 215, 120, 29, 188, 61, 141, 130);
 RT_INTERFACE!{interface IGattServiceProviderAdvertisingParameters(IGattServiceProviderAdvertisingParametersVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProviderAdvertisingParameters] {
     fn put_IsConnectable(&self, value: bool) -> HRESULT,
@@ -6519,7 +6519,7 @@ impl IGattServiceProviderAdvertisingParameters {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattServiceProviderAdvertisingParameters: IGattServiceProviderAdvertisingParameters}
+RT_CLASS!{class GattServiceProviderAdvertisingParameters: IGattServiceProviderAdvertisingParameters ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattServiceProviderAdvertisingParameters"]}
 impl RtActivatable<IActivationFactory> for GattServiceProviderAdvertisingParameters {}
 DEFINE_CLSID!(GattServiceProviderAdvertisingParameters(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,83,101,114,118,105,99,101,80,114,111,118,105,100,101,114,65,100,118,101,114,116,105,115,105,110,103,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_GattServiceProviderAdvertisingParameters]);
 DEFINE_IID!(IID_IGattServiceProviderResult, 1984337624, 50494, 17036, 138, 72, 103, 175, 224, 44, 58, 230);
@@ -6539,7 +6539,7 @@ impl IGattServiceProviderResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattServiceProviderResult: IGattServiceProviderResult}
+RT_CLASS!{class GattServiceProviderResult: IGattServiceProviderResult ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattServiceProviderResult"]}
 DEFINE_IID!(IID_IGattServiceProviderStatics, 830029923, 21078, 16468, 164, 244, 123, 190, 119, 85, 165, 126);
 RT_INTERFACE!{static interface IGattServiceProviderStatics(IGattServiceProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProviderStatics] {
     fn CreateAsync(&self, serviceUuid: Guid, out: *mut *mut foundation::IAsyncOperation<GattServiceProviderResult>) -> HRESULT
@@ -6827,7 +6827,7 @@ impl IGattSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattSession: IGattSession}
+RT_CLASS!{class GattSession: IGattSession ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattSession"]}
 impl RtActivatable<IGattSessionStatics> for GattSession {}
 impl GattSession {
     #[inline] pub fn from_device_id_async(deviceId: &super::BluetoothDeviceId) -> Result<ComPtr<foundation::IAsyncOperation<GattSession>>> {
@@ -6846,7 +6846,7 @@ impl IGattSessionStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GattSessionStatus: i32 {
+RT_ENUM! { enum GattSessionStatus: i32 ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattSessionStatus"] {
     Closed (GattSessionStatus_Closed) = 0, Active (GattSessionStatus_Active) = 1,
 }}
 DEFINE_IID!(IID_IGattSessionStatusChangedEventArgs, 1980086062, 33663, 16460, 171, 52, 49, 99, 243, 157, 223, 50);
@@ -6866,8 +6866,8 @@ impl IGattSessionStatusChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattSessionStatusChangedEventArgs: IGattSessionStatusChangedEventArgs}
-RT_ENUM! { enum GattSharingMode: i32 {
+RT_CLASS!{class GattSessionStatusChangedEventArgs: IGattSessionStatusChangedEventArgs ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattSessionStatusChangedEventArgs"]}
+RT_ENUM! { enum GattSharingMode: i32 ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattSharingMode"] {
     Unspecified (GattSharingMode_Unspecified) = 0, Exclusive (GattSharingMode_Exclusive) = 1, SharedReadOnly (GattSharingMode_SharedReadOnly) = 2, SharedReadAndWrite (GattSharingMode_SharedReadAndWrite) = 3,
 }}
 DEFINE_IID!(IID_IGattSubscribedClient, 1936625665, 5540, 20162, 146, 72, 227, 242, 13, 70, 59, 233);
@@ -6898,7 +6898,7 @@ impl IGattSubscribedClient {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattSubscribedClient: IGattSubscribedClient}
+RT_CLASS!{class GattSubscribedClient: IGattSubscribedClient ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattSubscribedClient"]}
 DEFINE_IID!(IID_IGattValueChangedEventArgs, 3525040980, 1763, 20184, 162, 99, 172, 250, 200, 186, 115, 19);
 RT_INTERFACE!{interface IGattValueChangedEventArgs(IGattValueChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGattValueChangedEventArgs] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -6917,8 +6917,8 @@ impl IGattValueChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattValueChangedEventArgs: IGattValueChangedEventArgs}
-RT_ENUM! { enum GattWriteOption: i32 {
+RT_CLASS!{class GattValueChangedEventArgs: IGattValueChangedEventArgs ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattValueChangedEventArgs"]}
+RT_ENUM! { enum GattWriteOption: i32 ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattWriteOption"] {
     WriteWithResponse (GattWriteOption_WriteWithResponse) = 0, WriteWithoutResponse (GattWriteOption_WriteWithoutResponse) = 1,
 }}
 DEFINE_IID!(IID_IGattWriteRequest, 2931206637, 56879, 20418, 169, 168, 148, 234, 120, 68, 241, 61);
@@ -6972,7 +6972,7 @@ impl IGattWriteRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattWriteRequest: IGattWriteRequest}
+RT_CLASS!{class GattWriteRequest: IGattWriteRequest ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattWriteRequest"]}
 DEFINE_IID!(IID_IGattWriteRequestedEventArgs, 770476990, 42810, 18202, 148, 213, 3, 125, 234, 221, 8, 6);
 RT_INTERFACE!{interface IGattWriteRequestedEventArgs(IGattWriteRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGattWriteRequestedEventArgs] {
     fn get_Session(&self, out: *mut *mut GattSession) -> HRESULT,
@@ -6996,7 +6996,7 @@ impl IGattWriteRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattWriteRequestedEventArgs: IGattWriteRequestedEventArgs}
+RT_CLASS!{class GattWriteRequestedEventArgs: IGattWriteRequestedEventArgs ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattWriteRequestedEventArgs"]}
 DEFINE_IID!(IID_IGattWriteResult, 1234296241, 52011, 17655, 153, 252, 210, 154, 40, 113, 220, 155);
 RT_INTERFACE!{interface IGattWriteResult(IGattWriteResultVtbl): IInspectable(IInspectableVtbl) [IID_IGattWriteResult] {
     fn get_Status(&self, out: *mut GattCommunicationStatus) -> HRESULT,
@@ -7014,7 +7014,7 @@ impl IGattWriteResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattWriteResult: IGattWriteResult}
+RT_CLASS!{class GattWriteResult: IGattWriteResult ["Windows.Devices.Bluetooth.GenericAttributeProfile.GattWriteResult"]}
 } // Windows.Devices.Bluetooth.GenericAttributeProfile
 pub mod rfcomm { // Windows.Devices.Bluetooth.Rfcomm
 use ::prelude::*;
@@ -7068,7 +7068,7 @@ impl IRfcommDeviceService {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RfcommDeviceService: IRfcommDeviceService}
+RT_CLASS!{class RfcommDeviceService: IRfcommDeviceService ["Windows.Devices.Bluetooth.Rfcomm.RfcommDeviceService"]}
 impl RtActivatable<IRfcommDeviceServiceStatics> for RfcommDeviceService {}
 impl RtActivatable<IRfcommDeviceServiceStatics2> for RfcommDeviceService {}
 impl RfcommDeviceService {
@@ -7137,7 +7137,7 @@ impl IRfcommDeviceServicesResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RfcommDeviceServicesResult: IRfcommDeviceServicesResult}
+RT_CLASS!{class RfcommDeviceServicesResult: IRfcommDeviceServicesResult ["Windows.Devices.Bluetooth.Rfcomm.RfcommDeviceServicesResult"]}
 DEFINE_IID!(IID_IRfcommDeviceServiceStatics, 2762033647, 25197, 16812, 178, 83, 135, 172, 92, 39, 226, 138);
 RT_INTERFACE!{static interface IRfcommDeviceServiceStatics(IRfcommDeviceServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommDeviceServiceStatics] {
     fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncOperation<RfcommDeviceService>) -> HRESULT,
@@ -7207,7 +7207,7 @@ impl IRfcommServiceId {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RfcommServiceId: IRfcommServiceId}
+RT_CLASS!{class RfcommServiceId: IRfcommServiceId ["Windows.Devices.Bluetooth.Rfcomm.RfcommServiceId"]}
 impl RtActivatable<IRfcommServiceIdStatics> for RfcommServiceId {}
 impl RfcommServiceId {
     #[inline] pub fn from_uuid(uuid: Guid) -> Result<Option<ComPtr<RfcommServiceId>>> {
@@ -7318,7 +7318,7 @@ impl IRfcommServiceProvider {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RfcommServiceProvider: IRfcommServiceProvider}
+RT_CLASS!{class RfcommServiceProvider: IRfcommServiceProvider ["Windows.Devices.Bluetooth.Rfcomm.RfcommServiceProvider"]}
 impl RtActivatable<IRfcommServiceProviderStatics> for RfcommServiceProvider {}
 impl RfcommServiceProvider {
     #[inline] pub fn create_async(serviceId: &RfcommServiceId) -> Result<ComPtr<foundation::IAsyncOperation<RfcommServiceProvider>>> {
@@ -7380,7 +7380,7 @@ impl ICustomDevice {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CustomDevice: ICustomDevice}
+RT_CLASS!{class CustomDevice: ICustomDevice ["Windows.Devices.Custom.CustomDevice"]}
 impl RtActivatable<ICustomDeviceStatics> for CustomDevice {}
 impl CustomDevice {
     #[inline] pub fn get_device_selector(classGuid: Guid) -> Result<HString> {
@@ -7408,10 +7408,10 @@ impl ICustomDeviceStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DeviceAccessMode: i32 {
+RT_ENUM! { enum DeviceAccessMode: i32 ["Windows.Devices.Custom.DeviceAccessMode"] {
     Read (DeviceAccessMode_Read) = 0, Write (DeviceAccessMode_Write) = 1, ReadWrite (DeviceAccessMode_ReadWrite) = 2,
 }}
-RT_ENUM! { enum DeviceSharingMode: i32 {
+RT_ENUM! { enum DeviceSharingMode: i32 ["Windows.Devices.Custom.DeviceSharingMode"] {
     Shared (DeviceSharingMode_Shared) = 0, Exclusive (DeviceSharingMode_Exclusive) = 1,
 }}
 DEFINE_IID!(IID_IIOControlCode, 244668903, 24776, 17269, 167, 97, 127, 136, 8, 6, 108, 96);
@@ -7479,13 +7479,13 @@ impl IKnownDeviceTypesStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum IOControlAccessMode: i32 {
+RT_ENUM! { enum IOControlAccessMode: i32 ["Windows.Devices.Custom.IOControlAccessMode"] {
     Any (IOControlAccessMode_Any) = 0, Read (IOControlAccessMode_Read) = 1, Write (IOControlAccessMode_Write) = 2, ReadWrite (IOControlAccessMode_ReadWrite) = 3,
 }}
-RT_ENUM! { enum IOControlBufferingMethod: i32 {
+RT_ENUM! { enum IOControlBufferingMethod: i32 ["Windows.Devices.Custom.IOControlBufferingMethod"] {
     Buffered (IOControlBufferingMethod_Buffered) = 0, DirectInput (IOControlBufferingMethod_DirectInput) = 1, DirectOutput (IOControlBufferingMethod_DirectOutput) = 2, Neither (IOControlBufferingMethod_Neither) = 3,
 }}
-RT_CLASS!{class IOControlCode: IIOControlCode}
+RT_CLASS!{class IOControlCode: IIOControlCode ["Windows.Devices.Custom.IOControlCode"]}
 impl RtActivatable<IIOControlCodeFactory> for IOControlCode {}
 impl IOControlCode {
     #[inline] pub fn create_io_control_code(deviceType: u16, function: u16, accessMode: IOControlAccessMode, bufferingMethod: IOControlBufferingMethod) -> Result<ComPtr<IOControlCode>> {
@@ -7623,7 +7623,7 @@ impl IDisplayMonitor {
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayMonitor: IDisplayMonitor}
+RT_CLASS!{class DisplayMonitor: IDisplayMonitor ["Windows.Devices.Display.DisplayMonitor"]}
 impl RtActivatable<IDisplayMonitorStatics> for DisplayMonitor {}
 impl DisplayMonitor {
     #[inline] pub fn get_device_selector() -> Result<HString> {
@@ -7637,13 +7637,13 @@ impl DisplayMonitor {
     }
 }
 DEFINE_CLSID!(DisplayMonitor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,68,105,115,112,108,97,121,46,68,105,115,112,108,97,121,77,111,110,105,116,111,114,0]) [CLSID_DisplayMonitor]);
-RT_ENUM! { enum DisplayMonitorConnectionKind: i32 {
+RT_ENUM! { enum DisplayMonitorConnectionKind: i32 ["Windows.Devices.Display.DisplayMonitorConnectionKind"] {
     Internal (DisplayMonitorConnectionKind_Internal) = 0, Wired (DisplayMonitorConnectionKind_Wired) = 1, Wireless (DisplayMonitorConnectionKind_Wireless) = 2, Virtual (DisplayMonitorConnectionKind_Virtual) = 3,
 }}
-RT_ENUM! { enum DisplayMonitorDescriptorKind: i32 {
+RT_ENUM! { enum DisplayMonitorDescriptorKind: i32 ["Windows.Devices.Display.DisplayMonitorDescriptorKind"] {
     Edid (DisplayMonitorDescriptorKind_Edid) = 0, DisplayId (DisplayMonitorDescriptorKind_DisplayId) = 1,
 }}
-RT_ENUM! { enum DisplayMonitorPhysicalConnectorKind: i32 {
+RT_ENUM! { enum DisplayMonitorPhysicalConnectorKind: i32 ["Windows.Devices.Display.DisplayMonitorPhysicalConnectorKind"] {
     Unknown (DisplayMonitorPhysicalConnectorKind_Unknown) = 0, HD15 (DisplayMonitorPhysicalConnectorKind_HD15) = 1, AnalogTV (DisplayMonitorPhysicalConnectorKind_AnalogTV) = 2, Dvi (DisplayMonitorPhysicalConnectorKind_Dvi) = 3, Hdmi (DisplayMonitorPhysicalConnectorKind_Hdmi) = 4, Lvds (DisplayMonitorPhysicalConnectorKind_Lvds) = 5, Sdi (DisplayMonitorPhysicalConnectorKind_Sdi) = 6, DisplayPort (DisplayMonitorPhysicalConnectorKind_DisplayPort) = 7,
 }}
 DEFINE_IID!(IID_IDisplayMonitorStatics, 1856924047, 41512, 19461, 130, 29, 182, 149, 214, 103, 222, 142);
@@ -7669,7 +7669,7 @@ impl IDisplayMonitorStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DisplayMonitorUsageKind: i32 {
+RT_ENUM! { enum DisplayMonitorUsageKind: i32 ["Windows.Devices.Display.DisplayMonitorUsageKind"] {
     Standard (DisplayMonitorUsageKind_Standard) = 0, HeadMounted (DisplayMonitorUsageKind_HeadMounted) = 1, SpecialPurpose (DisplayMonitorUsageKind_SpecialPurpose) = 2,
 }}
 pub mod core { // Windows.Devices.Display.Core
@@ -7728,7 +7728,7 @@ impl IDisplayAdapter {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayAdapter: IDisplayAdapter}
+RT_CLASS!{class DisplayAdapter: IDisplayAdapter ["Windows.Devices.Display.Core.DisplayAdapter"]}
 impl RtActivatable<IDisplayAdapterStatics> for DisplayAdapter {}
 impl DisplayAdapter {
     #[cfg(feature="windows-graphics")] #[inline] pub fn from_id(id: ::rt::gen::windows::graphics::DisplayAdapterId) -> Result<Option<ComPtr<DisplayAdapter>>> {
@@ -7747,7 +7747,7 @@ impl IDisplayAdapterStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DisplayBitsPerChannel: u32 {
+RT_ENUM! { enum DisplayBitsPerChannel: u32 ["Windows.Devices.Display.Core.DisplayBitsPerChannel"] {
     None (DisplayBitsPerChannel_None) = 0, Bpc6 (DisplayBitsPerChannel_Bpc6) = 1, Bpc8 (DisplayBitsPerChannel_Bpc8) = 2, Bpc10 (DisplayBitsPerChannel_Bpc10) = 4, Bpc12 (DisplayBitsPerChannel_Bpc12) = 8, Bpc14 (DisplayBitsPerChannel_Bpc14) = 16, Bpc16 (DisplayBitsPerChannel_Bpc16) = 32,
 }}
 DEFINE_IID!(IID_IDisplayDevice, 2764682796, 13151, 22321, 140, 180, 193, 204, 212, 115, 16, 112);
@@ -7796,15 +7796,15 @@ impl IDisplayDevice {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayDevice: IDisplayDevice}
-RT_ENUM! { enum DisplayDeviceCapability: i32 {
+RT_CLASS!{class DisplayDevice: IDisplayDevice ["Windows.Devices.Display.Core.DisplayDevice"]}
+RT_ENUM! { enum DisplayDeviceCapability: i32 ["Windows.Devices.Display.Core.DisplayDeviceCapability"] {
     FlipOverride (DisplayDeviceCapability_FlipOverride) = 0,
 }}
 DEFINE_IID!(IID_IDisplayFence, 81590767, 13318, 22272, 143, 236, 119, 235, 164, 197, 167, 75);
 RT_INTERFACE!{interface IDisplayFence(IDisplayFenceVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayFence] {
     
 }}
-RT_CLASS!{class DisplayFence: IDisplayFence}
+RT_CLASS!{class DisplayFence: IDisplayFence ["Windows.Devices.Display.Core.DisplayFence"]}
 DEFINE_IID!(IID_IDisplayManager, 1322853467, 5612, 22242, 144, 114, 127, 229, 8, 74, 49, 167);
 RT_INTERFACE!{interface IDisplayManager(IDisplayManagerVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayManager] {
     fn GetCurrentTargets(&self, out: *mut *mut foundation::collections::IVectorView<DisplayTarget>) -> HRESULT,
@@ -7917,7 +7917,7 @@ impl IDisplayManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayManager: IDisplayManager}
+RT_CLASS!{class DisplayManager: IDisplayManager ["Windows.Devices.Display.Core.DisplayManager"]}
 impl RtActivatable<IDisplayManagerStatics> for DisplayManager {}
 impl DisplayManager {
     #[inline] pub fn create(options: DisplayManagerOptions) -> Result<Option<ComPtr<DisplayManager>>> {
@@ -7947,7 +7947,7 @@ impl IDisplayManagerChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayManagerChangedEventArgs: IDisplayManagerChangedEventArgs}
+RT_CLASS!{class DisplayManagerChangedEventArgs: IDisplayManagerChangedEventArgs ["Windows.Devices.Display.Core.DisplayManagerChangedEventArgs"]}
 DEFINE_IID!(IID_IDisplayManagerDisabledEventArgs, 2267471332, 26515, 22899, 161, 31, 95, 251, 201, 63, 219, 144);
 RT_INTERFACE!{interface IDisplayManagerDisabledEventArgs(IDisplayManagerDisabledEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayManagerDisabledEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -7970,7 +7970,7 @@ impl IDisplayManagerDisabledEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayManagerDisabledEventArgs: IDisplayManagerDisabledEventArgs}
+RT_CLASS!{class DisplayManagerDisabledEventArgs: IDisplayManagerDisabledEventArgs ["Windows.Devices.Display.Core.DisplayManagerDisabledEventArgs"]}
 DEFINE_IID!(IID_IDisplayManagerEnabledEventArgs, 4040114031, 17146, 22946, 178, 151, 38, 225, 113, 61, 232, 72);
 RT_INTERFACE!{interface IDisplayManagerEnabledEventArgs(IDisplayManagerEnabledEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayManagerEnabledEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -7993,8 +7993,8 @@ impl IDisplayManagerEnabledEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayManagerEnabledEventArgs: IDisplayManagerEnabledEventArgs}
-RT_ENUM! { enum DisplayManagerOptions: u32 {
+RT_CLASS!{class DisplayManagerEnabledEventArgs: IDisplayManagerEnabledEventArgs ["Windows.Devices.Display.Core.DisplayManagerEnabledEventArgs"]}
+RT_ENUM! { enum DisplayManagerOptions: u32 ["Windows.Devices.Display.Core.DisplayManagerOptions"] {
     None (DisplayManagerOptions_None) = 0, EnforceSourceOwnership (DisplayManagerOptions_EnforceSourceOwnership) = 1,
 }}
 DEFINE_IID!(IID_IDisplayManagerPathsFailedOrInvalidatedEventArgs, 61232729, 7660, 23573, 178, 162, 143, 233, 18, 152, 105, 254);
@@ -8019,8 +8019,8 @@ impl IDisplayManagerPathsFailedOrInvalidatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayManagerPathsFailedOrInvalidatedEventArgs: IDisplayManagerPathsFailedOrInvalidatedEventArgs}
-RT_ENUM! { enum DisplayManagerResult: i32 {
+RT_CLASS!{class DisplayManagerPathsFailedOrInvalidatedEventArgs: IDisplayManagerPathsFailedOrInvalidatedEventArgs ["Windows.Devices.Display.Core.DisplayManagerPathsFailedOrInvalidatedEventArgs"]}
+RT_ENUM! { enum DisplayManagerResult: i32 ["Windows.Devices.Display.Core.DisplayManagerResult"] {
     Success (DisplayManagerResult_Success) = 0, UnknownFailure (DisplayManagerResult_UnknownFailure) = 1, TargetAccessDenied (DisplayManagerResult_TargetAccessDenied) = 2, TargetStale (DisplayManagerResult_TargetStale) = 3, RemoteSessionNotSupported (DisplayManagerResult_RemoteSessionNotSupported) = 4,
 }}
 DEFINE_IID!(IID_IDisplayManagerResultWithState, 2389011110, 26132, 21694, 191, 239, 73, 148, 84, 127, 123, 225);
@@ -8046,7 +8046,7 @@ impl IDisplayManagerResultWithState {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayManagerResultWithState: IDisplayManagerResultWithState}
+RT_CLASS!{class DisplayManagerResultWithState: IDisplayManagerResultWithState ["Windows.Devices.Display.Core.DisplayManagerResultWithState"]}
 DEFINE_IID!(IID_IDisplayManagerStatics, 728470598, 47513, 21813, 157, 105, 83, 240, 146, 199, 128, 161);
 RT_INTERFACE!{static interface IDisplayManagerStatics(IDisplayManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayManagerStatics] {
     fn Create(&self, options: DisplayManagerOptions, out: *mut *mut DisplayManager) -> HRESULT
@@ -8120,8 +8120,8 @@ impl IDisplayModeInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayModeInfo: IDisplayModeInfo}
-RT_ENUM! { enum DisplayModeQueryOptions: u32 {
+RT_CLASS!{class DisplayModeInfo: IDisplayModeInfo ["Windows.Devices.Display.Core.DisplayModeInfo"]}
+RT_ENUM! { enum DisplayModeQueryOptions: u32 ["Windows.Devices.Display.Core.DisplayModeQueryOptions"] {
     None (DisplayModeQueryOptions_None) = 0, OnlyPreferredResolution (DisplayModeQueryOptions_OnlyPreferredResolution) = 1,
 }}
 DEFINE_IID!(IID_IDisplayPath, 3017791050, 29792, 23774, 129, 27, 213, 174, 159, 61, 159, 132);
@@ -8269,14 +8269,14 @@ impl IDisplayPath {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayPath: IDisplayPath}
-RT_ENUM! { enum DisplayPathScaling: i32 {
+RT_CLASS!{class DisplayPath: IDisplayPath ["Windows.Devices.Display.Core.DisplayPath"]}
+RT_ENUM! { enum DisplayPathScaling: i32 ["Windows.Devices.Display.Core.DisplayPathScaling"] {
     Identity (DisplayPathScaling_Identity) = 0, Centered (DisplayPathScaling_Centered) = 1, Stretched (DisplayPathScaling_Stretched) = 2, AspectRatioStretched (DisplayPathScaling_AspectRatioStretched) = 3, Custom (DisplayPathScaling_Custom) = 4, DriverPreferred (DisplayPathScaling_DriverPreferred) = 5,
 }}
-RT_ENUM! { enum DisplayPathStatus: i32 {
+RT_ENUM! { enum DisplayPathStatus: i32 ["Windows.Devices.Display.Core.DisplayPathStatus"] {
     Unknown (DisplayPathStatus_Unknown) = 0, Succeeded (DisplayPathStatus_Succeeded) = 1, Pending (DisplayPathStatus_Pending) = 2, Failed (DisplayPathStatus_Failed) = 3, FailedAsync (DisplayPathStatus_FailedAsync) = 4, InvalidatedAsync (DisplayPathStatus_InvalidatedAsync) = 5,
 }}
-RT_STRUCT! { struct DisplayPresentationRate {
+RT_STRUCT! { struct DisplayPresentationRate ["Windows.Devices.Display.Core.DisplayPresentationRate"] {
     VerticalSyncRate: foundation::numerics::Rational, VerticalSyncsPerPresentation: i32,
 }}
 DEFINE_IID!(IID_IDisplayPrimaryDescription, 2267386322, 54579, 20735, 168, 94, 6, 105, 97, 148, 183, 124);
@@ -8329,7 +8329,7 @@ impl IDisplayPrimaryDescription {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayPrimaryDescription: IDisplayPrimaryDescription}
+RT_CLASS!{class DisplayPrimaryDescription: IDisplayPrimaryDescription ["Windows.Devices.Display.Core.DisplayPrimaryDescription"]}
 impl RtActivatable<IDisplayPrimaryDescriptionFactory> for DisplayPrimaryDescription {}
 impl RtActivatable<IDisplayPrimaryDescriptionStatics> for DisplayPrimaryDescription {}
 impl DisplayPrimaryDescription {
@@ -8363,14 +8363,14 @@ impl IDisplayPrimaryDescriptionStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DisplayRotation: i32 {
+RT_ENUM! { enum DisplayRotation: i32 ["Windows.Devices.Display.Core.DisplayRotation"] {
     None (DisplayRotation_None) = 0, Clockwise90Degrees (DisplayRotation_Clockwise90Degrees) = 1, Clockwise180Degrees (DisplayRotation_Clockwise180Degrees) = 2, Clockwise270Degrees (DisplayRotation_Clockwise270Degrees) = 3,
 }}
 DEFINE_IID!(IID_IDisplayScanout, 3808761896, 7077, 20711, 138, 57, 187, 31, 210, 244, 248, 185);
 RT_INTERFACE!{interface IDisplayScanout(IDisplayScanoutVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayScanout] {
     
 }}
-RT_CLASS!{class DisplayScanout: IDisplayScanout}
+RT_CLASS!{class DisplayScanout: IDisplayScanout ["Windows.Devices.Display.Core.DisplayScanout"]}
 DEFINE_IID!(IID_IDisplaySource, 3973144513, 60124, 20924, 151, 29, 59, 198, 40, 219, 45, 212);
 RT_INTERFACE!{interface IDisplaySource(IDisplaySourceVtbl): IInspectable(IInspectableVtbl) [IID_IDisplaySource] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
@@ -8395,7 +8395,7 @@ impl IDisplaySource {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplaySource: IDisplaySource}
+RT_CLASS!{class DisplaySource: IDisplaySource ["Windows.Devices.Display.Core.DisplaySource"]}
 DEFINE_IID!(IID_IDisplayState, 135435041, 4533, 23730, 153, 248, 233, 11, 71, 154, 138, 29);
 RT_INTERFACE!{interface IDisplayState(IDisplayStateVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayState] {
     fn get_IsReadOnly(&self, out: *mut bool) -> HRESULT,
@@ -8484,11 +8484,11 @@ impl IDisplayState {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayState: IDisplayState}
-RT_ENUM! { enum DisplayStateApplyOptions: u32 {
+RT_CLASS!{class DisplayState: IDisplayState ["Windows.Devices.Display.Core.DisplayState"]}
+RT_ENUM! { enum DisplayStateApplyOptions: u32 ["Windows.Devices.Display.Core.DisplayStateApplyOptions"] {
     None (DisplayStateApplyOptions_None) = 0, FailIfStateChanged (DisplayStateApplyOptions_FailIfStateChanged) = 1, ForceReapply (DisplayStateApplyOptions_ForceReapply) = 2, ForceModeEnumeration (DisplayStateApplyOptions_ForceModeEnumeration) = 4,
 }}
-RT_ENUM! { enum DisplayStateFunctionalizeOptions: u32 {
+RT_ENUM! { enum DisplayStateFunctionalizeOptions: u32 ["Windows.Devices.Display.Core.DisplayStateFunctionalizeOptions"] {
     None (DisplayStateFunctionalizeOptions_None) = 0, FailIfStateChanged (DisplayStateFunctionalizeOptions_FailIfStateChanged) = 1, ValidateTopologyOnly (DisplayStateFunctionalizeOptions_ValidateTopologyOnly) = 2,
 }}
 DEFINE_IID!(IID_IDisplayStateOperationResult, 4239245279, 56359, 22072, 183, 242, 235, 223, 164, 247, 234, 147);
@@ -8508,15 +8508,15 @@ impl IDisplayStateOperationResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayStateOperationResult: IDisplayStateOperationResult}
-RT_ENUM! { enum DisplayStateOperationStatus: i32 {
+RT_CLASS!{class DisplayStateOperationResult: IDisplayStateOperationResult ["Windows.Devices.Display.Core.DisplayStateOperationResult"]}
+RT_ENUM! { enum DisplayStateOperationStatus: i32 ["Windows.Devices.Display.Core.DisplayStateOperationStatus"] {
     Success (DisplayStateOperationStatus_Success) = 0, PartialFailure (DisplayStateOperationStatus_PartialFailure) = 1, UnknownFailure (DisplayStateOperationStatus_UnknownFailure) = 2, TargetOwnershipLost (DisplayStateOperationStatus_TargetOwnershipLost) = 3, SystemStateChanged (DisplayStateOperationStatus_SystemStateChanged) = 4, TooManyPathsForAdapter (DisplayStateOperationStatus_TooManyPathsForAdapter) = 5, ModesNotSupported (DisplayStateOperationStatus_ModesNotSupported) = 6, RemoteSessionNotSupported (DisplayStateOperationStatus_RemoteSessionNotSupported) = 7,
 }}
 DEFINE_IID!(IID_IDisplaySurface, 1498377414, 5018, 22230, 164, 177, 21, 254, 44, 183, 106, 219);
 RT_INTERFACE!{interface IDisplaySurface(IDisplaySurfaceVtbl): IInspectable(IInspectableVtbl) [IID_IDisplaySurface] {
     
 }}
-RT_CLASS!{class DisplaySurface: IDisplaySurface}
+RT_CLASS!{class DisplaySurface: IDisplaySurface ["Windows.Devices.Display.Core.DisplaySurface"]}
 DEFINE_IID!(IID_IDisplayTarget, 2932178031, 18356, 21611, 152, 124, 231, 63, 167, 145, 254, 58);
 RT_INTERFACE!{interface IDisplayTarget(IDisplayTargetVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayTarget] {
     fn get_Adapter(&self, out: *mut *mut DisplayAdapter) -> HRESULT,
@@ -8606,8 +8606,8 @@ impl IDisplayTarget {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayTarget: IDisplayTarget}
-RT_ENUM! { enum DisplayTargetPersistence: i32 {
+RT_CLASS!{class DisplayTarget: IDisplayTarget ["Windows.Devices.Display.Core.DisplayTarget"]}
+RT_ENUM! { enum DisplayTargetPersistence: i32 ["Windows.Devices.Display.Core.DisplayTargetPersistence"] {
     None (DisplayTargetPersistence_None) = 0, BootPersisted (DisplayTargetPersistence_BootPersisted) = 1, TemporaryPersisted (DisplayTargetPersistence_TemporaryPersisted) = 2, PathPersisted (DisplayTargetPersistence_PathPersisted) = 3,
 }}
 DEFINE_IID!(IID_IDisplayTask, 1577612360, 4955, 23472, 191, 99, 99, 127, 132, 34, 124, 122);
@@ -8625,7 +8625,7 @@ impl IDisplayTask {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayTask: IDisplayTask}
+RT_CLASS!{class DisplayTask: IDisplayTask ["Windows.Devices.Display.Core.DisplayTask"]}
 DEFINE_IID!(IID_IDisplayTaskPool, 3329631549, 9085, 21832, 170, 250, 62, 81, 127, 239, 239, 28);
 RT_INTERFACE!{interface IDisplayTaskPool(IDisplayTaskPoolVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayTaskPool] {
     fn CreateTask(&self, out: *mut *mut DisplayTask) -> HRESULT,
@@ -8642,8 +8642,8 @@ impl IDisplayTaskPool {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayTaskPool: IDisplayTaskPool}
-RT_ENUM! { enum DisplayTaskSignalKind: i32 {
+RT_CLASS!{class DisplayTaskPool: IDisplayTaskPool ["Windows.Devices.Display.Core.DisplayTaskPool"]}
+RT_ENUM! { enum DisplayTaskSignalKind: i32 ["Windows.Devices.Display.Core.DisplayTaskSignalKind"] {
     OnPresentFlipAway (DisplayTaskSignalKind_OnPresentFlipAway) = 0,
 }}
 DEFINE_IID!(IID_IDisplayView, 2965998753, 46937, 23385, 177, 173, 240, 120, 106, 169, 229, 61);
@@ -8681,7 +8681,7 @@ impl IDisplayView {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayView: IDisplayView}
+RT_CLASS!{class DisplayView: IDisplayView ["Windows.Devices.Display.Core.DisplayView"]}
 DEFINE_IID!(IID_IDisplayWireFormat, 449615485, 34604, 23096, 187, 185, 29, 72, 114, 183, 98, 85);
 RT_INTERFACE!{interface IDisplayWireFormat(IDisplayWireFormatVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayWireFormat] {
     fn get_PixelEncoding(&self, out: *mut DisplayWireFormatPixelEncoding) -> HRESULT,
@@ -8723,7 +8723,7 @@ impl IDisplayWireFormat {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DisplayWireFormat: IDisplayWireFormat}
+RT_CLASS!{class DisplayWireFormat: IDisplayWireFormat ["Windows.Devices.Display.Core.DisplayWireFormat"]}
 impl RtActivatable<IDisplayWireFormatFactory> for DisplayWireFormat {}
 impl RtActivatable<IDisplayWireFormatStatics> for DisplayWireFormat {}
 impl DisplayWireFormat {
@@ -8735,10 +8735,10 @@ impl DisplayWireFormat {
     }
 }
 DEFINE_CLSID!(DisplayWireFormat(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,68,105,115,112,108,97,121,46,67,111,114,101,46,68,105,115,112,108,97,121,87,105,114,101,70,111,114,109,97,116,0]) [CLSID_DisplayWireFormat]);
-RT_ENUM! { enum DisplayWireFormatColorSpace: i32 {
+RT_ENUM! { enum DisplayWireFormatColorSpace: i32 ["Windows.Devices.Display.Core.DisplayWireFormatColorSpace"] {
     BT709 (DisplayWireFormatColorSpace_BT709) = 0, BT2020 (DisplayWireFormatColorSpace_BT2020) = 1, ProfileDefinedWideColorGamut (DisplayWireFormatColorSpace_ProfileDefinedWideColorGamut) = 2,
 }}
-RT_ENUM! { enum DisplayWireFormatEotf: i32 {
+RT_ENUM! { enum DisplayWireFormatEotf: i32 ["Windows.Devices.Display.Core.DisplayWireFormatEotf"] {
     Sdr (DisplayWireFormatEotf_Sdr) = 0, HdrSmpte2084 (DisplayWireFormatEotf_HdrSmpte2084) = 1,
 }}
 DEFINE_IID!(IID_IDisplayWireFormatFactory, 3002058965, 2518, 21990, 173, 34, 144, 20, 179, 210, 82, 41);
@@ -8752,10 +8752,10 @@ impl IDisplayWireFormatFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DisplayWireFormatHdrMetadata: i32 {
+RT_ENUM! { enum DisplayWireFormatHdrMetadata: i32 ["Windows.Devices.Display.Core.DisplayWireFormatHdrMetadata"] {
     None (DisplayWireFormatHdrMetadata_None) = 0, Hdr10 (DisplayWireFormatHdrMetadata_Hdr10) = 1, Hdr10Plus (DisplayWireFormatHdrMetadata_Hdr10Plus) = 2, DolbyVisionLowLatency (DisplayWireFormatHdrMetadata_DolbyVisionLowLatency) = 3,
 }}
-RT_ENUM! { enum DisplayWireFormatPixelEncoding: i32 {
+RT_ENUM! { enum DisplayWireFormatPixelEncoding: i32 ["Windows.Devices.Display.Core.DisplayWireFormatPixelEncoding"] {
     Rgb444 (DisplayWireFormatPixelEncoding_Rgb444) = 0, Ycc444 (DisplayWireFormatPixelEncoding_Ycc444) = 1, Ycc422 (DisplayWireFormatPixelEncoding_Ycc422) = 2, Ycc420 (DisplayWireFormatPixelEncoding_Ycc420) = 3, Intensity (DisplayWireFormatPixelEncoding_Intensity) = 4,
 }}
 DEFINE_IID!(IID_IDisplayWireFormatStatics, 3312820781, 50150, 24442, 189, 251, 135, 198, 171, 134, 97, 213);
@@ -8784,7 +8784,7 @@ impl IDeviceAccessChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceAccessChangedEventArgs: IDeviceAccessChangedEventArgs}
+RT_CLASS!{class DeviceAccessChangedEventArgs: IDeviceAccessChangedEventArgs ["Windows.Devices.Enumeration.DeviceAccessChangedEventArgs"]}
 DEFINE_IID!(IID_IDeviceAccessChangedEventArgs2, 2186424930, 37707, 19248, 161, 120, 173, 195, 159, 47, 43, 227);
 RT_INTERFACE!{interface IDeviceAccessChangedEventArgs2(IDeviceAccessChangedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IDeviceAccessChangedEventArgs2] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT
@@ -8818,7 +8818,7 @@ impl IDeviceAccessInformation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceAccessInformation: IDeviceAccessInformation}
+RT_CLASS!{class DeviceAccessInformation: IDeviceAccessInformation ["Windows.Devices.Enumeration.DeviceAccessInformation"]}
 impl RtActivatable<IDeviceAccessInformationStatics> for DeviceAccessInformation {}
 impl DeviceAccessInformation {
     #[inline] pub fn create_from_id(deviceId: &HStringArg) -> Result<Option<ComPtr<DeviceAccessInformation>>> {
@@ -8855,10 +8855,10 @@ impl IDeviceAccessInformationStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DeviceAccessStatus: i32 {
+RT_ENUM! { enum DeviceAccessStatus: i32 ["Windows.Devices.Enumeration.DeviceAccessStatus"] {
     Unspecified (DeviceAccessStatus_Unspecified) = 0, Allowed (DeviceAccessStatus_Allowed) = 1, DeniedByUser (DeviceAccessStatus_DeniedByUser) = 2, DeniedBySystem (DeviceAccessStatus_DeniedBySystem) = 3,
 }}
-RT_ENUM! { enum DeviceClass: i32 {
+RT_ENUM! { enum DeviceClass: i32 ["Windows.Devices.Enumeration.DeviceClass"] {
     All (DeviceClass_All) = 0, AudioCapture (DeviceClass_AudioCapture) = 1, AudioRender (DeviceClass_AudioRender) = 2, PortableStorageDevice (DeviceClass_PortableStorageDevice) = 3, VideoCapture (DeviceClass_VideoCapture) = 4, ImageScanner (DeviceClass_ImageScanner) = 5, Location (DeviceClass_Location) = 6,
 }}
 DEFINE_IID!(IID_IDeviceConnectionChangeTriggerDetails, 3092745228, 48065, 18507, 191, 250, 123, 49, 220, 194, 0, 178);
@@ -8872,7 +8872,7 @@ impl IDeviceConnectionChangeTriggerDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceConnectionChangeTriggerDetails: IDeviceConnectionChangeTriggerDetails}
+RT_CLASS!{class DeviceConnectionChangeTriggerDetails: IDeviceConnectionChangeTriggerDetails ["Windows.Devices.Enumeration.DeviceConnectionChangeTriggerDetails"]}
 DEFINE_IID!(IID_IDeviceDisconnectButtonClickedEventArgs, 2386867565, 63746, 18944, 181, 54, 243, 121, 146, 230, 162, 167);
 RT_INTERFACE!{interface IDeviceDisconnectButtonClickedEventArgs(IDeviceDisconnectButtonClickedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceDisconnectButtonClickedEventArgs] {
     fn get_Device(&self, out: *mut *mut DeviceInformation) -> HRESULT
@@ -8884,7 +8884,7 @@ impl IDeviceDisconnectButtonClickedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceDisconnectButtonClickedEventArgs: IDeviceDisconnectButtonClickedEventArgs}
+RT_CLASS!{class DeviceDisconnectButtonClickedEventArgs: IDeviceDisconnectButtonClickedEventArgs ["Windows.Devices.Enumeration.DeviceDisconnectButtonClickedEventArgs"]}
 DEFINE_IID!(IID_IDeviceInformation, 2879454101, 17304, 18589, 142, 68, 230, 19, 9, 39, 1, 31);
 RT_INTERFACE!{interface IDeviceInformation(IDeviceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformation] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -8943,7 +8943,7 @@ impl IDeviceInformation {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceInformation: IDeviceInformation}
+RT_CLASS!{class DeviceInformation: IDeviceInformation ["Windows.Devices.Enumeration.DeviceInformation"]}
 impl RtActivatable<IDeviceInformationStatics> for DeviceInformation {}
 impl RtActivatable<IDeviceInformationStatics2> for DeviceInformation {}
 impl DeviceInformation {
@@ -9008,7 +9008,7 @@ impl IDeviceInformation2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceInformationCollection: foundation::collections::IVectorView<DeviceInformation>}
+RT_CLASS!{class DeviceInformationCollection: foundation::collections::IVectorView<DeviceInformation> ["Windows.Devices.Enumeration.DeviceInformationCollection"]}
 DEFINE_IID!(IID_IDeviceInformationCustomPairing, 2232650754, 20198, 18708, 131, 112, 16, 122, 57, 20, 76, 14);
 RT_INTERFACE!{interface IDeviceInformationCustomPairing(IDeviceInformationCustomPairingVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationCustomPairing] {
     fn PairAsync(&self, pairingKindsSupported: DevicePairingKinds, out: *mut *mut foundation::IAsyncOperation<DevicePairingResult>) -> HRESULT,
@@ -9043,8 +9043,8 @@ impl IDeviceInformationCustomPairing {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceInformationCustomPairing: IDeviceInformationCustomPairing}
-RT_ENUM! { enum DeviceInformationKind: i32 {
+RT_CLASS!{class DeviceInformationCustomPairing: IDeviceInformationCustomPairing ["Windows.Devices.Enumeration.DeviceInformationCustomPairing"]}
+RT_ENUM! { enum DeviceInformationKind: i32 ["Windows.Devices.Enumeration.DeviceInformationKind"] {
     Unknown (DeviceInformationKind_Unknown) = 0, DeviceInterface (DeviceInformationKind_DeviceInterface) = 1, DeviceContainer (DeviceInformationKind_DeviceContainer) = 2, Device (DeviceInformationKind_Device) = 3, DeviceInterfaceClass (DeviceInformationKind_DeviceInterfaceClass) = 4, AssociationEndpoint (DeviceInformationKind_AssociationEndpoint) = 5, AssociationEndpointContainer (DeviceInformationKind_AssociationEndpointContainer) = 6, AssociationEndpointService (DeviceInformationKind_AssociationEndpointService) = 7, DevicePanel (DeviceInformationKind_DevicePanel) = 8,
 }}
 DEFINE_IID!(IID_IDeviceInformationPairing, 742877685, 63108, 16597, 132, 105, 232, 219, 170, 183, 4, 133);
@@ -9076,7 +9076,7 @@ impl IDeviceInformationPairing {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceInformationPairing: IDeviceInformationPairing}
+RT_CLASS!{class DeviceInformationPairing: IDeviceInformationPairing ["Windows.Devices.Enumeration.DeviceInformationPairing"]}
 impl RtActivatable<IDeviceInformationPairingStatics> for DeviceInformationPairing {}
 impl RtActivatable<IDeviceInformationPairingStatics2> for DeviceInformationPairing {}
 impl DeviceInformationPairing {
@@ -9250,7 +9250,7 @@ impl IDeviceInformationUpdate {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceInformationUpdate: IDeviceInformationUpdate}
+RT_CLASS!{class DeviceInformationUpdate: IDeviceInformationUpdate ["Windows.Devices.Enumeration.DeviceInformationUpdate"]}
 DEFINE_IID!(IID_IDeviceInformationUpdate2, 1570575500, 43123, 18526, 186, 166, 170, 98, 7, 136, 227, 204);
 RT_INTERFACE!{interface IDeviceInformationUpdate2(IDeviceInformationUpdate2Vtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationUpdate2] {
     fn get_Kind(&self, out: *mut DeviceInformationKind) -> HRESULT
@@ -9262,10 +9262,10 @@ impl IDeviceInformationUpdate2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DevicePairingKinds: u32 {
+RT_ENUM! { enum DevicePairingKinds: u32 ["Windows.Devices.Enumeration.DevicePairingKinds"] {
     None (DevicePairingKinds_None) = 0, ConfirmOnly (DevicePairingKinds_ConfirmOnly) = 1, DisplayPin (DevicePairingKinds_DisplayPin) = 2, ProvidePin (DevicePairingKinds_ProvidePin) = 4, ConfirmPinMatch (DevicePairingKinds_ConfirmPinMatch) = 8,
 }}
-RT_ENUM! { enum DevicePairingProtectionLevel: i32 {
+RT_ENUM! { enum DevicePairingProtectionLevel: i32 ["Windows.Devices.Enumeration.DevicePairingProtectionLevel"] {
     Default (DevicePairingProtectionLevel_Default) = 0, None (DevicePairingProtectionLevel_None) = 1, Encryption (DevicePairingProtectionLevel_Encryption) = 2, EncryptionAndAuthentication (DevicePairingProtectionLevel_EncryptionAndAuthentication) = 3,
 }}
 DEFINE_IID!(IID_IDevicePairingRequestedEventArgs, 4145544278, 56939, 18559, 131, 118, 1, 128, 172, 166, 153, 99);
@@ -9307,7 +9307,7 @@ impl IDevicePairingRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DevicePairingRequestedEventArgs: IDevicePairingRequestedEventArgs}
+RT_CLASS!{class DevicePairingRequestedEventArgs: IDevicePairingRequestedEventArgs ["Windows.Devices.Enumeration.DevicePairingRequestedEventArgs"]}
 DEFINE_IID!(IID_IDevicePairingResult, 120259263, 56725, 16421, 155, 55, 222, 81, 173, 186, 55, 183);
 RT_INTERFACE!{interface IDevicePairingResult(IDevicePairingResultVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePairingResult] {
     fn get_Status(&self, out: *mut DevicePairingResultStatus) -> HRESULT,
@@ -9325,8 +9325,8 @@ impl IDevicePairingResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DevicePairingResult: IDevicePairingResult}
-RT_ENUM! { enum DevicePairingResultStatus: i32 {
+RT_CLASS!{class DevicePairingResult: IDevicePairingResult ["Windows.Devices.Enumeration.DevicePairingResult"]}
+RT_ENUM! { enum DevicePairingResultStatus: i32 ["Windows.Devices.Enumeration.DevicePairingResultStatus"] {
     Paired (DevicePairingResultStatus_Paired) = 0, NotReadyToPair (DevicePairingResultStatus_NotReadyToPair) = 1, NotPaired (DevicePairingResultStatus_NotPaired) = 2, AlreadyPaired (DevicePairingResultStatus_AlreadyPaired) = 3, ConnectionRejected (DevicePairingResultStatus_ConnectionRejected) = 4, TooManyConnections (DevicePairingResultStatus_TooManyConnections) = 5, HardwareFailure (DevicePairingResultStatus_HardwareFailure) = 6, AuthenticationTimeout (DevicePairingResultStatus_AuthenticationTimeout) = 7, AuthenticationNotAllowed (DevicePairingResultStatus_AuthenticationNotAllowed) = 8, AuthenticationFailure (DevicePairingResultStatus_AuthenticationFailure) = 9, NoSupportedProfiles (DevicePairingResultStatus_NoSupportedProfiles) = 10, ProtectionLevelCouldNotBeMet (DevicePairingResultStatus_ProtectionLevelCouldNotBeMet) = 11, AccessDenied (DevicePairingResultStatus_AccessDenied) = 12, InvalidCeremonyData (DevicePairingResultStatus_InvalidCeremonyData) = 13, PairingCanceled (DevicePairingResultStatus_PairingCanceled) = 14, OperationAlreadyInProgress (DevicePairingResultStatus_OperationAlreadyInProgress) = 15, RequiredHandlerNotRegistered (DevicePairingResultStatus_RequiredHandlerNotRegistered) = 16, RejectedByHandler (DevicePairingResultStatus_RejectedByHandler) = 17, RemoteDeviceHasAssociation (DevicePairingResultStatus_RemoteDeviceHasAssociation) = 18, Failed (DevicePairingResultStatus_Failed) = 19,
 }}
 DEFINE_IID!(IID_IDevicePairingSettings, 1210888828, 33723, 16910, 190, 81, 102, 2, 178, 34, 222, 84);
@@ -9423,7 +9423,7 @@ impl IDevicePicker {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DevicePicker: IDevicePicker}
+RT_CLASS!{class DevicePicker: IDevicePicker ["Windows.Devices.Enumeration.DevicePicker"]}
 impl RtActivatable<IActivationFactory> for DevicePicker {}
 DEFINE_CLSID!(DevicePicker(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,69,110,117,109,101,114,97,116,105,111,110,46,68,101,118,105,99,101,80,105,99,107,101,114,0]) [CLSID_DevicePicker]);
 DEFINE_IID!(IID_IDevicePickerAppearance, 3868857030, 58919, 20184, 155, 108, 70, 10, 244, 69, 229, 109);
@@ -9508,8 +9508,8 @@ impl IDevicePickerAppearance {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DevicePickerAppearance: IDevicePickerAppearance}
-RT_ENUM! { enum DevicePickerDisplayStatusOptions: u32 {
+RT_CLASS!{class DevicePickerAppearance: IDevicePickerAppearance ["Windows.Devices.Enumeration.DevicePickerAppearance"]}
+RT_ENUM! { enum DevicePickerDisplayStatusOptions: u32 ["Windows.Devices.Enumeration.DevicePickerDisplayStatusOptions"] {
     None (DevicePickerDisplayStatusOptions_None) = 0, ShowProgress (DevicePickerDisplayStatusOptions_ShowProgress) = 1, ShowDisconnectButton (DevicePickerDisplayStatusOptions_ShowDisconnectButton) = 2, ShowRetryButton (DevicePickerDisplayStatusOptions_ShowRetryButton) = 4,
 }}
 DEFINE_IID!(IID_IDevicePickerFilter, 2447086242, 22475, 18673, 155, 89, 165, 155, 122, 31, 2, 162);
@@ -9529,7 +9529,7 @@ impl IDevicePickerFilter {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DevicePickerFilter: IDevicePickerFilter}
+RT_CLASS!{class DevicePickerFilter: IDevicePickerFilter ["Windows.Devices.Enumeration.DevicePickerFilter"]}
 DEFINE_IID!(IID_IDeviceSelectedEventArgs, 647944926, 7471, 18752, 132, 2, 65, 86, 184, 29, 60, 119);
 RT_INTERFACE!{interface IDeviceSelectedEventArgs(IDeviceSelectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceSelectedEventArgs] {
     fn get_SelectedDevice(&self, out: *mut *mut DeviceInformation) -> HRESULT
@@ -9541,9 +9541,9 @@ impl IDeviceSelectedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceSelectedEventArgs: IDeviceSelectedEventArgs}
-#[cfg(feature="windows-storage")] RT_CLASS!{class DeviceThumbnail: super::super::storage::streams::IRandomAccessStreamWithContentType}
-#[cfg(not(feature="windows-storage"))] RT_CLASS!{class DeviceThumbnail: IInspectable}
+RT_CLASS!{class DeviceSelectedEventArgs: IDeviceSelectedEventArgs ["Windows.Devices.Enumeration.DeviceSelectedEventArgs"]}
+#[cfg(feature="windows-storage")] RT_CLASS!{class DeviceThumbnail: super::super::storage::streams::IRandomAccessStreamWithContentType ["Windows.Devices.Enumeration.DeviceThumbnail"]}
+#[cfg(not(feature="windows-storage"))] RT_CLASS!{class DeviceThumbnail: IInspectable ["Windows.Devices.Enumeration.DeviceThumbnail"]}
 DEFINE_IID!(IID_IDeviceUnpairingResult, 1727285971, 31193, 17483, 146, 207, 169, 46, 247, 37, 113, 199);
 RT_INTERFACE!{interface IDeviceUnpairingResult(IDeviceUnpairingResultVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceUnpairingResult] {
     fn get_Status(&self, out: *mut DeviceUnpairingResultStatus) -> HRESULT
@@ -9555,8 +9555,8 @@ impl IDeviceUnpairingResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceUnpairingResult: IDeviceUnpairingResult}
-RT_ENUM! { enum DeviceUnpairingResultStatus: i32 {
+RT_CLASS!{class DeviceUnpairingResult: IDeviceUnpairingResult ["Windows.Devices.Enumeration.DeviceUnpairingResult"]}
+RT_ENUM! { enum DeviceUnpairingResultStatus: i32 ["Windows.Devices.Enumeration.DeviceUnpairingResultStatus"] {
     Unpaired (DeviceUnpairingResultStatus_Unpaired) = 0, AlreadyUnpaired (DeviceUnpairingResultStatus_AlreadyUnpaired) = 1, OperationAlreadyInProgress (DeviceUnpairingResultStatus_OperationAlreadyInProgress) = 2, AccessDenied (DeviceUnpairingResultStatus_AccessDenied) = 3, Failed (DeviceUnpairingResultStatus_Failed) = 4,
 }}
 DEFINE_IID!(IID_IDeviceWatcher, 3387603325, 36715, 20374, 169, 244, 171, 200, 20, 226, 34, 113);
@@ -9635,7 +9635,7 @@ impl IDeviceWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceWatcher: IDeviceWatcher}
+RT_CLASS!{class DeviceWatcher: IDeviceWatcher ["Windows.Devices.Enumeration.DeviceWatcher"]}
 DEFINE_IID!(IID_IDeviceWatcher2, 4278732142, 60692, 18921, 154, 105, 129, 23, 197, 74, 233, 113);
 RT_INTERFACE!{interface IDeviceWatcher2(IDeviceWatcher2Vtbl): IInspectable(IInspectableVtbl) [IID_IDeviceWatcher2] {
     #[cfg(feature="windows-applicationmodel")] fn GetBackgroundTrigger(&self, requestedEventKinds: *mut foundation::collections::IIterable<DeviceWatcherEventKind>, out: *mut *mut super::super::applicationmodel::background::DeviceWatcherTrigger) -> HRESULT
@@ -9670,11 +9670,11 @@ impl IDeviceWatcherEvent {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceWatcherEvent: IDeviceWatcherEvent}
-RT_ENUM! { enum DeviceWatcherEventKind: i32 {
+RT_CLASS!{class DeviceWatcherEvent: IDeviceWatcherEvent ["Windows.Devices.Enumeration.DeviceWatcherEvent"]}
+RT_ENUM! { enum DeviceWatcherEventKind: i32 ["Windows.Devices.Enumeration.DeviceWatcherEventKind"] {
     Add (DeviceWatcherEventKind_Add) = 0, Update (DeviceWatcherEventKind_Update) = 1, Remove (DeviceWatcherEventKind_Remove) = 2,
 }}
-RT_ENUM! { enum DeviceWatcherStatus: i32 {
+RT_ENUM! { enum DeviceWatcherStatus: i32 ["Windows.Devices.Enumeration.DeviceWatcherStatus"] {
     Created (DeviceWatcherStatus_Created) = 0, Started (DeviceWatcherStatus_Started) = 1, EnumerationCompleted (DeviceWatcherStatus_EnumerationCompleted) = 2, Stopping (DeviceWatcherStatus_Stopping) = 3, Stopped (DeviceWatcherStatus_Stopped) = 4, Aborted (DeviceWatcherStatus_Aborted) = 5,
 }}
 DEFINE_IID!(IID_IDeviceWatcherTriggerDetails, 947945753, 19639, 20055, 165, 109, 119, 109, 7, 203, 254, 249);
@@ -9688,7 +9688,7 @@ impl IDeviceWatcherTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceWatcherTriggerDetails: IDeviceWatcherTriggerDetails}
+RT_CLASS!{class DeviceWatcherTriggerDetails: IDeviceWatcherTriggerDetails ["Windows.Devices.Enumeration.DeviceWatcherTriggerDetails"]}
 DEFINE_IID!(IID_IEnclosureLocation, 1110706727, 22544, 17820, 170, 187, 198, 94, 31, 129, 62, 207);
 RT_INTERFACE!{interface IEnclosureLocation(IEnclosureLocationVtbl): IInspectable(IInspectableVtbl) [IID_IEnclosureLocation] {
     fn get_InDock(&self, out: *mut bool) -> HRESULT,
@@ -9712,7 +9712,7 @@ impl IEnclosureLocation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EnclosureLocation: IEnclosureLocation}
+RT_CLASS!{class EnclosureLocation: IEnclosureLocation ["Windows.Devices.Enumeration.EnclosureLocation"]}
 DEFINE_IID!(IID_IEnclosureLocation2, 679844187, 57469, 18525, 138, 158, 189, 242, 154, 239, 79, 102);
 RT_INTERFACE!{interface IEnclosureLocation2(IEnclosureLocation2Vtbl): IInspectable(IInspectableVtbl) [IID_IEnclosureLocation2] {
     fn get_RotationAngleInDegreesClockwise(&self, out: *mut u32) -> HRESULT
@@ -9724,7 +9724,7 @@ impl IEnclosureLocation2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum Panel: i32 {
+RT_ENUM! { enum Panel: i32 ["Windows.Devices.Enumeration.Panel"] {
     Unknown (Panel_Unknown) = 0, Front (Panel_Front) = 1, Back (Panel_Back) = 2, Top (Panel_Top) = 3, Bottom (Panel_Bottom) = 4, Left (Panel_Left) = 5, Right (Panel_Right) = 6,
 }}
 pub mod pnp { // Windows.Devices.Enumeration.Pnp
@@ -9757,7 +9757,7 @@ impl IPnpObject {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PnpObject: IPnpObject}
+RT_CLASS!{class PnpObject: IPnpObject ["Windows.Devices.Enumeration.Pnp.PnpObject"]}
 impl RtActivatable<IPnpObjectStatics> for PnpObject {}
 impl PnpObject {
     #[inline] pub fn create_from_id_async(type_: PnpObjectType, id: &HStringArg, requestedProperties: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<PnpObject>>> {
@@ -9777,7 +9777,7 @@ impl PnpObject {
     }
 }
 DEFINE_CLSID!(PnpObject(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,69,110,117,109,101,114,97,116,105,111,110,46,80,110,112,46,80,110,112,79,98,106,101,99,116,0]) [CLSID_PnpObject]);
-RT_CLASS!{class PnpObjectCollection: foundation::collections::IVectorView<PnpObject>}
+RT_CLASS!{class PnpObjectCollection: foundation::collections::IVectorView<PnpObject> ["Windows.Devices.Enumeration.Pnp.PnpObjectCollection"]}
 DEFINE_IID!(IID_IPnpObjectStatics, 3015911997, 53608, 18016, 187, 243, 167, 51, 177, 75, 110, 1);
 RT_INTERFACE!{static interface IPnpObjectStatics(IPnpObjectStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPnpObjectStatics] {
     fn CreateFromIdAsync(&self, type_: PnpObjectType, id: HSTRING, requestedProperties: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<PnpObject>) -> HRESULT,
@@ -9813,7 +9813,7 @@ impl IPnpObjectStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PnpObjectType: i32 {
+RT_ENUM! { enum PnpObjectType: i32 ["Windows.Devices.Enumeration.Pnp.PnpObjectType"] {
     Unknown (PnpObjectType_Unknown) = 0, DeviceInterface (PnpObjectType_DeviceInterface) = 1, DeviceContainer (PnpObjectType_DeviceContainer) = 2, Device (PnpObjectType_Device) = 3, DeviceInterfaceClass (PnpObjectType_DeviceInterfaceClass) = 4, AssociationEndpoint (PnpObjectType_AssociationEndpoint) = 5, AssociationEndpointContainer (PnpObjectType_AssociationEndpointContainer) = 6, AssociationEndpointService (PnpObjectType_AssociationEndpointService) = 7, DevicePanel (PnpObjectType_DevicePanel) = 8,
 }}
 DEFINE_IID!(IID_IPnpObjectUpdate, 1868163090, 30, 18500, 188, 198, 67, 40, 134, 133, 106, 23);
@@ -9839,7 +9839,7 @@ impl IPnpObjectUpdate {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PnpObjectUpdate: IPnpObjectUpdate}
+RT_CLASS!{class PnpObjectUpdate: IPnpObjectUpdate ["Windows.Devices.Enumeration.Pnp.PnpObjectUpdate"]}
 DEFINE_IID!(IID_IPnpObjectWatcher, 2211011752, 18290, 19066, 172, 168, 228, 140, 66, 168, 156, 68);
 RT_INTERFACE!{interface IPnpObjectWatcher(IPnpObjectWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IPnpObjectWatcher] {
     fn add_Added(&self, handler: *mut foundation::TypedEventHandler<PnpObjectWatcher, PnpObject>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -9916,15 +9916,15 @@ impl IPnpObjectWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PnpObjectWatcher: IPnpObjectWatcher}
+RT_CLASS!{class PnpObjectWatcher: IPnpObjectWatcher ["Windows.Devices.Enumeration.Pnp.PnpObjectWatcher"]}
 } // Windows.Devices.Enumeration.Pnp
 } // Windows.Devices.Enumeration
 pub mod geolocation { // Windows.Devices.Geolocation
 use ::prelude::*;
-RT_ENUM! { enum AltitudeReferenceSystem: i32 {
+RT_ENUM! { enum AltitudeReferenceSystem: i32 ["Windows.Devices.Geolocation.AltitudeReferenceSystem"] {
     Unspecified (AltitudeReferenceSystem_Unspecified) = 0, Terrain (AltitudeReferenceSystem_Terrain) = 1, Ellipsoid (AltitudeReferenceSystem_Ellipsoid) = 2, Geoid (AltitudeReferenceSystem_Geoid) = 3, Surface (AltitudeReferenceSystem_Surface) = 4,
 }}
-RT_STRUCT! { struct BasicGeoposition {
+RT_STRUCT! { struct BasicGeoposition ["Windows.Devices.Geolocation.BasicGeoposition"] {
     Latitude: f64, Longitude: f64, Altitude: f64,
 }}
 DEFINE_IID!(IID_ICivicAddress, 2824239642, 25844, 19784, 188, 234, 246, 176, 8, 236, 163, 76);
@@ -9962,7 +9962,7 @@ impl ICivicAddress {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CivicAddress: ICivicAddress}
+RT_CLASS!{class CivicAddress: ICivicAddress ["Windows.Devices.Geolocation.CivicAddress"]}
 DEFINE_IID!(IID_IGeoboundingBox, 144099339, 10063, 17370, 154, 6, 203, 252, 218, 235, 78, 194);
 RT_INTERFACE!{interface IGeoboundingBox(IGeoboundingBoxVtbl): IInspectable(IInspectableVtbl) [IID_IGeoboundingBox] {
     fn get_NorthwestCorner(&self, out: *mut BasicGeoposition) -> HRESULT,
@@ -9998,7 +9998,7 @@ impl IGeoboundingBox {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GeoboundingBox: IGeoboundingBox}
+RT_CLASS!{class GeoboundingBox: IGeoboundingBox ["Windows.Devices.Geolocation.GeoboundingBox"]}
 impl RtActivatable<IGeoboundingBoxFactory> for GeoboundingBox {}
 impl RtActivatable<IGeoboundingBoxStatics> for GeoboundingBox {}
 impl GeoboundingBox {
@@ -10085,7 +10085,7 @@ impl IGeocircle {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Geocircle: IGeocircle}
+RT_CLASS!{class Geocircle: IGeocircle ["Windows.Devices.Geolocation.Geocircle"]}
 impl RtActivatable<IGeocircleFactory> for Geocircle {}
 impl Geocircle {
     #[inline] pub fn create(position: BasicGeoposition, radius: f64) -> Result<ComPtr<Geocircle>> {
@@ -10175,7 +10175,7 @@ impl IGeocoordinate {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Geocoordinate: IGeocoordinate}
+RT_CLASS!{class Geocoordinate: IGeocoordinate ["Windows.Devices.Geolocation.Geocoordinate"]}
 DEFINE_IID!(IID_IGeocoordinateSatelliteData, 3274339545, 9736, 18252, 145, 44, 6, 221, 73, 15, 74, 247);
 RT_INTERFACE!{interface IGeocoordinateSatelliteData(IGeocoordinateSatelliteDataVtbl): IInspectable(IInspectableVtbl) [IID_IGeocoordinateSatelliteData] {
     fn get_PositionDilutionOfPrecision(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT,
@@ -10199,7 +10199,7 @@ impl IGeocoordinateSatelliteData {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GeocoordinateSatelliteData: IGeocoordinateSatelliteData}
+RT_CLASS!{class GeocoordinateSatelliteData: IGeocoordinateSatelliteData ["Windows.Devices.Geolocation.GeocoordinateSatelliteData"]}
 DEFINE_IID!(IID_IGeocoordinateWithPoint, 4276749605, 53804, 19782, 181, 39, 11, 150, 6, 111, 199, 219);
 RT_INTERFACE!{interface IGeocoordinateWithPoint(IGeocoordinateWithPointVtbl): IInspectable(IInspectableVtbl) [IID_IGeocoordinateWithPoint] {
     fn get_Point(&self, out: *mut *mut Geopoint) -> HRESULT
@@ -10239,7 +10239,7 @@ impl IGeocoordinateWithPositionSourceTimestamp {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GeolocationAccessStatus: i32 {
+RT_ENUM! { enum GeolocationAccessStatus: i32 ["Windows.Devices.Geolocation.GeolocationAccessStatus"] {
     Unspecified (GeolocationAccessStatus_Unspecified) = 0, Allowed (GeolocationAccessStatus_Allowed) = 1, Denied (GeolocationAccessStatus_Denied) = 2,
 }}
 DEFINE_IID!(IID_IGeolocator, 2848178018, 17700, 18825, 138, 169, 222, 1, 157, 46, 85, 31);
@@ -10320,7 +10320,7 @@ impl IGeolocator {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Geolocator: IGeolocator}
+RT_CLASS!{class Geolocator: IGeolocator ["Windows.Devices.Geolocation.Geolocator"]}
 impl RtActivatable<IGeolocatorStatics> for Geolocator {}
 impl RtActivatable<IGeolocatorStatics2> for Geolocator {}
 impl RtActivatable<IActivationFactory> for Geolocator {}
@@ -10427,7 +10427,7 @@ impl IGeopath {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Geopath: IGeopath}
+RT_CLASS!{class Geopath: IGeopath ["Windows.Devices.Geolocation.Geopath"]}
 impl RtActivatable<IGeopathFactory> for Geopath {}
 impl Geopath {
     #[inline] pub fn create(positions: &foundation::collections::IIterable<BasicGeoposition>) -> Result<ComPtr<Geopath>> {
@@ -10475,7 +10475,7 @@ impl IGeopoint {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Geopoint: IGeopoint}
+RT_CLASS!{class Geopoint: IGeopoint ["Windows.Devices.Geolocation.Geopoint"]}
 impl RtActivatable<IGeopointFactory> for Geopoint {}
 impl Geopoint {
     #[inline] pub fn create(position: BasicGeoposition) -> Result<ComPtr<Geopoint>> {
@@ -10529,7 +10529,7 @@ impl IGeoposition {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Geoposition: IGeoposition}
+RT_CLASS!{class Geoposition: IGeoposition ["Windows.Devices.Geolocation.Geoposition"]}
 DEFINE_IID!(IID_IGeoposition2, 2137192087, 34417, 19213, 134, 248, 71, 74, 132, 150, 24, 124);
 RT_INTERFACE!{interface IGeoposition2(IGeoposition2Vtbl): IInspectable(IInspectableVtbl) [IID_IGeoposition2] {
     fn get_VenueData(&self, out: *mut *mut VenueData) -> HRESULT
@@ -10564,7 +10564,7 @@ impl IGeoshape {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GeoshapeType: i32 {
+RT_ENUM! { enum GeoshapeType: i32 ["Windows.Devices.Geolocation.GeoshapeType"] {
     Geopoint (GeoshapeType_Geopoint) = 0, Geocircle (GeoshapeType_Geocircle) = 1, Geopath (GeoshapeType_Geopath) = 2, GeoboundingBox (GeoshapeType_GeoboundingBox) = 3,
 }}
 DEFINE_IID!(IID_IGeovisit, 2978445942, 40694, 16811, 160, 221, 121, 62, 206, 118, 226, 222);
@@ -10590,7 +10590,7 @@ impl IGeovisit {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Geovisit: IGeovisit}
+RT_CLASS!{class Geovisit: IGeovisit ["Windows.Devices.Geolocation.Geovisit"]}
 DEFINE_IID!(IID_IGeovisitMonitor, 2148633263, 22852, 17809, 131, 193, 57, 102, 71, 245, 79, 44);
 RT_INTERFACE!{interface IGeovisitMonitor(IGeovisitMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IGeovisitMonitor] {
     fn get_MonitoringScope(&self, out: *mut VisitMonitoringScope) -> HRESULT,
@@ -10623,7 +10623,7 @@ impl IGeovisitMonitor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GeovisitMonitor: IGeovisitMonitor}
+RT_CLASS!{class GeovisitMonitor: IGeovisitMonitor ["Windows.Devices.Geolocation.GeovisitMonitor"]}
 impl RtActivatable<IGeovisitMonitorStatics> for GeovisitMonitor {}
 impl RtActivatable<IActivationFactory> for GeovisitMonitor {}
 impl GeovisitMonitor {
@@ -10654,7 +10654,7 @@ impl IGeovisitStateChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GeovisitStateChangedEventArgs: IGeovisitStateChangedEventArgs}
+RT_CLASS!{class GeovisitStateChangedEventArgs: IGeovisitStateChangedEventArgs ["Windows.Devices.Geolocation.GeovisitStateChangedEventArgs"]}
 DEFINE_IID!(IID_IGeovisitTriggerDetails, 3933670814, 53705, 17739, 153, 183, 178, 248, 205, 210, 72, 47);
 RT_INTERFACE!{interface IGeovisitTriggerDetails(IGeovisitTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IGeovisitTriggerDetails] {
     fn ReadReports(&self, out: *mut *mut foundation::collections::IVectorView<Geovisit>) -> HRESULT
@@ -10666,8 +10666,8 @@ impl IGeovisitTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GeovisitTriggerDetails: IGeovisitTriggerDetails}
-RT_ENUM! { enum PositionAccuracy: i32 {
+RT_CLASS!{class GeovisitTriggerDetails: IGeovisitTriggerDetails ["Windows.Devices.Geolocation.GeovisitTriggerDetails"]}
+RT_ENUM! { enum PositionAccuracy: i32 ["Windows.Devices.Geolocation.PositionAccuracy"] {
     Default (PositionAccuracy_Default) = 0, High (PositionAccuracy_High) = 1,
 }}
 DEFINE_IID!(IID_IPositionChangedEventArgs, 931503333, 40222, 18117, 191, 59, 106, 216, 202, 193, 160, 147);
@@ -10681,11 +10681,11 @@ impl IPositionChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PositionChangedEventArgs: IPositionChangedEventArgs}
-RT_ENUM! { enum PositionSource: i32 {
+RT_CLASS!{class PositionChangedEventArgs: IPositionChangedEventArgs ["Windows.Devices.Geolocation.PositionChangedEventArgs"]}
+RT_ENUM! { enum PositionSource: i32 ["Windows.Devices.Geolocation.PositionSource"] {
     Cellular (PositionSource_Cellular) = 0, Satellite (PositionSource_Satellite) = 1, WiFi (PositionSource_WiFi) = 2, IPAddress (PositionSource_IPAddress) = 3, Unknown (PositionSource_Unknown) = 4, Default (PositionSource_Default) = 5, Obfuscated (PositionSource_Obfuscated) = 6,
 }}
-RT_ENUM! { enum PositionStatus: i32 {
+RT_ENUM! { enum PositionStatus: i32 ["Windows.Devices.Geolocation.PositionStatus"] {
     Ready (PositionStatus_Ready) = 0, Initializing (PositionStatus_Initializing) = 1, NoData (PositionStatus_NoData) = 2, Disabled (PositionStatus_Disabled) = 3, NotInitialized (PositionStatus_NotInitialized) = 4, NotAvailable (PositionStatus_NotAvailable) = 5,
 }}
 DEFINE_IID!(IID_IStatusChangedEventArgs, 877908698, 35987, 16657, 162, 5, 154, 236, 252, 155, 229, 192);
@@ -10699,7 +10699,7 @@ impl IStatusChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StatusChangedEventArgs: IStatusChangedEventArgs}
+RT_CLASS!{class StatusChangedEventArgs: IStatusChangedEventArgs ["Windows.Devices.Geolocation.StatusChangedEventArgs"]}
 DEFINE_IID!(IID_IVenueData, 1727238535, 24803, 19247, 181, 39, 79, 83, 241, 195, 198, 119);
 RT_INTERFACE!{interface IVenueData(IVenueDataVtbl): IInspectable(IInspectableVtbl) [IID_IVenueData] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -10717,11 +10717,11 @@ impl IVenueData {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VenueData: IVenueData}
-RT_ENUM! { enum VisitMonitoringScope: i32 {
+RT_CLASS!{class VenueData: IVenueData ["Windows.Devices.Geolocation.VenueData"]}
+RT_ENUM! { enum VisitMonitoringScope: i32 ["Windows.Devices.Geolocation.VisitMonitoringScope"] {
     Venue (VisitMonitoringScope_Venue) = 0, City (VisitMonitoringScope_City) = 1,
 }}
-RT_ENUM! { enum VisitStateChange: i32 {
+RT_ENUM! { enum VisitStateChange: i32 ["Windows.Devices.Geolocation.VisitStateChange"] {
     TrackingLost (VisitStateChange_TrackingLost) = 0, Arrived (VisitStateChange_Arrived) = 1, Departed (VisitStateChange_Departed) = 2, OtherMovement (VisitStateChange_OtherMovement) = 3,
 }}
 pub mod geofencing { // Windows.Devices.Geolocation.Geofencing
@@ -10773,7 +10773,7 @@ impl IGeofence {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Geofence: IGeofence}
+RT_CLASS!{class Geofence: IGeofence ["Windows.Devices.Geolocation.Geofencing.Geofence"]}
 impl RtActivatable<IGeofenceFactory> for Geofence {}
 impl Geofence {
     #[inline] pub fn create(id: &HStringArg, geoshape: &super::IGeoshape) -> Result<ComPtr<Geofence>> {
@@ -10870,7 +10870,7 @@ impl IGeofenceMonitor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GeofenceMonitor: IGeofenceMonitor}
+RT_CLASS!{class GeofenceMonitor: IGeofenceMonitor ["Windows.Devices.Geolocation.Geofencing.GeofenceMonitor"]}
 impl RtActivatable<IGeofenceMonitorStatics> for GeofenceMonitor {}
 impl GeofenceMonitor {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<GeofenceMonitor>>> {
@@ -10889,13 +10889,13 @@ impl IGeofenceMonitorStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GeofenceMonitorStatus: i32 {
+RT_ENUM! { enum GeofenceMonitorStatus: i32 ["Windows.Devices.Geolocation.Geofencing.GeofenceMonitorStatus"] {
     Ready (GeofenceMonitorStatus_Ready) = 0, Initializing (GeofenceMonitorStatus_Initializing) = 1, NoData (GeofenceMonitorStatus_NoData) = 2, Disabled (GeofenceMonitorStatus_Disabled) = 3, NotInitialized (GeofenceMonitorStatus_NotInitialized) = 4, NotAvailable (GeofenceMonitorStatus_NotAvailable) = 5,
 }}
-RT_ENUM! { enum GeofenceRemovalReason: i32 {
+RT_ENUM! { enum GeofenceRemovalReason: i32 ["Windows.Devices.Geolocation.Geofencing.GeofenceRemovalReason"] {
     Used (GeofenceRemovalReason_Used) = 0, Expired (GeofenceRemovalReason_Expired) = 1,
 }}
-RT_ENUM! { enum GeofenceState: u32 {
+RT_ENUM! { enum GeofenceState: u32 ["Windows.Devices.Geolocation.Geofencing.GeofenceState"] {
     None (GeofenceState_None) = 0, Entered (GeofenceState_Entered) = 1, Exited (GeofenceState_Exited) = 2, Removed (GeofenceState_Removed) = 4,
 }}
 DEFINE_IID!(IID_IGeofenceStateChangeReport, 2586065944, 9316, 19593, 190, 5, 179, 255, 255, 91, 171, 197);
@@ -10927,15 +10927,15 @@ impl IGeofenceStateChangeReport {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GeofenceStateChangeReport: IGeofenceStateChangeReport}
-RT_ENUM! { enum MonitoredGeofenceStates: u32 {
+RT_CLASS!{class GeofenceStateChangeReport: IGeofenceStateChangeReport ["Windows.Devices.Geolocation.Geofencing.GeofenceStateChangeReport"]}
+RT_ENUM! { enum MonitoredGeofenceStates: u32 ["Windows.Devices.Geolocation.Geofencing.MonitoredGeofenceStates"] {
     None (MonitoredGeofenceStates_None) = 0, Entered (MonitoredGeofenceStates_Entered) = 1, Exited (MonitoredGeofenceStates_Exited) = 2, Removed (MonitoredGeofenceStates_Removed) = 4,
 }}
 } // Windows.Devices.Geolocation.Geofencing
 } // Windows.Devices.Geolocation
 pub mod gpio { // Windows.Devices.Gpio
 use ::prelude::*;
-RT_STRUCT! { struct GpioChangeCount {
+RT_STRUCT! { struct GpioChangeCount ["Windows.Devices.Gpio.GpioChangeCount"] {
     Count: u64, RelativeTime: foundation::TimeSpan,
 }}
 DEFINE_IID!(IID_IGpioChangeCounter, 3411984606, 26625, 17407, 128, 61, 69, 118, 98, 138, 139, 38);
@@ -10982,7 +10982,7 @@ impl IGpioChangeCounter {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GpioChangeCounter: IGpioChangeCounter}
+RT_CLASS!{class GpioChangeCounter: IGpioChangeCounter ["Windows.Devices.Gpio.GpioChangeCounter"]}
 impl RtActivatable<IGpioChangeCounterFactory> for GpioChangeCounter {}
 impl GpioChangeCounter {
     #[inline] pub fn create(pin: &GpioPin) -> Result<ComPtr<GpioChangeCounter>> {
@@ -11001,7 +11001,7 @@ impl IGpioChangeCounterFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GpioChangePolarity: i32 {
+RT_ENUM! { enum GpioChangePolarity: i32 ["Windows.Devices.Gpio.GpioChangePolarity"] {
     Falling (GpioChangePolarity_Falling) = 0, Rising (GpioChangePolarity_Rising) = 1, Both (GpioChangePolarity_Both) = 2,
 }}
 DEFINE_IID!(IID_IGpioChangeReader, 180127839, 57393, 18664, 133, 144, 112, 222, 120, 54, 60, 109);
@@ -11089,7 +11089,7 @@ impl IGpioChangeReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GpioChangeReader: IGpioChangeReader}
+RT_CLASS!{class GpioChangeReader: IGpioChangeReader ["Windows.Devices.Gpio.GpioChangeReader"]}
 impl RtActivatable<IGpioChangeReaderFactory> for GpioChangeReader {}
 impl GpioChangeReader {
     #[inline] pub fn create(pin: &GpioPin) -> Result<ComPtr<GpioChangeReader>> {
@@ -11117,7 +11117,7 @@ impl IGpioChangeReaderFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct GpioChangeRecord {
+RT_STRUCT! { struct GpioChangeRecord ["Windows.Devices.Gpio.GpioChangeRecord"] {
     RelativeTime: foundation::TimeSpan, Edge: GpioPinEdge,
 }}
 DEFINE_IID!(IID_IGpioController, 675287779, 29793, 18076, 168, 188, 97, 214, 157, 8, 165, 60);
@@ -11149,7 +11149,7 @@ impl IGpioController {
         if hr == S_OK { Ok((ComPtr::wrap_optional(pin), openStatus, out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GpioController: IGpioController}
+RT_CLASS!{class GpioController: IGpioController ["Windows.Devices.Gpio.GpioController"]}
 impl RtActivatable<IGpioControllerStatics> for GpioController {}
 impl RtActivatable<IGpioControllerStatics2> for GpioController {}
 impl GpioController {
@@ -11192,7 +11192,7 @@ impl IGpioControllerStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GpioOpenStatus: i32 {
+RT_ENUM! { enum GpioOpenStatus: i32 ["Windows.Devices.Gpio.GpioOpenStatus"] {
     PinOpened (GpioOpenStatus_PinOpened) = 0, PinUnavailable (GpioOpenStatus_PinUnavailable) = 1, SharingViolation (GpioOpenStatus_SharingViolation) = 2, MuxingConflict (GpioOpenStatus_MuxingConflict) = 3, UnknownError (GpioOpenStatus_UnknownError) = 4,
 }}
 DEFINE_IID!(IID_IGpioPin, 299479175, 44974, 18320, 158, 233, 224, 234, 201, 66, 210, 1);
@@ -11262,14 +11262,14 @@ impl IGpioPin {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GpioPin: IGpioPin}
-RT_ENUM! { enum GpioPinDriveMode: i32 {
+RT_CLASS!{class GpioPin: IGpioPin ["Windows.Devices.Gpio.GpioPin"]}
+RT_ENUM! { enum GpioPinDriveMode: i32 ["Windows.Devices.Gpio.GpioPinDriveMode"] {
     Input (GpioPinDriveMode_Input) = 0, Output (GpioPinDriveMode_Output) = 1, InputPullUp (GpioPinDriveMode_InputPullUp) = 2, InputPullDown (GpioPinDriveMode_InputPullDown) = 3, OutputOpenDrain (GpioPinDriveMode_OutputOpenDrain) = 4, OutputOpenDrainPullUp (GpioPinDriveMode_OutputOpenDrainPullUp) = 5, OutputOpenSource (GpioPinDriveMode_OutputOpenSource) = 6, OutputOpenSourcePullDown (GpioPinDriveMode_OutputOpenSourcePullDown) = 7,
 }}
-RT_ENUM! { enum GpioPinEdge: i32 {
+RT_ENUM! { enum GpioPinEdge: i32 ["Windows.Devices.Gpio.GpioPinEdge"] {
     FallingEdge (GpioPinEdge_FallingEdge) = 0, RisingEdge (GpioPinEdge_RisingEdge) = 1,
 }}
-RT_ENUM! { enum GpioPinValue: i32 {
+RT_ENUM! { enum GpioPinValue: i32 ["Windows.Devices.Gpio.GpioPinValue"] {
     Low (GpioPinValue_Low) = 0, High (GpioPinValue_High) = 1,
 }}
 DEFINE_IID!(IID_IGpioPinValueChangedEventArgs, 825731809, 28733, 16473, 189, 36, 181, 178, 93, 255, 184, 78);
@@ -11283,8 +11283,8 @@ impl IGpioPinValueChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GpioPinValueChangedEventArgs: IGpioPinValueChangedEventArgs}
-RT_ENUM! { enum GpioSharingMode: i32 {
+RT_CLASS!{class GpioPinValueChangedEventArgs: IGpioPinValueChangedEventArgs ["Windows.Devices.Gpio.GpioPinValueChangedEventArgs"]}
+RT_ENUM! { enum GpioSharingMode: i32 ["Windows.Devices.Gpio.GpioSharingMode"] {
     Exclusive (GpioSharingMode_Exclusive) = 0, SharedReadOnly (GpioSharingMode_SharedReadOnly) = 1,
 }}
 pub mod provider { // Windows.Devices.Gpio.Provider
@@ -11384,7 +11384,7 @@ impl IGpioPinProviderValueChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GpioPinProviderValueChangedEventArgs: IGpioPinProviderValueChangedEventArgs}
+RT_CLASS!{class GpioPinProviderValueChangedEventArgs: IGpioPinProviderValueChangedEventArgs ["Windows.Devices.Gpio.Provider.GpioPinProviderValueChangedEventArgs"]}
 impl RtActivatable<IGpioPinProviderValueChangedEventArgsFactory> for GpioPinProviderValueChangedEventArgs {}
 impl GpioPinProviderValueChangedEventArgs {
     #[inline] pub fn create(edge: ProviderGpioPinEdge) -> Result<ComPtr<GpioPinProviderValueChangedEventArgs>> {
@@ -11414,16 +11414,16 @@ impl IGpioProvider {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ProviderGpioPinDriveMode: i32 {
+RT_ENUM! { enum ProviderGpioPinDriveMode: i32 ["Windows.Devices.Gpio.Provider.ProviderGpioPinDriveMode"] {
     Input (ProviderGpioPinDriveMode_Input) = 0, Output (ProviderGpioPinDriveMode_Output) = 1, InputPullUp (ProviderGpioPinDriveMode_InputPullUp) = 2, InputPullDown (ProviderGpioPinDriveMode_InputPullDown) = 3, OutputOpenDrain (ProviderGpioPinDriveMode_OutputOpenDrain) = 4, OutputOpenDrainPullUp (ProviderGpioPinDriveMode_OutputOpenDrainPullUp) = 5, OutputOpenSource (ProviderGpioPinDriveMode_OutputOpenSource) = 6, OutputOpenSourcePullDown (ProviderGpioPinDriveMode_OutputOpenSourcePullDown) = 7,
 }}
-RT_ENUM! { enum ProviderGpioPinEdge: i32 {
+RT_ENUM! { enum ProviderGpioPinEdge: i32 ["Windows.Devices.Gpio.Provider.ProviderGpioPinEdge"] {
     FallingEdge (ProviderGpioPinEdge_FallingEdge) = 0, RisingEdge (ProviderGpioPinEdge_RisingEdge) = 1,
 }}
-RT_ENUM! { enum ProviderGpioPinValue: i32 {
+RT_ENUM! { enum ProviderGpioPinValue: i32 ["Windows.Devices.Gpio.Provider.ProviderGpioPinValue"] {
     Low (ProviderGpioPinValue_Low) = 0, High (ProviderGpioPinValue_High) = 1,
 }}
-RT_ENUM! { enum ProviderGpioSharingMode: i32 {
+RT_ENUM! { enum ProviderGpioSharingMode: i32 ["Windows.Devices.Gpio.Provider.ProviderGpioSharingMode"] {
     Exclusive (ProviderGpioSharingMode_Exclusive) = 0, SharedReadOnly (ProviderGpioSharingMode_SharedReadOnly) = 1,
 }}
 } // Windows.Devices.Gpio.Provider
@@ -11551,7 +11551,7 @@ impl ISimpleHapticsController {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SimpleHapticsController: ISimpleHapticsController}
+RT_CLASS!{class SimpleHapticsController: ISimpleHapticsController ["Windows.Devices.Haptics.SimpleHapticsController"]}
 DEFINE_IID!(IID_ISimpleHapticsControllerFeedback, 1029144312, 19694, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{interface ISimpleHapticsControllerFeedback(ISimpleHapticsControllerFeedbackVtbl): IInspectable(IInspectableVtbl) [IID_ISimpleHapticsControllerFeedback] {
     fn get_Waveform(&self, out: *mut u16) -> HRESULT,
@@ -11569,8 +11569,8 @@ impl ISimpleHapticsControllerFeedback {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SimpleHapticsControllerFeedback: ISimpleHapticsControllerFeedback}
-RT_ENUM! { enum VibrationAccessStatus: i32 {
+RT_CLASS!{class SimpleHapticsControllerFeedback: ISimpleHapticsControllerFeedback ["Windows.Devices.Haptics.SimpleHapticsControllerFeedback"]}
+RT_ENUM! { enum VibrationAccessStatus: i32 ["Windows.Devices.Haptics.VibrationAccessStatus"] {
     Allowed (VibrationAccessStatus_Allowed) = 0, DeniedByUser (VibrationAccessStatus_DeniedByUser) = 1, DeniedBySystem (VibrationAccessStatus_DeniedBySystem) = 2, DeniedByEnergySaver (VibrationAccessStatus_DeniedByEnergySaver) = 3,
 }}
 DEFINE_IID!(IID_IVibrationDevice, 1089608254, 34884, 18431, 179, 18, 6, 24, 90, 56, 68, 218);
@@ -11590,7 +11590,7 @@ impl IVibrationDevice {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VibrationDevice: IVibrationDevice}
+RT_CLASS!{class VibrationDevice: IVibrationDevice ["Windows.Devices.Haptics.VibrationDevice"]}
 impl RtActivatable<IVibrationDeviceStatics> for VibrationDevice {}
 impl VibrationDevice {
     #[inline] pub fn request_access_async() -> Result<ComPtr<foundation::IAsyncOperation<VibrationAccessStatus>>> {
@@ -11688,7 +11688,7 @@ impl IHidBooleanControl {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HidBooleanControl: IHidBooleanControl}
+RT_CLASS!{class HidBooleanControl: IHidBooleanControl ["Windows.Devices.HumanInterfaceDevice.HidBooleanControl"]}
 DEFINE_IID!(IID_IHidBooleanControlDescription, 1637279043, 10712, 18986, 134, 131, 132, 158, 32, 123, 190, 49);
 RT_INTERFACE!{interface IHidBooleanControlDescription(IHidBooleanControlDescriptionVtbl): IInspectable(IInspectableVtbl) [IID_IHidBooleanControlDescription] {
     fn get_Id(&self, out: *mut u32) -> HRESULT,
@@ -11730,7 +11730,7 @@ impl IHidBooleanControlDescription {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HidBooleanControlDescription: IHidBooleanControlDescription}
+RT_CLASS!{class HidBooleanControlDescription: IHidBooleanControlDescription ["Windows.Devices.HumanInterfaceDevice.HidBooleanControlDescription"]}
 DEFINE_IID!(IID_IHidBooleanControlDescription2, 3371094762, 35447, 19510, 170, 0, 95, 240, 68, 157, 62, 115);
 RT_INTERFACE!{interface IHidBooleanControlDescription2(IHidBooleanControlDescription2Vtbl): IInspectable(IInspectableVtbl) [IID_IHidBooleanControlDescription2] {
     fn get_IsAbsolute(&self, out: *mut bool) -> HRESULT
@@ -11771,8 +11771,8 @@ impl IHidCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HidCollection: IHidCollection}
-RT_ENUM! { enum HidCollectionType: i32 {
+RT_CLASS!{class HidCollection: IHidCollection ["Windows.Devices.HumanInterfaceDevice.HidCollection"]}
+RT_ENUM! { enum HidCollectionType: i32 ["Windows.Devices.HumanInterfaceDevice.HidCollectionType"] {
     Physical (HidCollectionType_Physical) = 0, Application (HidCollectionType_Application) = 1, Logical (HidCollectionType_Logical) = 2, Report (HidCollectionType_Report) = 3, NamedArray (HidCollectionType_NamedArray) = 4, UsageSwitch (HidCollectionType_UsageSwitch) = 5, UsageModifier (HidCollectionType_UsageModifier) = 6, Other (HidCollectionType_Other) = 7,
 }}
 DEFINE_IID!(IID_IHidDevice, 1602884839, 8704, 17198, 149, 218, 208, 155, 135, 213, 116, 168);
@@ -11893,7 +11893,7 @@ impl IHidDevice {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HidDevice: IHidDevice}
+RT_CLASS!{class HidDevice: IHidDevice ["Windows.Devices.HumanInterfaceDevice.HidDevice"]}
 impl RtActivatable<IHidDeviceStatics> for HidDevice {}
 impl HidDevice {
     #[inline] pub fn get_device_selector(usagePage: u16, usageId: u16) -> Result<HString> {
@@ -11978,7 +11978,7 @@ impl IHidFeatureReport {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HidFeatureReport: IHidFeatureReport}
+RT_CLASS!{class HidFeatureReport: IHidFeatureReport ["Windows.Devices.HumanInterfaceDevice.HidFeatureReport"]}
 DEFINE_IID!(IID_IHidInputReport, 3277655632, 63463, 20109, 178, 62, 202, 187, 229, 107, 144, 233);
 RT_INTERFACE!{interface IHidInputReport(IHidInputReportVtbl): IInspectable(IInspectableVtbl) [IID_IHidInputReport] {
     fn get_Id(&self, out: *mut u16) -> HRESULT,
@@ -12033,7 +12033,7 @@ impl IHidInputReport {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HidInputReport: IHidInputReport}
+RT_CLASS!{class HidInputReport: IHidInputReport ["Windows.Devices.HumanInterfaceDevice.HidInputReport"]}
 DEFINE_IID!(IID_IHidInputReportReceivedEventArgs, 1884931531, 22962, 19906, 152, 92, 10, 220, 97, 54, 250, 45);
 RT_INTERFACE!{interface IHidInputReportReceivedEventArgs(IHidInputReportReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHidInputReportReceivedEventArgs] {
     fn get_Report(&self, out: *mut *mut HidInputReport) -> HRESULT
@@ -12045,7 +12045,7 @@ impl IHidInputReportReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HidInputReportReceivedEventArgs: IHidInputReportReceivedEventArgs}
+RT_CLASS!{class HidInputReportReceivedEventArgs: IHidInputReportReceivedEventArgs ["Windows.Devices.HumanInterfaceDevice.HidInputReportReceivedEventArgs"]}
 DEFINE_IID!(IID_IHidNumericControl, 3817476773, 13735, 19317, 137, 200, 251, 31, 40, 177, 8, 35);
 RT_INTERFACE!{interface IHidNumericControl(IHidNumericControlVtbl): IInspectable(IInspectableVtbl) [IID_IHidNumericControl] {
     fn get_Id(&self, out: *mut u32) -> HRESULT,
@@ -12103,7 +12103,7 @@ impl IHidNumericControl {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HidNumericControl: IHidNumericControl}
+RT_CLASS!{class HidNumericControl: IHidNumericControl ["Windows.Devices.HumanInterfaceDevice.HidNumericControl"]}
 DEFINE_IID!(IID_IHidNumericControlDescription, 1670209158, 7575, 19573, 146, 127, 95, 245, 139, 160, 94, 50);
 RT_INTERFACE!{interface IHidNumericControlDescription(IHidNumericControlDescriptionVtbl): IInspectable(IInspectableVtbl) [IID_IHidNumericControlDescription] {
     fn get_Id(&self, out: *mut u32) -> HRESULT,
@@ -12205,7 +12205,7 @@ impl IHidNumericControlDescription {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HidNumericControlDescription: IHidNumericControlDescription}
+RT_CLASS!{class HidNumericControlDescription: IHidNumericControlDescription ["Windows.Devices.HumanInterfaceDevice.HidNumericControlDescription"]}
 DEFINE_IID!(IID_IHidOutputReport, 1657480516, 51350, 17507, 147, 193, 223, 157, 176, 83, 196, 80);
 RT_INTERFACE!{interface IHidOutputReport(IHidOutputReportVtbl): IInspectable(IInspectableVtbl) [IID_IHidOutputReport] {
     fn get_Id(&self, out: *mut u16) -> HRESULT,
@@ -12254,14 +12254,14 @@ impl IHidOutputReport {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HidOutputReport: IHidOutputReport}
-RT_ENUM! { enum HidReportType: i32 {
+RT_CLASS!{class HidOutputReport: IHidOutputReport ["Windows.Devices.HumanInterfaceDevice.HidOutputReport"]}
+RT_ENUM! { enum HidReportType: i32 ["Windows.Devices.HumanInterfaceDevice.HidReportType"] {
     Input (HidReportType_Input) = 0, Output (HidReportType_Output) = 1, Feature (HidReportType_Feature) = 2,
 }}
 } // Windows.Devices.HumanInterfaceDevice
 pub mod i2c { // Windows.Devices.I2c
 use ::prelude::*;
-RT_ENUM! { enum I2cBusSpeed: i32 {
+RT_ENUM! { enum I2cBusSpeed: i32 ["Windows.Devices.I2c.I2cBusSpeed"] {
     StandardMode (I2cBusSpeed_StandardMode) = 0, FastMode (I2cBusSpeed_FastMode) = 1,
 }}
 DEFINE_IID!(IID_II2cConnectionSettings, 4074443527, 43887, 17977, 167, 103, 84, 83, 109, 195, 70, 15);
@@ -12302,7 +12302,7 @@ impl II2cConnectionSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class I2cConnectionSettings: II2cConnectionSettings}
+RT_CLASS!{class I2cConnectionSettings: II2cConnectionSettings ["Windows.Devices.I2c.I2cConnectionSettings"]}
 impl RtActivatable<II2cConnectionSettingsFactory> for I2cConnectionSettings {}
 impl I2cConnectionSettings {
     #[inline] pub fn create(slaveAddress: i32) -> Result<ComPtr<I2cConnectionSettings>> {
@@ -12332,7 +12332,7 @@ impl II2cController {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class I2cController: II2cController}
+RT_CLASS!{class I2cController: II2cController ["Windows.Devices.I2c.I2cController"]}
 impl RtActivatable<II2cControllerStatics> for I2cController {}
 impl I2cController {
     #[inline] pub fn get_controllers_async(provider: &provider::II2cProvider) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<I2cController>>>> {
@@ -12410,7 +12410,7 @@ impl II2cDevice {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class I2cDevice: II2cDevice}
+RT_CLASS!{class I2cDevice: II2cDevice ["Windows.Devices.I2c.I2cDevice"]}
 impl RtActivatable<II2cDeviceStatics> for I2cDevice {}
 impl I2cDevice {
     #[inline] pub fn get_device_selector() -> Result<HString> {
@@ -12447,13 +12447,13 @@ impl II2cDeviceStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum I2cSharingMode: i32 {
+RT_ENUM! { enum I2cSharingMode: i32 ["Windows.Devices.I2c.I2cSharingMode"] {
     Exclusive (I2cSharingMode_Exclusive) = 0, Shared (I2cSharingMode_Shared) = 1,
 }}
-RT_STRUCT! { struct I2cTransferResult {
+RT_STRUCT! { struct I2cTransferResult ["Windows.Devices.I2c.I2cTransferResult"] {
     Status: I2cTransferStatus, BytesTransferred: u32,
 }}
-RT_ENUM! { enum I2cTransferStatus: i32 {
+RT_ENUM! { enum I2cTransferStatus: i32 ["Windows.Devices.I2c.I2cTransferStatus"] {
     FullTransfer (I2cTransferStatus_FullTransfer) = 0, PartialTransfer (I2cTransferStatus_PartialTransfer) = 1, SlaveAddressNotAcknowledged (I2cTransferStatus_SlaveAddressNotAcknowledged) = 2, ClockStretchTimeout (I2cTransferStatus_ClockStretchTimeout) = 3, UnknownError (I2cTransferStatus_UnknownError) = 4,
 }}
 pub mod provider { // Windows.Devices.I2c.Provider
@@ -12524,7 +12524,7 @@ impl II2cProvider {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ProviderI2cBusSpeed: i32 {
+RT_ENUM! { enum ProviderI2cBusSpeed: i32 ["Windows.Devices.I2c.Provider.ProviderI2cBusSpeed"] {
     StandardMode (ProviderI2cBusSpeed_StandardMode) = 0, FastMode (ProviderI2cBusSpeed_FastMode) = 1,
 }}
 DEFINE_IID!(IID_IProviderI2cConnectionSettings, 3923463732, 58640, 17591, 128, 157, 242, 248, 91, 85, 83, 57);
@@ -12565,14 +12565,14 @@ impl IProviderI2cConnectionSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProviderI2cConnectionSettings: IProviderI2cConnectionSettings}
-RT_ENUM! { enum ProviderI2cSharingMode: i32 {
+RT_CLASS!{class ProviderI2cConnectionSettings: IProviderI2cConnectionSettings ["Windows.Devices.I2c.Provider.ProviderI2cConnectionSettings"]}
+RT_ENUM! { enum ProviderI2cSharingMode: i32 ["Windows.Devices.I2c.Provider.ProviderI2cSharingMode"] {
     Exclusive (ProviderI2cSharingMode_Exclusive) = 0, Shared (ProviderI2cSharingMode_Shared) = 1,
 }}
-RT_STRUCT! { struct ProviderI2cTransferResult {
+RT_STRUCT! { struct ProviderI2cTransferResult ["Windows.Devices.I2c.Provider.ProviderI2cTransferResult"] {
     Status: ProviderI2cTransferStatus, BytesTransferred: u32,
 }}
-RT_ENUM! { enum ProviderI2cTransferStatus: i32 {
+RT_ENUM! { enum ProviderI2cTransferStatus: i32 ["Windows.Devices.I2c.Provider.ProviderI2cTransferStatus"] {
     FullTransfer (ProviderI2cTransferStatus_FullTransfer) = 0, PartialTransfer (ProviderI2cTransferStatus_PartialTransfer) = 1, SlaveAddressNotAcknowledged (ProviderI2cTransferStatus_SlaveAddressNotAcknowledged) = 2,
 }}
 } // Windows.Devices.I2c.Provider
@@ -12590,7 +12590,7 @@ impl IKeyboardCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class KeyboardCapabilities: IKeyboardCapabilities}
+RT_CLASS!{class KeyboardCapabilities: IKeyboardCapabilities ["Windows.Devices.Input.KeyboardCapabilities"]}
 impl RtActivatable<IActivationFactory> for KeyboardCapabilities {}
 DEFINE_CLSID!(KeyboardCapabilities(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,110,112,117,116,46,75,101,121,98,111,97,114,100,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_KeyboardCapabilities]);
 DEFINE_IID!(IID_IMouseCapabilities, 3164987427, 32217, 19307, 154, 146, 85, 212, 60, 179, 143, 115);
@@ -12628,10 +12628,10 @@ impl IMouseCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MouseCapabilities: IMouseCapabilities}
+RT_CLASS!{class MouseCapabilities: IMouseCapabilities ["Windows.Devices.Input.MouseCapabilities"]}
 impl RtActivatable<IActivationFactory> for MouseCapabilities {}
 DEFINE_CLSID!(MouseCapabilities(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,110,112,117,116,46,77,111,117,115,101,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_MouseCapabilities]);
-RT_STRUCT! { struct MouseDelta {
+RT_STRUCT! { struct MouseDelta ["Windows.Devices.Input.MouseDelta"] {
     X: i32, Y: i32,
 }}
 DEFINE_IID!(IID_IMouseDevice, 2297295960, 62152, 18932, 190, 31, 194, 86, 179, 136, 188, 17);
@@ -12650,7 +12650,7 @@ impl IMouseDevice {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MouseDevice: IMouseDevice}
+RT_CLASS!{class MouseDevice: IMouseDevice ["Windows.Devices.Input.MouseDevice"]}
 impl RtActivatable<IMouseDeviceStatics> for MouseDevice {}
 impl MouseDevice {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<MouseDevice>>> {
@@ -12680,7 +12680,7 @@ impl IMouseEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MouseEventArgs: IMouseEventArgs}
+RT_CLASS!{class MouseEventArgs: IMouseEventArgs ["Windows.Devices.Input.MouseEventArgs"]}
 DEFINE_IID!(IID_IPointerDevice, 2479471356, 60363, 18046, 130, 198, 39, 111, 234, 227, 107, 90);
 RT_INTERFACE!{interface IPointerDevice(IPointerDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IPointerDevice] {
     fn get_PointerDeviceType(&self, out: *mut PointerDeviceType) -> HRESULT,
@@ -12722,7 +12722,7 @@ impl IPointerDevice {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PointerDevice: IPointerDevice}
+RT_CLASS!{class PointerDevice: IPointerDevice ["Windows.Devices.Input.PointerDevice"]}
 impl RtActivatable<IPointerDeviceStatics> for PointerDevice {}
 impl PointerDevice {
     #[inline] pub fn get_pointer_device(pointerId: u32) -> Result<Option<ComPtr<PointerDevice>>> {
@@ -12761,10 +12761,10 @@ impl IPointerDeviceStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PointerDeviceType: i32 {
+RT_ENUM! { enum PointerDeviceType: i32 ["Windows.Devices.Input.PointerDeviceType"] {
     Touch (PointerDeviceType_Touch) = 0, Pen (PointerDeviceType_Pen) = 1, Mouse (PointerDeviceType_Mouse) = 2,
 }}
-RT_STRUCT! { struct PointerDeviceUsage {
+RT_STRUCT! { struct PointerDeviceUsage ["Windows.Devices.Input.PointerDeviceUsage"] {
     UsagePage: u32, Usage: u32, MinLogical: i32, MaxLogical: i32, MinPhysical: i32, MaxPhysical: i32, Unit: u32, PhysicalMultiplier: f32,
 }}
 DEFINE_IID!(IID_ITouchCapabilities, 551376377, 5105, 18120, 146, 133, 44, 5, 250, 62, 218, 111);
@@ -12784,12 +12784,12 @@ impl ITouchCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TouchCapabilities: ITouchCapabilities}
+RT_CLASS!{class TouchCapabilities: ITouchCapabilities ["Windows.Devices.Input.TouchCapabilities"]}
 impl RtActivatable<IActivationFactory> for TouchCapabilities {}
 DEFINE_CLSID!(TouchCapabilities(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,110,112,117,116,46,84,111,117,99,104,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_TouchCapabilities]);
 pub mod preview { // Windows.Devices.Input.Preview
 use ::prelude::*;
-RT_ENUM! { enum GazeDeviceConfigurationStatePreview: i32 {
+RT_ENUM! { enum GazeDeviceConfigurationStatePreview: i32 ["Windows.Devices.Input.Preview.GazeDeviceConfigurationStatePreview"] {
     Unknown (GazeDeviceConfigurationStatePreview_Unknown) = 0, Ready (GazeDeviceConfigurationStatePreview_Ready) = 1, Configuring (GazeDeviceConfigurationStatePreview_Configuring) = 2, ScreenSetupNeeded (GazeDeviceConfigurationStatePreview_ScreenSetupNeeded) = 3, UserCalibrationNeeded (GazeDeviceConfigurationStatePreview_UserCalibrationNeeded) = 4,
 }}
 DEFINE_IID!(IID_IGazeDevicePreview, 3885924073, 45961, 4583, 178, 1, 200, 211, 255, 183, 87, 33);
@@ -12839,7 +12839,7 @@ impl IGazeDevicePreview {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GazeDevicePreview: IGazeDevicePreview}
+RT_CLASS!{class GazeDevicePreview: IGazeDevicePreview ["Windows.Devices.Input.Preview.GazeDevicePreview"]}
 DEFINE_IID!(IID_IGazeDeviceWatcherAddedPreviewEventArgs, 3885924077, 45961, 4583, 178, 1, 200, 211, 255, 183, 87, 33);
 RT_INTERFACE!{interface IGazeDeviceWatcherAddedPreviewEventArgs(IGazeDeviceWatcherAddedPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGazeDeviceWatcherAddedPreviewEventArgs] {
     fn get_Device(&self, out: *mut *mut GazeDevicePreview) -> HRESULT
@@ -12851,7 +12851,7 @@ impl IGazeDeviceWatcherAddedPreviewEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GazeDeviceWatcherAddedPreviewEventArgs: IGazeDeviceWatcherAddedPreviewEventArgs}
+RT_CLASS!{class GazeDeviceWatcherAddedPreviewEventArgs: IGazeDeviceWatcherAddedPreviewEventArgs ["Windows.Devices.Input.Preview.GazeDeviceWatcherAddedPreviewEventArgs"]}
 DEFINE_IID!(IID_IGazeDeviceWatcherPreview, 3885924071, 45961, 4583, 178, 1, 200, 211, 255, 183, 87, 33);
 RT_INTERFACE!{interface IGazeDeviceWatcherPreview(IGazeDeviceWatcherPreviewVtbl): IInspectable(IInspectableVtbl) [IID_IGazeDeviceWatcherPreview] {
     fn add_Added(&self, handler: *mut foundation::TypedEventHandler<GazeDeviceWatcherPreview, GazeDeviceWatcherAddedPreviewEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -12911,7 +12911,7 @@ impl IGazeDeviceWatcherPreview {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GazeDeviceWatcherPreview: IGazeDeviceWatcherPreview}
+RT_CLASS!{class GazeDeviceWatcherPreview: IGazeDeviceWatcherPreview ["Windows.Devices.Input.Preview.GazeDeviceWatcherPreview"]}
 DEFINE_IID!(IID_IGazeDeviceWatcherRemovedPreviewEventArgs, 4066582280, 3647, 17183, 166, 6, 80, 179, 90, 249, 74, 28);
 RT_INTERFACE!{interface IGazeDeviceWatcherRemovedPreviewEventArgs(IGazeDeviceWatcherRemovedPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGazeDeviceWatcherRemovedPreviewEventArgs] {
     fn get_Device(&self, out: *mut *mut GazeDevicePreview) -> HRESULT
@@ -12923,7 +12923,7 @@ impl IGazeDeviceWatcherRemovedPreviewEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GazeDeviceWatcherRemovedPreviewEventArgs: IGazeDeviceWatcherRemovedPreviewEventArgs}
+RT_CLASS!{class GazeDeviceWatcherRemovedPreviewEventArgs: IGazeDeviceWatcherRemovedPreviewEventArgs ["Windows.Devices.Input.Preview.GazeDeviceWatcherRemovedPreviewEventArgs"]}
 DEFINE_IID!(IID_IGazeDeviceWatcherUpdatedPreviewEventArgs, 2145923311, 32520, 18231, 136, 225, 74, 131, 174, 78, 72, 133);
 RT_INTERFACE!{interface IGazeDeviceWatcherUpdatedPreviewEventArgs(IGazeDeviceWatcherUpdatedPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGazeDeviceWatcherUpdatedPreviewEventArgs] {
     fn get_Device(&self, out: *mut *mut GazeDevicePreview) -> HRESULT
@@ -12935,7 +12935,7 @@ impl IGazeDeviceWatcherUpdatedPreviewEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GazeDeviceWatcherUpdatedPreviewEventArgs: IGazeDeviceWatcherUpdatedPreviewEventArgs}
+RT_CLASS!{class GazeDeviceWatcherUpdatedPreviewEventArgs: IGazeDeviceWatcherUpdatedPreviewEventArgs ["Windows.Devices.Input.Preview.GazeDeviceWatcherUpdatedPreviewEventArgs"]}
 DEFINE_IID!(IID_IGazeEnteredPreviewEventArgs, 627556163, 4645, 18591, 157, 209, 218, 167, 197, 15, 191, 75);
 RT_INTERFACE!{interface IGazeEnteredPreviewEventArgs(IGazeEnteredPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGazeEnteredPreviewEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -12958,7 +12958,7 @@ impl IGazeEnteredPreviewEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GazeEnteredPreviewEventArgs: IGazeEnteredPreviewEventArgs}
+RT_CLASS!{class GazeEnteredPreviewEventArgs: IGazeEnteredPreviewEventArgs ["Windows.Devices.Input.Preview.GazeEnteredPreviewEventArgs"]}
 DEFINE_IID!(IID_IGazeExitedPreviewEventArgs, 1560998014, 32131, 16623, 159, 10, 251, 193, 187, 220, 197, 172);
 RT_INTERFACE!{interface IGazeExitedPreviewEventArgs(IGazeExitedPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGazeExitedPreviewEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -12981,7 +12981,7 @@ impl IGazeExitedPreviewEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GazeExitedPreviewEventArgs: IGazeExitedPreviewEventArgs}
+RT_CLASS!{class GazeExitedPreviewEventArgs: IGazeExitedPreviewEventArgs ["Windows.Devices.Input.Preview.GazeExitedPreviewEventArgs"]}
 DEFINE_IID!(IID_IGazeInputSourcePreview, 3885924072, 45961, 4583, 178, 1, 200, 211, 255, 183, 87, 33);
 RT_INTERFACE!{interface IGazeInputSourcePreview(IGazeInputSourcePreviewVtbl): IInspectable(IInspectableVtbl) [IID_IGazeInputSourcePreview] {
     fn add_GazeMoved(&self, handler: *mut foundation::TypedEventHandler<GazeInputSourcePreview, GazeMovedPreviewEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -13020,7 +13020,7 @@ impl IGazeInputSourcePreview {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GazeInputSourcePreview: IGazeInputSourcePreview}
+RT_CLASS!{class GazeInputSourcePreview: IGazeInputSourcePreview ["Windows.Devices.Input.Preview.GazeInputSourcePreview"]}
 impl RtActivatable<IGazeInputSourcePreviewStatics> for GazeInputSourcePreview {}
 impl GazeInputSourcePreview {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<GazeInputSourcePreview>>> {
@@ -13076,7 +13076,7 @@ impl IGazeMovedPreviewEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GazeMovedPreviewEventArgs: IGazeMovedPreviewEventArgs}
+RT_CLASS!{class GazeMovedPreviewEventArgs: IGazeMovedPreviewEventArgs ["Windows.Devices.Input.Preview.GazeMovedPreviewEventArgs"]}
 DEFINE_IID!(IID_IGazePointPreview, 3885924074, 45961, 4583, 178, 1, 200, 211, 255, 183, 87, 33);
 RT_INTERFACE!{interface IGazePointPreview(IGazePointPreviewVtbl): IInspectable(IInspectableVtbl) [IID_IGazePointPreview] {
     fn get_SourceDevice(&self, out: *mut *mut GazeDevicePreview) -> HRESULT,
@@ -13112,7 +13112,7 @@ impl IGazePointPreview {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GazePointPreview: IGazePointPreview}
+RT_CLASS!{class GazePointPreview: IGazePointPreview ["Windows.Devices.Input.Preview.GazePointPreview"]}
 } // Windows.Devices.Input.Preview
 } // Windows.Devices.Input
 pub mod lights { // Windows.Devices.Lights
@@ -13180,7 +13180,7 @@ impl ILamp {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Lamp: ILamp}
+RT_CLASS!{class Lamp: ILamp ["Windows.Devices.Lights.Lamp"]}
 impl RtActivatable<ILampStatics> for Lamp {}
 impl Lamp {
     #[inline] pub fn get_device_selector() -> Result<HString> {
@@ -13354,7 +13354,7 @@ impl ILampArray {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LampArray: ILampArray}
+RT_CLASS!{class LampArray: ILampArray ["Windows.Devices.Lights.LampArray"]}
 impl RtActivatable<ILampArrayStatics> for LampArray {}
 impl LampArray {
     #[inline] pub fn get_device_selector() -> Result<HString> {
@@ -13365,7 +13365,7 @@ impl LampArray {
     }
 }
 DEFINE_CLSID!(LampArray(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,76,105,103,104,116,115,46,76,97,109,112,65,114,114,97,121,0]) [CLSID_LampArray]);
-RT_ENUM! { enum LampArrayKind: i32 {
+RT_ENUM! { enum LampArrayKind: i32 ["Windows.Devices.Lights.LampArrayKind"] {
     Undefined (LampArrayKind_Undefined) = 0, Keyboard (LampArrayKind_Keyboard) = 1, Mouse (LampArrayKind_Mouse) = 2, GameController (LampArrayKind_GameController) = 3, Peripheral (LampArrayKind_Peripheral) = 4, Scene (LampArrayKind_Scene) = 5, Notification (LampArrayKind_Notification) = 6, Chassis (LampArrayKind_Chassis) = 7, Wearable (LampArrayKind_Wearable) = 8, Furniture (LampArrayKind_Furniture) = 9, Art (LampArrayKind_Art) = 10,
 }}
 DEFINE_IID!(IID_ILampArrayStatics, 2075707789, 24513, 17709, 187, 31, 74, 212, 16, 211, 152, 255);
@@ -13396,7 +13396,7 @@ impl ILampAvailabilityChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LampAvailabilityChangedEventArgs: ILampAvailabilityChangedEventArgs}
+RT_CLASS!{class LampAvailabilityChangedEventArgs: ILampAvailabilityChangedEventArgs ["Windows.Devices.Lights.LampAvailabilityChangedEventArgs"]}
 DEFINE_IID!(IID_ILampInfo, 817582620, 2767, 18906, 140, 16, 21, 11, 156, 246, 39, 19);
 RT_INTERFACE!{interface ILampInfo(ILampInfoVtbl): IInspectable(IInspectableVtbl) [IID_ILampInfo] {
     fn get_Index(&self, out: *mut i32) -> HRESULT,
@@ -13464,8 +13464,8 @@ impl ILampInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LampInfo: ILampInfo}
-RT_ENUM! { enum LampPurposes: u32 {
+RT_CLASS!{class LampInfo: ILampInfo ["Windows.Devices.Lights.LampInfo"]}
+RT_ENUM! { enum LampPurposes: u32 ["Windows.Devices.Lights.LampPurposes"] {
     Undefined (LampPurposes_Undefined) = 0, Control (LampPurposes_Control) = 1, Accent (LampPurposes_Accent) = 2, Branding (LampPurposes_Branding) = 4, Status (LampPurposes_Status) = 8, Illumination (LampPurposes_Illumination) = 16, Presentation (LampPurposes_Presentation) = 32,
 }}
 DEFINE_IID!(IID_ILampStatics, 2820817260, 34949, 16414, 184, 33, 142, 139, 56, 168, 232, 236);
@@ -13548,7 +13548,7 @@ impl ILampArrayBitmapEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LampArrayBitmapEffect: ILampArrayBitmapEffect}
+RT_CLASS!{class LampArrayBitmapEffect: ILampArrayBitmapEffect ["Windows.Devices.Lights.Effects.LampArrayBitmapEffect"]}
 impl RtActivatable<ILampArrayBitmapEffectFactory> for LampArrayBitmapEffect {}
 impl LampArrayBitmapEffect {
     #[inline] pub fn create_instance(lampArray: &super::LampArray, lampIndexes: &[i32]) -> Result<ComPtr<LampArrayBitmapEffect>> {
@@ -13583,7 +13583,7 @@ impl ILampArrayBitmapRequestedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LampArrayBitmapRequestedEventArgs: ILampArrayBitmapRequestedEventArgs}
+RT_CLASS!{class LampArrayBitmapRequestedEventArgs: ILampArrayBitmapRequestedEventArgs ["Windows.Devices.Lights.Effects.LampArrayBitmapRequestedEventArgs"]}
 DEFINE_IID!(IID_ILampArrayBlinkEffect, 3955176950, 12229, 19379, 179, 195, 98, 33, 167, 104, 13, 19);
 RT_INTERFACE!{interface ILampArrayBlinkEffect(ILampArrayBlinkEffectVtbl): IInspectable(IInspectableVtbl) [IID_ILampArrayBlinkEffect] {
     #[cfg(not(feature="windows-ui"))] fn __Dummy0(&self) -> (),
@@ -13679,7 +13679,7 @@ impl ILampArrayBlinkEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LampArrayBlinkEffect: ILampArrayBlinkEffect}
+RT_CLASS!{class LampArrayBlinkEffect: ILampArrayBlinkEffect ["Windows.Devices.Lights.Effects.LampArrayBlinkEffect"]}
 impl RtActivatable<ILampArrayBlinkEffectFactory> for LampArrayBlinkEffect {}
 impl LampArrayBlinkEffect {
     #[inline] pub fn create_instance(lampArray: &super::LampArray, lampIndexes: &[i32]) -> Result<ComPtr<LampArrayBlinkEffect>> {
@@ -13749,7 +13749,7 @@ impl ILampArrayColorRampEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LampArrayColorRampEffect: ILampArrayColorRampEffect}
+RT_CLASS!{class LampArrayColorRampEffect: ILampArrayColorRampEffect ["Windows.Devices.Lights.Effects.LampArrayColorRampEffect"]}
 impl RtActivatable<ILampArrayColorRampEffectFactory> for LampArrayColorRampEffect {}
 impl LampArrayColorRampEffect {
     #[inline] pub fn create_instance(lampArray: &super::LampArray, lampIndexes: &[i32]) -> Result<ComPtr<LampArrayColorRampEffect>> {
@@ -13806,7 +13806,7 @@ impl ILampArrayCustomEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LampArrayCustomEffect: ILampArrayCustomEffect}
+RT_CLASS!{class LampArrayCustomEffect: ILampArrayCustomEffect ["Windows.Devices.Lights.Effects.LampArrayCustomEffect"]}
 impl RtActivatable<ILampArrayCustomEffectFactory> for LampArrayCustomEffect {}
 impl LampArrayCustomEffect {
     #[inline] pub fn create_instance(lampArray: &super::LampArray, lampIndexes: &[i32]) -> Result<ComPtr<LampArrayCustomEffect>> {
@@ -13841,7 +13841,7 @@ impl ILampArrayEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum LampArrayEffectCompletionBehavior: i32 {
+RT_ENUM! { enum LampArrayEffectCompletionBehavior: i32 ["Windows.Devices.Lights.Effects.LampArrayEffectCompletionBehavior"] {
     ClearState (LampArrayEffectCompletionBehavior_ClearState) = 0, KeepState (LampArrayEffectCompletionBehavior_KeepState) = 1,
 }}
 DEFINE_IID!(IID_ILampArrayEffectPlaylist, 2112195582, 28513, 16643, 152, 199, 214, 99, 47, 123, 145, 105);
@@ -13907,7 +13907,7 @@ impl ILampArrayEffectPlaylist {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LampArrayEffectPlaylist: ILampArrayEffectPlaylist}
+RT_CLASS!{class LampArrayEffectPlaylist: ILampArrayEffectPlaylist ["Windows.Devices.Lights.Effects.LampArrayEffectPlaylist"]}
 impl RtActivatable<ILampArrayEffectPlaylistStatics> for LampArrayEffectPlaylist {}
 impl RtActivatable<IActivationFactory> for LampArrayEffectPlaylist {}
 impl LampArrayEffectPlaylist {
@@ -13942,10 +13942,10 @@ impl ILampArrayEffectPlaylistStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum LampArrayEffectStartMode: i32 {
+RT_ENUM! { enum LampArrayEffectStartMode: i32 ["Windows.Devices.Lights.Effects.LampArrayEffectStartMode"] {
     Sequential (LampArrayEffectStartMode_Sequential) = 0, Simultaneous (LampArrayEffectStartMode_Simultaneous) = 1,
 }}
-RT_ENUM! { enum LampArrayRepetitionMode: i32 {
+RT_ENUM! { enum LampArrayRepetitionMode: i32 ["Windows.Devices.Lights.Effects.LampArrayRepetitionMode"] {
     Occurrences (LampArrayRepetitionMode_Occurrences) = 0, Forever (LampArrayRepetitionMode_Forever) = 1,
 }}
 DEFINE_IID!(IID_ILampArraySolidEffect, 1142915603, 17356, 19251, 128, 235, 198, 221, 222, 125, 200, 237);
@@ -13999,7 +13999,7 @@ impl ILampArraySolidEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LampArraySolidEffect: ILampArraySolidEffect}
+RT_CLASS!{class LampArraySolidEffect: ILampArraySolidEffect ["Windows.Devices.Lights.Effects.LampArraySolidEffect"]}
 impl RtActivatable<ILampArraySolidEffectFactory> for LampArraySolidEffect {}
 impl LampArraySolidEffect {
     #[inline] pub fn create_instance(lampArray: &super::LampArray, lampIndexes: &[i32]) -> Result<ComPtr<LampArraySolidEffect>> {
@@ -14049,12 +14049,12 @@ impl ILampArrayUpdateRequestedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LampArrayUpdateRequestedEventArgs: ILampArrayUpdateRequestedEventArgs}
+RT_CLASS!{class LampArrayUpdateRequestedEventArgs: ILampArrayUpdateRequestedEventArgs ["Windows.Devices.Lights.Effects.LampArrayUpdateRequestedEventArgs"]}
 } // Windows.Devices.Lights.Effects
 } // Windows.Devices.Lights
 pub mod midi { // Windows.Devices.Midi
 use ::prelude::*;
-RT_CLASS!{class MidiActiveSensingMessage: IMidiMessage}
+RT_CLASS!{class MidiActiveSensingMessage: IMidiMessage ["Windows.Devices.Midi.MidiActiveSensingMessage"]}
 impl RtActivatable<IActivationFactory> for MidiActiveSensingMessage {}
 DEFINE_CLSID!(MidiActiveSensingMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,65,99,116,105,118,101,83,101,110,115,105,110,103,77,101,115,115,97,103,101,0]) [CLSID_MidiActiveSensingMessage]);
 DEFINE_IID!(IID_IMidiChannelPressureMessage, 3189745760, 25268, 19794, 163, 126, 146, 229, 77, 53, 185, 9);
@@ -14074,7 +14074,7 @@ impl IMidiChannelPressureMessage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiChannelPressureMessage: IMidiChannelPressureMessage}
+RT_CLASS!{class MidiChannelPressureMessage: IMidiChannelPressureMessage ["Windows.Devices.Midi.MidiChannelPressureMessage"]}
 impl RtActivatable<IMidiChannelPressureMessageFactory> for MidiChannelPressureMessage {}
 impl MidiChannelPressureMessage {
     #[inline] pub fn create_midi_channel_pressure_message(channel: u8, pressure: u8) -> Result<ComPtr<MidiChannelPressureMessage>> {
@@ -14093,7 +14093,7 @@ impl IMidiChannelPressureMessageFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiContinueMessage: IMidiMessage}
+RT_CLASS!{class MidiContinueMessage: IMidiMessage ["Windows.Devices.Midi.MidiContinueMessage"]}
 impl RtActivatable<IActivationFactory> for MidiContinueMessage {}
 DEFINE_CLSID!(MidiContinueMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,67,111,110,116,105,110,117,101,77,101,115,115,97,103,101,0]) [CLSID_MidiContinueMessage]);
 DEFINE_IID!(IID_IMidiControlChangeMessage, 3085000579, 30733, 16479, 183, 129, 62, 21, 152, 201, 127, 64);
@@ -14119,7 +14119,7 @@ impl IMidiControlChangeMessage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiControlChangeMessage: IMidiControlChangeMessage}
+RT_CLASS!{class MidiControlChangeMessage: IMidiControlChangeMessage ["Windows.Devices.Midi.MidiControlChangeMessage"]}
 impl RtActivatable<IMidiControlChangeMessageFactory> for MidiControlChangeMessage {}
 impl MidiControlChangeMessage {
     #[inline] pub fn create_midi_control_change_message(channel: u8, controller: u8, controlValue: u8) -> Result<ComPtr<MidiControlChangeMessage>> {
@@ -14160,7 +14160,7 @@ impl IMidiInPort {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiInPort: IMidiInPort}
+RT_CLASS!{class MidiInPort: IMidiInPort ["Windows.Devices.Midi.MidiInPort"]}
 impl RtActivatable<IMidiInPortStatics> for MidiInPort {}
 impl MidiInPort {
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<MidiInPort>>> {
@@ -14223,8 +14223,8 @@ impl IMidiMessageReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiMessageReceivedEventArgs: IMidiMessageReceivedEventArgs}
-RT_ENUM! { enum MidiMessageType: i32 {
+RT_CLASS!{class MidiMessageReceivedEventArgs: IMidiMessageReceivedEventArgs ["Windows.Devices.Midi.MidiMessageReceivedEventArgs"]}
+RT_ENUM! { enum MidiMessageType: i32 ["Windows.Devices.Midi.MidiMessageType"] {
     None (MidiMessageType_None) = 0, NoteOff (MidiMessageType_NoteOff) = 128, NoteOn (MidiMessageType_NoteOn) = 144, PolyphonicKeyPressure (MidiMessageType_PolyphonicKeyPressure) = 160, ControlChange (MidiMessageType_ControlChange) = 176, ProgramChange (MidiMessageType_ProgramChange) = 192, ChannelPressure (MidiMessageType_ChannelPressure) = 208, PitchBendChange (MidiMessageType_PitchBendChange) = 224, SystemExclusive (MidiMessageType_SystemExclusive) = 240, MidiTimeCode (MidiMessageType_MidiTimeCode) = 241, SongPositionPointer (MidiMessageType_SongPositionPointer) = 242, SongSelect (MidiMessageType_SongSelect) = 243, TuneRequest (MidiMessageType_TuneRequest) = 246, EndSystemExclusive (MidiMessageType_EndSystemExclusive) = 247, TimingClock (MidiMessageType_TimingClock) = 248, Start (MidiMessageType_Start) = 250, Continue (MidiMessageType_Continue) = 251, Stop (MidiMessageType_Stop) = 252, ActiveSensing (MidiMessageType_ActiveSensing) = 254, SystemReset (MidiMessageType_SystemReset) = 255,
 }}
 DEFINE_IID!(IID_IMidiNoteOffMessage, 385714932, 6542, 19855, 166, 84, 211, 5, 162, 147, 84, 143);
@@ -14250,7 +14250,7 @@ impl IMidiNoteOffMessage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiNoteOffMessage: IMidiNoteOffMessage}
+RT_CLASS!{class MidiNoteOffMessage: IMidiNoteOffMessage ["Windows.Devices.Midi.MidiNoteOffMessage"]}
 impl RtActivatable<IMidiNoteOffMessageFactory> for MidiNoteOffMessage {}
 impl MidiNoteOffMessage {
     #[inline] pub fn create_midi_note_off_message(channel: u8, note: u8, velocity: u8) -> Result<ComPtr<MidiNoteOffMessage>> {
@@ -14292,7 +14292,7 @@ impl IMidiNoteOnMessage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiNoteOnMessage: IMidiNoteOnMessage}
+RT_CLASS!{class MidiNoteOnMessage: IMidiNoteOnMessage ["Windows.Devices.Midi.MidiNoteOnMessage"]}
 impl RtActivatable<IMidiNoteOnMessageFactory> for MidiNoteOnMessage {}
 impl MidiNoteOnMessage {
     #[inline] pub fn create_midi_note_on_message(channel: u8, note: u8, velocity: u8) -> Result<ComPtr<MidiNoteOnMessage>> {
@@ -14333,7 +14333,7 @@ impl IMidiOutPort {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiOutPort: IMidiOutPort}
+RT_CLASS!{class MidiOutPort: IMidiOutPort ["Windows.Devices.Midi.MidiOutPort"]}
 impl RtActivatable<IMidiOutPortStatics> for MidiOutPort {}
 impl MidiOutPort {
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<IMidiOutPort>>> {
@@ -14378,7 +14378,7 @@ impl IMidiPitchBendChangeMessage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiPitchBendChangeMessage: IMidiPitchBendChangeMessage}
+RT_CLASS!{class MidiPitchBendChangeMessage: IMidiPitchBendChangeMessage ["Windows.Devices.Midi.MidiPitchBendChangeMessage"]}
 impl RtActivatable<IMidiPitchBendChangeMessageFactory> for MidiPitchBendChangeMessage {}
 impl MidiPitchBendChangeMessage {
     #[inline] pub fn create_midi_pitch_bend_change_message(channel: u8, bend: u16) -> Result<ComPtr<MidiPitchBendChangeMessage>> {
@@ -14420,7 +14420,7 @@ impl IMidiPolyphonicKeyPressureMessage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiPolyphonicKeyPressureMessage: IMidiPolyphonicKeyPressureMessage}
+RT_CLASS!{class MidiPolyphonicKeyPressureMessage: IMidiPolyphonicKeyPressureMessage ["Windows.Devices.Midi.MidiPolyphonicKeyPressureMessage"]}
 impl RtActivatable<IMidiPolyphonicKeyPressureMessageFactory> for MidiPolyphonicKeyPressureMessage {}
 impl MidiPolyphonicKeyPressureMessage {
     #[inline] pub fn create_midi_polyphonic_key_pressure_message(channel: u8, note: u8, pressure: u8) -> Result<ComPtr<MidiPolyphonicKeyPressureMessage>> {
@@ -14456,7 +14456,7 @@ impl IMidiProgramChangeMessage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiProgramChangeMessage: IMidiProgramChangeMessage}
+RT_CLASS!{class MidiProgramChangeMessage: IMidiProgramChangeMessage ["Windows.Devices.Midi.MidiProgramChangeMessage"]}
 impl RtActivatable<IMidiProgramChangeMessageFactory> for MidiProgramChangeMessage {}
 impl MidiProgramChangeMessage {
     #[inline] pub fn create_midi_program_change_message(channel: u8, program: u8) -> Result<ComPtr<MidiProgramChangeMessage>> {
@@ -14486,7 +14486,7 @@ impl IMidiSongPositionPointerMessage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiSongPositionPointerMessage: IMidiSongPositionPointerMessage}
+RT_CLASS!{class MidiSongPositionPointerMessage: IMidiSongPositionPointerMessage ["Windows.Devices.Midi.MidiSongPositionPointerMessage"]}
 impl RtActivatable<IMidiSongPositionPointerMessageFactory> for MidiSongPositionPointerMessage {}
 impl MidiSongPositionPointerMessage {
     #[inline] pub fn create_midi_song_position_pointer_message(beats: u16) -> Result<ComPtr<MidiSongPositionPointerMessage>> {
@@ -14516,7 +14516,7 @@ impl IMidiSongSelectMessage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiSongSelectMessage: IMidiSongSelectMessage}
+RT_CLASS!{class MidiSongSelectMessage: IMidiSongSelectMessage ["Windows.Devices.Midi.MidiSongSelectMessage"]}
 impl RtActivatable<IMidiSongSelectMessageFactory> for MidiSongSelectMessage {}
 impl MidiSongSelectMessage {
     #[inline] pub fn create_midi_song_select_message(song: u8) -> Result<ComPtr<MidiSongSelectMessage>> {
@@ -14535,10 +14535,10 @@ impl IMidiSongSelectMessageFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiStartMessage: IMidiMessage}
+RT_CLASS!{class MidiStartMessage: IMidiMessage ["Windows.Devices.Midi.MidiStartMessage"]}
 impl RtActivatable<IActivationFactory> for MidiStartMessage {}
 DEFINE_CLSID!(MidiStartMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,83,116,97,114,116,77,101,115,115,97,103,101,0]) [CLSID_MidiStartMessage]);
-RT_CLASS!{class MidiStopMessage: IMidiMessage}
+RT_CLASS!{class MidiStopMessage: IMidiMessage ["Windows.Devices.Midi.MidiStopMessage"]}
 impl RtActivatable<IActivationFactory> for MidiStopMessage {}
 DEFINE_CLSID!(MidiStopMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,83,116,111,112,77,101,115,115,97,103,101,0]) [CLSID_MidiStopMessage]);
 DEFINE_IID!(IID_IMidiSynthesizer, 4040824158, 56208, 16479, 184, 174, 33, 210, 225, 127, 46, 69);
@@ -14563,7 +14563,7 @@ impl IMidiSynthesizer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiSynthesizer: IMidiSynthesizer}
+RT_CLASS!{class MidiSynthesizer: IMidiSynthesizer ["Windows.Devices.Midi.MidiSynthesizer"]}
 impl RtActivatable<IMidiSynthesizerStatics> for MidiSynthesizer {}
 impl MidiSynthesizer {
     #[inline] pub fn create_async() -> Result<ComPtr<foundation::IAsyncOperation<MidiSynthesizer>>> {
@@ -14600,7 +14600,7 @@ impl IMidiSynthesizerStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiSystemExclusiveMessage: IMidiMessage}
+RT_CLASS!{class MidiSystemExclusiveMessage: IMidiMessage ["Windows.Devices.Midi.MidiSystemExclusiveMessage"]}
 impl RtActivatable<IMidiSystemExclusiveMessageFactory> for MidiSystemExclusiveMessage {}
 impl MidiSystemExclusiveMessage {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_midi_system_exclusive_message(rawData: &super::super::storage::streams::IBuffer) -> Result<ComPtr<MidiSystemExclusiveMessage>> {
@@ -14619,7 +14619,7 @@ impl IMidiSystemExclusiveMessageFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiSystemResetMessage: IMidiMessage}
+RT_CLASS!{class MidiSystemResetMessage: IMidiMessage ["Windows.Devices.Midi.MidiSystemResetMessage"]}
 impl RtActivatable<IActivationFactory> for MidiSystemResetMessage {}
 DEFINE_CLSID!(MidiSystemResetMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,83,121,115,116,101,109,82,101,115,101,116,77,101,115,115,97,103,101,0]) [CLSID_MidiSystemResetMessage]);
 DEFINE_IID!(IID_IMidiTimeCodeMessage, 200738941, 64099, 18972, 141, 235, 192, 232, 119, 150, 166, 215);
@@ -14639,7 +14639,7 @@ impl IMidiTimeCodeMessage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiTimeCodeMessage: IMidiTimeCodeMessage}
+RT_CLASS!{class MidiTimeCodeMessage: IMidiTimeCodeMessage ["Windows.Devices.Midi.MidiTimeCodeMessage"]}
 impl RtActivatable<IMidiTimeCodeMessageFactory> for MidiTimeCodeMessage {}
 impl MidiTimeCodeMessage {
     #[inline] pub fn create_midi_time_code_message(frameType: u8, values: u8) -> Result<ComPtr<MidiTimeCodeMessage>> {
@@ -14658,10 +14658,10 @@ impl IMidiTimeCodeMessageFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MidiTimingClockMessage: IMidiMessage}
+RT_CLASS!{class MidiTimingClockMessage: IMidiMessage ["Windows.Devices.Midi.MidiTimingClockMessage"]}
 impl RtActivatable<IActivationFactory> for MidiTimingClockMessage {}
 DEFINE_CLSID!(MidiTimingClockMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,84,105,109,105,110,103,67,108,111,99,107,77,101,115,115,97,103,101,0]) [CLSID_MidiTimingClockMessage]);
-RT_CLASS!{class MidiTuneRequestMessage: IMidiMessage}
+RT_CLASS!{class MidiTuneRequestMessage: IMidiMessage ["Windows.Devices.Midi.MidiTuneRequestMessage"]}
 impl RtActivatable<IActivationFactory> for MidiTuneRequestMessage {}
 DEFINE_CLSID!(MidiTuneRequestMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,84,117,110,101,82,101,113,117,101,115,116,77,101,115,115,97,103,101,0]) [CLSID_MidiTuneRequestMessage]);
 } // Windows.Devices.Midi
@@ -15042,7 +15042,7 @@ impl IPerceptionColorFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionColorFrame: IPerceptionColorFrame}
+RT_CLASS!{class PerceptionColorFrame: IPerceptionColorFrame ["Windows.Devices.Perception.PerceptionColorFrame"]}
 DEFINE_IID!(IID_IPerceptionColorFrameArrivedEventArgs, 2410480341, 34551, 19853, 185, 102, 90, 55, 97, 186, 159, 89);
 RT_INTERFACE!{interface IPerceptionColorFrameArrivedEventArgs(IPerceptionColorFrameArrivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionColorFrameArrivedEventArgs] {
     fn get_RelativeTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -15060,7 +15060,7 @@ impl IPerceptionColorFrameArrivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionColorFrameArrivedEventArgs: IPerceptionColorFrameArrivedEventArgs}
+RT_CLASS!{class PerceptionColorFrameArrivedEventArgs: IPerceptionColorFrameArrivedEventArgs ["Windows.Devices.Perception.PerceptionColorFrameArrivedEventArgs"]}
 DEFINE_IID!(IID_IPerceptionColorFrameReader, 1985017198, 47605, 17947, 131, 173, 242, 34, 175, 42, 170, 220);
 RT_INTERFACE!{interface IPerceptionColorFrameReader(IPerceptionColorFrameReaderVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionColorFrameReader] {
     fn add_FrameArrived(&self, handler: *mut foundation::TypedEventHandler<PerceptionColorFrameReader, PerceptionColorFrameArrivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -15100,7 +15100,7 @@ impl IPerceptionColorFrameReader {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionColorFrameReader: IPerceptionColorFrameReader}
+RT_CLASS!{class PerceptionColorFrameReader: IPerceptionColorFrameReader ["Windows.Devices.Perception.PerceptionColorFrameReader"]}
 DEFINE_IID!(IID_IPerceptionColorFrameSource, 3698178684, 2904, 18061, 156, 161, 109, 176, 76, 192, 71, 124);
 RT_INTERFACE!{interface IPerceptionColorFrameSource(IPerceptionColorFrameSourceVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionColorFrameSource] {
     fn add_AvailableChanged(&self, handler: *mut foundation::TypedEventHandler<PerceptionColorFrameSource, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -15276,7 +15276,7 @@ impl IPerceptionColorFrameSource {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionColorFrameSource: IPerceptionColorFrameSource}
+RT_CLASS!{class PerceptionColorFrameSource: IPerceptionColorFrameSource ["Windows.Devices.Perception.PerceptionColorFrameSource"]}
 impl RtActivatable<IPerceptionColorFrameSourceStatics> for PerceptionColorFrameSource {}
 impl PerceptionColorFrameSource {
     #[inline] pub fn create_watcher() -> Result<Option<ComPtr<PerceptionColorFrameSourceWatcher>>> {
@@ -15315,7 +15315,7 @@ impl IPerceptionColorFrameSourceAddedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionColorFrameSourceAddedEventArgs: IPerceptionColorFrameSourceAddedEventArgs}
+RT_CLASS!{class PerceptionColorFrameSourceAddedEventArgs: IPerceptionColorFrameSourceAddedEventArgs ["Windows.Devices.Perception.PerceptionColorFrameSourceAddedEventArgs"]}
 DEFINE_IID!(IID_IPerceptionColorFrameSourceRemovedEventArgs, 3531078249, 60236, 17135, 186, 79, 40, 143, 97, 92, 147, 193);
 RT_INTERFACE!{interface IPerceptionColorFrameSourceRemovedEventArgs(IPerceptionColorFrameSourceRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionColorFrameSourceRemovedEventArgs] {
     fn get_FrameSource(&self, out: *mut *mut PerceptionColorFrameSource) -> HRESULT
@@ -15327,7 +15327,7 @@ impl IPerceptionColorFrameSourceRemovedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionColorFrameSourceRemovedEventArgs: IPerceptionColorFrameSourceRemovedEventArgs}
+RT_CLASS!{class PerceptionColorFrameSourceRemovedEventArgs: IPerceptionColorFrameSourceRemovedEventArgs ["Windows.Devices.Perception.PerceptionColorFrameSourceRemovedEventArgs"]}
 DEFINE_IID!(IID_IPerceptionColorFrameSourceStatics, 1576258722, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 73);
 RT_INTERFACE!{static interface IPerceptionColorFrameSourceStatics(IPerceptionColorFrameSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionColorFrameSourceStatics] {
     fn CreateWatcher(&self, out: *mut *mut PerceptionColorFrameSourceWatcher) -> HRESULT,
@@ -15422,7 +15422,7 @@ impl IPerceptionColorFrameSourceWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionColorFrameSourceWatcher: IPerceptionColorFrameSourceWatcher}
+RT_CLASS!{class PerceptionColorFrameSourceWatcher: IPerceptionColorFrameSourceWatcher ["Windows.Devices.Perception.PerceptionColorFrameSourceWatcher"]}
 DEFINE_IID!(IID_IPerceptionControlSession, 2576975443, 23101, 16767, 146, 57, 241, 136, 158, 84, 139, 72);
 RT_INTERFACE!{interface IPerceptionControlSession(IPerceptionControlSessionVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionControlSession] {
     fn add_ControlLost(&self, handler: *mut foundation::TypedEventHandler<PerceptionControlSession, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -15445,7 +15445,7 @@ impl IPerceptionControlSession {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionControlSession: IPerceptionControlSession}
+RT_CLASS!{class PerceptionControlSession: IPerceptionControlSession ["Windows.Devices.Perception.PerceptionControlSession"]}
 DEFINE_IID!(IID_IPerceptionDepthCorrelatedCameraIntrinsics, 1699269121, 34526, 23521, 101, 130, 128, 127, 207, 76, 149, 207);
 RT_INTERFACE!{interface IPerceptionDepthCorrelatedCameraIntrinsics(IPerceptionDepthCorrelatedCameraIntrinsicsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionDepthCorrelatedCameraIntrinsics] {
     fn UnprojectPixelAtCorrelatedDepth(&self, pixelCoordinate: foundation::Point, depthFrame: *mut PerceptionDepthFrame, out: *mut foundation::numerics::Vector3) -> HRESULT,
@@ -15474,7 +15474,7 @@ impl IPerceptionDepthCorrelatedCameraIntrinsics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionDepthCorrelatedCameraIntrinsics: IPerceptionDepthCorrelatedCameraIntrinsics}
+RT_CLASS!{class PerceptionDepthCorrelatedCameraIntrinsics: IPerceptionDepthCorrelatedCameraIntrinsics ["Windows.Devices.Perception.PerceptionDepthCorrelatedCameraIntrinsics"]}
 DEFINE_IID!(IID_IPerceptionDepthCorrelatedCoordinateMapper, 1531813149, 46582, 18076, 184, 194, 185, 122, 69, 230, 134, 59);
 RT_INTERFACE!{interface IPerceptionDepthCorrelatedCoordinateMapper(IPerceptionDepthCorrelatedCoordinateMapperVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionDepthCorrelatedCoordinateMapper] {
     fn MapPixelToTarget(&self, sourcePixelCoordinate: foundation::Point, depthFrame: *mut PerceptionDepthFrame, out: *mut foundation::Point) -> HRESULT,
@@ -15503,7 +15503,7 @@ impl IPerceptionDepthCorrelatedCoordinateMapper {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionDepthCorrelatedCoordinateMapper: IPerceptionDepthCorrelatedCoordinateMapper}
+RT_CLASS!{class PerceptionDepthCorrelatedCoordinateMapper: IPerceptionDepthCorrelatedCoordinateMapper ["Windows.Devices.Perception.PerceptionDepthCorrelatedCoordinateMapper"]}
 DEFINE_IID!(IID_IPerceptionDepthFrame, 2742780412, 39174, 20477, 145, 97, 0, 36, 179, 96, 182, 87);
 RT_INTERFACE!{interface IPerceptionDepthFrame(IPerceptionDepthFrameVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionDepthFrame] {
     #[cfg(feature="windows-media")] fn get_VideoFrame(&self, out: *mut *mut super::super::media::VideoFrame) -> HRESULT
@@ -15515,7 +15515,7 @@ impl IPerceptionDepthFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionDepthFrame: IPerceptionDepthFrame}
+RT_CLASS!{class PerceptionDepthFrame: IPerceptionDepthFrame ["Windows.Devices.Perception.PerceptionDepthFrame"]}
 DEFINE_IID!(IID_IPerceptionDepthFrameArrivedEventArgs, 1144858034, 45698, 17975, 145, 115, 172, 151, 132, 53, 201, 133);
 RT_INTERFACE!{interface IPerceptionDepthFrameArrivedEventArgs(IPerceptionDepthFrameArrivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionDepthFrameArrivedEventArgs] {
     fn get_RelativeTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -15533,7 +15533,7 @@ impl IPerceptionDepthFrameArrivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionDepthFrameArrivedEventArgs: IPerceptionDepthFrameArrivedEventArgs}
+RT_CLASS!{class PerceptionDepthFrameArrivedEventArgs: IPerceptionDepthFrameArrivedEventArgs ["Windows.Devices.Perception.PerceptionDepthFrameArrivedEventArgs"]}
 DEFINE_IID!(IID_IPerceptionDepthFrameReader, 2980298911, 10651, 17938, 164, 247, 39, 15, 37, 160, 150, 236);
 RT_INTERFACE!{interface IPerceptionDepthFrameReader(IPerceptionDepthFrameReaderVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionDepthFrameReader] {
     fn add_FrameArrived(&self, handler: *mut foundation::TypedEventHandler<PerceptionDepthFrameReader, PerceptionDepthFrameArrivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -15573,7 +15573,7 @@ impl IPerceptionDepthFrameReader {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionDepthFrameReader: IPerceptionDepthFrameReader}
+RT_CLASS!{class PerceptionDepthFrameReader: IPerceptionDepthFrameReader ["Windows.Devices.Perception.PerceptionDepthFrameReader"]}
 DEFINE_IID!(IID_IPerceptionDepthFrameSource, 2043950038, 18427, 19953, 191, 201, 240, 29, 64, 189, 153, 66);
 RT_INTERFACE!{interface IPerceptionDepthFrameSource(IPerceptionDepthFrameSourceVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionDepthFrameSource] {
     fn add_AvailableChanged(&self, handler: *mut foundation::TypedEventHandler<PerceptionDepthFrameSource, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -15749,7 +15749,7 @@ impl IPerceptionDepthFrameSource {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionDepthFrameSource: IPerceptionDepthFrameSource}
+RT_CLASS!{class PerceptionDepthFrameSource: IPerceptionDepthFrameSource ["Windows.Devices.Perception.PerceptionDepthFrameSource"]}
 impl RtActivatable<IPerceptionDepthFrameSourceStatics> for PerceptionDepthFrameSource {}
 impl PerceptionDepthFrameSource {
     #[inline] pub fn create_watcher() -> Result<Option<ComPtr<PerceptionDepthFrameSourceWatcher>>> {
@@ -15788,7 +15788,7 @@ impl IPerceptionDepthFrameSourceAddedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionDepthFrameSourceAddedEventArgs: IPerceptionDepthFrameSourceAddedEventArgs}
+RT_CLASS!{class PerceptionDepthFrameSourceAddedEventArgs: IPerceptionDepthFrameSourceAddedEventArgs ["Windows.Devices.Perception.PerceptionDepthFrameSourceAddedEventArgs"]}
 DEFINE_IID!(IID_IPerceptionDepthFrameSourceRemovedEventArgs, 2696989773, 59756, 19841, 134, 221, 56, 185, 94, 73, 198, 223);
 RT_INTERFACE!{interface IPerceptionDepthFrameSourceRemovedEventArgs(IPerceptionDepthFrameSourceRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionDepthFrameSourceRemovedEventArgs] {
     fn get_FrameSource(&self, out: *mut *mut PerceptionDepthFrameSource) -> HRESULT
@@ -15800,7 +15800,7 @@ impl IPerceptionDepthFrameSourceRemovedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionDepthFrameSourceRemovedEventArgs: IPerceptionDepthFrameSourceRemovedEventArgs}
+RT_CLASS!{class PerceptionDepthFrameSourceRemovedEventArgs: IPerceptionDepthFrameSourceRemovedEventArgs ["Windows.Devices.Perception.PerceptionDepthFrameSourceRemovedEventArgs"]}
 DEFINE_IID!(IID_IPerceptionDepthFrameSourceStatics, 1576258722, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 72);
 RT_INTERFACE!{static interface IPerceptionDepthFrameSourceStatics(IPerceptionDepthFrameSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionDepthFrameSourceStatics] {
     fn CreateWatcher(&self, out: *mut *mut PerceptionDepthFrameSourceWatcher) -> HRESULT,
@@ -15895,8 +15895,8 @@ impl IPerceptionDepthFrameSourceWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionDepthFrameSourceWatcher: IPerceptionDepthFrameSourceWatcher}
-RT_ENUM! { enum PerceptionFrameSourceAccessStatus: i32 {
+RT_CLASS!{class PerceptionDepthFrameSourceWatcher: IPerceptionDepthFrameSourceWatcher ["Windows.Devices.Perception.PerceptionDepthFrameSourceWatcher"]}
+RT_ENUM! { enum PerceptionFrameSourceAccessStatus: i32 ["Windows.Devices.Perception.PerceptionFrameSourceAccessStatus"] {
     Unspecified (PerceptionFrameSourceAccessStatus_Unspecified) = 0, Allowed (PerceptionFrameSourceAccessStatus_Allowed) = 1, DeniedByUser (PerceptionFrameSourceAccessStatus_DeniedByUser) = 2, DeniedBySystem (PerceptionFrameSourceAccessStatus_DeniedBySystem) = 3,
 }}
 DEFINE_IID!(IID_IPerceptionFrameSourcePropertiesChangedEventArgs, 1818812520, 48369, 20172, 184, 145, 118, 37, 209, 36, 75, 107);
@@ -15916,7 +15916,7 @@ impl IPerceptionFrameSourcePropertiesChangedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionFrameSourcePropertiesChangedEventArgs: IPerceptionFrameSourcePropertiesChangedEventArgs}
+RT_CLASS!{class PerceptionFrameSourcePropertiesChangedEventArgs: IPerceptionFrameSourcePropertiesChangedEventArgs ["Windows.Devices.Perception.PerceptionFrameSourcePropertiesChangedEventArgs"]}
 DEFINE_IID!(IID_IPerceptionFrameSourcePropertyChangeResult, 506673418, 15504, 19746, 184, 152, 244, 43, 186, 100, 24, 255);
 RT_INTERFACE!{interface IPerceptionFrameSourcePropertyChangeResult(IPerceptionFrameSourcePropertyChangeResultVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionFrameSourcePropertyChangeResult] {
     fn get_Status(&self, out: *mut PerceptionFrameSourcePropertyChangeStatus) -> HRESULT,
@@ -15934,8 +15934,8 @@ impl IPerceptionFrameSourcePropertyChangeResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionFrameSourcePropertyChangeResult: IPerceptionFrameSourcePropertyChangeResult}
-RT_ENUM! { enum PerceptionFrameSourcePropertyChangeStatus: i32 {
+RT_CLASS!{class PerceptionFrameSourcePropertyChangeResult: IPerceptionFrameSourcePropertyChangeResult ["Windows.Devices.Perception.PerceptionFrameSourcePropertyChangeResult"]}
+RT_ENUM! { enum PerceptionFrameSourcePropertyChangeStatus: i32 ["Windows.Devices.Perception.PerceptionFrameSourcePropertyChangeStatus"] {
     Unknown (PerceptionFrameSourcePropertyChangeStatus_Unknown) = 0, Accepted (PerceptionFrameSourcePropertyChangeStatus_Accepted) = 1, LostControl (PerceptionFrameSourcePropertyChangeStatus_LostControl) = 2, PropertyNotSupported (PerceptionFrameSourcePropertyChangeStatus_PropertyNotSupported) = 3, PropertyReadOnly (PerceptionFrameSourcePropertyChangeStatus_PropertyReadOnly) = 4, ValueOutOfRange (PerceptionFrameSourcePropertyChangeStatus_ValueOutOfRange) = 5,
 }}
 DEFINE_IID!(IID_IPerceptionInfraredFrame, 2961728118, 33950, 19578, 138, 230, 181, 96, 100, 83, 33, 83);
@@ -15949,7 +15949,7 @@ impl IPerceptionInfraredFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionInfraredFrame: IPerceptionInfraredFrame}
+RT_CLASS!{class PerceptionInfraredFrame: IPerceptionInfraredFrame ["Windows.Devices.Perception.PerceptionInfraredFrame"]}
 DEFINE_IID!(IID_IPerceptionInfraredFrameArrivedEventArgs, 2675440327, 46269, 18519, 157, 80, 190, 142, 240, 117, 218, 239);
 RT_INTERFACE!{interface IPerceptionInfraredFrameArrivedEventArgs(IPerceptionInfraredFrameArrivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionInfraredFrameArrivedEventArgs] {
     fn get_RelativeTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -15967,7 +15967,7 @@ impl IPerceptionInfraredFrameArrivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionInfraredFrameArrivedEventArgs: IPerceptionInfraredFrameArrivedEventArgs}
+RT_CLASS!{class PerceptionInfraredFrameArrivedEventArgs: IPerceptionInfraredFrameArrivedEventArgs ["Windows.Devices.Perception.PerceptionInfraredFrameArrivedEventArgs"]}
 DEFINE_IID!(IID_IPerceptionInfraredFrameReader, 2036387352, 54171, 20424, 160, 74, 146, 151, 52, 198, 117, 108);
 RT_INTERFACE!{interface IPerceptionInfraredFrameReader(IPerceptionInfraredFrameReaderVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionInfraredFrameReader] {
     fn add_FrameArrived(&self, handler: *mut foundation::TypedEventHandler<PerceptionInfraredFrameReader, PerceptionInfraredFrameArrivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -16007,7 +16007,7 @@ impl IPerceptionInfraredFrameReader {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionInfraredFrameReader: IPerceptionInfraredFrameReader}
+RT_CLASS!{class PerceptionInfraredFrameReader: IPerceptionInfraredFrameReader ["Windows.Devices.Perception.PerceptionInfraredFrameReader"]}
 DEFINE_IID!(IID_IPerceptionInfraredFrameSource, 1437632322, 6152, 18766, 158, 48, 157, 42, 123, 232, 247, 0);
 RT_INTERFACE!{interface IPerceptionInfraredFrameSource(IPerceptionInfraredFrameSourceVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionInfraredFrameSource] {
     fn add_AvailableChanged(&self, handler: *mut foundation::TypedEventHandler<PerceptionInfraredFrameSource, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -16183,7 +16183,7 @@ impl IPerceptionInfraredFrameSource {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionInfraredFrameSource: IPerceptionInfraredFrameSource}
+RT_CLASS!{class PerceptionInfraredFrameSource: IPerceptionInfraredFrameSource ["Windows.Devices.Perception.PerceptionInfraredFrameSource"]}
 impl RtActivatable<IPerceptionInfraredFrameSourceStatics> for PerceptionInfraredFrameSource {}
 impl PerceptionInfraredFrameSource {
     #[inline] pub fn create_watcher() -> Result<Option<ComPtr<PerceptionInfraredFrameSourceWatcher>>> {
@@ -16222,7 +16222,7 @@ impl IPerceptionInfraredFrameSourceAddedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionInfraredFrameSourceAddedEventArgs: IPerceptionInfraredFrameSourceAddedEventArgs}
+RT_CLASS!{class PerceptionInfraredFrameSourceAddedEventArgs: IPerceptionInfraredFrameSourceAddedEventArgs ["Windows.Devices.Perception.PerceptionInfraredFrameSourceAddedEventArgs"]}
 DEFINE_IID!(IID_IPerceptionInfraredFrameSourceRemovedEventArgs, 3927605361, 31344, 19041, 175, 148, 7, 48, 56, 83, 246, 149);
 RT_INTERFACE!{interface IPerceptionInfraredFrameSourceRemovedEventArgs(IPerceptionInfraredFrameSourceRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionInfraredFrameSourceRemovedEventArgs] {
     fn get_FrameSource(&self, out: *mut *mut PerceptionInfraredFrameSource) -> HRESULT
@@ -16234,7 +16234,7 @@ impl IPerceptionInfraredFrameSourceRemovedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionInfraredFrameSourceRemovedEventArgs: IPerceptionInfraredFrameSourceRemovedEventArgs}
+RT_CLASS!{class PerceptionInfraredFrameSourceRemovedEventArgs: IPerceptionInfraredFrameSourceRemovedEventArgs ["Windows.Devices.Perception.PerceptionInfraredFrameSourceRemovedEventArgs"]}
 DEFINE_IID!(IID_IPerceptionInfraredFrameSourceStatics, 1576258722, 504, 19079, 184, 89, 213, 229, 183, 225, 222, 71);
 RT_INTERFACE!{static interface IPerceptionInfraredFrameSourceStatics(IPerceptionInfraredFrameSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionInfraredFrameSourceStatics] {
     fn CreateWatcher(&self, out: *mut *mut PerceptionInfraredFrameSourceWatcher) -> HRESULT,
@@ -16329,7 +16329,7 @@ impl IPerceptionInfraredFrameSourceWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionInfraredFrameSourceWatcher: IPerceptionInfraredFrameSourceWatcher}
+RT_CLASS!{class PerceptionInfraredFrameSourceWatcher: IPerceptionInfraredFrameSourceWatcher ["Windows.Devices.Perception.PerceptionInfraredFrameSourceWatcher"]}
 DEFINE_IID!(IID_IPerceptionVideoProfile, 1970683555, 282, 18190, 130, 37, 111, 5, 173, 226, 86, 72);
 RT_INTERFACE!{interface IPerceptionVideoProfile(IPerceptionVideoProfileVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionVideoProfile] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
@@ -16373,7 +16373,7 @@ impl IPerceptionVideoProfile {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionVideoProfile: IPerceptionVideoProfile}
+RT_CLASS!{class PerceptionVideoProfile: IPerceptionVideoProfile ["Windows.Devices.Perception.PerceptionVideoProfile"]}
 pub mod provider { // Windows.Devices.Perception.Provider
 use ::prelude::*;
 RT_CLASS!{static class KnownPerceptionFrameKind}
@@ -16424,7 +16424,7 @@ impl IPerceptionControlGroup {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionControlGroup: IPerceptionControlGroup}
+RT_CLASS!{class PerceptionControlGroup: IPerceptionControlGroup ["Windows.Devices.Perception.Provider.PerceptionControlGroup"]}
 impl RtActivatable<IPerceptionControlGroupFactory> for PerceptionControlGroup {}
 impl PerceptionControlGroup {
     #[inline] pub fn create(ids: &foundation::collections::IIterable<HString>) -> Result<ComPtr<PerceptionControlGroup>> {
@@ -16466,7 +16466,7 @@ impl IPerceptionCorrelation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionCorrelation: IPerceptionCorrelation}
+RT_CLASS!{class PerceptionCorrelation: IPerceptionCorrelation ["Windows.Devices.Perception.Provider.PerceptionCorrelation"]}
 impl RtActivatable<IPerceptionCorrelationFactory> for PerceptionCorrelation {}
 impl PerceptionCorrelation {
     #[inline] pub fn create(targetId: &HStringArg, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> Result<ComPtr<PerceptionCorrelation>> {
@@ -16496,7 +16496,7 @@ impl IPerceptionCorrelationGroup {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionCorrelationGroup: IPerceptionCorrelationGroup}
+RT_CLASS!{class PerceptionCorrelationGroup: IPerceptionCorrelationGroup ["Windows.Devices.Perception.Provider.PerceptionCorrelationGroup"]}
 impl RtActivatable<IPerceptionCorrelationGroupFactory> for PerceptionCorrelationGroup {}
 impl PerceptionCorrelationGroup {
     #[inline] pub fn create(relativeLocations: &foundation::collections::IIterable<PerceptionCorrelation>) -> Result<ComPtr<PerceptionCorrelationGroup>> {
@@ -16526,7 +16526,7 @@ impl IPerceptionFaceAuthenticationGroup {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionFaceAuthenticationGroup: IPerceptionFaceAuthenticationGroup}
+RT_CLASS!{class PerceptionFaceAuthenticationGroup: IPerceptionFaceAuthenticationGroup ["Windows.Devices.Perception.Provider.PerceptionFaceAuthenticationGroup"]}
 impl RtActivatable<IPerceptionFaceAuthenticationGroupFactory> for PerceptionFaceAuthenticationGroup {}
 impl PerceptionFaceAuthenticationGroup {
     #[inline] pub fn create(ids: &foundation::collections::IIterable<HString>, startHandler: &PerceptionStartFaceAuthenticationHandler, stopHandler: &PerceptionStopFaceAuthenticationHandler) -> Result<ComPtr<PerceptionFaceAuthenticationGroup>> {
@@ -16573,7 +16573,7 @@ impl IPerceptionFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionFrame: IPerceptionFrame}
+RT_CLASS!{class PerceptionFrame: IPerceptionFrame ["Windows.Devices.Perception.Provider.PerceptionFrame"]}
 DEFINE_IID!(IID_IPerceptionFrameProvider, 2035251897, 45949, 15155, 161, 13, 48, 98, 100, 25, 206, 101);
 RT_INTERFACE!{interface IPerceptionFrameProvider(IPerceptionFrameProviderVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionFrameProvider] {
     fn get_FrameProviderInfo(&self, out: *mut *mut PerceptionFrameProviderInfo) -> HRESULT,
@@ -16672,7 +16672,7 @@ impl IPerceptionFrameProviderInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionFrameProviderInfo: IPerceptionFrameProviderInfo}
+RT_CLASS!{class PerceptionFrameProviderInfo: IPerceptionFrameProviderInfo ["Windows.Devices.Perception.Provider.PerceptionFrameProviderInfo"]}
 impl RtActivatable<IActivationFactory> for PerceptionFrameProviderInfo {}
 DEFINE_CLSID!(PerceptionFrameProviderInfo(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,80,114,111,118,105,100,101,114,46,80,101,114,99,101,112,116,105,111,110,70,114,97,109,101,80,114,111,118,105,100,101,114,73,110,102,111,0]) [CLSID_PerceptionFrameProviderInfo]);
 DEFINE_IID!(IID_IPerceptionFrameProviderManager, 2841234951, 60115, 13279, 142, 193, 185, 36, 171, 224, 25, 196);
@@ -16810,7 +16810,7 @@ impl IPerceptionPropertyChangeRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionPropertyChangeRequest: IPerceptionPropertyChangeRequest}
+RT_CLASS!{class PerceptionPropertyChangeRequest: IPerceptionPropertyChangeRequest ["Windows.Devices.Perception.Provider.PerceptionPropertyChangeRequest"]}
 DEFINE_IID!(IID_PerceptionStartFaceAuthenticationHandler, 1954639146, 8336, 18032, 140, 72, 239, 57, 231, 255, 124, 38);
 RT_DELEGATE!{delegate PerceptionStartFaceAuthenticationHandler(PerceptionStartFaceAuthenticationHandlerVtbl, PerceptionStartFaceAuthenticationHandlerImpl) [IID_PerceptionStartFaceAuthenticationHandler] {
     fn Invoke(&self, sender: *mut PerceptionFaceAuthenticationGroup, out: *mut bool) -> HRESULT
@@ -16849,7 +16849,7 @@ impl IPerceptionVideoFrameAllocator {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PerceptionVideoFrameAllocator: IPerceptionVideoFrameAllocator}
+RT_CLASS!{class PerceptionVideoFrameAllocator: IPerceptionVideoFrameAllocator ["Windows.Devices.Perception.Provider.PerceptionVideoFrameAllocator"]}
 impl RtActivatable<IPerceptionVideoFrameAllocatorFactory> for PerceptionVideoFrameAllocator {}
 impl PerceptionVideoFrameAllocator {
     #[cfg(feature="windows-graphics")] #[inline] pub fn create(maxOutstandingFrameCountForWrite: u32, format: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, resolution: foundation::Size, alpha: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode) -> Result<ComPtr<PerceptionVideoFrameAllocator>> {
@@ -16943,7 +16943,7 @@ impl IBarcodeScanner {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScanner: IBarcodeScanner}
+RT_CLASS!{class BarcodeScanner: IBarcodeScanner ["Windows.Devices.PointOfService.BarcodeScanner"]}
 impl RtActivatable<IBarcodeScannerStatics> for BarcodeScanner {}
 impl RtActivatable<IBarcodeScannerStatics2> for BarcodeScanner {}
 impl BarcodeScanner {
@@ -17001,7 +17001,7 @@ impl IBarcodeScannerCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerCapabilities: IBarcodeScannerCapabilities}
+RT_CLASS!{class BarcodeScannerCapabilities: IBarcodeScannerCapabilities ["Windows.Devices.PointOfService.BarcodeScannerCapabilities"]}
 DEFINE_IID!(IID_IBarcodeScannerCapabilities1, 2388308969, 3628, 18223, 161, 204, 238, 128, 84, 182, 166, 132);
 RT_INTERFACE!{interface IBarcodeScannerCapabilities1(IBarcodeScannerCapabilities1Vtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerCapabilities1] {
     fn get_IsSoftwareTriggerSupported(&self, out: *mut bool) -> HRESULT
@@ -17035,7 +17035,7 @@ impl IBarcodeScannerDataReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerDataReceivedEventArgs: IBarcodeScannerDataReceivedEventArgs}
+RT_CLASS!{class BarcodeScannerDataReceivedEventArgs: IBarcodeScannerDataReceivedEventArgs ["Windows.Devices.PointOfService.BarcodeScannerDataReceivedEventArgs"]}
 DEFINE_IID!(IID_IBarcodeScannerErrorOccurredEventArgs, 751984687, 53050, 16386, 167, 90, 197, 236, 70, 143, 10, 32);
 RT_INTERFACE!{interface IBarcodeScannerErrorOccurredEventArgs(IBarcodeScannerErrorOccurredEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerErrorOccurredEventArgs] {
     fn get_PartialInputData(&self, out: *mut *mut BarcodeScannerReport) -> HRESULT,
@@ -17059,7 +17059,7 @@ impl IBarcodeScannerErrorOccurredEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerErrorOccurredEventArgs: IBarcodeScannerErrorOccurredEventArgs}
+RT_CLASS!{class BarcodeScannerErrorOccurredEventArgs: IBarcodeScannerErrorOccurredEventArgs ["Windows.Devices.PointOfService.BarcodeScannerErrorOccurredEventArgs"]}
 DEFINE_IID!(IID_IBarcodeScannerImagePreviewReceivedEventArgs, 4088913541, 28299, 17230, 159, 88, 6, 239, 38, 188, 75, 175);
 RT_INTERFACE!{interface IBarcodeScannerImagePreviewReceivedEventArgs(IBarcodeScannerImagePreviewReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerImagePreviewReceivedEventArgs] {
     #[cfg(feature="windows-storage")] fn get_Preview(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStreamWithContentType) -> HRESULT
@@ -17071,7 +17071,7 @@ impl IBarcodeScannerImagePreviewReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerImagePreviewReceivedEventArgs: IBarcodeScannerImagePreviewReceivedEventArgs}
+RT_CLASS!{class BarcodeScannerImagePreviewReceivedEventArgs: IBarcodeScannerImagePreviewReceivedEventArgs ["Windows.Devices.PointOfService.BarcodeScannerImagePreviewReceivedEventArgs"]}
 DEFINE_IID!(IID_IBarcodeScannerReport, 1558501552, 42121, 19350, 134, 196, 240, 191, 138, 55, 117, 61);
 RT_INTERFACE!{interface IBarcodeScannerReport(IBarcodeScannerReportVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerReport] {
     fn get_ScanDataType(&self, out: *mut u32) -> HRESULT,
@@ -17095,7 +17095,7 @@ impl IBarcodeScannerReport {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerReport: IBarcodeScannerReport}
+RT_CLASS!{class BarcodeScannerReport: IBarcodeScannerReport ["Windows.Devices.PointOfService.BarcodeScannerReport"]}
 impl RtActivatable<IBarcodeScannerReportFactory> for BarcodeScannerReport {}
 impl BarcodeScannerReport {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_instance(scanDataType: u32, scanData: &super::super::storage::streams::IBuffer, scanDataLabel: &super::super::storage::streams::IBuffer) -> Result<ComPtr<BarcodeScannerReport>> {
@@ -17148,7 +17148,7 @@ impl IBarcodeScannerStatics2 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BarcodeScannerStatus: i32 {
+RT_ENUM! { enum BarcodeScannerStatus: i32 ["Windows.Devices.PointOfService.BarcodeScannerStatus"] {
     Online (BarcodeScannerStatus_Online) = 0, Off (BarcodeScannerStatus_Off) = 1, Offline (BarcodeScannerStatus_Offline) = 2, OffOrOffline (BarcodeScannerStatus_OffOrOffline) = 3, Extended (BarcodeScannerStatus_Extended) = 4,
 }}
 DEFINE_IID!(IID_IBarcodeScannerStatusUpdatedEventArgs, 895321478, 40003, 17963, 169, 26, 129, 109, 201, 127, 69, 44);
@@ -17168,7 +17168,7 @@ impl IBarcodeScannerStatusUpdatedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerStatusUpdatedEventArgs: IBarcodeScannerStatusUpdatedEventArgs}
+RT_CLASS!{class BarcodeScannerStatusUpdatedEventArgs: IBarcodeScannerStatusUpdatedEventArgs ["Windows.Devices.PointOfService.BarcodeScannerStatusUpdatedEventArgs"]}
 RT_CLASS!{static class BarcodeSymbologies}
 impl RtActivatable<IBarcodeSymbologiesStatics> for BarcodeSymbologies {}
 impl RtActivatable<IBarcodeSymbologiesStatics2> for BarcodeSymbologies {}
@@ -18118,8 +18118,8 @@ impl IBarcodeSymbologyAttributes {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeSymbologyAttributes: IBarcodeSymbologyAttributes}
-RT_ENUM! { enum BarcodeSymbologyDecodeLengthKind: i32 {
+RT_CLASS!{class BarcodeSymbologyAttributes: IBarcodeSymbologyAttributes ["Windows.Devices.PointOfService.BarcodeSymbologyAttributes"]}
+RT_ENUM! { enum BarcodeSymbologyDecodeLengthKind: i32 ["Windows.Devices.PointOfService.BarcodeSymbologyDecodeLengthKind"] {
     AnyLength (BarcodeSymbologyDecodeLengthKind_AnyLength) = 0, Discrete (BarcodeSymbologyDecodeLengthKind_Discrete) = 1, Range (BarcodeSymbologyDecodeLengthKind_Range) = 2,
 }}
 DEFINE_IID!(IID_ICashDrawer, 2676553160, 56916, 19182, 168, 144, 146, 11, 203, 254, 48, 252);
@@ -18186,7 +18186,7 @@ impl ICashDrawer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CashDrawer: ICashDrawer}
+RT_CLASS!{class CashDrawer: ICashDrawer ["Windows.Devices.PointOfService.CashDrawer"]}
 impl RtActivatable<ICashDrawerStatics> for CashDrawer {}
 impl RtActivatable<ICashDrawerStatics2> for CashDrawer {}
 impl CashDrawer {
@@ -18245,7 +18245,7 @@ impl ICashDrawerCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CashDrawerCapabilities: ICashDrawerCapabilities}
+RT_CLASS!{class CashDrawerCapabilities: ICashDrawerCapabilities ["Windows.Devices.PointOfService.CashDrawerCapabilities"]}
 DEFINE_IID!(IID_ICashDrawerCloseAlarm, 1811451079, 28515, 17166, 171, 59, 149, 215, 95, 251, 232, 127);
 RT_INTERFACE!{interface ICashDrawerCloseAlarm(ICashDrawerCloseAlarmVtbl): IInspectable(IInspectableVtbl) [IID_ICashDrawerCloseAlarm] {
     fn put_AlarmTimeout(&self, value: foundation::TimeSpan) -> HRESULT,
@@ -18312,8 +18312,8 @@ impl ICashDrawerCloseAlarm {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CashDrawerCloseAlarm: ICashDrawerCloseAlarm}
-RT_CLASS!{class CashDrawerClosedEventArgs: ICashDrawerEventSourceEventArgs}
+RT_CLASS!{class CashDrawerCloseAlarm: ICashDrawerCloseAlarm ["Windows.Devices.PointOfService.CashDrawerCloseAlarm"]}
+RT_CLASS!{class CashDrawerClosedEventArgs: ICashDrawerEventSourceEventArgs ["Windows.Devices.PointOfService.CashDrawerClosedEventArgs"]}
 DEFINE_IID!(IID_ICashDrawerEventSource, 3758548076, 62201, 17455, 141, 214, 6, 193, 10, 66, 39, 186);
 RT_INTERFACE!{interface ICashDrawerEventSource(ICashDrawerEventSourceVtbl): IInspectable(IInspectableVtbl) [IID_ICashDrawerEventSource] {
     fn add_DrawerClosed(&self, handler: *mut foundation::TypedEventHandler<CashDrawerEventSource, CashDrawerClosedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -18341,7 +18341,7 @@ impl ICashDrawerEventSource {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CashDrawerEventSource: ICashDrawerEventSource}
+RT_CLASS!{class CashDrawerEventSource: ICashDrawerEventSource ["Windows.Devices.PointOfService.CashDrawerEventSource"]}
 DEFINE_IID!(IID_ICashDrawerEventSourceEventArgs, 1774926785, 5247, 16924, 156, 35, 9, 1, 35, 187, 120, 108);
 RT_INTERFACE!{interface ICashDrawerEventSourceEventArgs(ICashDrawerEventSourceEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICashDrawerEventSourceEventArgs] {
     fn get_CashDrawer(&self, out: *mut *mut CashDrawer) -> HRESULT
@@ -18353,7 +18353,7 @@ impl ICashDrawerEventSourceEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CashDrawerOpenedEventArgs: ICashDrawerEventSourceEventArgs}
+RT_CLASS!{class CashDrawerOpenedEventArgs: ICashDrawerEventSourceEventArgs ["Windows.Devices.PointOfService.CashDrawerOpenedEventArgs"]}
 DEFINE_IID!(IID_ICashDrawerStatics, 3751843162, 54327, 20479, 181, 71, 221, 169, 105, 164, 248, 131);
 RT_INTERFACE!{static interface ICashDrawerStatics(ICashDrawerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICashDrawerStatics] {
     fn GetDefaultAsync(&self, out: *mut *mut foundation::IAsyncOperation<CashDrawer>) -> HRESULT,
@@ -18405,8 +18405,8 @@ impl ICashDrawerStatus {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CashDrawerStatus: ICashDrawerStatus}
-RT_ENUM! { enum CashDrawerStatusKind: i32 {
+RT_CLASS!{class CashDrawerStatus: ICashDrawerStatus ["Windows.Devices.PointOfService.CashDrawerStatus"]}
+RT_ENUM! { enum CashDrawerStatusKind: i32 ["Windows.Devices.PointOfService.CashDrawerStatusKind"] {
     Online (CashDrawerStatusKind_Online) = 0, Off (CashDrawerStatusKind_Off) = 1, Offline (CashDrawerStatusKind_Offline) = 2, OffOrOffline (CashDrawerStatusKind_OffOrOffline) = 3, Extended (CashDrawerStatusKind_Extended) = 4,
 }}
 DEFINE_IID!(IID_ICashDrawerStatusUpdatedEventArgs, 816507274, 3440, 17820, 149, 83, 135, 225, 36, 197, 36, 136);
@@ -18420,7 +18420,7 @@ impl ICashDrawerStatusUpdatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CashDrawerStatusUpdatedEventArgs: ICashDrawerStatusUpdatedEventArgs}
+RT_CLASS!{class CashDrawerStatusUpdatedEventArgs: ICashDrawerStatusUpdatedEventArgs ["Windows.Devices.PointOfService.CashDrawerStatusUpdatedEventArgs"]}
 DEFINE_IID!(IID_IClaimedBarcodeScanner, 1248048284, 36772, 17202, 187, 38, 148, 93, 17, 216, 30, 15);
 RT_INTERFACE!{interface IClaimedBarcodeScanner(IClaimedBarcodeScannerVtbl): IInspectable(IInspectableVtbl) [IID_IClaimedBarcodeScanner] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -18567,7 +18567,7 @@ impl IClaimedBarcodeScanner {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ClaimedBarcodeScanner: IClaimedBarcodeScanner}
+RT_CLASS!{class ClaimedBarcodeScanner: IClaimedBarcodeScanner ["Windows.Devices.PointOfService.ClaimedBarcodeScanner"]}
 DEFINE_IID!(IID_IClaimedBarcodeScanner1, 4128943372, 34129, 17076, 153, 140, 151, 12, 32, 33, 10, 34);
 RT_INTERFACE!{interface IClaimedBarcodeScanner1(IClaimedBarcodeScanner1Vtbl): IInspectable(IInspectableVtbl) [IID_IClaimedBarcodeScanner1] {
     fn StartSoftwareTriggerAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -18649,7 +18649,7 @@ DEFINE_IID!(IID_IClaimedBarcodeScannerClosedEventArgs, 3481097353, 41516, 19557,
 RT_INTERFACE!{interface IClaimedBarcodeScannerClosedEventArgs(IClaimedBarcodeScannerClosedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IClaimedBarcodeScannerClosedEventArgs] {
     
 }}
-RT_CLASS!{class ClaimedBarcodeScannerClosedEventArgs: IClaimedBarcodeScannerClosedEventArgs}
+RT_CLASS!{class ClaimedBarcodeScannerClosedEventArgs: IClaimedBarcodeScannerClosedEventArgs ["Windows.Devices.PointOfService.ClaimedBarcodeScannerClosedEventArgs"]}
 DEFINE_IID!(IID_IClaimedCashDrawer, 3393165743, 43960, 17089, 138, 132, 92, 102, 81, 47, 90, 117);
 RT_INTERFACE!{interface IClaimedCashDrawer(IClaimedCashDrawerVtbl): IInspectable(IInspectableVtbl) [IID_IClaimedCashDrawer] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -18726,7 +18726,7 @@ impl IClaimedCashDrawer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ClaimedCashDrawer: IClaimedCashDrawer}
+RT_CLASS!{class ClaimedCashDrawer: IClaimedCashDrawer ["Windows.Devices.PointOfService.ClaimedCashDrawer"]}
 DEFINE_IID!(IID_IClaimedCashDrawer2, 2629481890, 56898, 19803, 176, 193, 155, 87, 162, 186, 137, 195);
 RT_INTERFACE!{interface IClaimedCashDrawer2(IClaimedCashDrawer2Vtbl): IInspectable(IInspectableVtbl) [IID_IClaimedCashDrawer2] {
     fn add_Closed(&self, handler: *mut foundation::TypedEventHandler<ClaimedCashDrawer, ClaimedCashDrawerClosedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -18747,7 +18747,7 @@ DEFINE_IID!(IID_IClaimedCashDrawerClosedEventArgs, 3428269875, 16180, 19548, 186
 RT_INTERFACE!{interface IClaimedCashDrawerClosedEventArgs(IClaimedCashDrawerClosedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IClaimedCashDrawerClosedEventArgs] {
     
 }}
-RT_CLASS!{class ClaimedCashDrawerClosedEventArgs: IClaimedCashDrawerClosedEventArgs}
+RT_CLASS!{class ClaimedCashDrawerClosedEventArgs: IClaimedCashDrawerClosedEventArgs ["Windows.Devices.PointOfService.ClaimedCashDrawerClosedEventArgs"]}
 DEFINE_IID!(IID_IClaimedJournalPrinter, 1743390256, 20861, 18559, 159, 223, 210, 224, 160, 162, 100, 165);
 RT_INTERFACE!{interface IClaimedJournalPrinter(IClaimedJournalPrinterVtbl): IInspectable(IInspectableVtbl) [IID_IClaimedJournalPrinter] {
     fn CreateJob(&self, out: *mut *mut JournalPrintJob) -> HRESULT
@@ -18759,7 +18759,7 @@ impl IClaimedJournalPrinter {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ClaimedJournalPrinter: IClaimedJournalPrinter}
+RT_CLASS!{class ClaimedJournalPrinter: IClaimedJournalPrinter ["Windows.Devices.PointOfService.ClaimedJournalPrinter"]}
 DEFINE_IID!(IID_IClaimedLineDisplay, 302696816, 39541, 19151, 170, 231, 9, 151, 43, 207, 135, 148);
 RT_INTERFACE!{interface IClaimedLineDisplay(IClaimedLineDisplayVtbl): IInspectable(IInspectableVtbl) [IID_IClaimedLineDisplay] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -18829,7 +18829,7 @@ impl IClaimedLineDisplay {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ClaimedLineDisplay: IClaimedLineDisplay}
+RT_CLASS!{class ClaimedLineDisplay: IClaimedLineDisplay ["Windows.Devices.PointOfService.ClaimedLineDisplay"]}
 impl RtActivatable<IClaimedLineDisplayStatics> for ClaimedLineDisplay {}
 impl ClaimedLineDisplay {
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ClaimedLineDisplay>>> {
@@ -18969,7 +18969,7 @@ DEFINE_IID!(IID_IClaimedLineDisplayClosedEventArgs, 4178965348, 54229, 20240, 18
 RT_INTERFACE!{interface IClaimedLineDisplayClosedEventArgs(IClaimedLineDisplayClosedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IClaimedLineDisplayClosedEventArgs] {
     
 }}
-RT_CLASS!{class ClaimedLineDisplayClosedEventArgs: IClaimedLineDisplayClosedEventArgs}
+RT_CLASS!{class ClaimedLineDisplayClosedEventArgs: IClaimedLineDisplayClosedEventArgs ["Windows.Devices.PointOfService.ClaimedLineDisplayClosedEventArgs"]}
 DEFINE_IID!(IID_IClaimedLineDisplayStatics, 2026543355, 35691, 18803, 134, 240, 62, 87, 12, 53, 24, 37);
 RT_INTERFACE!{static interface IClaimedLineDisplayStatics(IClaimedLineDisplayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IClaimedLineDisplayStatics] {
     fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncOperation<ClaimedLineDisplay>) -> HRESULT,
@@ -19185,7 +19185,7 @@ impl IClaimedMagneticStripeReader {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ClaimedMagneticStripeReader: IClaimedMagneticStripeReader}
+RT_CLASS!{class ClaimedMagneticStripeReader: IClaimedMagneticStripeReader ["Windows.Devices.PointOfService.ClaimedMagneticStripeReader"]}
 DEFINE_IID!(IID_IClaimedMagneticStripeReader2, 594522079, 58076, 19837, 156, 120, 6, 13, 242, 191, 41, 40);
 RT_INTERFACE!{interface IClaimedMagneticStripeReader2(IClaimedMagneticStripeReader2Vtbl): IInspectable(IInspectableVtbl) [IID_IClaimedMagneticStripeReader2] {
     fn add_Closed(&self, handler: *mut foundation::TypedEventHandler<ClaimedMagneticStripeReader, ClaimedMagneticStripeReaderClosedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -19206,7 +19206,7 @@ DEFINE_IID!(IID_IClaimedMagneticStripeReaderClosedEventArgs, 346925370, 44493, 1
 RT_INTERFACE!{interface IClaimedMagneticStripeReaderClosedEventArgs(IClaimedMagneticStripeReaderClosedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IClaimedMagneticStripeReaderClosedEventArgs] {
     
 }}
-RT_CLASS!{class ClaimedMagneticStripeReaderClosedEventArgs: IClaimedMagneticStripeReaderClosedEventArgs}
+RT_CLASS!{class ClaimedMagneticStripeReaderClosedEventArgs: IClaimedMagneticStripeReaderClosedEventArgs ["Windows.Devices.PointOfService.ClaimedMagneticStripeReaderClosedEventArgs"]}
 DEFINE_IID!(IID_IClaimedPosPrinter, 1835322892, 57406, 19220, 163, 142, 194, 140, 52, 184, 99, 83);
 RT_INTERFACE!{interface IClaimedPosPrinter(IClaimedPosPrinterVtbl): IInspectable(IInspectableVtbl) [IID_IClaimedPosPrinter] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19322,7 +19322,7 @@ impl IClaimedPosPrinter {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ClaimedPosPrinter: IClaimedPosPrinter}
+RT_CLASS!{class ClaimedPosPrinter: IClaimedPosPrinter ["Windows.Devices.PointOfService.ClaimedPosPrinter"]}
 DEFINE_IID!(IID_IClaimedPosPrinter2, 1542955989, 20888, 17274, 130, 223, 88, 153, 147, 250, 119, 225);
 RT_INTERFACE!{interface IClaimedPosPrinter2(IClaimedPosPrinter2Vtbl): IInspectable(IInspectableVtbl) [IID_IClaimedPosPrinter2] {
     fn add_Closed(&self, handler: *mut foundation::TypedEventHandler<ClaimedPosPrinter, ClaimedPosPrinterClosedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -19343,7 +19343,7 @@ DEFINE_IID!(IID_IClaimedPosPrinterClosedEventArgs, 3803685499, 19776, 18205, 146
 RT_INTERFACE!{interface IClaimedPosPrinterClosedEventArgs(IClaimedPosPrinterClosedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IClaimedPosPrinterClosedEventArgs] {
     
 }}
-RT_CLASS!{class ClaimedPosPrinterClosedEventArgs: IClaimedPosPrinterClosedEventArgs}
+RT_CLASS!{class ClaimedPosPrinterClosedEventArgs: IClaimedPosPrinterClosedEventArgs ["Windows.Devices.PointOfService.ClaimedPosPrinterClosedEventArgs"]}
 DEFINE_IID!(IID_IClaimedReceiptPrinter, 2597485172, 56673, 20194, 152, 55, 91, 93, 114, 213, 56, 185);
 RT_INTERFACE!{interface IClaimedReceiptPrinter(IClaimedReceiptPrinterVtbl): IInspectable(IInspectableVtbl) [IID_IClaimedReceiptPrinter] {
     fn get_SidewaysMaxLines(&self, out: *mut u32) -> HRESULT,
@@ -19385,7 +19385,7 @@ impl IClaimedReceiptPrinter {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ClaimedReceiptPrinter: IClaimedReceiptPrinter}
+RT_CLASS!{class ClaimedReceiptPrinter: IClaimedReceiptPrinter ["Windows.Devices.PointOfService.ClaimedReceiptPrinter"]}
 DEFINE_IID!(IID_IClaimedSlipPrinter, 3177050098, 44944, 20106, 183, 123, 227, 174, 156, 166, 58, 127);
 RT_INTERFACE!{interface IClaimedSlipPrinter(IClaimedSlipPrinterVtbl): IInspectable(IInspectableVtbl) [IID_IClaimedSlipPrinter] {
     fn get_SidewaysMaxLines(&self, out: *mut u32) -> HRESULT,
@@ -19466,7 +19466,7 @@ impl IClaimedSlipPrinter {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ClaimedSlipPrinter: IClaimedSlipPrinter}
+RT_CLASS!{class ClaimedSlipPrinter: IClaimedSlipPrinter ["Windows.Devices.PointOfService.ClaimedSlipPrinter"]}
 DEFINE_IID!(IID_ICommonClaimedPosPrinterStation, 3085657768, 65162, 19707, 139, 66, 227, 91, 40, 12, 178, 124);
 RT_INTERFACE!{interface ICommonClaimedPosPrinterStation(ICommonClaimedPosPrinterStationVtbl): IInspectable(IInspectableVtbl) [IID_ICommonClaimedPosPrinterStation] {
     fn put_CharactersPerLine(&self, value: u32) -> HRESULT,
@@ -19727,8 +19727,8 @@ DEFINE_IID!(IID_IJournalPrinterCapabilities, 995937347, 57415, 17507, 187, 88, 2
 RT_INTERFACE!{interface IJournalPrinterCapabilities(IJournalPrinterCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IJournalPrinterCapabilities] {
     
 }}
-RT_CLASS!{class JournalPrinterCapabilities: IJournalPrinterCapabilities}
-RT_CLASS!{class JournalPrintJob: IPosPrinterJob}
+RT_CLASS!{class JournalPrinterCapabilities: IJournalPrinterCapabilities ["Windows.Devices.PointOfService.JournalPrinterCapabilities"]}
+RT_CLASS!{class JournalPrintJob: IPosPrinterJob ["Windows.Devices.PointOfService.JournalPrintJob"]}
 DEFINE_IID!(IID_ILineDisplay, 620093262, 15513, 17634, 183, 63, 229, 27, 227, 99, 122, 140);
 RT_INTERFACE!{interface ILineDisplay(ILineDisplayVtbl): IInspectable(IInspectableVtbl) [IID_ILineDisplay] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19782,7 +19782,7 @@ impl ILineDisplay {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LineDisplay: ILineDisplay}
+RT_CLASS!{class LineDisplay: ILineDisplay ["Windows.Devices.PointOfService.LineDisplay"]}
 impl RtActivatable<ILineDisplayStatics> for LineDisplay {}
 impl RtActivatable<ILineDisplayStatics2> for LineDisplay {}
 impl LineDisplay {
@@ -19896,7 +19896,7 @@ impl ILineDisplayAttributes {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LineDisplayAttributes: ILineDisplayAttributes}
+RT_CLASS!{class LineDisplayAttributes: ILineDisplayAttributes ["Windows.Devices.PointOfService.LineDisplayAttributes"]}
 DEFINE_IID!(IID_ILineDisplayCapabilities, 1511372241, 36293, 19356, 145, 114, 48, 62, 71, 183, 12, 85);
 RT_INTERFACE!{interface ILineDisplayCapabilities(ILineDisplayCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_ILineDisplayCapabilities] {
     fn get_IsStatisticsReportingSupported(&self, out: *mut bool) -> HRESULT,
@@ -20010,7 +20010,7 @@ impl ILineDisplayCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LineDisplayCapabilities: ILineDisplayCapabilities}
+RT_CLASS!{class LineDisplayCapabilities: ILineDisplayCapabilities ["Windows.Devices.PointOfService.LineDisplayCapabilities"]}
 DEFINE_IID!(IID_ILineDisplayCursor, 3974102085, 30026, 20027, 171, 43, 21, 17, 129, 8, 86, 5);
 RT_INTERFACE!{interface ILineDisplayCursor(ILineDisplayCursorVtbl): IInspectable(IInspectableVtbl) [IID_ILineDisplayCursor] {
     fn get_CanCustomize(&self, out: *mut bool) -> HRESULT,
@@ -20070,7 +20070,7 @@ impl ILineDisplayCursor {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LineDisplayCursor: ILineDisplayCursor}
+RT_CLASS!{class LineDisplayCursor: ILineDisplayCursor ["Windows.Devices.PointOfService.LineDisplayCursor"]}
 DEFINE_IID!(IID_ILineDisplayCursorAttributes, 1311593726, 20477, 16784, 170, 225, 206, 40, 95, 32, 200, 150);
 RT_INTERFACE!{interface ILineDisplayCursorAttributes(ILineDisplayCursorAttributesVtbl): IInspectable(IInspectableVtbl) [IID_ILineDisplayCursorAttributes] {
     fn get_IsBlinkEnabled(&self, out: *mut bool) -> HRESULT,
@@ -20120,8 +20120,8 @@ impl ILineDisplayCursorAttributes {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LineDisplayCursorAttributes: ILineDisplayCursorAttributes}
-RT_ENUM! { enum LineDisplayCursorType: i32 {
+RT_CLASS!{class LineDisplayCursorAttributes: ILineDisplayCursorAttributes ["Windows.Devices.PointOfService.LineDisplayCursorAttributes"]}
+RT_ENUM! { enum LineDisplayCursorType: i32 ["Windows.Devices.PointOfService.LineDisplayCursorType"] {
     None (LineDisplayCursorType_None) = 0, Block (LineDisplayCursorType_Block) = 1, HalfBlock (LineDisplayCursorType_HalfBlock) = 2, Underline (LineDisplayCursorType_Underline) = 3, Reverse (LineDisplayCursorType_Reverse) = 4, Other (LineDisplayCursorType_Other) = 5,
 }}
 DEFINE_IID!(IID_ILineDisplayCustomGlyphs, 576190012, 62051, 17649, 161, 160, 231, 80, 166, 160, 236, 84);
@@ -20147,11 +20147,11 @@ impl ILineDisplayCustomGlyphs {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LineDisplayCustomGlyphs: ILineDisplayCustomGlyphs}
-RT_ENUM! { enum LineDisplayDescriptorState: i32 {
+RT_CLASS!{class LineDisplayCustomGlyphs: ILineDisplayCustomGlyphs ["Windows.Devices.PointOfService.LineDisplayCustomGlyphs"]}
+RT_ENUM! { enum LineDisplayDescriptorState: i32 ["Windows.Devices.PointOfService.LineDisplayDescriptorState"] {
     Off (LineDisplayDescriptorState_Off) = 0, On (LineDisplayDescriptorState_On) = 1, Blink (LineDisplayDescriptorState_Blink) = 2,
 }}
-RT_ENUM! { enum LineDisplayHorizontalAlignment: i32 {
+RT_ENUM! { enum LineDisplayHorizontalAlignment: i32 ["Windows.Devices.PointOfService.LineDisplayHorizontalAlignment"] {
     Left (LineDisplayHorizontalAlignment_Left) = 0, Center (LineDisplayHorizontalAlignment_Center) = 1, Right (LineDisplayHorizontalAlignment_Right) = 2,
 }}
 DEFINE_IID!(IID_ILineDisplayMarquee, 2748530238, 62570, 19322, 188, 33, 83, 235, 59, 87, 248, 180);
@@ -20204,14 +20204,14 @@ impl ILineDisplayMarquee {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LineDisplayMarquee: ILineDisplayMarquee}
-RT_ENUM! { enum LineDisplayMarqueeFormat: i32 {
+RT_CLASS!{class LineDisplayMarquee: ILineDisplayMarquee ["Windows.Devices.PointOfService.LineDisplayMarquee"]}
+RT_ENUM! { enum LineDisplayMarqueeFormat: i32 ["Windows.Devices.PointOfService.LineDisplayMarqueeFormat"] {
     None (LineDisplayMarqueeFormat_None) = 0, Walk (LineDisplayMarqueeFormat_Walk) = 1, Place (LineDisplayMarqueeFormat_Place) = 2,
 }}
-RT_ENUM! { enum LineDisplayPowerStatus: i32 {
+RT_ENUM! { enum LineDisplayPowerStatus: i32 ["Windows.Devices.PointOfService.LineDisplayPowerStatus"] {
     Unknown (LineDisplayPowerStatus_Unknown) = 0, Online (LineDisplayPowerStatus_Online) = 1, Off (LineDisplayPowerStatus_Off) = 2, Offline (LineDisplayPowerStatus_Offline) = 3, OffOrOffline (LineDisplayPowerStatus_OffOrOffline) = 4,
 }}
-RT_ENUM! { enum LineDisplayScrollDirection: i32 {
+RT_ENUM! { enum LineDisplayScrollDirection: i32 ["Windows.Devices.PointOfService.LineDisplayScrollDirection"] {
     Up (LineDisplayScrollDirection_Up) = 0, Down (LineDisplayScrollDirection_Down) = 1, Left (LineDisplayScrollDirection_Left) = 2, Right (LineDisplayScrollDirection_Right) = 3,
 }}
 DEFINE_IID!(IID_ILineDisplayStatics, 36552886, 4528, 18064, 149, 71, 11, 57, 197, 175, 33, 20);
@@ -20277,7 +20277,7 @@ impl ILineDisplayStatisticsCategorySelector {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LineDisplayStatisticsCategorySelector: ILineDisplayStatisticsCategorySelector}
+RT_CLASS!{class LineDisplayStatisticsCategorySelector: ILineDisplayStatisticsCategorySelector ["Windows.Devices.PointOfService.LineDisplayStatisticsCategorySelector"]}
 DEFINE_IID!(IID_ILineDisplayStatusUpdatedEventArgs, 3721755674, 34555, 20154, 147, 209, 111, 94, 218, 82, 183, 82);
 RT_INTERFACE!{interface ILineDisplayStatusUpdatedEventArgs(ILineDisplayStatusUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ILineDisplayStatusUpdatedEventArgs] {
     fn get_Status(&self, out: *mut LineDisplayPowerStatus) -> HRESULT
@@ -20289,7 +20289,7 @@ impl ILineDisplayStatusUpdatedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LineDisplayStatusUpdatedEventArgs: ILineDisplayStatusUpdatedEventArgs}
+RT_CLASS!{class LineDisplayStatusUpdatedEventArgs: ILineDisplayStatusUpdatedEventArgs ["Windows.Devices.PointOfService.LineDisplayStatusUpdatedEventArgs"]}
 DEFINE_IID!(IID_ILineDisplayStoredBitmap, 4129378651, 55326, 17338, 191, 27, 188, 250, 60, 120, 91, 160);
 RT_INTERFACE!{interface ILineDisplayStoredBitmap(ILineDisplayStoredBitmapVtbl): IInspectable(IInspectableVtbl) [IID_ILineDisplayStoredBitmap] {
     fn get_EscapeSequence(&self, out: *mut HSTRING) -> HRESULT,
@@ -20307,14 +20307,14 @@ impl ILineDisplayStoredBitmap {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LineDisplayStoredBitmap: ILineDisplayStoredBitmap}
-RT_ENUM! { enum LineDisplayTextAttribute: i32 {
+RT_CLASS!{class LineDisplayStoredBitmap: ILineDisplayStoredBitmap ["Windows.Devices.PointOfService.LineDisplayStoredBitmap"]}
+RT_ENUM! { enum LineDisplayTextAttribute: i32 ["Windows.Devices.PointOfService.LineDisplayTextAttribute"] {
     Normal (LineDisplayTextAttribute_Normal) = 0, Blink (LineDisplayTextAttribute_Blink) = 1, Reverse (LineDisplayTextAttribute_Reverse) = 2, ReverseBlink (LineDisplayTextAttribute_ReverseBlink) = 3,
 }}
-RT_ENUM! { enum LineDisplayTextAttributeGranularity: i32 {
+RT_ENUM! { enum LineDisplayTextAttributeGranularity: i32 ["Windows.Devices.PointOfService.LineDisplayTextAttributeGranularity"] {
     NotSupported (LineDisplayTextAttributeGranularity_NotSupported) = 0, EntireDisplay (LineDisplayTextAttributeGranularity_EntireDisplay) = 1, PerCharacter (LineDisplayTextAttributeGranularity_PerCharacter) = 2,
 }}
-RT_ENUM! { enum LineDisplayVerticalAlignment: i32 {
+RT_ENUM! { enum LineDisplayVerticalAlignment: i32 ["Windows.Devices.PointOfService.LineDisplayVerticalAlignment"] {
     Top (LineDisplayVerticalAlignment_Top) = 0, Center (LineDisplayVerticalAlignment_Center) = 1, Bottom (LineDisplayVerticalAlignment_Bottom) = 2,
 }}
 DEFINE_IID!(IID_ILineDisplayWindow, 3525308148, 9060, 19429, 190, 225, 133, 22, 128, 175, 73, 100);
@@ -20375,7 +20375,7 @@ impl ILineDisplayWindow {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LineDisplayWindow: ILineDisplayWindow}
+RT_CLASS!{class LineDisplayWindow: ILineDisplayWindow ["Windows.Devices.PointOfService.LineDisplayWindow"]}
 DEFINE_IID!(IID_ILineDisplayWindow2, 2841436902, 48600, 17253, 142, 17, 222, 148, 222, 141, 255, 2);
 RT_INTERFACE!{interface ILineDisplayWindow2(ILineDisplayWindow2Vtbl): IInspectable(IInspectableVtbl) [IID_ILineDisplayWindow2] {
     fn get_Cursor(&self, out: *mut *mut LineDisplayCursor) -> HRESULT,
@@ -20500,7 +20500,7 @@ impl IMagneticStripeReader {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MagneticStripeReader: IMagneticStripeReader}
+RT_CLASS!{class MagneticStripeReader: IMagneticStripeReader ["Windows.Devices.PointOfService.MagneticStripeReader"]}
 impl RtActivatable<IMagneticStripeReaderStatics> for MagneticStripeReader {}
 impl RtActivatable<IMagneticStripeReaderStatics2> for MagneticStripeReader {}
 impl MagneticStripeReader {
@@ -20637,11 +20637,11 @@ impl IMagneticStripeReaderAamvaCardDataReceivedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MagneticStripeReaderAamvaCardDataReceivedEventArgs: IMagneticStripeReaderAamvaCardDataReceivedEventArgs}
-RT_ENUM! { enum MagneticStripeReaderAuthenticationLevel: i32 {
+RT_CLASS!{class MagneticStripeReaderAamvaCardDataReceivedEventArgs: IMagneticStripeReaderAamvaCardDataReceivedEventArgs ["Windows.Devices.PointOfService.MagneticStripeReaderAamvaCardDataReceivedEventArgs"]}
+RT_ENUM! { enum MagneticStripeReaderAuthenticationLevel: i32 ["Windows.Devices.PointOfService.MagneticStripeReaderAuthenticationLevel"] {
     NotSupported (MagneticStripeReaderAuthenticationLevel_NotSupported) = 0, Optional (MagneticStripeReaderAuthenticationLevel_Optional) = 1, Required (MagneticStripeReaderAuthenticationLevel_Required) = 2,
 }}
-RT_ENUM! { enum MagneticStripeReaderAuthenticationProtocol: i32 {
+RT_ENUM! { enum MagneticStripeReaderAuthenticationProtocol: i32 ["Windows.Devices.PointOfService.MagneticStripeReaderAuthenticationProtocol"] {
     None (MagneticStripeReaderAuthenticationProtocol_None) = 0, ChallengeResponse (MagneticStripeReaderAuthenticationProtocol_ChallengeResponse) = 1,
 }}
 DEFINE_IID!(IID_IMagneticStripeReaderBankCardDataReceivedEventArgs, 781551651, 41754, 18275, 136, 44, 35, 114, 94, 57, 176, 142);
@@ -20703,7 +20703,7 @@ impl IMagneticStripeReaderBankCardDataReceivedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MagneticStripeReaderBankCardDataReceivedEventArgs: IMagneticStripeReaderBankCardDataReceivedEventArgs}
+RT_CLASS!{class MagneticStripeReaderBankCardDataReceivedEventArgs: IMagneticStripeReaderBankCardDataReceivedEventArgs ["Windows.Devices.PointOfService.MagneticStripeReaderBankCardDataReceivedEventArgs"]}
 DEFINE_IID!(IID_IMagneticStripeReaderCapabilities, 1898479772, 50240, 17570, 164, 103, 70, 145, 117, 208, 40, 150);
 RT_INTERFACE!{interface IMagneticStripeReaderCapabilities(IMagneticStripeReaderCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderCapabilities] {
     fn get_CardAuthentication(&self, out: *mut HSTRING) -> HRESULT,
@@ -20775,7 +20775,7 @@ impl IMagneticStripeReaderCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MagneticStripeReaderCapabilities: IMagneticStripeReaderCapabilities}
+RT_CLASS!{class MagneticStripeReaderCapabilities: IMagneticStripeReaderCapabilities ["Windows.Devices.PointOfService.MagneticStripeReaderCapabilities"]}
 RT_CLASS!{static class MagneticStripeReaderCardTypes}
 impl RtActivatable<IMagneticStripeReaderCardTypesStatics> for MagneticStripeReaderCardTypes {}
 impl MagneticStripeReaderCardTypes {
@@ -20900,8 +20900,8 @@ impl IMagneticStripeReaderErrorOccurredEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MagneticStripeReaderErrorOccurredEventArgs: IMagneticStripeReaderErrorOccurredEventArgs}
-RT_ENUM! { enum MagneticStripeReaderErrorReportingType: i32 {
+RT_CLASS!{class MagneticStripeReaderErrorOccurredEventArgs: IMagneticStripeReaderErrorOccurredEventArgs ["Windows.Devices.PointOfService.MagneticStripeReaderErrorOccurredEventArgs"]}
+RT_ENUM! { enum MagneticStripeReaderErrorReportingType: i32 ["Windows.Devices.PointOfService.MagneticStripeReaderErrorReportingType"] {
     CardLevel (MagneticStripeReaderErrorReportingType_CardLevel) = 0, TrackLevel (MagneticStripeReaderErrorReportingType_TrackLevel) = 1,
 }}
 DEFINE_IID!(IID_IMagneticStripeReaderReport, 1784373319, 39344, 16776, 190, 241, 237, 223, 121, 247, 143, 230);
@@ -20963,7 +20963,7 @@ impl IMagneticStripeReaderReport {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MagneticStripeReaderReport: IMagneticStripeReaderReport}
+RT_CLASS!{class MagneticStripeReaderReport: IMagneticStripeReaderReport ["Windows.Devices.PointOfService.MagneticStripeReaderReport"]}
 DEFINE_IID!(IID_IMagneticStripeReaderStatics, 3294604106, 61399, 18272, 165, 206, 21, 176, 228, 126, 148, 235);
 RT_INTERFACE!{static interface IMagneticStripeReaderStatics(IMagneticStripeReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderStatics] {
     fn GetDefaultAsync(&self, out: *mut *mut foundation::IAsyncOperation<MagneticStripeReader>) -> HRESULT,
@@ -20998,7 +20998,7 @@ impl IMagneticStripeReaderStatics2 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MagneticStripeReaderStatus: i32 {
+RT_ENUM! { enum MagneticStripeReaderStatus: i32 ["Windows.Devices.PointOfService.MagneticStripeReaderStatus"] {
     Unauthenticated (MagneticStripeReaderStatus_Unauthenticated) = 0, Authenticated (MagneticStripeReaderStatus_Authenticated) = 1, Extended (MagneticStripeReaderStatus_Extended) = 2,
 }}
 DEFINE_IID!(IID_IMagneticStripeReaderStatusUpdatedEventArgs, 164391856, 12898, 16413, 158, 138, 232, 13, 99, 88, 144, 107);
@@ -21018,7 +21018,7 @@ impl IMagneticStripeReaderStatusUpdatedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MagneticStripeReaderStatusUpdatedEventArgs: IMagneticStripeReaderStatusUpdatedEventArgs}
+RT_CLASS!{class MagneticStripeReaderStatusUpdatedEventArgs: IMagneticStripeReaderStatusUpdatedEventArgs ["Windows.Devices.PointOfService.MagneticStripeReaderStatusUpdatedEventArgs"]}
 DEFINE_IID!(IID_IMagneticStripeReaderTrackData, 273479281, 19101, 17518, 171, 197, 32, 64, 35, 7, 186, 54);
 RT_INTERFACE!{interface IMagneticStripeReaderTrackData(IMagneticStripeReaderTrackDataVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderTrackData] {
     #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
@@ -21042,11 +21042,11 @@ impl IMagneticStripeReaderTrackData {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MagneticStripeReaderTrackData: IMagneticStripeReaderTrackData}
-RT_ENUM! { enum MagneticStripeReaderTrackErrorType: i32 {
+RT_CLASS!{class MagneticStripeReaderTrackData: IMagneticStripeReaderTrackData ["Windows.Devices.PointOfService.MagneticStripeReaderTrackData"]}
+RT_ENUM! { enum MagneticStripeReaderTrackErrorType: i32 ["Windows.Devices.PointOfService.MagneticStripeReaderTrackErrorType"] {
     None (MagneticStripeReaderTrackErrorType_None) = 0, StartSentinelError (MagneticStripeReaderTrackErrorType_StartSentinelError) = 1, EndSentinelError (MagneticStripeReaderTrackErrorType_EndSentinelError) = 2, ParityError (MagneticStripeReaderTrackErrorType_ParityError) = 3, LrcError (MagneticStripeReaderTrackErrorType_LrcError) = 4, Unknown (MagneticStripeReaderTrackErrorType_Unknown) = -1,
 }}
-RT_ENUM! { enum MagneticStripeReaderTrackIds: i32 {
+RT_ENUM! { enum MagneticStripeReaderTrackIds: i32 ["Windows.Devices.PointOfService.MagneticStripeReaderTrackIds"] {
     None (MagneticStripeReaderTrackIds_None) = 0, Track1 (MagneticStripeReaderTrackIds_Track1) = 1, Track2 (MagneticStripeReaderTrackIds_Track2) = 2, Track3 (MagneticStripeReaderTrackIds_Track3) = 4, Track4 (MagneticStripeReaderTrackIds_Track4) = 8,
 }}
 DEFINE_IID!(IID_IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs, 2936689940, 22988, 19040, 153, 232, 153, 165, 61, 172, 229, 170);
@@ -21060,8 +21060,8 @@ impl IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MagneticStripeReaderVendorSpecificCardDataReceivedEventArgs: IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs}
-RT_ENUM! { enum PosConnectionTypes: u32 {
+RT_CLASS!{class MagneticStripeReaderVendorSpecificCardDataReceivedEventArgs: IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs ["Windows.Devices.PointOfService.MagneticStripeReaderVendorSpecificCardDataReceivedEventArgs"]}
+RT_ENUM! { enum PosConnectionTypes: u32 ["Windows.Devices.PointOfService.PosConnectionTypes"] {
     Local (PosConnectionTypes_Local) = 1, IP (PosConnectionTypes_IP) = 2, Bluetooth (PosConnectionTypes_Bluetooth) = 4, All (PosConnectionTypes_All) = 4294967295,
 }}
 DEFINE_IID!(IID_IPosPrinter, 704889102, 39449, 18945, 153, 79, 18, 223, 173, 106, 220, 191);
@@ -21128,7 +21128,7 @@ impl IPosPrinter {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PosPrinter: IPosPrinter}
+RT_CLASS!{class PosPrinter: IPosPrinter ["Windows.Devices.PointOfService.PosPrinter"]}
 impl RtActivatable<IPosPrinterStatics> for PosPrinter {}
 impl RtActivatable<IPosPrinterStatics2> for PosPrinter {}
 impl PosPrinter {
@@ -21146,10 +21146,10 @@ impl PosPrinter {
     }
 }
 DEFINE_CLSID!(PosPrinter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,80,111,115,80,114,105,110,116,101,114,0]) [CLSID_PosPrinter]);
-RT_ENUM! { enum PosPrinterAlignment: i32 {
+RT_ENUM! { enum PosPrinterAlignment: i32 ["Windows.Devices.PointOfService.PosPrinterAlignment"] {
     Left (PosPrinterAlignment_Left) = 0, Center (PosPrinterAlignment_Center) = 1, Right (PosPrinterAlignment_Right) = 2,
 }}
-RT_ENUM! { enum PosPrinterBarcodeTextPosition: i32 {
+RT_ENUM! { enum PosPrinterBarcodeTextPosition: i32 ["Windows.Devices.PointOfService.PosPrinterBarcodeTextPosition"] {
     None (PosPrinterBarcodeTextPosition_None) = 0, Above (PosPrinterBarcodeTextPosition_Above) = 1, Below (PosPrinterBarcodeTextPosition_Below) = 2,
 }}
 DEFINE_IID!(IID_IPosPrinterCapabilities, 3454621473, 17280, 18821, 173, 197, 57, 219, 48, 205, 147, 188);
@@ -21217,8 +21217,8 @@ impl IPosPrinterCapabilities {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PosPrinterCapabilities: IPosPrinterCapabilities}
-RT_ENUM! { enum PosPrinterCartridgeSensors: u32 {
+RT_CLASS!{class PosPrinterCapabilities: IPosPrinterCapabilities ["Windows.Devices.PointOfService.PosPrinterCapabilities"]}
+RT_ENUM! { enum PosPrinterCartridgeSensors: u32 ["Windows.Devices.PointOfService.PosPrinterCartridgeSensors"] {
     None (PosPrinterCartridgeSensors_None) = 0, Removed (PosPrinterCartridgeSensors_Removed) = 1, Empty (PosPrinterCartridgeSensors_Empty) = 2, HeadCleaning (PosPrinterCartridgeSensors_HeadCleaning) = 4, NearEnd (PosPrinterCartridgeSensors_NearEnd) = 8,
 }}
 RT_CLASS!{static class PosPrinterCharacterSetIds}
@@ -21258,10 +21258,10 @@ impl IPosPrinterCharacterSetIdsStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PosPrinterColorCapabilities: u32 {
+RT_ENUM! { enum PosPrinterColorCapabilities: u32 ["Windows.Devices.PointOfService.PosPrinterColorCapabilities"] {
     None (PosPrinterColorCapabilities_None) = 0, Primary (PosPrinterColorCapabilities_Primary) = 1, Custom1 (PosPrinterColorCapabilities_Custom1) = 2, Custom2 (PosPrinterColorCapabilities_Custom2) = 4, Custom3 (PosPrinterColorCapabilities_Custom3) = 8, Custom4 (PosPrinterColorCapabilities_Custom4) = 16, Custom5 (PosPrinterColorCapabilities_Custom5) = 32, Custom6 (PosPrinterColorCapabilities_Custom6) = 64, Cyan (PosPrinterColorCapabilities_Cyan) = 128, Magenta (PosPrinterColorCapabilities_Magenta) = 256, Yellow (PosPrinterColorCapabilities_Yellow) = 512, Full (PosPrinterColorCapabilities_Full) = 1024,
 }}
-RT_ENUM! { enum PosPrinterColorCartridge: i32 {
+RT_ENUM! { enum PosPrinterColorCartridge: i32 ["Windows.Devices.PointOfService.PosPrinterColorCartridge"] {
     Unknown (PosPrinterColorCartridge_Unknown) = 0, Primary (PosPrinterColorCartridge_Primary) = 1, Custom1 (PosPrinterColorCartridge_Custom1) = 2, Custom2 (PosPrinterColorCartridge_Custom2) = 3, Custom3 (PosPrinterColorCartridge_Custom3) = 4, Custom4 (PosPrinterColorCartridge_Custom4) = 5, Custom5 (PosPrinterColorCartridge_Custom5) = 6, Custom6 (PosPrinterColorCartridge_Custom6) = 7, Cyan (PosPrinterColorCartridge_Cyan) = 8, Magenta (PosPrinterColorCartridge_Magenta) = 9, Yellow (PosPrinterColorCartridge_Yellow) = 10,
 }}
 DEFINE_IID!(IID_IPosPrinterJob, 2593390684, 1557, 17809, 165, 143, 48, 248, 126, 223, 226, 228);
@@ -21290,33 +21290,33 @@ impl IPosPrinterJob {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PosPrinterLineDirection: i32 {
+RT_ENUM! { enum PosPrinterLineDirection: i32 ["Windows.Devices.PointOfService.PosPrinterLineDirection"] {
     Horizontal (PosPrinterLineDirection_Horizontal) = 0, Vertical (PosPrinterLineDirection_Vertical) = 1,
 }}
-RT_ENUM! { enum PosPrinterLineStyle: i32 {
+RT_ENUM! { enum PosPrinterLineStyle: i32 ["Windows.Devices.PointOfService.PosPrinterLineStyle"] {
     SingleSolid (PosPrinterLineStyle_SingleSolid) = 0, DoubleSolid (PosPrinterLineStyle_DoubleSolid) = 1, Broken (PosPrinterLineStyle_Broken) = 2, Chain (PosPrinterLineStyle_Chain) = 3,
 }}
-RT_ENUM! { enum PosPrinterMapMode: i32 {
+RT_ENUM! { enum PosPrinterMapMode: i32 ["Windows.Devices.PointOfService.PosPrinterMapMode"] {
     Dots (PosPrinterMapMode_Dots) = 0, Twips (PosPrinterMapMode_Twips) = 1, English (PosPrinterMapMode_English) = 2, Metric (PosPrinterMapMode_Metric) = 3,
 }}
-RT_ENUM! { enum PosPrinterMarkFeedCapabilities: u32 {
+RT_ENUM! { enum PosPrinterMarkFeedCapabilities: u32 ["Windows.Devices.PointOfService.PosPrinterMarkFeedCapabilities"] {
     None (PosPrinterMarkFeedCapabilities_None) = 0, ToTakeUp (PosPrinterMarkFeedCapabilities_ToTakeUp) = 1, ToCutter (PosPrinterMarkFeedCapabilities_ToCutter) = 2, ToCurrentTopOfForm (PosPrinterMarkFeedCapabilities_ToCurrentTopOfForm) = 4, ToNextTopOfForm (PosPrinterMarkFeedCapabilities_ToNextTopOfForm) = 8,
 }}
-RT_ENUM! { enum PosPrinterMarkFeedKind: i32 {
+RT_ENUM! { enum PosPrinterMarkFeedKind: i32 ["Windows.Devices.PointOfService.PosPrinterMarkFeedKind"] {
     ToTakeUp (PosPrinterMarkFeedKind_ToTakeUp) = 0, ToCutter (PosPrinterMarkFeedKind_ToCutter) = 1, ToCurrentTopOfForm (PosPrinterMarkFeedKind_ToCurrentTopOfForm) = 2, ToNextTopOfForm (PosPrinterMarkFeedKind_ToNextTopOfForm) = 3,
 }}
-RT_ENUM! { enum PosPrinterPrintSide: i32 {
+RT_ENUM! { enum PosPrinterPrintSide: i32 ["Windows.Devices.PointOfService.PosPrinterPrintSide"] {
     Unknown (PosPrinterPrintSide_Unknown) = 0, Side1 (PosPrinterPrintSide_Side1) = 1, Side2 (PosPrinterPrintSide_Side2) = 2,
 }}
 DEFINE_IID!(IID_IPosPrinterReleaseDeviceRequestedEventArgs, 734765913, 7407, 16562, 158, 203, 249, 39, 248, 86, 174, 60);
 RT_INTERFACE!{interface IPosPrinterReleaseDeviceRequestedEventArgs(IPosPrinterReleaseDeviceRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPosPrinterReleaseDeviceRequestedEventArgs] {
     
 }}
-RT_CLASS!{class PosPrinterReleaseDeviceRequestedEventArgs: IPosPrinterReleaseDeviceRequestedEventArgs}
-RT_ENUM! { enum PosPrinterRotation: i32 {
+RT_CLASS!{class PosPrinterReleaseDeviceRequestedEventArgs: IPosPrinterReleaseDeviceRequestedEventArgs ["Windows.Devices.PointOfService.PosPrinterReleaseDeviceRequestedEventArgs"]}
+RT_ENUM! { enum PosPrinterRotation: i32 ["Windows.Devices.PointOfService.PosPrinterRotation"] {
     Normal (PosPrinterRotation_Normal) = 0, Right90 (PosPrinterRotation_Right90) = 1, Left90 (PosPrinterRotation_Left90) = 2, Rotate180 (PosPrinterRotation_Rotate180) = 3,
 }}
-RT_ENUM! { enum PosPrinterRuledLineCapabilities: u32 {
+RT_ENUM! { enum PosPrinterRuledLineCapabilities: u32 ["Windows.Devices.PointOfService.PosPrinterRuledLineCapabilities"] {
     None (PosPrinterRuledLineCapabilities_None) = 0, Horizontal (PosPrinterRuledLineCapabilities_Horizontal) = 1, Vertical (PosPrinterRuledLineCapabilities_Vertical) = 2,
 }}
 DEFINE_IID!(IID_IPosPrinterStatics, 2363544810, 4911, 19679, 166, 74, 45, 13, 124, 150, 168, 91);
@@ -21370,8 +21370,8 @@ impl IPosPrinterStatus {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PosPrinterStatus: IPosPrinterStatus}
-RT_ENUM! { enum PosPrinterStatusKind: i32 {
+RT_CLASS!{class PosPrinterStatus: IPosPrinterStatus ["Windows.Devices.PointOfService.PosPrinterStatus"]}
+RT_ENUM! { enum PosPrinterStatusKind: i32 ["Windows.Devices.PointOfService.PosPrinterStatusKind"] {
     Online (PosPrinterStatusKind_Online) = 0, Off (PosPrinterStatusKind_Off) = 1, Offline (PosPrinterStatusKind_Offline) = 2, OffOrOffline (PosPrinterStatusKind_OffOrOffline) = 3, Extended (PosPrinterStatusKind_Extended) = 4,
 }}
 DEFINE_IID!(IID_IPosPrinterStatusUpdatedEventArgs, 786139103, 5030, 17037, 186, 129, 176, 231, 195, 229, 163, 205);
@@ -21385,7 +21385,7 @@ impl IPosPrinterStatusUpdatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PosPrinterStatusUpdatedEventArgs: IPosPrinterStatusUpdatedEventArgs}
+RT_CLASS!{class PosPrinterStatusUpdatedEventArgs: IPosPrinterStatusUpdatedEventArgs ["Windows.Devices.PointOfService.PosPrinterStatusUpdatedEventArgs"]}
 DEFINE_IID!(IID_IReceiptOrSlipJob, 1394710974, 51395, 19906, 137, 233, 92, 74, 55, 179, 77, 220);
 RT_INTERFACE!{interface IReceiptOrSlipJob(IReceiptOrSlipJobVtbl): IInspectable(IInspectableVtbl) [IID_IReceiptOrSlipJob] {
     fn SetBarcodeRotation(&self, value: PosPrinterRotation) -> HRESULT,
@@ -21489,7 +21489,7 @@ impl IReceiptPrinterCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ReceiptPrinterCapabilities: IReceiptPrinterCapabilities}
+RT_CLASS!{class ReceiptPrinterCapabilities: IReceiptPrinterCapabilities ["Windows.Devices.PointOfService.ReceiptPrinterCapabilities"]}
 DEFINE_IID!(IID_IReceiptPrintJob, 2861958766, 44205, 19321, 157, 15, 192, 207, 192, 141, 199, 123);
 RT_INTERFACE!{interface IReceiptPrintJob(IReceiptPrintJobVtbl): IInspectable(IInspectableVtbl) [IID_IReceiptPrintJob] {
     fn MarkFeed(&self, kind: PosPrinterMarkFeedKind) -> HRESULT,
@@ -21510,7 +21510,7 @@ impl IReceiptPrintJob {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ReceiptPrintJob: IReceiptPrintJob}
+RT_CLASS!{class ReceiptPrintJob: IReceiptPrintJob ["Windows.Devices.PointOfService.ReceiptPrintJob"]}
 DEFINE_IID!(IID_ISlipPrinterCapabilities, 2578539417, 18572, 16727, 138, 194, 159, 87, 247, 8, 211, 219);
 RT_INTERFACE!{interface ISlipPrinterCapabilities(ISlipPrinterCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_ISlipPrinterCapabilities] {
     fn get_IsFullLengthSupported(&self, out: *mut bool) -> HRESULT,
@@ -21528,8 +21528,8 @@ impl ISlipPrinterCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SlipPrinterCapabilities: ISlipPrinterCapabilities}
-RT_CLASS!{class SlipPrintJob: IReceiptOrSlipJob}
+RT_CLASS!{class SlipPrinterCapabilities: ISlipPrinterCapabilities ["Windows.Devices.PointOfService.SlipPrinterCapabilities"]}
+RT_CLASS!{class SlipPrintJob: IReceiptOrSlipJob ["Windows.Devices.PointOfService.SlipPrintJob"]}
 DEFINE_IID!(IID_IUnifiedPosErrorData, 731483194, 21852, 18569, 142, 216, 197, 153, 187, 58, 113, 42);
 RT_INTERFACE!{interface IUnifiedPosErrorData(IUnifiedPosErrorDataVtbl): IInspectable(IInspectableVtbl) [IID_IUnifiedPosErrorData] {
     fn get_Message(&self, out: *mut HSTRING) -> HRESULT,
@@ -21559,7 +21559,7 @@ impl IUnifiedPosErrorData {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UnifiedPosErrorData: IUnifiedPosErrorData}
+RT_CLASS!{class UnifiedPosErrorData: IUnifiedPosErrorData ["Windows.Devices.PointOfService.UnifiedPosErrorData"]}
 impl RtActivatable<IUnifiedPosErrorDataFactory> for UnifiedPosErrorData {}
 impl UnifiedPosErrorData {
     #[inline] pub fn create_instance(message: &HStringArg, severity: UnifiedPosErrorSeverity, reason: UnifiedPosErrorReason, extendedReason: u32) -> Result<ComPtr<UnifiedPosErrorData>> {
@@ -21578,16 +21578,16 @@ impl IUnifiedPosErrorDataFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UnifiedPosErrorReason: i32 {
+RT_ENUM! { enum UnifiedPosErrorReason: i32 ["Windows.Devices.PointOfService.UnifiedPosErrorReason"] {
     UnknownErrorReason (UnifiedPosErrorReason_UnknownErrorReason) = 0, NoService (UnifiedPosErrorReason_NoService) = 1, Disabled (UnifiedPosErrorReason_Disabled) = 2, Illegal (UnifiedPosErrorReason_Illegal) = 3, NoHardware (UnifiedPosErrorReason_NoHardware) = 4, Closed (UnifiedPosErrorReason_Closed) = 5, Offline (UnifiedPosErrorReason_Offline) = 6, Failure (UnifiedPosErrorReason_Failure) = 7, Timeout (UnifiedPosErrorReason_Timeout) = 8, Busy (UnifiedPosErrorReason_Busy) = 9, Extended (UnifiedPosErrorReason_Extended) = 10,
 }}
-RT_ENUM! { enum UnifiedPosErrorSeverity: i32 {
+RT_ENUM! { enum UnifiedPosErrorSeverity: i32 ["Windows.Devices.PointOfService.UnifiedPosErrorSeverity"] {
     UnknownErrorSeverity (UnifiedPosErrorSeverity_UnknownErrorSeverity) = 0, Warning (UnifiedPosErrorSeverity_Warning) = 1, Recoverable (UnifiedPosErrorSeverity_Recoverable) = 2, Unrecoverable (UnifiedPosErrorSeverity_Unrecoverable) = 3, AssistanceRequired (UnifiedPosErrorSeverity_AssistanceRequired) = 4, Fatal (UnifiedPosErrorSeverity_Fatal) = 5,
 }}
-RT_ENUM! { enum UnifiedPosHealthCheckLevel: i32 {
+RT_ENUM! { enum UnifiedPosHealthCheckLevel: i32 ["Windows.Devices.PointOfService.UnifiedPosHealthCheckLevel"] {
     UnknownHealthCheckLevel (UnifiedPosHealthCheckLevel_UnknownHealthCheckLevel) = 0, POSInternal (UnifiedPosHealthCheckLevel_POSInternal) = 1, External (UnifiedPosHealthCheckLevel_External) = 2, Interactive (UnifiedPosHealthCheckLevel_Interactive) = 3,
 }}
-RT_ENUM! { enum UnifiedPosPowerReportingType: i32 {
+RT_ENUM! { enum UnifiedPosPowerReportingType: i32 ["Windows.Devices.PointOfService.UnifiedPosPowerReportingType"] {
     UnknownPowerReportingType (UnifiedPosPowerReportingType_UnknownPowerReportingType) = 0, Standard (UnifiedPosPowerReportingType_Standard) = 1, Advanced (UnifiedPosPowerReportingType_Advanced) = 2,
 }}
 pub mod provider { // Windows.Devices.PointOfService.Provider
@@ -21609,7 +21609,7 @@ impl IBarcodeScannerDisableScannerRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerDisableScannerRequest: IBarcodeScannerDisableScannerRequest}
+RT_CLASS!{class BarcodeScannerDisableScannerRequest: IBarcodeScannerDisableScannerRequest ["Windows.Devices.PointOfService.Provider.BarcodeScannerDisableScannerRequest"]}
 DEFINE_IID!(IID_IBarcodeScannerDisableScannerRequest2, 3437225509, 26051, 19660, 180, 87, 243, 156, 122, 158, 166, 13);
 RT_INTERFACE!{interface IBarcodeScannerDisableScannerRequest2(IBarcodeScannerDisableScannerRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerDisableScannerRequest2] {
     fn ReportFailedWithFailedReasonAsync(&self, reason: i32, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -21644,7 +21644,7 @@ impl IBarcodeScannerDisableScannerRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerDisableScannerRequestEventArgs: IBarcodeScannerDisableScannerRequestEventArgs}
+RT_CLASS!{class BarcodeScannerDisableScannerRequestEventArgs: IBarcodeScannerDisableScannerRequestEventArgs ["Windows.Devices.PointOfService.Provider.BarcodeScannerDisableScannerRequestEventArgs"]}
 DEFINE_IID!(IID_IBarcodeScannerEnableScannerRequest, 3233016250, 33130, 17707, 189, 119, 183, 228, 83, 236, 68, 109);
 RT_INTERFACE!{interface IBarcodeScannerEnableScannerRequest(IBarcodeScannerEnableScannerRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerEnableScannerRequest] {
     fn ReportCompletedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -21662,7 +21662,7 @@ impl IBarcodeScannerEnableScannerRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerEnableScannerRequest: IBarcodeScannerEnableScannerRequest}
+RT_CLASS!{class BarcodeScannerEnableScannerRequest: IBarcodeScannerEnableScannerRequest ["Windows.Devices.PointOfService.Provider.BarcodeScannerEnableScannerRequest"]}
 DEFINE_IID!(IID_IBarcodeScannerEnableScannerRequest2, 1906635432, 39173, 16812, 145, 33, 182, 69, 145, 106, 132, 161);
 RT_INTERFACE!{interface IBarcodeScannerEnableScannerRequest2(IBarcodeScannerEnableScannerRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerEnableScannerRequest2] {
     fn ReportFailedWithFailedReasonAsync(&self, reason: i32, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -21697,7 +21697,7 @@ impl IBarcodeScannerEnableScannerRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerEnableScannerRequestEventArgs: IBarcodeScannerEnableScannerRequestEventArgs}
+RT_CLASS!{class BarcodeScannerEnableScannerRequestEventArgs: IBarcodeScannerEnableScannerRequestEventArgs ["Windows.Devices.PointOfService.Provider.BarcodeScannerEnableScannerRequestEventArgs"]}
 DEFINE_IID!(IID_IBarcodeScannerFrameReader, 3687262983, 25795, 18475, 147, 200, 101, 251, 51, 194, 34, 8);
 RT_INTERFACE!{interface IBarcodeScannerFrameReader(IBarcodeScannerFrameReaderVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerFrameReader] {
     fn StartAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
@@ -21738,7 +21738,7 @@ impl IBarcodeScannerFrameReader {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerFrameReader: IBarcodeScannerFrameReader}
+RT_CLASS!{class BarcodeScannerFrameReader: IBarcodeScannerFrameReader ["Windows.Devices.PointOfService.Provider.BarcodeScannerFrameReader"]}
 DEFINE_IID!(IID_IBarcodeScannerFrameReaderFrameArrivedEventArgs, 2965100036, 21757, 17261, 134, 41, 113, 46, 120, 114, 35, 221);
 RT_INTERFACE!{interface IBarcodeScannerFrameReaderFrameArrivedEventArgs(IBarcodeScannerFrameReaderFrameArrivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerFrameReaderFrameArrivedEventArgs] {
     fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
@@ -21750,7 +21750,7 @@ impl IBarcodeScannerFrameReaderFrameArrivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerFrameReaderFrameArrivedEventArgs: IBarcodeScannerFrameReaderFrameArrivedEventArgs}
+RT_CLASS!{class BarcodeScannerFrameReaderFrameArrivedEventArgs: IBarcodeScannerFrameReaderFrameArrivedEventArgs ["Windows.Devices.PointOfService.Provider.BarcodeScannerFrameReaderFrameArrivedEventArgs"]}
 DEFINE_IID!(IID_IBarcodeScannerGetSymbologyAttributesRequest, 2541012074, 22756, 19551, 184, 233, 228, 20, 103, 99, 39, 0);
 RT_INTERFACE!{interface IBarcodeScannerGetSymbologyAttributesRequest(IBarcodeScannerGetSymbologyAttributesRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerGetSymbologyAttributesRequest] {
     fn get_Symbology(&self, out: *mut u32) -> HRESULT,
@@ -21774,7 +21774,7 @@ impl IBarcodeScannerGetSymbologyAttributesRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerGetSymbologyAttributesRequest: IBarcodeScannerGetSymbologyAttributesRequest}
+RT_CLASS!{class BarcodeScannerGetSymbologyAttributesRequest: IBarcodeScannerGetSymbologyAttributesRequest ["Windows.Devices.PointOfService.Provider.BarcodeScannerGetSymbologyAttributesRequest"]}
 DEFINE_IID!(IID_IBarcodeScannerGetSymbologyAttributesRequest2, 1785342739, 30120, 18939, 184, 82, 191, 185, 61, 118, 10, 247);
 RT_INTERFACE!{interface IBarcodeScannerGetSymbologyAttributesRequest2(IBarcodeScannerGetSymbologyAttributesRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerGetSymbologyAttributesRequest2] {
     fn ReportFailedWithFailedReasonAsync(&self, reason: i32, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -21809,7 +21809,7 @@ impl IBarcodeScannerGetSymbologyAttributesRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerGetSymbologyAttributesRequestEventArgs: IBarcodeScannerGetSymbologyAttributesRequestEventArgs}
+RT_CLASS!{class BarcodeScannerGetSymbologyAttributesRequestEventArgs: IBarcodeScannerGetSymbologyAttributesRequestEventArgs ["Windows.Devices.PointOfService.Provider.BarcodeScannerGetSymbologyAttributesRequestEventArgs"]}
 DEFINE_IID!(IID_IBarcodeScannerHideVideoPreviewRequest, 4199464575, 26224, 16609, 185, 11, 187, 16, 216, 212, 37, 250);
 RT_INTERFACE!{interface IBarcodeScannerHideVideoPreviewRequest(IBarcodeScannerHideVideoPreviewRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerHideVideoPreviewRequest] {
     fn ReportCompletedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -21827,7 +21827,7 @@ impl IBarcodeScannerHideVideoPreviewRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerHideVideoPreviewRequest: IBarcodeScannerHideVideoPreviewRequest}
+RT_CLASS!{class BarcodeScannerHideVideoPreviewRequest: IBarcodeScannerHideVideoPreviewRequest ["Windows.Devices.PointOfService.Provider.BarcodeScannerHideVideoPreviewRequest"]}
 DEFINE_IID!(IID_IBarcodeScannerHideVideoPreviewRequest2, 2116567901, 38932, 17181, 162, 242, 214, 36, 140, 90, 212, 181);
 RT_INTERFACE!{interface IBarcodeScannerHideVideoPreviewRequest2(IBarcodeScannerHideVideoPreviewRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerHideVideoPreviewRequest2] {
     fn ReportFailedWithFailedReasonAsync(&self, reason: i32, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -21862,7 +21862,7 @@ impl IBarcodeScannerHideVideoPreviewRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerHideVideoPreviewRequestEventArgs: IBarcodeScannerHideVideoPreviewRequestEventArgs}
+RT_CLASS!{class BarcodeScannerHideVideoPreviewRequestEventArgs: IBarcodeScannerHideVideoPreviewRequestEventArgs ["Windows.Devices.PointOfService.Provider.BarcodeScannerHideVideoPreviewRequestEventArgs"]}
 DEFINE_IID!(IID_IBarcodeScannerProviderConnection, 3024800749, 2874, 20387, 134, 197, 73, 30, 163, 7, 128, 235);
 RT_INTERFACE!{interface IBarcodeScannerProviderConnection(IBarcodeScannerProviderConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerProviderConnection] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -22036,7 +22036,7 @@ impl IBarcodeScannerProviderConnection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerProviderConnection: IBarcodeScannerProviderConnection}
+RT_CLASS!{class BarcodeScannerProviderConnection: IBarcodeScannerProviderConnection ["Windows.Devices.PointOfService.Provider.BarcodeScannerProviderConnection"]}
 DEFINE_IID!(IID_IBarcodeScannerProviderConnection2, 3197850573, 4404, 16780, 160, 107, 4, 66, 58, 115, 243, 215);
 RT_INTERFACE!{interface IBarcodeScannerProviderConnection2(IBarcodeScannerProviderConnection2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerProviderConnection2] {
     fn CreateFrameReaderAsync(&self, out: *mut *mut foundation::IAsyncOperation<BarcodeScannerFrameReader>) -> HRESULT,
@@ -22071,7 +22071,7 @@ impl IBarcodeScannerProviderTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerProviderTriggerDetails: IBarcodeScannerProviderTriggerDetails}
+RT_CLASS!{class BarcodeScannerProviderTriggerDetails: IBarcodeScannerProviderTriggerDetails ["Windows.Devices.PointOfService.Provider.BarcodeScannerProviderTriggerDetails"]}
 DEFINE_IID!(IID_IBarcodeScannerSetActiveSymbologiesRequest, 3678352057, 63450, 16801, 159, 121, 7, 188, 217, 95, 11, 223);
 RT_INTERFACE!{interface IBarcodeScannerSetActiveSymbologiesRequest(IBarcodeScannerSetActiveSymbologiesRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerSetActiveSymbologiesRequest] {
     fn get_Symbologies(&self, out: *mut *mut foundation::collections::IVectorView<u32>) -> HRESULT,
@@ -22095,7 +22095,7 @@ impl IBarcodeScannerSetActiveSymbologiesRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerSetActiveSymbologiesRequest: IBarcodeScannerSetActiveSymbologiesRequest}
+RT_CLASS!{class BarcodeScannerSetActiveSymbologiesRequest: IBarcodeScannerSetActiveSymbologiesRequest ["Windows.Devices.PointOfService.Provider.BarcodeScannerSetActiveSymbologiesRequest"]}
 DEFINE_IID!(IID_IBarcodeScannerSetActiveSymbologiesRequest2, 4127157983, 64154, 18249, 177, 27, 232, 252, 203, 117, 188, 107);
 RT_INTERFACE!{interface IBarcodeScannerSetActiveSymbologiesRequest2(IBarcodeScannerSetActiveSymbologiesRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerSetActiveSymbologiesRequest2] {
     fn ReportFailedWithFailedReasonAsync(&self, reason: i32, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -22130,7 +22130,7 @@ impl IBarcodeScannerSetActiveSymbologiesRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerSetActiveSymbologiesRequestEventArgs: IBarcodeScannerSetActiveSymbologiesRequestEventArgs}
+RT_CLASS!{class BarcodeScannerSetActiveSymbologiesRequestEventArgs: IBarcodeScannerSetActiveSymbologiesRequestEventArgs ["Windows.Devices.PointOfService.Provider.BarcodeScannerSetActiveSymbologiesRequestEventArgs"]}
 DEFINE_IID!(IID_IBarcodeScannerSetSymbologyAttributesRequest, 855343439, 41855, 18608, 172, 234, 220, 225, 72, 15, 18, 174);
 RT_INTERFACE!{interface IBarcodeScannerSetSymbologyAttributesRequest(IBarcodeScannerSetSymbologyAttributesRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerSetSymbologyAttributesRequest] {
     fn get_Symbology(&self, out: *mut u32) -> HRESULT,
@@ -22160,7 +22160,7 @@ impl IBarcodeScannerSetSymbologyAttributesRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerSetSymbologyAttributesRequest: IBarcodeScannerSetSymbologyAttributesRequest}
+RT_CLASS!{class BarcodeScannerSetSymbologyAttributesRequest: IBarcodeScannerSetSymbologyAttributesRequest ["Windows.Devices.PointOfService.Provider.BarcodeScannerSetSymbologyAttributesRequest"]}
 DEFINE_IID!(IID_IBarcodeScannerSetSymbologyAttributesRequest2, 3757817793, 56232, 19319, 190, 30, 181, 108, 215, 47, 101, 179);
 RT_INTERFACE!{interface IBarcodeScannerSetSymbologyAttributesRequest2(IBarcodeScannerSetSymbologyAttributesRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerSetSymbologyAttributesRequest2] {
     fn ReportFailedWithFailedReasonAsync(&self, reason: i32, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -22195,7 +22195,7 @@ impl IBarcodeScannerSetSymbologyAttributesRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerSetSymbologyAttributesRequestEventArgs: IBarcodeScannerSetSymbologyAttributesRequestEventArgs}
+RT_CLASS!{class BarcodeScannerSetSymbologyAttributesRequestEventArgs: IBarcodeScannerSetSymbologyAttributesRequestEventArgs ["Windows.Devices.PointOfService.Provider.BarcodeScannerSetSymbologyAttributesRequestEventArgs"]}
 DEFINE_IID!(IID_IBarcodeScannerStartSoftwareTriggerRequest, 3824843559, 65378, 17492, 175, 74, 203, 97, 68, 163, 227, 247);
 RT_INTERFACE!{interface IBarcodeScannerStartSoftwareTriggerRequest(IBarcodeScannerStartSoftwareTriggerRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerStartSoftwareTriggerRequest] {
     fn ReportCompletedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -22213,7 +22213,7 @@ impl IBarcodeScannerStartSoftwareTriggerRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerStartSoftwareTriggerRequest: IBarcodeScannerStartSoftwareTriggerRequest}
+RT_CLASS!{class BarcodeScannerStartSoftwareTriggerRequest: IBarcodeScannerStartSoftwareTriggerRequest ["Windows.Devices.PointOfService.Provider.BarcodeScannerStartSoftwareTriggerRequest"]}
 DEFINE_IID!(IID_IBarcodeScannerStartSoftwareTriggerRequest2, 3950158428, 26200, 18277, 166, 142, 50, 116, 130, 101, 61, 235);
 RT_INTERFACE!{interface IBarcodeScannerStartSoftwareTriggerRequest2(IBarcodeScannerStartSoftwareTriggerRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerStartSoftwareTriggerRequest2] {
     fn ReportFailedWithFailedReasonAsync(&self, reason: i32, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -22248,7 +22248,7 @@ impl IBarcodeScannerStartSoftwareTriggerRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerStartSoftwareTriggerRequestEventArgs: IBarcodeScannerStartSoftwareTriggerRequestEventArgs}
+RT_CLASS!{class BarcodeScannerStartSoftwareTriggerRequestEventArgs: IBarcodeScannerStartSoftwareTriggerRequestEventArgs ["Windows.Devices.PointOfService.Provider.BarcodeScannerStartSoftwareTriggerRequestEventArgs"]}
 DEFINE_IID!(IID_IBarcodeScannerStopSoftwareTriggerRequest, 1872736053, 57991, 19624, 183, 13, 90, 145, 214, 148, 246, 104);
 RT_INTERFACE!{interface IBarcodeScannerStopSoftwareTriggerRequest(IBarcodeScannerStopSoftwareTriggerRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerStopSoftwareTriggerRequest] {
     fn ReportCompletedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -22266,7 +22266,7 @@ impl IBarcodeScannerStopSoftwareTriggerRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerStopSoftwareTriggerRequest: IBarcodeScannerStopSoftwareTriggerRequest}
+RT_CLASS!{class BarcodeScannerStopSoftwareTriggerRequest: IBarcodeScannerStopSoftwareTriggerRequest ["Windows.Devices.PointOfService.Provider.BarcodeScannerStopSoftwareTriggerRequest"]}
 DEFINE_IID!(IID_IBarcodeScannerStopSoftwareTriggerRequest2, 3411527133, 65104, 18936, 160, 180, 189, 194, 48, 129, 77, 162);
 RT_INTERFACE!{interface IBarcodeScannerStopSoftwareTriggerRequest2(IBarcodeScannerStopSoftwareTriggerRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerStopSoftwareTriggerRequest2] {
     fn ReportFailedWithFailedReasonAsync(&self, reason: i32, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -22301,8 +22301,8 @@ impl IBarcodeScannerStopSoftwareTriggerRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerStopSoftwareTriggerRequestEventArgs: IBarcodeScannerStopSoftwareTriggerRequestEventArgs}
-RT_ENUM! { enum BarcodeScannerTriggerState: i32 {
+RT_CLASS!{class BarcodeScannerStopSoftwareTriggerRequestEventArgs: IBarcodeScannerStopSoftwareTriggerRequestEventArgs ["Windows.Devices.PointOfService.Provider.BarcodeScannerStopSoftwareTriggerRequestEventArgs"]}
+RT_ENUM! { enum BarcodeScannerTriggerState: i32 ["Windows.Devices.PointOfService.Provider.BarcodeScannerTriggerState"] {
     Released (BarcodeScannerTriggerState_Released) = 0, Pressed (BarcodeScannerTriggerState_Pressed) = 1,
 }}
 DEFINE_IID!(IID_IBarcodeScannerVideoFrame, 2119717448, 40439, 16673, 161, 117, 128, 29, 128, 0, 17, 46);
@@ -22335,7 +22335,7 @@ impl IBarcodeScannerVideoFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerVideoFrame: IBarcodeScannerVideoFrame}
+RT_CLASS!{class BarcodeScannerVideoFrame: IBarcodeScannerVideoFrame ["Windows.Devices.PointOfService.Provider.BarcodeScannerVideoFrame"]}
 DEFINE_IID!(IID_IBarcodeSymbologyAttributesBuilder, 3313175743, 58613, 16569, 132, 207, 230, 63, 186, 234, 66, 180);
 RT_INTERFACE!{interface IBarcodeSymbologyAttributesBuilder(IBarcodeSymbologyAttributesBuilderVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeSymbologyAttributesBuilder] {
     fn get_IsCheckDigitValidationSupported(&self, out: *mut bool) -> HRESULT,
@@ -22380,7 +22380,7 @@ impl IBarcodeSymbologyAttributesBuilder {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeSymbologyAttributesBuilder: IBarcodeSymbologyAttributesBuilder}
+RT_CLASS!{class BarcodeSymbologyAttributesBuilder: IBarcodeSymbologyAttributesBuilder ["Windows.Devices.PointOfService.Provider.BarcodeSymbologyAttributesBuilder"]}
 impl RtActivatable<IActivationFactory> for BarcodeSymbologyAttributesBuilder {}
 DEFINE_CLSID!(BarcodeSymbologyAttributesBuilder(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,80,114,111,118,105,100,101,114,46,66,97,114,99,111,100,101,83,121,109,98,111,108,111,103,121,65,116,116,114,105,98,117,116,101,115,66,117,105,108,100,101,114,0]) [CLSID_BarcodeSymbologyAttributesBuilder]);
 } // Windows.Devices.PointOfService.Provider
@@ -22415,7 +22415,7 @@ impl IServiceDeviceStatics {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ServiceDeviceType: i32 {
+RT_ENUM! { enum ServiceDeviceType: i32 ["Windows.Devices.Portable.ServiceDeviceType"] {
     CalendarService (ServiceDeviceType_CalendarService) = 0, ContactsService (ServiceDeviceType_ContactsService) = 1, DeviceStatusService (ServiceDeviceType_DeviceStatusService) = 2, NotesService (ServiceDeviceType_NotesService) = 3, RingtonesService (ServiceDeviceType_RingtonesService) = 4, SmsService (ServiceDeviceType_SmsService) = 5, TasksService (ServiceDeviceType_TasksService) = 6,
 }}
 RT_CLASS!{static class StorageDevice}
@@ -22478,7 +22478,7 @@ impl IBattery {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Battery: IBattery}
+RT_CLASS!{class Battery: IBattery ["Windows.Devices.Power.Battery"]}
 impl RtActivatable<IBatteryStatics> for Battery {}
 impl Battery {
     #[inline] pub fn get_aggregate_battery() -> Result<Option<ComPtr<Battery>>> {
@@ -22527,7 +22527,7 @@ impl IBatteryReport {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BatteryReport: IBatteryReport}
+RT_CLASS!{class BatteryReport: IBatteryReport ["Windows.Devices.Power.BatteryReport"]}
 DEFINE_IID!(IID_IBatteryStatics, 2043507382, 40542, 17490, 190, 166, 223, 205, 84, 30, 89, 127);
 RT_INTERFACE!{static interface IBatteryStatics(IBatteryStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBatteryStatics] {
     fn get_AggregateBattery(&self, out: *mut *mut Battery) -> HRESULT,
@@ -22565,7 +22565,7 @@ impl IPrint3DDevice {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Print3DDevice: IPrint3DDevice}
+RT_CLASS!{class Print3DDevice: IPrint3DDevice ["Windows.Devices.Printers.Print3DDevice"]}
 impl RtActivatable<IPrint3DDeviceStatics> for Print3DDevice {}
 impl Print3DDevice {
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<Print3DDevice>>> {
@@ -22616,7 +22616,7 @@ impl IPrintSchema {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintSchema: IPrintSchema}
+RT_CLASS!{class PrintSchema: IPrintSchema ["Windows.Devices.Printers.PrintSchema"]}
 pub mod extensions { // Windows.Devices.Printers.Extensions
 use ::prelude::*;
 DEFINE_IID!(IID_IPrint3DWorkflow, 3312415933, 13929, 19046, 171, 66, 200, 21, 25, 48, 205, 52);
@@ -22658,7 +22658,7 @@ impl IPrint3DWorkflow {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Print3DWorkflow: IPrint3DWorkflow}
+RT_CLASS!{class Print3DWorkflow: IPrint3DWorkflow ["Windows.Devices.Printers.Extensions.Print3DWorkflow"]}
 DEFINE_IID!(IID_IPrint3DWorkflow2, 2728838479, 35521, 18712, 151, 65, 227, 79, 48, 4, 35, 158);
 RT_INTERFACE!{interface IPrint3DWorkflow2(IPrint3DWorkflow2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DWorkflow2] {
     fn add_PrinterChanged(&self, eventHandler: *mut foundation::TypedEventHandler<Print3DWorkflow, Print3DWorkflowPrinterChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -22675,7 +22675,7 @@ impl IPrint3DWorkflow2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum Print3DWorkflowDetail: i32 {
+RT_ENUM! { enum Print3DWorkflowDetail: i32 ["Windows.Devices.Printers.Extensions.Print3DWorkflowDetail"] {
     Unknown (Print3DWorkflowDetail_Unknown) = 0, ModelExceedsPrintBed (Print3DWorkflowDetail_ModelExceedsPrintBed) = 1, UploadFailed (Print3DWorkflowDetail_UploadFailed) = 2, InvalidMaterialSelection (Print3DWorkflowDetail_InvalidMaterialSelection) = 3, InvalidModel (Print3DWorkflowDetail_InvalidModel) = 4, ModelNotManifold (Print3DWorkflowDetail_ModelNotManifold) = 5, InvalidPrintTicket (Print3DWorkflowDetail_InvalidPrintTicket) = 6,
 }}
 DEFINE_IID!(IID_IPrint3DWorkflowPrinterChangedEventArgs, 1159881730, 38396, 18503, 147, 179, 19, 77, 191, 92, 96, 247);
@@ -22689,7 +22689,7 @@ impl IPrint3DWorkflowPrinterChangedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Print3DWorkflowPrinterChangedEventArgs: IPrint3DWorkflowPrinterChangedEventArgs}
+RT_CLASS!{class Print3DWorkflowPrinterChangedEventArgs: IPrint3DWorkflowPrinterChangedEventArgs ["Windows.Devices.Printers.Extensions.Print3DWorkflowPrinterChangedEventArgs"]}
 DEFINE_IID!(IID_IPrint3DWorkflowPrintRequestedEventArgs, 435734616, 23240, 19285, 138, 95, 230, 21, 103, 218, 251, 77);
 RT_INTERFACE!{interface IPrint3DWorkflowPrintRequestedEventArgs(IPrint3DWorkflowPrintRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DWorkflowPrintRequestedEventArgs] {
     fn get_Status(&self, out: *mut Print3DWorkflowStatus) -> HRESULT,
@@ -22716,8 +22716,8 @@ impl IPrint3DWorkflowPrintRequestedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Print3DWorkflowPrintRequestedEventArgs: IPrint3DWorkflowPrintRequestedEventArgs}
-RT_ENUM! { enum Print3DWorkflowStatus: i32 {
+RT_CLASS!{class Print3DWorkflowPrintRequestedEventArgs: IPrint3DWorkflowPrintRequestedEventArgs ["Windows.Devices.Printers.Extensions.Print3DWorkflowPrintRequestedEventArgs"]}
+RT_ENUM! { enum Print3DWorkflowStatus: i32 ["Windows.Devices.Printers.Extensions.Print3DWorkflowStatus"] {
     Abandoned (Print3DWorkflowStatus_Abandoned) = 0, Canceled (Print3DWorkflowStatus_Canceled) = 1, Failed (Print3DWorkflowStatus_Failed) = 2, Slicing (Print3DWorkflowStatus_Slicing) = 3, Submitted (Print3DWorkflowStatus_Submitted) = 4,
 }}
 RT_CLASS!{static class PrintExtensionContext}
@@ -22761,7 +22761,7 @@ impl IPrintNotificationEventDetails {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintNotificationEventDetails: IPrintNotificationEventDetails}
+RT_CLASS!{class PrintNotificationEventDetails: IPrintNotificationEventDetails ["Windows.Devices.Printers.Extensions.PrintNotificationEventDetails"]}
 DEFINE_IID!(IID_IPrintTaskConfiguration, 3821151313, 15012, 18565, 146, 64, 49, 31, 95, 143, 190, 157);
 RT_INTERFACE!{interface IPrintTaskConfiguration(IPrintTaskConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskConfiguration] {
     fn get_PrinterExtensionContext(&self, out: *mut *mut IInspectable) -> HRESULT,
@@ -22784,7 +22784,7 @@ impl IPrintTaskConfiguration {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskConfiguration: IPrintTaskConfiguration}
+RT_CLASS!{class PrintTaskConfiguration: IPrintTaskConfiguration ["Windows.Devices.Printers.Extensions.PrintTaskConfiguration"]}
 DEFINE_IID!(IID_IPrintTaskConfigurationSaveRequest, 4004458443, 25118, 19298, 172, 119, 178, 129, 204, 224, 141, 96);
 RT_INTERFACE!{interface IPrintTaskConfigurationSaveRequest(IPrintTaskConfigurationSaveRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskConfigurationSaveRequest] {
     fn Cancel(&self) -> HRESULT,
@@ -22812,7 +22812,7 @@ impl IPrintTaskConfigurationSaveRequest {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskConfigurationSaveRequest: IPrintTaskConfigurationSaveRequest}
+RT_CLASS!{class PrintTaskConfigurationSaveRequest: IPrintTaskConfigurationSaveRequest ["Windows.Devices.Printers.Extensions.PrintTaskConfigurationSaveRequest"]}
 DEFINE_IID!(IID_IPrintTaskConfigurationSaveRequestedDeferral, 3914978664, 63273, 17572, 135, 29, 189, 6, 40, 105, 106, 51);
 RT_INTERFACE!{interface IPrintTaskConfigurationSaveRequestedDeferral(IPrintTaskConfigurationSaveRequestedDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskConfigurationSaveRequestedDeferral] {
     fn Complete(&self) -> HRESULT
@@ -22823,7 +22823,7 @@ impl IPrintTaskConfigurationSaveRequestedDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskConfigurationSaveRequestedDeferral: IPrintTaskConfigurationSaveRequestedDeferral}
+RT_CLASS!{class PrintTaskConfigurationSaveRequestedDeferral: IPrintTaskConfigurationSaveRequestedDeferral ["Windows.Devices.Printers.Extensions.PrintTaskConfigurationSaveRequestedDeferral"]}
 DEFINE_IID!(IID_IPrintTaskConfigurationSaveRequestedEventArgs, 3765184633, 3425, 18744, 145, 208, 150, 164, 91, 238, 132, 121);
 RT_INTERFACE!{interface IPrintTaskConfigurationSaveRequestedEventArgs(IPrintTaskConfigurationSaveRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskConfigurationSaveRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut PrintTaskConfigurationSaveRequest) -> HRESULT
@@ -22835,7 +22835,7 @@ impl IPrintTaskConfigurationSaveRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskConfigurationSaveRequestedEventArgs: IPrintTaskConfigurationSaveRequestedEventArgs}
+RT_CLASS!{class PrintTaskConfigurationSaveRequestedEventArgs: IPrintTaskConfigurationSaveRequestedEventArgs ["Windows.Devices.Printers.Extensions.PrintTaskConfigurationSaveRequestedEventArgs"]}
 } // Windows.Devices.Printers.Extensions
 } // Windows.Devices.Printers
 pub mod pwm { // Windows.Devices.Pwm
@@ -22881,7 +22881,7 @@ impl IPwmController {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PwmController: IPwmController}
+RT_CLASS!{class PwmController: IPwmController ["Windows.Devices.Pwm.PwmController"]}
 impl RtActivatable<IPwmControllerStatics> for PwmController {}
 impl RtActivatable<IPwmControllerStatics2> for PwmController {}
 impl RtActivatable<IPwmControllerStatics3> for PwmController {}
@@ -22997,8 +22997,8 @@ impl IPwmPin {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PwmPin: IPwmPin}
-RT_ENUM! { enum PwmPulsePolarity: i32 {
+RT_CLASS!{class PwmPin: IPwmPin ["Windows.Devices.Pwm.PwmPin"]}
+RT_ENUM! { enum PwmPulsePolarity: i32 ["Windows.Devices.Pwm.PwmPulsePolarity"] {
     ActiveHigh (PwmPulsePolarity_ActiveHigh) = 0, ActiveLow (PwmPulsePolarity_ActiveLow) = 1,
 }}
 pub mod provider { // Windows.Devices.Pwm.Provider
@@ -23118,7 +23118,7 @@ impl IRadio {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Radio: IRadio}
+RT_CLASS!{class Radio: IRadio ["Windows.Devices.Radios.Radio"]}
 impl RtActivatable<IRadioStatics> for Radio {}
 impl Radio {
     #[inline] pub fn get_radios_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<Radio>>>> {
@@ -23135,13 +23135,13 @@ impl Radio {
     }
 }
 DEFINE_CLSID!(Radio(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,82,97,100,105,111,115,46,82,97,100,105,111,0]) [CLSID_Radio]);
-RT_ENUM! { enum RadioAccessStatus: i32 {
+RT_ENUM! { enum RadioAccessStatus: i32 ["Windows.Devices.Radios.RadioAccessStatus"] {
     Unspecified (RadioAccessStatus_Unspecified) = 0, Allowed (RadioAccessStatus_Allowed) = 1, DeniedByUser (RadioAccessStatus_DeniedByUser) = 2, DeniedBySystem (RadioAccessStatus_DeniedBySystem) = 3,
 }}
-RT_ENUM! { enum RadioKind: i32 {
+RT_ENUM! { enum RadioKind: i32 ["Windows.Devices.Radios.RadioKind"] {
     Other (RadioKind_Other) = 0, WiFi (RadioKind_WiFi) = 1, MobileBroadband (RadioKind_MobileBroadband) = 2, Bluetooth (RadioKind_Bluetooth) = 3, FM (RadioKind_FM) = 4,
 }}
-RT_ENUM! { enum RadioState: i32 {
+RT_ENUM! { enum RadioState: i32 ["Windows.Devices.Radios.RadioState"] {
     Unknown (RadioState_Unknown) = 0, On (RadioState_On) = 1, Off (RadioState_Off) = 2, Disabled (RadioState_Disabled) = 3,
 }}
 DEFINE_IID!(IID_IRadioStatics, 1605804334, 26571, 18094, 170, 233, 101, 145, 159, 134, 239, 244);
@@ -23235,7 +23235,7 @@ impl IImageScanner {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ImageScanner: IImageScanner}
+RT_CLASS!{class ImageScanner: IImageScanner ["Windows.Devices.Scanners.ImageScanner"]}
 impl RtActivatable<IImageScannerStatics> for ImageScanner {}
 impl ImageScanner {
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ImageScanner>>> {
@@ -23246,11 +23246,11 @@ impl ImageScanner {
     }
 }
 DEFINE_CLSID!(ImageScanner(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,99,97,110,110,101,114,115,46,73,109,97,103,101,83,99,97,110,110,101,114,0]) [CLSID_ImageScanner]);
-RT_CLASS!{class ImageScannerAutoConfiguration: IImageScannerFormatConfiguration}
-RT_ENUM! { enum ImageScannerAutoCroppingMode: i32 {
+RT_CLASS!{class ImageScannerAutoConfiguration: IImageScannerFormatConfiguration ["Windows.Devices.Scanners.ImageScannerAutoConfiguration"]}
+RT_ENUM! { enum ImageScannerAutoCroppingMode: i32 ["Windows.Devices.Scanners.ImageScannerAutoCroppingMode"] {
     Disabled (ImageScannerAutoCroppingMode_Disabled) = 0, SingleRegion (ImageScannerAutoCroppingMode_SingleRegion) = 1, MultipleRegion (ImageScannerAutoCroppingMode_MultipleRegion) = 2,
 }}
-RT_ENUM! { enum ImageScannerColorMode: i32 {
+RT_ENUM! { enum ImageScannerColorMode: i32 ["Windows.Devices.Scanners.ImageScannerColorMode"] {
     Color (ImageScannerColorMode_Color) = 0, Grayscale (ImageScannerColorMode_Grayscale) = 1, Monochrome (ImageScannerColorMode_Monochrome) = 2, AutoColor (ImageScannerColorMode_AutoColor) = 3,
 }}
 DEFINE_IID!(IID_IImageScannerFeederConfiguration, 1958587630, 64151, 19479, 130, 128, 64, 227, 156, 109, 204, 103);
@@ -23359,9 +23359,9 @@ impl IImageScannerFeederConfiguration {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ImageScannerFeederConfiguration: IImageScannerFormatConfiguration}
-RT_CLASS!{class ImageScannerFlatbedConfiguration: IImageScannerFormatConfiguration}
-RT_ENUM! { enum ImageScannerFormat: i32 {
+RT_CLASS!{class ImageScannerFeederConfiguration: IImageScannerFormatConfiguration ["Windows.Devices.Scanners.ImageScannerFeederConfiguration"]}
+RT_CLASS!{class ImageScannerFlatbedConfiguration: IImageScannerFormatConfiguration ["Windows.Devices.Scanners.ImageScannerFlatbedConfiguration"]}
+RT_ENUM! { enum ImageScannerFormat: i32 ["Windows.Devices.Scanners.ImageScannerFormat"] {
     Jpeg (ImageScannerFormat_Jpeg) = 0, Png (ImageScannerFormat_Png) = 1, DeviceIndependentBitmap (ImageScannerFormat_DeviceIndependentBitmap) = 2, Tiff (ImageScannerFormat_Tiff) = 3, Xps (ImageScannerFormat_Xps) = 4, OpenXps (ImageScannerFormat_OpenXps) = 5, Pdf (ImageScannerFormat_Pdf) = 6,
 }}
 DEFINE_IID!(IID_IImageScannerFormatConfiguration, 2921815313, 56031, 16400, 191, 16, 204, 165, 200, 61, 203, 176);
@@ -23409,8 +23409,8 @@ impl IImageScannerPreviewResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ImageScannerPreviewResult: IImageScannerPreviewResult}
-RT_STRUCT! { struct ImageScannerResolution {
+RT_CLASS!{class ImageScannerPreviewResult: IImageScannerPreviewResult ["Windows.Devices.Scanners.ImageScannerPreviewResult"]}
+RT_STRUCT! { struct ImageScannerResolution ["Windows.Devices.Scanners.ImageScannerResolution"] {
     DpiX: f32, DpiY: f32,
 }}
 DEFINE_IID!(IID_IImageScannerScanResult, 3373671629, 36919, 20040, 132, 193, 172, 9, 117, 7, 107, 197);
@@ -23424,8 +23424,8 @@ impl IImageScannerScanResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ImageScannerScanResult: IImageScannerScanResult}
-RT_ENUM! { enum ImageScannerScanSource: i32 {
+RT_CLASS!{class ImageScannerScanResult: IImageScannerScanResult ["Windows.Devices.Scanners.ImageScannerScanResult"]}
+RT_ENUM! { enum ImageScannerScanSource: i32 ["Windows.Devices.Scanners.ImageScannerScanSource"] {
     Default (ImageScannerScanSource_Default) = 0, Flatbed (ImageScannerScanSource_Flatbed) = 1, Feeder (ImageScannerScanSource_Feeder) = 2, AutoConfigured (ImageScannerScanSource_AutoConfigured) = 3,
 }}
 DEFINE_IID!(IID_IImageScannerSourceConfiguration, 3216310357, 2884, 19586, 158, 137, 32, 95, 156, 35, 78, 89);
@@ -23671,7 +23671,7 @@ impl IAccelerometer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Accelerometer: IAccelerometer}
+RT_CLASS!{class Accelerometer: IAccelerometer ["Windows.Devices.Sensors.Accelerometer"]}
 impl RtActivatable<IAccelerometerStatics> for Accelerometer {}
 impl RtActivatable<IAccelerometerStatics2> for Accelerometer {}
 impl RtActivatable<IAccelerometerStatics3> for Accelerometer {}
@@ -23779,7 +23779,7 @@ impl IAccelerometerReading {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AccelerometerReading: IAccelerometerReading}
+RT_CLASS!{class AccelerometerReading: IAccelerometerReading ["Windows.Devices.Sensors.AccelerometerReading"]}
 DEFINE_IID!(IID_IAccelerometerReading2, 176573090, 5550, 19008, 190, 85, 219, 88, 215, 222, 115, 137);
 RT_INTERFACE!{interface IAccelerometerReading2(IAccelerometerReading2Vtbl): IInspectable(IInspectableVtbl) [IID_IAccelerometerReading2] {
     fn get_PerformanceCount(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -23808,8 +23808,8 @@ impl IAccelerometerReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AccelerometerReadingChangedEventArgs: IAccelerometerReadingChangedEventArgs}
-RT_ENUM! { enum AccelerometerReadingType: i32 {
+RT_CLASS!{class AccelerometerReadingChangedEventArgs: IAccelerometerReadingChangedEventArgs ["Windows.Devices.Sensors.AccelerometerReadingChangedEventArgs"]}
+RT_ENUM! { enum AccelerometerReadingType: i32 ["Windows.Devices.Sensors.AccelerometerReadingType"] {
     Standard (AccelerometerReadingType_Standard) = 0, Linear (AccelerometerReadingType_Linear) = 1, Gravity (AccelerometerReadingType_Gravity) = 2,
 }}
 DEFINE_IID!(IID_IAccelerometerShakenEventArgs, 2516517329, 18984, 20277, 152, 232, 129, 120, 170, 228, 8, 74);
@@ -23823,7 +23823,7 @@ impl IAccelerometerShakenEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AccelerometerShakenEventArgs: IAccelerometerShakenEventArgs}
+RT_CLASS!{class AccelerometerShakenEventArgs: IAccelerometerShakenEventArgs ["Windows.Devices.Sensors.AccelerometerShakenEventArgs"]}
 DEFINE_IID!(IID_IAccelerometerStatics, 2783087476, 23175, 18989, 190, 204, 15, 144, 110, 160, 97, 221);
 RT_INTERFACE!{static interface IAccelerometerStatics(IAccelerometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAccelerometerStatics] {
     fn GetDefault(&self, out: *mut *mut Accelerometer) -> HRESULT
@@ -23915,7 +23915,7 @@ impl IActivitySensor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ActivitySensor: IActivitySensor}
+RT_CLASS!{class ActivitySensor: IActivitySensor ["Windows.Devices.Sensors.ActivitySensor"]}
 impl RtActivatable<IActivitySensorStatics> for ActivitySensor {}
 impl ActivitySensor {
     #[inline] pub fn get_default_async() -> Result<ComPtr<foundation::IAsyncOperation<ActivitySensor>>> {
@@ -23958,7 +23958,7 @@ impl IActivitySensorReading {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ActivitySensorReading: IActivitySensorReading}
+RT_CLASS!{class ActivitySensorReading: IActivitySensorReading ["Windows.Devices.Sensors.ActivitySensorReading"]}
 DEFINE_IID!(IID_IActivitySensorReadingChangedEventArgs, 3728238359, 44726, 20167, 148, 106, 217, 204, 25, 185, 81, 236);
 RT_INTERFACE!{interface IActivitySensorReadingChangedEventArgs(IActivitySensorReadingChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IActivitySensorReadingChangedEventArgs] {
     fn get_Reading(&self, out: *mut *mut ActivitySensorReading) -> HRESULT
@@ -23970,7 +23970,7 @@ impl IActivitySensorReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ActivitySensorReadingChangedEventArgs: IActivitySensorReadingChangedEventArgs}
+RT_CLASS!{class ActivitySensorReadingChangedEventArgs: IActivitySensorReadingChangedEventArgs ["Windows.Devices.Sensors.ActivitySensorReadingChangedEventArgs"]}
 DEFINE_IID!(IID_IActivitySensorReadingChangeReport, 1329342741, 55611, 18365, 150, 10, 242, 15, 178, 243, 34, 185);
 RT_INTERFACE!{interface IActivitySensorReadingChangeReport(IActivitySensorReadingChangeReportVtbl): IInspectable(IInspectableVtbl) [IID_IActivitySensorReadingChangeReport] {
     fn get_Reading(&self, out: *mut *mut ActivitySensorReading) -> HRESULT
@@ -23982,8 +23982,8 @@ impl IActivitySensorReadingChangeReport {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ActivitySensorReadingChangeReport: IActivitySensorReadingChangeReport}
-RT_ENUM! { enum ActivitySensorReadingConfidence: i32 {
+RT_CLASS!{class ActivitySensorReadingChangeReport: IActivitySensorReadingChangeReport ["Windows.Devices.Sensors.ActivitySensorReadingChangeReport"]}
+RT_ENUM! { enum ActivitySensorReadingConfidence: i32 ["Windows.Devices.Sensors.ActivitySensorReadingConfidence"] {
     High (ActivitySensorReadingConfidence_High) = 0, Low (ActivitySensorReadingConfidence_Low) = 1,
 }}
 DEFINE_IID!(IID_IActivitySensorStatics, 2803764893, 61067, 17873, 178, 91, 8, 204, 13, 249, 42, 182);
@@ -24032,8 +24032,8 @@ impl IActivitySensorTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ActivitySensorTriggerDetails: IActivitySensorTriggerDetails}
-RT_ENUM! { enum ActivityType: i32 {
+RT_CLASS!{class ActivitySensorTriggerDetails: IActivitySensorTriggerDetails ["Windows.Devices.Sensors.ActivitySensorTriggerDetails"]}
+RT_ENUM! { enum ActivityType: i32 ["Windows.Devices.Sensors.ActivityType"] {
     Unknown (ActivityType_Unknown) = 0, Idle (ActivityType_Idle) = 1, Stationary (ActivityType_Stationary) = 2, Fidgeting (ActivityType_Fidgeting) = 3, Walking (ActivityType_Walking) = 4, Running (ActivityType_Running) = 5, InVehicle (ActivityType_InVehicle) = 6, Biking (ActivityType_Biking) = 7,
 }}
 DEFINE_IID!(IID_IAltimeter, 1928353789, 36612, 18929, 180, 167, 244, 227, 99, 183, 1, 162);
@@ -24081,7 +24081,7 @@ impl IAltimeter {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Altimeter: IAltimeter}
+RT_CLASS!{class Altimeter: IAltimeter ["Windows.Devices.Sensors.Altimeter"]}
 impl RtActivatable<IAltimeterStatics> for Altimeter {}
 impl Altimeter {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<Altimeter>>> {
@@ -24128,7 +24128,7 @@ impl IAltimeterReading {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AltimeterReading: IAltimeterReading}
+RT_CLASS!{class AltimeterReading: IAltimeterReading ["Windows.Devices.Sensors.AltimeterReading"]}
 DEFINE_IID!(IID_IAltimeterReading2, 1413094361, 27915, 17074, 189, 105, 188, 143, 174, 15, 120, 44);
 RT_INTERFACE!{interface IAltimeterReading2(IAltimeterReading2Vtbl): IInspectable(IInspectableVtbl) [IID_IAltimeterReading2] {
     fn get_PerformanceCount(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -24157,7 +24157,7 @@ impl IAltimeterReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AltimeterReadingChangedEventArgs: IAltimeterReadingChangedEventArgs}
+RT_CLASS!{class AltimeterReadingChangedEventArgs: IAltimeterReadingChangedEventArgs ["Windows.Devices.Sensors.AltimeterReadingChangedEventArgs"]}
 DEFINE_IID!(IID_IAltimeterStatics, 2662651843, 58796, 18382, 142, 239, 211, 113, 129, 104, 192, 31);
 RT_INTERFACE!{static interface IAltimeterStatics(IAltimeterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAltimeterStatics] {
     fn GetDefault(&self, out: *mut *mut Altimeter) -> HRESULT
@@ -24214,7 +24214,7 @@ impl IBarometer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Barometer: IBarometer}
+RT_CLASS!{class Barometer: IBarometer ["Windows.Devices.Sensors.Barometer"]}
 impl RtActivatable<IBarometerStatics> for Barometer {}
 impl RtActivatable<IBarometerStatics2> for Barometer {}
 impl Barometer {
@@ -24268,7 +24268,7 @@ impl IBarometerReading {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarometerReading: IBarometerReading}
+RT_CLASS!{class BarometerReading: IBarometerReading ["Windows.Devices.Sensors.BarometerReading"]}
 DEFINE_IID!(IID_IBarometerReading2, 2242004203, 37061, 18549, 137, 28, 56, 101, 180, 195, 87, 231);
 RT_INTERFACE!{interface IBarometerReading2(IBarometerReading2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarometerReading2] {
     fn get_PerformanceCount(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -24297,7 +24297,7 @@ impl IBarometerReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarometerReadingChangedEventArgs: IBarometerReadingChangedEventArgs}
+RT_CLASS!{class BarometerReadingChangedEventArgs: IBarometerReadingChangedEventArgs ["Windows.Devices.Sensors.BarometerReadingChangedEventArgs"]}
 DEFINE_IID!(IID_IBarometerStatics, 678110986, 739, 20358, 132, 252, 253, 216, 146, 181, 148, 15);
 RT_INTERFACE!{static interface IBarometerStatics(IBarometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBarometerStatics] {
     fn GetDefault(&self, out: *mut *mut Barometer) -> HRESULT
@@ -24365,7 +24365,7 @@ impl ICompass {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Compass: ICompass}
+RT_CLASS!{class Compass: ICompass ["Windows.Devices.Sensors.Compass"]}
 impl RtActivatable<ICompassStatics> for Compass {}
 impl RtActivatable<ICompassStatics2> for Compass {}
 impl Compass {
@@ -24452,7 +24452,7 @@ impl ICompassReading {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompassReading: ICompassReading}
+RT_CLASS!{class CompassReading: ICompassReading ["Windows.Devices.Sensors.CompassReading"]}
 DEFINE_IID!(IID_ICompassReading2, 2973394462, 20923, 18962, 190, 221, 173, 71, 255, 135, 210, 232);
 RT_INTERFACE!{interface ICompassReading2(ICompassReading2Vtbl): IInspectable(IInspectableVtbl) [IID_ICompassReading2] {
     fn get_PerformanceCount(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -24481,7 +24481,7 @@ impl ICompassReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompassReadingChangedEventArgs: ICompassReadingChangedEventArgs}
+RT_CLASS!{class CompassReadingChangedEventArgs: ICompassReadingChangedEventArgs ["Windows.Devices.Sensors.CompassReadingChangedEventArgs"]}
 DEFINE_IID!(IID_ICompassReadingHeadingAccuracy, 3881907534, 35089, 16631, 158, 22, 110, 204, 125, 174, 197, 222);
 RT_INTERFACE!{interface ICompassReadingHeadingAccuracy(ICompassReadingHeadingAccuracyVtbl): IInspectable(IInspectableVtbl) [IID_ICompassReadingHeadingAccuracy] {
     fn get_HeadingAccuracy(&self, out: *mut MagnetometerAccuracy) -> HRESULT
@@ -24560,7 +24560,7 @@ impl IGyrometer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Gyrometer: IGyrometer}
+RT_CLASS!{class Gyrometer: IGyrometer ["Windows.Devices.Sensors.Gyrometer"]}
 impl RtActivatable<IGyrometerStatics> for Gyrometer {}
 impl RtActivatable<IGyrometerStatics2> for Gyrometer {}
 impl Gyrometer {
@@ -24653,7 +24653,7 @@ impl IGyrometerReading {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GyrometerReading: IGyrometerReading}
+RT_CLASS!{class GyrometerReading: IGyrometerReading ["Windows.Devices.Sensors.GyrometerReading"]}
 DEFINE_IID!(IID_IGyrometerReading2, 380625212, 11145, 17595, 130, 43, 209, 225, 85, 111, 240, 155);
 RT_INTERFACE!{interface IGyrometerReading2(IGyrometerReading2Vtbl): IInspectable(IInspectableVtbl) [IID_IGyrometerReading2] {
     fn get_PerformanceCount(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -24682,7 +24682,7 @@ impl IGyrometerReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GyrometerReadingChangedEventArgs: IGyrometerReadingChangedEventArgs}
+RT_CLASS!{class GyrometerReadingChangedEventArgs: IGyrometerReadingChangedEventArgs ["Windows.Devices.Sensors.GyrometerReadingChangedEventArgs"]}
 DEFINE_IID!(IID_IGyrometerStatics, 2209802185, 58525, 19257, 134, 230, 205, 85, 75, 228, 197, 193);
 RT_INTERFACE!{static interface IGyrometerStatics(IGyrometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGyrometerStatics] {
     fn GetDefault(&self, out: *mut *mut Gyrometer) -> HRESULT
@@ -24734,7 +24734,7 @@ impl IHingeAngleReading {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HingeAngleReading: IHingeAngleReading}
+RT_CLASS!{class HingeAngleReading: IHingeAngleReading ["Windows.Devices.Sensors.HingeAngleReading"]}
 DEFINE_IID!(IID_IHingeAngleSensor, 3922968066, 49119, 17279, 140, 41, 136, 199, 115, 147, 211, 9);
 RT_INTERFACE!{interface IHingeAngleSensor(IHingeAngleSensorVtbl): IInspectable(IInspectableVtbl) [IID_IHingeAngleSensor] {
     fn GetCurrentReadingAsync(&self, out: *mut *mut foundation::IAsyncOperation<HingeAngleReading>) -> HRESULT,
@@ -24780,7 +24780,7 @@ impl IHingeAngleSensor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HingeAngleSensor: IHingeAngleSensor}
+RT_CLASS!{class HingeAngleSensor: IHingeAngleSensor ["Windows.Devices.Sensors.HingeAngleSensor"]}
 impl RtActivatable<IHingeAngleSensorStatics> for HingeAngleSensor {}
 impl HingeAngleSensor {
     #[inline] pub fn get_device_selector() -> Result<HString> {
@@ -24808,7 +24808,7 @@ impl IHingeAngleSensorReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HingeAngleSensorReadingChangedEventArgs: IHingeAngleSensorReadingChangedEventArgs}
+RT_CLASS!{class HingeAngleSensorReadingChangedEventArgs: IHingeAngleSensorReadingChangedEventArgs ["Windows.Devices.Sensors.HingeAngleSensorReadingChangedEventArgs"]}
 DEFINE_IID!(IID_IHingeAngleSensorStatics, 3082172688, 64433, 16675, 137, 206, 78, 163, 78, 176, 223, 202);
 RT_INTERFACE!{static interface IHingeAngleSensorStatics(IHingeAngleSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHingeAngleSensorStatics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
@@ -24877,7 +24877,7 @@ impl IInclinometer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Inclinometer: IInclinometer}
+RT_CLASS!{class Inclinometer: IInclinometer ["Windows.Devices.Sensors.Inclinometer"]}
 impl RtActivatable<IInclinometerStatics> for Inclinometer {}
 impl RtActivatable<IInclinometerStatics2> for Inclinometer {}
 impl RtActivatable<IInclinometerStatics3> for Inclinometer {}
@@ -24986,7 +24986,7 @@ impl IInclinometerReading {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InclinometerReading: IInclinometerReading}
+RT_CLASS!{class InclinometerReading: IInclinometerReading ["Windows.Devices.Sensors.InclinometerReading"]}
 DEFINE_IID!(IID_IInclinometerReading2, 1326860161, 59659, 18008, 137, 21, 1, 3, 224, 138, 128, 90);
 RT_INTERFACE!{interface IInclinometerReading2(IInclinometerReading2Vtbl): IInspectable(IInspectableVtbl) [IID_IInclinometerReading2] {
     fn get_PerformanceCount(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -25015,7 +25015,7 @@ impl IInclinometerReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InclinometerReadingChangedEventArgs: IInclinometerReadingChangedEventArgs}
+RT_CLASS!{class InclinometerReadingChangedEventArgs: IInclinometerReadingChangedEventArgs ["Windows.Devices.Sensors.InclinometerReadingChangedEventArgs"]}
 DEFINE_IID!(IID_IInclinometerReadingYawAccuracy, 3025397888, 8163, 18822, 162, 87, 230, 236, 226, 114, 57, 73);
 RT_INTERFACE!{interface IInclinometerReadingYawAccuracy(IInclinometerReadingYawAccuracyVtbl): IInspectable(IInspectableVtbl) [IID_IInclinometerReadingYawAccuracy] {
     fn get_YawAccuracy(&self, out: *mut MagnetometerAccuracy) -> HRESULT
@@ -25116,7 +25116,7 @@ impl ILightSensor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LightSensor: ILightSensor}
+RT_CLASS!{class LightSensor: ILightSensor ["Windows.Devices.Sensors.LightSensor"]}
 impl RtActivatable<ILightSensorStatics> for LightSensor {}
 impl RtActivatable<ILightSensorStatics2> for LightSensor {}
 impl LightSensor {
@@ -25181,7 +25181,7 @@ impl ILightSensorReading {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LightSensorReading: ILightSensorReading}
+RT_CLASS!{class LightSensorReading: ILightSensorReading ["Windows.Devices.Sensors.LightSensorReading"]}
 DEFINE_IID!(IID_ILightSensorReading2, 3075547525, 17571, 17609, 129, 144, 158, 246, 222, 10, 138, 116);
 RT_INTERFACE!{interface ILightSensorReading2(ILightSensorReading2Vtbl): IInspectable(IInspectableVtbl) [IID_ILightSensorReading2] {
     fn get_PerformanceCount(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -25210,7 +25210,7 @@ impl ILightSensorReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LightSensorReadingChangedEventArgs: ILightSensorReadingChangedEventArgs}
+RT_CLASS!{class LightSensorReadingChangedEventArgs: ILightSensorReadingChangedEventArgs ["Windows.Devices.Sensors.LightSensorReadingChangedEventArgs"]}
 DEFINE_IID!(IID_ILightSensorStatics, 1172016260, 50088, 18206, 154, 83, 100, 87, 250, 216, 124, 14);
 RT_INTERFACE!{static interface ILightSensorStatics(ILightSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILightSensorStatics] {
     fn GetDefault(&self, out: *mut *mut LightSensor) -> HRESULT
@@ -25278,7 +25278,7 @@ impl IMagnetometer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Magnetometer: IMagnetometer}
+RT_CLASS!{class Magnetometer: IMagnetometer ["Windows.Devices.Sensors.Magnetometer"]}
 impl RtActivatable<IMagnetometerStatics> for Magnetometer {}
 impl RtActivatable<IMagnetometerStatics2> for Magnetometer {}
 impl Magnetometer {
@@ -25331,7 +25331,7 @@ impl IMagnetometer3 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MagnetometerAccuracy: i32 {
+RT_ENUM! { enum MagnetometerAccuracy: i32 ["Windows.Devices.Sensors.MagnetometerAccuracy"] {
     Unknown (MagnetometerAccuracy_Unknown) = 0, Unreliable (MagnetometerAccuracy_Unreliable) = 1, Approximate (MagnetometerAccuracy_Approximate) = 2, High (MagnetometerAccuracy_High) = 3,
 }}
 DEFINE_IID!(IID_IMagnetometerDeviceId, 1488230594, 32331, 16460, 159, 197, 93, 232, 180, 14, 186, 227);
@@ -25380,7 +25380,7 @@ impl IMagnetometerReading {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MagnetometerReading: IMagnetometerReading}
+RT_CLASS!{class MagnetometerReading: IMagnetometerReading ["Windows.Devices.Sensors.MagnetometerReading"]}
 DEFINE_IID!(IID_IMagnetometerReading2, 3569966177, 25049, 16459, 163, 40, 6, 111, 23, 122, 20, 9);
 RT_INTERFACE!{interface IMagnetometerReading2(IMagnetometerReading2Vtbl): IInspectable(IInspectableVtbl) [IID_IMagnetometerReading2] {
     fn get_PerformanceCount(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -25409,7 +25409,7 @@ impl IMagnetometerReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MagnetometerReadingChangedEventArgs: IMagnetometerReadingChangedEventArgs}
+RT_CLASS!{class MagnetometerReadingChangedEventArgs: IMagnetometerReadingChangedEventArgs ["Windows.Devices.Sensors.MagnetometerReadingChangedEventArgs"]}
 DEFINE_IID!(IID_IMagnetometerStatics, 2235327692, 1688, 19930, 166, 223, 156, 185, 204, 74, 180, 10);
 RT_INTERFACE!{static interface IMagnetometerStatics(IMagnetometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMagnetometerStatics] {
     fn GetDefault(&self, out: *mut *mut Magnetometer) -> HRESULT
@@ -25477,7 +25477,7 @@ impl IOrientationSensor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OrientationSensor: IOrientationSensor}
+RT_CLASS!{class OrientationSensor: IOrientationSensor ["Windows.Devices.Sensors.OrientationSensor"]}
 impl RtActivatable<IOrientationSensorStatics> for OrientationSensor {}
 impl RtActivatable<IOrientationSensorStatics2> for OrientationSensor {}
 impl RtActivatable<IOrientationSensorStatics3> for OrientationSensor {}
@@ -25586,7 +25586,7 @@ impl IOrientationSensorReading {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OrientationSensorReading: IOrientationSensorReading}
+RT_CLASS!{class OrientationSensorReading: IOrientationSensorReading ["Windows.Devices.Sensors.OrientationSensorReading"]}
 DEFINE_IID!(IID_IOrientationSensorReading2, 5729887, 18936, 19461, 158, 7, 36, 250, 199, 148, 8, 195);
 RT_INTERFACE!{interface IOrientationSensorReading2(IOrientationSensorReading2Vtbl): IInspectable(IInspectableVtbl) [IID_IOrientationSensorReading2] {
     fn get_PerformanceCount(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -25615,7 +25615,7 @@ impl IOrientationSensorReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OrientationSensorReadingChangedEventArgs: IOrientationSensorReadingChangedEventArgs}
+RT_CLASS!{class OrientationSensorReadingChangedEventArgs: IOrientationSensorReadingChangedEventArgs ["Windows.Devices.Sensors.OrientationSensorReadingChangedEventArgs"]}
 DEFINE_IID!(IID_IOrientationSensorReadingYawAccuracy, 3517749284, 16218, 18850, 188, 123, 17, 128, 188, 56, 205, 43);
 RT_INTERFACE!{interface IOrientationSensorReadingYawAccuracy(IOrientationSensorReadingYawAccuracyVtbl): IInspectable(IInspectableVtbl) [IID_IOrientationSensorReadingYawAccuracy] {
     fn get_YawAccuracy(&self, out: *mut MagnetometerAccuracy) -> HRESULT
@@ -25734,7 +25734,7 @@ impl IPedometer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Pedometer: IPedometer}
+RT_CLASS!{class Pedometer: IPedometer ["Windows.Devices.Sensors.Pedometer"]}
 impl RtActivatable<IPedometerStatics> for Pedometer {}
 impl RtActivatable<IPedometerStatics2> for Pedometer {}
 impl Pedometer {
@@ -25769,7 +25769,7 @@ impl IPedometer2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PedometerDataThreshold: ISensorDataThreshold}
+RT_CLASS!{class PedometerDataThreshold: ISensorDataThreshold ["Windows.Devices.Sensors.PedometerDataThreshold"]}
 impl RtActivatable<IPedometerDataThresholdFactory> for PedometerDataThreshold {}
 impl PedometerDataThreshold {
     #[inline] pub fn create(sensor: &Pedometer, stepGoal: i32) -> Result<ComPtr<PedometerDataThreshold>> {
@@ -25817,7 +25817,7 @@ impl IPedometerReading {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PedometerReading: IPedometerReading}
+RT_CLASS!{class PedometerReading: IPedometerReading ["Windows.Devices.Sensors.PedometerReading"]}
 DEFINE_IID!(IID_IPedometerReadingChangedEventArgs, 4166378622, 43964, 17494, 134, 168, 37, 207, 43, 51, 55, 66);
 RT_INTERFACE!{interface IPedometerReadingChangedEventArgs(IPedometerReadingChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPedometerReadingChangedEventArgs] {
     fn get_Reading(&self, out: *mut *mut PedometerReading) -> HRESULT
@@ -25829,7 +25829,7 @@ impl IPedometerReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PedometerReadingChangedEventArgs: IPedometerReadingChangedEventArgs}
+RT_CLASS!{class PedometerReadingChangedEventArgs: IPedometerReadingChangedEventArgs ["Windows.Devices.Sensors.PedometerReadingChangedEventArgs"]}
 DEFINE_IID!(IID_IPedometerStatics, 2191002159, 16515, 19963, 180, 17, 147, 142, 160, 244, 185, 70);
 RT_INTERFACE!{static interface IPedometerStatics(IPedometerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPedometerStatics] {
     fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncOperation<Pedometer>) -> HRESULT,
@@ -25876,7 +25876,7 @@ impl IPedometerStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PedometerStepKind: i32 {
+RT_ENUM! { enum PedometerStepKind: i32 ["Windows.Devices.Sensors.PedometerStepKind"] {
     Unknown (PedometerStepKind_Unknown) = 0, Walking (PedometerStepKind_Walking) = 1, Running (PedometerStepKind_Running) = 2,
 }}
 DEFINE_IID!(IID_IProximitySensor, 1421899448, 60667, 18756, 185, 40, 116, 252, 80, 77, 71, 238);
@@ -25925,7 +25925,7 @@ impl IProximitySensor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProximitySensor: IProximitySensor}
+RT_CLASS!{class ProximitySensor: IProximitySensor ["Windows.Devices.Sensors.ProximitySensor"]}
 impl RtActivatable<IProximitySensorStatics> for ProximitySensor {}
 impl RtActivatable<IProximitySensorStatics2> for ProximitySensor {}
 impl ProximitySensor {
@@ -25940,7 +25940,7 @@ impl ProximitySensor {
     }
 }
 DEFINE_CLSID!(ProximitySensor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,101,110,115,111,114,115,46,80,114,111,120,105,109,105,116,121,83,101,110,115,111,114,0]) [CLSID_ProximitySensor]);
-RT_CLASS!{class ProximitySensorDataThreshold: ISensorDataThreshold}
+RT_CLASS!{class ProximitySensorDataThreshold: ISensorDataThreshold ["Windows.Devices.Sensors.ProximitySensorDataThreshold"]}
 impl RtActivatable<IProximitySensorDataThresholdFactory> for ProximitySensorDataThreshold {}
 impl ProximitySensorDataThreshold {
     #[inline] pub fn create(sensor: &ProximitySensor) -> Result<ComPtr<ProximitySensorDataThreshold>> {
@@ -25959,7 +25959,7 @@ impl IProximitySensorDataThresholdFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProximitySensorDisplayOnOffController: foundation::IClosable}
+RT_CLASS!{class ProximitySensorDisplayOnOffController: foundation::IClosable ["Windows.Devices.Sensors.ProximitySensorDisplayOnOffController"]}
 DEFINE_IID!(IID_IProximitySensorReading, 1898089817, 4909, 19807, 143, 249, 47, 13, 184, 117, 28, 237);
 RT_INTERFACE!{interface IProximitySensorReading(IProximitySensorReadingVtbl): IInspectable(IInspectableVtbl) [IID_IProximitySensorReading] {
     fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -25983,7 +25983,7 @@ impl IProximitySensorReading {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProximitySensorReading: IProximitySensorReading}
+RT_CLASS!{class ProximitySensorReading: IProximitySensorReading ["Windows.Devices.Sensors.ProximitySensorReading"]}
 DEFINE_IID!(IID_IProximitySensorReadingChangedEventArgs, 3485660006, 50152, 16637, 140, 195, 103, 226, 137, 0, 73, 56);
 RT_INTERFACE!{interface IProximitySensorReadingChangedEventArgs(IProximitySensorReadingChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IProximitySensorReadingChangedEventArgs] {
     fn get_Reading(&self, out: *mut *mut ProximitySensorReading) -> HRESULT
@@ -25995,7 +25995,7 @@ impl IProximitySensorReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProximitySensorReadingChangedEventArgs: IProximitySensorReadingChangedEventArgs}
+RT_CLASS!{class ProximitySensorReadingChangedEventArgs: IProximitySensorReadingChangedEventArgs ["Windows.Devices.Sensors.ProximitySensorReadingChangedEventArgs"]}
 DEFINE_IID!(IID_IProximitySensorStatics, 689464905, 25193, 20055, 165, 173, 130, 190, 128, 129, 51, 146);
 RT_INTERFACE!{static interface IProximitySensorStatics(IProximitySensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IProximitySensorStatics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
@@ -26045,8 +26045,8 @@ impl ISensorDataThresholdTriggerDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SensorDataThresholdTriggerDetails: ISensorDataThresholdTriggerDetails}
-RT_ENUM! { enum SensorOptimizationGoal: i32 {
+RT_CLASS!{class SensorDataThresholdTriggerDetails: ISensorDataThresholdTriggerDetails ["Windows.Devices.Sensors.SensorDataThresholdTriggerDetails"]}
+RT_ENUM! { enum SensorOptimizationGoal: i32 ["Windows.Devices.Sensors.SensorOptimizationGoal"] {
     Precision (SensorOptimizationGoal_Precision) = 0, PowerEfficiency (SensorOptimizationGoal_PowerEfficiency) = 1,
 }}
 DEFINE_IID!(IID_ISensorQuaternion, 3385182247, 50972, 18151, 157, 163, 54, 161, 147, 178, 50, 188);
@@ -26078,8 +26078,8 @@ impl ISensorQuaternion {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SensorQuaternion: ISensorQuaternion}
-RT_ENUM! { enum SensorReadingType: i32 {
+RT_CLASS!{class SensorQuaternion: ISensorQuaternion ["Windows.Devices.Sensors.SensorQuaternion"]}
+RT_ENUM! { enum SensorReadingType: i32 ["Windows.Devices.Sensors.SensorReadingType"] {
     Absolute (SensorReadingType_Absolute) = 0, Relative (SensorReadingType_Relative) = 1,
 }}
 DEFINE_IID!(IID_ISensorRotationMatrix, 171792999, 8948, 17298, 149, 56, 101, 208, 189, 6, 74, 166);
@@ -26141,11 +26141,11 @@ impl ISensorRotationMatrix {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SensorRotationMatrix: ISensorRotationMatrix}
-RT_ENUM! { enum SensorType: i32 {
+RT_CLASS!{class SensorRotationMatrix: ISensorRotationMatrix ["Windows.Devices.Sensors.SensorRotationMatrix"]}
+RT_ENUM! { enum SensorType: i32 ["Windows.Devices.Sensors.SensorType"] {
     Accelerometer (SensorType_Accelerometer) = 0, ActivitySensor (SensorType_ActivitySensor) = 1, Barometer (SensorType_Barometer) = 2, Compass (SensorType_Compass) = 3, CustomSensor (SensorType_CustomSensor) = 4, Gyroscope (SensorType_Gyroscope) = 5, ProximitySensor (SensorType_ProximitySensor) = 6, Inclinometer (SensorType_Inclinometer) = 7, LightSensor (SensorType_LightSensor) = 8, OrientationSensor (SensorType_OrientationSensor) = 9, Pedometer (SensorType_Pedometer) = 10, RelativeInclinometer (SensorType_RelativeInclinometer) = 11, RelativeOrientationSensor (SensorType_RelativeOrientationSensor) = 12, SimpleOrientationSensor (SensorType_SimpleOrientationSensor) = 13,
 }}
-RT_ENUM! { enum SimpleOrientation: i32 {
+RT_ENUM! { enum SimpleOrientation: i32 ["Windows.Devices.Sensors.SimpleOrientation"] {
     NotRotated (SimpleOrientation_NotRotated) = 0, Rotated90DegreesCounterclockwise (SimpleOrientation_Rotated90DegreesCounterclockwise) = 1, Rotated180DegreesCounterclockwise (SimpleOrientation_Rotated180DegreesCounterclockwise) = 2, Rotated270DegreesCounterclockwise (SimpleOrientation_Rotated270DegreesCounterclockwise) = 3, Faceup (SimpleOrientation_Faceup) = 4, Facedown (SimpleOrientation_Facedown) = 5,
 }}
 DEFINE_IID!(IID_ISimpleOrientationSensor, 1609906262, 8522, 19950, 163, 249, 97, 111, 26, 176, 111, 253);
@@ -26170,7 +26170,7 @@ impl ISimpleOrientationSensor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SimpleOrientationSensor: ISimpleOrientationSensor}
+RT_CLASS!{class SimpleOrientationSensor: ISimpleOrientationSensor ["Windows.Devices.Sensors.SimpleOrientationSensor"]}
 impl RtActivatable<ISimpleOrientationSensorStatics> for SimpleOrientationSensor {}
 impl RtActivatable<ISimpleOrientationSensorStatics2> for SimpleOrientationSensor {}
 impl SimpleOrientationSensor {
@@ -26229,7 +26229,7 @@ impl ISimpleOrientationSensorOrientationChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SimpleOrientationSensorOrientationChangedEventArgs: ISimpleOrientationSensorOrientationChangedEventArgs}
+RT_CLASS!{class SimpleOrientationSensorOrientationChangedEventArgs: ISimpleOrientationSensorOrientationChangedEventArgs ["Windows.Devices.Sensors.SimpleOrientationSensorOrientationChangedEventArgs"]}
 DEFINE_IID!(IID_ISimpleOrientationSensorStatics, 1928136303, 28842, 16582, 155, 27, 52, 51, 247, 69, 155, 78);
 RT_INTERFACE!{static interface ISimpleOrientationSensorStatics(ISimpleOrientationSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISimpleOrientationSensorStatics] {
     fn GetDefault(&self, out: *mut *mut SimpleOrientationSensor) -> HRESULT
@@ -26305,7 +26305,7 @@ impl ICustomSensor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CustomSensor: ICustomSensor}
+RT_CLASS!{class CustomSensor: ICustomSensor ["Windows.Devices.Sensors.Custom.CustomSensor"]}
 impl RtActivatable<ICustomSensorStatics> for CustomSensor {}
 impl CustomSensor {
     #[inline] pub fn get_device_selector(interfaceId: Guid) -> Result<HString> {
@@ -26355,7 +26355,7 @@ impl ICustomSensorReading {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CustomSensorReading: ICustomSensorReading}
+RT_CLASS!{class CustomSensorReading: ICustomSensorReading ["Windows.Devices.Sensors.Custom.CustomSensorReading"]}
 DEFINE_IID!(IID_ICustomSensorReading2, 574396650, 49011, 18834, 154, 72, 211, 200, 151, 89, 76, 203);
 RT_INTERFACE!{interface ICustomSensorReading2(ICustomSensorReading2Vtbl): IInspectable(IInspectableVtbl) [IID_ICustomSensorReading2] {
     fn get_PerformanceCount(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT
@@ -26378,7 +26378,7 @@ impl ICustomSensorReadingChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CustomSensorReadingChangedEventArgs: ICustomSensorReadingChangedEventArgs}
+RT_CLASS!{class CustomSensorReadingChangedEventArgs: ICustomSensorReadingChangedEventArgs ["Windows.Devices.Sensors.Custom.CustomSensorReadingChangedEventArgs"]}
 DEFINE_IID!(IID_ICustomSensorStatics, 2569032399, 62498, 19581, 131, 107, 231, 220, 116, 167, 18, 75);
 RT_INTERFACE!{static interface ICustomSensorStatics(ICustomSensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICustomSensorStatics] {
     fn GetDeviceSelector(&self, interfaceId: Guid, out: *mut HSTRING) -> HRESULT,
@@ -26411,7 +26411,7 @@ impl IErrorReceivedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ErrorReceivedEventArgs: IErrorReceivedEventArgs}
+RT_CLASS!{class ErrorReceivedEventArgs: IErrorReceivedEventArgs ["Windows.Devices.SerialCommunication.ErrorReceivedEventArgs"]}
 DEFINE_IID!(IID_IPinChangedEventArgs, 2730433968, 64668, 17927, 147, 208, 250, 94, 131, 67, 238, 34);
 RT_INTERFACE!{interface IPinChangedEventArgs(IPinChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPinChangedEventArgs] {
     fn get_PinChange(&self, out: *mut SerialPinChange) -> HRESULT
@@ -26423,7 +26423,7 @@ impl IPinChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PinChangedEventArgs: IPinChangedEventArgs}
+RT_CLASS!{class PinChangedEventArgs: IPinChangedEventArgs ["Windows.Devices.SerialCommunication.PinChangedEventArgs"]}
 DEFINE_IID!(IID_ISerialDevice, 3783773382, 8720, 16719, 182, 90, 245, 85, 58, 3, 55, 42);
 RT_INTERFACE!{interface ISerialDevice(ISerialDeviceVtbl): IInspectable(IInspectableVtbl) [IID_ISerialDevice] {
     fn get_BaudRate(&self, out: *mut u32) -> HRESULT,
@@ -26617,7 +26617,7 @@ impl ISerialDevice {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SerialDevice: ISerialDevice}
+RT_CLASS!{class SerialDevice: ISerialDevice ["Windows.Devices.SerialCommunication.SerialDevice"]}
 impl RtActivatable<ISerialDeviceStatics> for SerialDevice {}
 impl SerialDevice {
     #[inline] pub fn get_device_selector() -> Result<HString> {
@@ -26663,19 +26663,19 @@ impl ISerialDeviceStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SerialError: i32 {
+RT_ENUM! { enum SerialError: i32 ["Windows.Devices.SerialCommunication.SerialError"] {
     Frame (SerialError_Frame) = 0, BufferOverrun (SerialError_BufferOverrun) = 1, ReceiveFull (SerialError_ReceiveFull) = 2, ReceiveParity (SerialError_ReceiveParity) = 3, TransmitFull (SerialError_TransmitFull) = 4,
 }}
-RT_ENUM! { enum SerialHandshake: i32 {
+RT_ENUM! { enum SerialHandshake: i32 ["Windows.Devices.SerialCommunication.SerialHandshake"] {
     None (SerialHandshake_None) = 0, RequestToSend (SerialHandshake_RequestToSend) = 1, XOnXOff (SerialHandshake_XOnXOff) = 2, RequestToSendXOnXOff (SerialHandshake_RequestToSendXOnXOff) = 3,
 }}
-RT_ENUM! { enum SerialParity: i32 {
+RT_ENUM! { enum SerialParity: i32 ["Windows.Devices.SerialCommunication.SerialParity"] {
     None (SerialParity_None) = 0, Odd (SerialParity_Odd) = 1, Even (SerialParity_Even) = 2, Mark (SerialParity_Mark) = 3, Space (SerialParity_Space) = 4,
 }}
-RT_ENUM! { enum SerialPinChange: i32 {
+RT_ENUM! { enum SerialPinChange: i32 ["Windows.Devices.SerialCommunication.SerialPinChange"] {
     BreakSignal (SerialPinChange_BreakSignal) = 0, CarrierDetect (SerialPinChange_CarrierDetect) = 1, ClearToSend (SerialPinChange_ClearToSend) = 2, DataSetReady (SerialPinChange_DataSetReady) = 3, RingIndicator (SerialPinChange_RingIndicator) = 4,
 }}
-RT_ENUM! { enum SerialStopBitCount: i32 {
+RT_ENUM! { enum SerialStopBitCount: i32 ["Windows.Devices.SerialCommunication.SerialStopBitCount"] {
     One (SerialStopBitCount_One) = 0, OnePointFive (SerialStopBitCount_OnePointFive) = 1, Two (SerialStopBitCount_Two) = 2,
 }}
 } // Windows.Devices.SerialCommunication
@@ -26692,7 +26692,7 @@ impl ICardAddedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CardAddedEventArgs: ICardAddedEventArgs}
+RT_CLASS!{class CardAddedEventArgs: ICardAddedEventArgs ["Windows.Devices.SmartCards.CardAddedEventArgs"]}
 DEFINE_IID!(IID_ICardRemovedEventArgs, 355670703, 8919, 18757, 175, 201, 3, 180, 111, 66, 166, 205);
 RT_INTERFACE!{interface ICardRemovedEventArgs(ICardRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICardRemovedEventArgs] {
     fn get_SmartCard(&self, out: *mut *mut SmartCard) -> HRESULT
@@ -26704,7 +26704,7 @@ impl ICardRemovedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CardRemovedEventArgs: ICardRemovedEventArgs}
+RT_CLASS!{class CardRemovedEventArgs: ICardRemovedEventArgs ["Windows.Devices.SmartCards.CardRemovedEventArgs"]}
 DEFINE_IID!(IID_IKnownSmartCardAppletIds, 2063915224, 38324, 19592, 140, 234, 65, 30, 85, 81, 30, 252);
 RT_INTERFACE!{static interface IKnownSmartCardAppletIds(IKnownSmartCardAppletIdsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownSmartCardAppletIds] {
     #[cfg(feature="windows-storage")] fn get_PaymentSystemEnvironment(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
@@ -26756,8 +26756,8 @@ impl ISmartCard {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCard: ISmartCard}
-RT_ENUM! { enum SmartCardActivationPolicyChangeResult: i32 {
+RT_CLASS!{class SmartCard: ISmartCard ["Windows.Devices.SmartCards.SmartCard"]}
+RT_ENUM! { enum SmartCardActivationPolicyChangeResult: i32 ["Windows.Devices.SmartCards.SmartCardActivationPolicyChangeResult"] {
     Denied (SmartCardActivationPolicyChangeResult_Denied) = 0, Allowed (SmartCardActivationPolicyChangeResult_Allowed) = 1,
 }}
 DEFINE_IID!(IID_ISmartCardAppletIdGroup, 2108777958, 25188, 22260, 94, 3, 200, 99, 133, 57, 94, 177);
@@ -26816,7 +26816,7 @@ impl ISmartCardAppletIdGroup {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardAppletIdGroup: ISmartCardAppletIdGroup}
+RT_CLASS!{class SmartCardAppletIdGroup: ISmartCardAppletIdGroup ["Windows.Devices.SmartCards.SmartCardAppletIdGroup"]}
 impl RtActivatable<ISmartCardAppletIdGroupFactory> for SmartCardAppletIdGroup {}
 impl RtActivatable<ISmartCardAppletIdGroupStatics> for SmartCardAppletIdGroup {}
 impl RtActivatable<IActivationFactory> for SmartCardAppletIdGroup {}
@@ -26875,7 +26875,7 @@ impl ISmartCardAppletIdGroup2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SmartCardAppletIdGroupActivationPolicy: i32 {
+RT_ENUM! { enum SmartCardAppletIdGroupActivationPolicy: i32 ["Windows.Devices.SmartCards.SmartCardAppletIdGroupActivationPolicy"] {
     Disabled (SmartCardAppletIdGroupActivationPolicy_Disabled) = 0, ForegroundOverride (SmartCardAppletIdGroupActivationPolicy_ForegroundOverride) = 1, Enabled (SmartCardAppletIdGroupActivationPolicy_Enabled) = 2,
 }}
 DEFINE_IID!(IID_ISmartCardAppletIdGroupFactory, 2433084237, 19045, 20033, 128, 97, 203, 232, 63, 54, 149, 229);
@@ -26924,7 +26924,7 @@ impl ISmartCardAppletIdGroupRegistration {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardAppletIdGroupRegistration: ISmartCardAppletIdGroupRegistration}
+RT_CLASS!{class SmartCardAppletIdGroupRegistration: ISmartCardAppletIdGroupRegistration ["Windows.Devices.SmartCards.SmartCardAppletIdGroupRegistration"]}
 DEFINE_IID!(IID_ISmartCardAppletIdGroupRegistration2, 1599408344, 39079, 20270, 145, 217, 108, 252, 206, 218, 64, 127);
 RT_INTERFACE!{interface ISmartCardAppletIdGroupRegistration2(ISmartCardAppletIdGroupRegistration2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAppletIdGroupRegistration2] {
     fn get_SmartCardReaderId(&self, out: *mut HSTRING) -> HRESULT,
@@ -27013,7 +27013,7 @@ impl ISmartCardAutomaticResponseApdu {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardAutomaticResponseApdu: ISmartCardAutomaticResponseApdu}
+RT_CLASS!{class SmartCardAutomaticResponseApdu: ISmartCardAutomaticResponseApdu ["Windows.Devices.SmartCards.SmartCardAutomaticResponseApdu"]}
 impl RtActivatable<ISmartCardAutomaticResponseApduFactory> for SmartCardAutomaticResponseApdu {}
 impl SmartCardAutomaticResponseApdu {
     #[cfg(feature="windows-storage")] #[inline] pub fn create(commandApdu: &super::super::storage::streams::IBuffer, responseApdu: &super::super::storage::streams::IBuffer) -> Result<ComPtr<SmartCardAutomaticResponseApdu>> {
@@ -27075,7 +27075,7 @@ impl ISmartCardAutomaticResponseApduFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SmartCardAutomaticResponseStatus: i32 {
+RT_ENUM! { enum SmartCardAutomaticResponseStatus: i32 ["Windows.Devices.SmartCards.SmartCardAutomaticResponseStatus"] {
     None (SmartCardAutomaticResponseStatus_None) = 0, Success (SmartCardAutomaticResponseStatus_Success) = 1, UnknownError (SmartCardAutomaticResponseStatus_UnknownError) = 2,
 }}
 DEFINE_IID!(IID_ISmartCardChallengeContext, 422204185, 51652, 18759, 129, 204, 68, 121, 74, 97, 239, 145);
@@ -27113,7 +27113,7 @@ impl ISmartCardChallengeContext {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardChallengeContext: ISmartCardChallengeContext}
+RT_CLASS!{class SmartCardChallengeContext: ISmartCardChallengeContext ["Windows.Devices.SmartCards.SmartCardChallengeContext"]}
 DEFINE_IID!(IID_ISmartCardConnect, 803178469, 653, 18718, 160, 88, 51, 130, 195, 152, 111, 64);
 RT_INTERFACE!{interface ISmartCardConnect(ISmartCardConnectVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardConnect] {
     fn ConnectAsync(&self, out: *mut *mut foundation::IAsyncOperation<SmartCardConnection>) -> HRESULT
@@ -27136,8 +27136,8 @@ impl ISmartCardConnection {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardConnection: ISmartCardConnection}
-RT_ENUM! { enum SmartCardCryptogramAlgorithm: i32 {
+RT_CLASS!{class SmartCardConnection: ISmartCardConnection ["Windows.Devices.SmartCards.SmartCardConnection"]}
+RT_ENUM! { enum SmartCardCryptogramAlgorithm: i32 ["Windows.Devices.SmartCards.SmartCardCryptogramAlgorithm"] {
     None (SmartCardCryptogramAlgorithm_None) = 0, CbcMac (SmartCardCryptogramAlgorithm_CbcMac) = 1, Cvc3Umd (SmartCardCryptogramAlgorithm_Cvc3Umd) = 2, DecimalizedMsd (SmartCardCryptogramAlgorithm_DecimalizedMsd) = 3, Cvc3MD (SmartCardCryptogramAlgorithm_Cvc3MD) = 4, Sha1 (SmartCardCryptogramAlgorithm_Sha1) = 5, SignedDynamicApplicationData (SmartCardCryptogramAlgorithm_SignedDynamicApplicationData) = 6, RsaPkcs1 (SmartCardCryptogramAlgorithm_RsaPkcs1) = 7, Sha256Hmac (SmartCardCryptogramAlgorithm_Sha256Hmac) = 8,
 }}
 DEFINE_IID!(IID_ISmartCardCryptogramGenerator, 3818870907, 60883, 20041, 181, 148, 15, 245, 228, 208, 199, 111);
@@ -27220,7 +27220,7 @@ impl ISmartCardCryptogramGenerator {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardCryptogramGenerator: ISmartCardCryptogramGenerator}
+RT_CLASS!{class SmartCardCryptogramGenerator: ISmartCardCryptogramGenerator ["Windows.Devices.SmartCards.SmartCardCryptogramGenerator"]}
 impl RtActivatable<ISmartCardCryptogramGeneratorStatics> for SmartCardCryptogramGenerator {}
 impl RtActivatable<ISmartCardCryptogramGeneratorStatics2> for SmartCardCryptogramGenerator {}
 impl SmartCardCryptogramGenerator {
@@ -27268,7 +27268,7 @@ impl ISmartCardCryptogramGenerator2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SmartCardCryptogramGeneratorOperationStatus: i32 {
+RT_ENUM! { enum SmartCardCryptogramGeneratorOperationStatus: i32 ["Windows.Devices.SmartCards.SmartCardCryptogramGeneratorOperationStatus"] {
     Success (SmartCardCryptogramGeneratorOperationStatus_Success) = 0, AuthorizationFailed (SmartCardCryptogramGeneratorOperationStatus_AuthorizationFailed) = 1, AuthorizationCanceled (SmartCardCryptogramGeneratorOperationStatus_AuthorizationCanceled) = 2, AuthorizationRequired (SmartCardCryptogramGeneratorOperationStatus_AuthorizationRequired) = 3, CryptogramMaterialPackageStorageKeyExists (SmartCardCryptogramGeneratorOperationStatus_CryptogramMaterialPackageStorageKeyExists) = 4, NoCryptogramMaterialPackageStorageKey (SmartCardCryptogramGeneratorOperationStatus_NoCryptogramMaterialPackageStorageKey) = 5, NoCryptogramMaterialPackage (SmartCardCryptogramGeneratorOperationStatus_NoCryptogramMaterialPackage) = 6, UnsupportedCryptogramMaterialPackage (SmartCardCryptogramGeneratorOperationStatus_UnsupportedCryptogramMaterialPackage) = 7, UnknownCryptogramMaterialName (SmartCardCryptogramGeneratorOperationStatus_UnknownCryptogramMaterialName) = 8, InvalidCryptogramMaterialUsage (SmartCardCryptogramGeneratorOperationStatus_InvalidCryptogramMaterialUsage) = 9, ApduResponseNotSent (SmartCardCryptogramGeneratorOperationStatus_ApduResponseNotSent) = 10, OtherError (SmartCardCryptogramGeneratorOperationStatus_OtherError) = 11, ValidationFailed (SmartCardCryptogramGeneratorOperationStatus_ValidationFailed) = 12, NotSupported (SmartCardCryptogramGeneratorOperationStatus_NotSupported) = 13,
 }}
 DEFINE_IID!(IID_ISmartCardCryptogramGeneratorStatics, 160643344, 52124, 16405, 150, 125, 82, 52, 243, 176, 41, 0);
@@ -27310,7 +27310,7 @@ impl ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult}
+RT_CLASS!{class SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult ["Windows.Devices.SmartCards.SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult"]}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult {}
 DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,116,65,108,108,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,82,101,115,117,108,116,0]) [CLSID_SmartCardCryptogramGetAllCryptogramMaterialCharacteristicsResult]);
 DEFINE_IID!(IID_ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult, 1315605084, 38771, 18116, 163, 47, 177, 229, 67, 21, 158, 4);
@@ -27330,7 +27330,7 @@ impl ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult}
+RT_CLASS!{class SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult ["Windows.Devices.SmartCards.SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult"]}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult {}
 DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,116,65,108,108,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,80,97,99,107,97,103,101,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,82,101,115,117,108,116,0]) [CLSID_SmartCardCryptogramGetAllCryptogramMaterialPackageCharacteristicsResult]);
 DEFINE_IID!(IID_ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult, 2356996183, 42983, 18589, 185, 214, 54, 128, 97, 81, 80, 18);
@@ -27350,7 +27350,7 @@ impl ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult}
+RT_CLASS!{class SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult: ISmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult ["Windows.Devices.SmartCards.SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult"]}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult {}
 DEFINE_CLSID!(SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,71,101,116,65,108,108,67,114,121,112,116,111,103,114,97,109,83,116,111,114,97,103,101,75,101,121,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,82,101,115,117,108,116,0]) [CLSID_SmartCardCryptogramGetAllCryptogramStorageKeyCharacteristicsResult]);
 DEFINE_IID!(IID_ISmartCardCryptogramMaterialCharacteristics, 4238001612, 49623, 16723, 146, 59, 162, 212, 60, 108, 141, 73);
@@ -27406,7 +27406,7 @@ impl ISmartCardCryptogramMaterialCharacteristics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardCryptogramMaterialCharacteristics: ISmartCardCryptogramMaterialCharacteristics}
+RT_CLASS!{class SmartCardCryptogramMaterialCharacteristics: ISmartCardCryptogramMaterialCharacteristics ["Windows.Devices.SmartCards.SmartCardCryptogramMaterialCharacteristics"]}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramMaterialCharacteristics {}
 DEFINE_CLSID!(SmartCardCryptogramMaterialCharacteristics(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,0]) [CLSID_SmartCardCryptogramMaterialCharacteristics]);
 DEFINE_IID!(IID_ISmartCardCryptogramMaterialPackageCharacteristics, 4290088479, 1682, 19527, 147, 207, 52, 217, 31, 157, 205, 0);
@@ -27438,13 +27438,13 @@ impl ISmartCardCryptogramMaterialPackageCharacteristics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardCryptogramMaterialPackageCharacteristics: ISmartCardCryptogramMaterialPackageCharacteristics}
+RT_CLASS!{class SmartCardCryptogramMaterialPackageCharacteristics: ISmartCardCryptogramMaterialPackageCharacteristics ["Windows.Devices.SmartCards.SmartCardCryptogramMaterialPackageCharacteristics"]}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramMaterialPackageCharacteristics {}
 DEFINE_CLSID!(SmartCardCryptogramMaterialPackageCharacteristics(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,80,97,99,107,97,103,101,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,0]) [CLSID_SmartCardCryptogramMaterialPackageCharacteristics]);
-RT_ENUM! { enum SmartCardCryptogramMaterialPackageConfirmationResponseFormat: i32 {
+RT_ENUM! { enum SmartCardCryptogramMaterialPackageConfirmationResponseFormat: i32 ["Windows.Devices.SmartCards.SmartCardCryptogramMaterialPackageConfirmationResponseFormat"] {
     None (SmartCardCryptogramMaterialPackageConfirmationResponseFormat_None) = 0, VisaHmac (SmartCardCryptogramMaterialPackageConfirmationResponseFormat_VisaHmac) = 1,
 }}
-RT_ENUM! { enum SmartCardCryptogramMaterialPackageFormat: i32 {
+RT_ENUM! { enum SmartCardCryptogramMaterialPackageFormat: i32 ["Windows.Devices.SmartCards.SmartCardCryptogramMaterialPackageFormat"] {
     None (SmartCardCryptogramMaterialPackageFormat_None) = 0, JweRsaPki (SmartCardCryptogramMaterialPackageFormat_JweRsaPki) = 1,
 }}
 DEFINE_IID!(IID_ISmartCardCryptogramMaterialPossessionProof, 3854150540, 41281, 16693, 154, 221, 176, 210, 227, 170, 31, 201);
@@ -27464,14 +27464,14 @@ impl ISmartCardCryptogramMaterialPossessionProof {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardCryptogramMaterialPossessionProof: ISmartCardCryptogramMaterialPossessionProof}
-RT_ENUM! { enum SmartCardCryptogramMaterialProtectionMethod: i32 {
+RT_CLASS!{class SmartCardCryptogramMaterialPossessionProof: ISmartCardCryptogramMaterialPossessionProof ["Windows.Devices.SmartCards.SmartCardCryptogramMaterialPossessionProof"]}
+RT_ENUM! { enum SmartCardCryptogramMaterialProtectionMethod: i32 ["Windows.Devices.SmartCards.SmartCardCryptogramMaterialProtectionMethod"] {
     None (SmartCardCryptogramMaterialProtectionMethod_None) = 0, WhiteBoxing (SmartCardCryptogramMaterialProtectionMethod_WhiteBoxing) = 1,
 }}
-RT_ENUM! { enum SmartCardCryptogramMaterialType: i32 {
+RT_ENUM! { enum SmartCardCryptogramMaterialType: i32 ["Windows.Devices.SmartCards.SmartCardCryptogramMaterialType"] {
     None (SmartCardCryptogramMaterialType_None) = 0, StaticDataAuthentication (SmartCardCryptogramMaterialType_StaticDataAuthentication) = 1, TripleDes112 (SmartCardCryptogramMaterialType_TripleDes112) = 2, Aes (SmartCardCryptogramMaterialType_Aes) = 3, RsaPkcs1 (SmartCardCryptogramMaterialType_RsaPkcs1) = 4,
 }}
-RT_ENUM! { enum SmartCardCryptogramPlacementOptions: u32 {
+RT_ENUM! { enum SmartCardCryptogramPlacementOptions: u32 ["Windows.Devices.SmartCards.SmartCardCryptogramPlacementOptions"] {
     None (SmartCardCryptogramPlacementOptions_None) = 0, UnitsAreInNibbles (SmartCardCryptogramPlacementOptions_UnitsAreInNibbles) = 1, ChainOutput (SmartCardCryptogramPlacementOptions_ChainOutput) = 2,
 }}
 DEFINE_IID!(IID_ISmartCardCryptogramPlacementStep, 2491089899, 33602, 18322, 162, 229, 146, 86, 54, 55, 138, 83);
@@ -27580,13 +27580,13 @@ impl ISmartCardCryptogramPlacementStep {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardCryptogramPlacementStep: ISmartCardCryptogramPlacementStep}
+RT_CLASS!{class SmartCardCryptogramPlacementStep: ISmartCardCryptogramPlacementStep ["Windows.Devices.SmartCards.SmartCardCryptogramPlacementStep"]}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramPlacementStep {}
 DEFINE_CLSID!(SmartCardCryptogramPlacementStep(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,80,108,97,99,101,109,101,110,116,83,116,101,112,0]) [CLSID_SmartCardCryptogramPlacementStep]);
-RT_ENUM! { enum SmartCardCryptogramStorageKeyAlgorithm: i32 {
+RT_ENUM! { enum SmartCardCryptogramStorageKeyAlgorithm: i32 ["Windows.Devices.SmartCards.SmartCardCryptogramStorageKeyAlgorithm"] {
     None (SmartCardCryptogramStorageKeyAlgorithm_None) = 0, Rsa2048 (SmartCardCryptogramStorageKeyAlgorithm_Rsa2048) = 1,
 }}
-RT_ENUM! { enum SmartCardCryptogramStorageKeyCapabilities: u32 {
+RT_ENUM! { enum SmartCardCryptogramStorageKeyCapabilities: u32 ["Windows.Devices.SmartCards.SmartCardCryptogramStorageKeyCapabilities"] {
     None (SmartCardCryptogramStorageKeyCapabilities_None) = 0, HardwareProtection (SmartCardCryptogramStorageKeyCapabilities_HardwareProtection) = 1, UnlockPrompt (SmartCardCryptogramStorageKeyCapabilities_UnlockPrompt) = 2,
 }}
 DEFINE_IID!(IID_ISmartCardCryptogramStorageKeyCharacteristics, 2236765294, 17495, 18469, 180, 100, 99, 84, 113, 163, 159, 92);
@@ -27618,7 +27618,7 @@ impl ISmartCardCryptogramStorageKeyCharacteristics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardCryptogramStorageKeyCharacteristics: ISmartCardCryptogramStorageKeyCharacteristics}
+RT_CLASS!{class SmartCardCryptogramStorageKeyCharacteristics: ISmartCardCryptogramStorageKeyCharacteristics ["Windows.Devices.SmartCards.SmartCardCryptogramStorageKeyCharacteristics"]}
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramStorageKeyCharacteristics {}
 DEFINE_CLSID!(SmartCardCryptogramStorageKeyCharacteristics(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,83,116,111,114,97,103,101,75,101,121,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,0]) [CLSID_SmartCardCryptogramStorageKeyCharacteristics]);
 DEFINE_IID!(IID_ISmartCardCryptogramStorageKeyInfo, 2008084493, 45207, 20321, 162, 106, 149, 97, 99, 156, 156, 58);
@@ -27672,7 +27672,7 @@ impl ISmartCardCryptogramStorageKeyInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardCryptogramStorageKeyInfo: ISmartCardCryptogramStorageKeyInfo}
+RT_CLASS!{class SmartCardCryptogramStorageKeyInfo: ISmartCardCryptogramStorageKeyInfo ["Windows.Devices.SmartCards.SmartCardCryptogramStorageKeyInfo"]}
 DEFINE_IID!(IID_ISmartCardCryptogramStorageKeyInfo2, 278777, 63485, 16765, 137, 225, 251, 176, 56, 42, 220, 77);
 RT_INTERFACE!{interface ISmartCardCryptogramStorageKeyInfo2(ISmartCardCryptogramStorageKeyInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramStorageKeyInfo2] {
     fn get_OperationalRequirements(&self, out: *mut HSTRING) -> HRESULT
@@ -27684,13 +27684,13 @@ impl ISmartCardCryptogramStorageKeyInfo2 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SmartCardCryptographicKeyAttestationStatus: i32 {
+RT_ENUM! { enum SmartCardCryptographicKeyAttestationStatus: i32 ["Windows.Devices.SmartCards.SmartCardCryptographicKeyAttestationStatus"] {
     NoAttestation (SmartCardCryptographicKeyAttestationStatus_NoAttestation) = 0, SoftwareKeyWithoutTpm (SmartCardCryptographicKeyAttestationStatus_SoftwareKeyWithoutTpm) = 1, SoftwareKeyWithTpm (SmartCardCryptographicKeyAttestationStatus_SoftwareKeyWithTpm) = 2, TpmKeyUnknownAttestationStatus (SmartCardCryptographicKeyAttestationStatus_TpmKeyUnknownAttestationStatus) = 3, TpmKeyWithoutAttestationCapability (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithoutAttestationCapability) = 4, TpmKeyWithTemporaryAttestationFailure (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithTemporaryAttestationFailure) = 5, TpmKeyWithLongTermAttestationFailure (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithLongTermAttestationFailure) = 6, TpmKeyWithAttestation (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithAttestation) = 7,
 }}
-RT_ENUM! { enum SmartCardEmulationCategory: i32 {
+RT_ENUM! { enum SmartCardEmulationCategory: i32 ["Windows.Devices.SmartCards.SmartCardEmulationCategory"] {
     Other (SmartCardEmulationCategory_Other) = 0, Payment (SmartCardEmulationCategory_Payment) = 1,
 }}
-RT_ENUM! { enum SmartCardEmulationType: i32 {
+RT_ENUM! { enum SmartCardEmulationType: i32 ["Windows.Devices.SmartCards.SmartCardEmulationType"] {
     Host (SmartCardEmulationType_Host) = 0, Uicc (SmartCardEmulationType_Uicc) = 1, EmbeddedSE (SmartCardEmulationType_EmbeddedSE) = 2,
 }}
 DEFINE_IID!(IID_ISmartCardEmulator, 3753445042, 34654, 18405, 128, 119, 232, 191, 241, 177, 198, 251);
@@ -27704,7 +27704,7 @@ impl ISmartCardEmulator {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardEmulator: ISmartCardEmulator}
+RT_CLASS!{class SmartCardEmulator: ISmartCardEmulator ["Windows.Devices.SmartCards.SmartCardEmulator"]}
 impl RtActivatable<ISmartCardEmulatorStatics> for SmartCardEmulator {}
 impl RtActivatable<ISmartCardEmulatorStatics2> for SmartCardEmulator {}
 impl RtActivatable<ISmartCardEmulatorStatics3> for SmartCardEmulator {}
@@ -27798,7 +27798,7 @@ impl ISmartCardEmulatorApduReceivedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardEmulatorApduReceivedEventArgs: ISmartCardEmulatorApduReceivedEventArgs}
+RT_CLASS!{class SmartCardEmulatorApduReceivedEventArgs: ISmartCardEmulatorApduReceivedEventArgs ["Windows.Devices.SmartCards.SmartCardEmulatorApduReceivedEventArgs"]}
 DEFINE_IID!(IID_ISmartCardEmulatorApduReceivedEventArgs2, 2348367344, 8929, 16952, 134, 16, 148, 206, 74, 150, 84, 37);
 RT_INTERFACE!{interface ISmartCardEmulatorApduReceivedEventArgs2(ISmartCardEmulatorApduReceivedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorApduReceivedEventArgs2] {
     fn get_State(&self, out: *mut u32) -> HRESULT,
@@ -27850,8 +27850,8 @@ impl ISmartCardEmulatorConnectionDeactivatedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardEmulatorConnectionDeactivatedEventArgs: ISmartCardEmulatorConnectionDeactivatedEventArgs}
-RT_ENUM! { enum SmartCardEmulatorConnectionDeactivatedReason: i32 {
+RT_CLASS!{class SmartCardEmulatorConnectionDeactivatedEventArgs: ISmartCardEmulatorConnectionDeactivatedEventArgs ["Windows.Devices.SmartCards.SmartCardEmulatorConnectionDeactivatedEventArgs"]}
+RT_ENUM! { enum SmartCardEmulatorConnectionDeactivatedReason: i32 ["Windows.Devices.SmartCards.SmartCardEmulatorConnectionDeactivatedReason"] {
     ConnectionLost (SmartCardEmulatorConnectionDeactivatedReason_ConnectionLost) = 0, ConnectionRedirected (SmartCardEmulatorConnectionDeactivatedReason_ConnectionRedirected) = 1,
 }}
 DEFINE_IID!(IID_ISmartCardEmulatorConnectionProperties, 1311548910, 63849, 20605, 108, 249, 52, 226, 209, 141, 243, 17);
@@ -27871,11 +27871,11 @@ impl ISmartCardEmulatorConnectionProperties {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardEmulatorConnectionProperties: ISmartCardEmulatorConnectionProperties}
-RT_ENUM! { enum SmartCardEmulatorConnectionSource: i32 {
+RT_CLASS!{class SmartCardEmulatorConnectionProperties: ISmartCardEmulatorConnectionProperties ["Windows.Devices.SmartCards.SmartCardEmulatorConnectionProperties"]}
+RT_ENUM! { enum SmartCardEmulatorConnectionSource: i32 ["Windows.Devices.SmartCards.SmartCardEmulatorConnectionSource"] {
     Unknown (SmartCardEmulatorConnectionSource_Unknown) = 0, NfcReader (SmartCardEmulatorConnectionSource_NfcReader) = 1,
 }}
-RT_ENUM! { enum SmartCardEmulatorEnablementPolicy: i32 {
+RT_ENUM! { enum SmartCardEmulatorEnablementPolicy: i32 ["Windows.Devices.SmartCards.SmartCardEmulatorEnablementPolicy"] {
     Never (SmartCardEmulatorEnablementPolicy_Never) = 0, Always (SmartCardEmulatorEnablementPolicy_Always) = 1, ScreenOn (SmartCardEmulatorEnablementPolicy_ScreenOn) = 2, ScreenUnlocked (SmartCardEmulatorEnablementPolicy_ScreenUnlocked) = 3,
 }}
 DEFINE_IID!(IID_ISmartCardEmulatorStatics, 2057043019, 50387, 18767, 184, 162, 98, 21, 216, 30, 133, 178);
@@ -27929,10 +27929,10 @@ impl ISmartCardEmulatorStatics3 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SmartCardLaunchBehavior: i32 {
+RT_ENUM! { enum SmartCardLaunchBehavior: i32 ["Windows.Devices.SmartCards.SmartCardLaunchBehavior"] {
     Default (SmartCardLaunchBehavior_Default) = 0, AboveLock (SmartCardLaunchBehavior_AboveLock) = 1,
 }}
-RT_ENUM! { enum SmartCardPinCharacterPolicyOption: i32 {
+RT_ENUM! { enum SmartCardPinCharacterPolicyOption: i32 ["Windows.Devices.SmartCards.SmartCardPinCharacterPolicyOption"] {
     Allow (SmartCardPinCharacterPolicyOption_Allow) = 0, RequireAtLeastOne (SmartCardPinCharacterPolicyOption_RequireAtLeastOne) = 1, Disallow (SmartCardPinCharacterPolicyOption_Disallow) = 2,
 }}
 DEFINE_IID!(IID_ISmartCardPinPolicy, 406643076, 19894, 18497, 172, 158, 42, 193, 243, 155, 115, 4);
@@ -28006,7 +28006,7 @@ impl ISmartCardPinPolicy {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardPinPolicy: ISmartCardPinPolicy}
+RT_CLASS!{class SmartCardPinPolicy: ISmartCardPinPolicy ["Windows.Devices.SmartCards.SmartCardPinPolicy"]}
 impl RtActivatable<IActivationFactory> for SmartCardPinPolicy {}
 DEFINE_CLSID!(SmartCardPinPolicy(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,80,105,110,80,111,108,105,99,121,0]) [CLSID_SmartCardPinPolicy]);
 DEFINE_IID!(IID_ISmartCardPinResetDeferral, 415845036, 30725, 16388, 133, 228, 187, 239, 172, 143, 104, 132);
@@ -28019,7 +28019,7 @@ impl ISmartCardPinResetDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardPinResetDeferral: ISmartCardPinResetDeferral}
+RT_CLASS!{class SmartCardPinResetDeferral: ISmartCardPinResetDeferral ["Windows.Devices.SmartCards.SmartCardPinResetDeferral"]}
 DEFINE_IID!(IID_SmartCardPinResetHandler, 328031808, 62396, 19036, 180, 29, 75, 78, 246, 132, 226, 55);
 RT_DELEGATE!{delegate SmartCardPinResetHandler(SmartCardPinResetHandlerVtbl, SmartCardPinResetHandlerImpl) [IID_SmartCardPinResetHandler] {
     fn Invoke(&self, sender: *mut SmartCardProvisioning, request: *mut SmartCardPinResetRequest) -> HRESULT
@@ -28058,7 +28058,7 @@ impl ISmartCardPinResetRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardPinResetRequest: ISmartCardPinResetRequest}
+RT_CLASS!{class SmartCardPinResetRequest: ISmartCardPinResetRequest ["Windows.Devices.SmartCards.SmartCardPinResetRequest"]}
 DEFINE_IID!(IID_ISmartCardProvisioning, 435088829, 8107, 18300, 183, 18, 26, 44, 90, 241, 253, 110);
 RT_INTERFACE!{interface ISmartCardProvisioning(ISmartCardProvisioningVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardProvisioning] {
     fn get_SmartCard(&self, out: *mut *mut SmartCard) -> HRESULT,
@@ -28100,7 +28100,7 @@ impl ISmartCardProvisioning {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardProvisioning: ISmartCardProvisioning}
+RT_CLASS!{class SmartCardProvisioning: ISmartCardProvisioning ["Windows.Devices.SmartCards.SmartCardProvisioning"]}
 impl RtActivatable<ISmartCardProvisioningStatics> for SmartCardProvisioning {}
 impl RtActivatable<ISmartCardProvisioningStatics2> for SmartCardProvisioning {}
 impl SmartCardProvisioning {
@@ -28240,7 +28240,7 @@ impl ISmartCardReader {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardReader: ISmartCardReader}
+RT_CLASS!{class SmartCardReader: ISmartCardReader ["Windows.Devices.SmartCards.SmartCardReader"]}
 impl RtActivatable<ISmartCardReaderStatics> for SmartCardReader {}
 impl SmartCardReader {
     #[inline] pub fn get_device_selector() -> Result<HString> {
@@ -28254,7 +28254,7 @@ impl SmartCardReader {
     }
 }
 DEFINE_CLSID!(SmartCardReader(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,82,101,97,100,101,114,0]) [CLSID_SmartCardReader]);
-RT_ENUM! { enum SmartCardReaderKind: i32 {
+RT_ENUM! { enum SmartCardReaderKind: i32 ["Windows.Devices.SmartCards.SmartCardReaderKind"] {
     Any (SmartCardReaderKind_Any) = 0, Generic (SmartCardReaderKind_Generic) = 1, Tpm (SmartCardReaderKind_Tpm) = 2, Nfc (SmartCardReaderKind_Nfc) = 3, Uicc (SmartCardReaderKind_Uicc) = 4, EmbeddedSE (SmartCardReaderKind_EmbeddedSE) = 5,
 }}
 DEFINE_IID!(IID_ISmartCardReaderStatics, 272368865, 41418, 18674, 162, 129, 91, 111, 102, 154, 241, 7);
@@ -28280,10 +28280,10 @@ impl ISmartCardReaderStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SmartCardReaderStatus: i32 {
+RT_ENUM! { enum SmartCardReaderStatus: i32 ["Windows.Devices.SmartCards.SmartCardReaderStatus"] {
     Disconnected (SmartCardReaderStatus_Disconnected) = 0, Ready (SmartCardReaderStatus_Ready) = 1, Exclusive (SmartCardReaderStatus_Exclusive) = 2,
 }}
-RT_ENUM! { enum SmartCardStatus: i32 {
+RT_ENUM! { enum SmartCardStatus: i32 ["Windows.Devices.SmartCards.SmartCardStatus"] {
     Disconnected (SmartCardStatus_Disconnected) = 0, Ready (SmartCardStatus_Ready) = 1, Shared (SmartCardStatus_Shared) = 2, Exclusive (SmartCardStatus_Exclusive) = 3, Unresponsive (SmartCardStatus_Unresponsive) = 4,
 }}
 DEFINE_IID!(IID_ISmartCardTriggerDetails, 1604055326, 14831, 20267, 180, 79, 10, 145, 85, 177, 119, 188);
@@ -28309,7 +28309,7 @@ impl ISmartCardTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardTriggerDetails: ISmartCardTriggerDetails}
+RT_CLASS!{class SmartCardTriggerDetails: ISmartCardTriggerDetails ["Windows.Devices.SmartCards.SmartCardTriggerDetails"]}
 DEFINE_IID!(IID_ISmartCardTriggerDetails2, 692438377, 35189, 19025, 158, 26, 95, 138, 118, 238, 81, 175);
 RT_INTERFACE!{interface ISmartCardTriggerDetails2(ISmartCardTriggerDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardTriggerDetails2] {
     fn get_Emulator(&self, out: *mut *mut SmartCardEmulator) -> HRESULT,
@@ -28344,24 +28344,24 @@ impl ISmartCardTriggerDetails3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SmartCardTriggerType: i32 {
+RT_ENUM! { enum SmartCardTriggerType: i32 ["Windows.Devices.SmartCards.SmartCardTriggerType"] {
     EmulatorTransaction (SmartCardTriggerType_EmulatorTransaction) = 0, EmulatorNearFieldEntry (SmartCardTriggerType_EmulatorNearFieldEntry) = 1, EmulatorNearFieldExit (SmartCardTriggerType_EmulatorNearFieldExit) = 2, EmulatorHostApplicationActivated (SmartCardTriggerType_EmulatorHostApplicationActivated) = 3, EmulatorAppletIdGroupRegistrationChanged (SmartCardTriggerType_EmulatorAppletIdGroupRegistrationChanged) = 4, ReaderCardAdded (SmartCardTriggerType_ReaderCardAdded) = 5,
 }}
-RT_ENUM! { enum SmartCardUnlockPromptingBehavior: i32 {
+RT_ENUM! { enum SmartCardUnlockPromptingBehavior: i32 ["Windows.Devices.SmartCards.SmartCardUnlockPromptingBehavior"] {
     AllowUnlockPrompt (SmartCardUnlockPromptingBehavior_AllowUnlockPrompt) = 0, RequireUnlockPrompt (SmartCardUnlockPromptingBehavior_RequireUnlockPrompt) = 1, PreventUnlockPrompt (SmartCardUnlockPromptingBehavior_PreventUnlockPrompt) = 2,
 }}
 } // Windows.Devices.SmartCards
 pub mod sms { // Windows.Devices.Sms
 use ::prelude::*;
-RT_ENUM! { enum CellularClass: i32 {
+RT_ENUM! { enum CellularClass: i32 ["Windows.Devices.Sms.CellularClass"] {
     None (CellularClass_None) = 0, Gsm (CellularClass_Gsm) = 1, Cdma (CellularClass_Cdma) = 2,
 }}
-RT_CLASS!{class DeleteSmsMessageOperation: foundation::IAsyncAction}
-RT_CLASS!{class DeleteSmsMessagesOperation: foundation::IAsyncAction}
-RT_CLASS!{class GetSmsDeviceOperation: foundation::IAsyncOperation<SmsDevice>}
-RT_CLASS!{class GetSmsMessageOperation: foundation::IAsyncOperation<ISmsMessage>}
-RT_CLASS!{class GetSmsMessagesOperation: foundation::IAsyncOperationWithProgress<foundation::collections::IVectorView<ISmsMessage>, i32>}
-RT_CLASS!{class SendSmsMessageOperation: foundation::IAsyncAction}
+RT_CLASS!{class DeleteSmsMessageOperation: foundation::IAsyncAction ["Windows.Devices.Sms.DeleteSmsMessageOperation"]}
+RT_CLASS!{class DeleteSmsMessagesOperation: foundation::IAsyncAction ["Windows.Devices.Sms.DeleteSmsMessagesOperation"]}
+RT_CLASS!{class GetSmsDeviceOperation: foundation::IAsyncOperation<SmsDevice> ["Windows.Devices.Sms.GetSmsDeviceOperation"]}
+RT_CLASS!{class GetSmsMessageOperation: foundation::IAsyncOperation<ISmsMessage> ["Windows.Devices.Sms.GetSmsMessageOperation"]}
+RT_CLASS!{class GetSmsMessagesOperation: foundation::IAsyncOperationWithProgress<foundation::collections::IVectorView<ISmsMessage>, i32> ["Windows.Devices.Sms.GetSmsMessagesOperation"]}
+RT_CLASS!{class SendSmsMessageOperation: foundation::IAsyncAction ["Windows.Devices.Sms.SendSmsMessageOperation"]}
 DEFINE_IID!(IID_ISmsAppMessage, 3904603284, 54176, 18954, 134, 215, 41, 16, 51, 168, 207, 84);
 RT_INTERFACE!{interface ISmsAppMessage(ISmsAppMessageVtbl): IInspectable(IInspectableVtbl) [IID_ISmsAppMessage] {
     fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -28489,7 +28489,7 @@ impl ISmsAppMessage {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsAppMessage: ISmsAppMessage}
+RT_CLASS!{class SmsAppMessage: ISmsAppMessage ["Windows.Devices.Sms.SmsAppMessage"]}
 impl RtActivatable<IActivationFactory> for SmsAppMessage {}
 DEFINE_CLSID!(SmsAppMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,65,112,112,77,101,115,115,97,103,101,0]) [CLSID_SmsAppMessage]);
 DEFINE_IID!(IID_ISmsBinaryMessage, 1542776851, 15187, 19566, 182, 26, 216, 106, 99, 117, 86, 80);
@@ -28519,7 +28519,7 @@ impl ISmsBinaryMessage {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsBinaryMessage: ISmsBinaryMessage}
+RT_CLASS!{class SmsBinaryMessage: ISmsBinaryMessage ["Windows.Devices.Sms.SmsBinaryMessage"]}
 impl RtActivatable<IActivationFactory> for SmsBinaryMessage {}
 DEFINE_CLSID!(SmsBinaryMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,66,105,110,97,114,121,77,101,115,115,97,103,101,0]) [CLSID_SmsBinaryMessage]);
 DEFINE_IID!(IID_ISmsBroadcastMessage, 1974385649, 58551, 18548, 160, 156, 41, 86, 229, 146, 249, 87);
@@ -28587,11 +28587,11 @@ impl ISmsBroadcastMessage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsBroadcastMessage: ISmsBroadcastMessage}
-RT_ENUM! { enum SmsBroadcastType: i32 {
+RT_CLASS!{class SmsBroadcastMessage: ISmsBroadcastMessage ["Windows.Devices.Sms.SmsBroadcastMessage"]}
+RT_ENUM! { enum SmsBroadcastType: i32 ["Windows.Devices.Sms.SmsBroadcastType"] {
     Other (SmsBroadcastType_Other) = 0, CmasPresidential (SmsBroadcastType_CmasPresidential) = 1, CmasExtreme (SmsBroadcastType_CmasExtreme) = 2, CmasSevere (SmsBroadcastType_CmasSevere) = 3, CmasAmber (SmsBroadcastType_CmasAmber) = 4, CmasTest (SmsBroadcastType_CmasTest) = 5, EUAlert1 (SmsBroadcastType_EUAlert1) = 6, EUAlert2 (SmsBroadcastType_EUAlert2) = 7, EUAlert3 (SmsBroadcastType_EUAlert3) = 8, EUAlertAmber (SmsBroadcastType_EUAlertAmber) = 9, EUAlertInfo (SmsBroadcastType_EUAlertInfo) = 10, EtwsEarthquake (SmsBroadcastType_EtwsEarthquake) = 11, EtwsTsunami (SmsBroadcastType_EtwsTsunami) = 12, EtwsTsunamiAndEarthquake (SmsBroadcastType_EtwsTsunamiAndEarthquake) = 13, LatAlertLocal (SmsBroadcastType_LatAlertLocal) = 14,
 }}
-RT_ENUM! { enum SmsDataFormat: i32 {
+RT_ENUM! { enum SmsDataFormat: i32 ["Windows.Devices.Sms.SmsDataFormat"] {
     Unknown (SmsDataFormat_Unknown) = 0, CdmaSubmit (SmsDataFormat_CdmaSubmit) = 1, GsmSubmit (SmsDataFormat_GsmSubmit) = 2, CdmaDeliver (SmsDataFormat_CdmaDeliver) = 3, GsmDeliver (SmsDataFormat_GsmDeliver) = 4,
 }}
 DEFINE_IID!(IID_ISmsDevice, 152539629, 34603, 20204, 156, 114, 171, 17, 98, 123, 52, 236);
@@ -28657,7 +28657,7 @@ impl ISmsDevice {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsDevice: ISmsDevice}
+RT_CLASS!{class SmsDevice: ISmsDevice ["Windows.Devices.Sms.SmsDevice"]}
 impl RtActivatable<ISmsDeviceStatics> for SmsDevice {}
 impl RtActivatable<ISmsDeviceStatics2> for SmsDevice {}
 impl SmsDevice {
@@ -28744,7 +28744,7 @@ impl ISmsDevice2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsDevice2: ISmsDevice2}
+RT_CLASS!{class SmsDevice2: ISmsDevice2 ["Windows.Devices.Sms.SmsDevice2"]}
 impl RtActivatable<ISmsDevice2Statics> for SmsDevice2 {}
 impl SmsDevice2 {
     #[inline] pub fn get_device_selector() -> Result<HString> {
@@ -28825,7 +28825,7 @@ impl ISmsDeviceMessageStore {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsDeviceMessageStore: ISmsDeviceMessageStore}
+RT_CLASS!{class SmsDeviceMessageStore: ISmsDeviceMessageStore ["Windows.Devices.Sms.SmsDeviceMessageStore"]}
 DEFINE_IID!(IID_ISmsDeviceStatics, 4169992170, 55317, 19921, 162, 52, 69, 32, 206, 70, 4, 164);
 RT_INTERFACE!{static interface ISmsDeviceStatics(ISmsDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsDeviceStatics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
@@ -28860,7 +28860,7 @@ impl ISmsDeviceStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SmsDeviceStatus: i32 {
+RT_ENUM! { enum SmsDeviceStatus: i32 ["Windows.Devices.Sms.SmsDeviceStatus"] {
     Off (SmsDeviceStatus_Off) = 0, Ready (SmsDeviceStatus_Ready) = 1, SimNotInserted (SmsDeviceStatus_SimNotInserted) = 2, BadSim (SmsDeviceStatus_BadSim) = 3, DeviceFailure (SmsDeviceStatus_DeviceFailure) = 4, SubscriptionNotActivated (SmsDeviceStatus_SubscriptionNotActivated) = 5, DeviceLocked (SmsDeviceStatus_DeviceLocked) = 6, DeviceBlocked (SmsDeviceStatus_DeviceBlocked) = 7,
 }}
 DEFINE_IID!(IID_SmsDeviceStatusChangedEventHandler, 2552959330, 15831, 17944, 175, 137, 12, 39, 45, 93, 6, 216);
@@ -28873,13 +28873,13 @@ impl SmsDeviceStatusChangedEventHandler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct SmsEncodedLength {
+RT_STRUCT! { struct SmsEncodedLength ["Windows.Devices.Sms.SmsEncodedLength"] {
     SegmentCount: u32, CharacterCountLastSegment: u32, CharactersPerSegment: u32, ByteCountLastSegment: u32, BytesPerSegment: u32,
 }}
-RT_ENUM! { enum SmsEncoding: i32 {
+RT_ENUM! { enum SmsEncoding: i32 ["Windows.Devices.Sms.SmsEncoding"] {
     Unknown (SmsEncoding_Unknown) = 0, Optimal (SmsEncoding_Optimal) = 1, SevenBitAscii (SmsEncoding_SevenBitAscii) = 2, Unicode (SmsEncoding_Unicode) = 3, GsmSevenBit (SmsEncoding_GsmSevenBit) = 4, EightBit (SmsEncoding_EightBit) = 5, Latin (SmsEncoding_Latin) = 6, Korean (SmsEncoding_Korean) = 7, IA5 (SmsEncoding_IA5) = 8, ShiftJis (SmsEncoding_ShiftJis) = 9, LatinHebrew (SmsEncoding_LatinHebrew) = 10,
 }}
-RT_ENUM! { enum SmsFilterActionType: i32 {
+RT_ENUM! { enum SmsFilterActionType: i32 ["Windows.Devices.Sms.SmsFilterActionType"] {
     AcceptImmediately (SmsFilterActionType_AcceptImmediately) = 0, Drop (SmsFilterActionType_Drop) = 1, Peek (SmsFilterActionType_Peek) = 2, Accept (SmsFilterActionType_Accept) = 3,
 }}
 DEFINE_IID!(IID_ISmsFilterRule, 1088630702, 45129, 20412, 175, 233, 226, 166, 16, 239, 245, 92);
@@ -28970,7 +28970,7 @@ impl ISmsFilterRule {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsFilterRule: ISmsFilterRule}
+RT_CLASS!{class SmsFilterRule: ISmsFilterRule ["Windows.Devices.Sms.SmsFilterRule"]}
 impl RtActivatable<ISmsFilterRuleFactory> for SmsFilterRule {}
 impl SmsFilterRule {
     #[inline] pub fn create_filter_rule(messageType: SmsMessageType) -> Result<ComPtr<SmsFilterRule>> {
@@ -29006,7 +29006,7 @@ impl ISmsFilterRules {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsFilterRules: ISmsFilterRules}
+RT_CLASS!{class SmsFilterRules: ISmsFilterRules ["Windows.Devices.Sms.SmsFilterRules"]}
 impl RtActivatable<ISmsFilterRulesFactory> for SmsFilterRules {}
 impl SmsFilterRules {
     #[inline] pub fn create_filter_rules(actionType: SmsFilterActionType) -> Result<ComPtr<SmsFilterRules>> {
@@ -29025,7 +29025,7 @@ impl ISmsFilterRulesFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SmsGeographicalScope: i32 {
+RT_ENUM! { enum SmsGeographicalScope: i32 ["Windows.Devices.Sms.SmsGeographicalScope"] {
     None (SmsGeographicalScope_None) = 0, CellWithImmediateDisplay (SmsGeographicalScope_CellWithImmediateDisplay) = 1, LocationArea (SmsGeographicalScope_LocationArea) = 2, Plmn (SmsGeographicalScope_Plmn) = 3, Cell (SmsGeographicalScope_Cell) = 4,
 }}
 DEFINE_IID!(IID_ISmsMessage, 3980156456, 27012, 19207, 129, 29, 141, 89, 6, 237, 60, 234);
@@ -29080,10 +29080,10 @@ impl ISmsMessageBase {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SmsMessageClass: i32 {
+RT_ENUM! { enum SmsMessageClass: i32 ["Windows.Devices.Sms.SmsMessageClass"] {
     None (SmsMessageClass_None) = 0, Class0 (SmsMessageClass_Class0) = 1, Class1 (SmsMessageClass_Class1) = 2, Class2 (SmsMessageClass_Class2) = 3, Class3 (SmsMessageClass_Class3) = 4,
 }}
-RT_ENUM! { enum SmsMessageFilter: i32 {
+RT_ENUM! { enum SmsMessageFilter: i32 ["Windows.Devices.Sms.SmsMessageFilter"] {
     All (SmsMessageFilter_All) = 0, Unread (SmsMessageFilter_Unread) = 1, Read (SmsMessageFilter_Read) = 2, Sent (SmsMessageFilter_Sent) = 3, Draft (SmsMessageFilter_Draft) = 4,
 }}
 DEFINE_IID!(IID_ISmsMessageReceivedEventArgs, 149424792, 47333, 16833, 163, 216, 211, 171, 250, 226, 38, 117);
@@ -29103,7 +29103,7 @@ impl ISmsMessageReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsMessageReceivedEventArgs: ISmsMessageReceivedEventArgs}
+RT_CLASS!{class SmsMessageReceivedEventArgs: ISmsMessageReceivedEventArgs ["Windows.Devices.Sms.SmsMessageReceivedEventArgs"]}
 DEFINE_IID!(IID_SmsMessageReceivedEventHandler, 192599049, 60461, 18382, 162, 83, 115, 43, 238, 235, 202, 205);
 RT_DELEGATE!{delegate SmsMessageReceivedEventHandler(SmsMessageReceivedEventHandlerVtbl, SmsMessageReceivedEventHandlerImpl) [IID_SmsMessageReceivedEventHandler] {
     fn Invoke(&self, sender: *mut SmsDevice, e: *mut SmsMessageReceivedEventArgs) -> HRESULT
@@ -29171,7 +29171,7 @@ impl ISmsMessageReceivedTriggerDetails {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsMessageReceivedTriggerDetails: ISmsMessageReceivedTriggerDetails}
+RT_CLASS!{class SmsMessageReceivedTriggerDetails: ISmsMessageReceivedTriggerDetails ["Windows.Devices.Sms.SmsMessageReceivedTriggerDetails"]}
 DEFINE_IID!(IID_ISmsMessageRegistration, 387993662, 62287, 17515, 131, 179, 15, 241, 153, 35, 180, 9);
 RT_INTERFACE!{interface ISmsMessageRegistration(ISmsMessageRegistrationVtbl): IInspectable(IInspectableVtbl) [IID_ISmsMessageRegistration] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -29199,7 +29199,7 @@ impl ISmsMessageRegistration {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsMessageRegistration: ISmsMessageRegistration}
+RT_CLASS!{class SmsMessageRegistration: ISmsMessageRegistration ["Windows.Devices.Sms.SmsMessageRegistration"]}
 impl RtActivatable<ISmsMessageRegistrationStatics> for SmsMessageRegistration {}
 impl SmsMessageRegistration {
     #[inline] pub fn get_all_registrations() -> Result<Option<ComPtr<foundation::collections::IVectorView<SmsMessageRegistration>>>> {
@@ -29227,10 +29227,10 @@ impl ISmsMessageRegistrationStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SmsMessageType: i32 {
+RT_ENUM! { enum SmsMessageType: i32 ["Windows.Devices.Sms.SmsMessageType"] {
     Binary (SmsMessageType_Binary) = 0, Text (SmsMessageType_Text) = 1, Wap (SmsMessageType_Wap) = 2, App (SmsMessageType_App) = 3, Broadcast (SmsMessageType_Broadcast) = 4, Voicemail (SmsMessageType_Voicemail) = 5, Status (SmsMessageType_Status) = 6,
 }}
-RT_ENUM! { enum SmsModemErrorCode: i32 {
+RT_ENUM! { enum SmsModemErrorCode: i32 ["Windows.Devices.Sms.SmsModemErrorCode"] {
     Other (SmsModemErrorCode_Other) = 0, MessagingNetworkError (SmsModemErrorCode_MessagingNetworkError) = 1, SmsOperationNotSupportedByDevice (SmsModemErrorCode_SmsOperationNotSupportedByDevice) = 2, SmsServiceNotSupportedByNetwork (SmsModemErrorCode_SmsServiceNotSupportedByNetwork) = 3, DeviceFailure (SmsModemErrorCode_DeviceFailure) = 4, MessageNotEncodedProperly (SmsModemErrorCode_MessageNotEncodedProperly) = 5, MessageTooLarge (SmsModemErrorCode_MessageTooLarge) = 6, DeviceNotReady (SmsModemErrorCode_DeviceNotReady) = 7, NetworkNotReady (SmsModemErrorCode_NetworkNotReady) = 8, InvalidSmscAddress (SmsModemErrorCode_InvalidSmscAddress) = 9, NetworkFailure (SmsModemErrorCode_NetworkFailure) = 10, FixedDialingNumberRestricted (SmsModemErrorCode_FixedDialingNumberRestricted) = 11,
 }}
 DEFINE_IID!(IID_ISmsReceivedEventDetails, 1538592533, 58477, 19586, 132, 125, 90, 3, 4, 193, 213, 61);
@@ -29250,7 +29250,7 @@ impl ISmsReceivedEventDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsReceivedEventDetails: ISmsReceivedEventDetails}
+RT_CLASS!{class SmsReceivedEventDetails: ISmsReceivedEventDetails ["Windows.Devices.Sms.SmsReceivedEventDetails"]}
 DEFINE_IID!(IID_ISmsReceivedEventDetails2, 1088445574, 42932, 18289, 154, 231, 11, 95, 251, 18, 192, 58);
 RT_INTERFACE!{interface ISmsReceivedEventDetails2(ISmsReceivedEventDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_ISmsReceivedEventDetails2] {
     fn get_MessageClass(&self, out: *mut SmsMessageClass) -> HRESULT,
@@ -29315,7 +29315,7 @@ impl ISmsSendMessageResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsSendMessageResult: ISmsSendMessageResult}
+RT_CLASS!{class SmsSendMessageResult: ISmsSendMessageResult ["Windows.Devices.Sms.SmsSendMessageResult"]}
 DEFINE_IID!(IID_ISmsStatusMessage, 3872555842, 46859, 18039, 147, 121, 201, 120, 63, 223, 248, 244);
 RT_INTERFACE!{interface ISmsStatusMessage(ISmsStatusMessageVtbl): IInspectable(IInspectableVtbl) [IID_ISmsStatusMessage] {
     fn get_To(&self, out: *mut HSTRING) -> HRESULT,
@@ -29363,7 +29363,7 @@ impl ISmsStatusMessage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsStatusMessage: ISmsStatusMessage}
+RT_CLASS!{class SmsStatusMessage: ISmsStatusMessage ["Windows.Devices.Sms.SmsStatusMessage"]}
 DEFINE_IID!(IID_ISmsTextMessage, 3592196172, 42133, 18559, 154, 111, 151, 21, 72, 197, 188, 159);
 RT_INTERFACE!{interface ISmsTextMessage(ISmsTextMessageVtbl): IInspectable(IInspectableVtbl) [IID_ISmsTextMessage] {
     fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -29443,7 +29443,7 @@ impl ISmsTextMessage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsTextMessage: ISmsTextMessage}
+RT_CLASS!{class SmsTextMessage: ISmsTextMessage ["Windows.Devices.Sms.SmsTextMessage"]}
 impl RtActivatable<ISmsTextMessageStatics> for SmsTextMessage {}
 impl RtActivatable<IActivationFactory> for SmsTextMessage {}
 impl SmsTextMessage {
@@ -29550,7 +29550,7 @@ impl ISmsTextMessage2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsTextMessage2: ISmsTextMessage2}
+RT_CLASS!{class SmsTextMessage2: ISmsTextMessage2 ["Windows.Devices.Sms.SmsTextMessage2"]}
 impl RtActivatable<IActivationFactory> for SmsTextMessage2 {}
 DEFINE_CLSID!(SmsTextMessage2(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,115,46,83,109,115,84,101,120,116,77,101,115,115,97,103,101,50,0]) [CLSID_SmsTextMessage2]);
 DEFINE_IID!(IID_ISmsTextMessageStatics, 2137572845, 15564, 18339, 140, 85, 56, 13, 59, 1, 8, 146);
@@ -29599,7 +29599,7 @@ impl ISmsVoicemailMessage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsVoicemailMessage: ISmsVoicemailMessage}
+RT_CLASS!{class SmsVoicemailMessage: ISmsVoicemailMessage ["Windows.Devices.Sms.SmsVoicemailMessage"]}
 DEFINE_IID!(IID_ISmsWapMessage, 3448993603, 31317, 19771, 144, 33, 242, 46, 2, 45, 9, 197);
 RT_INTERFACE!{interface ISmsWapMessage(ISmsWapMessageVtbl): IInspectable(IInspectableVtbl) [IID_ISmsWapMessage] {
     fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -29648,7 +29648,7 @@ impl ISmsWapMessage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsWapMessage: ISmsWapMessage}
+RT_CLASS!{class SmsWapMessage: ISmsWapMessage ["Windows.Devices.Sms.SmsWapMessage"]}
 } // Windows.Devices.Sms
 pub mod spi { // Windows.Devices.Spi
 use ::prelude::*;
@@ -29681,7 +29681,7 @@ impl ISpiBusInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpiBusInfo: ISpiBusInfo}
+RT_CLASS!{class SpiBusInfo: ISpiBusInfo ["Windows.Devices.Spi.SpiBusInfo"]}
 DEFINE_IID!(IID_ISpiConnectionSettings, 1384358783, 63797, 19359, 167, 167, 58, 120, 144, 175, 165, 206);
 RT_INTERFACE!{interface ISpiConnectionSettings(ISpiConnectionSettingsVtbl): IInspectable(IInspectableVtbl) [IID_ISpiConnectionSettings] {
     fn get_ChipSelectLine(&self, out: *mut i32) -> HRESULT,
@@ -29742,7 +29742,7 @@ impl ISpiConnectionSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpiConnectionSettings: ISpiConnectionSettings}
+RT_CLASS!{class SpiConnectionSettings: ISpiConnectionSettings ["Windows.Devices.Spi.SpiConnectionSettings"]}
 impl RtActivatable<ISpiConnectionSettingsFactory> for SpiConnectionSettings {}
 impl SpiConnectionSettings {
     #[inline] pub fn create(chipSelectLine: i32) -> Result<ComPtr<SpiConnectionSettings>> {
@@ -29772,7 +29772,7 @@ impl ISpiController {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpiController: ISpiController}
+RT_CLASS!{class SpiController: ISpiController ["Windows.Devices.Spi.SpiController"]}
 impl RtActivatable<ISpiControllerStatics> for SpiController {}
 impl SpiController {
     #[inline] pub fn get_default_async() -> Result<ComPtr<foundation::IAsyncOperation<SpiController>>> {
@@ -29837,7 +29837,7 @@ impl ISpiDevice {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpiDevice: ISpiDevice}
+RT_CLASS!{class SpiDevice: ISpiDevice ["Windows.Devices.Spi.SpiDevice"]}
 impl RtActivatable<ISpiDeviceStatics> for SpiDevice {}
 impl SpiDevice {
     #[inline] pub fn get_device_selector() -> Result<HString> {
@@ -29883,10 +29883,10 @@ impl ISpiDeviceStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SpiMode: i32 {
+RT_ENUM! { enum SpiMode: i32 ["Windows.Devices.Spi.SpiMode"] {
     Mode0 (SpiMode_Mode0) = 0, Mode1 (SpiMode_Mode1) = 1, Mode2 (SpiMode_Mode2) = 2, Mode3 (SpiMode_Mode3) = 3,
 }}
-RT_ENUM! { enum SpiSharingMode: i32 {
+RT_ENUM! { enum SpiSharingMode: i32 ["Windows.Devices.Spi.SpiSharingMode"] {
     Exclusive (SpiSharingMode_Exclusive) = 0, Shared (SpiSharingMode_Shared) = 1,
 }}
 pub mod provider { // Windows.Devices.Spi.Provider
@@ -29951,7 +29951,7 @@ impl IProviderSpiConnectionSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProviderSpiConnectionSettings: IProviderSpiConnectionSettings}
+RT_CLASS!{class ProviderSpiConnectionSettings: IProviderSpiConnectionSettings ["Windows.Devices.Spi.Provider.ProviderSpiConnectionSettings"]}
 impl RtActivatable<IProviderSpiConnectionSettingsFactory> for ProviderSpiConnectionSettings {}
 impl ProviderSpiConnectionSettings {
     #[inline] pub fn create(chipSelectLine: i32) -> Result<ComPtr<ProviderSpiConnectionSettings>> {
@@ -29970,10 +29970,10 @@ impl IProviderSpiConnectionSettingsFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ProviderSpiMode: i32 {
+RT_ENUM! { enum ProviderSpiMode: i32 ["Windows.Devices.Spi.Provider.ProviderSpiMode"] {
     Mode0 (ProviderSpiMode_Mode0) = 0, Mode1 (ProviderSpiMode_Mode1) = 1, Mode2 (ProviderSpiMode_Mode2) = 2, Mode3 (ProviderSpiMode_Mode3) = 3,
 }}
-RT_ENUM! { enum ProviderSpiSharingMode: i32 {
+RT_ENUM! { enum ProviderSpiSharingMode: i32 ["Windows.Devices.Spi.Provider.ProviderSpiSharingMode"] {
     Exclusive (ProviderSpiSharingMode_Exclusive) = 0, Shared (ProviderSpiSharingMode_Shared) = 1,
 }}
 DEFINE_IID!(IID_ISpiControllerProvider, 3244844292, 718, 16934, 163, 133, 79, 17, 251, 4, 180, 27);
@@ -30062,7 +30062,7 @@ impl IUsbBulkInEndpointDescriptor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbBulkInEndpointDescriptor: IUsbBulkInEndpointDescriptor}
+RT_CLASS!{class UsbBulkInEndpointDescriptor: IUsbBulkInEndpointDescriptor ["Windows.Devices.Usb.UsbBulkInEndpointDescriptor"]}
 DEFINE_IID!(IID_IUsbBulkInPipe, 4028443963, 17736, 19792, 179, 38, 216, 44, 218, 190, 18, 32);
 RT_INTERFACE!{interface IUsbBulkInPipe(IUsbBulkInPipeVtbl): IInspectable(IInspectableVtbl) [IID_IUsbBulkInPipe] {
     fn get_MaxTransferSizeBytes(&self, out: *mut u32) -> HRESULT,
@@ -30108,7 +30108,7 @@ impl IUsbBulkInPipe {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbBulkInPipe: IUsbBulkInPipe}
+RT_CLASS!{class UsbBulkInPipe: IUsbBulkInPipe ["Windows.Devices.Usb.UsbBulkInPipe"]}
 DEFINE_IID!(IID_IUsbBulkOutEndpointDescriptor, 673219706, 65518, 20320, 155, 225, 149, 108, 172, 62, 203, 101);
 RT_INTERFACE!{interface IUsbBulkOutEndpointDescriptor(IUsbBulkOutEndpointDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IUsbBulkOutEndpointDescriptor] {
     fn get_MaxPacketSize(&self, out: *mut u32) -> HRESULT,
@@ -30132,7 +30132,7 @@ impl IUsbBulkOutEndpointDescriptor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbBulkOutEndpointDescriptor: IUsbBulkOutEndpointDescriptor}
+RT_CLASS!{class UsbBulkOutEndpointDescriptor: IUsbBulkOutEndpointDescriptor ["Windows.Devices.Usb.UsbBulkOutEndpointDescriptor"]}
 DEFINE_IID!(IID_IUsbBulkOutPipe, 2833903214, 277, 17834, 139, 33, 55, 178, 37, 188, 206, 231);
 RT_INTERFACE!{interface IUsbBulkOutPipe(IUsbBulkOutPipeVtbl): IInspectable(IInspectableVtbl) [IID_IUsbBulkOutPipe] {
     fn get_EndpointDescriptor(&self, out: *mut *mut UsbBulkOutEndpointDescriptor) -> HRESULT,
@@ -30167,7 +30167,7 @@ impl IUsbBulkOutPipe {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbBulkOutPipe: IUsbBulkOutPipe}
+RT_CLASS!{class UsbBulkOutPipe: IUsbBulkOutPipe ["Windows.Devices.Usb.UsbBulkOutPipe"]}
 DEFINE_IID!(IID_IUsbConfiguration, 1746367529, 13993, 18135, 184, 115, 252, 104, 146, 81, 236, 48);
 RT_INTERFACE!{interface IUsbConfiguration(IUsbConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IUsbConfiguration] {
     fn get_UsbInterfaces(&self, out: *mut *mut foundation::collections::IVectorView<UsbInterface>) -> HRESULT,
@@ -30191,7 +30191,7 @@ impl IUsbConfiguration {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbConfiguration: IUsbConfiguration}
+RT_CLASS!{class UsbConfiguration: IUsbConfiguration ["Windows.Devices.Usb.UsbConfiguration"]}
 DEFINE_IID!(IID_IUsbConfigurationDescriptor, 4061621650, 46146, 16506, 130, 7, 125, 100, 108, 3, 133, 243);
 RT_INTERFACE!{interface IUsbConfigurationDescriptor(IUsbConfigurationDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IUsbConfigurationDescriptor] {
     fn get_ConfigurationValue(&self, out: *mut u8) -> HRESULT,
@@ -30221,7 +30221,7 @@ impl IUsbConfigurationDescriptor {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbConfigurationDescriptor: IUsbConfigurationDescriptor}
+RT_CLASS!{class UsbConfigurationDescriptor: IUsbConfigurationDescriptor ["Windows.Devices.Usb.UsbConfigurationDescriptor"]}
 impl RtActivatable<IUsbConfigurationDescriptorStatics> for UsbConfigurationDescriptor {}
 impl UsbConfigurationDescriptor {
     #[inline] pub fn try_parse(descriptor: &UsbDescriptor) -> Result<(Option<ComPtr<UsbConfigurationDescriptor>>, bool)> {
@@ -30249,7 +30249,7 @@ impl IUsbConfigurationDescriptorStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UsbControlRecipient: i32 {
+RT_ENUM! { enum UsbControlRecipient: i32 ["Windows.Devices.Usb.UsbControlRecipient"] {
     Device (UsbControlRecipient_Device) = 0, SpecifiedInterface (UsbControlRecipient_SpecifiedInterface) = 1, Endpoint (UsbControlRecipient_Endpoint) = 2, Other (UsbControlRecipient_Other) = 3, DefaultInterface (UsbControlRecipient_DefaultInterface) = 4,
 }}
 DEFINE_IID!(IID_IUsbControlRequestType, 2392090022, 55101, 18142, 148, 190, 170, 231, 240, 124, 15, 92);
@@ -30301,10 +30301,10 @@ impl IUsbControlRequestType {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbControlRequestType: IUsbControlRequestType}
+RT_CLASS!{class UsbControlRequestType: IUsbControlRequestType ["Windows.Devices.Usb.UsbControlRequestType"]}
 impl RtActivatable<IActivationFactory> for UsbControlRequestType {}
 DEFINE_CLSID!(UsbControlRequestType(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,67,111,110,116,114,111,108,82,101,113,117,101,115,116,84,121,112,101,0]) [CLSID_UsbControlRequestType]);
-RT_ENUM! { enum UsbControlTransferType: i32 {
+RT_ENUM! { enum UsbControlTransferType: i32 ["Windows.Devices.Usb.UsbControlTransferType"] {
     Standard (UsbControlTransferType_Standard) = 0, Class (UsbControlTransferType_Class) = 1, Vendor (UsbControlTransferType_Vendor) = 2,
 }}
 DEFINE_IID!(IID_IUsbDescriptor, 176812566, 24477, 18548, 137, 4, 218, 154, 211, 245, 82, 143);
@@ -30329,7 +30329,7 @@ impl IUsbDescriptor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbDescriptor: IUsbDescriptor}
+RT_CLASS!{class UsbDescriptor: IUsbDescriptor ["Windows.Devices.Usb.UsbDescriptor"]}
 DEFINE_IID!(IID_IUsbDevice, 1380563346, 50262, 17621, 173, 94, 36, 245, 160, 137, 246, 59);
 RT_INTERFACE!{interface IUsbDevice(IUsbDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IUsbDevice] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -30380,7 +30380,7 @@ impl IUsbDevice {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbDevice: IUsbDevice}
+RT_CLASS!{class UsbDevice: IUsbDevice ["Windows.Devices.Usb.UsbDevice"]}
 impl RtActivatable<IUsbDeviceStatics> for UsbDevice {}
 impl UsbDevice {
     #[inline] pub fn get_device_selector(vendorId: u32, productId: u32, winUsbInterfaceClass: Guid) -> Result<HString> {
@@ -30438,14 +30438,14 @@ impl IUsbDeviceClass {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbDeviceClass: IUsbDeviceClass}
+RT_CLASS!{class UsbDeviceClass: IUsbDeviceClass ["Windows.Devices.Usb.UsbDeviceClass"]}
 impl RtActivatable<IActivationFactory> for UsbDeviceClass {}
 DEFINE_CLSID!(UsbDeviceClass(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,68,101,118,105,99,101,67,108,97,115,115,0]) [CLSID_UsbDeviceClass]);
 DEFINE_IID!(IID_IUsbDeviceClasses, 1752143197, 39826, 19248, 151, 129, 194, 44, 85, 172, 53, 203);
 RT_INTERFACE!{interface IUsbDeviceClasses(IUsbDeviceClassesVtbl): IInspectable(IInspectableVtbl) [IID_IUsbDeviceClasses] {
     
 }}
-RT_CLASS!{class UsbDeviceClasses: IUsbDeviceClasses}
+RT_CLASS!{class UsbDeviceClasses: IUsbDeviceClasses ["Windows.Devices.Usb.UsbDeviceClasses"]}
 impl RtActivatable<IUsbDeviceClassesStatics> for UsbDeviceClasses {}
 impl UsbDeviceClasses {
     #[inline] pub fn get_cdc_control() -> Result<Option<ComPtr<UsbDeviceClass>>> {
@@ -30577,7 +30577,7 @@ impl IUsbDeviceDescriptor {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbDeviceDescriptor: IUsbDeviceDescriptor}
+RT_CLASS!{class UsbDeviceDescriptor: IUsbDeviceDescriptor ["Windows.Devices.Usb.UsbDeviceDescriptor"]}
 DEFINE_IID!(IID_IUsbDeviceStatics, 107709858, 2487, 17478, 133, 2, 111, 230, 220, 170, 115, 9);
 RT_INTERFACE!{static interface IUsbDeviceStatics(IUsbDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbDeviceStatics] {
     fn GetDeviceSelector(&self, vendorId: u32, productId: u32, winUsbInterfaceClass: Guid, out: *mut HSTRING) -> HRESULT,
@@ -30660,7 +30660,7 @@ impl IUsbEndpointDescriptor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbEndpointDescriptor: IUsbEndpointDescriptor}
+RT_CLASS!{class UsbEndpointDescriptor: IUsbEndpointDescriptor ["Windows.Devices.Usb.UsbEndpointDescriptor"]}
 impl RtActivatable<IUsbEndpointDescriptorStatics> for UsbEndpointDescriptor {}
 impl UsbEndpointDescriptor {
     #[inline] pub fn try_parse(descriptor: &UsbDescriptor) -> Result<(Option<ComPtr<UsbEndpointDescriptor>>, bool)> {
@@ -30688,7 +30688,7 @@ impl IUsbEndpointDescriptorStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UsbEndpointType: i32 {
+RT_ENUM! { enum UsbEndpointType: i32 ["Windows.Devices.Usb.UsbEndpointType"] {
     Control (UsbEndpointType_Control) = 0, Isochronous (UsbEndpointType_Isochronous) = 1, Bulk (UsbEndpointType_Bulk) = 2, Interrupt (UsbEndpointType_Interrupt) = 3,
 }}
 DEFINE_IID!(IID_IUsbInterface, 2687642517, 32583, 18603, 167, 39, 103, 140, 37, 190, 33, 18);
@@ -30738,7 +30738,7 @@ impl IUsbInterface {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbInterface: IUsbInterface}
+RT_CLASS!{class UsbInterface: IUsbInterface ["Windows.Devices.Usb.UsbInterface"]}
 DEFINE_IID!(IID_IUsbInterfaceDescriptor, 429289671, 47086, 20368, 140, 213, 148, 162, 226, 87, 89, 138);
 RT_INTERFACE!{interface IUsbInterfaceDescriptor(IUsbInterfaceDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IUsbInterfaceDescriptor] {
     fn get_ClassCode(&self, out: *mut u8) -> HRESULT,
@@ -30774,7 +30774,7 @@ impl IUsbInterfaceDescriptor {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbInterfaceDescriptor: IUsbInterfaceDescriptor}
+RT_CLASS!{class UsbInterfaceDescriptor: IUsbInterfaceDescriptor ["Windows.Devices.Usb.UsbInterfaceDescriptor"]}
 impl RtActivatable<IUsbInterfaceDescriptorStatics> for UsbInterfaceDescriptor {}
 impl UsbInterfaceDescriptor {
     #[inline] pub fn try_parse(descriptor: &UsbDescriptor) -> Result<(Option<ComPtr<UsbInterfaceDescriptor>>, bool)> {
@@ -30855,7 +30855,7 @@ impl IUsbInterfaceSetting {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbInterfaceSetting: IUsbInterfaceSetting}
+RT_CLASS!{class UsbInterfaceSetting: IUsbInterfaceSetting ["Windows.Devices.Usb.UsbInterfaceSetting"]}
 DEFINE_IID!(IID_IUsbInterruptInEndpointDescriptor, 3226634599, 51473, 19514, 134, 178, 65, 156, 45, 168, 144, 57);
 RT_INTERFACE!{interface IUsbInterruptInEndpointDescriptor(IUsbInterruptInEndpointDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IUsbInterruptInEndpointDescriptor] {
     fn get_MaxPacketSize(&self, out: *mut u32) -> HRESULT,
@@ -30885,7 +30885,7 @@ impl IUsbInterruptInEndpointDescriptor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbInterruptInEndpointDescriptor: IUsbInterruptInEndpointDescriptor}
+RT_CLASS!{class UsbInterruptInEndpointDescriptor: IUsbInterruptInEndpointDescriptor ["Windows.Devices.Usb.UsbInterruptInEndpointDescriptor"]}
 DEFINE_IID!(IID_IUsbInterruptInEventArgs, 3081781394, 5144, 18742, 130, 9, 41, 156, 245, 96, 85, 131);
 RT_INTERFACE!{interface IUsbInterruptInEventArgs(IUsbInterruptInEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUsbInterruptInEventArgs] {
     #[cfg(feature="windows-storage")] fn get_InterruptData(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
@@ -30897,7 +30897,7 @@ impl IUsbInterruptInEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbInterruptInEventArgs: IUsbInterruptInEventArgs}
+RT_CLASS!{class UsbInterruptInEventArgs: IUsbInterruptInEventArgs ["Windows.Devices.Usb.UsbInterruptInEventArgs"]}
 DEFINE_IID!(IID_IUsbInterruptInPipe, 4194332950, 34007, 18631, 138, 63, 76, 11, 35, 95, 46, 166);
 RT_INTERFACE!{interface IUsbInterruptInPipe(IUsbInterruptInPipeVtbl): IInspectable(IInspectableVtbl) [IID_IUsbInterruptInPipe] {
     fn get_EndpointDescriptor(&self, out: *mut *mut UsbInterruptInEndpointDescriptor) -> HRESULT,
@@ -30926,7 +30926,7 @@ impl IUsbInterruptInPipe {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbInterruptInPipe: IUsbInterruptInPipe}
+RT_CLASS!{class UsbInterruptInPipe: IUsbInterruptInPipe ["Windows.Devices.Usb.UsbInterruptInPipe"]}
 DEFINE_IID!(IID_IUsbInterruptOutEndpointDescriptor, 3433033089, 4298, 17715, 149, 45, 158, 39, 131, 65, 232, 15);
 RT_INTERFACE!{interface IUsbInterruptOutEndpointDescriptor(IUsbInterruptOutEndpointDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IUsbInterruptOutEndpointDescriptor] {
     fn get_MaxPacketSize(&self, out: *mut u32) -> HRESULT,
@@ -30956,7 +30956,7 @@ impl IUsbInterruptOutEndpointDescriptor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbInterruptOutEndpointDescriptor: IUsbInterruptOutEndpointDescriptor}
+RT_CLASS!{class UsbInterruptOutEndpointDescriptor: IUsbInterruptOutEndpointDescriptor ["Windows.Devices.Usb.UsbInterruptOutEndpointDescriptor"]}
 DEFINE_IID!(IID_IUsbInterruptOutPipe, 3917793449, 43769, 18896, 185, 108, 246, 97, 171, 74, 127, 149);
 RT_INTERFACE!{interface IUsbInterruptOutPipe(IUsbInterruptOutPipeVtbl): IInspectable(IInspectableVtbl) [IID_IUsbInterruptOutPipe] {
     fn get_EndpointDescriptor(&self, out: *mut *mut UsbInterruptOutEndpointDescriptor) -> HRESULT,
@@ -30991,8 +30991,8 @@ impl IUsbInterruptOutPipe {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbInterruptOutPipe: IUsbInterruptOutPipe}
-RT_ENUM! { enum UsbReadOptions: u32 {
+RT_CLASS!{class UsbInterruptOutPipe: IUsbInterruptOutPipe ["Windows.Devices.Usb.UsbInterruptOutPipe"]}
+RT_ENUM! { enum UsbReadOptions: u32 ["Windows.Devices.Usb.UsbReadOptions"] {
     None (UsbReadOptions_None) = 0, AutoClearStall (UsbReadOptions_AutoClearStall) = 1, OverrideAutomaticBufferManagement (UsbReadOptions_OverrideAutomaticBufferManagement) = 2, IgnoreShortPacket (UsbReadOptions_IgnoreShortPacket) = 4, AllowPartialReads (UsbReadOptions_AllowPartialReads) = 8,
 }}
 DEFINE_IID!(IID_IUsbSetupPacket, 273391922, 51087, 19537, 182, 84, 228, 157, 2, 242, 203, 3);
@@ -31055,7 +31055,7 @@ impl IUsbSetupPacket {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UsbSetupPacket: IUsbSetupPacket}
+RT_CLASS!{class UsbSetupPacket: IUsbSetupPacket ["Windows.Devices.Usb.UsbSetupPacket"]}
 impl RtActivatable<IUsbSetupPacketFactory> for UsbSetupPacket {}
 impl RtActivatable<IActivationFactory> for UsbSetupPacket {}
 impl UsbSetupPacket {
@@ -31075,16 +31075,16 @@ impl IUsbSetupPacketFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UsbTransferDirection: i32 {
+RT_ENUM! { enum UsbTransferDirection: i32 ["Windows.Devices.Usb.UsbTransferDirection"] {
     Out (UsbTransferDirection_Out) = 0, In (UsbTransferDirection_In) = 1,
 }}
-RT_ENUM! { enum UsbWriteOptions: u32 {
+RT_ENUM! { enum UsbWriteOptions: u32 ["Windows.Devices.Usb.UsbWriteOptions"] {
     None (UsbWriteOptions_None) = 0, AutoClearStall (UsbWriteOptions_AutoClearStall) = 1, ShortPacketTerminate (UsbWriteOptions_ShortPacketTerminate) = 2,
 }}
 } // Windows.Devices.Usb
 pub mod wifi { // Windows.Devices.WiFi
 use ::prelude::*;
-RT_ENUM! { enum WiFiAccessStatus: i32 {
+RT_ENUM! { enum WiFiAccessStatus: i32 ["Windows.Devices.WiFi.WiFiAccessStatus"] {
     Unspecified (WiFiAccessStatus_Unspecified) = 0, Allowed (WiFiAccessStatus_Allowed) = 1, DeniedByUser (WiFiAccessStatus_DeniedByUser) = 2, DeniedBySystem (WiFiAccessStatus_DeniedBySystem) = 3,
 }}
 DEFINE_IID!(IID_IWiFiAdapter, 2797921315, 15733, 17316, 185, 222, 17, 226, 107, 114, 217, 176);
@@ -31147,7 +31147,7 @@ impl IWiFiAdapter {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiAdapter: IWiFiAdapter}
+RT_CLASS!{class WiFiAdapter: IWiFiAdapter ["Windows.Devices.WiFi.WiFiAdapter"]}
 impl RtActivatable<IWiFiAdapterStatics> for WiFiAdapter {}
 impl WiFiAdapter {
     #[inline] pub fn find_all_adapters_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<WiFiAdapter>>>> {
@@ -31282,8 +31282,8 @@ impl IWiFiAvailableNetwork {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiAvailableNetwork: IWiFiAvailableNetwork}
-RT_ENUM! { enum WiFiConnectionMethod: i32 {
+RT_CLASS!{class WiFiAvailableNetwork: IWiFiAvailableNetwork ["Windows.Devices.WiFi.WiFiAvailableNetwork"]}
+RT_ENUM! { enum WiFiConnectionMethod: i32 ["Windows.Devices.WiFi.WiFiConnectionMethod"] {
     Default (WiFiConnectionMethod_Default) = 0, WpsPin (WiFiConnectionMethod_WpsPin) = 1, WpsPushButton (WiFiConnectionMethod_WpsPushButton) = 2,
 }}
 DEFINE_IID!(IID_IWiFiConnectionResult, 339468249, 50045, 16574, 165, 200, 133, 123, 206, 133, 169, 49);
@@ -31297,11 +31297,11 @@ impl IWiFiConnectionResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiConnectionResult: IWiFiConnectionResult}
-RT_ENUM! { enum WiFiConnectionStatus: i32 {
+RT_CLASS!{class WiFiConnectionResult: IWiFiConnectionResult ["Windows.Devices.WiFi.WiFiConnectionResult"]}
+RT_ENUM! { enum WiFiConnectionStatus: i32 ["Windows.Devices.WiFi.WiFiConnectionStatus"] {
     UnspecifiedFailure (WiFiConnectionStatus_UnspecifiedFailure) = 0, Success (WiFiConnectionStatus_Success) = 1, AccessRevoked (WiFiConnectionStatus_AccessRevoked) = 2, InvalidCredential (WiFiConnectionStatus_InvalidCredential) = 3, NetworkNotAvailable (WiFiConnectionStatus_NetworkNotAvailable) = 4, Timeout (WiFiConnectionStatus_Timeout) = 5, UnsupportedAuthenticationProtocol (WiFiConnectionStatus_UnsupportedAuthenticationProtocol) = 6,
 }}
-RT_ENUM! { enum WiFiNetworkKind: i32 {
+RT_ENUM! { enum WiFiNetworkKind: i32 ["Windows.Devices.WiFi.WiFiNetworkKind"] {
     Any (WiFiNetworkKind_Any) = 0, Infrastructure (WiFiNetworkKind_Infrastructure) = 1, Adhoc (WiFiNetworkKind_Adhoc) = 2,
 }}
 DEFINE_IID!(IID_IWiFiNetworkReport, 2502221522, 22801, 17502, 129, 148, 190, 79, 26, 112, 72, 149);
@@ -31321,11 +31321,11 @@ impl IWiFiNetworkReport {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiNetworkReport: IWiFiNetworkReport}
-RT_ENUM! { enum WiFiPhyKind: i32 {
+RT_CLASS!{class WiFiNetworkReport: IWiFiNetworkReport ["Windows.Devices.WiFi.WiFiNetworkReport"]}
+RT_ENUM! { enum WiFiPhyKind: i32 ["Windows.Devices.WiFi.WiFiPhyKind"] {
     Unknown (WiFiPhyKind_Unknown) = 0, Fhss (WiFiPhyKind_Fhss) = 1, Dsss (WiFiPhyKind_Dsss) = 2, IRBaseband (WiFiPhyKind_IRBaseband) = 3, Ofdm (WiFiPhyKind_Ofdm) = 4, Hrdsss (WiFiPhyKind_Hrdsss) = 5, Erp (WiFiPhyKind_Erp) = 6, HT (WiFiPhyKind_HT) = 7, Vht (WiFiPhyKind_Vht) = 8, Dmg (WiFiPhyKind_Dmg) = 9, HE (WiFiPhyKind_HE) = 10,
 }}
-RT_ENUM! { enum WiFiReconnectionKind: i32 {
+RT_ENUM! { enum WiFiReconnectionKind: i32 ["Windows.Devices.WiFi.WiFiReconnectionKind"] {
     Automatic (WiFiReconnectionKind_Automatic) = 0, Manual (WiFiReconnectionKind_Manual) = 1,
 }}
 DEFINE_IID!(IID_IWiFiWpsConfigurationResult, 1739888753, 6126, 17105, 177, 79, 90, 17, 241, 34, 111, 181);
@@ -31345,11 +31345,11 @@ impl IWiFiWpsConfigurationResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiWpsConfigurationResult: IWiFiWpsConfigurationResult}
-RT_ENUM! { enum WiFiWpsConfigurationStatus: i32 {
+RT_CLASS!{class WiFiWpsConfigurationResult: IWiFiWpsConfigurationResult ["Windows.Devices.WiFi.WiFiWpsConfigurationResult"]}
+RT_ENUM! { enum WiFiWpsConfigurationStatus: i32 ["Windows.Devices.WiFi.WiFiWpsConfigurationStatus"] {
     UnspecifiedFailure (WiFiWpsConfigurationStatus_UnspecifiedFailure) = 0, Success (WiFiWpsConfigurationStatus_Success) = 1, Timeout (WiFiWpsConfigurationStatus_Timeout) = 2,
 }}
-RT_ENUM! { enum WiFiWpsKind: i32 {
+RT_ENUM! { enum WiFiWpsKind: i32 ["Windows.Devices.WiFi.WiFiWpsKind"] {
     Unknown (WiFiWpsKind_Unknown) = 0, Pin (WiFiWpsKind_Pin) = 1, PushButton (WiFiWpsKind_PushButton) = 2, Nfc (WiFiWpsKind_Nfc) = 3, Ethernet (WiFiWpsKind_Ethernet) = 4, Usb (WiFiWpsKind_Usb) = 5,
 }}
 } // Windows.Devices.WiFi
@@ -31399,7 +31399,7 @@ impl IWiFiDirectAdvertisement {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectAdvertisement: IWiFiDirectAdvertisement}
+RT_CLASS!{class WiFiDirectAdvertisement: IWiFiDirectAdvertisement ["Windows.Devices.WiFiDirect.WiFiDirectAdvertisement"]}
 DEFINE_IID!(IID_IWiFiDirectAdvertisement2, 3076106822, 55318, 18715, 145, 122, 180, 13, 125, 196, 3, 162);
 RT_INTERFACE!{interface IWiFiDirectAdvertisement2(IWiFiDirectAdvertisement2Vtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectAdvertisement2] {
     fn get_SupportedConfigurationMethods(&self, out: *mut *mut foundation::collections::IVector<WiFiDirectConfigurationMethod>) -> HRESULT
@@ -31411,7 +31411,7 @@ impl IWiFiDirectAdvertisement2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WiFiDirectAdvertisementListenStateDiscoverability: i32 {
+RT_ENUM! { enum WiFiDirectAdvertisementListenStateDiscoverability: i32 ["Windows.Devices.WiFiDirect.WiFiDirectAdvertisementListenStateDiscoverability"] {
     None (WiFiDirectAdvertisementListenStateDiscoverability_None) = 0, Normal (WiFiDirectAdvertisementListenStateDiscoverability_Normal) = 1, Intensive (WiFiDirectAdvertisementListenStateDiscoverability_Intensive) = 2,
 }}
 DEFINE_IID!(IID_IWiFiDirectAdvertisementPublisher, 3009031450, 39711, 17881, 146, 90, 105, 77, 102, 223, 104, 239);
@@ -31452,10 +31452,10 @@ impl IWiFiDirectAdvertisementPublisher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectAdvertisementPublisher: IWiFiDirectAdvertisementPublisher}
+RT_CLASS!{class WiFiDirectAdvertisementPublisher: IWiFiDirectAdvertisementPublisher ["Windows.Devices.WiFiDirect.WiFiDirectAdvertisementPublisher"]}
 impl RtActivatable<IActivationFactory> for WiFiDirectAdvertisementPublisher {}
 DEFINE_CLSID!(WiFiDirectAdvertisementPublisher(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,87,105,70,105,68,105,114,101,99,116,65,100,118,101,114,116,105,115,101,109,101,110,116,80,117,98,108,105,115,104,101,114,0]) [CLSID_WiFiDirectAdvertisementPublisher]);
-RT_ENUM! { enum WiFiDirectAdvertisementPublisherStatus: i32 {
+RT_ENUM! { enum WiFiDirectAdvertisementPublisherStatus: i32 ["Windows.Devices.WiFiDirect.WiFiDirectAdvertisementPublisherStatus"] {
     Created (WiFiDirectAdvertisementPublisherStatus_Created) = 0, Started (WiFiDirectAdvertisementPublisherStatus_Started) = 1, Stopped (WiFiDirectAdvertisementPublisherStatus_Stopped) = 2, Aborted (WiFiDirectAdvertisementPublisherStatus_Aborted) = 3,
 }}
 DEFINE_IID!(IID_IWiFiDirectAdvertisementPublisherStatusChangedEventArgs, 2868766012, 21633, 18150, 144, 221, 50, 17, 101, 24, 241, 146);
@@ -31475,8 +31475,8 @@ impl IWiFiDirectAdvertisementPublisherStatusChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectAdvertisementPublisherStatusChangedEventArgs: IWiFiDirectAdvertisementPublisherStatusChangedEventArgs}
-RT_ENUM! { enum WiFiDirectConfigurationMethod: i32 {
+RT_CLASS!{class WiFiDirectAdvertisementPublisherStatusChangedEventArgs: IWiFiDirectAdvertisementPublisherStatusChangedEventArgs ["Windows.Devices.WiFiDirect.WiFiDirectAdvertisementPublisherStatusChangedEventArgs"]}
+RT_ENUM! { enum WiFiDirectConfigurationMethod: i32 ["Windows.Devices.WiFiDirect.WiFiDirectConfigurationMethod"] {
     ProvidePin (WiFiDirectConfigurationMethod_ProvidePin) = 0, DisplayPin (WiFiDirectConfigurationMethod_DisplayPin) = 1, PushButton (WiFiDirectConfigurationMethod_PushButton) = 2,
 }}
 DEFINE_IID!(IID_IWiFiDirectConnectionListener, 1771838221, 36115, 20201, 185, 236, 156, 114, 248, 37, 31, 125);
@@ -31495,7 +31495,7 @@ impl IWiFiDirectConnectionListener {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectConnectionListener: IWiFiDirectConnectionListener}
+RT_CLASS!{class WiFiDirectConnectionListener: IWiFiDirectConnectionListener ["Windows.Devices.WiFiDirect.WiFiDirectConnectionListener"]}
 impl RtActivatable<IActivationFactory> for WiFiDirectConnectionListener {}
 DEFINE_CLSID!(WiFiDirectConnectionListener(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,87,105,70,105,68,105,114,101,99,116,67,111,110,110,101,99,116,105,111,110,76,105,115,116,101,110,101,114,0]) [CLSID_WiFiDirectConnectionListener]);
 DEFINE_IID!(IID_IWiFiDirectConnectionParameters, 3001373701, 22274, 19222, 160, 44, 187, 205, 33, 239, 96, 152);
@@ -31514,7 +31514,7 @@ impl IWiFiDirectConnectionParameters {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectConnectionParameters: IWiFiDirectConnectionParameters}
+RT_CLASS!{class WiFiDirectConnectionParameters: IWiFiDirectConnectionParameters ["Windows.Devices.WiFiDirect.WiFiDirectConnectionParameters"]}
 impl RtActivatable<IWiFiDirectConnectionParametersStatics> for WiFiDirectConnectionParameters {}
 impl RtActivatable<IActivationFactory> for WiFiDirectConnectionParameters {}
 impl WiFiDirectConnectionParameters {
@@ -31567,7 +31567,7 @@ impl IWiFiDirectConnectionRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectConnectionRequest: IWiFiDirectConnectionRequest}
+RT_CLASS!{class WiFiDirectConnectionRequest: IWiFiDirectConnectionRequest ["Windows.Devices.WiFiDirect.WiFiDirectConnectionRequest"]}
 DEFINE_IID!(IID_IWiFiDirectConnectionRequestedEventArgs, 4187824318, 54157, 18511, 130, 21, 231, 182, 90, 191, 36, 76);
 RT_INTERFACE!{interface IWiFiDirectConnectionRequestedEventArgs(IWiFiDirectConnectionRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectConnectionRequestedEventArgs] {
     fn GetConnectionRequest(&self, out: *mut *mut WiFiDirectConnectionRequest) -> HRESULT
@@ -31579,8 +31579,8 @@ impl IWiFiDirectConnectionRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectConnectionRequestedEventArgs: IWiFiDirectConnectionRequestedEventArgs}
-RT_ENUM! { enum WiFiDirectConnectionStatus: i32 {
+RT_CLASS!{class WiFiDirectConnectionRequestedEventArgs: IWiFiDirectConnectionRequestedEventArgs ["Windows.Devices.WiFiDirect.WiFiDirectConnectionRequestedEventArgs"]}
+RT_ENUM! { enum WiFiDirectConnectionStatus: i32 ["Windows.Devices.WiFiDirect.WiFiDirectConnectionStatus"] {
     Disconnected (WiFiDirectConnectionStatus_Disconnected) = 0, Connected (WiFiDirectConnectionStatus_Connected) = 1,
 }}
 DEFINE_IID!(IID_IWiFiDirectDevice, 1927195304, 29419, 19886, 138, 40, 133, 19, 53, 93, 39, 119);
@@ -31617,7 +31617,7 @@ impl IWiFiDirectDevice {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectDevice: IWiFiDirectDevice}
+RT_CLASS!{class WiFiDirectDevice: IWiFiDirectDevice ["Windows.Devices.WiFiDirect.WiFiDirectDevice"]}
 impl RtActivatable<IWiFiDirectDeviceStatics> for WiFiDirectDevice {}
 impl RtActivatable<IWiFiDirectDeviceStatics2> for WiFiDirectDevice {}
 impl WiFiDirectDevice {
@@ -31635,7 +31635,7 @@ impl WiFiDirectDevice {
     }
 }
 DEFINE_CLSID!(WiFiDirectDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,87,105,70,105,68,105,114,101,99,116,68,101,118,105,99,101,0]) [CLSID_WiFiDirectDevice]);
-RT_ENUM! { enum WiFiDirectDeviceSelectorType: i32 {
+RT_ENUM! { enum WiFiDirectDeviceSelectorType: i32 ["Windows.Devices.WiFiDirect.WiFiDirectDeviceSelectorType"] {
     DeviceInterface (WiFiDirectDeviceSelectorType_DeviceInterface) = 0, AssociationEndpoint (WiFiDirectDeviceSelectorType_AssociationEndpoint) = 1,
 }}
 DEFINE_IID!(IID_IWiFiDirectDeviceStatics, 3899438460, 15020, 18513, 167, 146, 72, 42, 175, 147, 27, 4);
@@ -31672,7 +31672,7 @@ impl IWiFiDirectDeviceStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WiFiDirectError: i32 {
+RT_ENUM! { enum WiFiDirectError: i32 ["Windows.Devices.WiFiDirect.WiFiDirectError"] {
     Success (WiFiDirectError_Success) = 0, RadioNotAvailable (WiFiDirectError_RadioNotAvailable) = 1, ResourceInUse (WiFiDirectError_ResourceInUse) = 2,
 }}
 DEFINE_IID!(IID_IWiFiDirectInformationElement, 2952491734, 30395, 18814, 172, 139, 220, 114, 131, 139, 195, 9);
@@ -31713,7 +31713,7 @@ impl IWiFiDirectInformationElement {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectInformationElement: IWiFiDirectInformationElement}
+RT_CLASS!{class WiFiDirectInformationElement: IWiFiDirectInformationElement ["Windows.Devices.WiFiDirect.WiFiDirectInformationElement"]}
 impl RtActivatable<IWiFiDirectInformationElementStatics> for WiFiDirectInformationElement {}
 impl RtActivatable<IActivationFactory> for WiFiDirectInformationElement {}
 impl WiFiDirectInformationElement {
@@ -31781,8 +31781,8 @@ impl IWiFiDirectLegacySettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectLegacySettings: IWiFiDirectLegacySettings}
-RT_ENUM! { enum WiFiDirectPairingProcedure: i32 {
+RT_CLASS!{class WiFiDirectLegacySettings: IWiFiDirectLegacySettings ["Windows.Devices.WiFiDirect.WiFiDirectLegacySettings"]}
+RT_ENUM! { enum WiFiDirectPairingProcedure: i32 ["Windows.Devices.WiFiDirect.WiFiDirectPairingProcedure"] {
     GroupOwnerNegotiation (WiFiDirectPairingProcedure_GroupOwnerNegotiation) = 0, Invitation (WiFiDirectPairingProcedure_Invitation) = 1,
 }}
 pub mod services { // Windows.Devices.WiFiDirect.Services
@@ -31864,7 +31864,7 @@ impl IWiFiDirectService {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectService: IWiFiDirectService}
+RT_CLASS!{class WiFiDirectService: IWiFiDirectService ["Windows.Devices.WiFiDirect.Services.WiFiDirectService"]}
 impl RtActivatable<IWiFiDirectServiceStatics> for WiFiDirectService {}
 impl WiFiDirectService {
     #[inline] pub fn get_selector(serviceName: &HStringArg) -> Result<HString> {
@@ -31878,7 +31878,7 @@ impl WiFiDirectService {
     }
 }
 DEFINE_CLSID!(WiFiDirectService(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,83,101,114,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,83,101,114,118,105,99,101,0]) [CLSID_WiFiDirectService]);
-RT_ENUM! { enum WiFiDirectServiceAdvertisementStatus: i32 {
+RT_ENUM! { enum WiFiDirectServiceAdvertisementStatus: i32 ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceAdvertisementStatus"] {
     Created (WiFiDirectServiceAdvertisementStatus_Created) = 0, Started (WiFiDirectServiceAdvertisementStatus_Started) = 1, Stopped (WiFiDirectServiceAdvertisementStatus_Stopped) = 2, Aborted (WiFiDirectServiceAdvertisementStatus_Aborted) = 3,
 }}
 DEFINE_IID!(IID_IWiFiDirectServiceAdvertiser, 2762612449, 40335, 20303, 147, 238, 125, 222, 162, 227, 127, 70);
@@ -32041,7 +32041,7 @@ impl IWiFiDirectServiceAdvertiser {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectServiceAdvertiser: IWiFiDirectServiceAdvertiser}
+RT_CLASS!{class WiFiDirectServiceAdvertiser: IWiFiDirectServiceAdvertiser ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceAdvertiser"]}
 impl RtActivatable<IWiFiDirectServiceAdvertiserFactory> for WiFiDirectServiceAdvertiser {}
 impl WiFiDirectServiceAdvertiser {
     #[inline] pub fn create_wi_fi_direct_service_advertiser(serviceName: &HStringArg) -> Result<ComPtr<WiFiDirectServiceAdvertiser>> {
@@ -32077,14 +32077,14 @@ impl IWiFiDirectServiceAutoAcceptSessionConnectedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectServiceAutoAcceptSessionConnectedEventArgs: IWiFiDirectServiceAutoAcceptSessionConnectedEventArgs}
-RT_ENUM! { enum WiFiDirectServiceConfigurationMethod: i32 {
+RT_CLASS!{class WiFiDirectServiceAutoAcceptSessionConnectedEventArgs: IWiFiDirectServiceAutoAcceptSessionConnectedEventArgs ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceAutoAcceptSessionConnectedEventArgs"]}
+RT_ENUM! { enum WiFiDirectServiceConfigurationMethod: i32 ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceConfigurationMethod"] {
     Default (WiFiDirectServiceConfigurationMethod_Default) = 0, PinDisplay (WiFiDirectServiceConfigurationMethod_PinDisplay) = 1, PinEntry (WiFiDirectServiceConfigurationMethod_PinEntry) = 2,
 }}
-RT_ENUM! { enum WiFiDirectServiceError: i32 {
+RT_ENUM! { enum WiFiDirectServiceError: i32 ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceError"] {
     Success (WiFiDirectServiceError_Success) = 0, RadioNotAvailable (WiFiDirectServiceError_RadioNotAvailable) = 1, ResourceInUse (WiFiDirectServiceError_ResourceInUse) = 2, UnsupportedHardware (WiFiDirectServiceError_UnsupportedHardware) = 3, NoHardware (WiFiDirectServiceError_NoHardware) = 4,
 }}
-RT_ENUM! { enum WiFiDirectServiceIPProtocol: i32 {
+RT_ENUM! { enum WiFiDirectServiceIPProtocol: i32 ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceIPProtocol"] {
     Tcp (WiFiDirectServiceIPProtocol_Tcp) = 6, Udp (WiFiDirectServiceIPProtocol_Udp) = 17,
 }}
 DEFINE_IID!(IID_IWiFiDirectServiceProvisioningInfo, 2346417406, 38873, 17826, 142, 153, 219, 80, 145, 15, 182, 166);
@@ -32104,7 +32104,7 @@ impl IWiFiDirectServiceProvisioningInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectServiceProvisioningInfo: IWiFiDirectServiceProvisioningInfo}
+RT_CLASS!{class WiFiDirectServiceProvisioningInfo: IWiFiDirectServiceProvisioningInfo ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceProvisioningInfo"]}
 DEFINE_IID!(IID_IWiFiDirectServiceRemotePortAddedEventArgs, 3570318017, 16339, 20238, 183, 189, 120, 41, 6, 244, 68, 17);
 RT_INTERFACE!{interface IWiFiDirectServiceRemotePortAddedEventArgs(IWiFiDirectServiceRemotePortAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceRemotePortAddedEventArgs] {
     #[cfg(not(feature="windows-networking"))] fn __Dummy0(&self) -> (),
@@ -32123,7 +32123,7 @@ impl IWiFiDirectServiceRemotePortAddedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectServiceRemotePortAddedEventArgs: IWiFiDirectServiceRemotePortAddedEventArgs}
+RT_CLASS!{class WiFiDirectServiceRemotePortAddedEventArgs: IWiFiDirectServiceRemotePortAddedEventArgs ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceRemotePortAddedEventArgs"]}
 DEFINE_IID!(IID_IWiFiDirectServiceSession, 2165580131, 58406, 18379, 134, 64, 225, 179, 88, 139, 242, 111);
 RT_INTERFACE!{interface IWiFiDirectServiceSession(IWiFiDirectServiceSessionVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceSession] {
     fn get_ServiceName(&self, out: *mut HSTRING) -> HRESULT,
@@ -32214,7 +32214,7 @@ impl IWiFiDirectServiceSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectServiceSession: IWiFiDirectServiceSession}
+RT_CLASS!{class WiFiDirectServiceSession: IWiFiDirectServiceSession ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceSession"]}
 DEFINE_IID!(IID_IWiFiDirectServiceSessionDeferredEventArgs, 2382109055, 4609, 20255, 182, 244, 93, 241, 183, 185, 251, 46);
 RT_INTERFACE!{interface IWiFiDirectServiceSessionDeferredEventArgs(IWiFiDirectServiceSessionDeferredEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceSessionDeferredEventArgs] {
     #[cfg(feature="windows-storage")] fn get_DeferredSessionInfo(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
@@ -32226,8 +32226,8 @@ impl IWiFiDirectServiceSessionDeferredEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectServiceSessionDeferredEventArgs: IWiFiDirectServiceSessionDeferredEventArgs}
-RT_ENUM! { enum WiFiDirectServiceSessionErrorStatus: i32 {
+RT_CLASS!{class WiFiDirectServiceSessionDeferredEventArgs: IWiFiDirectServiceSessionDeferredEventArgs ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceSessionDeferredEventArgs"]}
+RT_ENUM! { enum WiFiDirectServiceSessionErrorStatus: i32 ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceSessionErrorStatus"] {
     Ok (WiFiDirectServiceSessionErrorStatus_Ok) = 0, Disassociated (WiFiDirectServiceSessionErrorStatus_Disassociated) = 1, LocalClose (WiFiDirectServiceSessionErrorStatus_LocalClose) = 2, RemoteClose (WiFiDirectServiceSessionErrorStatus_RemoteClose) = 3, SystemFailure (WiFiDirectServiceSessionErrorStatus_SystemFailure) = 4, NoResponseFromRemote (WiFiDirectServiceSessionErrorStatus_NoResponseFromRemote) = 5,
 }}
 DEFINE_IID!(IID_IWiFiDirectServiceSessionRequest, 2699197579, 20683, 19032, 155, 207, 228, 114, 185, 159, 186, 4);
@@ -32253,7 +32253,7 @@ impl IWiFiDirectServiceSessionRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectServiceSessionRequest: IWiFiDirectServiceSessionRequest}
+RT_CLASS!{class WiFiDirectServiceSessionRequest: IWiFiDirectServiceSessionRequest ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceSessionRequest"]}
 DEFINE_IID!(IID_IWiFiDirectServiceSessionRequestedEventArgs, 1958595601, 21462, 18841, 180, 248, 108, 142, 204, 23, 113, 231);
 RT_INTERFACE!{interface IWiFiDirectServiceSessionRequestedEventArgs(IWiFiDirectServiceSessionRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceSessionRequestedEventArgs] {
     fn GetSessionRequest(&self, out: *mut *mut WiFiDirectServiceSessionRequest) -> HRESULT
@@ -32265,8 +32265,8 @@ impl IWiFiDirectServiceSessionRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WiFiDirectServiceSessionRequestedEventArgs: IWiFiDirectServiceSessionRequestedEventArgs}
-RT_ENUM! { enum WiFiDirectServiceSessionStatus: i32 {
+RT_CLASS!{class WiFiDirectServiceSessionRequestedEventArgs: IWiFiDirectServiceSessionRequestedEventArgs ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceSessionRequestedEventArgs"]}
+RT_ENUM! { enum WiFiDirectServiceSessionStatus: i32 ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceSessionStatus"] {
     Closed (WiFiDirectServiceSessionStatus_Closed) = 0, Initiated (WiFiDirectServiceSessionStatus_Initiated) = 1, Requested (WiFiDirectServiceSessionStatus_Requested) = 2, Open (WiFiDirectServiceSessionStatus_Open) = 3,
 }}
 DEFINE_IID!(IID_IWiFiDirectServiceStatics, 2108948549, 64884, 18056, 183, 37, 93, 206, 134, 172, 242, 51);
@@ -32293,7 +32293,7 @@ impl IWiFiDirectServiceStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WiFiDirectServiceStatus: i32 {
+RT_ENUM! { enum WiFiDirectServiceStatus: i32 ["Windows.Devices.WiFiDirect.Services.WiFiDirectServiceStatus"] {
     Available (WiFiDirectServiceStatus_Available) = 0, Busy (WiFiDirectServiceStatus_Busy) = 1, Custom (WiFiDirectServiceStatus_Custom) = 2,
 }}
 } // Windows.Devices.WiFiDirect.Services

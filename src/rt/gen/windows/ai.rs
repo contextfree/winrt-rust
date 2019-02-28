@@ -31,7 +31,7 @@ impl IImageFeatureDescriptor {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ImageFeatureDescriptor: IImageFeatureDescriptor}
+RT_CLASS!{class ImageFeatureDescriptor: IImageFeatureDescriptor ["Windows.AI.MachineLearning.ImageFeatureDescriptor"]}
 DEFINE_IID!(IID_IImageFeatureValue, 4030812121, 51626, 17413, 183, 251, 148, 248, 124, 138, 48, 55);
 RT_INTERFACE!{interface IImageFeatureValue(IImageFeatureValueVtbl): IInspectable(IInspectableVtbl) [IID_IImageFeatureValue] {
     #[cfg(feature="windows-media")] fn get_VideoFrame(&self, out: *mut *mut super::super::media::VideoFrame) -> HRESULT
@@ -43,7 +43,7 @@ impl IImageFeatureValue {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ImageFeatureValue: IImageFeatureValue}
+RT_CLASS!{class ImageFeatureValue: IImageFeatureValue ["Windows.AI.MachineLearning.ImageFeatureValue"]}
 impl RtActivatable<IImageFeatureValueStatics> for ImageFeatureValue {}
 impl ImageFeatureValue {
     #[cfg(feature="windows-media")] #[inline] pub fn create_from_video_frame(image: &super::super::media::VideoFrame) -> Result<Option<ComPtr<ImageFeatureValue>>> {
@@ -115,7 +115,7 @@ impl ILearningModel {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LearningModel: ILearningModel}
+RT_CLASS!{class LearningModel: ILearningModel ["Windows.AI.MachineLearning.LearningModel"]}
 impl RtActivatable<ILearningModelStatics> for LearningModel {}
 impl LearningModel {
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_storage_file_async(modelFile: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> {
@@ -164,7 +164,7 @@ impl ILearningModelBinding {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LearningModelBinding: ILearningModelBinding}
+RT_CLASS!{class LearningModelBinding: ILearningModelBinding ["Windows.AI.MachineLearning.LearningModelBinding"]}
 impl RtActivatable<ILearningModelBindingFactory> for LearningModelBinding {}
 impl LearningModelBinding {
     #[inline] pub fn create_from_session(session: &LearningModelSession) -> Result<ComPtr<LearningModelBinding>> {
@@ -200,7 +200,7 @@ impl ILearningModelDevice {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LearningModelDevice: ILearningModelDevice}
+RT_CLASS!{class LearningModelDevice: ILearningModelDevice ["Windows.AI.MachineLearning.LearningModelDevice"]}
 impl RtActivatable<ILearningModelDeviceFactory> for LearningModelDevice {}
 impl RtActivatable<ILearningModelDeviceStatics> for LearningModelDevice {}
 impl LearningModelDevice {
@@ -223,7 +223,7 @@ impl ILearningModelDeviceFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum LearningModelDeviceKind: i32 {
+RT_ENUM! { enum LearningModelDeviceKind: i32 ["Windows.AI.MachineLearning.LearningModelDeviceKind"] {
     Default (LearningModelDeviceKind_Default) = 0, Cpu (LearningModelDeviceKind_Cpu) = 1, DirectX (LearningModelDeviceKind_DirectX) = 2, DirectXHighPerformance (LearningModelDeviceKind_DirectXHighPerformance) = 3, DirectXMinPower (LearningModelDeviceKind_DirectXMinPower) = 4,
 }}
 DEFINE_IID!(IID_ILearningModelDeviceStatics, 1240670471, 43199, 17083, 146, 199, 16, 177, 45, 197, 210, 31);
@@ -266,7 +266,7 @@ impl ILearningModelEvaluationResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LearningModelEvaluationResult: ILearningModelEvaluationResult}
+RT_CLASS!{class LearningModelEvaluationResult: ILearningModelEvaluationResult ["Windows.AI.MachineLearning.LearningModelEvaluationResult"]}
 DEFINE_IID!(IID_ILearningModelFeatureDescriptor, 3154694012, 28368, 16388, 151, 186, 185, 162, 238, 205, 43, 79);
 RT_INTERFACE!{interface ILearningModelFeatureDescriptor(ILearningModelFeatureDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_ILearningModelFeatureDescriptor] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -296,7 +296,7 @@ impl ILearningModelFeatureDescriptor {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum LearningModelFeatureKind: i32 {
+RT_ENUM! { enum LearningModelFeatureKind: i32 ["Windows.AI.MachineLearning.LearningModelFeatureKind"] {
     Tensor (LearningModelFeatureKind_Tensor) = 0, Sequence (LearningModelFeatureKind_Sequence) = 1, Map (LearningModelFeatureKind_Map) = 2, Image (LearningModelFeatureKind_Image) = 3,
 }}
 DEFINE_IID!(IID_ILearningModelFeatureValue, 4111467995, 16517, 19966, 159, 237, 149, 235, 12, 12, 247, 92);
@@ -361,7 +361,7 @@ impl ILearningModelSession {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LearningModelSession: ILearningModelSession}
+RT_CLASS!{class LearningModelSession: ILearningModelSession ["Windows.AI.MachineLearning.LearningModelSession"]}
 impl RtActivatable<ILearningModelSessionFactory> for LearningModelSession {}
 impl LearningModelSession {
     #[inline] pub fn create_from_model(model: &LearningModel) -> Result<ComPtr<LearningModelSession>> {
@@ -459,7 +459,7 @@ impl IMapFeatureDescriptor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MapFeatureDescriptor: IMapFeatureDescriptor}
+RT_CLASS!{class MapFeatureDescriptor: IMapFeatureDescriptor ["Windows.AI.MachineLearning.MapFeatureDescriptor"]}
 DEFINE_IID!(IID_ISequenceFeatureDescriptor, 2230752346, 22059, 19810, 168, 81, 115, 154, 206, 217, 102, 104);
 RT_INTERFACE!{interface ISequenceFeatureDescriptor(ISequenceFeatureDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_ISequenceFeatureDescriptor] {
     fn get_ElementDescriptor(&self, out: *mut *mut ILearningModelFeatureDescriptor) -> HRESULT
@@ -471,7 +471,7 @@ impl ISequenceFeatureDescriptor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SequenceFeatureDescriptor: ISequenceFeatureDescriptor}
+RT_CLASS!{class SequenceFeatureDescriptor: ISequenceFeatureDescriptor ["Windows.AI.MachineLearning.SequenceFeatureDescriptor"]}
 DEFINE_IID!(IID_ITensor, 88642963, 41733, 18981, 173, 9, 68, 1, 25, 180, 183, 246);
 RT_INTERFACE!{interface ITensor(ITensorVtbl): IInspectable(IInspectableVtbl) [IID_ITensor] {
     fn get_TensorKind(&self, out: *mut TensorKind) -> HRESULT,
@@ -500,7 +500,7 @@ impl ITensorBoolean {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorBoolean: ITensorBoolean}
+RT_CLASS!{class TensorBoolean: ITensorBoolean ["Windows.AI.MachineLearning.TensorBoolean"]}
 impl RtActivatable<ITensorBooleanStatics> for TensorBoolean {}
 impl TensorBoolean {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorBoolean>>> {
@@ -557,7 +557,7 @@ impl ITensorDouble {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorDouble: ITensorDouble}
+RT_CLASS!{class TensorDouble: ITensorDouble ["Windows.AI.MachineLearning.TensorDouble"]}
 impl RtActivatable<ITensorDoubleStatics> for TensorDouble {}
 impl TensorDouble {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorDouble>>> {
@@ -620,7 +620,7 @@ impl ITensorFeatureDescriptor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorFeatureDescriptor: ITensorFeatureDescriptor}
+RT_CLASS!{class TensorFeatureDescriptor: ITensorFeatureDescriptor ["Windows.AI.MachineLearning.TensorFeatureDescriptor"]}
 DEFINE_IID!(IID_ITensorFloat, 4062719362, 43522, 17096, 160, 200, 223, 30, 252, 150, 118, 225);
 RT_INTERFACE!{interface ITensorFloat(ITensorFloatVtbl): IInspectable(IInspectableVtbl) [IID_ITensorFloat] {
     fn GetAsVectorView(&self, out: *mut *mut foundation::collections::IVectorView<f32>) -> HRESULT
@@ -632,7 +632,7 @@ impl ITensorFloat {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorFloat: ITensorFloat}
+RT_CLASS!{class TensorFloat: ITensorFloat ["Windows.AI.MachineLearning.TensorFloat"]}
 impl RtActivatable<ITensorFloatStatics> for TensorFloat {}
 impl TensorFloat {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorFloat>>> {
@@ -660,7 +660,7 @@ impl ITensorFloat16Bit {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorFloat16Bit: ITensorFloat16Bit}
+RT_CLASS!{class TensorFloat16Bit: ITensorFloat16Bit ["Windows.AI.MachineLearning.TensorFloat16Bit"]}
 impl RtActivatable<ITensorFloat16BitStatics> for TensorFloat16Bit {}
 impl TensorFloat16Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorFloat16Bit>>> {
@@ -746,7 +746,7 @@ impl ITensorInt16Bit {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorInt16Bit: ITensorInt16Bit}
+RT_CLASS!{class TensorInt16Bit: ITensorInt16Bit ["Windows.AI.MachineLearning.TensorInt16Bit"]}
 impl RtActivatable<ITensorInt16BitStatics> for TensorInt16Bit {}
 impl TensorInt16Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorInt16Bit>>> {
@@ -803,7 +803,7 @@ impl ITensorInt32Bit {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorInt32Bit: ITensorInt32Bit}
+RT_CLASS!{class TensorInt32Bit: ITensorInt32Bit ["Windows.AI.MachineLearning.TensorInt32Bit"]}
 impl RtActivatable<ITensorInt32BitStatics> for TensorInt32Bit {}
 impl TensorInt32Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorInt32Bit>>> {
@@ -860,7 +860,7 @@ impl ITensorInt64Bit {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorInt64Bit: ITensorInt64Bit}
+RT_CLASS!{class TensorInt64Bit: ITensorInt64Bit ["Windows.AI.MachineLearning.TensorInt64Bit"]}
 impl RtActivatable<ITensorInt64BitStatics> for TensorInt64Bit {}
 impl TensorInt64Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorInt64Bit>>> {
@@ -917,7 +917,7 @@ impl ITensorInt8Bit {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorInt8Bit: ITensorInt8Bit}
+RT_CLASS!{class TensorInt8Bit: ITensorInt8Bit ["Windows.AI.MachineLearning.TensorInt8Bit"]}
 impl RtActivatable<ITensorInt8BitStatics> for TensorInt8Bit {}
 impl TensorInt8Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorInt8Bit>>> {
@@ -963,7 +963,7 @@ impl ITensorInt8BitStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum TensorKind: i32 {
+RT_ENUM! { enum TensorKind: i32 ["Windows.AI.MachineLearning.TensorKind"] {
     Undefined (TensorKind_Undefined) = 0, Float (TensorKind_Float) = 1, UInt8 (TensorKind_UInt8) = 2, Int8 (TensorKind_Int8) = 3, UInt16 (TensorKind_UInt16) = 4, Int16 (TensorKind_Int16) = 5, Int32 (TensorKind_Int32) = 6, Int64 (TensorKind_Int64) = 7, String (TensorKind_String) = 8, Boolean (TensorKind_Boolean) = 9, Float16 (TensorKind_Float16) = 10, Double (TensorKind_Double) = 11, UInt32 (TensorKind_UInt32) = 12, UInt64 (TensorKind_UInt64) = 13, Complex64 (TensorKind_Complex64) = 14, Complex128 (TensorKind_Complex128) = 15,
 }}
 DEFINE_IID!(IID_ITensorString, 1478702536, 48561, 17936, 188, 117, 53, 233, 203, 240, 9, 183);
@@ -977,7 +977,7 @@ impl ITensorString {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorString: ITensorString}
+RT_CLASS!{class TensorString: ITensorString ["Windows.AI.MachineLearning.TensorString"]}
 impl RtActivatable<ITensorStringStatics> for TensorString {}
 impl TensorString {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorString>>> {
@@ -1034,7 +1034,7 @@ impl ITensorUInt16Bit {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorUInt16Bit: ITensorUInt16Bit}
+RT_CLASS!{class TensorUInt16Bit: ITensorUInt16Bit ["Windows.AI.MachineLearning.TensorUInt16Bit"]}
 impl RtActivatable<ITensorUInt16BitStatics> for TensorUInt16Bit {}
 impl TensorUInt16Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorUInt16Bit>>> {
@@ -1091,7 +1091,7 @@ impl ITensorUInt32Bit {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorUInt32Bit: ITensorUInt32Bit}
+RT_CLASS!{class TensorUInt32Bit: ITensorUInt32Bit ["Windows.AI.MachineLearning.TensorUInt32Bit"]}
 impl RtActivatable<ITensorUInt32BitStatics> for TensorUInt32Bit {}
 impl TensorUInt32Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorUInt32Bit>>> {
@@ -1148,7 +1148,7 @@ impl ITensorUInt64Bit {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorUInt64Bit: ITensorUInt64Bit}
+RT_CLASS!{class TensorUInt64Bit: ITensorUInt64Bit ["Windows.AI.MachineLearning.TensorUInt64Bit"]}
 impl RtActivatable<ITensorUInt64BitStatics> for TensorUInt64Bit {}
 impl TensorUInt64Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorUInt64Bit>>> {
@@ -1205,7 +1205,7 @@ impl ITensorUInt8Bit {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorUInt8Bit: ITensorUInt8Bit}
+RT_CLASS!{class TensorUInt8Bit: ITensorUInt8Bit ["Windows.AI.MachineLearning.TensorUInt8Bit"]}
 impl RtActivatable<ITensorUInt8BitStatics> for TensorUInt8Bit {}
 impl TensorUInt8Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorUInt8Bit>>> {
@@ -1253,7 +1253,7 @@ impl ITensorUInt8BitStatics {
 }
 pub mod preview { // Windows.AI.MachineLearning.Preview
 use ::prelude::*;
-RT_ENUM! { enum FeatureElementKindPreview: i32 {
+RT_ENUM! { enum FeatureElementKindPreview: i32 ["Windows.AI.MachineLearning.Preview.FeatureElementKindPreview"] {
     Undefined (FeatureElementKindPreview_Undefined) = 0, Float (FeatureElementKindPreview_Float) = 1, UInt8 (FeatureElementKindPreview_UInt8) = 2, Int8 (FeatureElementKindPreview_Int8) = 3, UInt16 (FeatureElementKindPreview_UInt16) = 4, Int16 (FeatureElementKindPreview_Int16) = 5, Int32 (FeatureElementKindPreview_Int32) = 6, Int64 (FeatureElementKindPreview_Int64) = 7, String (FeatureElementKindPreview_String) = 8, Boolean (FeatureElementKindPreview_Boolean) = 9, Float16 (FeatureElementKindPreview_Float16) = 10, Double (FeatureElementKindPreview_Double) = 11, UInt32 (FeatureElementKindPreview_UInt32) = 12, UInt64 (FeatureElementKindPreview_UInt64) = 13, Complex64 (FeatureElementKindPreview_Complex64) = 14, Complex128 (FeatureElementKindPreview_Complex128) = 15,
 }}
 DEFINE_IID!(IID_IImageVariableDescriptorPreview, 2061630066, 670, 19909, 162, 248, 95, 183, 99, 21, 65, 80);
@@ -1280,7 +1280,7 @@ impl IImageVariableDescriptorPreview {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ImageVariableDescriptorPreview: IImageVariableDescriptorPreview}
+RT_CLASS!{class ImageVariableDescriptorPreview: IImageVariableDescriptorPreview ["Windows.AI.MachineLearning.Preview.ImageVariableDescriptorPreview"]}
 DEFINE_IID!(IID_IInferencingOptionsPreview, 1203536389, 19766, 18345, 143, 104, 255, 203, 51, 157, 208, 252);
 RT_INTERFACE!{interface IInferencingOptionsPreview(IInferencingOptionsPreviewVtbl): IInspectable(IInspectableVtbl) [IID_IInferencingOptionsPreview] {
     fn get_PreferredDeviceKind(&self, out: *mut LearningModelDeviceKindPreview) -> HRESULT,
@@ -1341,7 +1341,7 @@ impl IInferencingOptionsPreview {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InferencingOptionsPreview: IInferencingOptionsPreview}
+RT_CLASS!{class InferencingOptionsPreview: IInferencingOptionsPreview ["Windows.AI.MachineLearning.Preview.InferencingOptionsPreview"]}
 DEFINE_IID!(IID_ILearningModelBindingPreview, 2479423976, 27768, 19279, 174, 193, 166, 187, 158, 105, 22, 36);
 RT_INTERFACE!{interface ILearningModelBindingPreview(ILearningModelBindingPreviewVtbl): IInspectable(IInspectableVtbl) [IID_ILearningModelBindingPreview] {
     fn Bind(&self, name: HSTRING, value: *mut IInspectable) -> HRESULT,
@@ -1362,7 +1362,7 @@ impl ILearningModelBindingPreview {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LearningModelBindingPreview: ILearningModelBindingPreview}
+RT_CLASS!{class LearningModelBindingPreview: ILearningModelBindingPreview ["Windows.AI.MachineLearning.Preview.LearningModelBindingPreview"]}
 impl RtActivatable<ILearningModelBindingPreviewFactory> for LearningModelBindingPreview {}
 impl LearningModelBindingPreview {
     #[inline] pub fn create_from_model(model: &LearningModelPreview) -> Result<ComPtr<LearningModelBindingPreview>> {
@@ -1434,8 +1434,8 @@ impl ILearningModelDescriptionPreview {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LearningModelDescriptionPreview: ILearningModelDescriptionPreview}
-RT_ENUM! { enum LearningModelDeviceKindPreview: i32 {
+RT_CLASS!{class LearningModelDescriptionPreview: ILearningModelDescriptionPreview ["Windows.AI.MachineLearning.Preview.LearningModelDescriptionPreview"]}
+RT_ENUM! { enum LearningModelDeviceKindPreview: i32 ["Windows.AI.MachineLearning.Preview.LearningModelDeviceKindPreview"] {
     LearningDeviceAny (LearningModelDeviceKindPreview_LearningDeviceAny) = 0, LearningDeviceCpu (LearningModelDeviceKindPreview_LearningDeviceCpu) = 1, LearningDeviceGpu (LearningModelDeviceKindPreview_LearningDeviceGpu) = 2, LearningDeviceNpu (LearningModelDeviceKindPreview_LearningDeviceNpu) = 3, LearningDeviceDsp (LearningModelDeviceKindPreview_LearningDeviceDsp) = 4, LearningDeviceFpga (LearningModelDeviceKindPreview_LearningDeviceFpga) = 5,
 }}
 DEFINE_IID!(IID_ILearningModelEvaluationResultPreview, 3743804063, 39011, 16520, 132, 152, 135, 161, 244, 104, 111, 146);
@@ -1455,8 +1455,8 @@ impl ILearningModelEvaluationResultPreview {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LearningModelEvaluationResultPreview: ILearningModelEvaluationResultPreview}
-RT_ENUM! { enum LearningModelFeatureKindPreview: i32 {
+RT_CLASS!{class LearningModelEvaluationResultPreview: ILearningModelEvaluationResultPreview ["Windows.AI.MachineLearning.Preview.LearningModelEvaluationResultPreview"]}
+RT_ENUM! { enum LearningModelFeatureKindPreview: i32 ["Windows.AI.MachineLearning.Preview.LearningModelFeatureKindPreview"] {
     Undefined (LearningModelFeatureKindPreview_Undefined) = 0, Tensor (LearningModelFeatureKindPreview_Tensor) = 1, Sequence (LearningModelFeatureKindPreview_Sequence) = 2, Map (LearningModelFeatureKindPreview_Map) = 3, Image (LearningModelFeatureKindPreview_Image) = 4,
 }}
 DEFINE_IID!(IID_ILearningModelPreview, 77342314, 37812, 18316, 174, 184, 112, 21, 123, 240, 255, 148);
@@ -1493,7 +1493,7 @@ impl ILearningModelPreview {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LearningModelPreview: ILearningModelPreview}
+RT_CLASS!{class LearningModelPreview: ILearningModelPreview ["Windows.AI.MachineLearning.Preview.LearningModelPreview"]}
 impl RtActivatable<ILearningModelPreviewStatics> for LearningModelPreview {}
 impl LearningModelPreview {
     #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_storage_file_async(modelFile: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> {
@@ -1550,7 +1550,7 @@ impl ILearningModelVariableDescriptorPreview {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LearningModelVariableDescriptorPreview: ILearningModelVariableDescriptorPreview}
+RT_CLASS!{class LearningModelVariableDescriptorPreview: ILearningModelVariableDescriptorPreview ["Windows.AI.MachineLearning.Preview.LearningModelVariableDescriptorPreview"]}
 DEFINE_IID!(IID_IMapVariableDescriptorPreview, 1018397552, 49195, 16950, 179, 232, 107, 220, 164, 156, 49, 41);
 RT_INTERFACE!{interface IMapVariableDescriptorPreview(IMapVariableDescriptorPreviewVtbl): IInspectable(IInspectableVtbl) [IID_IMapVariableDescriptorPreview] {
     fn get_KeyKind(&self, out: *mut FeatureElementKindPreview) -> HRESULT,
@@ -1580,7 +1580,7 @@ impl IMapVariableDescriptorPreview {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MapVariableDescriptorPreview: IMapVariableDescriptorPreview}
+RT_CLASS!{class MapVariableDescriptorPreview: IMapVariableDescriptorPreview ["Windows.AI.MachineLearning.Preview.MapVariableDescriptorPreview"]}
 DEFINE_IID!(IID_ISequenceVariableDescriptorPreview, 2631463570, 39090, 17712, 161, 182, 45, 237, 95, 236, 188, 38);
 RT_INTERFACE!{interface ISequenceVariableDescriptorPreview(ISequenceVariableDescriptorPreviewVtbl): IInspectable(IInspectableVtbl) [IID_ISequenceVariableDescriptorPreview] {
     fn get_ElementType(&self, out: *mut *mut ILearningModelVariableDescriptorPreview) -> HRESULT
@@ -1592,7 +1592,7 @@ impl ISequenceVariableDescriptorPreview {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SequenceVariableDescriptorPreview: ISequenceVariableDescriptorPreview}
+RT_CLASS!{class SequenceVariableDescriptorPreview: ISequenceVariableDescriptorPreview ["Windows.AI.MachineLearning.Preview.SequenceVariableDescriptorPreview"]}
 DEFINE_IID!(IID_ITensorVariableDescriptorPreview, 2819575834, 39596, 16947, 151, 132, 172, 234, 249, 37, 16, 181);
 RT_INTERFACE!{interface ITensorVariableDescriptorPreview(ITensorVariableDescriptorPreviewVtbl): IInspectable(IInspectableVtbl) [IID_ITensorVariableDescriptorPreview] {
     fn get_DataType(&self, out: *mut FeatureElementKindPreview) -> HRESULT,
@@ -1610,6 +1610,6 @@ impl ITensorVariableDescriptorPreview {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TensorVariableDescriptorPreview: ITensorVariableDescriptorPreview}
+RT_CLASS!{class TensorVariableDescriptorPreview: ITensorVariableDescriptorPreview ["Windows.AI.MachineLearning.Preview.TensorVariableDescriptorPreview"]}
 } // Windows.AI.MachineLearning.Preview
 } // Windows.AI.MachineLearning

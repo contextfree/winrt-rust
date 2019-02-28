@@ -21,8 +21,8 @@ impl IAudioBuffer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioBuffer: IAudioBuffer}
-RT_ENUM! { enum AudioBufferAccessMode: i32 {
+RT_CLASS!{class AudioBuffer: IAudioBuffer ["Windows.Media.AudioBuffer"]}
+RT_ENUM! { enum AudioBufferAccessMode: i32 ["Windows.Media.AudioBufferAccessMode"] {
     Read (AudioBufferAccessMode_Read) = 0, ReadWrite (AudioBufferAccessMode_ReadWrite) = 1, Write (AudioBufferAccessMode_Write) = 2,
 }}
 DEFINE_IID!(IID_IAudioFrame, 3815424772, 43698, 17015, 158, 208, 67, 206, 223, 142, 41, 198);
@@ -36,7 +36,7 @@ impl IAudioFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioFrame: IAudioFrame}
+RT_CLASS!{class AudioFrame: IAudioFrame ["Windows.Media.AudioFrame"]}
 impl RtActivatable<IAudioFrameFactory> for AudioFrame {}
 impl AudioFrame {
     #[inline] pub fn create(capacity: u32) -> Result<ComPtr<AudioFrame>> {
@@ -55,7 +55,7 @@ impl IAudioFrameFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AudioProcessing: i32 {
+RT_ENUM! { enum AudioProcessing: i32 ["Windows.Media.AudioProcessing"] {
     Default (AudioProcessing_Default) = 0, Raw (AudioProcessing_Raw) = 1,
 }}
 DEFINE_IID!(IID_IAutoRepeatModeChangeRequestedEventArgs, 3927146234, 55378, 17294, 136, 43, 201, 144, 16, 154, 120, 244);
@@ -69,7 +69,7 @@ impl IAutoRepeatModeChangeRequestedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AutoRepeatModeChangeRequestedEventArgs: IAutoRepeatModeChangeRequestedEventArgs}
+RT_CLASS!{class AutoRepeatModeChangeRequestedEventArgs: IAutoRepeatModeChangeRequestedEventArgs ["Windows.Media.AutoRepeatModeChangeRequestedEventArgs"]}
 DEFINE_IID!(IID_IImageDisplayProperties, 3440101359, 21735, 16671, 153, 51, 240, 233, 139, 10, 150, 210);
 RT_INTERFACE!{interface IImageDisplayProperties(IImageDisplayPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IImageDisplayProperties] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
@@ -97,7 +97,7 @@ impl IImageDisplayProperties {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ImageDisplayProperties: IImageDisplayProperties}
+RT_CLASS!{class ImageDisplayProperties: IImageDisplayProperties ["Windows.Media.ImageDisplayProperties"]}
 DEFINE_IID!(IID_IMediaControl, 2565995489, 31373, 17099, 182, 254, 143, 230, 152, 38, 79, 19);
 RT_INTERFACE!{static interface IMediaControl(IMediaControlVtbl): IInspectable(IInspectableVtbl) [IID_IMediaControl] {
     fn add_SoundLevelChanged(&self, handler: *mut foundation::EventHandler<IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -464,7 +464,7 @@ impl IMediaExtensionManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaExtensionManager: IMediaExtensionManager}
+RT_CLASS!{class MediaExtensionManager: IMediaExtensionManager ["Windows.Media.MediaExtensionManager"]}
 impl RtActivatable<IActivationFactory> for MediaExtensionManager {}
 DEFINE_CLSID!(MediaExtensionManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,69,120,116,101,110,115,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MediaExtensionManager]);
 DEFINE_IID!(IID_IMediaExtensionManager2, 1540276039, 16451, 20461, 172, 175, 84, 236, 41, 223, 177, 247);
@@ -597,13 +597,13 @@ impl IMediaMarkerTypesStatics {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaPlaybackAutoRepeatMode: i32 {
+RT_ENUM! { enum MediaPlaybackAutoRepeatMode: i32 ["Windows.Media.MediaPlaybackAutoRepeatMode"] {
     None (MediaPlaybackAutoRepeatMode_None) = 0, Track (MediaPlaybackAutoRepeatMode_Track) = 1, List (MediaPlaybackAutoRepeatMode_List) = 2,
 }}
-RT_ENUM! { enum MediaPlaybackStatus: i32 {
+RT_ENUM! { enum MediaPlaybackStatus: i32 ["Windows.Media.MediaPlaybackStatus"] {
     Closed (MediaPlaybackStatus_Closed) = 0, Changing (MediaPlaybackStatus_Changing) = 1, Stopped (MediaPlaybackStatus_Stopped) = 2, Playing (MediaPlaybackStatus_Playing) = 3, Paused (MediaPlaybackStatus_Paused) = 4,
 }}
-RT_ENUM! { enum MediaPlaybackType: i32 {
+RT_ENUM! { enum MediaPlaybackType: i32 ["Windows.Media.MediaPlaybackType"] {
     Unknown (MediaPlaybackType_Unknown) = 0, Music (MediaPlaybackType_Music) = 1, Video (MediaPlaybackType_Video) = 2, Image (MediaPlaybackType_Image) = 3,
 }}
 DEFINE_IID!(IID_IMediaProcessingTriggerDetails, 3951387820, 41809, 20302, 180, 240, 155, 242, 64, 137, 147, 219);
@@ -617,7 +617,7 @@ impl IMediaProcessingTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaProcessingTriggerDetails: IMediaProcessingTriggerDetails}
+RT_CLASS!{class MediaProcessingTriggerDetails: IMediaProcessingTriggerDetails ["Windows.Media.MediaProcessingTriggerDetails"]}
 DEFINE_IID!(IID_IMediaTimelineController, 2396217843, 2936, 17248, 191, 113, 12, 132, 25, 153, 234, 27);
 RT_INTERFACE!{interface IMediaTimelineController(IMediaTimelineControllerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaTimelineController] {
     fn Start(&self) -> HRESULT,
@@ -688,7 +688,7 @@ impl IMediaTimelineController {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaTimelineController: IMediaTimelineController}
+RT_CLASS!{class MediaTimelineController: IMediaTimelineController ["Windows.Media.MediaTimelineController"]}
 impl RtActivatable<IActivationFactory> for MediaTimelineController {}
 DEFINE_CLSID!(MediaTimelineController(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,84,105,109,101,108,105,110,101,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_MediaTimelineController]);
 DEFINE_IID!(IID_IMediaTimelineController2, 4017416760, 40562, 19961, 131, 85, 110, 144, 200, 27, 186, 221);
@@ -751,11 +751,11 @@ impl IMediaTimelineControllerFailedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaTimelineControllerFailedEventArgs: IMediaTimelineControllerFailedEventArgs}
-RT_ENUM! { enum MediaTimelineControllerState: i32 {
+RT_CLASS!{class MediaTimelineControllerFailedEventArgs: IMediaTimelineControllerFailedEventArgs ["Windows.Media.MediaTimelineControllerFailedEventArgs"]}
+RT_ENUM! { enum MediaTimelineControllerState: i32 ["Windows.Media.MediaTimelineControllerState"] {
     Paused (MediaTimelineControllerState_Paused) = 0, Running (MediaTimelineControllerState_Running) = 1, Stalled (MediaTimelineControllerState_Stalled) = 2, Error (MediaTimelineControllerState_Error) = 3,
 }}
-RT_STRUCT! { struct MediaTimeRange {
+RT_STRUCT! { struct MediaTimeRange ["Windows.Media.MediaTimeRange"] {
     Start: foundation::TimeSpan, End: foundation::TimeSpan,
 }}
 DEFINE_IID!(IID_IMusicDisplayProperties, 1807682649, 53408, 19750, 146, 160, 249, 120, 225, 209, 142, 123);
@@ -796,7 +796,7 @@ impl IMusicDisplayProperties {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MusicDisplayProperties: IMusicDisplayProperties}
+RT_CLASS!{class MusicDisplayProperties: IMusicDisplayProperties ["Windows.Media.MusicDisplayProperties"]}
 DEFINE_IID!(IID_IMusicDisplayProperties2, 3572834, 38867, 17593, 176, 15, 0, 138, 252, 239, 175, 24);
 RT_INTERFACE!{interface IMusicDisplayProperties2(IMusicDisplayProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IMusicDisplayProperties2] {
     fn get_AlbumTitle(&self, out: *mut HSTRING) -> HRESULT,
@@ -857,7 +857,7 @@ impl IPlaybackPositionChangeRequestedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlaybackPositionChangeRequestedEventArgs: IPlaybackPositionChangeRequestedEventArgs}
+RT_CLASS!{class PlaybackPositionChangeRequestedEventArgs: IPlaybackPositionChangeRequestedEventArgs ["Windows.Media.PlaybackPositionChangeRequestedEventArgs"]}
 DEFINE_IID!(IID_IPlaybackRateChangeRequestedEventArgs, 753058847, 15574, 20343, 155, 167, 235, 39, 194, 106, 33, 64);
 RT_INTERFACE!{interface IPlaybackRateChangeRequestedEventArgs(IPlaybackRateChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackRateChangeRequestedEventArgs] {
     fn get_RequestedPlaybackRate(&self, out: *mut f64) -> HRESULT
@@ -869,7 +869,7 @@ impl IPlaybackRateChangeRequestedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlaybackRateChangeRequestedEventArgs: IPlaybackRateChangeRequestedEventArgs}
+RT_CLASS!{class PlaybackRateChangeRequestedEventArgs: IPlaybackRateChangeRequestedEventArgs ["Windows.Media.PlaybackRateChangeRequestedEventArgs"]}
 DEFINE_IID!(IID_IShuffleEnabledChangeRequestedEventArgs, 1236636670, 20432, 18022, 163, 20, 192, 224, 25, 64, 211, 2);
 RT_INTERFACE!{interface IShuffleEnabledChangeRequestedEventArgs(IShuffleEnabledChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IShuffleEnabledChangeRequestedEventArgs] {
     fn get_RequestedShuffleEnabled(&self, out: *mut bool) -> HRESULT
@@ -881,8 +881,8 @@ impl IShuffleEnabledChangeRequestedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ShuffleEnabledChangeRequestedEventArgs: IShuffleEnabledChangeRequestedEventArgs}
-RT_ENUM! { enum SoundLevel: i32 {
+RT_CLASS!{class ShuffleEnabledChangeRequestedEventArgs: IShuffleEnabledChangeRequestedEventArgs ["Windows.Media.ShuffleEnabledChangeRequestedEventArgs"]}
+RT_ENUM! { enum SoundLevel: i32 ["Windows.Media.SoundLevel"] {
     Muted (SoundLevel_Muted) = 0, Low (SoundLevel_Low) = 1, Full (SoundLevel_Full) = 2,
 }}
 DEFINE_IID!(IID_ISystemMediaTransportControls, 2583314420, 5954, 17062, 144, 46, 8, 125, 65, 249, 101, 236);
@@ -1056,7 +1056,7 @@ impl ISystemMediaTransportControls {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemMediaTransportControls: ISystemMediaTransportControls}
+RT_CLASS!{class SystemMediaTransportControls: ISystemMediaTransportControls ["Windows.Media.SystemMediaTransportControls"]}
 impl RtActivatable<ISystemMediaTransportControlsStatics> for SystemMediaTransportControls {}
 impl SystemMediaTransportControls {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<SystemMediaTransportControls>>> {
@@ -1151,7 +1151,7 @@ impl ISystemMediaTransportControls2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SystemMediaTransportControlsButton: i32 {
+RT_ENUM! { enum SystemMediaTransportControlsButton: i32 ["Windows.Media.SystemMediaTransportControlsButton"] {
     Play (SystemMediaTransportControlsButton_Play) = 0, Pause (SystemMediaTransportControlsButton_Pause) = 1, Stop (SystemMediaTransportControlsButton_Stop) = 2, Record (SystemMediaTransportControlsButton_Record) = 3, FastForward (SystemMediaTransportControlsButton_FastForward) = 4, Rewind (SystemMediaTransportControlsButton_Rewind) = 5, Next (SystemMediaTransportControlsButton_Next) = 6, Previous (SystemMediaTransportControlsButton_Previous) = 7, ChannelUp (SystemMediaTransportControlsButton_ChannelUp) = 8, ChannelDown (SystemMediaTransportControlsButton_ChannelDown) = 9,
 }}
 DEFINE_IID!(IID_ISystemMediaTransportControlsButtonPressedEventArgs, 3086250262, 42351, 19912, 158, 17, 146, 3, 31, 74, 135, 194);
@@ -1165,7 +1165,7 @@ impl ISystemMediaTransportControlsButtonPressedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemMediaTransportControlsButtonPressedEventArgs: ISystemMediaTransportControlsButtonPressedEventArgs}
+RT_CLASS!{class SystemMediaTransportControlsButtonPressedEventArgs: ISystemMediaTransportControlsButtonPressedEventArgs ["Windows.Media.SystemMediaTransportControlsButtonPressedEventArgs"]}
 DEFINE_IID!(IID_ISystemMediaTransportControlsDisplayUpdater, 2327561534, 64085, 20175, 173, 142, 201, 132, 229, 221, 21, 80);
 RT_INTERFACE!{interface ISystemMediaTransportControlsDisplayUpdater(ISystemMediaTransportControlsDisplayUpdaterVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaTransportControlsDisplayUpdater] {
     fn get_Type(&self, out: *mut MediaPlaybackType) -> HRESULT,
@@ -1241,8 +1241,8 @@ impl ISystemMediaTransportControlsDisplayUpdater {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemMediaTransportControlsDisplayUpdater: ISystemMediaTransportControlsDisplayUpdater}
-RT_ENUM! { enum SystemMediaTransportControlsProperty: i32 {
+RT_CLASS!{class SystemMediaTransportControlsDisplayUpdater: ISystemMediaTransportControlsDisplayUpdater ["Windows.Media.SystemMediaTransportControlsDisplayUpdater"]}
+RT_ENUM! { enum SystemMediaTransportControlsProperty: i32 ["Windows.Media.SystemMediaTransportControlsProperty"] {
     SoundLevel (SystemMediaTransportControlsProperty_SoundLevel) = 0,
 }}
 DEFINE_IID!(IID_ISystemMediaTransportControlsPropertyChangedEventArgs, 3502901558, 13211, 19635, 142, 235, 115, 118, 7, 245, 110, 8);
@@ -1256,7 +1256,7 @@ impl ISystemMediaTransportControlsPropertyChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemMediaTransportControlsPropertyChangedEventArgs: ISystemMediaTransportControlsPropertyChangedEventArgs}
+RT_CLASS!{class SystemMediaTransportControlsPropertyChangedEventArgs: ISystemMediaTransportControlsPropertyChangedEventArgs ["Windows.Media.SystemMediaTransportControlsPropertyChangedEventArgs"]}
 DEFINE_IID!(IID_ISystemMediaTransportControlsStatics, 1136277514, 60580, 18482, 145, 171, 212, 21, 250, 228, 132, 198);
 RT_INTERFACE!{static interface ISystemMediaTransportControlsStatics(ISystemMediaTransportControlsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaTransportControlsStatics] {
     fn GetForCurrentView(&self, out: *mut *mut SystemMediaTransportControls) -> HRESULT
@@ -1328,7 +1328,7 @@ impl ISystemMediaTransportControlsTimelineProperties {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemMediaTransportControlsTimelineProperties: ISystemMediaTransportControlsTimelineProperties}
+RT_CLASS!{class SystemMediaTransportControlsTimelineProperties: ISystemMediaTransportControlsTimelineProperties ["Windows.Media.SystemMediaTransportControlsTimelineProperties"]}
 impl RtActivatable<IActivationFactory> for SystemMediaTransportControlsTimelineProperties {}
 DEFINE_CLSID!(SystemMediaTransportControlsTimelineProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,121,115,116,101,109,77,101,100,105,97,84,114,97,110,115,112,111,114,116,67,111,110,116,114,111,108,115,84,105,109,101,108,105,110,101,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_SystemMediaTransportControlsTimelineProperties]);
 DEFINE_IID!(IID_IVideoDisplayProperties, 1443495345, 23853, 18546, 129, 112, 69, 222, 229, 188, 47, 92);
@@ -1358,7 +1358,7 @@ impl IVideoDisplayProperties {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoDisplayProperties: IVideoDisplayProperties}
+RT_CLASS!{class VideoDisplayProperties: IVideoDisplayProperties ["Windows.Media.VideoDisplayProperties"]}
 DEFINE_IID!(IID_IVideoDisplayProperties2, 3021005262, 43858, 16811, 164, 134, 204, 16, 250, 177, 82, 249);
 RT_INTERFACE!{interface IVideoDisplayProperties2(IVideoDisplayProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoDisplayProperties2] {
     fn get_Genres(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT
@@ -1412,7 +1412,7 @@ impl IVideoFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoFrame: IVideoFrame}
+RT_CLASS!{class VideoFrame: IVideoFrame ["Windows.Media.VideoFrame"]}
 impl RtActivatable<IVideoFrameFactory> for VideoFrame {}
 impl RtActivatable<IVideoFrameStatics> for VideoFrame {}
 impl VideoFrame {
@@ -1517,7 +1517,7 @@ impl IAppBroadcastingMonitor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastingMonitor: IAppBroadcastingMonitor}
+RT_CLASS!{class AppBroadcastingMonitor: IAppBroadcastingMonitor ["Windows.Media.AppBroadcasting.AppBroadcastingMonitor"]}
 impl RtActivatable<IActivationFactory> for AppBroadcastingMonitor {}
 DEFINE_CLSID!(AppBroadcastingMonitor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,112,112,66,114,111,97,100,99,97,115,116,105,110,103,46,65,112,112,66,114,111,97,100,99,97,115,116,105,110,103,77,111,110,105,116,111,114,0]) [CLSID_AppBroadcastingMonitor]);
 DEFINE_IID!(IID_IAppBroadcastingStatus, 304473311, 929, 17144, 139, 128, 201, 34, 140, 217, 207, 46);
@@ -1537,7 +1537,7 @@ impl IAppBroadcastingStatus {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastingStatus: IAppBroadcastingStatus}
+RT_CLASS!{class AppBroadcastingStatus: IAppBroadcastingStatus ["Windows.Media.AppBroadcasting.AppBroadcastingStatus"]}
 DEFINE_IID!(IID_IAppBroadcastingStatusDetails, 110996900, 46451, 20028, 142, 25, 27, 175, 172, 208, 151, 19);
 RT_INTERFACE!{interface IAppBroadcastingStatusDetails(IAppBroadcastingStatusDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastingStatusDetails] {
     fn get_IsAnyAppBroadcasting(&self, out: *mut bool) -> HRESULT,
@@ -1591,7 +1591,7 @@ impl IAppBroadcastingStatusDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastingStatusDetails: IAppBroadcastingStatusDetails}
+RT_CLASS!{class AppBroadcastingStatusDetails: IAppBroadcastingStatusDetails ["Windows.Media.AppBroadcasting.AppBroadcastingStatusDetails"]}
 DEFINE_IID!(IID_IAppBroadcastingUI, 3849297807, 61081, 19914, 163, 195, 112, 175, 61, 180, 79, 95);
 RT_INTERFACE!{interface IAppBroadcastingUI(IAppBroadcastingUIVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastingUI] {
     fn GetStatus(&self, out: *mut *mut AppBroadcastingStatus) -> HRESULT,
@@ -1608,7 +1608,7 @@ impl IAppBroadcastingUI {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastingUI: IAppBroadcastingUI}
+RT_CLASS!{class AppBroadcastingUI: IAppBroadcastingUI ["Windows.Media.AppBroadcasting.AppBroadcastingUI"]}
 impl RtActivatable<IAppBroadcastingUIStatics> for AppBroadcastingUI {}
 impl AppBroadcastingUI {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<AppBroadcastingUI>>> {
@@ -1674,7 +1674,7 @@ impl IAppRecordingManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppRecordingManager: IAppRecordingManager}
+RT_CLASS!{class AppRecordingManager: IAppRecordingManager ["Windows.Media.AppRecording.AppRecordingManager"]}
 impl RtActivatable<IAppRecordingManagerStatics> for AppRecordingManager {}
 impl AppRecordingManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<AppRecordingManager>>> {
@@ -1722,7 +1722,7 @@ impl IAppRecordingResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppRecordingResult: IAppRecordingResult}
+RT_CLASS!{class AppRecordingResult: IAppRecordingResult ["Windows.Media.AppRecording.AppRecordingResult"]}
 DEFINE_IID!(IID_IAppRecordingSavedScreenshotInfo, 2607033610, 6298, 19712, 191, 37, 225, 187, 18, 73, 213, 148);
 RT_INTERFACE!{interface IAppRecordingSavedScreenshotInfo(IAppRecordingSavedScreenshotInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppRecordingSavedScreenshotInfo] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -1741,8 +1741,8 @@ impl IAppRecordingSavedScreenshotInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppRecordingSavedScreenshotInfo: IAppRecordingSavedScreenshotInfo}
-RT_ENUM! { enum AppRecordingSaveScreenshotOption: i32 {
+RT_CLASS!{class AppRecordingSavedScreenshotInfo: IAppRecordingSavedScreenshotInfo ["Windows.Media.AppRecording.AppRecordingSavedScreenshotInfo"]}
+RT_ENUM! { enum AppRecordingSaveScreenshotOption: i32 ["Windows.Media.AppRecording.AppRecordingSaveScreenshotOption"] {
     None (AppRecordingSaveScreenshotOption_None) = 0, HdrContentVisible (AppRecordingSaveScreenshotOption_HdrContentVisible) = 1,
 }}
 DEFINE_IID!(IID_IAppRecordingSaveScreenshotResult, 2623245578, 2747, 17495, 170, 238, 36, 249, 193, 46, 199, 120);
@@ -1768,7 +1768,7 @@ impl IAppRecordingSaveScreenshotResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppRecordingSaveScreenshotResult: IAppRecordingSaveScreenshotResult}
+RT_CLASS!{class AppRecordingSaveScreenshotResult: IAppRecordingSaveScreenshotResult ["Windows.Media.AppRecording.AppRecordingSaveScreenshotResult"]}
 DEFINE_IID!(IID_IAppRecordingStatus, 487376940, 48152, 19338, 166, 239, 18, 126, 250, 179, 181, 217);
 RT_INTERFACE!{interface IAppRecordingStatus(IAppRecordingStatusVtbl): IInspectable(IInspectableVtbl) [IID_IAppRecordingStatus] {
     fn get_CanRecord(&self, out: *mut bool) -> HRESULT,
@@ -1798,7 +1798,7 @@ impl IAppRecordingStatus {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppRecordingStatus: IAppRecordingStatus}
+RT_CLASS!{class AppRecordingStatus: IAppRecordingStatus ["Windows.Media.AppRecording.AppRecordingStatus"]}
 DEFINE_IID!(IID_IAppRecordingStatusDetails, 3040389552, 5357, 17426, 172, 69, 109, 103, 44, 156, 153, 73);
 RT_INTERFACE!{interface IAppRecordingStatusDetails(IAppRecordingStatusDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IAppRecordingStatusDetails] {
     fn get_IsAnyAppBroadcasting(&self, out: *mut bool) -> HRESULT,
@@ -1858,7 +1858,7 @@ impl IAppRecordingStatusDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppRecordingStatusDetails: IAppRecordingStatusDetails}
+RT_CLASS!{class AppRecordingStatusDetails: IAppRecordingStatusDetails ["Windows.Media.AppRecording.AppRecordingStatusDetails"]}
 } // Windows.Media.AppRecording
 pub mod audio { // Windows.Media.Audio
 use ::prelude::*;
@@ -1873,8 +1873,8 @@ impl IAudioDeviceInputNode {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioDeviceInputNode: IAudioDeviceInputNode}
-RT_ENUM! { enum AudioDeviceNodeCreationStatus: i32 {
+RT_CLASS!{class AudioDeviceInputNode: IAudioDeviceInputNode ["Windows.Media.Audio.AudioDeviceInputNode"]}
+RT_ENUM! { enum AudioDeviceNodeCreationStatus: i32 ["Windows.Media.Audio.AudioDeviceNodeCreationStatus"] {
     Success (AudioDeviceNodeCreationStatus_Success) = 0, DeviceNotAvailable (AudioDeviceNodeCreationStatus_DeviceNotAvailable) = 1, FormatNotSupported (AudioDeviceNodeCreationStatus_FormatNotSupported) = 2, UnknownFailure (AudioDeviceNodeCreationStatus_UnknownFailure) = 3, AccessDenied (AudioDeviceNodeCreationStatus_AccessDenied) = 4,
 }}
 DEFINE_IID!(IID_IAudioDeviceOutputNode, 909040639, 65308, 17460, 158, 15, 189, 46, 245, 34, 172, 130);
@@ -1888,7 +1888,7 @@ impl IAudioDeviceOutputNode {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioDeviceOutputNode: IAudioDeviceOutputNode}
+RT_CLASS!{class AudioDeviceOutputNode: IAudioDeviceOutputNode ["Windows.Media.Audio.AudioDeviceOutputNode"]}
 DEFINE_IID!(IID_IAudioFileInputNode, 2421909448, 28517, 19668, 136, 144, 70, 148, 132, 60, 39, 109);
 RT_INTERFACE!{interface IAudioFileInputNode(IAudioFileInputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFileInputNode] {
     fn put_PlaybackSpeedFactor(&self, value: f64) -> HRESULT,
@@ -1973,8 +1973,8 @@ impl IAudioFileInputNode {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioFileInputNode: IAudioFileInputNode}
-RT_ENUM! { enum AudioFileNodeCreationStatus: i32 {
+RT_CLASS!{class AudioFileInputNode: IAudioFileInputNode ["Windows.Media.Audio.AudioFileInputNode"]}
+RT_ENUM! { enum AudioFileNodeCreationStatus: i32 ["Windows.Media.Audio.AudioFileNodeCreationStatus"] {
     Success (AudioFileNodeCreationStatus_Success) = 0, FileNotFound (AudioFileNodeCreationStatus_FileNotFound) = 1, InvalidFileType (AudioFileNodeCreationStatus_InvalidFileType) = 2, FormatNotSupported (AudioFileNodeCreationStatus_FormatNotSupported) = 3, UnknownFailure (AudioFileNodeCreationStatus_UnknownFailure) = 4,
 }}
 DEFINE_IID!(IID_IAudioFileOutputNode, 1356863872, 20838, 16531, 128, 248, 173, 160, 0, 137, 233, 207);
@@ -2001,7 +2001,7 @@ impl IAudioFileOutputNode {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioFileOutputNode: IAudioFileOutputNode}
+RT_CLASS!{class AudioFileOutputNode: IAudioFileOutputNode ["Windows.Media.Audio.AudioFileOutputNode"]}
 DEFINE_IID!(IID_IAudioFrameCompletedEventArgs, 3699147422, 520, 17668, 165, 168, 240, 242, 104, 146, 10, 101);
 RT_INTERFACE!{interface IAudioFrameCompletedEventArgs(IAudioFrameCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFrameCompletedEventArgs] {
     fn get_Frame(&self, out: *mut *mut super::AudioFrame) -> HRESULT
@@ -2013,7 +2013,7 @@ impl IAudioFrameCompletedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioFrameCompletedEventArgs: IAudioFrameCompletedEventArgs}
+RT_CLASS!{class AudioFrameCompletedEventArgs: IAudioFrameCompletedEventArgs ["Windows.Media.Audio.AudioFrameCompletedEventArgs"]}
 DEFINE_IID!(IID_IAudioFrameInputNode, 28468935, 64918, 20469, 163, 197, 210, 122, 155, 244, 66, 55);
 RT_INTERFACE!{interface IAudioFrameInputNode(IAudioFrameInputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFrameInputNode] {
     fn put_PlaybackSpeedFactor(&self, value: f64) -> HRESULT,
@@ -2068,7 +2068,7 @@ impl IAudioFrameInputNode {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioFrameInputNode: IAudioFrameInputNode}
+RT_CLASS!{class AudioFrameInputNode: IAudioFrameInputNode ["Windows.Media.Audio.AudioFrameInputNode"]}
 DEFINE_IID!(IID_IAudioFrameOutputNode, 3091674907, 12953, 17909, 136, 179, 201, 209, 42, 63, 28, 200);
 RT_INTERFACE!{interface IAudioFrameOutputNode(IAudioFrameOutputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFrameOutputNode] {
     fn GetFrame(&self, out: *mut *mut super::AudioFrame) -> HRESULT
@@ -2080,7 +2080,7 @@ impl IAudioFrameOutputNode {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioFrameOutputNode: IAudioFrameOutputNode}
+RT_CLASS!{class AudioFrameOutputNode: IAudioFrameOutputNode ["Windows.Media.Audio.AudioFrameOutputNode"]}
 DEFINE_IID!(IID_IAudioGraph, 450129645, 58508, 19988, 150, 96, 44, 79, 131, 233, 205, 216);
 RT_INTERFACE!{interface IAudioGraph(IAudioGraphVtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraph] {
     fn CreateFrameInputNode(&self, out: *mut *mut AudioFrameInputNode) -> HRESULT,
@@ -2253,7 +2253,7 @@ impl IAudioGraph {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioGraph: IAudioGraph}
+RT_CLASS!{class AudioGraph: IAudioGraph ["Windows.Media.Audio.AudioGraph"]}
 impl RtActivatable<IAudioGraphStatics> for AudioGraph {}
 impl AudioGraph {
     #[inline] pub fn create_async(settings: &AudioGraphSettings) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioGraphResult>>> {
@@ -2315,7 +2315,7 @@ impl IAudioGraph3 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioGraphBatchUpdater: foundation::IClosable}
+RT_CLASS!{class AudioGraphBatchUpdater: foundation::IClosable ["Windows.Media.Audio.AudioGraphBatchUpdater"]}
 DEFINE_IID!(IID_IAudioGraphConnection, 1982886125, 53326, 20396, 178, 51, 96, 11, 66, 237, 212, 105);
 RT_INTERFACE!{interface IAudioGraphConnection(IAudioGraphConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraphConnection] {
     fn get_Destination(&self, out: *mut *mut IAudioNode) -> HRESULT,
@@ -2338,8 +2338,8 @@ impl IAudioGraphConnection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioGraphConnection: IAudioGraphConnection}
-RT_ENUM! { enum AudioGraphCreationStatus: i32 {
+RT_CLASS!{class AudioGraphConnection: IAudioGraphConnection ["Windows.Media.Audio.AudioGraphConnection"]}
+RT_ENUM! { enum AudioGraphCreationStatus: i32 ["Windows.Media.Audio.AudioGraphCreationStatus"] {
     Success (AudioGraphCreationStatus_Success) = 0, DeviceNotAvailable (AudioGraphCreationStatus_DeviceNotAvailable) = 1, FormatNotSupported (AudioGraphCreationStatus_FormatNotSupported) = 2, UnknownFailure (AudioGraphCreationStatus_UnknownFailure) = 3,
 }}
 DEFINE_IID!(IID_IAudioGraphSettings, 492397695, 59134, 17960, 132, 248, 157, 139, 219, 162, 87, 133);
@@ -2415,7 +2415,7 @@ impl IAudioGraphSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioGraphSettings: IAudioGraphSettings}
+RT_CLASS!{class AudioGraphSettings: IAudioGraphSettings ["Windows.Media.Audio.AudioGraphSettings"]}
 impl RtActivatable<IAudioGraphSettingsFactory> for AudioGraphSettings {}
 impl AudioGraphSettings {
     #[inline] pub fn create(audioRenderCategory: super::render::AudioRenderCategory) -> Result<ComPtr<AudioGraphSettings>> {
@@ -2461,7 +2461,7 @@ impl IAudioGraphStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AudioGraphUnrecoverableError: i32 {
+RT_ENUM! { enum AudioGraphUnrecoverableError: i32 ["Windows.Media.Audio.AudioGraphUnrecoverableError"] {
     None (AudioGraphUnrecoverableError_None) = 0, AudioDeviceLost (AudioGraphUnrecoverableError_AudioDeviceLost) = 1, AudioSessionDisconnected (AudioGraphUnrecoverableError_AudioSessionDisconnected) = 2, UnknownFailure (AudioGraphUnrecoverableError_UnknownFailure) = 3,
 }}
 DEFINE_IID!(IID_IAudioGraphUnrecoverableErrorOccurredEventArgs, 3285830624, 16374, 20403, 178, 98, 80, 212, 53, 197, 84, 35);
@@ -2475,7 +2475,7 @@ impl IAudioGraphUnrecoverableErrorOccurredEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioGraphUnrecoverableErrorOccurredEventArgs: IAudioGraphUnrecoverableErrorOccurredEventArgs}
+RT_CLASS!{class AudioGraphUnrecoverableErrorOccurredEventArgs: IAudioGraphUnrecoverableErrorOccurredEventArgs ["Windows.Media.Audio.AudioGraphUnrecoverableErrorOccurredEventArgs"]}
 DEFINE_IID!(IID_IAudioInputNode, 3511156828, 33832, 18308, 183, 253, 169, 157, 70, 140, 93, 32);
 RT_INTERFACE!{interface IAudioInputNode(IAudioInputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioInputNode] {
     fn get_OutgoingConnections(&self, out: *mut *mut foundation::collections::IVectorView<AudioGraphConnection>) -> HRESULT,
@@ -2666,7 +2666,7 @@ impl IAudioNodeEmitter {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioNodeEmitter: IAudioNodeEmitter}
+RT_CLASS!{class AudioNodeEmitter: IAudioNodeEmitter ["Windows.Media.Audio.AudioNodeEmitter"]}
 impl RtActivatable<IAudioNodeEmitterFactory> for AudioNodeEmitter {}
 impl RtActivatable<IActivationFactory> for AudioNodeEmitter {}
 impl AudioNodeEmitter {
@@ -2714,8 +2714,8 @@ impl IAudioNodeEmitterConeProperties {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioNodeEmitterConeProperties: IAudioNodeEmitterConeProperties}
-RT_ENUM! { enum AudioNodeEmitterDecayKind: i32 {
+RT_CLASS!{class AudioNodeEmitterConeProperties: IAudioNodeEmitterConeProperties ["Windows.Media.Audio.AudioNodeEmitterConeProperties"]}
+RT_ENUM! { enum AudioNodeEmitterDecayKind: i32 ["Windows.Media.Audio.AudioNodeEmitterDecayKind"] {
     Natural (AudioNodeEmitterDecayKind_Natural) = 0, Custom (AudioNodeEmitterDecayKind_Custom) = 1,
 }}
 DEFINE_IID!(IID_IAudioNodeEmitterDecayModel, 488463095, 3411, 20393, 189, 132, 213, 129, 106, 134, 243, 255);
@@ -2747,7 +2747,7 @@ impl IAudioNodeEmitterDecayModel {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioNodeEmitterDecayModel: IAudioNodeEmitterDecayModel}
+RT_CLASS!{class AudioNodeEmitterDecayModel: IAudioNodeEmitterDecayModel ["Windows.Media.Audio.AudioNodeEmitterDecayModel"]}
 impl RtActivatable<IAudioNodeEmitterDecayModelStatics> for AudioNodeEmitterDecayModel {}
 impl AudioNodeEmitterDecayModel {
     #[inline] pub fn create_natural(minGain: f64, maxGain: f64, unityGainDistance: f64, cutoffDistance: f64) -> Result<Option<ComPtr<AudioNodeEmitterDecayModel>>> {
@@ -2803,8 +2803,8 @@ impl IAudioNodeEmitterNaturalDecayModelProperties {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioNodeEmitterNaturalDecayModelProperties: IAudioNodeEmitterNaturalDecayModelProperties}
-RT_ENUM! { enum AudioNodeEmitterSettings: u32 {
+RT_CLASS!{class AudioNodeEmitterNaturalDecayModelProperties: IAudioNodeEmitterNaturalDecayModelProperties ["Windows.Media.Audio.AudioNodeEmitterNaturalDecayModelProperties"]}
+RT_ENUM! { enum AudioNodeEmitterSettings: u32 ["Windows.Media.Audio.AudioNodeEmitterSettings"] {
     None (AudioNodeEmitterSettings_None) = 0, DisableDoppler (AudioNodeEmitterSettings_DisableDoppler) = 1,
 }}
 DEFINE_IID!(IID_IAudioNodeEmitterShape, 3926069701, 59197, 17596, 133, 156, 69, 85, 59, 188, 72, 40);
@@ -2824,7 +2824,7 @@ impl IAudioNodeEmitterShape {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioNodeEmitterShape: IAudioNodeEmitterShape}
+RT_CLASS!{class AudioNodeEmitterShape: IAudioNodeEmitterShape ["Windows.Media.Audio.AudioNodeEmitterShape"]}
 impl RtActivatable<IAudioNodeEmitterShapeStatics> for AudioNodeEmitterShape {}
 impl AudioNodeEmitterShape {
     #[inline] pub fn create_cone(innerAngle: f64, outerAngle: f64, outerAngleGain: f64) -> Result<Option<ComPtr<AudioNodeEmitterShape>>> {
@@ -2835,7 +2835,7 @@ impl AudioNodeEmitterShape {
     }
 }
 DEFINE_CLSID!(AudioNodeEmitterShape(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,78,111,100,101,69,109,105,116,116,101,114,83,104,97,112,101,0]) [CLSID_AudioNodeEmitterShape]);
-RT_ENUM! { enum AudioNodeEmitterShapeKind: i32 {
+RT_ENUM! { enum AudioNodeEmitterShapeKind: i32 ["Windows.Media.Audio.AudioNodeEmitterShapeKind"] {
     Omnidirectional (AudioNodeEmitterShapeKind_Omnidirectional) = 0, Cone (AudioNodeEmitterShapeKind_Cone) = 1,
 }}
 DEFINE_IID!(IID_IAudioNodeEmitterShapeStatics, 1471883121, 65445, 19334, 167, 121, 226, 100, 174, 185, 20, 95);
@@ -2904,7 +2904,7 @@ impl IAudioNodeListener {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioNodeListener: IAudioNodeListener}
+RT_CLASS!{class AudioNodeListener: IAudioNodeListener ["Windows.Media.Audio.AudioNodeListener"]}
 impl RtActivatable<IActivationFactory> for AudioNodeListener {}
 DEFINE_CLSID!(AudioNodeListener(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,78,111,100,101,76,105,115,116,101,110,101,114,0]) [CLSID_AudioNodeListener]);
 DEFINE_IID!(IID_IAudioNodeWithListener, 235901052, 31231, 17732, 158, 235, 1, 37, 123, 21, 16, 90);
@@ -2945,7 +2945,7 @@ impl IAudioStateMonitor {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioStateMonitor: IAudioStateMonitor}
+RT_CLASS!{class AudioStateMonitor: IAudioStateMonitor ["Windows.Media.Audio.AudioStateMonitor"]}
 impl RtActivatable<IAudioStateMonitorStatics> for AudioStateMonitor {}
 impl AudioStateMonitor {
     #[inline] pub fn create_for_render_monitoring() -> Result<Option<ComPtr<AudioStateMonitor>>> {
@@ -3027,7 +3027,7 @@ impl IAudioStateMonitorStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioSubmixNode: IAudioInputNode}
+RT_CLASS!{class AudioSubmixNode: IAudioInputNode ["Windows.Media.Audio.AudioSubmixNode"]}
 DEFINE_IID!(IID_ICreateAudioDeviceInputNodeResult, 384747432, 7335, 16623, 145, 164, 211, 70, 224, 170, 27, 186);
 RT_INTERFACE!{interface ICreateAudioDeviceInputNodeResult(ICreateAudioDeviceInputNodeResultVtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioDeviceInputNodeResult] {
     fn get_Status(&self, out: *mut AudioDeviceNodeCreationStatus) -> HRESULT,
@@ -3045,7 +3045,7 @@ impl ICreateAudioDeviceInputNodeResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CreateAudioDeviceInputNodeResult: ICreateAudioDeviceInputNodeResult}
+RT_CLASS!{class CreateAudioDeviceInputNodeResult: ICreateAudioDeviceInputNodeResult ["Windows.Media.Audio.CreateAudioDeviceInputNodeResult"]}
 DEFINE_IID!(IID_ICreateAudioDeviceInputNodeResult2, 2451335630, 16181, 16839, 150, 34, 121, 246, 8, 186, 237, 194);
 RT_INTERFACE!{interface ICreateAudioDeviceInputNodeResult2(ICreateAudioDeviceInputNodeResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioDeviceInputNodeResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
@@ -3074,7 +3074,7 @@ impl ICreateAudioDeviceOutputNodeResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CreateAudioDeviceOutputNodeResult: ICreateAudioDeviceOutputNodeResult}
+RT_CLASS!{class CreateAudioDeviceOutputNodeResult: ICreateAudioDeviceOutputNodeResult ["Windows.Media.Audio.CreateAudioDeviceOutputNodeResult"]}
 DEFINE_IID!(IID_ICreateAudioDeviceOutputNodeResult2, 1214523039, 48590, 19121, 189, 56, 251, 174, 147, 174, 218, 202);
 RT_INTERFACE!{interface ICreateAudioDeviceOutputNodeResult2(ICreateAudioDeviceOutputNodeResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioDeviceOutputNodeResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
@@ -3103,7 +3103,7 @@ impl ICreateAudioFileInputNodeResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CreateAudioFileInputNodeResult: ICreateAudioFileInputNodeResult}
+RT_CLASS!{class CreateAudioFileInputNodeResult: ICreateAudioFileInputNodeResult ["Windows.Media.Audio.CreateAudioFileInputNodeResult"]}
 DEFINE_IID!(IID_ICreateAudioFileInputNodeResult2, 4178059296, 15744, 20448, 129, 193, 118, 143, 234, 124, 167, 224);
 RT_INTERFACE!{interface ICreateAudioFileInputNodeResult2(ICreateAudioFileInputNodeResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioFileInputNodeResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
@@ -3132,7 +3132,7 @@ impl ICreateAudioFileOutputNodeResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CreateAudioFileOutputNodeResult: ICreateAudioFileOutputNodeResult}
+RT_CLASS!{class CreateAudioFileOutputNodeResult: ICreateAudioFileOutputNodeResult ["Windows.Media.Audio.CreateAudioFileOutputNodeResult"]}
 DEFINE_IID!(IID_ICreateAudioFileOutputNodeResult2, 2667689229, 13080, 18355, 166, 10, 27, 73, 43, 231, 252, 13);
 RT_INTERFACE!{interface ICreateAudioFileOutputNodeResult2(ICreateAudioFileOutputNodeResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioFileOutputNodeResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
@@ -3161,7 +3161,7 @@ impl ICreateAudioGraphResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CreateAudioGraphResult: ICreateAudioGraphResult}
+RT_CLASS!{class CreateAudioGraphResult: ICreateAudioGraphResult ["Windows.Media.Audio.CreateAudioGraphResult"]}
 DEFINE_IID!(IID_ICreateAudioGraphResult2, 1836289532, 35014, 20427, 165, 52, 133, 206, 221, 64, 80, 161);
 RT_INTERFACE!{interface ICreateAudioGraphResult2(ICreateAudioGraphResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioGraphResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
@@ -3190,7 +3190,7 @@ impl ICreateMediaSourceAudioInputNodeResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CreateMediaSourceAudioInputNodeResult: ICreateMediaSourceAudioInputNodeResult}
+RT_CLASS!{class CreateMediaSourceAudioInputNodeResult: ICreateMediaSourceAudioInputNodeResult ["Windows.Media.Audio.CreateMediaSourceAudioInputNodeResult"]}
 DEFINE_IID!(IID_ICreateMediaSourceAudioInputNodeResult2, 1666272488, 27162, 18915, 151, 236, 40, 253, 91, 225, 20, 229);
 RT_INTERFACE!{interface ICreateMediaSourceAudioInputNodeResult2(ICreateMediaSourceAudioInputNodeResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ICreateMediaSourceAudioInputNodeResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
@@ -3240,7 +3240,7 @@ impl IEchoEffectDefinition {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EchoEffectDefinition: IEchoEffectDefinition}
+RT_CLASS!{class EchoEffectDefinition: IEchoEffectDefinition ["Windows.Media.Audio.EchoEffectDefinition"]}
 impl RtActivatable<IEchoEffectDefinitionFactory> for EchoEffectDefinition {}
 impl EchoEffectDefinition {
     #[inline] pub fn create(audioGraph: &AudioGraph) -> Result<ComPtr<EchoEffectDefinition>> {
@@ -3297,7 +3297,7 @@ impl IEqualizerBand {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EqualizerBand: IEqualizerBand}
+RT_CLASS!{class EqualizerBand: IEqualizerBand ["Windows.Media.Audio.EqualizerBand"]}
 DEFINE_IID!(IID_IEqualizerEffectDefinition, 37711647, 33790, 17562, 168, 34, 198, 150, 68, 45, 22, 176);
 RT_INTERFACE!{interface IEqualizerEffectDefinition(IEqualizerEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IEqualizerEffectDefinition] {
     fn get_Bands(&self, out: *mut *mut foundation::collections::IVectorView<EqualizerBand>) -> HRESULT
@@ -3309,7 +3309,7 @@ impl IEqualizerEffectDefinition {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EqualizerEffectDefinition: IEqualizerEffectDefinition}
+RT_CLASS!{class EqualizerEffectDefinition: IEqualizerEffectDefinition ["Windows.Media.Audio.EqualizerEffectDefinition"]}
 impl RtActivatable<IEqualizerEffectDefinitionFactory> for EqualizerEffectDefinition {}
 impl EqualizerEffectDefinition {
     #[inline] pub fn create(audioGraph: &AudioGraph) -> Result<ComPtr<EqualizerEffectDefinition>> {
@@ -3339,7 +3339,7 @@ impl IFrameInputNodeQuantumStartedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FrameInputNodeQuantumStartedEventArgs: IFrameInputNodeQuantumStartedEventArgs}
+RT_CLASS!{class FrameInputNodeQuantumStartedEventArgs: IFrameInputNodeQuantumStartedEventArgs ["Windows.Media.Audio.FrameInputNodeQuantumStartedEventArgs"]}
 DEFINE_IID!(IID_ILimiterEffectDefinition, 1802853657, 9731, 18362, 189, 235, 57, 5, 94, 52, 134, 220);
 RT_INTERFACE!{interface ILimiterEffectDefinition(ILimiterEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_ILimiterEffectDefinition] {
     fn put_Release(&self, value: u32) -> HRESULT,
@@ -3367,7 +3367,7 @@ impl ILimiterEffectDefinition {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LimiterEffectDefinition: ILimiterEffectDefinition}
+RT_CLASS!{class LimiterEffectDefinition: ILimiterEffectDefinition ["Windows.Media.Audio.LimiterEffectDefinition"]}
 impl RtActivatable<ILimiterEffectDefinitionFactory> for LimiterEffectDefinition {}
 impl LimiterEffectDefinition {
     #[inline] pub fn create(audioGraph: &AudioGraph) -> Result<ComPtr<LimiterEffectDefinition>> {
@@ -3469,14 +3469,14 @@ impl IMediaSourceAudioInputNode {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaSourceAudioInputNode: IMediaSourceAudioInputNode}
-RT_ENUM! { enum MediaSourceAudioInputNodeCreationStatus: i32 {
+RT_CLASS!{class MediaSourceAudioInputNode: IMediaSourceAudioInputNode ["Windows.Media.Audio.MediaSourceAudioInputNode"]}
+RT_ENUM! { enum MediaSourceAudioInputNodeCreationStatus: i32 ["Windows.Media.Audio.MediaSourceAudioInputNodeCreationStatus"] {
     Success (MediaSourceAudioInputNodeCreationStatus_Success) = 0, FormatNotSupported (MediaSourceAudioInputNodeCreationStatus_FormatNotSupported) = 1, NetworkError (MediaSourceAudioInputNodeCreationStatus_NetworkError) = 2, UnknownFailure (MediaSourceAudioInputNodeCreationStatus_UnknownFailure) = 3,
 }}
-RT_ENUM! { enum MixedRealitySpatialAudioFormatPolicy: i32 {
+RT_ENUM! { enum MixedRealitySpatialAudioFormatPolicy: i32 ["Windows.Media.Audio.MixedRealitySpatialAudioFormatPolicy"] {
     UseMixedRealityDefaultSpatialAudioFormat (MixedRealitySpatialAudioFormatPolicy_UseMixedRealityDefaultSpatialAudioFormat) = 0, UseDeviceConfigurationDefaultSpatialAudioFormat (MixedRealitySpatialAudioFormatPolicy_UseDeviceConfigurationDefaultSpatialAudioFormat) = 1,
 }}
-RT_ENUM! { enum QuantumSizeSelectionMode: i32 {
+RT_ENUM! { enum QuantumSizeSelectionMode: i32 ["Windows.Media.Audio.QuantumSizeSelectionMode"] {
     SystemDefault (QuantumSizeSelectionMode_SystemDefault) = 0, LowestLatency (QuantumSizeSelectionMode_LowestLatency) = 1, ClosestToDesired (QuantumSizeSelectionMode_ClosestToDesired) = 2,
 }}
 DEFINE_IID!(IID_IReverbEffectDefinition, 1174841993, 62819, 19722, 143, 110, 240, 205, 223, 243, 93, 132);
@@ -3737,7 +3737,7 @@ impl IReverbEffectDefinition {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ReverbEffectDefinition: IReverbEffectDefinition}
+RT_CLASS!{class ReverbEffectDefinition: IReverbEffectDefinition ["Windows.Media.Audio.ReverbEffectDefinition"]}
 impl RtActivatable<IReverbEffectDefinitionFactory> for ReverbEffectDefinition {}
 impl ReverbEffectDefinition {
     #[inline] pub fn create(audioGraph: &AudioGraph) -> Result<ComPtr<ReverbEffectDefinition>> {
@@ -3767,8 +3767,8 @@ impl ISetDefaultSpatialAudioFormatResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SetDefaultSpatialAudioFormatResult: ISetDefaultSpatialAudioFormatResult}
-RT_ENUM! { enum SetDefaultSpatialAudioFormatStatus: i32 {
+RT_CLASS!{class SetDefaultSpatialAudioFormatResult: ISetDefaultSpatialAudioFormatResult ["Windows.Media.Audio.SetDefaultSpatialAudioFormatResult"]}
+RT_ENUM! { enum SetDefaultSpatialAudioFormatStatus: i32 ["Windows.Media.Audio.SetDefaultSpatialAudioFormatStatus"] {
     Succeeded (SetDefaultSpatialAudioFormatStatus_Succeeded) = 0, AccessDenied (SetDefaultSpatialAudioFormatStatus_AccessDenied) = 1, LicenseExpired (SetDefaultSpatialAudioFormatStatus_LicenseExpired) = 2, LicenseNotValidForAudioEndpoint (SetDefaultSpatialAudioFormatStatus_LicenseNotValidForAudioEndpoint) = 3, NotSupportedOnAudioEndpoint (SetDefaultSpatialAudioFormatStatus_NotSupportedOnAudioEndpoint) = 4, UnknownError (SetDefaultSpatialAudioFormatStatus_UnknownError) = 5,
 }}
 DEFINE_IID!(IID_ISpatialAudioDeviceConfiguration, 4001562676, 25039, 22345, 157, 164, 16, 240, 254, 2, 129, 153);
@@ -3823,7 +3823,7 @@ impl ISpatialAudioDeviceConfiguration {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialAudioDeviceConfiguration: ISpatialAudioDeviceConfiguration}
+RT_CLASS!{class SpatialAudioDeviceConfiguration: ISpatialAudioDeviceConfiguration ["Windows.Media.Audio.SpatialAudioDeviceConfiguration"]}
 impl RtActivatable<ISpatialAudioDeviceConfigurationStatics> for SpatialAudioDeviceConfiguration {}
 impl SpatialAudioDeviceConfiguration {
     #[inline] pub fn get_for_device_id(deviceId: &HStringArg) -> Result<Option<ComPtr<SpatialAudioDeviceConfiguration>>> {
@@ -3870,7 +3870,7 @@ impl ISpatialAudioFormatConfiguration {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpatialAudioFormatConfiguration: ISpatialAudioFormatConfiguration}
+RT_CLASS!{class SpatialAudioFormatConfiguration: ISpatialAudioFormatConfiguration ["Windows.Media.Audio.SpatialAudioFormatConfiguration"]}
 impl RtActivatable<ISpatialAudioFormatConfigurationStatics> for SpatialAudioFormatConfiguration {}
 impl SpatialAudioFormatConfiguration {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<SpatialAudioFormatConfiguration>>> {
@@ -3953,7 +3953,7 @@ impl ISpatialAudioFormatSubtypeStatics {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SpatialAudioModel: i32 {
+RT_ENUM! { enum SpatialAudioModel: i32 ["Windows.Media.Audio.SpatialAudioModel"] {
     ObjectBased (SpatialAudioModel_ObjectBased) = 0, FoldDown (SpatialAudioModel_FoldDown) = 1,
 }}
 } // Windows.Media.Audio
@@ -3982,7 +3982,7 @@ impl IAdvancedCapturedPhoto {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdvancedCapturedPhoto: IAdvancedCapturedPhoto}
+RT_CLASS!{class AdvancedCapturedPhoto: IAdvancedCapturedPhoto ["Windows.Media.Capture.AdvancedCapturedPhoto"]}
 DEFINE_IID!(IID_IAdvancedCapturedPhoto2, 416247000, 53246, 17112, 129, 4, 1, 123, 179, 24, 244, 161);
 RT_INTERFACE!{interface IAdvancedCapturedPhoto2(IAdvancedCapturedPhoto2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedCapturedPhoto2] {
     fn get_FrameBoundsRelativeToReferencePhoto(&self, out: *mut *mut foundation::IReference<foundation::Rect>) -> HRESULT
@@ -4039,7 +4039,7 @@ impl IAdvancedPhotoCapture {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdvancedPhotoCapture: IAdvancedPhotoCapture}
+RT_CLASS!{class AdvancedPhotoCapture: IAdvancedPhotoCapture ["Windows.Media.Capture.AdvancedPhotoCapture"]}
 DEFINE_IID!(IID_IAppBroadcastBackgroundService, 3134318378, 64148, 18169, 149, 252, 215, 21, 17, 205, 167, 11);
 RT_INTERFACE!{interface IAppBroadcastBackgroundService(IAppBroadcastBackgroundServiceVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastBackgroundService] {
     fn put_PlugInState(&self, value: AppBroadcastPlugInState) -> HRESULT,
@@ -4123,7 +4123,7 @@ impl IAppBroadcastBackgroundService {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastBackgroundService: IAppBroadcastBackgroundService}
+RT_CLASS!{class AppBroadcastBackgroundService: IAppBroadcastBackgroundService ["Windows.Media.Capture.AppBroadcastBackgroundService"]}
 DEFINE_IID!(IID_IAppBroadcastBackgroundService2, 4237085631, 21833, 19335, 149, 159, 35, 202, 64, 31, 212, 115);
 RT_INTERFACE!{interface IAppBroadcastBackgroundService2(IAppBroadcastBackgroundService2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastBackgroundService2] {
     fn put_BroadcastTitle(&self, value: HSTRING) -> HRESULT,
@@ -4251,7 +4251,7 @@ impl IAppBroadcastBackgroundServiceSignInInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastBackgroundServiceSignInInfo: IAppBroadcastBackgroundServiceSignInInfo}
+RT_CLASS!{class AppBroadcastBackgroundServiceSignInInfo: IAppBroadcastBackgroundServiceSignInInfo ["Windows.Media.Capture.AppBroadcastBackgroundServiceSignInInfo"]}
 DEFINE_IID!(IID_IAppBroadcastBackgroundServiceSignInInfo2, 2432968796, 25295, 19004, 167, 238, 174, 181, 7, 64, 70, 69);
 RT_INTERFACE!{interface IAppBroadcastBackgroundServiceSignInInfo2(IAppBroadcastBackgroundServiceSignInInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastBackgroundServiceSignInInfo2] {
     fn add_UserNameChanged(&self, handler: *mut foundation::TypedEventHandler<AppBroadcastBackgroundServiceSignInInfo, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -4351,7 +4351,7 @@ impl IAppBroadcastBackgroundServiceStreamInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastBackgroundServiceStreamInfo: IAppBroadcastBackgroundServiceStreamInfo}
+RT_CLASS!{class AppBroadcastBackgroundServiceStreamInfo: IAppBroadcastBackgroundServiceStreamInfo ["Windows.Media.Capture.AppBroadcastBackgroundServiceStreamInfo"]}
 DEFINE_IID!(IID_IAppBroadcastBackgroundServiceStreamInfo2, 3172900717, 38108, 20430, 149, 65, 169, 241, 41, 89, 99, 52);
 RT_INTERFACE!{interface IAppBroadcastBackgroundServiceStreamInfo2(IAppBroadcastBackgroundServiceStreamInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastBackgroundServiceStreamInfo2] {
     fn ReportProblemWithStream(&self) -> HRESULT
@@ -4362,7 +4362,7 @@ impl IAppBroadcastBackgroundServiceStreamInfo2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppBroadcastCameraCaptureState: i32 {
+RT_ENUM! { enum AppBroadcastCameraCaptureState: i32 ["Windows.Media.Capture.AppBroadcastCameraCaptureState"] {
     Stopped (AppBroadcastCameraCaptureState_Stopped) = 0, Started (AppBroadcastCameraCaptureState_Started) = 1, Failed (AppBroadcastCameraCaptureState_Failed) = 2,
 }}
 DEFINE_IID!(IID_IAppBroadcastCameraCaptureStateChangedEventArgs, 506678480, 47234, 19336, 134, 146, 5, 153, 154, 206, 183, 15);
@@ -4382,17 +4382,17 @@ impl IAppBroadcastCameraCaptureStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastCameraCaptureStateChangedEventArgs: IAppBroadcastCameraCaptureStateChangedEventArgs}
-RT_ENUM! { enum AppBroadcastCameraOverlayLocation: i32 {
+RT_CLASS!{class AppBroadcastCameraCaptureStateChangedEventArgs: IAppBroadcastCameraCaptureStateChangedEventArgs ["Windows.Media.Capture.AppBroadcastCameraCaptureStateChangedEventArgs"]}
+RT_ENUM! { enum AppBroadcastCameraOverlayLocation: i32 ["Windows.Media.Capture.AppBroadcastCameraOverlayLocation"] {
     TopLeft (AppBroadcastCameraOverlayLocation_TopLeft) = 0, TopCenter (AppBroadcastCameraOverlayLocation_TopCenter) = 1, TopRight (AppBroadcastCameraOverlayLocation_TopRight) = 2, MiddleLeft (AppBroadcastCameraOverlayLocation_MiddleLeft) = 3, MiddleCenter (AppBroadcastCameraOverlayLocation_MiddleCenter) = 4, MiddleRight (AppBroadcastCameraOverlayLocation_MiddleRight) = 5, BottomLeft (AppBroadcastCameraOverlayLocation_BottomLeft) = 6, BottomCenter (AppBroadcastCameraOverlayLocation_BottomCenter) = 7, BottomRight (AppBroadcastCameraOverlayLocation_BottomRight) = 8,
 }}
-RT_ENUM! { enum AppBroadcastCameraOverlaySize: i32 {
+RT_ENUM! { enum AppBroadcastCameraOverlaySize: i32 ["Windows.Media.Capture.AppBroadcastCameraOverlaySize"] {
     Small (AppBroadcastCameraOverlaySize_Small) = 0, Medium (AppBroadcastCameraOverlaySize_Medium) = 1, Large (AppBroadcastCameraOverlaySize_Large) = 2,
 }}
-RT_ENUM! { enum AppBroadcastCaptureTargetType: i32 {
+RT_ENUM! { enum AppBroadcastCaptureTargetType: i32 ["Windows.Media.Capture.AppBroadcastCaptureTargetType"] {
     AppView (AppBroadcastCaptureTargetType_AppView) = 0, EntireDisplay (AppBroadcastCaptureTargetType_EntireDisplay) = 1,
 }}
-RT_ENUM! { enum AppBroadcastExitBroadcastModeReason: i32 {
+RT_ENUM! { enum AppBroadcastExitBroadcastModeReason: i32 ["Windows.Media.Capture.AppBroadcastExitBroadcastModeReason"] {
     NormalExit (AppBroadcastExitBroadcastModeReason_NormalExit) = 0, UserCanceled (AppBroadcastExitBroadcastModeReason_UserCanceled) = 1, AuthorizationFail (AppBroadcastExitBroadcastModeReason_AuthorizationFail) = 2, ForegroundAppActivated (AppBroadcastExitBroadcastModeReason_ForegroundAppActivated) = 3,
 }}
 DEFINE_IID!(IID_IAppBroadcastGlobalSettings, 2999658405, 28924, 19991, 128, 189, 107, 160, 253, 63, 243, 160);
@@ -4534,7 +4534,7 @@ impl IAppBroadcastGlobalSettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastGlobalSettings: IAppBroadcastGlobalSettings}
+RT_CLASS!{class AppBroadcastGlobalSettings: IAppBroadcastGlobalSettings ["Windows.Media.Capture.AppBroadcastGlobalSettings"]}
 DEFINE_IID!(IID_IAppBroadcastHeartbeatRequestedEventArgs, 3466936963, 61009, 19903, 148, 114, 121, 169, 237, 78, 33, 101);
 RT_INTERFACE!{interface IAppBroadcastHeartbeatRequestedEventArgs(IAppBroadcastHeartbeatRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastHeartbeatRequestedEventArgs] {
     fn put_Handled(&self, value: bool) -> HRESULT,
@@ -4551,7 +4551,7 @@ impl IAppBroadcastHeartbeatRequestedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastHeartbeatRequestedEventArgs: IAppBroadcastHeartbeatRequestedEventArgs}
+RT_CLASS!{class AppBroadcastHeartbeatRequestedEventArgs: IAppBroadcastHeartbeatRequestedEventArgs ["Windows.Media.Capture.AppBroadcastHeartbeatRequestedEventArgs"]}
 RT_CLASS!{static class AppBroadcastManager}
 impl RtActivatable<IAppBroadcastManagerStatics> for AppBroadcastManager {}
 impl AppBroadcastManager {
@@ -4596,7 +4596,7 @@ impl IAppBroadcastManagerStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppBroadcastMicrophoneCaptureState: i32 {
+RT_ENUM! { enum AppBroadcastMicrophoneCaptureState: i32 ["Windows.Media.Capture.AppBroadcastMicrophoneCaptureState"] {
     Stopped (AppBroadcastMicrophoneCaptureState_Stopped) = 0, Started (AppBroadcastMicrophoneCaptureState_Started) = 1, Failed (AppBroadcastMicrophoneCaptureState_Failed) = 2,
 }}
 DEFINE_IID!(IID_IAppBroadcastMicrophoneCaptureStateChangedEventArgs, 2825573865, 37952, 18696, 157, 9, 101, 183, 227, 21, 215, 149);
@@ -4616,7 +4616,7 @@ impl IAppBroadcastMicrophoneCaptureStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastMicrophoneCaptureStateChangedEventArgs: IAppBroadcastMicrophoneCaptureStateChangedEventArgs}
+RT_CLASS!{class AppBroadcastMicrophoneCaptureStateChangedEventArgs: IAppBroadcastMicrophoneCaptureStateChangedEventArgs ["Windows.Media.Capture.AppBroadcastMicrophoneCaptureStateChangedEventArgs"]}
 DEFINE_IID!(IID_IAppBroadcastPlugIn, 1376525926, 25875, 17780, 172, 84, 35, 183, 151, 41, 97, 91);
 RT_INTERFACE!{interface IAppBroadcastPlugIn(IAppBroadcastPlugInVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPlugIn] {
     fn get_AppId(&self, out: *mut HSTRING) -> HRESULT,
@@ -4647,7 +4647,7 @@ impl IAppBroadcastPlugIn {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastPlugIn: IAppBroadcastPlugIn}
+RT_CLASS!{class AppBroadcastPlugIn: IAppBroadcastPlugIn ["Windows.Media.Capture.AppBroadcastPlugIn"]}
 DEFINE_IID!(IID_IAppBroadcastPlugInManager, 3847281017, 10145, 18855, 187, 244, 215, 169, 233, 208, 118, 104);
 RT_INTERFACE!{interface IAppBroadcastPlugInManager(IAppBroadcastPlugInManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPlugInManager] {
     fn get_IsBroadcastProviderAvailable(&self, out: *mut bool) -> HRESULT,
@@ -4676,7 +4676,7 @@ impl IAppBroadcastPlugInManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastPlugInManager: IAppBroadcastPlugInManager}
+RT_CLASS!{class AppBroadcastPlugInManager: IAppBroadcastPlugInManager ["Windows.Media.Capture.AppBroadcastPlugInManager"]}
 impl RtActivatable<IAppBroadcastPlugInManagerStatics> for AppBroadcastPlugInManager {}
 impl AppBroadcastPlugInManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<AppBroadcastPlugInManager>>> {
@@ -4704,7 +4704,7 @@ impl IAppBroadcastPlugInManagerStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppBroadcastPlugInState: i32 {
+RT_ENUM! { enum AppBroadcastPlugInState: i32 ["Windows.Media.Capture.AppBroadcastPlugInState"] {
     Unknown (AppBroadcastPlugInState_Unknown) = 0, Initialized (AppBroadcastPlugInState_Initialized) = 1, MicrosoftSignInRequired (AppBroadcastPlugInState_MicrosoftSignInRequired) = 2, OAuthSignInRequired (AppBroadcastPlugInState_OAuthSignInRequired) = 3, ProviderSignInRequired (AppBroadcastPlugInState_ProviderSignInRequired) = 4, InBandwidthTest (AppBroadcastPlugInState_InBandwidthTest) = 5, ReadyToBroadcast (AppBroadcastPlugInState_ReadyToBroadcast) = 6,
 }}
 DEFINE_IID!(IID_IAppBroadcastPlugInStateChangedEventArgs, 1216467186, 43973, 20422, 132, 176, 137, 55, 11, 180, 114, 18);
@@ -4718,7 +4718,7 @@ impl IAppBroadcastPlugInStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastPlugInStateChangedEventArgs: IAppBroadcastPlugInStateChangedEventArgs}
+RT_CLASS!{class AppBroadcastPlugInStateChangedEventArgs: IAppBroadcastPlugInStateChangedEventArgs ["Windows.Media.Capture.AppBroadcastPlugInStateChangedEventArgs"]}
 DEFINE_IID!(IID_IAppBroadcastPreview, 347475802, 28234, 19328, 161, 79, 103, 238, 119, 209, 83, 231);
 RT_INTERFACE!{interface IAppBroadcastPreview(IAppBroadcastPreviewVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPreview] {
     fn StopPreview(&self) -> HRESULT,
@@ -4758,8 +4758,8 @@ impl IAppBroadcastPreview {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastPreview: IAppBroadcastPreview}
-RT_ENUM! { enum AppBroadcastPreviewState: i32 {
+RT_CLASS!{class AppBroadcastPreview: IAppBroadcastPreview ["Windows.Media.Capture.AppBroadcastPreview"]}
+RT_ENUM! { enum AppBroadcastPreviewState: i32 ["Windows.Media.Capture.AppBroadcastPreviewState"] {
     Started (AppBroadcastPreviewState_Started) = 0, Stopped (AppBroadcastPreviewState_Stopped) = 1, Failed (AppBroadcastPreviewState_Failed) = 2,
 }}
 DEFINE_IID!(IID_IAppBroadcastPreviewStateChangedEventArgs, 1515713246, 36330, 20102, 144, 173, 3, 252, 38, 185, 101, 60);
@@ -4779,7 +4779,7 @@ impl IAppBroadcastPreviewStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastPreviewStateChangedEventArgs: IAppBroadcastPreviewStateChangedEventArgs}
+RT_CLASS!{class AppBroadcastPreviewStateChangedEventArgs: IAppBroadcastPreviewStateChangedEventArgs ["Windows.Media.Capture.AppBroadcastPreviewStateChangedEventArgs"]}
 DEFINE_IID!(IID_IAppBroadcastPreviewStreamReader, 2451737936, 56127, 16552, 140, 212, 244, 227, 113, 221, 171, 55);
 RT_INTERFACE!{interface IAppBroadcastPreviewStreamReader(IAppBroadcastPreviewStreamReaderVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPreviewStreamReader] {
     fn get_VideoWidth(&self, out: *mut u32) -> HRESULT,
@@ -4834,7 +4834,7 @@ impl IAppBroadcastPreviewStreamReader {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastPreviewStreamReader: IAppBroadcastPreviewStreamReader}
+RT_CLASS!{class AppBroadcastPreviewStreamReader: IAppBroadcastPreviewStreamReader ["Windows.Media.Capture.AppBroadcastPreviewStreamReader"]}
 DEFINE_IID!(IID_IAppBroadcastPreviewStreamVideoFrame, 17809057, 38142, 17561, 184, 192, 141, 36, 66, 121, 251, 18);
 RT_INTERFACE!{interface IAppBroadcastPreviewStreamVideoFrame(IAppBroadcastPreviewStreamVideoFrameVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPreviewStreamVideoFrame] {
     fn get_VideoHeader(&self, out: *mut *mut AppBroadcastPreviewStreamVideoHeader) -> HRESULT,
@@ -4852,7 +4852,7 @@ impl IAppBroadcastPreviewStreamVideoFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastPreviewStreamVideoFrame: IAppBroadcastPreviewStreamVideoFrame}
+RT_CLASS!{class AppBroadcastPreviewStreamVideoFrame: IAppBroadcastPreviewStreamVideoFrame ["Windows.Media.Capture.AppBroadcastPreviewStreamVideoFrame"]}
 DEFINE_IID!(IID_IAppBroadcastPreviewStreamVideoHeader, 2347720979, 55940, 17561, 167, 171, 135, 17, 140, 180, 161, 87);
 RT_INTERFACE!{interface IAppBroadcastPreviewStreamVideoHeader(IAppBroadcastPreviewStreamVideoHeaderVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPreviewStreamVideoHeader] {
     fn get_AbsoluteTimestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -4882,7 +4882,7 @@ impl IAppBroadcastPreviewStreamVideoHeader {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastPreviewStreamVideoHeader: IAppBroadcastPreviewStreamVideoHeader}
+RT_CLASS!{class AppBroadcastPreviewStreamVideoHeader: IAppBroadcastPreviewStreamVideoHeader ["Windows.Media.Capture.AppBroadcastPreviewStreamVideoHeader"]}
 DEFINE_IID!(IID_IAppBroadcastProviderSettings, 3272335202, 39240, 17807, 173, 80, 170, 6, 236, 3, 218, 8);
 RT_INTERFACE!{interface IAppBroadcastProviderSettings(IAppBroadcastProviderSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastProviderSettings] {
     fn put_DefaultBroadcastTitle(&self, value: HSTRING) -> HRESULT,
@@ -4965,7 +4965,7 @@ impl IAppBroadcastProviderSettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastProviderSettings: IAppBroadcastProviderSettings}
+RT_CLASS!{class AppBroadcastProviderSettings: IAppBroadcastProviderSettings ["Windows.Media.Capture.AppBroadcastProviderSettings"]}
 DEFINE_IID!(IID_IAppBroadcastServices, 2254484694, 38555, 20028, 172, 58, 139, 4, 46, 228, 238, 99);
 RT_INTERFACE!{interface IAppBroadcastServices(IAppBroadcastServicesVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastServices] {
     fn get_CaptureTargetType(&self, out: *mut AppBroadcastCaptureTargetType) -> HRESULT,
@@ -5054,11 +5054,11 @@ impl IAppBroadcastServices {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastServices: IAppBroadcastServices}
-RT_ENUM! { enum AppBroadcastSignInResult: i32 {
+RT_CLASS!{class AppBroadcastServices: IAppBroadcastServices ["Windows.Media.Capture.AppBroadcastServices"]}
+RT_ENUM! { enum AppBroadcastSignInResult: i32 ["Windows.Media.Capture.AppBroadcastSignInResult"] {
     Success (AppBroadcastSignInResult_Success) = 0, AuthenticationFailed (AppBroadcastSignInResult_AuthenticationFailed) = 1, Unauthorized (AppBroadcastSignInResult_Unauthorized) = 2, ServiceUnavailable (AppBroadcastSignInResult_ServiceUnavailable) = 3, Unknown (AppBroadcastSignInResult_Unknown) = 4,
 }}
-RT_ENUM! { enum AppBroadcastSignInState: i32 {
+RT_ENUM! { enum AppBroadcastSignInState: i32 ["Windows.Media.Capture.AppBroadcastSignInState"] {
     NotSignedIn (AppBroadcastSignInState_NotSignedIn) = 0, MicrosoftSignInInProgress (AppBroadcastSignInState_MicrosoftSignInInProgress) = 1, MicrosoftSignInComplete (AppBroadcastSignInState_MicrosoftSignInComplete) = 2, OAuthSignInInProgress (AppBroadcastSignInState_OAuthSignInInProgress) = 3, OAuthSignInComplete (AppBroadcastSignInState_OAuthSignInComplete) = 4,
 }}
 DEFINE_IID!(IID_IAppBroadcastSignInStateChangedEventArgs, 45519524, 22809, 19102, 141, 94, 201, 187, 13, 211, 55, 122);
@@ -5078,7 +5078,7 @@ impl IAppBroadcastSignInStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastSignInStateChangedEventArgs: IAppBroadcastSignInStateChangedEventArgs}
+RT_CLASS!{class AppBroadcastSignInStateChangedEventArgs: IAppBroadcastSignInStateChangedEventArgs ["Windows.Media.Capture.AppBroadcastSignInStateChangedEventArgs"]}
 DEFINE_IID!(IID_IAppBroadcastState, 3993503085, 32921, 19933, 146, 46, 197, 109, 172, 88, 171, 251);
 RT_INTERFACE!{interface IAppBroadcastState(IAppBroadcastStateVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastState] {
     fn get_IsCaptureTargetRunning(&self, out: *mut bool) -> HRESULT,
@@ -5284,7 +5284,7 @@ impl IAppBroadcastState {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastState: IAppBroadcastState}
+RT_CLASS!{class AppBroadcastState: IAppBroadcastState ["Windows.Media.Capture.AppBroadcastState"]}
 DEFINE_IID!(IID_IAppBroadcastStreamAudioFrame, 4020980424, 8634, 17727, 139, 183, 94, 147, 138, 46, 154, 116);
 RT_INTERFACE!{interface IAppBroadcastStreamAudioFrame(IAppBroadcastStreamAudioFrameVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastStreamAudioFrame] {
     fn get_AudioHeader(&self, out: *mut *mut AppBroadcastStreamAudioHeader) -> HRESULT,
@@ -5302,7 +5302,7 @@ impl IAppBroadcastStreamAudioFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastStreamAudioFrame: IAppBroadcastStreamAudioFrame}
+RT_CLASS!{class AppBroadcastStreamAudioFrame: IAppBroadcastStreamAudioFrame ["Windows.Media.Capture.AppBroadcastStreamAudioFrame"]}
 DEFINE_IID!(IID_IAppBroadcastStreamAudioHeader, 3206653296, 27512, 16918, 159, 7, 90, 255, 82, 86, 241, 183);
 RT_INTERFACE!{interface IAppBroadcastStreamAudioHeader(IAppBroadcastStreamAudioHeaderVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastStreamAudioHeader] {
     fn get_AbsoluteTimestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -5338,7 +5338,7 @@ impl IAppBroadcastStreamAudioHeader {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastStreamAudioHeader: IAppBroadcastStreamAudioHeader}
+RT_CLASS!{class AppBroadcastStreamAudioHeader: IAppBroadcastStreamAudioHeader ["Windows.Media.Capture.AppBroadcastStreamAudioHeader"]}
 DEFINE_IID!(IID_IAppBroadcastStreamReader, 3006840057, 13156, 17504, 181, 241, 60, 194, 121, 106, 138, 162);
 RT_INTERFACE!{interface IAppBroadcastStreamReader(IAppBroadcastStreamReaderVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastStreamReader] {
     fn get_AudioChannels(&self, out: *mut u32) -> HRESULT,
@@ -5421,8 +5421,8 @@ impl IAppBroadcastStreamReader {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastStreamReader: IAppBroadcastStreamReader}
-RT_ENUM! { enum AppBroadcastStreamState: i32 {
+RT_CLASS!{class AppBroadcastStreamReader: IAppBroadcastStreamReader ["Windows.Media.Capture.AppBroadcastStreamReader"]}
+RT_ENUM! { enum AppBroadcastStreamState: i32 ["Windows.Media.Capture.AppBroadcastStreamState"] {
     Initializing (AppBroadcastStreamState_Initializing) = 0, StreamReady (AppBroadcastStreamState_StreamReady) = 1, Started (AppBroadcastStreamState_Started) = 2, Paused (AppBroadcastStreamState_Paused) = 3, Terminated (AppBroadcastStreamState_Terminated) = 4,
 }}
 DEFINE_IID!(IID_IAppBroadcastStreamStateChangedEventArgs, 1359521587, 53256, 19081, 147, 190, 88, 174, 217, 97, 55, 78);
@@ -5436,7 +5436,7 @@ impl IAppBroadcastStreamStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastStreamStateChangedEventArgs: IAppBroadcastStreamStateChangedEventArgs}
+RT_CLASS!{class AppBroadcastStreamStateChangedEventArgs: IAppBroadcastStreamStateChangedEventArgs ["Windows.Media.Capture.AppBroadcastStreamStateChangedEventArgs"]}
 DEFINE_IID!(IID_IAppBroadcastStreamVideoFrame, 261607211, 51684, 20104, 129, 148, 216, 20, 203, 213, 133, 216);
 RT_INTERFACE!{interface IAppBroadcastStreamVideoFrame(IAppBroadcastStreamVideoFrameVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastStreamVideoFrame] {
     fn get_VideoHeader(&self, out: *mut *mut AppBroadcastStreamVideoHeader) -> HRESULT,
@@ -5454,7 +5454,7 @@ impl IAppBroadcastStreamVideoFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastStreamVideoFrame: IAppBroadcastStreamVideoFrame}
+RT_CLASS!{class AppBroadcastStreamVideoFrame: IAppBroadcastStreamVideoFrame ["Windows.Media.Capture.AppBroadcastStreamVideoFrame"]}
 DEFINE_IID!(IID_IAppBroadcastStreamVideoHeader, 194952910, 32306, 17197, 140, 162, 54, 191, 16, 185, 244, 98);
 RT_INTERFACE!{interface IAppBroadcastStreamVideoHeader(IAppBroadcastStreamVideoHeaderVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastStreamVideoHeader] {
     fn get_AbsoluteTimestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -5496,8 +5496,8 @@ impl IAppBroadcastStreamVideoHeader {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastStreamVideoHeader: IAppBroadcastStreamVideoHeader}
-RT_ENUM! { enum AppBroadcastTerminationReason: i32 {
+RT_CLASS!{class AppBroadcastStreamVideoHeader: IAppBroadcastStreamVideoHeader ["Windows.Media.Capture.AppBroadcastStreamVideoHeader"]}
+RT_ENUM! { enum AppBroadcastTerminationReason: i32 ["Windows.Media.Capture.AppBroadcastTerminationReason"] {
     NormalTermination (AppBroadcastTerminationReason_NormalTermination) = 0, LostConnectionToService (AppBroadcastTerminationReason_LostConnectionToService) = 1, NoNetworkConnectivity (AppBroadcastTerminationReason_NoNetworkConnectivity) = 2, ServiceAbort (AppBroadcastTerminationReason_ServiceAbort) = 3, ServiceError (AppBroadcastTerminationReason_ServiceError) = 4, ServiceUnavailable (AppBroadcastTerminationReason_ServiceUnavailable) = 5, InternalError (AppBroadcastTerminationReason_InternalError) = 6, UnsupportedFormat (AppBroadcastTerminationReason_UnsupportedFormat) = 7, BackgroundTaskTerminated (AppBroadcastTerminationReason_BackgroundTaskTerminated) = 8, BackgroundTaskUnresponsive (AppBroadcastTerminationReason_BackgroundTaskUnresponsive) = 9,
 }}
 DEFINE_IID!(IID_IAppBroadcastTriggerDetails, 3739986741, 60510, 19855, 177, 192, 93, 166, 232, 199, 86, 56);
@@ -5511,11 +5511,11 @@ impl IAppBroadcastTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastTriggerDetails: IAppBroadcastTriggerDetails}
-RT_ENUM! { enum AppBroadcastVideoEncodingBitrateMode: i32 {
+RT_CLASS!{class AppBroadcastTriggerDetails: IAppBroadcastTriggerDetails ["Windows.Media.Capture.AppBroadcastTriggerDetails"]}
+RT_ENUM! { enum AppBroadcastVideoEncodingBitrateMode: i32 ["Windows.Media.Capture.AppBroadcastVideoEncodingBitrateMode"] {
     Custom (AppBroadcastVideoEncodingBitrateMode_Custom) = 0, Auto (AppBroadcastVideoEncodingBitrateMode_Auto) = 1,
 }}
-RT_ENUM! { enum AppBroadcastVideoEncodingResolutionMode: i32 {
+RT_ENUM! { enum AppBroadcastVideoEncodingResolutionMode: i32 ["Windows.Media.Capture.AppBroadcastVideoEncodingResolutionMode"] {
     Custom (AppBroadcastVideoEncodingResolutionMode_Custom) = 0, Auto (AppBroadcastVideoEncodingResolutionMode_Auto) = 1,
 }}
 DEFINE_IID!(IID_IAppBroadcastViewerCountChangedEventArgs, 3873511461, 21505, 19166, 139, 210, 193, 78, 206, 230, 128, 125);
@@ -5529,7 +5529,7 @@ impl IAppBroadcastViewerCountChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastViewerCountChangedEventArgs: IAppBroadcastViewerCountChangedEventArgs}
+RT_CLASS!{class AppBroadcastViewerCountChangedEventArgs: IAppBroadcastViewerCountChangedEventArgs ["Windows.Media.Capture.AppBroadcastViewerCountChangedEventArgs"]}
 DEFINE_IID!(IID_IAppCapture, 2538198099, 41626, 17901, 143, 41, 34, 208, 153, 66, 207, 247);
 RT_INTERFACE!{interface IAppCapture(IAppCaptureVtbl): IInspectable(IInspectableVtbl) [IID_IAppCapture] {
     fn get_IsCapturingAudio(&self, out: *mut bool) -> HRESULT,
@@ -5558,7 +5558,7 @@ impl IAppCapture {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppCapture: IAppCapture}
+RT_CLASS!{class AppCapture: IAppCapture ["Windows.Media.Capture.AppCapture"]}
 impl RtActivatable<IAppCaptureStatics> for AppCapture {}
 impl RtActivatable<IAppCaptureStatics2> for AppCapture {}
 impl AppCapture {
@@ -5685,7 +5685,7 @@ impl IAppCaptureAlternateShortcutKeys {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppCaptureAlternateShortcutKeys: IAppCaptureAlternateShortcutKeys}
+RT_CLASS!{class AppCaptureAlternateShortcutKeys: IAppCaptureAlternateShortcutKeys ["Windows.Media.Capture.AppCaptureAlternateShortcutKeys"]}
 DEFINE_IID!(IID_IAppCaptureAlternateShortcutKeys2, 3278278800, 56599, 18416, 149, 229, 206, 66, 40, 108, 243, 56);
 RT_INTERFACE!{interface IAppCaptureAlternateShortcutKeys2(IAppCaptureAlternateShortcutKeys2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureAlternateShortcutKeys2] {
     #[cfg(feature="windows-system")] fn put_ToggleMicrophoneCaptureKey(&self, value: super::super::system::VirtualKey) -> HRESULT,
@@ -5773,7 +5773,7 @@ impl IAppCaptureDurationGeneratedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppCaptureDurationGeneratedEventArgs: IAppCaptureDurationGeneratedEventArgs}
+RT_CLASS!{class AppCaptureDurationGeneratedEventArgs: IAppCaptureDurationGeneratedEventArgs ["Windows.Media.Capture.AppCaptureDurationGeneratedEventArgs"]}
 DEFINE_IID!(IID_IAppCaptureFileGeneratedEventArgs, 1099561972, 18014, 17855, 144, 127, 22, 91, 63, 178, 55, 88);
 RT_INTERFACE!{interface IAppCaptureFileGeneratedEventArgs(IAppCaptureFileGeneratedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureFileGeneratedEventArgs] {
     #[cfg(feature="windows-storage")] fn get_File(&self, out: *mut *mut super::super::storage::StorageFile) -> HRESULT
@@ -5785,8 +5785,8 @@ impl IAppCaptureFileGeneratedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppCaptureFileGeneratedEventArgs: IAppCaptureFileGeneratedEventArgs}
-RT_ENUM! { enum AppCaptureHistoricalBufferLengthUnit: i32 {
+RT_CLASS!{class AppCaptureFileGeneratedEventArgs: IAppCaptureFileGeneratedEventArgs ["Windows.Media.Capture.AppCaptureFileGeneratedEventArgs"]}
+RT_ENUM! { enum AppCaptureHistoricalBufferLengthUnit: i32 ["Windows.Media.Capture.AppCaptureHistoricalBufferLengthUnit"] {
     Megabytes (AppCaptureHistoricalBufferLengthUnit_Megabytes) = 0, Seconds (AppCaptureHistoricalBufferLengthUnit_Seconds) = 1,
 }}
 RT_CLASS!{static class AppCaptureManager}
@@ -5816,7 +5816,7 @@ impl IAppCaptureManagerStatics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppCaptureMetadataPriority: i32 {
+RT_ENUM! { enum AppCaptureMetadataPriority: i32 ["Windows.Media.Capture.AppCaptureMetadataPriority"] {
     Informational (AppCaptureMetadataPriority_Informational) = 0, Important (AppCaptureMetadataPriority_Important) = 1,
 }}
 DEFINE_IID!(IID_IAppCaptureMetadataWriter, 3771615351, 39599, 18100, 173, 49, 106, 96, 180, 65, 199, 128);
@@ -5881,10 +5881,10 @@ impl IAppCaptureMetadataWriter {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppCaptureMetadataWriter: IAppCaptureMetadataWriter}
+RT_CLASS!{class AppCaptureMetadataWriter: IAppCaptureMetadataWriter ["Windows.Media.Capture.AppCaptureMetadataWriter"]}
 impl RtActivatable<IActivationFactory> for AppCaptureMetadataWriter {}
 DEFINE_CLSID!(AppCaptureMetadataWriter(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,67,97,112,116,117,114,101,77,101,116,97,100,97,116,97,87,114,105,116,101,114,0]) [CLSID_AppCaptureMetadataWriter]);
-RT_ENUM! { enum AppCaptureMicrophoneCaptureState: i32 {
+RT_ENUM! { enum AppCaptureMicrophoneCaptureState: i32 ["Windows.Media.Capture.AppCaptureMicrophoneCaptureState"] {
     Stopped (AppCaptureMicrophoneCaptureState_Stopped) = 0, Started (AppCaptureMicrophoneCaptureState_Started) = 1, Failed (AppCaptureMicrophoneCaptureState_Failed) = 2,
 }}
 DEFINE_IID!(IID_IAppCaptureMicrophoneCaptureStateChangedEventArgs, 843916446, 17852, 19509, 188, 53, 228, 105, 252, 122, 105, 224);
@@ -5904,8 +5904,8 @@ impl IAppCaptureMicrophoneCaptureStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppCaptureMicrophoneCaptureStateChangedEventArgs: IAppCaptureMicrophoneCaptureStateChangedEventArgs}
-RT_ENUM! { enum AppCaptureRecordingState: i32 {
+RT_CLASS!{class AppCaptureMicrophoneCaptureStateChangedEventArgs: IAppCaptureMicrophoneCaptureStateChangedEventArgs ["Windows.Media.Capture.AppCaptureMicrophoneCaptureStateChangedEventArgs"]}
+RT_ENUM! { enum AppCaptureRecordingState: i32 ["Windows.Media.Capture.AppCaptureRecordingState"] {
     InProgress (AppCaptureRecordingState_InProgress) = 0, Completed (AppCaptureRecordingState_Completed) = 1, Failed (AppCaptureRecordingState_Failed) = 2,
 }}
 DEFINE_IID!(IID_IAppCaptureRecordingStateChangedEventArgs, 620529426, 58117, 18701, 180, 21, 107, 28, 144, 73, 115, 107);
@@ -5925,7 +5925,7 @@ impl IAppCaptureRecordingStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppCaptureRecordingStateChangedEventArgs: IAppCaptureRecordingStateChangedEventArgs}
+RT_CLASS!{class AppCaptureRecordingStateChangedEventArgs: IAppCaptureRecordingStateChangedEventArgs ["Windows.Media.Capture.AppCaptureRecordingStateChangedEventArgs"]}
 DEFINE_IID!(IID_IAppCaptureRecordOperation, 3328188585, 5432, 18780, 155, 187, 43, 168, 112, 236, 88, 97);
 RT_INTERFACE!{interface IAppCaptureRecordOperation(IAppCaptureRecordOperationVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureRecordOperation] {
     fn StopRecording(&self) -> HRESULT,
@@ -6000,7 +6000,7 @@ impl IAppCaptureRecordOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppCaptureRecordOperation: IAppCaptureRecordOperation}
+RT_CLASS!{class AppCaptureRecordOperation: IAppCaptureRecordOperation ["Windows.Media.Capture.AppCaptureRecordOperation"]}
 DEFINE_IID!(IID_IAppCaptureServices, 1157546165, 13557, 20248, 174, 140, 185, 18, 58, 187, 252, 13);
 RT_INTERFACE!{interface IAppCaptureServices(IAppCaptureServicesVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureServices] {
     fn Record(&self, out: *mut *mut AppCaptureRecordOperation) -> HRESULT,
@@ -6030,7 +6030,7 @@ impl IAppCaptureServices {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppCaptureServices: IAppCaptureServices}
+RT_CLASS!{class AppCaptureServices: IAppCaptureServices ["Windows.Media.Capture.AppCaptureServices"]}
 DEFINE_IID!(IID_IAppCaptureSettings, 342375046, 34823, 18643, 136, 58, 151, 14, 228, 83, 42, 57);
 RT_INTERFACE!{interface IAppCaptureSettings(IAppCaptureSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureSettings] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -6240,7 +6240,7 @@ impl IAppCaptureSettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppCaptureSettings: IAppCaptureSettings}
+RT_CLASS!{class AppCaptureSettings: IAppCaptureSettings ["Windows.Media.Capture.AppCaptureSettings"]}
 DEFINE_IID!(IID_IAppCaptureSettings2, 4239970023, 57963, 18287, 155, 26, 236, 52, 45, 42, 143, 222);
 RT_INTERFACE!{interface IAppCaptureSettings2(IAppCaptureSettings2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureSettings2] {
     fn get_IsGpuConstrained(&self, out: *mut bool) -> HRESULT,
@@ -6417,7 +6417,7 @@ impl IAppCaptureState {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppCaptureState: IAppCaptureState}
+RT_CLASS!{class AppCaptureState: IAppCaptureState ["Windows.Media.Capture.AppCaptureState"]}
 DEFINE_IID!(IID_IAppCaptureStatics, 4179811692, 2686, 20084, 139, 32, 156, 31, 144, 45, 8, 161);
 RT_INTERFACE!{static interface IAppCaptureStatics(IAppCaptureStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureStatics] {
     fn GetForCurrentView(&self, out: *mut *mut AppCapture) -> HRESULT
@@ -6440,13 +6440,13 @@ impl IAppCaptureStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppCaptureVideoEncodingBitrateMode: i32 {
+RT_ENUM! { enum AppCaptureVideoEncodingBitrateMode: i32 ["Windows.Media.Capture.AppCaptureVideoEncodingBitrateMode"] {
     Custom (AppCaptureVideoEncodingBitrateMode_Custom) = 0, High (AppCaptureVideoEncodingBitrateMode_High) = 1, Standard (AppCaptureVideoEncodingBitrateMode_Standard) = 2,
 }}
-RT_ENUM! { enum AppCaptureVideoEncodingFrameRateMode: i32 {
+RT_ENUM! { enum AppCaptureVideoEncodingFrameRateMode: i32 ["Windows.Media.Capture.AppCaptureVideoEncodingFrameRateMode"] {
     Standard (AppCaptureVideoEncodingFrameRateMode_Standard) = 0, High (AppCaptureVideoEncodingFrameRateMode_High) = 1,
 }}
-RT_ENUM! { enum AppCaptureVideoEncodingResolutionMode: i32 {
+RT_ENUM! { enum AppCaptureVideoEncodingResolutionMode: i32 ["Windows.Media.Capture.AppCaptureVideoEncodingResolutionMode"] {
     Custom (AppCaptureVideoEncodingResolutionMode_Custom) = 0, High (AppCaptureVideoEncodingResolutionMode_High) = 1, Standard (AppCaptureVideoEncodingResolutionMode_Standard) = 2,
 }}
 DEFINE_IID!(IID_ICameraCaptureUI, 1213756736, 28563, 19380, 184, 243, 232, 158, 72, 148, 140, 145);
@@ -6472,16 +6472,16 @@ impl ICameraCaptureUI {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CameraCaptureUI: ICameraCaptureUI}
+RT_CLASS!{class CameraCaptureUI: ICameraCaptureUI ["Windows.Media.Capture.CameraCaptureUI"]}
 impl RtActivatable<IActivationFactory> for CameraCaptureUI {}
 DEFINE_CLSID!(CameraCaptureUI(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,67,97,109,101,114,97,67,97,112,116,117,114,101,85,73,0]) [CLSID_CameraCaptureUI]);
-RT_ENUM! { enum CameraCaptureUIMaxPhotoResolution: i32 {
+RT_ENUM! { enum CameraCaptureUIMaxPhotoResolution: i32 ["Windows.Media.Capture.CameraCaptureUIMaxPhotoResolution"] {
     HighestAvailable (CameraCaptureUIMaxPhotoResolution_HighestAvailable) = 0, VerySmallQvga (CameraCaptureUIMaxPhotoResolution_VerySmallQvga) = 1, SmallVga (CameraCaptureUIMaxPhotoResolution_SmallVga) = 2, MediumXga (CameraCaptureUIMaxPhotoResolution_MediumXga) = 3, Large3M (CameraCaptureUIMaxPhotoResolution_Large3M) = 4, VeryLarge5M (CameraCaptureUIMaxPhotoResolution_VeryLarge5M) = 5,
 }}
-RT_ENUM! { enum CameraCaptureUIMaxVideoResolution: i32 {
+RT_ENUM! { enum CameraCaptureUIMaxVideoResolution: i32 ["Windows.Media.Capture.CameraCaptureUIMaxVideoResolution"] {
     HighestAvailable (CameraCaptureUIMaxVideoResolution_HighestAvailable) = 0, LowDefinition (CameraCaptureUIMaxVideoResolution_LowDefinition) = 1, StandardDefinition (CameraCaptureUIMaxVideoResolution_StandardDefinition) = 2, HighDefinition (CameraCaptureUIMaxVideoResolution_HighDefinition) = 3,
 }}
-RT_ENUM! { enum CameraCaptureUIMode: i32 {
+RT_ENUM! { enum CameraCaptureUIMode: i32 ["Windows.Media.Capture.CameraCaptureUIMode"] {
     PhotoOrVideo (CameraCaptureUIMode_PhotoOrVideo) = 0, Photo (CameraCaptureUIMode_Photo) = 1, Video (CameraCaptureUIMode_Video) = 2,
 }}
 DEFINE_IID!(IID_ICameraCaptureUIPhotoCaptureSettings, 3119890071, 13426, 18088, 138, 158, 4, 206, 66, 204, 201, 125);
@@ -6544,8 +6544,8 @@ impl ICameraCaptureUIPhotoCaptureSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CameraCaptureUIPhotoCaptureSettings: ICameraCaptureUIPhotoCaptureSettings}
-RT_ENUM! { enum CameraCaptureUIPhotoFormat: i32 {
+RT_CLASS!{class CameraCaptureUIPhotoCaptureSettings: ICameraCaptureUIPhotoCaptureSettings ["Windows.Media.Capture.CameraCaptureUIPhotoCaptureSettings"]}
+RT_ENUM! { enum CameraCaptureUIPhotoFormat: i32 ["Windows.Media.Capture.CameraCaptureUIPhotoFormat"] {
     Jpeg (CameraCaptureUIPhotoFormat_Jpeg) = 0, Png (CameraCaptureUIPhotoFormat_Png) = 1, JpegXR (CameraCaptureUIPhotoFormat_JpegXR) = 2,
 }}
 DEFINE_IID!(IID_ICameraCaptureUIVideoCaptureSettings, 1693003039, 41613, 16986, 184, 79, 229, 104, 51, 95, 242, 78);
@@ -6597,8 +6597,8 @@ impl ICameraCaptureUIVideoCaptureSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CameraCaptureUIVideoCaptureSettings: ICameraCaptureUIVideoCaptureSettings}
-RT_ENUM! { enum CameraCaptureUIVideoFormat: i32 {
+RT_CLASS!{class CameraCaptureUIVideoCaptureSettings: ICameraCaptureUIVideoCaptureSettings ["Windows.Media.Capture.CameraCaptureUIVideoCaptureSettings"]}
+RT_ENUM! { enum CameraCaptureUIVideoFormat: i32 ["Windows.Media.Capture.CameraCaptureUIVideoFormat"] {
     Mp4 (CameraCaptureUIVideoFormat_Mp4) = 0, Wmv (CameraCaptureUIVideoFormat_Wmv) = 1,
 }}
 RT_CLASS!{static class CameraOptionsUI}
@@ -6636,7 +6636,7 @@ impl ICapturedFrame {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CapturedFrame: ICapturedFrame}
+RT_CLASS!{class CapturedFrame: ICapturedFrame ["Windows.Media.Capture.CapturedFrame"]}
 DEFINE_IID!(IID_ICapturedFrame2, 1413457617, 48504, 18534, 173, 218, 36, 49, 75, 198, 93, 234);
 RT_INTERFACE!{interface ICapturedFrame2(ICapturedFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_ICapturedFrame2] {
     fn get_ControlValues(&self, out: *mut *mut CapturedFrameControlValues) -> HRESULT,
@@ -6713,7 +6713,7 @@ impl ICapturedFrameControlValues {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CapturedFrameControlValues: ICapturedFrameControlValues}
+RT_CLASS!{class CapturedFrameControlValues: ICapturedFrameControlValues ["Windows.Media.Capture.CapturedFrameControlValues"]}
 DEFINE_IID!(IID_ICapturedFrameControlValues2, 1342909320, 1746, 19111, 167, 219, 211, 122, 247, 51, 33, 216);
 RT_INTERFACE!{interface ICapturedFrameControlValues2(ICapturedFrameControlValues2Vtbl): IInspectable(IInspectableVtbl) [IID_ICapturedFrameControlValues2] {
     fn get_FocusState(&self, out: *mut *mut foundation::IReference<super::devices::MediaCaptureFocusState>) -> HRESULT,
@@ -6777,14 +6777,14 @@ impl ICapturedPhoto {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CapturedPhoto: ICapturedPhoto}
-RT_ENUM! { enum ForegroundActivationArgument: i32 {
+RT_CLASS!{class CapturedPhoto: ICapturedPhoto ["Windows.Media.Capture.CapturedPhoto"]}
+RT_ENUM! { enum ForegroundActivationArgument: i32 ["Windows.Media.Capture.ForegroundActivationArgument"] {
     SignInRequired (ForegroundActivationArgument_SignInRequired) = 0, MoreSettings (ForegroundActivationArgument_MoreSettings) = 1,
 }}
-RT_ENUM! { enum GameBarCommand: i32 {
+RT_ENUM! { enum GameBarCommand: i32 ["Windows.Media.Capture.GameBarCommand"] {
     OpenGameBar (GameBarCommand_OpenGameBar) = 0, RecordHistoricalBuffer (GameBarCommand_RecordHistoricalBuffer) = 1, ToggleStartStopRecord (GameBarCommand_ToggleStartStopRecord) = 2, StartRecord (GameBarCommand_StartRecord) = 3, StopRecord (GameBarCommand_StopRecord) = 4, TakeScreenshot (GameBarCommand_TakeScreenshot) = 5, StartBroadcast (GameBarCommand_StartBroadcast) = 6, StopBroadcast (GameBarCommand_StopBroadcast) = 7, PauseBroadcast (GameBarCommand_PauseBroadcast) = 8, ResumeBroadcast (GameBarCommand_ResumeBroadcast) = 9, ToggleStartStopBroadcast (GameBarCommand_ToggleStartStopBroadcast) = 10, ToggleMicrophoneCapture (GameBarCommand_ToggleMicrophoneCapture) = 11, ToggleCameraCapture (GameBarCommand_ToggleCameraCapture) = 12, ToggleRecordingIndicator (GameBarCommand_ToggleRecordingIndicator) = 13,
 }}
-RT_ENUM! { enum GameBarCommandOrigin: i32 {
+RT_ENUM! { enum GameBarCommandOrigin: i32 ["Windows.Media.Capture.GameBarCommandOrigin"] {
     ShortcutKey (GameBarCommandOrigin_ShortcutKey) = 0, Cortana (GameBarCommandOrigin_Cortana) = 1, AppCommand (GameBarCommandOrigin_AppCommand) = 2,
 }}
 DEFINE_IID!(IID_IGameBarServices, 767470935, 20646, 18846, 140, 108, 211, 48, 167, 49, 23, 150);
@@ -6843,7 +6843,7 @@ impl IGameBarServices {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameBarServices: IGameBarServices}
+RT_CLASS!{class GameBarServices: IGameBarServices ["Windows.Media.Capture.GameBarServices"]}
 DEFINE_IID!(IID_IGameBarServicesCommandEventArgs, 2806130354, 61814, 20431, 143, 187, 207, 105, 139, 46, 184, 224);
 RT_INTERFACE!{interface IGameBarServicesCommandEventArgs(IGameBarServicesCommandEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarServicesCommandEventArgs] {
     fn get_Command(&self, out: *mut GameBarCommand) -> HRESULT,
@@ -6861,8 +6861,8 @@ impl IGameBarServicesCommandEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameBarServicesCommandEventArgs: IGameBarServicesCommandEventArgs}
-RT_ENUM! { enum GameBarServicesDisplayMode: i32 {
+RT_CLASS!{class GameBarServicesCommandEventArgs: IGameBarServicesCommandEventArgs ["Windows.Media.Capture.GameBarServicesCommandEventArgs"]}
+RT_ENUM! { enum GameBarServicesDisplayMode: i32 ["Windows.Media.Capture.GameBarServicesDisplayMode"] {
     Windowed (GameBarServicesDisplayMode_Windowed) = 0, FullScreenExclusive (GameBarServicesDisplayMode_FullScreenExclusive) = 1,
 }}
 DEFINE_IID!(IID_IGameBarServicesManager, 978033914, 32651, 19552, 157, 187, 11, 205, 38, 45, 255, 198);
@@ -6881,7 +6881,7 @@ impl IGameBarServicesManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameBarServicesManager: IGameBarServicesManager}
+RT_CLASS!{class GameBarServicesManager: IGameBarServicesManager ["Windows.Media.Capture.GameBarServicesManager"]}
 impl RtActivatable<IGameBarServicesManagerStatics> for GameBarServicesManager {}
 impl GameBarServicesManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<GameBarServicesManager>>> {
@@ -6900,7 +6900,7 @@ impl IGameBarServicesManagerGameBarServicesCreatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameBarServicesManagerGameBarServicesCreatedEventArgs: IGameBarServicesManagerGameBarServicesCreatedEventArgs}
+RT_CLASS!{class GameBarServicesManagerGameBarServicesCreatedEventArgs: IGameBarServicesManagerGameBarServicesCreatedEventArgs ["Windows.Media.Capture.GameBarServicesManagerGameBarServicesCreatedEventArgs"]}
 DEFINE_IID!(IID_IGameBarServicesManagerStatics, 885110294, 65317, 18322, 152, 242, 211, 117, 63, 21, 172, 19);
 RT_INTERFACE!{static interface IGameBarServicesManagerStatics(IGameBarServicesManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarServicesManagerStatics] {
     fn GetDefault(&self, out: *mut *mut GameBarServicesManager) -> HRESULT
@@ -6941,11 +6941,11 @@ impl IGameBarServicesTargetInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GameBarServicesTargetInfo: IGameBarServicesTargetInfo}
-RT_ENUM! { enum GameBarTargetCapturePolicy: i32 {
+RT_CLASS!{class GameBarServicesTargetInfo: IGameBarServicesTargetInfo ["Windows.Media.Capture.GameBarServicesTargetInfo"]}
+RT_ENUM! { enum GameBarTargetCapturePolicy: i32 ["Windows.Media.Capture.GameBarTargetCapturePolicy"] {
     EnabledBySystem (GameBarTargetCapturePolicy_EnabledBySystem) = 0, EnabledByUser (GameBarTargetCapturePolicy_EnabledByUser) = 1, NotEnabled (GameBarTargetCapturePolicy_NotEnabled) = 2, ProhibitedBySystem (GameBarTargetCapturePolicy_ProhibitedBySystem) = 3, ProhibitedByPublisher (GameBarTargetCapturePolicy_ProhibitedByPublisher) = 4,
 }}
-RT_ENUM! { enum KnownVideoProfile: i32 {
+RT_ENUM! { enum KnownVideoProfile: i32 ["Windows.Media.Capture.KnownVideoProfile"] {
     VideoRecording (KnownVideoProfile_VideoRecording) = 0, HighQualityPhoto (KnownVideoProfile_HighQualityPhoto) = 1, BalancedVideoAndPhoto (KnownVideoProfile_BalancedVideoAndPhoto) = 2, VideoConferencing (KnownVideoProfile_VideoConferencing) = 3, PhotoSequence (KnownVideoProfile_PhotoSequence) = 4, HighFrameRate (KnownVideoProfile_HighFrameRate) = 5, VariablePhotoSequence (KnownVideoProfile_VariablePhotoSequence) = 6, HdrWithWcgVideo (KnownVideoProfile_HdrWithWcgVideo) = 7, HdrWithWcgPhoto (KnownVideoProfile_HdrWithWcgPhoto) = 8, VideoHdr8 (KnownVideoProfile_VideoHdr8) = 9,
 }}
 DEFINE_IID!(IID_ILowLagMediaRecording, 1103674103, 65343, 18928, 164, 119, 241, 149, 227, 206, 81, 8);
@@ -6971,7 +6971,7 @@ impl ILowLagMediaRecording {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LowLagMediaRecording: ILowLagMediaRecording}
+RT_CLASS!{class LowLagMediaRecording: ILowLagMediaRecording ["Windows.Media.Capture.LowLagMediaRecording"]}
 DEFINE_IID!(IID_ILowLagMediaRecording2, 1667876696, 22084, 16866, 151, 175, 142, 245, 106, 37, 226, 37);
 RT_INTERFACE!{interface ILowLagMediaRecording2(ILowLagMediaRecording2Vtbl): IInspectable(IInspectableVtbl) [IID_ILowLagMediaRecording2] {
     fn PauseAsync(&self, behavior: super::devices::MediaCapturePauseBehavior, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -7023,7 +7023,7 @@ impl ILowLagPhotoCapture {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LowLagPhotoCapture: ILowLagPhotoCapture}
+RT_CLASS!{class LowLagPhotoCapture: ILowLagPhotoCapture ["Windows.Media.Capture.LowLagPhotoCapture"]}
 DEFINE_IID!(IID_ILowLagPhotoSequenceCapture, 2093172411, 47529, 19601, 143, 250, 40, 126, 156, 102, 134, 105);
 RT_INTERFACE!{interface ILowLagPhotoSequenceCapture(ILowLagPhotoSequenceCaptureVtbl): IInspectable(IInspectableVtbl) [IID_ILowLagPhotoSequenceCapture] {
     fn StartAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -7058,7 +7058,7 @@ impl ILowLagPhotoSequenceCapture {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LowLagPhotoSequenceCapture: ILowLagPhotoSequenceCapture}
+RT_CLASS!{class LowLagPhotoSequenceCapture: ILowLagPhotoSequenceCapture ["Windows.Media.Capture.LowLagPhotoSequenceCapture"]}
 DEFINE_IID!(IID_IMediaCapture, 3323657140, 64272, 18996, 172, 24, 202, 128, 217, 200, 231, 238);
 RT_INTERFACE!{interface IMediaCapture(IMediaCaptureVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCapture] {
     fn InitializeAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -7218,7 +7218,7 @@ impl IMediaCapture {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaCapture: IMediaCapture}
+RT_CLASS!{class MediaCapture: IMediaCapture ["Windows.Media.Capture.MediaCapture"]}
 impl RtActivatable<IMediaCaptureStatics> for MediaCapture {}
 impl RtActivatable<IActivationFactory> for MediaCapture {}
 impl MediaCapture {
@@ -7468,7 +7468,7 @@ impl IMediaCapture6 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaCaptureDeviceExclusiveControlStatus: i32 {
+RT_ENUM! { enum MediaCaptureDeviceExclusiveControlStatus: i32 ["Windows.Media.Capture.MediaCaptureDeviceExclusiveControlStatus"] {
     ExclusiveControlAvailable (MediaCaptureDeviceExclusiveControlStatus_ExclusiveControlAvailable) = 0, SharedReadOnlyAvailable (MediaCaptureDeviceExclusiveControlStatus_SharedReadOnlyAvailable) = 1,
 }}
 DEFINE_IID!(IID_IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs, 2637140493, 42376, 17350, 137, 214, 90, 211, 34, 175, 0, 106);
@@ -7488,7 +7488,7 @@ impl IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaCaptureDeviceExclusiveControlStatusChangedEventArgs: IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs}
+RT_CLASS!{class MediaCaptureDeviceExclusiveControlStatusChangedEventArgs: IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs ["Windows.Media.Capture.MediaCaptureDeviceExclusiveControlStatusChangedEventArgs"]}
 DEFINE_IID!(IID_IMediaCaptureFailedEventArgs, 2164122612, 21700, 17088, 141, 25, 206, 161, 168, 124, 161, 139);
 RT_INTERFACE!{interface IMediaCaptureFailedEventArgs(IMediaCaptureFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureFailedEventArgs] {
     fn get_Message(&self, out: *mut HSTRING) -> HRESULT,
@@ -7506,7 +7506,7 @@ impl IMediaCaptureFailedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaCaptureFailedEventArgs: IMediaCaptureFailedEventArgs}
+RT_CLASS!{class MediaCaptureFailedEventArgs: IMediaCaptureFailedEventArgs ["Windows.Media.Capture.MediaCaptureFailedEventArgs"]}
 DEFINE_IID!(IID_MediaCaptureFailedEventHandler, 538243067, 23768, 20232, 163, 20, 13, 54, 13, 165, 159, 20);
 RT_DELEGATE!{delegate MediaCaptureFailedEventHandler(MediaCaptureFailedEventHandlerVtbl, MediaCaptureFailedEventHandlerImpl) [IID_MediaCaptureFailedEventHandler] {
     fn Invoke(&self, sender: *mut MediaCapture, errorEventArgs: *mut MediaCaptureFailedEventArgs) -> HRESULT
@@ -7528,7 +7528,7 @@ impl IMediaCaptureFocusChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaCaptureFocusChangedEventArgs: IMediaCaptureFocusChangedEventArgs}
+RT_CLASS!{class MediaCaptureFocusChangedEventArgs: IMediaCaptureFocusChangedEventArgs ["Windows.Media.Capture.MediaCaptureFocusChangedEventArgs"]}
 DEFINE_IID!(IID_IMediaCaptureInitializationSettings, 2541927024, 60005, 18688, 147, 86, 140, 168, 135, 114, 104, 132);
 RT_INTERFACE!{interface IMediaCaptureInitializationSettings(IMediaCaptureInitializationSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureInitializationSettings] {
     fn put_AudioDeviceId(&self, value: HSTRING) -> HRESULT,
@@ -7578,7 +7578,7 @@ impl IMediaCaptureInitializationSettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaCaptureInitializationSettings: IMediaCaptureInitializationSettings}
+RT_CLASS!{class MediaCaptureInitializationSettings: IMediaCaptureInitializationSettings ["Windows.Media.Capture.MediaCaptureInitializationSettings"]}
 impl RtActivatable<IActivationFactory> for MediaCaptureInitializationSettings {}
 DEFINE_CLSID!(MediaCaptureInitializationSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,77,101,100,105,97,67,97,112,116,117,114,101,73,110,105,116,105,97,108,105,122,97,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_MediaCaptureInitializationSettings]);
 DEFINE_IID!(IID_IMediaCaptureInitializationSettings2, 1078855206, 51676, 17385, 174, 228, 230, 191, 27, 87, 180, 76);
@@ -7738,7 +7738,7 @@ impl IMediaCaptureInitializationSettings6 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaCaptureMemoryPreference: i32 {
+RT_ENUM! { enum MediaCaptureMemoryPreference: i32 ["Windows.Media.Capture.MediaCaptureMemoryPreference"] {
     Auto (MediaCaptureMemoryPreference_Auto) = 0, Cpu (MediaCaptureMemoryPreference_Cpu) = 1,
 }}
 DEFINE_IID!(IID_IMediaCapturePauseResult, 2932112547, 17527, 19204, 160, 111, 44, 28, 81, 130, 254, 157);
@@ -7758,7 +7758,7 @@ impl IMediaCapturePauseResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaCapturePauseResult: IMediaCapturePauseResult}
+RT_CLASS!{class MediaCapturePauseResult: IMediaCapturePauseResult ["Windows.Media.Capture.MediaCapturePauseResult"]}
 DEFINE_IID!(IID_IMediaCaptureSettings, 495168254, 27973, 17527, 141, 196, 172, 91, 192, 28, 64, 145);
 RT_INTERFACE!{interface IMediaCaptureSettings(IMediaCaptureSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureSettings] {
     fn get_AudioDeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -7794,7 +7794,7 @@ impl IMediaCaptureSettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaCaptureSettings: IMediaCaptureSettings}
+RT_CLASS!{class MediaCaptureSettings: IMediaCaptureSettings ["Windows.Media.Capture.MediaCaptureSettings"]}
 DEFINE_IID!(IID_IMediaCaptureSettings2, 1872657659, 64159, 19219, 156, 190, 90, 185, 79, 31, 52, 147);
 RT_INTERFACE!{interface IMediaCaptureSettings2(IMediaCaptureSettings2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureSettings2] {
     fn get_ConcurrentRecordAndPhotoSupported(&self, out: *mut bool) -> HRESULT,
@@ -7859,7 +7859,7 @@ impl IMediaCaptureSettings3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaCaptureSharingMode: i32 {
+RT_ENUM! { enum MediaCaptureSharingMode: i32 ["Windows.Media.Capture.MediaCaptureSharingMode"] {
     ExclusiveControl (MediaCaptureSharingMode_ExclusiveControl) = 0, SharedReadOnly (MediaCaptureSharingMode_SharedReadOnly) = 1,
 }}
 DEFINE_IID!(IID_IMediaCaptureStatics, 2901377535, 39405, 17989, 150, 94, 25, 37, 207, 198, 56, 52);
@@ -7908,8 +7908,8 @@ impl IMediaCaptureStopResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaCaptureStopResult: IMediaCaptureStopResult}
-RT_ENUM! { enum MediaCaptureThermalStatus: i32 {
+RT_CLASS!{class MediaCaptureStopResult: IMediaCaptureStopResult ["Windows.Media.Capture.MediaCaptureStopResult"]}
+RT_ENUM! { enum MediaCaptureThermalStatus: i32 ["Windows.Media.Capture.MediaCaptureThermalStatus"] {
     Normal (MediaCaptureThermalStatus_Normal) = 0, Overheated (MediaCaptureThermalStatus_Overheated) = 1,
 }}
 DEFINE_IID!(IID_IMediaCaptureVideoPreview, 661811315, 21662, 17535, 162, 10, 79, 3, 196, 121, 216, 192);
@@ -7982,7 +7982,7 @@ impl IMediaCaptureVideoProfile {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaCaptureVideoProfile: IMediaCaptureVideoProfile}
+RT_CLASS!{class MediaCaptureVideoProfile: IMediaCaptureVideoProfile ["Windows.Media.Capture.MediaCaptureVideoProfile"]}
 DEFINE_IID!(IID_IMediaCaptureVideoProfile2, 2547894623, 38094, 18063, 147, 22, 252, 91, 194, 99, 143, 107);
 RT_INTERFACE!{interface IMediaCaptureVideoProfile2(IMediaCaptureVideoProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureVideoProfile2] {
     fn get_FrameSourceInfos(&self, out: *mut *mut foundation::collections::IVectorView<frames::MediaFrameSourceInfo>) -> HRESULT,
@@ -8035,7 +8035,7 @@ impl IMediaCaptureVideoProfileMediaDescription {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaCaptureVideoProfileMediaDescription: IMediaCaptureVideoProfileMediaDescription}
+RT_CLASS!{class MediaCaptureVideoProfileMediaDescription: IMediaCaptureVideoProfileMediaDescription ["Windows.Media.Capture.MediaCaptureVideoProfileMediaDescription"]}
 DEFINE_IID!(IID_IMediaCaptureVideoProfileMediaDescription2, 3332828947, 12845, 16698, 184, 90, 104, 168, 142, 2, 244, 233);
 RT_INTERFACE!{interface IMediaCaptureVideoProfileMediaDescription2(IMediaCaptureVideoProfileMediaDescription2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureVideoProfileMediaDescription2] {
     fn get_Subtype(&self, out: *mut HSTRING) -> HRESULT,
@@ -8053,10 +8053,10 @@ impl IMediaCaptureVideoProfileMediaDescription2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaCategory: i32 {
+RT_ENUM! { enum MediaCategory: i32 ["Windows.Media.Capture.MediaCategory"] {
     Other (MediaCategory_Other) = 0, Communications (MediaCategory_Communications) = 1, Media (MediaCategory_Media) = 2, GameChat (MediaCategory_GameChat) = 3, Speech (MediaCategory_Speech) = 4,
 }}
-RT_ENUM! { enum MediaStreamType: i32 {
+RT_ENUM! { enum MediaStreamType: i32 ["Windows.Media.Capture.MediaStreamType"] {
     VideoPreview (MediaStreamType_VideoPreview) = 0, VideoRecord (MediaStreamType_VideoRecord) = 1, Audio (MediaStreamType_Audio) = 2, Photo (MediaStreamType_Photo) = 3,
 }}
 DEFINE_IID!(IID_IOptionalReferencePhotoCapturedEventArgs, 1192200371, 7789, 16465, 156, 139, 241, 216, 90, 240, 71, 183);
@@ -8076,7 +8076,7 @@ impl IOptionalReferencePhotoCapturedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OptionalReferencePhotoCapturedEventArgs: IOptionalReferencePhotoCapturedEventArgs}
+RT_CLASS!{class OptionalReferencePhotoCapturedEventArgs: IOptionalReferencePhotoCapturedEventArgs ["Windows.Media.Capture.OptionalReferencePhotoCapturedEventArgs"]}
 DEFINE_IID!(IID_IPhotoCapturedEventArgs, 926677953, 38990, 20464, 191, 133, 28, 0, 170, 188, 90, 69);
 RT_INTERFACE!{interface IPhotoCapturedEventArgs(IPhotoCapturedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoCapturedEventArgs] {
     fn get_Frame(&self, out: *mut *mut CapturedFrame) -> HRESULT,
@@ -8100,8 +8100,8 @@ impl IPhotoCapturedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoCapturedEventArgs: IPhotoCapturedEventArgs}
-RT_ENUM! { enum PhotoCaptureSource: i32 {
+RT_CLASS!{class PhotoCapturedEventArgs: IPhotoCapturedEventArgs ["Windows.Media.Capture.PhotoCapturedEventArgs"]}
+RT_ENUM! { enum PhotoCaptureSource: i32 ["Windows.Media.Capture.PhotoCaptureSource"] {
     Auto (PhotoCaptureSource_Auto) = 0, VideoPreview (PhotoCaptureSource_VideoPreview) = 1, Photo (PhotoCaptureSource_Photo) = 2,
 }}
 DEFINE_IID!(IID_IPhotoConfirmationCapturedEventArgs, 2873570930, 49802, 18471, 143, 141, 54, 54, 211, 190, 181, 30);
@@ -8121,8 +8121,8 @@ impl IPhotoConfirmationCapturedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoConfirmationCapturedEventArgs: IPhotoConfirmationCapturedEventArgs}
-RT_ENUM! { enum PowerlineFrequency: i32 {
+RT_CLASS!{class PhotoConfirmationCapturedEventArgs: IPhotoConfirmationCapturedEventArgs ["Windows.Media.Capture.PhotoConfirmationCapturedEventArgs"]}
+RT_ENUM! { enum PowerlineFrequency: i32 ["Windows.Media.Capture.PowerlineFrequency"] {
     Disabled (PowerlineFrequency_Disabled) = 0, FiftyHertz (PowerlineFrequency_FiftyHertz) = 1, SixtyHertz (PowerlineFrequency_SixtyHertz) = 2, Auto (PowerlineFrequency_Auto) = 3,
 }}
 DEFINE_IID!(IID_RecordLimitationExceededEventHandler, 1068404526, 20449, 20477, 170, 186, 225, 241, 51, 125, 78, 83);
@@ -8135,13 +8135,13 @@ impl RecordLimitationExceededEventHandler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum StreamingCaptureMode: i32 {
+RT_ENUM! { enum StreamingCaptureMode: i32 ["Windows.Media.Capture.StreamingCaptureMode"] {
     AudioAndVideo (StreamingCaptureMode_AudioAndVideo) = 0, Audio (StreamingCaptureMode_Audio) = 1, Video (StreamingCaptureMode_Video) = 2,
 }}
-RT_ENUM! { enum VideoDeviceCharacteristic: i32 {
+RT_ENUM! { enum VideoDeviceCharacteristic: i32 ["Windows.Media.Capture.VideoDeviceCharacteristic"] {
     AllStreamsIndependent (VideoDeviceCharacteristic_AllStreamsIndependent) = 0, PreviewRecordStreamsIdentical (VideoDeviceCharacteristic_PreviewRecordStreamsIdentical) = 1, PreviewPhotoStreamsIdentical (VideoDeviceCharacteristic_PreviewPhotoStreamsIdentical) = 2, RecordPhotoStreamsIdentical (VideoDeviceCharacteristic_RecordPhotoStreamsIdentical) = 3, AllStreamsIdentical (VideoDeviceCharacteristic_AllStreamsIdentical) = 4,
 }}
-RT_ENUM! { enum VideoRotation: i32 {
+RT_ENUM! { enum VideoRotation: i32 ["Windows.Media.Capture.VideoRotation"] {
     None (VideoRotation_None) = 0, Clockwise90Degrees (VideoRotation_Clockwise90Degrees) = 1, Clockwise180Degrees (VideoRotation_Clockwise180Degrees) = 2, Clockwise270Degrees (VideoRotation_Clockwise270Degrees) = 3,
 }}
 DEFINE_IID!(IID_IVideoStreamConfiguration, 3631680111, 17296, 19294, 173, 62, 15, 138, 240, 150, 52, 144);
@@ -8161,8 +8161,8 @@ impl IVideoStreamConfiguration {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoStreamConfiguration: IVideoStreamConfiguration}
-RT_STRUCT! { struct WhiteBalanceGain {
+RT_CLASS!{class VideoStreamConfiguration: IVideoStreamConfiguration ["Windows.Media.Capture.VideoStreamConfiguration"]}
+RT_STRUCT! { struct WhiteBalanceGain ["Windows.Media.Capture.WhiteBalanceGain"] {
     R: f64, G: f64, B: f64,
 }}
 pub mod core { // Windows.Media.Capture.Core
@@ -8196,7 +8196,7 @@ impl IVariablePhotoCapturedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VariablePhotoCapturedEventArgs: IVariablePhotoCapturedEventArgs}
+RT_CLASS!{class VariablePhotoCapturedEventArgs: IVariablePhotoCapturedEventArgs ["Windows.Media.Capture.Core.VariablePhotoCapturedEventArgs"]}
 DEFINE_IID!(IID_IVariablePhotoSequenceCapture, 3490786589, 798, 16449, 166, 214, 189, 116, 36, 118, 168, 238);
 RT_INTERFACE!{interface IVariablePhotoSequenceCapture(IVariablePhotoSequenceCaptureVtbl): IInspectable(IInspectableVtbl) [IID_IVariablePhotoSequenceCapture] {
     fn StartAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -8242,7 +8242,7 @@ impl IVariablePhotoSequenceCapture {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VariablePhotoSequenceCapture: IVariablePhotoSequenceCapture}
+RT_CLASS!{class VariablePhotoSequenceCapture: IVariablePhotoSequenceCapture ["Windows.Media.Capture.Core.VariablePhotoSequenceCapture"]}
 DEFINE_IID!(IID_IVariablePhotoSequenceCapture2, 4264321724, 20656, 17379, 145, 124, 227, 185, 39, 152, 148, 47);
 RT_INTERFACE!{interface IVariablePhotoSequenceCapture2(IVariablePhotoSequenceCapture2Vtbl): IInspectable(IInspectableVtbl) [IID_IVariablePhotoSequenceCapture2] {
     fn UpdateSettingsAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
@@ -8280,7 +8280,7 @@ impl IAudioMediaFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioMediaFrame: IAudioMediaFrame}
+RT_CLASS!{class AudioMediaFrame: IAudioMediaFrame ["Windows.Media.Capture.Frames.AudioMediaFrame"]}
 DEFINE_IID!(IID_IBufferMediaFrame, 3048297415, 39812, 16482, 183, 156, 163, 101, 178, 89, 104, 84);
 RT_INTERFACE!{interface IBufferMediaFrame(IBufferMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IBufferMediaFrame] {
     fn get_FrameReference(&self, out: *mut *mut MediaFrameReference) -> HRESULT,
@@ -8298,7 +8298,7 @@ impl IBufferMediaFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BufferMediaFrame: IBufferMediaFrame}
+RT_CLASS!{class BufferMediaFrame: IBufferMediaFrame ["Windows.Media.Capture.Frames.BufferMediaFrame"]}
 DEFINE_IID!(IID_IDepthMediaFrame, 1192451663, 34121, 17856, 146, 91, 128, 211, 94, 253, 177, 10);
 RT_INTERFACE!{interface IDepthMediaFrame(IDepthMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IDepthMediaFrame] {
     fn get_FrameReference(&self, out: *mut *mut MediaFrameReference) -> HRESULT,
@@ -8328,7 +8328,7 @@ impl IDepthMediaFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DepthMediaFrame: IDepthMediaFrame}
+RT_CLASS!{class DepthMediaFrame: IDepthMediaFrame ["Windows.Media.Capture.Frames.DepthMediaFrame"]}
 DEFINE_IID!(IID_IDepthMediaFrame2, 1825195837, 50340, 16758, 176, 205, 51, 234, 227, 179, 90, 163);
 RT_INTERFACE!{interface IDepthMediaFrame2(IDepthMediaFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_IDepthMediaFrame2] {
     fn get_MaxReliableDepth(&self, out: *mut u32) -> HRESULT,
@@ -8363,7 +8363,7 @@ impl IDepthMediaFrameFormat {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DepthMediaFrameFormat: IDepthMediaFrameFormat}
+RT_CLASS!{class DepthMediaFrameFormat: IDepthMediaFrameFormat ["Windows.Media.Capture.Frames.DepthMediaFrameFormat"]}
 DEFINE_IID!(IID_IInfraredMediaFrame, 1070675203, 75, 20238, 145, 172, 70, 82, 153, 180, 22, 88);
 RT_INTERFACE!{interface IInfraredMediaFrame(IInfraredMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IInfraredMediaFrame] {
     fn get_FrameReference(&self, out: *mut *mut MediaFrameReference) -> HRESULT,
@@ -8387,12 +8387,12 @@ impl IInfraredMediaFrame {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InfraredMediaFrame: IInfraredMediaFrame}
+RT_CLASS!{class InfraredMediaFrame: IInfraredMediaFrame ["Windows.Media.Capture.Frames.InfraredMediaFrame"]}
 DEFINE_IID!(IID_IMediaFrameArrivedEventArgs, 188943069, 42128, 17461, 173, 161, 154, 255, 213, 82, 57, 247);
 RT_INTERFACE!{interface IMediaFrameArrivedEventArgs(IMediaFrameArrivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameArrivedEventArgs] {
     
 }}
-RT_CLASS!{class MediaFrameArrivedEventArgs: IMediaFrameArrivedEventArgs}
+RT_CLASS!{class MediaFrameArrivedEventArgs: IMediaFrameArrivedEventArgs ["Windows.Media.Capture.Frames.MediaFrameArrivedEventArgs"]}
 DEFINE_IID!(IID_IMediaFrameFormat, 1905273678, 45689, 19095, 169, 219, 189, 90, 47, 183, 143, 57);
 RT_INTERFACE!{interface IMediaFrameFormat(IMediaFrameFormatVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameFormat] {
     fn get_MajorType(&self, out: *mut HSTRING) -> HRESULT,
@@ -8428,7 +8428,7 @@ impl IMediaFrameFormat {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaFrameFormat: IMediaFrameFormat}
+RT_CLASS!{class MediaFrameFormat: IMediaFrameFormat ["Windows.Media.Capture.Frames.MediaFrameFormat"]}
 DEFINE_IID!(IID_IMediaFrameFormat2, 1669686080, 24199, 19472, 134, 209, 109, 240, 151, 166, 198, 168);
 RT_INTERFACE!{interface IMediaFrameFormat2(IMediaFrameFormat2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameFormat2] {
     fn get_AudioEncodingProperties(&self, out: *mut *mut super::super::mediaproperties::AudioEncodingProperties) -> HRESULT
@@ -8474,7 +8474,7 @@ impl IMediaFrameReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaFrameReader: IMediaFrameReader}
+RT_CLASS!{class MediaFrameReader: IMediaFrameReader ["Windows.Media.Capture.Frames.MediaFrameReader"]}
 DEFINE_IID!(IID_IMediaFrameReader2, 2266048435, 34097, 16464, 135, 204, 161, 55, 51, 207, 62, 155);
 RT_INTERFACE!{interface IMediaFrameReader2(IMediaFrameReader2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameReader2] {
     fn put_AcquisitionMode(&self, value: MediaFrameReaderAcquisitionMode) -> HRESULT,
@@ -8491,10 +8491,10 @@ impl IMediaFrameReader2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaFrameReaderAcquisitionMode: i32 {
+RT_ENUM! { enum MediaFrameReaderAcquisitionMode: i32 ["Windows.Media.Capture.Frames.MediaFrameReaderAcquisitionMode"] {
     Realtime (MediaFrameReaderAcquisitionMode_Realtime) = 0, Buffered (MediaFrameReaderAcquisitionMode_Buffered) = 1,
 }}
-RT_ENUM! { enum MediaFrameReaderStartStatus: i32 {
+RT_ENUM! { enum MediaFrameReaderStartStatus: i32 ["Windows.Media.Capture.Frames.MediaFrameReaderStartStatus"] {
     Success (MediaFrameReaderStartStatus_Success) = 0, UnknownFailure (MediaFrameReaderStartStatus_UnknownFailure) = 1, DeviceNotAvailable (MediaFrameReaderStartStatus_DeviceNotAvailable) = 2, OutputFormatNotSupported (MediaFrameReaderStartStatus_OutputFormatNotSupported) = 3, ExclusiveControlNotAvailable (MediaFrameReaderStartStatus_ExclusiveControlNotAvailable) = 4,
 }}
 DEFINE_IID!(IID_IMediaFrameReference, 4139288129, 61660, 16452, 141, 201, 150, 28, 237, 208, 91, 173);
@@ -8550,7 +8550,7 @@ impl IMediaFrameReference {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaFrameReference: IMediaFrameReference}
+RT_CLASS!{class MediaFrameReference: IMediaFrameReference ["Windows.Media.Capture.Frames.MediaFrameReference"]}
 DEFINE_IID!(IID_IMediaFrameReference2, 3720101580, 54706, 18927, 131, 106, 148, 125, 152, 155, 128, 193);
 RT_INTERFACE!{interface IMediaFrameReference2(IMediaFrameReference2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameReference2] {
     fn get_AudioMediaFrame(&self, out: *mut *mut AudioMediaFrame) -> HRESULT
@@ -8614,7 +8614,7 @@ impl IMediaFrameSource {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaFrameSource: IMediaFrameSource}
+RT_CLASS!{class MediaFrameSource: IMediaFrameSource ["Windows.Media.Capture.Frames.MediaFrameSource"]}
 DEFINE_IID!(IID_IMediaFrameSourceController, 1829201461, 12653, 19343, 183, 182, 238, 176, 74, 140, 101, 37);
 RT_INTERFACE!{interface IMediaFrameSourceController(IMediaFrameSourceControllerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceController] {
     fn GetPropertyAsync(&self, propertyId: HSTRING, out: *mut *mut foundation::IAsyncOperation<MediaFrameSourceGetPropertyResult>) -> HRESULT,
@@ -8638,7 +8638,7 @@ impl IMediaFrameSourceController {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaFrameSourceController: IMediaFrameSourceController}
+RT_CLASS!{class MediaFrameSourceController: IMediaFrameSourceController ["Windows.Media.Capture.Frames.MediaFrameSourceController"]}
 DEFINE_IID!(IID_IMediaFrameSourceController2, 4022640596, 64754, 18947, 180, 228, 172, 150, 40, 115, 155, 238);
 RT_INTERFACE!{interface IMediaFrameSourceController2(IMediaFrameSourceController2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceController2] {
     fn GetPropertyByExtendedIdAsync(&self, extendedPropertyIdSize: u32, extendedPropertyId: *mut u8, maxPropertyValueSize: *mut foundation::IReference<u32>, out: *mut *mut foundation::IAsyncOperation<MediaFrameSourceGetPropertyResult>) -> HRESULT,
@@ -8684,8 +8684,8 @@ impl IMediaFrameSourceGetPropertyResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaFrameSourceGetPropertyResult: IMediaFrameSourceGetPropertyResult}
-RT_ENUM! { enum MediaFrameSourceGetPropertyStatus: i32 {
+RT_CLASS!{class MediaFrameSourceGetPropertyResult: IMediaFrameSourceGetPropertyResult ["Windows.Media.Capture.Frames.MediaFrameSourceGetPropertyResult"]}
+RT_ENUM! { enum MediaFrameSourceGetPropertyStatus: i32 ["Windows.Media.Capture.Frames.MediaFrameSourceGetPropertyStatus"] {
     Success (MediaFrameSourceGetPropertyStatus_Success) = 0, UnknownFailure (MediaFrameSourceGetPropertyStatus_UnknownFailure) = 1, NotSupported (MediaFrameSourceGetPropertyStatus_NotSupported) = 2, DeviceNotAvailable (MediaFrameSourceGetPropertyStatus_DeviceNotAvailable) = 3, MaxPropertyValueSizeTooSmall (MediaFrameSourceGetPropertyStatus_MaxPropertyValueSizeTooSmall) = 4, MaxPropertyValueSizeRequired (MediaFrameSourceGetPropertyStatus_MaxPropertyValueSizeRequired) = 5,
 }}
 DEFINE_IID!(IID_IMediaFrameSourceGroup, 2137021319, 18482, 19295, 174, 61, 65, 47, 170, 179, 125, 52);
@@ -8711,7 +8711,7 @@ impl IMediaFrameSourceGroup {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaFrameSourceGroup: IMediaFrameSourceGroup}
+RT_CLASS!{class MediaFrameSourceGroup: IMediaFrameSourceGroup ["Windows.Media.Capture.Frames.MediaFrameSourceGroup"]}
 impl RtActivatable<IMediaFrameSourceGroupStatics> for MediaFrameSourceGroup {}
 impl MediaFrameSourceGroup {
     #[inline] pub fn find_all_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<MediaFrameSourceGroup>>>> {
@@ -8796,7 +8796,7 @@ impl IMediaFrameSourceInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaFrameSourceInfo: IMediaFrameSourceInfo}
+RT_CLASS!{class MediaFrameSourceInfo: IMediaFrameSourceInfo ["Windows.Media.Capture.Frames.MediaFrameSourceInfo"]}
 DEFINE_IID!(IID_IMediaFrameSourceInfo2, 425359445, 25687, 17094, 167, 105, 25, 182, 91, 211, 46, 110);
 RT_INTERFACE!{interface IMediaFrameSourceInfo2(IMediaFrameSourceInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceInfo2] {
     fn get_ProfileId(&self, out: *mut HSTRING) -> HRESULT,
@@ -8814,17 +8814,17 @@ impl IMediaFrameSourceInfo2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaFrameSourceKind: i32 {
+RT_ENUM! { enum MediaFrameSourceKind: i32 ["Windows.Media.Capture.Frames.MediaFrameSourceKind"] {
     Custom (MediaFrameSourceKind_Custom) = 0, Color (MediaFrameSourceKind_Color) = 1, Infrared (MediaFrameSourceKind_Infrared) = 2, Depth (MediaFrameSourceKind_Depth) = 3, Audio (MediaFrameSourceKind_Audio) = 4, Image (MediaFrameSourceKind_Image) = 5,
 }}
-RT_ENUM! { enum MediaFrameSourceSetPropertyStatus: i32 {
+RT_ENUM! { enum MediaFrameSourceSetPropertyStatus: i32 ["Windows.Media.Capture.Frames.MediaFrameSourceSetPropertyStatus"] {
     Success (MediaFrameSourceSetPropertyStatus_Success) = 0, UnknownFailure (MediaFrameSourceSetPropertyStatus_UnknownFailure) = 1, NotSupported (MediaFrameSourceSetPropertyStatus_NotSupported) = 2, InvalidValue (MediaFrameSourceSetPropertyStatus_InvalidValue) = 3, DeviceNotAvailable (MediaFrameSourceSetPropertyStatus_DeviceNotAvailable) = 4, NotInControl (MediaFrameSourceSetPropertyStatus_NotInControl) = 5,
 }}
 DEFINE_IID!(IID_IMultiSourceMediaFrameArrivedEventArgs, 1662082561, 53073, 18685, 170, 176, 109, 105, 62, 180, 129, 39);
 RT_INTERFACE!{interface IMultiSourceMediaFrameArrivedEventArgs(IMultiSourceMediaFrameArrivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMultiSourceMediaFrameArrivedEventArgs] {
     
 }}
-RT_CLASS!{class MultiSourceMediaFrameArrivedEventArgs: IMultiSourceMediaFrameArrivedEventArgs}
+RT_CLASS!{class MultiSourceMediaFrameArrivedEventArgs: IMultiSourceMediaFrameArrivedEventArgs ["Windows.Media.Capture.Frames.MultiSourceMediaFrameArrivedEventArgs"]}
 DEFINE_IID!(IID_IMultiSourceMediaFrameReader, 2366915586, 63331, 18573, 152, 242, 180, 55, 188, 240, 117, 231);
 RT_INTERFACE!{interface IMultiSourceMediaFrameReader(IMultiSourceMediaFrameReaderVtbl): IInspectable(IInspectableVtbl) [IID_IMultiSourceMediaFrameReader] {
     fn add_FrameArrived(&self, handler: *mut foundation::TypedEventHandler<MultiSourceMediaFrameReader, MultiSourceMediaFrameArrivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -8859,7 +8859,7 @@ impl IMultiSourceMediaFrameReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MultiSourceMediaFrameReader: IMultiSourceMediaFrameReader}
+RT_CLASS!{class MultiSourceMediaFrameReader: IMultiSourceMediaFrameReader ["Windows.Media.Capture.Frames.MultiSourceMediaFrameReader"]}
 DEFINE_IID!(IID_IMultiSourceMediaFrameReader2, 4015819453, 64604, 19563, 157, 129, 60, 185, 204, 99, 124, 38);
 RT_INTERFACE!{interface IMultiSourceMediaFrameReader2(IMultiSourceMediaFrameReader2Vtbl): IInspectable(IInspectableVtbl) [IID_IMultiSourceMediaFrameReader2] {
     fn put_AcquisitionMode(&self, value: MediaFrameReaderAcquisitionMode) -> HRESULT,
@@ -8876,7 +8876,7 @@ impl IMultiSourceMediaFrameReader2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MultiSourceMediaFrameReaderStartStatus: i32 {
+RT_ENUM! { enum MultiSourceMediaFrameReaderStartStatus: i32 ["Windows.Media.Capture.Frames.MultiSourceMediaFrameReaderStartStatus"] {
     Success (MultiSourceMediaFrameReaderStartStatus_Success) = 0, NotSupported (MultiSourceMediaFrameReaderStartStatus_NotSupported) = 1, InsufficientResources (MultiSourceMediaFrameReaderStartStatus_InsufficientResources) = 2, DeviceNotAvailable (MultiSourceMediaFrameReaderStartStatus_DeviceNotAvailable) = 3, UnknownFailure (MultiSourceMediaFrameReaderStartStatus_UnknownFailure) = 4,
 }}
 DEFINE_IID!(IID_IMultiSourceMediaFrameReference, 563497754, 32738, 17622, 146, 229, 41, 142, 109, 40, 16, 233);
@@ -8890,7 +8890,7 @@ impl IMultiSourceMediaFrameReference {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MultiSourceMediaFrameReference: IMultiSourceMediaFrameReference}
+RT_CLASS!{class MultiSourceMediaFrameReference: IMultiSourceMediaFrameReference ["Windows.Media.Capture.Frames.MultiSourceMediaFrameReference"]}
 DEFINE_IID!(IID_IVideoMediaFrame, 14503115, 12989, 20449, 160, 19, 124, 193, 60, 245, 219, 207);
 RT_INTERFACE!{interface IVideoMediaFrame(IVideoMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IVideoMediaFrame] {
     fn get_FrameReference(&self, out: *mut *mut MediaFrameReference) -> HRESULT,
@@ -8946,7 +8946,7 @@ impl IVideoMediaFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoMediaFrame: IVideoMediaFrame}
+RT_CLASS!{class VideoMediaFrame: IVideoMediaFrame ["Windows.Media.Capture.Frames.VideoMediaFrame"]}
 DEFINE_IID!(IID_IVideoMediaFrameFormat, 1174568896, 55067, 17863, 143, 20, 109, 154, 10, 230, 4, 228);
 RT_INTERFACE!{interface IVideoMediaFrameFormat(IVideoMediaFrameFormatVtbl): IInspectable(IInspectableVtbl) [IID_IVideoMediaFrameFormat] {
     fn get_MediaFrameFormat(&self, out: *mut *mut MediaFrameFormat) -> HRESULT,
@@ -8976,7 +8976,7 @@ impl IVideoMediaFrameFormat {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoMediaFrameFormat: IVideoMediaFrameFormat}
+RT_CLASS!{class VideoMediaFrameFormat: IVideoMediaFrameFormat ["Windows.Media.Capture.Frames.VideoMediaFrameFormat"]}
 } // Windows.Media.Capture.Frames
 } // Windows.Media.Capture
 pub mod casting { // Windows.Media.Casting
@@ -9043,7 +9043,7 @@ impl ICastingConnection {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CastingConnection: ICastingConnection}
+RT_CLASS!{class CastingConnection: ICastingConnection ["Windows.Media.Casting.CastingConnection"]}
 DEFINE_IID!(IID_ICastingConnectionErrorOccurredEventArgs, 2818260073, 34585, 20224, 129, 251, 150, 24, 99, 199, 154, 50);
 RT_INTERFACE!{interface ICastingConnectionErrorOccurredEventArgs(ICastingConnectionErrorOccurredEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICastingConnectionErrorOccurredEventArgs] {
     fn get_ErrorStatus(&self, out: *mut CastingConnectionErrorStatus) -> HRESULT,
@@ -9061,11 +9061,11 @@ impl ICastingConnectionErrorOccurredEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CastingConnectionErrorOccurredEventArgs: ICastingConnectionErrorOccurredEventArgs}
-RT_ENUM! { enum CastingConnectionErrorStatus: i32 {
+RT_CLASS!{class CastingConnectionErrorOccurredEventArgs: ICastingConnectionErrorOccurredEventArgs ["Windows.Media.Casting.CastingConnectionErrorOccurredEventArgs"]}
+RT_ENUM! { enum CastingConnectionErrorStatus: i32 ["Windows.Media.Casting.CastingConnectionErrorStatus"] {
     Succeeded (CastingConnectionErrorStatus_Succeeded) = 0, DeviceDidNotRespond (CastingConnectionErrorStatus_DeviceDidNotRespond) = 1, DeviceError (CastingConnectionErrorStatus_DeviceError) = 2, DeviceLocked (CastingConnectionErrorStatus_DeviceLocked) = 3, ProtectedPlaybackFailed (CastingConnectionErrorStatus_ProtectedPlaybackFailed) = 4, InvalidCastingSource (CastingConnectionErrorStatus_InvalidCastingSource) = 5, Unknown (CastingConnectionErrorStatus_Unknown) = 6,
 }}
-RT_ENUM! { enum CastingConnectionState: i32 {
+RT_ENUM! { enum CastingConnectionState: i32 ["Windows.Media.Casting.CastingConnectionState"] {
     Disconnected (CastingConnectionState_Disconnected) = 0, Connected (CastingConnectionState_Connected) = 1, Rendering (CastingConnectionState_Rendering) = 2, Disconnecting (CastingConnectionState_Disconnecting) = 3, Connecting (CastingConnectionState_Connecting) = 4,
 }}
 DEFINE_IID!(IID_ICastingDevice, 3732020355, 19011, 19153, 166, 210, 36, 146, 167, 150, 195, 242);
@@ -9104,7 +9104,7 @@ impl ICastingDevice {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CastingDevice: ICastingDevice}
+RT_CLASS!{class CastingDevice: ICastingDevice ["Windows.Media.Casting.CastingDevice"]}
 impl RtActivatable<ICastingDeviceStatics> for CastingDevice {}
 impl CastingDevice {
     #[inline] pub fn get_device_selector(type_: CastingPlaybackTypes) -> Result<HString> {
@@ -9177,7 +9177,7 @@ impl ICastingDevicePicker {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CastingDevicePicker: ICastingDevicePicker}
+RT_CLASS!{class CastingDevicePicker: ICastingDevicePicker ["Windows.Media.Casting.CastingDevicePicker"]}
 impl RtActivatable<IActivationFactory> for CastingDevicePicker {}
 DEFINE_CLSID!(CastingDevicePicker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,115,116,105,110,103,46,67,97,115,116,105,110,103,68,101,118,105,99,101,80,105,99,107,101,114,0]) [CLSID_CastingDevicePicker]);
 DEFINE_IID!(IID_ICastingDevicePickerFilter, 3196871068, 46435, 17236, 174, 51, 159, 218, 173, 140, 98, 145);
@@ -9224,7 +9224,7 @@ impl ICastingDevicePickerFilter {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CastingDevicePickerFilter: ICastingDevicePickerFilter}
+RT_CLASS!{class CastingDevicePickerFilter: ICastingDevicePickerFilter ["Windows.Media.Casting.CastingDevicePickerFilter"]}
 DEFINE_IID!(IID_ICastingDeviceSelectedEventArgs, 3695419014, 56663, 19725, 148, 0, 175, 69, 228, 251, 54, 99);
 RT_INTERFACE!{interface ICastingDeviceSelectedEventArgs(ICastingDeviceSelectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICastingDeviceSelectedEventArgs] {
     fn get_SelectedCastingDevice(&self, out: *mut *mut CastingDevice) -> HRESULT
@@ -9236,7 +9236,7 @@ impl ICastingDeviceSelectedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CastingDeviceSelectedEventArgs: ICastingDeviceSelectedEventArgs}
+RT_CLASS!{class CastingDeviceSelectedEventArgs: ICastingDeviceSelectedEventArgs ["Windows.Media.Casting.CastingDeviceSelectedEventArgs"]}
 DEFINE_IID!(IID_ICastingDeviceStatics, 3889780951, 19731, 16951, 163, 101, 76, 79, 106, 76, 253, 47);
 RT_INTERFACE!{static interface ICastingDeviceStatics(ICastingDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICastingDeviceStatics] {
     fn GetDeviceSelector(&self, type_: CastingPlaybackTypes, out: *mut HSTRING) -> HRESULT,
@@ -9266,7 +9266,7 @@ impl ICastingDeviceStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CastingPlaybackTypes: u32 {
+RT_ENUM! { enum CastingPlaybackTypes: u32 ["Windows.Media.Casting.CastingPlaybackTypes"] {
     None (CastingPlaybackTypes_None) = 0, Audio (CastingPlaybackTypes_Audio) = 1, Video (CastingPlaybackTypes_Video) = 2, Picture (CastingPlaybackTypes_Picture) = 4,
 }}
 DEFINE_IID!(IID_ICastingSource, 4096387698, 13415, 18406, 160, 39, 82, 41, 35, 233, 215, 39);
@@ -9285,17 +9285,17 @@ impl ICastingSource {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CastingSource: ICastingSource}
+RT_CLASS!{class CastingSource: ICastingSource ["Windows.Media.Casting.CastingSource"]}
 } // Windows.Media.Casting
 pub mod closedcaptioning { // Windows.Media.ClosedCaptioning
 use ::prelude::*;
-RT_ENUM! { enum ClosedCaptionColor: i32 {
+RT_ENUM! { enum ClosedCaptionColor: i32 ["Windows.Media.ClosedCaptioning.ClosedCaptionColor"] {
     Default (ClosedCaptionColor_Default) = 0, White (ClosedCaptionColor_White) = 1, Black (ClosedCaptionColor_Black) = 2, Red (ClosedCaptionColor_Red) = 3, Green (ClosedCaptionColor_Green) = 4, Blue (ClosedCaptionColor_Blue) = 5, Yellow (ClosedCaptionColor_Yellow) = 6, Magenta (ClosedCaptionColor_Magenta) = 7, Cyan (ClosedCaptionColor_Cyan) = 8,
 }}
-RT_ENUM! { enum ClosedCaptionEdgeEffect: i32 {
+RT_ENUM! { enum ClosedCaptionEdgeEffect: i32 ["Windows.Media.ClosedCaptioning.ClosedCaptionEdgeEffect"] {
     Default (ClosedCaptionEdgeEffect_Default) = 0, None (ClosedCaptionEdgeEffect_None) = 1, Raised (ClosedCaptionEdgeEffect_Raised) = 2, Depressed (ClosedCaptionEdgeEffect_Depressed) = 3, Uniform (ClosedCaptionEdgeEffect_Uniform) = 4, DropShadow (ClosedCaptionEdgeEffect_DropShadow) = 5,
 }}
-RT_ENUM! { enum ClosedCaptionOpacity: i32 {
+RT_ENUM! { enum ClosedCaptionOpacity: i32 ["Windows.Media.ClosedCaptioning.ClosedCaptionOpacity"] {
     Default (ClosedCaptionOpacity_Default) = 0, OneHundredPercent (ClosedCaptionOpacity_OneHundredPercent) = 1, SeventyFivePercent (ClosedCaptionOpacity_SeventyFivePercent) = 2, TwentyFivePercent (ClosedCaptionOpacity_TwentyFivePercent) = 3, ZeroPercent (ClosedCaptionOpacity_ZeroPercent) = 4,
 }}
 RT_CLASS!{static class ClosedCaptionProperties}
@@ -9419,16 +9419,16 @@ impl IClosedCaptionPropertiesStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ClosedCaptionSize: i32 {
+RT_ENUM! { enum ClosedCaptionSize: i32 ["Windows.Media.ClosedCaptioning.ClosedCaptionSize"] {
     Default (ClosedCaptionSize_Default) = 0, FiftyPercent (ClosedCaptionSize_FiftyPercent) = 1, OneHundredPercent (ClosedCaptionSize_OneHundredPercent) = 2, OneHundredFiftyPercent (ClosedCaptionSize_OneHundredFiftyPercent) = 3, TwoHundredPercent (ClosedCaptionSize_TwoHundredPercent) = 4,
 }}
-RT_ENUM! { enum ClosedCaptionStyle: i32 {
+RT_ENUM! { enum ClosedCaptionStyle: i32 ["Windows.Media.ClosedCaptioning.ClosedCaptionStyle"] {
     Default (ClosedCaptionStyle_Default) = 0, MonospacedWithSerifs (ClosedCaptionStyle_MonospacedWithSerifs) = 1, ProportionalWithSerifs (ClosedCaptionStyle_ProportionalWithSerifs) = 2, MonospacedWithoutSerifs (ClosedCaptionStyle_MonospacedWithoutSerifs) = 3, ProportionalWithoutSerifs (ClosedCaptionStyle_ProportionalWithoutSerifs) = 4, Casual (ClosedCaptionStyle_Casual) = 5, Cursive (ClosedCaptionStyle_Cursive) = 6, SmallCapitals (ClosedCaptionStyle_SmallCapitals) = 7,
 }}
 } // Windows.Media.ClosedCaptioning
 pub mod contentrestrictions { // Windows.Media.ContentRestrictions
 use ::prelude::*;
-RT_ENUM! { enum ContentAccessRestrictionLevel: i32 {
+RT_ENUM! { enum ContentAccessRestrictionLevel: i32 ["Windows.Media.ContentRestrictions.ContentAccessRestrictionLevel"] {
     Allow (ContentAccessRestrictionLevel_Allow) = 0, Warn (ContentAccessRestrictionLevel_Warn) = 1, Block (ContentAccessRestrictionLevel_Block) = 2, Hide (ContentAccessRestrictionLevel_Hide) = 3,
 }}
 DEFINE_IID!(IID_IContentRestrictionsBrowsePolicy, 2348888996, 17454, 17946, 135, 87, 250, 210, 245, 189, 55, 228);
@@ -9454,8 +9454,8 @@ impl IContentRestrictionsBrowsePolicy {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContentRestrictionsBrowsePolicy: IContentRestrictionsBrowsePolicy}
-RT_ENUM! { enum RatedContentCategory: i32 {
+RT_CLASS!{class ContentRestrictionsBrowsePolicy: IContentRestrictionsBrowsePolicy ["Windows.Media.ContentRestrictions.ContentRestrictionsBrowsePolicy"]}
+RT_ENUM! { enum RatedContentCategory: i32 ["Windows.Media.ContentRestrictions.RatedContentCategory"] {
     General (RatedContentCategory_General) = 0, Application (RatedContentCategory_Application) = 1, Game (RatedContentCategory_Game) = 2, Movie (RatedContentCategory_Movie) = 3, Television (RatedContentCategory_Television) = 4, Music (RatedContentCategory_Music) = 5,
 }}
 DEFINE_IID!(IID_IRatedContentDescription, 1766352607, 26290, 19907, 150, 177, 240, 144, 238, 222, 226, 85);
@@ -9520,7 +9520,7 @@ impl IRatedContentDescription {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RatedContentDescription: IRatedContentDescription}
+RT_CLASS!{class RatedContentDescription: IRatedContentDescription ["Windows.Media.ContentRestrictions.RatedContentDescription"]}
 impl RtActivatable<IRatedContentDescriptionFactory> for RatedContentDescription {}
 impl RatedContentDescription {
     #[inline] pub fn create(id: &HStringArg, title: &HStringArg, category: RatedContentCategory) -> Result<ComPtr<RatedContentDescription>> {
@@ -9573,7 +9573,7 @@ impl IRatedContentRestrictions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RatedContentRestrictions: IRatedContentRestrictions}
+RT_CLASS!{class RatedContentRestrictions: IRatedContentRestrictions ["Windows.Media.ContentRestrictions.RatedContentRestrictions"]}
 impl RtActivatable<IRatedContentRestrictionsFactory> for RatedContentRestrictions {}
 impl RtActivatable<IActivationFactory> for RatedContentRestrictions {}
 impl RatedContentRestrictions {
@@ -9600,7 +9600,7 @@ DEFINE_IID!(IID_ICurrentSessionChangedEventArgs, 1768540985, 3066, 24544, 141, 1
 RT_INTERFACE!{interface ICurrentSessionChangedEventArgs(ICurrentSessionChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICurrentSessionChangedEventArgs] {
     
 }}
-RT_CLASS!{class CurrentSessionChangedEventArgs: ICurrentSessionChangedEventArgs}
+RT_CLASS!{class CurrentSessionChangedEventArgs: ICurrentSessionChangedEventArgs ["Windows.Media.Control.CurrentSessionChangedEventArgs"]}
 DEFINE_IID!(IID_IGlobalSystemMediaTransportControlsSession, 1900595253, 39700, 23266, 171, 133, 220, 155, 28, 20, 225, 168);
 RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSession(IGlobalSystemMediaTransportControlsSessionVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalSystemMediaTransportControlsSession] {
     fn get_SourceAppUserModelId(&self, out: *mut HSTRING) -> HRESULT,
@@ -9753,7 +9753,7 @@ impl IGlobalSystemMediaTransportControlsSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GlobalSystemMediaTransportControlsSession: IGlobalSystemMediaTransportControlsSession}
+RT_CLASS!{class GlobalSystemMediaTransportControlsSession: IGlobalSystemMediaTransportControlsSession ["Windows.Media.Control.GlobalSystemMediaTransportControlsSession"]}
 DEFINE_IID!(IID_IGlobalSystemMediaTransportControlsSessionManager, 3402534572, 59502, 20554, 171, 49, 95, 248, 255, 27, 206, 73);
 RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionManager(IGlobalSystemMediaTransportControlsSessionManagerVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalSystemMediaTransportControlsSessionManager] {
     fn GetCurrentSession(&self, out: *mut *mut GlobalSystemMediaTransportControlsSession) -> HRESULT,
@@ -9793,7 +9793,7 @@ impl IGlobalSystemMediaTransportControlsSessionManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GlobalSystemMediaTransportControlsSessionManager: IGlobalSystemMediaTransportControlsSessionManager}
+RT_CLASS!{class GlobalSystemMediaTransportControlsSessionManager: IGlobalSystemMediaTransportControlsSessionManager ["Windows.Media.Control.GlobalSystemMediaTransportControlsSessionManager"]}
 impl RtActivatable<IGlobalSystemMediaTransportControlsSessionManagerStatics> for GlobalSystemMediaTransportControlsSessionManager {}
 impl GlobalSystemMediaTransportControlsSessionManager {
     #[inline] pub fn request_async() -> Result<ComPtr<foundation::IAsyncOperation<GlobalSystemMediaTransportControlsSessionManager>>> {
@@ -9877,7 +9877,7 @@ impl IGlobalSystemMediaTransportControlsSessionMediaProperties {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GlobalSystemMediaTransportControlsSessionMediaProperties: IGlobalSystemMediaTransportControlsSessionMediaProperties}
+RT_CLASS!{class GlobalSystemMediaTransportControlsSessionMediaProperties: IGlobalSystemMediaTransportControlsSessionMediaProperties ["Windows.Media.Control.GlobalSystemMediaTransportControlsSessionMediaProperties"]}
 DEFINE_IID!(IID_IGlobalSystemMediaTransportControlsSessionPlaybackControls, 1694606310, 48250, 20538, 187, 27, 104, 241, 88, 243, 251, 3);
 RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionPlaybackControls(IGlobalSystemMediaTransportControlsSessionPlaybackControlsVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalSystemMediaTransportControlsSessionPlaybackControls] {
     fn get_IsPlayEnabled(&self, out: *mut bool) -> HRESULT,
@@ -9973,7 +9973,7 @@ impl IGlobalSystemMediaTransportControlsSessionPlaybackControls {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GlobalSystemMediaTransportControlsSessionPlaybackControls: IGlobalSystemMediaTransportControlsSessionPlaybackControls}
+RT_CLASS!{class GlobalSystemMediaTransportControlsSessionPlaybackControls: IGlobalSystemMediaTransportControlsSessionPlaybackControls ["Windows.Media.Control.GlobalSystemMediaTransportControlsSessionPlaybackControls"]}
 DEFINE_IID!(IID_IGlobalSystemMediaTransportControlsSessionPlaybackInfo, 2494871247, 59578, 20909, 135, 167, 193, 10, 222, 16, 97, 39);
 RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionPlaybackInfo(IGlobalSystemMediaTransportControlsSessionPlaybackInfoVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalSystemMediaTransportControlsSessionPlaybackInfo] {
     fn get_Controls(&self, out: *mut *mut GlobalSystemMediaTransportControlsSessionPlaybackControls) -> HRESULT,
@@ -10015,8 +10015,8 @@ impl IGlobalSystemMediaTransportControlsSessionPlaybackInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GlobalSystemMediaTransportControlsSessionPlaybackInfo: IGlobalSystemMediaTransportControlsSessionPlaybackInfo}
-RT_ENUM! { enum GlobalSystemMediaTransportControlsSessionPlaybackStatus: i32 {
+RT_CLASS!{class GlobalSystemMediaTransportControlsSessionPlaybackInfo: IGlobalSystemMediaTransportControlsSessionPlaybackInfo ["Windows.Media.Control.GlobalSystemMediaTransportControlsSessionPlaybackInfo"]}
+RT_ENUM! { enum GlobalSystemMediaTransportControlsSessionPlaybackStatus: i32 ["Windows.Media.Control.GlobalSystemMediaTransportControlsSessionPlaybackStatus"] {
     Closed (GlobalSystemMediaTransportControlsSessionPlaybackStatus_Closed) = 0, Opened (GlobalSystemMediaTransportControlsSessionPlaybackStatus_Opened) = 1, Changing (GlobalSystemMediaTransportControlsSessionPlaybackStatus_Changing) = 2, Stopped (GlobalSystemMediaTransportControlsSessionPlaybackStatus_Stopped) = 3, Playing (GlobalSystemMediaTransportControlsSessionPlaybackStatus_Playing) = 4, Paused (GlobalSystemMediaTransportControlsSessionPlaybackStatus_Paused) = 5,
 }}
 DEFINE_IID!(IID_IGlobalSystemMediaTransportControlsSessionTimelineProperties, 3991093558, 28453, 22669, 142, 207, 234, 91, 103, 53, 170, 165);
@@ -10060,34 +10060,34 @@ impl IGlobalSystemMediaTransportControlsSessionTimelineProperties {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GlobalSystemMediaTransportControlsSessionTimelineProperties: IGlobalSystemMediaTransportControlsSessionTimelineProperties}
+RT_CLASS!{class GlobalSystemMediaTransportControlsSessionTimelineProperties: IGlobalSystemMediaTransportControlsSessionTimelineProperties ["Windows.Media.Control.GlobalSystemMediaTransportControlsSessionTimelineProperties"]}
 DEFINE_IID!(IID_IMediaPropertiesChangedEventArgs, 2100773323, 44528, 23791, 145, 186, 207, 171, 205, 215, 118, 120);
 RT_INTERFACE!{interface IMediaPropertiesChangedEventArgs(IMediaPropertiesChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPropertiesChangedEventArgs] {
     
 }}
-RT_CLASS!{class MediaPropertiesChangedEventArgs: IMediaPropertiesChangedEventArgs}
+RT_CLASS!{class MediaPropertiesChangedEventArgs: IMediaPropertiesChangedEventArgs ["Windows.Media.Control.MediaPropertiesChangedEventArgs"]}
 DEFINE_IID!(IID_IPlaybackInfoChangedEventArgs, 2020038338, 48141, 20645, 136, 7, 5, 66, 145, 254, 241, 57);
 RT_INTERFACE!{interface IPlaybackInfoChangedEventArgs(IPlaybackInfoChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackInfoChangedEventArgs] {
     
 }}
-RT_CLASS!{class PlaybackInfoChangedEventArgs: IPlaybackInfoChangedEventArgs}
+RT_CLASS!{class PlaybackInfoChangedEventArgs: IPlaybackInfoChangedEventArgs ["Windows.Media.Control.PlaybackInfoChangedEventArgs"]}
 DEFINE_IID!(IID_ISessionsChangedEventArgs, 3153120562, 17092, 23128, 179, 23, 243, 75, 191, 189, 38, 224);
 RT_INTERFACE!{interface ISessionsChangedEventArgs(ISessionsChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISessionsChangedEventArgs] {
     
 }}
-RT_CLASS!{class SessionsChangedEventArgs: ISessionsChangedEventArgs}
+RT_CLASS!{class SessionsChangedEventArgs: ISessionsChangedEventArgs ["Windows.Media.Control.SessionsChangedEventArgs"]}
 DEFINE_IID!(IID_ITimelinePropertiesChangedEventArgs, 688077359, 51491, 23159, 188, 175, 5, 95, 244, 21, 173, 50);
 RT_INTERFACE!{interface ITimelinePropertiesChangedEventArgs(ITimelinePropertiesChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITimelinePropertiesChangedEventArgs] {
     
 }}
-RT_CLASS!{class TimelinePropertiesChangedEventArgs: ITimelinePropertiesChangedEventArgs}
+RT_CLASS!{class TimelinePropertiesChangedEventArgs: ITimelinePropertiesChangedEventArgs ["Windows.Media.Control.TimelinePropertiesChangedEventArgs"]}
 } // Windows.Media.Control
 pub mod core { // Windows.Media.Core
 use ::prelude::*;
-RT_ENUM! { enum AudioDecoderDegradation: i32 {
+RT_ENUM! { enum AudioDecoderDegradation: i32 ["Windows.Media.Core.AudioDecoderDegradation"] {
     None (AudioDecoderDegradation_None) = 0, DownmixTo2Channels (AudioDecoderDegradation_DownmixTo2Channels) = 1, DownmixTo6Channels (AudioDecoderDegradation_DownmixTo6Channels) = 2, DownmixTo8Channels (AudioDecoderDegradation_DownmixTo8Channels) = 3,
 }}
-RT_ENUM! { enum AudioDecoderDegradationReason: i32 {
+RT_ENUM! { enum AudioDecoderDegradationReason: i32 ["Windows.Media.Core.AudioDecoderDegradationReason"] {
     None (AudioDecoderDegradationReason_None) = 0, LicensingRequirement (AudioDecoderDegradationReason_LicensingRequirement) = 1, SpatialAudioNotSupported (AudioDecoderDegradationReason_SpatialAudioNotSupported) = 2,
 }}
 DEFINE_IID!(IID_IAudioStreamDescriptor, 506893028, 16423, 18503, 167, 11, 223, 29, 154, 42, 123, 4);
@@ -10101,7 +10101,7 @@ impl IAudioStreamDescriptor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioStreamDescriptor: IAudioStreamDescriptor}
+RT_CLASS!{class AudioStreamDescriptor: IAudioStreamDescriptor ["Windows.Media.Core.AudioStreamDescriptor"]}
 impl RtActivatable<IAudioStreamDescriptorFactory> for AudioStreamDescriptor {}
 impl AudioStreamDescriptor {
     #[inline] pub fn create(encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<ComPtr<AudioStreamDescriptor>> {
@@ -10198,7 +10198,7 @@ impl IAudioTrack {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioTrack: IMediaTrack}
+RT_CLASS!{class AudioTrack: IMediaTrack ["Windows.Media.Core.AudioTrack"]}
 DEFINE_IID!(IID_IAudioTrackOpenFailedEventArgs, 4007508409, 47996, 16658, 191, 118, 147, 132, 103, 111, 130, 75);
 RT_INTERFACE!{interface IAudioTrackOpenFailedEventArgs(IAudioTrackOpenFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioTrackOpenFailedEventArgs] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
@@ -10210,7 +10210,7 @@ impl IAudioTrackOpenFailedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioTrackOpenFailedEventArgs: IAudioTrackOpenFailedEventArgs}
+RT_CLASS!{class AudioTrackOpenFailedEventArgs: IAudioTrackOpenFailedEventArgs ["Windows.Media.Core.AudioTrackOpenFailedEventArgs"]}
 DEFINE_IID!(IID_IAudioTrackSupportInfo, 395046903, 52281, 17574, 185, 81, 74, 86, 83, 240, 115, 250);
 RT_INTERFACE!{interface IAudioTrackSupportInfo(IAudioTrackSupportInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAudioTrackSupportInfo] {
     fn get_DecoderStatus(&self, out: *mut MediaDecoderStatus) -> HRESULT,
@@ -10240,7 +10240,7 @@ impl IAudioTrackSupportInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioTrackSupportInfo: IAudioTrackSupportInfo}
+RT_CLASS!{class AudioTrackSupportInfo: IAudioTrackSupportInfo ["Windows.Media.Core.AudioTrackSupportInfo"]}
 DEFINE_IID!(IID_IChapterCue, 1923710977, 54154, 19466, 143, 166, 117, 205, 218, 244, 102, 76);
 RT_INTERFACE!{interface IChapterCue(IChapterCueVtbl): IInspectable(IInspectableVtbl) [IID_IChapterCue] {
     fn put_Title(&self, value: HSTRING) -> HRESULT,
@@ -10257,10 +10257,10 @@ impl IChapterCue {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChapterCue: IChapterCue}
+RT_CLASS!{class ChapterCue: IChapterCue ["Windows.Media.Core.ChapterCue"]}
 impl RtActivatable<IActivationFactory> for ChapterCue {}
 DEFINE_CLSID!(ChapterCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,67,104,97,112,116,101,114,67,117,101,0]) [CLSID_ChapterCue]);
-RT_ENUM! { enum CodecCategory: i32 {
+RT_ENUM! { enum CodecCategory: i32 ["Windows.Media.Core.CodecCategory"] {
     Encoder (CodecCategory_Encoder) = 0, Decoder (CodecCategory_Decoder) = 1,
 }}
 DEFINE_IID!(IID_ICodecInfo, 1374199685, 60055, 18844, 134, 172, 76, 229, 231, 63, 58, 66);
@@ -10298,8 +10298,8 @@ impl ICodecInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CodecInfo: ICodecInfo}
-RT_ENUM! { enum CodecKind: i32 {
+RT_CLASS!{class CodecInfo: ICodecInfo ["Windows.Media.Core.CodecInfo"]}
+RT_ENUM! { enum CodecKind: i32 ["Windows.Media.Core.CodecKind"] {
     Audio (CodecKind_Audio) = 0, Video (CodecKind_Video) = 1,
 }}
 DEFINE_IID!(IID_ICodecQuery, 573216058, 44897, 19972, 128, 138, 164, 99, 78, 47, 58, 196);
@@ -10313,7 +10313,7 @@ impl ICodecQuery {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CodecQuery: ICodecQuery}
+RT_CLASS!{class CodecQuery: ICodecQuery ["Windows.Media.Core.CodecQuery"]}
 impl RtActivatable<IActivationFactory> for CodecQuery {}
 DEFINE_CLSID!(CodecQuery(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,67,111,100,101,99,81,117,101,114,121,0]) [CLSID_CodecQuery]);
 RT_CLASS!{static class CodecSubtypes}
@@ -10801,7 +10801,7 @@ impl IDataCue {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataCue: IDataCue}
+RT_CLASS!{class DataCue: IDataCue ["Windows.Media.Core.DataCue"]}
 impl RtActivatable<IActivationFactory> for DataCue {}
 DEFINE_CLSID!(DataCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,68,97,116,97,67,117,101,0]) [CLSID_DataCue]);
 DEFINE_IID!(IID_IDataCue2, 3159759637, 38386, 18920, 150, 241, 141, 213, 218, 198, 141, 147);
@@ -10826,7 +10826,7 @@ impl IFaceDetectedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FaceDetectedEventArgs: IFaceDetectedEventArgs}
+RT_CLASS!{class FaceDetectedEventArgs: IFaceDetectedEventArgs ["Windows.Media.Core.FaceDetectedEventArgs"]}
 DEFINE_IID!(IID_IFaceDetectionEffect, 2920672210, 1346, 17065, 188, 144, 242, 131, 162, 159, 70, 193);
 RT_INTERFACE!{interface IFaceDetectionEffect(IFaceDetectionEffectVtbl): IInspectable(IInspectableVtbl) [IID_IFaceDetectionEffect] {
     fn put_Enabled(&self, value: bool) -> HRESULT,
@@ -10865,7 +10865,7 @@ impl IFaceDetectionEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FaceDetectionEffect: IFaceDetectionEffect}
+RT_CLASS!{class FaceDetectionEffect: IFaceDetectionEffect ["Windows.Media.Core.FaceDetectionEffect"]}
 DEFINE_IID!(IID_IFaceDetectionEffectDefinition, 1138532481, 47176, 20275, 183, 2, 31, 210, 98, 79, 176, 22);
 RT_INTERFACE!{interface IFaceDetectionEffectDefinition(IFaceDetectionEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IFaceDetectionEffectDefinition] {
     fn put_DetectionMode(&self, value: FaceDetectionMode) -> HRESULT,
@@ -10893,7 +10893,7 @@ impl IFaceDetectionEffectDefinition {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FaceDetectionEffectDefinition: super::effects::IVideoEffectDefinition}
+RT_CLASS!{class FaceDetectionEffectDefinition: super::effects::IVideoEffectDefinition ["Windows.Media.Core.FaceDetectionEffectDefinition"]}
 impl RtActivatable<IActivationFactory> for FaceDetectionEffectDefinition {}
 DEFINE_CLSID!(FaceDetectionEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,70,97,99,101,68,101,116,101,99,116,105,111,110,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_FaceDetectionEffectDefinition]);
 DEFINE_IID!(IID_IFaceDetectionEffectFrame, 2326825363, 24008, 17531, 162, 71, 82, 112, 189, 128, 46, 206);
@@ -10907,8 +10907,8 @@ impl IFaceDetectionEffectFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FaceDetectionEffectFrame: IFaceDetectionEffectFrame}
-RT_ENUM! { enum FaceDetectionMode: i32 {
+RT_CLASS!{class FaceDetectionEffectFrame: IFaceDetectionEffectFrame ["Windows.Media.Core.FaceDetectionEffectFrame"]}
+RT_ENUM! { enum FaceDetectionMode: i32 ["Windows.Media.Core.FaceDetectionMode"] {
     HighPerformance (FaceDetectionMode_HighPerformance) = 0, Balanced (FaceDetectionMode_Balanced) = 1, HighQuality (FaceDetectionMode_HighQuality) = 2,
 }}
 DEFINE_IID!(IID_IHighDynamicRangeControl, 1441900462, 55639, 19913, 157, 28, 133, 83, 168, 42, 125, 153);
@@ -10927,7 +10927,7 @@ impl IHighDynamicRangeControl {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HighDynamicRangeControl: IHighDynamicRangeControl}
+RT_CLASS!{class HighDynamicRangeControl: IHighDynamicRangeControl ["Windows.Media.Core.HighDynamicRangeControl"]}
 DEFINE_IID!(IID_IHighDynamicRangeOutput, 257392747, 9531, 16665, 187, 64, 58, 144, 229, 19, 132, 247);
 RT_INTERFACE!{interface IHighDynamicRangeOutput(IHighDynamicRangeOutputVtbl): IInspectable(IInspectableVtbl) [IID_IHighDynamicRangeOutput] {
     fn get_Certainty(&self, out: *mut f64) -> HRESULT,
@@ -10945,7 +10945,7 @@ impl IHighDynamicRangeOutput {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HighDynamicRangeOutput: IHighDynamicRangeOutput}
+RT_CLASS!{class HighDynamicRangeOutput: IHighDynamicRangeOutput ["Windows.Media.Core.HighDynamicRangeOutput"]}
 DEFINE_IID!(IID_IImageCue, 1384284802, 13947, 17419, 145, 22, 60, 132, 87, 13, 210, 112);
 RT_INTERFACE!{interface IImageCue(IImageCueVtbl): IInspectable(IInspectableVtbl) [IID_IImageCue] {
     fn get_Position(&self, out: *mut TimedTextPoint) -> HRESULT,
@@ -10984,7 +10984,7 @@ impl IImageCue {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ImageCue: IImageCue}
+RT_CLASS!{class ImageCue: IImageCue ["Windows.Media.Core.ImageCue"]}
 impl RtActivatable<IActivationFactory> for ImageCue {}
 DEFINE_CLSID!(ImageCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,73,109,97,103,101,67,117,101,0]) [CLSID_ImageCue]);
 DEFINE_IID!(IID_IInitializeMediaStreamSourceRequestedEventArgs, 633095649, 39688, 19502, 168, 85, 69, 66, 241, 167, 93, 235);
@@ -11011,7 +11011,7 @@ impl IInitializeMediaStreamSourceRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InitializeMediaStreamSourceRequestedEventArgs: IInitializeMediaStreamSourceRequestedEventArgs}
+RT_CLASS!{class InitializeMediaStreamSourceRequestedEventArgs: IInitializeMediaStreamSourceRequestedEventArgs ["Windows.Media.Core.InitializeMediaStreamSourceRequestedEventArgs"]}
 RT_CLASS!{static class LowLightFusion}
 impl RtActivatable<ILowLightFusionStatics> for LowLightFusion {}
 impl LowLightFusion {
@@ -11037,7 +11037,7 @@ impl ILowLightFusionResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LowLightFusionResult: ILowLightFusionResult}
+RT_CLASS!{class LowLightFusionResult: ILowLightFusionResult ["Windows.Media.Core.LowLightFusionResult"]}
 DEFINE_IID!(IID_ILowLightFusionStatics, 1392836973, 49822, 16610, 135, 169, 158, 31, 210, 241, 146, 245);
 RT_INTERFACE!{static interface ILowLightFusionStatics(ILowLightFusionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILowLightFusionStatics] {
     #[cfg(feature="windows-graphics")] fn get_SupportedBitmapPixelFormats(&self, out: *mut *mut foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>) -> HRESULT,
@@ -11094,7 +11094,7 @@ impl IMediaBinder {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaBinder: IMediaBinder}
+RT_CLASS!{class MediaBinder: IMediaBinder ["Windows.Media.Core.MediaBinder"]}
 impl RtActivatable<IActivationFactory> for MediaBinder {}
 DEFINE_CLSID!(MediaBinder(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,66,105,110,100,101,114,0]) [CLSID_MediaBinder]);
 DEFINE_IID!(IID_IMediaBindingEventArgs, 3055333978, 7021, 17968, 168, 109, 47, 8, 55, 247, 18, 229);
@@ -11140,7 +11140,7 @@ impl IMediaBindingEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaBindingEventArgs: IMediaBindingEventArgs}
+RT_CLASS!{class MediaBindingEventArgs: IMediaBindingEventArgs ["Windows.Media.Core.MediaBindingEventArgs"]}
 DEFINE_IID!(IID_IMediaBindingEventArgs2, 73714923, 47962, 18479, 184, 186, 240, 40, 76, 105, 101, 103);
 RT_INTERFACE!{interface IMediaBindingEventArgs2(IMediaBindingEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaBindingEventArgs2] {
     fn SetAdaptiveMediaSource(&self, mediaSource: *mut super::streaming::adaptive::AdaptiveMediaSource) -> HRESULT,
@@ -11215,15 +11215,15 @@ impl IMediaCueEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaCueEventArgs: IMediaCueEventArgs}
-RT_ENUM! { enum MediaDecoderStatus: i32 {
+RT_CLASS!{class MediaCueEventArgs: IMediaCueEventArgs ["Windows.Media.Core.MediaCueEventArgs"]}
+RT_ENUM! { enum MediaDecoderStatus: i32 ["Windows.Media.Core.MediaDecoderStatus"] {
     FullySupported (MediaDecoderStatus_FullySupported) = 0, UnsupportedSubtype (MediaDecoderStatus_UnsupportedSubtype) = 1, UnsupportedEncoderProperties (MediaDecoderStatus_UnsupportedEncoderProperties) = 2, Degraded (MediaDecoderStatus_Degraded) = 3,
 }}
 DEFINE_IID!(IID_IMediaSource, 3888100761, 41117, 19489, 188, 223, 32, 175, 79, 134, 179, 217);
 RT_INTERFACE!{interface IMediaSource(IMediaSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSource] {
     
 }}
-RT_CLASS!{class MediaSource: IMediaSource2}
+RT_CLASS!{class MediaSource: IMediaSource2 ["Windows.Media.Core.MediaSource"]}
 impl RtActivatable<IMediaSourceStatics> for MediaSource {}
 impl RtActivatable<IMediaSourceStatics2> for MediaSource {}
 impl RtActivatable<IMediaSourceStatics3> for MediaSource {}
@@ -11404,7 +11404,7 @@ impl IMediaSourceAppServiceConnection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaSourceAppServiceConnection: IMediaSourceAppServiceConnection}
+RT_CLASS!{class MediaSourceAppServiceConnection: IMediaSourceAppServiceConnection ["Windows.Media.Core.MediaSourceAppServiceConnection"]}
 impl RtActivatable<IMediaSourceAppServiceConnectionFactory> for MediaSourceAppServiceConnection {}
 impl MediaSourceAppServiceConnection {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn create(appServiceConnection: &super::super::applicationmodel::appservice::AppServiceConnection) -> Result<ComPtr<MediaSourceAppServiceConnection>> {
@@ -11434,7 +11434,7 @@ impl IMediaSourceError {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaSourceError: IMediaSourceError}
+RT_CLASS!{class MediaSourceError: IMediaSourceError ["Windows.Media.Core.MediaSourceError"]}
 DEFINE_IID!(IID_IMediaSourceOpenOperationCompletedEventArgs, 4234685675, 57985, 18300, 168, 224, 26, 205, 101, 65, 20, 200);
 RT_INTERFACE!{interface IMediaSourceOpenOperationCompletedEventArgs(IMediaSourceOpenOperationCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceOpenOperationCompletedEventArgs] {
     fn get_Error(&self, out: *mut *mut MediaSourceError) -> HRESULT
@@ -11446,8 +11446,8 @@ impl IMediaSourceOpenOperationCompletedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaSourceOpenOperationCompletedEventArgs: IMediaSourceOpenOperationCompletedEventArgs}
-RT_ENUM! { enum MediaSourceState: i32 {
+RT_CLASS!{class MediaSourceOpenOperationCompletedEventArgs: IMediaSourceOpenOperationCompletedEventArgs ["Windows.Media.Core.MediaSourceOpenOperationCompletedEventArgs"]}
+RT_ENUM! { enum MediaSourceState: i32 ["Windows.Media.Core.MediaSourceState"] {
     Initial (MediaSourceState_Initial) = 0, Opening (MediaSourceState_Opening) = 1, Opened (MediaSourceState_Opened) = 2, Failed (MediaSourceState_Failed) = 3, Closed (MediaSourceState_Closed) = 4,
 }}
 DEFINE_IID!(IID_IMediaSourceStateChangedEventArgs, 170962818, 36977, 19372, 188, 57, 202, 42, 147, 183, 23, 169);
@@ -11467,7 +11467,7 @@ impl IMediaSourceStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaSourceStateChangedEventArgs: IMediaSourceStateChangedEventArgs}
+RT_CLASS!{class MediaSourceStateChangedEventArgs: IMediaSourceStateChangedEventArgs ["Windows.Media.Core.MediaSourceStateChangedEventArgs"]}
 DEFINE_IID!(IID_IMediaSourceStatics, 4152192932, 18002, 16654, 177, 216, 233, 165, 226, 69, 164, 92);
 RT_INTERFACE!{static interface IMediaSourceStatics(IMediaSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceStatics] {
     fn CreateFromAdaptiveMediaSource(&self, mediaSource: *mut super::streaming::adaptive::AdaptiveMediaSource, out: *mut *mut MediaSource) -> HRESULT,
@@ -11557,7 +11557,7 @@ impl IMediaSourceStatics4 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaSourceStatus: i32 {
+RT_ENUM! { enum MediaSourceStatus: i32 ["Windows.Media.Core.MediaSourceStatus"] {
     FullySupported (MediaSourceStatus_FullySupported) = 0, Unknown (MediaSourceStatus_Unknown) = 1,
 }}
 DEFINE_IID!(IID_IMediaStreamDescriptor, 2163306094, 37623, 17694, 151, 210, 175, 216, 7, 66, 218, 112);
@@ -11694,7 +11694,7 @@ impl IMediaStreamSample {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSample: IMediaStreamSample}
+RT_CLASS!{class MediaStreamSample: IMediaStreamSample ["Windows.Media.Core.MediaStreamSample"]}
 impl RtActivatable<IMediaStreamSampleStatics> for MediaStreamSample {}
 impl RtActivatable<IMediaStreamSampleStatics2> for MediaStreamSample {}
 impl MediaStreamSample {
@@ -11720,7 +11720,7 @@ impl IMediaStreamSample2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSamplePropertySet: foundation::collections::IMap<Guid, IInspectable>}
+RT_CLASS!{class MediaStreamSamplePropertySet: foundation::collections::IMap<Guid, IInspectable> ["Windows.Media.Core.MediaStreamSamplePropertySet"]}
 DEFINE_IID!(IID_IMediaStreamSampleProtectionProperties, 1320714898, 60639, 18750, 132, 29, 221, 74, 221, 124, 172, 162);
 RT_INTERFACE!{interface IMediaStreamSampleProtectionProperties(IMediaStreamSampleProtectionPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSampleProtectionProperties] {
     fn SetKeyIdentifier(&self, valueSize: u32, value: *mut u8) -> HRESULT,
@@ -11759,7 +11759,7 @@ impl IMediaStreamSampleProtectionProperties {
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSampleProtectionProperties: IMediaStreamSampleProtectionProperties}
+RT_CLASS!{class MediaStreamSampleProtectionProperties: IMediaStreamSampleProtectionProperties ["Windows.Media.Core.MediaStreamSampleProtectionProperties"]}
 DEFINE_IID!(IID_IMediaStreamSampleStatics, 3755942287, 42703, 17785, 190, 65, 115, 221, 148, 26, 217, 114);
 RT_INTERFACE!{static interface IMediaStreamSampleStatics(IMediaStreamSampleStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSampleStatics] {
     #[cfg(feature="windows-storage")] fn CreateFromBuffer(&self, buffer: *mut super::super::storage::streams::IBuffer, timestamp: foundation::TimeSpan, out: *mut *mut MediaStreamSample) -> HRESULT,
@@ -11939,7 +11939,7 @@ impl IMediaStreamSource {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSource: IMediaStreamSource}
+RT_CLASS!{class MediaStreamSource: IMediaStreamSource ["Windows.Media.Core.MediaStreamSource"]}
 impl RtActivatable<IMediaStreamSourceFactory> for MediaStreamSource {}
 impl MediaStreamSource {
     #[inline] pub fn create_from_descriptor(descriptor: &IMediaStreamDescriptor) -> Result<ComPtr<MediaStreamSource>> {
@@ -12009,8 +12009,8 @@ impl IMediaStreamSourceClosedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSourceClosedEventArgs: IMediaStreamSourceClosedEventArgs}
-RT_ENUM! { enum MediaStreamSourceClosedReason: i32 {
+RT_CLASS!{class MediaStreamSourceClosedEventArgs: IMediaStreamSourceClosedEventArgs ["Windows.Media.Core.MediaStreamSourceClosedEventArgs"]}
+RT_ENUM! { enum MediaStreamSourceClosedReason: i32 ["Windows.Media.Core.MediaStreamSourceClosedReason"] {
     Done (MediaStreamSourceClosedReason_Done) = 0, UnknownError (MediaStreamSourceClosedReason_UnknownError) = 1, AppReportedError (MediaStreamSourceClosedReason_AppReportedError) = 2, UnsupportedProtectionSystem (MediaStreamSourceClosedReason_UnsupportedProtectionSystem) = 3, ProtectionSystemFailure (MediaStreamSourceClosedReason_ProtectionSystemFailure) = 4, UnsupportedEncodingFormat (MediaStreamSourceClosedReason_UnsupportedEncodingFormat) = 5, MissingSampleRequestedEventHandler (MediaStreamSourceClosedReason_MissingSampleRequestedEventHandler) = 6,
 }}
 DEFINE_IID!(IID_IMediaStreamSourceClosedRequest, 2424045801, 6307, 18769, 136, 122, 44, 30, 235, 213, 198, 158);
@@ -12024,8 +12024,8 @@ impl IMediaStreamSourceClosedRequest {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSourceClosedRequest: IMediaStreamSourceClosedRequest}
-RT_ENUM! { enum MediaStreamSourceErrorStatus: i32 {
+RT_CLASS!{class MediaStreamSourceClosedRequest: IMediaStreamSourceClosedRequest ["Windows.Media.Core.MediaStreamSourceClosedRequest"]}
+RT_ENUM! { enum MediaStreamSourceErrorStatus: i32 ["Windows.Media.Core.MediaStreamSourceErrorStatus"] {
     Other (MediaStreamSourceErrorStatus_Other) = 0, OutOfMemory (MediaStreamSourceErrorStatus_OutOfMemory) = 1, FailedToOpenFile (MediaStreamSourceErrorStatus_FailedToOpenFile) = 2, FailedToConnectToServer (MediaStreamSourceErrorStatus_FailedToConnectToServer) = 3, ConnectionToServerLost (MediaStreamSourceErrorStatus_ConnectionToServerLost) = 4, UnspecifiedNetworkError (MediaStreamSourceErrorStatus_UnspecifiedNetworkError) = 5, DecodeError (MediaStreamSourceErrorStatus_DecodeError) = 6, UnsupportedMediaFormat (MediaStreamSourceErrorStatus_UnsupportedMediaFormat) = 7,
 }}
 DEFINE_IID!(IID_IMediaStreamSourceFactory, 4017610969, 53592, 19322, 134, 63, 32, 51, 66, 251, 253, 65);
@@ -12056,7 +12056,7 @@ impl IMediaStreamSourceSampleRenderedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSourceSampleRenderedEventArgs: IMediaStreamSourceSampleRenderedEventArgs}
+RT_CLASS!{class MediaStreamSourceSampleRenderedEventArgs: IMediaStreamSourceSampleRenderedEventArgs ["Windows.Media.Core.MediaStreamSourceSampleRenderedEventArgs"]}
 DEFINE_IID!(IID_IMediaStreamSourceSampleRequest, 1303593385, 13569, 19867, 131, 249, 143, 35, 92, 130, 37, 50);
 RT_INTERFACE!{interface IMediaStreamSourceSampleRequest(IMediaStreamSourceSampleRequestVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceSampleRequest] {
     fn get_StreamDescriptor(&self, out: *mut *mut IMediaStreamDescriptor) -> HRESULT,
@@ -12090,7 +12090,7 @@ impl IMediaStreamSourceSampleRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSourceSampleRequest: IMediaStreamSourceSampleRequest}
+RT_CLASS!{class MediaStreamSourceSampleRequest: IMediaStreamSourceSampleRequest ["Windows.Media.Core.MediaStreamSourceSampleRequest"]}
 DEFINE_IID!(IID_IMediaStreamSourceSampleRequestDeferral, 2023083010, 63874, 17352, 157, 22, 198, 45, 153, 147, 25, 190);
 RT_INTERFACE!{interface IMediaStreamSourceSampleRequestDeferral(IMediaStreamSourceSampleRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceSampleRequestDeferral] {
     fn Complete(&self) -> HRESULT
@@ -12101,7 +12101,7 @@ impl IMediaStreamSourceSampleRequestDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSourceSampleRequestDeferral: IMediaStreamSourceSampleRequestDeferral}
+RT_CLASS!{class MediaStreamSourceSampleRequestDeferral: IMediaStreamSourceSampleRequestDeferral ["Windows.Media.Core.MediaStreamSourceSampleRequestDeferral"]}
 DEFINE_IID!(IID_IMediaStreamSourceSampleRequestedEventArgs, 284801950, 29125, 18735, 132, 127, 13, 161, 243, 94, 129, 248);
 RT_INTERFACE!{interface IMediaStreamSourceSampleRequestedEventArgs(IMediaStreamSourceSampleRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceSampleRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut MediaStreamSourceSampleRequest) -> HRESULT
@@ -12113,7 +12113,7 @@ impl IMediaStreamSourceSampleRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSourceSampleRequestedEventArgs: IMediaStreamSourceSampleRequestedEventArgs}
+RT_CLASS!{class MediaStreamSourceSampleRequestedEventArgs: IMediaStreamSourceSampleRequestedEventArgs ["Windows.Media.Core.MediaStreamSourceSampleRequestedEventArgs"]}
 DEFINE_IID!(IID_IMediaStreamSourceStartingEventArgs, 4094978290, 49780, 18752, 165, 187, 40, 165, 114, 69, 47, 167);
 RT_INTERFACE!{interface IMediaStreamSourceStartingEventArgs(IMediaStreamSourceStartingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceStartingEventArgs] {
     fn get_Request(&self, out: *mut *mut MediaStreamSourceStartingRequest) -> HRESULT
@@ -12125,7 +12125,7 @@ impl IMediaStreamSourceStartingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSourceStartingEventArgs: IMediaStreamSourceStartingEventArgs}
+RT_CLASS!{class MediaStreamSourceStartingEventArgs: IMediaStreamSourceStartingEventArgs ["Windows.Media.Core.MediaStreamSourceStartingEventArgs"]}
 DEFINE_IID!(IID_IMediaStreamSourceStartingRequest, 714118116, 13764, 19227, 167, 145, 13, 153, 219, 86, 221, 29);
 RT_INTERFACE!{interface IMediaStreamSourceStartingRequest(IMediaStreamSourceStartingRequestVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceStartingRequest] {
     fn get_StartPosition(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -12148,7 +12148,7 @@ impl IMediaStreamSourceStartingRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSourceStartingRequest: IMediaStreamSourceStartingRequest}
+RT_CLASS!{class MediaStreamSourceStartingRequest: IMediaStreamSourceStartingRequest ["Windows.Media.Core.MediaStreamSourceStartingRequest"]}
 DEFINE_IID!(IID_IMediaStreamSourceStartingRequestDeferral, 1058231973, 25408, 19908, 153, 16, 6, 142, 217, 245, 152, 248);
 RT_INTERFACE!{interface IMediaStreamSourceStartingRequestDeferral(IMediaStreamSourceStartingRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceStartingRequestDeferral] {
     fn Complete(&self) -> HRESULT
@@ -12159,7 +12159,7 @@ impl IMediaStreamSourceStartingRequestDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSourceStartingRequestDeferral: IMediaStreamSourceStartingRequestDeferral}
+RT_CLASS!{class MediaStreamSourceStartingRequestDeferral: IMediaStreamSourceStartingRequestDeferral ["Windows.Media.Core.MediaStreamSourceStartingRequestDeferral"]}
 DEFINE_IID!(IID_IMediaStreamSourceSwitchStreamsRequest, 1102610574, 14505, 20163, 155, 160, 182, 155, 133, 80, 30, 144);
 RT_INTERFACE!{interface IMediaStreamSourceSwitchStreamsRequest(IMediaStreamSourceSwitchStreamsRequestVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceSwitchStreamsRequest] {
     fn get_OldStreamDescriptor(&self, out: *mut *mut IMediaStreamDescriptor) -> HRESULT,
@@ -12183,7 +12183,7 @@ impl IMediaStreamSourceSwitchStreamsRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSourceSwitchStreamsRequest: IMediaStreamSourceSwitchStreamsRequest}
+RT_CLASS!{class MediaStreamSourceSwitchStreamsRequest: IMediaStreamSourceSwitchStreamsRequest ["Windows.Media.Core.MediaStreamSourceSwitchStreamsRequest"]}
 DEFINE_IID!(IID_IMediaStreamSourceSwitchStreamsRequestDeferral, 3202603061, 42245, 20378, 185, 67, 43, 140, 177, 180, 187, 217);
 RT_INTERFACE!{interface IMediaStreamSourceSwitchStreamsRequestDeferral(IMediaStreamSourceSwitchStreamsRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceSwitchStreamsRequestDeferral] {
     fn Complete(&self) -> HRESULT
@@ -12194,7 +12194,7 @@ impl IMediaStreamSourceSwitchStreamsRequestDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSourceSwitchStreamsRequestDeferral: IMediaStreamSourceSwitchStreamsRequestDeferral}
+RT_CLASS!{class MediaStreamSourceSwitchStreamsRequestDeferral: IMediaStreamSourceSwitchStreamsRequestDeferral ["Windows.Media.Core.MediaStreamSourceSwitchStreamsRequestDeferral"]}
 DEFINE_IID!(IID_IMediaStreamSourceSwitchStreamsRequestedEventArgs, 1109404530, 28321, 18039, 152, 30, 53, 10, 13, 164, 18, 170);
 RT_INTERFACE!{interface IMediaStreamSourceSwitchStreamsRequestedEventArgs(IMediaStreamSourceSwitchStreamsRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceSwitchStreamsRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut MediaStreamSourceSwitchStreamsRequest) -> HRESULT
@@ -12206,7 +12206,7 @@ impl IMediaStreamSourceSwitchStreamsRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaStreamSourceSwitchStreamsRequestedEventArgs: IMediaStreamSourceSwitchStreamsRequestedEventArgs}
+RT_CLASS!{class MediaStreamSourceSwitchStreamsRequestedEventArgs: IMediaStreamSourceSwitchStreamsRequestedEventArgs ["Windows.Media.Core.MediaStreamSourceSwitchStreamsRequestedEventArgs"]}
 DEFINE_IID!(IID_IMediaTrack, 65141500, 51505, 18714, 180, 107, 193, 14, 232, 194, 86, 183);
 RT_INTERFACE!{interface IMediaTrack(IMediaTrackVtbl): IInspectable(IInspectableVtbl) [IID_IMediaTrack] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -12241,16 +12241,16 @@ impl IMediaTrack {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaTrackKind: i32 {
+RT_ENUM! { enum MediaTrackKind: i32 ["Windows.Media.Core.MediaTrackKind"] {
     Audio (MediaTrackKind_Audio) = 0, Video (MediaTrackKind_Video) = 1, TimedMetadata (MediaTrackKind_TimedMetadata) = 2,
 }}
-RT_ENUM! { enum MseAppendMode: i32 {
+RT_ENUM! { enum MseAppendMode: i32 ["Windows.Media.Core.MseAppendMode"] {
     Segments (MseAppendMode_Segments) = 0, Sequence (MseAppendMode_Sequence) = 1,
 }}
-RT_ENUM! { enum MseEndOfStreamStatus: i32 {
+RT_ENUM! { enum MseEndOfStreamStatus: i32 ["Windows.Media.Core.MseEndOfStreamStatus"] {
     Success (MseEndOfStreamStatus_Success) = 0, NetworkError (MseEndOfStreamStatus_NetworkError) = 1, DecodeError (MseEndOfStreamStatus_DecodeError) = 2, UnknownError (MseEndOfStreamStatus_UnknownError) = 3,
 }}
-RT_ENUM! { enum MseReadyState: i32 {
+RT_ENUM! { enum MseReadyState: i32 ["Windows.Media.Core.MseReadyState"] {
     Closed (MseReadyState_Closed) = 0, Open (MseReadyState_Open) = 1, Ended (MseReadyState_Ended) = 2,
 }}
 DEFINE_IID!(IID_IMseSourceBuffer, 203072483, 57229, 16505, 163, 254, 104, 73, 24, 75, 78, 47);
@@ -12397,7 +12397,7 @@ impl IMseSourceBuffer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MseSourceBuffer: IMseSourceBuffer}
+RT_CLASS!{class MseSourceBuffer: IMseSourceBuffer ["Windows.Media.Core.MseSourceBuffer"]}
 DEFINE_IID!(IID_IMseSourceBufferList, 2516248807, 43239, 20159, 137, 39, 20, 94, 148, 11, 165, 17);
 RT_INTERFACE!{interface IMseSourceBufferList(IMseSourceBufferListVtbl): IInspectable(IInspectableVtbl) [IID_IMseSourceBufferList] {
     fn add_SourceBufferAdded(&self, handler: *mut foundation::TypedEventHandler<MseSourceBufferList, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -12431,7 +12431,7 @@ impl IMseSourceBufferList {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MseSourceBufferList: IMseSourceBufferList}
+RT_CLASS!{class MseSourceBufferList: IMseSourceBufferList ["Windows.Media.Core.MseSourceBufferList"]}
 DEFINE_IID!(IID_IMseStreamSource, 2964593037, 756, 18723, 136, 221, 129, 188, 63, 54, 15, 250);
 RT_INTERFACE!{interface IMseStreamSource(IMseStreamSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMseStreamSource] {
     fn add_Opened(&self, handler: *mut foundation::TypedEventHandler<MseStreamSource, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -12515,7 +12515,7 @@ impl IMseStreamSource {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MseStreamSource: IMseStreamSource}
+RT_CLASS!{class MseStreamSource: IMseStreamSource ["Windows.Media.Core.MseStreamSource"]}
 impl RtActivatable<IMseStreamSourceStatics> for MseStreamSource {}
 impl RtActivatable<IActivationFactory> for MseStreamSource {}
 impl MseStreamSource {
@@ -12551,7 +12551,7 @@ impl IMseStreamSourceStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct MseTimeRange {
+RT_STRUCT! { struct MseTimeRange ["Windows.Media.Core.MseTimeRange"] {
     Start: foundation::TimeSpan, End: foundation::TimeSpan,
 }}
 DEFINE_IID!(IID_ISceneAnalysisEffect, 3226182425, 51777, 18451, 191, 253, 123, 8, 176, 237, 37, 87);
@@ -12587,8 +12587,8 @@ impl ISceneAnalysisEffect {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SceneAnalysisEffect: ISceneAnalysisEffect}
-RT_CLASS!{class SceneAnalysisEffectDefinition: super::effects::IVideoEffectDefinition}
+RT_CLASS!{class SceneAnalysisEffect: ISceneAnalysisEffect ["Windows.Media.Core.SceneAnalysisEffect"]}
+RT_CLASS!{class SceneAnalysisEffectDefinition: super::effects::IVideoEffectDefinition ["Windows.Media.Core.SceneAnalysisEffectDefinition"]}
 impl RtActivatable<IActivationFactory> for SceneAnalysisEffectDefinition {}
 DEFINE_CLSID!(SceneAnalysisEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,83,99,101,110,101,65,110,97,108,121,115,105,115,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_SceneAnalysisEffectDefinition]);
 DEFINE_IID!(IID_ISceneAnalysisEffectFrame, 3635482188, 32729, 17121, 133, 235, 101, 114, 194, 151, 201, 135);
@@ -12608,7 +12608,7 @@ impl ISceneAnalysisEffectFrame {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SceneAnalysisEffectFrame: ISceneAnalysisEffectFrame}
+RT_CLASS!{class SceneAnalysisEffectFrame: ISceneAnalysisEffectFrame ["Windows.Media.Core.SceneAnalysisEffectFrame"]}
 DEFINE_IID!(IID_ISceneAnalysisEffectFrame2, 760097214, 1567, 18350, 153, 21, 2, 82, 75, 95, 154, 95);
 RT_INTERFACE!{interface ISceneAnalysisEffectFrame2(ISceneAnalysisEffectFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_ISceneAnalysisEffectFrame2] {
     fn get_AnalysisRecommendation(&self, out: *mut SceneAnalysisRecommendation) -> HRESULT
@@ -12620,7 +12620,7 @@ impl ISceneAnalysisEffectFrame2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SceneAnalysisRecommendation: i32 {
+RT_ENUM! { enum SceneAnalysisRecommendation: i32 ["Windows.Media.Core.SceneAnalysisRecommendation"] {
     Standard (SceneAnalysisRecommendation_Standard) = 0, Hdr (SceneAnalysisRecommendation_Hdr) = 1, LowLight (SceneAnalysisRecommendation_LowLight) = 2,
 }}
 DEFINE_IID!(IID_ISceneAnalyzedEventArgs, 342594952, 10321, 17892, 173, 85, 68, 207, 141, 248, 219, 77);
@@ -12634,7 +12634,7 @@ impl ISceneAnalyzedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SceneAnalyzedEventArgs: ISceneAnalyzedEventArgs}
+RT_CLASS!{class SceneAnalyzedEventArgs: ISceneAnalyzedEventArgs ["Windows.Media.Core.SceneAnalyzedEventArgs"]}
 DEFINE_IID!(IID_ISingleSelectMediaTrackList, 1998614303, 49999, 18767, 128, 119, 43, 173, 159, 244, 236, 241);
 RT_INTERFACE!{interface ISingleSelectMediaTrackList(ISingleSelectMediaTrackListVtbl): IInspectable(IInspectableVtbl) [IID_ISingleSelectMediaTrackList] {
     fn add_SelectedIndexChanged(&self, handler: *mut foundation::TypedEventHandler<ISingleSelectMediaTrackList, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -12700,10 +12700,10 @@ impl ISpeechCue {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechCue: ISpeechCue}
+RT_CLASS!{class SpeechCue: ISpeechCue ["Windows.Media.Core.SpeechCue"]}
 impl RtActivatable<IActivationFactory> for SpeechCue {}
 DEFINE_CLSID!(SpeechCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,83,112,101,101,99,104,67,117,101,0]) [CLSID_SpeechCue]);
-RT_ENUM! { enum TimedMetadataKind: i32 {
+RT_ENUM! { enum TimedMetadataKind: i32 ["Windows.Media.Core.TimedMetadataKind"] {
     Caption (TimedMetadataKind_Caption) = 0, Chapter (TimedMetadataKind_Chapter) = 1, Custom (TimedMetadataKind_Custom) = 2, Data (TimedMetadataKind_Data) = 3, Description (TimedMetadataKind_Description) = 4, Subtitle (TimedMetadataKind_Subtitle) = 5, ImageSubtitle (TimedMetadataKind_ImageSubtitle) = 6, Speech (TimedMetadataKind_Speech) = 7,
 }}
 DEFINE_IID!(IID_ITimedMetadataStreamDescriptor, 322123455, 10602, 17982, 159, 249, 1, 205, 37, 105, 20, 8);
@@ -12723,7 +12723,7 @@ impl ITimedMetadataStreamDescriptor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimedMetadataStreamDescriptor: IMediaStreamDescriptor}
+RT_CLASS!{class TimedMetadataStreamDescriptor: IMediaStreamDescriptor ["Windows.Media.Core.TimedMetadataStreamDescriptor"]}
 impl RtActivatable<ITimedMetadataStreamDescriptorFactory> for TimedMetadataStreamDescriptor {}
 impl TimedMetadataStreamDescriptor {
     #[inline] pub fn create(encodingProperties: &super::mediaproperties::TimedMetadataEncodingProperties) -> Result<ComPtr<TimedMetadataStreamDescriptor>> {
@@ -12814,7 +12814,7 @@ impl ITimedMetadataTrack {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimedMetadataTrack: ITimedMetadataTrack}
+RT_CLASS!{class TimedMetadataTrack: ITimedMetadataTrack ["Windows.Media.Core.TimedMetadataTrack"]}
 impl RtActivatable<ITimedMetadataTrackFactory> for TimedMetadataTrack {}
 impl TimedMetadataTrack {
     #[inline] pub fn create(id: &HStringArg, language: &HStringArg, kind: TimedMetadataKind) -> Result<ComPtr<TimedMetadataTrack>> {
@@ -12856,8 +12856,8 @@ impl ITimedMetadataTrackError {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimedMetadataTrackError: ITimedMetadataTrackError}
-RT_ENUM! { enum TimedMetadataTrackErrorCode: i32 {
+RT_CLASS!{class TimedMetadataTrackError: ITimedMetadataTrackError ["Windows.Media.Core.TimedMetadataTrackError"]}
+RT_ENUM! { enum TimedMetadataTrackErrorCode: i32 ["Windows.Media.Core.TimedMetadataTrackErrorCode"] {
     None (TimedMetadataTrackErrorCode_None) = 0, DataFormatError (TimedMetadataTrackErrorCode_DataFormatError) = 1, NetworkError (TimedMetadataTrackErrorCode_NetworkError) = 2, InternalError (TimedMetadataTrackErrorCode_InternalError) = 3,
 }}
 DEFINE_IID!(IID_ITimedMetadataTrackFactory, 2379576849, 38835, 19999, 133, 44, 15, 72, 44, 129, 173, 38);
@@ -12882,7 +12882,7 @@ impl ITimedMetadataTrackFailedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimedMetadataTrackFailedEventArgs: ITimedMetadataTrackFailedEventArgs}
+RT_CLASS!{class TimedMetadataTrackFailedEventArgs: ITimedMetadataTrackFailedEventArgs ["Windows.Media.Core.TimedMetadataTrackFailedEventArgs"]}
 DEFINE_IID!(IID_ITimedMetadataTrackProvider, 998187044, 63310, 19166, 147, 197, 33, 157, 160, 91, 104, 86);
 RT_INTERFACE!{interface ITimedMetadataTrackProvider(ITimedMetadataTrackProviderVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataTrackProvider] {
     fn get_TimedMetadataTracks(&self, out: *mut *mut foundation::collections::IVectorView<TimedMetadataTrack>) -> HRESULT
@@ -12927,19 +12927,19 @@ impl ITimedTextCue {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimedTextCue: ITimedTextCue}
+RT_CLASS!{class TimedTextCue: ITimedTextCue ["Windows.Media.Core.TimedTextCue"]}
 impl RtActivatable<IActivationFactory> for TimedTextCue {}
 DEFINE_CLSID!(TimedTextCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,67,117,101,0]) [CLSID_TimedTextCue]);
-RT_ENUM! { enum TimedTextDisplayAlignment: i32 {
+RT_ENUM! { enum TimedTextDisplayAlignment: i32 ["Windows.Media.Core.TimedTextDisplayAlignment"] {
     Before (TimedTextDisplayAlignment_Before) = 0, After (TimedTextDisplayAlignment_After) = 1, Center (TimedTextDisplayAlignment_Center) = 2,
 }}
-RT_STRUCT! { struct TimedTextDouble {
+RT_STRUCT! { struct TimedTextDouble ["Windows.Media.Core.TimedTextDouble"] {
     Value: f64, Unit: TimedTextUnit,
 }}
-RT_ENUM! { enum TimedTextFlowDirection: i32 {
+RT_ENUM! { enum TimedTextFlowDirection: i32 ["Windows.Media.Core.TimedTextFlowDirection"] {
     LeftToRight (TimedTextFlowDirection_LeftToRight) = 0, RightToLeft (TimedTextFlowDirection_RightToLeft) = 1,
 }}
-RT_ENUM! { enum TimedTextFontStyle: i32 {
+RT_ENUM! { enum TimedTextFontStyle: i32 ["Windows.Media.Core.TimedTextFontStyle"] {
     Normal (TimedTextFontStyle_Normal) = 0, Oblique (TimedTextFontStyle_Oblique) = 1, Italic (TimedTextFontStyle_Italic) = 2,
 }}
 DEFINE_IID!(IID_ITimedTextLine, 2542632162, 29448, 19558, 190, 80, 101, 119, 114, 137, 245, 223);
@@ -12964,16 +12964,16 @@ impl ITimedTextLine {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimedTextLine: ITimedTextLine}
+RT_CLASS!{class TimedTextLine: ITimedTextLine ["Windows.Media.Core.TimedTextLine"]}
 impl RtActivatable<IActivationFactory> for TimedTextLine {}
 DEFINE_CLSID!(TimedTextLine(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,76,105,110,101,0]) [CLSID_TimedTextLine]);
-RT_ENUM! { enum TimedTextLineAlignment: i32 {
+RT_ENUM! { enum TimedTextLineAlignment: i32 ["Windows.Media.Core.TimedTextLineAlignment"] {
     Start (TimedTextLineAlignment_Start) = 0, End (TimedTextLineAlignment_End) = 1, Center (TimedTextLineAlignment_Center) = 2,
 }}
-RT_STRUCT! { struct TimedTextPadding {
+RT_STRUCT! { struct TimedTextPadding ["Windows.Media.Core.TimedTextPadding"] {
     Before: f64, After: f64, Start: f64, End: f64, Unit: TimedTextUnit,
 }}
-RT_STRUCT! { struct TimedTextPoint {
+RT_STRUCT! { struct TimedTextPoint ["Windows.Media.Core.TimedTextPoint"] {
     X: f64, Y: f64, Unit: TimedTextUnit,
 }}
 DEFINE_IID!(IID_ITimedTextRegion, 516982815, 35334, 16930, 159, 89, 178, 27, 244, 1, 36, 180);
@@ -13115,13 +13115,13 @@ impl ITimedTextRegion {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimedTextRegion: ITimedTextRegion}
+RT_CLASS!{class TimedTextRegion: ITimedTextRegion ["Windows.Media.Core.TimedTextRegion"]}
 impl RtActivatable<IActivationFactory> for TimedTextRegion {}
 DEFINE_CLSID!(TimedTextRegion(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,82,101,103,105,111,110,0]) [CLSID_TimedTextRegion]);
-RT_ENUM! { enum TimedTextScrollMode: i32 {
+RT_ENUM! { enum TimedTextScrollMode: i32 ["Windows.Media.Core.TimedTextScrollMode"] {
     Popon (TimedTextScrollMode_Popon) = 0, Rollup (TimedTextScrollMode_Rollup) = 1,
 }}
-RT_STRUCT! { struct TimedTextSize {
+RT_STRUCT! { struct TimedTextSize ["Windows.Media.Core.TimedTextSize"] {
     Height: f64, Width: f64, Unit: TimedTextUnit,
 }}
 DEFINE_IID!(IID_ITimedTextSource, 3303906214, 4127, 16461, 169, 73, 130, 243, 63, 205, 147, 183);
@@ -13140,7 +13140,7 @@ impl ITimedTextSource {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimedTextSource: ITimedTextSource}
+RT_CLASS!{class TimedTextSource: ITimedTextSource ["Windows.Media.Core.TimedTextSource"]}
 impl RtActivatable<ITimedTextSourceStatics> for TimedTextSource {}
 impl RtActivatable<ITimedTextSourceStatics2> for TimedTextSource {}
 impl TimedTextSource {
@@ -13187,7 +13187,7 @@ impl ITimedTextSourceResolveResultEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimedTextSourceResolveResultEventArgs: ITimedTextSourceResolveResultEventArgs}
+RT_CLASS!{class TimedTextSourceResolveResultEventArgs: ITimedTextSourceResolveResultEventArgs ["Windows.Media.Core.TimedTextSourceResolveResultEventArgs"]}
 DEFINE_IID!(IID_ITimedTextSourceStatics, 2117146707, 39610, 19140, 187, 152, 47, 177, 118, 195, 191, 221);
 RT_INTERFACE!{static interface ITimedTextSourceStatics(ITimedTextSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextSourceStatics] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -13393,7 +13393,7 @@ impl ITimedTextStyle {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimedTextStyle: ITimedTextStyle}
+RT_CLASS!{class TimedTextStyle: ITimedTextStyle ["Windows.Media.Core.TimedTextStyle"]}
 impl RtActivatable<IActivationFactory> for TimedTextStyle {}
 DEFINE_CLSID!(TimedTextStyle(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,83,116,121,108,101,0]) [CLSID_TimedTextStyle]);
 DEFINE_IID!(IID_ITimedTextStyle2, 1700743469, 24849, 18311, 137, 204, 104, 111, 236, 229, 126, 20);
@@ -13483,19 +13483,19 @@ impl ITimedTextSubformat {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimedTextSubformat: ITimedTextSubformat}
+RT_CLASS!{class TimedTextSubformat: ITimedTextSubformat ["Windows.Media.Core.TimedTextSubformat"]}
 impl RtActivatable<IActivationFactory> for TimedTextSubformat {}
 DEFINE_CLSID!(TimedTextSubformat(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,83,117,98,102,111,114,109,97,116,0]) [CLSID_TimedTextSubformat]);
-RT_ENUM! { enum TimedTextUnit: i32 {
+RT_ENUM! { enum TimedTextUnit: i32 ["Windows.Media.Core.TimedTextUnit"] {
     Pixels (TimedTextUnit_Pixels) = 0, Percentage (TimedTextUnit_Percentage) = 1,
 }}
-RT_ENUM! { enum TimedTextWeight: i32 {
+RT_ENUM! { enum TimedTextWeight: i32 ["Windows.Media.Core.TimedTextWeight"] {
     Normal (TimedTextWeight_Normal) = 400, Bold (TimedTextWeight_Bold) = 700,
 }}
-RT_ENUM! { enum TimedTextWrapping: i32 {
+RT_ENUM! { enum TimedTextWrapping: i32 ["Windows.Media.Core.TimedTextWrapping"] {
     NoWrap (TimedTextWrapping_NoWrap) = 0, Wrap (TimedTextWrapping_Wrap) = 1,
 }}
-RT_ENUM! { enum TimedTextWritingMode: i32 {
+RT_ENUM! { enum TimedTextWritingMode: i32 ["Windows.Media.Core.TimedTextWritingMode"] {
     LeftRightTopBottom (TimedTextWritingMode_LeftRightTopBottom) = 0, RightLeftTopBottom (TimedTextWritingMode_RightLeftTopBottom) = 1, TopBottomRightLeft (TimedTextWritingMode_TopBottomRightLeft) = 2, TopBottomLeftRight (TimedTextWritingMode_TopBottomLeftRight) = 3, LeftRight (TimedTextWritingMode_LeftRight) = 4, RightLeft (TimedTextWritingMode_RightLeft) = 5, TopBottom (TimedTextWritingMode_TopBottom) = 6,
 }}
 DEFINE_IID!(IID_IVideoStabilizationEffect, 134784592, 38552, 20055, 135, 123, 189, 124, 178, 238, 15, 138);
@@ -13531,8 +13531,8 @@ impl IVideoStabilizationEffect {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoStabilizationEffect: IVideoStabilizationEffect}
-RT_CLASS!{class VideoStabilizationEffectDefinition: super::effects::IVideoEffectDefinition}
+RT_CLASS!{class VideoStabilizationEffect: IVideoStabilizationEffect ["Windows.Media.Core.VideoStabilizationEffect"]}
+RT_CLASS!{class VideoStabilizationEffectDefinition: super::effects::IVideoEffectDefinition ["Windows.Media.Core.VideoStabilizationEffectDefinition"]}
 impl RtActivatable<IActivationFactory> for VideoStabilizationEffectDefinition {}
 DEFINE_CLSID!(VideoStabilizationEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,86,105,100,101,111,83,116,97,98,105,108,105,122,97,116,105,111,110,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_VideoStabilizationEffectDefinition]);
 DEFINE_IID!(IID_IVideoStabilizationEffectEnabledChangedEventArgs, 410976040, 26555, 18195, 185, 0, 65, 104, 218, 22, 69, 41);
@@ -13546,8 +13546,8 @@ impl IVideoStabilizationEffectEnabledChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoStabilizationEffectEnabledChangedEventArgs: IVideoStabilizationEffectEnabledChangedEventArgs}
-RT_ENUM! { enum VideoStabilizationEffectEnabledChangedReason: i32 {
+RT_CLASS!{class VideoStabilizationEffectEnabledChangedEventArgs: IVideoStabilizationEffectEnabledChangedEventArgs ["Windows.Media.Core.VideoStabilizationEffectEnabledChangedEventArgs"]}
+RT_ENUM! { enum VideoStabilizationEffectEnabledChangedReason: i32 ["Windows.Media.Core.VideoStabilizationEffectEnabledChangedReason"] {
     Programmatic (VideoStabilizationEffectEnabledChangedReason_Programmatic) = 0, PixelRateTooHigh (VideoStabilizationEffectEnabledChangedReason_PixelRateTooHigh) = 1, RunningSlowly (VideoStabilizationEffectEnabledChangedReason_RunningSlowly) = 2,
 }}
 DEFINE_IID!(IID_IVideoStreamDescriptor, 317590869, 39979, 17472, 128, 87, 44, 122, 144, 240, 203, 236);
@@ -13561,7 +13561,7 @@ impl IVideoStreamDescriptor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoStreamDescriptor: IVideoStreamDescriptor}
+RT_CLASS!{class VideoStreamDescriptor: IVideoStreamDescriptor ["Windows.Media.Core.VideoStreamDescriptor"]}
 impl RtActivatable<IVideoStreamDescriptorFactory> for VideoStreamDescriptor {}
 impl VideoStreamDescriptor {
     #[inline] pub fn create(encodingProperties: &super::mediaproperties::VideoEncodingProperties) -> Result<ComPtr<VideoStreamDescriptor>> {
@@ -13631,7 +13631,7 @@ impl IVideoTrack {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoTrack: IMediaTrack}
+RT_CLASS!{class VideoTrack: IMediaTrack ["Windows.Media.Core.VideoTrack"]}
 DEFINE_IID!(IID_IVideoTrackOpenFailedEventArgs, 1987699249, 1273, 19586, 164, 238, 134, 2, 200, 187, 71, 84);
 RT_INTERFACE!{interface IVideoTrackOpenFailedEventArgs(IVideoTrackOpenFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVideoTrackOpenFailedEventArgs] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
@@ -13643,7 +13643,7 @@ impl IVideoTrackOpenFailedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoTrackOpenFailedEventArgs: IVideoTrackOpenFailedEventArgs}
+RT_CLASS!{class VideoTrackOpenFailedEventArgs: IVideoTrackOpenFailedEventArgs ["Windows.Media.Core.VideoTrackOpenFailedEventArgs"]}
 DEFINE_IID!(IID_IVideoTrackSupportInfo, 1270166688, 64607, 17677, 143, 240, 119, 141, 89, 4, 134, 222);
 RT_INTERFACE!{interface IVideoTrackSupportInfo(IVideoTrackSupportInfoVtbl): IInspectable(IInspectableVtbl) [IID_IVideoTrackSupportInfo] {
     fn get_DecoderStatus(&self, out: *mut MediaDecoderStatus) -> HRESULT,
@@ -13661,7 +13661,7 @@ impl IVideoTrackSupportInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoTrackSupportInfo: IVideoTrackSupportInfo}
+RT_CLASS!{class VideoTrackSupportInfo: IVideoTrackSupportInfo ["Windows.Media.Core.VideoTrackSupportInfo"]}
 pub mod preview { // Windows.Media.Core.Preview
 use ::prelude::*;
 RT_CLASS!{static class SoundLevelBroker}
@@ -13720,7 +13720,7 @@ impl IAdvancedPhotoCaptureSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdvancedPhotoCaptureSettings: IAdvancedPhotoCaptureSettings}
+RT_CLASS!{class AdvancedPhotoCaptureSettings: IAdvancedPhotoCaptureSettings ["Windows.Media.Devices.AdvancedPhotoCaptureSettings"]}
 impl RtActivatable<IActivationFactory> for AdvancedPhotoCaptureSettings {}
 DEFINE_CLSID!(AdvancedPhotoCaptureSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,65,100,118,97,110,99,101,100,80,104,111,116,111,67,97,112,116,117,114,101,83,101,116,116,105,110,103,115,0]) [CLSID_AdvancedPhotoCaptureSettings]);
 DEFINE_IID!(IID_IAdvancedPhotoControl, 3316733062, 36865, 18050, 147, 9, 104, 234, 224, 8, 14, 236);
@@ -13751,8 +13751,8 @@ impl IAdvancedPhotoControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdvancedPhotoControl: IAdvancedPhotoControl}
-RT_ENUM! { enum AdvancedPhotoMode: i32 {
+RT_CLASS!{class AdvancedPhotoControl: IAdvancedPhotoControl ["Windows.Media.Devices.AdvancedPhotoControl"]}
+RT_ENUM! { enum AdvancedPhotoMode: i32 ["Windows.Media.Devices.AdvancedPhotoMode"] {
     Auto (AdvancedPhotoMode_Auto) = 0, Standard (AdvancedPhotoMode_Standard) = 1, Hdr (AdvancedPhotoMode_Hdr) = 2, LowLight (AdvancedPhotoMode_LowLight) = 3,
 }}
 DEFINE_IID!(IID_IAdvancedVideoCaptureDeviceController, 3731879123, 11158, 17795, 128, 171, 181, 176, 29, 198, 168, 215);
@@ -13989,7 +13989,7 @@ impl IAudioDeviceController {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioDeviceController: IAudioDeviceController}
+RT_CLASS!{class AudioDeviceController: IAudioDeviceController ["Windows.Media.Devices.AudioDeviceController"]}
 DEFINE_IID!(IID_IAudioDeviceModule, 2261756982, 18369, 19251, 152, 82, 135, 115, 236, 75, 225, 35);
 RT_INTERFACE!{interface IAudioDeviceModule(IAudioDeviceModuleVtbl): IInspectable(IInspectableVtbl) [IID_IAudioDeviceModule] {
     fn get_ClassId(&self, out: *mut HSTRING) -> HRESULT,
@@ -14031,7 +14031,7 @@ impl IAudioDeviceModule {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioDeviceModule: IAudioDeviceModule}
+RT_CLASS!{class AudioDeviceModule: IAudioDeviceModule ["Windows.Media.Devices.AudioDeviceModule"]}
 DEFINE_IID!(IID_IAudioDeviceModuleNotificationEventArgs, 3823357103, 8780, 18622, 149, 107, 154, 19, 19, 78, 150, 232);
 RT_INTERFACE!{interface IAudioDeviceModuleNotificationEventArgs(IAudioDeviceModuleNotificationEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioDeviceModuleNotificationEventArgs] {
     fn get_Module(&self, out: *mut *mut AudioDeviceModule) -> HRESULT,
@@ -14049,7 +14049,7 @@ impl IAudioDeviceModuleNotificationEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioDeviceModuleNotificationEventArgs: IAudioDeviceModuleNotificationEventArgs}
+RT_CLASS!{class AudioDeviceModuleNotificationEventArgs: IAudioDeviceModuleNotificationEventArgs ["Windows.Media.Devices.AudioDeviceModuleNotificationEventArgs"]}
 DEFINE_IID!(IID_IAudioDeviceModulesManager, 1789135949, 38410, 19740, 179, 24, 0, 34, 96, 69, 71, 237);
 RT_INTERFACE!{interface IAudioDeviceModulesManager(IAudioDeviceModulesManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAudioDeviceModulesManager] {
     fn add_ModuleNotificationReceived(&self, handler: *mut foundation::TypedEventHandler<AudioDeviceModulesManager, AudioDeviceModuleNotificationEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -14078,7 +14078,7 @@ impl IAudioDeviceModulesManager {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioDeviceModulesManager: IAudioDeviceModulesManager}
+RT_CLASS!{class AudioDeviceModulesManager: IAudioDeviceModulesManager ["Windows.Media.Devices.AudioDeviceModulesManager"]}
 impl RtActivatable<IAudioDeviceModulesManagerFactory> for AudioDeviceModulesManager {}
 impl AudioDeviceModulesManager {
     #[inline] pub fn create(deviceId: &HStringArg) -> Result<ComPtr<AudioDeviceModulesManager>> {
@@ -14097,10 +14097,10 @@ impl IAudioDeviceModulesManagerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AudioDeviceRole: i32 {
+RT_ENUM! { enum AudioDeviceRole: i32 ["Windows.Media.Devices.AudioDeviceRole"] {
     Default (AudioDeviceRole_Default) = 0, Communications (AudioDeviceRole_Communications) = 1,
 }}
-RT_ENUM! { enum AutoFocusRange: i32 {
+RT_ENUM! { enum AutoFocusRange: i32 ["Windows.Media.Devices.AutoFocusRange"] {
     FullRange (AutoFocusRange_FullRange) = 0, Macro (AutoFocusRange_Macro) = 1, Normal (AutoFocusRange_Normal) = 2,
 }}
 DEFINE_IID!(IID_ICallControl, 2770391254, 44685, 17883, 128, 17, 202, 73, 211, 179, 229, 120);
@@ -14202,7 +14202,7 @@ impl ICallControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CallControl: ICallControl}
+RT_CLASS!{class CallControl: ICallControl ["Windows.Media.Devices.CallControl"]}
 impl RtActivatable<ICallControlStatics> for CallControl {}
 impl CallControl {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<CallControl>>> {
@@ -14240,19 +14240,19 @@ impl ICallControlStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CameraStreamState: i32 {
+RT_ENUM! { enum CameraStreamState: i32 ["Windows.Media.Devices.CameraStreamState"] {
     NotStreaming (CameraStreamState_NotStreaming) = 0, Streaming (CameraStreamState_Streaming) = 1, BlockedForPrivacy (CameraStreamState_BlockedForPrivacy) = 2, Shutdown (CameraStreamState_Shutdown) = 3,
 }}
-RT_ENUM! { enum CaptureSceneMode: i32 {
+RT_ENUM! { enum CaptureSceneMode: i32 ["Windows.Media.Devices.CaptureSceneMode"] {
     Auto (CaptureSceneMode_Auto) = 0, Manual (CaptureSceneMode_Manual) = 1, Macro (CaptureSceneMode_Macro) = 2, Portrait (CaptureSceneMode_Portrait) = 3, Sport (CaptureSceneMode_Sport) = 4, Snow (CaptureSceneMode_Snow) = 5, Night (CaptureSceneMode_Night) = 6, Beach (CaptureSceneMode_Beach) = 7, Sunset (CaptureSceneMode_Sunset) = 8, Candlelight (CaptureSceneMode_Candlelight) = 9, Landscape (CaptureSceneMode_Landscape) = 10, NightPortrait (CaptureSceneMode_NightPortrait) = 11, Backlit (CaptureSceneMode_Backlit) = 12,
 }}
-RT_ENUM! { enum CaptureUse: i32 {
+RT_ENUM! { enum CaptureUse: i32 ["Windows.Media.Devices.CaptureUse"] {
     None (CaptureUse_None) = 0, Photo (CaptureUse_Photo) = 1, Video (CaptureUse_Video) = 2,
 }}
-RT_ENUM! { enum ColorTemperaturePreset: i32 {
+RT_ENUM! { enum ColorTemperaturePreset: i32 ["Windows.Media.Devices.ColorTemperaturePreset"] {
     Auto (ColorTemperaturePreset_Auto) = 0, Manual (ColorTemperaturePreset_Manual) = 1, Cloudy (ColorTemperaturePreset_Cloudy) = 2, Daylight (ColorTemperaturePreset_Daylight) = 3, Flash (ColorTemperaturePreset_Flash) = 4, Fluorescent (ColorTemperaturePreset_Fluorescent) = 5, Tungsten (ColorTemperaturePreset_Tungsten) = 6, Candlelight (ColorTemperaturePreset_Candlelight) = 7,
 }}
-RT_CLASS!{class DefaultAudioCaptureDeviceChangedEventArgs: IDefaultAudioDeviceChangedEventArgs}
+RT_CLASS!{class DefaultAudioCaptureDeviceChangedEventArgs: IDefaultAudioDeviceChangedEventArgs ["Windows.Media.Devices.DefaultAudioCaptureDeviceChangedEventArgs"]}
 DEFINE_IID!(IID_IDefaultAudioDeviceChangedEventArgs, 286230575, 7173, 18007, 161, 142, 71, 201, 182, 159, 7, 171);
 RT_INTERFACE!{interface IDefaultAudioDeviceChangedEventArgs(IDefaultAudioDeviceChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDefaultAudioDeviceChangedEventArgs] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -14270,7 +14270,7 @@ impl IDefaultAudioDeviceChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DefaultAudioRenderDeviceChangedEventArgs: IDefaultAudioDeviceChangedEventArgs}
+RT_CLASS!{class DefaultAudioRenderDeviceChangedEventArgs: IDefaultAudioDeviceChangedEventArgs ["Windows.Media.Devices.DefaultAudioRenderDeviceChangedEventArgs"]}
 DEFINE_IID!(IID_IDialRequestedEventArgs, 58430110, 38204, 17030, 136, 102, 79, 15, 55, 108, 133, 90);
 RT_INTERFACE!{interface IDialRequestedEventArgs(IDialRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDialRequestedEventArgs] {
     fn Handled(&self) -> HRESULT,
@@ -14287,7 +14287,7 @@ impl IDialRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DialRequestedEventArgs: IDialRequestedEventArgs}
+RT_CLASS!{class DialRequestedEventArgs: IDialRequestedEventArgs ["Windows.Media.Devices.DialRequestedEventArgs"]}
 DEFINE_IID!(IID_DialRequestedEventHandler, 1522270171, 49695, 19396, 137, 27, 37, 126, 40, 193, 177, 164);
 RT_DELEGATE!{delegate DialRequestedEventHandler(DialRequestedEventHandlerVtbl, DialRequestedEventHandlerImpl) [IID_DialRequestedEventHandler] {
     fn Invoke(&self, sender: *mut CallControl, e: *mut DialRequestedEventArgs) -> HRESULT
@@ -14339,7 +14339,7 @@ impl IExposureCompensationControl {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ExposureCompensationControl: IExposureCompensationControl}
+RT_CLASS!{class ExposureCompensationControl: IExposureCompensationControl ["Windows.Media.Devices.ExposureCompensationControl"]}
 DEFINE_IID!(IID_IExposureControl, 166251490, 44438, 20264, 160, 224, 150, 237, 126, 27, 95, 210);
 RT_INTERFACE!{interface IExposureControl(IExposureControlVtbl): IInspectable(IInspectableVtbl) [IID_IExposureControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -14393,7 +14393,7 @@ impl IExposureControl {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ExposureControl: IExposureControl}
+RT_CLASS!{class ExposureControl: IExposureControl ["Windows.Media.Devices.ExposureControl"]}
 DEFINE_IID!(IID_IExposurePriorityVideoControl, 749879459, 20840, 17009, 158, 165, 71, 98, 26, 152, 163, 82);
 RT_INTERFACE!{interface IExposurePriorityVideoControl(IExposurePriorityVideoControlVtbl): IInspectable(IInspectableVtbl) [IID_IExposurePriorityVideoControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -14416,7 +14416,7 @@ impl IExposurePriorityVideoControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ExposurePriorityVideoControl: IExposurePriorityVideoControl}
+RT_CLASS!{class ExposurePriorityVideoControl: IExposurePriorityVideoControl ["Windows.Media.Devices.ExposurePriorityVideoControl"]}
 DEFINE_IID!(IID_IFlashControl, 3740540350, 32104, 17891, 140, 15, 190, 123, 179, 40, 55, 208);
 RT_INTERFACE!{interface IFlashControl(IFlashControlVtbl): IInspectable(IInspectableVtbl) [IID_IFlashControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -14484,7 +14484,7 @@ impl IFlashControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FlashControl: IFlashControl}
+RT_CLASS!{class FlashControl: IFlashControl ["Windows.Media.Devices.FlashControl"]}
 DEFINE_IID!(IID_IFlashControl2, 2099891358, 30177, 19191, 189, 125, 78, 56, 225, 192, 108, 214);
 RT_INTERFACE!{interface IFlashControl2(IFlashControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IFlashControl2] {
     fn get_AssistantLightSupported(&self, out: *mut bool) -> HRESULT,
@@ -14578,7 +14578,7 @@ impl IFocusControl {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FocusControl: IFocusControl}
+RT_CLASS!{class FocusControl: IFocusControl ["Windows.Media.Devices.FocusControl"]}
 DEFINE_IID!(IID_IFocusControl2, 1065156424, 50484, 20126, 148, 195, 82, 239, 42, 253, 93, 7);
 RT_INTERFACE!{interface IFocusControl2(IFocusControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IFocusControl2] {
     fn get_FocusChangedSupported(&self, out: *mut bool) -> HRESULT,
@@ -14643,10 +14643,10 @@ impl IFocusControl2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum FocusMode: i32 {
+RT_ENUM! { enum FocusMode: i32 ["Windows.Media.Devices.FocusMode"] {
     Auto (FocusMode_Auto) = 0, Single (FocusMode_Single) = 1, Continuous (FocusMode_Continuous) = 2, Manual (FocusMode_Manual) = 3,
 }}
-RT_ENUM! { enum FocusPreset: i32 {
+RT_ENUM! { enum FocusPreset: i32 ["Windows.Media.Devices.FocusPreset"] {
     Auto (FocusPreset_Auto) = 0, Manual (FocusPreset_Manual) = 1, AutoMacro (FocusPreset_AutoMacro) = 2, AutoNormal (FocusPreset_AutoNormal) = 3, AutoInfinity (FocusPreset_AutoInfinity) = 4, AutoHyperfocal (FocusPreset_AutoHyperfocal) = 5,
 }}
 DEFINE_IID!(IID_IFocusSettings, 2039844715, 12899, 17013, 133, 214, 174, 174, 137, 28, 150, 238);
@@ -14720,7 +14720,7 @@ impl IFocusSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FocusSettings: IFocusSettings}
+RT_CLASS!{class FocusSettings: IFocusSettings ["Windows.Media.Devices.FocusSettings"]}
 impl RtActivatable<IActivationFactory> for FocusSettings {}
 DEFINE_CLSID!(FocusSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,70,111,99,117,115,83,101,116,116,105,110,103,115,0]) [CLSID_FocusSettings]);
 DEFINE_IID!(IID_IHdrVideoControl, 1440277200, 12480, 17343, 155, 154, 151, 153, 215, 12, 237, 148);
@@ -14751,8 +14751,8 @@ impl IHdrVideoControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HdrVideoControl: IHdrVideoControl}
-RT_ENUM! { enum HdrVideoMode: i32 {
+RT_CLASS!{class HdrVideoControl: IHdrVideoControl ["Windows.Media.Devices.HdrVideoControl"]}
+RT_ENUM! { enum HdrVideoMode: i32 ["Windows.Media.Devices.HdrVideoMode"] {
     Off (HdrVideoMode_Off) = 0, On (HdrVideoMode_On) = 1, Auto (HdrVideoMode_Auto) = 2,
 }}
 DEFINE_IID!(IID_IIsoSpeedControl, 666288930, 9645, 20251, 170, 171, 82, 74, 179, 118, 202, 51);
@@ -14784,7 +14784,7 @@ impl IIsoSpeedControl {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class IsoSpeedControl: IIsoSpeedControl}
+RT_CLASS!{class IsoSpeedControl: IIsoSpeedControl ["Windows.Media.Devices.IsoSpeedControl"]}
 DEFINE_IID!(IID_IIsoSpeedControl2, 1863678194, 28023, 20362, 140, 47, 97, 48, 182, 57, 80, 83);
 RT_INTERFACE!{interface IIsoSpeedControl2(IIsoSpeedControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IIsoSpeedControl2] {
     fn get_Min(&self, out: *mut u32) -> HRESULT,
@@ -14832,7 +14832,7 @@ impl IIsoSpeedControl2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum IsoSpeedPreset: i32 {
+RT_ENUM! { enum IsoSpeedPreset: i32 ["Windows.Media.Devices.IsoSpeedPreset"] {
     Auto (IsoSpeedPreset_Auto) = 0, Iso50 (IsoSpeedPreset_Iso50) = 1, Iso80 (IsoSpeedPreset_Iso80) = 2, Iso100 (IsoSpeedPreset_Iso100) = 3, Iso200 (IsoSpeedPreset_Iso200) = 4, Iso400 (IsoSpeedPreset_Iso400) = 5, Iso800 (IsoSpeedPreset_Iso800) = 6, Iso1600 (IsoSpeedPreset_Iso1600) = 7, Iso3200 (IsoSpeedPreset_Iso3200) = 8, Iso6400 (IsoSpeedPreset_Iso6400) = 9, Iso12800 (IsoSpeedPreset_Iso12800) = 10, Iso25600 (IsoSpeedPreset_Iso25600) = 11,
 }}
 DEFINE_IID!(IID_IKeypadPressedEventArgs, 3550755072, 46330, 18893, 148, 66, 137, 175, 101, 104, 246, 1);
@@ -14846,7 +14846,7 @@ impl IKeypadPressedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class KeypadPressedEventArgs: IKeypadPressedEventArgs}
+RT_CLASS!{class KeypadPressedEventArgs: IKeypadPressedEventArgs ["Windows.Media.Devices.KeypadPressedEventArgs"]}
 DEFINE_IID!(IID_KeypadPressedEventHandler, 3862406228, 50471, 16940, 137, 38, 201, 175, 131, 181, 89, 160);
 RT_DELEGATE!{delegate KeypadPressedEventHandler(KeypadPressedEventHandlerVtbl, KeypadPressedEventHandlerImpl) [IID_KeypadPressedEventHandler] {
     fn Invoke(&self, sender: *mut CallControl, e: *mut KeypadPressedEventArgs) -> HRESULT
@@ -14913,7 +14913,7 @@ impl ILowLagPhotoControl {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LowLagPhotoControl: ILowLagPhotoControl}
+RT_CLASS!{class LowLagPhotoControl: ILowLagPhotoControl ["Windows.Media.Devices.LowLagPhotoControl"]}
 DEFINE_IID!(IID_ILowLagPhotoSequenceControl, 1037013149, 27926, 16540, 186, 254, 185, 165, 148, 198, 253, 230);
 RT_INTERFACE!{interface ILowLagPhotoSequenceControl(ILowLagPhotoSequenceControlVtbl): IInspectable(IInspectableVtbl) [IID_ILowLagPhotoSequenceControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -15010,17 +15010,17 @@ impl ILowLagPhotoSequenceControl {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LowLagPhotoSequenceControl: ILowLagPhotoSequenceControl}
-RT_ENUM! { enum ManualFocusDistance: i32 {
+RT_CLASS!{class LowLagPhotoSequenceControl: ILowLagPhotoSequenceControl ["Windows.Media.Devices.LowLagPhotoSequenceControl"]}
+RT_ENUM! { enum ManualFocusDistance: i32 ["Windows.Media.Devices.ManualFocusDistance"] {
     Infinity (ManualFocusDistance_Infinity) = 0, Hyperfocal (ManualFocusDistance_Hyperfocal) = 1, Nearest (ManualFocusDistance_Nearest) = 2,
 }}
-RT_ENUM! { enum MediaCaptureFocusState: i32 {
+RT_ENUM! { enum MediaCaptureFocusState: i32 ["Windows.Media.Devices.MediaCaptureFocusState"] {
     Uninitialized (MediaCaptureFocusState_Uninitialized) = 0, Lost (MediaCaptureFocusState_Lost) = 1, Searching (MediaCaptureFocusState_Searching) = 2, Focused (MediaCaptureFocusState_Focused) = 3, Failed (MediaCaptureFocusState_Failed) = 4,
 }}
-RT_ENUM! { enum MediaCaptureOptimization: i32 {
+RT_ENUM! { enum MediaCaptureOptimization: i32 ["Windows.Media.Devices.MediaCaptureOptimization"] {
     Default (MediaCaptureOptimization_Default) = 0, Quality (MediaCaptureOptimization_Quality) = 1, Latency (MediaCaptureOptimization_Latency) = 2, Power (MediaCaptureOptimization_Power) = 3, LatencyThenQuality (MediaCaptureOptimization_LatencyThenQuality) = 4, LatencyThenPower (MediaCaptureOptimization_LatencyThenPower) = 5, PowerAndQuality (MediaCaptureOptimization_PowerAndQuality) = 6,
 }}
-RT_ENUM! { enum MediaCapturePauseBehavior: i32 {
+RT_ENUM! { enum MediaCapturePauseBehavior: i32 ["Windows.Media.Devices.MediaCapturePauseBehavior"] {
     RetainHardwareResources (MediaCapturePauseBehavior_RetainHardwareResources) = 0, ReleaseHardwareResources (MediaCapturePauseBehavior_ReleaseHardwareResources) = 1,
 }}
 RT_CLASS!{static class MediaDevice}
@@ -15090,7 +15090,7 @@ impl IMediaDeviceControl {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaDeviceControl: IMediaDeviceControl}
+RT_CLASS!{class MediaDeviceControl: IMediaDeviceControl ["Windows.Media.Devices.MediaDeviceControl"]}
 DEFINE_IID!(IID_IMediaDeviceControlCapabilities, 587225110, 60293, 17378, 185, 43, 130, 64, 213, 238, 112, 236);
 RT_INTERFACE!{interface IMediaDeviceControlCapabilities(IMediaDeviceControlCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IMediaDeviceControlCapabilities] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -15132,7 +15132,7 @@ impl IMediaDeviceControlCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaDeviceControlCapabilities: IMediaDeviceControlCapabilities}
+RT_CLASS!{class MediaDeviceControlCapabilities: IMediaDeviceControlCapabilities ["Windows.Media.Devices.MediaDeviceControlCapabilities"]}
 DEFINE_IID!(IID_IMediaDeviceController, 4143510990, 8346, 18683, 134, 252, 212, 69, 120, 243, 23, 230);
 RT_INTERFACE!{interface IMediaDeviceController(IMediaDeviceControllerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaDeviceController] {
     fn GetAvailableMediaStreamProperties(&self, mediaStreamType: super::capture::MediaStreamType, out: *mut *mut foundation::collections::IVectorView<super::mediaproperties::IMediaEncodingProperties>) -> HRESULT,
@@ -15230,7 +15230,7 @@ impl IModuleCommandResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ModuleCommandResult: IModuleCommandResult}
+RT_CLASS!{class ModuleCommandResult: IModuleCommandResult ["Windows.Media.Devices.ModuleCommandResult"]}
 DEFINE_IID!(IID_IOpticalImageStabilizationControl, 3215825949, 188, 16955, 142, 178, 160, 23, 140, 169, 66, 71);
 RT_INTERFACE!{interface IOpticalImageStabilizationControl(IOpticalImageStabilizationControlVtbl): IInspectable(IInspectableVtbl) [IID_IOpticalImageStabilizationControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -15259,8 +15259,8 @@ impl IOpticalImageStabilizationControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OpticalImageStabilizationControl: IOpticalImageStabilizationControl}
-RT_ENUM! { enum OpticalImageStabilizationMode: i32 {
+RT_CLASS!{class OpticalImageStabilizationControl: IOpticalImageStabilizationControl ["Windows.Media.Devices.OpticalImageStabilizationControl"]}
+RT_ENUM! { enum OpticalImageStabilizationMode: i32 ["Windows.Media.Devices.OpticalImageStabilizationMode"] {
     Off (OpticalImageStabilizationMode_Off) = 0, On (OpticalImageStabilizationMode_On) = 1, Auto (OpticalImageStabilizationMode_Auto) = 2,
 }}
 DEFINE_IID!(IID_IPhotoConfirmationControl, 3371430755, 65374, 17794, 169, 168, 5, 80, 248, 90, 74, 118);
@@ -15296,7 +15296,7 @@ impl IPhotoConfirmationControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoConfirmationControl: IPhotoConfirmationControl}
+RT_CLASS!{class PhotoConfirmationControl: IPhotoConfirmationControl ["Windows.Media.Devices.PhotoConfirmationControl"]}
 DEFINE_IID!(IID_IRedialRequestedEventArgs, 2125812233, 30379, 19505, 180, 14, 75, 88, 55, 157, 88, 12);
 RT_INTERFACE!{interface IRedialRequestedEventArgs(IRedialRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRedialRequestedEventArgs] {
     fn Handled(&self) -> HRESULT
@@ -15307,7 +15307,7 @@ impl IRedialRequestedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RedialRequestedEventArgs: IRedialRequestedEventArgs}
+RT_CLASS!{class RedialRequestedEventArgs: IRedialRequestedEventArgs ["Windows.Media.Devices.RedialRequestedEventArgs"]}
 DEFINE_IID!(IID_RedialRequestedEventHandler, 3136444369, 20157, 19332, 159, 71, 110, 196, 61, 117, 216, 177);
 RT_DELEGATE!{delegate RedialRequestedEventHandler(RedialRequestedEventHandlerVtbl, RedialRequestedEventHandlerImpl) [IID_RedialRequestedEventHandler] {
     fn Invoke(&self, sender: *mut CallControl, e: *mut RedialRequestedEventArgs) -> HRESULT
@@ -15367,7 +15367,7 @@ impl IRegionOfInterest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RegionOfInterest: IRegionOfInterest}
+RT_CLASS!{class RegionOfInterest: IRegionOfInterest ["Windows.Media.Devices.RegionOfInterest"]}
 impl RtActivatable<IActivationFactory> for RegionOfInterest {}
 DEFINE_CLSID!(RegionOfInterest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,82,101,103,105,111,110,79,102,73,110,116,101,114,101,115,116,0]) [CLSID_RegionOfInterest]);
 DEFINE_IID!(IID_IRegionOfInterest2, 436087441, 29610, 19793, 138, 157, 86, 204, 247, 219, 127, 84);
@@ -15408,7 +15408,7 @@ impl IRegionOfInterest2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RegionOfInterestType: i32 {
+RT_ENUM! { enum RegionOfInterestType: i32 ["Windows.Media.Devices.RegionOfInterestType"] {
     Unknown (RegionOfInterestType_Unknown) = 0, Face (RegionOfInterestType_Face) = 1,
 }}
 DEFINE_IID!(IID_IRegionsOfInterestControl, 3273913639, 43787, 17752, 139, 91, 223, 86, 147, 219, 3, 120);
@@ -15458,7 +15458,7 @@ impl IRegionsOfInterestControl {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RegionsOfInterestControl: IRegionsOfInterestControl}
+RT_CLASS!{class RegionsOfInterestControl: IRegionsOfInterestControl ["Windows.Media.Devices.RegionsOfInterestControl"]}
 DEFINE_IID!(IID_ISceneModeControl, 3566099191, 36185, 18516, 140, 98, 18, 199, 11, 168, 155, 124);
 RT_INTERFACE!{interface ISceneModeControl(ISceneModeControlVtbl): IInspectable(IInspectableVtbl) [IID_ISceneModeControl] {
     fn get_SupportedModes(&self, out: *mut *mut foundation::collections::IVectorView<CaptureSceneMode>) -> HRESULT,
@@ -15482,11 +15482,11 @@ impl ISceneModeControl {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SceneModeControl: ISceneModeControl}
-RT_ENUM! { enum SendCommandStatus: i32 {
+RT_CLASS!{class SceneModeControl: ISceneModeControl ["Windows.Media.Devices.SceneModeControl"]}
+RT_ENUM! { enum SendCommandStatus: i32 ["Windows.Media.Devices.SendCommandStatus"] {
     Success (SendCommandStatus_Success) = 0, DeviceNotAvailable (SendCommandStatus_DeviceNotAvailable) = 1,
 }}
-RT_ENUM! { enum TelephonyKey: i32 {
+RT_ENUM! { enum TelephonyKey: i32 ["Windows.Media.Devices.TelephonyKey"] {
     D0 (TelephonyKey_D0) = 0, D1 (TelephonyKey_D1) = 1, D2 (TelephonyKey_D2) = 2, D3 (TelephonyKey_D3) = 3, D4 (TelephonyKey_D4) = 4, D5 (TelephonyKey_D5) = 5, D6 (TelephonyKey_D6) = 6, D7 (TelephonyKey_D7) = 7, D8 (TelephonyKey_D8) = 8, D9 (TelephonyKey_D9) = 9, Star (TelephonyKey_Star) = 10, Pound (TelephonyKey_Pound) = 11, A (TelephonyKey_A) = 12, B (TelephonyKey_B) = 13, C (TelephonyKey_C) = 14, D (TelephonyKey_D) = 15,
 }}
 DEFINE_IID!(IID_ITorchControl, 2785359461, 33360, 16748, 145, 154, 114, 66, 150, 175, 163, 6);
@@ -15528,7 +15528,7 @@ impl ITorchControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TorchControl: ITorchControl}
+RT_CLASS!{class TorchControl: ITorchControl ["Windows.Media.Devices.TorchControl"]}
 DEFINE_IID!(IID_IVideoDeviceController, 2572506485, 11822, 16568, 182, 199, 248, 45, 16, 1, 50, 16);
 RT_INTERFACE!{interface IVideoDeviceController(IVideoDeviceControllerVtbl): IInspectable(IInspectableVtbl) [IID_IVideoDeviceController] {
     fn get_Brightness(&self, out: *mut *mut MediaDeviceControl) -> HRESULT,
@@ -15612,7 +15612,7 @@ impl IVideoDeviceController {
         if hr == S_OK { Ok((value, out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoDeviceController: IVideoDeviceController}
+RT_CLASS!{class VideoDeviceController: IVideoDeviceController ["Windows.Media.Devices.VideoDeviceController"]}
 DEFINE_IID!(IID_IVideoDeviceControllerGetDevicePropertyResult, 3319301013, 28373, 18320, 139, 93, 14, 241, 57, 53, 208, 248);
 RT_INTERFACE!{interface IVideoDeviceControllerGetDevicePropertyResult(IVideoDeviceControllerGetDevicePropertyResultVtbl): IInspectable(IInspectableVtbl) [IID_IVideoDeviceControllerGetDevicePropertyResult] {
     fn get_Status(&self, out: *mut VideoDeviceControllerGetDevicePropertyStatus) -> HRESULT,
@@ -15630,11 +15630,11 @@ impl IVideoDeviceControllerGetDevicePropertyResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoDeviceControllerGetDevicePropertyResult: IVideoDeviceControllerGetDevicePropertyResult}
-RT_ENUM! { enum VideoDeviceControllerGetDevicePropertyStatus: i32 {
+RT_CLASS!{class VideoDeviceControllerGetDevicePropertyResult: IVideoDeviceControllerGetDevicePropertyResult ["Windows.Media.Devices.VideoDeviceControllerGetDevicePropertyResult"]}
+RT_ENUM! { enum VideoDeviceControllerGetDevicePropertyStatus: i32 ["Windows.Media.Devices.VideoDeviceControllerGetDevicePropertyStatus"] {
     Success (VideoDeviceControllerGetDevicePropertyStatus_Success) = 0, UnknownFailure (VideoDeviceControllerGetDevicePropertyStatus_UnknownFailure) = 1, BufferTooSmall (VideoDeviceControllerGetDevicePropertyStatus_BufferTooSmall) = 2, NotSupported (VideoDeviceControllerGetDevicePropertyStatus_NotSupported) = 3, DeviceNotAvailable (VideoDeviceControllerGetDevicePropertyStatus_DeviceNotAvailable) = 4, MaxPropertyValueSizeTooSmall (VideoDeviceControllerGetDevicePropertyStatus_MaxPropertyValueSizeTooSmall) = 5, MaxPropertyValueSizeRequired (VideoDeviceControllerGetDevicePropertyStatus_MaxPropertyValueSizeRequired) = 6,
 }}
-RT_ENUM! { enum VideoDeviceControllerSetDevicePropertyStatus: i32 {
+RT_ENUM! { enum VideoDeviceControllerSetDevicePropertyStatus: i32 ["Windows.Media.Devices.VideoDeviceControllerSetDevicePropertyStatus"] {
     Success (VideoDeviceControllerSetDevicePropertyStatus_Success) = 0, UnknownFailure (VideoDeviceControllerSetDevicePropertyStatus_UnknownFailure) = 1, NotSupported (VideoDeviceControllerSetDevicePropertyStatus_NotSupported) = 2, InvalidValue (VideoDeviceControllerSetDevicePropertyStatus_InvalidValue) = 3, DeviceNotAvailable (VideoDeviceControllerSetDevicePropertyStatus_DeviceNotAvailable) = 4, NotInControl (VideoDeviceControllerSetDevicePropertyStatus_NotInControl) = 5,
 }}
 DEFINE_IID!(IID_IVideoTemporalDenoisingControl, 2058569525, 15914, 18994, 186, 255, 67, 88, 196, 251, 221, 87);
@@ -15665,8 +15665,8 @@ impl IVideoTemporalDenoisingControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoTemporalDenoisingControl: IVideoTemporalDenoisingControl}
-RT_ENUM! { enum VideoTemporalDenoisingMode: i32 {
+RT_CLASS!{class VideoTemporalDenoisingControl: IVideoTemporalDenoisingControl ["Windows.Media.Devices.VideoTemporalDenoisingControl"]}
+RT_ENUM! { enum VideoTemporalDenoisingMode: i32 ["Windows.Media.Devices.VideoTemporalDenoisingMode"] {
     Off (VideoTemporalDenoisingMode_Off) = 0, On (VideoTemporalDenoisingMode_On) = 1, Auto (VideoTemporalDenoisingMode_Auto) = 2,
 }}
 DEFINE_IID!(IID_IWhiteBalanceControl, 2015298686, 29026, 18888, 168, 249, 148, 129, 197, 101, 54, 62);
@@ -15722,7 +15722,7 @@ impl IWhiteBalanceControl {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WhiteBalanceControl: IWhiteBalanceControl}
+RT_CLASS!{class WhiteBalanceControl: IWhiteBalanceControl ["Windows.Media.Devices.WhiteBalanceControl"]}
 DEFINE_IID!(IID_IZoomControl, 975047442, 13018, 19479, 191, 215, 141, 12, 115, 200, 245, 165);
 RT_INTERFACE!{interface IZoomControl(IZoomControlVtbl): IInspectable(IInspectableVtbl) [IID_IZoomControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -15763,7 +15763,7 @@ impl IZoomControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ZoomControl: IZoomControl}
+RT_CLASS!{class ZoomControl: IZoomControl ["Windows.Media.Devices.ZoomControl"]}
 DEFINE_IID!(IID_IZoomControl2, 1770274224, 11929, 17985, 133, 41, 24, 79, 49, 157, 22, 113);
 RT_INTERFACE!{interface IZoomControl2(IZoomControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IZoomControl2] {
     fn get_SupportedModes(&self, out: *mut *mut foundation::collections::IVectorView<ZoomTransitionMode>) -> HRESULT,
@@ -15813,10 +15813,10 @@ impl IZoomSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ZoomSettings: IZoomSettings}
+RT_CLASS!{class ZoomSettings: IZoomSettings ["Windows.Media.Devices.ZoomSettings"]}
 impl RtActivatable<IActivationFactory> for ZoomSettings {}
 DEFINE_CLSID!(ZoomSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,90,111,111,109,83,101,116,116,105,110,103,115,0]) [CLSID_ZoomSettings]);
-RT_ENUM! { enum ZoomTransitionMode: i32 {
+RT_ENUM! { enum ZoomTransitionMode: i32 ["Windows.Media.Devices.ZoomTransitionMode"] {
     Auto (ZoomTransitionMode_Auto) = 0, Direct (ZoomTransitionMode_Direct) = 1, Smooth (ZoomTransitionMode_Smooth) = 2,
 }}
 pub mod core { // Windows.Media.Devices.Core
@@ -15884,7 +15884,7 @@ impl ICameraIntrinsics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CameraIntrinsics: ICameraIntrinsics}
+RT_CLASS!{class CameraIntrinsics: ICameraIntrinsics ["Windows.Media.Devices.Core.CameraIntrinsics"]}
 impl RtActivatable<ICameraIntrinsicsFactory> for CameraIntrinsics {}
 impl CameraIntrinsics {
     #[inline] pub fn create(focalLength: foundation::numerics::Vector2, principalPoint: foundation::numerics::Vector2, radialDistortion: foundation::numerics::Vector3, tangentialDistortion: foundation::numerics::Vector2, imageWidth: u32, imageHeight: u32) -> Result<ComPtr<CameraIntrinsics>> {
@@ -15963,7 +15963,7 @@ impl IDepthCorrelatedCoordinateMapper {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DepthCorrelatedCoordinateMapper: IDepthCorrelatedCoordinateMapper}
+RT_CLASS!{class DepthCorrelatedCoordinateMapper: IDepthCorrelatedCoordinateMapper ["Windows.Media.Devices.Core.DepthCorrelatedCoordinateMapper"]}
 DEFINE_IID!(IID_IFrameControlCapabilities, 2835328608, 20126, 17271, 167, 137, 226, 76, 74, 231, 229, 68);
 RT_INTERFACE!{interface IFrameControlCapabilities(IFrameControlCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IFrameControlCapabilities] {
     fn get_Exposure(&self, out: *mut *mut FrameExposureCapabilities) -> HRESULT,
@@ -15999,7 +15999,7 @@ impl IFrameControlCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FrameControlCapabilities: IFrameControlCapabilities}
+RT_CLASS!{class FrameControlCapabilities: IFrameControlCapabilities ["Windows.Media.Devices.Core.FrameControlCapabilities"]}
 DEFINE_IID!(IID_IFrameControlCapabilities2, 3466265700, 18224, 17423, 189, 62, 239, 232, 168, 242, 48, 168);
 RT_INTERFACE!{interface IFrameControlCapabilities2(IFrameControlCapabilities2Vtbl): IInspectable(IInspectableVtbl) [IID_IFrameControlCapabilities2] {
     fn get_Flash(&self, out: *mut *mut FrameFlashCapabilities) -> HRESULT
@@ -16051,7 +16051,7 @@ impl IFrameController {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FrameController: IFrameController}
+RT_CLASS!{class FrameController: IFrameController ["Windows.Media.Devices.Core.FrameController"]}
 impl RtActivatable<IActivationFactory> for FrameController {}
 DEFINE_CLSID!(FrameController(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,67,111,114,101,46,70,114,97,109,101,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_FrameController]);
 DEFINE_IID!(IID_IFrameController2, 13876341, 55420, 18523, 138, 9, 92, 53, 133, 104, 180, 39);
@@ -16094,7 +16094,7 @@ impl IFrameExposureCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FrameExposureCapabilities: IFrameExposureCapabilities}
+RT_CLASS!{class FrameExposureCapabilities: IFrameExposureCapabilities ["Windows.Media.Devices.Core.FrameExposureCapabilities"]}
 DEFINE_IID!(IID_IFrameExposureCompensationCapabilities, 3112740899, 32869, 16878, 176, 79, 114, 34, 101, 149, 69, 0);
 RT_INTERFACE!{interface IFrameExposureCompensationCapabilities(IFrameExposureCompensationCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IFrameExposureCompensationCapabilities] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -16124,7 +16124,7 @@ impl IFrameExposureCompensationCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FrameExposureCompensationCapabilities: IFrameExposureCompensationCapabilities}
+RT_CLASS!{class FrameExposureCompensationCapabilities: IFrameExposureCompensationCapabilities ["Windows.Media.Devices.Core.FrameExposureCompensationCapabilities"]}
 DEFINE_IID!(IID_IFrameExposureCompensationControl, 3914897097, 63481, 18634, 133, 145, 162, 101, 49, 203, 21, 120);
 RT_INTERFACE!{interface IFrameExposureCompensationControl(IFrameExposureCompensationControlVtbl): IInspectable(IInspectableVtbl) [IID_IFrameExposureCompensationControl] {
     fn get_Value(&self, out: *mut *mut foundation::IReference<f32>) -> HRESULT,
@@ -16141,7 +16141,7 @@ impl IFrameExposureCompensationControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FrameExposureCompensationControl: IFrameExposureCompensationControl}
+RT_CLASS!{class FrameExposureCompensationControl: IFrameExposureCompensationControl ["Windows.Media.Devices.Core.FrameExposureCompensationControl"]}
 DEFINE_IID!(IID_IFrameExposureControl, 2975881825, 65455, 18258, 182, 33, 245, 182, 241, 23, 244, 50);
 RT_INTERFACE!{interface IFrameExposureControl(IFrameExposureControlVtbl): IInspectable(IInspectableVtbl) [IID_IFrameExposureControl] {
     fn get_Auto(&self, out: *mut bool) -> HRESULT,
@@ -16169,7 +16169,7 @@ impl IFrameExposureControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FrameExposureControl: IFrameExposureControl}
+RT_CLASS!{class FrameExposureControl: IFrameExposureControl ["Windows.Media.Devices.Core.FrameExposureControl"]}
 DEFINE_IID!(IID_IFrameFlashCapabilities, 3146989986, 24254, 20322, 130, 35, 14, 43, 5, 191, 187, 208);
 RT_INTERFACE!{interface IFrameFlashCapabilities(IFrameFlashCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IFrameFlashCapabilities] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -16193,7 +16193,7 @@ impl IFrameFlashCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FrameFlashCapabilities: IFrameFlashCapabilities}
+RT_CLASS!{class FrameFlashCapabilities: IFrameFlashCapabilities ["Windows.Media.Devices.Core.FrameFlashCapabilities"]}
 DEFINE_IID!(IID_IFrameFlashControl, 1976956615, 48453, 20395, 147, 117, 69, 172, 4, 179, 50, 194);
 RT_INTERFACE!{interface IFrameFlashControl(IFrameFlashControlVtbl): IInspectable(IInspectableVtbl) [IID_IFrameFlashControl] {
     fn get_Mode(&self, out: *mut FrameFlashMode) -> HRESULT,
@@ -16243,8 +16243,8 @@ impl IFrameFlashControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FrameFlashControl: IFrameFlashControl}
-RT_ENUM! { enum FrameFlashMode: i32 {
+RT_CLASS!{class FrameFlashControl: IFrameFlashControl ["Windows.Media.Devices.Core.FrameFlashControl"]}
+RT_ENUM! { enum FrameFlashMode: i32 ["Windows.Media.Devices.Core.FrameFlashMode"] {
     Disable (FrameFlashMode_Disable) = 0, Enable (FrameFlashMode_Enable) = 1, Global (FrameFlashMode_Global) = 2,
 }}
 DEFINE_IID!(IID_IFrameFocusCapabilities, 2066074968, 448, 16485, 156, 64, 193, 167, 33, 66, 92, 26);
@@ -16276,7 +16276,7 @@ impl IFrameFocusCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FrameFocusCapabilities: IFrameFocusCapabilities}
+RT_CLASS!{class FrameFocusCapabilities: IFrameFocusCapabilities ["Windows.Media.Devices.Core.FrameFocusCapabilities"]}
 DEFINE_IID!(IID_IFrameFocusControl, 657322448, 55570, 16916, 166, 123, 227, 138, 141, 72, 216, 198);
 RT_INTERFACE!{interface IFrameFocusControl(IFrameFocusControlVtbl): IInspectable(IInspectableVtbl) [IID_IFrameFocusControl] {
     fn get_Value(&self, out: *mut *mut foundation::IReference<u32>) -> HRESULT,
@@ -16293,7 +16293,7 @@ impl IFrameFocusControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FrameFocusControl: IFrameFocusControl}
+RT_CLASS!{class FrameFocusControl: IFrameFocusControl ["Windows.Media.Devices.Core.FrameFocusControl"]}
 DEFINE_IID!(IID_IFrameIsoSpeedCapabilities, 381550433, 28150, 19145, 185, 42, 159, 110, 205, 26, 210, 250);
 RT_INTERFACE!{interface IFrameIsoSpeedCapabilities(IFrameIsoSpeedCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IFrameIsoSpeedCapabilities] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -16323,7 +16323,7 @@ impl IFrameIsoSpeedCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FrameIsoSpeedCapabilities: IFrameIsoSpeedCapabilities}
+RT_CLASS!{class FrameIsoSpeedCapabilities: IFrameIsoSpeedCapabilities ["Windows.Media.Devices.Core.FrameIsoSpeedCapabilities"]}
 DEFINE_IID!(IID_IFrameIsoSpeedControl, 436465645, 30826, 19573, 165, 87, 122, 185, 168, 95, 88, 140);
 RT_INTERFACE!{interface IFrameIsoSpeedControl(IFrameIsoSpeedControlVtbl): IInspectable(IInspectableVtbl) [IID_IFrameIsoSpeedControl] {
     fn get_Auto(&self, out: *mut bool) -> HRESULT,
@@ -16351,7 +16351,7 @@ impl IFrameIsoSpeedControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FrameIsoSpeedControl: IFrameIsoSpeedControl}
+RT_CLASS!{class FrameIsoSpeedControl: IFrameIsoSpeedControl ["Windows.Media.Devices.Core.FrameIsoSpeedControl"]}
 DEFINE_IID!(IID_IVariablePhotoSequenceController, 2143287424, 60812, 17405, 167, 195, 179, 88, 9, 228, 34, 154);
 RT_INTERFACE!{interface IVariablePhotoSequenceController(IVariablePhotoSequenceControllerVtbl): IInspectable(IInspectableVtbl) [IID_IVariablePhotoSequenceController] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
@@ -16404,7 +16404,7 @@ impl IVariablePhotoSequenceController {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VariablePhotoSequenceController: IVariablePhotoSequenceController}
+RT_CLASS!{class VariablePhotoSequenceController: IVariablePhotoSequenceController ["Windows.Media.Devices.Core.VariablePhotoSequenceController"]}
 } // Windows.Media.Devices.Core
 } // Windows.Media.Devices
 pub mod dialprotocol { // Windows.Media.DialProtocol
@@ -16438,11 +16438,11 @@ impl IDialApp {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DialApp: IDialApp}
-RT_ENUM! { enum DialAppLaunchResult: i32 {
+RT_CLASS!{class DialApp: IDialApp ["Windows.Media.DialProtocol.DialApp"]}
+RT_ENUM! { enum DialAppLaunchResult: i32 ["Windows.Media.DialProtocol.DialAppLaunchResult"] {
     Launched (DialAppLaunchResult_Launched) = 0, FailedToLaunch (DialAppLaunchResult_FailedToLaunch) = 1, NotFound (DialAppLaunchResult_NotFound) = 2, NetworkFailure (DialAppLaunchResult_NetworkFailure) = 3,
 }}
-RT_ENUM! { enum DialAppState: i32 {
+RT_ENUM! { enum DialAppState: i32 ["Windows.Media.DialProtocol.DialAppState"] {
     Unknown (DialAppState_Unknown) = 0, Stopped (DialAppState_Stopped) = 1, Running (DialAppState_Running) = 2, NetworkFailure (DialAppState_NetworkFailure) = 3,
 }}
 DEFINE_IID!(IID_IDialAppStateDetails, 3720651937, 62942, 16397, 190, 164, 140, 132, 102, 187, 41, 97);
@@ -16462,8 +16462,8 @@ impl IDialAppStateDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DialAppStateDetails: IDialAppStateDetails}
-RT_ENUM! { enum DialAppStopResult: i32 {
+RT_CLASS!{class DialAppStateDetails: IDialAppStateDetails ["Windows.Media.DialProtocol.DialAppStateDetails"]}
+RT_ENUM! { enum DialAppStopResult: i32 ["Windows.Media.DialProtocol.DialAppStopResult"] {
     Stopped (DialAppStopResult_Stopped) = 0, StopFailed (DialAppStopResult_StopFailed) = 1, OperationNotSupported (DialAppStopResult_OperationNotSupported) = 2, NetworkFailure (DialAppStopResult_NetworkFailure) = 3,
 }}
 DEFINE_IID!(IID_IDialDevice, 4293979567, 30111, 16850, 162, 10, 127, 41, 206, 11, 55, 132);
@@ -16483,7 +16483,7 @@ impl IDialDevice {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DialDevice: IDialDevice}
+RT_CLASS!{class DialDevice: IDialDevice ["Windows.Media.DialProtocol.DialDevice"]}
 impl RtActivatable<IDialDeviceStatics> for DialDevice {}
 impl DialDevice {
     #[inline] pub fn get_device_selector(appName: &HStringArg) -> Result<HString> {
@@ -16514,7 +16514,7 @@ impl IDialDevice2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DialDeviceDisplayStatus: i32 {
+RT_ENUM! { enum DialDeviceDisplayStatus: i32 ["Windows.Media.DialProtocol.DialDeviceDisplayStatus"] {
     None (DialDeviceDisplayStatus_None) = 0, Connecting (DialDeviceDisplayStatus_Connecting) = 1, Connected (DialDeviceDisplayStatus_Connected) = 2, Disconnecting (DialDeviceDisplayStatus_Disconnecting) = 3, Disconnected (DialDeviceDisplayStatus_Disconnected) = 4, Error (DialDeviceDisplayStatus_Error) = 5,
 }}
 DEFINE_IID!(IID_IDialDevicePicker, 3128840714, 65369, 20299, 189, 172, 216, 159, 73, 90, 214, 225);
@@ -16602,7 +16602,7 @@ impl IDialDevicePicker {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DialDevicePicker: IDialDevicePicker}
+RT_CLASS!{class DialDevicePicker: IDialDevicePicker ["Windows.Media.DialProtocol.DialDevicePicker"]}
 impl RtActivatable<IActivationFactory> for DialDevicePicker {}
 DEFINE_CLSID!(DialDevicePicker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,105,97,108,80,114,111,116,111,99,111,108,46,68,105,97,108,68,101,118,105,99,101,80,105,99,107,101,114,0]) [CLSID_DialDevicePicker]);
 DEFINE_IID!(IID_IDialDevicePickerFilter, 3246166970, 34496, 18525, 184, 214, 15, 154, 143, 100, 21, 144);
@@ -16616,7 +16616,7 @@ impl IDialDevicePickerFilter {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DialDevicePickerFilter: IDialDevicePickerFilter}
+RT_CLASS!{class DialDevicePickerFilter: IDialDevicePickerFilter ["Windows.Media.DialProtocol.DialDevicePickerFilter"]}
 DEFINE_IID!(IID_IDialDeviceSelectedEventArgs, 1208717997, 44150, 18411, 156, 6, 161, 147, 4, 218, 2, 71);
 RT_INTERFACE!{interface IDialDeviceSelectedEventArgs(IDialDeviceSelectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDialDeviceSelectedEventArgs] {
     fn get_SelectedDialDevice(&self, out: *mut *mut DialDevice) -> HRESULT
@@ -16628,7 +16628,7 @@ impl IDialDeviceSelectedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DialDeviceSelectedEventArgs: IDialDeviceSelectedEventArgs}
+RT_CLASS!{class DialDeviceSelectedEventArgs: IDialDeviceSelectedEventArgs ["Windows.Media.DialProtocol.DialDeviceSelectedEventArgs"]}
 DEFINE_IID!(IID_IDialDeviceStatics, 2859060373, 504, 18264, 132, 97, 43, 189, 28, 220, 60, 243);
 RT_INTERFACE!{static interface IDialDeviceStatics(IDialDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDialDeviceStatics] {
     fn GetDeviceSelector(&self, appName: HSTRING, out: *mut HSTRING) -> HRESULT,
@@ -16663,7 +16663,7 @@ impl IDialDisconnectButtonClickedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DialDisconnectButtonClickedEventArgs: IDialDisconnectButtonClickedEventArgs}
+RT_CLASS!{class DialDisconnectButtonClickedEventArgs: IDialDisconnectButtonClickedEventArgs ["Windows.Media.DialProtocol.DialDisconnectButtonClickedEventArgs"]}
 DEFINE_IID!(IID_IDialReceiverApp, 4248730711, 20549, 18190, 179, 4, 77, 217, 177, 62, 125, 17);
 RT_INTERFACE!{interface IDialReceiverApp(IDialReceiverAppVtbl): IInspectable(IInspectableVtbl) [IID_IDialReceiverApp] {
     fn GetAdditionalDataAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IMap<HString, HString>>) -> HRESULT,
@@ -16681,7 +16681,7 @@ impl IDialReceiverApp {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DialReceiverApp: IDialReceiverApp}
+RT_CLASS!{class DialReceiverApp: IDialReceiverApp ["Windows.Media.DialProtocol.DialReceiverApp"]}
 impl RtActivatable<IDialReceiverAppStatics> for DialReceiverApp {}
 impl DialReceiverApp {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<DialReceiverApp>>> {
@@ -16799,7 +16799,7 @@ impl IBackgroundAudioTrack {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundAudioTrack: IBackgroundAudioTrack}
+RT_CLASS!{class BackgroundAudioTrack: IBackgroundAudioTrack ["Windows.Media.Editing.BackgroundAudioTrack"]}
 impl RtActivatable<IBackgroundAudioTrackStatics> for BackgroundAudioTrack {}
 impl BackgroundAudioTrack {
     #[inline] pub fn create_from_embedded_audio_track(embeddedAudioTrack: &EmbeddedAudioTrack) -> Result<Option<ComPtr<BackgroundAudioTrack>>> {
@@ -16838,7 +16838,7 @@ impl IEmbeddedAudioTrack {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmbeddedAudioTrack: IEmbeddedAudioTrack}
+RT_CLASS!{class EmbeddedAudioTrack: IEmbeddedAudioTrack ["Windows.Media.Editing.EmbeddedAudioTrack"]}
 DEFINE_IID!(IID_IMediaClip, 1408389990, 24506, 16036, 134, 147, 36, 118, 24, 17, 20, 10);
 RT_INTERFACE!{interface IMediaClip(IMediaClipVtbl): IInspectable(IInspectableVtbl) [IID_IMediaClip] {
     fn get_TrimTimeFromStart(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -16948,7 +16948,7 @@ impl IMediaClip {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaClip: IMediaClip}
+RT_CLASS!{class MediaClip: IMediaClip ["Windows.Media.Editing.MediaClip"]}
 impl RtActivatable<IMediaClipStatics> for MediaClip {}
 impl RtActivatable<IMediaClipStatics2> for MediaClip {}
 impl MediaClip {
@@ -17102,7 +17102,7 @@ impl IMediaComposition {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaComposition: IMediaComposition}
+RT_CLASS!{class MediaComposition: IMediaComposition ["Windows.Media.Editing.MediaComposition"]}
 impl RtActivatable<IMediaCompositionStatics> for MediaComposition {}
 impl RtActivatable<IActivationFactory> for MediaComposition {}
 impl MediaComposition {
@@ -17194,7 +17194,7 @@ impl IMediaOverlay {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaOverlay: IMediaOverlay}
+RT_CLASS!{class MediaOverlay: IMediaOverlay ["Windows.Media.Editing.MediaOverlay"]}
 impl RtActivatable<IMediaOverlayFactory> for MediaOverlay {}
 impl MediaOverlay {
     #[inline] pub fn create(clip: &MediaClip) -> Result<ComPtr<MediaOverlay>> {
@@ -17245,7 +17245,7 @@ impl IMediaOverlayLayer {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaOverlayLayer: IMediaOverlayLayer}
+RT_CLASS!{class MediaOverlayLayer: IMediaOverlayLayer ["Windows.Media.Editing.MediaOverlayLayer"]}
 impl RtActivatable<IMediaOverlayLayerFactory> for MediaOverlayLayer {}
 impl RtActivatable<IActivationFactory> for MediaOverlayLayer {}
 impl MediaOverlayLayer {
@@ -17265,10 +17265,10 @@ impl IMediaOverlayLayerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaTrimmingPreference: i32 {
+RT_ENUM! { enum MediaTrimmingPreference: i32 ["Windows.Media.Editing.MediaTrimmingPreference"] {
     Fast (MediaTrimmingPreference_Fast) = 0, Precise (MediaTrimmingPreference_Precise) = 1,
 }}
-RT_ENUM! { enum VideoFramePrecision: i32 {
+RT_ENUM! { enum VideoFramePrecision: i32 ["Windows.Media.Editing.VideoFramePrecision"] {
     NearestFrame (VideoFramePrecision_NearestFrame) = 0, NearestKeyFrame (VideoFramePrecision_NearestKeyFrame) = 1,
 }}
 } // Windows.Media.Editing
@@ -17296,7 +17296,7 @@ impl IAudioCaptureEffectsManager {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioCaptureEffectsManager: IAudioCaptureEffectsManager}
+RT_CLASS!{class AudioCaptureEffectsManager: IAudioCaptureEffectsManager ["Windows.Media.Effects.AudioCaptureEffectsManager"]}
 DEFINE_IID!(IID_IAudioEffect, 883620433, 37383, 16469, 190, 147, 110, 87, 52, 168, 106, 228);
 RT_INTERFACE!{interface IAudioEffect(IAudioEffectVtbl): IInspectable(IInspectableVtbl) [IID_IAudioEffect] {
     fn get_AudioEffectType(&self, out: *mut AudioEffectType) -> HRESULT
@@ -17308,7 +17308,7 @@ impl IAudioEffect {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioEffect: IAudioEffect}
+RT_CLASS!{class AudioEffect: IAudioEffect ["Windows.Media.Effects.AudioEffect"]}
 DEFINE_IID!(IID_IAudioEffectDefinition, 3839359348, 32128, 20339, 144, 137, 227, 28, 157, 185, 194, 148);
 RT_INTERFACE!{interface IAudioEffectDefinition(IAudioEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IAudioEffectDefinition] {
     fn get_ActivatableClassId(&self, out: *mut HSTRING) -> HRESULT,
@@ -17326,7 +17326,7 @@ impl IAudioEffectDefinition {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioEffectDefinition: IAudioEffectDefinition}
+RT_CLASS!{class AudioEffectDefinition: IAudioEffectDefinition ["Windows.Media.Effects.AudioEffectDefinition"]}
 impl RtActivatable<IAudioEffectDefinitionFactory> for AudioEffectDefinition {}
 impl AudioEffectDefinition {
     #[inline] pub fn create(activatableClassId: &HStringArg) -> Result<ComPtr<AudioEffectDefinition>> {
@@ -17400,7 +17400,7 @@ impl IAudioEffectsManagerStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AudioEffectType: i32 {
+RT_ENUM! { enum AudioEffectType: i32 ["Windows.Media.Effects.AudioEffectType"] {
     Other (AudioEffectType_Other) = 0, AcousticEchoCancellation (AudioEffectType_AcousticEchoCancellation) = 1, NoiseSuppression (AudioEffectType_NoiseSuppression) = 2, AutomaticGainControl (AudioEffectType_AutomaticGainControl) = 3, BeamForming (AudioEffectType_BeamForming) = 4, ConstantToneRemoval (AudioEffectType_ConstantToneRemoval) = 5, Equalizer (AudioEffectType_Equalizer) = 6, LoudnessEqualizer (AudioEffectType_LoudnessEqualizer) = 7, BassBoost (AudioEffectType_BassBoost) = 8, VirtualSurround (AudioEffectType_VirtualSurround) = 9, VirtualHeadphones (AudioEffectType_VirtualHeadphones) = 10, SpeakerFill (AudioEffectType_SpeakerFill) = 11, RoomCorrection (AudioEffectType_RoomCorrection) = 12, BassManagement (AudioEffectType_BassManagement) = 13, EnvironmentalEffects (AudioEffectType_EnvironmentalEffects) = 14, SpeakerProtection (AudioEffectType_SpeakerProtection) = 15, SpeakerCompensation (AudioEffectType_SpeakerCompensation) = 16, DynamicRangeCompression (AudioEffectType_DynamicRangeCompression) = 17,
 }}
 DEFINE_IID!(IID_IAudioRenderEffectsManager, 1305053542, 34641, 17074, 191, 203, 57, 202, 120, 100, 189, 71);
@@ -17425,7 +17425,7 @@ impl IAudioRenderEffectsManager {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioRenderEffectsManager: IAudioRenderEffectsManager}
+RT_CLASS!{class AudioRenderEffectsManager: IAudioRenderEffectsManager ["Windows.Media.Effects.AudioRenderEffectsManager"]}
 DEFINE_IID!(IID_IAudioRenderEffectsManager2, 2823081225, 24268, 17587, 187, 78, 29, 176, 114, 135, 19, 156);
 RT_INTERFACE!{interface IAudioRenderEffectsManager2(IAudioRenderEffectsManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioRenderEffectsManager2] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -17565,11 +17565,11 @@ impl ICompositeVideoFrameContext {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CompositeVideoFrameContext: ICompositeVideoFrameContext}
-RT_ENUM! { enum MediaEffectClosedReason: i32 {
+RT_CLASS!{class CompositeVideoFrameContext: ICompositeVideoFrameContext ["Windows.Media.Effects.CompositeVideoFrameContext"]}
+RT_ENUM! { enum MediaEffectClosedReason: i32 ["Windows.Media.Effects.MediaEffectClosedReason"] {
     Done (MediaEffectClosedReason_Done) = 0, UnknownError (MediaEffectClosedReason_UnknownError) = 1, UnsupportedEncodingFormat (MediaEffectClosedReason_UnsupportedEncodingFormat) = 2, EffectCurrentlyUnloaded (MediaEffectClosedReason_EffectCurrentlyUnloaded) = 3,
 }}
-RT_ENUM! { enum MediaMemoryTypes: i32 {
+RT_ENUM! { enum MediaMemoryTypes: i32 ["Windows.Media.Effects.MediaMemoryTypes"] {
     Gpu (MediaMemoryTypes_Gpu) = 0, Cpu (MediaMemoryTypes_Cpu) = 1, GpuAndCpu (MediaMemoryTypes_GpuAndCpu) = 2,
 }}
 DEFINE_IID!(IID_IProcessAudioFrameContext, 1289300294, 4642, 18983, 165, 134, 251, 62, 32, 39, 50, 85);
@@ -17589,7 +17589,7 @@ impl IProcessAudioFrameContext {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProcessAudioFrameContext: IProcessAudioFrameContext}
+RT_CLASS!{class ProcessAudioFrameContext: IProcessAudioFrameContext ["Windows.Media.Effects.ProcessAudioFrameContext"]}
 DEFINE_IID!(IID_IProcessVideoFrameContext, 661589547, 25697, 16414, 186, 120, 15, 218, 214, 17, 78, 236);
 RT_INTERFACE!{interface IProcessVideoFrameContext(IProcessVideoFrameContextVtbl): IInspectable(IInspectableVtbl) [IID_IProcessVideoFrameContext] {
     fn get_InputFrame(&self, out: *mut *mut super::VideoFrame) -> HRESULT,
@@ -17607,7 +17607,7 @@ impl IProcessVideoFrameContext {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProcessVideoFrameContext: IProcessVideoFrameContext}
+RT_CLASS!{class ProcessVideoFrameContext: IProcessVideoFrameContext ["Windows.Media.Effects.ProcessVideoFrameContext"]}
 DEFINE_IID!(IID_IVideoCompositor, 2232464446, 16908, 16911, 150, 199, 124, 152, 187, 161, 252, 85);
 RT_INTERFACE!{interface IVideoCompositor(IVideoCompositorVtbl): IInspectable(IInspectableVtbl) [IID_IVideoCompositor] {
     fn get_TimeIndependent(&self, out: *mut bool) -> HRESULT,
@@ -17657,7 +17657,7 @@ impl IVideoCompositorDefinition {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoCompositorDefinition: IVideoCompositorDefinition}
+RT_CLASS!{class VideoCompositorDefinition: IVideoCompositorDefinition ["Windows.Media.Effects.VideoCompositorDefinition"]}
 impl RtActivatable<IVideoCompositorDefinitionFactory> for VideoCompositorDefinition {}
 impl VideoCompositorDefinition {
     #[inline] pub fn create(activatableClassId: &HStringArg) -> Result<ComPtr<VideoCompositorDefinition>> {
@@ -17702,7 +17702,7 @@ impl IVideoEffectDefinition {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoEffectDefinition: IVideoEffectDefinition}
+RT_CLASS!{class VideoEffectDefinition: IVideoEffectDefinition ["Windows.Media.Effects.VideoEffectDefinition"]}
 impl RtActivatable<IVideoEffectDefinitionFactory> for VideoEffectDefinition {}
 impl VideoEffectDefinition {
     #[inline] pub fn create(activatableClassId: &HStringArg) -> Result<ComPtr<VideoEffectDefinition>> {
@@ -17803,7 +17803,7 @@ impl IVideoTransformEffectDefinition {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoTransformEffectDefinition: IVideoEffectDefinition}
+RT_CLASS!{class VideoTransformEffectDefinition: IVideoEffectDefinition ["Windows.Media.Effects.VideoTransformEffectDefinition"]}
 impl RtActivatable<IActivationFactory> for VideoTransformEffectDefinition {}
 DEFINE_CLSID!(VideoTransformEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,86,105,100,101,111,84,114,97,110,115,102,111,114,109,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_VideoTransformEffectDefinition]);
 DEFINE_IID!(IID_IVideoTransformEffectDefinition2, 4037544095, 26312, 18068, 159, 217, 17, 54, 171, 247, 68, 74);
@@ -17877,7 +17877,7 @@ impl IVideoTransformSphericalProjection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoTransformSphericalProjection: IVideoTransformSphericalProjection}
+RT_CLASS!{class VideoTransformSphericalProjection: IVideoTransformSphericalProjection ["Windows.Media.Effects.VideoTransformSphericalProjection"]}
 } // Windows.Media.Effects
 pub mod faceanalysis { // Windows.Media.FaceAnalysis
 use ::prelude::*;
@@ -17892,7 +17892,7 @@ impl IDetectedFace {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DetectedFace: IDetectedFace}
+RT_CLASS!{class DetectedFace: IDetectedFace ["Windows.Media.FaceAnalysis.DetectedFace"]}
 DEFINE_IID!(IID_IFaceDetector, 381055708, 65135, 12567, 141, 149, 195, 240, 77, 81, 99, 12);
 RT_INTERFACE!{interface IFaceDetector(IFaceDetectorVtbl): IInspectable(IInspectableVtbl) [IID_IFaceDetector] {
     #[cfg(feature="windows-graphics")] fn DetectFacesAsync(&self, image: *mut super::super::graphics::imaging::SoftwareBitmap, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVector<DetectedFace>>) -> HRESULT,
@@ -17932,7 +17932,7 @@ impl IFaceDetector {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FaceDetector: IFaceDetector}
+RT_CLASS!{class FaceDetector: IFaceDetector ["Windows.Media.FaceAnalysis.FaceDetector"]}
 impl RtActivatable<IFaceDetectorStatics> for FaceDetector {}
 impl FaceDetector {
     #[inline] pub fn create_async() -> Result<ComPtr<foundation::IAsyncOperation<FaceDetector>>> {
@@ -18013,7 +18013,7 @@ impl IFaceTracker {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FaceTracker: IFaceTracker}
+RT_CLASS!{class FaceTracker: IFaceTracker ["Windows.Media.FaceAnalysis.FaceTracker"]}
 impl RtActivatable<IFaceTrackerStatics> for FaceTracker {}
 impl FaceTracker {
     #[inline] pub fn create_async() -> Result<ComPtr<foundation::IAsyncOperation<FaceTracker>>> {
@@ -18064,16 +18064,16 @@ impl IFaceTrackerStatics {
 } // Windows.Media.FaceAnalysis
 pub mod import { // Windows.Media.Import
 use ::prelude::*;
-RT_ENUM! { enum PhotoImportAccessMode: i32 {
+RT_ENUM! { enum PhotoImportAccessMode: i32 ["Windows.Media.Import.PhotoImportAccessMode"] {
     ReadWrite (PhotoImportAccessMode_ReadWrite) = 0, ReadOnly (PhotoImportAccessMode_ReadOnly) = 1, ReadAndDelete (PhotoImportAccessMode_ReadAndDelete) = 2,
 }}
-RT_ENUM! { enum PhotoImportConnectionTransport: i32 {
+RT_ENUM! { enum PhotoImportConnectionTransport: i32 ["Windows.Media.Import.PhotoImportConnectionTransport"] {
     Unknown (PhotoImportConnectionTransport_Unknown) = 0, Usb (PhotoImportConnectionTransport_Usb) = 1, IP (PhotoImportConnectionTransport_IP) = 2, Bluetooth (PhotoImportConnectionTransport_Bluetooth) = 3,
 }}
-RT_ENUM! { enum PhotoImportContentType: i32 {
+RT_ENUM! { enum PhotoImportContentType: i32 ["Windows.Media.Import.PhotoImportContentType"] {
     Unknown (PhotoImportContentType_Unknown) = 0, Image (PhotoImportContentType_Image) = 1, Video (PhotoImportContentType_Video) = 2,
 }}
-RT_ENUM! { enum PhotoImportContentTypeFilter: i32 {
+RT_ENUM! { enum PhotoImportContentTypeFilter: i32 ["Windows.Media.Import.PhotoImportContentTypeFilter"] {
     OnlyImages (PhotoImportContentTypeFilter_OnlyImages) = 0, OnlyVideos (PhotoImportContentTypeFilter_OnlyVideos) = 1, ImagesAndVideos (PhotoImportContentTypeFilter_ImagesAndVideos) = 2, ImagesAndVideosFromCameraRoll (PhotoImportContentTypeFilter_ImagesAndVideosFromCameraRoll) = 3,
 }}
 DEFINE_IID!(IID_IPhotoImportDeleteImportedItemsFromSourceResult, 4108391160, 33853, 17034, 161, 166, 129, 81, 2, 146, 176, 174);
@@ -18159,7 +18159,7 @@ impl IPhotoImportDeleteImportedItemsFromSourceResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoImportDeleteImportedItemsFromSourceResult: IPhotoImportDeleteImportedItemsFromSourceResult}
+RT_CLASS!{class PhotoImportDeleteImportedItemsFromSourceResult: IPhotoImportDeleteImportedItemsFromSourceResult ["Windows.Media.Import.PhotoImportDeleteImportedItemsFromSourceResult"]}
 DEFINE_IID!(IID_IPhotoImportFindItemsResult, 957736519, 27768, 18731, 132, 78, 143, 229, 232, 246, 191, 185);
 RT_INTERFACE!{interface IPhotoImportFindItemsResult(IPhotoImportFindItemsResultVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportFindItemsResult] {
     fn get_Session(&self, out: *mut *mut PhotoImportSession) -> HRESULT,
@@ -18358,7 +18358,7 @@ impl IPhotoImportFindItemsResult {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoImportFindItemsResult: IPhotoImportFindItemsResult}
+RT_CLASS!{class PhotoImportFindItemsResult: IPhotoImportFindItemsResult ["Windows.Media.Import.PhotoImportFindItemsResult"]}
 DEFINE_IID!(IID_IPhotoImportFindItemsResult2, 4225591867, 60665, 16490, 129, 94, 80, 21, 98, 91, 10, 136);
 RT_INTERFACE!{interface IPhotoImportFindItemsResult2(IPhotoImportFindItemsResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportFindItemsResult2] {
     fn AddItemsInDateRangeToSelection(&self, rangeStart: foundation::DateTime, rangeLength: foundation::TimeSpan) -> HRESULT
@@ -18458,8 +18458,8 @@ impl IPhotoImportImportItemsResult {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoImportImportItemsResult: IPhotoImportImportItemsResult}
-RT_ENUM! { enum PhotoImportImportMode: i32 {
+RT_CLASS!{class PhotoImportImportItemsResult: IPhotoImportImportItemsResult ["Windows.Media.Import.PhotoImportImportItemsResult"]}
+RT_ENUM! { enum PhotoImportImportMode: i32 ["Windows.Media.Import.PhotoImportImportMode"] {
     ImportEverything (PhotoImportImportMode_ImportEverything) = 0, IgnoreSidecars (PhotoImportImportMode_IgnoreSidecars) = 1, IgnoreSiblings (PhotoImportImportMode_IgnoreSiblings) = 2, IgnoreSidecarsAndSiblings (PhotoImportImportMode_IgnoreSidecarsAndSiblings) = 3,
 }}
 DEFINE_IID!(IID_IPhotoImportItem, 2849013366, 39932, 17336, 179, 86, 99, 59, 106, 152, 140, 158);
@@ -18545,7 +18545,7 @@ impl IPhotoImportItem {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoImportItem: IPhotoImportItem}
+RT_CLASS!{class PhotoImportItem: IPhotoImportItem ["Windows.Media.Import.PhotoImportItem"]}
 DEFINE_IID!(IID_IPhotoImportItem2, 4043650309, 62779, 18083, 158, 48, 54, 16, 121, 26, 145, 16);
 RT_INTERFACE!{interface IPhotoImportItem2(IPhotoImportItem2Vtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportItem2] {
     fn get_Path(&self, out: *mut HSTRING) -> HRESULT
@@ -18568,8 +18568,8 @@ impl IPhotoImportItemImportedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoImportItemImportedEventArgs: IPhotoImportItemImportedEventArgs}
-RT_ENUM! { enum PhotoImportItemSelectionMode: i32 {
+RT_CLASS!{class PhotoImportItemImportedEventArgs: IPhotoImportItemImportedEventArgs ["Windows.Media.Import.PhotoImportItemImportedEventArgs"]}
+RT_ENUM! { enum PhotoImportItemSelectionMode: i32 ["Windows.Media.Import.PhotoImportItemSelectionMode"] {
     SelectAll (PhotoImportItemSelectionMode_SelectAll) = 0, SelectNone (PhotoImportItemSelectionMode_SelectNone) = 1, SelectNew (PhotoImportItemSelectionMode_SelectNew) = 2,
 }}
 RT_CLASS!{static class PhotoImportManager}
@@ -18644,11 +18644,11 @@ impl IPhotoImportOperation {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoImportOperation: IPhotoImportOperation}
-RT_ENUM! { enum PhotoImportPowerSource: i32 {
+RT_CLASS!{class PhotoImportOperation: IPhotoImportOperation ["Windows.Media.Import.PhotoImportOperation"]}
+RT_ENUM! { enum PhotoImportPowerSource: i32 ["Windows.Media.Import.PhotoImportPowerSource"] {
     Unknown (PhotoImportPowerSource_Unknown) = 0, Battery (PhotoImportPowerSource_Battery) = 1, External (PhotoImportPowerSource_External) = 2,
 }}
-RT_STRUCT! { struct PhotoImportProgress {
+RT_STRUCT! { struct PhotoImportProgress ["Windows.Media.Import.PhotoImportProgress"] {
     ItemsImported: u32, TotalItemsToImport: u32, BytesImported: u64, TotalBytesToImport: u64, ImportProgress: f64,
 }}
 DEFINE_IID!(IID_IPhotoImportSelectionChangedEventArgs, 273028994, 64157, 19504, 139, 201, 77, 100, 145, 21, 114, 213);
@@ -18662,7 +18662,7 @@ impl IPhotoImportSelectionChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoImportSelectionChangedEventArgs: IPhotoImportSelectionChangedEventArgs}
+RT_CLASS!{class PhotoImportSelectionChangedEventArgs: IPhotoImportSelectionChangedEventArgs ["Windows.Media.Import.PhotoImportSelectionChangedEventArgs"]}
 DEFINE_IID!(IID_IPhotoImportSession, 2858652014, 60635, 20222, 148, 198, 95, 92, 175, 227, 76, 251);
 RT_INTERFACE!{interface IPhotoImportSession(IPhotoImportSessionVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportSession] {
     fn get_Source(&self, out: *mut *mut PhotoImportSource) -> HRESULT,
@@ -18732,7 +18732,7 @@ impl IPhotoImportSession {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoImportSession: IPhotoImportSession}
+RT_CLASS!{class PhotoImportSession: IPhotoImportSession ["Windows.Media.Import.PhotoImportSession"]}
 DEFINE_IID!(IID_IPhotoImportSession2, 710043408, 16070, 18077, 163, 117, 43, 159, 71, 133, 57, 30);
 RT_INTERFACE!{interface IPhotoImportSession2(IPhotoImportSession2Vtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportSession2] {
     fn put_SubfolderDateFormat(&self, value: PhotoImportSubfolderDateFormat) -> HRESULT,
@@ -18783,7 +18783,7 @@ impl IPhotoImportSidecar {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoImportSidecar: IPhotoImportSidecar}
+RT_CLASS!{class PhotoImportSidecar: IPhotoImportSidecar ["Windows.Media.Import.PhotoImportSidecar"]}
 DEFINE_IID!(IID_IPhotoImportSource, 529441630, 5211, 19670, 135, 241, 84, 150, 90, 152, 47, 239);
 RT_INTERFACE!{interface IPhotoImportSource(IPhotoImportSourceVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportSource] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -18892,7 +18892,7 @@ impl IPhotoImportSource {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoImportSource: IPhotoImportSource}
+RT_CLASS!{class PhotoImportSource: IPhotoImportSource ["Windows.Media.Import.PhotoImportSource"]}
 impl RtActivatable<IPhotoImportSourceStatics> for PhotoImportSource {}
 impl PhotoImportSource {
     #[inline] pub fn from_id_async(sourceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PhotoImportSource>>> {
@@ -18920,10 +18920,10 @@ impl IPhotoImportSourceStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PhotoImportSourceType: i32 {
+RT_ENUM! { enum PhotoImportSourceType: i32 ["Windows.Media.Import.PhotoImportSourceType"] {
     Generic (PhotoImportSourceType_Generic) = 0, Camera (PhotoImportSourceType_Camera) = 1, MediaPlayer (PhotoImportSourceType_MediaPlayer) = 2, Phone (PhotoImportSourceType_Phone) = 3, Video (PhotoImportSourceType_Video) = 4, PersonalInfoManager (PhotoImportSourceType_PersonalInfoManager) = 5, AudioRecorder (PhotoImportSourceType_AudioRecorder) = 6,
 }}
-RT_ENUM! { enum PhotoImportStage: i32 {
+RT_ENUM! { enum PhotoImportStage: i32 ["Windows.Media.Import.PhotoImportStage"] {
     NotStarted (PhotoImportStage_NotStarted) = 0, FindingItems (PhotoImportStage_FindingItems) = 1, ImportingItems (PhotoImportStage_ImportingItems) = 2, DeletingImportedItemsFromSource (PhotoImportStage_DeletingImportedItemsFromSource) = 3,
 }}
 DEFINE_IID!(IID_IPhotoImportStorageMedium, 4072255635, 64645, 18559, 135, 194, 88, 214, 117, 208, 91, 7);
@@ -18978,14 +18978,14 @@ impl IPhotoImportStorageMedium {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoImportStorageMedium: IPhotoImportStorageMedium}
-RT_ENUM! { enum PhotoImportStorageMediumType: i32 {
+RT_CLASS!{class PhotoImportStorageMedium: IPhotoImportStorageMedium ["Windows.Media.Import.PhotoImportStorageMedium"]}
+RT_ENUM! { enum PhotoImportStorageMediumType: i32 ["Windows.Media.Import.PhotoImportStorageMediumType"] {
     Undefined (PhotoImportStorageMediumType_Undefined) = 0, Fixed (PhotoImportStorageMediumType_Fixed) = 1, Removable (PhotoImportStorageMediumType_Removable) = 2,
 }}
-RT_ENUM! { enum PhotoImportSubfolderCreationMode: i32 {
+RT_ENUM! { enum PhotoImportSubfolderCreationMode: i32 ["Windows.Media.Import.PhotoImportSubfolderCreationMode"] {
     DoNotCreateSubfolders (PhotoImportSubfolderCreationMode_DoNotCreateSubfolders) = 0, CreateSubfoldersFromFileDate (PhotoImportSubfolderCreationMode_CreateSubfoldersFromFileDate) = 1, CreateSubfoldersFromExifDate (PhotoImportSubfolderCreationMode_CreateSubfoldersFromExifDate) = 2, KeepOriginalFolderStructure (PhotoImportSubfolderCreationMode_KeepOriginalFolderStructure) = 3,
 }}
-RT_ENUM! { enum PhotoImportSubfolderDateFormat: i32 {
+RT_ENUM! { enum PhotoImportSubfolderDateFormat: i32 ["Windows.Media.Import.PhotoImportSubfolderDateFormat"] {
     Year (PhotoImportSubfolderDateFormat_Year) = 0, YearMonth (PhotoImportSubfolderDateFormat_YearMonth) = 1, YearMonthDay (PhotoImportSubfolderDateFormat_YearMonthDay) = 2,
 }}
 DEFINE_IID!(IID_IPhotoImportVideoSegment, 1648099977, 12826, 16856, 145, 102, 140, 98, 163, 51, 39, 108);
@@ -19023,7 +19023,7 @@ impl IPhotoImportVideoSegment {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhotoImportVideoSegment: IPhotoImportVideoSegment}
+RT_CLASS!{class PhotoImportVideoSegment: IPhotoImportVideoSegment ["Windows.Media.Import.PhotoImportVideoSegment"]}
 } // Windows.Media.Import
 pub mod mediaproperties { // Windows.Media.MediaProperties
 use ::prelude::*;
@@ -19076,7 +19076,7 @@ impl IAudioEncodingProperties {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AudioEncodingProperties: IAudioEncodingProperties}
+RT_CLASS!{class AudioEncodingProperties: IAudioEncodingProperties ["Windows.Media.MediaProperties.AudioEncodingProperties"]}
 impl RtActivatable<IAudioEncodingPropertiesStatics> for AudioEncodingProperties {}
 impl RtActivatable<IAudioEncodingPropertiesStatics2> for AudioEncodingProperties {}
 impl RtActivatable<IActivationFactory> for AudioEncodingProperties {}
@@ -19194,14 +19194,14 @@ impl IAudioEncodingPropertiesWithFormatUserData {
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AudioEncodingQuality: i32 {
+RT_ENUM! { enum AudioEncodingQuality: i32 ["Windows.Media.MediaProperties.AudioEncodingQuality"] {
     Auto (AudioEncodingQuality_Auto) = 0, High (AudioEncodingQuality_High) = 1, Medium (AudioEncodingQuality_Medium) = 2, Low (AudioEncodingQuality_Low) = 3,
 }}
 DEFINE_IID!(IID_IContainerEncodingProperties, 1504455255, 45866, 18334, 138, 97, 75, 127, 46, 158, 126, 160);
 RT_INTERFACE!{interface IContainerEncodingProperties(IContainerEncodingPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IContainerEncodingProperties] {
     
 }}
-RT_CLASS!{class ContainerEncodingProperties: IContainerEncodingProperties}
+RT_CLASS!{class ContainerEncodingProperties: IContainerEncodingProperties ["Windows.Media.MediaProperties.ContainerEncodingProperties"]}
 impl RtActivatable<IActivationFactory> for ContainerEncodingProperties {}
 DEFINE_CLSID!(ContainerEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,67,111,110,116,97,105,110,101,114,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_ContainerEncodingProperties]);
 DEFINE_IID!(IID_IContainerEncodingProperties2, 2993864745, 44582, 18457, 186, 173, 173, 122, 73, 176, 168, 118);
@@ -19342,7 +19342,7 @@ impl IImageEncodingProperties {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ImageEncodingProperties: IImageEncodingProperties}
+RT_CLASS!{class ImageEncodingProperties: IImageEncodingProperties ["Windows.Media.MediaProperties.ImageEncodingProperties"]}
 impl RtActivatable<IImageEncodingPropertiesStatics> for ImageEncodingProperties {}
 impl RtActivatable<IImageEncodingPropertiesStatics2> for ImageEncodingProperties {}
 impl RtActivatable<IImageEncodingPropertiesStatics3> for ImageEncodingProperties {}
@@ -19468,7 +19468,7 @@ impl IMediaEncodingProfile {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaEncodingProfile: IMediaEncodingProfile}
+RT_CLASS!{class MediaEncodingProfile: IMediaEncodingProfile ["Windows.Media.MediaProperties.MediaEncodingProfile"]}
 impl RtActivatable<IMediaEncodingProfileStatics> for MediaEncodingProfile {}
 impl RtActivatable<IMediaEncodingProfileStatics2> for MediaEncodingProfile {}
 impl RtActivatable<IMediaEncodingProfileStatics3> for MediaEncodingProfile {}
@@ -20136,13 +20136,13 @@ impl IMediaEncodingSubtypesStatics5 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaMirroringOptions: u32 {
+RT_ENUM! { enum MediaMirroringOptions: u32 ["Windows.Media.MediaProperties.MediaMirroringOptions"] {
     None (MediaMirroringOptions_None) = 0, Horizontal (MediaMirroringOptions_Horizontal) = 1, Vertical (MediaMirroringOptions_Vertical) = 2,
 }}
-RT_ENUM! { enum MediaPixelFormat: i32 {
+RT_ENUM! { enum MediaPixelFormat: i32 ["Windows.Media.MediaProperties.MediaPixelFormat"] {
     Nv12 (MediaPixelFormat_Nv12) = 0, Bgra8 (MediaPixelFormat_Bgra8) = 1, P010 (MediaPixelFormat_P010) = 2,
 }}
-RT_CLASS!{class MediaPropertySet: foundation::collections::IMap<Guid, IInspectable>}
+RT_CLASS!{class MediaPropertySet: foundation::collections::IMap<Guid, IInspectable> ["Windows.Media.MediaProperties.MediaPropertySet"]}
 impl RtActivatable<IActivationFactory> for MediaPropertySet {}
 DEFINE_CLSID!(MediaPropertySet(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,101,100,105,97,80,114,111,112,101,114,116,121,83,101,116,0]) [CLSID_MediaPropertySet]);
 DEFINE_IID!(IID_IMediaRatio, 3536912101, 35113, 16413, 172, 120, 125, 53, 126, 55, 129, 99);
@@ -20172,11 +20172,11 @@ impl IMediaRatio {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaRatio: IMediaRatio}
-RT_ENUM! { enum MediaRotation: i32 {
+RT_CLASS!{class MediaRatio: IMediaRatio ["Windows.Media.MediaProperties.MediaRatio"]}
+RT_ENUM! { enum MediaRotation: i32 ["Windows.Media.MediaProperties.MediaRotation"] {
     None (MediaRotation_None) = 0, Clockwise90Degrees (MediaRotation_Clockwise90Degrees) = 1, Clockwise180Degrees (MediaRotation_Clockwise180Degrees) = 2, Clockwise270Degrees (MediaRotation_Clockwise270Degrees) = 3,
 }}
-RT_ENUM! { enum MediaThumbnailFormat: i32 {
+RT_ENUM! { enum MediaThumbnailFormat: i32 ["Windows.Media.MediaProperties.MediaThumbnailFormat"] {
     Bmp (MediaThumbnailFormat_Bmp) = 0, Bgra8 (MediaThumbnailFormat_Bgra8) = 1,
 }}
 RT_CLASS!{static class Mpeg2ProfileIds}
@@ -20234,10 +20234,10 @@ impl IMpeg2ProfileIdsStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SphericalVideoFrameFormat: i32 {
+RT_ENUM! { enum SphericalVideoFrameFormat: i32 ["Windows.Media.MediaProperties.SphericalVideoFrameFormat"] {
     None (SphericalVideoFrameFormat_None) = 0, Unsupported (SphericalVideoFrameFormat_Unsupported) = 1, Equirectangular (SphericalVideoFrameFormat_Equirectangular) = 2,
 }}
-RT_ENUM! { enum StereoscopicVideoPackingMode: i32 {
+RT_ENUM! { enum StereoscopicVideoPackingMode: i32 ["Windows.Media.MediaProperties.StereoscopicVideoPackingMode"] {
     None (StereoscopicVideoPackingMode_None) = 0, SideBySide (StereoscopicVideoPackingMode_SideBySide) = 1, TopBottom (StereoscopicVideoPackingMode_TopBottom) = 2,
 }}
 DEFINE_IID!(IID_ITimedMetadataEncodingProperties, 1372401875, 54928, 19706, 151, 244, 74, 57, 142, 157, 180, 32);
@@ -20262,7 +20262,7 @@ impl ITimedMetadataEncodingProperties {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimedMetadataEncodingProperties: IMediaEncodingProperties}
+RT_CLASS!{class TimedMetadataEncodingProperties: IMediaEncodingProperties ["Windows.Media.MediaProperties.TimedMetadataEncodingProperties"]}
 impl RtActivatable<IActivationFactory> for TimedMetadataEncodingProperties {}
 DEFINE_CLSID!(TimedMetadataEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,84,105,109,101,100,77,101,116,97,100,97,116,97,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_TimedMetadataEncodingProperties]);
 DEFINE_IID!(IID_IVideoEncodingProperties, 1995336858, 14274, 20266, 136, 10, 18, 130, 187, 180, 55, 61);
@@ -20315,7 +20315,7 @@ impl IVideoEncodingProperties {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoEncodingProperties: IVideoEncodingProperties}
+RT_CLASS!{class VideoEncodingProperties: IVideoEncodingProperties ["Windows.Media.MediaProperties.VideoEncodingProperties"]}
 impl RtActivatable<IVideoEncodingPropertiesStatics> for VideoEncodingProperties {}
 impl RtActivatable<IVideoEncodingPropertiesStatics2> for VideoEncodingProperties {}
 impl RtActivatable<IActivationFactory> for VideoEncodingProperties {}
@@ -20428,7 +20428,7 @@ impl IVideoEncodingPropertiesStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum VideoEncodingQuality: i32 {
+RT_ENUM! { enum VideoEncodingQuality: i32 ["Windows.Media.MediaProperties.VideoEncodingQuality"] {
     Auto (VideoEncodingQuality_Auto) = 0, HD1080p (VideoEncodingQuality_HD1080p) = 1, HD720p (VideoEncodingQuality_HD720p) = 2, Wvga (VideoEncodingQuality_Wvga) = 3, Ntsc (VideoEncodingQuality_Ntsc) = 4, Pal (VideoEncodingQuality_Pal) = 5, Vga (VideoEncodingQuality_Vga) = 6, Qvga (VideoEncodingQuality_Qvga) = 7, Uhd2160p (VideoEncodingQuality_Uhd2160p) = 8, Uhd4320p (VideoEncodingQuality_Uhd4320p) = 9,
 }}
 } // Windows.Media.MediaProperties
@@ -20452,7 +20452,7 @@ impl IOcrEngine {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OcrEngine: IOcrEngine}
+RT_CLASS!{class OcrEngine: IOcrEngine ["Windows.Media.Ocr.OcrEngine"]}
 impl RtActivatable<IOcrEngineStatics> for OcrEngine {}
 impl OcrEngine {
     #[inline] pub fn get_max_image_dimension() -> Result<u32> {
@@ -20527,7 +20527,7 @@ impl IOcrLine {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OcrLine: IOcrLine}
+RT_CLASS!{class OcrLine: IOcrLine ["Windows.Media.Ocr.OcrLine"]}
 DEFINE_IID!(IID_IOcrResult, 2614244786, 5979, 15722, 146, 226, 56, 140, 32, 110, 47, 99);
 RT_INTERFACE!{interface IOcrResult(IOcrResultVtbl): IInspectable(IInspectableVtbl) [IID_IOcrResult] {
     fn get_Lines(&self, out: *mut *mut foundation::collections::IVectorView<OcrLine>) -> HRESULT,
@@ -20551,7 +20551,7 @@ impl IOcrResult {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OcrResult: IOcrResult}
+RT_CLASS!{class OcrResult: IOcrResult ["Windows.Media.Ocr.OcrResult"]}
 DEFINE_IID!(IID_IOcrWord, 1009403770, 23769, 13605, 186, 42, 35, 209, 224, 166, 138, 29);
 RT_INTERFACE!{interface IOcrWord(IOcrWordVtbl): IInspectable(IInspectableVtbl) [IID_IOcrWord] {
     fn get_BoundingRect(&self, out: *mut foundation::Rect) -> HRESULT,
@@ -20569,7 +20569,7 @@ impl IOcrWord {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OcrWord: IOcrWord}
+RT_CLASS!{class OcrWord: IOcrWord ["Windows.Media.Ocr.OcrWord"]}
 } // Windows.Media.Ocr
 pub mod playto { // Windows.Media.PlayTo
 use ::prelude::*;
@@ -20584,7 +20584,7 @@ impl ICurrentTimeChangeRequestedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CurrentTimeChangeRequestedEventArgs: ICurrentTimeChangeRequestedEventArgs}
+RT_CLASS!{class CurrentTimeChangeRequestedEventArgs: ICurrentTimeChangeRequestedEventArgs ["Windows.Media.PlayTo.CurrentTimeChangeRequestedEventArgs"]}
 DEFINE_IID!(IID_IMuteChangeRequestedEventArgs, 3837064694, 44831, 20254, 180, 55, 125, 163, 36, 0, 225, 212);
 RT_INTERFACE!{interface IMuteChangeRequestedEventArgs(IMuteChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMuteChangeRequestedEventArgs] {
     fn get_Mute(&self, out: *mut bool) -> HRESULT
@@ -20596,7 +20596,7 @@ impl IMuteChangeRequestedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MuteChangeRequestedEventArgs: IMuteChangeRequestedEventArgs}
+RT_CLASS!{class MuteChangeRequestedEventArgs: IMuteChangeRequestedEventArgs ["Windows.Media.PlayTo.MuteChangeRequestedEventArgs"]}
 DEFINE_IID!(IID_IPlaybackRateChangeRequestedEventArgs, 257319342, 11400, 19658, 133, 64, 213, 134, 9, 93, 19, 165);
 RT_INTERFACE!{interface IPlaybackRateChangeRequestedEventArgs(IPlaybackRateChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackRateChangeRequestedEventArgs] {
     fn get_Rate(&self, out: *mut f64) -> HRESULT
@@ -20608,7 +20608,7 @@ impl IPlaybackRateChangeRequestedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlaybackRateChangeRequestedEventArgs: IPlaybackRateChangeRequestedEventArgs}
+RT_CLASS!{class PlaybackRateChangeRequestedEventArgs: IPlaybackRateChangeRequestedEventArgs ["Windows.Media.PlayTo.PlaybackRateChangeRequestedEventArgs"]}
 DEFINE_IID!(IID_IPlayToConnection, 288341960, 62005, 20446, 141, 65, 155, 242, 124, 158, 154, 64);
 RT_INTERFACE!{interface IPlayToConnection(IPlayToConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToConnection] {
     fn get_State(&self, out: *mut PlayToConnectionState) -> HRESULT,
@@ -20653,8 +20653,8 @@ impl IPlayToConnection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayToConnection: IPlayToConnection}
-RT_ENUM! { enum PlayToConnectionError: i32 {
+RT_CLASS!{class PlayToConnection: IPlayToConnection ["Windows.Media.PlayTo.PlayToConnection"]}
+RT_ENUM! { enum PlayToConnectionError: i32 ["Windows.Media.PlayTo.PlayToConnectionError"] {
     None (PlayToConnectionError_None) = 0, DeviceNotResponding (PlayToConnectionError_DeviceNotResponding) = 1, DeviceError (PlayToConnectionError_DeviceError) = 2, DeviceLocked (PlayToConnectionError_DeviceLocked) = 3, ProtectedPlaybackFailed (PlayToConnectionError_ProtectedPlaybackFailed) = 4,
 }}
 DEFINE_IID!(IID_IPlayToConnectionErrorEventArgs, 3210653094, 35046, 17503, 157, 64, 217, 185, 248, 147, 152, 150);
@@ -20674,8 +20674,8 @@ impl IPlayToConnectionErrorEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayToConnectionErrorEventArgs: IPlayToConnectionErrorEventArgs}
-RT_ENUM! { enum PlayToConnectionState: i32 {
+RT_CLASS!{class PlayToConnectionErrorEventArgs: IPlayToConnectionErrorEventArgs ["Windows.Media.PlayTo.PlayToConnectionErrorEventArgs"]}
+RT_ENUM! { enum PlayToConnectionState: i32 ["Windows.Media.PlayTo.PlayToConnectionState"] {
     Disconnected (PlayToConnectionState_Disconnected) = 0, Connected (PlayToConnectionState_Connected) = 1, Rendering (PlayToConnectionState_Rendering) = 2,
 }}
 DEFINE_IID!(IID_IPlayToConnectionStateChangedEventArgs, 1757721871, 3104, 18816, 134, 2, 88, 198, 34, 56, 212, 35);
@@ -20695,7 +20695,7 @@ impl IPlayToConnectionStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayToConnectionStateChangedEventArgs: IPlayToConnectionStateChangedEventArgs}
+RT_CLASS!{class PlayToConnectionStateChangedEventArgs: IPlayToConnectionStateChangedEventArgs ["Windows.Media.PlayTo.PlayToConnectionStateChangedEventArgs"]}
 DEFINE_IID!(IID_IPlayToConnectionTransferredEventArgs, 4209187130, 1667, 18393, 141, 240, 24, 203, 180, 137, 132, 216);
 RT_INTERFACE!{interface IPlayToConnectionTransferredEventArgs(IPlayToConnectionTransferredEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToConnectionTransferredEventArgs] {
     fn get_PreviousSource(&self, out: *mut *mut PlayToSource) -> HRESULT,
@@ -20713,7 +20713,7 @@ impl IPlayToConnectionTransferredEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayToConnectionTransferredEventArgs: IPlayToConnectionTransferredEventArgs}
+RT_CLASS!{class PlayToConnectionTransferredEventArgs: IPlayToConnectionTransferredEventArgs ["Windows.Media.PlayTo.PlayToConnectionTransferredEventArgs"]}
 DEFINE_IID!(IID_IPlayToManager, 4117373038, 7031, 17135, 143, 13, 185, 73, 248, 217, 178, 96);
 RT_INTERFACE!{interface IPlayToManager(IPlayToManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToManager] {
     fn add_SourceRequested(&self, handler: *mut foundation::TypedEventHandler<PlayToManager, PlayToSourceRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -20752,7 +20752,7 @@ impl IPlayToManager {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayToManager: IPlayToManager}
+RT_CLASS!{class PlayToManager: IPlayToManager ["Windows.Media.PlayTo.PlayToManager"]}
 impl RtActivatable<IPlayToManagerStatics> for PlayToManager {}
 impl PlayToManager {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<PlayToManager>>> {
@@ -21005,7 +21005,7 @@ impl IPlayToReceiver {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayToReceiver: IPlayToReceiver}
+RT_CLASS!{class PlayToReceiver: IPlayToReceiver ["Windows.Media.PlayTo.PlayToReceiver"]}
 impl RtActivatable<IActivationFactory> for PlayToReceiver {}
 DEFINE_CLSID!(PlayToReceiver(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,84,111,46,80,108,97,121,84,111,82,101,99,101,105,118,101,114,0]) [CLSID_PlayToReceiver]);
 DEFINE_IID!(IID_IPlayToSource, 2131986952, 64439, 19209, 131, 86, 170, 95, 78, 51, 92, 49);
@@ -21035,7 +21035,7 @@ impl IPlayToSource {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayToSource: IPlayToSource}
+RT_CLASS!{class PlayToSource: IPlayToSource ["Windows.Media.PlayTo.PlayToSource"]}
 DEFINE_IID!(IID_IPlayToSourceDeferral, 1090554141, 10126, 20265, 133, 155, 169, 229, 1, 5, 62, 125);
 RT_INTERFACE!{interface IPlayToSourceDeferral(IPlayToSourceDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToSourceDeferral] {
     fn Complete(&self) -> HRESULT
@@ -21046,7 +21046,7 @@ impl IPlayToSourceDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayToSourceDeferral: IPlayToSourceDeferral}
+RT_CLASS!{class PlayToSourceDeferral: IPlayToSourceDeferral ["Windows.Media.PlayTo.PlayToSourceDeferral"]}
 DEFINE_IID!(IID_IPlayToSourceRequest, 4166534757, 25844, 17568, 172, 13, 70, 141, 43, 143, 218, 131);
 RT_INTERFACE!{interface IPlayToSourceRequest(IPlayToSourceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToSourceRequest] {
     fn get_Deadline(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -21074,7 +21074,7 @@ impl IPlayToSourceRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayToSourceRequest: IPlayToSourceRequest}
+RT_CLASS!{class PlayToSourceRequest: IPlayToSourceRequest ["Windows.Media.PlayTo.PlayToSourceRequest"]}
 DEFINE_IID!(IID_IPlayToSourceRequestedEventArgs, 3318596400, 10719, 20166, 157, 169, 159, 189, 252, 252, 27, 62);
 RT_INTERFACE!{interface IPlayToSourceRequestedEventArgs(IPlayToSourceRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToSourceRequestedEventArgs] {
     fn get_SourceRequest(&self, out: *mut *mut PlayToSourceRequest) -> HRESULT
@@ -21086,7 +21086,7 @@ impl IPlayToSourceRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayToSourceRequestedEventArgs: IPlayToSourceRequestedEventArgs}
+RT_CLASS!{class PlayToSourceRequestedEventArgs: IPlayToSourceRequestedEventArgs ["Windows.Media.PlayTo.PlayToSourceRequestedEventArgs"]}
 DEFINE_IID!(IID_IPlayToSourceSelectedEventArgs, 211649809, 20994, 19915, 140, 103, 171, 218, 18, 187, 60, 18);
 RT_INTERFACE!{interface IPlayToSourceSelectedEventArgs(IPlayToSourceSelectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToSourceSelectedEventArgs] {
     fn get_FriendlyName(&self, out: *mut HSTRING) -> HRESULT,
@@ -21123,7 +21123,7 @@ impl IPlayToSourceSelectedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayToSourceSelectedEventArgs: IPlayToSourceSelectedEventArgs}
+RT_CLASS!{class PlayToSourceSelectedEventArgs: IPlayToSourceSelectedEventArgs ["Windows.Media.PlayTo.PlayToSourceSelectedEventArgs"]}
 DEFINE_IID!(IID_IPlayToSourceWithPreferredSourceUri, 2863813611, 13057, 19908, 175, 186, 178, 242, 237, 150, 53, 160);
 RT_INTERFACE!{interface IPlayToSourceWithPreferredSourceUri(IPlayToSourceWithPreferredSourceUriVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToSourceWithPreferredSourceUri] {
     fn get_PreferredSourceUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
@@ -21207,7 +21207,7 @@ impl ISourceChangeRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SourceChangeRequestedEventArgs: ISourceChangeRequestedEventArgs}
+RT_CLASS!{class SourceChangeRequestedEventArgs: ISourceChangeRequestedEventArgs ["Windows.Media.PlayTo.SourceChangeRequestedEventArgs"]}
 DEFINE_IID!(IID_IVolumeChangeRequestedEventArgs, 1862430044, 53109, 19499, 145, 62, 109, 124, 108, 50, 145, 121);
 RT_INTERFACE!{interface IVolumeChangeRequestedEventArgs(IVolumeChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVolumeChangeRequestedEventArgs] {
     fn get_Volume(&self, out: *mut f64) -> HRESULT
@@ -21219,11 +21219,11 @@ impl IVolumeChangeRequestedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VolumeChangeRequestedEventArgs: IVolumeChangeRequestedEventArgs}
+RT_CLASS!{class VolumeChangeRequestedEventArgs: IVolumeChangeRequestedEventArgs ["Windows.Media.PlayTo.VolumeChangeRequestedEventArgs"]}
 } // Windows.Media.PlayTo
 pub mod playback { // Windows.Media.Playback
 use ::prelude::*;
-RT_ENUM! { enum AutoLoadedDisplayPropertyKind: i32 {
+RT_ENUM! { enum AutoLoadedDisplayPropertyKind: i32 ["Windows.Media.Playback.AutoLoadedDisplayPropertyKind"] {
     None (AutoLoadedDisplayPropertyKind_None) = 0, MusicOrVideo (AutoLoadedDisplayPropertyKind_MusicOrVideo) = 1, Music (AutoLoadedDisplayPropertyKind_Music) = 2, Video (AutoLoadedDisplayPropertyKind_Video) = 3,
 }}
 RT_CLASS!{static class BackgroundMediaPlayer}
@@ -21329,7 +21329,7 @@ impl ICurrentMediaPlaybackItemChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CurrentMediaPlaybackItemChangedEventArgs: ICurrentMediaPlaybackItemChangedEventArgs}
+RT_CLASS!{class CurrentMediaPlaybackItemChangedEventArgs: ICurrentMediaPlaybackItemChangedEventArgs ["Windows.Media.Playback.CurrentMediaPlaybackItemChangedEventArgs"]}
 DEFINE_IID!(IID_ICurrentMediaPlaybackItemChangedEventArgs2, 494970142, 39278, 16553, 190, 72, 230, 110, 201, 11, 43, 125);
 RT_INTERFACE!{interface ICurrentMediaPlaybackItemChangedEventArgs2(ICurrentMediaPlaybackItemChangedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_ICurrentMediaPlaybackItemChangedEventArgs2] {
     fn get_Reason(&self, out: *mut MediaPlaybackItemChangedReason) -> HRESULT
@@ -21341,7 +21341,7 @@ impl ICurrentMediaPlaybackItemChangedEventArgs2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum FailedMediaStreamKind: i32 {
+RT_ENUM! { enum FailedMediaStreamKind: i32 ["Windows.Media.Playback.FailedMediaStreamKind"] {
     Unknown (FailedMediaStreamKind_Unknown) = 0, Audio (FailedMediaStreamKind_Audio) = 1, Video (FailedMediaStreamKind_Video) = 2,
 }}
 DEFINE_IID!(IID_IMediaBreak, 1900798576, 3567, 20156, 164, 137, 107, 52, 147, 14, 21, 88);
@@ -21384,7 +21384,7 @@ impl IMediaBreak {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaBreak: IMediaBreak}
+RT_CLASS!{class MediaBreak: IMediaBreak ["Windows.Media.Playback.MediaBreak"]}
 impl RtActivatable<IMediaBreakFactory> for MediaBreak {}
 impl MediaBreak {
     #[inline] pub fn create(insertionMethod: MediaBreakInsertionMethod) -> Result<ComPtr<MediaBreak>> {
@@ -21406,7 +21406,7 @@ impl IMediaBreakEndedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaBreakEndedEventArgs: IMediaBreakEndedEventArgs}
+RT_CLASS!{class MediaBreakEndedEventArgs: IMediaBreakEndedEventArgs ["Windows.Media.Playback.MediaBreakEndedEventArgs"]}
 DEFINE_IID!(IID_IMediaBreakFactory, 1159127042, 6368, 16505, 139, 95, 211, 52, 149, 193, 93, 46);
 RT_INTERFACE!{static interface IMediaBreakFactory(IMediaBreakFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakFactory] {
     fn Create(&self, insertionMethod: MediaBreakInsertionMethod, out: *mut *mut MediaBreak) -> HRESULT,
@@ -21424,7 +21424,7 @@ impl IMediaBreakFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaBreakInsertionMethod: i32 {
+RT_ENUM! { enum MediaBreakInsertionMethod: i32 ["Windows.Media.Playback.MediaBreakInsertionMethod"] {
     Interrupt (MediaBreakInsertionMethod_Interrupt) = 0, Replace (MediaBreakInsertionMethod_Replace) = 1,
 }}
 DEFINE_IID!(IID_IMediaBreakManager, 2824134065, 65204, 19867, 157, 151, 15, 219, 229, 142, 94, 57);
@@ -21498,7 +21498,7 @@ impl IMediaBreakManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaBreakManager: IMediaBreakManager}
+RT_CLASS!{class MediaBreakManager: IMediaBreakManager ["Windows.Media.Playback.MediaBreakManager"]}
 DEFINE_IID!(IID_IMediaBreakSchedule, 2711246867, 39094, 16856, 131, 218, 249, 113, 210, 43, 123, 186);
 RT_INTERFACE!{interface IMediaBreakSchedule(IMediaBreakScheduleVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakSchedule] {
     fn add_ScheduleChanged(&self, handler: *mut foundation::TypedEventHandler<MediaBreakSchedule, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -21559,7 +21559,7 @@ impl IMediaBreakSchedule {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaBreakSchedule: IMediaBreakSchedule}
+RT_CLASS!{class MediaBreakSchedule: IMediaBreakSchedule ["Windows.Media.Playback.MediaBreakSchedule"]}
 DEFINE_IID!(IID_IMediaBreakSeekedOverEventArgs, 3853150022, 1542, 17554, 185, 211, 195, 200, 253, 224, 164, 234);
 RT_INTERFACE!{interface IMediaBreakSeekedOverEventArgs(IMediaBreakSeekedOverEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakSeekedOverEventArgs] {
     fn get_SeekedOverBreaks(&self, out: *mut *mut foundation::collections::IVectorView<MediaBreak>) -> HRESULT,
@@ -21583,7 +21583,7 @@ impl IMediaBreakSeekedOverEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaBreakSeekedOverEventArgs: IMediaBreakSeekedOverEventArgs}
+RT_CLASS!{class MediaBreakSeekedOverEventArgs: IMediaBreakSeekedOverEventArgs ["Windows.Media.Playback.MediaBreakSeekedOverEventArgs"]}
 DEFINE_IID!(IID_IMediaBreakSkippedEventArgs, 1860783109, 12116, 19006, 163, 171, 36, 195, 178, 112, 180, 163);
 RT_INTERFACE!{interface IMediaBreakSkippedEventArgs(IMediaBreakSkippedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakSkippedEventArgs] {
     fn get_MediaBreak(&self, out: *mut *mut MediaBreak) -> HRESULT
@@ -21595,7 +21595,7 @@ impl IMediaBreakSkippedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaBreakSkippedEventArgs: IMediaBreakSkippedEventArgs}
+RT_CLASS!{class MediaBreakSkippedEventArgs: IMediaBreakSkippedEventArgs ["Windows.Media.Playback.MediaBreakSkippedEventArgs"]}
 DEFINE_IID!(IID_IMediaBreakStartedEventArgs, 2826894961, 57300, 17738, 149, 110, 10, 74, 100, 131, 149, 248);
 RT_INTERFACE!{interface IMediaBreakStartedEventArgs(IMediaBreakStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakStartedEventArgs] {
     fn get_MediaBreak(&self, out: *mut *mut MediaBreak) -> HRESULT
@@ -21607,8 +21607,8 @@ impl IMediaBreakStartedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaBreakStartedEventArgs: IMediaBreakStartedEventArgs}
-RT_ENUM! { enum MediaCommandEnablingRule: i32 {
+RT_CLASS!{class MediaBreakStartedEventArgs: IMediaBreakStartedEventArgs ["Windows.Media.Playback.MediaBreakStartedEventArgs"]}
+RT_ENUM! { enum MediaCommandEnablingRule: i32 ["Windows.Media.Playback.MediaCommandEnablingRule"] {
     Auto (MediaCommandEnablingRule_Auto) = 0, Always (MediaCommandEnablingRule_Always) = 1, Never (MediaCommandEnablingRule_Never) = 2,
 }}
 DEFINE_IID!(IID_IMediaEnginePlaybackSource, 1545407399, 14422, 18617, 141, 198, 36, 75, 241, 7, 191, 140);
@@ -21673,8 +21673,8 @@ impl IMediaItemDisplayProperties {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaItemDisplayProperties: IMediaItemDisplayProperties}
-RT_CLASS!{class MediaPlaybackAudioTrackList: foundation::collections::IVectorView<super::core::AudioTrack>}
+RT_CLASS!{class MediaItemDisplayProperties: IMediaItemDisplayProperties ["Windows.Media.Playback.MediaItemDisplayProperties"]}
+RT_CLASS!{class MediaPlaybackAudioTrackList: foundation::collections::IVectorView<super::core::AudioTrack> ["Windows.Media.Playback.MediaPlaybackAudioTrackList"]}
 DEFINE_IID!(IID_IMediaPlaybackCommandManager, 1523508646, 23734, 19034, 133, 33, 204, 134, 177, 193, 237, 55);
 RT_INTERFACE!{interface IMediaPlaybackCommandManager(IMediaPlaybackCommandManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManager] {
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
@@ -21867,7 +21867,7 @@ impl IMediaPlaybackCommandManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackCommandManager: IMediaPlaybackCommandManager}
+RT_CLASS!{class MediaPlaybackCommandManager: IMediaPlaybackCommandManager ["Windows.Media.Playback.MediaPlaybackCommandManager"]}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs, 1030704931, 21040, 17425, 160, 233, 186, 217, 76, 42, 4, 92);
 RT_INTERFACE!{interface IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs(IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -21896,7 +21896,7 @@ impl IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs: IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs}
+RT_CLASS!{class MediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs: IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs ["Windows.Media.Playback.MediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerCommandBehavior, 2020351608, 52856, 18960, 175, 214, 132, 63, 203, 185, 12, 46);
 RT_INTERFACE!{interface IMediaPlaybackCommandManagerCommandBehavior(IMediaPlaybackCommandManagerCommandBehaviorVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerCommandBehavior] {
     fn get_CommandManager(&self, out: *mut *mut MediaPlaybackCommandManager) -> HRESULT,
@@ -21936,7 +21936,7 @@ impl IMediaPlaybackCommandManagerCommandBehavior {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackCommandManagerCommandBehavior: IMediaPlaybackCommandManagerCommandBehavior}
+RT_CLASS!{class MediaPlaybackCommandManagerCommandBehavior: IMediaPlaybackCommandManagerCommandBehavior ["Windows.Media.Playback.MediaPlaybackCommandManagerCommandBehavior"]}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerFastForwardReceivedEventArgs, 821060825, 46225, 19722, 188, 33, 48, 152, 189, 19, 50, 233);
 RT_INTERFACE!{interface IMediaPlaybackCommandManagerFastForwardReceivedEventArgs(IMediaPlaybackCommandManagerFastForwardReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerFastForwardReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -21959,7 +21959,7 @@ impl IMediaPlaybackCommandManagerFastForwardReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackCommandManagerFastForwardReceivedEventArgs: IMediaPlaybackCommandManagerFastForwardReceivedEventArgs}
+RT_CLASS!{class MediaPlaybackCommandManagerFastForwardReceivedEventArgs: IMediaPlaybackCommandManagerFastForwardReceivedEventArgs ["Windows.Media.Playback.MediaPlaybackCommandManagerFastForwardReceivedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerNextReceivedEventArgs, 3780133939, 41648, 17876, 185, 222, 95, 66, 172, 20, 168, 57);
 RT_INTERFACE!{interface IMediaPlaybackCommandManagerNextReceivedEventArgs(IMediaPlaybackCommandManagerNextReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerNextReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -21982,7 +21982,7 @@ impl IMediaPlaybackCommandManagerNextReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackCommandManagerNextReceivedEventArgs: IMediaPlaybackCommandManagerNextReceivedEventArgs}
+RT_CLASS!{class MediaPlaybackCommandManagerNextReceivedEventArgs: IMediaPlaybackCommandManagerNextReceivedEventArgs ["Windows.Media.Playback.MediaPlaybackCommandManagerNextReceivedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerPauseReceivedEventArgs, 1559022876, 49756, 16929, 177, 108, 195, 201, 140, 224, 18, 214);
 RT_INTERFACE!{interface IMediaPlaybackCommandManagerPauseReceivedEventArgs(IMediaPlaybackCommandManagerPauseReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerPauseReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -22005,7 +22005,7 @@ impl IMediaPlaybackCommandManagerPauseReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackCommandManagerPauseReceivedEventArgs: IMediaPlaybackCommandManagerPauseReceivedEventArgs}
+RT_CLASS!{class MediaPlaybackCommandManagerPauseReceivedEventArgs: IMediaPlaybackCommandManagerPauseReceivedEventArgs ["Windows.Media.Playback.MediaPlaybackCommandManagerPauseReceivedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerPlayReceivedEventArgs, 2599419982, 22411, 19542, 160, 6, 22, 21, 157, 136, 138, 72);
 RT_INTERFACE!{interface IMediaPlaybackCommandManagerPlayReceivedEventArgs(IMediaPlaybackCommandManagerPlayReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerPlayReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -22028,7 +22028,7 @@ impl IMediaPlaybackCommandManagerPlayReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackCommandManagerPlayReceivedEventArgs: IMediaPlaybackCommandManagerPlayReceivedEventArgs}
+RT_CLASS!{class MediaPlaybackCommandManagerPlayReceivedEventArgs: IMediaPlaybackCommandManagerPlayReceivedEventArgs ["Windows.Media.Playback.MediaPlaybackCommandManagerPlayReceivedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerPositionReceivedEventArgs, 1435608916, 54823, 19421, 169, 13, 134, 160, 21, 178, 73, 2);
 RT_INTERFACE!{interface IMediaPlaybackCommandManagerPositionReceivedEventArgs(IMediaPlaybackCommandManagerPositionReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerPositionReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -22057,7 +22057,7 @@ impl IMediaPlaybackCommandManagerPositionReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackCommandManagerPositionReceivedEventArgs: IMediaPlaybackCommandManagerPositionReceivedEventArgs}
+RT_CLASS!{class MediaPlaybackCommandManagerPositionReceivedEventArgs: IMediaPlaybackCommandManagerPositionReceivedEventArgs ["Windows.Media.Playback.MediaPlaybackCommandManagerPositionReceivedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerPreviousReceivedEventArgs, 1381904513, 17970, 20342, 153, 177, 215, 113, 98, 63, 98, 135);
 RT_INTERFACE!{interface IMediaPlaybackCommandManagerPreviousReceivedEventArgs(IMediaPlaybackCommandManagerPreviousReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerPreviousReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -22080,7 +22080,7 @@ impl IMediaPlaybackCommandManagerPreviousReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackCommandManagerPreviousReceivedEventArgs: IMediaPlaybackCommandManagerPreviousReceivedEventArgs}
+RT_CLASS!{class MediaPlaybackCommandManagerPreviousReceivedEventArgs: IMediaPlaybackCommandManagerPreviousReceivedEventArgs ["Windows.Media.Playback.MediaPlaybackCommandManagerPreviousReceivedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerRateReceivedEventArgs, 418003257, 18966, 16745, 139, 5, 62, 185, 245, 255, 120, 235);
 RT_INTERFACE!{interface IMediaPlaybackCommandManagerRateReceivedEventArgs(IMediaPlaybackCommandManagerRateReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerRateReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -22109,7 +22109,7 @@ impl IMediaPlaybackCommandManagerRateReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackCommandManagerRateReceivedEventArgs: IMediaPlaybackCommandManagerRateReceivedEventArgs}
+RT_CLASS!{class MediaPlaybackCommandManagerRateReceivedEventArgs: IMediaPlaybackCommandManagerRateReceivedEventArgs ["Windows.Media.Playback.MediaPlaybackCommandManagerRateReceivedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerRewindReceivedEventArgs, 2668124487, 41920, 16989, 170, 239, 151, 186, 120, 152, 177, 65);
 RT_INTERFACE!{interface IMediaPlaybackCommandManagerRewindReceivedEventArgs(IMediaPlaybackCommandManagerRewindReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerRewindReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -22132,7 +22132,7 @@ impl IMediaPlaybackCommandManagerRewindReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackCommandManagerRewindReceivedEventArgs: IMediaPlaybackCommandManagerRewindReceivedEventArgs}
+RT_CLASS!{class MediaPlaybackCommandManagerRewindReceivedEventArgs: IMediaPlaybackCommandManagerRewindReceivedEventArgs ["Windows.Media.Playback.MediaPlaybackCommandManagerRewindReceivedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerShuffleReceivedEventArgs, 1352686831, 25582, 19094, 183, 181, 254, 224, 139, 159, 249, 12);
 RT_INTERFACE!{interface IMediaPlaybackCommandManagerShuffleReceivedEventArgs(IMediaPlaybackCommandManagerShuffleReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerShuffleReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -22161,7 +22161,7 @@ impl IMediaPlaybackCommandManagerShuffleReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackCommandManagerShuffleReceivedEventArgs: IMediaPlaybackCommandManagerShuffleReceivedEventArgs}
+RT_CLASS!{class MediaPlaybackCommandManagerShuffleReceivedEventArgs: IMediaPlaybackCommandManagerShuffleReceivedEventArgs ["Windows.Media.Playback.MediaPlaybackCommandManagerShuffleReceivedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlaybackItem, 74487762, 58543, 18603, 178, 131, 105, 41, 230, 116, 236, 226);
 RT_INTERFACE!{interface IMediaPlaybackItem(IMediaPlaybackItemVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItem] {
     fn add_AudioTracksChanged(&self, handler: *mut foundation::TypedEventHandler<MediaPlaybackItem, foundation::collections::IVectorChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -22224,7 +22224,7 @@ impl IMediaPlaybackItem {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackItem: IMediaPlaybackItem}
+RT_CLASS!{class MediaPlaybackItem: IMediaPlaybackItem ["Windows.Media.Playback.MediaPlaybackItem"]}
 impl RtActivatable<IMediaPlaybackItemFactory> for MediaPlaybackItem {}
 impl RtActivatable<IMediaPlaybackItemFactory2> for MediaPlaybackItem {}
 impl RtActivatable<IMediaPlaybackItemStatics> for MediaPlaybackItem {}
@@ -22321,7 +22321,7 @@ impl IMediaPlaybackItem3 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaPlaybackItemChangedReason: i32 {
+RT_ENUM! { enum MediaPlaybackItemChangedReason: i32 ["Windows.Media.Playback.MediaPlaybackItemChangedReason"] {
     InitialItem (MediaPlaybackItemChangedReason_InitialItem) = 0, EndOfStream (MediaPlaybackItemChangedReason_EndOfStream) = 1, Error (MediaPlaybackItemChangedReason_Error) = 2, AppRequested (MediaPlaybackItemChangedReason_AppRequested) = 3,
 }}
 DEFINE_IID!(IID_IMediaPlaybackItemError, 1778118443, 56534, 19961, 164, 80, 219, 244, 198, 241, 194, 194);
@@ -22341,8 +22341,8 @@ impl IMediaPlaybackItemError {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackItemError: IMediaPlaybackItemError}
-RT_ENUM! { enum MediaPlaybackItemErrorCode: i32 {
+RT_CLASS!{class MediaPlaybackItemError: IMediaPlaybackItemError ["Windows.Media.Playback.MediaPlaybackItemError"]}
+RT_ENUM! { enum MediaPlaybackItemErrorCode: i32 ["Windows.Media.Playback.MediaPlaybackItemErrorCode"] {
     None (MediaPlaybackItemErrorCode_None) = 0, Aborted (MediaPlaybackItemErrorCode_Aborted) = 1, NetworkError (MediaPlaybackItemErrorCode_NetworkError) = 2, DecodeError (MediaPlaybackItemErrorCode_DecodeError) = 3, SourceNotSupportedError (MediaPlaybackItemErrorCode_SourceNotSupportedError) = 4, EncryptionError (MediaPlaybackItemErrorCode_EncryptionError) = 5,
 }}
 DEFINE_IID!(IID_IMediaPlaybackItemFactory, 1899232481, 5993, 20473, 167, 193, 56, 210, 196, 212, 35, 96);
@@ -22390,7 +22390,7 @@ impl IMediaPlaybackItemFailedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackItemFailedEventArgs: IMediaPlaybackItemFailedEventArgs}
+RT_CLASS!{class MediaPlaybackItemFailedEventArgs: IMediaPlaybackItemFailedEventArgs ["Windows.Media.Playback.MediaPlaybackItemFailedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlaybackItemOpenedEventArgs, 3420044674, 12343, 20414, 174, 143, 57, 252, 57, 237, 244, 239);
 RT_INTERFACE!{interface IMediaPlaybackItemOpenedEventArgs(IMediaPlaybackItemOpenedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItemOpenedEventArgs] {
     fn get_Item(&self, out: *mut *mut MediaPlaybackItem) -> HRESULT
@@ -22402,7 +22402,7 @@ impl IMediaPlaybackItemOpenedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackItemOpenedEventArgs: IMediaPlaybackItemOpenedEventArgs}
+RT_CLASS!{class MediaPlaybackItemOpenedEventArgs: IMediaPlaybackItemOpenedEventArgs ["Windows.Media.Playback.MediaPlaybackItemOpenedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlaybackItemStatics, 1260120052, 17221, 16444, 138, 103, 245, 222, 145, 223, 76, 134);
 RT_INTERFACE!{static interface IMediaPlaybackItemStatics(IMediaPlaybackItemStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItemStatics] {
     fn FindFromMediaSource(&self, source: *mut super::core::MediaSource, out: *mut *mut MediaPlaybackItem) -> HRESULT
@@ -22510,7 +22510,7 @@ impl IMediaPlaybackList {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackList: IMediaPlaybackList}
+RT_CLASS!{class MediaPlaybackList: IMediaPlaybackList ["Windows.Media.Playback.MediaPlaybackList"]}
 impl RtActivatable<IActivationFactory> for MediaPlaybackList {}
 DEFINE_CLSID!(MediaPlaybackList(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,77,101,100,105,97,80,108,97,121,98,97,99,107,76,105,115,116,0]) [CLSID_MediaPlaybackList]);
 DEFINE_IID!(IID_IMediaPlaybackList2, 235517048, 24586, 17012, 161, 75, 11, 103, 35, 208, 244, 139);
@@ -22786,7 +22786,7 @@ impl IMediaPlaybackSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackSession: IMediaPlaybackSession}
+RT_CLASS!{class MediaPlaybackSession: IMediaPlaybackSession ["Windows.Media.Playback.MediaPlaybackSession"]}
 DEFINE_IID!(IID_IMediaPlaybackSession2, 4172971129, 8136, 16535, 173, 112, 192, 250, 24, 204, 0, 80);
 RT_INTERFACE!{interface IMediaPlaybackSession2(IMediaPlaybackSession2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSession2] {
     fn add_BufferedRangesChanged(&self, value: *mut foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -22910,7 +22910,7 @@ impl IMediaPlaybackSessionBufferingStartedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackSessionBufferingStartedEventArgs: IMediaPlaybackSessionBufferingStartedEventArgs}
+RT_CLASS!{class MediaPlaybackSessionBufferingStartedEventArgs: IMediaPlaybackSessionBufferingStartedEventArgs ["Windows.Media.Playback.MediaPlaybackSessionBufferingStartedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlaybackSessionOutputDegradationPolicyState, 1435398781, 63027, 18937, 150, 90, 171, 170, 29, 183, 9, 190);
 RT_INTERFACE!{interface IMediaPlaybackSessionOutputDegradationPolicyState(IMediaPlaybackSessionOutputDegradationPolicyStateVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSessionOutputDegradationPolicyState] {
     fn get_VideoConstrictionReason(&self, out: *mut MediaPlaybackSessionVideoConstrictionReason) -> HRESULT
@@ -22922,8 +22922,8 @@ impl IMediaPlaybackSessionOutputDegradationPolicyState {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackSessionOutputDegradationPolicyState: IMediaPlaybackSessionOutputDegradationPolicyState}
-RT_ENUM! { enum MediaPlaybackSessionVideoConstrictionReason: i32 {
+RT_CLASS!{class MediaPlaybackSessionOutputDegradationPolicyState: IMediaPlaybackSessionOutputDegradationPolicyState ["Windows.Media.Playback.MediaPlaybackSessionOutputDegradationPolicyState"]}
+RT_ENUM! { enum MediaPlaybackSessionVideoConstrictionReason: i32 ["Windows.Media.Playback.MediaPlaybackSessionVideoConstrictionReason"] {
     None (MediaPlaybackSessionVideoConstrictionReason_None) = 0, VirtualMachine (MediaPlaybackSessionVideoConstrictionReason_VirtualMachine) = 1, UnsupportedDisplayAdapter (MediaPlaybackSessionVideoConstrictionReason_UnsupportedDisplayAdapter) = 2, UnsignedDriver (MediaPlaybackSessionVideoConstrictionReason_UnsignedDriver) = 3, FrameServerEnabled (MediaPlaybackSessionVideoConstrictionReason_FrameServerEnabled) = 4, OutputProtectionFailed (MediaPlaybackSessionVideoConstrictionReason_OutputProtectionFailed) = 5, Unknown (MediaPlaybackSessionVideoConstrictionReason_Unknown) = 6,
 }}
 DEFINE_IID!(IID_IMediaPlaybackSource, 4020093628, 37655, 18070, 176, 81, 43, 173, 100, 49, 119, 181);
@@ -22990,8 +22990,8 @@ impl IMediaPlaybackSphericalVideoProjection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackSphericalVideoProjection: IMediaPlaybackSphericalVideoProjection}
-RT_ENUM! { enum MediaPlaybackState: i32 {
+RT_CLASS!{class MediaPlaybackSphericalVideoProjection: IMediaPlaybackSphericalVideoProjection ["Windows.Media.Playback.MediaPlaybackSphericalVideoProjection"]}
+RT_ENUM! { enum MediaPlaybackState: i32 ["Windows.Media.Playback.MediaPlaybackState"] {
     None (MediaPlaybackState_None) = 0, Opening (MediaPlaybackState_Opening) = 1, Buffering (MediaPlaybackState_Buffering) = 2, Playing (MediaPlaybackState_Playing) = 3, Paused (MediaPlaybackState_Paused) = 4,
 }}
 DEFINE_IID!(IID_IMediaPlaybackTimedMetadataTrackList, 1924403993, 48123, 18083, 147, 114, 156, 156, 116, 75, 148, 56);
@@ -23021,8 +23021,8 @@ impl IMediaPlaybackTimedMetadataTrackList {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlaybackTimedMetadataTrackList: foundation::collections::IVectorView<super::core::TimedMetadataTrack>}
-RT_CLASS!{class MediaPlaybackVideoTrackList: foundation::collections::IVectorView<super::core::VideoTrack>}
+RT_CLASS!{class MediaPlaybackTimedMetadataTrackList: foundation::collections::IVectorView<super::core::TimedMetadataTrack> ["Windows.Media.Playback.MediaPlaybackTimedMetadataTrackList"]}
+RT_CLASS!{class MediaPlaybackVideoTrackList: foundation::collections::IVectorView<super::core::VideoTrack> ["Windows.Media.Playback.MediaPlaybackVideoTrackList"]}
 DEFINE_IID!(IID_IMediaPlayer, 941261771, 28671, 18843, 141, 100, 40, 133, 223, 193, 36, 158);
 RT_INTERFACE!{interface IMediaPlayer(IMediaPlayerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayer] {
     fn get_AutoPlay(&self, out: *mut bool) -> HRESULT,
@@ -23261,7 +23261,7 @@ impl IMediaPlayer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlayer: IMediaPlayer}
+RT_CLASS!{class MediaPlayer: IMediaPlayer ["Windows.Media.Playback.MediaPlayer"]}
 impl RtActivatable<IActivationFactory> for MediaPlayer {}
 DEFINE_CLSID!(MediaPlayer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,77,101,100,105,97,80,108,97,121,101,114,0]) [CLSID_MediaPlayer]);
 DEFINE_IID!(IID_IMediaPlayer2, 1015288344, 8483, 20421, 144, 130, 47, 136, 63, 119, 189, 245);
@@ -23523,10 +23523,10 @@ impl IMediaPlayer7 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaPlayerAudioCategory: i32 {
+RT_ENUM! { enum MediaPlayerAudioCategory: i32 ["Windows.Media.Playback.MediaPlayerAudioCategory"] {
     Other (MediaPlayerAudioCategory_Other) = 0, Communications (MediaPlayerAudioCategory_Communications) = 3, Alerts (MediaPlayerAudioCategory_Alerts) = 4, SoundEffects (MediaPlayerAudioCategory_SoundEffects) = 5, GameEffects (MediaPlayerAudioCategory_GameEffects) = 6, GameMedia (MediaPlayerAudioCategory_GameMedia) = 7, GameChat (MediaPlayerAudioCategory_GameChat) = 8, Speech (MediaPlayerAudioCategory_Speech) = 9, Movie (MediaPlayerAudioCategory_Movie) = 10, Media (MediaPlayerAudioCategory_Media) = 11,
 }}
-RT_ENUM! { enum MediaPlayerAudioDeviceType: i32 {
+RT_ENUM! { enum MediaPlayerAudioDeviceType: i32 ["Windows.Media.Playback.MediaPlayerAudioDeviceType"] {
     Console (MediaPlayerAudioDeviceType_Console) = 0, Multimedia (MediaPlayerAudioDeviceType_Multimedia) = 1, Communications (MediaPlayerAudioDeviceType_Communications) = 2,
 }}
 DEFINE_IID!(IID_IMediaPlayerDataReceivedEventArgs, 3344602117, 51201, 16682, 131, 91, 131, 252, 14, 98, 42, 142);
@@ -23540,7 +23540,7 @@ impl IMediaPlayerDataReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlayerDataReceivedEventArgs: IMediaPlayerDataReceivedEventArgs}
+RT_CLASS!{class MediaPlayerDataReceivedEventArgs: IMediaPlayerDataReceivedEventArgs ["Windows.Media.Playback.MediaPlayerDataReceivedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlayerEffects, 2241978074, 51894, 19648, 139, 227, 96, 53, 244, 222, 37, 145);
 RT_INTERFACE!{interface IMediaPlayerEffects(IMediaPlayerEffectsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerEffects] {
     fn AddAudioEffect(&self, activatableClassId: HSTRING, effectOptional: bool, configuration: *mut foundation::collections::IPropertySet) -> HRESULT,
@@ -23566,7 +23566,7 @@ impl IMediaPlayerEffects2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaPlayerError: i32 {
+RT_ENUM! { enum MediaPlayerError: i32 ["Windows.Media.Playback.MediaPlayerError"] {
     Unknown (MediaPlayerError_Unknown) = 0, Aborted (MediaPlayerError_Aborted) = 1, NetworkError (MediaPlayerError_NetworkError) = 2, DecodingError (MediaPlayerError_DecodingError) = 3, SourceNotSupported (MediaPlayerError_SourceNotSupported) = 4,
 }}
 DEFINE_IID!(IID_IMediaPlayerFailedEventArgs, 658827705, 42979, 20246, 186, 196, 121, 20, 235, 192, 131, 1);
@@ -23592,7 +23592,7 @@ impl IMediaPlayerFailedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlayerFailedEventArgs: IMediaPlayerFailedEventArgs}
+RT_CLASS!{class MediaPlayerFailedEventArgs: IMediaPlayerFailedEventArgs ["Windows.Media.Playback.MediaPlayerFailedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlayerRateChangedEventArgs, 1080036696, 15201, 19378, 152, 159, 252, 101, 96, 139, 108, 171);
 RT_INTERFACE!{interface IMediaPlayerRateChangedEventArgs(IMediaPlayerRateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerRateChangedEventArgs] {
     fn get_NewRate(&self, out: *mut f64) -> HRESULT
@@ -23604,7 +23604,7 @@ impl IMediaPlayerRateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlayerRateChangedEventArgs: IMediaPlayerRateChangedEventArgs}
+RT_CLASS!{class MediaPlayerRateChangedEventArgs: IMediaPlayerRateChangedEventArgs ["Windows.Media.Playback.MediaPlayerRateChangedEventArgs"]}
 DEFINE_IID!(IID_IMediaPlayerSource, 3176106135, 5155, 19518, 130, 197, 15, 177, 175, 148, 247, 21);
 RT_INTERFACE!{interface IMediaPlayerSource(IMediaPlayerSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerSource] {
     fn get_ProtectionManager(&self, out: *mut *mut super::protection::MediaProtectionManager) -> HRESULT,
@@ -23654,7 +23654,7 @@ impl IMediaPlayerSource2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaPlayerState: i32 {
+RT_ENUM! { enum MediaPlayerState: i32 ["Windows.Media.Playback.MediaPlayerState"] {
     Closed (MediaPlayerState_Closed) = 0, Opening (MediaPlayerState_Opening) = 1, Buffering (MediaPlayerState_Buffering) = 2, Playing (MediaPlayerState_Playing) = 3, Paused (MediaPlayerState_Paused) = 4, Stopped (MediaPlayerState_Stopped) = 5,
 }}
 DEFINE_IID!(IID_IMediaPlayerSurface, 248927164, 46902, 18883, 131, 11, 118, 74, 56, 69, 49, 58);
@@ -23682,7 +23682,7 @@ impl IMediaPlayerSurface {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaPlayerSurface: IMediaPlayerSurface}
+RT_CLASS!{class MediaPlayerSurface: IMediaPlayerSurface ["Windows.Media.Playback.MediaPlayerSurface"]}
 DEFINE_IID!(IID_IPlaybackMediaMarker, 3302109020, 15388, 17476, 182, 185, 119, 139, 4, 34, 212, 26);
 RT_INTERFACE!{interface IPlaybackMediaMarker(IPlaybackMediaMarkerVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackMediaMarker] {
     fn get_Time(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -23706,7 +23706,7 @@ impl IPlaybackMediaMarker {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlaybackMediaMarker: IPlaybackMediaMarker}
+RT_CLASS!{class PlaybackMediaMarker: IPlaybackMediaMarker ["Windows.Media.Playback.PlaybackMediaMarker"]}
 impl RtActivatable<IPlaybackMediaMarkerFactory> for PlaybackMediaMarker {}
 impl PlaybackMediaMarker {
     #[inline] pub fn create_from_time(value: foundation::TimeSpan) -> Result<ComPtr<PlaybackMediaMarker>> {
@@ -23745,7 +23745,7 @@ impl IPlaybackMediaMarkerReachedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlaybackMediaMarkerReachedEventArgs: IPlaybackMediaMarkerReachedEventArgs}
+RT_CLASS!{class PlaybackMediaMarkerReachedEventArgs: IPlaybackMediaMarkerReachedEventArgs ["Windows.Media.Playback.PlaybackMediaMarkerReachedEventArgs"]}
 DEFINE_IID!(IID_IPlaybackMediaMarkerSequence, 4068543726, 25483, 18127, 136, 23, 29, 17, 31, 233, 216, 196);
 RT_INTERFACE!{interface IPlaybackMediaMarkerSequence(IPlaybackMediaMarkerSequenceVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackMediaMarkerSequence] {
     fn get_Size(&self, out: *mut u32) -> HRESULT,
@@ -23767,11 +23767,11 @@ impl IPlaybackMediaMarkerSequence {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlaybackMediaMarkerSequence: IPlaybackMediaMarkerSequence}
-RT_ENUM! { enum SphericalVideoProjectionMode: i32 {
+RT_CLASS!{class PlaybackMediaMarkerSequence: IPlaybackMediaMarkerSequence ["Windows.Media.Playback.PlaybackMediaMarkerSequence"]}
+RT_ENUM! { enum SphericalVideoProjectionMode: i32 ["Windows.Media.Playback.SphericalVideoProjectionMode"] {
     Spherical (SphericalVideoProjectionMode_Spherical) = 0, Flat (SphericalVideoProjectionMode_Flat) = 1,
 }}
-RT_ENUM! { enum StereoscopicVideoRenderMode: i32 {
+RT_ENUM! { enum StereoscopicVideoRenderMode: i32 ["Windows.Media.Playback.StereoscopicVideoRenderMode"] {
     Mono (StereoscopicVideoRenderMode_Mono) = 0, Stereo (StereoscopicVideoRenderMode_Stereo) = 1,
 }}
 DEFINE_IID!(IID_ITimedMetadataPresentationModeChangedEventArgs, 3512950937, 26079, 17838, 140, 239, 220, 11, 83, 253, 194, 187);
@@ -23797,8 +23797,8 @@ impl ITimedMetadataPresentationModeChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimedMetadataPresentationModeChangedEventArgs: ITimedMetadataPresentationModeChangedEventArgs}
-RT_ENUM! { enum TimedMetadataTrackPresentationMode: i32 {
+RT_CLASS!{class TimedMetadataPresentationModeChangedEventArgs: ITimedMetadataPresentationModeChangedEventArgs ["Windows.Media.Playback.TimedMetadataPresentationModeChangedEventArgs"]}
+RT_ENUM! { enum TimedMetadataTrackPresentationMode: i32 ["Windows.Media.Playback.TimedMetadataTrackPresentationMode"] {
     Disabled (TimedMetadataTrackPresentationMode_Disabled) = 0, Hidden (TimedMetadataTrackPresentationMode_Hidden) = 1, ApplicationPresented (TimedMetadataTrackPresentationMode_ApplicationPresented) = 2, PlatformPresented (TimedMetadataTrackPresentationMode_PlatformPresented) = 3,
 }}
 } // Windows.Media.Playback
@@ -23833,7 +23833,7 @@ impl IPlaylist {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Playlist: IPlaylist}
+RT_CLASS!{class Playlist: IPlaylist ["Windows.Media.Playlists.Playlist"]}
 impl RtActivatable<IPlaylistStatics> for Playlist {}
 impl RtActivatable<IActivationFactory> for Playlist {}
 impl Playlist {
@@ -23842,7 +23842,7 @@ impl Playlist {
     }
 }
 DEFINE_CLSID!(Playlist(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,108,105,115,116,115,46,80,108,97,121,108,105,115,116,0]) [CLSID_Playlist]);
-RT_ENUM! { enum PlaylistFormat: i32 {
+RT_ENUM! { enum PlaylistFormat: i32 ["Windows.Media.Playlists.PlaylistFormat"] {
     WindowsMedia (PlaylistFormat_WindowsMedia) = 0, Zune (PlaylistFormat_Zune) = 1, M3u (PlaylistFormat_M3u) = 2,
 }}
 DEFINE_IID!(IID_IPlaylistStatics, 3317903821, 33273, 20467, 149, 185, 112, 182, 255, 4, 107, 104);
@@ -23876,7 +23876,7 @@ impl IComponentLoadFailedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ComponentLoadFailedEventArgs: IComponentLoadFailedEventArgs}
+RT_CLASS!{class ComponentLoadFailedEventArgs: IComponentLoadFailedEventArgs ["Windows.Media.Protection.ComponentLoadFailedEventArgs"]}
 DEFINE_IID!(IID_ComponentLoadFailedEventHandler, 2514117692, 28089, 16971, 134, 202, 9, 26, 244, 50, 8, 28);
 RT_DELEGATE!{delegate ComponentLoadFailedEventHandler(ComponentLoadFailedEventHandlerVtbl, ComponentLoadFailedEventHandlerImpl) [IID_ComponentLoadFailedEventHandler] {
     fn Invoke(&self, sender: *mut MediaProtectionManager, e: *mut ComponentLoadFailedEventArgs) -> HRESULT
@@ -23906,10 +23906,10 @@ impl IComponentRenewalStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum GraphicsTrustStatus: i32 {
+RT_ENUM! { enum GraphicsTrustStatus: i32 ["Windows.Media.Protection.GraphicsTrustStatus"] {
     TrustNotRequired (GraphicsTrustStatus_TrustNotRequired) = 0, TrustEstablished (GraphicsTrustStatus_TrustEstablished) = 1, EnvironmentNotSupported (GraphicsTrustStatus_EnvironmentNotSupported) = 2, DriverNotSupported (GraphicsTrustStatus_DriverNotSupported) = 3, DriverSigningFailure (GraphicsTrustStatus_DriverSigningFailure) = 4, UnknownFailure (GraphicsTrustStatus_UnknownFailure) = 5,
 }}
-RT_ENUM! { enum HdcpProtection: i32 {
+RT_ENUM! { enum HdcpProtection: i32 ["Windows.Media.Protection.HdcpProtection"] {
     Off (HdcpProtection_Off) = 0, On (HdcpProtection_On) = 1, OnWithTypeEnforcement (HdcpProtection_OnWithTypeEnforcement) = 2,
 }}
 DEFINE_IID!(IID_IHdcpSession, 1904756201, 25815, 17005, 128, 155, 27, 228, 97, 148, 26, 42);
@@ -23946,10 +23946,10 @@ impl IHdcpSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HdcpSession: IHdcpSession}
+RT_CLASS!{class HdcpSession: IHdcpSession ["Windows.Media.Protection.HdcpSession"]}
 impl RtActivatable<IActivationFactory> for HdcpSession {}
 DEFINE_CLSID!(HdcpSession(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,72,100,99,112,83,101,115,115,105,111,110,0]) [CLSID_HdcpSession]);
-RT_ENUM! { enum HdcpSetProtectionResult: i32 {
+RT_ENUM! { enum HdcpSetProtectionResult: i32 ["Windows.Media.Protection.HdcpSetProtectionResult"] {
     Success (HdcpSetProtectionResult_Success) = 0, TimedOut (HdcpSetProtectionResult_TimedOut) = 1, NotSupported (HdcpSetProtectionResult_NotSupported) = 2, UnknownFailure (HdcpSetProtectionResult_UnknownFailure) = 3,
 }}
 DEFINE_IID!(IID_IMediaProtectionManager, 1164527943, 51009, 17227, 167, 158, 71, 76, 18, 217, 61, 47);
@@ -23996,7 +23996,7 @@ impl IMediaProtectionManager {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaProtectionManager: IMediaProtectionManager}
+RT_CLASS!{class MediaProtectionManager: IMediaProtectionManager ["Windows.Media.Protection.MediaProtectionManager"]}
 impl RtActivatable<IActivationFactory> for MediaProtectionManager {}
 DEFINE_CLSID!(MediaProtectionManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,77,101,100,105,97,80,114,111,116,101,99,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MediaProtectionManager]);
 DEFINE_IID!(IID_IMediaProtectionPMPServer, 202445350, 31526, 19761, 149, 187, 156, 27, 8, 239, 127, 192);
@@ -24010,7 +24010,7 @@ impl IMediaProtectionPMPServer {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaProtectionPMPServer: IMediaProtectionPMPServer}
+RT_CLASS!{class MediaProtectionPMPServer: IMediaProtectionPMPServer ["Windows.Media.Protection.MediaProtectionPMPServer"]}
 impl RtActivatable<IMediaProtectionPMPServerFactory> for MediaProtectionPMPServer {}
 impl MediaProtectionPMPServer {
     #[inline] pub fn create_pmp_server(pProperties: &foundation::collections::IPropertySet) -> Result<ComPtr<MediaProtectionPMPServer>> {
@@ -24039,7 +24039,7 @@ impl IMediaProtectionServiceCompletion {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaProtectionServiceCompletion: IMediaProtectionServiceCompletion}
+RT_CLASS!{class MediaProtectionServiceCompletion: IMediaProtectionServiceCompletion ["Windows.Media.Protection.MediaProtectionServiceCompletion"]}
 DEFINE_IID!(IID_IMediaProtectionServiceRequest, 2984119974, 8340, 18317, 135, 164, 139, 149, 32, 15, 133, 198);
 RT_INTERFACE!{interface IMediaProtectionServiceRequest(IMediaProtectionServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IMediaProtectionServiceRequest] {
     fn get_ProtectionSystem(&self, out: *mut Guid) -> HRESULT,
@@ -24068,10 +24068,10 @@ impl IProtectionCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProtectionCapabilities: IProtectionCapabilities}
+RT_CLASS!{class ProtectionCapabilities: IProtectionCapabilities ["Windows.Media.Protection.ProtectionCapabilities"]}
 impl RtActivatable<IActivationFactory> for ProtectionCapabilities {}
 DEFINE_CLSID!(ProtectionCapabilities(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,114,111,116,101,99,116,105,111,110,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_ProtectionCapabilities]);
-RT_ENUM! { enum ProtectionCapabilityResult: i32 {
+RT_ENUM! { enum ProtectionCapabilityResult: i32 ["Windows.Media.Protection.ProtectionCapabilityResult"] {
     NotSupported (ProtectionCapabilityResult_NotSupported) = 0, Maybe (ProtectionCapabilityResult_Maybe) = 1, Probably (ProtectionCapabilityResult_Probably) = 2,
 }}
 DEFINE_IID!(IID_RebootNeededEventHandler, 1692478021, 38715, 19002, 178, 96, 145, 137, 138, 73, 168, 44);
@@ -24084,7 +24084,7 @@ impl RebootNeededEventHandler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RenewalStatus: i32 {
+RT_ENUM! { enum RenewalStatus: i32 ["Windows.Media.Protection.RenewalStatus"] {
     NotStarted (RenewalStatus_NotStarted) = 0, UpdatesInProgress (RenewalStatus_UpdatesInProgress) = 1, UserCancelled (RenewalStatus_UserCancelled) = 2, AppComponentsMayNeedUpdating (RenewalStatus_AppComponentsMayNeedUpdating) = 3, NoComponentsFound (RenewalStatus_NoComponentsFound) = 4,
 }}
 DEFINE_IID!(IID_IRevocationAndRenewalInformation, 4087452539, 9473, 17310, 166, 231, 111, 201, 94, 23, 95, 207);
@@ -24098,7 +24098,7 @@ impl IRevocationAndRenewalInformation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RevocationAndRenewalInformation: IRevocationAndRenewalInformation}
+RT_CLASS!{class RevocationAndRenewalInformation: IRevocationAndRenewalInformation ["Windows.Media.Protection.RevocationAndRenewalInformation"]}
 DEFINE_IID!(IID_IRevocationAndRenewalItem, 815383052, 15600, 18922, 144, 45, 202, 243, 45, 45, 222, 44);
 RT_INTERFACE!{interface IRevocationAndRenewalItem(IRevocationAndRenewalItemVtbl): IInspectable(IInspectableVtbl) [IID_IRevocationAndRenewalItem] {
     fn get_Reasons(&self, out: *mut RevocationAndRenewalReasons) -> HRESULT,
@@ -24134,8 +24134,8 @@ impl IRevocationAndRenewalItem {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RevocationAndRenewalItem: IRevocationAndRenewalItem}
-RT_ENUM! { enum RevocationAndRenewalReasons: u32 {
+RT_CLASS!{class RevocationAndRenewalItem: IRevocationAndRenewalItem ["Windows.Media.Protection.RevocationAndRenewalItem"]}
+RT_ENUM! { enum RevocationAndRenewalReasons: u32 ["Windows.Media.Protection.RevocationAndRenewalReasons"] {
     UserModeComponentLoad (RevocationAndRenewalReasons_UserModeComponentLoad) = 1, KernelModeComponentLoad (RevocationAndRenewalReasons_KernelModeComponentLoad) = 2, AppComponent (RevocationAndRenewalReasons_AppComponent) = 4, GlobalRevocationListLoadFailed (RevocationAndRenewalReasons_GlobalRevocationListLoadFailed) = 16, InvalidGlobalRevocationListSignature (RevocationAndRenewalReasons_InvalidGlobalRevocationListSignature) = 32, GlobalRevocationListAbsent (RevocationAndRenewalReasons_GlobalRevocationListAbsent) = 4096, ComponentRevoked (RevocationAndRenewalReasons_ComponentRevoked) = 8192, InvalidComponentCertificateExtendedKeyUse (RevocationAndRenewalReasons_InvalidComponentCertificateExtendedKeyUse) = 16384, ComponentCertificateRevoked (RevocationAndRenewalReasons_ComponentCertificateRevoked) = 32768, InvalidComponentCertificateRoot (RevocationAndRenewalReasons_InvalidComponentCertificateRoot) = 65536, ComponentHighSecurityCertificateRevoked (RevocationAndRenewalReasons_ComponentHighSecurityCertificateRevoked) = 131072, ComponentLowSecurityCertificateRevoked (RevocationAndRenewalReasons_ComponentLowSecurityCertificateRevoked) = 262144, BootDriverVerificationFailed (RevocationAndRenewalReasons_BootDriverVerificationFailed) = 1048576, ComponentSignedWithTestCertificate (RevocationAndRenewalReasons_ComponentSignedWithTestCertificate) = 16777216, EncryptionFailure (RevocationAndRenewalReasons_EncryptionFailure) = 268435456,
 }}
 DEFINE_IID!(IID_IServiceRequestedEventArgs, 875051951, 43956, 20417, 189, 137, 147, 241, 6, 87, 58, 73);
@@ -24155,7 +24155,7 @@ impl IServiceRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ServiceRequestedEventArgs: IServiceRequestedEventArgs}
+RT_CLASS!{class ServiceRequestedEventArgs: IServiceRequestedEventArgs ["Windows.Media.Protection.ServiceRequestedEventArgs"]}
 DEFINE_IID!(IID_IServiceRequestedEventArgs2, 1430022614, 64254, 16680, 141, 250, 19, 14, 57, 138, 19, 167);
 RT_INTERFACE!{interface IServiceRequestedEventArgs2(IServiceRequestedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IServiceRequestedEventArgs2] {
     fn get_MediaPlaybackItem(&self, out: *mut *mut super::playback::MediaPlaybackItem) -> HRESULT
@@ -24179,13 +24179,13 @@ impl ServiceRequestedEventHandler {
 }
 pub mod playready { // Windows.Media.Protection.PlayReady
 use ::prelude::*;
-RT_ENUM! { enum NDCertificateFeature: i32 {
+RT_ENUM! { enum NDCertificateFeature: i32 ["Windows.Media.Protection.PlayReady.NDCertificateFeature"] {
     Transmitter (NDCertificateFeature_Transmitter) = 1, Receiver (NDCertificateFeature_Receiver) = 2, SharedCertificate (NDCertificateFeature_SharedCertificate) = 3, SecureClock (NDCertificateFeature_SecureClock) = 4, AntiRollBackClock (NDCertificateFeature_AntiRollBackClock) = 5, CRLS (NDCertificateFeature_CRLS) = 9, PlayReady3Features (NDCertificateFeature_PlayReady3Features) = 13,
 }}
-RT_ENUM! { enum NDCertificatePlatformID: i32 {
+RT_ENUM! { enum NDCertificatePlatformID: i32 ["Windows.Media.Protection.PlayReady.NDCertificatePlatformID"] {
     Windows (NDCertificatePlatformID_Windows) = 0, OSX (NDCertificatePlatformID_OSX) = 1, WindowsOnARM (NDCertificatePlatformID_WindowsOnARM) = 2, WindowsMobile7 (NDCertificatePlatformID_WindowsMobile7) = 5, iOSOnARM (NDCertificatePlatformID_iOSOnARM) = 6, XBoxOnPPC (NDCertificatePlatformID_XBoxOnPPC) = 7, WindowsPhone8OnARM (NDCertificatePlatformID_WindowsPhone8OnARM) = 8, WindowsPhone8OnX86 (NDCertificatePlatformID_WindowsPhone8OnX86) = 9, XboxOne (NDCertificatePlatformID_XboxOne) = 10, AndroidOnARM (NDCertificatePlatformID_AndroidOnARM) = 11, WindowsPhone81OnARM (NDCertificatePlatformID_WindowsPhone81OnARM) = 12, WindowsPhone81OnX86 (NDCertificatePlatformID_WindowsPhone81OnX86) = 13,
 }}
-RT_ENUM! { enum NDCertificateType: i32 {
+RT_ENUM! { enum NDCertificateType: i32 ["Windows.Media.Protection.PlayReady.NDCertificateType"] {
     Unknown (NDCertificateType_Unknown) = 0, PC (NDCertificateType_PC) = 1, Device (NDCertificateType_Device) = 2, Domain (NDCertificateType_Domain) = 3, Issuer (NDCertificateType_Issuer) = 4, CrlSigner (NDCertificateType_CrlSigner) = 5, Service (NDCertificateType_Service) = 6, Silverlight (NDCertificateType_Silverlight) = 7, Application (NDCertificateType_Application) = 8, Metering (NDCertificateType_Metering) = 9, KeyFileSigner (NDCertificateType_KeyFileSigner) = 10, Server (NDCertificateType_Server) = 11, LicenseSigner (NDCertificateType_LicenseSigner) = 12,
 }}
 DEFINE_IID!(IID_INDClient, 1003911195, 25016, 18146, 153, 165, 138, 188, 182, 185, 247, 214);
@@ -24271,7 +24271,7 @@ impl INDClient {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NDClient: INDClient}
+RT_CLASS!{class NDClient: INDClient ["Windows.Media.Protection.PlayReady.NDClient"]}
 impl RtActivatable<INDClientFactory> for NDClient {}
 impl NDClient {
     #[inline] pub fn create_instance(downloadEngine: &INDDownloadEngine, streamParser: &INDStreamParser, pMessenger: &INDMessenger) -> Result<ComPtr<NDClient>> {
@@ -24313,10 +24313,10 @@ impl INDClosedCaptionDataReceivedEventArgs {
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum NDClosedCaptionFormat: i32 {
+RT_ENUM! { enum NDClosedCaptionFormat: i32 ["Windows.Media.Protection.PlayReady.NDClosedCaptionFormat"] {
     ATSC (NDClosedCaptionFormat_ATSC) = 0, SCTE20 (NDClosedCaptionFormat_SCTE20) = 1, Unknown (NDClosedCaptionFormat_Unknown) = 2,
 }}
-RT_ENUM! { enum NDContentIDType: i32 {
+RT_ENUM! { enum NDContentIDType: i32 ["Windows.Media.Protection.PlayReady.NDContentIDType"] {
     KeyID (NDContentIDType_KeyID) = 1, PlayReadyObject (NDContentIDType_PlayReadyObject) = 2, Custom (NDContentIDType_Custom) = 3,
 }}
 DEFINE_IID!(IID_INDCustomData, 4123725788, 11529, 20249, 181, 225, 118, 160, 179, 238, 146, 103);
@@ -24336,7 +24336,7 @@ impl INDCustomData {
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NDCustomData: INDCustomData}
+RT_CLASS!{class NDCustomData: INDCustomData ["Windows.Media.Protection.PlayReady.NDCustomData"]}
 impl RtActivatable<INDCustomDataFactory> for NDCustomData {}
 impl NDCustomData {
     #[inline] pub fn create_instance(customDataTypeIDBytes: &[u8], customDataBytes: &[u8]) -> Result<ComPtr<NDCustomData>> {
@@ -24444,7 +24444,7 @@ impl INDDownloadEngineNotifier {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NDDownloadEngineNotifier: INDDownloadEngineNotifier}
+RT_CLASS!{class NDDownloadEngineNotifier: INDDownloadEngineNotifier ["Windows.Media.Protection.PlayReady.NDDownloadEngineNotifier"]}
 impl RtActivatable<IActivationFactory> for NDDownloadEngineNotifier {}
 DEFINE_CLSID!(NDDownloadEngineNotifier(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,68,111,119,110,108,111,97,100,69,110,103,105,110,101,78,111,116,105,102,105,101,114,0]) [CLSID_NDDownloadEngineNotifier]);
 DEFINE_IID!(IID_INDLicenseFetchCompletedEventArgs, 518195738, 4530, 17752, 136, 101, 227, 165, 22, 146, 37, 23);
@@ -24486,7 +24486,7 @@ impl INDLicenseFetchDescriptor {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NDLicenseFetchDescriptor: INDLicenseFetchDescriptor}
+RT_CLASS!{class NDLicenseFetchDescriptor: INDLicenseFetchDescriptor ["Windows.Media.Protection.PlayReady.NDLicenseFetchDescriptor"]}
 impl RtActivatable<INDLicenseFetchDescriptorFactory> for NDLicenseFetchDescriptor {}
 impl NDLicenseFetchDescriptor {
     #[inline] pub fn create_instance(contentIDType: NDContentIDType, contentIDBytes: &[u8], licenseFetchChallengeCustomData: &INDCustomData) -> Result<ComPtr<NDLicenseFetchDescriptor>> {
@@ -24516,7 +24516,7 @@ impl INDLicenseFetchResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum NDMediaStreamType: i32 {
+RT_ENUM! { enum NDMediaStreamType: i32 ["Windows.Media.Protection.PlayReady.NDMediaStreamType"] {
     Audio (NDMediaStreamType_Audio) = 1, Video (NDMediaStreamType_Video) = 2,
 }}
 DEFINE_IID!(IID_INDMessenger, 3559782749, 42843, 18367, 130, 73, 188, 131, 130, 13, 163, 138);
@@ -24559,7 +24559,7 @@ impl INDProximityDetectionCompletedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum NDProximityDetectionType: i32 {
+RT_ENUM! { enum NDProximityDetectionType: i32 ["Windows.Media.Protection.PlayReady.NDProximityDetectionType"] {
     UDP (NDProximityDetectionType_UDP) = 1, TCP (NDProximityDetectionType_TCP) = 2, TransportAgnostic (NDProximityDetectionType_TransportAgnostic) = 4,
 }}
 DEFINE_IID!(IID_INDRegistrationCompletedEventArgs, 2654582349, 43867, 18693, 172, 220, 120, 122, 119, 198, 55, 77);
@@ -24601,7 +24601,7 @@ impl INDSendResult {
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum NDStartAsyncOptions: i32 {
+RT_ENUM! { enum NDStartAsyncOptions: i32 ["Windows.Media.Protection.PlayReady.NDStartAsyncOptions"] {
     MutualAuthentication (NDStartAsyncOptions_MutualAuthentication) = 1, WaitForLicenseDescriptor (NDStartAsyncOptions_WaitForLicenseDescriptor) = 2,
 }}
 DEFINE_IID!(IID_INDStartResult, 2046224750, 62735, 16405, 139, 164, 194, 188, 52, 78, 189, 78);
@@ -24626,7 +24626,7 @@ impl INDStorageFileHelper {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NDStorageFileHelper: INDStorageFileHelper}
+RT_CLASS!{class NDStorageFileHelper: INDStorageFileHelper ["Windows.Media.Protection.PlayReady.NDStorageFileHelper"]}
 impl RtActivatable<IActivationFactory> for NDStorageFileHelper {}
 DEFINE_CLSID!(NDStorageFileHelper(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,83,116,111,114,97,103,101,70,105,108,101,72,101,108,112,101,114,0]) [CLSID_NDStorageFileHelper]);
 DEFINE_IID!(IID_INDStreamParser, 3770327448, 38806, 16841, 134, 149, 89, 67, 126, 103, 230, 106);
@@ -24686,10 +24686,10 @@ impl INDStreamParserNotifier {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NDStreamParserNotifier: INDStreamParserNotifier}
+RT_CLASS!{class NDStreamParserNotifier: INDStreamParserNotifier ["Windows.Media.Protection.PlayReady.NDStreamParserNotifier"]}
 impl RtActivatable<IActivationFactory> for NDStreamParserNotifier {}
 DEFINE_CLSID!(NDStreamParserNotifier(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,83,116,114,101,97,109,80,97,114,115,101,114,78,111,116,105,102,105,101,114,0]) [CLSID_NDStreamParserNotifier]);
-RT_CLASS!{class NDTCPMessenger: INDMessenger}
+RT_CLASS!{class NDTCPMessenger: INDMessenger ["Windows.Media.Protection.PlayReady.NDTCPMessenger"]}
 impl RtActivatable<INDTCPMessengerFactory> for NDTCPMessenger {}
 impl NDTCPMessenger {
     #[inline] pub fn create_instance(remoteHostName: &HStringArg, remoteHostPort: u32) -> Result<ComPtr<NDTCPMessenger>> {
@@ -24844,7 +24844,7 @@ impl IPlayReadyContentHeader {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadyContentHeader: IPlayReadyContentHeader}
+RT_CLASS!{class PlayReadyContentHeader: IPlayReadyContentHeader ["Windows.Media.Protection.PlayReady.PlayReadyContentHeader"]}
 impl RtActivatable<IPlayReadyContentHeaderFactory> for PlayReadyContentHeader {}
 impl RtActivatable<IPlayReadyContentHeaderFactory2> for PlayReadyContentHeader {}
 impl PlayReadyContentHeader {
@@ -24932,7 +24932,7 @@ impl PlayReadyContentResolver {
     }
 }
 DEFINE_CLSID!(PlayReadyContentResolver(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,67,111,110,116,101,110,116,82,101,115,111,108,118,101,114,0]) [CLSID_PlayReadyContentResolver]);
-RT_ENUM! { enum PlayReadyDecryptorSetup: i32 {
+RT_ENUM! { enum PlayReadyDecryptorSetup: i32 ["Windows.Media.Protection.PlayReady.PlayReadyDecryptorSetup"] {
     Uninitialized (PlayReadyDecryptorSetup_Uninitialized) = 0, OnDemand (PlayReadyDecryptorSetup_OnDemand) = 1,
 }}
 DEFINE_IID!(IID_IPlayReadyDomain, 2915865516, 38886, 17391, 149, 228, 215, 134, 143, 59, 22, 169);
@@ -24970,8 +24970,8 @@ impl IPlayReadyDomain {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadyDomain: IPlayReadyDomain}
-RT_CLASS!{class PlayReadyDomainIterable: foundation::collections::IIterable<IPlayReadyDomain>}
+RT_CLASS!{class PlayReadyDomain: IPlayReadyDomain ["Windows.Media.Protection.PlayReady.PlayReadyDomain"]}
+RT_CLASS!{class PlayReadyDomainIterable: foundation::collections::IIterable<IPlayReadyDomain> ["Windows.Media.Protection.PlayReady.PlayReadyDomainIterable"]}
 impl RtActivatable<IPlayReadyDomainIterableFactory> for PlayReadyDomainIterable {}
 impl PlayReadyDomainIterable {
     #[inline] pub fn create_instance(domainAccountId: Guid) -> Result<ComPtr<PlayReadyDomainIterable>> {
@@ -24990,7 +24990,7 @@ impl IPlayReadyDomainIterableFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadyDomainIterator: foundation::collections::IIterator<IPlayReadyDomain>}
+RT_CLASS!{class PlayReadyDomainIterator: foundation::collections::IIterator<IPlayReadyDomain> ["Windows.Media.Protection.PlayReady.PlayReadyDomainIterator"]}
 DEFINE_IID!(IID_IPlayReadyDomainJoinServiceRequest, 387664474, 16479, 18233, 176, 64, 103, 185, 240, 195, 135, 88);
 RT_INTERFACE!{interface IPlayReadyDomainJoinServiceRequest(IPlayReadyDomainJoinServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyDomainJoinServiceRequest] {
     fn get_DomainAccountId(&self, out: *mut Guid) -> HRESULT,
@@ -25029,7 +25029,7 @@ impl IPlayReadyDomainJoinServiceRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadyDomainJoinServiceRequest: IPlayReadyDomainJoinServiceRequest}
+RT_CLASS!{class PlayReadyDomainJoinServiceRequest: IPlayReadyDomainJoinServiceRequest ["Windows.Media.Protection.PlayReady.PlayReadyDomainJoinServiceRequest"]}
 impl RtActivatable<IActivationFactory> for PlayReadyDomainJoinServiceRequest {}
 DEFINE_CLSID!(PlayReadyDomainJoinServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,68,111,109,97,105,110,74,111,105,110,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyDomainJoinServiceRequest]);
 DEFINE_IID!(IID_IPlayReadyDomainLeaveServiceRequest, 103635134, 38829, 18711, 170, 3, 70, 212, 194, 82, 212, 100);
@@ -25059,23 +25059,23 @@ impl IPlayReadyDomainLeaveServiceRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadyDomainLeaveServiceRequest: IPlayReadyDomainLeaveServiceRequest}
+RT_CLASS!{class PlayReadyDomainLeaveServiceRequest: IPlayReadyDomainLeaveServiceRequest ["Windows.Media.Protection.PlayReady.PlayReadyDomainLeaveServiceRequest"]}
 impl RtActivatable<IActivationFactory> for PlayReadyDomainLeaveServiceRequest {}
 DEFINE_CLSID!(PlayReadyDomainLeaveServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,68,111,109,97,105,110,76,101,97,118,101,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyDomainLeaveServiceRequest]);
-RT_ENUM! { enum PlayReadyEncryptionAlgorithm: i32 {
+RT_ENUM! { enum PlayReadyEncryptionAlgorithm: i32 ["Windows.Media.Protection.PlayReady.PlayReadyEncryptionAlgorithm"] {
     Unprotected (PlayReadyEncryptionAlgorithm_Unprotected) = 0, Aes128Ctr (PlayReadyEncryptionAlgorithm_Aes128Ctr) = 1, Cocktail (PlayReadyEncryptionAlgorithm_Cocktail) = 4, Aes128Cbc (PlayReadyEncryptionAlgorithm_Aes128Cbc) = 5, Unspecified (PlayReadyEncryptionAlgorithm_Unspecified) = 65535, Uninitialized (PlayReadyEncryptionAlgorithm_Uninitialized) = 2147483647,
 }}
-RT_ENUM! { enum PlayReadyHardwareDRMFeatures: i32 {
+RT_ENUM! { enum PlayReadyHardwareDRMFeatures: i32 ["Windows.Media.Protection.PlayReady.PlayReadyHardwareDRMFeatures"] {
     HardwareDRM (PlayReadyHardwareDRMFeatures_HardwareDRM) = 1, HEVC (PlayReadyHardwareDRMFeatures_HEVC) = 2, Aes128Cbc (PlayReadyHardwareDRMFeatures_Aes128Cbc) = 3,
 }}
 DEFINE_IID!(IID_IPlayReadyIndividualizationServiceRequest, 569747563, 140, 17937, 171, 47, 170, 166, 198, 159, 14, 36);
 RT_INTERFACE!{interface IPlayReadyIndividualizationServiceRequest(IPlayReadyIndividualizationServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyIndividualizationServiceRequest] {
     
 }}
-RT_CLASS!{class PlayReadyIndividualizationServiceRequest: IPlayReadyIndividualizationServiceRequest}
+RT_CLASS!{class PlayReadyIndividualizationServiceRequest: IPlayReadyIndividualizationServiceRequest ["Windows.Media.Protection.PlayReady.PlayReadyIndividualizationServiceRequest"]}
 impl RtActivatable<IActivationFactory> for PlayReadyIndividualizationServiceRequest {}
 DEFINE_CLSID!(PlayReadyIndividualizationServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,73,110,100,105,118,105,100,117,97,108,105,122,97,116,105,111,110,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyIndividualizationServiceRequest]);
-RT_ENUM! { enum PlayReadyITADataFormat: i32 {
+RT_ENUM! { enum PlayReadyITADataFormat: i32 ["Windows.Media.Protection.PlayReady.PlayReadyITADataFormat"] {
     SerializedProperties (PlayReadyITADataFormat_SerializedProperties) = 0, SerializedProperties_WithContentProtectionWrapper (PlayReadyITADataFormat_SerializedProperties_WithContentProtectionWrapper) = 1,
 }}
 DEFINE_IID!(IID_IPlayReadyITADataGenerator, 608463758, 4281, 17712, 178, 91, 144, 26, 128, 41, 169, 178);
@@ -25089,7 +25089,7 @@ impl IPlayReadyITADataGenerator {
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadyITADataGenerator: IPlayReadyITADataGenerator}
+RT_CLASS!{class PlayReadyITADataGenerator: IPlayReadyITADataGenerator ["Windows.Media.Protection.PlayReady.PlayReadyITADataGenerator"]}
 impl RtActivatable<IActivationFactory> for PlayReadyITADataGenerator {}
 DEFINE_CLSID!(PlayReadyITADataGenerator(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,73,84,65,68,97,116,97,71,101,110,101,114,97,116,111,114,0]) [CLSID_PlayReadyITADataGenerator]);
 DEFINE_IID!(IID_IPlayReadyLicense, 3997649998, 64060, 16717, 169, 242, 63, 252, 30, 248, 50, 212);
@@ -25139,7 +25139,7 @@ impl IPlayReadyLicense {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadyLicense: IPlayReadyLicense}
+RT_CLASS!{class PlayReadyLicense: IPlayReadyLicense ["Windows.Media.Protection.PlayReady.PlayReadyLicense"]}
 DEFINE_IID!(IID_IPlayReadyLicense2, 821356455, 55523, 18592, 188, 218, 255, 159, 64, 83, 4, 54);
 RT_INTERFACE!{interface IPlayReadyLicense2(IPlayReadyLicense2Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicense2] {
     fn get_SecureStopId(&self, out: *mut Guid) -> HRESULT,
@@ -25196,7 +25196,7 @@ impl IPlayReadyLicenseAcquisitionServiceRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadyLicenseAcquisitionServiceRequest: IPlayReadyLicenseAcquisitionServiceRequest}
+RT_CLASS!{class PlayReadyLicenseAcquisitionServiceRequest: IPlayReadyLicenseAcquisitionServiceRequest ["Windows.Media.Protection.PlayReady.PlayReadyLicenseAcquisitionServiceRequest"]}
 impl RtActivatable<IActivationFactory> for PlayReadyLicenseAcquisitionServiceRequest {}
 DEFINE_CLSID!(PlayReadyLicenseAcquisitionServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,76,105,99,101,110,115,101,65,99,113,117,105,115,105,116,105,111,110,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyLicenseAcquisitionServiceRequest]);
 DEFINE_IID!(IID_IPlayReadyLicenseAcquisitionServiceRequest2, 3086638773, 65036, 45605, 188, 96, 90, 158, 221, 50, 206, 181);
@@ -25221,7 +25221,7 @@ impl IPlayReadyLicenseAcquisitionServiceRequest3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadyLicenseIterable: foundation::collections::IIterable<IPlayReadyLicense>}
+RT_CLASS!{class PlayReadyLicenseIterable: foundation::collections::IIterable<IPlayReadyLicense> ["Windows.Media.Protection.PlayReady.PlayReadyLicenseIterable"]}
 impl RtActivatable<IPlayReadyLicenseIterableFactory> for PlayReadyLicenseIterable {}
 impl RtActivatable<IActivationFactory> for PlayReadyLicenseIterable {}
 impl PlayReadyLicenseIterable {
@@ -25241,7 +25241,7 @@ impl IPlayReadyLicenseIterableFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadyLicenseIterator: foundation::collections::IIterator<IPlayReadyLicense>}
+RT_CLASS!{class PlayReadyLicenseIterator: foundation::collections::IIterator<IPlayReadyLicense> ["Windows.Media.Protection.PlayReady.PlayReadyLicenseIterator"]}
 DEFINE_IID!(IID_IPlayReadyLicenseManagement, 2867536193, 2391, 17413, 184, 146, 139, 243, 236, 93, 173, 217);
 RT_INTERFACE!{static interface IPlayReadyLicenseManagement(IPlayReadyLicenseManagementVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicenseManagement] {
     fn DeleteLicenses(&self, contentHeader: *mut PlayReadyContentHeader, out: *mut *mut foundation::IAsyncAction) -> HRESULT
@@ -25277,7 +25277,7 @@ impl IPlayReadyLicenseSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadyLicenseSession: IPlayReadyLicenseSession}
+RT_CLASS!{class PlayReadyLicenseSession: IPlayReadyLicenseSession ["Windows.Media.Protection.PlayReady.PlayReadyLicenseSession"]}
 impl RtActivatable<IPlayReadyLicenseSessionFactory> for PlayReadyLicenseSession {}
 impl PlayReadyLicenseSession {
     #[inline] pub fn create_instance(configuration: &foundation::collections::IPropertySet) -> Result<ComPtr<PlayReadyLicenseSession>> {
@@ -25323,17 +25323,17 @@ impl IPlayReadyMeteringReportServiceRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadyMeteringReportServiceRequest: IPlayReadyMeteringReportServiceRequest}
+RT_CLASS!{class PlayReadyMeteringReportServiceRequest: IPlayReadyMeteringReportServiceRequest ["Windows.Media.Protection.PlayReady.PlayReadyMeteringReportServiceRequest"]}
 impl RtActivatable<IActivationFactory> for PlayReadyMeteringReportServiceRequest {}
 DEFINE_CLSID!(PlayReadyMeteringReportServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,77,101,116,101,114,105,110,103,82,101,112,111,114,116,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyMeteringReportServiceRequest]);
 DEFINE_IID!(IID_IPlayReadyRevocationServiceRequest, 1413310124, 64240, 17760, 132, 165, 14, 74, 206, 201, 57, 228);
 RT_INTERFACE!{interface IPlayReadyRevocationServiceRequest(IPlayReadyRevocationServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyRevocationServiceRequest] {
     
 }}
-RT_CLASS!{class PlayReadyRevocationServiceRequest: IPlayReadyRevocationServiceRequest}
+RT_CLASS!{class PlayReadyRevocationServiceRequest: IPlayReadyRevocationServiceRequest ["Windows.Media.Protection.PlayReady.PlayReadyRevocationServiceRequest"]}
 impl RtActivatable<IActivationFactory> for PlayReadyRevocationServiceRequest {}
 DEFINE_CLSID!(PlayReadyRevocationServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,82,101,118,111,99,97,116,105,111,110,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyRevocationServiceRequest]);
-RT_CLASS!{class PlayReadySecureStopIterable: foundation::collections::IIterable<IPlayReadySecureStopServiceRequest>}
+RT_CLASS!{class PlayReadySecureStopIterable: foundation::collections::IIterable<IPlayReadySecureStopServiceRequest> ["Windows.Media.Protection.PlayReady.PlayReadySecureStopIterable"]}
 impl RtActivatable<IPlayReadySecureStopIterableFactory> for PlayReadySecureStopIterable {}
 impl PlayReadySecureStopIterable {
     #[inline] pub fn create_instance(publisherCertBytes: &[u8]) -> Result<ComPtr<PlayReadySecureStopIterable>> {
@@ -25352,7 +25352,7 @@ impl IPlayReadySecureStopIterableFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadySecureStopIterator: foundation::collections::IIterator<IPlayReadySecureStopServiceRequest>}
+RT_CLASS!{class PlayReadySecureStopIterator: foundation::collections::IIterator<IPlayReadySecureStopServiceRequest> ["Windows.Media.Protection.PlayReady.PlayReadySecureStopIterator"]}
 DEFINE_IID!(IID_IPlayReadySecureStopServiceRequest, 3041926885, 447, 17409, 150, 119, 5, 99, 10, 106, 76, 200);
 RT_INTERFACE!{interface IPlayReadySecureStopServiceRequest(IPlayReadySecureStopServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadySecureStopServiceRequest] {
     fn get_SessionID(&self, out: *mut Guid) -> HRESULT,
@@ -25388,7 +25388,7 @@ impl IPlayReadySecureStopServiceRequest {
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadySecureStopServiceRequest: IPlayReadySecureStopServiceRequest}
+RT_CLASS!{class PlayReadySecureStopServiceRequest: IPlayReadySecureStopServiceRequest ["Windows.Media.Protection.PlayReady.PlayReadySecureStopServiceRequest"]}
 impl RtActivatable<IPlayReadySecureStopServiceRequestFactory> for PlayReadySecureStopServiceRequest {}
 impl PlayReadySecureStopServiceRequest {
     #[inline] pub fn create_instance(publisherCertBytes: &[u8]) -> Result<ComPtr<PlayReadySecureStopServiceRequest>> {
@@ -25496,7 +25496,7 @@ impl IPlayReadySoapMessage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PlayReadySoapMessage: IPlayReadySoapMessage}
+RT_CLASS!{class PlayReadySoapMessage: IPlayReadySoapMessage ["Windows.Media.Protection.PlayReady.PlayReadySoapMessage"]}
 DEFINE_IID!(IID_IPlayReadyStatics, 1583988749, 9340, 18074, 143, 49, 92, 26, 21, 113, 217, 198);
 RT_INTERFACE!{static interface IPlayReadyStatics(IPlayReadyStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyStatics] {
     fn get_DomainJoinServiceRequestType(&self, out: *mut Guid) -> HRESULT,
@@ -25678,7 +25678,7 @@ impl IPlayReadyStatics5 {
 } // Windows.Media.Protection
 pub mod render { // Windows.Media.Render
 use ::prelude::*;
-RT_ENUM! { enum AudioRenderCategory: i32 {
+RT_ENUM! { enum AudioRenderCategory: i32 ["Windows.Media.Render.AudioRenderCategory"] {
     Other (AudioRenderCategory_Other) = 0, ForegroundOnlyMedia (AudioRenderCategory_ForegroundOnlyMedia) = 1, BackgroundCapableMedia (AudioRenderCategory_BackgroundCapableMedia) = 2, Communications (AudioRenderCategory_Communications) = 3, Alerts (AudioRenderCategory_Alerts) = 4, SoundEffects (AudioRenderCategory_SoundEffects) = 5, GameEffects (AudioRenderCategory_GameEffects) = 6, GameMedia (AudioRenderCategory_GameMedia) = 7, GameChat (AudioRenderCategory_GameChat) = 8, Speech (AudioRenderCategory_Speech) = 9, Movie (AudioRenderCategory_Movie) = 10, Media (AudioRenderCategory_Media) = 11,
 }}
 } // Windows.Media.Render
@@ -25695,8 +25695,8 @@ impl ISpeechContinuousRecognitionCompletedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechContinuousRecognitionCompletedEventArgs: ISpeechContinuousRecognitionCompletedEventArgs}
-RT_ENUM! { enum SpeechContinuousRecognitionMode: i32 {
+RT_CLASS!{class SpeechContinuousRecognitionCompletedEventArgs: ISpeechContinuousRecognitionCompletedEventArgs ["Windows.Media.SpeechRecognition.SpeechContinuousRecognitionCompletedEventArgs"]}
+RT_ENUM! { enum SpeechContinuousRecognitionMode: i32 ["Windows.Media.SpeechRecognition.SpeechContinuousRecognitionMode"] {
     Default (SpeechContinuousRecognitionMode_Default) = 0, PauseOnRecognition (SpeechContinuousRecognitionMode_PauseOnRecognition) = 1,
 }}
 DEFINE_IID!(IID_ISpeechContinuousRecognitionResultGeneratedEventArgs, 420027934, 28286, 23110, 64, 251, 118, 89, 79, 120, 101, 4);
@@ -25710,7 +25710,7 @@ impl ISpeechContinuousRecognitionResultGeneratedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechContinuousRecognitionResultGeneratedEventArgs: ISpeechContinuousRecognitionResultGeneratedEventArgs}
+RT_CLASS!{class SpeechContinuousRecognitionResultGeneratedEventArgs: ISpeechContinuousRecognitionResultGeneratedEventArgs ["Windows.Media.SpeechRecognition.SpeechContinuousRecognitionResultGeneratedEventArgs"]}
 DEFINE_IID!(IID_ISpeechContinuousRecognitionSession, 1780562948, 26132, 18936, 153, 162, 181, 233, 179, 160, 133, 200);
 RT_INTERFACE!{interface ISpeechContinuousRecognitionSession(ISpeechContinuousRecognitionSessionVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechContinuousRecognitionSession] {
     fn get_AutoStopSilenceTimeout(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -25784,8 +25784,8 @@ impl ISpeechContinuousRecognitionSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechContinuousRecognitionSession: ISpeechContinuousRecognitionSession}
-RT_ENUM! { enum SpeechRecognitionAudioProblem: i32 {
+RT_CLASS!{class SpeechContinuousRecognitionSession: ISpeechContinuousRecognitionSession ["Windows.Media.SpeechRecognition.SpeechContinuousRecognitionSession"]}
+RT_ENUM! { enum SpeechRecognitionAudioProblem: i32 ["Windows.Media.SpeechRecognition.SpeechRecognitionAudioProblem"] {
     None (SpeechRecognitionAudioProblem_None) = 0, TooNoisy (SpeechRecognitionAudioProblem_TooNoisy) = 1, NoSignal (SpeechRecognitionAudioProblem_NoSignal) = 2, TooLoud (SpeechRecognitionAudioProblem_TooLoud) = 3, TooQuiet (SpeechRecognitionAudioProblem_TooQuiet) = 4, TooFast (SpeechRecognitionAudioProblem_TooFast) = 5, TooSlow (SpeechRecognitionAudioProblem_TooSlow) = 6,
 }}
 DEFINE_IID!(IID_ISpeechRecognitionCompilationResult, 1082027101, 27335, 19876, 156, 193, 47, 206, 50, 207, 116, 137);
@@ -25799,8 +25799,8 @@ impl ISpeechRecognitionCompilationResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechRecognitionCompilationResult: ISpeechRecognitionCompilationResult}
-RT_ENUM! { enum SpeechRecognitionConfidence: i32 {
+RT_CLASS!{class SpeechRecognitionCompilationResult: ISpeechRecognitionCompilationResult ["Windows.Media.SpeechRecognition.SpeechRecognitionCompilationResult"]}
+RT_ENUM! { enum SpeechRecognitionConfidence: i32 ["Windows.Media.SpeechRecognition.SpeechRecognitionConfidence"] {
     High (SpeechRecognitionConfidence_High) = 0, Medium (SpeechRecognitionConfidence_Medium) = 1, Low (SpeechRecognitionConfidence_Low) = 2, Rejected (SpeechRecognitionConfidence_Rejected) = 3,
 }}
 DEFINE_IID!(IID_ISpeechRecognitionConstraint, 2041321000, 19816, 17348, 137, 17, 64, 220, 65, 1, 181, 91);
@@ -25847,10 +25847,10 @@ impl ISpeechRecognitionConstraint {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SpeechRecognitionConstraintProbability: i32 {
+RT_ENUM! { enum SpeechRecognitionConstraintProbability: i32 ["Windows.Media.SpeechRecognition.SpeechRecognitionConstraintProbability"] {
     Default (SpeechRecognitionConstraintProbability_Default) = 0, Min (SpeechRecognitionConstraintProbability_Min) = 1, Max (SpeechRecognitionConstraintProbability_Max) = 2,
 }}
-RT_ENUM! { enum SpeechRecognitionConstraintType: i32 {
+RT_ENUM! { enum SpeechRecognitionConstraintType: i32 ["Windows.Media.SpeechRecognition.SpeechRecognitionConstraintType"] {
     Topic (SpeechRecognitionConstraintType_Topic) = 0, List (SpeechRecognitionConstraintType_List) = 1, Grammar (SpeechRecognitionConstraintType_Grammar) = 2, VoiceCommandDefinition (SpeechRecognitionConstraintType_VoiceCommandDefinition) = 3,
 }}
 DEFINE_IID!(IID_ISpeechRecognitionGrammarFileConstraint, 3036879503, 34250, 20388, 177, 26, 71, 79, 196, 27, 56, 53);
@@ -25864,7 +25864,7 @@ impl ISpeechRecognitionGrammarFileConstraint {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechRecognitionGrammarFileConstraint: ISpeechRecognitionGrammarFileConstraint}
+RT_CLASS!{class SpeechRecognitionGrammarFileConstraint: ISpeechRecognitionGrammarFileConstraint ["Windows.Media.SpeechRecognition.SpeechRecognitionGrammarFileConstraint"]}
 impl RtActivatable<ISpeechRecognitionGrammarFileConstraintFactory> for SpeechRecognitionGrammarFileConstraint {}
 impl SpeechRecognitionGrammarFileConstraint {
     #[cfg(feature="windows-storage")] #[inline] pub fn create(file: &super::super::storage::StorageFile) -> Result<ComPtr<SpeechRecognitionGrammarFileConstraint>> {
@@ -25903,7 +25903,7 @@ impl ISpeechRecognitionHypothesis {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechRecognitionHypothesis: ISpeechRecognitionHypothesis}
+RT_CLASS!{class SpeechRecognitionHypothesis: ISpeechRecognitionHypothesis ["Windows.Media.SpeechRecognition.SpeechRecognitionHypothesis"]}
 DEFINE_IID!(IID_ISpeechRecognitionHypothesisGeneratedEventArgs, 1427511930, 32803, 22630, 65, 29, 18, 19, 187, 39, 20, 118);
 RT_INTERFACE!{interface ISpeechRecognitionHypothesisGeneratedEventArgs(ISpeechRecognitionHypothesisGeneratedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionHypothesisGeneratedEventArgs] {
     fn get_Hypothesis(&self, out: *mut *mut SpeechRecognitionHypothesis) -> HRESULT
@@ -25915,7 +25915,7 @@ impl ISpeechRecognitionHypothesisGeneratedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechRecognitionHypothesisGeneratedEventArgs: ISpeechRecognitionHypothesisGeneratedEventArgs}
+RT_CLASS!{class SpeechRecognitionHypothesisGeneratedEventArgs: ISpeechRecognitionHypothesisGeneratedEventArgs ["Windows.Media.SpeechRecognition.SpeechRecognitionHypothesisGeneratedEventArgs"]}
 DEFINE_IID!(IID_ISpeechRecognitionListConstraint, 163874793, 58541, 17702, 129, 242, 73, 70, 251, 72, 29, 152);
 RT_INTERFACE!{interface ISpeechRecognitionListConstraint(ISpeechRecognitionListConstraintVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionListConstraint] {
     fn get_Commands(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT
@@ -25927,7 +25927,7 @@ impl ISpeechRecognitionListConstraint {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechRecognitionListConstraint: ISpeechRecognitionListConstraint}
+RT_CLASS!{class SpeechRecognitionListConstraint: ISpeechRecognitionListConstraint ["Windows.Media.SpeechRecognition.SpeechRecognitionListConstraint"]}
 impl RtActivatable<ISpeechRecognitionListConstraintFactory> for SpeechRecognitionListConstraint {}
 impl SpeechRecognitionListConstraint {
     #[inline] pub fn create(commands: &foundation::collections::IIterable<HString>) -> Result<ComPtr<SpeechRecognitionListConstraint>> {
@@ -25966,7 +25966,7 @@ impl ISpeechRecognitionQualityDegradingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechRecognitionQualityDegradingEventArgs: ISpeechRecognitionQualityDegradingEventArgs}
+RT_CLASS!{class SpeechRecognitionQualityDegradingEventArgs: ISpeechRecognitionQualityDegradingEventArgs ["Windows.Media.SpeechRecognition.SpeechRecognitionQualityDegradingEventArgs"]}
 DEFINE_IID!(IID_ISpeechRecognitionResult, 1311781207, 846, 18002, 133, 126, 208, 69, 76, 196, 190, 236);
 RT_INTERFACE!{interface ISpeechRecognitionResult(ISpeechRecognitionResultVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionResult] {
     fn get_Status(&self, out: *mut SpeechRecognitionResultStatus) -> HRESULT,
@@ -26020,7 +26020,7 @@ impl ISpeechRecognitionResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechRecognitionResult: ISpeechRecognitionResult}
+RT_CLASS!{class SpeechRecognitionResult: ISpeechRecognitionResult ["Windows.Media.SpeechRecognition.SpeechRecognitionResult"]}
 DEFINE_IID!(IID_ISpeechRecognitionResult2, 2944324026, 17691, 16742, 160, 193, 31, 254, 132, 3, 45, 3);
 RT_INTERFACE!{interface ISpeechRecognitionResult2(ISpeechRecognitionResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionResult2] {
     fn get_PhraseStartTime(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -26038,10 +26038,10 @@ impl ISpeechRecognitionResult2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SpeechRecognitionResultStatus: i32 {
+RT_ENUM! { enum SpeechRecognitionResultStatus: i32 ["Windows.Media.SpeechRecognition.SpeechRecognitionResultStatus"] {
     Success (SpeechRecognitionResultStatus_Success) = 0, TopicLanguageNotSupported (SpeechRecognitionResultStatus_TopicLanguageNotSupported) = 1, GrammarLanguageMismatch (SpeechRecognitionResultStatus_GrammarLanguageMismatch) = 2, GrammarCompilationFailure (SpeechRecognitionResultStatus_GrammarCompilationFailure) = 3, AudioQualityFailure (SpeechRecognitionResultStatus_AudioQualityFailure) = 4, UserCanceled (SpeechRecognitionResultStatus_UserCanceled) = 5, Unknown (SpeechRecognitionResultStatus_Unknown) = 6, TimeoutExceeded (SpeechRecognitionResultStatus_TimeoutExceeded) = 7, PauseLimitExceeded (SpeechRecognitionResultStatus_PauseLimitExceeded) = 8, NetworkFailure (SpeechRecognitionResultStatus_NetworkFailure) = 9, MicrophoneUnavailable (SpeechRecognitionResultStatus_MicrophoneUnavailable) = 10,
 }}
-RT_ENUM! { enum SpeechRecognitionScenario: i32 {
+RT_ENUM! { enum SpeechRecognitionScenario: i32 ["Windows.Media.SpeechRecognition.SpeechRecognitionScenario"] {
     WebSearch (SpeechRecognitionScenario_WebSearch) = 0, Dictation (SpeechRecognitionScenario_Dictation) = 1, FormFilling (SpeechRecognitionScenario_FormFilling) = 2,
 }}
 DEFINE_IID!(IID_ISpeechRecognitionSemanticInterpretation, 2866928283, 32306, 19487, 137, 254, 12, 101, 244, 134, 245, 46);
@@ -26055,7 +26055,7 @@ impl ISpeechRecognitionSemanticInterpretation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechRecognitionSemanticInterpretation: ISpeechRecognitionSemanticInterpretation}
+RT_CLASS!{class SpeechRecognitionSemanticInterpretation: ISpeechRecognitionSemanticInterpretation ["Windows.Media.SpeechRecognition.SpeechRecognitionSemanticInterpretation"]}
 DEFINE_IID!(IID_ISpeechRecognitionTopicConstraint, 3211779865, 33373, 20073, 166, 129, 54, 228, 140, 241, 201, 62);
 RT_INTERFACE!{interface ISpeechRecognitionTopicConstraint(ISpeechRecognitionTopicConstraintVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionTopicConstraint] {
     fn get_Scenario(&self, out: *mut SpeechRecognitionScenario) -> HRESULT,
@@ -26073,7 +26073,7 @@ impl ISpeechRecognitionTopicConstraint {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechRecognitionTopicConstraint: ISpeechRecognitionTopicConstraint}
+RT_CLASS!{class SpeechRecognitionTopicConstraint: ISpeechRecognitionTopicConstraint ["Windows.Media.SpeechRecognition.SpeechRecognitionTopicConstraint"]}
 impl RtActivatable<ISpeechRecognitionTopicConstraintFactory> for SpeechRecognitionTopicConstraint {}
 impl SpeechRecognitionTopicConstraint {
     #[inline] pub fn create(scenario: SpeechRecognitionScenario, topicHint: &HStringArg) -> Result<ComPtr<SpeechRecognitionTopicConstraint>> {
@@ -26105,7 +26105,7 @@ DEFINE_IID!(IID_ISpeechRecognitionVoiceCommandDefinitionConstraint, 4068023339, 
 RT_INTERFACE!{interface ISpeechRecognitionVoiceCommandDefinitionConstraint(ISpeechRecognitionVoiceCommandDefinitionConstraintVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionVoiceCommandDefinitionConstraint] {
     
 }}
-RT_CLASS!{class SpeechRecognitionVoiceCommandDefinitionConstraint: ISpeechRecognitionVoiceCommandDefinitionConstraint}
+RT_CLASS!{class SpeechRecognitionVoiceCommandDefinitionConstraint: ISpeechRecognitionVoiceCommandDefinitionConstraint ["Windows.Media.SpeechRecognition.SpeechRecognitionVoiceCommandDefinitionConstraint"]}
 DEFINE_IID!(IID_ISpeechRecognizer, 197380555, 49770, 16626, 174, 181, 128, 150, 178, 228, 128, 115);
 RT_INTERFACE!{interface ISpeechRecognizer(ISpeechRecognizerVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognizer] {
     #[cfg(not(feature="windows-globalization"))] fn __Dummy0(&self) -> (),
@@ -26176,7 +26176,7 @@ impl ISpeechRecognizer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechRecognizer: ISpeechRecognizer}
+RT_CLASS!{class SpeechRecognizer: ISpeechRecognizer ["Windows.Media.SpeechRecognition.SpeechRecognizer"]}
 impl RtActivatable<ISpeechRecognizerFactory> for SpeechRecognizer {}
 impl RtActivatable<ISpeechRecognizerStatics> for SpeechRecognizer {}
 impl RtActivatable<ISpeechRecognizerStatics2> for SpeechRecognizer {}
@@ -26244,7 +26244,7 @@ impl ISpeechRecognizerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SpeechRecognizerState: i32 {
+RT_ENUM! { enum SpeechRecognizerState: i32 ["Windows.Media.SpeechRecognition.SpeechRecognizerState"] {
     Idle (SpeechRecognizerState_Idle) = 0, Capturing (SpeechRecognizerState_Capturing) = 1, Processing (SpeechRecognizerState_Processing) = 2, SoundStarted (SpeechRecognizerState_SoundStarted) = 3, SoundEnded (SpeechRecognizerState_SoundEnded) = 4, SpeechDetected (SpeechRecognizerState_SpeechDetected) = 5, Paused (SpeechRecognizerState_Paused) = 6,
 }}
 DEFINE_IID!(IID_ISpeechRecognizerStateChangedEventArgs, 1446858505, 47619, 19373, 173, 129, 221, 198, 196, 218, 176, 195);
@@ -26258,7 +26258,7 @@ impl ISpeechRecognizerStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechRecognizerStateChangedEventArgs: ISpeechRecognizerStateChangedEventArgs}
+RT_CLASS!{class SpeechRecognizerStateChangedEventArgs: ISpeechRecognizerStateChangedEventArgs ["Windows.Media.SpeechRecognition.SpeechRecognizerStateChangedEventArgs"]}
 DEFINE_IID!(IID_ISpeechRecognizerStatics, 2275630764, 42972, 19211, 188, 201, 36, 244, 124, 11, 126, 191);
 RT_INTERFACE!{static interface ISpeechRecognizerStatics(ISpeechRecognizerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognizerStatics] {
     #[cfg(feature="windows-globalization")] fn get_SystemSpeechLanguage(&self, out: *mut *mut super::super::globalization::Language) -> HRESULT,
@@ -26331,7 +26331,7 @@ impl ISpeechRecognizerTimeouts {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechRecognizerTimeouts: ISpeechRecognizerTimeouts}
+RT_CLASS!{class SpeechRecognizerTimeouts: ISpeechRecognizerTimeouts ["Windows.Media.SpeechRecognition.SpeechRecognizerTimeouts"]}
 DEFINE_IID!(IID_ISpeechRecognizerUIOptions, 2022233665, 47403, 17594, 162, 95, 209, 134, 70, 48, 100, 31);
 RT_INTERFACE!{interface ISpeechRecognizerUIOptions(ISpeechRecognizerUIOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognizerUIOptions] {
     fn get_ExampleText(&self, out: *mut HSTRING) -> HRESULT,
@@ -26381,7 +26381,7 @@ impl ISpeechRecognizerUIOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechRecognizerUIOptions: ISpeechRecognizerUIOptions}
+RT_CLASS!{class SpeechRecognizerUIOptions: ISpeechRecognizerUIOptions ["Windows.Media.SpeechRecognition.SpeechRecognizerUIOptions"]}
 } // Windows.Media.SpeechRecognition
 pub mod speechsynthesis { // Windows.Media.SpeechSynthesis
 use ::prelude::*;
@@ -26413,10 +26413,10 @@ impl IInstalledVoicesStatic2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SpeechAppendedSilence: i32 {
+RT_ENUM! { enum SpeechAppendedSilence: i32 ["Windows.Media.SpeechSynthesis.SpeechAppendedSilence"] {
     Default (SpeechAppendedSilence_Default) = 0, Min (SpeechAppendedSilence_Min) = 1,
 }}
-RT_ENUM! { enum SpeechPunctuationSilence: i32 {
+RT_ENUM! { enum SpeechPunctuationSilence: i32 ["Windows.Media.SpeechSynthesis.SpeechPunctuationSilence"] {
     Default (SpeechPunctuationSilence_Default) = 0, Min (SpeechPunctuationSilence_Min) = 1,
 }}
 DEFINE_IID!(IID_ISpeechSynthesisStream, 2212785811, 9292, 17954, 186, 11, 98, 41, 196, 208, 214, 93);
@@ -26430,7 +26430,7 @@ impl ISpeechSynthesisStream {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechSynthesisStream: ISpeechSynthesisStream}
+RT_CLASS!{class SpeechSynthesisStream: ISpeechSynthesisStream ["Windows.Media.SpeechSynthesis.SpeechSynthesisStream"]}
 DEFINE_IID!(IID_ISpeechSynthesizer, 3466558582, 38900, 19693, 173, 104, 213, 28, 69, 142, 69, 198);
 RT_INTERFACE!{interface ISpeechSynthesizer(ISpeechSynthesizerVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechSynthesizer] {
     fn SynthesizeTextToStreamAsync(&self, text: HSTRING, out: *mut *mut foundation::IAsyncOperation<SpeechSynthesisStream>) -> HRESULT,
@@ -26459,7 +26459,7 @@ impl ISpeechSynthesizer {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechSynthesizer: ISpeechSynthesizer}
+RT_CLASS!{class SpeechSynthesizer: ISpeechSynthesizer ["Windows.Media.SpeechSynthesis.SpeechSynthesizer"]}
 impl RtActivatable<IInstalledVoicesStatic> for SpeechSynthesizer {}
 impl RtActivatable<IInstalledVoicesStatic2> for SpeechSynthesizer {}
 impl RtActivatable<IActivationFactory> for SpeechSynthesizer {}
@@ -26513,7 +26513,7 @@ impl ISpeechSynthesizerOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SpeechSynthesizerOptions: ISpeechSynthesizerOptions}
+RT_CLASS!{class SpeechSynthesizerOptions: ISpeechSynthesizerOptions ["Windows.Media.SpeechSynthesis.SpeechSynthesizerOptions"]}
 DEFINE_IID!(IID_ISpeechSynthesizerOptions2, 482276878, 4508, 19437, 177, 24, 210, 80, 195, 162, 87, 147);
 RT_INTERFACE!{interface ISpeechSynthesizerOptions2(ISpeechSynthesizerOptions2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpeechSynthesizerOptions2] {
     fn get_AudioVolume(&self, out: *mut f64) -> HRESULT,
@@ -26579,7 +26579,7 @@ impl ISpeechSynthesizerOptions3 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum VoiceGender: i32 {
+RT_ENUM! { enum VoiceGender: i32 ["Windows.Media.SpeechSynthesis.VoiceGender"] {
     Male (VoiceGender_Male) = 0, Female (VoiceGender_Female) = 1,
 }}
 DEFINE_IID!(IID_IVoiceInformation, 2972178084, 4753, 17924, 170, 156, 131, 19, 64, 131, 53, 44);
@@ -26617,7 +26617,7 @@ impl IVoiceInformation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VoiceInformation: IVoiceInformation}
+RT_CLASS!{class VoiceInformation: IVoiceInformation ["Windows.Media.SpeechSynthesis.VoiceInformation"]}
 } // Windows.Media.SpeechSynthesis
 pub mod streaming { // Windows.Media.Streaming
 pub mod adaptive { // Windows.Media.Streaming.Adaptive
@@ -26773,7 +26773,7 @@ impl IAdaptiveMediaSource {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSource: IAdaptiveMediaSource}
+RT_CLASS!{class AdaptiveMediaSource: IAdaptiveMediaSource ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSource"]}
 impl RtActivatable<IAdaptiveMediaSourceStatics> for AdaptiveMediaSource {}
 impl AdaptiveMediaSource {
     #[inline] pub fn is_content_type_supported(contentType: &HStringArg) -> Result<bool> {
@@ -26882,7 +26882,7 @@ impl IAdaptiveMediaSourceAdvancedSettings {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSourceAdvancedSettings: IAdaptiveMediaSourceAdvancedSettings}
+RT_CLASS!{class AdaptiveMediaSourceAdvancedSettings: IAdaptiveMediaSourceAdvancedSettings ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceAdvancedSettings"]}
 DEFINE_IID!(IID_IAdaptiveMediaSourceCorrelatedTimes, 84969351, 57394, 18657, 171, 141, 0, 43, 11, 48, 81, 223);
 RT_INTERFACE!{interface IAdaptiveMediaSourceCorrelatedTimes(IAdaptiveMediaSourceCorrelatedTimesVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceCorrelatedTimes] {
     fn get_Position(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -26906,7 +26906,7 @@ impl IAdaptiveMediaSourceCorrelatedTimes {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSourceCorrelatedTimes: IAdaptiveMediaSourceCorrelatedTimes}
+RT_CLASS!{class AdaptiveMediaSourceCorrelatedTimes: IAdaptiveMediaSourceCorrelatedTimes ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceCorrelatedTimes"]}
 DEFINE_IID!(IID_IAdaptiveMediaSourceCreationResult, 1183233714, 32783, 20017, 144, 147, 118, 212, 120, 32, 19, 231);
 RT_INTERFACE!{interface IAdaptiveMediaSourceCreationResult(IAdaptiveMediaSourceCreationResultVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceCreationResult] {
     fn get_Status(&self, out: *mut AdaptiveMediaSourceCreationStatus) -> HRESULT,
@@ -26930,7 +26930,7 @@ impl IAdaptiveMediaSourceCreationResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSourceCreationResult: IAdaptiveMediaSourceCreationResult}
+RT_CLASS!{class AdaptiveMediaSourceCreationResult: IAdaptiveMediaSourceCreationResult ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceCreationResult"]}
 DEFINE_IID!(IID_IAdaptiveMediaSourceCreationResult2, 473056191, 7236, 16459, 162, 1, 223, 69, 172, 120, 152, 232);
 RT_INTERFACE!{interface IAdaptiveMediaSourceCreationResult2(IAdaptiveMediaSourceCreationResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceCreationResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
@@ -26942,7 +26942,7 @@ impl IAdaptiveMediaSourceCreationResult2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AdaptiveMediaSourceCreationStatus: i32 {
+RT_ENUM! { enum AdaptiveMediaSourceCreationStatus: i32 ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceCreationStatus"] {
     Success (AdaptiveMediaSourceCreationStatus_Success) = 0, ManifestDownloadFailure (AdaptiveMediaSourceCreationStatus_ManifestDownloadFailure) = 1, ManifestParseFailure (AdaptiveMediaSourceCreationStatus_ManifestParseFailure) = 2, UnsupportedManifestContentType (AdaptiveMediaSourceCreationStatus_UnsupportedManifestContentType) = 3, UnsupportedManifestVersion (AdaptiveMediaSourceCreationStatus_UnsupportedManifestVersion) = 4, UnsupportedManifestProfile (AdaptiveMediaSourceCreationStatus_UnsupportedManifestProfile) = 5, UnknownFailure (AdaptiveMediaSourceCreationStatus_UnknownFailure) = 6,
 }}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs, 989220614, 28060, 18762, 183, 169, 179, 165, 222, 230, 173, 104);
@@ -27004,7 +27004,7 @@ impl IAdaptiveMediaSourceDiagnosticAvailableEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSourceDiagnosticAvailableEventArgs: IAdaptiveMediaSourceDiagnosticAvailableEventArgs}
+RT_CLASS!{class AdaptiveMediaSourceDiagnosticAvailableEventArgs: IAdaptiveMediaSourceDiagnosticAvailableEventArgs ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceDiagnosticAvailableEventArgs"]}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs2, 2356009047, 5797, 19871, 129, 14, 0, 189, 144, 27, 62, 249);
 RT_INTERFACE!{interface IAdaptiveMediaSourceDiagnosticAvailableEventArgs2(IAdaptiveMediaSourceDiagnosticAvailableEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
@@ -27049,8 +27049,8 @@ impl IAdaptiveMediaSourceDiagnostics {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSourceDiagnostics: IAdaptiveMediaSourceDiagnostics}
-RT_ENUM! { enum AdaptiveMediaSourceDiagnosticType: i32 {
+RT_CLASS!{class AdaptiveMediaSourceDiagnostics: IAdaptiveMediaSourceDiagnostics ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceDiagnostics"]}
+RT_ENUM! { enum AdaptiveMediaSourceDiagnosticType: i32 ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceDiagnosticType"] {
     ManifestUnchangedUponReload (AdaptiveMediaSourceDiagnosticType_ManifestUnchangedUponReload) = 0, ManifestMismatchUponReload (AdaptiveMediaSourceDiagnosticType_ManifestMismatchUponReload) = 1, ManifestSignaledEndOfLiveEventUponReload (AdaptiveMediaSourceDiagnosticType_ManifestSignaledEndOfLiveEventUponReload) = 2, MediaSegmentSkipped (AdaptiveMediaSourceDiagnosticType_MediaSegmentSkipped) = 3, ResourceNotFound (AdaptiveMediaSourceDiagnosticType_ResourceNotFound) = 4, ResourceTimedOut (AdaptiveMediaSourceDiagnosticType_ResourceTimedOut) = 5, ResourceParsingError (AdaptiveMediaSourceDiagnosticType_ResourceParsingError) = 6, BitrateDisabled (AdaptiveMediaSourceDiagnosticType_BitrateDisabled) = 7, FatalMediaSourceError (AdaptiveMediaSourceDiagnosticType_FatalMediaSourceError) = 8,
 }}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadBitrateChangedEventArgs, 1728842308, 57422, 20223, 129, 106, 23, 57, 159, 120, 244, 186);
@@ -27070,7 +27070,7 @@ impl IAdaptiveMediaSourceDownloadBitrateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSourceDownloadBitrateChangedEventArgs: IAdaptiveMediaSourceDownloadBitrateChangedEventArgs}
+RT_CLASS!{class AdaptiveMediaSourceDownloadBitrateChangedEventArgs: IAdaptiveMediaSourceDownloadBitrateChangedEventArgs ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceDownloadBitrateChangedEventArgs"]}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2, 4092720196, 38574, 19936, 181, 64, 43, 50, 70, 230, 150, 140);
 RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2(IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2] {
     fn get_Reason(&self, out: *mut AdaptiveMediaSourceDownloadBitrateChangedReason) -> HRESULT
@@ -27082,7 +27082,7 @@ impl IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AdaptiveMediaSourceDownloadBitrateChangedReason: i32 {
+RT_ENUM! { enum AdaptiveMediaSourceDownloadBitrateChangedReason: i32 ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceDownloadBitrateChangedReason"] {
     SufficientInboundBitsPerSecond (AdaptiveMediaSourceDownloadBitrateChangedReason_SufficientInboundBitsPerSecond) = 0, InsufficientInboundBitsPerSecond (AdaptiveMediaSourceDownloadBitrateChangedReason_InsufficientInboundBitsPerSecond) = 1, LowBufferLevel (AdaptiveMediaSourceDownloadBitrateChangedReason_LowBufferLevel) = 2, PositionChanged (AdaptiveMediaSourceDownloadBitrateChangedReason_PositionChanged) = 3, TrackSelectionChanged (AdaptiveMediaSourceDownloadBitrateChangedReason_TrackSelectionChanged) = 4, DesiredBitratesChanged (AdaptiveMediaSourceDownloadBitrateChangedReason_DesiredBitratesChanged) = 5, ErrorInPreviousBitrate (AdaptiveMediaSourceDownloadBitrateChangedReason_ErrorInPreviousBitrate) = 6,
 }}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadCompletedEventArgs, 421793219, 23351, 18970, 137, 112, 214, 33, 203, 108, 168, 59);
@@ -27120,7 +27120,7 @@ impl IAdaptiveMediaSourceDownloadCompletedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSourceDownloadCompletedEventArgs: IAdaptiveMediaSourceDownloadCompletedEventArgs}
+RT_CLASS!{class AdaptiveMediaSourceDownloadCompletedEventArgs: IAdaptiveMediaSourceDownloadCompletedEventArgs ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceDownloadCompletedEventArgs"]}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadCompletedEventArgs2, 1883718852, 38474, 16612, 175, 149, 145, 119, 221, 109, 250, 0);
 RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadCompletedEventArgs2(IAdaptiveMediaSourceDownloadCompletedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadCompletedEventArgs2] {
     fn get_RequestId(&self, out: *mut i32) -> HRESULT,
@@ -27196,7 +27196,7 @@ impl IAdaptiveMediaSourceDownloadFailedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSourceDownloadFailedEventArgs: IAdaptiveMediaSourceDownloadFailedEventArgs}
+RT_CLASS!{class AdaptiveMediaSourceDownloadFailedEventArgs: IAdaptiveMediaSourceDownloadFailedEventArgs ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceDownloadFailedEventArgs"]}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadFailedEventArgs2, 1888589160, 38524, 18822, 144, 197, 198, 252, 75, 49, 226, 216);
 RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadFailedEventArgs2(IAdaptiveMediaSourceDownloadFailedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadFailedEventArgs2] {
     fn get_RequestId(&self, out: *mut i32) -> HRESULT,
@@ -27253,7 +27253,7 @@ impl IAdaptiveMediaSourceDownloadRequestedDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSourceDownloadRequestedDeferral: IAdaptiveMediaSourceDownloadRequestedDeferral}
+RT_CLASS!{class AdaptiveMediaSourceDownloadRequestedDeferral: IAdaptiveMediaSourceDownloadRequestedDeferral ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceDownloadRequestedDeferral"]}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadRequestedEventArgs, 3359629309, 17577, 18338, 191, 150, 3, 57, 139, 75, 250, 175);
 RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadRequestedEventArgs(IAdaptiveMediaSourceDownloadRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadRequestedEventArgs] {
     fn get_ResourceType(&self, out: *mut AdaptiveMediaSourceResourceType) -> HRESULT,
@@ -27295,7 +27295,7 @@ impl IAdaptiveMediaSourceDownloadRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSourceDownloadRequestedEventArgs: IAdaptiveMediaSourceDownloadRequestedEventArgs}
+RT_CLASS!{class AdaptiveMediaSourceDownloadRequestedEventArgs: IAdaptiveMediaSourceDownloadRequestedEventArgs ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceDownloadRequestedEventArgs"]}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadRequestedEventArgs2, 3011349502, 43588, 19842, 130, 91, 97, 29, 227, 188, 254, 203);
 RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadRequestedEventArgs2(IAdaptiveMediaSourceDownloadRequestedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadRequestedEventArgs2] {
     fn get_RequestId(&self, out: *mut i32) -> HRESULT,
@@ -27394,7 +27394,7 @@ impl IAdaptiveMediaSourceDownloadResult {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSourceDownloadResult: IAdaptiveMediaSourceDownloadResult}
+RT_CLASS!{class AdaptiveMediaSourceDownloadResult: IAdaptiveMediaSourceDownloadResult ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceDownloadResult"]}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadResult2, 357903543, 31616, 19140, 134, 96, 164, 185, 127, 124, 112, 240);
 RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadResult2(IAdaptiveMediaSourceDownloadResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadResult2] {
     fn get_ResourceByteRangeOffset(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
@@ -27451,7 +27451,7 @@ impl IAdaptiveMediaSourceDownloadStatistics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSourceDownloadStatistics: IAdaptiveMediaSourceDownloadStatistics}
+RT_CLASS!{class AdaptiveMediaSourceDownloadStatistics: IAdaptiveMediaSourceDownloadStatistics ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceDownloadStatistics"]}
 DEFINE_IID!(IID_IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs, 597860205, 32218, 19025, 135, 169, 111, 168, 197, 178, 146, 190);
 RT_INTERFACE!{interface IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs(IAdaptiveMediaSourcePlaybackBitrateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs] {
     fn get_OldValue(&self, out: *mut u32) -> HRESULT,
@@ -27475,8 +27475,8 @@ impl IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AdaptiveMediaSourcePlaybackBitrateChangedEventArgs: IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs}
-RT_ENUM! { enum AdaptiveMediaSourceResourceType: i32 {
+RT_CLASS!{class AdaptiveMediaSourcePlaybackBitrateChangedEventArgs: IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourcePlaybackBitrateChangedEventArgs"]}
+RT_ENUM! { enum AdaptiveMediaSourceResourceType: i32 ["Windows.Media.Streaming.Adaptive.AdaptiveMediaSourceResourceType"] {
     Manifest (AdaptiveMediaSourceResourceType_Manifest) = 0, InitializationSegment (AdaptiveMediaSourceResourceType_InitializationSegment) = 1, MediaSegment (AdaptiveMediaSourceResourceType_MediaSegment) = 2, Key (AdaptiveMediaSourceResourceType_Key) = 3, InitializationVector (AdaptiveMediaSourceResourceType_InitializationVector) = 4, MediaSegmentIndex (AdaptiveMediaSourceResourceType_MediaSegmentIndex) = 5,
 }}
 DEFINE_IID!(IID_IAdaptiveMediaSourceStatics, 1353104733, 26351, 19667, 149, 121, 158, 102, 5, 7, 220, 63);
@@ -27606,7 +27606,7 @@ impl IMediaTranscoder {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaTranscoder: IMediaTranscoder}
+RT_CLASS!{class MediaTranscoder: IMediaTranscoder ["Windows.Media.Transcoding.MediaTranscoder"]}
 impl RtActivatable<IActivationFactory> for MediaTranscoder {}
 DEFINE_CLSID!(MediaTranscoder(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,84,114,97,110,115,99,111,100,105,110,103,46,77,101,100,105,97,84,114,97,110,115,99,111,100,101,114,0]) [CLSID_MediaTranscoder]);
 DEFINE_IID!(IID_IMediaTranscoder2, 1079188852, 13792, 20228, 133, 116, 202, 139, 196, 229, 160, 130);
@@ -27632,7 +27632,7 @@ impl IMediaTranscoder2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MediaVideoProcessingAlgorithm: i32 {
+RT_ENUM! { enum MediaVideoProcessingAlgorithm: i32 ["Windows.Media.Transcoding.MediaVideoProcessingAlgorithm"] {
     Default (MediaVideoProcessingAlgorithm_Default) = 0, MrfCrf444 (MediaVideoProcessingAlgorithm_MrfCrf444) = 1,
 }}
 DEFINE_IID!(IID_IPrepareTranscodeResult, 99769806, 39247, 18996, 157, 104, 151, 204, 206, 23, 48, 214);
@@ -27658,8 +27658,8 @@ impl IPrepareTranscodeResult {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrepareTranscodeResult: IPrepareTranscodeResult}
-RT_ENUM! { enum TranscodeFailureReason: i32 {
+RT_CLASS!{class PrepareTranscodeResult: IPrepareTranscodeResult ["Windows.Media.Transcoding.PrepareTranscodeResult"]}
+RT_ENUM! { enum TranscodeFailureReason: i32 ["Windows.Media.Transcoding.TranscodeFailureReason"] {
     None (TranscodeFailureReason_None) = 0, Unknown (TranscodeFailureReason_Unknown) = 1, InvalidProfile (TranscodeFailureReason_InvalidProfile) = 2, CodecNotFound (TranscodeFailureReason_CodecNotFound) = 3,
 }}
 } // Windows.Media.Transcoding

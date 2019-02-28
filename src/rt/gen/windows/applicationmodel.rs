@@ -1,5 +1,5 @@
 use ::prelude::*;
-RT_ENUM! { enum AddResourcePackageOptions: u32 {
+RT_ENUM! { enum AddResourcePackageOptions: u32 ["Windows.ApplicationModel.AddResourcePackageOptions"] {
     None (AddResourcePackageOptions_None) = 0, ForceTargetAppShutdown (AddResourcePackageOptions_ForceTargetAppShutdown) = 1, ApplyUpdateIfAvailable (AddResourcePackageOptions_ApplyUpdateIfAvailable) = 2,
 }}
 DEFINE_IID!(IID_IAppDisplayInfo, 451612931, 58580, 16810, 164, 246, 196, 162, 118, 231, 158, 172);
@@ -25,7 +25,7 @@ impl IAppDisplayInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppDisplayInfo: IAppDisplayInfo}
+RT_CLASS!{class AppDisplayInfo: IAppDisplayInfo ["Windows.ApplicationModel.AppDisplayInfo"]}
 DEFINE_IID!(IID_IAppInfo, 3481229747, 27145, 19944, 166, 192, 87, 146, 213, 104, 128, 209);
 RT_INTERFACE!{interface IAppInfo(IAppInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppInfo] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -55,7 +55,7 @@ impl IAppInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppInfo: IAppInfo}
+RT_CLASS!{class AppInfo: IAppInfo ["Windows.ApplicationModel.AppInfo"]}
 DEFINE_IID!(IID_IAppInstallerInfo, 699083456, 54518, 17059, 173, 205, 214, 88, 60, 101, 149, 8);
 RT_INTERFACE!{interface IAppInstallerInfo(IAppInstallerInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallerInfo] {
     fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT
@@ -67,7 +67,7 @@ impl IAppInstallerInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppInstallerInfo: IAppInstallerInfo}
+RT_CLASS!{class AppInstallerInfo: IAppInstallerInfo ["Windows.ApplicationModel.AppInstallerInfo"]}
 DEFINE_IID!(IID_IAppInstance, 1734290247, 62047, 17714, 159, 214, 54, 51, 224, 99, 77, 1);
 RT_INTERFACE!{interface IAppInstance(IAppInstanceVtbl): IInspectable(IInspectableVtbl) [IID_IAppInstance] {
     fn get_Key(&self, out: *mut HSTRING) -> HRESULT,
@@ -90,7 +90,7 @@ impl IAppInstance {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppInstance: IAppInstance}
+RT_CLASS!{class AppInstance: IAppInstance ["Windows.ApplicationModel.AppInstance"]}
 impl RtActivatable<IAppInstanceStatics> for AppInstance {}
 impl AppInstance {
     #[inline] pub fn get_recommended_instance() -> Result<Option<ComPtr<AppInstance>>> {
@@ -189,7 +189,7 @@ impl IEnteredBackgroundEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EnteredBackgroundEventArgs: IEnteredBackgroundEventArgs}
+RT_CLASS!{class EnteredBackgroundEventArgs: IEnteredBackgroundEventArgs ["Windows.ApplicationModel.EnteredBackgroundEventArgs"]}
 RT_CLASS!{static class FullTrustProcessLauncher}
 impl RtActivatable<IFullTrustProcessLauncherStatics> for FullTrustProcessLauncher {}
 impl FullTrustProcessLauncher {
@@ -247,7 +247,7 @@ impl ILeavingBackgroundEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LeavingBackgroundEventArgs: ILeavingBackgroundEventArgs}
+RT_CLASS!{class LeavingBackgroundEventArgs: ILeavingBackgroundEventArgs ["Windows.ApplicationModel.LeavingBackgroundEventArgs"]}
 DEFINE_IID!(IID_ILimitedAccessFeatureRequestResult, 3562100390, 7716, 24029, 171, 180, 97, 136, 171, 164, 213, 191);
 RT_INTERFACE!{interface ILimitedAccessFeatureRequestResult(ILimitedAccessFeatureRequestResultVtbl): IInspectable(IInspectableVtbl) [IID_ILimitedAccessFeatureRequestResult] {
     fn get_FeatureId(&self, out: *mut HSTRING) -> HRESULT,
@@ -271,7 +271,7 @@ impl ILimitedAccessFeatureRequestResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LimitedAccessFeatureRequestResult: ILimitedAccessFeatureRequestResult}
+RT_CLASS!{class LimitedAccessFeatureRequestResult: ILimitedAccessFeatureRequestResult ["Windows.ApplicationModel.LimitedAccessFeatureRequestResult"]}
 RT_CLASS!{static class LimitedAccessFeatures}
 impl RtActivatable<ILimitedAccessFeaturesStatics> for LimitedAccessFeatures {}
 impl LimitedAccessFeatures {
@@ -291,7 +291,7 @@ impl ILimitedAccessFeaturesStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum LimitedAccessFeatureStatus: i32 {
+RT_ENUM! { enum LimitedAccessFeatureStatus: i32 ["Windows.ApplicationModel.LimitedAccessFeatureStatus"] {
     Unavailable (LimitedAccessFeatureStatus_Unavailable) = 0, Available (LimitedAccessFeatureStatus_Available) = 1, AvailableWithoutToken (LimitedAccessFeatureStatus_AvailableWithoutToken) = 2, Unknown (LimitedAccessFeatureStatus_Unknown) = 3,
 }}
 DEFINE_IID!(IID_IPackage, 373061935, 48501, 16700, 191, 35, 177, 254, 123, 149, 216, 37);
@@ -324,7 +324,7 @@ impl IPackage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Package: IPackage}
+RT_CLASS!{class Package: IPackage ["Windows.ApplicationModel.Package"]}
 impl RtActivatable<IPackageStatics> for Package {}
 impl Package {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<Package>>> {
@@ -537,7 +537,7 @@ impl IPackageCatalog {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageCatalog: IPackageCatalog}
+RT_CLASS!{class PackageCatalog: IPackageCatalog ["Windows.ApplicationModel.PackageCatalog"]}
 impl RtActivatable<IPackageCatalogStatics> for PackageCatalog {}
 impl PackageCatalog {
     #[inline] pub fn open_for_current_package() -> Result<Option<ComPtr<PackageCatalog>>> {
@@ -615,7 +615,7 @@ impl IPackageCatalogAddOptionalPackageResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageCatalogAddOptionalPackageResult: IPackageCatalogAddOptionalPackageResult}
+RT_CLASS!{class PackageCatalogAddOptionalPackageResult: IPackageCatalogAddOptionalPackageResult ["Windows.ApplicationModel.PackageCatalogAddOptionalPackageResult"]}
 DEFINE_IID!(IID_IPackageCatalogAddResourcePackageResult, 2520174093, 15895, 18751, 170, 8, 204, 236, 111, 222, 246, 153);
 RT_INTERFACE!{interface IPackageCatalogAddResourcePackageResult(IPackageCatalogAddResourcePackageResultVtbl): IInspectable(IInspectableVtbl) [IID_IPackageCatalogAddResourcePackageResult] {
     fn get_Package(&self, out: *mut *mut Package) -> HRESULT,
@@ -639,7 +639,7 @@ impl IPackageCatalogAddResourcePackageResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageCatalogAddResourcePackageResult: IPackageCatalogAddResourcePackageResult}
+RT_CLASS!{class PackageCatalogAddResourcePackageResult: IPackageCatalogAddResourcePackageResult ["Windows.ApplicationModel.PackageCatalogAddResourcePackageResult"]}
 DEFINE_IID!(IID_IPackageCatalogRemoveOptionalPackagesResult, 701692283, 55668, 20068, 147, 89, 34, 202, 223, 215, 152, 40);
 RT_INTERFACE!{interface IPackageCatalogRemoveOptionalPackagesResult(IPackageCatalogRemoveOptionalPackagesResultVtbl): IInspectable(IInspectableVtbl) [IID_IPackageCatalogRemoveOptionalPackagesResult] {
     fn get_PackagesRemoved(&self, out: *mut *mut foundation::collections::IVectorView<Package>) -> HRESULT,
@@ -657,7 +657,7 @@ impl IPackageCatalogRemoveOptionalPackagesResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageCatalogRemoveOptionalPackagesResult: IPackageCatalogRemoveOptionalPackagesResult}
+RT_CLASS!{class PackageCatalogRemoveOptionalPackagesResult: IPackageCatalogRemoveOptionalPackagesResult ["Windows.ApplicationModel.PackageCatalogRemoveOptionalPackagesResult"]}
 DEFINE_IID!(IID_IPackageCatalogRemoveResourcePackagesResult, 2926679817, 6738, 17185, 135, 179, 229, 161, 161, 121, 129, 167);
 RT_INTERFACE!{interface IPackageCatalogRemoveResourcePackagesResult(IPackageCatalogRemoveResourcePackagesResultVtbl): IInspectable(IInspectableVtbl) [IID_IPackageCatalogRemoveResourcePackagesResult] {
     fn get_PackagesRemoved(&self, out: *mut *mut foundation::collections::IVectorView<Package>) -> HRESULT,
@@ -675,7 +675,7 @@ impl IPackageCatalogRemoveResourcePackagesResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageCatalogRemoveResourcePackagesResult: IPackageCatalogRemoveResourcePackagesResult}
+RT_CLASS!{class PackageCatalogRemoveResourcePackagesResult: IPackageCatalogRemoveResourcePackagesResult ["Windows.ApplicationModel.PackageCatalogRemoveResourcePackagesResult"]}
 DEFINE_IID!(IID_IPackageCatalogStatics, 2710345366, 58971, 17972, 186, 33, 94, 99, 235, 114, 68, 167);
 RT_INTERFACE!{static interface IPackageCatalogStatics(IPackageCatalogStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPackageCatalogStatics] {
     fn OpenForCurrentPackage(&self, out: *mut *mut PackageCatalog) -> HRESULT,
@@ -722,7 +722,7 @@ impl IPackageContentGroup {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageContentGroup: IPackageContentGroup}
+RT_CLASS!{class PackageContentGroup: IPackageContentGroup ["Windows.ApplicationModel.PackageContentGroup"]}
 impl RtActivatable<IPackageContentGroupStatics> for PackageContentGroup {}
 impl PackageContentGroup {
     #[inline] pub fn get_required_group_name() -> Result<HString> {
@@ -777,8 +777,8 @@ impl IPackageContentGroupStagingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageContentGroupStagingEventArgs: IPackageContentGroupStagingEventArgs}
-RT_ENUM! { enum PackageContentGroupState: i32 {
+RT_CLASS!{class PackageContentGroupStagingEventArgs: IPackageContentGroupStagingEventArgs ["Windows.ApplicationModel.PackageContentGroupStagingEventArgs"]}
+RT_ENUM! { enum PackageContentGroupState: i32 ["Windows.ApplicationModel.PackageContentGroupState"] {
     NotStaged (PackageContentGroupState_NotStaged) = 0, Queued (PackageContentGroupState_Queued) = 1, Staging (PackageContentGroupState_Staging) = 2, Staged (PackageContentGroupState_Staged) = 3,
 }}
 DEFINE_IID!(IID_IPackageContentGroupStatics, 1894675993, 24338, 19346, 185, 234, 108, 202, 218, 19, 188, 117);
@@ -846,7 +846,7 @@ impl IPackageId {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageId: IPackageId}
+RT_CLASS!{class PackageId: IPackageId ["Windows.ApplicationModel.PackageId"]}
 DEFINE_IID!(IID_IPackageIdWithMetadata, 1079474812, 3230, 17469, 144, 116, 133, 95, 92, 224, 160, 141);
 RT_INTERFACE!{interface IPackageIdWithMetadata(IPackageIdWithMetadataVtbl): IInspectable(IInspectableVtbl) [IID_IPackageIdWithMetadata] {
     fn get_ProductId(&self, out: *mut HSTRING) -> HRESULT,
@@ -899,11 +899,11 @@ impl IPackageInstallingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageInstallingEventArgs: IPackageInstallingEventArgs}
-RT_STRUCT! { struct PackageInstallProgress {
+RT_CLASS!{class PackageInstallingEventArgs: IPackageInstallingEventArgs ["Windows.ApplicationModel.PackageInstallingEventArgs"]}
+RT_STRUCT! { struct PackageInstallProgress ["Windows.ApplicationModel.PackageInstallProgress"] {
     PercentComplete: u32,
 }}
-RT_ENUM! { enum PackageSignatureKind: i32 {
+RT_ENUM! { enum PackageSignatureKind: i32 ["Windows.ApplicationModel.PackageSignatureKind"] {
     None (PackageSignatureKind_None) = 0, Developer (PackageSignatureKind_Developer) = 1, Enterprise (PackageSignatureKind_Enterprise) = 2, Store (PackageSignatureKind_Store) = 3, System (PackageSignatureKind_System) = 4,
 }}
 DEFINE_IID!(IID_IPackageStagingEventArgs, 272721965, 21730, 20305, 184, 40, 158, 247, 4, 108, 33, 15);
@@ -941,7 +941,7 @@ impl IPackageStagingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageStagingEventArgs: IPackageStagingEventArgs}
+RT_CLASS!{class PackageStagingEventArgs: IPackageStagingEventArgs ["Windows.ApplicationModel.PackageStagingEventArgs"]}
 DEFINE_IID!(IID_IPackageStatics, 1314081759, 10592, 18552, 151, 164, 150, 36, 222, 183, 47, 45);
 RT_INTERFACE!{static interface IPackageStatics(IPackageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPackageStatics] {
     fn get_Current(&self, out: *mut *mut Package) -> HRESULT
@@ -1030,7 +1030,7 @@ impl IPackageStatus {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageStatus: IPackageStatus}
+RT_CLASS!{class PackageStatus: IPackageStatus ["Windows.ApplicationModel.PackageStatus"]}
 DEFINE_IID!(IID_IPackageStatus2, 4096326291, 31830, 18530, 172, 250, 171, 174, 220, 192, 105, 77);
 RT_INTERFACE!{interface IPackageStatus2(IPackageStatus2Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageStatus2] {
     fn get_IsPartiallyStaged(&self, out: *mut bool) -> HRESULT
@@ -1053,7 +1053,7 @@ impl IPackageStatusChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageStatusChangedEventArgs: IPackageStatusChangedEventArgs}
+RT_CLASS!{class PackageStatusChangedEventArgs: IPackageStatusChangedEventArgs ["Windows.ApplicationModel.PackageStatusChangedEventArgs"]}
 DEFINE_IID!(IID_IPackageUninstallingEventArgs, 1145285202, 43810, 17613, 130, 187, 78, 201, 184, 39, 54, 122);
 RT_INTERFACE!{interface IPackageUninstallingEventArgs(IPackageUninstallingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPackageUninstallingEventArgs] {
     fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
@@ -1089,8 +1089,8 @@ impl IPackageUninstallingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageUninstallingEventArgs: IPackageUninstallingEventArgs}
-RT_ENUM! { enum PackageUpdateAvailability: i32 {
+RT_CLASS!{class PackageUninstallingEventArgs: IPackageUninstallingEventArgs ["Windows.ApplicationModel.PackageUninstallingEventArgs"]}
+RT_ENUM! { enum PackageUpdateAvailability: i32 ["Windows.ApplicationModel.PackageUpdateAvailability"] {
     Unknown (PackageUpdateAvailability_Unknown) = 0, NoUpdates (PackageUpdateAvailability_NoUpdates) = 1, Available (PackageUpdateAvailability_Available) = 2, Required (PackageUpdateAvailability_Required) = 3, Error (PackageUpdateAvailability_Error) = 4,
 }}
 DEFINE_IID!(IID_IPackageUpdateAvailabilityResult, 290344969, 6554, 18593, 160, 121, 49, 60, 69, 99, 74, 113);
@@ -1110,7 +1110,7 @@ impl IPackageUpdateAvailabilityResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageUpdateAvailabilityResult: IPackageUpdateAvailabilityResult}
+RT_CLASS!{class PackageUpdateAvailabilityResult: IPackageUpdateAvailabilityResult ["Windows.ApplicationModel.PackageUpdateAvailabilityResult"]}
 DEFINE_IID!(IID_IPackageUpdatingEventArgs, 3447407144, 64884, 17470, 177, 20, 35, 230, 119, 176, 232, 111);
 RT_INTERFACE!{interface IPackageUpdatingEventArgs(IPackageUpdatingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPackageUpdatingEventArgs] {
     fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
@@ -1152,8 +1152,8 @@ impl IPackageUpdatingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageUpdatingEventArgs: IPackageUpdatingEventArgs}
-RT_STRUCT! { struct PackageVersion {
+RT_CLASS!{class PackageUpdatingEventArgs: IPackageUpdatingEventArgs ["Windows.ApplicationModel.PackageUpdatingEventArgs"]}
+RT_STRUCT! { struct PackageVersion ["Windows.ApplicationModel.PackageVersion"] {
     Major: u16, Minor: u16, Build: u16, Revision: u16,
 }}
 DEFINE_IID!(IID_IPackageWithMetadata, 2509543296, 7657, 16626, 180, 82, 13, 233, 241, 145, 0, 18);
@@ -1206,7 +1206,7 @@ impl IStartupTask {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StartupTask: IStartupTask}
+RT_CLASS!{class StartupTask: IStartupTask ["Windows.ApplicationModel.StartupTask"]}
 impl RtActivatable<IStartupTaskStatics> for StartupTask {}
 impl StartupTask {
     #[inline] pub fn get_for_current_package_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<StartupTask>>>> {
@@ -1217,7 +1217,7 @@ impl StartupTask {
     }
 }
 DEFINE_CLSID!(StartupTask(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,97,114,116,117,112,84,97,115,107,0]) [CLSID_StartupTask]);
-RT_ENUM! { enum StartupTaskState: i32 {
+RT_ENUM! { enum StartupTaskState: i32 ["Windows.ApplicationModel.StartupTaskState"] {
     Disabled (StartupTaskState_Disabled) = 0, DisabledByUser (StartupTaskState_DisabledByUser) = 1, Enabled (StartupTaskState_Enabled) = 2, DisabledByPolicy (StartupTaskState_DisabledByPolicy) = 3, EnabledByPolicy (StartupTaskState_EnabledByPolicy) = 4,
 }}
 DEFINE_IID!(IID_IStartupTaskStatics, 3998965949, 41288, 16807, 178, 110, 232, 184, 138, 30, 98, 248);
@@ -1247,7 +1247,7 @@ impl ISuspendingDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SuspendingDeferral: ISuspendingDeferral}
+RT_CLASS!{class SuspendingDeferral: ISuspendingDeferral ["Windows.ApplicationModel.SuspendingDeferral"]}
 DEFINE_IID!(IID_ISuspendingEventArgs, 2516982789, 11706, 19720, 176, 189, 43, 48, 161, 49, 198, 170);
 RT_INTERFACE!{interface ISuspendingEventArgs(ISuspendingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISuspendingEventArgs] {
     fn get_SuspendingOperation(&self, out: *mut *mut SuspendingOperation) -> HRESULT
@@ -1259,7 +1259,7 @@ impl ISuspendingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SuspendingEventArgs: ISuspendingEventArgs}
+RT_CLASS!{class SuspendingEventArgs: ISuspendingEventArgs ["Windows.ApplicationModel.SuspendingEventArgs"]}
 DEFINE_IID!(IID_ISuspendingOperation, 2644822593, 8417, 20123, 159, 101, 169, 244, 53, 52, 12, 58);
 RT_INTERFACE!{interface ISuspendingOperation(ISuspendingOperationVtbl): IInspectable(IInspectableVtbl) [IID_ISuspendingOperation] {
     fn GetDeferral(&self, out: *mut *mut SuspendingDeferral) -> HRESULT,
@@ -1277,7 +1277,7 @@ impl ISuspendingOperation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SuspendingOperation: ISuspendingOperation}
+RT_CLASS!{class SuspendingOperation: ISuspendingOperation ["Windows.ApplicationModel.SuspendingOperation"]}
 pub mod activation { // Windows.ApplicationModel.Activation
 use ::prelude::*;
 DEFINE_IID!(IID_IActivatedEventArgs, 3479508755, 52488, 20440, 182, 151, 162, 129, 182, 84, 78, 46);
@@ -1314,10 +1314,10 @@ impl IActivatedEventArgsWithUser {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ActivationKind: i32 {
+RT_ENUM! { enum ActivationKind: i32 ["Windows.ApplicationModel.Activation.ActivationKind"] {
     Launch (ActivationKind_Launch) = 0, Search (ActivationKind_Search) = 1, ShareTarget (ActivationKind_ShareTarget) = 2, File (ActivationKind_File) = 3, Protocol (ActivationKind_Protocol) = 4, FileOpenPicker (ActivationKind_FileOpenPicker) = 5, FileSavePicker (ActivationKind_FileSavePicker) = 6, CachedFileUpdater (ActivationKind_CachedFileUpdater) = 7, ContactPicker (ActivationKind_ContactPicker) = 8, Device (ActivationKind_Device) = 9, PrintTaskSettings (ActivationKind_PrintTaskSettings) = 10, CameraSettings (ActivationKind_CameraSettings) = 11, RestrictedLaunch (ActivationKind_RestrictedLaunch) = 12, AppointmentsProvider (ActivationKind_AppointmentsProvider) = 13, Contact (ActivationKind_Contact) = 14, LockScreenCall (ActivationKind_LockScreenCall) = 15, VoiceCommand (ActivationKind_VoiceCommand) = 16, LockScreen (ActivationKind_LockScreen) = 17, PickerReturned (ActivationKind_PickerReturned) = 1000, WalletAction (ActivationKind_WalletAction) = 1001, PickFileContinuation (ActivationKind_PickFileContinuation) = 1002, PickSaveFileContinuation (ActivationKind_PickSaveFileContinuation) = 1003, PickFolderContinuation (ActivationKind_PickFolderContinuation) = 1004, WebAuthenticationBrokerContinuation (ActivationKind_WebAuthenticationBrokerContinuation) = 1005, WebAccountProvider (ActivationKind_WebAccountProvider) = 1006, ComponentUI (ActivationKind_ComponentUI) = 1007, ProtocolForResults (ActivationKind_ProtocolForResults) = 1009, ToastNotification (ActivationKind_ToastNotification) = 1010, Print3DWorkflow (ActivationKind_Print3DWorkflow) = 1011, DialReceiver (ActivationKind_DialReceiver) = 1012, DevicePairing (ActivationKind_DevicePairing) = 1013, UserDataAccountsProvider (ActivationKind_UserDataAccountsProvider) = 1014, FilePickerExperience (ActivationKind_FilePickerExperience) = 1015, LockScreenComponent (ActivationKind_LockScreenComponent) = 1016, ContactPanel (ActivationKind_ContactPanel) = 1017, PrintWorkflowForegroundTask (ActivationKind_PrintWorkflowForegroundTask) = 1018, GameUIProvider (ActivationKind_GameUIProvider) = 1019, StartupTask (ActivationKind_StartupTask) = 1020, CommandLineLaunch (ActivationKind_CommandLineLaunch) = 1021, BarcodeScannerProvider (ActivationKind_BarcodeScannerProvider) = 1022,
 }}
-RT_ENUM! { enum ApplicationExecutionState: i32 {
+RT_ENUM! { enum ApplicationExecutionState: i32 ["Windows.ApplicationModel.Activation.ApplicationExecutionState"] {
     NotRunning (ApplicationExecutionState_NotRunning) = 0, Running (ApplicationExecutionState_Running) = 1, Suspended (ApplicationExecutionState_Suspended) = 2, Terminated (ApplicationExecutionState_Terminated) = 3, ClosedByUser (ApplicationExecutionState_ClosedByUser) = 4,
 }}
 DEFINE_IID!(IID_IApplicationViewActivatedEventArgs, 2467098443, 47145, 16636, 136, 244, 133, 19, 232, 166, 71, 56);
@@ -1353,7 +1353,7 @@ impl IAppointmentsProviderAddAppointmentActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentsProviderAddAppointmentActivatedEventArgs: IAppointmentsProviderAddAppointmentActivatedEventArgs}
+RT_CLASS!{class AppointmentsProviderAddAppointmentActivatedEventArgs: IAppointmentsProviderAddAppointmentActivatedEventArgs ["Windows.ApplicationModel.Activation.AppointmentsProviderAddAppointmentActivatedEventArgs"]}
 DEFINE_IID!(IID_IAppointmentsProviderRemoveAppointmentActivatedEventArgs, 1964980920, 2958, 17692, 159, 21, 150, 110, 105, 155, 172, 37);
 RT_INTERFACE!{interface IAppointmentsProviderRemoveAppointmentActivatedEventArgs(IAppointmentsProviderRemoveAppointmentActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentsProviderRemoveAppointmentActivatedEventArgs] {
     fn get_RemoveAppointmentOperation(&self, out: *mut *mut super::appointments::appointmentsprovider::RemoveAppointmentOperation) -> HRESULT
@@ -1365,7 +1365,7 @@ impl IAppointmentsProviderRemoveAppointmentActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentsProviderRemoveAppointmentActivatedEventArgs: IAppointmentsProviderRemoveAppointmentActivatedEventArgs}
+RT_CLASS!{class AppointmentsProviderRemoveAppointmentActivatedEventArgs: IAppointmentsProviderRemoveAppointmentActivatedEventArgs ["Windows.ApplicationModel.Activation.AppointmentsProviderRemoveAppointmentActivatedEventArgs"]}
 DEFINE_IID!(IID_IAppointmentsProviderReplaceAppointmentActivatedEventArgs, 357677012, 43393, 16487, 138, 98, 5, 36, 228, 173, 225, 33);
 RT_INTERFACE!{interface IAppointmentsProviderReplaceAppointmentActivatedEventArgs(IAppointmentsProviderReplaceAppointmentActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentsProviderReplaceAppointmentActivatedEventArgs] {
     fn get_ReplaceAppointmentOperation(&self, out: *mut *mut super::appointments::appointmentsprovider::ReplaceAppointmentOperation) -> HRESULT
@@ -1377,7 +1377,7 @@ impl IAppointmentsProviderReplaceAppointmentActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentsProviderReplaceAppointmentActivatedEventArgs: IAppointmentsProviderReplaceAppointmentActivatedEventArgs}
+RT_CLASS!{class AppointmentsProviderReplaceAppointmentActivatedEventArgs: IAppointmentsProviderReplaceAppointmentActivatedEventArgs ["Windows.ApplicationModel.Activation.AppointmentsProviderReplaceAppointmentActivatedEventArgs"]}
 DEFINE_IID!(IID_IAppointmentsProviderShowAppointmentDetailsActivatedEventArgs, 962130021, 38977, 19621, 153, 155, 136, 81, 152, 185, 239, 42);
 RT_INTERFACE!{interface IAppointmentsProviderShowAppointmentDetailsActivatedEventArgs(IAppointmentsProviderShowAppointmentDetailsActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentsProviderShowAppointmentDetailsActivatedEventArgs] {
     fn get_InstanceStartDate(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
@@ -1401,7 +1401,7 @@ impl IAppointmentsProviderShowAppointmentDetailsActivatedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentsProviderShowAppointmentDetailsActivatedEventArgs: IAppointmentsProviderShowAppointmentDetailsActivatedEventArgs}
+RT_CLASS!{class AppointmentsProviderShowAppointmentDetailsActivatedEventArgs: IAppointmentsProviderShowAppointmentDetailsActivatedEventArgs ["Windows.ApplicationModel.Activation.AppointmentsProviderShowAppointmentDetailsActivatedEventArgs"]}
 DEFINE_IID!(IID_IAppointmentsProviderShowTimeFrameActivatedEventArgs, 2611915686, 3595, 18858, 186, 188, 18, 177, 220, 119, 73, 134);
 RT_INTERFACE!{interface IAppointmentsProviderShowTimeFrameActivatedEventArgs(IAppointmentsProviderShowTimeFrameActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentsProviderShowTimeFrameActivatedEventArgs] {
     fn get_TimeToShow(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -1419,7 +1419,7 @@ impl IAppointmentsProviderShowTimeFrameActivatedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentsProviderShowTimeFrameActivatedEventArgs: IAppointmentsProviderShowTimeFrameActivatedEventArgs}
+RT_CLASS!{class AppointmentsProviderShowTimeFrameActivatedEventArgs: IAppointmentsProviderShowTimeFrameActivatedEventArgs ["Windows.ApplicationModel.Activation.AppointmentsProviderShowTimeFrameActivatedEventArgs"]}
 DEFINE_IID!(IID_IBackgroundActivatedEventArgs, 2870263520, 59232, 17422, 169, 28, 68, 121, 109, 227, 169, 45);
 RT_INTERFACE!{interface IBackgroundActivatedEventArgs(IBackgroundActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundActivatedEventArgs] {
     fn get_TaskInstance(&self, out: *mut *mut super::background::IBackgroundTaskInstance) -> HRESULT
@@ -1431,7 +1431,7 @@ impl IBackgroundActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundActivatedEventArgs: IBackgroundActivatedEventArgs}
+RT_CLASS!{class BackgroundActivatedEventArgs: IBackgroundActivatedEventArgs ["Windows.ApplicationModel.Activation.BackgroundActivatedEventArgs"]}
 DEFINE_IID!(IID_IBarcodeScannerPreviewActivatedEventArgs, 1735555452, 39359, 17225, 175, 34, 228, 18, 53, 96, 55, 28);
 RT_INTERFACE!{interface IBarcodeScannerPreviewActivatedEventArgs(IBarcodeScannerPreviewActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerPreviewActivatedEventArgs] {
     fn get_ConnectionId(&self, out: *mut HSTRING) -> HRESULT
@@ -1443,7 +1443,7 @@ impl IBarcodeScannerPreviewActivatedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BarcodeScannerPreviewActivatedEventArgs: IBarcodeScannerPreviewActivatedEventArgs}
+RT_CLASS!{class BarcodeScannerPreviewActivatedEventArgs: IBarcodeScannerPreviewActivatedEventArgs ["Windows.ApplicationModel.Activation.BarcodeScannerPreviewActivatedEventArgs"]}
 DEFINE_IID!(IID_ICachedFileUpdaterActivatedEventArgs, 3496915399, 14341, 20171, 183, 87, 108, 241, 94, 38, 254, 243);
 RT_INTERFACE!{interface ICachedFileUpdaterActivatedEventArgs(ICachedFileUpdaterActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterActivatedEventArgs] {
     #[cfg(feature="windows-storage")] fn get_CachedFileUpdaterUI(&self, out: *mut *mut super::super::storage::provider::CachedFileUpdaterUI) -> HRESULT
@@ -1455,7 +1455,7 @@ impl ICachedFileUpdaterActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CachedFileUpdaterActivatedEventArgs: ICachedFileUpdaterActivatedEventArgs}
+RT_CLASS!{class CachedFileUpdaterActivatedEventArgs: ICachedFileUpdaterActivatedEventArgs ["Windows.ApplicationModel.Activation.CachedFileUpdaterActivatedEventArgs"]}
 DEFINE_IID!(IID_ICameraSettingsActivatedEventArgs, 4217873672, 11693, 18698, 145, 112, 220, 160, 54, 235, 17, 75);
 RT_INTERFACE!{interface ICameraSettingsActivatedEventArgs(ICameraSettingsActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICameraSettingsActivatedEventArgs] {
     fn get_VideoDeviceController(&self, out: *mut *mut IInspectable) -> HRESULT,
@@ -1473,7 +1473,7 @@ impl ICameraSettingsActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CameraSettingsActivatedEventArgs: ICameraSettingsActivatedEventArgs}
+RT_CLASS!{class CameraSettingsActivatedEventArgs: ICameraSettingsActivatedEventArgs ["Windows.ApplicationModel.Activation.CameraSettingsActivatedEventArgs"]}
 DEFINE_IID!(IID_ICommandLineActivatedEventArgs, 1158039340, 106, 18667, 138, 251, 208, 122, 178, 94, 51, 102);
 RT_INTERFACE!{interface ICommandLineActivatedEventArgs(ICommandLineActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICommandLineActivatedEventArgs] {
     fn get_Operation(&self, out: *mut *mut CommandLineActivationOperation) -> HRESULT
@@ -1485,7 +1485,7 @@ impl ICommandLineActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CommandLineActivatedEventArgs: ICommandLineActivatedEventArgs}
+RT_CLASS!{class CommandLineActivatedEventArgs: ICommandLineActivatedEventArgs ["Windows.ApplicationModel.Activation.CommandLineActivatedEventArgs"]}
 DEFINE_IID!(IID_ICommandLineActivationOperation, 2571839553, 50590, 20329, 188, 253, 182, 30, 212, 230, 34, 235);
 RT_INTERFACE!{interface ICommandLineActivationOperation(ICommandLineActivationOperationVtbl): IInspectable(IInspectableVtbl) [IID_ICommandLineActivationOperation] {
     fn get_Arguments(&self, out: *mut HSTRING) -> HRESULT,
@@ -1520,7 +1520,7 @@ impl ICommandLineActivationOperation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CommandLineActivationOperation: ICommandLineActivationOperation}
+RT_CLASS!{class CommandLineActivationOperation: ICommandLineActivationOperation ["Windows.ApplicationModel.Activation.CommandLineActivationOperation"]}
 DEFINE_IID!(IID_IContactActivatedEventArgs, 3592921540, 49189, 19521, 157, 239, 241, 234, 250, 208, 117, 231);
 RT_INTERFACE!{interface IContactActivatedEventArgs(IContactActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactActivatedEventArgs] {
     fn get_Verb(&self, out: *mut HSTRING) -> HRESULT
@@ -1555,7 +1555,7 @@ impl IContactCallActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactCallActivatedEventArgs: IContactCallActivatedEventArgs}
+RT_CLASS!{class ContactCallActivatedEventArgs: IContactCallActivatedEventArgs ["Windows.ApplicationModel.Activation.ContactCallActivatedEventArgs"]}
 DEFINE_IID!(IID_IContactMapActivatedEventArgs, 3006003312, 61159, 19154, 170, 241, 168, 126, 255, 207, 0, 164);
 RT_INTERFACE!{interface IContactMapActivatedEventArgs(IContactMapActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactMapActivatedEventArgs] {
     fn get_Address(&self, out: *mut *mut super::contacts::ContactAddress) -> HRESULT,
@@ -1573,7 +1573,7 @@ impl IContactMapActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactMapActivatedEventArgs: IContactMapActivatedEventArgs}
+RT_CLASS!{class ContactMapActivatedEventArgs: IContactMapActivatedEventArgs ["Windows.ApplicationModel.Activation.ContactMapActivatedEventArgs"]}
 DEFINE_IID!(IID_IContactMessageActivatedEventArgs, 3730410930, 3587, 17328, 191, 86, 188, 196, 11, 49, 98, 223);
 RT_INTERFACE!{interface IContactMessageActivatedEventArgs(IContactMessageActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactMessageActivatedEventArgs] {
     fn get_ServiceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -1597,7 +1597,7 @@ impl IContactMessageActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactMessageActivatedEventArgs: IContactMessageActivatedEventArgs}
+RT_CLASS!{class ContactMessageActivatedEventArgs: IContactMessageActivatedEventArgs ["Windows.ApplicationModel.Activation.ContactMessageActivatedEventArgs"]}
 DEFINE_IID!(IID_IContactPanelActivatedEventArgs, 1388012516, 54228, 19299, 128, 81, 74, 242, 8, 44, 171, 128);
 RT_INTERFACE!{interface IContactPanelActivatedEventArgs(IContactPanelActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactPanelActivatedEventArgs] {
     fn get_ContactPanel(&self, out: *mut *mut super::contacts::ContactPanel) -> HRESULT,
@@ -1615,7 +1615,7 @@ impl IContactPanelActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactPanelActivatedEventArgs: IContactPanelActivatedEventArgs}
+RT_CLASS!{class ContactPanelActivatedEventArgs: IContactPanelActivatedEventArgs ["Windows.ApplicationModel.Activation.ContactPanelActivatedEventArgs"]}
 DEFINE_IID!(IID_IContactPickerActivatedEventArgs, 3461851879, 25673, 17831, 151, 31, 209, 19, 190, 122, 137, 54);
 RT_INTERFACE!{interface IContactPickerActivatedEventArgs(IContactPickerActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactPickerActivatedEventArgs] {
     fn get_ContactPickerUI(&self, out: *mut *mut super::contacts::provider::ContactPickerUI) -> HRESULT
@@ -1627,7 +1627,7 @@ impl IContactPickerActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactPickerActivatedEventArgs: IContactPickerActivatedEventArgs}
+RT_CLASS!{class ContactPickerActivatedEventArgs: IContactPickerActivatedEventArgs ["Windows.ApplicationModel.Activation.ContactPickerActivatedEventArgs"]}
 DEFINE_IID!(IID_IContactPostActivatedEventArgs, 3009035367, 61927, 18005, 173, 110, 72, 87, 88, 143, 85, 47);
 RT_INTERFACE!{interface IContactPostActivatedEventArgs(IContactPostActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactPostActivatedEventArgs] {
     fn get_ServiceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -1651,7 +1651,7 @@ impl IContactPostActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactPostActivatedEventArgs: IContactPostActivatedEventArgs}
+RT_CLASS!{class ContactPostActivatedEventArgs: IContactPostActivatedEventArgs ["Windows.ApplicationModel.Activation.ContactPostActivatedEventArgs"]}
 DEFINE_IID!(IID_IContactsProviderActivatedEventArgs, 1166073000, 22352, 18710, 170, 82, 192, 130, 149, 33, 235, 148);
 RT_INTERFACE!{interface IContactsProviderActivatedEventArgs(IContactsProviderActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactsProviderActivatedEventArgs] {
     fn get_Verb(&self, out: *mut HSTRING) -> HRESULT
@@ -1686,7 +1686,7 @@ impl IContactVideoCallActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactVideoCallActivatedEventArgs: IContactVideoCallActivatedEventArgs}
+RT_CLASS!{class ContactVideoCallActivatedEventArgs: IContactVideoCallActivatedEventArgs ["Windows.ApplicationModel.Activation.ContactVideoCallActivatedEventArgs"]}
 DEFINE_IID!(IID_IContinuationActivatedEventArgs, 3850438325, 5471, 19092, 167, 66, 199, 224, 143, 78, 24, 140);
 RT_INTERFACE!{interface IContinuationActivatedEventArgs(IContinuationActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContinuationActivatedEventArgs] {
     fn get_ContinuationData(&self, out: *mut *mut foundation::collections::ValueSet) -> HRESULT
@@ -1715,7 +1715,7 @@ impl IDeviceActivatedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceActivatedEventArgs: IDeviceActivatedEventArgs}
+RT_CLASS!{class DeviceActivatedEventArgs: IDeviceActivatedEventArgs ["Windows.ApplicationModel.Activation.DeviceActivatedEventArgs"]}
 DEFINE_IID!(IID_IDevicePairingActivatedEventArgs, 3953185252, 60614, 16712, 148, 237, 244, 179, 126, 192, 91, 62);
 RT_INTERFACE!{interface IDevicePairingActivatedEventArgs(IDevicePairingActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePairingActivatedEventArgs] {
     #[cfg(feature="windows-devices")] fn get_DeviceInformation(&self, out: *mut *mut super::super::devices::enumeration::DeviceInformation) -> HRESULT
@@ -1727,7 +1727,7 @@ impl IDevicePairingActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DevicePairingActivatedEventArgs: IDevicePairingActivatedEventArgs}
+RT_CLASS!{class DevicePairingActivatedEventArgs: IDevicePairingActivatedEventArgs ["Windows.ApplicationModel.Activation.DevicePairingActivatedEventArgs"]}
 DEFINE_IID!(IID_IDialReceiverActivatedEventArgs, 4218912471, 34286, 17774, 164, 77, 133, 215, 48, 231, 10, 237);
 RT_INTERFACE!{interface IDialReceiverActivatedEventArgs(IDialReceiverActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDialReceiverActivatedEventArgs] {
     fn get_AppName(&self, out: *mut HSTRING) -> HRESULT
@@ -1739,7 +1739,7 @@ impl IDialReceiverActivatedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DialReceiverActivatedEventArgs: IDialReceiverActivatedEventArgs}
+RT_CLASS!{class DialReceiverActivatedEventArgs: IDialReceiverActivatedEventArgs ["Windows.ApplicationModel.Activation.DialReceiverActivatedEventArgs"]}
 DEFINE_IID!(IID_IFileActivatedEventArgs, 3140156467, 37809, 17133, 139, 38, 35, 109, 217, 199, 132, 150);
 RT_INTERFACE!{interface IFileActivatedEventArgs(IFileActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IFileActivatedEventArgs] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -1758,7 +1758,7 @@ impl IFileActivatedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileActivatedEventArgs: IFileActivatedEventArgs}
+RT_CLASS!{class FileActivatedEventArgs: IFileActivatedEventArgs ["Windows.ApplicationModel.Activation.FileActivatedEventArgs"]}
 DEFINE_IID!(IID_IFileActivatedEventArgsWithCallerPackageFamilyName, 761327723, 53855, 19749, 134, 83, 225, 197, 225, 16, 131, 9);
 RT_INTERFACE!{interface IFileActivatedEventArgsWithCallerPackageFamilyName(IFileActivatedEventArgsWithCallerPackageFamilyNameVtbl): IInspectable(IInspectableVtbl) [IID_IFileActivatedEventArgsWithCallerPackageFamilyName] {
     fn get_CallerPackageFamilyName(&self, out: *mut HSTRING) -> HRESULT
@@ -1792,7 +1792,7 @@ impl IFileOpenPickerActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileOpenPickerActivatedEventArgs: IFileOpenPickerActivatedEventArgs}
+RT_CLASS!{class FileOpenPickerActivatedEventArgs: IFileOpenPickerActivatedEventArgs ["Windows.ApplicationModel.Activation.FileOpenPickerActivatedEventArgs"]}
 DEFINE_IID!(IID_IFileOpenPickerActivatedEventArgs2, 1584602982, 36127, 17915, 175, 29, 115, 32, 92, 143, 199, 161);
 RT_INTERFACE!{interface IFileOpenPickerActivatedEventArgs2(IFileOpenPickerActivatedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IFileOpenPickerActivatedEventArgs2] {
     fn get_CallerPackageFamilyName(&self, out: *mut HSTRING) -> HRESULT
@@ -1815,7 +1815,7 @@ impl IFileOpenPickerContinuationEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileOpenPickerContinuationEventArgs: IFileOpenPickerContinuationEventArgs}
+RT_CLASS!{class FileOpenPickerContinuationEventArgs: IFileOpenPickerContinuationEventArgs ["Windows.ApplicationModel.Activation.FileOpenPickerContinuationEventArgs"]}
 DEFINE_IID!(IID_IFileSavePickerActivatedEventArgs, 2176949489, 29926, 17287, 130, 235, 187, 143, 214, 75, 67, 70);
 RT_INTERFACE!{interface IFileSavePickerActivatedEventArgs(IFileSavePickerActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IFileSavePickerActivatedEventArgs] {
     #[cfg(feature="windows-storage")] fn get_FileSavePickerUI(&self, out: *mut *mut super::super::storage::pickers::provider::FileSavePickerUI) -> HRESULT
@@ -1827,7 +1827,7 @@ impl IFileSavePickerActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileSavePickerActivatedEventArgs: IFileSavePickerActivatedEventArgs}
+RT_CLASS!{class FileSavePickerActivatedEventArgs: IFileSavePickerActivatedEventArgs ["Windows.ApplicationModel.Activation.FileSavePickerActivatedEventArgs"]}
 DEFINE_IID!(IID_IFileSavePickerActivatedEventArgs2, 1802763795, 11506, 19784, 140, 188, 175, 103, 210, 63, 28, 231);
 RT_INTERFACE!{interface IFileSavePickerActivatedEventArgs2(IFileSavePickerActivatedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IFileSavePickerActivatedEventArgs2] {
     fn get_CallerPackageFamilyName(&self, out: *mut HSTRING) -> HRESULT,
@@ -1856,7 +1856,7 @@ impl IFileSavePickerContinuationEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileSavePickerContinuationEventArgs: IFileSavePickerContinuationEventArgs}
+RT_CLASS!{class FileSavePickerContinuationEventArgs: IFileSavePickerContinuationEventArgs ["Windows.ApplicationModel.Activation.FileSavePickerContinuationEventArgs"]}
 DEFINE_IID!(IID_IFolderPickerContinuationEventArgs, 1367876454, 40779, 18831, 190, 176, 66, 104, 79, 110, 28, 41);
 RT_INTERFACE!{interface IFolderPickerContinuationEventArgs(IFolderPickerContinuationEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IFolderPickerContinuationEventArgs] {
     #[cfg(feature="windows-storage")] fn get_Folder(&self, out: *mut *mut super::super::storage::StorageFolder) -> HRESULT
@@ -1868,7 +1868,7 @@ impl IFolderPickerContinuationEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FolderPickerContinuationEventArgs: IFolderPickerContinuationEventArgs}
+RT_CLASS!{class FolderPickerContinuationEventArgs: IFolderPickerContinuationEventArgs ["Windows.ApplicationModel.Activation.FolderPickerContinuationEventArgs"]}
 DEFINE_IID!(IID_ILaunchActivatedEventArgs, 4224269862, 41290, 19279, 130, 176, 51, 190, 217, 32, 175, 82);
 RT_INTERFACE!{interface ILaunchActivatedEventArgs(ILaunchActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ILaunchActivatedEventArgs] {
     fn get_Arguments(&self, out: *mut HSTRING) -> HRESULT,
@@ -1886,7 +1886,7 @@ impl ILaunchActivatedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LaunchActivatedEventArgs: ILaunchActivatedEventArgs}
+RT_CLASS!{class LaunchActivatedEventArgs: ILaunchActivatedEventArgs ["Windows.ApplicationModel.Activation.LaunchActivatedEventArgs"]}
 DEFINE_IID!(IID_ILaunchActivatedEventArgs2, 265518780, 40393, 18101, 154, 206, 189, 149, 212, 86, 83, 69);
 RT_INTERFACE!{interface ILaunchActivatedEventArgs2(ILaunchActivatedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_ILaunchActivatedEventArgs2] {
     fn get_TileActivatedInfo(&self, out: *mut *mut TileActivatedInfo) -> HRESULT
@@ -1909,7 +1909,7 @@ impl ILockScreenActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LockScreenActivatedEventArgs: ILockScreenActivatedEventArgs}
+RT_CLASS!{class LockScreenActivatedEventArgs: ILockScreenActivatedEventArgs ["Windows.ApplicationModel.Activation.LockScreenActivatedEventArgs"]}
 DEFINE_IID!(IID_ILockScreenCallActivatedEventArgs, 116621246, 46578, 17547, 177, 62, 227, 40, 172, 28, 81, 106);
 RT_INTERFACE!{interface ILockScreenCallActivatedEventArgs(ILockScreenCallActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ILockScreenCallActivatedEventArgs] {
     fn get_CallUI(&self, out: *mut *mut super::calls::LockScreenCallUI) -> HRESULT
@@ -1921,8 +1921,8 @@ impl ILockScreenCallActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LockScreenCallActivatedEventArgs: ILockScreenCallActivatedEventArgs}
-RT_CLASS!{class LockScreenComponentActivatedEventArgs: IActivatedEventArgs}
+RT_CLASS!{class LockScreenCallActivatedEventArgs: ILockScreenCallActivatedEventArgs ["Windows.ApplicationModel.Activation.LockScreenCallActivatedEventArgs"]}
+RT_CLASS!{class LockScreenComponentActivatedEventArgs: IActivatedEventArgs ["Windows.ApplicationModel.Activation.LockScreenComponentActivatedEventArgs"]}
 DEFINE_IID!(IID_IPickerReturnedActivatedEventArgs, 906883001, 43475, 18820, 164, 237, 158, 199, 52, 96, 73, 33);
 RT_INTERFACE!{interface IPickerReturnedActivatedEventArgs(IPickerReturnedActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPickerReturnedActivatedEventArgs] {
     fn get_PickerOperationId(&self, out: *mut HSTRING) -> HRESULT
@@ -1934,7 +1934,7 @@ impl IPickerReturnedActivatedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PickerReturnedActivatedEventArgs: IPickerReturnedActivatedEventArgs}
+RT_CLASS!{class PickerReturnedActivatedEventArgs: IPickerReturnedActivatedEventArgs ["Windows.ApplicationModel.Activation.PickerReturnedActivatedEventArgs"]}
 DEFINE_IID!(IID_IPrelaunchActivatedEventArgs, 205812091, 6647, 18646, 176, 70, 207, 34, 130, 110, 170, 116);
 RT_INTERFACE!{interface IPrelaunchActivatedEventArgs(IPrelaunchActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrelaunchActivatedEventArgs] {
     fn get_PrelaunchActivated(&self, out: *mut bool) -> HRESULT
@@ -1957,7 +1957,7 @@ impl IPrint3DWorkflowActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Print3DWorkflowActivatedEventArgs: IPrint3DWorkflowActivatedEventArgs}
+RT_CLASS!{class Print3DWorkflowActivatedEventArgs: IPrint3DWorkflowActivatedEventArgs ["Windows.ApplicationModel.Activation.Print3DWorkflowActivatedEventArgs"]}
 DEFINE_IID!(IID_IPrintTaskSettingsActivatedEventArgs, 3996164297, 52822, 18533, 186, 142, 137, 84, 172, 39, 17, 7);
 RT_INTERFACE!{interface IPrintTaskSettingsActivatedEventArgs(IPrintTaskSettingsActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskSettingsActivatedEventArgs] {
     #[cfg(feature="windows-devices")] fn get_Configuration(&self, out: *mut *mut super::super::devices::printers::extensions::PrintTaskConfiguration) -> HRESULT
@@ -1969,7 +1969,7 @@ impl IPrintTaskSettingsActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PrintTaskSettingsActivatedEventArgs: IPrintTaskSettingsActivatedEventArgs}
+RT_CLASS!{class PrintTaskSettingsActivatedEventArgs: IPrintTaskSettingsActivatedEventArgs ["Windows.ApplicationModel.Activation.PrintTaskSettingsActivatedEventArgs"]}
 DEFINE_IID!(IID_IProtocolActivatedEventArgs, 1620440285, 47040, 18091, 129, 254, 217, 15, 54, 208, 13, 36);
 RT_INTERFACE!{interface IProtocolActivatedEventArgs(IProtocolActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IProtocolActivatedEventArgs] {
     fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT
@@ -1981,7 +1981,7 @@ impl IProtocolActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProtocolActivatedEventArgs: IProtocolActivatedEventArgs}
+RT_CLASS!{class ProtocolActivatedEventArgs: IProtocolActivatedEventArgs ["Windows.ApplicationModel.Activation.ProtocolActivatedEventArgs"]}
 DEFINE_IID!(IID_IProtocolActivatedEventArgsWithCallerPackageFamilyNameAndData, 3628731410, 23695, 17292, 131, 203, 194, 143, 204, 11, 47, 219);
 RT_INTERFACE!{interface IProtocolActivatedEventArgsWithCallerPackageFamilyNameAndData(IProtocolActivatedEventArgsWithCallerPackageFamilyNameAndDataVtbl): IInspectable(IInspectableVtbl) [IID_IProtocolActivatedEventArgsWithCallerPackageFamilyNameAndData] {
     fn get_CallerPackageFamilyName(&self, out: *mut HSTRING) -> HRESULT,
@@ -2010,7 +2010,7 @@ impl IProtocolForResultsActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProtocolForResultsActivatedEventArgs: IProtocolForResultsActivatedEventArgs}
+RT_CLASS!{class ProtocolForResultsActivatedEventArgs: IProtocolForResultsActivatedEventArgs ["Windows.ApplicationModel.Activation.ProtocolForResultsActivatedEventArgs"]}
 DEFINE_IID!(IID_IRestrictedLaunchActivatedEventArgs, 3770133633, 49091, 17220, 165, 218, 25, 253, 90, 39, 186, 174);
 RT_INTERFACE!{interface IRestrictedLaunchActivatedEventArgs(IRestrictedLaunchActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRestrictedLaunchActivatedEventArgs] {
     fn get_SharedContext(&self, out: *mut *mut IInspectable) -> HRESULT
@@ -2022,7 +2022,7 @@ impl IRestrictedLaunchActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RestrictedLaunchActivatedEventArgs: IRestrictedLaunchActivatedEventArgs}
+RT_CLASS!{class RestrictedLaunchActivatedEventArgs: IRestrictedLaunchActivatedEventArgs ["Windows.ApplicationModel.Activation.RestrictedLaunchActivatedEventArgs"]}
 DEFINE_IID!(IID_ISearchActivatedEventArgs, 2360568145, 22728, 17379, 148, 188, 65, 211, 63, 139, 99, 14);
 RT_INTERFACE!{interface ISearchActivatedEventArgs(ISearchActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISearchActivatedEventArgs] {
     fn get_QueryText(&self, out: *mut HSTRING) -> HRESULT,
@@ -2040,7 +2040,7 @@ impl ISearchActivatedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchActivatedEventArgs: ISearchActivatedEventArgs}
+RT_CLASS!{class SearchActivatedEventArgs: ISearchActivatedEventArgs ["Windows.ApplicationModel.Activation.SearchActivatedEventArgs"]}
 DEFINE_IID!(IID_ISearchActivatedEventArgsWithLinguisticDetails, 3231658970, 2219, 18737, 155, 124, 69, 16, 37, 242, 31, 129);
 RT_INTERFACE!{interface ISearchActivatedEventArgsWithLinguisticDetails(ISearchActivatedEventArgsWithLinguisticDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ISearchActivatedEventArgsWithLinguisticDetails] {
     fn get_LinguisticDetails(&self, out: *mut *mut super::search::SearchPaneQueryLinguisticDetails) -> HRESULT
@@ -2063,7 +2063,7 @@ impl IShareTargetActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ShareTargetActivatedEventArgs: IShareTargetActivatedEventArgs}
+RT_CLASS!{class ShareTargetActivatedEventArgs: IShareTargetActivatedEventArgs ["Windows.ApplicationModel.Activation.ShareTargetActivatedEventArgs"]}
 DEFINE_IID!(IID_ISplashScreen, 3394082652, 54486, 17392, 151, 192, 8, 51, 198, 57, 28, 36);
 RT_INTERFACE!{interface ISplashScreen(ISplashScreenVtbl): IInspectable(IInspectableVtbl) [IID_ISplashScreen] {
     fn get_ImageLocation(&self, out: *mut foundation::Rect) -> HRESULT,
@@ -2086,7 +2086,7 @@ impl ISplashScreen {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SplashScreen: ISplashScreen}
+RT_CLASS!{class SplashScreen: ISplashScreen ["Windows.ApplicationModel.Activation.SplashScreen"]}
 DEFINE_IID!(IID_IStartupTaskActivatedEventArgs, 61938264, 21110, 19857, 134, 33, 84, 97, 24, 100, 213, 250);
 RT_INTERFACE!{interface IStartupTaskActivatedEventArgs(IStartupTaskActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IStartupTaskActivatedEventArgs] {
     fn get_TaskId(&self, out: *mut HSTRING) -> HRESULT
@@ -2098,7 +2098,7 @@ impl IStartupTaskActivatedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StartupTaskActivatedEventArgs: IStartupTaskActivatedEventArgs}
+RT_CLASS!{class StartupTaskActivatedEventArgs: IStartupTaskActivatedEventArgs ["Windows.ApplicationModel.Activation.StartupTaskActivatedEventArgs"]}
 DEFINE_IID!(IID_ITileActivatedInfo, 2162467761, 14720, 20247, 183, 56, 137, 25, 78, 11, 143, 101);
 RT_INTERFACE!{interface ITileActivatedInfo(ITileActivatedInfoVtbl): IInspectable(IInspectableVtbl) [IID_ITileActivatedInfo] {
     #[cfg(feature="windows-ui")] fn get_RecentlyShownNotifications(&self, out: *mut *mut foundation::collections::IVectorView<super::super::ui::notifications::ShownTileNotification>) -> HRESULT
@@ -2110,7 +2110,7 @@ impl ITileActivatedInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TileActivatedInfo: ITileActivatedInfo}
+RT_CLASS!{class TileActivatedInfo: ITileActivatedInfo ["Windows.ApplicationModel.Activation.TileActivatedInfo"]}
 DEFINE_IID!(IID_IToastNotificationActivatedEventArgs, 2460512130, 21136, 17181, 190, 133, 196, 170, 238, 184, 104, 95);
 RT_INTERFACE!{interface IToastNotificationActivatedEventArgs(IToastNotificationActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IToastNotificationActivatedEventArgs] {
     fn get_Argument(&self, out: *mut HSTRING) -> HRESULT,
@@ -2128,7 +2128,7 @@ impl IToastNotificationActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastNotificationActivatedEventArgs: IToastNotificationActivatedEventArgs}
+RT_CLASS!{class ToastNotificationActivatedEventArgs: IToastNotificationActivatedEventArgs ["Windows.ApplicationModel.Activation.ToastNotificationActivatedEventArgs"]}
 DEFINE_IID!(IID_IUserDataAccountProviderActivatedEventArgs, 466220835, 36593, 19025, 166, 58, 254, 113, 30, 234, 182, 7);
 RT_INTERFACE!{interface IUserDataAccountProviderActivatedEventArgs(IUserDataAccountProviderActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccountProviderActivatedEventArgs] {
     fn get_Operation(&self, out: *mut *mut super::userdataaccounts::provider::IUserDataAccountProviderOperation) -> HRESULT
@@ -2140,7 +2140,7 @@ impl IUserDataAccountProviderActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataAccountProviderActivatedEventArgs: IUserDataAccountProviderActivatedEventArgs}
+RT_CLASS!{class UserDataAccountProviderActivatedEventArgs: IUserDataAccountProviderActivatedEventArgs ["Windows.ApplicationModel.Activation.UserDataAccountProviderActivatedEventArgs"]}
 DEFINE_IID!(IID_IViewSwitcherProvider, 871532710, 23596, 19751, 186, 199, 117, 54, 8, 143, 18, 25);
 RT_INTERFACE!{interface IViewSwitcherProvider(IViewSwitcherProviderVtbl): IInspectable(IInspectableVtbl) [IID_IViewSwitcherProvider] {
     #[cfg(feature="windows-ui")] fn get_ViewSwitcher(&self, out: *mut *mut super::super::ui::viewmanagement::ActivationViewSwitcher) -> HRESULT
@@ -2163,7 +2163,7 @@ impl IVoiceCommandActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VoiceCommandActivatedEventArgs: IVoiceCommandActivatedEventArgs}
+RT_CLASS!{class VoiceCommandActivatedEventArgs: IVoiceCommandActivatedEventArgs ["Windows.ApplicationModel.Activation.VoiceCommandActivatedEventArgs"]}
 DEFINE_IID!(IID_IWalletActionActivatedEventArgs, 4244374139, 6682, 19746, 146, 63, 174, 111, 69, 250, 82, 217);
 RT_INTERFACE!{interface IWalletActionActivatedEventArgs(IWalletActionActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWalletActionActivatedEventArgs] {
     fn get_ItemId(&self, out: *mut HSTRING) -> HRESULT,
@@ -2187,7 +2187,7 @@ impl IWalletActionActivatedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WalletActionActivatedEventArgs: IWalletActionActivatedEventArgs}
+RT_CLASS!{class WalletActionActivatedEventArgs: IWalletActionActivatedEventArgs ["Windows.ApplicationModel.Activation.WalletActionActivatedEventArgs"]}
 DEFINE_IID!(IID_IWebAccountProviderActivatedEventArgs, 1924601716, 39146, 19663, 151, 82, 70, 217, 5, 16, 4, 241);
 RT_INTERFACE!{interface IWebAccountProviderActivatedEventArgs(IWebAccountProviderActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderActivatedEventArgs] {
     #[cfg(feature="windows-security")] fn get_Operation(&self, out: *mut *mut super::super::security::authentication::web::provider::IWebAccountProviderOperation) -> HRESULT
@@ -2199,7 +2199,7 @@ impl IWebAccountProviderActivatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAccountProviderActivatedEventArgs: IWebAccountProviderActivatedEventArgs}
+RT_CLASS!{class WebAccountProviderActivatedEventArgs: IWebAccountProviderActivatedEventArgs ["Windows.ApplicationModel.Activation.WebAccountProviderActivatedEventArgs"]}
 DEFINE_IID!(IID_IWebAuthenticationBrokerContinuationEventArgs, 1977459668, 30484, 17725, 183, 255, 185, 94, 58, 23, 9, 218);
 RT_INTERFACE!{interface IWebAuthenticationBrokerContinuationEventArgs(IWebAuthenticationBrokerContinuationEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationBrokerContinuationEventArgs] {
     #[cfg(feature="windows-security")] fn get_WebAuthenticationResult(&self, out: *mut *mut super::super::security::authentication::web::WebAuthenticationResult) -> HRESULT
@@ -2211,7 +2211,7 @@ impl IWebAuthenticationBrokerContinuationEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebAuthenticationBrokerContinuationEventArgs: IWebAuthenticationBrokerContinuationEventArgs}
+RT_CLASS!{class WebAuthenticationBrokerContinuationEventArgs: IWebAuthenticationBrokerContinuationEventArgs ["Windows.ApplicationModel.Activation.WebAuthenticationBrokerContinuationEventArgs"]}
 } // Windows.ApplicationModel.Activation
 pub mod appextensions { // Windows.ApplicationModel.AppExtensions
 use ::prelude::*;
@@ -2262,7 +2262,7 @@ impl IAppExtension {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppExtension: IAppExtension}
+RT_CLASS!{class AppExtension: IAppExtension ["Windows.ApplicationModel.AppExtensions.AppExtension"]}
 DEFINE_IID!(IID_IAppExtensionCatalog, 2542215218, 33830, 19153, 144, 132, 146, 232, 140, 45, 162, 0);
 RT_INTERFACE!{interface IAppExtensionCatalog(IAppExtensionCatalogVtbl): IInspectable(IInspectableVtbl) [IID_IAppExtensionCatalog] {
     fn FindAllAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppExtension>>) -> HRESULT,
@@ -2335,7 +2335,7 @@ impl IAppExtensionCatalog {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppExtensionCatalog: IAppExtensionCatalog}
+RT_CLASS!{class AppExtensionCatalog: IAppExtensionCatalog ["Windows.ApplicationModel.AppExtensions.AppExtensionCatalog"]}
 impl RtActivatable<IAppExtensionCatalogStatics> for AppExtensionCatalog {}
 impl AppExtensionCatalog {
     #[inline] pub fn open(appExtensionName: &HStringArg) -> Result<Option<ComPtr<AppExtensionCatalog>>> {
@@ -2377,7 +2377,7 @@ impl IAppExtensionPackageInstalledEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppExtensionPackageInstalledEventArgs: IAppExtensionPackageInstalledEventArgs}
+RT_CLASS!{class AppExtensionPackageInstalledEventArgs: IAppExtensionPackageInstalledEventArgs ["Windows.ApplicationModel.AppExtensions.AppExtensionPackageInstalledEventArgs"]}
 DEFINE_IID!(IID_IAppExtensionPackageStatusChangedEventArgs, 484537395, 4435, 17661, 135, 177, 138, 225, 5, 3, 3, 223);
 RT_INTERFACE!{interface IAppExtensionPackageStatusChangedEventArgs(IAppExtensionPackageStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppExtensionPackageStatusChangedEventArgs] {
     fn get_AppExtensionName(&self, out: *mut HSTRING) -> HRESULT,
@@ -2395,7 +2395,7 @@ impl IAppExtensionPackageStatusChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppExtensionPackageStatusChangedEventArgs: IAppExtensionPackageStatusChangedEventArgs}
+RT_CLASS!{class AppExtensionPackageStatusChangedEventArgs: IAppExtensionPackageStatusChangedEventArgs ["Windows.ApplicationModel.AppExtensions.AppExtensionPackageStatusChangedEventArgs"]}
 DEFINE_IID!(IID_IAppExtensionPackageUninstallingEventArgs, 1626431685, 5918, 16639, 174, 152, 171, 44, 32, 221, 77, 117);
 RT_INTERFACE!{interface IAppExtensionPackageUninstallingEventArgs(IAppExtensionPackageUninstallingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppExtensionPackageUninstallingEventArgs] {
     fn get_AppExtensionName(&self, out: *mut HSTRING) -> HRESULT,
@@ -2413,7 +2413,7 @@ impl IAppExtensionPackageUninstallingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppExtensionPackageUninstallingEventArgs: IAppExtensionPackageUninstallingEventArgs}
+RT_CLASS!{class AppExtensionPackageUninstallingEventArgs: IAppExtensionPackageUninstallingEventArgs ["Windows.ApplicationModel.AppExtensions.AppExtensionPackageUninstallingEventArgs"]}
 DEFINE_IID!(IID_IAppExtensionPackageUpdatedEventArgs, 981713983, 31102, 17589, 186, 36, 164, 200, 181, 165, 67, 215);
 RT_INTERFACE!{interface IAppExtensionPackageUpdatedEventArgs(IAppExtensionPackageUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppExtensionPackageUpdatedEventArgs] {
     fn get_AppExtensionName(&self, out: *mut HSTRING) -> HRESULT,
@@ -2437,7 +2437,7 @@ impl IAppExtensionPackageUpdatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppExtensionPackageUpdatedEventArgs: IAppExtensionPackageUpdatedEventArgs}
+RT_CLASS!{class AppExtensionPackageUpdatedEventArgs: IAppExtensionPackageUpdatedEventArgs ["Windows.ApplicationModel.AppExtensions.AppExtensionPackageUpdatedEventArgs"]}
 DEFINE_IID!(IID_IAppExtensionPackageUpdatingEventArgs, 2127926057, 6757, 18432, 167, 0, 179, 33, 0, 158, 48, 106);
 RT_INTERFACE!{interface IAppExtensionPackageUpdatingEventArgs(IAppExtensionPackageUpdatingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppExtensionPackageUpdatingEventArgs] {
     fn get_AppExtensionName(&self, out: *mut HSTRING) -> HRESULT,
@@ -2455,7 +2455,7 @@ impl IAppExtensionPackageUpdatingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppExtensionPackageUpdatingEventArgs: IAppExtensionPackageUpdatingEventArgs}
+RT_CLASS!{class AppExtensionPackageUpdatingEventArgs: IAppExtensionPackageUpdatingEventArgs ["Windows.ApplicationModel.AppExtensions.AppExtensionPackageUpdatingEventArgs"]}
 } // Windows.ApplicationModel.AppExtensions
 pub mod appservice { // Windows.ApplicationModel.AppService
 use ::prelude::*;
@@ -2489,8 +2489,8 @@ impl IAppServiceClosedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppServiceClosedEventArgs: IAppServiceClosedEventArgs}
-RT_ENUM! { enum AppServiceClosedStatus: i32 {
+RT_CLASS!{class AppServiceClosedEventArgs: IAppServiceClosedEventArgs ["Windows.ApplicationModel.AppService.AppServiceClosedEventArgs"]}
+RT_ENUM! { enum AppServiceClosedStatus: i32 ["Windows.ApplicationModel.AppService.AppServiceClosedStatus"] {
     Completed (AppServiceClosedStatus_Completed) = 0, Canceled (AppServiceClosedStatus_Canceled) = 1, ResourceLimitsExceeded (AppServiceClosedStatus_ResourceLimitsExceeded) = 2, Unknown (AppServiceClosedStatus_Unknown) = 3,
 }}
 DEFINE_IID!(IID_IAppServiceConnection, 2647946402, 34591, 19794, 137, 169, 158, 9, 5, 49, 189, 39);
@@ -2554,7 +2554,7 @@ impl IAppServiceConnection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppServiceConnection: IAppServiceConnection}
+RT_CLASS!{class AppServiceConnection: IAppServiceConnection ["Windows.ApplicationModel.AppService.AppServiceConnection"]}
 impl RtActivatable<IActivationFactory> for AppServiceConnection {}
 DEFINE_CLSID!(AppServiceConnection(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,83,101,114,118,105,99,101,46,65,112,112,83,101,114,118,105,99,101,67,111,110,110,101,99,116,105,111,110,0]) [CLSID_AppServiceConnection]);
 DEFINE_IID!(IID_IAppServiceConnection2, 2346700127, 8962, 20413, 128, 97, 82, 81, 28, 47, 139, 249);
@@ -2579,7 +2579,7 @@ impl IAppServiceConnection2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppServiceConnectionStatus: i32 {
+RT_ENUM! { enum AppServiceConnectionStatus: i32 ["Windows.ApplicationModel.AppService.AppServiceConnectionStatus"] {
     Success (AppServiceConnectionStatus_Success) = 0, AppNotInstalled (AppServiceConnectionStatus_AppNotInstalled) = 1, AppUnavailable (AppServiceConnectionStatus_AppUnavailable) = 2, AppServiceUnavailable (AppServiceConnectionStatus_AppServiceUnavailable) = 3, Unknown (AppServiceConnectionStatus_Unknown) = 4, RemoteSystemUnavailable (AppServiceConnectionStatus_RemoteSystemUnavailable) = 5, RemoteSystemNotSupportedByApp (AppServiceConnectionStatus_RemoteSystemNotSupportedByApp) = 6, NotAuthorized (AppServiceConnectionStatus_NotAuthorized) = 7,
 }}
 DEFINE_IID!(IID_IAppServiceDeferral, 2115719970, 60080, 16968, 174, 4, 253, 249, 56, 56, 228, 114);
@@ -2592,7 +2592,7 @@ impl IAppServiceDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppServiceDeferral: IAppServiceDeferral}
+RT_CLASS!{class AppServiceDeferral: IAppServiceDeferral ["Windows.ApplicationModel.AppService.AppServiceDeferral"]}
 DEFINE_IID!(IID_IAppServiceRequest, 551914909, 6366, 19201, 128, 186, 144, 167, 98, 4, 227, 200);
 RT_INTERFACE!{interface IAppServiceRequest(IAppServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IAppServiceRequest] {
     fn get_Message(&self, out: *mut *mut foundation::collections::ValueSet) -> HRESULT,
@@ -2610,7 +2610,7 @@ impl IAppServiceRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppServiceRequest: IAppServiceRequest}
+RT_CLASS!{class AppServiceRequest: IAppServiceRequest ["Windows.ApplicationModel.AppService.AppServiceRequest"]}
 DEFINE_IID!(IID_IAppServiceRequestReceivedEventArgs, 1846682464, 65381, 17582, 158, 69, 133, 127, 228, 24, 6, 129);
 RT_INTERFACE!{interface IAppServiceRequestReceivedEventArgs(IAppServiceRequestReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppServiceRequestReceivedEventArgs] {
     fn get_Request(&self, out: *mut *mut AppServiceRequest) -> HRESULT,
@@ -2628,7 +2628,7 @@ impl IAppServiceRequestReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppServiceRequestReceivedEventArgs: IAppServiceRequestReceivedEventArgs}
+RT_CLASS!{class AppServiceRequestReceivedEventArgs: IAppServiceRequestReceivedEventArgs ["Windows.ApplicationModel.AppService.AppServiceRequestReceivedEventArgs"]}
 DEFINE_IID!(IID_IAppServiceResponse, 2370845932, 39587, 20072, 149, 89, 157, 230, 62, 55, 44, 228);
 RT_INTERFACE!{interface IAppServiceResponse(IAppServiceResponseVtbl): IInspectable(IInspectableVtbl) [IID_IAppServiceResponse] {
     fn get_Message(&self, out: *mut *mut foundation::collections::ValueSet) -> HRESULT,
@@ -2646,8 +2646,8 @@ impl IAppServiceResponse {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppServiceResponse: IAppServiceResponse}
-RT_ENUM! { enum AppServiceResponseStatus: i32 {
+RT_CLASS!{class AppServiceResponse: IAppServiceResponse ["Windows.ApplicationModel.AppService.AppServiceResponse"]}
+RT_ENUM! { enum AppServiceResponseStatus: i32 ["Windows.ApplicationModel.AppService.AppServiceResponseStatus"] {
     Success (AppServiceResponseStatus_Success) = 0, Failure (AppServiceResponseStatus_Failure) = 1, ResourceLimitsExceeded (AppServiceResponseStatus_ResourceLimitsExceeded) = 2, Unknown (AppServiceResponseStatus_Unknown) = 3, RemoteSystemUnavailable (AppServiceResponseStatus_RemoteSystemUnavailable) = 4, MessageSizeTooLarge (AppServiceResponseStatus_MessageSizeTooLarge) = 5,
 }}
 DEFINE_IID!(IID_IAppServiceTriggerDetails, 2292374700, 44328, 16824, 128, 187, 189, 241, 178, 22, 158, 25);
@@ -2673,7 +2673,7 @@ impl IAppServiceTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppServiceTriggerDetails: IAppServiceTriggerDetails}
+RT_CLASS!{class AppServiceTriggerDetails: IAppServiceTriggerDetails ["Windows.ApplicationModel.AppService.AppServiceTriggerDetails"]}
 DEFINE_IID!(IID_IAppServiceTriggerDetails2, 3896333490, 10444, 17394, 180, 101, 192, 72, 46, 89, 226, 220);
 RT_INTERFACE!{interface IAppServiceTriggerDetails2(IAppServiceTriggerDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppServiceTriggerDetails2] {
     fn get_IsRemoteSystemConnection(&self, out: *mut bool) -> HRESULT
@@ -2842,7 +2842,7 @@ impl IAppointment {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Appointment: IAppointment}
+RT_CLASS!{class Appointment: IAppointment ["Windows.ApplicationModel.Appointments.Appointment"]}
 impl RtActivatable<IActivationFactory> for Appointment {}
 DEFINE_CLSID!(Appointment(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,65,112,112,111,105,110,116,109,101,110,116,0]) [CLSID_Appointment]);
 DEFINE_IID!(IID_IAppointment2, 1585813564, 21519, 13394, 155, 92, 13, 215, 173, 76, 101, 162);
@@ -2995,7 +2995,7 @@ impl IAppointment3 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppointmentBusyStatus: i32 {
+RT_ENUM! { enum AppointmentBusyStatus: i32 ["Windows.ApplicationModel.Appointments.AppointmentBusyStatus"] {
     Busy (AppointmentBusyStatus_Busy) = 0, Tentative (AppointmentBusyStatus_Tentative) = 1, Free (AppointmentBusyStatus_Free) = 2, OutOfOffice (AppointmentBusyStatus_OutOfOffice) = 3, WorkingElsewhere (AppointmentBusyStatus_WorkingElsewhere) = 4,
 }}
 DEFINE_IID!(IID_IAppointmentCalendar, 1383301533, 33593, 15695, 160, 47, 100, 8, 68, 82, 187, 93);
@@ -3156,7 +3156,7 @@ impl IAppointmentCalendar {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendar: IAppointmentCalendar}
+RT_CLASS!{class AppointmentCalendar: IAppointmentCalendar ["Windows.ApplicationModel.Appointments.AppointmentCalendar"]}
 DEFINE_IID!(IID_IAppointmentCalendar2, 417850402, 9319, 19996, 164, 89, 216, 162, 147, 3, 208, 146);
 RT_INTERFACE!{interface IAppointmentCalendar2(IAppointmentCalendar2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendar2] {
     fn get_SyncManager(&self, out: *mut *mut AppointmentCalendarSyncManager) -> HRESULT,
@@ -3314,10 +3314,10 @@ impl IAppointmentCalendar3 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppointmentCalendarOtherAppReadAccess: i32 {
+RT_ENUM! { enum AppointmentCalendarOtherAppReadAccess: i32 ["Windows.ApplicationModel.Appointments.AppointmentCalendarOtherAppReadAccess"] {
     SystemOnly (AppointmentCalendarOtherAppReadAccess_SystemOnly) = 0, Limited (AppointmentCalendarOtherAppReadAccess_Limited) = 1, Full (AppointmentCalendarOtherAppReadAccess_Full) = 2, None (AppointmentCalendarOtherAppReadAccess_None) = 3,
 }}
-RT_ENUM! { enum AppointmentCalendarOtherAppWriteAccess: i32 {
+RT_ENUM! { enum AppointmentCalendarOtherAppWriteAccess: i32 ["Windows.ApplicationModel.Appointments.AppointmentCalendarOtherAppWriteAccess"] {
     None (AppointmentCalendarOtherAppWriteAccess_None) = 0, SystemOnly (AppointmentCalendarOtherAppWriteAccess_SystemOnly) = 1, Limited (AppointmentCalendarOtherAppWriteAccess_Limited) = 2,
 }}
 DEFINE_IID!(IID_IAppointmentCalendarSyncManager, 723628960, 19199, 17298, 188, 95, 86, 69, 255, 207, 251, 23);
@@ -3360,7 +3360,7 @@ impl IAppointmentCalendarSyncManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendarSyncManager: IAppointmentCalendarSyncManager}
+RT_CLASS!{class AppointmentCalendarSyncManager: IAppointmentCalendarSyncManager ["Windows.ApplicationModel.Appointments.AppointmentCalendarSyncManager"]}
 DEFINE_IID!(IID_IAppointmentCalendarSyncManager2, 1685399725, 3369, 19580, 170, 167, 191, 153, 104, 5, 83, 124);
 RT_INTERFACE!{interface IAppointmentCalendarSyncManager2(IAppointmentCalendarSyncManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarSyncManager2] {
     fn put_Status(&self, value: AppointmentCalendarSyncStatus) -> HRESULT,
@@ -3381,7 +3381,7 @@ impl IAppointmentCalendarSyncManager2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppointmentCalendarSyncStatus: i32 {
+RT_ENUM! { enum AppointmentCalendarSyncStatus: i32 ["Windows.ApplicationModel.Appointments.AppointmentCalendarSyncStatus"] {
     Idle (AppointmentCalendarSyncStatus_Idle) = 0, Syncing (AppointmentCalendarSyncStatus_Syncing) = 1, UpToDate (AppointmentCalendarSyncStatus_UpToDate) = 2, AuthenticationError (AppointmentCalendarSyncStatus_AuthenticationError) = 3, PolicyError (AppointmentCalendarSyncStatus_PolicyError) = 4, UnknownError (AppointmentCalendarSyncStatus_UnknownError) = 5, ManualAccountRemovalRequired (AppointmentCalendarSyncStatus_ManualAccountRemovalRequired) = 6,
 }}
 DEFINE_IID!(IID_IAppointmentConflictResult, 3587043518, 12079, 15229, 175, 10, 167, 226, 15, 58, 70, 227);
@@ -3401,14 +3401,14 @@ impl IAppointmentConflictResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentConflictResult: IAppointmentConflictResult}
-RT_ENUM! { enum AppointmentConflictType: i32 {
+RT_CLASS!{class AppointmentConflictResult: IAppointmentConflictResult ["Windows.ApplicationModel.Appointments.AppointmentConflictResult"]}
+RT_ENUM! { enum AppointmentConflictType: i32 ["Windows.ApplicationModel.Appointments.AppointmentConflictType"] {
     None (AppointmentConflictType_None) = 0, Adjacent (AppointmentConflictType_Adjacent) = 1, Overlap (AppointmentConflictType_Overlap) = 2,
 }}
-RT_ENUM! { enum AppointmentDaysOfWeek: u32 {
+RT_ENUM! { enum AppointmentDaysOfWeek: u32 ["Windows.ApplicationModel.Appointments.AppointmentDaysOfWeek"] {
     None (AppointmentDaysOfWeek_None) = 0, Sunday (AppointmentDaysOfWeek_Sunday) = 1, Monday (AppointmentDaysOfWeek_Monday) = 2, Tuesday (AppointmentDaysOfWeek_Tuesday) = 4, Wednesday (AppointmentDaysOfWeek_Wednesday) = 8, Thursday (AppointmentDaysOfWeek_Thursday) = 16, Friday (AppointmentDaysOfWeek_Friday) = 32, Saturday (AppointmentDaysOfWeek_Saturday) = 64,
 }}
-RT_ENUM! { enum AppointmentDetailsKind: i32 {
+RT_ENUM! { enum AppointmentDetailsKind: i32 ["Windows.ApplicationModel.Appointments.AppointmentDetailsKind"] {
     PlainText (AppointmentDetailsKind_PlainText) = 0, Html (AppointmentDetailsKind_Html) = 1,
 }}
 DEFINE_IID!(IID_IAppointmentException, 2718394215, 5878, 19406, 159, 90, 134, 0, 184, 1, 159, 203);
@@ -3434,7 +3434,7 @@ impl IAppointmentException {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentException: IAppointmentException}
+RT_CLASS!{class AppointmentException: IAppointmentException ["Windows.ApplicationModel.Appointments.AppointmentException"]}
 DEFINE_IID!(IID_IAppointmentInvitee, 331286422, 38978, 18779, 176, 231, 239, 143, 121, 192, 112, 29);
 RT_INTERFACE!{interface IAppointmentInvitee(IAppointmentInviteeVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentInvitee] {
     fn get_Role(&self, out: *mut AppointmentParticipantRole) -> HRESULT,
@@ -3462,7 +3462,7 @@ impl IAppointmentInvitee {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentInvitee: IAppointmentInvitee}
+RT_CLASS!{class AppointmentInvitee: IAppointmentInvitee ["Windows.ApplicationModel.Appointments.AppointmentInvitee"]}
 impl RtActivatable<IActivationFactory> for AppointmentInvitee {}
 DEFINE_CLSID!(AppointmentInvitee(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,65,112,112,111,105,110,116,109,101,110,116,73,110,118,105,116,101,101,0]) [CLSID_AppointmentInvitee]);
 RT_CLASS!{static class AppointmentManager}
@@ -3608,7 +3608,7 @@ impl IAppointmentManagerForUser {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentManagerForUser: IAppointmentManagerForUser}
+RT_CLASS!{class AppointmentManagerForUser: IAppointmentManagerForUser ["Windows.ApplicationModel.Appointments.AppointmentManagerForUser"]}
 DEFINE_IID!(IID_IAppointmentManagerStatics, 976288257, 23616, 18845, 179, 63, 164, 48, 80, 247, 79, 196);
 RT_INTERFACE!{static interface IAppointmentManagerStatics(IAppointmentManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentManagerStatics] {
     fn ShowAddAppointmentAsync(&self, appointment: *mut Appointment, selection: foundation::Rect, out: *mut *mut foundation::IAsyncOperation<HString>) -> HRESULT,
@@ -3713,7 +3713,7 @@ impl IAppointmentManagerStatics3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentOrganizer: IAppointmentParticipant}
+RT_CLASS!{class AppointmentOrganizer: IAppointmentParticipant ["Windows.ApplicationModel.Appointments.AppointmentOrganizer"]}
 impl RtActivatable<IActivationFactory> for AppointmentOrganizer {}
 DEFINE_CLSID!(AppointmentOrganizer(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,65,112,112,111,105,110,116,109,101,110,116,79,114,103,97,110,105,122,101,114,0]) [CLSID_AppointmentOrganizer]);
 DEFINE_IID!(IID_IAppointmentParticipant, 1633560834, 38680, 18043, 131, 251, 178, 147, 161, 145, 33, 222);
@@ -3743,10 +3743,10 @@ impl IAppointmentParticipant {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppointmentParticipantResponse: i32 {
+RT_ENUM! { enum AppointmentParticipantResponse: i32 ["Windows.ApplicationModel.Appointments.AppointmentParticipantResponse"] {
     None (AppointmentParticipantResponse_None) = 0, Tentative (AppointmentParticipantResponse_Tentative) = 1, Accepted (AppointmentParticipantResponse_Accepted) = 2, Declined (AppointmentParticipantResponse_Declined) = 3, Unknown (AppointmentParticipantResponse_Unknown) = 4,
 }}
-RT_ENUM! { enum AppointmentParticipantRole: i32 {
+RT_ENUM! { enum AppointmentParticipantRole: i32 ["Windows.ApplicationModel.Appointments.AppointmentParticipantRole"] {
     RequiredAttendee (AppointmentParticipantRole_RequiredAttendee) = 0, OptionalAttendee (AppointmentParticipantRole_OptionalAttendee) = 1, Resource (AppointmentParticipantRole_Resource) = 2,
 }}
 RT_CLASS!{static class AppointmentProperties}
@@ -4092,7 +4092,7 @@ impl IAppointmentRecurrence {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentRecurrence: IAppointmentRecurrence}
+RT_CLASS!{class AppointmentRecurrence: IAppointmentRecurrence ["Windows.ApplicationModel.Appointments.AppointmentRecurrence"]}
 impl RtActivatable<IActivationFactory> for AppointmentRecurrence {}
 DEFINE_CLSID!(AppointmentRecurrence(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,65,112,112,111,105,110,116,109,101,110,116,82,101,99,117,114,114,101,110,99,101,0]) [CLSID_AppointmentRecurrence]);
 DEFINE_IID!(IID_IAppointmentRecurrence2, 1039377120, 1447, 20304, 159, 134, 176, 63, 148, 54, 37, 77);
@@ -4128,10 +4128,10 @@ impl IAppointmentRecurrence3 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppointmentRecurrenceUnit: i32 {
+RT_ENUM! { enum AppointmentRecurrenceUnit: i32 ["Windows.ApplicationModel.Appointments.AppointmentRecurrenceUnit"] {
     Daily (AppointmentRecurrenceUnit_Daily) = 0, Weekly (AppointmentRecurrenceUnit_Weekly) = 1, Monthly (AppointmentRecurrenceUnit_Monthly) = 2, MonthlyOnDay (AppointmentRecurrenceUnit_MonthlyOnDay) = 3, Yearly (AppointmentRecurrenceUnit_Yearly) = 4, YearlyOnDay (AppointmentRecurrenceUnit_YearlyOnDay) = 5,
 }}
-RT_ENUM! { enum AppointmentSensitivity: i32 {
+RT_ENUM! { enum AppointmentSensitivity: i32 ["Windows.ApplicationModel.Appointments.AppointmentSensitivity"] {
     Public (AppointmentSensitivity_Public) = 0, Private (AppointmentSensitivity_Private) = 1,
 }}
 DEFINE_IID!(IID_IAppointmentStore, 2757857676, 31303, 19862, 150, 201, 21, 205, 138, 5, 167, 53);
@@ -4267,7 +4267,7 @@ impl IAppointmentStore {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentStore: IAppointmentStore}
+RT_CLASS!{class AppointmentStore: IAppointmentStore ["Windows.ApplicationModel.Appointments.AppointmentStore"]}
 DEFINE_IID!(IID_IAppointmentStore2, 633637920, 7233, 16975, 128, 132, 103, 193, 207, 224, 168, 84);
 RT_INTERFACE!{interface IAppointmentStore2(IAppointmentStore2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStore2] {
     fn add_StoreChanged(&self, pHandler: *mut foundation::TypedEventHandler<AppointmentStore, AppointmentStoreChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -4301,7 +4301,7 @@ impl IAppointmentStore3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppointmentStoreAccessType: i32 {
+RT_ENUM! { enum AppointmentStoreAccessType: i32 ["Windows.ApplicationModel.Appointments.AppointmentStoreAccessType"] {
     AppCalendarsReadWrite (AppointmentStoreAccessType_AppCalendarsReadWrite) = 0, AllCalendarsReadOnly (AppointmentStoreAccessType_AllCalendarsReadOnly) = 1, AllCalendarsReadWrite (AppointmentStoreAccessType_AllCalendarsReadWrite) = 2,
 }}
 DEFINE_IID!(IID_IAppointmentStoreChange, 2779177013, 2611, 13908, 132, 99, 181, 67, 233, 12, 59, 121);
@@ -4321,7 +4321,7 @@ impl IAppointmentStoreChange {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentStoreChange: IAppointmentStoreChange}
+RT_CLASS!{class AppointmentStoreChange: IAppointmentStoreChange ["Windows.ApplicationModel.Appointments.AppointmentStoreChange"]}
 DEFINE_IID!(IID_IAppointmentStoreChange2, 3011317198, 21009, 17410, 166, 8, 169, 111, 231, 11, 142, 226);
 RT_INTERFACE!{interface IAppointmentStoreChange2(IAppointmentStoreChange2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStoreChange2] {
     fn get_AppointmentCalendar(&self, out: *mut *mut AppointmentCalendar) -> HRESULT
@@ -4343,7 +4343,7 @@ impl IAppointmentStoreChangedDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentStoreChangedDeferral: IAppointmentStoreChangedDeferral}
+RT_CLASS!{class AppointmentStoreChangedDeferral: IAppointmentStoreChangedDeferral ["Windows.ApplicationModel.Appointments.AppointmentStoreChangedDeferral"]}
 DEFINE_IID!(IID_IAppointmentStoreChangedEventArgs, 579205305, 1937, 16766, 191, 234, 204, 109, 65, 99, 108, 140);
 RT_INTERFACE!{interface IAppointmentStoreChangedEventArgs(IAppointmentStoreChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStoreChangedEventArgs] {
     fn GetDeferral(&self, out: *mut *mut AppointmentStoreChangedDeferral) -> HRESULT
@@ -4355,7 +4355,7 @@ impl IAppointmentStoreChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentStoreChangedEventArgs: IAppointmentStoreChangedEventArgs}
+RT_CLASS!{class AppointmentStoreChangedEventArgs: IAppointmentStoreChangedEventArgs ["Windows.ApplicationModel.Appointments.AppointmentStoreChangedEventArgs"]}
 DEFINE_IID!(IID_IAppointmentStoreChangeReader, 2334394865, 26099, 17056, 150, 29, 76, 32, 155, 243, 3, 112);
 RT_INTERFACE!{interface IAppointmentStoreChangeReader(IAppointmentStoreChangeReaderVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStoreChangeReader] {
     fn ReadBatchAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppointmentStoreChange>>) -> HRESULT,
@@ -4377,7 +4377,7 @@ impl IAppointmentStoreChangeReader {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentStoreChangeReader: IAppointmentStoreChangeReader}
+RT_CLASS!{class AppointmentStoreChangeReader: IAppointmentStoreChangeReader ["Windows.ApplicationModel.Appointments.AppointmentStoreChangeReader"]}
 DEFINE_IID!(IID_IAppointmentStoreChangeTracker, 455472305, 36558, 20247, 147, 200, 230, 65, 36, 88, 253, 92);
 RT_INTERFACE!{interface IAppointmentStoreChangeTracker(IAppointmentStoreChangeTrackerVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStoreChangeTracker] {
     fn GetChangeReader(&self, out: *mut *mut AppointmentStoreChangeReader) -> HRESULT,
@@ -4399,7 +4399,7 @@ impl IAppointmentStoreChangeTracker {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentStoreChangeTracker: IAppointmentStoreChangeTracker}
+RT_CLASS!{class AppointmentStoreChangeTracker: IAppointmentStoreChangeTracker ["Windows.ApplicationModel.Appointments.AppointmentStoreChangeTracker"]}
 DEFINE_IID!(IID_IAppointmentStoreChangeTracker2, 3060444997, 38210, 19703, 133, 80, 235, 55, 14, 12, 8, 211);
 RT_INTERFACE!{interface IAppointmentStoreChangeTracker2(IAppointmentStoreChangeTracker2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStoreChangeTracker2] {
     fn get_IsTracking(&self, out: *mut bool) -> HRESULT
@@ -4411,21 +4411,21 @@ impl IAppointmentStoreChangeTracker2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppointmentStoreChangeType: i32 {
+RT_ENUM! { enum AppointmentStoreChangeType: i32 ["Windows.ApplicationModel.Appointments.AppointmentStoreChangeType"] {
     AppointmentCreated (AppointmentStoreChangeType_AppointmentCreated) = 0, AppointmentModified (AppointmentStoreChangeType_AppointmentModified) = 1, AppointmentDeleted (AppointmentStoreChangeType_AppointmentDeleted) = 2, ChangeTrackingLost (AppointmentStoreChangeType_ChangeTrackingLost) = 3, CalendarCreated (AppointmentStoreChangeType_CalendarCreated) = 4, CalendarModified (AppointmentStoreChangeType_CalendarModified) = 5, CalendarDeleted (AppointmentStoreChangeType_CalendarDeleted) = 6,
 }}
 DEFINE_IID!(IID_IAppointmentStoreNotificationTriggerDetails, 2603862801, 49921, 16926, 175, 239, 4, 126, 207, 167, 106, 219);
 RT_INTERFACE!{interface IAppointmentStoreNotificationTriggerDetails(IAppointmentStoreNotificationTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStoreNotificationTriggerDetails] {
     
 }}
-RT_CLASS!{class AppointmentStoreNotificationTriggerDetails: IAppointmentStoreNotificationTriggerDetails}
-RT_ENUM! { enum AppointmentSummaryCardView: i32 {
+RT_CLASS!{class AppointmentStoreNotificationTriggerDetails: IAppointmentStoreNotificationTriggerDetails ["Windows.ApplicationModel.Appointments.AppointmentStoreNotificationTriggerDetails"]}
+RT_ENUM! { enum AppointmentSummaryCardView: i32 ["Windows.ApplicationModel.Appointments.AppointmentSummaryCardView"] {
     System (AppointmentSummaryCardView_System) = 0, App (AppointmentSummaryCardView_App) = 1,
 }}
-RT_ENUM! { enum AppointmentWeekOfMonth: i32 {
+RT_ENUM! { enum AppointmentWeekOfMonth: i32 ["Windows.ApplicationModel.Appointments.AppointmentWeekOfMonth"] {
     First (AppointmentWeekOfMonth_First) = 0, Second (AppointmentWeekOfMonth_Second) = 1, Third (AppointmentWeekOfMonth_Third) = 2, Fourth (AppointmentWeekOfMonth_Fourth) = 3, Last (AppointmentWeekOfMonth_Last) = 4,
 }}
-RT_ENUM! { enum FindAppointmentCalendarsOptions: u32 {
+RT_ENUM! { enum FindAppointmentCalendarsOptions: u32 ["Windows.ApplicationModel.Appointments.FindAppointmentCalendarsOptions"] {
     None (FindAppointmentCalendarsOptions_None) = 0, IncludeHidden (FindAppointmentCalendarsOptions_IncludeHidden) = 1,
 }}
 DEFINE_IID!(IID_IFindAppointmentsOptions, 1442307157, 39234, 12422, 130, 181, 44, 178, 159, 100, 213, 245);
@@ -4467,10 +4467,10 @@ impl IFindAppointmentsOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FindAppointmentsOptions: IFindAppointmentsOptions}
+RT_CLASS!{class FindAppointmentsOptions: IFindAppointmentsOptions ["Windows.ApplicationModel.Appointments.FindAppointmentsOptions"]}
 impl RtActivatable<IActivationFactory> for FindAppointmentsOptions {}
 DEFINE_CLSID!(FindAppointmentsOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,70,105,110,100,65,112,112,111,105,110,116,109,101,110,116,115,79,112,116,105,111,110,115,0]) [CLSID_FindAppointmentsOptions]);
-RT_ENUM! { enum RecurrenceType: i32 {
+RT_ENUM! { enum RecurrenceType: i32 ["Windows.ApplicationModel.Appointments.RecurrenceType"] {
     Master (RecurrenceType_Master) = 0, Instance (RecurrenceType_Instance) = 1, ExceptionInstance (RecurrenceType_ExceptionInstance) = 2,
 }}
 pub mod appointmentsprovider { // Windows.ApplicationModel.Appointments.AppointmentsProvider
@@ -4512,7 +4512,7 @@ impl IAddAppointmentOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AddAppointmentOperation: IAddAppointmentOperation}
+RT_CLASS!{class AddAppointmentOperation: IAddAppointmentOperation ["Windows.ApplicationModel.Appointments.AppointmentsProvider.AddAppointmentOperation"]}
 RT_CLASS!{static class AppointmentsProviderLaunchActionVerbs}
 impl RtActivatable<IAppointmentsProviderLaunchActionVerbsStatics> for AppointmentsProviderLaunchActionVerbs {}
 impl RtActivatable<IAppointmentsProviderLaunchActionVerbsStatics2> for AppointmentsProviderLaunchActionVerbs {}
@@ -4617,7 +4617,7 @@ impl IRemoveAppointmentOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoveAppointmentOperation: IRemoveAppointmentOperation}
+RT_CLASS!{class RemoveAppointmentOperation: IRemoveAppointmentOperation ["Windows.ApplicationModel.Appointments.AppointmentsProvider.RemoveAppointmentOperation"]}
 DEFINE_IID!(IID_IReplaceAppointmentOperation, 4103093659, 40545, 19938, 167, 50, 38, 135, 192, 125, 29, 232);
 RT_INTERFACE!{interface IReplaceAppointmentOperation(IReplaceAppointmentOperationVtbl): IInspectable(IInspectableVtbl) [IID_IReplaceAppointmentOperation] {
     fn get_AppointmentId(&self, out: *mut HSTRING) -> HRESULT,
@@ -4667,7 +4667,7 @@ impl IReplaceAppointmentOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ReplaceAppointmentOperation: IReplaceAppointmentOperation}
+RT_CLASS!{class ReplaceAppointmentOperation: IReplaceAppointmentOperation ["Windows.ApplicationModel.Appointments.AppointmentsProvider.ReplaceAppointmentOperation"]}
 } // Windows.ApplicationModel.Appointments.AppointmentsProvider
 pub mod dataprovider { // Windows.ApplicationModel.Appointments.DataProvider
 use ::prelude::*;
@@ -4724,7 +4724,7 @@ impl IAppointmentCalendarCancelMeetingRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendarCancelMeetingRequest: IAppointmentCalendarCancelMeetingRequest}
+RT_CLASS!{class AppointmentCalendarCancelMeetingRequest: IAppointmentCalendarCancelMeetingRequest ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentCalendarCancelMeetingRequest"]}
 DEFINE_IID!(IID_IAppointmentCalendarCancelMeetingRequestEventArgs, 444186134, 32560, 20021, 190, 239, 157, 44, 123, 109, 202, 225);
 RT_INTERFACE!{interface IAppointmentCalendarCancelMeetingRequestEventArgs(IAppointmentCalendarCancelMeetingRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarCancelMeetingRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut AppointmentCalendarCancelMeetingRequest) -> HRESULT,
@@ -4742,7 +4742,7 @@ impl IAppointmentCalendarCancelMeetingRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendarCancelMeetingRequestEventArgs: IAppointmentCalendarCancelMeetingRequestEventArgs}
+RT_CLASS!{class AppointmentCalendarCancelMeetingRequestEventArgs: IAppointmentCalendarCancelMeetingRequestEventArgs ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentCalendarCancelMeetingRequestEventArgs"]}
 DEFINE_IID!(IID_IAppointmentCalendarCreateOrUpdateAppointmentRequest, 778236594, 51862, 18604, 145, 36, 64, 107, 25, 254, 250, 112);
 RT_INTERFACE!{interface IAppointmentCalendarCreateOrUpdateAppointmentRequest(IAppointmentCalendarCreateOrUpdateAppointmentRequestVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarCreateOrUpdateAppointmentRequest] {
     fn get_AppointmentCalendarLocalId(&self, out: *mut HSTRING) -> HRESULT,
@@ -4784,7 +4784,7 @@ impl IAppointmentCalendarCreateOrUpdateAppointmentRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendarCreateOrUpdateAppointmentRequest: IAppointmentCalendarCreateOrUpdateAppointmentRequest}
+RT_CLASS!{class AppointmentCalendarCreateOrUpdateAppointmentRequest: IAppointmentCalendarCreateOrUpdateAppointmentRequest ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentCalendarCreateOrUpdateAppointmentRequest"]}
 DEFINE_IID!(IID_IAppointmentCalendarCreateOrUpdateAppointmentRequestEventArgs, 3482185000, 46, 19447, 142, 157, 94, 32, 212, 154, 163, 186);
 RT_INTERFACE!{interface IAppointmentCalendarCreateOrUpdateAppointmentRequestEventArgs(IAppointmentCalendarCreateOrUpdateAppointmentRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarCreateOrUpdateAppointmentRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut AppointmentCalendarCreateOrUpdateAppointmentRequest) -> HRESULT,
@@ -4802,7 +4802,7 @@ impl IAppointmentCalendarCreateOrUpdateAppointmentRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendarCreateOrUpdateAppointmentRequestEventArgs: IAppointmentCalendarCreateOrUpdateAppointmentRequestEventArgs}
+RT_CLASS!{class AppointmentCalendarCreateOrUpdateAppointmentRequestEventArgs: IAppointmentCalendarCreateOrUpdateAppointmentRequestEventArgs ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentCalendarCreateOrUpdateAppointmentRequestEventArgs"]}
 DEFINE_IID!(IID_IAppointmentCalendarForwardMeetingRequest, 2196106838, 9910, 16979, 138, 143, 108, 245, 242, 255, 120, 132);
 RT_INTERFACE!{interface IAppointmentCalendarForwardMeetingRequest(IAppointmentCalendarForwardMeetingRequestVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarForwardMeetingRequest] {
     fn get_AppointmentCalendarLocalId(&self, out: *mut HSTRING) -> HRESULT,
@@ -4862,7 +4862,7 @@ impl IAppointmentCalendarForwardMeetingRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendarForwardMeetingRequest: IAppointmentCalendarForwardMeetingRequest}
+RT_CLASS!{class AppointmentCalendarForwardMeetingRequest: IAppointmentCalendarForwardMeetingRequest ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentCalendarForwardMeetingRequest"]}
 DEFINE_IID!(IID_IAppointmentCalendarForwardMeetingRequestEventArgs, 822678810, 9122, 17149, 156, 130, 201, 166, 13, 89, 248, 168);
 RT_INTERFACE!{interface IAppointmentCalendarForwardMeetingRequestEventArgs(IAppointmentCalendarForwardMeetingRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarForwardMeetingRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut AppointmentCalendarForwardMeetingRequest) -> HRESULT,
@@ -4880,7 +4880,7 @@ impl IAppointmentCalendarForwardMeetingRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendarForwardMeetingRequestEventArgs: IAppointmentCalendarForwardMeetingRequestEventArgs}
+RT_CLASS!{class AppointmentCalendarForwardMeetingRequestEventArgs: IAppointmentCalendarForwardMeetingRequestEventArgs ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentCalendarForwardMeetingRequestEventArgs"]}
 DEFINE_IID!(IID_IAppointmentCalendarProposeNewTimeForMeetingRequest, 3457967093, 60918, 17347, 130, 183, 190, 107, 54, 140, 105, 0);
 RT_INTERFACE!{interface IAppointmentCalendarProposeNewTimeForMeetingRequest(IAppointmentCalendarProposeNewTimeForMeetingRequestVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarProposeNewTimeForMeetingRequest] {
     fn get_AppointmentCalendarLocalId(&self, out: *mut HSTRING) -> HRESULT,
@@ -4940,7 +4940,7 @@ impl IAppointmentCalendarProposeNewTimeForMeetingRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendarProposeNewTimeForMeetingRequest: IAppointmentCalendarProposeNewTimeForMeetingRequest}
+RT_CLASS!{class AppointmentCalendarProposeNewTimeForMeetingRequest: IAppointmentCalendarProposeNewTimeForMeetingRequest ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentCalendarProposeNewTimeForMeetingRequest"]}
 DEFINE_IID!(IID_IAppointmentCalendarProposeNewTimeForMeetingRequestEventArgs, 3537336280, 65233, 17024, 163, 186, 46, 31, 71, 96, 154, 162);
 RT_INTERFACE!{interface IAppointmentCalendarProposeNewTimeForMeetingRequestEventArgs(IAppointmentCalendarProposeNewTimeForMeetingRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarProposeNewTimeForMeetingRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut AppointmentCalendarProposeNewTimeForMeetingRequest) -> HRESULT,
@@ -4958,7 +4958,7 @@ impl IAppointmentCalendarProposeNewTimeForMeetingRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendarProposeNewTimeForMeetingRequestEventArgs: IAppointmentCalendarProposeNewTimeForMeetingRequestEventArgs}
+RT_CLASS!{class AppointmentCalendarProposeNewTimeForMeetingRequestEventArgs: IAppointmentCalendarProposeNewTimeForMeetingRequestEventArgs ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentCalendarProposeNewTimeForMeetingRequestEventArgs"]}
 DEFINE_IID!(IID_IAppointmentCalendarSyncManagerSyncRequest, 313210923, 29027, 19030, 154, 78, 114, 35, 168, 74, 223, 70);
 RT_INTERFACE!{interface IAppointmentCalendarSyncManagerSyncRequest(IAppointmentCalendarSyncManagerSyncRequestVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarSyncManagerSyncRequest] {
     fn get_AppointmentCalendarLocalId(&self, out: *mut HSTRING) -> HRESULT,
@@ -4982,7 +4982,7 @@ impl IAppointmentCalendarSyncManagerSyncRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendarSyncManagerSyncRequest: IAppointmentCalendarSyncManagerSyncRequest}
+RT_CLASS!{class AppointmentCalendarSyncManagerSyncRequest: IAppointmentCalendarSyncManagerSyncRequest ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentCalendarSyncManagerSyncRequest"]}
 DEFINE_IID!(IID_IAppointmentCalendarSyncManagerSyncRequestEventArgs, 3390555895, 644, 20189, 135, 186, 77, 143, 105, 220, 245, 192);
 RT_INTERFACE!{interface IAppointmentCalendarSyncManagerSyncRequestEventArgs(IAppointmentCalendarSyncManagerSyncRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarSyncManagerSyncRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut AppointmentCalendarSyncManagerSyncRequest) -> HRESULT,
@@ -5000,7 +5000,7 @@ impl IAppointmentCalendarSyncManagerSyncRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendarSyncManagerSyncRequestEventArgs: IAppointmentCalendarSyncManagerSyncRequestEventArgs}
+RT_CLASS!{class AppointmentCalendarSyncManagerSyncRequestEventArgs: IAppointmentCalendarSyncManagerSyncRequestEventArgs ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentCalendarSyncManagerSyncRequestEventArgs"]}
 DEFINE_IID!(IID_IAppointmentCalendarUpdateMeetingResponseRequest, 2741854348, 49821, 19348, 176, 134, 126, 159, 247, 189, 132, 160);
 RT_INTERFACE!{interface IAppointmentCalendarUpdateMeetingResponseRequest(IAppointmentCalendarUpdateMeetingResponseRequestVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarUpdateMeetingResponseRequest] {
     fn get_AppointmentCalendarLocalId(&self, out: *mut HSTRING) -> HRESULT,
@@ -5060,7 +5060,7 @@ impl IAppointmentCalendarUpdateMeetingResponseRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendarUpdateMeetingResponseRequest: IAppointmentCalendarUpdateMeetingResponseRequest}
+RT_CLASS!{class AppointmentCalendarUpdateMeetingResponseRequest: IAppointmentCalendarUpdateMeetingResponseRequest ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentCalendarUpdateMeetingResponseRequest"]}
 DEFINE_IID!(IID_IAppointmentCalendarUpdateMeetingResponseRequestEventArgs, 2289408131, 38847, 18333, 174, 213, 11, 232, 206, 86, 125, 30);
 RT_INTERFACE!{interface IAppointmentCalendarUpdateMeetingResponseRequestEventArgs(IAppointmentCalendarUpdateMeetingResponseRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarUpdateMeetingResponseRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut AppointmentCalendarUpdateMeetingResponseRequest) -> HRESULT,
@@ -5078,7 +5078,7 @@ impl IAppointmentCalendarUpdateMeetingResponseRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentCalendarUpdateMeetingResponseRequestEventArgs: IAppointmentCalendarUpdateMeetingResponseRequestEventArgs}
+RT_CLASS!{class AppointmentCalendarUpdateMeetingResponseRequestEventArgs: IAppointmentCalendarUpdateMeetingResponseRequestEventArgs ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentCalendarUpdateMeetingResponseRequestEventArgs"]}
 DEFINE_IID!(IID_IAppointmentDataProviderConnection, 4091387267, 12884, 18015, 171, 219, 146, 128, 70, 85, 44, 244);
 RT_INTERFACE!{interface IAppointmentDataProviderConnection(IAppointmentDataProviderConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentDataProviderConnection] {
     fn add_SyncRequested(&self, handler: *mut foundation::TypedEventHandler<AppointmentDataProviderConnection, AppointmentCalendarSyncManagerSyncRequestEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5155,7 +5155,7 @@ impl IAppointmentDataProviderConnection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentDataProviderConnection: IAppointmentDataProviderConnection}
+RT_CLASS!{class AppointmentDataProviderConnection: IAppointmentDataProviderConnection ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentDataProviderConnection"]}
 DEFINE_IID!(IID_IAppointmentDataProviderTriggerDetails, 3005758465, 32274, 20062, 177, 239, 116, 251, 104, 172, 111, 42);
 RT_INTERFACE!{interface IAppointmentDataProviderTriggerDetails(IAppointmentDataProviderTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentDataProviderTriggerDetails] {
     fn get_Connection(&self, out: *mut *mut AppointmentDataProviderConnection) -> HRESULT
@@ -5167,7 +5167,7 @@ impl IAppointmentDataProviderTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppointmentDataProviderTriggerDetails: IAppointmentDataProviderTriggerDetails}
+RT_CLASS!{class AppointmentDataProviderTriggerDetails: IAppointmentDataProviderTriggerDetails ["Windows.ApplicationModel.Appointments.DataProvider.AppointmentDataProviderTriggerDetails"]}
 } // Windows.ApplicationModel.Appointments.DataProvider
 } // Windows.ApplicationModel.Appointments
 pub mod background { // Windows.ApplicationModel.Background
@@ -5203,7 +5203,7 @@ impl IActivitySensorTrigger {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ActivitySensorTrigger: IActivitySensorTrigger}
+RT_CLASS!{class ActivitySensorTrigger: IActivitySensorTrigger ["Windows.ApplicationModel.Background.ActivitySensorTrigger"]}
 impl RtActivatable<IActivitySensorTriggerFactory> for ActivitySensorTrigger {}
 impl ActivitySensorTrigger {
     #[inline] pub fn create(reportIntervalInMilliseconds: u32) -> Result<ComPtr<ActivitySensorTrigger>> {
@@ -5222,7 +5222,7 @@ impl IActivitySensorTriggerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AlarmAccessStatus: i32 {
+RT_ENUM! { enum AlarmAccessStatus: i32 ["Windows.ApplicationModel.Background.AlarmAccessStatus"] {
     Unspecified (AlarmAccessStatus_Unspecified) = 0, AllowedWithWakeupCapability (AlarmAccessStatus_AllowedWithWakeupCapability) = 1, AllowedWithoutWakeupCapability (AlarmAccessStatus_AllowedWithoutWakeupCapability) = 2, Denied (AlarmAccessStatus_Denied) = 3,
 }}
 RT_CLASS!{static class AlarmApplicationManager}
@@ -5269,7 +5269,7 @@ impl IAppBroadcastTrigger {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastTrigger: IAppBroadcastTrigger}
+RT_CLASS!{class AppBroadcastTrigger: IAppBroadcastTrigger ["Windows.ApplicationModel.Background.AppBroadcastTrigger"]}
 impl RtActivatable<IAppBroadcastTriggerFactory> for AppBroadcastTrigger {}
 impl AppBroadcastTrigger {
     #[inline] pub fn create_app_broadcast_trigger(providerKey: &HStringArg) -> Result<ComPtr<AppBroadcastTrigger>> {
@@ -5359,7 +5359,7 @@ impl IAppBroadcastTriggerProviderInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppBroadcastTriggerProviderInfo: IAppBroadcastTriggerProviderInfo}
+RT_CLASS!{class AppBroadcastTriggerProviderInfo: IAppBroadcastTriggerProviderInfo ["Windows.ApplicationModel.Background.AppBroadcastTriggerProviderInfo"]}
 DEFINE_IID!(IID_IApplicationTrigger, 189171248, 38260, 18732, 158, 147, 26, 58, 230, 51, 95, 233);
 RT_INTERFACE!{interface IApplicationTrigger(IApplicationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationTrigger] {
     fn RequestAsync(&self, out: *mut *mut foundation::IAsyncOperation<ApplicationTriggerResult>) -> HRESULT,
@@ -5377,7 +5377,7 @@ impl IApplicationTrigger {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ApplicationTrigger: IApplicationTrigger}
+RT_CLASS!{class ApplicationTrigger: IApplicationTrigger ["Windows.ApplicationModel.Background.ApplicationTrigger"]}
 impl RtActivatable<IActivationFactory> for ApplicationTrigger {}
 DEFINE_CLSID!(ApplicationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,112,112,108,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ApplicationTrigger]);
 DEFINE_IID!(IID_IApplicationTriggerDetails, 2547804850, 8729, 19102, 156, 94, 65, 208, 71, 247, 110, 130);
@@ -5391,21 +5391,21 @@ impl IApplicationTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ApplicationTriggerDetails: IApplicationTriggerDetails}
-RT_ENUM! { enum ApplicationTriggerResult: i32 {
+RT_CLASS!{class ApplicationTriggerDetails: IApplicationTriggerDetails ["Windows.ApplicationModel.Background.ApplicationTriggerDetails"]}
+RT_ENUM! { enum ApplicationTriggerResult: i32 ["Windows.ApplicationModel.Background.ApplicationTriggerResult"] {
     Allowed (ApplicationTriggerResult_Allowed) = 0, CurrentlyRunning (ApplicationTriggerResult_CurrentlyRunning) = 1, DisabledByPolicy (ApplicationTriggerResult_DisabledByPolicy) = 2, UnknownError (ApplicationTriggerResult_UnknownError) = 3,
 }}
 DEFINE_IID!(IID_IAppointmentStoreNotificationTrigger, 1691616268, 49665, 17069, 170, 42, 226, 27, 163, 66, 91, 109);
 RT_INTERFACE!{interface IAppointmentStoreNotificationTrigger(IAppointmentStoreNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStoreNotificationTrigger] {
     
 }}
-RT_CLASS!{class AppointmentStoreNotificationTrigger: IAppointmentStoreNotificationTrigger}
+RT_CLASS!{class AppointmentStoreNotificationTrigger: IAppointmentStoreNotificationTrigger ["Windows.ApplicationModel.Background.AppointmentStoreNotificationTrigger"]}
 impl RtActivatable<IActivationFactory> for AppointmentStoreNotificationTrigger {}
 DEFINE_CLSID!(AppointmentStoreNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,112,112,111,105,110,116,109,101,110,116,83,116,111,114,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_AppointmentStoreNotificationTrigger]);
-RT_ENUM! { enum BackgroundAccessRequestKind: i32 {
+RT_ENUM! { enum BackgroundAccessRequestKind: i32 ["Windows.ApplicationModel.Background.BackgroundAccessRequestKind"] {
     AlwaysAllowed (BackgroundAccessRequestKind_AlwaysAllowed) = 0, AllowedSubjectToSystemPolicy (BackgroundAccessRequestKind_AllowedSubjectToSystemPolicy) = 1,
 }}
-RT_ENUM! { enum BackgroundAccessStatus: i32 {
+RT_ENUM! { enum BackgroundAccessStatus: i32 ["Windows.ApplicationModel.Background.BackgroundAccessStatus"] {
     Unspecified (BackgroundAccessStatus_Unspecified) = 0, AllowedWithAlwaysOnRealTimeConnectivity (BackgroundAccessStatus_AllowedWithAlwaysOnRealTimeConnectivity) = 1, AllowedMayUseActiveRealTimeConnectivity (BackgroundAccessStatus_AllowedMayUseActiveRealTimeConnectivity) = 2, Denied (BackgroundAccessStatus_Denied) = 3, AlwaysAllowed (BackgroundAccessStatus_AlwaysAllowed) = 4, AllowedSubjectToSystemPolicy (BackgroundAccessStatus_AllowedSubjectToSystemPolicy) = 5, DeniedBySystemPolicy (BackgroundAccessStatus_DeniedBySystemPolicy) = 6, DeniedByUser (BackgroundAccessStatus_DeniedByUser) = 7,
 }}
 DEFINE_IID!(IID_IBackgroundCondition, 2923995630, 35153, 16394, 131, 2, 156, 156, 154, 42, 58, 59);
@@ -5542,7 +5542,7 @@ impl IBackgroundTaskBuilder {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundTaskBuilder: IBackgroundTaskBuilder}
+RT_CLASS!{class BackgroundTaskBuilder: IBackgroundTaskBuilder ["Windows.ApplicationModel.Background.BackgroundTaskBuilder"]}
 impl RtActivatable<IActivationFactory> for BackgroundTaskBuilder {}
 DEFINE_CLSID!(BackgroundTaskBuilder(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,97,99,107,103,114,111,117,110,100,84,97,115,107,66,117,105,108,100,101,114,0]) [CLSID_BackgroundTaskBuilder]);
 DEFINE_IID!(IID_IBackgroundTaskBuilder2, 1793576881, 4175, 16493, 141, 182, 132, 74, 87, 15, 66, 187);
@@ -5603,7 +5603,7 @@ impl BackgroundTaskCanceledEventHandler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BackgroundTaskCancellationReason: i32 {
+RT_ENUM! { enum BackgroundTaskCancellationReason: i32 ["Windows.ApplicationModel.Background.BackgroundTaskCancellationReason"] {
     Abort (BackgroundTaskCancellationReason_Abort) = 0, Terminating (BackgroundTaskCancellationReason_Terminating) = 1, LoggingOff (BackgroundTaskCancellationReason_LoggingOff) = 2, ServicingUpdate (BackgroundTaskCancellationReason_ServicingUpdate) = 3, IdleTask (BackgroundTaskCancellationReason_IdleTask) = 4, Uninstall (BackgroundTaskCancellationReason_Uninstall) = 5, ConditionLoss (BackgroundTaskCancellationReason_ConditionLoss) = 6, SystemPolicy (BackgroundTaskCancellationReason_SystemPolicy) = 7, QuietHoursEntered (BackgroundTaskCancellationReason_QuietHoursEntered) = 8, ExecutionTimeExceeded (BackgroundTaskCancellationReason_ExecutionTimeExceeded) = 9, ResourceRevocation (BackgroundTaskCancellationReason_ResourceRevocation) = 10, EnergySaver (BackgroundTaskCancellationReason_EnergySaver) = 11,
 }}
 DEFINE_IID!(IID_IBackgroundTaskCompletedEventArgs, 1448945103, 61961, 18676, 153, 103, 43, 24, 79, 123, 251, 240);
@@ -5622,7 +5622,7 @@ impl IBackgroundTaskCompletedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundTaskCompletedEventArgs: IBackgroundTaskCompletedEventArgs}
+RT_CLASS!{class BackgroundTaskCompletedEventArgs: IBackgroundTaskCompletedEventArgs ["Windows.ApplicationModel.Background.BackgroundTaskCompletedEventArgs"]}
 DEFINE_IID!(IID_BackgroundTaskCompletedEventHandler, 1530456361, 41094, 18087, 166, 120, 67, 145, 53, 130, 43, 207);
 RT_DELEGATE!{delegate BackgroundTaskCompletedEventHandler(BackgroundTaskCompletedEventHandlerVtbl, BackgroundTaskCompletedEventHandlerImpl) [IID_BackgroundTaskCompletedEventHandler] {
     fn Invoke(&self, sender: *mut BackgroundTaskRegistration, args: *mut BackgroundTaskCompletedEventArgs) -> HRESULT
@@ -5643,7 +5643,7 @@ impl IBackgroundTaskDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundTaskDeferral: IBackgroundTaskDeferral}
+RT_CLASS!{class BackgroundTaskDeferral: IBackgroundTaskDeferral ["Windows.ApplicationModel.Background.BackgroundTaskDeferral"]}
 DEFINE_IID!(IID_IBackgroundTaskInstance, 2254166650, 8664, 17779, 143, 50, 146, 138, 27, 6, 65, 246);
 RT_INTERFACE!{interface IBackgroundTaskInstance(IBackgroundTaskInstanceVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskInstance] {
     fn get_InstanceId(&self, out: *mut Guid) -> HRESULT,
@@ -5740,7 +5740,7 @@ impl IBackgroundTaskProgressEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundTaskProgressEventArgs: IBackgroundTaskProgressEventArgs}
+RT_CLASS!{class BackgroundTaskProgressEventArgs: IBackgroundTaskProgressEventArgs ["Windows.ApplicationModel.Background.BackgroundTaskProgressEventArgs"]}
 DEFINE_IID!(IID_BackgroundTaskProgressEventHandler, 1189111868, 35464, 19609, 128, 76, 118, 137, 127, 98, 119, 166);
 RT_DELEGATE!{delegate BackgroundTaskProgressEventHandler(BackgroundTaskProgressEventHandlerVtbl, BackgroundTaskProgressEventHandlerImpl) [IID_BackgroundTaskProgressEventHandler] {
     fn Invoke(&self, sender: *mut BackgroundTaskRegistration, args: *mut BackgroundTaskProgressEventArgs) -> HRESULT
@@ -5795,7 +5795,7 @@ impl IBackgroundTaskRegistration {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundTaskRegistration: IBackgroundTaskRegistration}
+RT_CLASS!{class BackgroundTaskRegistration: IBackgroundTaskRegistration ["Windows.ApplicationModel.Background.BackgroundTaskRegistration"]}
 impl RtActivatable<IBackgroundTaskRegistrationStatics> for BackgroundTaskRegistration {}
 impl RtActivatable<IBackgroundTaskRegistrationStatics2> for BackgroundTaskRegistration {}
 impl BackgroundTaskRegistration {
@@ -5866,7 +5866,7 @@ impl IBackgroundTaskRegistrationGroup {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundTaskRegistrationGroup: IBackgroundTaskRegistrationGroup}
+RT_CLASS!{class BackgroundTaskRegistrationGroup: IBackgroundTaskRegistrationGroup ["Windows.ApplicationModel.Background.BackgroundTaskRegistrationGroup"]}
 impl RtActivatable<IBackgroundTaskRegistrationGroupFactory> for BackgroundTaskRegistrationGroup {}
 impl BackgroundTaskRegistrationGroup {
     #[inline] pub fn create(id: &HStringArg) -> Result<ComPtr<BackgroundTaskRegistrationGroup>> {
@@ -5922,7 +5922,7 @@ impl IBackgroundTaskRegistrationStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BackgroundTaskThrottleCounter: i32 {
+RT_ENUM! { enum BackgroundTaskThrottleCounter: i32 ["Windows.ApplicationModel.Background.BackgroundTaskThrottleCounter"] {
     All (BackgroundTaskThrottleCounter_All) = 0, Cpu (BackgroundTaskThrottleCounter_Cpu) = 1, Network (BackgroundTaskThrottleCounter_Network) = 2,
 }}
 DEFINE_IID!(IID_IBackgroundTrigger, 2226364504, 24615, 19335, 151, 144, 189, 243, 247, 87, 219, 215);
@@ -5948,7 +5948,7 @@ impl IBackgroundWorkCostStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BackgroundWorkCostValue: i32 {
+RT_ENUM! { enum BackgroundWorkCostValue: i32 ["Windows.ApplicationModel.Background.BackgroundWorkCostValue"] {
     Low (BackgroundWorkCostValue_Low) = 0, Medium (BackgroundWorkCostValue_Medium) = 1, High (BackgroundWorkCostValue_High) = 2,
 }}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementPublisherTrigger, 2872976914, 9683, 18606, 135, 36, 216, 24, 119, 174, 97, 41);
@@ -5962,7 +5962,7 @@ impl IBluetoothLEAdvertisementPublisherTrigger {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAdvertisementPublisherTrigger: IBluetoothLEAdvertisementPublisherTrigger}
+RT_CLASS!{class BluetoothLEAdvertisementPublisherTrigger: IBluetoothLEAdvertisementPublisherTrigger ["Windows.ApplicationModel.Background.BluetoothLEAdvertisementPublisherTrigger"]}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementPublisherTrigger {}
 DEFINE_CLSID!(BluetoothLEAdvertisementPublisherTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,80,117,98,108,105,115,104,101,114,84,114,105,103,103,101,114,0]) [CLSID_BluetoothLEAdvertisementPublisherTrigger]);
 DEFINE_IID!(IID_IBluetoothLEAdvertisementWatcherTrigger, 447420441, 48353, 18667, 168, 39, 89, 251, 124, 238, 82, 166);
@@ -6016,14 +6016,14 @@ impl IBluetoothLEAdvertisementWatcherTrigger {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BluetoothLEAdvertisementWatcherTrigger: IBluetoothLEAdvertisementWatcherTrigger}
+RT_CLASS!{class BluetoothLEAdvertisementWatcherTrigger: IBluetoothLEAdvertisementWatcherTrigger ["Windows.ApplicationModel.Background.BluetoothLEAdvertisementWatcherTrigger"]}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementWatcherTrigger {}
 DEFINE_CLSID!(BluetoothLEAdvertisementWatcherTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,87,97,116,99,104,101,114,84,114,105,103,103,101,114,0]) [CLSID_BluetoothLEAdvertisementWatcherTrigger]);
 DEFINE_IID!(IID_ICachedFileUpdaterTrigger, 3793530603, 13042, 19761, 181, 83, 185, 224, 27, 222, 55, 224);
 RT_INTERFACE!{interface ICachedFileUpdaterTrigger(ICachedFileUpdaterTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterTrigger] {
     
 }}
-RT_CLASS!{class CachedFileUpdaterTrigger: ICachedFileUpdaterTrigger}
+RT_CLASS!{class CachedFileUpdaterTrigger: ICachedFileUpdaterTrigger ["Windows.ApplicationModel.Background.CachedFileUpdaterTrigger"]}
 impl RtActivatable<IActivationFactory> for CachedFileUpdaterTrigger {}
 DEFINE_CLSID!(CachedFileUpdaterTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,97,99,104,101,100,70,105,108,101,85,112,100,97,116,101,114,84,114,105,103,103,101,114,0]) [CLSID_CachedFileUpdaterTrigger]);
 DEFINE_IID!(IID_ICachedFileUpdaterTriggerDetails, 1904446483, 4884, 18356, 149, 151, 220, 126, 36, 140, 23, 204);
@@ -6051,33 +6051,33 @@ impl ICachedFileUpdaterTriggerDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CachedFileUpdaterTriggerDetails: ICachedFileUpdaterTriggerDetails}
+RT_CLASS!{class CachedFileUpdaterTriggerDetails: ICachedFileUpdaterTriggerDetails ["Windows.ApplicationModel.Background.CachedFileUpdaterTriggerDetails"]}
 DEFINE_IID!(IID_IChatMessageNotificationTrigger, 1362838463, 7488, 23645, 120, 245, 201, 35, 254, 227, 115, 158);
 RT_INTERFACE!{interface IChatMessageNotificationTrigger(IChatMessageNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageNotificationTrigger] {
     
 }}
-RT_CLASS!{class ChatMessageNotificationTrigger: IChatMessageNotificationTrigger}
+RT_CLASS!{class ChatMessageNotificationTrigger: IChatMessageNotificationTrigger ["Windows.ApplicationModel.Background.ChatMessageNotificationTrigger"]}
 impl RtActivatable<IActivationFactory> for ChatMessageNotificationTrigger {}
 DEFINE_CLSID!(ChatMessageNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,104,97,116,77,101,115,115,97,103,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ChatMessageNotificationTrigger]);
 DEFINE_IID!(IID_IChatMessageReceivedNotificationTrigger, 1050899982, 47861, 16503, 136, 233, 6, 12, 246, 240, 198, 213);
 RT_INTERFACE!{interface IChatMessageReceivedNotificationTrigger(IChatMessageReceivedNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageReceivedNotificationTrigger] {
     
 }}
-RT_CLASS!{class ChatMessageReceivedNotificationTrigger: IChatMessageReceivedNotificationTrigger}
+RT_CLASS!{class ChatMessageReceivedNotificationTrigger: IChatMessageReceivedNotificationTrigger ["Windows.ApplicationModel.Background.ChatMessageReceivedNotificationTrigger"]}
 impl RtActivatable<IActivationFactory> for ChatMessageReceivedNotificationTrigger {}
 DEFINE_CLSID!(ChatMessageReceivedNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,104,97,116,77,101,115,115,97,103,101,82,101,99,101,105,118,101,100,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ChatMessageReceivedNotificationTrigger]);
 DEFINE_IID!(IID_ICommunicationBlockingAppSetAsActiveTrigger, 4220646026, 5797, 18541, 151, 76, 120, 53, 168, 71, 123, 226);
 RT_INTERFACE!{interface ICommunicationBlockingAppSetAsActiveTrigger(ICommunicationBlockingAppSetAsActiveTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ICommunicationBlockingAppSetAsActiveTrigger] {
     
 }}
-RT_CLASS!{class CommunicationBlockingAppSetAsActiveTrigger: ICommunicationBlockingAppSetAsActiveTrigger}
+RT_CLASS!{class CommunicationBlockingAppSetAsActiveTrigger: ICommunicationBlockingAppSetAsActiveTrigger ["Windows.ApplicationModel.Background.CommunicationBlockingAppSetAsActiveTrigger"]}
 impl RtActivatable<IActivationFactory> for CommunicationBlockingAppSetAsActiveTrigger {}
 DEFINE_CLSID!(CommunicationBlockingAppSetAsActiveTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,111,109,109,117,110,105,99,97,116,105,111,110,66,108,111,99,107,105,110,103,65,112,112,83,101,116,65,115,65,99,116,105,118,101,84,114,105,103,103,101,114,0]) [CLSID_CommunicationBlockingAppSetAsActiveTrigger]);
 DEFINE_IID!(IID_IContactStoreNotificationTrigger, 3358802331, 18181, 17777, 154, 22, 6, 185, 151, 191, 156, 150);
 RT_INTERFACE!{interface IContactStoreNotificationTrigger(IContactStoreNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IContactStoreNotificationTrigger] {
     
 }}
-RT_CLASS!{class ContactStoreNotificationTrigger: IContactStoreNotificationTrigger}
+RT_CLASS!{class ContactStoreNotificationTrigger: IContactStoreNotificationTrigger ["Windows.ApplicationModel.Background.ContactStoreNotificationTrigger"]}
 impl RtActivatable<IActivationFactory> for ContactStoreNotificationTrigger {}
 DEFINE_CLSID!(ContactStoreNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,67,111,110,116,97,99,116,83,116,111,114,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_ContactStoreNotificationTrigger]);
 DEFINE_IID!(IID_IContentPrefetchTrigger, 1896228846, 1274, 17419, 128, 192, 23, 50, 2, 25, 158, 93);
@@ -6091,7 +6091,7 @@ impl IContentPrefetchTrigger {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContentPrefetchTrigger: IContentPrefetchTrigger}
+RT_CLASS!{class ContentPrefetchTrigger: IContentPrefetchTrigger ["Windows.ApplicationModel.Background.ContentPrefetchTrigger"]}
 impl RtActivatable<IContentPrefetchTriggerFactory> for ContentPrefetchTrigger {}
 impl RtActivatable<IActivationFactory> for ContentPrefetchTrigger {}
 impl ContentPrefetchTrigger {
@@ -6128,7 +6128,7 @@ impl ICustomSystemEventTrigger {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CustomSystemEventTrigger: ICustomSystemEventTrigger}
+RT_CLASS!{class CustomSystemEventTrigger: ICustomSystemEventTrigger ["Windows.ApplicationModel.Background.CustomSystemEventTrigger"]}
 impl RtActivatable<ICustomSystemEventTriggerFactory> for CustomSystemEventTrigger {}
 impl CustomSystemEventTrigger {
     #[inline] pub fn create(triggerId: &HStringArg, recurrence: CustomSystemEventTriggerRecurrence) -> Result<ComPtr<CustomSystemEventTrigger>> {
@@ -6147,7 +6147,7 @@ impl ICustomSystemEventTriggerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CustomSystemEventTriggerRecurrence: i32 {
+RT_ENUM! { enum CustomSystemEventTriggerRecurrence: i32 ["Windows.ApplicationModel.Background.CustomSystemEventTriggerRecurrence"] {
     Once (CustomSystemEventTriggerRecurrence_Once) = 0, Always (CustomSystemEventTriggerRecurrence_Always) = 1,
 }}
 DEFINE_IID!(IID_IDeviceConnectionChangeTrigger, 2424790628, 15581, 20219, 171, 28, 91, 59, 106, 96, 206, 52);
@@ -6178,7 +6178,7 @@ impl IDeviceConnectionChangeTrigger {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceConnectionChangeTrigger: IDeviceConnectionChangeTrigger}
+RT_CLASS!{class DeviceConnectionChangeTrigger: IDeviceConnectionChangeTrigger ["Windows.ApplicationModel.Background.DeviceConnectionChangeTrigger"]}
 impl RtActivatable<IDeviceConnectionChangeTriggerStatics> for DeviceConnectionChangeTrigger {}
 impl DeviceConnectionChangeTrigger {
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DeviceConnectionChangeTrigger>>> {
@@ -6214,7 +6214,7 @@ impl IDeviceManufacturerNotificationTrigger {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceManufacturerNotificationTrigger: IDeviceManufacturerNotificationTrigger}
+RT_CLASS!{class DeviceManufacturerNotificationTrigger: IDeviceManufacturerNotificationTrigger ["Windows.ApplicationModel.Background.DeviceManufacturerNotificationTrigger"]}
 impl RtActivatable<IDeviceManufacturerNotificationTriggerFactory> for DeviceManufacturerNotificationTrigger {}
 impl DeviceManufacturerNotificationTrigger {
     #[inline] pub fn create(triggerQualifier: &HStringArg, oneShot: bool) -> Result<ComPtr<DeviceManufacturerNotificationTrigger>> {
@@ -6250,10 +6250,10 @@ impl IDeviceServicingTrigger {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceServicingTrigger: IDeviceServicingTrigger}
+RT_CLASS!{class DeviceServicingTrigger: IDeviceServicingTrigger ["Windows.ApplicationModel.Background.DeviceServicingTrigger"]}
 impl RtActivatable<IActivationFactory> for DeviceServicingTrigger {}
 DEFINE_CLSID!(DeviceServicingTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,83,101,114,118,105,99,105,110,103,84,114,105,103,103,101,114,0]) [CLSID_DeviceServicingTrigger]);
-RT_ENUM! { enum DeviceTriggerResult: i32 {
+RT_ENUM! { enum DeviceTriggerResult: i32 ["Windows.ApplicationModel.Background.DeviceTriggerResult"] {
     Allowed (DeviceTriggerResult_Allowed) = 0, DeniedByUser (DeviceTriggerResult_DeniedByUser) = 1, DeniedBySystem (DeviceTriggerResult_DeniedBySystem) = 2, LowBattery (DeviceTriggerResult_LowBattery) = 3,
 }}
 DEFINE_IID!(IID_IDeviceUseTrigger, 229015569, 13135, 19799, 182, 236, 109, 202, 100, 180, 18, 228);
@@ -6273,19 +6273,19 @@ impl IDeviceUseTrigger {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceUseTrigger: IDeviceUseTrigger}
+RT_CLASS!{class DeviceUseTrigger: IDeviceUseTrigger ["Windows.ApplicationModel.Background.DeviceUseTrigger"]}
 impl RtActivatable<IActivationFactory> for DeviceUseTrigger {}
 DEFINE_CLSID!(DeviceUseTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,85,115,101,84,114,105,103,103,101,114,0]) [CLSID_DeviceUseTrigger]);
 DEFINE_IID!(IID_IDeviceWatcherTrigger, 2757853149, 34163, 16992, 190, 252, 91, 236, 137, 203, 105, 61);
 RT_INTERFACE!{interface IDeviceWatcherTrigger(IDeviceWatcherTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceWatcherTrigger] {
     
 }}
-RT_CLASS!{class DeviceWatcherTrigger: IDeviceWatcherTrigger}
+RT_CLASS!{class DeviceWatcherTrigger: IDeviceWatcherTrigger ["Windows.ApplicationModel.Background.DeviceWatcherTrigger"]}
 DEFINE_IID!(IID_IEmailStoreNotificationTrigger, 2557282010, 18411, 17000, 164, 242, 243, 247, 113, 136, 56, 138);
 RT_INTERFACE!{interface IEmailStoreNotificationTrigger(IEmailStoreNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IEmailStoreNotificationTrigger] {
     
 }}
-RT_CLASS!{class EmailStoreNotificationTrigger: IEmailStoreNotificationTrigger}
+RT_CLASS!{class EmailStoreNotificationTrigger: IEmailStoreNotificationTrigger ["Windows.ApplicationModel.Background.EmailStoreNotificationTrigger"]}
 impl RtActivatable<IActivationFactory> for EmailStoreNotificationTrigger {}
 DEFINE_CLSID!(EmailStoreNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,69,109,97,105,108,83,116,111,114,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_EmailStoreNotificationTrigger]);
 DEFINE_IID!(IID_IGattCharacteristicNotificationTrigger, 3797913544, 1686, 18255, 167, 50, 242, 146, 176, 206, 188, 93);
@@ -6299,7 +6299,7 @@ impl IGattCharacteristicNotificationTrigger {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattCharacteristicNotificationTrigger: IGattCharacteristicNotificationTrigger}
+RT_CLASS!{class GattCharacteristicNotificationTrigger: IGattCharacteristicNotificationTrigger ["Windows.ApplicationModel.Background.GattCharacteristicNotificationTrigger"]}
 impl RtActivatable<IGattCharacteristicNotificationTriggerFactory> for GattCharacteristicNotificationTrigger {}
 impl RtActivatable<IGattCharacteristicNotificationTriggerFactory2> for GattCharacteristicNotificationTrigger {}
 impl GattCharacteristicNotificationTrigger {
@@ -6372,7 +6372,7 @@ impl IGattServiceProviderTrigger {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattServiceProviderTrigger: IGattServiceProviderTrigger}
+RT_CLASS!{class GattServiceProviderTrigger: IGattServiceProviderTrigger ["Windows.ApplicationModel.Background.GattServiceProviderTrigger"]}
 impl RtActivatable<IGattServiceProviderTriggerStatics> for GattServiceProviderTrigger {}
 impl GattServiceProviderTrigger {
     #[inline] pub fn create_async(triggerId: &HStringArg, serviceUuid: Guid) -> Result<ComPtr<foundation::IAsyncOperation<GattServiceProviderTriggerResult>>> {
@@ -6397,7 +6397,7 @@ impl IGattServiceProviderTriggerResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GattServiceProviderTriggerResult: IGattServiceProviderTriggerResult}
+RT_CLASS!{class GattServiceProviderTriggerResult: IGattServiceProviderTriggerResult ["Windows.ApplicationModel.Background.GattServiceProviderTriggerResult"]}
 DEFINE_IID!(IID_IGattServiceProviderTriggerStatics, 3021185898, 58004, 17809, 165, 166, 100, 137, 26, 130, 129, 83);
 RT_INTERFACE!{static interface IGattServiceProviderTriggerStatics(IGattServiceProviderTriggerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProviderTriggerStatics] {
     fn CreateAsync(&self, triggerId: HSTRING, serviceUuid: Guid, out: *mut *mut foundation::IAsyncOperation<GattServiceProviderTriggerResult>) -> HRESULT
@@ -6425,7 +6425,7 @@ impl IGeovisitTrigger {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GeovisitTrigger: IGeovisitTrigger}
+RT_CLASS!{class GeovisitTrigger: IGeovisitTrigger ["Windows.ApplicationModel.Background.GeovisitTrigger"]}
 impl RtActivatable<IActivationFactory> for GeovisitTrigger {}
 DEFINE_CLSID!(GeovisitTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,71,101,111,118,105,115,105,116,84,114,105,103,103,101,114,0]) [CLSID_GeovisitTrigger]);
 DEFINE_IID!(IID_ILocationTrigger, 1197894172, 26743, 18462, 128, 38, 255, 126, 20, 168, 17, 160);
@@ -6439,7 +6439,7 @@ impl ILocationTrigger {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LocationTrigger: ILocationTrigger}
+RT_CLASS!{class LocationTrigger: ILocationTrigger ["Windows.ApplicationModel.Background.LocationTrigger"]}
 impl RtActivatable<ILocationTriggerFactory> for LocationTrigger {}
 impl LocationTrigger {
     #[inline] pub fn create(triggerType: LocationTriggerType) -> Result<ComPtr<LocationTrigger>> {
@@ -6458,7 +6458,7 @@ impl ILocationTriggerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum LocationTriggerType: i32 {
+RT_ENUM! { enum LocationTriggerType: i32 ["Windows.ApplicationModel.Background.LocationTriggerType"] {
     Geofence (LocationTriggerType_Geofence) = 0,
 }}
 DEFINE_IID!(IID_IMaintenanceTrigger, 1746422915, 64546, 19685, 132, 26, 114, 57, 169, 129, 0, 71);
@@ -6478,7 +6478,7 @@ impl IMaintenanceTrigger {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MaintenanceTrigger: IMaintenanceTrigger}
+RT_CLASS!{class MaintenanceTrigger: IMaintenanceTrigger ["Windows.ApplicationModel.Background.MaintenanceTrigger"]}
 impl RtActivatable<IMaintenanceTriggerFactory> for MaintenanceTrigger {}
 impl MaintenanceTrigger {
     #[inline] pub fn create(freshnessTime: u32, oneShot: bool) -> Result<ComPtr<MaintenanceTrigger>> {
@@ -6514,35 +6514,35 @@ impl IMediaProcessingTrigger {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MediaProcessingTrigger: IMediaProcessingTrigger}
+RT_CLASS!{class MediaProcessingTrigger: IMediaProcessingTrigger ["Windows.ApplicationModel.Background.MediaProcessingTrigger"]}
 impl RtActivatable<IActivationFactory> for MediaProcessingTrigger {}
 DEFINE_CLSID!(MediaProcessingTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,101,100,105,97,80,114,111,99,101,115,115,105,110,103,84,114,105,103,103,101,114,0]) [CLSID_MediaProcessingTrigger]);
-RT_ENUM! { enum MediaProcessingTriggerResult: i32 {
+RT_ENUM! { enum MediaProcessingTriggerResult: i32 ["Windows.ApplicationModel.Background.MediaProcessingTriggerResult"] {
     Allowed (MediaProcessingTriggerResult_Allowed) = 0, CurrentlyRunning (MediaProcessingTriggerResult_CurrentlyRunning) = 1, DisabledByPolicy (MediaProcessingTriggerResult_DisabledByPolicy) = 2, UnknownError (MediaProcessingTriggerResult_UnknownError) = 3,
 }}
-RT_CLASS!{class MobileBroadbandDeviceServiceNotificationTrigger: IBackgroundTrigger}
+RT_CLASS!{class MobileBroadbandDeviceServiceNotificationTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.MobileBroadbandDeviceServiceNotificationTrigger"]}
 impl RtActivatable<IActivationFactory> for MobileBroadbandDeviceServiceNotificationTrigger {}
 DEFINE_CLSID!(MobileBroadbandDeviceServiceNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,68,101,118,105,99,101,83,101,114,118,105,99,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandDeviceServiceNotificationTrigger]);
-RT_CLASS!{class MobileBroadbandPcoDataChangeTrigger: IBackgroundTrigger}
+RT_CLASS!{class MobileBroadbandPcoDataChangeTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.MobileBroadbandPcoDataChangeTrigger"]}
 impl RtActivatable<IActivationFactory> for MobileBroadbandPcoDataChangeTrigger {}
 DEFINE_CLSID!(MobileBroadbandPcoDataChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,80,99,111,68,97,116,97,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandPcoDataChangeTrigger]);
-RT_CLASS!{class MobileBroadbandPinLockStateChangeTrigger: IBackgroundTrigger}
+RT_CLASS!{class MobileBroadbandPinLockStateChangeTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.MobileBroadbandPinLockStateChangeTrigger"]}
 impl RtActivatable<IActivationFactory> for MobileBroadbandPinLockStateChangeTrigger {}
 DEFINE_CLSID!(MobileBroadbandPinLockStateChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,80,105,110,76,111,99,107,83,116,97,116,101,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandPinLockStateChangeTrigger]);
-RT_CLASS!{class MobileBroadbandRadioStateChangeTrigger: IBackgroundTrigger}
+RT_CLASS!{class MobileBroadbandRadioStateChangeTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.MobileBroadbandRadioStateChangeTrigger"]}
 impl RtActivatable<IActivationFactory> for MobileBroadbandRadioStateChangeTrigger {}
 DEFINE_CLSID!(MobileBroadbandRadioStateChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,82,97,100,105,111,83,116,97,116,101,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandRadioStateChangeTrigger]);
-RT_CLASS!{class MobileBroadbandRegistrationStateChangeTrigger: IBackgroundTrigger}
+RT_CLASS!{class MobileBroadbandRegistrationStateChangeTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.MobileBroadbandRegistrationStateChangeTrigger"]}
 impl RtActivatable<IActivationFactory> for MobileBroadbandRegistrationStateChangeTrigger {}
 DEFINE_CLSID!(MobileBroadbandRegistrationStateChangeTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,82,101,103,105,115,116,114,97,116,105,111,110,83,116,97,116,101,67,104,97,110,103,101,84,114,105,103,103,101,114,0]) [CLSID_MobileBroadbandRegistrationStateChangeTrigger]);
-RT_CLASS!{class NetworkOperatorDataUsageTrigger: IBackgroundTrigger}
+RT_CLASS!{class NetworkOperatorDataUsageTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.NetworkOperatorDataUsageTrigger"]}
 impl RtActivatable<IActivationFactory> for NetworkOperatorDataUsageTrigger {}
 DEFINE_CLSID!(NetworkOperatorDataUsageTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,68,97,116,97,85,115,97,103,101,84,114,105,103,103,101,114,0]) [CLSID_NetworkOperatorDataUsageTrigger]);
 DEFINE_IID!(IID_INetworkOperatorHotspotAuthenticationTrigger, 3881224081, 12289, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
 RT_INTERFACE!{interface INetworkOperatorHotspotAuthenticationTrigger(INetworkOperatorHotspotAuthenticationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorHotspotAuthenticationTrigger] {
     
 }}
-RT_CLASS!{class NetworkOperatorHotspotAuthenticationTrigger: INetworkOperatorHotspotAuthenticationTrigger}
+RT_CLASS!{class NetworkOperatorHotspotAuthenticationTrigger: INetworkOperatorHotspotAuthenticationTrigger ["Windows.ApplicationModel.Background.NetworkOperatorHotspotAuthenticationTrigger"]}
 impl RtActivatable<IActivationFactory> for NetworkOperatorHotspotAuthenticationTrigger {}
 DEFINE_CLSID!(NetworkOperatorHotspotAuthenticationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,72,111,116,115,112,111,116,65,117,116,104,101,110,116,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_NetworkOperatorHotspotAuthenticationTrigger]);
 DEFINE_IID!(IID_INetworkOperatorNotificationTrigger, 2416483526, 25549, 18444, 149, 209, 110, 106, 239, 128, 30, 74);
@@ -6556,7 +6556,7 @@ impl INetworkOperatorNotificationTrigger {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NetworkOperatorNotificationTrigger: INetworkOperatorNotificationTrigger}
+RT_CLASS!{class NetworkOperatorNotificationTrigger: INetworkOperatorNotificationTrigger ["Windows.ApplicationModel.Background.NetworkOperatorNotificationTrigger"]}
 impl RtActivatable<INetworkOperatorNotificationTriggerFactory> for NetworkOperatorNotificationTrigger {}
 impl NetworkOperatorNotificationTrigger {
     #[inline] pub fn create(networkAccountId: &HStringArg) -> Result<ComPtr<NetworkOperatorNotificationTrigger>> {
@@ -6575,7 +6575,7 @@ impl INetworkOperatorNotificationTriggerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentAppCanMakePaymentTrigger: IBackgroundTrigger}
+RT_CLASS!{class PaymentAppCanMakePaymentTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.PaymentAppCanMakePaymentTrigger"]}
 impl RtActivatable<IActivationFactory> for PaymentAppCanMakePaymentTrigger {}
 DEFINE_CLSID!(PaymentAppCanMakePaymentTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,80,97,121,109,101,110,116,65,112,112,67,97,110,77,97,107,101,80,97,121,109,101,110,116,84,114,105,103,103,101,114,0]) [CLSID_PaymentAppCanMakePaymentTrigger]);
 DEFINE_IID!(IID_IPhoneTrigger, 2379213211, 54469, 18929, 183, 211, 130, 232, 122, 14, 157, 222);
@@ -6595,7 +6595,7 @@ impl IPhoneTrigger {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneTrigger: IPhoneTrigger}
+RT_CLASS!{class PhoneTrigger: IPhoneTrigger ["Windows.ApplicationModel.Background.PhoneTrigger"]}
 impl RtActivatable<IPhoneTriggerFactory> for PhoneTrigger {}
 impl PhoneTrigger {
     #[inline] pub fn create(type_: super::calls::background::PhoneTriggerType, oneShot: bool) -> Result<ComPtr<PhoneTrigger>> {
@@ -6614,7 +6614,7 @@ impl IPhoneTriggerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PushNotificationTrigger: IBackgroundTrigger}
+RT_CLASS!{class PushNotificationTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.PushNotificationTrigger"]}
 impl RtActivatable<IPushNotificationTriggerFactory> for PushNotificationTrigger {}
 impl RtActivatable<IActivationFactory> for PushNotificationTrigger {}
 impl PushNotificationTrigger {
@@ -6638,7 +6638,7 @@ DEFINE_IID!(IID_IRcsEndUserMessageAvailableTrigger, 2557283690, 45814, 18047, 16
 RT_INTERFACE!{interface IRcsEndUserMessageAvailableTrigger(IRcsEndUserMessageAvailableTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IRcsEndUserMessageAvailableTrigger] {
     
 }}
-RT_CLASS!{class RcsEndUserMessageAvailableTrigger: IRcsEndUserMessageAvailableTrigger}
+RT_CLASS!{class RcsEndUserMessageAvailableTrigger: IRcsEndUserMessageAvailableTrigger ["Windows.ApplicationModel.Background.RcsEndUserMessageAvailableTrigger"]}
 impl RtActivatable<IActivationFactory> for RcsEndUserMessageAvailableTrigger {}
 DEFINE_CLSID!(RcsEndUserMessageAvailableTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,82,99,115,69,110,100,85,115,101,114,77,101,115,115,97,103,101,65,118,97,105,108,97,98,108,101,84,114,105,103,103,101,114,0]) [CLSID_RcsEndUserMessageAvailableTrigger]);
 DEFINE_IID!(IID_IRfcommConnectionTrigger, 3905211106, 2899, 17508, 147, 148, 253, 135, 86, 84, 222, 100);
@@ -6693,21 +6693,21 @@ impl IRfcommConnectionTrigger {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RfcommConnectionTrigger: IRfcommConnectionTrigger}
+RT_CLASS!{class RfcommConnectionTrigger: IRfcommConnectionTrigger ["Windows.ApplicationModel.Background.RfcommConnectionTrigger"]}
 impl RtActivatable<IActivationFactory> for RfcommConnectionTrigger {}
 DEFINE_CLSID!(RfcommConnectionTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,82,102,99,111,109,109,67,111,110,110,101,99,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_RfcommConnectionTrigger]);
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationTrigger, 4063752999, 20865, 20260, 150, 167, 112, 10, 78, 95, 172, 98);
 RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationTrigger(ISecondaryAuthenticationFactorAuthenticationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationTrigger] {
     
 }}
-RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationTrigger: ISecondaryAuthenticationFactorAuthenticationTrigger}
+RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationTrigger: ISecondaryAuthenticationFactorAuthenticationTrigger ["Windows.ApplicationModel.Background.SecondaryAuthenticationFactorAuthenticationTrigger"]}
 impl RtActivatable<IActivationFactory> for SecondaryAuthenticationFactorAuthenticationTrigger {}
 DEFINE_CLSID!(SecondaryAuthenticationFactorAuthenticationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_SecondaryAuthenticationFactorAuthenticationTrigger]);
 DEFINE_IID!(IID_ISensorDataThresholdTrigger, 1539371890, 54411, 19327, 171, 236, 21, 249, 186, 204, 18, 226);
 RT_INTERFACE!{interface ISensorDataThresholdTrigger(ISensorDataThresholdTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISensorDataThresholdTrigger] {
     
 }}
-RT_CLASS!{class SensorDataThresholdTrigger: ISensorDataThresholdTrigger}
+RT_CLASS!{class SensorDataThresholdTrigger: ISensorDataThresholdTrigger ["Windows.ApplicationModel.Background.SensorDataThresholdTrigger"]}
 impl RtActivatable<ISensorDataThresholdTriggerFactory> for SensorDataThresholdTrigger {}
 impl SensorDataThresholdTrigger {
     #[cfg(feature="windows-devices")] #[inline] pub fn create(threshold: &super::super::devices::sensors::ISensorDataThreshold) -> Result<ComPtr<SensorDataThresholdTrigger>> {
@@ -6737,7 +6737,7 @@ impl ISmartCardTrigger {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmartCardTrigger: ISmartCardTrigger}
+RT_CLASS!{class SmartCardTrigger: ISmartCardTrigger ["Windows.ApplicationModel.Background.SmartCardTrigger"]}
 impl RtActivatable<ISmartCardTriggerFactory> for SmartCardTrigger {}
 impl SmartCardTrigger {
     #[cfg(feature="windows-devices")] #[inline] pub fn create(triggerType: super::super::devices::smartcards::SmartCardTriggerType) -> Result<ComPtr<SmartCardTrigger>> {
@@ -6756,7 +6756,7 @@ impl ISmartCardTriggerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SmsMessageReceivedTrigger: IBackgroundTrigger}
+RT_CLASS!{class SmsMessageReceivedTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.SmsMessageReceivedTrigger"]}
 impl RtActivatable<ISmsMessageReceivedTriggerFactory> for SmsMessageReceivedTrigger {}
 impl SmsMessageReceivedTrigger {
     #[cfg(feature="windows-devices")] #[inline] pub fn create(filterRules: &super::super::devices::sms::SmsFilterRules) -> Result<ComPtr<SmsMessageReceivedTrigger>> {
@@ -6786,10 +6786,10 @@ impl ISocketActivityTrigger {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SocketActivityTrigger: IBackgroundTrigger}
+RT_CLASS!{class SocketActivityTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.SocketActivityTrigger"]}
 impl RtActivatable<IActivationFactory> for SocketActivityTrigger {}
 DEFINE_CLSID!(SocketActivityTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,83,111,99,107,101,116,65,99,116,105,118,105,116,121,84,114,105,103,103,101,114,0]) [CLSID_SocketActivityTrigger]);
-RT_CLASS!{class StorageLibraryChangeTrackerTrigger: IBackgroundTrigger}
+RT_CLASS!{class StorageLibraryChangeTrackerTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.StorageLibraryChangeTrackerTrigger"]}
 impl RtActivatable<IStorageLibraryChangeTrackerTriggerFactory> for StorageLibraryChangeTrackerTrigger {}
 impl StorageLibraryChangeTrackerTrigger {
     #[cfg(feature="windows-storage")] #[inline] pub fn create(tracker: &super::super::storage::StorageLibraryChangeTracker) -> Result<ComPtr<StorageLibraryChangeTrackerTrigger>> {
@@ -6812,7 +6812,7 @@ DEFINE_IID!(IID_IStorageLibraryContentChangedTrigger, 372760743, 33436, 17852, 1
 RT_INTERFACE!{interface IStorageLibraryContentChangedTrigger(IStorageLibraryContentChangedTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryContentChangedTrigger] {
     
 }}
-RT_CLASS!{class StorageLibraryContentChangedTrigger: IStorageLibraryContentChangedTrigger}
+RT_CLASS!{class StorageLibraryContentChangedTrigger: IStorageLibraryContentChangedTrigger ["Windows.ApplicationModel.Background.StorageLibraryContentChangedTrigger"]}
 impl RtActivatable<IStorageLibraryContentChangedTriggerStatics> for StorageLibraryContentChangedTrigger {}
 impl StorageLibraryContentChangedTrigger {
     #[cfg(feature="windows-storage")] #[inline] pub fn create(storageLibrary: &super::super::storage::StorageLibrary) -> Result<Option<ComPtr<StorageLibraryContentChangedTrigger>>> {
@@ -6851,7 +6851,7 @@ impl ISystemCondition {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemCondition: ISystemCondition}
+RT_CLASS!{class SystemCondition: ISystemCondition ["Windows.ApplicationModel.Background.SystemCondition"]}
 impl RtActivatable<ISystemConditionFactory> for SystemCondition {}
 impl SystemCondition {
     #[inline] pub fn create(conditionType: SystemConditionType) -> Result<ComPtr<SystemCondition>> {
@@ -6870,7 +6870,7 @@ impl ISystemConditionFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SystemConditionType: i32 {
+RT_ENUM! { enum SystemConditionType: i32 ["Windows.ApplicationModel.Background.SystemConditionType"] {
     Invalid (SystemConditionType_Invalid) = 0, UserPresent (SystemConditionType_UserPresent) = 1, UserNotPresent (SystemConditionType_UserNotPresent) = 2, InternetAvailable (SystemConditionType_InternetAvailable) = 3, InternetNotAvailable (SystemConditionType_InternetNotAvailable) = 4, SessionConnected (SystemConditionType_SessionConnected) = 5, SessionDisconnected (SystemConditionType_SessionDisconnected) = 6, FreeNetworkAvailable (SystemConditionType_FreeNetworkAvailable) = 7, BackgroundWorkCostNotHigh (SystemConditionType_BackgroundWorkCostNotHigh) = 8,
 }}
 DEFINE_IID!(IID_ISystemTrigger, 494978934, 14152, 17507, 141, 126, 39, 109, 193, 57, 172, 28);
@@ -6890,7 +6890,7 @@ impl ISystemTrigger {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemTrigger: ISystemTrigger}
+RT_CLASS!{class SystemTrigger: ISystemTrigger ["Windows.ApplicationModel.Background.SystemTrigger"]}
 impl RtActivatable<ISystemTriggerFactory> for SystemTrigger {}
 impl SystemTrigger {
     #[inline] pub fn create(triggerType: SystemTriggerType, oneShot: bool) -> Result<ComPtr<SystemTrigger>> {
@@ -6909,10 +6909,10 @@ impl ISystemTriggerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SystemTriggerType: i32 {
+RT_ENUM! { enum SystemTriggerType: i32 ["Windows.ApplicationModel.Background.SystemTriggerType"] {
     Invalid (SystemTriggerType_Invalid) = 0, SmsReceived (SystemTriggerType_SmsReceived) = 1, UserPresent (SystemTriggerType_UserPresent) = 2, UserAway (SystemTriggerType_UserAway) = 3, NetworkStateChange (SystemTriggerType_NetworkStateChange) = 4, ControlChannelReset (SystemTriggerType_ControlChannelReset) = 5, InternetAvailable (SystemTriggerType_InternetAvailable) = 6, SessionConnected (SystemTriggerType_SessionConnected) = 7, ServicingComplete (SystemTriggerType_ServicingComplete) = 8, LockScreenApplicationAdded (SystemTriggerType_LockScreenApplicationAdded) = 9, LockScreenApplicationRemoved (SystemTriggerType_LockScreenApplicationRemoved) = 10, TimeZoneChange (SystemTriggerType_TimeZoneChange) = 11, OnlineIdConnectedStateChange (SystemTriggerType_OnlineIdConnectedStateChange) = 12, BackgroundWorkCostChange (SystemTriggerType_BackgroundWorkCostChange) = 13, PowerStateChange (SystemTriggerType_PowerStateChange) = 14, DefaultSignInAccountChange (SystemTriggerType_DefaultSignInAccountChange) = 15,
 }}
-RT_CLASS!{class TetheringEntitlementCheckTrigger: IBackgroundTrigger}
+RT_CLASS!{class TetheringEntitlementCheckTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.TetheringEntitlementCheckTrigger"]}
 impl RtActivatable<IActivationFactory> for TetheringEntitlementCheckTrigger {}
 DEFINE_CLSID!(TetheringEntitlementCheckTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,84,101,116,104,101,114,105,110,103,69,110,116,105,116,108,101,109,101,110,116,67,104,101,99,107,84,114,105,103,103,101,114,0]) [CLSID_TetheringEntitlementCheckTrigger]);
 DEFINE_IID!(IID_ITimeTrigger, 1701729622, 2858, 17271, 186, 112, 59, 69, 169, 53, 84, 127);
@@ -6932,7 +6932,7 @@ impl ITimeTrigger {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TimeTrigger: ITimeTrigger}
+RT_CLASS!{class TimeTrigger: ITimeTrigger ["Windows.ApplicationModel.Background.TimeTrigger"]}
 impl RtActivatable<ITimeTriggerFactory> for TimeTrigger {}
 impl TimeTrigger {
     #[inline] pub fn create(freshnessTime: u32, oneShot: bool) -> Result<ComPtr<TimeTrigger>> {
@@ -6951,7 +6951,7 @@ impl ITimeTriggerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastNotificationActionTrigger: IBackgroundTrigger}
+RT_CLASS!{class ToastNotificationActionTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.ToastNotificationActionTrigger"]}
 impl RtActivatable<IToastNotificationActionTriggerFactory> for ToastNotificationActionTrigger {}
 impl RtActivatable<IActivationFactory> for ToastNotificationActionTrigger {}
 impl ToastNotificationActionTrigger {
@@ -6971,7 +6971,7 @@ impl IToastNotificationActionTriggerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ToastNotificationHistoryChangedTrigger: IBackgroundTrigger}
+RT_CLASS!{class ToastNotificationHistoryChangedTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.ToastNotificationHistoryChangedTrigger"]}
 impl RtActivatable<IToastNotificationHistoryChangedTriggerFactory> for ToastNotificationHistoryChangedTrigger {}
 impl RtActivatable<IActivationFactory> for ToastNotificationHistoryChangedTrigger {}
 impl ToastNotificationHistoryChangedTrigger {
@@ -6991,7 +6991,7 @@ impl IToastNotificationHistoryChangedTriggerFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserNotificationChangedTrigger: IBackgroundTrigger}
+RT_CLASS!{class UserNotificationChangedTrigger: IBackgroundTrigger ["Windows.ApplicationModel.Background.UserNotificationChangedTrigger"]}
 impl RtActivatable<IUserNotificationChangedTriggerFactory> for UserNotificationChangedTrigger {}
 impl UserNotificationChangedTrigger {
     #[cfg(feature="windows-ui")] #[inline] pub fn create(notificationKinds: super::super::ui::notifications::NotificationKinds) -> Result<ComPtr<UserNotificationChangedTrigger>> {
@@ -7024,7 +7024,7 @@ impl ICallAnswerEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CallAnswerEventArgs: ICallAnswerEventArgs}
+RT_CLASS!{class CallAnswerEventArgs: ICallAnswerEventArgs ["Windows.ApplicationModel.Calls.CallAnswerEventArgs"]}
 DEFINE_IID!(IID_ICallRejectEventArgs, 3662150359, 5076, 19858, 161, 194, 183, 120, 17, 238, 55, 236);
 RT_INTERFACE!{interface ICallRejectEventArgs(ICallRejectEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICallRejectEventArgs] {
     fn get_RejectReason(&self, out: *mut VoipPhoneCallRejectReason) -> HRESULT
@@ -7036,7 +7036,7 @@ impl ICallRejectEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CallRejectEventArgs: ICallRejectEventArgs}
+RT_CLASS!{class CallRejectEventArgs: ICallRejectEventArgs ["Windows.ApplicationModel.Calls.CallRejectEventArgs"]}
 DEFINE_IID!(IID_ICallStateChangeEventArgs, 3937547422, 26357, 18425, 159, 181, 69, 156, 81, 152, 199, 32);
 RT_INTERFACE!{interface ICallStateChangeEventArgs(ICallStateChangeEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICallStateChangeEventArgs] {
     fn get_State(&self, out: *mut VoipPhoneCallState) -> HRESULT
@@ -7048,8 +7048,8 @@ impl ICallStateChangeEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CallStateChangeEventArgs: ICallStateChangeEventArgs}
-RT_ENUM! { enum CellularDtmfMode: i32 {
+RT_CLASS!{class CallStateChangeEventArgs: ICallStateChangeEventArgs ["Windows.ApplicationModel.Calls.CallStateChangeEventArgs"]}
+RT_ENUM! { enum CellularDtmfMode: i32 ["Windows.ApplicationModel.Calls.CellularDtmfMode"] {
     Continuous (CellularDtmfMode_Continuous) = 0, Burst (CellularDtmfMode_Burst) = 1,
 }}
 DEFINE_IID!(IID_ILockScreenCallEndCallDeferral, 769125645, 39149, 16449, 150, 50, 80, 255, 129, 43, 119, 63);
@@ -7062,7 +7062,7 @@ impl ILockScreenCallEndCallDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LockScreenCallEndCallDeferral: ILockScreenCallEndCallDeferral}
+RT_CLASS!{class LockScreenCallEndCallDeferral: ILockScreenCallEndCallDeferral ["Windows.ApplicationModel.Calls.LockScreenCallEndCallDeferral"]}
 DEFINE_IID!(IID_ILockScreenCallEndRequestedEventArgs, 2173739875, 28455, 18153, 174, 182, 192, 174, 131, 228, 125, 199);
 RT_INTERFACE!{interface ILockScreenCallEndRequestedEventArgs(ILockScreenCallEndRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ILockScreenCallEndRequestedEventArgs] {
     fn GetDeferral(&self, out: *mut *mut LockScreenCallEndCallDeferral) -> HRESULT,
@@ -7080,7 +7080,7 @@ impl ILockScreenCallEndRequestedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LockScreenCallEndRequestedEventArgs: ILockScreenCallEndRequestedEventArgs}
+RT_CLASS!{class LockScreenCallEndRequestedEventArgs: ILockScreenCallEndRequestedEventArgs ["Windows.ApplicationModel.Calls.LockScreenCallEndRequestedEventArgs"]}
 DEFINE_IID!(IID_ILockScreenCallUI, 3315006861, 29641, 18964, 176, 33, 236, 28, 80, 163, 183, 39);
 RT_INTERFACE!{interface ILockScreenCallUI(ILockScreenCallUIVtbl): IInspectable(IInspectableVtbl) [IID_ILockScreenCallUI] {
     fn Dismiss(&self) -> HRESULT,
@@ -7124,7 +7124,7 @@ impl ILockScreenCallUI {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LockScreenCallUI: ILockScreenCallUI}
+RT_CLASS!{class LockScreenCallUI: ILockScreenCallUI ["Windows.ApplicationModel.Calls.LockScreenCallUI"]}
 DEFINE_IID!(IID_IMuteChangeEventArgs, 2240143705, 3137, 17196, 129, 77, 197, 241, 253, 245, 48, 190);
 RT_INTERFACE!{interface IMuteChangeEventArgs(IMuteChangeEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMuteChangeEventArgs] {
     fn get_Muted(&self, out: *mut bool) -> HRESULT
@@ -7136,8 +7136,8 @@ impl IMuteChangeEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MuteChangeEventArgs: IMuteChangeEventArgs}
-RT_ENUM! { enum PhoneAudioRoutingEndpoint: i32 {
+RT_CLASS!{class MuteChangeEventArgs: IMuteChangeEventArgs ["Windows.ApplicationModel.Calls.MuteChangeEventArgs"]}
+RT_ENUM! { enum PhoneAudioRoutingEndpoint: i32 ["Windows.ApplicationModel.Calls.PhoneAudioRoutingEndpoint"] {
     Default (PhoneAudioRoutingEndpoint_Default) = 0, Bluetooth (PhoneAudioRoutingEndpoint_Bluetooth) = 1, Speakerphone (PhoneAudioRoutingEndpoint_Speakerphone) = 2,
 }}
 RT_CLASS!{static class PhoneCallBlocking}
@@ -7386,7 +7386,7 @@ impl IPhoneCallHistoryEntry {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneCallHistoryEntry: IPhoneCallHistoryEntry}
+RT_CLASS!{class PhoneCallHistoryEntry: IPhoneCallHistoryEntry ["Windows.ApplicationModel.Calls.PhoneCallHistoryEntry"]}
 impl RtActivatable<IActivationFactory> for PhoneCallHistoryEntry {}
 DEFINE_CLSID!(PhoneCallHistoryEntry(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,97,108,108,115,46,80,104,111,110,101,67,97,108,108,72,105,115,116,111,114,121,69,110,116,114,121,0]) [CLSID_PhoneCallHistoryEntry]);
 DEFINE_IID!(IID_IPhoneCallHistoryEntryAddress, 821123546, 14677, 16450, 132, 230, 102, 238, 191, 130, 230, 127);
@@ -7438,7 +7438,7 @@ impl IPhoneCallHistoryEntryAddress {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneCallHistoryEntryAddress: IPhoneCallHistoryEntryAddress}
+RT_CLASS!{class PhoneCallHistoryEntryAddress: IPhoneCallHistoryEntryAddress ["Windows.ApplicationModel.Calls.PhoneCallHistoryEntryAddress"]}
 impl RtActivatable<IPhoneCallHistoryEntryAddressFactory> for PhoneCallHistoryEntryAddress {}
 impl RtActivatable<IActivationFactory> for PhoneCallHistoryEntryAddress {}
 impl PhoneCallHistoryEntryAddress {
@@ -7458,13 +7458,13 @@ impl IPhoneCallHistoryEntryAddressFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PhoneCallHistoryEntryMedia: i32 {
+RT_ENUM! { enum PhoneCallHistoryEntryMedia: i32 ["Windows.ApplicationModel.Calls.PhoneCallHistoryEntryMedia"] {
     Audio (PhoneCallHistoryEntryMedia_Audio) = 0, Video (PhoneCallHistoryEntryMedia_Video) = 1,
 }}
-RT_ENUM! { enum PhoneCallHistoryEntryOtherAppReadAccess: i32 {
+RT_ENUM! { enum PhoneCallHistoryEntryOtherAppReadAccess: i32 ["Windows.ApplicationModel.Calls.PhoneCallHistoryEntryOtherAppReadAccess"] {
     Full (PhoneCallHistoryEntryOtherAppReadAccess_Full) = 0, SystemOnly (PhoneCallHistoryEntryOtherAppReadAccess_SystemOnly) = 1,
 }}
-RT_ENUM! { enum PhoneCallHistoryEntryQueryDesiredMedia: u32 {
+RT_ENUM! { enum PhoneCallHistoryEntryQueryDesiredMedia: u32 ["Windows.ApplicationModel.Calls.PhoneCallHistoryEntryQueryDesiredMedia"] {
     None (PhoneCallHistoryEntryQueryDesiredMedia_None) = 0, Audio (PhoneCallHistoryEntryQueryDesiredMedia_Audio) = 1, Video (PhoneCallHistoryEntryQueryDesiredMedia_Video) = 2, All (PhoneCallHistoryEntryQueryDesiredMedia_All) = 4294967295,
 }}
 DEFINE_IID!(IID_IPhoneCallHistoryEntryQueryOptions, 2623529308, 35821, 16586, 176, 110, 196, 202, 142, 174, 92, 135);
@@ -7489,10 +7489,10 @@ impl IPhoneCallHistoryEntryQueryOptions {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneCallHistoryEntryQueryOptions: IPhoneCallHistoryEntryQueryOptions}
+RT_CLASS!{class PhoneCallHistoryEntryQueryOptions: IPhoneCallHistoryEntryQueryOptions ["Windows.ApplicationModel.Calls.PhoneCallHistoryEntryQueryOptions"]}
 impl RtActivatable<IActivationFactory> for PhoneCallHistoryEntryQueryOptions {}
 DEFINE_CLSID!(PhoneCallHistoryEntryQueryOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,97,108,108,115,46,80,104,111,110,101,67,97,108,108,72,105,115,116,111,114,121,69,110,116,114,121,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_PhoneCallHistoryEntryQueryOptions]);
-RT_ENUM! { enum PhoneCallHistoryEntryRawAddressKind: i32 {
+RT_ENUM! { enum PhoneCallHistoryEntryRawAddressKind: i32 ["Windows.ApplicationModel.Calls.PhoneCallHistoryEntryRawAddressKind"] {
     PhoneNumber (PhoneCallHistoryEntryRawAddressKind_PhoneNumber) = 0, Custom (PhoneCallHistoryEntryRawAddressKind_Custom) = 1,
 }}
 DEFINE_IID!(IID_IPhoneCallHistoryEntryReader, 1642915006, 36230, 18335, 132, 4, 169, 132, 105, 32, 254, 230);
@@ -7506,7 +7506,7 @@ impl IPhoneCallHistoryEntryReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneCallHistoryEntryReader: IPhoneCallHistoryEntryReader}
+RT_CLASS!{class PhoneCallHistoryEntryReader: IPhoneCallHistoryEntryReader ["Windows.ApplicationModel.Calls.PhoneCallHistoryEntryReader"]}
 RT_CLASS!{static class PhoneCallHistoryManager}
 impl RtActivatable<IPhoneCallHistoryManagerStatics> for PhoneCallHistoryManager {}
 impl RtActivatable<IPhoneCallHistoryManagerStatics2> for PhoneCallHistoryManager {}
@@ -7536,7 +7536,7 @@ impl IPhoneCallHistoryManagerForUser {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneCallHistoryManagerForUser: IPhoneCallHistoryManagerForUser}
+RT_CLASS!{class PhoneCallHistoryManagerForUser: IPhoneCallHistoryManagerForUser ["Windows.ApplicationModel.Calls.PhoneCallHistoryManagerForUser"]}
 DEFINE_IID!(IID_IPhoneCallHistoryManagerStatics, 4121352761, 45855, 20293, 172, 142, 27, 8, 137, 60, 27, 80);
 RT_INTERFACE!{static interface IPhoneCallHistoryManagerStatics(IPhoneCallHistoryManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneCallHistoryManagerStatics] {
     fn RequestStoreAsync(&self, accessType: PhoneCallHistoryStoreAccessType, out: *mut *mut foundation::IAsyncOperation<PhoneCallHistoryStore>) -> HRESULT
@@ -7559,7 +7559,7 @@ impl IPhoneCallHistoryManagerStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PhoneCallHistorySourceIdKind: i32 {
+RT_ENUM! { enum PhoneCallHistorySourceIdKind: i32 ["Windows.ApplicationModel.Calls.PhoneCallHistorySourceIdKind"] {
     CellularPhoneLineId (PhoneCallHistorySourceIdKind_CellularPhoneLineId) = 0, PackageFamilyName (PhoneCallHistorySourceIdKind_PackageFamilyName) = 1,
 }}
 DEFINE_IID!(IID_IPhoneCallHistoryStore, 797998520, 46094, 16939, 133, 69, 203, 25, 16, 166, 28, 82);
@@ -7639,8 +7639,8 @@ impl IPhoneCallHistoryStore {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneCallHistoryStore: IPhoneCallHistoryStore}
-RT_ENUM! { enum PhoneCallHistoryStoreAccessType: i32 {
+RT_CLASS!{class PhoneCallHistoryStore: IPhoneCallHistoryStore ["Windows.ApplicationModel.Calls.PhoneCallHistoryStore"]}
+RT_ENUM! { enum PhoneCallHistoryStoreAccessType: i32 ["Windows.ApplicationModel.Calls.PhoneCallHistoryStoreAccessType"] {
     AppEntriesReadWrite (PhoneCallHistoryStoreAccessType_AppEntriesReadWrite) = 0, AllEntriesLimitedReadWrite (PhoneCallHistoryStoreAccessType_AllEntriesLimitedReadWrite) = 1, AllEntriesReadWrite (PhoneCallHistoryStoreAccessType_AllEntriesReadWrite) = 2,
 }}
 RT_CLASS!{static class PhoneCallManager}
@@ -7719,7 +7719,7 @@ impl IPhoneCallManagerStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PhoneCallMedia: i32 {
+RT_ENUM! { enum PhoneCallMedia: i32 ["Windows.ApplicationModel.Calls.PhoneCallMedia"] {
     Audio (PhoneCallMedia_Audio) = 0, AudioAndVideo (PhoneCallMedia_AudioAndVideo) = 1, AudioAndRealTimeText (PhoneCallMedia_AudioAndRealTimeText) = 2,
 }}
 DEFINE_IID!(IID_IPhoneCallStore, 1600194376, 6310, 16755, 134, 209, 40, 190, 157, 198, 45, 186);
@@ -7745,7 +7745,7 @@ impl IPhoneCallStore {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneCallStore: IPhoneCallStore}
+RT_CLASS!{class PhoneCallStore: IPhoneCallStore ["Windows.ApplicationModel.Calls.PhoneCallStore"]}
 DEFINE_IID!(IID_IPhoneCallVideoCapabilities, 37234566, 45418, 20443, 190, 59, 196, 36, 14, 19, 173, 13);
 RT_INTERFACE!{interface IPhoneCallVideoCapabilities(IPhoneCallVideoCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneCallVideoCapabilities] {
     fn get_IsVideoCallingCapable(&self, out: *mut bool) -> HRESULT
@@ -7757,7 +7757,7 @@ impl IPhoneCallVideoCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneCallVideoCapabilities: IPhoneCallVideoCapabilities}
+RT_CLASS!{class PhoneCallVideoCapabilities: IPhoneCallVideoCapabilities ["Windows.ApplicationModel.Calls.PhoneCallVideoCapabilities"]}
 RT_CLASS!{static class PhoneCallVideoCapabilitiesManager}
 impl RtActivatable<IPhoneCallVideoCapabilitiesManagerStatics> for PhoneCallVideoCapabilitiesManager {}
 impl PhoneCallVideoCapabilitiesManager {
@@ -7848,7 +7848,7 @@ impl IPhoneDialOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneDialOptions: IPhoneDialOptions}
+RT_CLASS!{class PhoneDialOptions: IPhoneDialOptions ["Windows.ApplicationModel.Calls.PhoneDialOptions"]}
 impl RtActivatable<IActivationFactory> for PhoneDialOptions {}
 DEFINE_CLSID!(PhoneDialOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,97,108,108,115,46,80,104,111,110,101,68,105,97,108,79,112,116,105,111,110,115,0]) [CLSID_PhoneDialOptions]);
 DEFINE_IID!(IID_IPhoneLine, 667316016, 27241, 13514, 162, 186, 101, 48, 37, 48, 195, 17);
@@ -7956,7 +7956,7 @@ impl IPhoneLine {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneLine: IPhoneLine}
+RT_CLASS!{class PhoneLine: IPhoneLine ["Windows.ApplicationModel.Calls.PhoneLine"]}
 impl RtActivatable<IPhoneLineStatics> for PhoneLine {}
 impl PhoneLine {
     #[inline] pub fn from_id_async(lineId: Guid) -> Result<ComPtr<foundation::IAsyncOperation<PhoneLine>>> {
@@ -7999,7 +7999,7 @@ impl IPhoneLineCellularDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneLineCellularDetails: IPhoneLineCellularDetails}
+RT_CLASS!{class PhoneLineCellularDetails: IPhoneLineCellularDetails ["Windows.ApplicationModel.Calls.PhoneLineCellularDetails"]}
 DEFINE_IID!(IID_IPhoneLineConfiguration, 4263925858, 63055, 17170, 178, 168, 78, 37, 119, 33, 170, 149);
 RT_INTERFACE!{interface IPhoneLineConfiguration(IPhoneLineConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneLineConfiguration] {
     fn get_IsVideoCallingEnabled(&self, out: *mut bool) -> HRESULT,
@@ -8017,8 +8017,8 @@ impl IPhoneLineConfiguration {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneLineConfiguration: IPhoneLineConfiguration}
-RT_ENUM! { enum PhoneLineNetworkOperatorDisplayTextLocation: i32 {
+RT_CLASS!{class PhoneLineConfiguration: IPhoneLineConfiguration ["Windows.ApplicationModel.Calls.PhoneLineConfiguration"]}
+RT_ENUM! { enum PhoneLineNetworkOperatorDisplayTextLocation: i32 ["Windows.ApplicationModel.Calls.PhoneLineNetworkOperatorDisplayTextLocation"] {
     Default (PhoneLineNetworkOperatorDisplayTextLocation_Default) = 0, Tile (PhoneLineNetworkOperatorDisplayTextLocation_Tile) = 1, Dialer (PhoneLineNetworkOperatorDisplayTextLocation_Dialer) = 2, InCallUI (PhoneLineNetworkOperatorDisplayTextLocation_InCallUI) = 3,
 }}
 DEFINE_IID!(IID_IPhoneLineStatics, 4085997347, 52912, 16463, 188, 242, 186, 159, 105, 125, 138, 223);
@@ -8032,7 +8032,7 @@ impl IPhoneLineStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PhoneLineTransport: i32 {
+RT_ENUM! { enum PhoneLineTransport: i32 ["Windows.ApplicationModel.Calls.PhoneLineTransport"] {
     Cellular (PhoneLineTransport_Cellular) = 0, VoipApp (PhoneLineTransport_VoipApp) = 1,
 }}
 DEFINE_IID!(IID_IPhoneLineWatcher, 2319830282, 25379, 17632, 166, 246, 159, 33, 246, 77, 201, 10);
@@ -8111,7 +8111,7 @@ impl IPhoneLineWatcher {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneLineWatcher: IPhoneLineWatcher}
+RT_CLASS!{class PhoneLineWatcher: IPhoneLineWatcher ["Windows.ApplicationModel.Calls.PhoneLineWatcher"]}
 DEFINE_IID!(IID_IPhoneLineWatcherEventArgs, 3497817406, 40466, 18999, 130, 183, 173, 83, 93, 173, 106, 103);
 RT_INTERFACE!{interface IPhoneLineWatcherEventArgs(IPhoneLineWatcherEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneLineWatcherEventArgs] {
     fn get_LineId(&self, out: *mut Guid) -> HRESULT
@@ -8123,14 +8123,14 @@ impl IPhoneLineWatcherEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneLineWatcherEventArgs: IPhoneLineWatcherEventArgs}
-RT_ENUM! { enum PhoneLineWatcherStatus: i32 {
+RT_CLASS!{class PhoneLineWatcherEventArgs: IPhoneLineWatcherEventArgs ["Windows.ApplicationModel.Calls.PhoneLineWatcherEventArgs"]}
+RT_ENUM! { enum PhoneLineWatcherStatus: i32 ["Windows.ApplicationModel.Calls.PhoneLineWatcherStatus"] {
     Created (PhoneLineWatcherStatus_Created) = 0, Started (PhoneLineWatcherStatus_Started) = 1, EnumerationCompleted (PhoneLineWatcherStatus_EnumerationCompleted) = 2, Stopped (PhoneLineWatcherStatus_Stopped) = 3,
 }}
-RT_ENUM! { enum PhoneNetworkState: i32 {
+RT_ENUM! { enum PhoneNetworkState: i32 ["Windows.ApplicationModel.Calls.PhoneNetworkState"] {
     Unknown (PhoneNetworkState_Unknown) = 0, NoSignal (PhoneNetworkState_NoSignal) = 1, Deregistered (PhoneNetworkState_Deregistered) = 2, Denied (PhoneNetworkState_Denied) = 3, Searching (PhoneNetworkState_Searching) = 4, Home (PhoneNetworkState_Home) = 5, RoamingInternational (PhoneNetworkState_RoamingInternational) = 6, RoamingDomestic (PhoneNetworkState_RoamingDomestic) = 7,
 }}
-RT_ENUM! { enum PhoneSimState: i32 {
+RT_ENUM! { enum PhoneSimState: i32 ["Windows.ApplicationModel.Calls.PhoneSimState"] {
     Unknown (PhoneSimState_Unknown) = 0, PinNotRequired (PhoneSimState_PinNotRequired) = 1, PinUnlocked (PhoneSimState_PinUnlocked) = 2, PinLocked (PhoneSimState_PinLocked) = 3, PukLocked (PhoneSimState_PukLocked) = 4, NotInserted (PhoneSimState_NotInserted) = 5, Invalid (PhoneSimState_Invalid) = 6, Disabled (PhoneSimState_Disabled) = 7,
 }}
 DEFINE_IID!(IID_IPhoneVoicemail, 3385751542, 28319, 14987, 183, 39, 110, 12, 246, 153, 130, 36);
@@ -8162,8 +8162,8 @@ impl IPhoneVoicemail {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneVoicemail: IPhoneVoicemail}
-RT_ENUM! { enum PhoneVoicemailType: i32 {
+RT_CLASS!{class PhoneVoicemail: IPhoneVoicemail ["Windows.ApplicationModel.Calls.PhoneVoicemail"]}
+RT_ENUM! { enum PhoneVoicemailType: i32 ["Windows.ApplicationModel.Calls.PhoneVoicemailType"] {
     None (PhoneVoicemailType_None) = 0, Traditional (PhoneVoicemailType_Traditional) = 1, Visual (PhoneVoicemailType_Visual) = 2,
 }}
 DEFINE_IID!(IID_IVoipCallCoordinator, 1326549967, 59631, 17460, 156, 95, 168, 216, 147, 250, 254, 121);
@@ -8232,7 +8232,7 @@ impl IVoipCallCoordinator {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VoipCallCoordinator: IVoipCallCoordinator}
+RT_CLASS!{class VoipCallCoordinator: IVoipCallCoordinator ["Windows.ApplicationModel.Calls.VoipCallCoordinator"]}
 impl RtActivatable<IVoipCallCoordinatorStatics> for VoipCallCoordinator {}
 impl VoipCallCoordinator {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<VoipCallCoordinator>>> {
@@ -8403,7 +8403,7 @@ impl IVoipPhoneCall {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VoipPhoneCall: IVoipPhoneCall}
+RT_CLASS!{class VoipPhoneCall: IVoipPhoneCall ["Windows.ApplicationModel.Calls.VoipPhoneCall"]}
 DEFINE_IID!(IID_IVoipPhoneCall2, 1947944673, 9311, 16883, 147, 153, 49, 65, 210, 91, 82, 227);
 RT_INTERFACE!{interface IVoipPhoneCall2(IVoipPhoneCall2Vtbl): IInspectable(IInspectableVtbl) [IID_IVoipPhoneCall2] {
     fn TryShowAppUI(&self) -> HRESULT
@@ -8424,21 +8424,21 @@ impl IVoipPhoneCall3 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum VoipPhoneCallMedia: u32 {
+RT_ENUM! { enum VoipPhoneCallMedia: u32 ["Windows.ApplicationModel.Calls.VoipPhoneCallMedia"] {
     None (VoipPhoneCallMedia_None) = 0, Audio (VoipPhoneCallMedia_Audio) = 1, Video (VoipPhoneCallMedia_Video) = 2,
 }}
-RT_ENUM! { enum VoipPhoneCallRejectReason: i32 {
+RT_ENUM! { enum VoipPhoneCallRejectReason: i32 ["Windows.ApplicationModel.Calls.VoipPhoneCallRejectReason"] {
     UserIgnored (VoipPhoneCallRejectReason_UserIgnored) = 0, TimedOut (VoipPhoneCallRejectReason_TimedOut) = 1, OtherIncomingCall (VoipPhoneCallRejectReason_OtherIncomingCall) = 2, EmergencyCallExists (VoipPhoneCallRejectReason_EmergencyCallExists) = 3, InvalidCallState (VoipPhoneCallRejectReason_InvalidCallState) = 4,
 }}
-RT_ENUM! { enum VoipPhoneCallResourceReservationStatus: i32 {
+RT_ENUM! { enum VoipPhoneCallResourceReservationStatus: i32 ["Windows.ApplicationModel.Calls.VoipPhoneCallResourceReservationStatus"] {
     Success (VoipPhoneCallResourceReservationStatus_Success) = 0, ResourcesNotAvailable (VoipPhoneCallResourceReservationStatus_ResourcesNotAvailable) = 1,
 }}
-RT_ENUM! { enum VoipPhoneCallState: i32 {
+RT_ENUM! { enum VoipPhoneCallState: i32 ["Windows.ApplicationModel.Calls.VoipPhoneCallState"] {
     Ended (VoipPhoneCallState_Ended) = 0, Held (VoipPhoneCallState_Held) = 1, Active (VoipPhoneCallState_Active) = 2, Incoming (VoipPhoneCallState_Incoming) = 3, Outgoing (VoipPhoneCallState_Outgoing) = 4,
 }}
 pub mod background { // Windows.ApplicationModel.Calls.Background
 use ::prelude::*;
-RT_ENUM! { enum PhoneCallBlockedReason: i32 {
+RT_ENUM! { enum PhoneCallBlockedReason: i32 ["Windows.ApplicationModel.Calls.Background.PhoneCallBlockedReason"] {
     InCallBlockingList (PhoneCallBlockedReason_InCallBlockingList) = 0, PrivateNumber (PhoneCallBlockedReason_PrivateNumber) = 1, UnknownNumber (PhoneCallBlockedReason_UnknownNumber) = 2,
 }}
 DEFINE_IID!(IID_IPhoneCallBlockedTriggerDetails, 2762379426, 58561, 17023, 134, 78, 228, 112, 71, 125, 219, 103);
@@ -8464,7 +8464,7 @@ impl IPhoneCallBlockedTriggerDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneCallBlockedTriggerDetails: IPhoneCallBlockedTriggerDetails}
+RT_CLASS!{class PhoneCallBlockedTriggerDetails: IPhoneCallBlockedTriggerDetails ["Windows.ApplicationModel.Calls.Background.PhoneCallBlockedTriggerDetails"]}
 DEFINE_IID!(IID_IPhoneCallOriginDataRequestTriggerDetails, 1855675199, 50507, 20098, 76, 201, 227, 41, 164, 24, 69, 146);
 RT_INTERFACE!{interface IPhoneCallOriginDataRequestTriggerDetails(IPhoneCallOriginDataRequestTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneCallOriginDataRequestTriggerDetails] {
     fn get_RequestId(&self, out: *mut Guid) -> HRESULT,
@@ -8482,7 +8482,7 @@ impl IPhoneCallOriginDataRequestTriggerDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneCallOriginDataRequestTriggerDetails: IPhoneCallOriginDataRequestTriggerDetails}
+RT_CLASS!{class PhoneCallOriginDataRequestTriggerDetails: IPhoneCallOriginDataRequestTriggerDetails ["Windows.ApplicationModel.Calls.Background.PhoneCallOriginDataRequestTriggerDetails"]}
 DEFINE_IID!(IID_IPhoneLineChangedTriggerDetails, 3335725543, 53533, 16600, 178, 183, 228, 10, 1, 214, 98, 73);
 RT_INTERFACE!{interface IPhoneLineChangedTriggerDetails(IPhoneLineChangedTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneLineChangedTriggerDetails] {
     fn get_LineId(&self, out: *mut Guid) -> HRESULT,
@@ -8506,11 +8506,11 @@ impl IPhoneLineChangedTriggerDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneLineChangedTriggerDetails: IPhoneLineChangedTriggerDetails}
-RT_ENUM! { enum PhoneLineChangeKind: i32 {
+RT_CLASS!{class PhoneLineChangedTriggerDetails: IPhoneLineChangedTriggerDetails ["Windows.ApplicationModel.Calls.Background.PhoneLineChangedTriggerDetails"]}
+RT_ENUM! { enum PhoneLineChangeKind: i32 ["Windows.ApplicationModel.Calls.Background.PhoneLineChangeKind"] {
     Added (PhoneLineChangeKind_Added) = 0, Removed (PhoneLineChangeKind_Removed) = 1, PropertiesChanged (PhoneLineChangeKind_PropertiesChanged) = 2,
 }}
-RT_ENUM! { enum PhoneLineProperties: u32 {
+RT_ENUM! { enum PhoneLineProperties: u32 ["Windows.ApplicationModel.Calls.Background.PhoneLineProperties"] {
     None (PhoneLineProperties_None) = 0, BrandingOptions (PhoneLineProperties_BrandingOptions) = 1, CanDial (PhoneLineProperties_CanDial) = 2, CellularDetails (PhoneLineProperties_CellularDetails) = 4, DisplayColor (PhoneLineProperties_DisplayColor) = 8, DisplayName (PhoneLineProperties_DisplayName) = 16, NetworkName (PhoneLineProperties_NetworkName) = 32, NetworkState (PhoneLineProperties_NetworkState) = 64, Transport (PhoneLineProperties_Transport) = 128, Voicemail (PhoneLineProperties_Voicemail) = 256,
 }}
 DEFINE_IID!(IID_IPhoneNewVoicemailMessageTriggerDetails, 329826331, 47153, 18643, 139, 169, 141, 34, 166, 88, 13, 207);
@@ -8536,8 +8536,8 @@ impl IPhoneNewVoicemailMessageTriggerDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneNewVoicemailMessageTriggerDetails: IPhoneNewVoicemailMessageTriggerDetails}
-RT_ENUM! { enum PhoneTriggerType: i32 {
+RT_CLASS!{class PhoneNewVoicemailMessageTriggerDetails: IPhoneNewVoicemailMessageTriggerDetails ["Windows.ApplicationModel.Calls.Background.PhoneNewVoicemailMessageTriggerDetails"]}
+RT_ENUM! { enum PhoneTriggerType: i32 ["Windows.ApplicationModel.Calls.Background.PhoneTriggerType"] {
     NewVoicemailMessage (PhoneTriggerType_NewVoicemailMessage) = 0, CallHistoryChanged (PhoneTriggerType_CallHistoryChanged) = 1, LineChanged (PhoneTriggerType_LineChanged) = 2, AirplaneModeDisabledForEmergencyCall (PhoneTriggerType_AirplaneModeDisabledForEmergencyCall) = 3, CallOriginDataRequest (PhoneTriggerType_CallOriginDataRequest) = 4, CallBlocked (PhoneTriggerType_CallBlocked) = 5,
 }}
 } // Windows.ApplicationModel.Calls.Background
@@ -8581,7 +8581,7 @@ impl IPhoneCallOrigin {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PhoneCallOrigin: IPhoneCallOrigin}
+RT_CLASS!{class PhoneCallOrigin: IPhoneCallOrigin ["Windows.ApplicationModel.Calls.Provider.PhoneCallOrigin"]}
 impl RtActivatable<IActivationFactory> for PhoneCallOrigin {}
 DEFINE_CLSID!(PhoneCallOrigin(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,97,108,108,115,46,80,114,111,118,105,100,101,114,46,80,104,111,110,101,67,97,108,108,79,114,105,103,105,110,0]) [CLSID_PhoneCallOrigin]);
 DEFINE_IID!(IID_IPhoneCallOrigin2, 80210304, 39618, 18280, 181, 54, 182, 141, 164, 149, 125, 2);
@@ -8705,7 +8705,7 @@ impl IChatCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatCapabilities: IChatCapabilities}
+RT_CLASS!{class ChatCapabilities: IChatCapabilities ["Windows.ApplicationModel.Chat.ChatCapabilities"]}
 RT_CLASS!{static class ChatCapabilitiesManager}
 impl RtActivatable<IChatCapabilitiesManagerStatics> for ChatCapabilitiesManager {}
 impl RtActivatable<IChatCapabilitiesManagerStatics2> for ChatCapabilitiesManager {}
@@ -8866,7 +8866,7 @@ impl IChatConversation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatConversation: IChatConversation}
+RT_CLASS!{class ChatConversation: IChatConversation ["Windows.ApplicationModel.Chat.ChatConversation"]}
 DEFINE_IID!(IID_IChatConversation2, 167972049, 38970, 18346, 154, 144, 238, 72, 238, 153, 123, 89);
 RT_INTERFACE!{interface IChatConversation2(IChatConversation2Vtbl): IInspectable(IInspectableVtbl) [IID_IChatConversation2] {
     fn get_CanModifyParticipants(&self, out: *mut bool) -> HRESULT,
@@ -8900,7 +8900,7 @@ impl IChatConversationReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatConversationReader: IChatConversationReader}
+RT_CLASS!{class ChatConversationReader: IChatConversationReader ["Windows.ApplicationModel.Chat.ChatConversationReader"]}
 DEFINE_IID!(IID_IChatConversationThreadingInfo, 857481692, 31239, 17442, 163, 44, 36, 190, 124, 109, 171, 36);
 RT_INTERFACE!{interface IChatConversationThreadingInfo(IChatConversationThreadingInfoVtbl): IInspectable(IInspectableVtbl) [IID_IChatConversationThreadingInfo] {
     fn get_ContactId(&self, out: *mut HSTRING) -> HRESULT,
@@ -8956,10 +8956,10 @@ impl IChatConversationThreadingInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatConversationThreadingInfo: IChatConversationThreadingInfo}
+RT_CLASS!{class ChatConversationThreadingInfo: IChatConversationThreadingInfo ["Windows.ApplicationModel.Chat.ChatConversationThreadingInfo"]}
 impl RtActivatable<IActivationFactory> for ChatConversationThreadingInfo {}
 DEFINE_CLSID!(ChatConversationThreadingInfo(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,67,111,110,118,101,114,115,97,116,105,111,110,84,104,114,101,97,100,105,110,103,73,110,102,111,0]) [CLSID_ChatConversationThreadingInfo]);
-RT_ENUM! { enum ChatConversationThreadingKind: i32 {
+RT_ENUM! { enum ChatConversationThreadingKind: i32 ["Windows.ApplicationModel.Chat.ChatConversationThreadingKind"] {
     Participants (ChatConversationThreadingKind_Participants) = 0, ContactId (ChatConversationThreadingKind_ContactId) = 1, ConversationId (ChatConversationThreadingKind_ConversationId) = 2, Custom (ChatConversationThreadingKind_Custom) = 3,
 }}
 DEFINE_IID!(IID_IChatItem, 2270285824, 52913, 16963, 184, 3, 21, 212, 90, 29, 212, 40);
@@ -8973,7 +8973,7 @@ impl IChatItem {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ChatItemKind: i32 {
+RT_ENUM! { enum ChatItemKind: i32 ["Windows.ApplicationModel.Chat.ChatItemKind"] {
     Message (ChatItemKind_Message) = 0, Conversation (ChatItemKind_Conversation) = 1,
 }}
 DEFINE_IID!(IID_IChatMessage, 1262028074, 4418, 20617, 118, 218, 242, 219, 61, 23, 205, 5);
@@ -9081,7 +9081,7 @@ impl IChatMessage {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessage: IChatMessage}
+RT_CLASS!{class ChatMessage: IChatMessage ["Windows.ApplicationModel.Chat.ChatMessage"]}
 impl RtActivatable<IActivationFactory> for ChatMessage {}
 DEFINE_CLSID!(ChatMessage(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,77,101,115,115,97,103,101,0]) [CLSID_ChatMessage]);
 DEFINE_IID!(IID_IChatMessage2, 2254865202, 21567, 18933, 172, 113, 108, 42, 252, 101, 101, 253);
@@ -9318,7 +9318,7 @@ impl IChatMessageAttachment {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessageAttachment: IChatMessageAttachment}
+RT_CLASS!{class ChatMessageAttachment: IChatMessageAttachment ["Windows.ApplicationModel.Chat.ChatMessageAttachment"]}
 impl RtActivatable<IChatMessageAttachmentFactory> for ChatMessageAttachment {}
 impl ChatMessageAttachment {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_chat_message_attachment(mimeType: &HStringArg, dataStreamReference: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<ComPtr<ChatMessageAttachment>> {
@@ -9413,7 +9413,7 @@ impl IChatMessageChange {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessageChange: IChatMessageChange}
+RT_CLASS!{class ChatMessageChange: IChatMessageChange ["Windows.ApplicationModel.Chat.ChatMessageChange"]}
 DEFINE_IID!(IID_IChatMessageChangedDeferral, 4224103180, 30860, 19916, 172, 231, 98, 130, 56, 41, 104, 207);
 RT_INTERFACE!{interface IChatMessageChangedDeferral(IChatMessageChangedDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageChangedDeferral] {
     fn Complete(&self) -> HRESULT
@@ -9424,7 +9424,7 @@ impl IChatMessageChangedDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessageChangedDeferral: IChatMessageChangedDeferral}
+RT_CLASS!{class ChatMessageChangedDeferral: IChatMessageChangedDeferral ["Windows.ApplicationModel.Chat.ChatMessageChangedDeferral"]}
 DEFINE_IID!(IID_IChatMessageChangedEventArgs, 3065462317, 26908, 20191, 134, 96, 110, 185, 137, 104, 146, 227);
 RT_INTERFACE!{interface IChatMessageChangedEventArgs(IChatMessageChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageChangedEventArgs] {
     fn GetDeferral(&self, out: *mut *mut ChatMessageChangedDeferral) -> HRESULT
@@ -9436,7 +9436,7 @@ impl IChatMessageChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessageChangedEventArgs: IChatMessageChangedEventArgs}
+RT_CLASS!{class ChatMessageChangedEventArgs: IChatMessageChangedEventArgs ["Windows.ApplicationModel.Chat.ChatMessageChangedEventArgs"]}
 DEFINE_IID!(IID_IChatMessageChangeReader, 338063392, 10446, 24358, 123, 5, 154, 92, 124, 206, 135, 202);
 RT_INTERFACE!{interface IChatMessageChangeReader(IChatMessageChangeReaderVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageChangeReader] {
     fn AcceptChanges(&self) -> HRESULT,
@@ -9458,7 +9458,7 @@ impl IChatMessageChangeReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessageChangeReader: IChatMessageChangeReader}
+RT_CLASS!{class ChatMessageChangeReader: IChatMessageChangeReader ["Windows.ApplicationModel.Chat.ChatMessageChangeReader"]}
 DEFINE_IID!(IID_IChatMessageChangeTracker, 1622667366, 28832, 21028, 80, 140, 36, 46, 247, 193, 208, 111);
 RT_INTERFACE!{interface IChatMessageChangeTracker(IChatMessageChangeTrackerVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageChangeTracker] {
     fn Enable(&self) -> HRESULT,
@@ -9480,11 +9480,11 @@ impl IChatMessageChangeTracker {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessageChangeTracker: IChatMessageChangeTracker}
-RT_ENUM! { enum ChatMessageChangeType: i32 {
+RT_CLASS!{class ChatMessageChangeTracker: IChatMessageChangeTracker ["Windows.ApplicationModel.Chat.ChatMessageChangeTracker"]}
+RT_ENUM! { enum ChatMessageChangeType: i32 ["Windows.ApplicationModel.Chat.ChatMessageChangeType"] {
     MessageCreated (ChatMessageChangeType_MessageCreated) = 0, MessageModified (ChatMessageChangeType_MessageModified) = 1, MessageDeleted (ChatMessageChangeType_MessageDeleted) = 2, ChangeTrackingLost (ChatMessageChangeType_ChangeTrackingLost) = 3,
 }}
-RT_ENUM! { enum ChatMessageKind: i32 {
+RT_ENUM! { enum ChatMessageKind: i32 ["Windows.ApplicationModel.Chat.ChatMessageKind"] {
     Standard (ChatMessageKind_Standard) = 0, FileTransferRequest (ChatMessageKind_FileTransferRequest) = 1, TransportCustom (ChatMessageKind_TransportCustom) = 2, JoinedConversation (ChatMessageKind_JoinedConversation) = 3, LeftConversation (ChatMessageKind_LeftConversation) = 4, OtherParticipantJoinedConversation (ChatMessageKind_OtherParticipantJoinedConversation) = 5, OtherParticipantLeftConversation (ChatMessageKind_OtherParticipantLeftConversation) = 6,
 }}
 RT_CLASS!{static class ChatMessageManager}
@@ -9582,7 +9582,7 @@ impl IChatMessageNotificationTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessageNotificationTriggerDetails: IChatMessageNotificationTriggerDetails}
+RT_CLASS!{class ChatMessageNotificationTriggerDetails: IChatMessageNotificationTriggerDetails ["Windows.ApplicationModel.Chat.ChatMessageNotificationTriggerDetails"]}
 DEFINE_IID!(IID_IChatMessageNotificationTriggerDetails2, 1807033056, 43527, 20433, 148, 113, 119, 147, 79, 183, 94, 230);
 RT_INTERFACE!{interface IChatMessageNotificationTriggerDetails2(IChatMessageNotificationTriggerDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageNotificationTriggerDetails2] {
     fn get_ShouldDisplayToast(&self, out: *mut bool) -> HRESULT,
@@ -9612,7 +9612,7 @@ impl IChatMessageNotificationTriggerDetails2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ChatMessageOperatorKind: i32 {
+RT_ENUM! { enum ChatMessageOperatorKind: i32 ["Windows.ApplicationModel.Chat.ChatMessageOperatorKind"] {
     Unspecified (ChatMessageOperatorKind_Unspecified) = 0, Sms (ChatMessageOperatorKind_Sms) = 1, Mms (ChatMessageOperatorKind_Mms) = 2, Rcs (ChatMessageOperatorKind_Rcs) = 3,
 }}
 DEFINE_IID!(IID_IChatMessageReader, 3068819662, 17545, 22265, 118, 170, 226, 4, 104, 37, 20, 207);
@@ -9626,7 +9626,7 @@ impl IChatMessageReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessageReader: IChatMessageReader}
+RT_CLASS!{class ChatMessageReader: IChatMessageReader ["Windows.ApplicationModel.Chat.ChatMessageReader"]}
 DEFINE_IID!(IID_IChatMessageReader2, 2305046147, 25787, 18189, 157, 244, 13, 232, 190, 26, 5, 191);
 RT_INTERFACE!{interface IChatMessageReader2(IChatMessageReader2Vtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageReader2] {
     fn ReadBatchWithCountAsync(&self, count: i32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<ChatMessage>>) -> HRESULT
@@ -9638,7 +9638,7 @@ impl IChatMessageReader2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ChatMessageStatus: i32 {
+RT_ENUM! { enum ChatMessageStatus: i32 ["Windows.ApplicationModel.Chat.ChatMessageStatus"] {
     Draft (ChatMessageStatus_Draft) = 0, Sending (ChatMessageStatus_Sending) = 1, Sent (ChatMessageStatus_Sent) = 2, SendRetryNeeded (ChatMessageStatus_SendRetryNeeded) = 3, SendFailed (ChatMessageStatus_SendFailed) = 4, Received (ChatMessageStatus_Received) = 5, ReceiveDownloadNeeded (ChatMessageStatus_ReceiveDownloadNeeded) = 6, ReceiveDownloadFailed (ChatMessageStatus_ReceiveDownloadFailed) = 7, ReceiveDownloading (ChatMessageStatus_ReceiveDownloading) = 8, Deleted (ChatMessageStatus_Deleted) = 9, Declined (ChatMessageStatus_Declined) = 10, Cancelled (ChatMessageStatus_Cancelled) = 11, Recalled (ChatMessageStatus_Recalled) = 12, ReceiveRetryNeeded (ChatMessageStatus_ReceiveRetryNeeded) = 13,
 }}
 DEFINE_IID!(IID_IChatMessageStore, 838008065, 52470, 22539, 73, 118, 10, 7, 221, 93, 59, 71);
@@ -9717,7 +9717,7 @@ impl IChatMessageStore {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessageStore: IChatMessageStore}
+RT_CLASS!{class ChatMessageStore: IChatMessageStore ["Windows.ApplicationModel.Chat.ChatMessageStore"]}
 DEFINE_IID!(IID_IChatMessageStore2, 2907555054, 15060, 18715, 179, 17, 171, 223, 155, 178, 39, 104);
 RT_INTERFACE!{interface IChatMessageStore2(IChatMessageStore2Vtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageStore2] {
     fn ForwardMessageAsync(&self, localChatMessageId: HSTRING, addresses: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<ChatMessage>) -> HRESULT,
@@ -9852,7 +9852,7 @@ impl IChatMessageStoreChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessageStoreChangedEventArgs: IChatMessageStoreChangedEventArgs}
+RT_CLASS!{class ChatMessageStoreChangedEventArgs: IChatMessageStoreChangedEventArgs ["Windows.ApplicationModel.Chat.ChatMessageStoreChangedEventArgs"]}
 DEFINE_IID!(IID_IChatMessageTransport, 1672076280, 59059, 23706, 95, 133, 212, 121, 37, 185, 189, 24);
 RT_INTERFACE!{interface IChatMessageTransport(IChatMessageTransportVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageTransport] {
     fn get_IsAppSetAsNotificationProvider(&self, out: *mut bool) -> HRESULT,
@@ -9888,7 +9888,7 @@ impl IChatMessageTransport {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessageTransport: IChatMessageTransport}
+RT_CLASS!{class ChatMessageTransport: IChatMessageTransport ["Windows.ApplicationModel.Chat.ChatMessageTransport"]}
 DEFINE_IID!(IID_IChatMessageTransport2, 2426885666, 55370, 19490, 169, 77, 84, 68, 68, 237, 200, 161);
 RT_INTERFACE!{interface IChatMessageTransport2(IChatMessageTransport2Vtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageTransport2] {
     fn get_Configuration(&self, out: *mut *mut ChatMessageTransportConfiguration) -> HRESULT,
@@ -9942,8 +9942,8 @@ impl IChatMessageTransportConfiguration {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessageTransportConfiguration: IChatMessageTransportConfiguration}
-RT_ENUM! { enum ChatMessageTransportKind: i32 {
+RT_CLASS!{class ChatMessageTransportConfiguration: IChatMessageTransportConfiguration ["Windows.ApplicationModel.Chat.ChatMessageTransportConfiguration"]}
+RT_ENUM! { enum ChatMessageTransportKind: i32 ["Windows.ApplicationModel.Chat.ChatMessageTransportKind"] {
     Text (ChatMessageTransportKind_Text) = 0, Untriaged (ChatMessageTransportKind_Untriaged) = 1, Blocked (ChatMessageTransportKind_Blocked) = 2, Custom (ChatMessageTransportKind_Custom) = 3,
 }}
 DEFINE_IID!(IID_IChatMessageValidationResult, 636041731, 10476, 22665, 86, 155, 126, 72, 107, 18, 111, 24);
@@ -9975,8 +9975,8 @@ impl IChatMessageValidationResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatMessageValidationResult: IChatMessageValidationResult}
-RT_ENUM! { enum ChatMessageValidationStatus: i32 {
+RT_CLASS!{class ChatMessageValidationResult: IChatMessageValidationResult ["Windows.ApplicationModel.Chat.ChatMessageValidationResult"]}
+RT_ENUM! { enum ChatMessageValidationStatus: i32 ["Windows.ApplicationModel.Chat.ChatMessageValidationStatus"] {
     Valid (ChatMessageValidationStatus_Valid) = 0, NoRecipients (ChatMessageValidationStatus_NoRecipients) = 1, InvalidData (ChatMessageValidationStatus_InvalidData) = 2, MessageTooLarge (ChatMessageValidationStatus_MessageTooLarge) = 3, TooManyRecipients (ChatMessageValidationStatus_TooManyRecipients) = 4, TransportInactive (ChatMessageValidationStatus_TransportInactive) = 5, TransportNotFound (ChatMessageValidationStatus_TransportNotFound) = 6, TooManyAttachments (ChatMessageValidationStatus_TooManyAttachments) = 7, InvalidRecipients (ChatMessageValidationStatus_InvalidRecipients) = 8, InvalidBody (ChatMessageValidationStatus_InvalidBody) = 9, InvalidOther (ChatMessageValidationStatus_InvalidOther) = 10, ValidWithLargeMessage (ChatMessageValidationStatus_ValidWithLargeMessage) = 11, VoiceRoamingRestriction (ChatMessageValidationStatus_VoiceRoamingRestriction) = 12, DataRoamingRestriction (ChatMessageValidationStatus_DataRoamingRestriction) = 13,
 }}
 DEFINE_IID!(IID_IChatQueryOptions, 802383014, 48950, 17143, 183, 231, 146, 60, 10, 171, 254, 22);
@@ -9995,7 +9995,7 @@ impl IChatQueryOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatQueryOptions: IChatQueryOptions}
+RT_CLASS!{class ChatQueryOptions: IChatQueryOptions ["Windows.ApplicationModel.Chat.ChatQueryOptions"]}
 impl RtActivatable<IActivationFactory> for ChatQueryOptions {}
 DEFINE_CLSID!(ChatQueryOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_ChatQueryOptions]);
 DEFINE_IID!(IID_IChatRecipientDeliveryInfo, 4291277474, 10300, 19466, 138, 14, 140, 51, 189, 191, 5, 69);
@@ -10066,10 +10066,10 @@ impl IChatRecipientDeliveryInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatRecipientDeliveryInfo: IChatRecipientDeliveryInfo}
+RT_CLASS!{class ChatRecipientDeliveryInfo: IChatRecipientDeliveryInfo ["Windows.ApplicationModel.Chat.ChatRecipientDeliveryInfo"]}
 impl RtActivatable<IActivationFactory> for ChatRecipientDeliveryInfo {}
 DEFINE_CLSID!(ChatRecipientDeliveryInfo(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,82,101,99,105,112,105,101,110,116,68,101,108,105,118,101,114,121,73,110,102,111,0]) [CLSID_ChatRecipientDeliveryInfo]);
-RT_ENUM! { enum ChatRestoreHistorySpan: i32 {
+RT_ENUM! { enum ChatRestoreHistorySpan: i32 ["Windows.ApplicationModel.Chat.ChatRestoreHistorySpan"] {
     LastMonth (ChatRestoreHistorySpan_LastMonth) = 0, LastYear (ChatRestoreHistorySpan_LastYear) = 1, AnyTime (ChatRestoreHistorySpan_AnyTime) = 2,
 }}
 DEFINE_IID!(IID_IChatSearchReader, 1181089353, 36896, 18258, 152, 13, 57, 97, 35, 37, 245, 137);
@@ -10089,8 +10089,8 @@ impl IChatSearchReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatSearchReader: IChatSearchReader}
-RT_ENUM! { enum ChatStoreChangedEventKind: i32 {
+RT_CLASS!{class ChatSearchReader: IChatSearchReader ["Windows.ApplicationModel.Chat.ChatSearchReader"]}
+RT_ENUM! { enum ChatStoreChangedEventKind: i32 ["Windows.ApplicationModel.Chat.ChatStoreChangedEventKind"] {
     NotificationsMissed (ChatStoreChangedEventKind_NotificationsMissed) = 0, StoreModified (ChatStoreChangedEventKind_StoreModified) = 1, MessageCreated (ChatStoreChangedEventKind_MessageCreated) = 2, MessageModified (ChatStoreChangedEventKind_MessageModified) = 3, MessageDeleted (ChatStoreChangedEventKind_MessageDeleted) = 4, ConversationModified (ChatStoreChangedEventKind_ConversationModified) = 5, ConversationDeleted (ChatStoreChangedEventKind_ConversationDeleted) = 6, ConversationTransportDeleted (ChatStoreChangedEventKind_ConversationTransportDeleted) = 7,
 }}
 DEFINE_IID!(IID_IChatSyncConfiguration, 167274930, 27124, 19199, 130, 182, 6, 153, 47, 244, 2, 210);
@@ -10120,7 +10120,7 @@ impl IChatSyncConfiguration {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatSyncConfiguration: IChatSyncConfiguration}
+RT_CLASS!{class ChatSyncConfiguration: IChatSyncConfiguration ["Windows.ApplicationModel.Chat.ChatSyncConfiguration"]}
 DEFINE_IID!(IID_IChatSyncManager, 2074422371, 9808, 18543, 180, 180, 107, 217, 211, 214, 60, 132);
 RT_INTERFACE!{interface IChatSyncManager(IChatSyncManagerVtbl): IInspectable(IInspectableVtbl) [IID_IChatSyncManager] {
     fn get_Configuration(&self, out: *mut *mut ChatSyncConfiguration) -> HRESULT,
@@ -10163,11 +10163,11 @@ impl IChatSyncManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ChatSyncManager: IChatSyncManager}
-RT_ENUM! { enum ChatTransportErrorCodeCategory: i32 {
+RT_CLASS!{class ChatSyncManager: IChatSyncManager ["Windows.ApplicationModel.Chat.ChatSyncManager"]}
+RT_ENUM! { enum ChatTransportErrorCodeCategory: i32 ["Windows.ApplicationModel.Chat.ChatTransportErrorCodeCategory"] {
     None (ChatTransportErrorCodeCategory_None) = 0, Http (ChatTransportErrorCodeCategory_Http) = 1, Network (ChatTransportErrorCodeCategory_Network) = 2, MmsServer (ChatTransportErrorCodeCategory_MmsServer) = 3,
 }}
-RT_ENUM! { enum ChatTransportInterpretedErrorCode: i32 {
+RT_ENUM! { enum ChatTransportInterpretedErrorCode: i32 ["Windows.ApplicationModel.Chat.ChatTransportInterpretedErrorCode"] {
     None (ChatTransportInterpretedErrorCode_None) = 0, Unknown (ChatTransportInterpretedErrorCode_Unknown) = 1, InvalidRecipientAddress (ChatTransportInterpretedErrorCode_InvalidRecipientAddress) = 2, NetworkConnectivity (ChatTransportInterpretedErrorCode_NetworkConnectivity) = 3, ServiceDenied (ChatTransportInterpretedErrorCode_ServiceDenied) = 4, Timeout (ChatTransportInterpretedErrorCode_Timeout) = 5,
 }}
 DEFINE_IID!(IID_IRcsEndUserMessage, 3620578795, 52183, 20283, 133, 38, 181, 6, 222, 195, 92, 83);
@@ -10217,7 +10217,7 @@ impl IRcsEndUserMessage {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RcsEndUserMessage: IRcsEndUserMessage}
+RT_CLASS!{class RcsEndUserMessage: IRcsEndUserMessage ["Windows.ApplicationModel.Chat.RcsEndUserMessage"]}
 DEFINE_IID!(IID_IRcsEndUserMessageAction, 2453112631, 39746, 18131, 157, 94, 60, 27, 45, 174, 124, 184);
 RT_INTERFACE!{interface IRcsEndUserMessageAction(IRcsEndUserMessageActionVtbl): IInspectable(IInspectableVtbl) [IID_IRcsEndUserMessageAction] {
     fn get_Label(&self, out: *mut HSTRING) -> HRESULT
@@ -10229,7 +10229,7 @@ impl IRcsEndUserMessageAction {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RcsEndUserMessageAction: IRcsEndUserMessageAction}
+RT_CLASS!{class RcsEndUserMessageAction: IRcsEndUserMessageAction ["Windows.ApplicationModel.Chat.RcsEndUserMessageAction"]}
 DEFINE_IID!(IID_IRcsEndUserMessageAvailableEventArgs, 759541249, 16265, 16874, 151, 2, 158, 158, 212, 17, 170, 152);
 RT_INTERFACE!{interface IRcsEndUserMessageAvailableEventArgs(IRcsEndUserMessageAvailableEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRcsEndUserMessageAvailableEventArgs] {
     fn get_IsMessageAvailable(&self, out: *mut bool) -> HRESULT,
@@ -10247,7 +10247,7 @@ impl IRcsEndUserMessageAvailableEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RcsEndUserMessageAvailableEventArgs: IRcsEndUserMessageAvailableEventArgs}
+RT_CLASS!{class RcsEndUserMessageAvailableEventArgs: IRcsEndUserMessageAvailableEventArgs ["Windows.ApplicationModel.Chat.RcsEndUserMessageAvailableEventArgs"]}
 DEFINE_IID!(IID_IRcsEndUserMessageAvailableTriggerDetails, 1536652333, 13599, 18066, 180, 30, 27, 3, 93, 193, 137, 134);
 RT_INTERFACE!{interface IRcsEndUserMessageAvailableTriggerDetails(IRcsEndUserMessageAvailableTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IRcsEndUserMessageAvailableTriggerDetails] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
@@ -10265,7 +10265,7 @@ impl IRcsEndUserMessageAvailableTriggerDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RcsEndUserMessageAvailableTriggerDetails: IRcsEndUserMessageAvailableTriggerDetails}
+RT_CLASS!{class RcsEndUserMessageAvailableTriggerDetails: IRcsEndUserMessageAvailableTriggerDetails ["Windows.ApplicationModel.Chat.RcsEndUserMessageAvailableTriggerDetails"]}
 DEFINE_IID!(IID_IRcsEndUserMessageManager, 810856026, 19743, 19289, 148, 51, 18, 108, 115, 78, 134, 166);
 RT_INTERFACE!{interface IRcsEndUserMessageManager(IRcsEndUserMessageManagerVtbl): IInspectable(IInspectableVtbl) [IID_IRcsEndUserMessageManager] {
     fn add_MessageAvailableChanged(&self, handler: *mut foundation::TypedEventHandler<RcsEndUserMessageManager, RcsEndUserMessageAvailableEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -10282,7 +10282,7 @@ impl IRcsEndUserMessageManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RcsEndUserMessageManager: IRcsEndUserMessageManager}
+RT_CLASS!{class RcsEndUserMessageManager: IRcsEndUserMessageManager ["Windows.ApplicationModel.Chat.RcsEndUserMessageManager"]}
 RT_CLASS!{static class RcsManager}
 impl RtActivatable<IRcsManagerStatics> for RcsManager {}
 impl RtActivatable<IRcsManagerStatics2> for RcsManager {}
@@ -10352,7 +10352,7 @@ impl IRcsManagerStatics2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RcsServiceKind: i32 {
+RT_ENUM! { enum RcsServiceKind: i32 ["Windows.ApplicationModel.Chat.RcsServiceKind"] {
     Chat (RcsServiceKind_Chat) = 0, GroupChat (RcsServiceKind_GroupChat) = 1, FileTransfer (RcsServiceKind_FileTransfer) = 2, Capability (RcsServiceKind_Capability) = 3,
 }}
 DEFINE_IID!(IID_IRcsServiceKindSupportedChangedEventArgs, 4101939780, 59267, 18534, 179, 167, 78, 92, 207, 2, 48, 112);
@@ -10366,7 +10366,7 @@ impl IRcsServiceKindSupportedChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RcsServiceKindSupportedChangedEventArgs: IRcsServiceKindSupportedChangedEventArgs}
+RT_CLASS!{class RcsServiceKindSupportedChangedEventArgs: IRcsServiceKindSupportedChangedEventArgs ["Windows.ApplicationModel.Chat.RcsServiceKindSupportedChangedEventArgs"]}
 DEFINE_IID!(IID_IRcsTransport, 4272113497, 62332, 17177, 133, 70, 236, 132, 210, 29, 48, 255);
 RT_INTERFACE!{interface IRcsTransport(IRcsTransportVtbl): IInspectable(IInspectableVtbl) [IID_IRcsTransport] {
     fn get_ExtendedProperties(&self, out: *mut *mut foundation::collections::IMapView<HString, IInspectable>) -> HRESULT,
@@ -10425,7 +10425,7 @@ impl IRcsTransport {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RcsTransport: IRcsTransport}
+RT_CLASS!{class RcsTransport: IRcsTransport ["Windows.ApplicationModel.Chat.RcsTransport"]}
 DEFINE_IID!(IID_IRcsTransportConfiguration, 533508354, 9330, 19385, 153, 136, 193, 33, 28, 131, 232, 169);
 RT_INTERFACE!{interface IRcsTransportConfiguration(IRcsTransportConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IRcsTransportConfiguration] {
     fn get_MaxAttachmentCount(&self, out: *mut i32) -> HRESULT,
@@ -10467,7 +10467,7 @@ impl IRcsTransportConfiguration {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RcsTransportConfiguration: IRcsTransportConfiguration}
+RT_CLASS!{class RcsTransportConfiguration: IRcsTransportConfiguration ["Windows.ApplicationModel.Chat.RcsTransportConfiguration"]}
 DEFINE_IID!(IID_IRemoteParticipantComposingChangedEventArgs, 515917223, 53193, 17865, 152, 118, 68, 159, 43, 193, 128, 245);
 RT_INTERFACE!{interface IRemoteParticipantComposingChangedEventArgs(IRemoteParticipantComposingChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteParticipantComposingChangedEventArgs] {
     fn get_TransportId(&self, out: *mut HSTRING) -> HRESULT,
@@ -10491,7 +10491,7 @@ impl IRemoteParticipantComposingChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RemoteParticipantComposingChangedEventArgs: IRemoteParticipantComposingChangedEventArgs}
+RT_CLASS!{class RemoteParticipantComposingChangedEventArgs: IRemoteParticipantComposingChangedEventArgs ["Windows.ApplicationModel.Chat.RemoteParticipantComposingChangedEventArgs"]}
 } // Windows.ApplicationModel.Chat
 pub mod communicationblocking { // Windows.ApplicationModel.CommunicationBlocking
 use ::prelude::*;
@@ -10631,7 +10631,7 @@ impl IAggregateContactManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AggregateContactManager: IAggregateContactManager}
+RT_CLASS!{class AggregateContactManager: IAggregateContactManager ["Windows.ApplicationModel.Contacts.AggregateContactManager"]}
 DEFINE_IID!(IID_IAggregateContactManager2, 1586283224, 43469, 17456, 156, 75, 1, 52, 141, 178, 202, 80);
 RT_INTERFACE!{interface IAggregateContactManager2(IAggregateContactManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IAggregateContactManager2] {
     fn SetRemoteIdentificationInformationAsync(&self, contactListId: HSTRING, remoteSourceId: HSTRING, accountId: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT
@@ -10678,7 +10678,7 @@ impl IContact {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Contact: IContact}
+RT_CLASS!{class Contact: IContact ["Windows.ApplicationModel.Contacts.Contact"]}
 impl RtActivatable<IActivationFactory> for Contact {}
 DEFINE_CLSID!(Contact(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,0]) [CLSID_Contact]);
 DEFINE_IID!(IID_IContact2, 4078105445, 47991, 19604, 128, 45, 131, 40, 206, 228, 12, 8);
@@ -10990,10 +10990,10 @@ impl IContactAddress {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactAddress: IContactAddress}
+RT_CLASS!{class ContactAddress: IContactAddress ["Windows.ApplicationModel.Contacts.ContactAddress"]}
 impl RtActivatable<IActivationFactory> for ContactAddress {}
 DEFINE_CLSID!(ContactAddress(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,65,100,100,114,101,115,115,0]) [CLSID_ContactAddress]);
-RT_ENUM! { enum ContactAddressKind: i32 {
+RT_ENUM! { enum ContactAddressKind: i32 ["Windows.ApplicationModel.Contacts.ContactAddressKind"] {
     Home (ContactAddressKind_Home) = 0, Work (ContactAddressKind_Work) = 1, Other (ContactAddressKind_Other) = 2,
 }}
 DEFINE_IID!(IID_IContactAnnotation, 2183119599, 32065, 17570, 132, 195, 96, 162, 129, 221, 123, 134);
@@ -11058,7 +11058,7 @@ impl IContactAnnotation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactAnnotation: IContactAnnotation}
+RT_CLASS!{class ContactAnnotation: IContactAnnotation ["Windows.ApplicationModel.Contacts.ContactAnnotation"]}
 impl RtActivatable<IActivationFactory> for ContactAnnotation {}
 DEFINE_CLSID!(ContactAnnotation(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,65,110,110,111,116,97,116,105,111,110,0]) [CLSID_ContactAnnotation]);
 DEFINE_IID!(IID_IContactAnnotation2, 3063016691, 19127, 18975, 153, 65, 12, 156, 243, 23, 27, 117);
@@ -11136,8 +11136,8 @@ impl IContactAnnotationList {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactAnnotationList: IContactAnnotationList}
-RT_ENUM! { enum ContactAnnotationOperations: u32 {
+RT_CLASS!{class ContactAnnotationList: IContactAnnotationList ["Windows.ApplicationModel.Contacts.ContactAnnotationList"]}
+RT_ENUM! { enum ContactAnnotationOperations: u32 ["Windows.ApplicationModel.Contacts.ContactAnnotationOperations"] {
     None (ContactAnnotationOperations_None) = 0, ContactProfile (ContactAnnotationOperations_ContactProfile) = 1, Message (ContactAnnotationOperations_Message) = 2, AudioCall (ContactAnnotationOperations_AudioCall) = 4, VideoCall (ContactAnnotationOperations_VideoCall) = 8, SocialFeeds (ContactAnnotationOperations_SocialFeeds) = 16, Share (ContactAnnotationOperations_Share) = 32,
 }}
 DEFINE_IID!(IID_IContactAnnotationStore, 598537386, 31351, 17789, 130, 3, 152, 127, 75, 49, 175, 9);
@@ -11193,7 +11193,7 @@ impl IContactAnnotationStore {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactAnnotationStore: IContactAnnotationStore}
+RT_CLASS!{class ContactAnnotationStore: IContactAnnotationStore ["Windows.ApplicationModel.Contacts.ContactAnnotationStore"]}
 DEFINE_IID!(IID_IContactAnnotationStore2, 2128487421, 25063, 18791, 142, 197, 189, 242, 128, 162, 64, 99);
 RT_INTERFACE!{interface IContactAnnotationStore2(IContactAnnotationStore2Vtbl): IInspectable(IInspectableVtbl) [IID_IContactAnnotationStore2] {
     fn FindAnnotationsForContactListAsync(&self, contactListId: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<ContactAnnotation>>) -> HRESULT
@@ -11205,7 +11205,7 @@ impl IContactAnnotationStore2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ContactAnnotationStoreAccessType: i32 {
+RT_ENUM! { enum ContactAnnotationStoreAccessType: i32 ["Windows.ApplicationModel.Contacts.ContactAnnotationStoreAccessType"] {
     AppAnnotationsReadWrite (ContactAnnotationStoreAccessType_AppAnnotationsReadWrite) = 0, AllAnnotationsReadWrite (ContactAnnotationStoreAccessType_AllAnnotationsReadWrite) = 1,
 }}
 DEFINE_IID!(IID_IContactBatch, 902928173, 49102, 18107, 147, 248, 165, 176, 110, 197, 226, 1);
@@ -11225,8 +11225,8 @@ impl IContactBatch {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactBatch: IContactBatch}
-RT_ENUM! { enum ContactBatchStatus: i32 {
+RT_CLASS!{class ContactBatch: IContactBatch ["Windows.ApplicationModel.Contacts.ContactBatch"]}
+RT_ENUM! { enum ContactBatchStatus: i32 ["Windows.ApplicationModel.Contacts.ContactBatchStatus"] {
     Success (ContactBatchStatus_Success) = 0, ServerSearchSyncManagerError (ContactBatchStatus_ServerSearchSyncManagerError) = 1, ServerSearchUnknownError (ContactBatchStatus_ServerSearchUnknownError) = 2,
 }}
 DEFINE_IID!(IID_IContactCardDelayedDataLoader, 3054172418, 5446, 17229, 134, 156, 110, 53, 32, 118, 14, 243);
@@ -11239,8 +11239,8 @@ impl IContactCardDelayedDataLoader {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactCardDelayedDataLoader: IContactCardDelayedDataLoader}
-RT_ENUM! { enum ContactCardHeaderKind: i32 {
+RT_CLASS!{class ContactCardDelayedDataLoader: IContactCardDelayedDataLoader ["Windows.ApplicationModel.Contacts.ContactCardDelayedDataLoader"]}
+RT_ENUM! { enum ContactCardHeaderKind: i32 ["Windows.ApplicationModel.Contacts.ContactCardHeaderKind"] {
     Default (ContactCardHeaderKind_Default) = 0, Basic (ContactCardHeaderKind_Basic) = 1, Enterprise (ContactCardHeaderKind_Enterprise) = 2,
 }}
 DEFINE_IID!(IID_IContactCardOptions, 2349485950, 27318, 20287, 190, 114, 129, 114, 54, 238, 234, 91);
@@ -11270,7 +11270,7 @@ impl IContactCardOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactCardOptions: IContactCardOptions}
+RT_CLASS!{class ContactCardOptions: IContactCardOptions ["Windows.ApplicationModel.Contacts.ContactCardOptions"]}
 impl RtActivatable<IActivationFactory> for ContactCardOptions {}
 DEFINE_CLSID!(ContactCardOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,67,97,114,100,79,112,116,105,111,110,115,0]) [CLSID_ContactCardOptions]);
 DEFINE_IID!(IID_IContactCardOptions2, 2401704864, 55115, 19654, 159, 83, 27, 14, 181, 209, 39, 60);
@@ -11284,7 +11284,7 @@ impl IContactCardOptions2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ContactCardTabKind: i32 {
+RT_ENUM! { enum ContactCardTabKind: i32 ["Windows.ApplicationModel.Contacts.ContactCardTabKind"] {
     Default (ContactCardTabKind_Default) = 0, Email (ContactCardTabKind_Email) = 1, Messaging (ContactCardTabKind_Messaging) = 2, Phone (ContactCardTabKind_Phone) = 3, Video (ContactCardTabKind_Video) = 4, OrganizationalHierarchy (ContactCardTabKind_OrganizationalHierarchy) = 5,
 }}
 DEFINE_IID!(IID_IContactChange, 2501724944, 27225, 18208, 164, 225, 54, 61, 152, 193, 53, 213);
@@ -11304,7 +11304,7 @@ impl IContactChange {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactChange: IContactChange}
+RT_CLASS!{class ContactChange: IContactChange ["Windows.ApplicationModel.Contacts.ContactChange"]}
 DEFINE_IID!(IID_IContactChangedDeferral, 3306437352, 6915, 18168, 182, 148, 165, 35, 232, 60, 252, 182);
 RT_INTERFACE!{interface IContactChangedDeferral(IContactChangedDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IContactChangedDeferral] {
     fn Complete(&self) -> HRESULT
@@ -11315,7 +11315,7 @@ impl IContactChangedDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactChangedDeferral: IContactChangedDeferral}
+RT_CLASS!{class ContactChangedDeferral: IContactChangedDeferral ["Windows.ApplicationModel.Contacts.ContactChangedDeferral"]}
 DEFINE_IID!(IID_IContactChangedEventArgs, 1381924817, 29683, 19325, 169, 24, 88, 11, 228, 54, 97, 33);
 RT_INTERFACE!{interface IContactChangedEventArgs(IContactChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactChangedEventArgs] {
     fn GetDeferral(&self, out: *mut *mut ContactChangedDeferral) -> HRESULT
@@ -11327,7 +11327,7 @@ impl IContactChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactChangedEventArgs: IContactChangedEventArgs}
+RT_CLASS!{class ContactChangedEventArgs: IContactChangedEventArgs ["Windows.ApplicationModel.Contacts.ContactChangedEventArgs"]}
 DEFINE_IID!(IID_IContactChangeReader, 561191418, 11532, 17120, 169, 218, 62, 205, 86, 167, 138, 71);
 RT_INTERFACE!{interface IContactChangeReader(IContactChangeReaderVtbl): IInspectable(IInspectableVtbl) [IID_IContactChangeReader] {
     fn AcceptChanges(&self) -> HRESULT,
@@ -11349,7 +11349,7 @@ impl IContactChangeReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactChangeReader: IContactChangeReader}
+RT_CLASS!{class ContactChangeReader: IContactChangeReader ["Windows.ApplicationModel.Contacts.ContactChangeReader"]}
 DEFINE_IID!(IID_IContactChangeTracker, 1855531346, 12443, 16461, 151, 18, 179, 123, 211, 2, 120, 170);
 RT_INTERFACE!{interface IContactChangeTracker(IContactChangeTrackerVtbl): IInspectable(IInspectableVtbl) [IID_IContactChangeTracker] {
     fn Enable(&self) -> HRESULT,
@@ -11371,7 +11371,7 @@ impl IContactChangeTracker {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactChangeTracker: IContactChangeTracker}
+RT_CLASS!{class ContactChangeTracker: IContactChangeTracker ["Windows.ApplicationModel.Contacts.ContactChangeTracker"]}
 DEFINE_IID!(IID_IContactChangeTracker2, 2139803900, 37665, 19736, 156, 9, 215, 8, 198, 63, 205, 49);
 RT_INTERFACE!{interface IContactChangeTracker2(IContactChangeTracker2Vtbl): IInspectable(IInspectableVtbl) [IID_IContactChangeTracker2] {
     fn get_IsTracking(&self, out: *mut bool) -> HRESULT
@@ -11383,7 +11383,7 @@ impl IContactChangeTracker2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ContactChangeType: i32 {
+RT_ENUM! { enum ContactChangeType: i32 ["Windows.ApplicationModel.Contacts.ContactChangeType"] {
     Created (ContactChangeType_Created) = 0, Modified (ContactChangeType_Modified) = 1, Deleted (ContactChangeType_Deleted) = 2, ChangeTrackingLost (ContactChangeType_ChangeTrackingLost) = 3,
 }}
 DEFINE_IID!(IID_IContactConnectedServiceAccount, 4143461715, 43559, 18225, 142, 74, 61, 236, 92, 233, 238, 201);
@@ -11413,7 +11413,7 @@ impl IContactConnectedServiceAccount {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactConnectedServiceAccount: IContactConnectedServiceAccount}
+RT_CLASS!{class ContactConnectedServiceAccount: IContactConnectedServiceAccount ["Windows.ApplicationModel.Contacts.ContactConnectedServiceAccount"]}
 impl RtActivatable<IActivationFactory> for ContactConnectedServiceAccount {}
 DEFINE_CLSID!(ContactConnectedServiceAccount(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,67,111,110,110,101,99,116,101,100,83,101,114,118,105,99,101,65,99,99,111,117,110,116,0]) [CLSID_ContactConnectedServiceAccount]);
 DEFINE_IID!(IID_IContactDate, 4271418982, 45573, 18740, 145, 116, 15, 242, 176, 86, 87, 7);
@@ -11476,10 +11476,10 @@ impl IContactDate {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactDate: IContactDate}
+RT_CLASS!{class ContactDate: IContactDate ["Windows.ApplicationModel.Contacts.ContactDate"]}
 impl RtActivatable<IActivationFactory> for ContactDate {}
 DEFINE_CLSID!(ContactDate(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,68,97,116,101,0]) [CLSID_ContactDate]);
-RT_ENUM! { enum ContactDateKind: i32 {
+RT_ENUM! { enum ContactDateKind: i32 ["Windows.ApplicationModel.Contacts.ContactDateKind"] {
     Birthday (ContactDateKind_Birthday) = 0, Anniversary (ContactDateKind_Anniversary) = 1, Other (ContactDateKind_Other) = 2,
 }}
 DEFINE_IID!(IID_IContactEmail, 2426542505, 58323, 19811, 153, 59, 5, 185, 165, 57, 58, 191);
@@ -11520,10 +11520,10 @@ impl IContactEmail {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactEmail: IContactEmail}
+RT_CLASS!{class ContactEmail: IContactEmail ["Windows.ApplicationModel.Contacts.ContactEmail"]}
 impl RtActivatable<IActivationFactory> for ContactEmail {}
 DEFINE_CLSID!(ContactEmail(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,69,109,97,105,108,0]) [CLSID_ContactEmail]);
-RT_ENUM! { enum ContactEmailKind: i32 {
+RT_ENUM! { enum ContactEmailKind: i32 ["Windows.ApplicationModel.Contacts.ContactEmailKind"] {
     Personal (ContactEmailKind_Personal) = 0, Work (ContactEmailKind_Work) = 1, Other (ContactEmailKind_Other) = 2,
 }}
 DEFINE_IID!(IID_IContactField, 2977319018, 53907, 18732, 160, 88, 219, 87, 91, 62, 60, 15);
@@ -11555,7 +11555,7 @@ impl IContactField {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactField: IContactField}
+RT_CLASS!{class ContactField: IContactField ["Windows.ApplicationModel.Contacts.ContactField"]}
 impl RtActivatable<IContactFieldFactory> for ContactField {}
 impl ContactField {
     #[inline] pub fn create_field_default(value: &HStringArg, type_: ContactFieldType) -> Result<ComPtr<ContactField>> {
@@ -11569,7 +11569,7 @@ impl ContactField {
     }
 }
 DEFINE_CLSID!(ContactField(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,70,105,101,108,100,0]) [CLSID_ContactField]);
-RT_ENUM! { enum ContactFieldCategory: i32 {
+RT_ENUM! { enum ContactFieldCategory: i32 ["Windows.ApplicationModel.Contacts.ContactFieldCategory"] {
     None (ContactFieldCategory_None) = 0, Home (ContactFieldCategory_Home) = 1, Work (ContactFieldCategory_Work) = 2, Mobile (ContactFieldCategory_Mobile) = 3, Other (ContactFieldCategory_Other) = 4,
 }}
 DEFINE_IID!(IID_IContactFieldFactory, 2246218047, 3658, 19006, 137, 148, 64, 106, 231, 237, 100, 110);
@@ -11595,17 +11595,17 @@ impl IContactFieldFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactFieldFactory: IContactFieldFactory}
+RT_CLASS!{class ContactFieldFactory: IContactFieldFactory ["Windows.ApplicationModel.Contacts.ContactFieldFactory"]}
 impl RtActivatable<IActivationFactory> for ContactFieldFactory {}
 DEFINE_CLSID!(ContactFieldFactory(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,70,105,101,108,100,70,97,99,116,111,114,121,0]) [CLSID_ContactFieldFactory]);
-RT_ENUM! { enum ContactFieldType: i32 {
+RT_ENUM! { enum ContactFieldType: i32 ["Windows.ApplicationModel.Contacts.ContactFieldType"] {
     Email (ContactFieldType_Email) = 0, PhoneNumber (ContactFieldType_PhoneNumber) = 1, Location (ContactFieldType_Location) = 2, InstantMessage (ContactFieldType_InstantMessage) = 3, Custom (ContactFieldType_Custom) = 4, ConnectedServiceAccount (ContactFieldType_ConnectedServiceAccount) = 5, ImportantDate (ContactFieldType_ImportantDate) = 6, Address (ContactFieldType_Address) = 7, SignificantOther (ContactFieldType_SignificantOther) = 8, Notes (ContactFieldType_Notes) = 9, Website (ContactFieldType_Website) = 10, JobInfo (ContactFieldType_JobInfo) = 11,
 }}
 DEFINE_IID!(IID_IContactGroup, 1505618689, 40602, 18269, 191, 229, 163, 123, 128, 109, 133, 44);
 RT_INTERFACE!{interface IContactGroup(IContactGroupVtbl): IInspectable(IInspectableVtbl) [IID_IContactGroup] {
     
 }}
-RT_CLASS!{class ContactGroup: IContactGroup}
+RT_CLASS!{class ContactGroup: IContactGroup ["Windows.ApplicationModel.Contacts.ContactGroup"]}
 DEFINE_IID!(IID_IContactInformation, 660518612, 27182, 17016, 169, 20, 228, 96, 213, 240, 136, 246);
 RT_INTERFACE!{interface IContactInformation(IContactInformationVtbl): IInspectable(IInspectableVtbl) [IID_IContactInformation] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -11660,7 +11660,7 @@ impl IContactInformation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactInformation: IContactInformation}
+RT_CLASS!{class ContactInformation: IContactInformation ["Windows.ApplicationModel.Contacts.ContactInformation"]}
 DEFINE_IID!(IID_IContactInstantMessageField, 3437443895, 3461, 16890, 180, 61, 218, 89, 156, 62, 176, 9);
 RT_INTERFACE!{interface IContactInstantMessageField(IContactInstantMessageFieldVtbl): IInspectable(IInspectableVtbl) [IID_IContactInstantMessageField] {
     fn get_UserName(&self, out: *mut HSTRING) -> HRESULT,
@@ -11690,7 +11690,7 @@ impl IContactInstantMessageField {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactInstantMessageField: IContactInstantMessageField}
+RT_CLASS!{class ContactInstantMessageField: IContactInstantMessageField ["Windows.ApplicationModel.Contacts.ContactInstantMessageField"]}
 impl RtActivatable<IContactInstantMessageFieldFactory> for ContactInstantMessageField {}
 impl ContactInstantMessageField {
     #[inline] pub fn create_instant_message_default(userName: &HStringArg) -> Result<ComPtr<ContactInstantMessageField>> {
@@ -11820,7 +11820,7 @@ impl IContactJobInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactJobInfo: IContactJobInfo}
+RT_CLASS!{class ContactJobInfo: IContactJobInfo ["Windows.ApplicationModel.Contacts.ContactJobInfo"]}
 impl RtActivatable<IActivationFactory> for ContactJobInfo {}
 DEFINE_CLSID!(ContactJobInfo(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,74,111,98,73,110,102,111,0]) [CLSID_ContactJobInfo]);
 RT_CLASS!{static class ContactLaunchActionVerbs}
@@ -12028,7 +12028,7 @@ impl IContactList {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactList: IContactList}
+RT_CLASS!{class ContactList: IContactList ["Windows.ApplicationModel.Contacts.ContactList"]}
 DEFINE_IID!(IID_IContactList2, 3409527732, 17744, 19915, 146, 41, 64, 255, 145, 251, 2, 3);
 RT_INTERFACE!{interface IContactList2(IContactList2Vtbl): IInspectable(IInspectableVtbl) [IID_IContactList2] {
     fn RegisterSyncManagerAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -12085,11 +12085,11 @@ impl IContactListLimitedWriteOperations {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactListLimitedWriteOperations: IContactListLimitedWriteOperations}
-RT_ENUM! { enum ContactListOtherAppReadAccess: i32 {
+RT_CLASS!{class ContactListLimitedWriteOperations: IContactListLimitedWriteOperations ["Windows.ApplicationModel.Contacts.ContactListLimitedWriteOperations"]}
+RT_ENUM! { enum ContactListOtherAppReadAccess: i32 ["Windows.ApplicationModel.Contacts.ContactListOtherAppReadAccess"] {
     SystemOnly (ContactListOtherAppReadAccess_SystemOnly) = 0, Limited (ContactListOtherAppReadAccess_Limited) = 1, Full (ContactListOtherAppReadAccess_Full) = 2, None (ContactListOtherAppReadAccess_None) = 3,
 }}
-RT_ENUM! { enum ContactListOtherAppWriteAccess: i32 {
+RT_ENUM! { enum ContactListOtherAppWriteAccess: i32 ["Windows.ApplicationModel.Contacts.ContactListOtherAppWriteAccess"] {
     None (ContactListOtherAppWriteAccess_None) = 0, SystemOnly (ContactListOtherAppWriteAccess_SystemOnly) = 1, Limited (ContactListOtherAppWriteAccess_Limited) = 2,
 }}
 DEFINE_IID!(IID_IContactListSyncConstraints, 2997927681, 12386, 20014, 150, 157, 1, 141, 25, 135, 243, 20);
@@ -12405,7 +12405,7 @@ impl IContactListSyncConstraints {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactListSyncConstraints: IContactListSyncConstraints}
+RT_CLASS!{class ContactListSyncConstraints: IContactListSyncConstraints ["Windows.ApplicationModel.Contacts.ContactListSyncConstraints"]}
 DEFINE_IID!(IID_IContactListSyncManager, 342787006, 31013, 19148, 157, 229, 33, 221, 208, 111, 134, 116);
 RT_INTERFACE!{interface IContactListSyncManager(IContactListSyncManagerVtbl): IInspectable(IInspectableVtbl) [IID_IContactListSyncManager] {
     fn get_Status(&self, out: *mut ContactListSyncStatus) -> HRESULT,
@@ -12446,7 +12446,7 @@ impl IContactListSyncManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactListSyncManager: IContactListSyncManager}
+RT_CLASS!{class ContactListSyncManager: IContactListSyncManager ["Windows.ApplicationModel.Contacts.ContactListSyncManager"]}
 DEFINE_IID!(IID_IContactListSyncManager2, 2841186887, 47957, 20003, 129, 40, 55, 1, 52, 168, 93, 13);
 RT_INTERFACE!{interface IContactListSyncManager2(IContactListSyncManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IContactListSyncManager2] {
     fn put_Status(&self, value: ContactListSyncStatus) -> HRESULT,
@@ -12467,7 +12467,7 @@ impl IContactListSyncManager2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ContactListSyncStatus: i32 {
+RT_ENUM! { enum ContactListSyncStatus: i32 ["Windows.ApplicationModel.Contacts.ContactListSyncStatus"] {
     Idle (ContactListSyncStatus_Idle) = 0, Syncing (ContactListSyncStatus_Syncing) = 1, UpToDate (ContactListSyncStatus_UpToDate) = 2, AuthenticationError (ContactListSyncStatus_AuthenticationError) = 3, PolicyError (ContactListSyncStatus_PolicyError) = 4, UnknownError (ContactListSyncStatus_UnknownError) = 5, ManualAccountRemovalRequired (ContactListSyncStatus_ManualAccountRemovalRequired) = 6,
 }}
 DEFINE_IID!(IID_IContactLocationField, 2663387010, 43886, 19254, 137, 227, 178, 59, 192, 161, 218, 204);
@@ -12511,7 +12511,7 @@ impl IContactLocationField {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactLocationField: IContactLocationField}
+RT_CLASS!{class ContactLocationField: IContactLocationField ["Windows.ApplicationModel.Contacts.ContactLocationField"]}
 impl RtActivatable<IContactLocationFieldFactory> for ContactLocationField {}
 impl ContactLocationField {
     #[inline] pub fn create_location_default(unstructuredAddress: &HStringArg) -> Result<ComPtr<ContactLocationField>> {
@@ -12689,7 +12689,7 @@ impl IContactManagerForUser {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactManagerForUser: IContactManagerForUser}
+RT_CLASS!{class ContactManagerForUser: IContactManagerForUser ["Windows.ApplicationModel.Contacts.ContactManagerForUser"]}
 DEFINE_IID!(IID_IContactManagerForUser2, 1296473134, 15221, 19059, 187, 48, 115, 102, 69, 71, 34, 86);
 RT_INTERFACE!{interface IContactManagerForUser2(IContactManagerForUser2Vtbl): IInspectable(IInspectableVtbl) [IID_IContactManagerForUser2] {
     fn ShowFullContactCard(&self, contact: *mut Contact, fullContactCardOptions: *mut FullContactCardOptions) -> HRESULT
@@ -12879,8 +12879,8 @@ impl IContactMatchReason {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactMatchReason: IContactMatchReason}
-RT_ENUM! { enum ContactMatchReasonKind: i32 {
+RT_CLASS!{class ContactMatchReason: IContactMatchReason ["Windows.ApplicationModel.Contacts.ContactMatchReason"]}
+RT_ENUM! { enum ContactMatchReasonKind: i32 ["Windows.ApplicationModel.Contacts.ContactMatchReasonKind"] {
     Name (ContactMatchReasonKind_Name) = 0, EmailAddress (ContactMatchReasonKind_EmailAddress) = 1, PhoneNumber (ContactMatchReasonKind_PhoneNumber) = 2, JobInfo (ContactMatchReasonKind_JobInfo) = 3, YomiName (ContactMatchReasonKind_YomiName) = 4, Other (ContactMatchReasonKind_Other) = 5,
 }}
 DEFINE_IID!(IID_IContactName, 4093962619, 36916, 17724, 142, 191, 20, 10, 56, 200, 111, 29);
@@ -12977,7 +12977,7 @@ impl IContactName {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ContactNameOrder: i32 {
+RT_ENUM! { enum ContactNameOrder: i32 ["Windows.ApplicationModel.Contacts.ContactNameOrder"] {
     FirstNameLastName (ContactNameOrder_FirstNameLastName) = 0, LastNameFirstName (ContactNameOrder_LastNameFirstName) = 1,
 }}
 DEFINE_IID!(IID_IContactPanel, 1103041125, 53998, 19351, 168, 10, 125, 141, 100, 204, 166, 245);
@@ -13025,7 +13025,7 @@ impl IContactPanel {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactPanel: IContactPanel}
+RT_CLASS!{class ContactPanel: IContactPanel ["Windows.ApplicationModel.Contacts.ContactPanel"]}
 DEFINE_IID!(IID_IContactPanelClosingEventArgs, 572617939, 53067, 18135, 183, 57, 110, 220, 22, 17, 11, 251);
 RT_INTERFACE!{interface IContactPanelClosingEventArgs(IContactPanelClosingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactPanelClosingEventArgs] {
     fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
@@ -13037,7 +13037,7 @@ impl IContactPanelClosingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactPanelClosingEventArgs: IContactPanelClosingEventArgs}
+RT_CLASS!{class ContactPanelClosingEventArgs: IContactPanelClosingEventArgs ["Windows.ApplicationModel.Contacts.ContactPanelClosingEventArgs"]}
 DEFINE_IID!(IID_IContactPanelLaunchFullAppRequestedEventArgs, 2295733262, 9140, 19432, 138, 252, 7, 44, 37, 164, 25, 13);
 RT_INTERFACE!{interface IContactPanelLaunchFullAppRequestedEventArgs(IContactPanelLaunchFullAppRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactPanelLaunchFullAppRequestedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -13054,7 +13054,7 @@ impl IContactPanelLaunchFullAppRequestedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactPanelLaunchFullAppRequestedEventArgs: IContactPanelLaunchFullAppRequestedEventArgs}
+RT_CLASS!{class ContactPanelLaunchFullAppRequestedEventArgs: IContactPanelLaunchFullAppRequestedEventArgs ["Windows.ApplicationModel.Contacts.ContactPanelLaunchFullAppRequestedEventArgs"]}
 DEFINE_IID!(IID_IContactPhone, 1182640997, 10002, 20306, 183, 131, 158, 168, 17, 28, 99, 205);
 RT_INTERFACE!{interface IContactPhone(IContactPhoneVtbl): IInspectable(IInspectableVtbl) [IID_IContactPhone] {
     fn get_Number(&self, out: *mut HSTRING) -> HRESULT,
@@ -13093,10 +13093,10 @@ impl IContactPhone {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactPhone: IContactPhone}
+RT_CLASS!{class ContactPhone: IContactPhone ["Windows.ApplicationModel.Contacts.ContactPhone"]}
 impl RtActivatable<IActivationFactory> for ContactPhone {}
 DEFINE_CLSID!(ContactPhone(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,80,104,111,110,101,0]) [CLSID_ContactPhone]);
-RT_ENUM! { enum ContactPhoneKind: i32 {
+RT_ENUM! { enum ContactPhoneKind: i32 ["Windows.ApplicationModel.Contacts.ContactPhoneKind"] {
     Home (ContactPhoneKind_Home) = 0, Mobile (ContactPhoneKind_Mobile) = 1, Work (ContactPhoneKind_Work) = 2, Other (ContactPhoneKind_Other) = 3, Pager (ContactPhoneKind_Pager) = 4, BusinessFax (ContactPhoneKind_BusinessFax) = 5, HomeFax (ContactPhoneKind_HomeFax) = 6, Company (ContactPhoneKind_Company) = 7, Assistant (ContactPhoneKind_Assistant) = 8, Radio (ContactPhoneKind_Radio) = 9,
 }}
 DEFINE_IID!(IID_IContactPicker, 235535761, 17144, 16469, 144, 160, 137, 111, 150, 115, 137, 54);
@@ -13144,7 +13144,7 @@ impl IContactPicker {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactPicker: IContactPicker}
+RT_CLASS!{class ContactPicker: IContactPicker ["Windows.ApplicationModel.Contacts.ContactPicker"]}
 impl RtActivatable<IContactPickerStatics> for ContactPicker {}
 impl RtActivatable<IActivationFactory> for ContactPicker {}
 impl ContactPicker {
@@ -13208,7 +13208,7 @@ impl IContactPickerStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ContactQueryDesiredFields: u32 {
+RT_ENUM! { enum ContactQueryDesiredFields: u32 ["Windows.ApplicationModel.Contacts.ContactQueryDesiredFields"] {
     None (ContactQueryDesiredFields_None) = 0, PhoneNumber (ContactQueryDesiredFields_PhoneNumber) = 1, EmailAddress (ContactQueryDesiredFields_EmailAddress) = 2, PostalAddress (ContactQueryDesiredFields_PostalAddress) = 4,
 }}
 DEFINE_IID!(IID_IContactQueryOptions, 1141427358, 32124, 17136, 138, 199, 245, 7, 51, 236, 219, 193);
@@ -13267,7 +13267,7 @@ impl IContactQueryOptions {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactQueryOptions: IContactQueryOptions}
+RT_CLASS!{class ContactQueryOptions: IContactQueryOptions ["Windows.ApplicationModel.Contacts.ContactQueryOptions"]}
 impl RtActivatable<IContactQueryOptionsFactory> for ContactQueryOptions {}
 impl RtActivatable<IActivationFactory> for ContactQueryOptions {}
 impl ContactQueryOptions {
@@ -13296,10 +13296,10 @@ impl IContactQueryOptionsFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ContactQuerySearchFields: u32 {
+RT_ENUM! { enum ContactQuerySearchFields: u32 ["Windows.ApplicationModel.Contacts.ContactQuerySearchFields"] {
     None (ContactQuerySearchFields_None) = 0, Name (ContactQuerySearchFields_Name) = 1, Email (ContactQuerySearchFields_Email) = 2, Phone (ContactQuerySearchFields_Phone) = 4, All (ContactQuerySearchFields_All) = 4294967295,
 }}
-RT_ENUM! { enum ContactQuerySearchScope: i32 {
+RT_ENUM! { enum ContactQuerySearchScope: i32 ["Windows.ApplicationModel.Contacts.ContactQuerySearchScope"] {
     Local (ContactQuerySearchScope_Local) = 0, Server (ContactQuerySearchScope_Server) = 1,
 }}
 DEFINE_IID!(IID_IContactQueryTextSearch, 4158912971, 43351, 17307, 160, 183, 28, 2, 161, 150, 63, 240);
@@ -13340,7 +13340,7 @@ impl IContactQueryTextSearch {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactQueryTextSearch: IContactQueryTextSearch}
+RT_CLASS!{class ContactQueryTextSearch: IContactQueryTextSearch ["Windows.ApplicationModel.Contacts.ContactQueryTextSearch"]}
 DEFINE_IID!(IID_IContactReader, 3549946926, 5256, 17138, 191, 100, 37, 63, 72, 132, 191, 237);
 RT_INTERFACE!{interface IContactReader(IContactReaderVtbl): IInspectable(IInspectableVtbl) [IID_IContactReader] {
     fn ReadBatchAsync(&self, out: *mut *mut foundation::IAsyncOperation<ContactBatch>) -> HRESULT,
@@ -13358,11 +13358,11 @@ impl IContactReader {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactReader: IContactReader}
-RT_ENUM! { enum ContactRelationship: i32 {
+RT_CLASS!{class ContactReader: IContactReader ["Windows.ApplicationModel.Contacts.ContactReader"]}
+RT_ENUM! { enum ContactRelationship: i32 ["Windows.ApplicationModel.Contacts.ContactRelationship"] {
     Other (ContactRelationship_Other) = 0, Spouse (ContactRelationship_Spouse) = 1, Partner (ContactRelationship_Partner) = 2, Sibling (ContactRelationship_Sibling) = 3, Parent (ContactRelationship_Parent) = 4, Child (ContactRelationship_Child) = 5,
 }}
-RT_ENUM! { enum ContactSelectionMode: i32 {
+RT_ENUM! { enum ContactSelectionMode: i32 ["Windows.ApplicationModel.Contacts.ContactSelectionMode"] {
     Contacts (ContactSelectionMode_Contacts) = 0, Fields (ContactSelectionMode_Fields) = 1,
 }}
 DEFINE_IID!(IID_IContactSignificantOther, 2289284523, 50683, 18136, 147, 254, 218, 63, 241, 147, 64, 84);
@@ -13392,7 +13392,7 @@ impl IContactSignificantOther {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactSignificantOther: IContactSignificantOther}
+RT_CLASS!{class ContactSignificantOther: IContactSignificantOther ["Windows.ApplicationModel.Contacts.ContactSignificantOther"]}
 impl RtActivatable<IActivationFactory> for ContactSignificantOther {}
 DEFINE_CLSID!(ContactSignificantOther(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,83,105,103,110,105,102,105,99,97,110,116,79,116,104,101,114,0]) [CLSID_ContactSignificantOther]);
 DEFINE_IID!(IID_IContactSignificantOther2, 2373702772, 16131, 17912, 186, 15, 196, 237, 55, 214, 66, 25);
@@ -13434,7 +13434,7 @@ impl IContactStore {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactStore: IContactStore}
+RT_CLASS!{class ContactStore: IContactStore ["Windows.ApplicationModel.Contacts.ContactStore"]}
 DEFINE_IID!(IID_IContactStore2, 416160802, 60373, 19451, 182, 144, 95, 79, 39, 196, 240, 232);
 RT_INTERFACE!{interface IContactStore2(IContactStore2Vtbl): IInspectable(IInspectableVtbl) [IID_IContactStore2] {
     fn get_ChangeTracker(&self, out: *mut *mut ContactChangeTracker) -> HRESULT,
@@ -13516,14 +13516,14 @@ impl IContactStore3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ContactStoreAccessType: i32 {
+RT_ENUM! { enum ContactStoreAccessType: i32 ["Windows.ApplicationModel.Contacts.ContactStoreAccessType"] {
     AppContactsReadWrite (ContactStoreAccessType_AppContactsReadWrite) = 0, AllContactsReadOnly (ContactStoreAccessType_AllContactsReadOnly) = 1, AllContactsReadWrite (ContactStoreAccessType_AllContactsReadWrite) = 2,
 }}
 DEFINE_IID!(IID_IContactStoreNotificationTriggerDetails, 2880608470, 34698, 20363, 169, 206, 70, 187, 125, 28, 132, 206);
 RT_INTERFACE!{interface IContactStoreNotificationTriggerDetails(IContactStoreNotificationTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IContactStoreNotificationTriggerDetails] {
     
 }}
-RT_CLASS!{class ContactStoreNotificationTriggerDetails: IContactStoreNotificationTriggerDetails}
+RT_CLASS!{class ContactStoreNotificationTriggerDetails: IContactStoreNotificationTriggerDetails ["Windows.ApplicationModel.Contacts.ContactStoreNotificationTriggerDetails"]}
 DEFINE_IID!(IID_IContactWebsite, 2668822902, 56347, 16469, 173, 102, 101, 47, 57, 217, 144, 232);
 RT_INTERFACE!{interface IContactWebsite(IContactWebsiteVtbl): IInspectable(IInspectableVtbl) [IID_IContactWebsite] {
     fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
@@ -13551,7 +13551,7 @@ impl IContactWebsite {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactWebsite: IContactWebsite}
+RT_CLASS!{class ContactWebsite: IContactWebsite ["Windows.ApplicationModel.Contacts.ContactWebsite"]}
 impl RtActivatable<IActivationFactory> for ContactWebsite {}
 DEFINE_CLSID!(ContactWebsite(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,87,101,98,115,105,116,101,0]) [CLSID_ContactWebsite]);
 DEFINE_IID!(IID_IContactWebsite2, 4169066782, 22087, 16488, 187, 94, 75, 111, 67, 124, 227, 8);
@@ -13586,7 +13586,7 @@ impl IFullContactCardOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FullContactCardOptions: IFullContactCardOptions}
+RT_CLASS!{class FullContactCardOptions: IFullContactCardOptions ["Windows.ApplicationModel.Contacts.FullContactCardOptions"]}
 impl RtActivatable<IActivationFactory> for FullContactCardOptions {}
 DEFINE_CLSID!(FullContactCardOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,70,117,108,108,67,111,110,116,97,99,116,67,97,114,100,79,112,116,105,111,110,115,0]) [CLSID_FullContactCardOptions]);
 RT_CLASS!{static class KnownContactField}
@@ -13664,7 +13664,7 @@ impl IPinnedContactIdsQueryResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PinnedContactIdsQueryResult: IPinnedContactIdsQueryResult}
+RT_CLASS!{class PinnedContactIdsQueryResult: IPinnedContactIdsQueryResult ["Windows.ApplicationModel.Contacts.PinnedContactIdsQueryResult"]}
 DEFINE_IID!(IID_IPinnedContactManager, 4240208908, 57814, 17859, 184, 182, 163, 86, 4, 225, 103, 160);
 RT_INTERFACE!{interface IPinnedContactManager(IPinnedContactManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPinnedContactManager] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
@@ -13718,7 +13718,7 @@ impl IPinnedContactManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PinnedContactManager: IPinnedContactManager}
+RT_CLASS!{class PinnedContactManager: IPinnedContactManager ["Windows.ApplicationModel.Contacts.PinnedContactManager"]}
 impl RtActivatable<IPinnedContactManagerStatics> for PinnedContactManager {}
 impl PinnedContactManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<PinnedContactManager>>> {
@@ -13756,7 +13756,7 @@ impl IPinnedContactManagerStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PinnedContactSurface: i32 {
+RT_ENUM! { enum PinnedContactSurface: i32 ["Windows.ApplicationModel.Contacts.PinnedContactSurface"] {
     StartMenu (PinnedContactSurface_StartMenu) = 0, Taskbar (PinnedContactSurface_Taskbar) = 1,
 }}
 pub mod dataprovider { // Windows.ApplicationModel.Contacts.DataProvider
@@ -13793,7 +13793,7 @@ impl IContactDataProviderConnection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactDataProviderConnection: IContactDataProviderConnection}
+RT_CLASS!{class ContactDataProviderConnection: IContactDataProviderConnection ["Windows.ApplicationModel.Contacts.DataProvider.ContactDataProviderConnection"]}
 DEFINE_IID!(IID_IContactDataProviderConnection2, 2714970032, 6508, 19453, 143, 15, 198, 141, 103, 242, 73, 211);
 RT_INTERFACE!{interface IContactDataProviderConnection2(IContactDataProviderConnection2Vtbl): IInspectable(IInspectableVtbl) [IID_IContactDataProviderConnection2] {
     fn add_CreateOrUpdateContactRequested(&self, handler: *mut foundation::TypedEventHandler<ContactDataProviderConnection, ContactListCreateOrUpdateContactRequestEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -13832,7 +13832,7 @@ impl IContactDataProviderTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactDataProviderTriggerDetails: IContactDataProviderTriggerDetails}
+RT_CLASS!{class ContactDataProviderTriggerDetails: IContactDataProviderTriggerDetails ["Windows.ApplicationModel.Contacts.DataProvider.ContactDataProviderTriggerDetails"]}
 DEFINE_IID!(IID_IContactListCreateOrUpdateContactRequest, 3031384351, 51273, 18384, 177, 25, 145, 207, 96, 91, 47, 42);
 RT_INTERFACE!{interface IContactListCreateOrUpdateContactRequest(IContactListCreateOrUpdateContactRequestVtbl): IInspectable(IInspectableVtbl) [IID_IContactListCreateOrUpdateContactRequest] {
     fn get_ContactListId(&self, out: *mut HSTRING) -> HRESULT,
@@ -13862,7 +13862,7 @@ impl IContactListCreateOrUpdateContactRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactListCreateOrUpdateContactRequest: IContactListCreateOrUpdateContactRequest}
+RT_CLASS!{class ContactListCreateOrUpdateContactRequest: IContactListCreateOrUpdateContactRequest ["Windows.ApplicationModel.Contacts.DataProvider.ContactListCreateOrUpdateContactRequest"]}
 DEFINE_IID!(IID_IContactListCreateOrUpdateContactRequestEventArgs, 2233210512, 6737, 19212, 174, 239, 18, 64, 172, 91, 237, 117);
 RT_INTERFACE!{interface IContactListCreateOrUpdateContactRequestEventArgs(IContactListCreateOrUpdateContactRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactListCreateOrUpdateContactRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut ContactListCreateOrUpdateContactRequest) -> HRESULT,
@@ -13880,7 +13880,7 @@ impl IContactListCreateOrUpdateContactRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactListCreateOrUpdateContactRequestEventArgs: IContactListCreateOrUpdateContactRequestEventArgs}
+RT_CLASS!{class ContactListCreateOrUpdateContactRequestEventArgs: IContactListCreateOrUpdateContactRequestEventArgs ["Windows.ApplicationModel.Contacts.DataProvider.ContactListCreateOrUpdateContactRequestEventArgs"]}
 DEFINE_IID!(IID_IContactListDeleteContactRequest, 1578190471, 52739, 19941, 133, 87, 156, 207, 85, 45, 71, 42);
 RT_INTERFACE!{interface IContactListDeleteContactRequest(IContactListDeleteContactRequestVtbl): IInspectable(IInspectableVtbl) [IID_IContactListDeleteContactRequest] {
     fn get_ContactListId(&self, out: *mut HSTRING) -> HRESULT,
@@ -13910,7 +13910,7 @@ impl IContactListDeleteContactRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactListDeleteContactRequest: IContactListDeleteContactRequest}
+RT_CLASS!{class ContactListDeleteContactRequest: IContactListDeleteContactRequest ["Windows.ApplicationModel.Contacts.DataProvider.ContactListDeleteContactRequest"]}
 DEFINE_IID!(IID_IContactListDeleteContactRequestEventArgs, 2988463265, 59642, 19893, 147, 137, 45, 18, 238, 125, 21, 238);
 RT_INTERFACE!{interface IContactListDeleteContactRequestEventArgs(IContactListDeleteContactRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactListDeleteContactRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut ContactListDeleteContactRequest) -> HRESULT,
@@ -13928,7 +13928,7 @@ impl IContactListDeleteContactRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactListDeleteContactRequestEventArgs: IContactListDeleteContactRequestEventArgs}
+RT_CLASS!{class ContactListDeleteContactRequestEventArgs: IContactListDeleteContactRequestEventArgs ["Windows.ApplicationModel.Contacts.DataProvider.ContactListDeleteContactRequestEventArgs"]}
 DEFINE_IID!(IID_IContactListServerSearchReadBatchRequest, 3128388247, 16432, 18725, 159, 180, 20, 59, 41, 94, 101, 59);
 RT_INTERFACE!{interface IContactListServerSearchReadBatchRequest(IContactListServerSearchReadBatchRequestVtbl): IInspectable(IInspectableVtbl) [IID_IContactListServerSearchReadBatchRequest] {
     fn get_SessionId(&self, out: *mut HSTRING) -> HRESULT,
@@ -13976,7 +13976,7 @@ impl IContactListServerSearchReadBatchRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactListServerSearchReadBatchRequest: IContactListServerSearchReadBatchRequest}
+RT_CLASS!{class ContactListServerSearchReadBatchRequest: IContactListServerSearchReadBatchRequest ["Windows.ApplicationModel.Contacts.DataProvider.ContactListServerSearchReadBatchRequest"]}
 DEFINE_IID!(IID_IContactListServerSearchReadBatchRequestEventArgs, 438823035, 27095, 20046, 128, 66, 134, 28, 186, 97, 71, 30);
 RT_INTERFACE!{interface IContactListServerSearchReadBatchRequestEventArgs(IContactListServerSearchReadBatchRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactListServerSearchReadBatchRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut ContactListServerSearchReadBatchRequest) -> HRESULT,
@@ -13994,7 +13994,7 @@ impl IContactListServerSearchReadBatchRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactListServerSearchReadBatchRequestEventArgs: IContactListServerSearchReadBatchRequestEventArgs}
+RT_CLASS!{class ContactListServerSearchReadBatchRequestEventArgs: IContactListServerSearchReadBatchRequestEventArgs ["Windows.ApplicationModel.Contacts.DataProvider.ContactListServerSearchReadBatchRequestEventArgs"]}
 DEFINE_IID!(IID_IContactListSyncManagerSyncRequest, 1007572900, 50407, 18800, 154, 143, 154, 102, 162, 187, 108, 26);
 RT_INTERFACE!{interface IContactListSyncManagerSyncRequest(IContactListSyncManagerSyncRequestVtbl): IInspectable(IInspectableVtbl) [IID_IContactListSyncManagerSyncRequest] {
     fn get_ContactListId(&self, out: *mut HSTRING) -> HRESULT,
@@ -14018,7 +14018,7 @@ impl IContactListSyncManagerSyncRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactListSyncManagerSyncRequest: IContactListSyncManagerSyncRequest}
+RT_CLASS!{class ContactListSyncManagerSyncRequest: IContactListSyncManagerSyncRequest ["Windows.ApplicationModel.Contacts.DataProvider.ContactListSyncManagerSyncRequest"]}
 DEFINE_IID!(IID_IContactListSyncManagerSyncRequestEventArgs, 361647532, 17517, 20240, 175, 194, 2, 104, 62, 197, 51, 166);
 RT_INTERFACE!{interface IContactListSyncManagerSyncRequestEventArgs(IContactListSyncManagerSyncRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IContactListSyncManagerSyncRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut ContactListSyncManagerSyncRequest) -> HRESULT,
@@ -14036,11 +14036,11 @@ impl IContactListSyncManagerSyncRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactListSyncManagerSyncRequestEventArgs: IContactListSyncManagerSyncRequestEventArgs}
+RT_CLASS!{class ContactListSyncManagerSyncRequestEventArgs: IContactListSyncManagerSyncRequestEventArgs ["Windows.ApplicationModel.Contacts.DataProvider.ContactListSyncManagerSyncRequestEventArgs"]}
 } // Windows.ApplicationModel.Contacts.DataProvider
 pub mod provider { // Windows.ApplicationModel.Contacts.Provider
 use ::prelude::*;
-RT_ENUM! { enum AddContactResult: i32 {
+RT_ENUM! { enum AddContactResult: i32 ["Windows.ApplicationModel.Contacts.Provider.AddContactResult"] {
     Added (AddContactResult_Added) = 0, AlreadyAdded (AddContactResult_AlreadyAdded) = 1, Unavailable (AddContactResult_Unavailable) = 2,
 }}
 DEFINE_IID!(IID_IContactPickerUI, 3805025126, 53094, 17348, 169, 106, 165, 161, 18, 219, 71, 70);
@@ -14088,7 +14088,7 @@ impl IContactPickerUI {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactPickerUI: IContactPickerUI}
+RT_CLASS!{class ContactPickerUI: IContactPickerUI ["Windows.ApplicationModel.Contacts.Provider.ContactPickerUI"]}
 DEFINE_IID!(IID_IContactPickerUI2, 1849990696, 31525, 18841, 155, 11, 135, 84, 0, 161, 232, 200);
 RT_INTERFACE!{interface IContactPickerUI2(IContactPickerUI2Vtbl): IInspectable(IInspectableVtbl) [IID_IContactPickerUI2] {
     fn AddContact(&self, contact: *mut super::Contact, out: *mut AddContactResult) -> HRESULT,
@@ -14117,7 +14117,7 @@ impl IContactRemovedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContactRemovedEventArgs: IContactRemovedEventArgs}
+RT_CLASS!{class ContactRemovedEventArgs: IContactRemovedEventArgs ["Windows.ApplicationModel.Contacts.Provider.ContactRemovedEventArgs"]}
 } // Windows.ApplicationModel.Contacts.Provider
 } // Windows.ApplicationModel.Contacts
 pub mod core { // Windows.ApplicationModel.Core
@@ -14139,7 +14139,7 @@ impl IAppListEntry {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppListEntry: IAppListEntry}
+RT_CLASS!{class AppListEntry: IAppListEntry ["Windows.ApplicationModel.Core.AppListEntry"]}
 DEFINE_IID!(IID_IAppListEntry2, 3500546221, 48949, 17068, 172, 6, 134, 238, 235, 65, 208, 75);
 RT_INTERFACE!{interface IAppListEntry2(IAppListEntry2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppListEntry2] {
     fn get_AppUserModelId(&self, out: *mut HSTRING) -> HRESULT
@@ -14162,7 +14162,7 @@ impl IAppListEntry3 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppRestartFailureReason: i32 {
+RT_ENUM! { enum AppRestartFailureReason: i32 ["Windows.ApplicationModel.Core.AppRestartFailureReason"] {
     RestartPending (AppRestartFailureReason_RestartPending) = 0, NotInForeground (AppRestartFailureReason_NotInForeground) = 1, InvalidUser (AppRestartFailureReason_InvalidUser) = 2, Other (AppRestartFailureReason_Other) = 3,
 }}
 DEFINE_IID!(IID_ICoreApplication, 179107748, 24093, 18911, 128, 52, 251, 106, 104, 188, 94, 209);
@@ -14470,7 +14470,7 @@ impl ICoreApplicationView {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreApplicationView: ICoreApplicationView}
+RT_CLASS!{class CoreApplicationView: ICoreApplicationView ["Windows.ApplicationModel.Core.CoreApplicationView"]}
 DEFINE_IID!(IID_ICoreApplicationView2, 1760262879, 37247, 18667, 154, 235, 125, 229, 62, 8, 106, 177);
 RT_INTERFACE!{interface ICoreApplicationView2(ICoreApplicationView2Vtbl): IInspectable(IInspectableVtbl) [IID_ICoreApplicationView2] {
     #[cfg(feature="windows-ui")] fn get_Dispatcher(&self, out: *mut *mut super::super::ui::core::CoreDispatcher) -> HRESULT
@@ -14594,7 +14594,7 @@ impl ICoreApplicationViewTitleBar {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreApplicationViewTitleBar: ICoreApplicationViewTitleBar}
+RT_CLASS!{class CoreApplicationViewTitleBar: ICoreApplicationViewTitleBar ["Windows.ApplicationModel.Core.CoreApplicationViewTitleBar"]}
 DEFINE_IID!(IID_ICoreImmersiveApplication, 450498110, 58530, 16675, 180, 81, 220, 150, 191, 128, 4, 25);
 RT_INTERFACE!{static interface ICoreImmersiveApplication(ICoreImmersiveApplicationVtbl): IInspectable(IInspectableVtbl) [IID_ICoreImmersiveApplication] {
     fn get_Views(&self, out: *mut *mut foundation::collections::IVectorView<CoreApplicationView>) -> HRESULT,
@@ -14693,7 +14693,7 @@ impl IHostedViewClosingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HostedViewClosingEventArgs: IHostedViewClosingEventArgs}
+RT_CLASS!{class HostedViewClosingEventArgs: IHostedViewClosingEventArgs ["Windows.ApplicationModel.Core.HostedViewClosingEventArgs"]}
 DEFINE_IID!(IID_IUnhandledError, 2488907558, 21429, 18054, 158, 175, 250, 129, 98, 220, 57, 128);
 RT_INTERFACE!{interface IUnhandledError(IUnhandledErrorVtbl): IInspectable(IInspectableVtbl) [IID_IUnhandledError] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -14710,7 +14710,7 @@ impl IUnhandledError {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UnhandledError: IUnhandledError}
+RT_CLASS!{class UnhandledError: IUnhandledError ["Windows.ApplicationModel.Core.UnhandledError"]}
 DEFINE_IID!(IID_IUnhandledErrorDetectedEventArgs, 1738192779, 45878, 18466, 172, 64, 13, 117, 15, 11, 122, 43);
 RT_INTERFACE!{interface IUnhandledErrorDetectedEventArgs(IUnhandledErrorDetectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUnhandledErrorDetectedEventArgs] {
     fn get_UnhandledError(&self, out: *mut *mut UnhandledError) -> HRESULT
@@ -14722,7 +14722,7 @@ impl IUnhandledErrorDetectedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UnhandledErrorDetectedEventArgs: IUnhandledErrorDetectedEventArgs}
+RT_CLASS!{class UnhandledErrorDetectedEventArgs: IUnhandledErrorDetectedEventArgs ["Windows.ApplicationModel.Core.UnhandledErrorDetectedEventArgs"]}
 } // Windows.ApplicationModel.Core
 pub mod datatransfer { // Windows.ApplicationModel.DataTransfer
 use ::prelude::*;
@@ -14828,14 +14828,14 @@ impl IClipboardContentOptions {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ClipboardContentOptions: IClipboardContentOptions}
+RT_CLASS!{class ClipboardContentOptions: IClipboardContentOptions ["Windows.ApplicationModel.DataTransfer.ClipboardContentOptions"]}
 impl RtActivatable<IActivationFactory> for ClipboardContentOptions {}
 DEFINE_CLSID!(ClipboardContentOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,67,108,105,112,98,111,97,114,100,67,111,110,116,101,110,116,79,112,116,105,111,110,115,0]) [CLSID_ClipboardContentOptions]);
 DEFINE_IID!(IID_IClipboardHistoryChangedEventArgs, 3233695039, 36514, 21454, 154, 186, 141, 34, 18, 87, 52, 82);
 RT_INTERFACE!{interface IClipboardHistoryChangedEventArgs(IClipboardHistoryChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IClipboardHistoryChangedEventArgs] {
     
 }}
-RT_CLASS!{class ClipboardHistoryChangedEventArgs: IClipboardHistoryChangedEventArgs}
+RT_CLASS!{class ClipboardHistoryChangedEventArgs: IClipboardHistoryChangedEventArgs ["Windows.ApplicationModel.DataTransfer.ClipboardHistoryChangedEventArgs"]}
 DEFINE_IID!(IID_IClipboardHistoryItem, 24362378, 45055, 23632, 171, 146, 61, 25, 244, 129, 236, 88);
 RT_INTERFACE!{interface IClipboardHistoryItem(IClipboardHistoryItemVtbl): IInspectable(IInspectableVtbl) [IID_IClipboardHistoryItem] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -14859,7 +14859,7 @@ impl IClipboardHistoryItem {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ClipboardHistoryItem: IClipboardHistoryItem}
+RT_CLASS!{class ClipboardHistoryItem: IClipboardHistoryItem ["Windows.ApplicationModel.DataTransfer.ClipboardHistoryItem"]}
 DEFINE_IID!(IID_IClipboardHistoryItemsResult, 3873431270, 3810, 21219, 133, 43, 242, 149, 219, 101, 147, 154);
 RT_INTERFACE!{interface IClipboardHistoryItemsResult(IClipboardHistoryItemsResultVtbl): IInspectable(IInspectableVtbl) [IID_IClipboardHistoryItemsResult] {
     fn get_Status(&self, out: *mut ClipboardHistoryItemsResultStatus) -> HRESULT,
@@ -14877,8 +14877,8 @@ impl IClipboardHistoryItemsResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ClipboardHistoryItemsResult: IClipboardHistoryItemsResult}
-RT_ENUM! { enum ClipboardHistoryItemsResultStatus: i32 {
+RT_CLASS!{class ClipboardHistoryItemsResult: IClipboardHistoryItemsResult ["Windows.ApplicationModel.DataTransfer.ClipboardHistoryItemsResult"]}
+RT_ENUM! { enum ClipboardHistoryItemsResultStatus: i32 ["Windows.ApplicationModel.DataTransfer.ClipboardHistoryItemsResultStatus"] {
     Success (ClipboardHistoryItemsResultStatus_Success) = 0, AccessDenied (ClipboardHistoryItemsResultStatus_AccessDenied) = 1, ClipboardHistoryDisabled (ClipboardHistoryItemsResultStatus_ClipboardHistoryDisabled) = 2,
 }}
 DEFINE_IID!(IID_IClipboardStatics, 3324502673, 13538, 18787, 142, 237, 147, 203, 176, 234, 61, 112);
@@ -15099,7 +15099,7 @@ impl IDataPackage {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataPackage: IDataPackage}
+RT_CLASS!{class DataPackage: IDataPackage ["Windows.ApplicationModel.DataTransfer.DataPackage"]}
 impl RtActivatable<IActivationFactory> for DataPackage {}
 DEFINE_CLSID!(DataPackage(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,68,97,116,97,80,97,99,107,97,103,101,0]) [CLSID_DataPackage]);
 DEFINE_IID!(IID_IDataPackage2, 68952041, 9225, 17889, 165, 56, 76, 83, 238, 238, 4, 167);
@@ -15133,7 +15133,7 @@ impl IDataPackage3 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DataPackageOperation: u32 {
+RT_ENUM! { enum DataPackageOperation: u32 ["Windows.ApplicationModel.DataTransfer.DataPackageOperation"] {
     None (DataPackageOperation_None) = 0, Copy (DataPackageOperation_Copy) = 1, Move (DataPackageOperation_Move) = 2, Link (DataPackageOperation_Link) = 4,
 }}
 DEFINE_IID!(IID_IDataPackagePropertySet, 3441202155, 19532, 17466, 168, 211, 245, 194, 65, 233, 22, 137);
@@ -15204,7 +15204,7 @@ impl IDataPackagePropertySet {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataPackagePropertySet: IDataPackagePropertySet}
+RT_CLASS!{class DataPackagePropertySet: IDataPackagePropertySet ["Windows.ApplicationModel.DataTransfer.DataPackagePropertySet"]}
 DEFINE_IID!(IID_IDataPackagePropertySet2, 3947912522, 38912, 18090, 177, 129, 123, 111, 15, 43, 145, 154);
 RT_INTERFACE!{interface IDataPackagePropertySet2(IDataPackagePropertySet2Vtbl): IInspectable(IInspectableVtbl) [IID_IDataPackagePropertySet2] {
     fn get_ContentSourceWebLink(&self, out: *mut *mut foundation::Uri) -> HRESULT,
@@ -15341,7 +15341,7 @@ impl IDataPackagePropertySetView {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataPackagePropertySetView: IDataPackagePropertySetView}
+RT_CLASS!{class DataPackagePropertySetView: IDataPackagePropertySetView ["Windows.ApplicationModel.DataTransfer.DataPackagePropertySetView"]}
 DEFINE_IID!(IID_IDataPackagePropertySetView2, 1616138395, 36542, 20459, 156, 30, 117, 230, 157, 229, 75, 132);
 RT_INTERFACE!{interface IDataPackagePropertySetView2(IDataPackagePropertySetView2Vtbl): IInspectable(IInspectableVtbl) [IID_IDataPackagePropertySetView2] {
     fn get_PackageFamilyName(&self, out: *mut HSTRING) -> HRESULT,
@@ -15499,7 +15499,7 @@ impl IDataPackageView {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataPackageView: IDataPackageView}
+RT_CLASS!{class DataPackageView: IDataPackageView ["Windows.ApplicationModel.DataTransfer.DataPackageView"]}
 DEFINE_IID!(IID_IDataPackageView2, 1089256085, 9296, 19485, 182, 180, 237, 69, 70, 61, 238, 156);
 RT_INTERFACE!{interface IDataPackageView2(IDataPackageView2Vtbl): IInspectable(IInspectableVtbl) [IID_IDataPackageView2] {
     fn GetApplicationLinkAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::Uri>) -> HRESULT,
@@ -15560,7 +15560,7 @@ impl IDataProviderDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataProviderDeferral: IDataProviderDeferral}
+RT_CLASS!{class DataProviderDeferral: IDataProviderDeferral ["Windows.ApplicationModel.DataTransfer.DataProviderDeferral"]}
 DEFINE_IID!(IID_DataProviderHandler, 3891058464, 62196, 18989, 146, 14, 23, 10, 47, 72, 42, 39);
 RT_DELEGATE!{delegate DataProviderHandler(DataProviderHandlerVtbl, DataProviderHandlerImpl) [IID_DataProviderHandler] {
     fn Invoke(&self, request: *mut DataProviderRequest) -> HRESULT
@@ -15599,7 +15599,7 @@ impl IDataProviderRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataProviderRequest: IDataProviderRequest}
+RT_CLASS!{class DataProviderRequest: IDataProviderRequest ["Windows.ApplicationModel.DataTransfer.DataProviderRequest"]}
 DEFINE_IID!(IID_IDataRequest, 1128377915, 64530, 20051, 140, 2, 172, 113, 76, 65, 90, 39);
 RT_INTERFACE!{interface IDataRequest(IDataRequestVtbl): IInspectable(IInspectableVtbl) [IID_IDataRequest] {
     fn get_Data(&self, out: *mut *mut DataPackage) -> HRESULT,
@@ -15633,7 +15633,7 @@ impl IDataRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataRequest: IDataRequest}
+RT_CLASS!{class DataRequest: IDataRequest ["Windows.ApplicationModel.DataTransfer.DataRequest"]}
 DEFINE_IID!(IID_IDataRequestDeferral, 1841608863, 902, 16995, 135, 193, 237, 125, 206, 48, 137, 14);
 RT_INTERFACE!{interface IDataRequestDeferral(IDataRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IDataRequestDeferral] {
     fn Complete(&self) -> HRESULT
@@ -15644,7 +15644,7 @@ impl IDataRequestDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataRequestDeferral: IDataRequestDeferral}
+RT_CLASS!{class DataRequestDeferral: IDataRequestDeferral ["Windows.ApplicationModel.DataTransfer.DataRequestDeferral"]}
 DEFINE_IID!(IID_IDataRequestedEventArgs, 3414927367, 27333, 17353, 138, 197, 155, 162, 50, 22, 49, 130);
 RT_INTERFACE!{interface IDataRequestedEventArgs(IDataRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDataRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut DataRequest) -> HRESULT
@@ -15656,7 +15656,7 @@ impl IDataRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataRequestedEventArgs: IDataRequestedEventArgs}
+RT_CLASS!{class DataRequestedEventArgs: IDataRequestedEventArgs ["Windows.ApplicationModel.DataTransfer.DataRequestedEventArgs"]}
 DEFINE_IID!(IID_IDataTransferManager, 2781539995, 34568, 18897, 141, 54, 103, 210, 90, 141, 160, 12);
 RT_INTERFACE!{interface IDataTransferManager(IDataTransferManagerVtbl): IInspectable(IInspectableVtbl) [IID_IDataTransferManager] {
     fn add_DataRequested(&self, eventHandler: *mut foundation::TypedEventHandler<DataTransferManager, DataRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -15684,7 +15684,7 @@ impl IDataTransferManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataTransferManager: IDataTransferManager}
+RT_CLASS!{class DataTransferManager: IDataTransferManager ["Windows.ApplicationModel.DataTransfer.DataTransferManager"]}
 impl RtActivatable<IDataTransferManagerStatics> for DataTransferManager {}
 impl RtActivatable<IDataTransferManagerStatics2> for DataTransferManager {}
 impl RtActivatable<IDataTransferManagerStatics3> for DataTransferManager {}
@@ -15795,7 +15795,7 @@ impl IOperationCompletedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OperationCompletedEventArgs: IOperationCompletedEventArgs}
+RT_CLASS!{class OperationCompletedEventArgs: IOperationCompletedEventArgs ["Windows.ApplicationModel.DataTransfer.OperationCompletedEventArgs"]}
 DEFINE_IID!(IID_IOperationCompletedEventArgs2, 2240782451, 7705, 16645, 178, 247, 200, 71, 136, 8, 213, 98);
 RT_INTERFACE!{interface IOperationCompletedEventArgs2(IOperationCompletedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IOperationCompletedEventArgs2] {
     fn get_AcceptedFormatId(&self, out: *mut HSTRING) -> HRESULT
@@ -15807,7 +15807,7 @@ impl IOperationCompletedEventArgs2 {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SetHistoryItemAsContentStatus: i32 {
+RT_ENUM! { enum SetHistoryItemAsContentStatus: i32 ["Windows.ApplicationModel.DataTransfer.SetHistoryItemAsContentStatus"] {
     Success (SetHistoryItemAsContentStatus_Success) = 0, AccessDenied (SetHistoryItemAsContentStatus_AccessDenied) = 1, ItemDeleted (SetHistoryItemAsContentStatus_ItemDeleted) = 2,
 }}
 DEFINE_IID!(IID_IShareCompletedEventArgs, 1165280322, 63763, 20320, 157, 247, 204, 64, 96, 171, 25, 22);
@@ -15821,7 +15821,7 @@ impl IShareCompletedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ShareCompletedEventArgs: IShareCompletedEventArgs}
+RT_CLASS!{class ShareCompletedEventArgs: IShareCompletedEventArgs ["Windows.ApplicationModel.DataTransfer.ShareCompletedEventArgs"]}
 RT_CLASS!{static class SharedStorageAccessManager}
 impl RtActivatable<ISharedStorageAccessManagerStatics> for SharedStorageAccessManager {}
 impl SharedStorageAccessManager {
@@ -15896,7 +15896,7 @@ impl IShareProvider {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ShareProvider: IShareProvider}
+RT_CLASS!{class ShareProvider: IShareProvider ["Windows.ApplicationModel.DataTransfer.ShareProvider"]}
 impl RtActivatable<IShareProviderFactory> for ShareProvider {}
 impl ShareProvider {
     #[cfg(all(feature="windows-storage",feature="windows-ui"))] #[inline] pub fn create(title: &HStringArg, displayIcon: &super::super::storage::streams::RandomAccessStreamReference, backgroundColor: super::super::ui::Color, handler: &ShareProviderHandler) -> Result<ComPtr<ShareProvider>> {
@@ -15947,7 +15947,7 @@ impl IShareProviderOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ShareProviderOperation: IShareProviderOperation}
+RT_CLASS!{class ShareProviderOperation: IShareProviderOperation ["Windows.ApplicationModel.DataTransfer.ShareProviderOperation"]}
 DEFINE_IID!(IID_IShareProvidersRequestedEventArgs, 4169724758, 41976, 20430, 133, 228, 136, 38, 230, 59, 231, 153);
 RT_INTERFACE!{interface IShareProvidersRequestedEventArgs(IShareProvidersRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IShareProvidersRequestedEventArgs] {
     fn get_Providers(&self, out: *mut *mut foundation::collections::IVector<ShareProvider>) -> HRESULT,
@@ -15971,7 +15971,7 @@ impl IShareProvidersRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ShareProvidersRequestedEventArgs: IShareProvidersRequestedEventArgs}
+RT_CLASS!{class ShareProvidersRequestedEventArgs: IShareProvidersRequestedEventArgs ["Windows.ApplicationModel.DataTransfer.ShareProvidersRequestedEventArgs"]}
 DEFINE_IID!(IID_IShareTargetInfo, 945546759, 50920, 16660, 178, 148, 40, 243, 187, 111, 153, 4);
 RT_INTERFACE!{interface IShareTargetInfo(IShareTargetInfoVtbl): IInspectable(IInspectableVtbl) [IID_IShareTargetInfo] {
     fn get_AppUserModelId(&self, out: *mut HSTRING) -> HRESULT,
@@ -15989,7 +15989,7 @@ impl IShareTargetInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ShareTargetInfo: IShareTargetInfo}
+RT_CLASS!{class ShareTargetInfo: IShareTargetInfo ["Windows.ApplicationModel.DataTransfer.ShareTargetInfo"]}
 DEFINE_IID!(IID_IShareUIOptions, 1929022080, 13359, 19856, 149, 81, 42, 224, 78, 55, 104, 12);
 RT_INTERFACE!{interface IShareUIOptions(IShareUIOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IShareUIOptions] {
     fn get_Theme(&self, out: *mut ShareUITheme) -> HRESULT,
@@ -16017,10 +16017,10 @@ impl IShareUIOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ShareUIOptions: IShareUIOptions}
+RT_CLASS!{class ShareUIOptions: IShareUIOptions ["Windows.ApplicationModel.DataTransfer.ShareUIOptions"]}
 impl RtActivatable<IActivationFactory> for ShareUIOptions {}
 DEFINE_CLSID!(ShareUIOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,83,104,97,114,101,85,73,79,112,116,105,111,110,115,0]) [CLSID_ShareUIOptions]);
-RT_ENUM! { enum ShareUITheme: i32 {
+RT_ENUM! { enum ShareUITheme: i32 ["Windows.ApplicationModel.DataTransfer.ShareUITheme"] {
     Default (ShareUITheme_Default) = 0, Light (ShareUITheme_Light) = 1, Dark (ShareUITheme_Dark) = 2,
 }}
 RT_CLASS!{static class StandardDataFormats}
@@ -16137,10 +16137,10 @@ impl ITargetApplicationChosenEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetApplicationChosenEventArgs: ITargetApplicationChosenEventArgs}
+RT_CLASS!{class TargetApplicationChosenEventArgs: ITargetApplicationChosenEventArgs ["Windows.ApplicationModel.DataTransfer.TargetApplicationChosenEventArgs"]}
 pub mod dragdrop { // Windows.ApplicationModel.DataTransfer.DragDrop
 use ::prelude::*;
-RT_ENUM! { enum DragDropModifiers: u32 {
+RT_ENUM! { enum DragDropModifiers: u32 ["Windows.ApplicationModel.DataTransfer.DragDrop.DragDropModifiers"] {
     None (DragDropModifiers_None) = 0, Shift (DragDropModifiers_Shift) = 1, Control (DragDropModifiers_Control) = 2, Alt (DragDropModifiers_Alt) = 4, LeftButton (DragDropModifiers_LeftButton) = 8, MiddleButton (DragDropModifiers_MiddleButton) = 16, RightButton (DragDropModifiers_RightButton) = 32,
 }}
 pub mod core { // Windows.ApplicationModel.DataTransfer.DragDrop.Core
@@ -16172,7 +16172,7 @@ impl ICoreDragDropManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreDragDropManager: ICoreDragDropManager}
+RT_CLASS!{class CoreDragDropManager: ICoreDragDropManager ["Windows.ApplicationModel.DataTransfer.DragDrop.Core.CoreDragDropManager"]}
 impl RtActivatable<ICoreDragDropManagerStatics> for CoreDragDropManager {}
 impl CoreDragDropManager {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<CoreDragDropManager>>> {
@@ -16214,7 +16214,7 @@ impl ICoreDragInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreDragInfo: ICoreDragInfo}
+RT_CLASS!{class CoreDragInfo: ICoreDragInfo ["Windows.ApplicationModel.DataTransfer.DragDrop.Core.CoreDragInfo"]}
 DEFINE_IID!(IID_ICoreDragInfo2, 3309736421, 59131, 19828, 180, 177, 138, 60, 23, 242, 94, 158);
 RT_INTERFACE!{interface ICoreDragInfo2(ICoreDragInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_ICoreDragInfo2] {
     fn get_AllowedOperations(&self, out: *mut super::super::DataPackageOperation) -> HRESULT
@@ -16271,7 +16271,7 @@ impl ICoreDragOperation {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreDragOperation: ICoreDragOperation}
+RT_CLASS!{class CoreDragOperation: ICoreDragOperation ["Windows.ApplicationModel.DataTransfer.DragDrop.Core.CoreDragOperation"]}
 impl RtActivatable<IActivationFactory> for CoreDragOperation {}
 DEFINE_CLSID!(CoreDragOperation(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,68,114,97,103,68,114,111,112,46,67,111,114,101,46,67,111,114,101,68,114,97,103,79,112,101,114,97,116,105,111,110,0]) [CLSID_CoreDragOperation]);
 DEFINE_IID!(IID_ICoreDragOperation2, 2185961004, 55706, 20419, 133, 7, 108, 24, 47, 51, 180, 106);
@@ -16290,7 +16290,7 @@ impl ICoreDragOperation2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CoreDragUIContentMode: u32 {
+RT_ENUM! { enum CoreDragUIContentMode: u32 ["Windows.ApplicationModel.DataTransfer.DragDrop.Core.CoreDragUIContentMode"] {
     Auto (CoreDragUIContentMode_Auto) = 0, Deferred (CoreDragUIContentMode_Deferred) = 1,
 }}
 DEFINE_IID!(IID_ICoreDragUIOverride, 2309509220, 13193, 20303, 136, 151, 126, 138, 63, 251, 60, 147);
@@ -16359,7 +16359,7 @@ impl ICoreDragUIOverride {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreDragUIOverride: ICoreDragUIOverride}
+RT_CLASS!{class CoreDragUIOverride: ICoreDragUIOverride ["Windows.ApplicationModel.DataTransfer.DragDrop.Core.CoreDragUIOverride"]}
 DEFINE_IID!(IID_ICoreDropOperationTarget, 3641860502, 19547, 16765, 187, 55, 118, 56, 29, 239, 141, 180);
 RT_INTERFACE!{interface ICoreDropOperationTarget(ICoreDropOperationTargetVtbl): IInspectable(IInspectableVtbl) [IID_ICoreDropOperationTarget] {
     fn EnterAsync(&self, dragInfo: *mut CoreDragInfo, dragUIOverride: *mut CoreDragUIOverride, out: *mut *mut foundation::IAsyncOperation<super::super::DataPackageOperation>) -> HRESULT,
@@ -16399,7 +16399,7 @@ impl ICoreDropOperationTargetRequestedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CoreDropOperationTargetRequestedEventArgs: ICoreDropOperationTargetRequestedEventArgs}
+RT_CLASS!{class CoreDropOperationTargetRequestedEventArgs: ICoreDropOperationTargetRequestedEventArgs ["Windows.ApplicationModel.DataTransfer.DragDrop.Core.CoreDropOperationTargetRequestedEventArgs"]}
 } // Windows.ApplicationModel.DataTransfer.DragDrop.Core
 } // Windows.ApplicationModel.DataTransfer.DragDrop
 pub mod sharetarget { // Windows.ApplicationModel.DataTransfer.ShareTarget
@@ -16456,7 +16456,7 @@ impl IQuickLink {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class QuickLink: IQuickLink}
+RT_CLASS!{class QuickLink: IQuickLink ["Windows.ApplicationModel.DataTransfer.ShareTarget.QuickLink"]}
 impl RtActivatable<IActivationFactory> for QuickLink {}
 DEFINE_CLSID!(QuickLink(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,83,104,97,114,101,84,97,114,103,101,116,46,81,117,105,99,107,76,105,110,107,0]) [CLSID_QuickLink]);
 DEFINE_IID!(IID_IShareOperation, 575060664, 53496, 16833, 168, 42, 65, 55, 219, 101, 4, 251);
@@ -16511,7 +16511,7 @@ impl IShareOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ShareOperation: IShareOperation}
+RT_CLASS!{class ShareOperation: IShareOperation ["Windows.ApplicationModel.DataTransfer.ShareTarget.ShareOperation"]}
 DEFINE_IID!(IID_IShareOperation2, 268146625, 38776, 18953, 142, 91, 203, 94, 72, 45, 5, 85);
 RT_INTERFACE!{interface IShareOperation2(IShareOperation2Vtbl): IInspectable(IInspectableVtbl) [IID_IShareOperation2] {
     fn DismissUI(&self) -> HRESULT
@@ -16564,7 +16564,7 @@ impl IEmailAttachment {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailAttachment: IEmailAttachment}
+RT_CLASS!{class EmailAttachment: IEmailAttachment ["Windows.ApplicationModel.Email.EmailAttachment"]}
 impl RtActivatable<IEmailAttachmentFactory> for EmailAttachment {}
 impl RtActivatable<IEmailAttachmentFactory2> for EmailAttachment {}
 impl RtActivatable<IActivationFactory> for EmailAttachment {}
@@ -16660,7 +16660,7 @@ impl IEmailAttachment2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum EmailAttachmentDownloadState: i32 {
+RT_ENUM! { enum EmailAttachmentDownloadState: i32 ["Windows.ApplicationModel.Email.EmailAttachmentDownloadState"] {
     NotDownloaded (EmailAttachmentDownloadState_NotDownloaded) = 0, Downloading (EmailAttachmentDownloadState_Downloading) = 1, Downloaded (EmailAttachmentDownloadState_Downloaded) = 2, Failed (EmailAttachmentDownloadState_Failed) = 3,
 }}
 DEFINE_IID!(IID_IEmailAttachmentFactory, 2037296198, 60758, 18809, 135, 8, 171, 184, 188, 133, 75, 125);
@@ -16685,10 +16685,10 @@ impl IEmailAttachmentFactory2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum EmailBatchStatus: i32 {
+RT_ENUM! { enum EmailBatchStatus: i32 ["Windows.ApplicationModel.Email.EmailBatchStatus"] {
     Success (EmailBatchStatus_Success) = 0, ServerSearchSyncManagerError (EmailBatchStatus_ServerSearchSyncManagerError) = 1, ServerSearchUnknownError (EmailBatchStatus_ServerSearchUnknownError) = 2,
 }}
-RT_ENUM! { enum EmailCertificateValidationStatus: i32 {
+RT_ENUM! { enum EmailCertificateValidationStatus: i32 ["Windows.ApplicationModel.Email.EmailCertificateValidationStatus"] {
     Success (EmailCertificateValidationStatus_Success) = 0, NoMatch (EmailCertificateValidationStatus_NoMatch) = 1, InvalidUsage (EmailCertificateValidationStatus_InvalidUsage) = 2, InvalidCertificate (EmailCertificateValidationStatus_InvalidCertificate) = 3, Revoked (EmailCertificateValidationStatus_Revoked) = 4, ChainRevoked (EmailCertificateValidationStatus_ChainRevoked) = 5, RevocationServerFailure (EmailCertificateValidationStatus_RevocationServerFailure) = 6, Expired (EmailCertificateValidationStatus_Expired) = 7, Untrusted (EmailCertificateValidationStatus_Untrusted) = 8, ServerError (EmailCertificateValidationStatus_ServerError) = 9, UnknownFailure (EmailCertificateValidationStatus_UnknownFailure) = 10,
 }}
 DEFINE_IID!(IID_IEmailConversation, 3659055688, 41148, 17225, 144, 45, 144, 246, 99, 137, 245, 27);
@@ -16786,7 +16786,7 @@ impl IEmailConversation {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailConversation: IEmailConversation}
+RT_CLASS!{class EmailConversation: IEmailConversation ["Windows.ApplicationModel.Email.EmailConversation"]}
 DEFINE_IID!(IID_IEmailConversationBatch, 3099700097, 453, 17194, 157, 241, 254, 133, 217, 138, 39, 154);
 RT_INTERFACE!{interface IEmailConversationBatch(IEmailConversationBatchVtbl): IInspectable(IInspectableVtbl) [IID_IEmailConversationBatch] {
     fn get_Conversations(&self, out: *mut *mut foundation::collections::IVectorView<EmailConversation>) -> HRESULT,
@@ -16804,7 +16804,7 @@ impl IEmailConversationBatch {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailConversationBatch: IEmailConversationBatch}
+RT_CLASS!{class EmailConversationBatch: IEmailConversationBatch ["Windows.ApplicationModel.Email.EmailConversationBatch"]}
 DEFINE_IID!(IID_IEmailConversationReader, 3026390914, 10357, 17608, 155, 140, 133, 190, 179, 163, 198, 83);
 RT_INTERFACE!{interface IEmailConversationReader(IEmailConversationReaderVtbl): IInspectable(IInspectableVtbl) [IID_IEmailConversationReader] {
     fn ReadBatchAsync(&self, out: *mut *mut foundation::IAsyncOperation<EmailConversationBatch>) -> HRESULT
@@ -16816,8 +16816,8 @@ impl IEmailConversationReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailConversationReader: IEmailConversationReader}
-RT_ENUM! { enum EmailFlagState: i32 {
+RT_CLASS!{class EmailConversationReader: IEmailConversationReader ["Windows.ApplicationModel.Email.EmailConversationReader"]}
+RT_ENUM! { enum EmailFlagState: i32 ["Windows.ApplicationModel.Email.EmailFlagState"] {
     Unflagged (EmailFlagState_Unflagged) = 0, Flagged (EmailFlagState_Flagged) = 1, Completed (EmailFlagState_Completed) = 2, Cleared (EmailFlagState_Cleared) = 3,
 }}
 DEFINE_IID!(IID_IEmailFolder, 2723116913, 39276, 18532, 177, 186, 237, 18, 64, 229, 125, 17);
@@ -16971,8 +16971,8 @@ impl IEmailFolder {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailFolder: IEmailFolder}
-RT_ENUM! { enum EmailImportance: i32 {
+RT_CLASS!{class EmailFolder: IEmailFolder ["Windows.ApplicationModel.Email.EmailFolder"]}
+RT_ENUM! { enum EmailImportance: i32 ["Windows.ApplicationModel.Email.EmailImportance"] {
     Normal (EmailImportance_Normal) = 0, High (EmailImportance_High) = 1, Low (EmailImportance_Low) = 2,
 }}
 DEFINE_IID!(IID_IEmailIrmInfo, 2431984019, 45472, 20157, 166, 182, 221, 202, 85, 96, 110, 14);
@@ -17112,7 +17112,7 @@ impl IEmailIrmInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailIrmInfo: IEmailIrmInfo}
+RT_CLASS!{class EmailIrmInfo: IEmailIrmInfo ["Windows.ApplicationModel.Email.EmailIrmInfo"]}
 impl RtActivatable<IEmailIrmInfoFactory> for EmailIrmInfo {}
 impl RtActivatable<IActivationFactory> for EmailIrmInfo {}
 impl EmailIrmInfo {
@@ -17170,7 +17170,7 @@ impl IEmailIrmTemplate {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailIrmTemplate: IEmailIrmTemplate}
+RT_CLASS!{class EmailIrmTemplate: IEmailIrmTemplate ["Windows.ApplicationModel.Email.EmailIrmTemplate"]}
 impl RtActivatable<IEmailIrmTemplateFactory> for EmailIrmTemplate {}
 impl RtActivatable<IActivationFactory> for EmailIrmTemplate {}
 impl EmailIrmTemplate {
@@ -17219,7 +17219,7 @@ impl IEmailItemCounts {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailItemCounts: IEmailItemCounts}
+RT_CLASS!{class EmailItemCounts: IEmailItemCounts ["Windows.ApplicationModel.Email.EmailItemCounts"]}
 DEFINE_IID!(IID_IEmailMailbox, 2826503753, 53083, 16667, 128, 177, 74, 106, 20, 132, 206, 37);
 RT_INTERFACE!{interface IEmailMailbox(IEmailMailboxVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailbox] {
     fn get_Capabilities(&self, out: *mut *mut EmailMailboxCapabilities) -> HRESULT,
@@ -17520,7 +17520,7 @@ impl IEmailMailbox {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailbox: IEmailMailbox}
+RT_CLASS!{class EmailMailbox: IEmailMailbox ["Windows.ApplicationModel.Email.EmailMailbox"]}
 DEFINE_IID!(IID_IEmailMailbox2, 351855620, 27810, 19122, 146, 65, 121, 205, 123, 244, 99, 70);
 RT_INTERFACE!{interface IEmailMailbox2(IEmailMailbox2Vtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailbox2] {
     fn get_LinkedMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -17619,11 +17619,11 @@ impl IEmailMailboxAction {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxAction: IEmailMailboxAction}
-RT_ENUM! { enum EmailMailboxActionKind: i32 {
+RT_CLASS!{class EmailMailboxAction: IEmailMailboxAction ["Windows.ApplicationModel.Email.EmailMailboxAction"]}
+RT_ENUM! { enum EmailMailboxActionKind: i32 ["Windows.ApplicationModel.Email.EmailMailboxActionKind"] {
     MarkMessageAsSeen (EmailMailboxActionKind_MarkMessageAsSeen) = 0, MarkMessageRead (EmailMailboxActionKind_MarkMessageRead) = 1, ChangeMessageFlagState (EmailMailboxActionKind_ChangeMessageFlagState) = 2, MoveMessage (EmailMailboxActionKind_MoveMessage) = 3, SaveDraft (EmailMailboxActionKind_SaveDraft) = 4, SendMessage (EmailMailboxActionKind_SendMessage) = 5, CreateResponseReplyMessage (EmailMailboxActionKind_CreateResponseReplyMessage) = 6, CreateResponseReplyAllMessage (EmailMailboxActionKind_CreateResponseReplyAllMessage) = 7, CreateResponseForwardMessage (EmailMailboxActionKind_CreateResponseForwardMessage) = 8, MoveFolder (EmailMailboxActionKind_MoveFolder) = 9, MarkFolderForSyncEnabled (EmailMailboxActionKind_MarkFolderForSyncEnabled) = 10,
 }}
-RT_ENUM! { enum EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation: i32 {
+RT_ENUM! { enum EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation: i32 ["Windows.ApplicationModel.Email.EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation"] {
     None (EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation_None) = 0, StrongAlgorithm (EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation_StrongAlgorithm) = 1, AnyAlgorithm (EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation_AnyAlgorithm) = 2,
 }}
 DEFINE_IID!(IID_IEmailMailboxAutoReply, 3793954124, 35508, 18523, 179, 31, 4, 209, 84, 118, 189, 89);
@@ -17653,8 +17653,8 @@ impl IEmailMailboxAutoReply {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxAutoReply: IEmailMailboxAutoReply}
-RT_ENUM! { enum EmailMailboxAutoReplyMessageResponseKind: i32 {
+RT_CLASS!{class EmailMailboxAutoReply: IEmailMailboxAutoReply ["Windows.ApplicationModel.Email.EmailMailboxAutoReply"]}
+RT_ENUM! { enum EmailMailboxAutoReplyMessageResponseKind: i32 ["Windows.ApplicationModel.Email.EmailMailboxAutoReplyMessageResponseKind"] {
     Html (EmailMailboxAutoReplyMessageResponseKind_Html) = 0, PlainText (EmailMailboxAutoReplyMessageResponseKind_PlainText) = 1,
 }}
 DEFINE_IID!(IID_IEmailMailboxAutoReplySettings, 2826608552, 2758, 19319, 186, 119, 166, 185, 158, 154, 39, 184);
@@ -17724,7 +17724,7 @@ impl IEmailMailboxAutoReplySettings {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxAutoReplySettings: IEmailMailboxAutoReplySettings}
+RT_CLASS!{class EmailMailboxAutoReplySettings: IEmailMailboxAutoReplySettings ["Windows.ApplicationModel.Email.EmailMailboxAutoReplySettings"]}
 impl RtActivatable<IActivationFactory> for EmailMailboxAutoReplySettings {}
 DEFINE_CLSID!(EmailMailboxAutoReplySettings(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,77,97,105,108,98,111,120,65,117,116,111,82,101,112,108,121,83,101,116,116,105,110,103,115,0]) [CLSID_EmailMailboxAutoReplySettings]);
 DEFINE_IID!(IID_IEmailMailboxCapabilities, 4007576486, 35291, 17157, 130, 196, 67, 158, 10, 51, 218, 17);
@@ -17780,7 +17780,7 @@ impl IEmailMailboxCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxCapabilities: IEmailMailboxCapabilities}
+RT_CLASS!{class EmailMailboxCapabilities: IEmailMailboxCapabilities ["Windows.ApplicationModel.Email.EmailMailboxCapabilities"]}
 DEFINE_IID!(IID_IEmailMailboxCapabilities2, 1769094884, 12065, 19644, 136, 171, 46, 118, 2, 164, 128, 107);
 RT_INTERFACE!{interface IEmailMailboxCapabilities2(IEmailMailboxCapabilities2Vtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxCapabilities2] {
     fn get_CanResolveRecipients(&self, out: *mut bool) -> HRESULT,
@@ -17926,7 +17926,7 @@ impl IEmailMailboxChange {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxChange: IEmailMailboxChange}
+RT_CLASS!{class EmailMailboxChange: IEmailMailboxChange ["Windows.ApplicationModel.Email.EmailMailboxChange"]}
 DEFINE_IID!(IID_IEmailMailboxChangedDeferral, 2006611137, 38853, 19284, 179, 13, 48, 98, 50, 98, 62, 109);
 RT_INTERFACE!{interface IEmailMailboxChangedDeferral(IEmailMailboxChangedDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxChangedDeferral] {
     fn Complete(&self) -> HRESULT
@@ -17937,7 +17937,7 @@ impl IEmailMailboxChangedDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxChangedDeferral: IEmailMailboxChangedDeferral}
+RT_CLASS!{class EmailMailboxChangedDeferral: IEmailMailboxChangedDeferral ["Windows.ApplicationModel.Email.EmailMailboxChangedDeferral"]}
 DEFINE_IID!(IID_IEmailMailboxChangedEventArgs, 1023237998, 468, 20042, 164, 76, 178, 45, 212, 46, 194, 7);
 RT_INTERFACE!{interface IEmailMailboxChangedEventArgs(IEmailMailboxChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxChangedEventArgs] {
     fn GetDeferral(&self, out: *mut *mut EmailMailboxChangedDeferral) -> HRESULT
@@ -17949,7 +17949,7 @@ impl IEmailMailboxChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxChangedEventArgs: IEmailMailboxChangedEventArgs}
+RT_CLASS!{class EmailMailboxChangedEventArgs: IEmailMailboxChangedEventArgs ["Windows.ApplicationModel.Email.EmailMailboxChangedEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxChangeReader, 3183283899, 50493, 17201, 151, 190, 190, 117, 162, 20, 106, 117);
 RT_INTERFACE!{interface IEmailMailboxChangeReader(IEmailMailboxChangeReaderVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxChangeReader] {
     fn AcceptChanges(&self) -> HRESULT,
@@ -17971,7 +17971,7 @@ impl IEmailMailboxChangeReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxChangeReader: IEmailMailboxChangeReader}
+RT_CLASS!{class EmailMailboxChangeReader: IEmailMailboxChangeReader ["Windows.ApplicationModel.Email.EmailMailboxChangeReader"]}
 DEFINE_IID!(IID_IEmailMailboxChangeTracker, 2061796920, 20838, 17079, 136, 130, 253, 33, 201, 43, 221, 75);
 RT_INTERFACE!{interface IEmailMailboxChangeTracker(IEmailMailboxChangeTrackerVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxChangeTracker] {
     fn get_IsTracking(&self, out: *mut bool) -> HRESULT,
@@ -17999,8 +17999,8 @@ impl IEmailMailboxChangeTracker {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxChangeTracker: IEmailMailboxChangeTracker}
-RT_ENUM! { enum EmailMailboxChangeType: i32 {
+RT_CLASS!{class EmailMailboxChangeTracker: IEmailMailboxChangeTracker ["Windows.ApplicationModel.Email.EmailMailboxChangeTracker"]}
+RT_ENUM! { enum EmailMailboxChangeType: i32 ["Windows.ApplicationModel.Email.EmailMailboxChangeType"] {
     MessageCreated (EmailMailboxChangeType_MessageCreated) = 0, MessageModified (EmailMailboxChangeType_MessageModified) = 1, MessageDeleted (EmailMailboxChangeType_MessageDeleted) = 2, FolderCreated (EmailMailboxChangeType_FolderCreated) = 3, FolderModified (EmailMailboxChangeType_FolderModified) = 4, FolderDeleted (EmailMailboxChangeType_FolderDeleted) = 5, ChangeTrackingLost (EmailMailboxChangeType_ChangeTrackingLost) = 6,
 }}
 DEFINE_IID!(IID_IEmailMailboxCreateFolderResult, 2988987775, 10373, 18840, 181, 149, 138, 45, 55, 76, 233, 80);
@@ -18020,20 +18020,20 @@ impl IEmailMailboxCreateFolderResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxCreateFolderResult: IEmailMailboxCreateFolderResult}
-RT_ENUM! { enum EmailMailboxCreateFolderStatus: i32 {
+RT_CLASS!{class EmailMailboxCreateFolderResult: IEmailMailboxCreateFolderResult ["Windows.ApplicationModel.Email.EmailMailboxCreateFolderResult"]}
+RT_ENUM! { enum EmailMailboxCreateFolderStatus: i32 ["Windows.ApplicationModel.Email.EmailMailboxCreateFolderStatus"] {
     Success (EmailMailboxCreateFolderStatus_Success) = 0, NetworkError (EmailMailboxCreateFolderStatus_NetworkError) = 1, PermissionsError (EmailMailboxCreateFolderStatus_PermissionsError) = 2, ServerError (EmailMailboxCreateFolderStatus_ServerError) = 3, UnknownFailure (EmailMailboxCreateFolderStatus_UnknownFailure) = 4, NameCollision (EmailMailboxCreateFolderStatus_NameCollision) = 5, ServerRejected (EmailMailboxCreateFolderStatus_ServerRejected) = 6,
 }}
-RT_ENUM! { enum EmailMailboxDeleteFolderStatus: i32 {
+RT_ENUM! { enum EmailMailboxDeleteFolderStatus: i32 ["Windows.ApplicationModel.Email.EmailMailboxDeleteFolderStatus"] {
     Success (EmailMailboxDeleteFolderStatus_Success) = 0, NetworkError (EmailMailboxDeleteFolderStatus_NetworkError) = 1, PermissionsError (EmailMailboxDeleteFolderStatus_PermissionsError) = 2, ServerError (EmailMailboxDeleteFolderStatus_ServerError) = 3, UnknownFailure (EmailMailboxDeleteFolderStatus_UnknownFailure) = 4, CouldNotDeleteEverything (EmailMailboxDeleteFolderStatus_CouldNotDeleteEverything) = 5,
 }}
-RT_ENUM! { enum EmailMailboxEmptyFolderStatus: i32 {
+RT_ENUM! { enum EmailMailboxEmptyFolderStatus: i32 ["Windows.ApplicationModel.Email.EmailMailboxEmptyFolderStatus"] {
     Success (EmailMailboxEmptyFolderStatus_Success) = 0, NetworkError (EmailMailboxEmptyFolderStatus_NetworkError) = 1, PermissionsError (EmailMailboxEmptyFolderStatus_PermissionsError) = 2, ServerError (EmailMailboxEmptyFolderStatus_ServerError) = 3, UnknownFailure (EmailMailboxEmptyFolderStatus_UnknownFailure) = 4, CouldNotDeleteEverything (EmailMailboxEmptyFolderStatus_CouldNotDeleteEverything) = 5,
 }}
-RT_ENUM! { enum EmailMailboxOtherAppReadAccess: i32 {
+RT_ENUM! { enum EmailMailboxOtherAppReadAccess: i32 ["Windows.ApplicationModel.Email.EmailMailboxOtherAppReadAccess"] {
     SystemOnly (EmailMailboxOtherAppReadAccess_SystemOnly) = 0, Full (EmailMailboxOtherAppReadAccess_Full) = 1, None (EmailMailboxOtherAppReadAccess_None) = 2,
 }}
-RT_ENUM! { enum EmailMailboxOtherAppWriteAccess: i32 {
+RT_ENUM! { enum EmailMailboxOtherAppWriteAccess: i32 ["Windows.ApplicationModel.Email.EmailMailboxOtherAppWriteAccess"] {
     None (EmailMailboxOtherAppWriteAccess_None) = 0, Limited (EmailMailboxOtherAppWriteAccess_Limited) = 1,
 }}
 DEFINE_IID!(IID_IEmailMailboxPolicies, 523453893, 7227, 19911, 180, 16, 99, 115, 120, 62, 84, 93);
@@ -18065,7 +18065,7 @@ impl IEmailMailboxPolicies {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxPolicies: IEmailMailboxPolicies}
+RT_CLASS!{class EmailMailboxPolicies: IEmailMailboxPolicies ["Windows.ApplicationModel.Email.EmailMailboxPolicies"]}
 DEFINE_IID!(IID_IEmailMailboxPolicies2, 3132459771, 41291, 18812, 168, 226, 85, 234, 194, 156, 196, 181);
 RT_INTERFACE!{interface IEmailMailboxPolicies2(IEmailMailboxPolicies2Vtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxPolicies2] {
     fn get_MustEncryptSmimeMessages(&self, out: *mut bool) -> HRESULT,
@@ -18118,10 +18118,10 @@ impl IEmailMailboxPolicies3 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum EmailMailboxSmimeEncryptionAlgorithm: i32 {
+RT_ENUM! { enum EmailMailboxSmimeEncryptionAlgorithm: i32 ["Windows.ApplicationModel.Email.EmailMailboxSmimeEncryptionAlgorithm"] {
     Any (EmailMailboxSmimeEncryptionAlgorithm_Any) = 0, TripleDes (EmailMailboxSmimeEncryptionAlgorithm_TripleDes) = 1, Des (EmailMailboxSmimeEncryptionAlgorithm_Des) = 2, RC2128Bit (EmailMailboxSmimeEncryptionAlgorithm_RC2128Bit) = 3, RC264Bit (EmailMailboxSmimeEncryptionAlgorithm_RC264Bit) = 4, RC240Bit (EmailMailboxSmimeEncryptionAlgorithm_RC240Bit) = 5,
 }}
-RT_ENUM! { enum EmailMailboxSmimeSigningAlgorithm: i32 {
+RT_ENUM! { enum EmailMailboxSmimeSigningAlgorithm: i32 ["Windows.ApplicationModel.Email.EmailMailboxSmimeSigningAlgorithm"] {
     Any (EmailMailboxSmimeSigningAlgorithm_Any) = 0, Sha1 (EmailMailboxSmimeSigningAlgorithm_Sha1) = 1, MD5 (EmailMailboxSmimeSigningAlgorithm_MD5) = 2,
 }}
 DEFINE_IID!(IID_IEmailMailboxSyncManager, 1367000410, 13713, 19293, 133, 188, 199, 29, 222, 134, 34, 99);
@@ -18164,7 +18164,7 @@ impl IEmailMailboxSyncManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxSyncManager: IEmailMailboxSyncManager}
+RT_CLASS!{class EmailMailboxSyncManager: IEmailMailboxSyncManager ["Windows.ApplicationModel.Email.EmailMailboxSyncManager"]}
 DEFINE_IID!(IID_IEmailMailboxSyncManager2, 3448621438, 38337, 20361, 129, 183, 230, 174, 203, 102, 149, 252);
 RT_INTERFACE!{interface IEmailMailboxSyncManager2(IEmailMailboxSyncManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxSyncManager2] {
     fn put_Status(&self, value: EmailMailboxSyncStatus) -> HRESULT,
@@ -18185,7 +18185,7 @@ impl IEmailMailboxSyncManager2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum EmailMailboxSyncStatus: i32 {
+RT_ENUM! { enum EmailMailboxSyncStatus: i32 ["Windows.ApplicationModel.Email.EmailMailboxSyncStatus"] {
     Idle (EmailMailboxSyncStatus_Idle) = 0, Syncing (EmailMailboxSyncStatus_Syncing) = 1, UpToDate (EmailMailboxSyncStatus_UpToDate) = 2, AuthenticationError (EmailMailboxSyncStatus_AuthenticationError) = 3, PolicyError (EmailMailboxSyncStatus_PolicyError) = 4, UnknownError (EmailMailboxSyncStatus_UnknownError) = 5, ManualAccountRemovalRequired (EmailMailboxSyncStatus_ManualAccountRemovalRequired) = 6,
 }}
 RT_CLASS!{static class EmailManager}
@@ -18227,7 +18227,7 @@ impl IEmailManagerForUser {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailManagerForUser: IEmailManagerForUser}
+RT_CLASS!{class EmailManagerForUser: IEmailManagerForUser ["Windows.ApplicationModel.Email.EmailManagerForUser"]}
 DEFINE_IID!(IID_IEmailManagerStatics, 4111631956, 21957, 18576, 168, 36, 33, 108, 38, 24, 206, 127);
 RT_INTERFACE!{static interface IEmailManagerStatics(IEmailManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailManagerStatics] {
     fn ShowComposeNewEmailAsync(&self, message: *mut EmailMessage, out: *mut *mut foundation::IAsyncAction) -> HRESULT
@@ -18409,7 +18409,7 @@ impl IEmailMeetingInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMeetingInfo: IEmailMeetingInfo}
+RT_CLASS!{class EmailMeetingInfo: IEmailMeetingInfo ["Windows.ApplicationModel.Email.EmailMeetingInfo"]}
 impl RtActivatable<IActivationFactory> for EmailMeetingInfo {}
 DEFINE_CLSID!(EmailMeetingInfo(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,77,101,101,116,105,110,103,73,110,102,111,0]) [CLSID_EmailMeetingInfo]);
 DEFINE_IID!(IID_IEmailMeetingInfo2, 2119776365, 45273, 20453, 134, 124, 227, 30, 210, 181, 136, 184);
@@ -18423,7 +18423,7 @@ impl IEmailMeetingInfo2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum EmailMeetingResponseType: i32 {
+RT_ENUM! { enum EmailMeetingResponseType: i32 ["Windows.ApplicationModel.Email.EmailMeetingResponseType"] {
     Accept (EmailMeetingResponseType_Accept) = 0, Decline (EmailMeetingResponseType_Decline) = 1, Tentative (EmailMeetingResponseType_Tentative) = 2,
 }}
 DEFINE_IID!(IID_IEmailMessage, 1819120781, 32949, 18680, 176, 177, 224, 78, 67, 15, 68, 229);
@@ -18477,7 +18477,7 @@ impl IEmailMessage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMessage: IEmailMessage}
+RT_CLASS!{class EmailMessage: IEmailMessage ["Windows.ApplicationModel.Email.EmailMessage"]}
 impl RtActivatable<IActivationFactory> for EmailMessage {}
 DEFINE_CLSID!(EmailMessage(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,77,101,115,115,97,103,101,0]) [CLSID_EmailMessage]);
 DEFINE_IID!(IID_IEmailMessage2, 4257752203, 40730, 17627, 189, 60, 101, 195, 132, 119, 15, 134);
@@ -18806,11 +18806,11 @@ impl IEmailMessageBatch {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMessageBatch: IEmailMessageBatch}
-RT_ENUM! { enum EmailMessageBodyKind: i32 {
+RT_CLASS!{class EmailMessageBatch: IEmailMessageBatch ["Windows.ApplicationModel.Email.EmailMessageBatch"]}
+RT_ENUM! { enum EmailMessageBodyKind: i32 ["Windows.ApplicationModel.Email.EmailMessageBodyKind"] {
     Html (EmailMessageBodyKind_Html) = 0, PlainText (EmailMessageBodyKind_PlainText) = 1,
 }}
-RT_ENUM! { enum EmailMessageDownloadState: i32 {
+RT_ENUM! { enum EmailMessageDownloadState: i32 ["Windows.ApplicationModel.Email.EmailMessageDownloadState"] {
     PartiallyDownloaded (EmailMessageDownloadState_PartiallyDownloaded) = 0, Downloading (EmailMessageDownloadState_Downloading) = 1, Downloaded (EmailMessageDownloadState_Downloaded) = 2, Failed (EmailMessageDownloadState_Failed) = 3,
 }}
 DEFINE_IID!(IID_IEmailMessageReader, 793427615, 25107, 19077, 163, 176, 249, 45, 26, 131, 157, 25);
@@ -18824,14 +18824,14 @@ impl IEmailMessageReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMessageReader: IEmailMessageReader}
-RT_ENUM! { enum EmailMessageResponseKind: i32 {
+RT_CLASS!{class EmailMessageReader: IEmailMessageReader ["Windows.ApplicationModel.Email.EmailMessageReader"]}
+RT_ENUM! { enum EmailMessageResponseKind: i32 ["Windows.ApplicationModel.Email.EmailMessageResponseKind"] {
     None (EmailMessageResponseKind_None) = 0, Reply (EmailMessageResponseKind_Reply) = 1, ReplyAll (EmailMessageResponseKind_ReplyAll) = 2, Forward (EmailMessageResponseKind_Forward) = 3,
 }}
-RT_ENUM! { enum EmailMessageSmimeKind: i32 {
+RT_ENUM! { enum EmailMessageSmimeKind: i32 ["Windows.ApplicationModel.Email.EmailMessageSmimeKind"] {
     None (EmailMessageSmimeKind_None) = 0, ClearSigned (EmailMessageSmimeKind_ClearSigned) = 1, OpaqueSigned (EmailMessageSmimeKind_OpaqueSigned) = 2, Encrypted (EmailMessageSmimeKind_Encrypted) = 3,
 }}
-RT_ENUM! { enum EmailQueryKind: i32 {
+RT_ENUM! { enum EmailQueryKind: i32 ["Windows.ApplicationModel.Email.EmailQueryKind"] {
     All (EmailQueryKind_All) = 0, Important (EmailQueryKind_Important) = 1, Flagged (EmailQueryKind_Flagged) = 2, Unread (EmailQueryKind_Unread) = 3, Read (EmailQueryKind_Read) = 4, Unseen (EmailQueryKind_Unseen) = 5,
 }}
 DEFINE_IID!(IID_IEmailQueryOptions, 1162890139, 15999, 19794, 182, 221, 214, 253, 78, 31, 189, 154);
@@ -18884,7 +18884,7 @@ impl IEmailQueryOptions {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailQueryOptions: IEmailQueryOptions}
+RT_CLASS!{class EmailQueryOptions: IEmailQueryOptions ["Windows.ApplicationModel.Email.EmailQueryOptions"]}
 impl RtActivatable<IEmailQueryOptionsFactory> for EmailQueryOptions {}
 impl RtActivatable<IActivationFactory> for EmailQueryOptions {}
 impl EmailQueryOptions {
@@ -18913,16 +18913,16 @@ impl IEmailQueryOptionsFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum EmailQuerySearchFields: u32 {
+RT_ENUM! { enum EmailQuerySearchFields: u32 ["Windows.ApplicationModel.Email.EmailQuerySearchFields"] {
     None (EmailQuerySearchFields_None) = 0, Subject (EmailQuerySearchFields_Subject) = 1, Sender (EmailQuerySearchFields_Sender) = 2, Preview (EmailQuerySearchFields_Preview) = 4, Recipients (EmailQuerySearchFields_Recipients) = 8, All (EmailQuerySearchFields_All) = 4294967295,
 }}
-RT_ENUM! { enum EmailQuerySearchScope: i32 {
+RT_ENUM! { enum EmailQuerySearchScope: i32 ["Windows.ApplicationModel.Email.EmailQuerySearchScope"] {
     Local (EmailQuerySearchScope_Local) = 0, Server (EmailQuerySearchScope_Server) = 1,
 }}
-RT_ENUM! { enum EmailQuerySortDirection: i32 {
+RT_ENUM! { enum EmailQuerySortDirection: i32 ["Windows.ApplicationModel.Email.EmailQuerySortDirection"] {
     Descending (EmailQuerySortDirection_Descending) = 0, Ascending (EmailQuerySortDirection_Ascending) = 1,
 }}
-RT_ENUM! { enum EmailQuerySortProperty: i32 {
+RT_ENUM! { enum EmailQuerySortProperty: i32 ["Windows.ApplicationModel.Email.EmailQuerySortProperty"] {
     Date (EmailQuerySortProperty_Date) = 0,
 }}
 DEFINE_IID!(IID_IEmailQueryTextSearch, 2678104712, 15453, 18085, 166, 226, 49, 214, 253, 23, 229, 64);
@@ -18963,7 +18963,7 @@ impl IEmailQueryTextSearch {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailQueryTextSearch: IEmailQueryTextSearch}
+RT_CLASS!{class EmailQueryTextSearch: IEmailQueryTextSearch ["Windows.ApplicationModel.Email.EmailQueryTextSearch"]}
 DEFINE_IID!(IID_IEmailRecipient, 3404211635, 17528, 18452, 185, 0, 201, 2, 181, 225, 155, 83);
 RT_INTERFACE!{interface IEmailRecipient(IEmailRecipientVtbl): IInspectable(IInspectableVtbl) [IID_IEmailRecipient] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -18991,7 +18991,7 @@ impl IEmailRecipient {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailRecipient: IEmailRecipient}
+RT_CLASS!{class EmailRecipient: IEmailRecipient ["Windows.ApplicationModel.Email.EmailRecipient"]}
 impl RtActivatable<IEmailRecipientFactory> for EmailRecipient {}
 impl RtActivatable<IActivationFactory> for EmailRecipient {}
 impl EmailRecipient {
@@ -19037,7 +19037,7 @@ impl IEmailRecipientResolutionResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailRecipientResolutionResult: IEmailRecipientResolutionResult}
+RT_CLASS!{class EmailRecipientResolutionResult: IEmailRecipientResolutionResult ["Windows.ApplicationModel.Email.EmailRecipientResolutionResult"]}
 impl RtActivatable<IActivationFactory> for EmailRecipientResolutionResult {}
 DEFINE_CLSID!(EmailRecipientResolutionResult(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,109,97,105,108,46,69,109,97,105,108,82,101,99,105,112,105,101,110,116,82,101,115,111,108,117,116,105,111,110,82,101,115,117,108,116,0]) [CLSID_EmailRecipientResolutionResult]);
 DEFINE_IID!(IID_IEmailRecipientResolutionResult2, 1581386678, 52827, 19422, 185, 212, 225, 109, 160, 176, 159, 202);
@@ -19055,10 +19055,10 @@ impl IEmailRecipientResolutionResult2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum EmailRecipientResolutionStatus: i32 {
+RT_ENUM! { enum EmailRecipientResolutionStatus: i32 ["Windows.ApplicationModel.Email.EmailRecipientResolutionStatus"] {
     Success (EmailRecipientResolutionStatus_Success) = 0, RecipientNotFound (EmailRecipientResolutionStatus_RecipientNotFound) = 1, AmbiguousRecipient (EmailRecipientResolutionStatus_AmbiguousRecipient) = 2, NoCertificate (EmailRecipientResolutionStatus_NoCertificate) = 3, CertificateRequestLimitReached (EmailRecipientResolutionStatus_CertificateRequestLimitReached) = 4, CannotResolveDistributionList (EmailRecipientResolutionStatus_CannotResolveDistributionList) = 5, ServerError (EmailRecipientResolutionStatus_ServerError) = 6, UnknownFailure (EmailRecipientResolutionStatus_UnknownFailure) = 7,
 }}
-RT_ENUM! { enum EmailSpecialFolderKind: i32 {
+RT_ENUM! { enum EmailSpecialFolderKind: i32 ["Windows.ApplicationModel.Email.EmailSpecialFolderKind"] {
     None (EmailSpecialFolderKind_None) = 0, Root (EmailSpecialFolderKind_Root) = 1, Inbox (EmailSpecialFolderKind_Inbox) = 2, Outbox (EmailSpecialFolderKind_Outbox) = 3, Drafts (EmailSpecialFolderKind_Drafts) = 4, DeletedItems (EmailSpecialFolderKind_DeletedItems) = 5, Sent (EmailSpecialFolderKind_Sent) = 6,
 }}
 DEFINE_IID!(IID_IEmailStore, 4160954990, 37175, 20363, 164, 112, 39, 154, 195, 5, 142, 182);
@@ -19132,15 +19132,15 @@ impl IEmailStore {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailStore: IEmailStore}
-RT_ENUM! { enum EmailStoreAccessType: i32 {
+RT_CLASS!{class EmailStore: IEmailStore ["Windows.ApplicationModel.Email.EmailStore"]}
+RT_ENUM! { enum EmailStoreAccessType: i32 ["Windows.ApplicationModel.Email.EmailStoreAccessType"] {
     AppMailboxesReadWrite (EmailStoreAccessType_AppMailboxesReadWrite) = 0, AllMailboxesLimitedReadWrite (EmailStoreAccessType_AllMailboxesLimitedReadWrite) = 1,
 }}
 DEFINE_IID!(IID_IEmailStoreNotificationTriggerDetails, 3457635900, 18150, 17353, 150, 247, 250, 207, 125, 215, 16, 203);
 RT_INTERFACE!{interface IEmailStoreNotificationTriggerDetails(IEmailStoreNotificationTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailStoreNotificationTriggerDetails] {
     
 }}
-RT_CLASS!{class EmailStoreNotificationTriggerDetails: IEmailStoreNotificationTriggerDetails}
+RT_CLASS!{class EmailStoreNotificationTriggerDetails: IEmailStoreNotificationTriggerDetails ["Windows.ApplicationModel.Email.EmailStoreNotificationTriggerDetails"]}
 pub mod dataprovider { // Windows.ApplicationModel.Email.DataProvider
 use ::prelude::*;
 DEFINE_IID!(IID_IEmailDataProviderConnection, 1000119751, 14258, 19440, 174, 48, 123, 100, 74, 28, 150, 225);
@@ -19318,7 +19318,7 @@ impl IEmailDataProviderConnection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailDataProviderConnection: IEmailDataProviderConnection}
+RT_CLASS!{class EmailDataProviderConnection: IEmailDataProviderConnection ["Windows.ApplicationModel.Email.DataProvider.EmailDataProviderConnection"]}
 DEFINE_IID!(IID_IEmailDataProviderTriggerDetails, 2403225168, 13342, 17907, 187, 160, 132, 160, 5, 225, 49, 154);
 RT_INTERFACE!{interface IEmailDataProviderTriggerDetails(IEmailDataProviderTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailDataProviderTriggerDetails] {
     fn get_Connection(&self, out: *mut *mut EmailDataProviderConnection) -> HRESULT
@@ -19330,7 +19330,7 @@ impl IEmailDataProviderTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailDataProviderTriggerDetails: IEmailDataProviderTriggerDetails}
+RT_CLASS!{class EmailDataProviderTriggerDetails: IEmailDataProviderTriggerDetails ["Windows.ApplicationModel.Email.DataProvider.EmailDataProviderTriggerDetails"]}
 DEFINE_IID!(IID_IEmailMailboxCreateFolderRequest, 407713653, 51489, 19513, 163, 9, 225, 108, 159, 34, 176, 75);
 RT_INTERFACE!{interface IEmailMailboxCreateFolderRequest(IEmailMailboxCreateFolderRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxCreateFolderRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19366,7 +19366,7 @@ impl IEmailMailboxCreateFolderRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxCreateFolderRequest: IEmailMailboxCreateFolderRequest}
+RT_CLASS!{class EmailMailboxCreateFolderRequest: IEmailMailboxCreateFolderRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxCreateFolderRequest"]}
 DEFINE_IID!(IID_IEmailMailboxCreateFolderRequestEventArgs, 65323052, 9244, 20137, 166, 143, 255, 32, 188, 90, 252, 133);
 RT_INTERFACE!{interface IEmailMailboxCreateFolderRequestEventArgs(IEmailMailboxCreateFolderRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxCreateFolderRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxCreateFolderRequest) -> HRESULT,
@@ -19384,7 +19384,7 @@ impl IEmailMailboxCreateFolderRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxCreateFolderRequestEventArgs: IEmailMailboxCreateFolderRequestEventArgs}
+RT_CLASS!{class EmailMailboxCreateFolderRequestEventArgs: IEmailMailboxCreateFolderRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxCreateFolderRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxDeleteFolderRequest, 2489968778, 43313, 18297, 146, 61, 9, 163, 234, 41, 46, 41);
 RT_INTERFACE!{interface IEmailMailboxDeleteFolderRequest(IEmailMailboxDeleteFolderRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxDeleteFolderRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19414,7 +19414,7 @@ impl IEmailMailboxDeleteFolderRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxDeleteFolderRequest: IEmailMailboxDeleteFolderRequest}
+RT_CLASS!{class EmailMailboxDeleteFolderRequest: IEmailMailboxDeleteFolderRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxDeleteFolderRequest"]}
 DEFINE_IID!(IID_IEmailMailboxDeleteFolderRequestEventArgs, 3033738502, 9010, 18040, 131, 120, 40, 181, 121, 51, 104, 70);
 RT_INTERFACE!{interface IEmailMailboxDeleteFolderRequestEventArgs(IEmailMailboxDeleteFolderRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxDeleteFolderRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxDeleteFolderRequest) -> HRESULT,
@@ -19432,7 +19432,7 @@ impl IEmailMailboxDeleteFolderRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxDeleteFolderRequestEventArgs: IEmailMailboxDeleteFolderRequestEventArgs}
+RT_CLASS!{class EmailMailboxDeleteFolderRequestEventArgs: IEmailMailboxDeleteFolderRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxDeleteFolderRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxDownloadAttachmentRequest, 186497972, 29964, 18657, 188, 228, 141, 88, 150, 132, 255, 188);
 RT_INTERFACE!{interface IEmailMailboxDownloadAttachmentRequest(IEmailMailboxDownloadAttachmentRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxDownloadAttachmentRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19468,7 +19468,7 @@ impl IEmailMailboxDownloadAttachmentRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxDownloadAttachmentRequest: IEmailMailboxDownloadAttachmentRequest}
+RT_CLASS!{class EmailMailboxDownloadAttachmentRequest: IEmailMailboxDownloadAttachmentRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxDownloadAttachmentRequest"]}
 DEFINE_IID!(IID_IEmailMailboxDownloadAttachmentRequestEventArgs, 3437085805, 65448, 18551, 159, 157, 254, 215, 188, 175, 65, 4);
 RT_INTERFACE!{interface IEmailMailboxDownloadAttachmentRequestEventArgs(IEmailMailboxDownloadAttachmentRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxDownloadAttachmentRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxDownloadAttachmentRequest) -> HRESULT,
@@ -19486,7 +19486,7 @@ impl IEmailMailboxDownloadAttachmentRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxDownloadAttachmentRequestEventArgs: IEmailMailboxDownloadAttachmentRequestEventArgs}
+RT_CLASS!{class EmailMailboxDownloadAttachmentRequestEventArgs: IEmailMailboxDownloadAttachmentRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxDownloadAttachmentRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxDownloadMessageRequest, 1232814471, 23373, 19235, 129, 108, 243, 132, 43, 235, 117, 62);
 RT_INTERFACE!{interface IEmailMailboxDownloadMessageRequest(IEmailMailboxDownloadMessageRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxDownloadMessageRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19516,7 +19516,7 @@ impl IEmailMailboxDownloadMessageRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxDownloadMessageRequest: IEmailMailboxDownloadMessageRequest}
+RT_CLASS!{class EmailMailboxDownloadMessageRequest: IEmailMailboxDownloadMessageRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxDownloadMessageRequest"]}
 DEFINE_IID!(IID_IEmailMailboxDownloadMessageRequestEventArgs, 1191446957, 53408, 19035, 187, 42, 55, 98, 16, 57, 197, 62);
 RT_INTERFACE!{interface IEmailMailboxDownloadMessageRequestEventArgs(IEmailMailboxDownloadMessageRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxDownloadMessageRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxDownloadMessageRequest) -> HRESULT,
@@ -19534,7 +19534,7 @@ impl IEmailMailboxDownloadMessageRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxDownloadMessageRequestEventArgs: IEmailMailboxDownloadMessageRequestEventArgs}
+RT_CLASS!{class EmailMailboxDownloadMessageRequestEventArgs: IEmailMailboxDownloadMessageRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxDownloadMessageRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxEmptyFolderRequest, 4266329003, 63597, 18137, 180, 206, 188, 138, 109, 158, 146, 104);
 RT_INTERFACE!{interface IEmailMailboxEmptyFolderRequest(IEmailMailboxEmptyFolderRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxEmptyFolderRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19564,7 +19564,7 @@ impl IEmailMailboxEmptyFolderRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxEmptyFolderRequest: IEmailMailboxEmptyFolderRequest}
+RT_CLASS!{class EmailMailboxEmptyFolderRequest: IEmailMailboxEmptyFolderRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxEmptyFolderRequest"]}
 DEFINE_IID!(IID_IEmailMailboxEmptyFolderRequestEventArgs, 1904473220, 39002, 19136, 179, 63, 238, 14, 38, 39, 163, 192);
 RT_INTERFACE!{interface IEmailMailboxEmptyFolderRequestEventArgs(IEmailMailboxEmptyFolderRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxEmptyFolderRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxEmptyFolderRequest) -> HRESULT,
@@ -19582,7 +19582,7 @@ impl IEmailMailboxEmptyFolderRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxEmptyFolderRequestEventArgs: IEmailMailboxEmptyFolderRequestEventArgs}
+RT_CLASS!{class EmailMailboxEmptyFolderRequestEventArgs: IEmailMailboxEmptyFolderRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxEmptyFolderRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxForwardMeetingRequest, 1634560753, 28884, 18482, 184, 105, 184, 5, 66, 174, 155, 232);
 RT_INTERFACE!{interface IEmailMailboxForwardMeetingRequest(IEmailMailboxForwardMeetingRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxForwardMeetingRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19642,7 +19642,7 @@ impl IEmailMailboxForwardMeetingRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxForwardMeetingRequest: IEmailMailboxForwardMeetingRequest}
+RT_CLASS!{class EmailMailboxForwardMeetingRequest: IEmailMailboxForwardMeetingRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxForwardMeetingRequest"]}
 DEFINE_IID!(IID_IEmailMailboxForwardMeetingRequestEventArgs, 735638330, 10612, 18265, 165, 165, 88, 244, 77, 60, 2, 117);
 RT_INTERFACE!{interface IEmailMailboxForwardMeetingRequestEventArgs(IEmailMailboxForwardMeetingRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxForwardMeetingRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxForwardMeetingRequest) -> HRESULT,
@@ -19660,7 +19660,7 @@ impl IEmailMailboxForwardMeetingRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxForwardMeetingRequestEventArgs: IEmailMailboxForwardMeetingRequestEventArgs}
+RT_CLASS!{class EmailMailboxForwardMeetingRequestEventArgs: IEmailMailboxForwardMeetingRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxForwardMeetingRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxGetAutoReplySettingsRequest, 2604140425, 7816, 19969, 132, 204, 19, 134, 173, 154, 44, 47);
 RT_INTERFACE!{interface IEmailMailboxGetAutoReplySettingsRequest(IEmailMailboxGetAutoReplySettingsRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxGetAutoReplySettingsRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19690,7 +19690,7 @@ impl IEmailMailboxGetAutoReplySettingsRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxGetAutoReplySettingsRequest: IEmailMailboxGetAutoReplySettingsRequest}
+RT_CLASS!{class EmailMailboxGetAutoReplySettingsRequest: IEmailMailboxGetAutoReplySettingsRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxGetAutoReplySettingsRequest"]}
 DEFINE_IID!(IID_IEmailMailboxGetAutoReplySettingsRequestEventArgs, 3617543618, 64837, 16388, 138, 145, 155, 172, 243, 139, 112, 34);
 RT_INTERFACE!{interface IEmailMailboxGetAutoReplySettingsRequestEventArgs(IEmailMailboxGetAutoReplySettingsRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxGetAutoReplySettingsRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxGetAutoReplySettingsRequest) -> HRESULT,
@@ -19708,7 +19708,7 @@ impl IEmailMailboxGetAutoReplySettingsRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxGetAutoReplySettingsRequestEventArgs: IEmailMailboxGetAutoReplySettingsRequestEventArgs}
+RT_CLASS!{class EmailMailboxGetAutoReplySettingsRequestEventArgs: IEmailMailboxGetAutoReplySettingsRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxGetAutoReplySettingsRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxMoveFolderRequest, 280635478, 19093, 16488, 145, 204, 103, 204, 122, 207, 69, 79);
 RT_INTERFACE!{interface IEmailMailboxMoveFolderRequest(IEmailMailboxMoveFolderRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxMoveFolderRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19750,7 +19750,7 @@ impl IEmailMailboxMoveFolderRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxMoveFolderRequest: IEmailMailboxMoveFolderRequest}
+RT_CLASS!{class EmailMailboxMoveFolderRequest: IEmailMailboxMoveFolderRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxMoveFolderRequest"]}
 DEFINE_IID!(IID_IEmailMailboxMoveFolderRequestEventArgs, 945958944, 5306, 19592, 134, 152, 114, 57, 227, 200, 170, 167);
 RT_INTERFACE!{interface IEmailMailboxMoveFolderRequestEventArgs(IEmailMailboxMoveFolderRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxMoveFolderRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxMoveFolderRequest) -> HRESULT,
@@ -19768,7 +19768,7 @@ impl IEmailMailboxMoveFolderRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxMoveFolderRequestEventArgs: IEmailMailboxMoveFolderRequestEventArgs}
+RT_CLASS!{class EmailMailboxMoveFolderRequestEventArgs: IEmailMailboxMoveFolderRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxMoveFolderRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxProposeNewTimeForMeetingRequest, 1525674322, 38809, 20383, 163, 153, 255, 7, 243, 238, 240, 78);
 RT_INTERFACE!{interface IEmailMailboxProposeNewTimeForMeetingRequest(IEmailMailboxProposeNewTimeForMeetingRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxProposeNewTimeForMeetingRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19822,7 +19822,7 @@ impl IEmailMailboxProposeNewTimeForMeetingRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxProposeNewTimeForMeetingRequest: IEmailMailboxProposeNewTimeForMeetingRequest}
+RT_CLASS!{class EmailMailboxProposeNewTimeForMeetingRequest: IEmailMailboxProposeNewTimeForMeetingRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxProposeNewTimeForMeetingRequest"]}
 DEFINE_IID!(IID_IEmailMailboxProposeNewTimeForMeetingRequestEventArgs, 4215802776, 13229, 19047, 130, 81, 15, 156, 36, 155, 106, 32);
 RT_INTERFACE!{interface IEmailMailboxProposeNewTimeForMeetingRequestEventArgs(IEmailMailboxProposeNewTimeForMeetingRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxProposeNewTimeForMeetingRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxProposeNewTimeForMeetingRequest) -> HRESULT,
@@ -19840,7 +19840,7 @@ impl IEmailMailboxProposeNewTimeForMeetingRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxProposeNewTimeForMeetingRequestEventArgs: IEmailMailboxProposeNewTimeForMeetingRequestEventArgs}
+RT_CLASS!{class EmailMailboxProposeNewTimeForMeetingRequestEventArgs: IEmailMailboxProposeNewTimeForMeetingRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxProposeNewTimeForMeetingRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxResolveRecipientsRequest, 4020555632, 31545, 19611, 129, 30, 65, 234, 244, 58, 51, 45);
 RT_INTERFACE!{interface IEmailMailboxResolveRecipientsRequest(IEmailMailboxResolveRecipientsRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxResolveRecipientsRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19870,7 +19870,7 @@ impl IEmailMailboxResolveRecipientsRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxResolveRecipientsRequest: IEmailMailboxResolveRecipientsRequest}
+RT_CLASS!{class EmailMailboxResolveRecipientsRequest: IEmailMailboxResolveRecipientsRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxResolveRecipientsRequest"]}
 DEFINE_IID!(IID_IEmailMailboxResolveRecipientsRequestEventArgs, 638557698, 45775, 16632, 140, 40, 227, 237, 67, 177, 232, 154);
 RT_INTERFACE!{interface IEmailMailboxResolveRecipientsRequestEventArgs(IEmailMailboxResolveRecipientsRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxResolveRecipientsRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxResolveRecipientsRequest) -> HRESULT,
@@ -19888,7 +19888,7 @@ impl IEmailMailboxResolveRecipientsRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxResolveRecipientsRequestEventArgs: IEmailMailboxResolveRecipientsRequestEventArgs}
+RT_CLASS!{class EmailMailboxResolveRecipientsRequestEventArgs: IEmailMailboxResolveRecipientsRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxResolveRecipientsRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxServerSearchReadBatchRequest, 151972831, 23190, 16851, 138, 216, 52, 145, 47, 154, 166, 14);
 RT_INTERFACE!{interface IEmailMailboxServerSearchReadBatchRequest(IEmailMailboxServerSearchReadBatchRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxServerSearchReadBatchRequest] {
     fn get_SessionId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19942,7 +19942,7 @@ impl IEmailMailboxServerSearchReadBatchRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxServerSearchReadBatchRequest: IEmailMailboxServerSearchReadBatchRequest}
+RT_CLASS!{class EmailMailboxServerSearchReadBatchRequest: IEmailMailboxServerSearchReadBatchRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxServerSearchReadBatchRequest"]}
 DEFINE_IID!(IID_IEmailMailboxServerSearchReadBatchRequestEventArgs, 336599886, 60830, 17873, 173, 122, 204, 155, 127, 100, 58, 226);
 RT_INTERFACE!{interface IEmailMailboxServerSearchReadBatchRequestEventArgs(IEmailMailboxServerSearchReadBatchRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxServerSearchReadBatchRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxServerSearchReadBatchRequest) -> HRESULT,
@@ -19960,7 +19960,7 @@ impl IEmailMailboxServerSearchReadBatchRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxServerSearchReadBatchRequestEventArgs: IEmailMailboxServerSearchReadBatchRequestEventArgs}
+RT_CLASS!{class EmailMailboxServerSearchReadBatchRequestEventArgs: IEmailMailboxServerSearchReadBatchRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxServerSearchReadBatchRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxSetAutoReplySettingsRequest, 1973691088, 43150, 20052, 141, 199, 194, 67, 24, 107, 119, 78);
 RT_INTERFACE!{interface IEmailMailboxSetAutoReplySettingsRequest(IEmailMailboxSetAutoReplySettingsRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxSetAutoReplySettingsRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -19990,7 +19990,7 @@ impl IEmailMailboxSetAutoReplySettingsRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxSetAutoReplySettingsRequest: IEmailMailboxSetAutoReplySettingsRequest}
+RT_CLASS!{class EmailMailboxSetAutoReplySettingsRequest: IEmailMailboxSetAutoReplySettingsRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxSetAutoReplySettingsRequest"]}
 DEFINE_IID!(IID_IEmailMailboxSetAutoReplySettingsRequestEventArgs, 165286317, 55242, 16519, 172, 134, 83, 250, 103, 247, 98, 70);
 RT_INTERFACE!{interface IEmailMailboxSetAutoReplySettingsRequestEventArgs(IEmailMailboxSetAutoReplySettingsRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxSetAutoReplySettingsRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxSetAutoReplySettingsRequest) -> HRESULT,
@@ -20008,7 +20008,7 @@ impl IEmailMailboxSetAutoReplySettingsRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxSetAutoReplySettingsRequestEventArgs: IEmailMailboxSetAutoReplySettingsRequestEventArgs}
+RT_CLASS!{class EmailMailboxSetAutoReplySettingsRequestEventArgs: IEmailMailboxSetAutoReplySettingsRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxSetAutoReplySettingsRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxSyncManagerSyncRequest, 1309731044, 32359, 16474, 182, 115, 220, 96, 201, 16, 144, 252);
 RT_INTERFACE!{interface IEmailMailboxSyncManagerSyncRequest(IEmailMailboxSyncManagerSyncRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxSyncManagerSyncRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -20032,7 +20032,7 @@ impl IEmailMailboxSyncManagerSyncRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxSyncManagerSyncRequest: IEmailMailboxSyncManagerSyncRequest}
+RT_CLASS!{class EmailMailboxSyncManagerSyncRequest: IEmailMailboxSyncManagerSyncRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxSyncManagerSyncRequest"]}
 DEFINE_IID!(IID_IEmailMailboxSyncManagerSyncRequestEventArgs, 1134166810, 36812, 19173, 185, 181, 212, 52, 224, 166, 90, 168);
 RT_INTERFACE!{interface IEmailMailboxSyncManagerSyncRequestEventArgs(IEmailMailboxSyncManagerSyncRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxSyncManagerSyncRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxSyncManagerSyncRequest) -> HRESULT,
@@ -20050,7 +20050,7 @@ impl IEmailMailboxSyncManagerSyncRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxSyncManagerSyncRequestEventArgs: IEmailMailboxSyncManagerSyncRequestEventArgs}
+RT_CLASS!{class EmailMailboxSyncManagerSyncRequestEventArgs: IEmailMailboxSyncManagerSyncRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxSyncManagerSyncRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxUpdateMeetingResponseRequest, 1536797843, 45775, 18568, 186, 79, 48, 107, 107, 102, 223, 48);
 RT_INTERFACE!{interface IEmailMailboxUpdateMeetingResponseRequest(IEmailMailboxUpdateMeetingResponseRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxUpdateMeetingResponseRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -20104,7 +20104,7 @@ impl IEmailMailboxUpdateMeetingResponseRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxUpdateMeetingResponseRequest: IEmailMailboxUpdateMeetingResponseRequest}
+RT_CLASS!{class EmailMailboxUpdateMeetingResponseRequest: IEmailMailboxUpdateMeetingResponseRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxUpdateMeetingResponseRequest"]}
 DEFINE_IID!(IID_IEmailMailboxUpdateMeetingResponseRequestEventArgs, 1754847073, 22217, 20247, 190, 49, 102, 253, 169, 75, 161, 89);
 RT_INTERFACE!{interface IEmailMailboxUpdateMeetingResponseRequestEventArgs(IEmailMailboxUpdateMeetingResponseRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxUpdateMeetingResponseRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxUpdateMeetingResponseRequest) -> HRESULT,
@@ -20122,7 +20122,7 @@ impl IEmailMailboxUpdateMeetingResponseRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxUpdateMeetingResponseRequestEventArgs: IEmailMailboxUpdateMeetingResponseRequestEventArgs}
+RT_CLASS!{class EmailMailboxUpdateMeetingResponseRequestEventArgs: IEmailMailboxUpdateMeetingResponseRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxUpdateMeetingResponseRequestEventArgs"]}
 DEFINE_IID!(IID_IEmailMailboxValidateCertificatesRequest, 2840410417, 57626, 20375, 184, 26, 24, 122, 112, 168, 244, 26);
 RT_INTERFACE!{interface IEmailMailboxValidateCertificatesRequest(IEmailMailboxValidateCertificatesRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxValidateCertificatesRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
@@ -20153,7 +20153,7 @@ impl IEmailMailboxValidateCertificatesRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxValidateCertificatesRequest: IEmailMailboxValidateCertificatesRequest}
+RT_CLASS!{class EmailMailboxValidateCertificatesRequest: IEmailMailboxValidateCertificatesRequest ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxValidateCertificatesRequest"]}
 DEFINE_IID!(IID_IEmailMailboxValidateCertificatesRequestEventArgs, 629391127, 767, 18942, 167, 60, 3, 243, 117, 102, 198, 145);
 RT_INTERFACE!{interface IEmailMailboxValidateCertificatesRequestEventArgs(IEmailMailboxValidateCertificatesRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxValidateCertificatesRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut EmailMailboxValidateCertificatesRequest) -> HRESULT,
@@ -20171,15 +20171,15 @@ impl IEmailMailboxValidateCertificatesRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EmailMailboxValidateCertificatesRequestEventArgs: IEmailMailboxValidateCertificatesRequestEventArgs}
+RT_CLASS!{class EmailMailboxValidateCertificatesRequestEventArgs: IEmailMailboxValidateCertificatesRequestEventArgs ["Windows.ApplicationModel.Email.DataProvider.EmailMailboxValidateCertificatesRequestEventArgs"]}
 } // Windows.ApplicationModel.Email.DataProvider
 } // Windows.ApplicationModel.Email
 pub mod extendedexecution { // Windows.ApplicationModel.ExtendedExecution
 use ::prelude::*;
-RT_ENUM! { enum ExtendedExecutionReason: i32 {
+RT_ENUM! { enum ExtendedExecutionReason: i32 ["Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason"] {
     Unspecified (ExtendedExecutionReason_Unspecified) = 0, LocationTracking (ExtendedExecutionReason_LocationTracking) = 1, SavingData (ExtendedExecutionReason_SavingData) = 2,
 }}
-RT_ENUM! { enum ExtendedExecutionResult: i32 {
+RT_ENUM! { enum ExtendedExecutionResult: i32 ["Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionResult"] {
     Allowed (ExtendedExecutionResult_Allowed) = 0, Denied (ExtendedExecutionResult_Denied) = 1,
 }}
 DEFINE_IID!(IID_IExtendedExecutionRevokedEventArgs, 3216809750, 25525, 19467, 170, 214, 130, 138, 245, 55, 62, 195);
@@ -20193,8 +20193,8 @@ impl IExtendedExecutionRevokedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ExtendedExecutionRevokedEventArgs: IExtendedExecutionRevokedEventArgs}
-RT_ENUM! { enum ExtendedExecutionRevokedReason: i32 {
+RT_CLASS!{class ExtendedExecutionRevokedEventArgs: IExtendedExecutionRevokedEventArgs ["Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionRevokedEventArgs"]}
+RT_ENUM! { enum ExtendedExecutionRevokedReason: i32 ["Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionRevokedReason"] {
     Resumed (ExtendedExecutionRevokedReason_Resumed) = 0, SystemPolicy (ExtendedExecutionRevokedReason_SystemPolicy) = 1,
 }}
 DEFINE_IID!(IID_IExtendedExecutionSession, 2945485357, 4491, 18673, 147, 8, 12, 79, 196, 30, 32, 15);
@@ -20252,15 +20252,15 @@ impl IExtendedExecutionSession {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ExtendedExecutionSession: IExtendedExecutionSession}
+RT_CLASS!{class ExtendedExecutionSession: IExtendedExecutionSession ["Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession"]}
 impl RtActivatable<IActivationFactory> for ExtendedExecutionSession {}
 DEFINE_CLSID!(ExtendedExecutionSession(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,120,116,101,110,100,101,100,69,120,101,99,117,116,105,111,110,46,69,120,116,101,110,100,101,100,69,120,101,99,117,116,105,111,110,83,101,115,115,105,111,110,0]) [CLSID_ExtendedExecutionSession]);
 pub mod foreground { // Windows.ApplicationModel.ExtendedExecution.Foreground
 use ::prelude::*;
-RT_ENUM! { enum ExtendedExecutionForegroundReason: i32 {
+RT_ENUM! { enum ExtendedExecutionForegroundReason: i32 ["Windows.ApplicationModel.ExtendedExecution.Foreground.ExtendedExecutionForegroundReason"] {
     Unspecified (ExtendedExecutionForegroundReason_Unspecified) = 0, SavingData (ExtendedExecutionForegroundReason_SavingData) = 1, BackgroundAudio (ExtendedExecutionForegroundReason_BackgroundAudio) = 2, Unconstrained (ExtendedExecutionForegroundReason_Unconstrained) = 3,
 }}
-RT_ENUM! { enum ExtendedExecutionForegroundResult: i32 {
+RT_ENUM! { enum ExtendedExecutionForegroundResult: i32 ["Windows.ApplicationModel.ExtendedExecution.Foreground.ExtendedExecutionForegroundResult"] {
     Allowed (ExtendedExecutionForegroundResult_Allowed) = 0, Denied (ExtendedExecutionForegroundResult_Denied) = 1,
 }}
 DEFINE_IID!(IID_IExtendedExecutionForegroundRevokedEventArgs, 2960972096, 38231, 44708, 44, 153, 189, 213, 109, 155, 228, 97);
@@ -20274,8 +20274,8 @@ impl IExtendedExecutionForegroundRevokedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ExtendedExecutionForegroundRevokedEventArgs: IExtendedExecutionForegroundRevokedEventArgs}
-RT_ENUM! { enum ExtendedExecutionForegroundRevokedReason: i32 {
+RT_CLASS!{class ExtendedExecutionForegroundRevokedEventArgs: IExtendedExecutionForegroundRevokedEventArgs ["Windows.ApplicationModel.ExtendedExecution.Foreground.ExtendedExecutionForegroundRevokedEventArgs"]}
+RT_ENUM! { enum ExtendedExecutionForegroundRevokedReason: i32 ["Windows.ApplicationModel.ExtendedExecution.Foreground.ExtendedExecutionForegroundRevokedReason"] {
     Resumed (ExtendedExecutionForegroundRevokedReason_Resumed) = 0, SystemPolicy (ExtendedExecutionForegroundRevokedReason_SystemPolicy) = 1,
 }}
 DEFINE_IID!(IID_IExtendedExecutionForegroundSession, 4227088609, 40208, 16897, 176, 30, 200, 50, 117, 41, 111, 46);
@@ -20322,7 +20322,7 @@ impl IExtendedExecutionForegroundSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ExtendedExecutionForegroundSession: IExtendedExecutionForegroundSession}
+RT_CLASS!{class ExtendedExecutionForegroundSession: IExtendedExecutionForegroundSession ["Windows.ApplicationModel.ExtendedExecution.Foreground.ExtendedExecutionForegroundSession"]}
 impl RtActivatable<IActivationFactory> for ExtendedExecutionForegroundSession {}
 DEFINE_CLSID!(ExtendedExecutionForegroundSession(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,120,116,101,110,100,101,100,69,120,101,99,117,116,105,111,110,46,70,111,114,101,103,114,111,117,110,100,46,69,120,116,101,110,100,101,100,69,120,101,99,117,116,105,111,110,70,111,114,101,103,114,111,117,110,100,83,101,115,115,105,111,110,0]) [CLSID_ExtendedExecutionForegroundSession]);
 } // Windows.ApplicationModel.ExtendedExecution.Foreground
@@ -20350,7 +20350,7 @@ impl ILockApplicationHost {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LockApplicationHost: ILockApplicationHost}
+RT_CLASS!{class LockApplicationHost: ILockApplicationHost ["Windows.ApplicationModel.LockScreen.LockApplicationHost"]}
 impl RtActivatable<ILockApplicationHostStatics> for LockApplicationHost {}
 impl LockApplicationHost {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<LockApplicationHost>>> {
@@ -20405,7 +20405,7 @@ impl ILockScreenBadge {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LockScreenBadge: ILockScreenBadge}
+RT_CLASS!{class LockScreenBadge: ILockScreenBadge ["Windows.ApplicationModel.LockScreen.LockScreenBadge"]}
 DEFINE_IID!(IID_ILockScreenInfo, 4120553052, 38673, 19913, 166, 48, 149, 182, 203, 140, 218, 208);
 RT_INTERFACE!{interface ILockScreenInfo(ILockScreenInfoVtbl): IInspectable(IInspectableVtbl) [IID_ILockScreenInfo] {
     fn add_LockScreenImageChanged(&self, handler: *mut foundation::TypedEventHandler<LockScreenInfo, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -20479,7 +20479,7 @@ impl ILockScreenInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LockScreenInfo: ILockScreenInfo}
+RT_CLASS!{class LockScreenInfo: ILockScreenInfo ["Windows.ApplicationModel.LockScreen.LockScreenInfo"]}
 DEFINE_IID!(IID_ILockScreenUnlockingDeferral, 2122128086, 20995, 17383, 155, 214, 124, 57, 71, 209, 227, 254);
 RT_INTERFACE!{interface ILockScreenUnlockingDeferral(ILockScreenUnlockingDeferralVtbl): IInspectable(IInspectableVtbl) [IID_ILockScreenUnlockingDeferral] {
     fn Complete(&self) -> HRESULT
@@ -20490,7 +20490,7 @@ impl ILockScreenUnlockingDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LockScreenUnlockingDeferral: ILockScreenUnlockingDeferral}
+RT_CLASS!{class LockScreenUnlockingDeferral: ILockScreenUnlockingDeferral ["Windows.ApplicationModel.LockScreen.LockScreenUnlockingDeferral"]}
 DEFINE_IID!(IID_ILockScreenUnlockingEventArgs, 1155973127, 30203, 19131, 159, 139, 130, 71, 72, 144, 12, 113);
 RT_INTERFACE!{interface ILockScreenUnlockingEventArgs(ILockScreenUnlockingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ILockScreenUnlockingEventArgs] {
     fn GetDeferral(&self, out: *mut *mut LockScreenUnlockingDeferral) -> HRESULT,
@@ -20508,7 +20508,7 @@ impl ILockScreenUnlockingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LockScreenUnlockingEventArgs: ILockScreenUnlockingEventArgs}
+RT_CLASS!{class LockScreenUnlockingEventArgs: ILockScreenUnlockingEventArgs ["Windows.ApplicationModel.LockScreen.LockScreenUnlockingEventArgs"]}
 } // Windows.ApplicationModel.LockScreen
 pub mod payments { // Windows.ApplicationModel.Payments
 use ::prelude::*;
@@ -20644,7 +20644,7 @@ impl IPaymentAddress {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentAddress: IPaymentAddress}
+RT_CLASS!{class PaymentAddress: IPaymentAddress ["Windows.ApplicationModel.Payments.PaymentAddress"]}
 impl RtActivatable<IActivationFactory> for PaymentAddress {}
 DEFINE_CLSID!(PaymentAddress(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,65,100,100,114,101,115,115,0]) [CLSID_PaymentAddress]);
 DEFINE_IID!(IID_IPaymentCanMakePaymentResult, 1989606997, 54739, 19773, 179, 69, 69, 89, 23, 89, 197, 16);
@@ -20658,7 +20658,7 @@ impl IPaymentCanMakePaymentResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentCanMakePaymentResult: IPaymentCanMakePaymentResult}
+RT_CLASS!{class PaymentCanMakePaymentResult: IPaymentCanMakePaymentResult ["Windows.ApplicationModel.Payments.PaymentCanMakePaymentResult"]}
 impl RtActivatable<IPaymentCanMakePaymentResultFactory> for PaymentCanMakePaymentResult {}
 impl PaymentCanMakePaymentResult {
     #[inline] pub fn create(value: PaymentCanMakePaymentResultStatus) -> Result<ComPtr<PaymentCanMakePaymentResult>> {
@@ -20677,7 +20677,7 @@ impl IPaymentCanMakePaymentResultFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PaymentCanMakePaymentResultStatus: i32 {
+RT_ENUM! { enum PaymentCanMakePaymentResultStatus: i32 ["Windows.ApplicationModel.Payments.PaymentCanMakePaymentResultStatus"] {
     Unknown (PaymentCanMakePaymentResultStatus_Unknown) = 0, Yes (PaymentCanMakePaymentResultStatus_Yes) = 1, No (PaymentCanMakePaymentResultStatus_No) = 2, NotAllowed (PaymentCanMakePaymentResultStatus_NotAllowed) = 3, UserNotSignedIn (PaymentCanMakePaymentResultStatus_UserNotSignedIn) = 4, SpecifiedPaymentMethodIdsNotSupported (PaymentCanMakePaymentResultStatus_SpecifiedPaymentMethodIdsNotSupported) = 5, NoQualifyingCardOnFile (PaymentCanMakePaymentResultStatus_NoQualifyingCardOnFile) = 6,
 }}
 DEFINE_IID!(IID_IPaymentCurrencyAmount, 3819170272, 46111, 18823, 189, 203, 7, 19, 49, 242, 218, 164);
@@ -20718,7 +20718,7 @@ impl IPaymentCurrencyAmount {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentCurrencyAmount: IPaymentCurrencyAmount}
+RT_CLASS!{class PaymentCurrencyAmount: IPaymentCurrencyAmount ["Windows.ApplicationModel.Payments.PaymentCurrencyAmount"]}
 impl RtActivatable<IPaymentCurrencyAmountFactory> for PaymentCurrencyAmount {}
 impl PaymentCurrencyAmount {
     #[inline] pub fn create(value: &HStringArg, currency: &HStringArg) -> Result<ComPtr<PaymentCurrencyAmount>> {
@@ -20795,7 +20795,7 @@ impl IPaymentDetails {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentDetails: IPaymentDetails}
+RT_CLASS!{class PaymentDetails: IPaymentDetails ["Windows.ApplicationModel.Payments.PaymentDetails"]}
 impl RtActivatable<IPaymentDetailsFactory> for PaymentDetails {}
 impl RtActivatable<IActivationFactory> for PaymentDetails {}
 impl PaymentDetails {
@@ -20853,7 +20853,7 @@ impl IPaymentDetailsModifier {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentDetailsModifier: IPaymentDetailsModifier}
+RT_CLASS!{class PaymentDetailsModifier: IPaymentDetailsModifier ["Windows.ApplicationModel.Payments.PaymentDetailsModifier"]}
 impl RtActivatable<IPaymentDetailsModifierFactory> for PaymentDetailsModifier {}
 impl PaymentDetailsModifier {
     #[inline] pub fn create(supportedMethodIds: &foundation::collections::IIterable<HString>, total: &PaymentItem) -> Result<ComPtr<PaymentDetailsModifier>> {
@@ -20928,7 +20928,7 @@ impl IPaymentItem {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentItem: IPaymentItem}
+RT_CLASS!{class PaymentItem: IPaymentItem ["Windows.ApplicationModel.Payments.PaymentItem"]}
 impl RtActivatable<IPaymentItemFactory> for PaymentItem {}
 impl PaymentItem {
     #[inline] pub fn create(label: &HStringArg, amount: &PaymentCurrencyAmount) -> Result<ComPtr<PaymentItem>> {
@@ -20970,7 +20970,7 @@ impl IPaymentMediator {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentMediator: IPaymentMediator}
+RT_CLASS!{class PaymentMediator: IPaymentMediator ["Windows.ApplicationModel.Payments.PaymentMediator"]}
 impl RtActivatable<IActivationFactory> for PaymentMediator {}
 DEFINE_CLSID!(PaymentMediator(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,77,101,100,105,97,116,111,114,0]) [CLSID_PaymentMediator]);
 DEFINE_IID!(IID_IPaymentMediator2, 3471808753, 58375, 16680, 142, 115, 217, 61, 95, 130, 39, 134);
@@ -21001,7 +21001,7 @@ impl IPaymentMerchantInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentMerchantInfo: IPaymentMerchantInfo}
+RT_CLASS!{class PaymentMerchantInfo: IPaymentMerchantInfo ["Windows.ApplicationModel.Payments.PaymentMerchantInfo"]}
 impl RtActivatable<IPaymentMerchantInfoFactory> for PaymentMerchantInfo {}
 impl RtActivatable<IActivationFactory> for PaymentMerchantInfo {}
 impl PaymentMerchantInfo {
@@ -21038,7 +21038,7 @@ impl IPaymentMethodData {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentMethodData: IPaymentMethodData}
+RT_CLASS!{class PaymentMethodData: IPaymentMethodData ["Windows.ApplicationModel.Payments.PaymentMethodData"]}
 impl RtActivatable<IPaymentMethodDataFactory> for PaymentMethodData {}
 impl PaymentMethodData {
     #[inline] pub fn create(supportedMethodIds: &foundation::collections::IIterable<HString>) -> Result<ComPtr<PaymentMethodData>> {
@@ -21066,7 +21066,7 @@ impl IPaymentMethodDataFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PaymentOptionPresence: i32 {
+RT_ENUM! { enum PaymentOptionPresence: i32 ["Windows.ApplicationModel.Payments.PaymentOptionPresence"] {
     None (PaymentOptionPresence_None) = 0, Optional (PaymentOptionPresence_Optional) = 1, Required (PaymentOptionPresence_Required) = 2,
 }}
 DEFINE_IID!(IID_IPaymentOptions, 2862811220, 7979, 17253, 130, 81, 1, 181, 137, 21, 165, 188);
@@ -21129,7 +21129,7 @@ impl IPaymentOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentOptions: IPaymentOptions}
+RT_CLASS!{class PaymentOptions: IPaymentOptions ["Windows.ApplicationModel.Payments.PaymentOptions"]}
 impl RtActivatable<IActivationFactory> for PaymentOptions {}
 DEFINE_CLSID!(PaymentOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,97,121,109,101,110,116,115,46,80,97,121,109,101,110,116,79,112,116,105,111,110,115,0]) [CLSID_PaymentOptions]);
 DEFINE_IID!(IID_IPaymentRequest, 3075031777, 60795, 18411, 188, 8, 120, 204, 93, 104, 150, 182);
@@ -21161,7 +21161,7 @@ impl IPaymentRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentRequest: IPaymentRequest}
+RT_CLASS!{class PaymentRequest: IPaymentRequest ["Windows.ApplicationModel.Payments.PaymentRequest"]}
 impl RtActivatable<IPaymentRequestFactory> for PaymentRequest {}
 impl RtActivatable<IPaymentRequestFactory2> for PaymentRequest {}
 impl PaymentRequest {
@@ -21218,7 +21218,7 @@ impl IPaymentRequestChangedArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentRequestChangedArgs: IPaymentRequestChangedArgs}
+RT_CLASS!{class PaymentRequestChangedArgs: IPaymentRequestChangedArgs ["Windows.ApplicationModel.Payments.PaymentRequestChangedArgs"]}
 DEFINE_IID!(IID_PaymentRequestChangedHandler, 1350089185, 62360, 20268, 162, 126, 148, 211, 113, 207, 108, 125);
 RT_DELEGATE!{delegate PaymentRequestChangedHandler(PaymentRequestChangedHandlerVtbl, PaymentRequestChangedHandlerImpl) [IID_PaymentRequestChangedHandler] {
     fn Invoke(&self, paymentRequest: *mut PaymentRequest, args: *mut PaymentRequestChangedArgs) -> HRESULT
@@ -21267,7 +21267,7 @@ impl IPaymentRequestChangedResult {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentRequestChangedResult: IPaymentRequestChangedResult}
+RT_CLASS!{class PaymentRequestChangedResult: IPaymentRequestChangedResult ["Windows.ApplicationModel.Payments.PaymentRequestChangedResult"]}
 impl RtActivatable<IPaymentRequestChangedResultFactory> for PaymentRequestChangedResult {}
 impl PaymentRequestChangedResult {
     #[inline] pub fn create(changeAcceptedByMerchant: bool) -> Result<ComPtr<PaymentRequestChangedResult>> {
@@ -21295,10 +21295,10 @@ impl IPaymentRequestChangedResultFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PaymentRequestChangeKind: i32 {
+RT_ENUM! { enum PaymentRequestChangeKind: i32 ["Windows.ApplicationModel.Payments.PaymentRequestChangeKind"] {
     ShippingOption (PaymentRequestChangeKind_ShippingOption) = 0, ShippingAddress (PaymentRequestChangeKind_ShippingAddress) = 1,
 }}
-RT_ENUM! { enum PaymentRequestCompletionStatus: i32 {
+RT_ENUM! { enum PaymentRequestCompletionStatus: i32 ["Windows.ApplicationModel.Payments.PaymentRequestCompletionStatus"] {
     Succeeded (PaymentRequestCompletionStatus_Succeeded) = 0, Failed (PaymentRequestCompletionStatus_Failed) = 1, Unknown (PaymentRequestCompletionStatus_Unknown) = 2,
 }}
 DEFINE_IID!(IID_IPaymentRequestFactory, 1049262556, 27508, 17107, 177, 3, 240, 222, 53, 251, 24, 72);
@@ -21335,7 +21335,7 @@ impl IPaymentRequestFactory2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PaymentRequestStatus: i32 {
+RT_ENUM! { enum PaymentRequestStatus: i32 ["Windows.ApplicationModel.Payments.PaymentRequestStatus"] {
     Succeeded (PaymentRequestStatus_Succeeded) = 0, Failed (PaymentRequestStatus_Failed) = 1, Canceled (PaymentRequestStatus_Canceled) = 2,
 }}
 DEFINE_IID!(IID_IPaymentRequestSubmitResult, 2073835794, 12530, 20112, 178, 73, 140, 231, 215, 143, 254, 86);
@@ -21355,7 +21355,7 @@ impl IPaymentRequestSubmitResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentRequestSubmitResult: IPaymentRequestSubmitResult}
+RT_CLASS!{class PaymentRequestSubmitResult: IPaymentRequestSubmitResult ["Windows.ApplicationModel.Payments.PaymentRequestSubmitResult"]}
 DEFINE_IID!(IID_IPaymentResponse, 3778581591, 35794, 18568, 159, 168, 151, 152, 85, 69, 16, 142);
 RT_INTERFACE!{interface IPaymentResponse(IPaymentResponseVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentResponse] {
     fn get_PaymentToken(&self, out: *mut *mut PaymentToken) -> HRESULT,
@@ -21403,7 +21403,7 @@ impl IPaymentResponse {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentResponse: IPaymentResponse}
+RT_CLASS!{class PaymentResponse: IPaymentResponse ["Windows.ApplicationModel.Payments.PaymentResponse"]}
 DEFINE_IID!(IID_IPaymentShippingOption, 322382554, 38739, 17780, 137, 102, 147, 20, 90, 118, 199, 249);
 RT_INTERFACE!{interface IPaymentShippingOption(IPaymentShippingOptionVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentShippingOption] {
     fn get_Label(&self, out: *mut HSTRING) -> HRESULT,
@@ -21453,7 +21453,7 @@ impl IPaymentShippingOption {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentShippingOption: IPaymentShippingOption}
+RT_CLASS!{class PaymentShippingOption: IPaymentShippingOption ["Windows.ApplicationModel.Payments.PaymentShippingOption"]}
 impl RtActivatable<IPaymentShippingOptionFactory> for PaymentShippingOption {}
 impl PaymentShippingOption {
     #[inline] pub fn create(label: &HStringArg, amount: &PaymentCurrencyAmount) -> Result<ComPtr<PaymentShippingOption>> {
@@ -21490,7 +21490,7 @@ impl IPaymentShippingOptionFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PaymentShippingType: i32 {
+RT_ENUM! { enum PaymentShippingType: i32 ["Windows.ApplicationModel.Payments.PaymentShippingType"] {
     Shipping (PaymentShippingType_Shipping) = 0, Delivery (PaymentShippingType_Delivery) = 1, Pickup (PaymentShippingType_Pickup) = 2,
 }}
 DEFINE_IID!(IID_IPaymentToken, 3150626835, 52432, 16882, 178, 161, 10, 46, 75, 93, 206, 37);
@@ -21510,7 +21510,7 @@ impl IPaymentToken {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentToken: IPaymentToken}
+RT_CLASS!{class PaymentToken: IPaymentToken ["Windows.ApplicationModel.Payments.PaymentToken"]}
 impl RtActivatable<IPaymentTokenFactory> for PaymentToken {}
 impl PaymentToken {
     #[inline] pub fn create(paymentMethodId: &HStringArg) -> Result<ComPtr<PaymentToken>> {
@@ -21556,7 +21556,7 @@ impl IPaymentAppCanMakePaymentTriggerDetails {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentAppCanMakePaymentTriggerDetails: IPaymentAppCanMakePaymentTriggerDetails}
+RT_CLASS!{class PaymentAppCanMakePaymentTriggerDetails: IPaymentAppCanMakePaymentTriggerDetails ["Windows.ApplicationModel.Payments.Provider.PaymentAppCanMakePaymentTriggerDetails"]}
 DEFINE_IID!(IID_IPaymentAppManager, 239577683, 34081, 18793, 169, 87, 223, 37, 56, 163, 169, 143);
 RT_INTERFACE!{interface IPaymentAppManager(IPaymentAppManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentAppManager] {
     fn RegisterAsync(&self, supportedPaymentMethodIds: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -21574,7 +21574,7 @@ impl IPaymentAppManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentAppManager: IPaymentAppManager}
+RT_CLASS!{class PaymentAppManager: IPaymentAppManager ["Windows.ApplicationModel.Payments.Provider.PaymentAppManager"]}
 impl RtActivatable<IPaymentAppManagerStatics> for PaymentAppManager {}
 impl PaymentAppManager {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<PaymentAppManager>>> {
@@ -21660,7 +21660,7 @@ impl IPaymentTransaction {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentTransaction: IPaymentTransaction}
+RT_CLASS!{class PaymentTransaction: IPaymentTransaction ["Windows.ApplicationModel.Payments.Provider.PaymentTransaction"]}
 impl RtActivatable<IPaymentTransactionStatics> for PaymentTransaction {}
 impl PaymentTransaction {
     #[inline] pub fn from_id_async(id: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PaymentTransaction>>> {
@@ -21679,7 +21679,7 @@ impl IPaymentTransactionAcceptResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PaymentTransactionAcceptResult: IPaymentTransactionAcceptResult}
+RT_CLASS!{class PaymentTransactionAcceptResult: IPaymentTransactionAcceptResult ["Windows.ApplicationModel.Payments.Provider.PaymentTransactionAcceptResult"]}
 DEFINE_IID!(IID_IPaymentTransactionStatics, 2372114256, 60938, 19957, 155, 30, 28, 15, 158, 197, 152, 129);
 RT_INTERFACE!{static interface IPaymentTransactionStatics(IPaymentTransactionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentTransactionStatics] {
     fn FromIdAsync(&self, id: HSTRING, out: *mut *mut foundation::IAsyncOperation<PaymentTransaction>) -> HRESULT
@@ -21738,7 +21738,7 @@ impl IInkWorkspaceHostedAppManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InkWorkspaceHostedAppManager: IInkWorkspaceHostedAppManager}
+RT_CLASS!{class InkWorkspaceHostedAppManager: IInkWorkspaceHostedAppManager ["Windows.ApplicationModel.Preview.InkWorkspace.InkWorkspaceHostedAppManager"]}
 impl RtActivatable<IInkWorkspaceHostedAppManagerStatics> for InkWorkspaceHostedAppManager {}
 impl InkWorkspaceHostedAppManager {
     #[inline] pub fn get_for_current_app() -> Result<Option<ComPtr<InkWorkspaceHostedAppManager>>> {
@@ -21771,7 +21771,7 @@ impl INotePlacementChangedPreviewEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NotePlacementChangedPreviewEventArgs: INotePlacementChangedPreviewEventArgs}
+RT_CLASS!{class NotePlacementChangedPreviewEventArgs: INotePlacementChangedPreviewEventArgs ["Windows.ApplicationModel.Preview.Notes.NotePlacementChangedPreviewEventArgs"]}
 DEFINE_IID!(IID_INotesWindowManagerPreview, 3693789758, 18512, 20243, 156, 199, 255, 72, 126, 253, 252, 222);
 RT_INTERFACE!{interface INotesWindowManagerPreview(INotesWindowManagerPreviewVtbl): IInspectable(IInspectableVtbl) [IID_INotesWindowManagerPreview] {
     fn get_IsScreenLocked(&self, out: *mut bool) -> HRESULT,
@@ -21862,7 +21862,7 @@ impl INotesWindowManagerPreview {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NotesWindowManagerPreview: INotesWindowManagerPreview}
+RT_CLASS!{class NotesWindowManagerPreview: INotesWindowManagerPreview ["Windows.ApplicationModel.Preview.Notes.NotesWindowManagerPreview"]}
 impl RtActivatable<INotesWindowManagerPreviewStatics> for NotesWindowManagerPreview {}
 impl NotesWindowManagerPreview {
     #[inline] pub fn get_for_current_app() -> Result<Option<ComPtr<NotesWindowManagerPreview>>> {
@@ -21913,7 +21913,7 @@ impl INotesWindowManagerPreviewShowNoteOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NotesWindowManagerPreviewShowNoteOptions: INotesWindowManagerPreviewShowNoteOptions}
+RT_CLASS!{class NotesWindowManagerPreviewShowNoteOptions: INotesWindowManagerPreviewShowNoteOptions ["Windows.ApplicationModel.Preview.Notes.NotesWindowManagerPreviewShowNoteOptions"]}
 impl RtActivatable<IActivationFactory> for NotesWindowManagerPreviewShowNoteOptions {}
 DEFINE_CLSID!(NotesWindowManagerPreviewShowNoteOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,80,114,101,118,105,101,119,46,78,111,116,101,115,46,78,111,116,101,115,87,105,110,100,111,119,77,97,110,97,103,101,114,80,114,101,118,105,101,119,83,104,111,119,78,111,116,101,79,112,116,105,111,110,115,0]) [CLSID_NotesWindowManagerPreviewShowNoteOptions]);
 DEFINE_IID!(IID_INotesWindowManagerPreviewStatics, 1718144136, 2702, 16679, 163, 142, 153, 84, 69, 134, 138, 120);
@@ -21944,7 +21944,7 @@ impl INoteVisibilityChangedPreviewEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NoteVisibilityChangedPreviewEventArgs: INoteVisibilityChangedPreviewEventArgs}
+RT_CLASS!{class NoteVisibilityChangedPreviewEventArgs: INoteVisibilityChangedPreviewEventArgs ["Windows.ApplicationModel.Preview.Notes.NoteVisibilityChangedPreviewEventArgs"]}
 } // Windows.ApplicationModel.Preview.Notes
 } // Windows.ApplicationModel.Preview
 pub mod resources { // Windows.ApplicationModel.Resources
@@ -21960,7 +21960,7 @@ impl IResourceLoader {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ResourceLoader: IResourceLoader}
+RT_CLASS!{class ResourceLoader: IResourceLoader ["Windows.ApplicationModel.Resources.ResourceLoader"]}
 impl RtActivatable<IResourceLoaderFactory> for ResourceLoader {}
 impl RtActivatable<IResourceLoaderStatics> for ResourceLoader {}
 impl RtActivatable<IResourceLoaderStatics2> for ResourceLoader {}
@@ -22091,7 +22091,7 @@ impl INamedResource {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NamedResource: INamedResource}
+RT_CLASS!{class NamedResource: INamedResource ["Windows.ApplicationModel.Resources.Core.NamedResource"]}
 DEFINE_IID!(IID_IResourceCandidate, 2941388761, 50227, 18276, 179, 253, 143, 166, 191, 188, 186, 220);
 RT_INTERFACE!{interface IResourceCandidate(IResourceCandidateVtbl): IInspectable(IInspectableVtbl) [IID_IResourceCandidate] {
     fn get_Qualifiers(&self, out: *mut *mut foundation::collections::IVectorView<ResourceQualifier>) -> HRESULT,
@@ -22140,7 +22140,7 @@ impl IResourceCandidate {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ResourceCandidate: IResourceCandidate}
+RT_CLASS!{class ResourceCandidate: IResourceCandidate ["Windows.ApplicationModel.Resources.Core.ResourceCandidate"]}
 DEFINE_IID!(IID_IResourceCandidate2, 1776661608, 63228, 16403, 170, 162, 213, 63, 23, 87, 211, 181);
 RT_INTERFACE!{interface IResourceCandidate2(IResourceCandidate2Vtbl): IInspectable(IInspectableVtbl) [IID_IResourceCandidate2] {
     #[cfg(feature="windows-storage")] fn GetValueAsStreamAsync(&self, out: *mut *mut foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IRandomAccessStream>) -> HRESULT
@@ -22152,7 +22152,7 @@ impl IResourceCandidate2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ResourceCandidateVectorView: foundation::collections::IVectorView<ResourceCandidate>}
+RT_CLASS!{class ResourceCandidateVectorView: foundation::collections::IVectorView<ResourceCandidate> ["Windows.ApplicationModel.Resources.Core.ResourceCandidateVectorView"]}
 DEFINE_IID!(IID_IResourceContext, 799158091, 28798, 19239, 173, 13, 208, 216, 205, 70, 143, 210);
 RT_INTERFACE!{interface IResourceContext(IResourceContextVtbl): IInspectable(IInspectableVtbl) [IID_IResourceContext] {
     fn get_QualifierValues(&self, out: *mut *mut foundation::collections::IObservableMap<HString, HString>) -> HRESULT,
@@ -22196,7 +22196,7 @@ impl IResourceContext {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ResourceContext: IResourceContext}
+RT_CLASS!{class ResourceContext: IResourceContext ["Windows.ApplicationModel.Resources.Core.ResourceContext"]}
 impl RtActivatable<IResourceContextStatics> for ResourceContext {}
 impl RtActivatable<IResourceContextStatics2> for ResourceContext {}
 impl RtActivatable<IResourceContextStatics3> for ResourceContext {}
@@ -22225,7 +22225,7 @@ impl ResourceContext {
     }
 }
 DEFINE_CLSID!(ResourceContext(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,82,101,115,111,117,114,99,101,115,46,67,111,114,101,46,82,101,115,111,117,114,99,101,67,111,110,116,101,120,116,0]) [CLSID_ResourceContext]);
-RT_CLASS!{class ResourceContextLanguagesVectorView: foundation::collections::IVectorView<HString>}
+RT_CLASS!{class ResourceContextLanguagesVectorView: foundation::collections::IVectorView<HString> ["Windows.ApplicationModel.Resources.Core.ResourceContextLanguagesVectorView"]}
 DEFINE_IID!(IID_IResourceContextStatics, 2562628972, 25400, 19249, 153, 223, 178, 180, 66, 241, 113, 73);
 RT_INTERFACE!{static interface IResourceContextStatics(IResourceContextStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IResourceContextStatics] {
     fn CreateMatchingContext(&self, result: *mut foundation::collections::IIterable<ResourceQualifier>, out: *mut *mut ResourceContext) -> HRESULT
@@ -22279,7 +22279,7 @@ impl IResourceContextStatics3 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct ResourceLayoutInfo {
+RT_STRUCT! { struct ResourceLayoutInfo ["Windows.ApplicationModel.Resources.Core.ResourceLayoutInfo"] {
     MajorVersion: u32, MinorVersion: u32, ResourceSubtreeCount: u32, NamedResourceCount: u32, Checksum: i32,
 }}
 DEFINE_IID!(IID_IResourceManager, 4148484475, 39304, 17659, 171, 214, 83, 120, 132, 76, 250, 139);
@@ -22315,7 +22315,7 @@ impl IResourceManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ResourceManager: IResourceManager}
+RT_CLASS!{class ResourceManager: IResourceManager ["Windows.ApplicationModel.Resources.Core.ResourceManager"]}
 impl RtActivatable<IResourceManagerStatics> for ResourceManager {}
 impl ResourceManager {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<ResourceManager>>> {
@@ -22389,10 +22389,10 @@ impl IResourceMap {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ResourceMap: IResourceMap}
-RT_CLASS!{class ResourceMapIterator: foundation::collections::IIterator<foundation::collections::IKeyValuePair<HString, NamedResource>>}
-RT_CLASS!{class ResourceMapMapView: foundation::collections::IMapView<HString, ResourceMap>}
-RT_CLASS!{class ResourceMapMapViewIterator: foundation::collections::IIterator<foundation::collections::IKeyValuePair<HString, ResourceMap>>}
+RT_CLASS!{class ResourceMap: IResourceMap ["Windows.ApplicationModel.Resources.Core.ResourceMap"]}
+RT_CLASS!{class ResourceMapIterator: foundation::collections::IIterator<foundation::collections::IKeyValuePair<HString, NamedResource>> ["Windows.ApplicationModel.Resources.Core.ResourceMapIterator"]}
+RT_CLASS!{class ResourceMapMapView: foundation::collections::IMapView<HString, ResourceMap> ["Windows.ApplicationModel.Resources.Core.ResourceMapMapView"]}
+RT_CLASS!{class ResourceMapMapViewIterator: foundation::collections::IIterator<foundation::collections::IKeyValuePair<HString, ResourceMap>> ["Windows.ApplicationModel.Resources.Core.ResourceMapMapViewIterator"]}
 DEFINE_IID!(IID_IResourceQualifier, 2019403186, 19197, 17270, 168, 136, 197, 249, 166, 183, 160, 92);
 RT_INTERFACE!{interface IResourceQualifier(IResourceQualifierVtbl): IInspectable(IInspectableVtbl) [IID_IResourceQualifier] {
     fn get_QualifierName(&self, out: *mut HSTRING) -> HRESULT,
@@ -22428,13 +22428,13 @@ impl IResourceQualifier {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ResourceQualifier: IResourceQualifier}
-RT_CLASS!{class ResourceQualifierMapView: foundation::collections::IMapView<HString, HString>}
-RT_CLASS!{class ResourceQualifierObservableMap: foundation::collections::IObservableMap<HString, HString>}
-RT_ENUM! { enum ResourceQualifierPersistence: i32 {
+RT_CLASS!{class ResourceQualifier: IResourceQualifier ["Windows.ApplicationModel.Resources.Core.ResourceQualifier"]}
+RT_CLASS!{class ResourceQualifierMapView: foundation::collections::IMapView<HString, HString> ["Windows.ApplicationModel.Resources.Core.ResourceQualifierMapView"]}
+RT_CLASS!{class ResourceQualifierObservableMap: foundation::collections::IObservableMap<HString, HString> ["Windows.ApplicationModel.Resources.Core.ResourceQualifierObservableMap"]}
+RT_ENUM! { enum ResourceQualifierPersistence: i32 ["Windows.ApplicationModel.Resources.Core.ResourceQualifierPersistence"] {
     None (ResourceQualifierPersistence_None) = 0, LocalMachine (ResourceQualifierPersistence_LocalMachine) = 1,
 }}
-RT_CLASS!{class ResourceQualifierVectorView: foundation::collections::IVectorView<ResourceQualifier>}
+RT_CLASS!{class ResourceQualifierVectorView: foundation::collections::IVectorView<ResourceQualifier> ["Windows.ApplicationModel.Resources.Core.ResourceQualifierVectorView"]}
 } // Windows.ApplicationModel.Resources.Core
 pub mod management { // Windows.ApplicationModel.Resources.Management
 use ::prelude::*;
@@ -22479,7 +22479,7 @@ impl IIndexedResourceCandidate {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class IndexedResourceCandidate: IIndexedResourceCandidate}
+RT_CLASS!{class IndexedResourceCandidate: IIndexedResourceCandidate ["Windows.ApplicationModel.Resources.Management.IndexedResourceCandidate"]}
 DEFINE_IID!(IID_IIndexedResourceQualifier, 3672357787, 54020, 18815, 161, 104, 163, 64, 4, 44, 138, 219);
 RT_INTERFACE!{interface IIndexedResourceQualifier(IIndexedResourceQualifierVtbl): IInspectable(IInspectableVtbl) [IID_IIndexedResourceQualifier] {
     fn get_QualifierName(&self, out: *mut HSTRING) -> HRESULT,
@@ -22497,8 +22497,8 @@ impl IIndexedResourceQualifier {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class IndexedResourceQualifier: IIndexedResourceQualifier}
-RT_ENUM! { enum IndexedResourceType: i32 {
+RT_CLASS!{class IndexedResourceQualifier: IIndexedResourceQualifier ["Windows.ApplicationModel.Resources.Management.IndexedResourceQualifier"]}
+RT_ENUM! { enum IndexedResourceType: i32 ["Windows.ApplicationModel.Resources.Management.IndexedResourceType"] {
     String (IndexedResourceType_String) = 0, Path (IndexedResourceType_Path) = 1, EmbeddedData (IndexedResourceType_EmbeddedData) = 2,
 }}
 DEFINE_IID!(IID_IResourceIndexer, 760019365, 58159, 19122, 135, 72, 150, 53, 10, 1, 109, 163);
@@ -22518,7 +22518,7 @@ impl IResourceIndexer {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ResourceIndexer: IResourceIndexer}
+RT_CLASS!{class ResourceIndexer: IResourceIndexer ["Windows.ApplicationModel.Resources.Management.ResourceIndexer"]}
 impl RtActivatable<IResourceIndexerFactory> for ResourceIndexer {}
 impl RtActivatable<IResourceIndexerFactory2> for ResourceIndexer {}
 impl ResourceIndexer {
@@ -22596,7 +22596,7 @@ impl ILocalContentSuggestionSettings {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LocalContentSuggestionSettings: ILocalContentSuggestionSettings}
+RT_CLASS!{class LocalContentSuggestionSettings: ILocalContentSuggestionSettings ["Windows.ApplicationModel.Search.LocalContentSuggestionSettings"]}
 impl RtActivatable<IActivationFactory> for LocalContentSuggestionSettings {}
 DEFINE_CLSID!(LocalContentSuggestionSettings(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,101,97,114,99,104,46,76,111,99,97,108,67,111,110,116,101,110,116,83,117,103,103,101,115,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_LocalContentSuggestionSettings]);
 DEFINE_IID!(IID_ISearchPane, 4255968312, 14080, 19827, 145, 161, 47, 153, 134, 116, 35, 138);
@@ -22742,7 +22742,7 @@ impl ISearchPane {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchPane: ISearchPane}
+RT_CLASS!{class SearchPane: ISearchPane ["Windows.ApplicationModel.Search.SearchPane"]}
 impl RtActivatable<ISearchPaneStatics> for SearchPane {}
 impl RtActivatable<ISearchPaneStaticsWithHideThisApplication> for SearchPane {}
 impl SearchPane {
@@ -22777,7 +22777,7 @@ impl ISearchPaneQueryChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchPaneQueryChangedEventArgs: ISearchPaneQueryChangedEventArgs}
+RT_CLASS!{class SearchPaneQueryChangedEventArgs: ISearchPaneQueryChangedEventArgs ["Windows.ApplicationModel.Search.SearchPaneQueryChangedEventArgs"]}
 DEFINE_IID!(IID_ISearchPaneQueryLinguisticDetails, 2197505550, 2368, 19309, 184, 208, 100, 43, 48, 152, 158, 21);
 RT_INTERFACE!{interface ISearchPaneQueryLinguisticDetails(ISearchPaneQueryLinguisticDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ISearchPaneQueryLinguisticDetails] {
     fn get_QueryTextAlternatives(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
@@ -22801,7 +22801,7 @@ impl ISearchPaneQueryLinguisticDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchPaneQueryLinguisticDetails: ISearchPaneQueryLinguisticDetails}
+RT_CLASS!{class SearchPaneQueryLinguisticDetails: ISearchPaneQueryLinguisticDetails ["Windows.ApplicationModel.Search.SearchPaneQueryLinguisticDetails"]}
 DEFINE_IID!(IID_ISearchPaneQuerySubmittedEventArgs, 339453180, 59845, 18230, 145, 178, 232, 235, 156, 184, 131, 86);
 RT_INTERFACE!{interface ISearchPaneQuerySubmittedEventArgs(ISearchPaneQuerySubmittedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISearchPaneQuerySubmittedEventArgs] {
     fn get_QueryText(&self, out: *mut HSTRING) -> HRESULT,
@@ -22819,7 +22819,7 @@ impl ISearchPaneQuerySubmittedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchPaneQuerySubmittedEventArgs: ISearchPaneQuerySubmittedEventArgs}
+RT_CLASS!{class SearchPaneQuerySubmittedEventArgs: ISearchPaneQuerySubmittedEventArgs ["Windows.ApplicationModel.Search.SearchPaneQuerySubmittedEventArgs"]}
 DEFINE_IID!(IID_ISearchPaneQuerySubmittedEventArgsWithLinguisticDetails, 1175229157, 19506, 17720, 164, 212, 182, 180, 64, 13, 20, 15);
 RT_INTERFACE!{interface ISearchPaneQuerySubmittedEventArgsWithLinguisticDetails(ISearchPaneQuerySubmittedEventArgsWithLinguisticDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ISearchPaneQuerySubmittedEventArgsWithLinguisticDetails] {
     fn get_LinguisticDetails(&self, out: *mut *mut SearchPaneQueryLinguisticDetails) -> HRESULT
@@ -22842,7 +22842,7 @@ impl ISearchPaneResultSuggestionChosenEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchPaneResultSuggestionChosenEventArgs: ISearchPaneResultSuggestionChosenEventArgs}
+RT_CLASS!{class SearchPaneResultSuggestionChosenEventArgs: ISearchPaneResultSuggestionChosenEventArgs ["Windows.ApplicationModel.Search.SearchPaneResultSuggestionChosenEventArgs"]}
 DEFINE_IID!(IID_ISearchPaneStatics, 2507320817, 36637, 18463, 161, 91, 198, 22, 85, 241, 106, 14);
 RT_INTERFACE!{static interface ISearchPaneStatics(ISearchPaneStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISearchPaneStatics] {
     fn GetForCurrentView(&self, out: *mut *mut SearchPane) -> HRESULT
@@ -22887,7 +22887,7 @@ impl ISearchPaneSuggestionsRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchPaneSuggestionsRequest: ISearchPaneSuggestionsRequest}
+RT_CLASS!{class SearchPaneSuggestionsRequest: ISearchPaneSuggestionsRequest ["Windows.ApplicationModel.Search.SearchPaneSuggestionsRequest"]}
 DEFINE_IID!(IID_ISearchPaneSuggestionsRequestDeferral, 2697988599, 34632, 20194, 173, 68, 175, 166, 190, 153, 124, 81);
 RT_INTERFACE!{interface ISearchPaneSuggestionsRequestDeferral(ISearchPaneSuggestionsRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_ISearchPaneSuggestionsRequestDeferral] {
     fn Complete(&self) -> HRESULT
@@ -22898,7 +22898,7 @@ impl ISearchPaneSuggestionsRequestDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchPaneSuggestionsRequestDeferral: ISearchPaneSuggestionsRequestDeferral}
+RT_CLASS!{class SearchPaneSuggestionsRequestDeferral: ISearchPaneSuggestionsRequestDeferral ["Windows.ApplicationModel.Search.SearchPaneSuggestionsRequestDeferral"]}
 DEFINE_IID!(IID_ISearchPaneSuggestionsRequestedEventArgs, 3365636655, 44118, 17504, 141, 47, 128, 2, 59, 236, 79, 197);
 RT_INTERFACE!{interface ISearchPaneSuggestionsRequestedEventArgs(ISearchPaneSuggestionsRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISearchPaneSuggestionsRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut SearchPaneSuggestionsRequest) -> HRESULT
@@ -22910,7 +22910,7 @@ impl ISearchPaneSuggestionsRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchPaneSuggestionsRequestedEventArgs: ISearchPaneSuggestionsRequestedEventArgs}
+RT_CLASS!{class SearchPaneSuggestionsRequestedEventArgs: ISearchPaneSuggestionsRequestedEventArgs ["Windows.ApplicationModel.Search.SearchPaneSuggestionsRequestedEventArgs"]}
 DEFINE_IID!(IID_ISearchPaneVisibilityChangedEventArgs, 1011691590, 44107, 18930, 151, 214, 2, 14, 97, 130, 203, 156);
 RT_INTERFACE!{interface ISearchPaneVisibilityChangedEventArgs(ISearchPaneVisibilityChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISearchPaneVisibilityChangedEventArgs] {
     fn get_Visible(&self, out: *mut bool) -> HRESULT
@@ -22922,7 +22922,7 @@ impl ISearchPaneVisibilityChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchPaneVisibilityChangedEventArgs: ISearchPaneVisibilityChangedEventArgs}
+RT_CLASS!{class SearchPaneVisibilityChangedEventArgs: ISearchPaneVisibilityChangedEventArgs ["Windows.ApplicationModel.Search.SearchPaneVisibilityChangedEventArgs"]}
 DEFINE_IID!(IID_ISearchQueryLinguisticDetails, 1184964699, 27081, 18245, 183, 47, 168, 164, 252, 143, 36, 174);
 RT_INTERFACE!{interface ISearchQueryLinguisticDetails(ISearchQueryLinguisticDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ISearchQueryLinguisticDetails] {
     fn get_QueryTextAlternatives(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
@@ -22946,7 +22946,7 @@ impl ISearchQueryLinguisticDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchQueryLinguisticDetails: ISearchQueryLinguisticDetails}
+RT_CLASS!{class SearchQueryLinguisticDetails: ISearchQueryLinguisticDetails ["Windows.ApplicationModel.Search.SearchQueryLinguisticDetails"]}
 impl RtActivatable<ISearchQueryLinguisticDetailsFactory> for SearchQueryLinguisticDetails {}
 impl SearchQueryLinguisticDetails {
     #[inline] pub fn create_instance(queryTextAlternatives: &foundation::collections::IIterable<HString>, queryTextCompositionStart: u32, queryTextCompositionLength: u32) -> Result<ComPtr<SearchQueryLinguisticDetails>> {
@@ -22997,7 +22997,7 @@ impl ISearchSuggestionCollection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchSuggestionCollection: ISearchSuggestionCollection}
+RT_CLASS!{class SearchSuggestionCollection: ISearchSuggestionCollection ["Windows.ApplicationModel.Search.SearchSuggestionCollection"]}
 DEFINE_IID!(IID_ISearchSuggestionsRequest, 1313744551, 17637, 16441, 144, 153, 96, 0, 234, 209, 240, 198);
 RT_INTERFACE!{interface ISearchSuggestionsRequest(ISearchSuggestionsRequestVtbl): IInspectable(IInspectableVtbl) [IID_ISearchSuggestionsRequest] {
     fn get_IsCanceled(&self, out: *mut bool) -> HRESULT,
@@ -23021,7 +23021,7 @@ impl ISearchSuggestionsRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchSuggestionsRequest: ISearchSuggestionsRequest}
+RT_CLASS!{class SearchSuggestionsRequest: ISearchSuggestionsRequest ["Windows.ApplicationModel.Search.SearchSuggestionsRequest"]}
 DEFINE_IID!(IID_ISearchSuggestionsRequestDeferral, 3071645865, 49253, 17773, 168, 69, 30, 204, 236, 93, 194, 139);
 RT_INTERFACE!{interface ISearchSuggestionsRequestDeferral(ISearchSuggestionsRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_ISearchSuggestionsRequestDeferral] {
     fn Complete(&self) -> HRESULT
@@ -23032,14 +23032,14 @@ impl ISearchSuggestionsRequestDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchSuggestionsRequestDeferral: ISearchSuggestionsRequestDeferral}
+RT_CLASS!{class SearchSuggestionsRequestDeferral: ISearchSuggestionsRequestDeferral ["Windows.ApplicationModel.Search.SearchSuggestionsRequestDeferral"]}
 pub mod core { // Windows.ApplicationModel.Search.Core
 use ::prelude::*;
 DEFINE_IID!(IID_IRequestingFocusOnKeyboardInputEventArgs, 2702794535, 45479, 16802, 135, 157, 106, 104, 104, 126, 89, 133);
 RT_INTERFACE!{interface IRequestingFocusOnKeyboardInputEventArgs(IRequestingFocusOnKeyboardInputEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRequestingFocusOnKeyboardInputEventArgs] {
     
 }}
-RT_CLASS!{class RequestingFocusOnKeyboardInputEventArgs: IRequestingFocusOnKeyboardInputEventArgs}
+RT_CLASS!{class RequestingFocusOnKeyboardInputEventArgs: IRequestingFocusOnKeyboardInputEventArgs ["Windows.ApplicationModel.Search.Core.RequestingFocusOnKeyboardInputEventArgs"]}
 DEFINE_IID!(IID_ISearchSuggestion, 1532318896, 5415, 17275, 149, 197, 141, 24, 210, 184, 175, 85);
 RT_INTERFACE!{interface ISearchSuggestion(ISearchSuggestionVtbl): IInspectable(IInspectableVtbl) [IID_ISearchSuggestion] {
     fn get_Kind(&self, out: *mut SearchSuggestionKind) -> HRESULT,
@@ -23082,8 +23082,8 @@ impl ISearchSuggestion {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchSuggestion: ISearchSuggestion}
-RT_ENUM! { enum SearchSuggestionKind: i32 {
+RT_CLASS!{class SearchSuggestion: ISearchSuggestion ["Windows.ApplicationModel.Search.Core.SearchSuggestion"]}
+RT_ENUM! { enum SearchSuggestionKind: i32 ["Windows.ApplicationModel.Search.Core.SearchSuggestionKind"] {
     Query (SearchSuggestionKind_Query) = 0, Result (SearchSuggestionKind_Result) = 1, Separator (SearchSuggestionKind_Separator) = 2,
 }}
 DEFINE_IID!(IID_ISearchSuggestionManager, 1057771681, 52125, 18811, 181, 0, 60, 4, 172, 149, 154, 210);
@@ -23176,7 +23176,7 @@ impl ISearchSuggestionManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchSuggestionManager: ISearchSuggestionManager}
+RT_CLASS!{class SearchSuggestionManager: ISearchSuggestionManager ["Windows.ApplicationModel.Search.Core.SearchSuggestionManager"]}
 impl RtActivatable<IActivationFactory> for SearchSuggestionManager {}
 DEFINE_CLSID!(SearchSuggestionManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,101,97,114,99,104,46,67,111,114,101,46,83,101,97,114,99,104,83,117,103,103,101,115,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_SearchSuggestionManager]);
 DEFINE_IID!(IID_ISearchSuggestionsRequestedEventArgs, 1876236773, 40574, 19124, 139, 227, 199, 107, 27, 212, 52, 74);
@@ -23208,7 +23208,7 @@ impl ISearchSuggestionsRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SearchSuggestionsRequestedEventArgs: ISearchSuggestionsRequestedEventArgs}
+RT_CLASS!{class SearchSuggestionsRequestedEventArgs: ISearchSuggestionsRequestedEventArgs ["Windows.ApplicationModel.Search.Core.SearchSuggestionsRequestedEventArgs"]}
 } // Windows.ApplicationModel.Search.Core
 } // Windows.ApplicationModel.Search
 pub mod socialinfo { // Windows.ApplicationModel.SocialInfo
@@ -23275,7 +23275,7 @@ impl ISocialFeedChildItem {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SocialFeedChildItem: ISocialFeedChildItem}
+RT_CLASS!{class SocialFeedChildItem: ISocialFeedChildItem ["Windows.ApplicationModel.SocialInfo.SocialFeedChildItem"]}
 impl RtActivatable<IActivationFactory> for SocialFeedChildItem {}
 DEFINE_CLSID!(SocialFeedChildItem(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,111,99,105,97,108,73,110,102,111,46,83,111,99,105,97,108,70,101,101,100,67,104,105,108,100,73,116,101,109,0]) [CLSID_SocialFeedChildItem]);
 DEFINE_IID!(IID_ISocialFeedContent, 2721375273, 15929, 18765, 163, 124, 244, 98, 162, 73, 69, 20);
@@ -23316,7 +23316,7 @@ impl ISocialFeedContent {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SocialFeedContent: ISocialFeedContent}
+RT_CLASS!{class SocialFeedContent: ISocialFeedContent ["Windows.ApplicationModel.SocialInfo.SocialFeedContent"]}
 DEFINE_IID!(IID_ISocialFeedItem, 1326682795, 8050, 19763, 182, 149, 222, 62, 29, 182, 3, 23);
 RT_INTERFACE!{interface ISocialFeedItem(ISocialFeedItemVtbl): IInspectable(IInspectableVtbl) [IID_ISocialFeedItem] {
     fn get_Author(&self, out: *mut *mut SocialUserInfo) -> HRESULT,
@@ -23434,13 +23434,13 @@ impl ISocialFeedItem {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SocialFeedItem: ISocialFeedItem}
+RT_CLASS!{class SocialFeedItem: ISocialFeedItem ["Windows.ApplicationModel.SocialInfo.SocialFeedItem"]}
 impl RtActivatable<IActivationFactory> for SocialFeedItem {}
 DEFINE_CLSID!(SocialFeedItem(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,111,99,105,97,108,73,110,102,111,46,83,111,99,105,97,108,70,101,101,100,73,116,101,109,0]) [CLSID_SocialFeedItem]);
-RT_ENUM! { enum SocialFeedItemStyle: i32 {
+RT_ENUM! { enum SocialFeedItemStyle: i32 ["Windows.ApplicationModel.SocialInfo.SocialFeedItemStyle"] {
     Default (SocialFeedItemStyle_Default) = 0, Photo (SocialFeedItemStyle_Photo) = 1,
 }}
-RT_ENUM! { enum SocialFeedKind: i32 {
+RT_ENUM! { enum SocialFeedKind: i32 ["Windows.ApplicationModel.SocialInfo.SocialFeedKind"] {
     HomeFeed (SocialFeedKind_HomeFeed) = 0, ContactFeed (SocialFeedKind_ContactFeed) = 1, Dashboard (SocialFeedKind_Dashboard) = 2,
 }}
 DEFINE_IID!(IID_ISocialFeedSharedItem, 2080087616, 42666, 17831, 159, 246, 84, 196, 33, 5, 221, 31);
@@ -23498,13 +23498,13 @@ impl ISocialFeedSharedItem {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SocialFeedSharedItem: ISocialFeedSharedItem}
+RT_CLASS!{class SocialFeedSharedItem: ISocialFeedSharedItem ["Windows.ApplicationModel.SocialInfo.SocialFeedSharedItem"]}
 impl RtActivatable<IActivationFactory> for SocialFeedSharedItem {}
 DEFINE_CLSID!(SocialFeedSharedItem(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,111,99,105,97,108,73,110,102,111,46,83,111,99,105,97,108,70,101,101,100,83,104,97,114,101,100,73,116,101,109,0]) [CLSID_SocialFeedSharedItem]);
-RT_ENUM! { enum SocialFeedUpdateMode: i32 {
+RT_ENUM! { enum SocialFeedUpdateMode: i32 ["Windows.ApplicationModel.SocialInfo.SocialFeedUpdateMode"] {
     Append (SocialFeedUpdateMode_Append) = 0, Replace (SocialFeedUpdateMode_Replace) = 1,
 }}
-RT_ENUM! { enum SocialItemBadgeStyle: i32 {
+RT_ENUM! { enum SocialItemBadgeStyle: i32 ["Windows.ApplicationModel.SocialInfo.SocialItemBadgeStyle"] {
     Hidden (SocialItemBadgeStyle_Hidden) = 0, Visible (SocialItemBadgeStyle_Visible) = 1, VisibleWithCount (SocialItemBadgeStyle_VisibleWithCount) = 2,
 }}
 DEFINE_IID!(IID_ISocialItemThumbnail, 1556054810, 16136, 18815, 145, 127, 87, 224, 157, 132, 177, 65);
@@ -23553,7 +23553,7 @@ impl ISocialItemThumbnail {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SocialItemThumbnail: ISocialItemThumbnail}
+RT_CLASS!{class SocialItemThumbnail: ISocialItemThumbnail ["Windows.ApplicationModel.SocialInfo.SocialItemThumbnail"]}
 impl RtActivatable<IActivationFactory> for SocialItemThumbnail {}
 DEFINE_CLSID!(SocialItemThumbnail(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,111,99,105,97,108,73,110,102,111,46,83,111,99,105,97,108,73,116,101,109,84,104,117,109,98,110,97,105,108,0]) [CLSID_SocialItemThumbnail]);
 DEFINE_IID!(IID_ISocialUserInfo, 2656967633, 37072, 19997, 149, 84, 132, 77, 70, 96, 127, 97);
@@ -23605,7 +23605,7 @@ impl ISocialUserInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SocialUserInfo: ISocialUserInfo}
+RT_CLASS!{class SocialUserInfo: ISocialUserInfo ["Windows.ApplicationModel.SocialInfo.SocialUserInfo"]}
 pub mod provider { // Windows.ApplicationModel.SocialInfo.Provider
 use ::prelude::*;
 DEFINE_IID!(IID_ISocialDashboardItemUpdater, 1021222345, 18432, 18125, 134, 155, 25, 115, 236, 104, 91, 222);
@@ -23664,7 +23664,7 @@ impl ISocialDashboardItemUpdater {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SocialDashboardItemUpdater: ISocialDashboardItemUpdater}
+RT_CLASS!{class SocialDashboardItemUpdater: ISocialDashboardItemUpdater ["Windows.ApplicationModel.SocialInfo.Provider.SocialDashboardItemUpdater"]}
 DEFINE_IID!(IID_ISocialFeedUpdater, 2047609511, 60809, 19413, 168, 217, 21, 244, 217, 134, 28, 16);
 RT_INTERFACE!{interface ISocialFeedUpdater(ISocialFeedUpdaterVtbl): IInspectable(IInspectableVtbl) [IID_ISocialFeedUpdater] {
     fn get_OwnerRemoteId(&self, out: *mut HSTRING) -> HRESULT,
@@ -23694,7 +23694,7 @@ impl ISocialFeedUpdater {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SocialFeedUpdater: ISocialFeedUpdater}
+RT_CLASS!{class SocialFeedUpdater: ISocialFeedUpdater ["Windows.ApplicationModel.SocialInfo.Provider.SocialFeedUpdater"]}
 RT_CLASS!{static class SocialInfoProviderManager}
 impl RtActivatable<ISocialInfoProviderManagerStatics> for SocialInfoProviderManager {}
 impl SocialInfoProviderManager {
@@ -24128,7 +24128,7 @@ impl ICurrentAppWithConsumables {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum FulfillmentResult: i32 {
+RT_ENUM! { enum FulfillmentResult: i32 ["Windows.ApplicationModel.Store.FulfillmentResult"] {
     Succeeded (FulfillmentResult_Succeeded) = 0, NothingToFulfill (FulfillmentResult_NothingToFulfill) = 1, PurchasePending (FulfillmentResult_PurchasePending) = 2, PurchaseReverted (FulfillmentResult_PurchaseReverted) = 3, ServerError (FulfillmentResult_ServerError) = 4,
 }}
 DEFINE_IID!(IID_LicenseChangedEventHandler, 3567583829, 4969, 19510, 131, 47, 111, 45, 136, 227, 101, 155);
@@ -24181,7 +24181,7 @@ impl ILicenseInformation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LicenseInformation: ILicenseInformation}
+RT_CLASS!{class LicenseInformation: ILicenseInformation ["Windows.ApplicationModel.Store.LicenseInformation"]}
 DEFINE_IID!(IID_IListingInformation, 1485523647, 48244, 17283, 183, 140, 153, 96, 99, 35, 222, 206);
 RT_INTERFACE!{interface IListingInformation(IListingInformationVtbl): IInspectable(IInspectableVtbl) [IID_IListingInformation] {
     fn get_CurrentMarket(&self, out: *mut HSTRING) -> HRESULT,
@@ -24223,7 +24223,7 @@ impl IListingInformation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ListingInformation: IListingInformation}
+RT_CLASS!{class ListingInformation: IListingInformation ["Windows.ApplicationModel.Store.ListingInformation"]}
 DEFINE_IID!(IID_IListingInformation2, 3237817373, 45838, 17284, 132, 234, 114, 254, 250, 130, 34, 62);
 RT_INTERFACE!{interface IListingInformation2(IListingInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IListingInformation2] {
     fn get_FormattedBasePrice(&self, out: *mut HSTRING) -> HRESULT,
@@ -24276,7 +24276,7 @@ impl IProductLicense {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProductLicense: IProductLicense}
+RT_CLASS!{class ProductLicense: IProductLicense ["Windows.ApplicationModel.Store.ProductLicense"]}
 DEFINE_IID!(IID_IProductLicenseWithFulfillment, 4233321610, 63079, 16627, 186, 60, 4, 90, 99, 171, 179, 172);
 RT_INTERFACE!{interface IProductLicenseWithFulfillment(IProductLicenseWithFulfillmentVtbl): IInspectable(IInspectableVtbl) [IID_IProductLicenseWithFulfillment] {
     fn get_IsConsumable(&self, out: *mut bool) -> HRESULT
@@ -24311,7 +24311,7 @@ impl IProductListing {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProductListing: IProductListing}
+RT_CLASS!{class ProductListing: IProductListing ["Windows.ApplicationModel.Store.ProductListing"]}
 DEFINE_IID!(IID_IProductListing2, 4171114767, 29694, 18765, 169, 57, 8, 169, 178, 73, 90, 190);
 RT_INTERFACE!{interface IProductListing2(IProductListing2Vtbl): IInspectable(IInspectableVtbl) [IID_IProductListing2] {
     fn get_FormattedBasePrice(&self, out: *mut HSTRING) -> HRESULT,
@@ -24425,7 +24425,7 @@ impl IProductPurchaseDisplayProperties {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProductPurchaseDisplayProperties: IProductPurchaseDisplayProperties}
+RT_CLASS!{class ProductPurchaseDisplayProperties: IProductPurchaseDisplayProperties ["Windows.ApplicationModel.Store.ProductPurchaseDisplayProperties"]}
 impl RtActivatable<IProductPurchaseDisplayPropertiesFactory> for ProductPurchaseDisplayProperties {}
 impl RtActivatable<IActivationFactory> for ProductPurchaseDisplayProperties {}
 impl ProductPurchaseDisplayProperties {
@@ -24445,10 +24445,10 @@ impl IProductPurchaseDisplayPropertiesFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ProductPurchaseStatus: i32 {
+RT_ENUM! { enum ProductPurchaseStatus: i32 ["Windows.ApplicationModel.Store.ProductPurchaseStatus"] {
     Succeeded (ProductPurchaseStatus_Succeeded) = 0, AlreadyPurchased (ProductPurchaseStatus_AlreadyPurchased) = 1, NotFulfilled (ProductPurchaseStatus_NotFulfilled) = 2, NotPurchased (ProductPurchaseStatus_NotPurchased) = 3,
 }}
-RT_ENUM! { enum ProductType: i32 {
+RT_ENUM! { enum ProductType: i32 ["Windows.ApplicationModel.Store.ProductType"] {
     Unknown (ProductType_Unknown) = 0, Durable (ProductType_Durable) = 1, Consumable (ProductType_Consumable) = 2,
 }}
 DEFINE_IID!(IID_IPurchaseResults, 3981489022, 34390, 20325, 184, 200, 172, 126, 12, 177, 161, 194);
@@ -24480,7 +24480,7 @@ impl IPurchaseResults {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PurchaseResults: IPurchaseResults}
+RT_CLASS!{class PurchaseResults: IPurchaseResults ["Windows.ApplicationModel.Store.PurchaseResults"]}
 DEFINE_IID!(IID_IUnfulfilledConsumable, 771226555, 7389, 19640, 160, 20, 123, 156, 248, 152, 105, 39);
 RT_INTERFACE!{interface IUnfulfilledConsumable(IUnfulfilledConsumableVtbl): IInspectable(IInspectableVtbl) [IID_IUnfulfilledConsumable] {
     fn get_ProductId(&self, out: *mut HSTRING) -> HRESULT,
@@ -24504,7 +24504,7 @@ impl IUnfulfilledConsumable {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UnfulfilledConsumable: IUnfulfilledConsumable}
+RT_CLASS!{class UnfulfilledConsumable: IUnfulfilledConsumable ["Windows.ApplicationModel.Store.UnfulfilledConsumable"]}
 pub mod licensemanagement { // Windows.ApplicationModel.Store.LicenseManagement
 use ::prelude::*;
 RT_CLASS!{static class LicenseManager}
@@ -24551,7 +24551,7 @@ impl ILicenseManagerStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum LicenseRefreshOption: i32 {
+RT_ENUM! { enum LicenseRefreshOption: i32 ["Windows.ApplicationModel.Store.LicenseManagement.LicenseRefreshOption"] {
     RunningLicenses (LicenseRefreshOption_RunningLicenses) = 0, AllLicenses (LicenseRefreshOption_AllLicenses) = 1,
 }}
 DEFINE_IID!(IID_ILicenseSatisfactionInfo, 1019981967, 56113, 18645, 131, 132, 250, 23, 200, 20, 116, 226);
@@ -24601,7 +24601,7 @@ impl ILicenseSatisfactionInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LicenseSatisfactionInfo: ILicenseSatisfactionInfo}
+RT_CLASS!{class LicenseSatisfactionInfo: ILicenseSatisfactionInfo ["Windows.ApplicationModel.Store.LicenseManagement.LicenseSatisfactionInfo"]}
 DEFINE_IID!(IID_ILicenseSatisfactionResult, 1013403507, 15495, 20193, 130, 1, 244, 40, 53, 155, 211, 175);
 RT_INTERFACE!{interface ILicenseSatisfactionResult(ILicenseSatisfactionResultVtbl): IInspectable(IInspectableVtbl) [IID_ILicenseSatisfactionResult] {
     fn get_LicenseSatisfactionInfos(&self, out: *mut *mut foundation::collections::IMapView<HString, LicenseSatisfactionInfo>) -> HRESULT,
@@ -24619,14 +24619,14 @@ impl ILicenseSatisfactionResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LicenseSatisfactionResult: ILicenseSatisfactionResult}
+RT_CLASS!{class LicenseSatisfactionResult: ILicenseSatisfactionResult ["Windows.ApplicationModel.Store.LicenseManagement.LicenseSatisfactionResult"]}
 } // Windows.ApplicationModel.Store.LicenseManagement
 pub mod preview { // Windows.ApplicationModel.Store.Preview
 use ::prelude::*;
-RT_ENUM! { enum DeliveryOptimizationDownloadMode: i32 {
+RT_ENUM! { enum DeliveryOptimizationDownloadMode: i32 ["Windows.ApplicationModel.Store.Preview.DeliveryOptimizationDownloadMode"] {
     Simple (DeliveryOptimizationDownloadMode_Simple) = 0, HttpOnly (DeliveryOptimizationDownloadMode_HttpOnly) = 1, Lan (DeliveryOptimizationDownloadMode_Lan) = 2, Group (DeliveryOptimizationDownloadMode_Group) = 3, Internet (DeliveryOptimizationDownloadMode_Internet) = 4, Bypass (DeliveryOptimizationDownloadMode_Bypass) = 5,
 }}
-RT_ENUM! { enum DeliveryOptimizationDownloadModeSource: i32 {
+RT_ENUM! { enum DeliveryOptimizationDownloadModeSource: i32 ["Windows.ApplicationModel.Store.Preview.DeliveryOptimizationDownloadModeSource"] {
     Default (DeliveryOptimizationDownloadModeSource_Default) = 0, Policy (DeliveryOptimizationDownloadModeSource_Policy) = 1,
 }}
 DEFINE_IID!(IID_IDeliveryOptimizationSettings, 403766688, 59475, 22110, 184, 116, 122, 138, 123, 154, 14, 15);
@@ -24646,7 +24646,7 @@ impl IDeliveryOptimizationSettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeliveryOptimizationSettings: IDeliveryOptimizationSettings}
+RT_CLASS!{class DeliveryOptimizationSettings: IDeliveryOptimizationSettings ["Windows.ApplicationModel.Store.Preview.DeliveryOptimizationSettings"]}
 impl RtActivatable<IDeliveryOptimizationSettingsStatics> for DeliveryOptimizationSettings {}
 impl DeliveryOptimizationSettings {
     #[inline] pub fn get_current_settings() -> Result<Option<ComPtr<DeliveryOptimizationSettings>>> {
@@ -24971,8 +24971,8 @@ impl IStoreHardwareManufacturerInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StoreHardwareManufacturerInfo: IStoreHardwareManufacturerInfo}
-RT_ENUM! { enum StoreLogOptions: u32 {
+RT_CLASS!{class StoreHardwareManufacturerInfo: IStoreHardwareManufacturerInfo ["Windows.ApplicationModel.Store.Preview.StoreHardwareManufacturerInfo"]}
+RT_ENUM! { enum StoreLogOptions: u32 ["Windows.ApplicationModel.Store.Preview.StoreLogOptions"] {
     None (StoreLogOptions_None) = 0, TryElevate (StoreLogOptions_TryElevate) = 1,
 }}
 DEFINE_IID!(IID_IStorePreview, 2316661313, 33806, 18857, 188, 1, 93, 91, 1, 251, 200, 233);
@@ -25038,8 +25038,8 @@ impl IStorePreviewProductInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorePreviewProductInfo: IStorePreviewProductInfo}
-RT_ENUM! { enum StorePreviewProductPurchaseStatus: i32 {
+RT_CLASS!{class StorePreviewProductInfo: IStorePreviewProductInfo ["Windows.ApplicationModel.Store.Preview.StorePreviewProductInfo"]}
+RT_ENUM! { enum StorePreviewProductPurchaseStatus: i32 ["Windows.ApplicationModel.Store.Preview.StorePreviewProductPurchaseStatus"] {
     Succeeded (StorePreviewProductPurchaseStatus_Succeeded) = 0, AlreadyPurchased (StorePreviewProductPurchaseStatus_AlreadyPurchased) = 1, NotFulfilled (StorePreviewProductPurchaseStatus_NotFulfilled) = 2, NotPurchased (StorePreviewProductPurchaseStatus_NotPurchased) = 3,
 }}
 DEFINE_IID!(IID_IStorePreviewPurchaseResults, 2967121617, 54981, 20051, 160, 67, 251, 160, 216, 230, 18, 49);
@@ -25053,7 +25053,7 @@ impl IStorePreviewPurchaseResults {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorePreviewPurchaseResults: IStorePreviewPurchaseResults}
+RT_CLASS!{class StorePreviewPurchaseResults: IStorePreviewPurchaseResults ["Windows.ApplicationModel.Store.Preview.StorePreviewPurchaseResults"]}
 DEFINE_IID!(IID_IStorePreviewSkuInfo, 2180871906, 2854, 18649, 152, 206, 39, 70, 28, 102, 157, 108);
 RT_INTERFACE!{interface IStorePreviewSkuInfo(IStorePreviewSkuInfoVtbl): IInspectable(IInspectableVtbl) [IID_IStorePreviewSkuInfo] {
     fn get_ProductId(&self, out: *mut HSTRING) -> HRESULT,
@@ -25113,8 +25113,8 @@ impl IStorePreviewSkuInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorePreviewSkuInfo: IStorePreviewSkuInfo}
-RT_ENUM! { enum StoreSystemFeature: i32 {
+RT_CLASS!{class StorePreviewSkuInfo: IStorePreviewSkuInfo ["Windows.ApplicationModel.Store.Preview.StorePreviewSkuInfo"]}
+RT_ENUM! { enum StoreSystemFeature: i32 ["Windows.ApplicationModel.Store.Preview.StoreSystemFeature"] {
     ArchitectureX86 (StoreSystemFeature_ArchitectureX86) = 0, ArchitectureX64 (StoreSystemFeature_ArchitectureX64) = 1, ArchitectureArm (StoreSystemFeature_ArchitectureArm) = 2, DirectX9 (StoreSystemFeature_DirectX9) = 3, DirectX10 (StoreSystemFeature_DirectX10) = 4, DirectX11 (StoreSystemFeature_DirectX11) = 5, D3D12HardwareFL11 (StoreSystemFeature_D3D12HardwareFL11) = 6, D3D12HardwareFL12 (StoreSystemFeature_D3D12HardwareFL12) = 7, Memory300MB (StoreSystemFeature_Memory300MB) = 8, Memory750MB (StoreSystemFeature_Memory750MB) = 9, Memory1GB (StoreSystemFeature_Memory1GB) = 10, Memory2GB (StoreSystemFeature_Memory2GB) = 11, CameraFront (StoreSystemFeature_CameraFront) = 12, CameraRear (StoreSystemFeature_CameraRear) = 13, Gyroscope (StoreSystemFeature_Gyroscope) = 14, Hover (StoreSystemFeature_Hover) = 15, Magnetometer (StoreSystemFeature_Magnetometer) = 16, Nfc (StoreSystemFeature_Nfc) = 17, Resolution720P (StoreSystemFeature_Resolution720P) = 18, ResolutionWvga (StoreSystemFeature_ResolutionWvga) = 19, ResolutionWvgaOr720P (StoreSystemFeature_ResolutionWvgaOr720P) = 20, ResolutionWxga (StoreSystemFeature_ResolutionWxga) = 21, ResolutionWvgaOrWxga (StoreSystemFeature_ResolutionWvgaOrWxga) = 22, ResolutionWxgaOr720P (StoreSystemFeature_ResolutionWxgaOr720P) = 23, Memory4GB (StoreSystemFeature_Memory4GB) = 24, Memory6GB (StoreSystemFeature_Memory6GB) = 25, Memory8GB (StoreSystemFeature_Memory8GB) = 26, Memory12GB (StoreSystemFeature_Memory12GB) = 27, Memory16GB (StoreSystemFeature_Memory16GB) = 28, Memory20GB (StoreSystemFeature_Memory20GB) = 29, VideoMemory2GB (StoreSystemFeature_VideoMemory2GB) = 30, VideoMemory4GB (StoreSystemFeature_VideoMemory4GB) = 31, VideoMemory6GB (StoreSystemFeature_VideoMemory6GB) = 32, VideoMemory1GB (StoreSystemFeature_VideoMemory1GB) = 33, ArchitectureArm64 (StoreSystemFeature_ArchitectureArm64) = 34,
 }}
 DEFINE_IID!(IID_IWebAuthenticationCoreManagerHelper, 111478053, 59157, 16675, 146, 118, 157, 111, 134, 91, 165, 95);
@@ -25147,7 +25147,7 @@ impl WebAuthenticationCoreManagerHelper {
 DEFINE_CLSID!(WebAuthenticationCoreManagerHelper(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,80,114,101,118,105,101,119,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,67,111,114,101,77,97,110,97,103,101,114,72,101,108,112,101,114,0]) [CLSID_WebAuthenticationCoreManagerHelper]);
 pub mod installcontrol { // Windows.ApplicationModel.Store.Preview.InstallControl
 use ::prelude::*;
-RT_ENUM! { enum AppInstallationToastNotificationMode: i32 {
+RT_ENUM! { enum AppInstallationToastNotificationMode: i32 ["Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallationToastNotificationMode"] {
     Default (AppInstallationToastNotificationMode_Default) = 0, Toast (AppInstallationToastNotificationMode_Toast) = 1, ToastWithoutPopup (AppInstallationToastNotificationMode_ToastWithoutPopup) = 2, NoToast (AppInstallationToastNotificationMode_NoToast) = 3,
 }}
 DEFINE_IID!(IID_IAppInstallItem, 1238622123, 5770, 19647, 169, 58, 158, 68, 140, 130, 115, 125);
@@ -25222,7 +25222,7 @@ impl IAppInstallItem {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppInstallItem: IAppInstallItem}
+RT_CLASS!{class AppInstallItem: IAppInstallItem ["Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallItem"]}
 DEFINE_IID!(IID_IAppInstallItem2, 3549899512, 16576, 20439, 170, 108, 10, 161, 60, 166, 24, 140);
 RT_INTERFACE!{interface IAppInstallItem2(IAppInstallItem2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallItem2] {
     fn CancelWithTelemetry(&self, correlationVector: HSTRING) -> HRESULT,
@@ -25448,7 +25448,7 @@ impl IAppInstallManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppInstallManager: IAppInstallManager}
+RT_CLASS!{class AppInstallManager: IAppInstallManager ["Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallManager"]}
 impl RtActivatable<IActivationFactory> for AppInstallManager {}
 DEFINE_CLSID!(AppInstallManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,80,114,101,118,105,101,119,46,73,110,115,116,97,108,108,67,111,110,116,114,111,108,46,65,112,112,73,110,115,116,97,108,108,77,97,110,97,103,101,114,0]) [CLSID_AppInstallManager]);
 DEFINE_IID!(IID_IAppInstallManager2, 378763345, 60727, 18445, 131, 20, 82, 226, 124, 3, 240, 74);
@@ -25670,7 +25670,7 @@ impl IAppInstallManagerItemEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppInstallManagerItemEventArgs: IAppInstallManagerItemEventArgs}
+RT_CLASS!{class AppInstallManagerItemEventArgs: IAppInstallManagerItemEventArgs ["Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallManagerItemEventArgs"]}
 DEFINE_IID!(IID_IAppInstallOptions, 3380642560, 7352, 20150, 140, 159, 106, 48, 198, 74, 91, 81);
 RT_INTERFACE!{interface IAppInstallOptions(IAppInstallOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallOptions] {
     fn get_CatalogId(&self, out: *mut HSTRING) -> HRESULT,
@@ -25744,7 +25744,7 @@ impl IAppInstallOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppInstallOptions: IAppInstallOptions}
+RT_CLASS!{class AppInstallOptions: IAppInstallOptions ["Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallOptions"]}
 impl RtActivatable<IActivationFactory> for AppInstallOptions {}
 DEFINE_CLSID!(AppInstallOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,80,114,101,118,105,101,119,46,73,110,115,116,97,108,108,67,111,110,116,114,111,108,46,65,112,112,73,110,115,116,97,108,108,79,112,116,105,111,110,115,0]) [CLSID_AppInstallOptions]);
 DEFINE_IID!(IID_IAppInstallOptions2, 2315567319, 51531, 16990, 149, 180, 191, 39, 250, 234, 238, 137);
@@ -25851,7 +25851,7 @@ impl IAppInstallOptions2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppInstallState: i32 {
+RT_ENUM! { enum AppInstallState: i32 ["Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallState"] {
     Pending (AppInstallState_Pending) = 0, Starting (AppInstallState_Starting) = 1, AcquiringLicense (AppInstallState_AcquiringLicense) = 2, Downloading (AppInstallState_Downloading) = 3, RestoringData (AppInstallState_RestoringData) = 4, Installing (AppInstallState_Installing) = 5, Completed (AppInstallState_Completed) = 6, Canceled (AppInstallState_Canceled) = 7, Paused (AppInstallState_Paused) = 8, Error (AppInstallState_Error) = 9, PausedLowBattery (AppInstallState_PausedLowBattery) = 10, PausedWiFiRecommended (AppInstallState_PausedWiFiRecommended) = 11, PausedWiFiRequired (AppInstallState_PausedWiFiRequired) = 12, ReadyToDownload (AppInstallState_ReadyToDownload) = 13,
 }}
 DEFINE_IID!(IID_IAppInstallStatus, 2473446650, 9296, 16678, 136, 177, 97, 39, 166, 68, 221, 92);
@@ -25889,7 +25889,7 @@ impl IAppInstallStatus {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppInstallStatus: IAppInstallStatus}
+RT_CLASS!{class AppInstallStatus: IAppInstallStatus ["Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallStatus"]}
 DEFINE_IID!(IID_IAppInstallStatus2, 2531754378, 24210, 19113, 142, 220, 88, 254, 212, 184, 126, 0);
 RT_INTERFACE!{interface IAppInstallStatus2(IAppInstallStatus2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallStatus2] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
@@ -25919,7 +25919,7 @@ impl IAppInstallStatus3 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AppInstallType: i32 {
+RT_ENUM! { enum AppInstallType: i32 ["Windows.ApplicationModel.Store.Preview.InstallControl.AppInstallType"] {
     Install (AppInstallType_Install) = 0, Update (AppInstallType_Update) = 1, Repair (AppInstallType_Repair) = 2,
 }}
 DEFINE_IID!(IID_IAppUpdateOptions, 653307951, 49907, 19178, 175, 140, 99, 8, 221, 157, 184, 95);
@@ -25949,7 +25949,7 @@ impl IAppUpdateOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppUpdateOptions: IAppUpdateOptions}
+RT_CLASS!{class AppUpdateOptions: IAppUpdateOptions ["Windows.ApplicationModel.Store.Preview.InstallControl.AppUpdateOptions"]}
 impl RtActivatable<IActivationFactory> for AppUpdateOptions {}
 DEFINE_CLSID!(AppUpdateOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,80,114,101,118,105,101,119,46,73,110,115,116,97,108,108,67,111,110,116,114,111,108,46,65,112,112,85,112,100,97,116,101,79,112,116,105,111,110,115,0]) [CLSID_AppUpdateOptions]);
 DEFINE_IID!(IID_IAppUpdateOptions2, 4100222472, 60710, 19449, 150, 121, 72, 246, 40, 229, 61, 248);
@@ -25968,7 +25968,7 @@ impl IAppUpdateOptions2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum AutoUpdateSetting: i32 {
+RT_ENUM! { enum AutoUpdateSetting: i32 ["Windows.ApplicationModel.Store.Preview.InstallControl.AutoUpdateSetting"] {
     Disabled (AutoUpdateSetting_Disabled) = 0, Enabled (AutoUpdateSetting_Enabled) = 1, DisabledByPolicy (AutoUpdateSetting_DisabledByPolicy) = 2, EnabledByPolicy (AutoUpdateSetting_EnabledByPolicy) = 3,
 }}
 DEFINE_IID!(IID_IGetEntitlementResult, 1962705983, 6814, 17929, 142, 77, 129, 144, 134, 208, 138, 61);
@@ -25982,8 +25982,8 @@ impl IGetEntitlementResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class GetEntitlementResult: IGetEntitlementResult}
-RT_ENUM! { enum GetEntitlementStatus: i32 {
+RT_CLASS!{class GetEntitlementResult: IGetEntitlementResult ["Windows.ApplicationModel.Store.Preview.InstallControl.GetEntitlementResult"]}
+RT_ENUM! { enum GetEntitlementStatus: i32 ["Windows.ApplicationModel.Store.Preview.InstallControl.GetEntitlementStatus"] {
     Succeeded (GetEntitlementStatus_Succeeded) = 0, NoStoreAccount (GetEntitlementStatus_NoStoreAccount) = 1, NetworkError (GetEntitlementStatus_NetworkError) = 2, ServerError (GetEntitlementStatus_ServerError) = 3,
 }}
 } // Windows.ApplicationModel.Store.Preview.InstallControl
@@ -26081,7 +26081,7 @@ impl IUserActivity {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserActivity: IUserActivity}
+RT_CLASS!{class UserActivity: IUserActivity ["Windows.ApplicationModel.UserActivities.UserActivity"]}
 impl RtActivatable<IUserActivityFactory> for UserActivity {}
 impl RtActivatable<IUserActivityStatics> for UserActivity {}
 impl UserActivity {
@@ -26164,7 +26164,7 @@ impl IUserActivityAttribution {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserActivityAttribution: IUserActivityAttribution}
+RT_CLASS!{class UserActivityAttribution: IUserActivityAttribution ["Windows.ApplicationModel.UserActivities.UserActivityAttribution"]}
 impl RtActivatable<IUserActivityAttributionFactory> for UserActivityAttribution {}
 impl RtActivatable<IActivationFactory> for UserActivityAttribution {}
 impl UserActivityAttribution {
@@ -26207,7 +26207,7 @@ impl IUserActivityChannel {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserActivityChannel: IUserActivityChannel}
+RT_CLASS!{class UserActivityChannel: IUserActivityChannel ["Windows.ApplicationModel.UserActivities.UserActivityChannel"]}
 impl RtActivatable<IUserActivityChannelStatics> for UserActivityChannel {}
 impl RtActivatable<IUserActivityChannelStatics2> for UserActivityChannel {}
 impl UserActivityChannel {
@@ -26277,7 +26277,7 @@ impl IUserActivityContentInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserActivityContentInfo: IUserActivityContentInfo}
+RT_CLASS!{class UserActivityContentInfo: IUserActivityContentInfo ["Windows.ApplicationModel.UserActivities.UserActivityContentInfo"]}
 impl RtActivatable<IUserActivityContentInfoStatics> for UserActivityContentInfo {}
 impl UserActivityContentInfo {
     #[inline] pub fn from_json(value: &HStringArg) -> Result<Option<ComPtr<UserActivityContentInfo>>> {
@@ -26317,7 +26317,7 @@ impl IUserActivityRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserActivityRequest: IUserActivityRequest}
+RT_CLASS!{class UserActivityRequest: IUserActivityRequest ["Windows.ApplicationModel.UserActivities.UserActivityRequest"]}
 DEFINE_IID!(IID_IUserActivityRequestedEventArgs, 2764864076, 33321, 19709, 163, 188, 198, 29, 49, 133, 117, 164);
 RT_INTERFACE!{interface IUserActivityRequestedEventArgs(IUserActivityRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut UserActivityRequest) -> HRESULT,
@@ -26335,7 +26335,7 @@ impl IUserActivityRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserActivityRequestedEventArgs: IUserActivityRequestedEventArgs}
+RT_CLASS!{class UserActivityRequestedEventArgs: IUserActivityRequestedEventArgs ["Windows.ApplicationModel.UserActivities.UserActivityRequestedEventArgs"]}
 DEFINE_IID!(IID_IUserActivityRequestManager, 204521038, 36925, 18646, 130, 212, 64, 67, 237, 87, 121, 27);
 RT_INTERFACE!{interface IUserActivityRequestManager(IUserActivityRequestManagerVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityRequestManager] {
     fn add_UserActivityRequested(&self, handler: *mut foundation::TypedEventHandler<UserActivityRequestManager, UserActivityRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -26352,7 +26352,7 @@ impl IUserActivityRequestManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserActivityRequestManager: IUserActivityRequestManager}
+RT_CLASS!{class UserActivityRequestManager: IUserActivityRequestManager ["Windows.ApplicationModel.UserActivities.UserActivityRequestManager"]}
 impl RtActivatable<IUserActivityRequestManagerStatics> for UserActivityRequestManager {}
 impl UserActivityRequestManager {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<UserActivityRequestManager>>> {
@@ -26382,7 +26382,7 @@ impl IUserActivitySession {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserActivitySession: IUserActivitySession}
+RT_CLASS!{class UserActivitySession: IUserActivitySession ["Windows.ApplicationModel.UserActivities.UserActivitySession"]}
 DEFINE_IID!(IID_IUserActivitySessionHistoryItem, 3906313171, 15965, 18941, 152, 215, 109, 169, 117, 33, 226, 85);
 RT_INTERFACE!{interface IUserActivitySessionHistoryItem(IUserActivitySessionHistoryItemVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivitySessionHistoryItem] {
     fn get_UserActivity(&self, out: *mut *mut UserActivity) -> HRESULT,
@@ -26406,8 +26406,8 @@ impl IUserActivitySessionHistoryItem {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserActivitySessionHistoryItem: IUserActivitySessionHistoryItem}
-RT_ENUM! { enum UserActivityState: i32 {
+RT_CLASS!{class UserActivitySessionHistoryItem: IUserActivitySessionHistoryItem ["Windows.ApplicationModel.UserActivities.UserActivitySessionHistoryItem"]}
+RT_ENUM! { enum UserActivityState: i32 ["Windows.ApplicationModel.UserActivities.UserActivityState"] {
     New (UserActivityState_New) = 0, Published (UserActivityState_Published) = 1,
 }}
 DEFINE_IID!(IID_IUserActivityStatics, 2358235955, 3593, 18422, 154, 199, 149, 207, 92, 57, 54, 123);
@@ -26493,7 +26493,7 @@ impl IUserActivityVisualElements {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserActivityVisualElements: IUserActivityVisualElements}
+RT_CLASS!{class UserActivityVisualElements: IUserActivityVisualElements ["Windows.ApplicationModel.UserActivities.UserActivityVisualElements"]}
 DEFINE_IID!(IID_IUserActivityVisualElements2, 3400433607, 16111, 17241, 130, 92, 157, 81, 185, 34, 13, 227);
 RT_INTERFACE!{interface IUserActivityVisualElements2(IUserActivityVisualElements2Vtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityVisualElements2] {
     fn get_AttributionDisplayText(&self, out: *mut HSTRING) -> HRESULT,
@@ -26632,7 +26632,7 @@ impl IUserDataAccount {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataAccount: IUserDataAccount}
+RT_CLASS!{class UserDataAccount: IUserDataAccount ["Windows.ApplicationModel.UserDataAccounts.UserDataAccount"]}
 DEFINE_IID!(IID_IUserDataAccount2, 126671007, 56962, 16459, 129, 149, 200, 163, 172, 25, 143, 96);
 RT_INTERFACE!{interface IUserDataAccount2(IUserDataAccount2Vtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccount2] {
     fn get_EnterpriseId(&self, out: *mut HSTRING) -> HRESULT,
@@ -26722,7 +26722,7 @@ impl IUserDataAccount4 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UserDataAccountContentKinds: u32 {
+RT_ENUM! { enum UserDataAccountContentKinds: u32 ["Windows.ApplicationModel.UserDataAccounts.UserDataAccountContentKinds"] {
     Email (UserDataAccountContentKinds_Email) = 1, Contact (UserDataAccountContentKinds_Contact) = 2, Appointment (UserDataAccountContentKinds_Appointment) = 4,
 }}
 RT_CLASS!{static class UserDataAccountManager}
@@ -26763,7 +26763,7 @@ impl IUserDataAccountManagerForUser {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataAccountManagerForUser: IUserDataAccountManagerForUser}
+RT_CLASS!{class UserDataAccountManagerForUser: IUserDataAccountManagerForUser ["Windows.ApplicationModel.UserDataAccounts.UserDataAccountManagerForUser"]}
 DEFINE_IID!(IID_IUserDataAccountManagerStatics, 228297194, 6440, 18976, 134, 213, 60, 115, 127, 125, 195, 176);
 RT_INTERFACE!{static interface IUserDataAccountManagerStatics(IUserDataAccountManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccountManagerStatics] {
     fn RequestStoreAsync(&self, storeAccessType: UserDataAccountStoreAccessType, out: *mut *mut foundation::IAsyncOperation<UserDataAccountStore>) -> HRESULT,
@@ -26804,7 +26804,7 @@ impl IUserDataAccountManagerStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UserDataAccountOtherAppReadAccess: i32 {
+RT_ENUM! { enum UserDataAccountOtherAppReadAccess: i32 ["Windows.ApplicationModel.UserDataAccounts.UserDataAccountOtherAppReadAccess"] {
     SystemOnly (UserDataAccountOtherAppReadAccess_SystemOnly) = 0, Full (UserDataAccountOtherAppReadAccess_Full) = 1, None (UserDataAccountOtherAppReadAccess_None) = 2,
 }}
 DEFINE_IID!(IID_IUserDataAccountStore, 544452781, 32010, 20086, 191, 69, 35, 104, 249, 120, 165, 154);
@@ -26830,7 +26830,7 @@ impl IUserDataAccountStore {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataAccountStore: IUserDataAccountStore}
+RT_CLASS!{class UserDataAccountStore: IUserDataAccountStore ["Windows.ApplicationModel.UserDataAccounts.UserDataAccountStore"]}
 DEFINE_IID!(IID_IUserDataAccountStore2, 2984292087, 38240, 17969, 138, 240, 6, 29, 48, 22, 20, 105);
 RT_INTERFACE!{interface IUserDataAccountStore2(IUserDataAccountStore2Vtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccountStore2] {
     fn CreateAccountWithPackageRelativeAppIdAsync(&self, userDisplayName: HSTRING, packageRelativeAppId: HSTRING, out: *mut *mut foundation::IAsyncOperation<UserDataAccount>) -> HRESULT,
@@ -26864,7 +26864,7 @@ impl IUserDataAccountStore3 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UserDataAccountStoreAccessType: i32 {
+RT_ENUM! { enum UserDataAccountStoreAccessType: i32 ["Windows.ApplicationModel.UserDataAccounts.UserDataAccountStoreAccessType"] {
     AllAccountsReadOnly (UserDataAccountStoreAccessType_AllAccountsReadOnly) = 0, AppAccountsReadWrite (UserDataAccountStoreAccessType_AppAccountsReadWrite) = 1,
 }}
 DEFINE_IID!(IID_IUserDataAccountStoreChangedEventArgs, 2229527269, 34848, 17682, 177, 246, 46, 3, 91, 225, 7, 44);
@@ -26878,7 +26878,7 @@ impl IUserDataAccountStoreChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataAccountStoreChangedEventArgs: IUserDataAccountStoreChangedEventArgs}
+RT_CLASS!{class UserDataAccountStoreChangedEventArgs: IUserDataAccountStoreChangedEventArgs ["Windows.ApplicationModel.UserDataAccounts.UserDataAccountStoreChangedEventArgs"]}
 pub mod provider { // Windows.ApplicationModel.UserDataAccounts.Provider
 use ::prelude::*;
 DEFINE_IID!(IID_IUserDataAccountPartnerAccountInfo, 1595932727, 63215, 20163, 134, 48, 1, 44, 89, 193, 20, 159);
@@ -26904,7 +26904,7 @@ impl IUserDataAccountPartnerAccountInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataAccountPartnerAccountInfo: IUserDataAccountPartnerAccountInfo}
+RT_CLASS!{class UserDataAccountPartnerAccountInfo: IUserDataAccountPartnerAccountInfo ["Windows.ApplicationModel.UserDataAccounts.Provider.UserDataAccountPartnerAccountInfo"]}
 DEFINE_IID!(IID_IUserDataAccountProviderAddAccountOperation, 3116836144, 16260, 19293, 142, 170, 69, 233, 122, 168, 66, 237);
 RT_INTERFACE!{interface IUserDataAccountProviderAddAccountOperation(IUserDataAccountProviderAddAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccountProviderAddAccountOperation] {
     fn get_ContentKinds(&self, out: *mut super::UserDataAccountContentKinds) -> HRESULT,
@@ -26927,7 +26927,7 @@ impl IUserDataAccountProviderAddAccountOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataAccountProviderAddAccountOperation: IUserDataAccountProviderAddAccountOperation}
+RT_CLASS!{class UserDataAccountProviderAddAccountOperation: IUserDataAccountProviderAddAccountOperation ["Windows.ApplicationModel.UserDataAccounts.Provider.UserDataAccountProviderAddAccountOperation"]}
 DEFINE_IID!(IID_IUserDataAccountProviderOperation, 2718608739, 34956, 19042, 163, 221, 52, 208, 122, 128, 43, 43);
 RT_INTERFACE!{interface IUserDataAccountProviderOperation(IUserDataAccountProviderOperationVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccountProviderOperation] {
     fn get_Kind(&self, out: *mut UserDataAccountProviderOperationKind) -> HRESULT
@@ -26939,10 +26939,10 @@ impl IUserDataAccountProviderOperation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UserDataAccountProviderOperationKind: i32 {
+RT_ENUM! { enum UserDataAccountProviderOperationKind: i32 ["Windows.ApplicationModel.UserDataAccounts.Provider.UserDataAccountProviderOperationKind"] {
     AddAccount (UserDataAccountProviderOperationKind_AddAccount) = 0, Settings (UserDataAccountProviderOperationKind_Settings) = 1, ResolveErrors (UserDataAccountProviderOperationKind_ResolveErrors) = 2,
 }}
-RT_ENUM! { enum UserDataAccountProviderPartnerAccountKind: i32 {
+RT_ENUM! { enum UserDataAccountProviderPartnerAccountKind: i32 ["Windows.ApplicationModel.UserDataAccounts.Provider.UserDataAccountProviderPartnerAccountKind"] {
     Exchange (UserDataAccountProviderPartnerAccountKind_Exchange) = 0, PopOrImap (UserDataAccountProviderPartnerAccountKind_PopOrImap) = 1,
 }}
 DEFINE_IID!(IID_IUserDataAccountProviderResolveErrorsOperation, 1647696917, 49099, 16865, 153, 87, 151, 89, 162, 136, 70, 204);
@@ -26961,7 +26961,7 @@ impl IUserDataAccountProviderResolveErrorsOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataAccountProviderResolveErrorsOperation: IUserDataAccountProviderResolveErrorsOperation}
+RT_CLASS!{class UserDataAccountProviderResolveErrorsOperation: IUserDataAccountProviderResolveErrorsOperation ["Windows.ApplicationModel.UserDataAccounts.Provider.UserDataAccountProviderResolveErrorsOperation"]}
 DEFINE_IID!(IID_IUserDataAccountProviderSettingsOperation, 2449690039, 34376, 20272, 172, 250, 48, 2, 101, 140, 168, 13);
 RT_INTERFACE!{interface IUserDataAccountProviderSettingsOperation(IUserDataAccountProviderSettingsOperationVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccountProviderSettingsOperation] {
     fn get_UserDataAccountId(&self, out: *mut HSTRING) -> HRESULT,
@@ -26978,11 +26978,11 @@ impl IUserDataAccountProviderSettingsOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataAccountProviderSettingsOperation: IUserDataAccountProviderSettingsOperation}
+RT_CLASS!{class UserDataAccountProviderSettingsOperation: IUserDataAccountProviderSettingsOperation ["Windows.ApplicationModel.UserDataAccounts.Provider.UserDataAccountProviderSettingsOperation"]}
 } // Windows.ApplicationModel.UserDataAccounts.Provider
 pub mod systemaccess { // Windows.ApplicationModel.UserDataAccounts.SystemAccess
 use ::prelude::*;
-RT_ENUM! { enum DeviceAccountAuthenticationType: i32 {
+RT_ENUM! { enum DeviceAccountAuthenticationType: i32 ["Windows.ApplicationModel.UserDataAccounts.SystemAccess.DeviceAccountAuthenticationType"] {
     Basic (DeviceAccountAuthenticationType_Basic) = 0, OAuth (DeviceAccountAuthenticationType_OAuth) = 1, SingleSignOn (DeviceAccountAuthenticationType_SingleSignOn) = 2,
 }}
 DEFINE_IID!(IID_IDeviceAccountConfiguration, 2902533027, 64476, 19739, 190, 67, 90, 39, 234, 74, 27, 99);
@@ -27166,7 +27166,7 @@ impl IDeviceAccountConfiguration {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeviceAccountConfiguration: IDeviceAccountConfiguration}
+RT_CLASS!{class DeviceAccountConfiguration: IDeviceAccountConfiguration ["Windows.ApplicationModel.UserDataAccounts.SystemAccess.DeviceAccountConfiguration"]}
 impl RtActivatable<IActivationFactory> for DeviceAccountConfiguration {}
 DEFINE_CLSID!(DeviceAccountConfiguration(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,65,99,99,111,117,110,116,115,46,83,121,115,116,101,109,65,99,99,101,115,115,46,68,101,118,105,99,101,65,99,99,111,117,110,116,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_DeviceAccountConfiguration]);
 DEFINE_IID!(IID_IDeviceAccountConfiguration2, 4071810470, 29325, 19018, 137, 69, 43, 248, 88, 1, 54, 222);
@@ -27487,16 +27487,16 @@ impl IDeviceAccountConfiguration2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DeviceAccountIconId: i32 {
+RT_ENUM! { enum DeviceAccountIconId: i32 ["Windows.ApplicationModel.UserDataAccounts.SystemAccess.DeviceAccountIconId"] {
     Exchange (DeviceAccountIconId_Exchange) = 0, Msa (DeviceAccountIconId_Msa) = 1, Outlook (DeviceAccountIconId_Outlook) = 2, Generic (DeviceAccountIconId_Generic) = 3,
 }}
-RT_ENUM! { enum DeviceAccountMailAgeFilter: i32 {
+RT_ENUM! { enum DeviceAccountMailAgeFilter: i32 ["Windows.ApplicationModel.UserDataAccounts.SystemAccess.DeviceAccountMailAgeFilter"] {
     All (DeviceAccountMailAgeFilter_All) = 0, Last1Day (DeviceAccountMailAgeFilter_Last1Day) = 1, Last3Days (DeviceAccountMailAgeFilter_Last3Days) = 2, Last7Days (DeviceAccountMailAgeFilter_Last7Days) = 3, Last14Days (DeviceAccountMailAgeFilter_Last14Days) = 4, Last30Days (DeviceAccountMailAgeFilter_Last30Days) = 5, Last90Days (DeviceAccountMailAgeFilter_Last90Days) = 6,
 }}
-RT_ENUM! { enum DeviceAccountServerType: i32 {
+RT_ENUM! { enum DeviceAccountServerType: i32 ["Windows.ApplicationModel.UserDataAccounts.SystemAccess.DeviceAccountServerType"] {
     Exchange (DeviceAccountServerType_Exchange) = 0, Pop (DeviceAccountServerType_Pop) = 1, Imap (DeviceAccountServerType_Imap) = 2,
 }}
-RT_ENUM! { enum DeviceAccountSyncScheduleKind: i32 {
+RT_ENUM! { enum DeviceAccountSyncScheduleKind: i32 ["Windows.ApplicationModel.UserDataAccounts.SystemAccess.DeviceAccountSyncScheduleKind"] {
     Manual (DeviceAccountSyncScheduleKind_Manual) = 0, Every15Minutes (DeviceAccountSyncScheduleKind_Every15Minutes) = 1, Every30Minutes (DeviceAccountSyncScheduleKind_Every30Minutes) = 2, Every60Minutes (DeviceAccountSyncScheduleKind_Every60Minutes) = 3, Every2Hours (DeviceAccountSyncScheduleKind_Every2Hours) = 4, Daily (DeviceAccountSyncScheduleKind_Daily) = 5, AsItemsArrive (DeviceAccountSyncScheduleKind_AsItemsArrive) = 6,
 }}
 RT_CLASS!{static class UserDataAccountSystemAccessManager}
@@ -27719,7 +27719,7 @@ impl IUserDataTask {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTask: IUserDataTask}
+RT_CLASS!{class UserDataTask: IUserDataTask ["Windows.ApplicationModel.UserDataTasks.UserDataTask"]}
 impl RtActivatable<IActivationFactory> for UserDataTask {}
 DEFINE_CLSID!(UserDataTask(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,84,97,115,107,115,46,85,115,101,114,68,97,116,97,84,97,115,107,0]) [CLSID_UserDataTask]);
 DEFINE_IID!(IID_IUserDataTaskBatch, 942515710, 8373, 17180, 143, 66, 165, 210, 146, 236, 147, 12);
@@ -27733,14 +27733,14 @@ impl IUserDataTaskBatch {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskBatch: IUserDataTaskBatch}
-RT_ENUM! { enum UserDataTaskDaysOfWeek: u32 {
+RT_CLASS!{class UserDataTaskBatch: IUserDataTaskBatch ["Windows.ApplicationModel.UserDataTasks.UserDataTaskBatch"]}
+RT_ENUM! { enum UserDataTaskDaysOfWeek: u32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskDaysOfWeek"] {
     None (UserDataTaskDaysOfWeek_None) = 0, Sunday (UserDataTaskDaysOfWeek_Sunday) = 1, Monday (UserDataTaskDaysOfWeek_Monday) = 2, Tuesday (UserDataTaskDaysOfWeek_Tuesday) = 4, Wednesday (UserDataTaskDaysOfWeek_Wednesday) = 8, Thursday (UserDataTaskDaysOfWeek_Thursday) = 16, Friday (UserDataTaskDaysOfWeek_Friday) = 32, Saturday (UserDataTaskDaysOfWeek_Saturday) = 64,
 }}
-RT_ENUM! { enum UserDataTaskDetailsKind: i32 {
+RT_ENUM! { enum UserDataTaskDetailsKind: i32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskDetailsKind"] {
     PlainText (UserDataTaskDetailsKind_PlainText) = 0, Html (UserDataTaskDetailsKind_Html) = 1,
 }}
-RT_ENUM! { enum UserDataTaskKind: i32 {
+RT_ENUM! { enum UserDataTaskKind: i32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskKind"] {
     Single (UserDataTaskKind_Single) = 0, Recurring (UserDataTaskKind_Recurring) = 1, Regenerating (UserDataTaskKind_Regenerating) = 2,
 }}
 DEFINE_IID!(IID_IUserDataTaskList, 1229008441, 31773, 19953, 190, 211, 49, 75, 124, 191, 94, 78);
@@ -27859,7 +27859,7 @@ impl IUserDataTaskList {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskList: IUserDataTaskList}
+RT_CLASS!{class UserDataTaskList: IUserDataTaskList ["Windows.ApplicationModel.UserDataTasks.UserDataTaskList"]}
 DEFINE_IID!(IID_IUserDataTaskListLimitedWriteOperations, 2057463794, 24696, 16771, 145, 158, 79, 41, 241, 156, 250, 233);
 RT_INTERFACE!{interface IUserDataTaskListLimitedWriteOperations(IUserDataTaskListLimitedWriteOperationsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskListLimitedWriteOperations] {
     fn TryCompleteTaskAsync(&self, userDataTaskId: HSTRING, out: *mut *mut foundation::IAsyncOperation<HString>) -> HRESULT,
@@ -27889,11 +27889,11 @@ impl IUserDataTaskListLimitedWriteOperations {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskListLimitedWriteOperations: IUserDataTaskListLimitedWriteOperations}
-RT_ENUM! { enum UserDataTaskListOtherAppReadAccess: i32 {
+RT_CLASS!{class UserDataTaskListLimitedWriteOperations: IUserDataTaskListLimitedWriteOperations ["Windows.ApplicationModel.UserDataTasks.UserDataTaskListLimitedWriteOperations"]}
+RT_ENUM! { enum UserDataTaskListOtherAppReadAccess: i32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskListOtherAppReadAccess"] {
     Full (UserDataTaskListOtherAppReadAccess_Full) = 0, SystemOnly (UserDataTaskListOtherAppReadAccess_SystemOnly) = 1, None (UserDataTaskListOtherAppReadAccess_None) = 2,
 }}
-RT_ENUM! { enum UserDataTaskListOtherAppWriteAccess: i32 {
+RT_ENUM! { enum UserDataTaskListOtherAppWriteAccess: i32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskListOtherAppWriteAccess"] {
     Limited (UserDataTaskListOtherAppWriteAccess_Limited) = 0, None (UserDataTaskListOtherAppWriteAccess_None) = 1,
 }}
 DEFINE_IID!(IID_IUserDataTaskListSyncManager, 2388204181, 7631, 18079, 147, 236, 186, 72, 187, 85, 60, 107);
@@ -27951,8 +27951,8 @@ impl IUserDataTaskListSyncManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskListSyncManager: IUserDataTaskListSyncManager}
-RT_ENUM! { enum UserDataTaskListSyncStatus: i32 {
+RT_CLASS!{class UserDataTaskListSyncManager: IUserDataTaskListSyncManager ["Windows.ApplicationModel.UserDataTasks.UserDataTaskListSyncManager"]}
+RT_ENUM! { enum UserDataTaskListSyncStatus: i32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskListSyncStatus"] {
     Idle (UserDataTaskListSyncStatus_Idle) = 0, Syncing (UserDataTaskListSyncStatus_Syncing) = 1, UpToDate (UserDataTaskListSyncStatus_UpToDate) = 2, AuthenticationError (UserDataTaskListSyncStatus_AuthenticationError) = 3, PolicyError (UserDataTaskListSyncStatus_PolicyError) = 4, UnknownError (UserDataTaskListSyncStatus_UnknownError) = 5,
 }}
 DEFINE_IID!(IID_IUserDataTaskManager, 2219952404, 58891, 18601, 146, 17, 127, 184, 165, 108, 184, 76);
@@ -27972,7 +27972,7 @@ impl IUserDataTaskManager {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskManager: IUserDataTaskManager}
+RT_CLASS!{class UserDataTaskManager: IUserDataTaskManager ["Windows.ApplicationModel.UserDataTasks.UserDataTaskManager"]}
 impl RtActivatable<IUserDataTaskManagerStatics> for UserDataTaskManager {}
 impl UserDataTaskManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<UserDataTaskManager>>> {
@@ -28000,10 +28000,10 @@ impl IUserDataTaskManagerStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum UserDataTaskPriority: i32 {
+RT_ENUM! { enum UserDataTaskPriority: i32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskPriority"] {
     Normal (UserDataTaskPriority_Normal) = 0, Low (UserDataTaskPriority_Low) = -1, High (UserDataTaskPriority_High) = 1,
 }}
-RT_ENUM! { enum UserDataTaskQueryKind: i32 {
+RT_ENUM! { enum UserDataTaskQueryKind: i32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskQueryKind"] {
     All (UserDataTaskQueryKind_All) = 0, Incomplete (UserDataTaskQueryKind_Incomplete) = 1, Complete (UserDataTaskQueryKind_Complete) = 2,
 }}
 DEFINE_IID!(IID_IUserDataTaskQueryOptions, 2510235629, 37018, 19760, 140, 27, 51, 29, 143, 230, 103, 226);
@@ -28033,10 +28033,10 @@ impl IUserDataTaskQueryOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskQueryOptions: IUserDataTaskQueryOptions}
+RT_CLASS!{class UserDataTaskQueryOptions: IUserDataTaskQueryOptions ["Windows.ApplicationModel.UserDataTasks.UserDataTaskQueryOptions"]}
 impl RtActivatable<IActivationFactory> for UserDataTaskQueryOptions {}
 DEFINE_CLSID!(UserDataTaskQueryOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,84,97,115,107,115,46,85,115,101,114,68,97,116,97,84,97,115,107,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_UserDataTaskQueryOptions]);
-RT_ENUM! { enum UserDataTaskQuerySortProperty: i32 {
+RT_ENUM! { enum UserDataTaskQuerySortProperty: i32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskQuerySortProperty"] {
     DueDate (UserDataTaskQuerySortProperty_DueDate) = 0,
 }}
 DEFINE_IID!(IID_IUserDataTaskReader, 65439921, 19663, 17664, 136, 59, 231, 98, 144, 207, 237, 99);
@@ -28050,7 +28050,7 @@ impl IUserDataTaskReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskReader: IUserDataTaskReader}
+RT_CLASS!{class UserDataTaskReader: IUserDataTaskReader ["Windows.ApplicationModel.UserDataTasks.UserDataTaskReader"]}
 DEFINE_IID!(IID_IUserDataTaskRecurrenceProperties, 1944027312, 10182, 16590, 177, 73, 156, 212, 20, 133, 166, 158);
 RT_INTERFACE!{interface IUserDataTaskRecurrenceProperties(IUserDataTaskRecurrencePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskRecurrenceProperties] {
     fn get_Unit(&self, out: *mut UserDataTaskRecurrenceUnit) -> HRESULT,
@@ -28144,10 +28144,10 @@ impl IUserDataTaskRecurrenceProperties {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskRecurrenceProperties: IUserDataTaskRecurrenceProperties}
+RT_CLASS!{class UserDataTaskRecurrenceProperties: IUserDataTaskRecurrenceProperties ["Windows.ApplicationModel.UserDataTasks.UserDataTaskRecurrenceProperties"]}
 impl RtActivatable<IActivationFactory> for UserDataTaskRecurrenceProperties {}
 DEFINE_CLSID!(UserDataTaskRecurrenceProperties(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,84,97,115,107,115,46,85,115,101,114,68,97,116,97,84,97,115,107,82,101,99,117,114,114,101,110,99,101,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_UserDataTaskRecurrenceProperties]);
-RT_ENUM! { enum UserDataTaskRecurrenceUnit: i32 {
+RT_ENUM! { enum UserDataTaskRecurrenceUnit: i32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskRecurrenceUnit"] {
     Daily (UserDataTaskRecurrenceUnit_Daily) = 0, Weekly (UserDataTaskRecurrenceUnit_Weekly) = 1, Monthly (UserDataTaskRecurrenceUnit_Monthly) = 2, MonthlyOnDay (UserDataTaskRecurrenceUnit_MonthlyOnDay) = 3, Yearly (UserDataTaskRecurrenceUnit_Yearly) = 4, YearlyOnDay (UserDataTaskRecurrenceUnit_YearlyOnDay) = 5,
 }}
 DEFINE_IID!(IID_IUserDataTaskRegenerationProperties, 2460680199, 2318, 18180, 187, 92, 132, 252, 11, 13, 156, 49);
@@ -28199,13 +28199,13 @@ impl IUserDataTaskRegenerationProperties {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskRegenerationProperties: IUserDataTaskRegenerationProperties}
+RT_CLASS!{class UserDataTaskRegenerationProperties: IUserDataTaskRegenerationProperties ["Windows.ApplicationModel.UserDataTasks.UserDataTaskRegenerationProperties"]}
 impl RtActivatable<IActivationFactory> for UserDataTaskRegenerationProperties {}
 DEFINE_CLSID!(UserDataTaskRegenerationProperties(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,84,97,115,107,115,46,85,115,101,114,68,97,116,97,84,97,115,107,82,101,103,101,110,101,114,97,116,105,111,110,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_UserDataTaskRegenerationProperties]);
-RT_ENUM! { enum UserDataTaskRegenerationUnit: i32 {
+RT_ENUM! { enum UserDataTaskRegenerationUnit: i32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskRegenerationUnit"] {
     Daily (UserDataTaskRegenerationUnit_Daily) = 0, Weekly (UserDataTaskRegenerationUnit_Weekly) = 1, Monthly (UserDataTaskRegenerationUnit_Monthly) = 2, Yearly (UserDataTaskRegenerationUnit_Yearly) = 4,
 }}
-RT_ENUM! { enum UserDataTaskSensitivity: i32 {
+RT_ENUM! { enum UserDataTaskSensitivity: i32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskSensitivity"] {
     Public (UserDataTaskSensitivity_Public) = 0, Private (UserDataTaskSensitivity_Private) = 1,
 }}
 DEFINE_IID!(IID_IUserDataTaskStore, 4033518768, 61915, 17850, 138, 98, 8, 96, 4, 192, 33, 61);
@@ -28237,11 +28237,11 @@ impl IUserDataTaskStore {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskStore: IUserDataTaskStore}
-RT_ENUM! { enum UserDataTaskStoreAccessType: i32 {
+RT_CLASS!{class UserDataTaskStore: IUserDataTaskStore ["Windows.ApplicationModel.UserDataTasks.UserDataTaskStore"]}
+RT_ENUM! { enum UserDataTaskStoreAccessType: i32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskStoreAccessType"] {
     AppTasksReadWrite (UserDataTaskStoreAccessType_AppTasksReadWrite) = 0, AllTasksLimitedReadWrite (UserDataTaskStoreAccessType_AllTasksLimitedReadWrite) = 1,
 }}
-RT_ENUM! { enum UserDataTaskWeekOfMonth: i32 {
+RT_ENUM! { enum UserDataTaskWeekOfMonth: i32 ["Windows.ApplicationModel.UserDataTasks.UserDataTaskWeekOfMonth"] {
     First (UserDataTaskWeekOfMonth_First) = 0, Second (UserDataTaskWeekOfMonth_Second) = 1, Third (UserDataTaskWeekOfMonth_Third) = 2, Fourth (UserDataTaskWeekOfMonth_Fourth) = 3, Last (UserDataTaskWeekOfMonth_Last) = 4,
 }}
 pub mod dataprovider { // Windows.ApplicationModel.UserDataTasks.DataProvider
@@ -28311,7 +28311,7 @@ impl IUserDataTaskDataProviderConnection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskDataProviderConnection: IUserDataTaskDataProviderConnection}
+RT_CLASS!{class UserDataTaskDataProviderConnection: IUserDataTaskDataProviderConnection ["Windows.ApplicationModel.UserDataTasks.DataProvider.UserDataTaskDataProviderConnection"]}
 DEFINE_IID!(IID_IUserDataTaskDataProviderTriggerDetails, 2921804290, 45513, 17726, 175, 197, 179, 10, 243, 189, 33, 125);
 RT_INTERFACE!{interface IUserDataTaskDataProviderTriggerDetails(IUserDataTaskDataProviderTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskDataProviderTriggerDetails] {
     fn get_Connection(&self, out: *mut *mut UserDataTaskDataProviderConnection) -> HRESULT
@@ -28323,7 +28323,7 @@ impl IUserDataTaskDataProviderTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskDataProviderTriggerDetails: IUserDataTaskDataProviderTriggerDetails}
+RT_CLASS!{class UserDataTaskDataProviderTriggerDetails: IUserDataTaskDataProviderTriggerDetails ["Windows.ApplicationModel.UserDataTasks.DataProvider.UserDataTaskDataProviderTriggerDetails"]}
 DEFINE_IID!(IID_IUserDataTaskListCompleteTaskRequest, 4133360803, 6722, 18906, 133, 82, 40, 115, 229, 44, 85, 235);
 RT_INTERFACE!{interface IUserDataTaskListCompleteTaskRequest(IUserDataTaskListCompleteTaskRequestVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskListCompleteTaskRequest] {
     fn get_TaskListId(&self, out: *mut HSTRING) -> HRESULT,
@@ -28353,7 +28353,7 @@ impl IUserDataTaskListCompleteTaskRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskListCompleteTaskRequest: IUserDataTaskListCompleteTaskRequest}
+RT_CLASS!{class UserDataTaskListCompleteTaskRequest: IUserDataTaskListCompleteTaskRequest ["Windows.ApplicationModel.UserDataTasks.DataProvider.UserDataTaskListCompleteTaskRequest"]}
 DEFINE_IID!(IID_IUserDataTaskListCompleteTaskRequestEventArgs, 3615242557, 19698, 18605, 135, 253, 150, 63, 14, 170, 122, 149);
 RT_INTERFACE!{interface IUserDataTaskListCompleteTaskRequestEventArgs(IUserDataTaskListCompleteTaskRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskListCompleteTaskRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut UserDataTaskListCompleteTaskRequest) -> HRESULT,
@@ -28371,7 +28371,7 @@ impl IUserDataTaskListCompleteTaskRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskListCompleteTaskRequestEventArgs: IUserDataTaskListCompleteTaskRequestEventArgs}
+RT_CLASS!{class UserDataTaskListCompleteTaskRequestEventArgs: IUserDataTaskListCompleteTaskRequestEventArgs ["Windows.ApplicationModel.UserDataTasks.DataProvider.UserDataTaskListCompleteTaskRequestEventArgs"]}
 DEFINE_IID!(IID_IUserDataTaskListCreateOrUpdateTaskRequest, 557020972, 21954, 17152, 130, 121, 4, 50, 110, 7, 204, 228);
 RT_INTERFACE!{interface IUserDataTaskListCreateOrUpdateTaskRequest(IUserDataTaskListCreateOrUpdateTaskRequestVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskListCreateOrUpdateTaskRequest] {
     fn get_TaskListId(&self, out: *mut HSTRING) -> HRESULT,
@@ -28401,7 +28401,7 @@ impl IUserDataTaskListCreateOrUpdateTaskRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskListCreateOrUpdateTaskRequest: IUserDataTaskListCreateOrUpdateTaskRequest}
+RT_CLASS!{class UserDataTaskListCreateOrUpdateTaskRequest: IUserDataTaskListCreateOrUpdateTaskRequest ["Windows.ApplicationModel.UserDataTasks.DataProvider.UserDataTaskListCreateOrUpdateTaskRequest"]}
 DEFINE_IID!(IID_IUserDataTaskListCreateOrUpdateTaskRequestEventArgs, 314923602, 58232, 16795, 174, 56, 165, 233, 230, 4, 71, 110);
 RT_INTERFACE!{interface IUserDataTaskListCreateOrUpdateTaskRequestEventArgs(IUserDataTaskListCreateOrUpdateTaskRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskListCreateOrUpdateTaskRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut UserDataTaskListCreateOrUpdateTaskRequest) -> HRESULT,
@@ -28419,7 +28419,7 @@ impl IUserDataTaskListCreateOrUpdateTaskRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskListCreateOrUpdateTaskRequestEventArgs: IUserDataTaskListCreateOrUpdateTaskRequestEventArgs}
+RT_CLASS!{class UserDataTaskListCreateOrUpdateTaskRequestEventArgs: IUserDataTaskListCreateOrUpdateTaskRequestEventArgs ["Windows.ApplicationModel.UserDataTasks.DataProvider.UserDataTaskListCreateOrUpdateTaskRequestEventArgs"]}
 DEFINE_IID!(IID_IUserDataTaskListDeleteTaskRequest, 1267088488, 30295, 20285, 176, 116, 212, 126, 200, 223, 7, 231);
 RT_INTERFACE!{interface IUserDataTaskListDeleteTaskRequest(IUserDataTaskListDeleteTaskRequestVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskListDeleteTaskRequest] {
     fn get_TaskListId(&self, out: *mut HSTRING) -> HRESULT,
@@ -28449,7 +28449,7 @@ impl IUserDataTaskListDeleteTaskRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskListDeleteTaskRequest: IUserDataTaskListDeleteTaskRequest}
+RT_CLASS!{class UserDataTaskListDeleteTaskRequest: IUserDataTaskListDeleteTaskRequest ["Windows.ApplicationModel.UserDataTasks.DataProvider.UserDataTaskListDeleteTaskRequest"]}
 DEFINE_IID!(IID_IUserDataTaskListDeleteTaskRequestEventArgs, 1617156825, 62818, 16709, 142, 254, 213, 0, 120, 201, 43, 127);
 RT_INTERFACE!{interface IUserDataTaskListDeleteTaskRequestEventArgs(IUserDataTaskListDeleteTaskRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskListDeleteTaskRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut UserDataTaskListDeleteTaskRequest) -> HRESULT,
@@ -28467,7 +28467,7 @@ impl IUserDataTaskListDeleteTaskRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskListDeleteTaskRequestEventArgs: IUserDataTaskListDeleteTaskRequestEventArgs}
+RT_CLASS!{class UserDataTaskListDeleteTaskRequestEventArgs: IUserDataTaskListDeleteTaskRequestEventArgs ["Windows.ApplicationModel.UserDataTasks.DataProvider.UserDataTaskListDeleteTaskRequestEventArgs"]}
 DEFINE_IID!(IID_IUserDataTaskListSkipOccurrenceRequest, 2877809485, 7379, 17180, 159, 88, 8, 154, 164, 51, 141, 133);
 RT_INTERFACE!{interface IUserDataTaskListSkipOccurrenceRequest(IUserDataTaskListSkipOccurrenceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskListSkipOccurrenceRequest] {
     fn get_TaskListId(&self, out: *mut HSTRING) -> HRESULT,
@@ -28497,7 +28497,7 @@ impl IUserDataTaskListSkipOccurrenceRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskListSkipOccurrenceRequest: IUserDataTaskListSkipOccurrenceRequest}
+RT_CLASS!{class UserDataTaskListSkipOccurrenceRequest: IUserDataTaskListSkipOccurrenceRequest ["Windows.ApplicationModel.UserDataTasks.DataProvider.UserDataTaskListSkipOccurrenceRequest"]}
 DEFINE_IID!(IID_IUserDataTaskListSkipOccurrenceRequestEventArgs, 2050724426, 52271, 20091, 170, 205, 165, 185, 210, 156, 250, 78);
 RT_INTERFACE!{interface IUserDataTaskListSkipOccurrenceRequestEventArgs(IUserDataTaskListSkipOccurrenceRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskListSkipOccurrenceRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut UserDataTaskListSkipOccurrenceRequest) -> HRESULT,
@@ -28515,7 +28515,7 @@ impl IUserDataTaskListSkipOccurrenceRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskListSkipOccurrenceRequestEventArgs: IUserDataTaskListSkipOccurrenceRequestEventArgs}
+RT_CLASS!{class UserDataTaskListSkipOccurrenceRequestEventArgs: IUserDataTaskListSkipOccurrenceRequestEventArgs ["Windows.ApplicationModel.UserDataTasks.DataProvider.UserDataTaskListSkipOccurrenceRequestEventArgs"]}
 DEFINE_IID!(IID_IUserDataTaskListSyncManagerSyncRequest, 1084700679, 30096, 16713, 174, 25, 178, 17, 67, 26, 159, 72);
 RT_INTERFACE!{interface IUserDataTaskListSyncManagerSyncRequest(IUserDataTaskListSyncManagerSyncRequestVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskListSyncManagerSyncRequest] {
     fn get_TaskListId(&self, out: *mut HSTRING) -> HRESULT,
@@ -28539,7 +28539,7 @@ impl IUserDataTaskListSyncManagerSyncRequest {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskListSyncManagerSyncRequest: IUserDataTaskListSyncManagerSyncRequest}
+RT_CLASS!{class UserDataTaskListSyncManagerSyncRequest: IUserDataTaskListSyncManagerSyncRequest ["Windows.ApplicationModel.UserDataTasks.DataProvider.UserDataTaskListSyncManagerSyncRequest"]}
 DEFINE_IID!(IID_IUserDataTaskListSyncManagerSyncRequestEventArgs, 2393709586, 30350, 17341, 131, 133, 92, 220, 53, 31, 253, 234);
 RT_INTERFACE!{interface IUserDataTaskListSyncManagerSyncRequestEventArgs(IUserDataTaskListSyncManagerSyncRequestEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskListSyncManagerSyncRequestEventArgs] {
     fn get_Request(&self, out: *mut *mut UserDataTaskListSyncManagerSyncRequest) -> HRESULT,
@@ -28557,7 +28557,7 @@ impl IUserDataTaskListSyncManagerSyncRequestEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataTaskListSyncManagerSyncRequestEventArgs: IUserDataTaskListSyncManagerSyncRequestEventArgs}
+RT_CLASS!{class UserDataTaskListSyncManagerSyncRequestEventArgs: IUserDataTaskListSyncManagerSyncRequestEventArgs ["Windows.ApplicationModel.UserDataTasks.DataProvider.UserDataTaskListSyncManagerSyncRequestEventArgs"]}
 } // Windows.ApplicationModel.UserDataTasks.DataProvider
 } // Windows.ApplicationModel.UserDataTasks
 pub mod voicecommands { // Windows.ApplicationModel.VoiceCommands
@@ -28585,7 +28585,7 @@ impl IVoiceCommand {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VoiceCommand: IVoiceCommand}
+RT_CLASS!{class VoiceCommand: IVoiceCommand ["Windows.ApplicationModel.VoiceCommands.VoiceCommand"]}
 DEFINE_IID!(IID_IVoiceCommandCompletedEventArgs, 3361630045, 65090, 17196, 153, 7, 9, 223, 159, 207, 100, 232);
 RT_INTERFACE!{interface IVoiceCommandCompletedEventArgs(IVoiceCommandCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVoiceCommandCompletedEventArgs] {
     fn get_Reason(&self, out: *mut VoiceCommandCompletionReason) -> HRESULT
@@ -28597,8 +28597,8 @@ impl IVoiceCommandCompletedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VoiceCommandCompletedEventArgs: IVoiceCommandCompletedEventArgs}
-RT_ENUM! { enum VoiceCommandCompletionReason: i32 {
+RT_CLASS!{class VoiceCommandCompletedEventArgs: IVoiceCommandCompletedEventArgs ["Windows.ApplicationModel.VoiceCommands.VoiceCommandCompletedEventArgs"]}
+RT_ENUM! { enum VoiceCommandCompletionReason: i32 ["Windows.ApplicationModel.VoiceCommands.VoiceCommandCompletionReason"] {
     Unknown (VoiceCommandCompletionReason_Unknown) = 0, CommunicationFailed (VoiceCommandCompletionReason_CommunicationFailed) = 1, ResourceLimitsExceeded (VoiceCommandCompletionReason_ResourceLimitsExceeded) = 2, Canceled (VoiceCommandCompletionReason_Canceled) = 3, TimeoutExceeded (VoiceCommandCompletionReason_TimeoutExceeded) = 4, AppLaunched (VoiceCommandCompletionReason_AppLaunched) = 5, Completed (VoiceCommandCompletionReason_Completed) = 6,
 }}
 DEFINE_IID!(IID_IVoiceCommandConfirmationResult, 2686605630, 33313, 17702, 176, 131, 132, 9, 114, 38, 34, 71);
@@ -28612,7 +28612,7 @@ impl IVoiceCommandConfirmationResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VoiceCommandConfirmationResult: IVoiceCommandConfirmationResult}
+RT_CLASS!{class VoiceCommandConfirmationResult: IVoiceCommandConfirmationResult ["Windows.ApplicationModel.VoiceCommands.VoiceCommandConfirmationResult"]}
 DEFINE_IID!(IID_IVoiceCommandContentTile, 1055910384, 47303, 19574, 160, 222, 22, 7, 137, 94, 227, 39);
 RT_INTERFACE!{interface IVoiceCommandContentTile(IVoiceCommandContentTileVtbl): IInspectable(IInspectableVtbl) [IID_IVoiceCommandContentTile] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
@@ -28708,10 +28708,10 @@ impl IVoiceCommandContentTile {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VoiceCommandContentTile: IVoiceCommandContentTile}
+RT_CLASS!{class VoiceCommandContentTile: IVoiceCommandContentTile ["Windows.ApplicationModel.VoiceCommands.VoiceCommandContentTile"]}
 impl RtActivatable<IActivationFactory> for VoiceCommandContentTile {}
 DEFINE_CLSID!(VoiceCommandContentTile(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,86,111,105,99,101,67,111,109,109,97,110,100,115,46,86,111,105,99,101,67,111,109,109,97,110,100,67,111,110,116,101,110,116,84,105,108,101,0]) [CLSID_VoiceCommandContentTile]);
-RT_ENUM! { enum VoiceCommandContentTileType: i32 {
+RT_ENUM! { enum VoiceCommandContentTileType: i32 ["Windows.ApplicationModel.VoiceCommands.VoiceCommandContentTileType"] {
     TitleOnly (VoiceCommandContentTileType_TitleOnly) = 0, TitleWithText (VoiceCommandContentTileType_TitleWithText) = 1, TitleWith68x68Icon (VoiceCommandContentTileType_TitleWith68x68Icon) = 2, TitleWith68x68IconAndText (VoiceCommandContentTileType_TitleWith68x68IconAndText) = 3, TitleWith68x92Icon (VoiceCommandContentTileType_TitleWith68x92Icon) = 4, TitleWith68x92IconAndText (VoiceCommandContentTileType_TitleWith68x92IconAndText) = 5, TitleWith280x140Icon (VoiceCommandContentTileType_TitleWith280x140Icon) = 6, TitleWith280x140IconAndText (VoiceCommandContentTileType_TitleWith280x140IconAndText) = 7,
 }}
 DEFINE_IID!(IID_IVoiceCommandDefinition, 2037557968, 2420, 18809, 152, 75, 203, 137, 89, 205, 97, 174);
@@ -28737,7 +28737,7 @@ impl IVoiceCommandDefinition {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VoiceCommandDefinition: IVoiceCommandDefinition}
+RT_CLASS!{class VoiceCommandDefinition: IVoiceCommandDefinition ["Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinition"]}
 RT_CLASS!{static class VoiceCommandDefinitionManager}
 impl RtActivatable<IVoiceCommandDefinitionManagerStatics> for VoiceCommandDefinitionManager {}
 impl VoiceCommandDefinitionManager {
@@ -28778,7 +28778,7 @@ impl IVoiceCommandDisambiguationResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VoiceCommandDisambiguationResult: IVoiceCommandDisambiguationResult}
+RT_CLASS!{class VoiceCommandDisambiguationResult: IVoiceCommandDisambiguationResult ["Windows.ApplicationModel.VoiceCommands.VoiceCommandDisambiguationResult"]}
 DEFINE_IID!(IID_IVoiceCommandResponse, 42251022, 35387, 19652, 166, 161, 202, 213, 190, 39, 22, 181);
 RT_INTERFACE!{interface IVoiceCommandResponse(IVoiceCommandResponseVtbl): IInspectable(IInspectableVtbl) [IID_IVoiceCommandResponse] {
     fn get_Message(&self, out: *mut *mut VoiceCommandUserMessage) -> HRESULT,
@@ -28823,7 +28823,7 @@ impl IVoiceCommandResponse {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VoiceCommandResponse: IVoiceCommandResponse}
+RT_CLASS!{class VoiceCommandResponse: IVoiceCommandResponse ["Windows.ApplicationModel.VoiceCommands.VoiceCommandResponse"]}
 impl RtActivatable<IVoiceCommandResponseStatics> for VoiceCommandResponse {}
 impl VoiceCommandResponse {
     #[inline] pub fn get_max_supported_voice_command_content_tiles() -> Result<u32> {
@@ -28943,7 +28943,7 @@ impl IVoiceCommandServiceConnection {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VoiceCommandServiceConnection: IVoiceCommandServiceConnection}
+RT_CLASS!{class VoiceCommandServiceConnection: IVoiceCommandServiceConnection ["Windows.ApplicationModel.VoiceCommands.VoiceCommandServiceConnection"]}
 impl RtActivatable<IVoiceCommandServiceConnectionStatics> for VoiceCommandServiceConnection {}
 impl VoiceCommandServiceConnection {
     #[inline] pub fn from_app_service_trigger_details(triggerDetails: &super::appservice::AppServiceTriggerDetails) -> Result<Option<ComPtr<VoiceCommandServiceConnection>>> {
@@ -28989,13 +28989,13 @@ impl IVoiceCommandUserMessage {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VoiceCommandUserMessage: IVoiceCommandUserMessage}
+RT_CLASS!{class VoiceCommandUserMessage: IVoiceCommandUserMessage ["Windows.ApplicationModel.VoiceCommands.VoiceCommandUserMessage"]}
 impl RtActivatable<IActivationFactory> for VoiceCommandUserMessage {}
 DEFINE_CLSID!(VoiceCommandUserMessage(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,86,111,105,99,101,67,111,109,109,97,110,100,115,46,86,111,105,99,101,67,111,109,109,97,110,100,85,115,101,114,77,101,115,115,97,103,101,0]) [CLSID_VoiceCommandUserMessage]);
 } // Windows.ApplicationModel.VoiceCommands
 pub mod wallet { // Windows.ApplicationModel.Wallet
 use ::prelude::*;
-RT_ENUM! { enum WalletActionKind: i32 {
+RT_ENUM! { enum WalletActionKind: i32 ["Windows.ApplicationModel.Wallet.WalletActionKind"] {
     OpenItem (WalletActionKind_OpenItem) = 0, Transaction (WalletActionKind_Transaction) = 1, MoreTransactions (WalletActionKind_MoreTransactions) = 2, Message (WalletActionKind_Message) = 3, Verb (WalletActionKind_Verb) = 4,
 }}
 DEFINE_IID!(IID_IWalletBarcode, 1334147881, 56960, 20132, 161, 205, 129, 205, 8, 77, 172, 39);
@@ -29021,7 +29021,7 @@ impl IWalletBarcode {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WalletBarcode: IWalletBarcode}
+RT_CLASS!{class WalletBarcode: IWalletBarcode ["Windows.ApplicationModel.Wallet.WalletBarcode"]}
 impl RtActivatable<IWalletBarcodeFactory> for WalletBarcode {}
 impl WalletBarcode {
     #[inline] pub fn create_wallet_barcode(symbology: WalletBarcodeSymbology, value: &HStringArg) -> Result<ComPtr<WalletBarcode>> {
@@ -29049,10 +29049,10 @@ impl IWalletBarcodeFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WalletBarcodeSymbology: i32 {
+RT_ENUM! { enum WalletBarcodeSymbology: i32 ["Windows.ApplicationModel.Wallet.WalletBarcodeSymbology"] {
     Invalid (WalletBarcodeSymbology_Invalid) = 0, Upca (WalletBarcodeSymbology_Upca) = 1, Upce (WalletBarcodeSymbology_Upce) = 2, Ean13 (WalletBarcodeSymbology_Ean13) = 3, Ean8 (WalletBarcodeSymbology_Ean8) = 4, Itf (WalletBarcodeSymbology_Itf) = 5, Code39 (WalletBarcodeSymbology_Code39) = 6, Code128 (WalletBarcodeSymbology_Code128) = 7, Qr (WalletBarcodeSymbology_Qr) = 8, Pdf417 (WalletBarcodeSymbology_Pdf417) = 9, Aztec (WalletBarcodeSymbology_Aztec) = 10, Custom (WalletBarcodeSymbology_Custom) = 100000,
 }}
-RT_ENUM! { enum WalletDetailViewPosition: i32 {
+RT_ENUM! { enum WalletDetailViewPosition: i32 ["Windows.ApplicationModel.Wallet.WalletDetailViewPosition"] {
     Hidden (WalletDetailViewPosition_Hidden) = 0, HeaderField1 (WalletDetailViewPosition_HeaderField1) = 1, HeaderField2 (WalletDetailViewPosition_HeaderField2) = 2, PrimaryField1 (WalletDetailViewPosition_PrimaryField1) = 3, PrimaryField2 (WalletDetailViewPosition_PrimaryField2) = 4, SecondaryField1 (WalletDetailViewPosition_SecondaryField1) = 5, SecondaryField2 (WalletDetailViewPosition_SecondaryField2) = 6, SecondaryField3 (WalletDetailViewPosition_SecondaryField3) = 7, SecondaryField4 (WalletDetailViewPosition_SecondaryField4) = 8, SecondaryField5 (WalletDetailViewPosition_SecondaryField5) = 9, CenterField1 (WalletDetailViewPosition_CenterField1) = 10, FooterField1 (WalletDetailViewPosition_FooterField1) = 11, FooterField2 (WalletDetailViewPosition_FooterField2) = 12, FooterField3 (WalletDetailViewPosition_FooterField3) = 13, FooterField4 (WalletDetailViewPosition_FooterField4) = 14,
 }}
 DEFINE_IID!(IID_IWalletItem, 548752360, 4493, 20164, 153, 108, 185, 99, 231, 189, 62, 116);
@@ -29371,7 +29371,7 @@ impl IWalletItem {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WalletItem: IWalletItem}
+RT_CLASS!{class WalletItem: IWalletItem ["Windows.ApplicationModel.Wallet.WalletItem"]}
 impl RtActivatable<IWalletItemFactory> for WalletItem {}
 impl WalletItem {
     #[inline] pub fn create_wallet_item(kind: WalletItemKind, displayName: &HStringArg) -> Result<ComPtr<WalletItem>> {
@@ -29439,7 +29439,7 @@ impl IWalletItemCustomProperty {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WalletItemCustomProperty: IWalletItemCustomProperty}
+RT_CLASS!{class WalletItemCustomProperty: IWalletItemCustomProperty ["Windows.ApplicationModel.Wallet.WalletItemCustomProperty"]}
 impl RtActivatable<IWalletItemCustomPropertyFactory> for WalletItemCustomProperty {}
 impl WalletItemCustomProperty {
     #[inline] pub fn create_wallet_item_custom_property(name: &HStringArg, value: &HStringArg) -> Result<ComPtr<WalletItemCustomProperty>> {
@@ -29469,7 +29469,7 @@ impl IWalletItemFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WalletItemKind: i32 {
+RT_ENUM! { enum WalletItemKind: i32 ["Windows.ApplicationModel.Wallet.WalletItemKind"] {
     Invalid (WalletItemKind_Invalid) = 0, Deal (WalletItemKind_Deal) = 1, General (WalletItemKind_General) = 2, PaymentInstrument (WalletItemKind_PaymentInstrument) = 3, Ticket (WalletItemKind_Ticket) = 4, BoardingPass (WalletItemKind_BoardingPass) = 5, MembershipCard (WalletItemKind_MembershipCard) = 6,
 }}
 DEFINE_IID!(IID_IWalletItemStore, 1902135371, 27977, 18680, 145, 169, 64, 161, 208, 241, 62, 244);
@@ -29538,7 +29538,7 @@ impl IWalletItemStore {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WalletItemStore: IWalletItemStore}
+RT_CLASS!{class WalletItemStore: IWalletItemStore ["Windows.ApplicationModel.Wallet.WalletItemStore"]}
 DEFINE_IID!(IID_IWalletItemStore2, 1709605616, 28681, 18965, 189, 84, 79, 255, 55, 155, 255, 226);
 RT_INTERFACE!{interface IWalletItemStore2(IWalletItemStore2Vtbl): IInspectable(IInspectableVtbl) [IID_IWalletItemStore2] {
     fn add_ItemsChanged(&self, handler: *mut foundation::TypedEventHandler<WalletItemStore, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -29603,10 +29603,10 @@ impl IWalletRelevantLocation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WalletRelevantLocation: IWalletRelevantLocation}
+RT_CLASS!{class WalletRelevantLocation: IWalletRelevantLocation ["Windows.ApplicationModel.Wallet.WalletRelevantLocation"]}
 impl RtActivatable<IActivationFactory> for WalletRelevantLocation {}
 DEFINE_CLSID!(WalletRelevantLocation(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,87,97,108,108,101,116,46,87,97,108,108,101,116,82,101,108,101,118,97,110,116,76,111,99,97,116,105,111,110,0]) [CLSID_WalletRelevantLocation]);
-RT_ENUM! { enum WalletSummaryViewPosition: i32 {
+RT_ENUM! { enum WalletSummaryViewPosition: i32 ["Windows.ApplicationModel.Wallet.WalletSummaryViewPosition"] {
     Hidden (WalletSummaryViewPosition_Hidden) = 0, Field1 (WalletSummaryViewPosition_Field1) = 1, Field2 (WalletSummaryViewPosition_Field2) = 2,
 }}
 DEFINE_IID!(IID_IWalletTransaction, 1088547136, 9734, 17689, 129, 203, 191, 241, 198, 13, 31, 121);
@@ -29680,7 +29680,7 @@ impl IWalletTransaction {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WalletTransaction: IWalletTransaction}
+RT_CLASS!{class WalletTransaction: IWalletTransaction ["Windows.ApplicationModel.Wallet.WalletTransaction"]}
 impl RtActivatable<IActivationFactory> for WalletTransaction {}
 DEFINE_CLSID!(WalletTransaction(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,87,97,108,108,101,116,46,87,97,108,108,101,116,84,114,97,110,115,97,99,116,105,111,110,0]) [CLSID_WalletTransaction]);
 DEFINE_IID!(IID_IWalletVerb, 397944534, 58305, 19572, 138, 148, 33, 122, 173, 188, 72, 132);
@@ -29699,7 +29699,7 @@ impl IWalletVerb {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WalletVerb: IWalletVerb}
+RT_CLASS!{class WalletVerb: IWalletVerb ["Windows.ApplicationModel.Wallet.WalletVerb"]}
 impl RtActivatable<IWalletVerbFactory> for WalletVerb {}
 impl WalletVerb {
     #[inline] pub fn create_wallet_verb(name: &HStringArg) -> Result<ComPtr<WalletVerb>> {
@@ -29720,7 +29720,7 @@ impl IWalletVerbFactory {
 }
 pub mod system { // Windows.ApplicationModel.Wallet.System
 use ::prelude::*;
-RT_ENUM! { enum WalletItemAppAssociation: i32 {
+RT_ENUM! { enum WalletItemAppAssociation: i32 ["Windows.ApplicationModel.Wallet.System.WalletItemAppAssociation"] {
     None (WalletItemAppAssociation_None) = 0, AppInstalled (WalletItemAppAssociation_AppInstalled) = 1, AppNotInstalled (WalletItemAppAssociation_AppNotInstalled) = 2,
 }}
 DEFINE_IID!(IID_IWalletItemSystemStore, 1378757631, 38562, 18967, 141, 25, 254, 29, 159, 131, 117, 97);
@@ -29759,7 +29759,7 @@ impl IWalletItemSystemStore {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WalletItemSystemStore: IWalletItemSystemStore}
+RT_CLASS!{class WalletItemSystemStore: IWalletItemSystemStore ["Windows.ApplicationModel.Wallet.System.WalletItemSystemStore"]}
 DEFINE_IID!(IID_IWalletItemSystemStore2, 4186782286, 48640, 20445, 151, 52, 108, 17, 60, 26, 193, 203);
 RT_INTERFACE!{interface IWalletItemSystemStore2(IWalletItemSystemStore2Vtbl): IInspectable(IInspectableVtbl) [IID_IWalletItemSystemStore2] {
     fn add_ItemsChanged(&self, handler: *mut foundation::TypedEventHandler<WalletItemSystemStore, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,

@@ -23,6 +23,10 @@ use self::gen::windows::foundation::collections::{
 #[derive(Clone, Copy)] #[repr(C)]
 pub struct Char(pub ::w::ctypes::wchar_t); // TODO: deref to u16
 
+pub trait RtIidDescriptor {
+    fn write_iid_desc(buffer: &mut String); // should be implemented as const fn
+}
+
 /// Marker trait for all Windows Runtime interfaces. They must inherit from `IInspectable`.
 pub unsafe trait RtInterface: ComInterface {}
 
@@ -34,23 +38,36 @@ pub unsafe trait RtClassInterface: RtInterface {}
 pub unsafe trait RtValueType: Copy {}
 
 unsafe impl RtValueType for bool {}
+impl RtIidDescriptor for bool { fn write_iid_desc(buffer: &mut String) { buffer.push_str("b1"); } }
 unsafe impl RtValueType for f32 {}
+impl RtIidDescriptor for f32 { fn write_iid_desc(buffer: &mut String) { buffer.push_str("f4"); } }
 unsafe impl RtValueType for f64 {}
+impl RtIidDescriptor for f64 { fn write_iid_desc(buffer: &mut String) { buffer.push_str("f8"); } }
 unsafe impl RtValueType for i8 {}
+impl RtIidDescriptor for i8 { fn write_iid_desc(buffer: &mut String) { buffer.push_str("i1"); } }
 unsafe impl RtValueType for i16 {}
+impl RtIidDescriptor for i16 { fn write_iid_desc(buffer: &mut String) { buffer.push_str("i2"); } }
 unsafe impl RtValueType for i32 {}
+impl RtIidDescriptor for i32 { fn write_iid_desc(buffer: &mut String) { buffer.push_str("i4"); } }
 unsafe impl RtValueType for i64 {}
+impl RtIidDescriptor for i64 { fn write_iid_desc(buffer: &mut String) { buffer.push_str("i8"); } }
 unsafe impl RtValueType for u8 {}
+impl RtIidDescriptor for u8 { fn write_iid_desc(buffer: &mut String) { buffer.push_str("u1"); } }
 unsafe impl RtValueType for u16 {}
+impl RtIidDescriptor for u16 { fn write_iid_desc(buffer: &mut String) { buffer.push_str("u2"); } }
 unsafe impl RtValueType for u32 {}
+impl RtIidDescriptor for u32 { fn write_iid_desc(buffer: &mut String) { buffer.push_str("u4"); } }
 unsafe impl RtValueType for u64 {}
+impl RtIidDescriptor for u64 { fn write_iid_desc(buffer: &mut String) { buffer.push_str("u8"); } }
 unsafe impl RtValueType for Char {}
+impl RtIidDescriptor for Char { fn write_iid_desc(buffer: &mut String) { buffer.push_str("c2"); } }
 unsafe impl RtValueType for Guid {}
+impl RtIidDescriptor for Guid { fn write_iid_desc(buffer: &mut String) { buffer.push_str("g16"); } }
 
 /// This is a trait implemented by all types that can be used as generic parameters of parameterized interfaces.
 /// `Abi` and `OutNonNull` must be binary compatible (i.e. `wrap` must basically be the same as `transmute`)
 /// in order to work in `ComArray`.
-pub trait RtType {
+pub trait RtType/*: RtIidDescriptor*/ {
     type In;
     type Abi;
     type Out;
@@ -59,6 +76,16 @@ pub trait RtType {
     unsafe fn unwrap(input: &Self::In) -> Self::Abi;
     unsafe fn uninitialized() -> Self::Abi;
     unsafe fn wrap(abi: Self::Abi) -> Self::Out;
+}
+
+impl<'a> RtIidDescriptor for HString {
+    fn write_iid_desc(buffer: &mut String) { buffer.push_str("string"); }
+}
+
+
+// structs need this because they directly contain HSTRING members
+impl<'a> RtIidDescriptor for HSTRING {
+    fn write_iid_desc(buffer: &mut String) { buffer.push_str("string"); }
 }
 
 impl<'a> RtType for HString {
@@ -285,10 +312,17 @@ macro_rules! RT_INTERFACE {
             lpVtbl: *const $vtbl
         }
         impl ComIid for $interface {
-            #[inline] fn iid() -> &'static ::Guid { &$iid }
+            #[inline] fn iid() -> ::Guid { *$iid }
         }
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
+        }
+        impl ::RtIidDescriptor for $interface {
+            fn write_iid_desc(buffer: &mut String) {
+                buffer.push('{');
+                ::guid::format_for_iid_descriptor(buffer, $iid);
+                buffer.push('}');
+            }
         }
         impl ::RtType for $interface {
             type In = $interface;
@@ -334,10 +368,17 @@ macro_rules! RT_INTERFACE {
             lpVtbl: *const $vtbl
         }
         impl ComIid for $interface {
-            #[inline] fn iid() -> &'static ::Guid { &$iid }
+            #[inline] fn iid() -> ::Guid { *$iid }
         }
         impl ComInterface for $interface {
             type Vtbl = $vtbl;
+        }
+        impl ::RtIidDescriptor for $interface {
+            fn write_iid_desc(buffer: &mut String) {
+                buffer.push('{');
+                ::guid::format_for_iid_descriptor(buffer, $iid);
+                buffer.push('}');
+            }
         }
         impl ::RtType for $interface {
             type In = $interface;
@@ -363,8 +404,8 @@ macro_rules! RT_INTERFACE {
             }
         }
     };
-    // The $iid is actually not necessary, because it refers to the uninstantiated version of the interface,
-    // which is irrelevant at runtime (it is used to generate the IIDs of the parameterized interfaces).
+
+    // one generic parameter
     ($(#[$attr:meta])* basic $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&self $(,$p:ident : $t:ty)*) -> $rtr:ty
@@ -384,6 +425,15 @@ macro_rules! RT_INTERFACE {
         }
         impl<$t1> ComInterface for $interface<$t1> where $t1: RtType {
             type Vtbl = $vtbl<$t1>;
+        }
+        impl<$t1> ::RtIidDescriptor for $interface<$t1> where $t1: RtType + ::RtIidDescriptor {
+            fn write_iid_desc(buffer: &mut String) {
+                buffer.push_str("pinterface({");
+                ::guid::format_for_iid_descriptor(buffer, $iid);
+                buffer.push_str("};");
+                <$t1 as ::RtIidDescriptor>::write_iid_desc(buffer);
+                buffer.push(')');
+            }
         }
         impl<$t1> ::RtType for $interface<$t1> where $t1: RtType{
             type In = $interface<$t1>;
@@ -410,6 +460,7 @@ macro_rules! RT_INTERFACE {
         }
     };
 
+    // two generic parameters
     ($(#[$attr:meta])* basic $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&self $(,$p:ident : $t:ty)*) -> $rtr:ty
@@ -429,6 +480,17 @@ macro_rules! RT_INTERFACE {
         }
         impl<$t1, $t2> ComInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type Vtbl = $vtbl<$t1, $t2>;
+        }
+        impl<$t1, $t2> ::RtIidDescriptor for $interface<$t1, $t2> where $t1: RtType + ::RtIidDescriptor, $t2: RtType + ::RtIidDescriptor {
+            fn write_iid_desc(buffer: &mut String) {
+                buffer.push_str("pinterface({");
+                ::guid::format_for_iid_descriptor(buffer, $iid);
+                buffer.push_str("};");
+                <$t1 as ::RtIidDescriptor>::write_iid_desc(buffer);
+                buffer.push(';');
+                <$t2 as ::RtIidDescriptor>::write_iid_desc(buffer);
+                buffer.push(')');
+            }
         }
         impl<$t1, $t2> ::RtType for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type In = $interface<$t1, $t2>;
@@ -601,7 +663,7 @@ macro_rules! RT_CLASS {
         pub struct $cls; // does not exist at runtime and has no ABI representation
     };
 
-    {class $cls:ident : $interface:ty} => {
+    {class $cls:ident : $interface:ty [$fullname:tt]} => {
         pub struct $cls($interface);
         unsafe impl ::RtInterface for $cls {}
         unsafe impl ::RtClassInterface for $cls {}
@@ -609,7 +671,16 @@ macro_rules! RT_CLASS {
             type Vtbl = <$interface as ComInterface>::Vtbl;
         }
         impl ComIid for $cls {
-            #[inline] fn iid() -> &'static ::Guid { <$interface as ComIid>::iid() }
+            #[inline] fn iid() -> ::Guid { <$interface as ComIid>::iid() }
+        }
+        impl ::RtIidDescriptor for $cls {
+            fn write_iid_desc(buffer: &mut String) {
+                buffer.push_str("rc(");
+                buffer.push_str($fullname);
+                buffer.push(';');
+                <$interface as ::RtIidDescriptor>::write_iid_desc(buffer);
+                buffer.push(')');
+            }
         }
         impl ::RtType for $cls {
             type In = $cls;
@@ -648,7 +719,7 @@ macro_rules! DEFINE_CLSID {
 }
 
 macro_rules! RT_ENUM {
-    {enum $name:ident : $t:ty { $($variant:ident ($longvariant:ident) = $value:expr,)+ }} => {
+    {enum $name:ident : $t:ty [$fullname:tt] { $($variant:ident ($longvariant:ident) = $value:expr,)+ }} => {
         #[repr(C)] #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
         #[allow(non_upper_case_globals)]
         pub struct $name(pub $t);
@@ -659,16 +730,44 @@ macro_rules! RT_ENUM {
             $(pub const $variant: $name = $name($value);)+
         }
         unsafe impl ::RtValueType for $name {}
+        impl ::RtIidDescriptor for $name {
+            fn write_iid_desc(buffer: &mut String) {
+                buffer.push_str("enum(");
+                buffer.push_str($fullname);
+                buffer.push(';');
+                <$t as ::RtIidDescriptor>::write_iid_desc(buffer);
+                buffer.push(')');
+            }
+        }
     };
 }
 
 macro_rules! RT_STRUCT {
-    { struct $name:ident { $($field:ident: $ftype:ty,)* }} => {
+    { struct $name:ident [$fullname:tt] { $($field:ident: $ftype:ty,)* }} => {
         #[repr(C)] #[derive(Debug,Copy,Clone)]
         pub struct $name {
             $(pub $field: $ftype,)*
         }
         unsafe impl ::RtValueType for $name {}
+        impl ::RtIidDescriptor for $name {
+            fn write_iid_desc(buffer: &mut String) {
+                buffer.push_str("struct(");
+                buffer.push_str($fullname);
+                buffer.push(';');
+                RT_STRUCT! { iid_desc_helper buffer $($ftype,)*}
+                buffer.push(')');
+            }
+        }
+    };
+
+    { iid_desc_helper $buf:ident $ftype:ty, } => {
+        <$ftype as ::RtIidDescriptor>::write_iid_desc($buf);
+    };
+
+    { iid_desc_helper $buf:ident $ftype:ty, $($rest:tt)* } => {
+        <$ftype as ::RtIidDescriptor>::write_iid_desc($buf);
+        $buf.push(';');
+        RT_STRUCT! { iid_desc_helper $buf $($rest)* }
     };
 }
 
@@ -679,7 +778,13 @@ macro_rules! RT_PINTERFACE {
     ) => {
         DEFINE_IID!($iid, $l,$w1,$w2,$b1,$b2,$b3,$b4,$b5,$b6,$b7,$b8);
         impl ComIid for $t {
-            #[inline] fn iid() -> &'static ::Guid { &$iid }
+            #[inline] fn iid() -> ::Guid {
+                let mut buf = String::new();
+                <$t as ::RtIidDescriptor>::write_iid_desc(&mut buf);
+                let dyn_iid = ::guid::iid_from_descriptor(&buf);
+                assert_eq!(&dyn_iid, $iid, "{} -> {:?} != {:?}", &buf, dyn_iid, $iid);
+                *$iid
+            }
         }
     };
 }
@@ -718,6 +823,11 @@ impl IInspectable {
         result
     }
 }
+
+// TODO: is this really correct?
+//impl RtIidDescriptor for IInspectable {
+//    fn write_iid_desc(buffer: &mut String) { buffer.push_str("cinterface(IInspectable)"); }
+//}
 
 impl ::comptr::HiddenGetRuntimeClassName for IInspectable {
     #[inline]

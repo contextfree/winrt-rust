@@ -76,13 +76,13 @@ impl IMdmAlert {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MdmAlert: IMdmAlert}
+RT_CLASS!{class MdmAlert: IMdmAlert ["Windows.Management.MdmAlert"]}
 impl RtActivatable<IActivationFactory> for MdmAlert {}
 DEFINE_CLSID!(MdmAlert(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,77,100,109,65,108,101,114,116,0]) [CLSID_MdmAlert]);
-RT_ENUM! { enum MdmAlertDataType: i32 {
+RT_ENUM! { enum MdmAlertDataType: i32 ["Windows.Management.MdmAlertDataType"] {
     String (MdmAlertDataType_String) = 0, Base64 (MdmAlertDataType_Base64) = 1, Boolean (MdmAlertDataType_Boolean) = 2, Integer (MdmAlertDataType_Integer) = 3,
 }}
-RT_ENUM! { enum MdmAlertMark: i32 {
+RT_ENUM! { enum MdmAlertMark: i32 ["Windows.Management.MdmAlertMark"] {
     None (MdmAlertMark_None) = 0, Fatal (MdmAlertMark_Fatal) = 1, Critical (MdmAlertMark_Critical) = 2, Warning (MdmAlertMark_Warning) = 3, Informational (MdmAlertMark_Informational) = 4,
 }}
 DEFINE_IID!(IID_IMdmSession, 4270403916, 36708, 18327, 169, 215, 157, 136, 248, 106, 225, 102);
@@ -137,7 +137,7 @@ impl IMdmSession {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MdmSession: IMdmSession}
+RT_CLASS!{class MdmSession: IMdmSession ["Windows.Management.MdmSession"]}
 RT_CLASS!{static class MdmSessionManager}
 impl RtActivatable<IMdmSessionManagerStatics> for MdmSessionManager {}
 impl MdmSessionManager {
@@ -183,7 +183,7 @@ impl IMdmSessionManagerStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MdmSessionState: i32 {
+RT_ENUM! { enum MdmSessionState: i32 ["Windows.Management.MdmSessionState"] {
     NotStarted (MdmSessionState_NotStarted) = 0, Starting (MdmSessionState_Starting) = 1, Connecting (MdmSessionState_Connecting) = 2, Communicating (MdmSessionState_Communicating) = 3, AlertStatusAvailable (MdmSessionState_AlertStatusAvailable) = 4, Retrying (MdmSessionState_Retrying) = 5, Completed (MdmSessionState_Completed) = 6,
 }}
 pub mod core { // Windows.Management.Core
@@ -192,7 +192,7 @@ DEFINE_IID!(IID_IApplicationDataManager, 1959855154, 11929, 16384, 154, 58, 100,
 RT_INTERFACE!{interface IApplicationDataManager(IApplicationDataManagerVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationDataManager] {
     
 }}
-RT_CLASS!{class ApplicationDataManager: IApplicationDataManager}
+RT_CLASS!{class ApplicationDataManager: IApplicationDataManager ["Windows.Management.Core.ApplicationDataManager"]}
 impl RtActivatable<IApplicationDataManagerStatics> for ApplicationDataManager {}
 impl ApplicationDataManager {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_for_package_family(packageFamilyName: &HStringArg) -> Result<Option<ComPtr<super::super::storage::ApplicationData>>> {
@@ -214,16 +214,16 @@ impl IApplicationDataManagerStatics {
 } // Windows.Management.Core
 pub mod deployment { // Windows.Management.Deployment
 use ::prelude::*;
-RT_ENUM! { enum AddPackageByAppInstallerOptions: u32 {
+RT_ENUM! { enum AddPackageByAppInstallerOptions: u32 ["Windows.Management.Deployment.AddPackageByAppInstallerOptions"] {
     None (AddPackageByAppInstallerOptions_None) = 0, InstallAllResources (AddPackageByAppInstallerOptions_InstallAllResources) = 32, ForceTargetAppShutdown (AddPackageByAppInstallerOptions_ForceTargetAppShutdown) = 64, RequiredContentGroupOnly (AddPackageByAppInstallerOptions_RequiredContentGroupOnly) = 256,
 }}
-RT_ENUM! { enum DeploymentOptions: u32 {
+RT_ENUM! { enum DeploymentOptions: u32 ["Windows.Management.Deployment.DeploymentOptions"] {
     None (DeploymentOptions_None) = 0, ForceApplicationShutdown (DeploymentOptions_ForceApplicationShutdown) = 1, DevelopmentMode (DeploymentOptions_DevelopmentMode) = 2, InstallAllResources (DeploymentOptions_InstallAllResources) = 32, ForceTargetApplicationShutdown (DeploymentOptions_ForceTargetApplicationShutdown) = 64, RequiredContentGroupOnly (DeploymentOptions_RequiredContentGroupOnly) = 256, ForceUpdateFromAnyVersion (DeploymentOptions_ForceUpdateFromAnyVersion) = 262144,
 }}
-RT_STRUCT! { struct DeploymentProgress {
+RT_STRUCT! { struct DeploymentProgress ["Windows.Management.Deployment.DeploymentProgress"] {
     state: DeploymentProgressState, percentage: u32,
 }}
-RT_ENUM! { enum DeploymentProgressState: i32 {
+RT_ENUM! { enum DeploymentProgressState: i32 ["Windows.Management.Deployment.DeploymentProgressState"] {
     Queued (DeploymentProgressState_Queued) = 0, Processing (DeploymentProgressState_Processing) = 1,
 }}
 DEFINE_IID!(IID_IDeploymentResult, 627292590, 46973, 19487, 138, 123, 32, 230, 173, 81, 94, 243);
@@ -249,7 +249,7 @@ impl IDeploymentResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DeploymentResult: IDeploymentResult}
+RT_CLASS!{class DeploymentResult: IDeploymentResult ["Windows.Management.Deployment.DeploymentResult"]}
 DEFINE_IID!(IID_IDeploymentResult2, 4228804956, 23041, 19415, 188, 241, 56, 28, 140, 130, 224, 74);
 RT_INTERFACE!{interface IDeploymentResult2(IDeploymentResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IDeploymentResult2] {
     fn get_IsRegistered(&self, out: *mut bool) -> HRESULT
@@ -261,7 +261,7 @@ impl IDeploymentResult2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PackageInstallState: i32 {
+RT_ENUM! { enum PackageInstallState: i32 ["Windows.Management.Deployment.PackageInstallState"] {
     NotInstalled (PackageInstallState_NotInstalled) = 0, Staged (PackageInstallState_Staged) = 1, Installed (PackageInstallState_Installed) = 2, Paused (PackageInstallState_Paused) = 6,
 }}
 DEFINE_IID!(IID_IPackageManager, 2591902565, 24207, 20423, 162, 229, 127, 105, 37, 203, 139, 83);
@@ -364,7 +364,7 @@ impl IPackageManager {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageManager: IPackageManager}
+RT_CLASS!{class PackageManager: IPackageManager ["Windows.Management.Deployment.PackageManager"]}
 impl RtActivatable<IActivationFactory> for PackageManager {}
 DEFINE_CLSID!(PackageManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,68,101,112,108,111,121,109,101,110,116,46,80,97,99,107,97,103,101,77,97,110,97,103,101,114,0]) [CLSID_PackageManager]);
 DEFINE_IID!(IID_IPackageManager2, 4155166861, 2112, 18162, 181, 216, 202, 212, 118, 147, 160, 149);
@@ -650,14 +650,14 @@ impl IPackageManagerDebugSettings {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageManagerDebugSettings: IPackageManagerDebugSettings}
-RT_ENUM! { enum PackageState: i32 {
+RT_CLASS!{class PackageManagerDebugSettings: IPackageManagerDebugSettings ["Windows.Management.Deployment.PackageManagerDebugSettings"]}
+RT_ENUM! { enum PackageState: i32 ["Windows.Management.Deployment.PackageState"] {
     Normal (PackageState_Normal) = 0, LicenseInvalid (PackageState_LicenseInvalid) = 1, Modified (PackageState_Modified) = 2, Tampered (PackageState_Tampered) = 3,
 }}
-RT_ENUM! { enum PackageStatus: u32 {
+RT_ENUM! { enum PackageStatus: u32 ["Windows.Management.Deployment.PackageStatus"] {
     OK (PackageStatus_OK) = 0, LicenseIssue (PackageStatus_LicenseIssue) = 1, Modified (PackageStatus_Modified) = 2, Tampered (PackageStatus_Tampered) = 4, Disabled (PackageStatus_Disabled) = 8,
 }}
-RT_ENUM! { enum PackageTypes: u32 {
+RT_ENUM! { enum PackageTypes: u32 ["Windows.Management.Deployment.PackageTypes"] {
     None (PackageTypes_None) = 0, Main (PackageTypes_Main) = 1, Framework (PackageTypes_Framework) = 2, Resource (PackageTypes_Resource) = 4, Bundle (PackageTypes_Bundle) = 8, Xap (PackageTypes_Xap) = 16, Optional (PackageTypes_Optional) = 32,
 }}
 DEFINE_IID!(IID_IPackageUserInformation, 4130878499, 64009, 19644, 144, 85, 21, 202, 39, 94, 46, 126);
@@ -677,7 +677,7 @@ impl IPackageUserInformation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageUserInformation: IPackageUserInformation}
+RT_CLASS!{class PackageUserInformation: IPackageUserInformation ["Windows.Management.Deployment.PackageUserInformation"]}
 DEFINE_IID!(IID_IPackageVolume, 3475403459, 6720, 17488, 151, 57, 42, 206, 46, 137, 136, 83);
 RT_INTERFACE!{interface IPackageVolume(IPackageVolumeVtbl): IInspectable(IInspectableVtbl) [IID_IPackageVolume] {
     fn get_IsOffline(&self, out: *mut bool) -> HRESULT,
@@ -803,7 +803,7 @@ impl IPackageVolume {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PackageVolume: IPackageVolume}
+RT_CLASS!{class PackageVolume: IPackageVolume ["Windows.Management.Deployment.PackageVolume"]}
 DEFINE_IID!(IID_IPackageVolume2, 1185664814, 40404, 18338, 171, 140, 198, 64, 131, 73, 188, 216);
 RT_INTERFACE!{interface IPackageVolume2(IPackageVolume2Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageVolume2] {
     fn get_IsFullTrustPackageSupported(&self, out: *mut bool) -> HRESULT,
@@ -827,7 +827,7 @@ impl IPackageVolume2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum RemovalOptions: u32 {
+RT_ENUM! { enum RemovalOptions: u32 ["Windows.Management.Deployment.RemovalOptions"] {
     None (RemovalOptions_None) = 0, PreserveApplicationData (RemovalOptions_PreserveApplicationData) = 4096, RemoveForAllUsers (RemovalOptions_RemoveForAllUsers) = 524288,
 }}
 pub mod preview { // Windows.Management.Deployment.Preview
@@ -868,7 +868,7 @@ impl IInstalledClassicAppInfo {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InstalledClassicAppInfo: IInstalledClassicAppInfo}
+RT_CLASS!{class InstalledClassicAppInfo: IInstalledClassicAppInfo ["Windows.Management.Deployment.Preview.InstalledClassicAppInfo"]}
 } // Windows.Management.Deployment.Preview
 } // Windows.Management.Deployment
 pub mod policies { // Windows.Management.Policies
@@ -968,8 +968,8 @@ impl INamedPolicyData {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NamedPolicyData: INamedPolicyData}
-RT_ENUM! { enum NamedPolicyKind: i32 {
+RT_CLASS!{class NamedPolicyData: INamedPolicyData ["Windows.Management.Policies.NamedPolicyData"]}
+RT_ENUM! { enum NamedPolicyKind: i32 ["Windows.Management.Policies.NamedPolicyKind"] {
     Invalid (NamedPolicyKind_Invalid) = 0, Binary (NamedPolicyKind_Binary) = 1, Boolean (NamedPolicyKind_Boolean) = 2, Int32 (NamedPolicyKind_Int32) = 3, Int64 (NamedPolicyKind_Int64) = 4, String (NamedPolicyKind_String) = 5,
 }}
 DEFINE_IID!(IID_INamedPolicyStatics, 2138651623, 30404, 16472, 140, 173, 103, 102, 44, 208, 95, 13);
@@ -1020,7 +1020,7 @@ impl IPreviewBuildsManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PreviewBuildsManager: IPreviewBuildsManager}
+RT_CLASS!{class PreviewBuildsManager: IPreviewBuildsManager ["Windows.Management.Update.PreviewBuildsManager"]}
 impl RtActivatable<IPreviewBuildsManagerStatics> for PreviewBuildsManager {}
 impl PreviewBuildsManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<PreviewBuildsManager>>> {
@@ -1059,7 +1059,7 @@ impl IPreviewBuildsState {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PreviewBuildsState: IPreviewBuildsState}
+RT_CLASS!{class PreviewBuildsState: IPreviewBuildsState ["Windows.Management.Update.PreviewBuildsState"]}
 } // Windows.Management.Update
 pub mod workplace { // Windows.Management.Workplace
 use ::prelude::*;
@@ -1124,7 +1124,7 @@ impl IMdmPolicyStatics2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MessagingSyncPolicy: i32 {
+RT_ENUM! { enum MessagingSyncPolicy: i32 ["Windows.Management.Workplace.MessagingSyncPolicy"] {
     Disallowed (MessagingSyncPolicy_Disallowed) = 0, Allowed (MessagingSyncPolicy_Allowed) = 1, Required (MessagingSyncPolicy_Required) = 2,
 }}
 RT_CLASS!{static class WorkplaceSettings}

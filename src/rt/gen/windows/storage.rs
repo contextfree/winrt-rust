@@ -58,7 +58,7 @@ impl IAppDataPaths {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AppDataPaths: IAppDataPaths}
+RT_CLASS!{class AppDataPaths: IAppDataPaths ["Windows.Storage.AppDataPaths"]}
 impl RtActivatable<IAppDataPathsStatics> for AppDataPaths {}
 impl AppDataPaths {
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::system::User) -> Result<Option<ComPtr<AppDataPaths>>> {
@@ -168,7 +168,7 @@ impl IApplicationData {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ApplicationData: IApplicationData}
+RT_CLASS!{class ApplicationData: IApplicationData ["Windows.Storage.ApplicationData"]}
 impl RtActivatable<IApplicationDataStatics> for ApplicationData {}
 impl RtActivatable<IApplicationDataStatics2> for ApplicationData {}
 impl ApplicationData {
@@ -214,7 +214,7 @@ impl IApplicationData3 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ApplicationDataCompositeValue: foundation::collections::IPropertySet}
+RT_CLASS!{class ApplicationDataCompositeValue: foundation::collections::IPropertySet ["Windows.Storage.ApplicationDataCompositeValue"]}
 impl RtActivatable<IActivationFactory> for ApplicationDataCompositeValue {}
 DEFINE_CLSID!(ApplicationDataCompositeValue(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,112,112,108,105,99,97,116,105,111,110,68,97,116,97,67,111,109,112,111,115,105,116,101,86,97,108,117,101,0]) [CLSID_ApplicationDataCompositeValue]);
 DEFINE_IID!(IID_IApplicationDataContainer, 3316579614, 62567, 16570, 133, 102, 171, 100, 10, 68, 30, 29);
@@ -257,12 +257,12 @@ impl IApplicationDataContainer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ApplicationDataContainer: IApplicationDataContainer}
-RT_CLASS!{class ApplicationDataContainerSettings: foundation::collections::IPropertySet}
-RT_ENUM! { enum ApplicationDataCreateDisposition: i32 {
+RT_CLASS!{class ApplicationDataContainer: IApplicationDataContainer ["Windows.Storage.ApplicationDataContainer"]}
+RT_CLASS!{class ApplicationDataContainerSettings: foundation::collections::IPropertySet ["Windows.Storage.ApplicationDataContainerSettings"]}
+RT_ENUM! { enum ApplicationDataCreateDisposition: i32 ["Windows.Storage.ApplicationDataCreateDisposition"] {
     Always (ApplicationDataCreateDisposition_Always) = 0, Existing (ApplicationDataCreateDisposition_Existing) = 1,
 }}
-RT_ENUM! { enum ApplicationDataLocality: i32 {
+RT_ENUM! { enum ApplicationDataLocality: i32 ["Windows.Storage.ApplicationDataLocality"] {
     Local (ApplicationDataLocality_Local) = 0, Roaming (ApplicationDataLocality_Roaming) = 1, Temporary (ApplicationDataLocality_Temporary) = 2, LocalCache (ApplicationDataLocality_LocalCache) = 3,
 }}
 DEFINE_IID!(IID_ApplicationDataSetVersionHandler, 2690093542, 52383, 18055, 172, 171, 163, 100, 253, 120, 84, 99);
@@ -324,7 +324,7 @@ impl ICachedFileManagerStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum CreationCollisionOption: i32 {
+RT_ENUM! { enum CreationCollisionOption: i32 ["Windows.Storage.CreationCollisionOption"] {
     GenerateUniqueName (CreationCollisionOption_GenerateUniqueName) = 0, ReplaceExisting (CreationCollisionOption_ReplaceExisting) = 1, FailIfExists (CreationCollisionOption_FailIfExists) = 2, OpenIfExists (CreationCollisionOption_OpenIfExists) = 3,
 }}
 RT_CLASS!{static class DownloadsFolder}
@@ -415,10 +415,10 @@ impl IDownloadsFolderStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum FileAccessMode: i32 {
+RT_ENUM! { enum FileAccessMode: i32 ["Windows.Storage.FileAccessMode"] {
     Read (FileAccessMode_Read) = 0, ReadWrite (FileAccessMode_ReadWrite) = 1,
 }}
-RT_ENUM! { enum FileAttributes: u32 {
+RT_ENUM! { enum FileAttributes: u32 ["Windows.Storage.FileAttributes"] {
     Normal (FileAttributes_Normal) = 0, ReadOnly (FileAttributes_ReadOnly) = 1, Directory (FileAttributes_Directory) = 16, Archive (FileAttributes_Archive) = 32, Temporary (FileAttributes_Temporary) = 256, LocallyIncomplete (FileAttributes_LocallyIncomplete) = 512,
 }}
 RT_CLASS!{static class FileIO}
@@ -566,7 +566,7 @@ impl IFileIOStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum KnownFolderId: i32 {
+RT_ENUM! { enum KnownFolderId: i32 ["Windows.Storage.KnownFolderId"] {
     AppCaptures (KnownFolderId_AppCaptures) = 0, CameraRoll (KnownFolderId_CameraRoll) = 1, DocumentsLibrary (KnownFolderId_DocumentsLibrary) = 2, HomeGroup (KnownFolderId_HomeGroup) = 3, MediaServerDevices (KnownFolderId_MediaServerDevices) = 4, MusicLibrary (KnownFolderId_MusicLibrary) = 5, Objects3D (KnownFolderId_Objects3D) = 6, PicturesLibrary (KnownFolderId_PicturesLibrary) = 7, Playlists (KnownFolderId_Playlists) = 8, RecordedCalls (KnownFolderId_RecordedCalls) = 9, RemovableDevices (KnownFolderId_RemovableDevices) = 10, SavedPictures (KnownFolderId_SavedPictures) = 11, Screenshots (KnownFolderId_Screenshots) = 12, VideosLibrary (KnownFolderId_VideosLibrary) = 13, AllAppMods (KnownFolderId_AllAppMods) = 14, CurrentAppMods (KnownFolderId_CurrentAppMods) = 15,
 }}
 RT_CLASS!{static class KnownFolders}
@@ -735,10 +735,10 @@ impl IKnownFoldersStatics3 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum KnownLibraryId: i32 {
+RT_ENUM! { enum KnownLibraryId: i32 ["Windows.Storage.KnownLibraryId"] {
     Music (KnownLibraryId_Music) = 0, Pictures (KnownLibraryId_Pictures) = 1, Videos (KnownLibraryId_Videos) = 2, Documents (KnownLibraryId_Documents) = 3,
 }}
-RT_ENUM! { enum NameCollisionOption: i32 {
+RT_ENUM! { enum NameCollisionOption: i32 ["Windows.Storage.NameCollisionOption"] {
     GenerateUniqueName (NameCollisionOption_GenerateUniqueName) = 0, ReplaceExisting (NameCollisionOption_ReplaceExisting) = 1, FailIfExists (NameCollisionOption_FailIfExists) = 2,
 }}
 RT_CLASS!{static class PathIO}
@@ -896,7 +896,7 @@ impl ISetVersionDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SetVersionDeferral: ISetVersionDeferral}
+RT_CLASS!{class SetVersionDeferral: ISetVersionDeferral ["Windows.Storage.SetVersionDeferral"]}
 DEFINE_IID!(IID_ISetVersionRequest, 3116854171, 4182, 20073, 131, 48, 22, 38, 25, 149, 111, 155);
 RT_INTERFACE!{interface ISetVersionRequest(ISetVersionRequestVtbl): IInspectable(IInspectableVtbl) [IID_ISetVersionRequest] {
     fn get_CurrentVersion(&self, out: *mut u32) -> HRESULT,
@@ -920,8 +920,8 @@ impl ISetVersionRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SetVersionRequest: ISetVersionRequest}
-RT_ENUM! { enum StorageDeleteOption: i32 {
+RT_CLASS!{class SetVersionRequest: ISetVersionRequest ["Windows.Storage.SetVersionRequest"]}
+RT_ENUM! { enum StorageDeleteOption: i32 ["Windows.Storage.StorageDeleteOption"] {
     Default (StorageDeleteOption_Default) = 0, PermanentDelete (StorageDeleteOption_PermanentDelete) = 1,
 }}
 DEFINE_IID!(IID_IStorageFile, 4198457734, 16916, 17036, 166, 76, 20, 201, 172, 115, 21, 234);
@@ -1001,7 +1001,7 @@ impl IStorageFile {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageFile: IStorageFile}
+RT_CLASS!{class StorageFile: IStorageFile ["Windows.Storage.StorageFile"]}
 impl RtActivatable<IStorageFileStatics> for StorageFile {}
 impl StorageFile {
     #[inline] pub fn get_file_from_path_async(path: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
@@ -1158,7 +1158,7 @@ impl IStorageFolder {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageFolder: IStorageFolder}
+RT_CLASS!{class StorageFolder: IStorageFolder ["Windows.Storage.StorageFolder"]}
 impl RtActivatable<IStorageFolderStatics> for StorageFolder {}
 impl StorageFolder {
     #[inline] pub fn get_folder_from_path_async(path: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
@@ -1362,7 +1362,7 @@ impl IStorageItemPropertiesWithProvider {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum StorageItemTypes: u32 {
+RT_ENUM! { enum StorageItemTypes: u32 ["Windows.Storage.StorageItemTypes"] {
     None (StorageItemTypes_None) = 0, File (StorageItemTypes_File) = 1, Folder (StorageItemTypes_Folder) = 2,
 }}
 DEFINE_IID!(IID_IStorageLibrary, 517828867, 3678, 19820, 181, 232, 147, 24, 152, 61, 106, 3);
@@ -1405,7 +1405,7 @@ impl IStorageLibrary {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageLibrary: IStorageLibrary}
+RT_CLASS!{class StorageLibrary: IStorageLibrary ["Windows.Storage.StorageLibrary"]}
 impl RtActivatable<IStorageLibraryStatics> for StorageLibrary {}
 impl RtActivatable<IStorageLibraryStatics2> for StorageLibrary {}
 impl StorageLibrary {
@@ -1474,7 +1474,7 @@ impl IStorageLibraryChange {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageLibraryChange: IStorageLibraryChange}
+RT_CLASS!{class StorageLibraryChange: IStorageLibraryChange ["Windows.Storage.StorageLibraryChange"]}
 DEFINE_IID!(IID_IStorageLibraryChangeReader, 4060462211, 64674, 16889, 137, 84, 238, 46, 153, 30, 185, 111);
 RT_INTERFACE!{interface IStorageLibraryChangeReader(IStorageLibraryChangeReaderVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryChangeReader] {
     fn ReadBatchAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<StorageLibraryChange>>) -> HRESULT,
@@ -1492,7 +1492,7 @@ impl IStorageLibraryChangeReader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageLibraryChangeReader: IStorageLibraryChangeReader}
+RT_CLASS!{class StorageLibraryChangeReader: IStorageLibraryChangeReader ["Windows.Storage.StorageLibraryChangeReader"]}
 DEFINE_IID!(IID_IStorageLibraryChangeTracker, 2652205846, 24691, 17654, 150, 129, 116, 146, 209, 40, 108, 144);
 RT_INTERFACE!{interface IStorageLibraryChangeTracker(IStorageLibraryChangeTrackerVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryChangeTracker] {
     fn GetChangeReader(&self, out: *mut *mut StorageLibraryChangeReader) -> HRESULT,
@@ -1514,8 +1514,8 @@ impl IStorageLibraryChangeTracker {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageLibraryChangeTracker: IStorageLibraryChangeTracker}
-RT_ENUM! { enum StorageLibraryChangeType: i32 {
+RT_CLASS!{class StorageLibraryChangeTracker: IStorageLibraryChangeTracker ["Windows.Storage.StorageLibraryChangeTracker"]}
+RT_ENUM! { enum StorageLibraryChangeType: i32 ["Windows.Storage.StorageLibraryChangeType"] {
     Created (StorageLibraryChangeType_Created) = 0, Deleted (StorageLibraryChangeType_Deleted) = 1, MovedOrRenamed (StorageLibraryChangeType_MovedOrRenamed) = 2, ContentsChanged (StorageLibraryChangeType_ContentsChanged) = 3, MovedOutOfLibrary (StorageLibraryChangeType_MovedOutOfLibrary) = 4, MovedIntoLibrary (StorageLibraryChangeType_MovedIntoLibrary) = 5, ContentsReplaced (StorageLibraryChangeType_ContentsReplaced) = 6, IndexingStatusChanged (StorageLibraryChangeType_IndexingStatusChanged) = 7, EncryptionChanged (StorageLibraryChangeType_EncryptionChanged) = 8, ChangeTrackingLost (StorageLibraryChangeType_ChangeTrackingLost) = 9,
 }}
 DEFINE_IID!(IID_IStorageLibraryStatics, 1107863259, 26698, 18886, 158, 89, 144, 18, 30, 224, 80, 214);
@@ -1540,7 +1540,7 @@ impl IStorageLibraryStatics2 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum StorageOpenOptions: u32 {
+RT_ENUM! { enum StorageOpenOptions: u32 ["Windows.Storage.StorageOpenOptions"] {
     None (StorageOpenOptions_None) = 0, AllowOnlyReaders (StorageOpenOptions_AllowOnlyReaders) = 1, AllowReadersAndWriters (StorageOpenOptions_AllowReadersAndWriters) = 2,
 }}
 DEFINE_IID!(IID_IStorageProvider, 3875925716, 54392, 18390, 186, 70, 26, 142, 190, 17, 74, 32);
@@ -1560,7 +1560,7 @@ impl IStorageProvider {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageProvider: IStorageProvider}
+RT_CLASS!{class StorageProvider: IStorageProvider ["Windows.Storage.StorageProvider"]}
 DEFINE_IID!(IID_IStorageProvider2, 17635607, 13316, 16715, 159, 215, 205, 68, 71, 46, 170, 57);
 RT_INTERFACE!{interface IStorageProvider2(IStorageProvider2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageProvider2] {
     fn IsPropertySupportedForPartialFileAsync(&self, propertyCanonicalName: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
@@ -1589,7 +1589,7 @@ impl IStorageStreamTransaction {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageStreamTransaction: IStorageStreamTransaction}
+RT_CLASS!{class StorageStreamTransaction: IStorageStreamTransaction ["Windows.Storage.StorageStreamTransaction"]}
 DEFINE_IID!(IID_IStreamedFileDataRequest, 376700110, 55997, 19792, 190, 238, 24, 11, 138, 129, 145, 182);
 RT_INTERFACE!{interface IStreamedFileDataRequest(IStreamedFileDataRequestVtbl): IInspectable(IInspectableVtbl) [IID_IStreamedFileDataRequest] {
     fn FailAndClose(&self, failureMode: StreamedFileFailureMode) -> HRESULT
@@ -1600,7 +1600,7 @@ impl IStreamedFileDataRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StreamedFileDataRequest: streams::IOutputStream}
+RT_CLASS!{class StreamedFileDataRequest: streams::IOutputStream ["Windows.Storage.StreamedFileDataRequest"]}
 DEFINE_IID!(IID_StreamedFileDataRequestedHandler, 4277577764, 12257, 19719, 163, 91, 183, 124, 80, 181, 244, 204);
 RT_DELEGATE!{delegate StreamedFileDataRequestedHandler(StreamedFileDataRequestedHandlerVtbl, StreamedFileDataRequestedHandlerImpl) [IID_StreamedFileDataRequestedHandler] {
     fn Invoke(&self, stream: *mut StreamedFileDataRequest) -> HRESULT
@@ -1611,7 +1611,7 @@ impl StreamedFileDataRequestedHandler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum StreamedFileFailureMode: i32 {
+RT_ENUM! { enum StreamedFileFailureMode: i32 ["Windows.Storage.StreamedFileFailureMode"] {
     Failed (StreamedFileFailureMode_Failed) = 0, CurrentlyUnavailable (StreamedFileFailureMode_CurrentlyUnavailable) = 1, Incomplete (StreamedFileFailureMode_Incomplete) = 2,
 }}
 DEFINE_IID!(IID_ISystemAudioProperties, 1066350775, 12428, 18401, 146, 77, 134, 69, 52, 142, 93, 183);
@@ -1625,7 +1625,7 @@ impl ISystemAudioProperties {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemAudioProperties: ISystemAudioProperties}
+RT_CLASS!{class SystemAudioProperties: ISystemAudioProperties ["Windows.Storage.SystemAudioProperties"]}
 DEFINE_IID!(IID_ISystemDataPaths, 3811229552, 55546, 17900, 169, 66, 210, 226, 111, 182, 11, 165);
 RT_INTERFACE!{interface ISystemDataPaths(ISystemDataPathsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemDataPaths] {
     fn get_Fonts(&self, out: *mut HSTRING) -> HRESULT,
@@ -1727,7 +1727,7 @@ impl ISystemDataPaths {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemDataPaths: ISystemDataPaths}
+RT_CLASS!{class SystemDataPaths: ISystemDataPaths ["Windows.Storage.SystemDataPaths"]}
 impl RtActivatable<ISystemDataPathsStatics> for SystemDataPaths {}
 impl SystemDataPaths {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<SystemDataPaths>>> {
@@ -1763,7 +1763,7 @@ impl ISystemGPSProperties {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemGPSProperties: ISystemGPSProperties}
+RT_CLASS!{class SystemGPSProperties: ISystemGPSProperties ["Windows.Storage.SystemGPSProperties"]}
 DEFINE_IID!(IID_ISystemImageProperties, 18558512, 35641, 17160, 190, 161, 232, 170, 97, 228, 120, 38);
 RT_INTERFACE!{interface ISystemImageProperties(ISystemImagePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemImageProperties] {
     fn get_HorizontalSize(&self, out: *mut HSTRING) -> HRESULT,
@@ -1781,7 +1781,7 @@ impl ISystemImageProperties {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemImageProperties: ISystemImageProperties}
+RT_CLASS!{class SystemImageProperties: ISystemImageProperties ["Windows.Storage.SystemImageProperties"]}
 DEFINE_IID!(IID_ISystemMediaProperties, 2754294550, 33813, 16604, 140, 68, 152, 54, 29, 35, 84, 48);
 RT_INTERFACE!{interface ISystemMediaProperties(ISystemMediaPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaProperties] {
     fn get_Duration(&self, out: *mut HSTRING) -> HRESULT,
@@ -1823,7 +1823,7 @@ impl ISystemMediaProperties {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemMediaProperties: ISystemMediaProperties}
+RT_CLASS!{class SystemMediaProperties: ISystemMediaProperties ["Windows.Storage.SystemMediaProperties"]}
 DEFINE_IID!(IID_ISystemMusicProperties, 3027863765, 26543, 19395, 141, 57, 91, 137, 2, 32, 38, 161);
 RT_INTERFACE!{interface ISystemMusicProperties(ISystemMusicPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMusicProperties] {
     fn get_AlbumArtist(&self, out: *mut HSTRING) -> HRESULT,
@@ -1877,7 +1877,7 @@ impl ISystemMusicProperties {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemMusicProperties: ISystemMusicProperties}
+RT_CLASS!{class SystemMusicProperties: ISystemMusicProperties ["Windows.Storage.SystemMusicProperties"]}
 DEFINE_IID!(IID_ISystemPhotoProperties, 1194654781, 43809, 17444, 183, 53, 244, 53, 58, 86, 200, 252);
 RT_INTERFACE!{interface ISystemPhotoProperties(ISystemPhotoPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemPhotoProperties] {
     fn get_CameraManufacturer(&self, out: *mut HSTRING) -> HRESULT,
@@ -1913,7 +1913,7 @@ impl ISystemPhotoProperties {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemPhotoProperties: ISystemPhotoProperties}
+RT_CLASS!{class SystemPhotoProperties: ISystemPhotoProperties ["Windows.Storage.SystemPhotoProperties"]}
 DEFINE_IID!(IID_ISystemProperties, 2440720833, 34291, 19921, 176, 1, 165, 11, 253, 33, 200, 210);
 RT_INTERFACE!{static interface ISystemProperties(ISystemPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemProperties] {
     fn get_Author(&self, out: *mut HSTRING) -> HRESULT,
@@ -2076,7 +2076,7 @@ impl ISystemVideoProperties {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SystemVideoProperties: ISystemVideoProperties}
+RT_CLASS!{class SystemVideoProperties: ISystemVideoProperties ["Windows.Storage.SystemVideoProperties"]}
 DEFINE_IID!(IID_IUserDataPaths, 4190451986, 43972, 18175, 138, 43, 220, 157, 127, 166, 229, 47);
 RT_INTERFACE!{interface IUserDataPaths(IUserDataPathsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataPaths] {
     fn get_CameraRoll(&self, out: *mut HSTRING) -> HRESULT,
@@ -2196,7 +2196,7 @@ impl IUserDataPaths {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UserDataPaths: IUserDataPaths}
+RT_CLASS!{class UserDataPaths: IUserDataPaths ["Windows.Storage.UserDataPaths"]}
 impl RtActivatable<IUserDataPathsStatics> for UserDataPaths {}
 impl UserDataPaths {
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::system::User) -> Result<Option<ComPtr<UserDataPaths>>> {
@@ -2227,13 +2227,13 @@ impl IUserDataPathsStatics {
 }
 pub mod accesscache { // Windows.Storage.AccessCache
 use ::prelude::*;
-RT_ENUM! { enum AccessCacheOptions: u32 {
+RT_ENUM! { enum AccessCacheOptions: u32 ["Windows.Storage.AccessCache.AccessCacheOptions"] {
     None (AccessCacheOptions_None) = 0, DisallowUserInput (AccessCacheOptions_DisallowUserInput) = 1, FastLocationsOnly (AccessCacheOptions_FastLocationsOnly) = 2, UseReadOnlyCachedCopy (AccessCacheOptions_UseReadOnlyCachedCopy) = 4, SuppressAccessTimeUpdate (AccessCacheOptions_SuppressAccessTimeUpdate) = 8,
 }}
-RT_STRUCT! { struct AccessListEntry {
+RT_STRUCT! { struct AccessListEntry ["Windows.Storage.AccessCache.AccessListEntry"] {
     Token: HSTRING, Metadata: HSTRING,
 }}
-RT_CLASS!{class AccessListEntryView: foundation::collections::IVectorView<AccessListEntry>}
+RT_CLASS!{class AccessListEntryView: foundation::collections::IVectorView<AccessListEntry> ["Windows.Storage.AccessCache.AccessListEntryView"]}
 DEFINE_IID!(IID_IItemRemovedEventArgs, 1499954780, 21950, 19558, 186, 102, 94, 174, 167, 157, 38, 49);
 RT_INTERFACE!{interface IItemRemovedEventArgs(IItemRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IItemRemovedEventArgs] {
     fn get_RemovedEntry(&self, out: *mut AccessListEntry) -> HRESULT
@@ -2245,8 +2245,8 @@ impl IItemRemovedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ItemRemovedEventArgs: IItemRemovedEventArgs}
-RT_ENUM! { enum RecentStorageItemVisibility: i32 {
+RT_CLASS!{class ItemRemovedEventArgs: IItemRemovedEventArgs ["Windows.Storage.AccessCache.ItemRemovedEventArgs"]}
+RT_ENUM! { enum RecentStorageItemVisibility: i32 ["Windows.Storage.AccessCache.RecentStorageItemVisibility"] {
     AppOnly (RecentStorageItemVisibility_AppOnly) = 0, AppAndSystem (RecentStorageItemVisibility_AppAndSystem) = 1,
 }}
 RT_CLASS!{static class StorageApplicationPermissions}
@@ -2374,7 +2374,7 @@ impl IStorageItemAccessList {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageItemAccessList: IStorageItemAccessList}
+RT_CLASS!{class StorageItemAccessList: IStorageItemAccessList ["Windows.Storage.AccessCache.StorageItemAccessList"]}
 DEFINE_IID!(IID_IStorageItemMostRecentlyUsedList, 23214549, 20749, 16670, 140, 241, 195, 209, 239, 250, 76, 51);
 RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList(IStorageItemMostRecentlyUsedListVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemMostRecentlyUsedList] {
     fn add_ItemRemoved(&self, handler: *mut foundation::TypedEventHandler<StorageItemMostRecentlyUsedList, ItemRemovedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -2391,7 +2391,7 @@ impl IStorageItemMostRecentlyUsedList {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageItemMostRecentlyUsedList: IStorageItemMostRecentlyUsedList}
+RT_CLASS!{class StorageItemMostRecentlyUsedList: IStorageItemMostRecentlyUsedList ["Windows.Storage.AccessCache.StorageItemMostRecentlyUsedList"]}
 DEFINE_IID!(IID_IStorageItemMostRecentlyUsedList2, 3662159520, 60813, 18225, 161, 219, 228, 78, 226, 32, 64, 147);
 RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList2(IStorageItemMostRecentlyUsedList2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemMostRecentlyUsedList2] {
     fn AddWithMetadataAndVisibility(&self, file: *mut super::IStorageItem, metadata: HSTRING, visibility: RecentStorageItemVisibility, out: *mut HSTRING) -> HRESULT,
@@ -2411,7 +2411,7 @@ impl IStorageItemMostRecentlyUsedList2 {
 } // Windows.Storage.AccessCache
 pub mod bulkaccess { // Windows.Storage.BulkAccess
 use ::prelude::*;
-RT_CLASS!{class FileInformation: IStorageItemInformation}
+RT_CLASS!{class FileInformation: IStorageItemInformation ["Windows.Storage.BulkAccess.FileInformation"]}
 DEFINE_IID!(IID_IFileInformationFactory, 1075677374, 38415, 19821, 167, 208, 26, 56, 97, 231, 108, 131);
 RT_INTERFACE!{interface IFileInformationFactory(IFileInformationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileInformationFactory] {
     fn GetItemsAsync(&self, startIndex: u32, maxItemsToRetrieve: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItemInformation>>) -> HRESULT,
@@ -2471,7 +2471,7 @@ impl IFileInformationFactory {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileInformationFactory: IFileInformationFactory}
+RT_CLASS!{class FileInformationFactory: IFileInformationFactory ["Windows.Storage.BulkAccess.FileInformationFactory"]}
 impl RtActivatable<IFileInformationFactoryFactory> for FileInformationFactory {}
 impl FileInformationFactory {
     #[inline] pub fn create_with_mode(queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode) -> Result<ComPtr<FileInformationFactory>> {
@@ -2517,7 +2517,7 @@ impl IFileInformationFactoryFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FolderInformation: IStorageItemInformation}
+RT_CLASS!{class FolderInformation: IStorageItemInformation ["Windows.Storage.BulkAccess.FolderInformation"]}
 DEFINE_IID!(IID_IStorageItemInformation, 2275789707, 35186, 20288, 141, 224, 216, 111, 177, 121, 216, 250);
 RT_INTERFACE!{interface IStorageItemInformation(IStorageItemInformationVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemInformation] {
     fn get_MusicProperties(&self, out: *mut *mut super::fileproperties::MusicProperties) -> HRESULT,
@@ -2584,7 +2584,7 @@ impl IStorageItemInformation {
 } // Windows.Storage.BulkAccess
 pub mod compression { // Windows.Storage.Compression
 use ::prelude::*;
-RT_ENUM! { enum CompressAlgorithm: i32 {
+RT_ENUM! { enum CompressAlgorithm: i32 ["Windows.Storage.Compression.CompressAlgorithm"] {
     InvalidAlgorithm (CompressAlgorithm_InvalidAlgorithm) = 0, NullAlgorithm (CompressAlgorithm_NullAlgorithm) = 1, Mszip (CompressAlgorithm_Mszip) = 2, Xpress (CompressAlgorithm_Xpress) = 3, XpressHuff (CompressAlgorithm_XpressHuff) = 4, Lzms (CompressAlgorithm_Lzms) = 5,
 }}
 DEFINE_IID!(IID_ICompressor, 180577370, 22444, 20193, 183, 2, 132, 211, 157, 84, 36, 224);
@@ -2604,7 +2604,7 @@ impl ICompressor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Compressor: ICompressor}
+RT_CLASS!{class Compressor: ICompressor ["Windows.Storage.Compression.Compressor"]}
 impl RtActivatable<ICompressorFactory> for Compressor {}
 impl Compressor {
     #[inline] pub fn create_compressor(underlyingStream: &super::streams::IOutputStream) -> Result<ComPtr<Compressor>> {
@@ -2643,7 +2643,7 @@ impl IDecompressor {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Decompressor: IDecompressor}
+RT_CLASS!{class Decompressor: IDecompressor ["Windows.Storage.Compression.Decompressor"]}
 impl RtActivatable<IDecompressorFactory> for Decompressor {}
 impl Decompressor {
     #[inline] pub fn create_decompressor(underlyingStream: &super::streams::IInputStream) -> Result<ComPtr<Decompressor>> {
@@ -2688,7 +2688,7 @@ impl IBasicProperties {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BasicProperties: IBasicProperties}
+RT_CLASS!{class BasicProperties: IBasicProperties ["Windows.Storage.FileProperties.BasicProperties"]}
 DEFINE_IID!(IID_IDocumentProperties, 2125142460, 6177, 18723, 180, 169, 10, 234, 64, 77, 0, 112);
 RT_INTERFACE!{interface IDocumentProperties(IDocumentPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IDocumentProperties] {
     fn get_Author(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
@@ -2728,7 +2728,7 @@ impl IDocumentProperties {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DocumentProperties: IDocumentProperties}
+RT_CLASS!{class DocumentProperties: IDocumentProperties ["Windows.Storage.FileProperties.DocumentProperties"]}
 RT_CLASS!{static class GeotagHelper}
 impl RtActivatable<IGeotagHelperStatics> for GeotagHelper {}
 impl GeotagHelper {
@@ -2868,7 +2868,7 @@ impl IImageProperties {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ImageProperties: IImageProperties}
+RT_CLASS!{class ImageProperties: IImageProperties ["Windows.Storage.FileProperties.ImageProperties"]}
 DEFINE_IID!(IID_IMusicProperties, 3163204450, 26348, 16794, 188, 93, 202, 101, 164, 203, 70, 218);
 RT_INTERFACE!{interface IMusicProperties(IMusicPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IMusicProperties] {
     fn get_Album(&self, out: *mut HSTRING) -> HRESULT,
@@ -3015,11 +3015,11 @@ impl IMusicProperties {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MusicProperties: IMusicProperties}
-RT_ENUM! { enum PhotoOrientation: i32 {
+RT_CLASS!{class MusicProperties: IMusicProperties ["Windows.Storage.FileProperties.MusicProperties"]}
+RT_ENUM! { enum PhotoOrientation: i32 ["Windows.Storage.FileProperties.PhotoOrientation"] {
     Unspecified (PhotoOrientation_Unspecified) = 0, Normal (PhotoOrientation_Normal) = 1, FlipHorizontal (PhotoOrientation_FlipHorizontal) = 2, Rotate180 (PhotoOrientation_Rotate180) = 3, FlipVertical (PhotoOrientation_FlipVertical) = 4, Transpose (PhotoOrientation_Transpose) = 5, Rotate270 (PhotoOrientation_Rotate270) = 6, Transverse (PhotoOrientation_Transverse) = 7, Rotate90 (PhotoOrientation_Rotate90) = 8,
 }}
-RT_ENUM! { enum PropertyPrefetchOptions: u32 {
+RT_ENUM! { enum PropertyPrefetchOptions: u32 ["Windows.Storage.FileProperties.PropertyPrefetchOptions"] {
     None (PropertyPrefetchOptions_None) = 0, MusicProperties (PropertyPrefetchOptions_MusicProperties) = 1, VideoProperties (PropertyPrefetchOptions_VideoProperties) = 2, ImageProperties (PropertyPrefetchOptions_ImageProperties) = 4, DocumentProperties (PropertyPrefetchOptions_DocumentProperties) = 8, BasicProperties (PropertyPrefetchOptions_BasicProperties) = 16,
 }}
 DEFINE_IID!(IID_IStorageItemContentProperties, 86592429, 48184, 18623, 133, 215, 119, 14, 14, 42, 224, 186);
@@ -3051,7 +3051,7 @@ impl IStorageItemContentProperties {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageItemContentProperties: IStorageItemContentProperties}
+RT_CLASS!{class StorageItemContentProperties: IStorageItemContentProperties ["Windows.Storage.FileProperties.StorageItemContentProperties"]}
 DEFINE_IID!(IID_IStorageItemExtraProperties, 3309527474, 21709, 17195, 189, 188, 75, 25, 196, 180, 112, 215);
 RT_INTERFACE!{interface IStorageItemExtraProperties(IStorageItemExtraPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemExtraProperties] {
     fn RetrievePropertiesAsync(&self, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IMap<HString, IInspectable>>) -> HRESULT,
@@ -3075,11 +3075,11 @@ impl IStorageItemExtraProperties {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageItemThumbnail: super::streams::IRandomAccessStreamWithContentType}
-RT_ENUM! { enum ThumbnailMode: i32 {
+RT_CLASS!{class StorageItemThumbnail: super::streams::IRandomAccessStreamWithContentType ["Windows.Storage.FileProperties.StorageItemThumbnail"]}
+RT_ENUM! { enum ThumbnailMode: i32 ["Windows.Storage.FileProperties.ThumbnailMode"] {
     PicturesView (ThumbnailMode_PicturesView) = 0, VideosView (ThumbnailMode_VideosView) = 1, MusicView (ThumbnailMode_MusicView) = 2, DocumentsView (ThumbnailMode_DocumentsView) = 3, ListView (ThumbnailMode_ListView) = 4, SingleItem (ThumbnailMode_SingleItem) = 5,
 }}
-RT_ENUM! { enum ThumbnailOptions: u32 {
+RT_ENUM! { enum ThumbnailOptions: u32 ["Windows.Storage.FileProperties.ThumbnailOptions"] {
     None (ThumbnailOptions_None) = 0, ReturnOnlyIfCached (ThumbnailOptions_ReturnOnlyIfCached) = 1, ResizeThumbnail (ThumbnailOptions_ResizeThumbnail) = 2, UseCurrentScale (ThumbnailOptions_UseCurrentScale) = 4,
 }}
 DEFINE_IID!(IID_IThumbnailProperties, 1765659695, 56295, 18869, 179, 179, 40, 147, 172, 93, 52, 35);
@@ -3111,10 +3111,10 @@ impl IThumbnailProperties {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ThumbnailType: i32 {
+RT_ENUM! { enum ThumbnailType: i32 ["Windows.Storage.FileProperties.ThumbnailType"] {
     Image (ThumbnailType_Image) = 0, Icon (ThumbnailType_Icon) = 1,
 }}
-RT_ENUM! { enum VideoOrientation: i32 {
+RT_ENUM! { enum VideoOrientation: i32 ["Windows.Storage.FileProperties.VideoOrientation"] {
     Normal (VideoOrientation_Normal) = 0, Rotate90 (VideoOrientation_Rotate90) = 90, Rotate180 (VideoOrientation_Rotate180) = 180, Rotate270 (VideoOrientation_Rotate270) = 270,
 }}
 DEFINE_IID!(IID_IVideoProperties, 1905976583, 26846, 19896, 151, 222, 73, 153, 140, 5, 159, 47);
@@ -3243,11 +3243,11 @@ impl IVideoProperties {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VideoProperties: IVideoProperties}
+RT_CLASS!{class VideoProperties: IVideoProperties ["Windows.Storage.FileProperties.VideoProperties"]}
 } // Windows.Storage.FileProperties
 pub mod pickers { // Windows.Storage.Pickers
 use ::prelude::*;
-RT_CLASS!{class FileExtensionVector: foundation::collections::IVector<HString>}
+RT_CLASS!{class FileExtensionVector: foundation::collections::IVector<HString> ["Windows.Storage.Pickers.FileExtensionVector"]}
 DEFINE_IID!(IID_IFileOpenPicker, 749217674, 4805, 19551, 137, 119, 148, 84, 119, 147, 194, 65);
 RT_INTERFACE!{interface IFileOpenPicker(IFileOpenPickerVtbl): IInspectable(IInspectableVtbl) [IID_IFileOpenPicker] {
     fn get_ViewMode(&self, out: *mut PickerViewMode) -> HRESULT,
@@ -3315,7 +3315,7 @@ impl IFileOpenPicker {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileOpenPicker: IFileOpenPicker}
+RT_CLASS!{class FileOpenPicker: IFileOpenPicker ["Windows.Storage.Pickers.FileOpenPicker"]}
 impl RtActivatable<IFileOpenPickerStatics> for FileOpenPicker {}
 impl RtActivatable<IActivationFactory> for FileOpenPicker {}
 impl FileOpenPicker {
@@ -3367,8 +3367,8 @@ impl IFileOpenPickerWithOperationId {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FilePickerFileTypesOrderedMap: foundation::collections::IMap<HString, foundation::collections::IVector<HString>>}
-RT_CLASS!{class FilePickerSelectedFilesArray: foundation::collections::IVectorView<super::StorageFile>}
+RT_CLASS!{class FilePickerFileTypesOrderedMap: foundation::collections::IMap<HString, foundation::collections::IVector<HString>> ["Windows.Storage.Pickers.FilePickerFileTypesOrderedMap"]}
+RT_CLASS!{class FilePickerSelectedFilesArray: foundation::collections::IVectorView<super::StorageFile> ["Windows.Storage.Pickers.FilePickerSelectedFilesArray"]}
 DEFINE_IID!(IID_IFileSavePicker, 847708107, 24959, 19653, 175, 106, 179, 253, 242, 154, 209, 69);
 RT_INTERFACE!{interface IFileSavePicker(IFileSavePickerVtbl): IInspectable(IInspectableVtbl) [IID_IFileSavePicker] {
     fn get_SettingsIdentifier(&self, out: *mut HSTRING) -> HRESULT,
@@ -3452,7 +3452,7 @@ impl IFileSavePicker {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileSavePicker: IFileSavePicker}
+RT_CLASS!{class FileSavePicker: IFileSavePicker ["Windows.Storage.Pickers.FileSavePicker"]}
 impl RtActivatable<IActivationFactory> for FileSavePicker {}
 DEFINE_CLSID!(FileSavePicker(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,105,99,107,101,114,115,46,70,105,108,101,83,97,118,101,80,105,99,107,101,114,0]) [CLSID_FileSavePicker]);
 DEFINE_IID!(IID_IFileSavePicker2, 247665570, 53835, 17562, 129, 151, 232, 145, 4, 253, 66, 204);
@@ -3548,7 +3548,7 @@ impl IFolderPicker {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FolderPicker: IFolderPicker}
+RT_CLASS!{class FolderPicker: IFolderPicker ["Windows.Storage.Pickers.FolderPicker"]}
 impl RtActivatable<IActivationFactory> for FolderPicker {}
 DEFINE_CLSID!(FolderPicker(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,105,99,107,101,114,115,46,70,111,108,100,101,114,80,105,99,107,101,114,0]) [CLSID_FolderPicker]);
 DEFINE_IID!(IID_IFolderPicker2, 2394143383, 56453, 17942, 190, 148, 150, 96, 136, 31, 47, 93);
@@ -3567,15 +3567,15 @@ impl IFolderPicker2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PickerLocationId: i32 {
+RT_ENUM! { enum PickerLocationId: i32 ["Windows.Storage.Pickers.PickerLocationId"] {
     DocumentsLibrary (PickerLocationId_DocumentsLibrary) = 0, ComputerFolder (PickerLocationId_ComputerFolder) = 1, Desktop (PickerLocationId_Desktop) = 2, Downloads (PickerLocationId_Downloads) = 3, HomeGroup (PickerLocationId_HomeGroup) = 4, MusicLibrary (PickerLocationId_MusicLibrary) = 5, PicturesLibrary (PickerLocationId_PicturesLibrary) = 6, VideosLibrary (PickerLocationId_VideosLibrary) = 7, Objects3D (PickerLocationId_Objects3D) = 8, Unspecified (PickerLocationId_Unspecified) = 9,
 }}
-RT_ENUM! { enum PickerViewMode: i32 {
+RT_ENUM! { enum PickerViewMode: i32 ["Windows.Storage.Pickers.PickerViewMode"] {
     List (PickerViewMode_List) = 0, Thumbnail (PickerViewMode_Thumbnail) = 1,
 }}
 pub mod provider { // Windows.Storage.Pickers.Provider
 use ::prelude::*;
-RT_ENUM! { enum AddFileResult: i32 {
+RT_ENUM! { enum AddFileResult: i32 ["Windows.Storage.Pickers.Provider.AddFileResult"] {
     Added (AddFileResult_Added) = 0, AlreadyAdded (AddFileResult_AlreadyAdded) = 1, NotAllowed (AddFileResult_NotAllowed) = 2, Unavailable (AddFileResult_Unavailable) = 3,
 }}
 DEFINE_IID!(IID_IFileOpenPickerUI, 3718535696, 63956, 16580, 138, 245, 197, 182, 181, 166, 29, 29);
@@ -3657,7 +3657,7 @@ impl IFileOpenPickerUI {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileOpenPickerUI: IFileOpenPickerUI}
+RT_CLASS!{class FileOpenPickerUI: IFileOpenPickerUI ["Windows.Storage.Pickers.Provider.FileOpenPickerUI"]}
 DEFINE_IID!(IID_IFileRemovedEventArgs, 319045031, 32714, 19499, 158, 202, 104, 144, 249, 240, 1, 133);
 RT_INTERFACE!{interface IFileRemovedEventArgs(IFileRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IFileRemovedEventArgs] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT
@@ -3669,7 +3669,7 @@ impl IFileRemovedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileRemovedEventArgs: IFileRemovedEventArgs}
+RT_CLASS!{class FileRemovedEventArgs: IFileRemovedEventArgs ["Windows.Storage.Pickers.Provider.FileRemovedEventArgs"]}
 DEFINE_IID!(IID_IFileSavePickerUI, 2522268135, 15958, 17356, 138, 57, 51, 199, 61, 157, 84, 43);
 RT_INTERFACE!{interface IFileSavePickerUI(IFileSavePickerUIVtbl): IInspectable(IInspectableVtbl) [IID_IFileSavePickerUI] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
@@ -3732,8 +3732,8 @@ impl IFileSavePickerUI {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileSavePickerUI: IFileSavePickerUI}
-RT_ENUM! { enum FileSelectionMode: i32 {
+RT_CLASS!{class FileSavePickerUI: IFileSavePickerUI ["Windows.Storage.Pickers.Provider.FileSavePickerUI"]}
+RT_ENUM! { enum FileSelectionMode: i32 ["Windows.Storage.Pickers.Provider.FileSelectionMode"] {
     Single (FileSelectionMode_Single) = 0, Multiple (FileSelectionMode_Multiple) = 1,
 }}
 DEFINE_IID!(IID_IPickerClosingDeferral, 2063071006, 6759, 18993, 174, 128, 233, 7, 112, 138, 97, 155);
@@ -3746,7 +3746,7 @@ impl IPickerClosingDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PickerClosingDeferral: IPickerClosingDeferral}
+RT_CLASS!{class PickerClosingDeferral: IPickerClosingDeferral ["Windows.Storage.Pickers.Provider.PickerClosingDeferral"]}
 DEFINE_IID!(IID_IPickerClosingEventArgs, 2119823908, 45874, 20242, 139, 159, 168, 194, 240, 107, 50, 205);
 RT_INTERFACE!{interface IPickerClosingEventArgs(IPickerClosingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPickerClosingEventArgs] {
     fn get_ClosingOperation(&self, out: *mut *mut PickerClosingOperation) -> HRESULT,
@@ -3764,7 +3764,7 @@ impl IPickerClosingEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PickerClosingEventArgs: IPickerClosingEventArgs}
+RT_CLASS!{class PickerClosingEventArgs: IPickerClosingEventArgs ["Windows.Storage.Pickers.Provider.PickerClosingEventArgs"]}
 DEFINE_IID!(IID_IPickerClosingOperation, 1290402692, 48878, 20025, 167, 115, 252, 95, 14, 174, 50, 141);
 RT_INTERFACE!{interface IPickerClosingOperation(IPickerClosingOperationVtbl): IInspectable(IInspectableVtbl) [IID_IPickerClosingOperation] {
     fn GetDeferral(&self, out: *mut *mut PickerClosingDeferral) -> HRESULT,
@@ -3782,8 +3782,8 @@ impl IPickerClosingOperation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PickerClosingOperation: IPickerClosingOperation}
-RT_ENUM! { enum SetFileNameResult: i32 {
+RT_CLASS!{class PickerClosingOperation: IPickerClosingOperation ["Windows.Storage.Pickers.Provider.PickerClosingOperation"]}
+RT_ENUM! { enum SetFileNameResult: i32 ["Windows.Storage.Pickers.Provider.SetFileNameResult"] {
     Succeeded (SetFileNameResult_Succeeded) = 0, NotAllowed (SetFileNameResult_NotAllowed) = 1, Unavailable (SetFileNameResult_Unavailable) = 2,
 }}
 DEFINE_IID!(IID_ITargetFileRequest, 1119695701, 32648, 18315, 142, 129, 105, 11, 32, 52, 6, 120);
@@ -3808,7 +3808,7 @@ impl ITargetFileRequest {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetFileRequest: ITargetFileRequest}
+RT_CLASS!{class TargetFileRequest: ITargetFileRequest ["Windows.Storage.Pickers.Provider.TargetFileRequest"]}
 DEFINE_IID!(IID_ITargetFileRequestDeferral, 1257151889, 48917, 19881, 149, 246, 246, 183, 213, 88, 34, 91);
 RT_INTERFACE!{interface ITargetFileRequestDeferral(ITargetFileRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_ITargetFileRequestDeferral] {
     fn Complete(&self) -> HRESULT
@@ -3819,7 +3819,7 @@ impl ITargetFileRequestDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetFileRequestDeferral: ITargetFileRequestDeferral}
+RT_CLASS!{class TargetFileRequestDeferral: ITargetFileRequestDeferral ["Windows.Storage.Pickers.Provider.TargetFileRequestDeferral"]}
 DEFINE_IID!(IID_ITargetFileRequestedEventArgs, 2976111553, 6993, 19593, 165, 145, 15, 212, 11, 60, 87, 201);
 RT_INTERFACE!{interface ITargetFileRequestedEventArgs(ITargetFileRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITargetFileRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut TargetFileRequest) -> HRESULT
@@ -3831,15 +3831,15 @@ impl ITargetFileRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TargetFileRequestedEventArgs: ITargetFileRequestedEventArgs}
+RT_CLASS!{class TargetFileRequestedEventArgs: ITargetFileRequestedEventArgs ["Windows.Storage.Pickers.Provider.TargetFileRequestedEventArgs"]}
 } // Windows.Storage.Pickers.Provider
 } // Windows.Storage.Pickers
 pub mod provider { // Windows.Storage.Provider
 use ::prelude::*;
-RT_ENUM! { enum CachedFileOptions: u32 {
+RT_ENUM! { enum CachedFileOptions: u32 ["Windows.Storage.Provider.CachedFileOptions"] {
     None (CachedFileOptions_None) = 0, RequireUpdateOnAccess (CachedFileOptions_RequireUpdateOnAccess) = 1, UseCachedFileWhenOffline (CachedFileOptions_UseCachedFileWhenOffline) = 2, DenyAccessWhenOffline (CachedFileOptions_DenyAccessWhenOffline) = 4,
 }}
-RT_ENUM! { enum CachedFileTarget: i32 {
+RT_ENUM! { enum CachedFileTarget: i32 ["Windows.Storage.Provider.CachedFileTarget"] {
     Local (CachedFileTarget_Local) = 0, Remote (CachedFileTarget_Remote) = 1,
 }}
 RT_CLASS!{static class CachedFileUpdater}
@@ -3910,7 +3910,7 @@ impl ICachedFileUpdaterUI {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CachedFileUpdaterUI: ICachedFileUpdaterUI}
+RT_CLASS!{class CachedFileUpdaterUI: ICachedFileUpdaterUI ["Windows.Storage.Provider.CachedFileUpdaterUI"]}
 DEFINE_IID!(IID_ICachedFileUpdaterUI2, 2287378972, 34457, 17216, 159, 73, 247, 202, 215, 254, 137, 145);
 RT_INTERFACE!{interface ICachedFileUpdaterUI2(ICachedFileUpdaterUI2Vtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterUI2] {
     fn get_UpdateRequest(&self, out: *mut *mut FileUpdateRequest) -> HRESULT,
@@ -3967,7 +3967,7 @@ impl IFileUpdateRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileUpdateRequest: IFileUpdateRequest}
+RT_CLASS!{class FileUpdateRequest: IFileUpdateRequest ["Windows.Storage.Provider.FileUpdateRequest"]}
 DEFINE_IID!(IID_IFileUpdateRequest2, 2185774664, 48574, 17531, 162, 238, 122, 254, 106, 3, 42, 148);
 RT_INTERFACE!{interface IFileUpdateRequest2(IFileUpdateRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IFileUpdateRequest2] {
     fn get_UserInputNeededMessage(&self, out: *mut HSTRING) -> HRESULT,
@@ -3994,7 +3994,7 @@ impl IFileUpdateRequestDeferral {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileUpdateRequestDeferral: IFileUpdateRequestDeferral}
+RT_CLASS!{class FileUpdateRequestDeferral: IFileUpdateRequestDeferral ["Windows.Storage.Provider.FileUpdateRequestDeferral"]}
 DEFINE_IID!(IID_IFileUpdateRequestedEventArgs, 2064290626, 14597, 17293, 170, 239, 120, 174, 38, 95, 141, 210);
 RT_INTERFACE!{interface IFileUpdateRequestedEventArgs(IFileUpdateRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IFileUpdateRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut FileUpdateRequest) -> HRESULT
@@ -4006,11 +4006,11 @@ impl IFileUpdateRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class FileUpdateRequestedEventArgs: IFileUpdateRequestedEventArgs}
-RT_ENUM! { enum FileUpdateStatus: i32 {
+RT_CLASS!{class FileUpdateRequestedEventArgs: IFileUpdateRequestedEventArgs ["Windows.Storage.Provider.FileUpdateRequestedEventArgs"]}
+RT_ENUM! { enum FileUpdateStatus: i32 ["Windows.Storage.Provider.FileUpdateStatus"] {
     Incomplete (FileUpdateStatus_Incomplete) = 0, Complete (FileUpdateStatus_Complete) = 1, UserInputNeeded (FileUpdateStatus_UserInputNeeded) = 2, CurrentlyUnavailable (FileUpdateStatus_CurrentlyUnavailable) = 3, Failed (FileUpdateStatus_Failed) = 4, CompleteAndRenamed (FileUpdateStatus_CompleteAndRenamed) = 5,
 }}
-RT_ENUM! { enum ReadActivationMode: i32 {
+RT_ENUM! { enum ReadActivationMode: i32 ["Windows.Storage.Provider.ReadActivationMode"] {
     NotNeeded (ReadActivationMode_NotNeeded) = 0, BeforeAccess (ReadActivationMode_BeforeAccess) = 1,
 }}
 DEFINE_IID!(IID_IStorageProviderGetContentInfoForPathResult, 627339549, 43657, 19730, 130, 227, 247, 42, 146, 227, 57, 102);
@@ -4051,7 +4051,7 @@ impl IStorageProviderGetContentInfoForPathResult {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageProviderGetContentInfoForPathResult: IStorageProviderGetContentInfoForPathResult}
+RT_CLASS!{class StorageProviderGetContentInfoForPathResult: IStorageProviderGetContentInfoForPathResult ["Windows.Storage.Provider.StorageProviderGetContentInfoForPathResult"]}
 impl RtActivatable<IActivationFactory> for StorageProviderGetContentInfoForPathResult {}
 DEFINE_CLSID!(StorageProviderGetContentInfoForPathResult(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,71,101,116,67,111,110,116,101,110,116,73,110,102,111,70,111,114,80,97,116,104,82,101,115,117,108,116,0]) [CLSID_StorageProviderGetContentInfoForPathResult]);
 DEFINE_IID!(IID_IStorageProviderGetPathForContentUriResult, 1668356765, 16664, 17830, 172, 182, 34, 196, 157, 1, 159, 64);
@@ -4081,19 +4081,19 @@ impl IStorageProviderGetPathForContentUriResult {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageProviderGetPathForContentUriResult: IStorageProviderGetPathForContentUriResult}
+RT_CLASS!{class StorageProviderGetPathForContentUriResult: IStorageProviderGetPathForContentUriResult ["Windows.Storage.Provider.StorageProviderGetPathForContentUriResult"]}
 impl RtActivatable<IActivationFactory> for StorageProviderGetPathForContentUriResult {}
 DEFINE_CLSID!(StorageProviderGetPathForContentUriResult(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,71,101,116,80,97,116,104,70,111,114,67,111,110,116,101,110,116,85,114,105,82,101,115,117,108,116,0]) [CLSID_StorageProviderGetPathForContentUriResult]);
-RT_ENUM! { enum StorageProviderHardlinkPolicy: u32 {
+RT_ENUM! { enum StorageProviderHardlinkPolicy: u32 ["Windows.Storage.Provider.StorageProviderHardlinkPolicy"] {
     None (StorageProviderHardlinkPolicy_None) = 0, Allowed (StorageProviderHardlinkPolicy_Allowed) = 1,
 }}
-RT_ENUM! { enum StorageProviderHydrationPolicy: i32 {
+RT_ENUM! { enum StorageProviderHydrationPolicy: i32 ["Windows.Storage.Provider.StorageProviderHydrationPolicy"] {
     Partial (StorageProviderHydrationPolicy_Partial) = 0, Progressive (StorageProviderHydrationPolicy_Progressive) = 1, Full (StorageProviderHydrationPolicy_Full) = 2, AlwaysFull (StorageProviderHydrationPolicy_AlwaysFull) = 3,
 }}
-RT_ENUM! { enum StorageProviderHydrationPolicyModifier: u32 {
+RT_ENUM! { enum StorageProviderHydrationPolicyModifier: u32 ["Windows.Storage.Provider.StorageProviderHydrationPolicyModifier"] {
     None (StorageProviderHydrationPolicyModifier_None) = 0, ValidationRequired (StorageProviderHydrationPolicyModifier_ValidationRequired) = 1, StreamingAllowed (StorageProviderHydrationPolicyModifier_StreamingAllowed) = 2, AutoDehydrationAllowed (StorageProviderHydrationPolicyModifier_AutoDehydrationAllowed) = 4,
 }}
-RT_ENUM! { enum StorageProviderInSyncPolicy: u32 {
+RT_ENUM! { enum StorageProviderInSyncPolicy: u32 ["Windows.Storage.Provider.StorageProviderInSyncPolicy"] {
     Default (StorageProviderInSyncPolicy_Default) = 0, FileCreationTime (StorageProviderInSyncPolicy_FileCreationTime) = 1, FileReadOnlyAttribute (StorageProviderInSyncPolicy_FileReadOnlyAttribute) = 2, FileHiddenAttribute (StorageProviderInSyncPolicy_FileHiddenAttribute) = 4, FileSystemAttribute (StorageProviderInSyncPolicy_FileSystemAttribute) = 8, DirectoryCreationTime (StorageProviderInSyncPolicy_DirectoryCreationTime) = 16, DirectoryReadOnlyAttribute (StorageProviderInSyncPolicy_DirectoryReadOnlyAttribute) = 32, DirectoryHiddenAttribute (StorageProviderInSyncPolicy_DirectoryHiddenAttribute) = 64, DirectorySystemAttribute (StorageProviderInSyncPolicy_DirectorySystemAttribute) = 128, FileLastWriteTime (StorageProviderInSyncPolicy_FileLastWriteTime) = 256, DirectoryLastWriteTime (StorageProviderInSyncPolicy_DirectoryLastWriteTime) = 512, PreserveInsyncForSyncEngine (StorageProviderInSyncPolicy_PreserveInsyncForSyncEngine) = 2147483648,
 }}
 RT_CLASS!{static class StorageProviderItemProperties}
@@ -4153,7 +4153,7 @@ impl IStorageProviderItemProperty {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageProviderItemProperty: IStorageProviderItemProperty}
+RT_CLASS!{class StorageProviderItemProperty: IStorageProviderItemProperty ["Windows.Storage.Provider.StorageProviderItemProperty"]}
 impl RtActivatable<IActivationFactory> for StorageProviderItemProperty {}
 DEFINE_CLSID!(StorageProviderItemProperty(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,73,116,101,109,80,114,111,112,101,114,116,121,0]) [CLSID_StorageProviderItemProperty]);
 DEFINE_IID!(IID_IStorageProviderItemPropertyDefinition, 3316876219, 65311, 17048, 131, 30, 255, 28, 8, 8, 150, 144);
@@ -4183,7 +4183,7 @@ impl IStorageProviderItemPropertyDefinition {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageProviderItemPropertyDefinition: IStorageProviderItemPropertyDefinition}
+RT_CLASS!{class StorageProviderItemPropertyDefinition: IStorageProviderItemPropertyDefinition ["Windows.Storage.Provider.StorageProviderItemPropertyDefinition"]}
 impl RtActivatable<IActivationFactory> for StorageProviderItemPropertyDefinition {}
 DEFINE_CLSID!(StorageProviderItemPropertyDefinition(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,73,116,101,109,80,114,111,112,101,114,116,121,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_StorageProviderItemPropertyDefinition]);
 DEFINE_IID!(IID_IStorageProviderItemPropertySource, 2406456382, 63026, 19099, 141, 153, 210, 215, 161, 29, 245, 106);
@@ -4197,7 +4197,7 @@ impl IStorageProviderItemPropertySource {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum StorageProviderPopulationPolicy: i32 {
+RT_ENUM! { enum StorageProviderPopulationPolicy: i32 ["Windows.Storage.Provider.StorageProviderPopulationPolicy"] {
     Full (StorageProviderPopulationPolicy_Full) = 1, AlwaysFull (StorageProviderPopulationPolicy_AlwaysFull) = 2,
 }}
 DEFINE_IID!(IID_IStorageProviderPropertyCapabilities, 1703751438, 25527, 17767, 172, 249, 81, 171, 227, 1, 221, 165);
@@ -4211,7 +4211,7 @@ impl IStorageProviderPropertyCapabilities {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum StorageProviderProtectionMode: i32 {
+RT_ENUM! { enum StorageProviderProtectionMode: i32 ["Windows.Storage.Provider.StorageProviderProtectionMode"] {
     Unknown (StorageProviderProtectionMode_Unknown) = 0, Personal (StorageProviderProtectionMode_Personal) = 1,
 }}
 DEFINE_IID!(IID_IStorageProviderSyncRootInfo, 2081621444, 39417, 16812, 137, 4, 171, 5, 93, 101, 73, 38);
@@ -4390,7 +4390,7 @@ impl IStorageProviderSyncRootInfo {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageProviderSyncRootInfo: IStorageProviderSyncRootInfo}
+RT_CLASS!{class StorageProviderSyncRootInfo: IStorageProviderSyncRootInfo ["Windows.Storage.Provider.StorageProviderSyncRootInfo"]}
 impl RtActivatable<IActivationFactory> for StorageProviderSyncRootInfo {}
 DEFINE_CLSID!(StorageProviderSyncRootInfo(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,83,121,110,99,82,111,111,116,73,110,102,111,0]) [CLSID_StorageProviderSyncRootInfo]);
 DEFINE_IID!(IID_IStorageProviderSyncRootInfo2, 3478237219, 31985, 20838, 189, 186, 239, 217, 95, 82, 158, 49);
@@ -4477,22 +4477,22 @@ impl IStorageProviderUriSource {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum StorageProviderUriSourceStatus: i32 {
+RT_ENUM! { enum StorageProviderUriSourceStatus: i32 ["Windows.Storage.Provider.StorageProviderUriSourceStatus"] {
     Success (StorageProviderUriSourceStatus_Success) = 0, NoSyncRoot (StorageProviderUriSourceStatus_NoSyncRoot) = 1, FileNotFound (StorageProviderUriSourceStatus_FileNotFound) = 2,
 }}
-RT_ENUM! { enum UIStatus: i32 {
+RT_ENUM! { enum UIStatus: i32 ["Windows.Storage.Provider.UIStatus"] {
     Unavailable (UIStatus_Unavailable) = 0, Hidden (UIStatus_Hidden) = 1, Visible (UIStatus_Visible) = 2, Complete (UIStatus_Complete) = 3,
 }}
-RT_ENUM! { enum WriteActivationMode: i32 {
+RT_ENUM! { enum WriteActivationMode: i32 ["Windows.Storage.Provider.WriteActivationMode"] {
     ReadOnly (WriteActivationMode_ReadOnly) = 0, NotNeeded (WriteActivationMode_NotNeeded) = 1, AfterWrite (WriteActivationMode_AfterWrite) = 2,
 }}
 } // Windows.Storage.Provider
 pub mod search { // Windows.Storage.Search
 use ::prelude::*;
-RT_ENUM! { enum CommonFileQuery: i32 {
+RT_ENUM! { enum CommonFileQuery: i32 ["Windows.Storage.Search.CommonFileQuery"] {
     DefaultQuery (CommonFileQuery_DefaultQuery) = 0, OrderByName (CommonFileQuery_OrderByName) = 1, OrderByTitle (CommonFileQuery_OrderByTitle) = 2, OrderByMusicProperties (CommonFileQuery_OrderByMusicProperties) = 3, OrderBySearchRank (CommonFileQuery_OrderBySearchRank) = 4, OrderByDate (CommonFileQuery_OrderByDate) = 5,
 }}
-RT_ENUM! { enum CommonFolderQuery: i32 {
+RT_ENUM! { enum CommonFolderQuery: i32 ["Windows.Storage.Search.CommonFolderQuery"] {
     DefaultQuery (CommonFolderQuery_DefaultQuery) = 0, GroupByYear (CommonFolderQuery_GroupByYear) = 100, GroupByMonth (CommonFolderQuery_GroupByMonth) = 101, GroupByArtist (CommonFolderQuery_GroupByArtist) = 102, GroupByAlbum (CommonFolderQuery_GroupByAlbum) = 103, GroupByAlbumArtist (CommonFolderQuery_GroupByAlbumArtist) = 104, GroupByComposer (CommonFolderQuery_GroupByComposer) = 105, GroupByGenre (CommonFolderQuery_GroupByGenre) = 106, GroupByPublishedYear (CommonFolderQuery_GroupByPublishedYear) = 107, GroupByRating (CommonFolderQuery_GroupByRating) = 108, GroupByTag (CommonFolderQuery_GroupByTag) = 109, GroupByAuthor (CommonFolderQuery_GroupByAuthor) = 110, GroupByType (CommonFolderQuery_GroupByType) = 111,
 }}
 DEFINE_IID!(IID_IContentIndexer, 2977333133, 63128, 18818, 176, 95, 58, 110, 140, 171, 1, 162);
@@ -4542,7 +4542,7 @@ impl IContentIndexer {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContentIndexer: IContentIndexer}
+RT_CLASS!{class ContentIndexer: IContentIndexer ["Windows.Storage.Search.ContentIndexer"]}
 impl RtActivatable<IContentIndexerStatics> for ContentIndexer {}
 impl ContentIndexer {
     #[inline] pub fn get_indexer_with_name(indexName: &HStringArg) -> Result<Option<ComPtr<ContentIndexer>>> {
@@ -4594,7 +4594,7 @@ impl IContentIndexerQuery {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ContentIndexerQuery: IContentIndexerQuery}
+RT_CLASS!{class ContentIndexerQuery: IContentIndexerQuery ["Windows.Storage.Search.ContentIndexerQuery"]}
 DEFINE_IID!(IID_IContentIndexerQueryOperations, 679624208, 18310, 17137, 151, 48, 121, 43, 53, 102, 177, 80);
 RT_INTERFACE!{interface IContentIndexerQueryOperations(IContentIndexerQueryOperationsVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexerQueryOperations] {
     fn CreateQueryWithSortOrderAndLanguage(&self, searchFilter: HSTRING, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, sortOrder: *mut foundation::collections::IIterable<SortEntry>, searchFilterLanguage: HSTRING, out: *mut *mut ContentIndexerQuery) -> HRESULT,
@@ -4635,10 +4635,10 @@ impl IContentIndexerStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum DateStackOption: i32 {
+RT_ENUM! { enum DateStackOption: i32 ["Windows.Storage.Search.DateStackOption"] {
     None (DateStackOption_None) = 0, Year (DateStackOption_Year) = 1, Month (DateStackOption_Month) = 2,
 }}
-RT_ENUM! { enum FolderDepth: i32 {
+RT_ENUM! { enum FolderDepth: i32 ["Windows.Storage.Search.FolderDepth"] {
     Shallow (FolderDepth_Shallow) = 0, Deep (FolderDepth_Deep) = 1,
 }}
 DEFINE_IID!(IID_IIndexableContent, 3438387295, 54453, 18490, 176, 110, 224, 219, 30, 196, 32, 228);
@@ -4685,13 +4685,13 @@ impl IIndexableContent {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class IndexableContent: IIndexableContent}
+RT_CLASS!{class IndexableContent: IIndexableContent ["Windows.Storage.Search.IndexableContent"]}
 impl RtActivatable<IActivationFactory> for IndexableContent {}
 DEFINE_CLSID!(IndexableContent(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,73,110,100,101,120,97,98,108,101,67,111,110,116,101,110,116,0]) [CLSID_IndexableContent]);
-RT_ENUM! { enum IndexedState: i32 {
+RT_ENUM! { enum IndexedState: i32 ["Windows.Storage.Search.IndexedState"] {
     Unknown (IndexedState_Unknown) = 0, NotIndexed (IndexedState_NotIndexed) = 1, PartiallyIndexed (IndexedState_PartiallyIndexed) = 2, FullyIndexed (IndexedState_FullyIndexed) = 3,
 }}
-RT_ENUM! { enum IndexerOption: i32 {
+RT_ENUM! { enum IndexerOption: i32 ["Windows.Storage.Search.IndexerOption"] {
     UseIndexerWhenAvailable (IndexerOption_UseIndexerWhenAvailable) = 0, OnlyUseIndexer (IndexerOption_OnlyUseIndexer) = 1, DoNotUseIndexer (IndexerOption_DoNotUseIndexer) = 2, OnlyUseIndexerAndOptimizeForIndexedProperties (IndexerOption_OnlyUseIndexerAndOptimizeForIndexedProperties) = 3,
 }}
 DEFINE_IID!(IID_IQueryOptions, 509495022, 3909, 18488, 168, 233, 208, 71, 157, 68, 108, 48);
@@ -4799,7 +4799,7 @@ impl IQueryOptions {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class QueryOptions: IQueryOptions}
+RT_CLASS!{class QueryOptions: IQueryOptions ["Windows.Storage.Search.QueryOptions"]}
 impl RtActivatable<IQueryOptionsFactory> for QueryOptions {}
 impl RtActivatable<IActivationFactory> for QueryOptions {}
 impl QueryOptions {
@@ -4839,10 +4839,10 @@ impl IQueryOptionsWithProviderFilter {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct SortEntry {
+RT_STRUCT! { struct SortEntry ["Windows.Storage.Search.SortEntry"] {
     PropertyName: HSTRING, AscendingOrder: bool,
 }}
-RT_CLASS!{class SortEntryVector: foundation::collections::IVector<SortEntry>}
+RT_CLASS!{class SortEntryVector: foundation::collections::IVector<SortEntry> ["Windows.Storage.Search.SortEntryVector"]}
 DEFINE_IID!(IID_IStorageFileQueryResult, 1392354375, 11178, 16684, 178, 159, 212, 177, 119, 142, 250, 30);
 RT_INTERFACE!{interface IStorageFileQueryResult(IStorageFileQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFileQueryResult] {
     fn GetFilesAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>) -> HRESULT,
@@ -4860,7 +4860,7 @@ impl IStorageFileQueryResult {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageFileQueryResult: IStorageFileQueryResult}
+RT_CLASS!{class StorageFileQueryResult: IStorageFileQueryResult ["Windows.Storage.Search.StorageFileQueryResult"]}
 DEFINE_IID!(IID_IStorageFileQueryResult2, 1314765277, 28993, 18116, 139, 227, 233, 220, 158, 39, 39, 92);
 RT_INTERFACE!{interface IStorageFileQueryResult2(IStorageFileQueryResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageFileQueryResult2] {
     #[cfg(feature="windows-data")] fn GetMatchingPropertiesWithRanges(&self, file: *mut super::StorageFile, out: *mut *mut foundation::collections::IMap<HString, foundation::collections::IVectorView<super::super::data::text::TextSegment>>) -> HRESULT
@@ -4996,7 +4996,7 @@ impl IStorageFolderQueryResult {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageFolderQueryResult: IStorageFolderQueryResult}
+RT_CLASS!{class StorageFolderQueryResult: IStorageFolderQueryResult ["Windows.Storage.Search.StorageFolderQueryResult"]}
 DEFINE_IID!(IID_IStorageItemQueryResult, 3902046329, 40280, 18360, 178, 178, 65, 176, 127, 71, 149, 249);
 RT_INTERFACE!{interface IStorageItemQueryResult(IStorageItemQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemQueryResult] {
     fn GetItemsAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>) -> HRESULT,
@@ -5014,7 +5014,7 @@ impl IStorageItemQueryResult {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageItemQueryResult: IStorageItemQueryResult}
+RT_CLASS!{class StorageItemQueryResult: IStorageItemQueryResult ["Windows.Storage.Search.StorageItemQueryResult"]}
 DEFINE_IID!(IID_IStorageLibraryChangeTrackerTriggerDetails, 499622761, 47011, 19954, 157, 97, 235, 168, 90, 3, 67, 210);
 RT_INTERFACE!{interface IStorageLibraryChangeTrackerTriggerDetails(IStorageLibraryChangeTrackerTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryChangeTrackerTriggerDetails] {
     fn get_Folder(&self, out: *mut *mut super::StorageFolder) -> HRESULT,
@@ -5032,7 +5032,7 @@ impl IStorageLibraryChangeTrackerTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageLibraryChangeTrackerTriggerDetails: IStorageLibraryChangeTrackerTriggerDetails}
+RT_CLASS!{class StorageLibraryChangeTrackerTriggerDetails: IStorageLibraryChangeTrackerTriggerDetails ["Windows.Storage.Search.StorageLibraryChangeTrackerTriggerDetails"]}
 DEFINE_IID!(IID_IStorageLibraryContentChangedTriggerDetails, 708254071, 43967, 19997, 138, 165, 99, 133, 216, 136, 71, 153);
 RT_INTERFACE!{interface IStorageLibraryContentChangedTriggerDetails(IStorageLibraryContentChangedTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryContentChangedTriggerDetails] {
     fn get_Folder(&self, out: *mut *mut super::StorageFolder) -> HRESULT,
@@ -5050,7 +5050,7 @@ impl IStorageLibraryContentChangedTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StorageLibraryContentChangedTriggerDetails: IStorageLibraryContentChangedTriggerDetails}
+RT_CLASS!{class StorageLibraryContentChangedTriggerDetails: IStorageLibraryContentChangedTriggerDetails ["Windows.Storage.Search.StorageLibraryContentChangedTriggerDetails"]}
 DEFINE_IID!(IID_IStorageQueryResultBase, 3264730893, 29523, 18347, 186, 88, 140, 97, 66, 93, 197, 75);
 RT_INTERFACE!{interface IStorageQueryResultBase(IStorageQueryResultBaseVtbl): IInspectable(IInspectableVtbl) [IID_IStorageQueryResultBase] {
     fn GetItemCountAsync(&self, out: *mut *mut foundation::IAsyncOperation<u32>) -> HRESULT,
@@ -5134,7 +5134,7 @@ impl IValueAndLanguage {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ValueAndLanguage: IValueAndLanguage}
+RT_CLASS!{class ValueAndLanguage: IValueAndLanguage ["Windows.Storage.Search.ValueAndLanguage"]}
 impl RtActivatable<IActivationFactory> for ValueAndLanguage {}
 DEFINE_CLSID!(ValueAndLanguage(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,86,97,108,117,101,65,110,100,76,97,110,103,117,97,103,101,0]) [CLSID_ValueAndLanguage]);
 } // Windows.Storage.Search
@@ -5162,7 +5162,7 @@ impl IBuffer {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Buffer: IBuffer}
+RT_CLASS!{class Buffer: IBuffer ["Windows.Storage.Streams.Buffer"]}
 impl RtActivatable<IBufferFactory> for Buffer {}
 impl RtActivatable<IBufferStatics> for Buffer {}
 impl Buffer {
@@ -5205,7 +5205,7 @@ impl IBufferStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ByteOrder: i32 {
+RT_ENUM! { enum ByteOrder: i32 ["Windows.Storage.Streams.ByteOrder"] {
     LittleEndian (ByteOrder_LittleEndian) = 0, BigEndian (ByteOrder_BigEndian) = 1,
 }}
 DEFINE_IID!(IID_IContentTypeProvider, 2547030181, 15257, 19945, 136, 165, 225, 29, 47, 80, 199, 149);
@@ -5376,7 +5376,7 @@ impl IDataReader {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataReader: IDataReader}
+RT_CLASS!{class DataReader: IDataReader ["Windows.Storage.Streams.DataReader"]}
 impl RtActivatable<IDataReaderFactory> for DataReader {}
 impl RtActivatable<IDataReaderStatics> for DataReader {}
 impl DataReader {
@@ -5399,7 +5399,7 @@ impl IDataReaderFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataReaderLoadOperation: foundation::IAsyncOperation<u32>}
+RT_CLASS!{class DataReaderLoadOperation: foundation::IAsyncOperation<u32> ["Windows.Storage.Streams.DataReaderLoadOperation"]}
 DEFINE_IID!(IID_IDataReaderStatics, 301776840, 63802, 18203, 177, 33, 243, 121, 227, 73, 49, 60);
 RT_INTERFACE!{static interface IDataReaderStatics(IDataReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderStatics] {
     fn FromBuffer(&self, buffer: *mut IBuffer, out: *mut *mut DataReader) -> HRESULT
@@ -5560,7 +5560,7 @@ impl IDataWriter {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataWriter: IDataWriter}
+RT_CLASS!{class DataWriter: IDataWriter ["Windows.Storage.Streams.DataWriter"]}
 impl RtActivatable<IDataWriterFactory> for DataWriter {}
 impl RtActivatable<IActivationFactory> for DataWriter {}
 impl DataWriter {
@@ -5580,13 +5580,13 @@ impl IDataWriterFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataWriterStoreOperation: foundation::IAsyncOperation<u32>}
-RT_CLASS!{class FileInputStream: IInputStream}
-RT_ENUM! { enum FileOpenDisposition: i32 {
+RT_CLASS!{class DataWriterStoreOperation: foundation::IAsyncOperation<u32> ["Windows.Storage.Streams.DataWriterStoreOperation"]}
+RT_CLASS!{class FileInputStream: IInputStream ["Windows.Storage.Streams.FileInputStream"]}
+RT_ENUM! { enum FileOpenDisposition: i32 ["Windows.Storage.Streams.FileOpenDisposition"] {
     OpenExisting (FileOpenDisposition_OpenExisting) = 0, OpenAlways (FileOpenDisposition_OpenAlways) = 1, CreateNew (FileOpenDisposition_CreateNew) = 2, CreateAlways (FileOpenDisposition_CreateAlways) = 3, TruncateExisting (FileOpenDisposition_TruncateExisting) = 4,
 }}
-RT_CLASS!{class FileOutputStream: IOutputStream}
-RT_CLASS!{class FileRandomAccessStream: IRandomAccessStream}
+RT_CLASS!{class FileOutputStream: IOutputStream ["Windows.Storage.Streams.FileOutputStream"]}
+RT_CLASS!{class FileRandomAccessStream: IRandomAccessStream ["Windows.Storage.Streams.FileRandomAccessStream"]}
 impl RtActivatable<IFileRandomAccessStreamStatics> for FileRandomAccessStream {}
 impl FileRandomAccessStream {
     #[inline] pub fn open_async(filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
@@ -5668,7 +5668,7 @@ impl IFileRandomAccessStreamStatics {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class InMemoryRandomAccessStream: IRandomAccessStream}
+RT_CLASS!{class InMemoryRandomAccessStream: IRandomAccessStream ["Windows.Storage.Streams.InMemoryRandomAccessStream"]}
 impl RtActivatable<IActivationFactory> for InMemoryRandomAccessStream {}
 DEFINE_CLSID!(InMemoryRandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,73,110,77,101,109,111,114,121,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_InMemoryRandomAccessStream]);
 DEFINE_IID!(IID_IInputStream, 2421821410, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
@@ -5682,10 +5682,10 @@ impl IInputStream {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum InputStreamOptions: u32 {
+RT_ENUM! { enum InputStreamOptions: u32 ["Windows.Storage.Streams.InputStreamOptions"] {
     None (InputStreamOptions_None) = 0, Partial (InputStreamOptions_Partial) = 1, ReadAhead (InputStreamOptions_ReadAhead) = 2,
 }}
-RT_CLASS!{class InputStreamOverStream: IInputStream}
+RT_CLASS!{class InputStreamOverStream: IInputStream ["Windows.Storage.Streams.InputStreamOverStream"]}
 DEFINE_IID!(IID_IInputStreamReference, 1133681944, 24265, 19290, 145, 156, 66, 5, 176, 200, 4, 182);
 RT_INTERFACE!{interface IInputStreamReference(IInputStreamReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IInputStreamReference] {
     fn OpenSequentialReadAsync(&self, out: *mut *mut foundation::IAsyncOperation<IInputStream>) -> HRESULT
@@ -5714,7 +5714,7 @@ impl IOutputStream {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class OutputStreamOverStream: IOutputStream}
+RT_CLASS!{class OutputStreamOverStream: IOutputStream ["Windows.Storage.Streams.OutputStreamOverStream"]}
 DEFINE_IID!(IID_IRandomAccessStream, 2421821409, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
 RT_INTERFACE!{interface IRandomAccessStream(IRandomAccessStreamVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStream] {
     fn get_Size(&self, out: *mut u64) -> HRESULT,
@@ -5786,7 +5786,7 @@ impl RandomAccessStream {
     }
 }
 DEFINE_CLSID!(RandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_RandomAccessStream]);
-RT_CLASS!{class RandomAccessStreamOverStream: IRandomAccessStream}
+RT_CLASS!{class RandomAccessStreamOverStream: IRandomAccessStream ["Windows.Storage.Streams.RandomAccessStreamOverStream"]}
 DEFINE_IID!(IID_IRandomAccessStreamReference, 871248180, 7638, 20026, 128, 103, 209, 193, 98, 232, 100, 43);
 RT_INTERFACE!{interface IRandomAccessStreamReference(IRandomAccessStreamReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamReference] {
     fn OpenReadAsync(&self, out: *mut *mut foundation::IAsyncOperation<IRandomAccessStreamWithContentType>) -> HRESULT
@@ -5798,7 +5798,7 @@ impl IRandomAccessStreamReference {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RandomAccessStreamReference: IRandomAccessStreamReference}
+RT_CLASS!{class RandomAccessStreamReference: IRandomAccessStreamReference ["Windows.Storage.Streams.RandomAccessStreamReference"]}
 impl RtActivatable<IRandomAccessStreamReferenceStatics> for RandomAccessStreamReference {}
 impl RandomAccessStreamReference {
     #[inline] pub fn create_from_file(file: &super::IStorageFile) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
@@ -5862,7 +5862,7 @@ DEFINE_IID!(IID_IRandomAccessStreamWithContentType, 3424995367, 19261, 17295, 14
 RT_INTERFACE!{interface IRandomAccessStreamWithContentType(IRandomAccessStreamWithContentTypeVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamWithContentType] {
     
 }}
-RT_ENUM! { enum UnicodeEncoding: i32 {
+RT_ENUM! { enum UnicodeEncoding: i32 ["Windows.Storage.Streams.UnicodeEncoding"] {
     Utf8 (UnicodeEncoding_Utf8) = 0, Utf16LE (UnicodeEncoding_Utf16LE) = 1, Utf16BE (UnicodeEncoding_Utf16BE) = 2,
 }}
 } // Windows.Storage.Streams

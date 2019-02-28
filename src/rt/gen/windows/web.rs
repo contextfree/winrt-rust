@@ -29,7 +29,7 @@ impl IWebErrorStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WebErrorStatus: i32 {
+RT_ENUM! { enum WebErrorStatus: i32 ["Windows.Web.WebErrorStatus"] {
     Unknown (WebErrorStatus_Unknown) = 0, CertificateCommonNameIsIncorrect (WebErrorStatus_CertificateCommonNameIsIncorrect) = 1, CertificateExpired (WebErrorStatus_CertificateExpired) = 2, CertificateContainsErrors (WebErrorStatus_CertificateContainsErrors) = 3, CertificateRevoked (WebErrorStatus_CertificateRevoked) = 4, CertificateIsInvalid (WebErrorStatus_CertificateIsInvalid) = 5, ServerUnreachable (WebErrorStatus_ServerUnreachable) = 6, Timeout (WebErrorStatus_Timeout) = 7, ErrorHttpInvalidServerResponse (WebErrorStatus_ErrorHttpInvalidServerResponse) = 8, ConnectionAborted (WebErrorStatus_ConnectionAborted) = 9, ConnectionReset (WebErrorStatus_ConnectionReset) = 10, Disconnected (WebErrorStatus_Disconnected) = 11, HttpToHttpsOnRedirection (WebErrorStatus_HttpToHttpsOnRedirection) = 12, HttpsToHttpOnRedirection (WebErrorStatus_HttpsToHttpOnRedirection) = 13, CannotConnect (WebErrorStatus_CannotConnect) = 14, HostNameNotResolved (WebErrorStatus_HostNameNotResolved) = 15, OperationCanceled (WebErrorStatus_OperationCanceled) = 16, RedirectFailed (WebErrorStatus_RedirectFailed) = 17, UnexpectedStatusCode (WebErrorStatus_UnexpectedStatusCode) = 18, UnexpectedRedirection (WebErrorStatus_UnexpectedRedirection) = 19, UnexpectedClientError (WebErrorStatus_UnexpectedClientError) = 20, UnexpectedServerError (WebErrorStatus_UnexpectedServerError) = 21, InsufficientRangeSupport (WebErrorStatus_InsufficientRangeSupport) = 22, MissingContentLengthSupport (WebErrorStatus_MissingContentLengthSupport) = 23, MultipleChoices (WebErrorStatus_MultipleChoices) = 300, MovedPermanently (WebErrorStatus_MovedPermanently) = 301, Found (WebErrorStatus_Found) = 302, SeeOther (WebErrorStatus_SeeOther) = 303, NotModified (WebErrorStatus_NotModified) = 304, UseProxy (WebErrorStatus_UseProxy) = 305, TemporaryRedirect (WebErrorStatus_TemporaryRedirect) = 307, BadRequest (WebErrorStatus_BadRequest) = 400, Unauthorized (WebErrorStatus_Unauthorized) = 401, PaymentRequired (WebErrorStatus_PaymentRequired) = 402, Forbidden (WebErrorStatus_Forbidden) = 403, NotFound (WebErrorStatus_NotFound) = 404, MethodNotAllowed (WebErrorStatus_MethodNotAllowed) = 405, NotAcceptable (WebErrorStatus_NotAcceptable) = 406, ProxyAuthenticationRequired (WebErrorStatus_ProxyAuthenticationRequired) = 407, RequestTimeout (WebErrorStatus_RequestTimeout) = 408, Conflict (WebErrorStatus_Conflict) = 409, Gone (WebErrorStatus_Gone) = 410, LengthRequired (WebErrorStatus_LengthRequired) = 411, PreconditionFailed (WebErrorStatus_PreconditionFailed) = 412, RequestEntityTooLarge (WebErrorStatus_RequestEntityTooLarge) = 413, RequestUriTooLong (WebErrorStatus_RequestUriTooLong) = 414, UnsupportedMediaType (WebErrorStatus_UnsupportedMediaType) = 415, RequestedRangeNotSatisfiable (WebErrorStatus_RequestedRangeNotSatisfiable) = 416, ExpectationFailed (WebErrorStatus_ExpectationFailed) = 417, InternalServerError (WebErrorStatus_InternalServerError) = 500, NotImplemented (WebErrorStatus_NotImplemented) = 501, BadGateway (WebErrorStatus_BadGateway) = 502, ServiceUnavailable (WebErrorStatus_ServiceUnavailable) = 503, GatewayTimeout (WebErrorStatus_GatewayTimeout) = 504, HttpVersionNotSupported (WebErrorStatus_HttpVersionNotSupported) = 505,
 }}
 pub mod atompub { // Windows.Web.AtomPub
@@ -107,7 +107,7 @@ impl IAtomPubClient {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AtomPubClient: IAtomPubClient}
+RT_CLASS!{class AtomPubClient: IAtomPubClient ["Windows.Web.AtomPub.AtomPubClient"]}
 impl RtActivatable<IAtomPubClientFactory> for AtomPubClient {}
 impl RtActivatable<IActivationFactory> for AtomPubClient {}
 impl AtomPubClient {
@@ -156,7 +156,7 @@ impl IResourceCollection {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ResourceCollection: IResourceCollection}
+RT_CLASS!{class ResourceCollection: IResourceCollection ["Windows.Web.AtomPub.ResourceCollection"]}
 DEFINE_IID!(IID_IServiceDocument, 2340341617, 10931, 19902, 139, 204, 119, 143, 146, 183, 94, 81);
 RT_INTERFACE!{interface IServiceDocument(IServiceDocumentVtbl): IInspectable(IInspectableVtbl) [IID_IServiceDocument] {
     fn get_Workspaces(&self, out: *mut *mut foundation::collections::IVectorView<Workspace>) -> HRESULT
@@ -168,7 +168,7 @@ impl IServiceDocument {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ServiceDocument: IServiceDocument}
+RT_CLASS!{class ServiceDocument: IServiceDocument ["Windows.Web.AtomPub.ServiceDocument"]}
 DEFINE_IID!(IID_IWorkspace, 3021841979, 42168, 16438, 137, 197, 131, 195, 18, 102, 186, 73);
 RT_INTERFACE!{interface IWorkspace(IWorkspaceVtbl): IInspectable(IInspectableVtbl) [IID_IWorkspace] {
     fn get_Title(&self, out: *mut *mut super::syndication::ISyndicationText) -> HRESULT,
@@ -186,11 +186,11 @@ impl IWorkspace {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class Workspace: IWorkspace}
+RT_CLASS!{class Workspace: IWorkspace ["Windows.Web.AtomPub.Workspace"]}
 } // Windows.Web.AtomPub
 pub mod http { // Windows.Web.Http
 use ::prelude::*;
-RT_CLASS!{class HttpBufferContent: IHttpContent}
+RT_CLASS!{class HttpBufferContent: IHttpContent ["Windows.Web.Http.HttpBufferContent"]}
 impl RtActivatable<IHttpBufferContentFactory> for HttpBufferContent {}
 impl HttpBufferContent {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_buffer(content: &super::super::storage::streams::IBuffer) -> Result<ComPtr<HttpBufferContent>> {
@@ -291,7 +291,7 @@ impl IHttpClient {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpClient: IHttpClient}
+RT_CLASS!{class HttpClient: IHttpClient ["Windows.Web.Http.HttpClient"]}
 impl RtActivatable<IHttpClientFactory> for HttpClient {}
 impl RtActivatable<IActivationFactory> for HttpClient {}
 impl HttpClient {
@@ -311,7 +311,7 @@ impl IHttpClientFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum HttpCompletionOption: i32 {
+RT_ENUM! { enum HttpCompletionOption: i32 ["Windows.Web.Http.HttpCompletionOption"] {
     ResponseContentRead (HttpCompletionOption_ResponseContentRead) = 0, ResponseHeadersRead (HttpCompletionOption_ResponseHeadersRead) = 1,
 }}
 DEFINE_IID!(IID_IHttpContent, 1796514881, 64423, 19410, 175, 10, 131, 157, 231, 194, 149, 218);
@@ -428,7 +428,7 @@ impl IHttpCookie {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpCookie: IHttpCookie}
+RT_CLASS!{class HttpCookie: IHttpCookie ["Windows.Web.Http.HttpCookie"]}
 impl RtActivatable<IHttpCookieFactory> for HttpCookie {}
 impl HttpCookie {
     #[inline] pub fn create(name: &HStringArg, domain: &HStringArg, path: &HStringArg) -> Result<ComPtr<HttpCookie>> {
@@ -436,7 +436,7 @@ impl HttpCookie {
     }
 }
 DEFINE_CLSID!(HttpCookie(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,67,111,111,107,105,101,0]) [CLSID_HttpCookie]);
-RT_CLASS!{class HttpCookieCollection: foundation::collections::IVectorView<HttpCookie>}
+RT_CLASS!{class HttpCookieCollection: foundation::collections::IVectorView<HttpCookie> ["Windows.Web.Http.HttpCookieCollection"]}
 DEFINE_IID!(IID_IHttpCookieFactory, 1778746793, 37660, 19665, 169, 109, 194, 23, 1, 120, 92, 95);
 RT_INTERFACE!{static interface IHttpCookieFactory(IHttpCookieFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCookieFactory] {
     fn Create(&self, name: HSTRING, domain: HSTRING, path: HSTRING, out: *mut *mut HttpCookie) -> HRESULT
@@ -476,8 +476,8 @@ impl IHttpCookieManager {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpCookieManager: IHttpCookieManager}
-RT_CLASS!{class HttpFormUrlEncodedContent: IHttpContent}
+RT_CLASS!{class HttpCookieManager: IHttpCookieManager ["Windows.Web.Http.HttpCookieManager"]}
+RT_CLASS!{class HttpFormUrlEncodedContent: IHttpContent ["Windows.Web.Http.HttpFormUrlEncodedContent"]}
 impl RtActivatable<IHttpFormUrlEncodedContentFactory> for HttpFormUrlEncodedContent {}
 impl HttpFormUrlEncodedContent {
     #[inline] pub fn create(content: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, HString>>) -> Result<ComPtr<HttpFormUrlEncodedContent>> {
@@ -507,7 +507,7 @@ impl IHttpMethod {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpMethod: IHttpMethod}
+RT_CLASS!{class HttpMethod: IHttpMethod ["Windows.Web.Http.HttpMethod"]}
 impl RtActivatable<IHttpMethodFactory> for HttpMethod {}
 impl RtActivatable<IHttpMethodStatics> for HttpMethod {}
 impl HttpMethod {
@@ -605,7 +605,7 @@ impl IHttpMultipartContent {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpMultipartContent: IHttpContent}
+RT_CLASS!{class HttpMultipartContent: IHttpContent ["Windows.Web.Http.HttpMultipartContent"]}
 impl RtActivatable<IHttpMultipartContentFactory> for HttpMultipartContent {}
 impl RtActivatable<IActivationFactory> for HttpMultipartContent {}
 impl HttpMultipartContent {
@@ -654,7 +654,7 @@ impl IHttpMultipartFormDataContent {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpMultipartFormDataContent: IHttpContent}
+RT_CLASS!{class HttpMultipartFormDataContent: IHttpContent ["Windows.Web.Http.HttpMultipartFormDataContent"]}
 impl RtActivatable<IHttpMultipartFormDataContentFactory> for HttpMultipartFormDataContent {}
 impl RtActivatable<IActivationFactory> for HttpMultipartFormDataContent {}
 impl HttpMultipartFormDataContent {
@@ -674,10 +674,10 @@ impl IHttpMultipartFormDataContentFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct HttpProgress {
+RT_STRUCT! { struct HttpProgress ["Windows.Web.Http.HttpProgress"] {
     Stage: HttpProgressStage, BytesSent: u64, TotalBytesToSend: *mut foundation::IReference<u64>, BytesReceived: u64, TotalBytesToReceive: *mut foundation::IReference<u64>, Retries: u32,
 }}
-RT_ENUM! { enum HttpProgressStage: i32 {
+RT_ENUM! { enum HttpProgressStage: i32 ["Windows.Web.Http.HttpProgressStage"] {
     None (HttpProgressStage_None) = 0, DetectingProxy (HttpProgressStage_DetectingProxy) = 10, ResolvingName (HttpProgressStage_ResolvingName) = 20, ConnectingToServer (HttpProgressStage_ConnectingToServer) = 30, NegotiatingSsl (HttpProgressStage_NegotiatingSsl) = 40, SendingHeaders (HttpProgressStage_SendingHeaders) = 50, SendingContent (HttpProgressStage_SendingContent) = 60, WaitingForResponse (HttpProgressStage_WaitingForResponse) = 70, ReceivingHeaders (HttpProgressStage_ReceivingHeaders) = 80, ReceivingContent (HttpProgressStage_ReceivingContent) = 90,
 }}
 DEFINE_IID!(IID_IHttpRequestMessage, 4118162236, 29908, 18449, 181, 220, 159, 139, 78, 47, 154, 191);
@@ -736,7 +736,7 @@ impl IHttpRequestMessage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpRequestMessage: IHttpRequestMessage}
+RT_CLASS!{class HttpRequestMessage: IHttpRequestMessage ["Windows.Web.Http.HttpRequestMessage"]}
 impl RtActivatable<IHttpRequestMessageFactory> for HttpRequestMessage {}
 impl RtActivatable<IActivationFactory> for HttpRequestMessage {}
 impl HttpRequestMessage {
@@ -845,7 +845,7 @@ impl IHttpResponseMessage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpResponseMessage: IHttpResponseMessage}
+RT_CLASS!{class HttpResponseMessage: IHttpResponseMessage ["Windows.Web.Http.HttpResponseMessage"]}
 impl RtActivatable<IHttpResponseMessageFactory> for HttpResponseMessage {}
 impl RtActivatable<IActivationFactory> for HttpResponseMessage {}
 impl HttpResponseMessage {
@@ -865,13 +865,13 @@ impl IHttpResponseMessageFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum HttpResponseMessageSource: i32 {
+RT_ENUM! { enum HttpResponseMessageSource: i32 ["Windows.Web.Http.HttpResponseMessageSource"] {
     None (HttpResponseMessageSource_None) = 0, Cache (HttpResponseMessageSource_Cache) = 1, Network (HttpResponseMessageSource_Network) = 2,
 }}
-RT_ENUM! { enum HttpStatusCode: i32 {
+RT_ENUM! { enum HttpStatusCode: i32 ["Windows.Web.Http.HttpStatusCode"] {
     None (HttpStatusCode_None) = 0, Continue (HttpStatusCode_Continue) = 100, SwitchingProtocols (HttpStatusCode_SwitchingProtocols) = 101, Processing (HttpStatusCode_Processing) = 102, Ok (HttpStatusCode_Ok) = 200, Created (HttpStatusCode_Created) = 201, Accepted (HttpStatusCode_Accepted) = 202, NonAuthoritativeInformation (HttpStatusCode_NonAuthoritativeInformation) = 203, NoContent (HttpStatusCode_NoContent) = 204, ResetContent (HttpStatusCode_ResetContent) = 205, PartialContent (HttpStatusCode_PartialContent) = 206, MultiStatus (HttpStatusCode_MultiStatus) = 207, AlreadyReported (HttpStatusCode_AlreadyReported) = 208, IMUsed (HttpStatusCode_IMUsed) = 226, MultipleChoices (HttpStatusCode_MultipleChoices) = 300, MovedPermanently (HttpStatusCode_MovedPermanently) = 301, Found (HttpStatusCode_Found) = 302, SeeOther (HttpStatusCode_SeeOther) = 303, NotModified (HttpStatusCode_NotModified) = 304, UseProxy (HttpStatusCode_UseProxy) = 305, TemporaryRedirect (HttpStatusCode_TemporaryRedirect) = 307, PermanentRedirect (HttpStatusCode_PermanentRedirect) = 308, BadRequest (HttpStatusCode_BadRequest) = 400, Unauthorized (HttpStatusCode_Unauthorized) = 401, PaymentRequired (HttpStatusCode_PaymentRequired) = 402, Forbidden (HttpStatusCode_Forbidden) = 403, NotFound (HttpStatusCode_NotFound) = 404, MethodNotAllowed (HttpStatusCode_MethodNotAllowed) = 405, NotAcceptable (HttpStatusCode_NotAcceptable) = 406, ProxyAuthenticationRequired (HttpStatusCode_ProxyAuthenticationRequired) = 407, RequestTimeout (HttpStatusCode_RequestTimeout) = 408, Conflict (HttpStatusCode_Conflict) = 409, Gone (HttpStatusCode_Gone) = 410, LengthRequired (HttpStatusCode_LengthRequired) = 411, PreconditionFailed (HttpStatusCode_PreconditionFailed) = 412, RequestEntityTooLarge (HttpStatusCode_RequestEntityTooLarge) = 413, RequestUriTooLong (HttpStatusCode_RequestUriTooLong) = 414, UnsupportedMediaType (HttpStatusCode_UnsupportedMediaType) = 415, RequestedRangeNotSatisfiable (HttpStatusCode_RequestedRangeNotSatisfiable) = 416, ExpectationFailed (HttpStatusCode_ExpectationFailed) = 417, UnprocessableEntity (HttpStatusCode_UnprocessableEntity) = 422, Locked (HttpStatusCode_Locked) = 423, FailedDependency (HttpStatusCode_FailedDependency) = 424, UpgradeRequired (HttpStatusCode_UpgradeRequired) = 426, PreconditionRequired (HttpStatusCode_PreconditionRequired) = 428, TooManyRequests (HttpStatusCode_TooManyRequests) = 429, RequestHeaderFieldsTooLarge (HttpStatusCode_RequestHeaderFieldsTooLarge) = 431, InternalServerError (HttpStatusCode_InternalServerError) = 500, NotImplemented (HttpStatusCode_NotImplemented) = 501, BadGateway (HttpStatusCode_BadGateway) = 502, ServiceUnavailable (HttpStatusCode_ServiceUnavailable) = 503, GatewayTimeout (HttpStatusCode_GatewayTimeout) = 504, HttpVersionNotSupported (HttpStatusCode_HttpVersionNotSupported) = 505, VariantAlsoNegotiates (HttpStatusCode_VariantAlsoNegotiates) = 506, InsufficientStorage (HttpStatusCode_InsufficientStorage) = 507, LoopDetected (HttpStatusCode_LoopDetected) = 508, NotExtended (HttpStatusCode_NotExtended) = 510, NetworkAuthenticationRequired (HttpStatusCode_NetworkAuthenticationRequired) = 511,
 }}
-RT_CLASS!{class HttpStreamContent: IHttpContent}
+RT_CLASS!{class HttpStreamContent: IHttpContent ["Windows.Web.Http.HttpStreamContent"]}
 impl RtActivatable<IHttpStreamContentFactory> for HttpStreamContent {}
 impl HttpStreamContent {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_input_stream(content: &super::super::storage::streams::IInputStream) -> Result<ComPtr<HttpStreamContent>> {
@@ -890,7 +890,7 @@ impl IHttpStreamContentFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpStringContent: IHttpContent}
+RT_CLASS!{class HttpStringContent: IHttpContent ["Windows.Web.Http.HttpStringContent"]}
 impl RtActivatable<IHttpStringContentFactory> for HttpStringContent {}
 impl HttpStringContent {
     #[inline] pub fn create_from_string(content: &HStringArg) -> Result<ComPtr<HttpStringContent>> {
@@ -957,8 +957,8 @@ impl IHttpTransportInformation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpTransportInformation: IHttpTransportInformation}
-RT_ENUM! { enum HttpVersion: i32 {
+RT_CLASS!{class HttpTransportInformation: IHttpTransportInformation ["Windows.Web.Http.HttpTransportInformation"]}
+RT_ENUM! { enum HttpVersion: i32 ["Windows.Web.Http.HttpVersion"] {
     None (HttpVersion_None) = 0, Http10 (HttpVersion_Http10) = 1, Http11 (HttpVersion_Http11) = 2, Http20 (HttpVersion_Http20) = 3,
 }}
 pub mod diagnostics { // Windows.Web.Http.Diagnostics
@@ -1011,7 +1011,7 @@ impl IHttpDiagnosticProvider {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpDiagnosticProvider: IHttpDiagnosticProvider}
+RT_CLASS!{class HttpDiagnosticProvider: IHttpDiagnosticProvider ["Windows.Web.Http.Diagnostics.HttpDiagnosticProvider"]}
 impl RtActivatable<IHttpDiagnosticProviderStatics> for HttpDiagnosticProvider {}
 impl HttpDiagnosticProvider {
     #[cfg(feature="windows-system")] #[inline] pub fn create_from_process_diagnostic_info(processDiagnosticInfo: &::rt::gen::windows::system::diagnostics::ProcessDiagnosticInfo) -> Result<Option<ComPtr<HttpDiagnosticProvider>>> {
@@ -1066,7 +1066,7 @@ impl IHttpDiagnosticProviderRequestResponseCompletedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpDiagnosticProviderRequestResponseCompletedEventArgs: IHttpDiagnosticProviderRequestResponseCompletedEventArgs}
+RT_CLASS!{class HttpDiagnosticProviderRequestResponseCompletedEventArgs: IHttpDiagnosticProviderRequestResponseCompletedEventArgs ["Windows.Web.Http.Diagnostics.HttpDiagnosticProviderRequestResponseCompletedEventArgs"]}
 DEFINE_IID!(IID_IHttpDiagnosticProviderRequestResponseTimestamps, 3769622032, 21967, 19457, 145, 212, 162, 5, 87, 216, 73, 240);
 RT_INTERFACE!{interface IHttpDiagnosticProviderRequestResponseTimestamps(IHttpDiagnosticProviderRequestResponseTimestampsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderRequestResponseTimestamps] {
     fn get_CacheCheckedTimestamp(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
@@ -1126,7 +1126,7 @@ impl IHttpDiagnosticProviderRequestResponseTimestamps {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpDiagnosticProviderRequestResponseTimestamps: IHttpDiagnosticProviderRequestResponseTimestamps}
+RT_CLASS!{class HttpDiagnosticProviderRequestResponseTimestamps: IHttpDiagnosticProviderRequestResponseTimestamps ["Windows.Web.Http.Diagnostics.HttpDiagnosticProviderRequestResponseTimestamps"]}
 DEFINE_IID!(IID_IHttpDiagnosticProviderRequestSentEventArgs, 1062311632, 19487, 20158, 165, 122, 6, 147, 7, 113, 197, 13);
 RT_INTERFACE!{interface IHttpDiagnosticProviderRequestSentEventArgs(IHttpDiagnosticProviderRequestSentEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderRequestSentEventArgs] {
     fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -1174,7 +1174,7 @@ impl IHttpDiagnosticProviderRequestSentEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpDiagnosticProviderRequestSentEventArgs: IHttpDiagnosticProviderRequestSentEventArgs}
+RT_CLASS!{class HttpDiagnosticProviderRequestSentEventArgs: IHttpDiagnosticProviderRequestSentEventArgs ["Windows.Web.Http.Diagnostics.HttpDiagnosticProviderRequestSentEventArgs"]}
 DEFINE_IID!(IID_IHttpDiagnosticProviderResponseReceivedEventArgs, 2694993516, 43871, 19814, 187, 45, 8, 76, 244, 22, 53, 208);
 RT_INTERFACE!{interface IHttpDiagnosticProviderResponseReceivedEventArgs(IHttpDiagnosticProviderResponseReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderResponseReceivedEventArgs] {
     fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -1198,7 +1198,7 @@ impl IHttpDiagnosticProviderResponseReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpDiagnosticProviderResponseReceivedEventArgs: IHttpDiagnosticProviderResponseReceivedEventArgs}
+RT_CLASS!{class HttpDiagnosticProviderResponseReceivedEventArgs: IHttpDiagnosticProviderResponseReceivedEventArgs ["Windows.Web.Http.Diagnostics.HttpDiagnosticProviderResponseReceivedEventArgs"]}
 DEFINE_IID!(IID_IHttpDiagnosticProviderStatics, 1535266497, 27244, 18380, 175, 236, 30, 134, 188, 38, 5, 59);
 RT_INTERFACE!{static interface IHttpDiagnosticProviderStatics(IHttpDiagnosticProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderStatics] {
     #[cfg(feature="windows-system")] fn CreateFromProcessDiagnosticInfo(&self, processDiagnosticInfo: *mut ::rt::gen::windows::system::diagnostics::ProcessDiagnosticInfo, out: *mut *mut HttpDiagnosticProvider) -> HRESULT
@@ -1210,7 +1210,7 @@ impl IHttpDiagnosticProviderStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum HttpDiagnosticRequestInitiator: i32 {
+RT_ENUM! { enum HttpDiagnosticRequestInitiator: i32 ["Windows.Web.Http.Diagnostics.HttpDiagnosticRequestInitiator"] {
     ParsedElement (HttpDiagnosticRequestInitiator_ParsedElement) = 0, Script (HttpDiagnosticRequestInitiator_Script) = 1, Image (HttpDiagnosticRequestInitiator_Image) = 2, Link (HttpDiagnosticRequestInitiator_Link) = 3, Style (HttpDiagnosticRequestInitiator_Style) = 4, XmlHttpRequest (HttpDiagnosticRequestInitiator_XmlHttpRequest) = 5, Media (HttpDiagnosticRequestInitiator_Media) = 6, HtmlDownload (HttpDiagnosticRequestInitiator_HtmlDownload) = 7, Prefetch (HttpDiagnosticRequestInitiator_Prefetch) = 8, Other (HttpDiagnosticRequestInitiator_Other) = 9, CrossOriginPreFlight (HttpDiagnosticRequestInitiator_CrossOriginPreFlight) = 10, Fetch (HttpDiagnosticRequestInitiator_Fetch) = 11, Beacon (HttpDiagnosticRequestInitiator_Beacon) = 12,
 }}
 DEFINE_IID!(IID_IHttpDiagnosticSourceLocation, 1420415584, 34912, 16959, 182, 250, 215, 119, 22, 246, 71, 167);
@@ -1236,7 +1236,7 @@ impl IHttpDiagnosticSourceLocation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpDiagnosticSourceLocation: IHttpDiagnosticSourceLocation}
+RT_CLASS!{class HttpDiagnosticSourceLocation: IHttpDiagnosticSourceLocation ["Windows.Web.Http.Diagnostics.HttpDiagnosticSourceLocation"]}
 } // Windows.Web.Http.Diagnostics
 pub mod filters { // Windows.Web.Http.Filters
 use ::prelude::*;
@@ -1358,7 +1358,7 @@ impl IHttpBaseProtocolFilter {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpBaseProtocolFilter: IHttpBaseProtocolFilter}
+RT_CLASS!{class HttpBaseProtocolFilter: IHttpBaseProtocolFilter ["Windows.Web.Http.Filters.HttpBaseProtocolFilter"]}
 impl RtActivatable<IActivationFactory> for HttpBaseProtocolFilter {}
 DEFINE_CLSID!(HttpBaseProtocolFilter(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,70,105,108,116,101,114,115,46,72,116,116,112,66,97,115,101,80,114,111,116,111,99,111,108,70,105,108,116,101,114,0]) [CLSID_HttpBaseProtocolFilter]);
 DEFINE_IID!(IID_IHttpBaseProtocolFilter2, 784531475, 37927, 18688, 160, 23, 250, 125, 163, 181, 201, 174);
@@ -1441,14 +1441,14 @@ impl IHttpCacheControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpCacheControl: IHttpCacheControl}
-RT_ENUM! { enum HttpCacheReadBehavior: i32 {
+RT_CLASS!{class HttpCacheControl: IHttpCacheControl ["Windows.Web.Http.Filters.HttpCacheControl"]}
+RT_ENUM! { enum HttpCacheReadBehavior: i32 ["Windows.Web.Http.Filters.HttpCacheReadBehavior"] {
     Default (HttpCacheReadBehavior_Default) = 0, MostRecent (HttpCacheReadBehavior_MostRecent) = 1, OnlyFromCache (HttpCacheReadBehavior_OnlyFromCache) = 2, NoCache (HttpCacheReadBehavior_NoCache) = 3,
 }}
-RT_ENUM! { enum HttpCacheWriteBehavior: i32 {
+RT_ENUM! { enum HttpCacheWriteBehavior: i32 ["Windows.Web.Http.Filters.HttpCacheWriteBehavior"] {
     Default (HttpCacheWriteBehavior_Default) = 0, NoCache (HttpCacheWriteBehavior_NoCache) = 1,
 }}
-RT_ENUM! { enum HttpCookieUsageBehavior: i32 {
+RT_ENUM! { enum HttpCookieUsageBehavior: i32 ["Windows.Web.Http.Filters.HttpCookieUsageBehavior"] {
     Default (HttpCookieUsageBehavior_Default) = 0, NoCookies (HttpCookieUsageBehavior_NoCookies) = 1,
 }}
 DEFINE_IID!(IID_IHttpFilter, 2764795349, 2306, 17310, 191, 215, 225, 37, 82, 177, 101, 206);
@@ -1512,7 +1512,7 @@ impl IHttpServerCustomValidationRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpServerCustomValidationRequestedEventArgs: IHttpServerCustomValidationRequestedEventArgs}
+RT_CLASS!{class HttpServerCustomValidationRequestedEventArgs: IHttpServerCustomValidationRequestedEventArgs ["Windows.Web.Http.Filters.HttpServerCustomValidationRequestedEventArgs"]}
 } // Windows.Web.Http.Filters
 pub mod headers { // Windows.Web.Http.Headers
 use ::prelude::*;
@@ -1576,7 +1576,7 @@ impl IHttpCacheDirectiveHeaderValueCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpCacheDirectiveHeaderValueCollection: IHttpCacheDirectiveHeaderValueCollection}
+RT_CLASS!{class HttpCacheDirectiveHeaderValueCollection: IHttpCacheDirectiveHeaderValueCollection ["Windows.Web.Http.Headers.HttpCacheDirectiveHeaderValueCollection"]}
 DEFINE_IID!(IID_IHttpChallengeHeaderValue, 959668655, 3965, 18464, 159, 221, 162, 185, 86, 238, 174, 171);
 RT_INTERFACE!{interface IHttpChallengeHeaderValue(IHttpChallengeHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpChallengeHeaderValue] {
     fn get_Parameters(&self, out: *mut *mut foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT,
@@ -1600,7 +1600,7 @@ impl IHttpChallengeHeaderValue {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpChallengeHeaderValue: IHttpChallengeHeaderValue}
+RT_CLASS!{class HttpChallengeHeaderValue: IHttpChallengeHeaderValue ["Windows.Web.Http.Headers.HttpChallengeHeaderValue"]}
 impl RtActivatable<IHttpChallengeHeaderValueFactory> for HttpChallengeHeaderValue {}
 impl RtActivatable<IHttpChallengeHeaderValueStatics> for HttpChallengeHeaderValue {}
 impl HttpChallengeHeaderValue {
@@ -1634,7 +1634,7 @@ impl IHttpChallengeHeaderValueCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpChallengeHeaderValueCollection: IHttpChallengeHeaderValueCollection}
+RT_CLASS!{class HttpChallengeHeaderValueCollection: IHttpChallengeHeaderValueCollection ["Windows.Web.Http.Headers.HttpChallengeHeaderValueCollection"]}
 DEFINE_IID!(IID_IHttpChallengeHeaderValueFactory, 3293758545, 55708, 16554, 147, 153, 144, 238, 185, 143, 198, 19);
 RT_INTERFACE!{static interface IHttpChallengeHeaderValueFactory(IHttpChallengeHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpChallengeHeaderValueFactory] {
     fn CreateFromScheme(&self, scheme: HSTRING, out: *mut *mut HttpChallengeHeaderValue) -> HRESULT,
@@ -1680,7 +1680,7 @@ impl IHttpConnectionOptionHeaderValue {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpConnectionOptionHeaderValue: IHttpConnectionOptionHeaderValue}
+RT_CLASS!{class HttpConnectionOptionHeaderValue: IHttpConnectionOptionHeaderValue ["Windows.Web.Http.Headers.HttpConnectionOptionHeaderValue"]}
 impl RtActivatable<IHttpConnectionOptionHeaderValueFactory> for HttpConnectionOptionHeaderValue {}
 impl RtActivatable<IHttpConnectionOptionHeaderValueStatics> for HttpConnectionOptionHeaderValue {}
 impl HttpConnectionOptionHeaderValue {
@@ -1711,7 +1711,7 @@ impl IHttpConnectionOptionHeaderValueCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpConnectionOptionHeaderValueCollection: IHttpConnectionOptionHeaderValueCollection}
+RT_CLASS!{class HttpConnectionOptionHeaderValueCollection: IHttpConnectionOptionHeaderValueCollection ["Windows.Web.Http.Headers.HttpConnectionOptionHeaderValueCollection"]}
 DEFINE_IID!(IID_IHttpConnectionOptionHeaderValueFactory, 3644640286, 2941, 19519, 165, 141, 162, 161, 189, 234, 188, 10);
 RT_INTERFACE!{static interface IHttpConnectionOptionHeaderValueFactory(IHttpConnectionOptionHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpConnectionOptionHeaderValueFactory] {
     fn Create(&self, token: HSTRING, out: *mut *mut HttpConnectionOptionHeaderValue) -> HRESULT
@@ -1751,7 +1751,7 @@ impl IHttpContentCodingHeaderValue {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpContentCodingHeaderValue: IHttpContentCodingHeaderValue}
+RT_CLASS!{class HttpContentCodingHeaderValue: IHttpContentCodingHeaderValue ["Windows.Web.Http.Headers.HttpContentCodingHeaderValue"]}
 impl RtActivatable<IHttpContentCodingHeaderValueFactory> for HttpContentCodingHeaderValue {}
 impl RtActivatable<IHttpContentCodingHeaderValueStatics> for HttpContentCodingHeaderValue {}
 impl HttpContentCodingHeaderValue {
@@ -1782,7 +1782,7 @@ impl IHttpContentCodingHeaderValueCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpContentCodingHeaderValueCollection: IHttpContentCodingHeaderValueCollection}
+RT_CLASS!{class HttpContentCodingHeaderValueCollection: IHttpContentCodingHeaderValueCollection ["Windows.Web.Http.Headers.HttpContentCodingHeaderValueCollection"]}
 DEFINE_IID!(IID_IHttpContentCodingHeaderValueFactory, 3309120471, 13099, 17232, 133, 16, 46, 103, 162, 40, 154, 90);
 RT_INTERFACE!{static interface IHttpContentCodingHeaderValueFactory(IHttpContentCodingHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentCodingHeaderValueFactory] {
     fn Create(&self, contentCoding: HSTRING, out: *mut *mut HttpContentCodingHeaderValue) -> HRESULT
@@ -1828,7 +1828,7 @@ impl IHttpContentCodingWithQualityHeaderValue {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpContentCodingWithQualityHeaderValue: IHttpContentCodingWithQualityHeaderValue}
+RT_CLASS!{class HttpContentCodingWithQualityHeaderValue: IHttpContentCodingWithQualityHeaderValue ["Windows.Web.Http.Headers.HttpContentCodingWithQualityHeaderValue"]}
 impl RtActivatable<IHttpContentCodingWithQualityHeaderValueFactory> for HttpContentCodingWithQualityHeaderValue {}
 impl RtActivatable<IHttpContentCodingWithQualityHeaderValueStatics> for HttpContentCodingWithQualityHeaderValue {}
 impl HttpContentCodingWithQualityHeaderValue {
@@ -1862,7 +1862,7 @@ impl IHttpContentCodingWithQualityHeaderValueCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpContentCodingWithQualityHeaderValueCollection: IHttpContentCodingWithQualityHeaderValueCollection}
+RT_CLASS!{class HttpContentCodingWithQualityHeaderValueCollection: IHttpContentCodingWithQualityHeaderValueCollection ["Windows.Web.Http.Headers.HttpContentCodingWithQualityHeaderValueCollection"]}
 DEFINE_IID!(IID_IHttpContentCodingWithQualityHeaderValueFactory, 3294555674, 50515, 18172, 173, 226, 215, 92, 29, 83, 223, 123);
 RT_INTERFACE!{static interface IHttpContentCodingWithQualityHeaderValueFactory(IHttpContentCodingWithQualityHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentCodingWithQualityHeaderValueFactory] {
     fn CreateFromValue(&self, contentCoding: HSTRING, out: *mut *mut HttpContentCodingWithQualityHeaderValue) -> HRESULT,
@@ -1963,7 +1963,7 @@ impl IHttpContentDispositionHeaderValue {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpContentDispositionHeaderValue: IHttpContentDispositionHeaderValue}
+RT_CLASS!{class HttpContentDispositionHeaderValue: IHttpContentDispositionHeaderValue ["Windows.Web.Http.Headers.HttpContentDispositionHeaderValue"]}
 impl RtActivatable<IHttpContentDispositionHeaderValueFactory> for HttpContentDispositionHeaderValue {}
 impl RtActivatable<IHttpContentDispositionHeaderValueStatics> for HttpContentDispositionHeaderValue {}
 impl HttpContentDispositionHeaderValue {
@@ -2124,7 +2124,7 @@ impl IHttpContentHeaderCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpContentHeaderCollection: IHttpContentHeaderCollection}
+RT_CLASS!{class HttpContentHeaderCollection: IHttpContentHeaderCollection ["Windows.Web.Http.Headers.HttpContentHeaderCollection"]}
 impl RtActivatable<IActivationFactory> for HttpContentHeaderCollection {}
 DEFINE_CLSID!(HttpContentHeaderCollection(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,116,101,110,116,72,101,97,100,101,114,67,111,108,108,101,99,116,105,111,110,0]) [CLSID_HttpContentHeaderCollection]);
 DEFINE_IID!(IID_IHttpContentRangeHeaderValue, 81356755, 42230, 18780, 149, 48, 133, 121, 252, 186, 138, 169);
@@ -2161,7 +2161,7 @@ impl IHttpContentRangeHeaderValue {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpContentRangeHeaderValue: IHttpContentRangeHeaderValue}
+RT_CLASS!{class HttpContentRangeHeaderValue: IHttpContentRangeHeaderValue ["Windows.Web.Http.Headers.HttpContentRangeHeaderValue"]}
 impl RtActivatable<IHttpContentRangeHeaderValueFactory> for HttpContentRangeHeaderValue {}
 impl RtActivatable<IHttpContentRangeHeaderValueStatics> for HttpContentRangeHeaderValue {}
 impl HttpContentRangeHeaderValue {
@@ -2244,7 +2244,7 @@ impl IHttpCookiePairHeaderValue {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpCookiePairHeaderValue: IHttpCookiePairHeaderValue}
+RT_CLASS!{class HttpCookiePairHeaderValue: IHttpCookiePairHeaderValue ["Windows.Web.Http.Headers.HttpCookiePairHeaderValue"]}
 impl RtActivatable<IHttpCookiePairHeaderValueFactory> for HttpCookiePairHeaderValue {}
 impl RtActivatable<IHttpCookiePairHeaderValueStatics> for HttpCookiePairHeaderValue {}
 impl HttpCookiePairHeaderValue {
@@ -2278,7 +2278,7 @@ impl IHttpCookiePairHeaderValueCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpCookiePairHeaderValueCollection: IHttpCookiePairHeaderValueCollection}
+RT_CLASS!{class HttpCookiePairHeaderValueCollection: IHttpCookiePairHeaderValueCollection ["Windows.Web.Http.Headers.HttpCookiePairHeaderValueCollection"]}
 DEFINE_IID!(IID_IHttpCookiePairHeaderValueFactory, 1667117679, 5231, 20310, 170, 33, 44, 183, 214, 213, 139, 30);
 RT_INTERFACE!{static interface IHttpCookiePairHeaderValueFactory(IHttpCookiePairHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCookiePairHeaderValueFactory] {
     fn CreateFromName(&self, name: HSTRING, out: *mut *mut HttpCookiePairHeaderValue) -> HRESULT,
@@ -2336,7 +2336,7 @@ impl IHttpCredentialsHeaderValue {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpCredentialsHeaderValue: IHttpCredentialsHeaderValue}
+RT_CLASS!{class HttpCredentialsHeaderValue: IHttpCredentialsHeaderValue ["Windows.Web.Http.Headers.HttpCredentialsHeaderValue"]}
 impl RtActivatable<IHttpCredentialsHeaderValueFactory> for HttpCredentialsHeaderValue {}
 impl RtActivatable<IHttpCredentialsHeaderValueStatics> for HttpCredentialsHeaderValue {}
 impl HttpCredentialsHeaderValue {
@@ -2405,7 +2405,7 @@ impl IHttpDateOrDeltaHeaderValue {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpDateOrDeltaHeaderValue: IHttpDateOrDeltaHeaderValue}
+RT_CLASS!{class HttpDateOrDeltaHeaderValue: IHttpDateOrDeltaHeaderValue ["Windows.Web.Http.Headers.HttpDateOrDeltaHeaderValue"]}
 impl RtActivatable<IHttpDateOrDeltaHeaderValueStatics> for HttpDateOrDeltaHeaderValue {}
 impl HttpDateOrDeltaHeaderValue {
     #[inline] pub fn parse(input: &HStringArg) -> Result<Option<ComPtr<HttpDateOrDeltaHeaderValue>>> {
@@ -2461,7 +2461,7 @@ impl IHttpExpectationHeaderValue {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpExpectationHeaderValue: IHttpExpectationHeaderValue}
+RT_CLASS!{class HttpExpectationHeaderValue: IHttpExpectationHeaderValue ["Windows.Web.Http.Headers.HttpExpectationHeaderValue"]}
 impl RtActivatable<IHttpExpectationHeaderValueFactory> for HttpExpectationHeaderValue {}
 impl RtActivatable<IHttpExpectationHeaderValueStatics> for HttpExpectationHeaderValue {}
 impl HttpExpectationHeaderValue {
@@ -2495,7 +2495,7 @@ impl IHttpExpectationHeaderValueCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpExpectationHeaderValueCollection: IHttpExpectationHeaderValueCollection}
+RT_CLASS!{class HttpExpectationHeaderValueCollection: IHttpExpectationHeaderValueCollection ["Windows.Web.Http.Headers.HttpExpectationHeaderValueCollection"]}
 DEFINE_IID!(IID_IHttpExpectationHeaderValueFactory, 1319269835, 54590, 18536, 136, 86, 30, 33, 165, 3, 13, 192);
 RT_INTERFACE!{static interface IHttpExpectationHeaderValueFactory(IHttpExpectationHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpExpectationHeaderValueFactory] {
     fn CreateFromName(&self, name: HSTRING, out: *mut *mut HttpExpectationHeaderValue) -> HRESULT,
@@ -2546,7 +2546,7 @@ impl IHttpLanguageHeaderValueCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpLanguageHeaderValueCollection: IHttpLanguageHeaderValueCollection}
+RT_CLASS!{class HttpLanguageHeaderValueCollection: IHttpLanguageHeaderValueCollection ["Windows.Web.Http.Headers.HttpLanguageHeaderValueCollection"]}
 DEFINE_IID!(IID_IHttpLanguageRangeWithQualityHeaderValue, 1918296322, 128, 19892, 160, 131, 125, 231, 178, 229, 186, 76);
 RT_INTERFACE!{interface IHttpLanguageRangeWithQualityHeaderValue(IHttpLanguageRangeWithQualityHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpLanguageRangeWithQualityHeaderValue] {
     fn get_LanguageRange(&self, out: *mut HSTRING) -> HRESULT,
@@ -2564,7 +2564,7 @@ impl IHttpLanguageRangeWithQualityHeaderValue {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpLanguageRangeWithQualityHeaderValue: IHttpLanguageRangeWithQualityHeaderValue}
+RT_CLASS!{class HttpLanguageRangeWithQualityHeaderValue: IHttpLanguageRangeWithQualityHeaderValue ["Windows.Web.Http.Headers.HttpLanguageRangeWithQualityHeaderValue"]}
 impl RtActivatable<IHttpLanguageRangeWithQualityHeaderValueFactory> for HttpLanguageRangeWithQualityHeaderValue {}
 impl RtActivatable<IHttpLanguageRangeWithQualityHeaderValueStatics> for HttpLanguageRangeWithQualityHeaderValue {}
 impl HttpLanguageRangeWithQualityHeaderValue {
@@ -2598,7 +2598,7 @@ impl IHttpLanguageRangeWithQualityHeaderValueCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpLanguageRangeWithQualityHeaderValueCollection: IHttpLanguageRangeWithQualityHeaderValueCollection}
+RT_CLASS!{class HttpLanguageRangeWithQualityHeaderValueCollection: IHttpLanguageRangeWithQualityHeaderValueCollection ["Windows.Web.Http.Headers.HttpLanguageRangeWithQualityHeaderValueCollection"]}
 DEFINE_IID!(IID_IHttpLanguageRangeWithQualityHeaderValueFactory, 2075670896, 30735, 19587, 159, 228, 220, 48, 135, 246, 189, 85);
 RT_INTERFACE!{static interface IHttpLanguageRangeWithQualityHeaderValueFactory(IHttpLanguageRangeWithQualityHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpLanguageRangeWithQualityHeaderValueFactory] {
     fn CreateFromLanguageRange(&self, languageRange: HSTRING, out: *mut *mut HttpLanguageRangeWithQualityHeaderValue) -> HRESULT,
@@ -2666,7 +2666,7 @@ impl IHttpMediaTypeHeaderValue {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpMediaTypeHeaderValue: IHttpMediaTypeHeaderValue}
+RT_CLASS!{class HttpMediaTypeHeaderValue: IHttpMediaTypeHeaderValue ["Windows.Web.Http.Headers.HttpMediaTypeHeaderValue"]}
 impl RtActivatable<IHttpMediaTypeHeaderValueFactory> for HttpMediaTypeHeaderValue {}
 impl RtActivatable<IHttpMediaTypeHeaderValueStatics> for HttpMediaTypeHeaderValue {}
 impl HttpMediaTypeHeaderValue {
@@ -2753,7 +2753,7 @@ impl IHttpMediaTypeWithQualityHeaderValue {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpMediaTypeWithQualityHeaderValue: IHttpMediaTypeWithQualityHeaderValue}
+RT_CLASS!{class HttpMediaTypeWithQualityHeaderValue: IHttpMediaTypeWithQualityHeaderValue ["Windows.Web.Http.Headers.HttpMediaTypeWithQualityHeaderValue"]}
 impl RtActivatable<IHttpMediaTypeWithQualityHeaderValueFactory> for HttpMediaTypeWithQualityHeaderValue {}
 impl RtActivatable<IHttpMediaTypeWithQualityHeaderValueStatics> for HttpMediaTypeWithQualityHeaderValue {}
 impl HttpMediaTypeWithQualityHeaderValue {
@@ -2787,7 +2787,7 @@ impl IHttpMediaTypeWithQualityHeaderValueCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpMediaTypeWithQualityHeaderValueCollection: IHttpMediaTypeWithQualityHeaderValueCollection}
+RT_CLASS!{class HttpMediaTypeWithQualityHeaderValueCollection: IHttpMediaTypeWithQualityHeaderValueCollection ["Windows.Web.Http.Headers.HttpMediaTypeWithQualityHeaderValueCollection"]}
 DEFINE_IID!(IID_IHttpMediaTypeWithQualityHeaderValueFactory, 1282220276, 37975, 17638, 163, 35, 209, 34, 185, 88, 120, 11);
 RT_INTERFACE!{static interface IHttpMediaTypeWithQualityHeaderValueFactory(IHttpMediaTypeWithQualityHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMediaTypeWithQualityHeaderValueFactory] {
     fn CreateFromMediaType(&self, mediaType: HSTRING, out: *mut *mut HttpMediaTypeWithQualityHeaderValue) -> HRESULT,
@@ -2838,7 +2838,7 @@ impl IHttpMethodHeaderValueCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpMethodHeaderValueCollection: IHttpMethodHeaderValueCollection}
+RT_CLASS!{class HttpMethodHeaderValueCollection: IHttpMethodHeaderValueCollection ["Windows.Web.Http.Headers.HttpMethodHeaderValueCollection"]}
 DEFINE_IID!(IID_IHttpNameValueHeaderValue, 3636098147, 23450, 19739, 147, 249, 170, 91, 68, 236, 253, 223);
 RT_INTERFACE!{interface IHttpNameValueHeaderValue(IHttpNameValueHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpNameValueHeaderValue] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -2861,7 +2861,7 @@ impl IHttpNameValueHeaderValue {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpNameValueHeaderValue: IHttpNameValueHeaderValue}
+RT_CLASS!{class HttpNameValueHeaderValue: IHttpNameValueHeaderValue ["Windows.Web.Http.Headers.HttpNameValueHeaderValue"]}
 impl RtActivatable<IHttpNameValueHeaderValueFactory> for HttpNameValueHeaderValue {}
 impl RtActivatable<IHttpNameValueHeaderValueStatics> for HttpNameValueHeaderValue {}
 impl HttpNameValueHeaderValue {
@@ -2930,7 +2930,7 @@ impl IHttpProductHeaderValue {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpProductHeaderValue: IHttpProductHeaderValue}
+RT_CLASS!{class HttpProductHeaderValue: IHttpProductHeaderValue ["Windows.Web.Http.Headers.HttpProductHeaderValue"]}
 impl RtActivatable<IHttpProductHeaderValueFactory> for HttpProductHeaderValue {}
 impl RtActivatable<IHttpProductHeaderValueStatics> for HttpProductHeaderValue {}
 impl HttpProductHeaderValue {
@@ -2999,7 +2999,7 @@ impl IHttpProductInfoHeaderValue {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpProductInfoHeaderValue: IHttpProductInfoHeaderValue}
+RT_CLASS!{class HttpProductInfoHeaderValue: IHttpProductInfoHeaderValue ["Windows.Web.Http.Headers.HttpProductInfoHeaderValue"]}
 impl RtActivatable<IHttpProductInfoHeaderValueFactory> for HttpProductInfoHeaderValue {}
 impl RtActivatable<IHttpProductInfoHeaderValueStatics> for HttpProductInfoHeaderValue {}
 impl HttpProductInfoHeaderValue {
@@ -3033,7 +3033,7 @@ impl IHttpProductInfoHeaderValueCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpProductInfoHeaderValueCollection: IHttpProductInfoHeaderValueCollection}
+RT_CLASS!{class HttpProductInfoHeaderValueCollection: IHttpProductInfoHeaderValueCollection ["Windows.Web.Http.Headers.HttpProductInfoHeaderValueCollection"]}
 DEFINE_IID!(IID_IHttpProductInfoHeaderValueFactory, 606212030, 60094, 17508, 180, 96, 236, 1, 11, 124, 65, 226);
 RT_INTERFACE!{static interface IHttpProductInfoHeaderValueFactory(IHttpProductInfoHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpProductInfoHeaderValueFactory] {
     fn CreateFromComment(&self, productComment: HSTRING, out: *mut *mut HttpProductInfoHeaderValue) -> HRESULT,
@@ -3239,7 +3239,7 @@ impl IHttpRequestHeaderCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpRequestHeaderCollection: IHttpRequestHeaderCollection}
+RT_CLASS!{class HttpRequestHeaderCollection: IHttpRequestHeaderCollection ["Windows.Web.Http.Headers.HttpRequestHeaderCollection"]}
 DEFINE_IID!(IID_IHttpResponseHeaderCollection, 2056849769, 64063, 16877, 170, 198, 191, 149, 121, 117, 193, 107);
 RT_INTERFACE!{interface IHttpResponseHeaderCollection(IHttpResponseHeaderCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpResponseHeaderCollection] {
     fn get_Age(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -3336,7 +3336,7 @@ impl IHttpResponseHeaderCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpResponseHeaderCollection: IHttpResponseHeaderCollection}
+RT_CLASS!{class HttpResponseHeaderCollection: IHttpResponseHeaderCollection ["Windows.Web.Http.Headers.HttpResponseHeaderCollection"]}
 DEFINE_IID!(IID_IHttpTransferCodingHeaderValue, 1131361017, 15853, 17085, 179, 138, 84, 150, 162, 81, 28, 230);
 RT_INTERFACE!{interface IHttpTransferCodingHeaderValue(IHttpTransferCodingHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpTransferCodingHeaderValue] {
     fn get_Parameters(&self, out: *mut *mut foundation::collections::IVector<HttpNameValueHeaderValue>) -> HRESULT,
@@ -3354,7 +3354,7 @@ impl IHttpTransferCodingHeaderValue {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpTransferCodingHeaderValue: IHttpTransferCodingHeaderValue}
+RT_CLASS!{class HttpTransferCodingHeaderValue: IHttpTransferCodingHeaderValue ["Windows.Web.Http.Headers.HttpTransferCodingHeaderValue"]}
 impl RtActivatable<IHttpTransferCodingHeaderValueFactory> for HttpTransferCodingHeaderValue {}
 impl RtActivatable<IHttpTransferCodingHeaderValueStatics> for HttpTransferCodingHeaderValue {}
 impl HttpTransferCodingHeaderValue {
@@ -3385,7 +3385,7 @@ impl IHttpTransferCodingHeaderValueCollection {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HttpTransferCodingHeaderValueCollection: IHttpTransferCodingHeaderValueCollection}
+RT_CLASS!{class HttpTransferCodingHeaderValueCollection: IHttpTransferCodingHeaderValueCollection ["Windows.Web.Http.Headers.HttpTransferCodingHeaderValueCollection"]}
 DEFINE_IID!(IID_IHttpTransferCodingHeaderValueFactory, 3143819260, 58209, 20232, 142, 79, 201, 231, 35, 222, 112, 59);
 RT_INTERFACE!{static interface IHttpTransferCodingHeaderValueFactory(IHttpTransferCodingHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpTransferCodingHeaderValueFactory] {
     fn Create(&self, input: HSTRING, out: *mut *mut HttpTransferCodingHeaderValue) -> HRESULT
@@ -3418,7 +3418,7 @@ impl IHttpTransferCodingHeaderValueStatics {
 } // Windows.Web.Http
 pub mod syndication { // Windows.Web.Syndication
 use ::prelude::*;
-RT_STRUCT! { struct RetrievalProgress {
+RT_STRUCT! { struct RetrievalProgress ["Windows.Web.Syndication.RetrievalProgress"] {
     BytesRetrieved: u32, TotalBytesToRetrieve: u32,
 }}
 DEFINE_IID!(IID_ISyndicationAttribute, 1911093609, 21102, 16385, 154, 145, 232, 79, 131, 22, 26, 177);
@@ -3459,7 +3459,7 @@ impl ISyndicationAttribute {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SyndicationAttribute: ISyndicationAttribute}
+RT_CLASS!{class SyndicationAttribute: ISyndicationAttribute ["Windows.Web.Syndication.SyndicationAttribute"]}
 impl RtActivatable<ISyndicationAttributeFactory> for SyndicationAttribute {}
 impl RtActivatable<IActivationFactory> for SyndicationAttribute {}
 impl SyndicationAttribute {
@@ -3517,7 +3517,7 @@ impl ISyndicationCategory {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SyndicationCategory: ISyndicationCategory}
+RT_CLASS!{class SyndicationCategory: ISyndicationCategory ["Windows.Web.Syndication.SyndicationCategory"]}
 impl RtActivatable<ISyndicationCategoryFactory> for SyndicationCategory {}
 impl RtActivatable<IActivationFactory> for SyndicationCategory {}
 impl SyndicationCategory {
@@ -3621,7 +3621,7 @@ impl ISyndicationClient {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SyndicationClient: ISyndicationClient}
+RT_CLASS!{class SyndicationClient: ISyndicationClient ["Windows.Web.Syndication.SyndicationClient"]}
 impl RtActivatable<ISyndicationClientFactory> for SyndicationClient {}
 impl RtActivatable<IActivationFactory> for SyndicationClient {}
 impl SyndicationClient {
@@ -3657,7 +3657,7 @@ impl ISyndicationContent {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SyndicationContent: ISyndicationContent}
+RT_CLASS!{class SyndicationContent: ISyndicationContent ["Windows.Web.Syndication.SyndicationContent"]}
 impl RtActivatable<ISyndicationContentFactory> for SyndicationContent {}
 impl RtActivatable<IActivationFactory> for SyndicationContent {}
 impl SyndicationContent {
@@ -3705,7 +3705,7 @@ impl ISyndicationErrorStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SyndicationErrorStatus: i32 {
+RT_ENUM! { enum SyndicationErrorStatus: i32 ["Windows.Web.Syndication.SyndicationErrorStatus"] {
     Unknown (SyndicationErrorStatus_Unknown) = 0, MissingRequiredElement (SyndicationErrorStatus_MissingRequiredElement) = 1, MissingRequiredAttribute (SyndicationErrorStatus_MissingRequiredAttribute) = 2, InvalidXml (SyndicationErrorStatus_InvalidXml) = 3, UnexpectedContent (SyndicationErrorStatus_UnexpectedContent) = 4, UnsupportedFormat (SyndicationErrorStatus_UnsupportedFormat) = 5,
 }}
 DEFINE_IID!(IID_ISyndicationFeed, 2147368146, 23398, 19810, 132, 3, 27, 193, 13, 145, 13, 107);
@@ -3871,7 +3871,7 @@ impl ISyndicationFeed {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SyndicationFeed: ISyndicationFeed}
+RT_CLASS!{class SyndicationFeed: ISyndicationFeed ["Windows.Web.Syndication.SyndicationFeed"]}
 impl RtActivatable<ISyndicationFeedFactory> for SyndicationFeed {}
 impl RtActivatable<IActivationFactory> for SyndicationFeed {}
 impl SyndicationFeed {
@@ -3891,7 +3891,7 @@ impl ISyndicationFeedFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SyndicationFormat: i32 {
+RT_ENUM! { enum SyndicationFormat: i32 ["Windows.Web.Syndication.SyndicationFormat"] {
     Atom10 (SyndicationFormat_Atom10) = 0, Rss20 (SyndicationFormat_Rss20) = 1, Rss10 (SyndicationFormat_Rss10) = 2, Rss092 (SyndicationFormat_Rss092) = 3, Rss091 (SyndicationFormat_Rss091) = 4, Atom03 (SyndicationFormat_Atom03) = 5,
 }}
 DEFINE_IID!(IID_ISyndicationGenerator, 2540221305, 64299, 20333, 180, 28, 8, 138, 88, 104, 130, 92);
@@ -3932,7 +3932,7 @@ impl ISyndicationGenerator {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SyndicationGenerator: ISyndicationGenerator}
+RT_CLASS!{class SyndicationGenerator: ISyndicationGenerator ["Windows.Web.Syndication.SyndicationGenerator"]}
 impl RtActivatable<ISyndicationGeneratorFactory> for SyndicationGenerator {}
 impl RtActivatable<IActivationFactory> for SyndicationGenerator {}
 impl SyndicationGenerator {
@@ -4114,7 +4114,7 @@ impl ISyndicationItem {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SyndicationItem: ISyndicationItem}
+RT_CLASS!{class SyndicationItem: ISyndicationItem ["Windows.Web.Syndication.SyndicationItem"]}
 impl RtActivatable<ISyndicationItemFactory> for SyndicationItem {}
 impl RtActivatable<IActivationFactory> for SyndicationItem {}
 impl SyndicationItem {
@@ -4205,7 +4205,7 @@ impl ISyndicationLink {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SyndicationLink: ISyndicationLink}
+RT_CLASS!{class SyndicationLink: ISyndicationLink ["Windows.Web.Syndication.SyndicationLink"]}
 impl RtActivatable<ISyndicationLinkFactory> for SyndicationLink {}
 impl RtActivatable<IActivationFactory> for SyndicationLink {}
 impl SyndicationLink {
@@ -4312,7 +4312,7 @@ impl ISyndicationNode {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SyndicationNode: ISyndicationNode}
+RT_CLASS!{class SyndicationNode: ISyndicationNode ["Windows.Web.Syndication.SyndicationNode"]}
 impl RtActivatable<ISyndicationNodeFactory> for SyndicationNode {}
 impl RtActivatable<IActivationFactory> for SyndicationNode {}
 impl SyndicationNode {
@@ -4370,7 +4370,7 @@ impl ISyndicationPerson {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SyndicationPerson: ISyndicationPerson}
+RT_CLASS!{class SyndicationPerson: ISyndicationPerson ["Windows.Web.Syndication.SyndicationPerson"]}
 impl RtActivatable<ISyndicationPersonFactory> for SyndicationPerson {}
 impl RtActivatable<IActivationFactory> for SyndicationPerson {}
 impl SyndicationPerson {
@@ -4437,7 +4437,7 @@ impl ISyndicationText {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SyndicationText: ISyndicationText}
+RT_CLASS!{class SyndicationText: ISyndicationText ["Windows.Web.Syndication.SyndicationText"]}
 impl RtActivatable<ISyndicationTextFactory> for SyndicationText {}
 impl RtActivatable<IActivationFactory> for SyndicationText {}
 impl SyndicationText {
@@ -4466,10 +4466,10 @@ impl ISyndicationTextFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SyndicationTextType: i32 {
+RT_ENUM! { enum SyndicationTextType: i32 ["Windows.Web.Syndication.SyndicationTextType"] {
     Text (SyndicationTextType_Text) = 0, Html (SyndicationTextType_Html) = 1, Xhtml (SyndicationTextType_Xhtml) = 2,
 }}
-RT_STRUCT! { struct TransferProgress {
+RT_STRUCT! { struct TransferProgress ["Windows.Web.Syndication.TransferProgress"] {
     BytesSent: u32, TotalBytesToSend: u32, BytesRetrieved: u32, TotalBytesToRetrieve: u32,
 }}
 } // Windows.Web.Syndication
@@ -4820,7 +4820,7 @@ impl IWebViewControlContentLoadingEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlContentLoadingEventArgs: IWebViewControlContentLoadingEventArgs}
+RT_CLASS!{class WebViewControlContentLoadingEventArgs: IWebViewControlContentLoadingEventArgs ["Windows.Web.UI.WebViewControlContentLoadingEventArgs"]}
 DEFINE_IID!(IID_IWebViewControlDeferredPermissionRequest, 753093088, 55129, 17500, 153, 38, 137, 149, 41, 143, 21, 43);
 RT_INTERFACE!{interface IWebViewControlDeferredPermissionRequest(IWebViewControlDeferredPermissionRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlDeferredPermissionRequest] {
     fn get_Id(&self, out: *mut u32) -> HRESULT,
@@ -4854,7 +4854,7 @@ impl IWebViewControlDeferredPermissionRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlDeferredPermissionRequest: IWebViewControlDeferredPermissionRequest}
+RT_CLASS!{class WebViewControlDeferredPermissionRequest: IWebViewControlDeferredPermissionRequest ["Windows.Web.UI.WebViewControlDeferredPermissionRequest"]}
 DEFINE_IID!(IID_IWebViewControlDOMContentLoadedEventArgs, 3196829704, 38209, 17733, 159, 242, 45, 245, 133, 178, 159, 125);
 RT_INTERFACE!{interface IWebViewControlDOMContentLoadedEventArgs(IWebViewControlDOMContentLoadedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlDOMContentLoadedEventArgs] {
     fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT
@@ -4866,7 +4866,7 @@ impl IWebViewControlDOMContentLoadedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlDOMContentLoadedEventArgs: IWebViewControlDOMContentLoadedEventArgs}
+RT_CLASS!{class WebViewControlDOMContentLoadedEventArgs: IWebViewControlDOMContentLoadedEventArgs ["Windows.Web.UI.WebViewControlDOMContentLoadedEventArgs"]}
 DEFINE_IID!(IID_IWebViewControlLongRunningScriptDetectedEventArgs, 711875514, 39092, 17852, 187, 235, 15, 105, 206, 73, 197, 153);
 RT_INTERFACE!{interface IWebViewControlLongRunningScriptDetectedEventArgs(IWebViewControlLongRunningScriptDetectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlLongRunningScriptDetectedEventArgs] {
     fn get_ExecutionTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -4889,7 +4889,7 @@ impl IWebViewControlLongRunningScriptDetectedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlLongRunningScriptDetectedEventArgs: IWebViewControlLongRunningScriptDetectedEventArgs}
+RT_CLASS!{class WebViewControlLongRunningScriptDetectedEventArgs: IWebViewControlLongRunningScriptDetectedEventArgs ["Windows.Web.UI.WebViewControlLongRunningScriptDetectedEventArgs"]}
 DEFINE_IID!(IID_IWebViewControlNavigationCompletedEventArgs, 541104408, 18965, 19526, 165, 93, 247, 158, 219, 11, 222, 139);
 RT_INTERFACE!{interface IWebViewControlNavigationCompletedEventArgs(IWebViewControlNavigationCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlNavigationCompletedEventArgs] {
     fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
@@ -4913,7 +4913,7 @@ impl IWebViewControlNavigationCompletedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlNavigationCompletedEventArgs: IWebViewControlNavigationCompletedEventArgs}
+RT_CLASS!{class WebViewControlNavigationCompletedEventArgs: IWebViewControlNavigationCompletedEventArgs ["Windows.Web.UI.WebViewControlNavigationCompletedEventArgs"]}
 DEFINE_IID!(IID_IWebViewControlNavigationStartingEventArgs, 210786245, 2568, 16839, 134, 59, 113, 227, 169, 84, 145, 55);
 RT_INTERFACE!{interface IWebViewControlNavigationStartingEventArgs(IWebViewControlNavigationStartingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlNavigationStartingEventArgs] {
     fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
@@ -4936,7 +4936,7 @@ impl IWebViewControlNavigationStartingEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlNavigationStartingEventArgs: IWebViewControlNavigationStartingEventArgs}
+RT_CLASS!{class WebViewControlNavigationStartingEventArgs: IWebViewControlNavigationStartingEventArgs ["Windows.Web.UI.WebViewControlNavigationStartingEventArgs"]}
 DEFINE_IID!(IID_IWebViewControlNewWindowRequestedEventArgs, 1039420347, 41252, 18133, 160, 131, 208, 44, 172, 223, 245, 173);
 RT_INTERFACE!{interface IWebViewControlNewWindowRequestedEventArgs(IWebViewControlNewWindowRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlNewWindowRequestedEventArgs] {
     fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
@@ -4965,7 +4965,7 @@ impl IWebViewControlNewWindowRequestedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlNewWindowRequestedEventArgs: IWebViewControlNewWindowRequestedEventArgs}
+RT_CLASS!{class WebViewControlNewWindowRequestedEventArgs: IWebViewControlNewWindowRequestedEventArgs ["Windows.Web.UI.WebViewControlNewWindowRequestedEventArgs"]}
 DEFINE_IID!(IID_IWebViewControlNewWindowRequestedEventArgs2, 3040631974, 10926, 19452, 146, 185, 195, 14, 146, 180, 128, 152);
 RT_INTERFACE!{interface IWebViewControlNewWindowRequestedEventArgs2(IWebViewControlNewWindowRequestedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlNewWindowRequestedEventArgs2] {
     fn get_NewWindow(&self, out: *mut *mut IWebViewControl) -> HRESULT,
@@ -5032,7 +5032,7 @@ impl IWebViewControlPermissionRequest {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlPermissionRequest: IWebViewControlPermissionRequest}
+RT_CLASS!{class WebViewControlPermissionRequest: IWebViewControlPermissionRequest ["Windows.Web.UI.WebViewControlPermissionRequest"]}
 DEFINE_IID!(IID_IWebViewControlPermissionRequestedEventArgs, 656428369, 9352, 19653, 150, 142, 10, 119, 30, 89, 193, 71);
 RT_INTERFACE!{interface IWebViewControlPermissionRequestedEventArgs(IWebViewControlPermissionRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlPermissionRequestedEventArgs] {
     fn get_PermissionRequest(&self, out: *mut *mut WebViewControlPermissionRequest) -> HRESULT
@@ -5044,11 +5044,11 @@ impl IWebViewControlPermissionRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlPermissionRequestedEventArgs: IWebViewControlPermissionRequestedEventArgs}
-RT_ENUM! { enum WebViewControlPermissionState: i32 {
+RT_CLASS!{class WebViewControlPermissionRequestedEventArgs: IWebViewControlPermissionRequestedEventArgs ["Windows.Web.UI.WebViewControlPermissionRequestedEventArgs"]}
+RT_ENUM! { enum WebViewControlPermissionState: i32 ["Windows.Web.UI.WebViewControlPermissionState"] {
     Unknown (WebViewControlPermissionState_Unknown) = 0, Defer (WebViewControlPermissionState_Defer) = 1, Allow (WebViewControlPermissionState_Allow) = 2, Deny (WebViewControlPermissionState_Deny) = 3,
 }}
-RT_ENUM! { enum WebViewControlPermissionType: i32 {
+RT_ENUM! { enum WebViewControlPermissionType: i32 ["Windows.Web.UI.WebViewControlPermissionType"] {
     Geolocation (WebViewControlPermissionType_Geolocation) = 0, UnlimitedIndexedDBQuota (WebViewControlPermissionType_UnlimitedIndexedDBQuota) = 1, Media (WebViewControlPermissionType_Media) = 2, PointerLock (WebViewControlPermissionType_PointerLock) = 3, WebNotifications (WebViewControlPermissionType_WebNotifications) = 4, Screen (WebViewControlPermissionType_Screen) = 5, ImmersiveView (WebViewControlPermissionType_ImmersiveView) = 6,
 }}
 DEFINE_IID!(IID_IWebViewControlScriptNotifyEventArgs, 1226696059, 28489, 16827, 181, 145, 81, 184, 91, 129, 112, 55);
@@ -5068,7 +5068,7 @@ impl IWebViewControlScriptNotifyEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlScriptNotifyEventArgs: IWebViewControlScriptNotifyEventArgs}
+RT_CLASS!{class WebViewControlScriptNotifyEventArgs: IWebViewControlScriptNotifyEventArgs ["Windows.Web.UI.WebViewControlScriptNotifyEventArgs"]}
 DEFINE_IID!(IID_IWebViewControlSettings, 3382083519, 24216, 19709, 140, 206, 39, 176, 145, 30, 61, 232);
 RT_INTERFACE!{interface IWebViewControlSettings(IWebViewControlSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlSettings] {
     fn put_IsJavaScriptEnabled(&self, value: bool) -> HRESULT,
@@ -5107,7 +5107,7 @@ impl IWebViewControlSettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlSettings: IWebViewControlSettings}
+RT_CLASS!{class WebViewControlSettings: IWebViewControlSettings ["Windows.Web.UI.WebViewControlSettings"]}
 DEFINE_IID!(IID_IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs, 3820493124, 58620, 17372, 148, 202, 249, 128, 243, 11, 197, 29);
 RT_INTERFACE!{interface IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs(IWebViewControlUnsupportedUriSchemeIdentifiedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs] {
     fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
@@ -5130,7 +5130,7 @@ impl IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlUnsupportedUriSchemeIdentifiedEventArgs: IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs}
+RT_CLASS!{class WebViewControlUnsupportedUriSchemeIdentifiedEventArgs: IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs ["Windows.Web.UI.WebViewControlUnsupportedUriSchemeIdentifiedEventArgs"]}
 DEFINE_IID!(IID_IWebViewControlUnviewableContentIdentifiedEventArgs, 1251377371, 35058, 20000, 182, 147, 180, 226, 223, 74, 165, 129);
 RT_INTERFACE!{interface IWebViewControlUnviewableContentIdentifiedEventArgs(IWebViewControlUnviewableContentIdentifiedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlUnviewableContentIdentifiedEventArgs] {
     fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
@@ -5154,7 +5154,7 @@ impl IWebViewControlUnviewableContentIdentifiedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlUnviewableContentIdentifiedEventArgs: IWebViewControlUnviewableContentIdentifiedEventArgs}
+RT_CLASS!{class WebViewControlUnviewableContentIdentifiedEventArgs: IWebViewControlUnviewableContentIdentifiedEventArgs ["Windows.Web.UI.WebViewControlUnviewableContentIdentifiedEventArgs"]}
 DEFINE_IID!(IID_IWebViewControlWebResourceRequestedEventArgs, 1154896461, 21924, 19851, 137, 28, 147, 29, 142, 37, 212, 46);
 RT_INTERFACE!{interface IWebViewControlWebResourceRequestedEventArgs(IWebViewControlWebResourceRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlWebResourceRequestedEventArgs] {
     fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT,
@@ -5183,10 +5183,10 @@ impl IWebViewControlWebResourceRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlWebResourceRequestedEventArgs: IWebViewControlWebResourceRequestedEventArgs}
+RT_CLASS!{class WebViewControlWebResourceRequestedEventArgs: IWebViewControlWebResourceRequestedEventArgs ["Windows.Web.UI.WebViewControlWebResourceRequestedEventArgs"]}
 pub mod interop { // Windows.Web.UI.Interop
 use ::prelude::*;
-RT_CLASS!{class WebViewControl: super::IWebViewControl}
+RT_CLASS!{class WebViewControl: super::IWebViewControl ["Windows.Web.UI.Interop.WebViewControl"]}
 DEFINE_IID!(IID_IWebViewControlAcceleratorKeyPressedEventArgs, 2007147838, 31860, 17277, 162, 144, 58, 192, 216, 205, 86, 85);
 RT_INTERFACE!{interface IWebViewControlAcceleratorKeyPressedEventArgs(IWebViewControlAcceleratorKeyPressedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlAcceleratorKeyPressedEventArgs] {
     #[cfg(not(feature="windows-ui"))] fn __Dummy0(&self) -> (),
@@ -5230,11 +5230,11 @@ impl IWebViewControlAcceleratorKeyPressedEventArgs {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlAcceleratorKeyPressedEventArgs: IWebViewControlAcceleratorKeyPressedEventArgs}
-RT_ENUM! { enum WebViewControlAcceleratorKeyRoutingStage: i32 {
+RT_CLASS!{class WebViewControlAcceleratorKeyPressedEventArgs: IWebViewControlAcceleratorKeyPressedEventArgs ["Windows.Web.UI.Interop.WebViewControlAcceleratorKeyPressedEventArgs"]}
+RT_ENUM! { enum WebViewControlAcceleratorKeyRoutingStage: i32 ["Windows.Web.UI.Interop.WebViewControlAcceleratorKeyRoutingStage"] {
     Tunneling (WebViewControlAcceleratorKeyRoutingStage_Tunneling) = 0, Bubbling (WebViewControlAcceleratorKeyRoutingStage_Bubbling) = 1,
 }}
-RT_ENUM! { enum WebViewControlMoveFocusReason: i32 {
+RT_ENUM! { enum WebViewControlMoveFocusReason: i32 ["Windows.Web.UI.Interop.WebViewControlMoveFocusReason"] {
     Programmatic (WebViewControlMoveFocusReason_Programmatic) = 0, Next (WebViewControlMoveFocusReason_Next) = 1, Previous (WebViewControlMoveFocusReason_Previous) = 2,
 }}
 DEFINE_IID!(IID_IWebViewControlMoveFocusRequestedEventArgs, 1797927949, 19408, 16478, 183, 193, 30, 114, 164, 146, 244, 70);
@@ -5248,7 +5248,7 @@ impl IWebViewControlMoveFocusRequestedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlMoveFocusRequestedEventArgs: IWebViewControlMoveFocusRequestedEventArgs}
+RT_CLASS!{class WebViewControlMoveFocusRequestedEventArgs: IWebViewControlMoveFocusRequestedEventArgs ["Windows.Web.UI.Interop.WebViewControlMoveFocusRequestedEventArgs"]}
 DEFINE_IID!(IID_IWebViewControlProcess, 46605292, 39126, 16970, 182, 62, 198, 19, 108, 54, 160, 242);
 RT_INTERFACE!{interface IWebViewControlProcess(IWebViewControlProcessVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlProcess] {
     fn get_ProcessId(&self, out: *mut u32) -> HRESULT,
@@ -5300,7 +5300,7 @@ impl IWebViewControlProcess {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlProcess: IWebViewControlProcess}
+RT_CLASS!{class WebViewControlProcess: IWebViewControlProcess ["Windows.Web.UI.Interop.WebViewControlProcess"]}
 impl RtActivatable<IWebViewControlProcessFactory> for WebViewControlProcess {}
 impl RtActivatable<IActivationFactory> for WebViewControlProcess {}
 impl WebViewControlProcess {
@@ -5309,7 +5309,7 @@ impl WebViewControlProcess {
     }
 }
 DEFINE_CLSID!(WebViewControlProcess(&[87,105,110,100,111,119,115,46,87,101,98,46,85,73,46,73,110,116,101,114,111,112,46,87,101,98,86,105,101,119,67,111,110,116,114,111,108,80,114,111,99,101,115,115,0]) [CLSID_WebViewControlProcess]);
-RT_ENUM! { enum WebViewControlProcessCapabilityState: i32 {
+RT_ENUM! { enum WebViewControlProcessCapabilityState: i32 ["Windows.Web.UI.Interop.WebViewControlProcessCapabilityState"] {
     Default (WebViewControlProcessCapabilityState_Default) = 0, Disabled (WebViewControlProcessCapabilityState_Disabled) = 1, Enabled (WebViewControlProcessCapabilityState_Enabled) = 2,
 }}
 DEFINE_IID!(IID_IWebViewControlProcessFactory, 1203133689, 41682, 17724, 176, 151, 246, 119, 157, 75, 142, 2);
@@ -5350,7 +5350,7 @@ impl IWebViewControlProcessOptions {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebViewControlProcessOptions: IWebViewControlProcessOptions}
+RT_CLASS!{class WebViewControlProcessOptions: IWebViewControlProcessOptions ["Windows.Web.UI.Interop.WebViewControlProcessOptions"]}
 impl RtActivatable<IActivationFactory> for WebViewControlProcessOptions {}
 DEFINE_CLSID!(WebViewControlProcessOptions(&[87,105,110,100,111,119,115,46,87,101,98,46,85,73,46,73,110,116,101,114,111,112,46,87,101,98,86,105,101,119,67,111,110,116,114,111,108,80,114,111,99,101,115,115,79,112,116,105,111,110,115,0]) [CLSID_WebViewControlProcessOptions]);
 DEFINE_IID!(IID_IWebViewControlSite, 322914246, 4828, 18584, 189, 71, 4, 150, 125, 230, 72, 186);

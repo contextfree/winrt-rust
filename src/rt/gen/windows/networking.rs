@@ -1,5 +1,5 @@
 use ::prelude::*;
-RT_ENUM! { enum DomainNameType: i32 {
+RT_ENUM! { enum DomainNameType: i32 ["Windows.Networking.DomainNameType"] {
     Suffix (DomainNameType_Suffix) = 0, FullyQualified (DomainNameType_FullyQualified) = 1,
 }}
 DEFINE_IID!(IID_IEndpointPair, 866167350, 63738, 19248, 184, 86, 118, 81, 124, 59, 208, 109);
@@ -51,7 +51,7 @@ impl IEndpointPair {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class EndpointPair: IEndpointPair}
+RT_CLASS!{class EndpointPair: IEndpointPair ["Windows.Networking.EndpointPair"]}
 impl RtActivatable<IEndpointPairFactory> for EndpointPair {}
 impl EndpointPair {
     #[inline] pub fn create_endpoint_pair(localHostName: &HostName, localServiceName: &HStringArg, remoteHostName: &HostName, remoteServiceName: &HStringArg) -> Result<ComPtr<EndpointPair>> {
@@ -111,7 +111,7 @@ impl IHostName {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HostName: IHostName}
+RT_CLASS!{class HostName: IHostName ["Windows.Networking.HostName"]}
 impl RtActivatable<IHostNameFactory> for HostName {}
 impl RtActivatable<IHostNameStatics> for HostName {}
 impl HostName {
@@ -134,7 +134,7 @@ impl IHostNameFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum HostNameSortOptions: u32 {
+RT_ENUM! { enum HostNameSortOptions: u32 ["Windows.Networking.HostNameSortOptions"] {
     None (HostNameSortOptions_None) = 0, OptimizeForLongConnections (HostNameSortOptions_OptimizeForLongConnections) = 2,
 }}
 DEFINE_IID!(IID_IHostNameStatics, 4136424639, 41864, 20107, 145, 234, 84, 221, 109, 217, 1, 192);
@@ -148,7 +148,7 @@ impl IHostNameStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum HostNameType: i32 {
+RT_ENUM! { enum HostNameType: i32 ["Windows.Networking.HostNameType"] {
     DomainName (HostNameType_DomainName) = 0, Ipv4 (HostNameType_Ipv4) = 1, Ipv6 (HostNameType_Ipv6) = 2, Bluetooth (HostNameType_Bluetooth) = 3,
 }}
 pub mod backgroundtransfer { // Windows.Networking.BackgroundTransfer
@@ -176,7 +176,7 @@ impl IBackgroundDownloader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundDownloader: IBackgroundDownloader}
+RT_CLASS!{class BackgroundDownloader: IBackgroundDownloader ["Windows.Networking.BackgroundTransfer.BackgroundDownloader"]}
 impl RtActivatable<IBackgroundDownloaderFactory> for BackgroundDownloader {}
 impl RtActivatable<IBackgroundDownloaderStaticMethods> for BackgroundDownloader {}
 impl RtActivatable<IBackgroundDownloaderStaticMethods2> for BackgroundDownloader {}
@@ -321,7 +321,7 @@ impl IBackgroundDownloaderUserConsent {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct BackgroundDownloadProgress {
+RT_STRUCT! { struct BackgroundDownloadProgress ["Windows.Networking.BackgroundTransfer.BackgroundDownloadProgress"] {
     BytesReceived: u64, TotalBytesToReceive: u64, Status: BackgroundTransferStatus, HasResponseChanged: bool, HasRestarted: bool,
 }}
 DEFINE_IID!(IID_IBackgroundTransferBase, 714973776, 51049, 17804, 175, 232, 254, 184, 212, 211, 178, 239);
@@ -393,7 +393,7 @@ impl IBackgroundTransferBase {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BackgroundTransferBehavior: i32 {
+RT_ENUM! { enum BackgroundTransferBehavior: i32 ["Windows.Networking.BackgroundTransfer.BackgroundTransferBehavior"] {
     Parallel (BackgroundTransferBehavior_Parallel) = 0, Serialized (BackgroundTransferBehavior_Serialized) = 1,
 }}
 DEFINE_IID!(IID_IBackgroundTransferCompletionGroup, 764609061, 39019, 22349, 121, 80, 10, 221, 71, 245, 215, 6);
@@ -419,7 +419,7 @@ impl IBackgroundTransferCompletionGroup {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundTransferCompletionGroup: IBackgroundTransferCompletionGroup}
+RT_CLASS!{class BackgroundTransferCompletionGroup: IBackgroundTransferCompletionGroup ["Windows.Networking.BackgroundTransfer.BackgroundTransferCompletionGroup"]}
 impl RtActivatable<IActivationFactory> for BackgroundTransferCompletionGroup {}
 DEFINE_CLSID!(BackgroundTransferCompletionGroup(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,67,111,109,112,108,101,116,105,111,110,71,114,111,117,112,0]) [CLSID_BackgroundTransferCompletionGroup]);
 DEFINE_IID!(IID_IBackgroundTransferCompletionGroupTriggerDetails, 2070667910, 28231, 20790, 127, 203, 250, 67, 137, 244, 111, 91);
@@ -439,7 +439,7 @@ impl IBackgroundTransferCompletionGroupTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundTransferCompletionGroupTriggerDetails: IBackgroundTransferCompletionGroupTriggerDetails}
+RT_CLASS!{class BackgroundTransferCompletionGroupTriggerDetails: IBackgroundTransferCompletionGroupTriggerDetails ["Windows.Networking.BackgroundTransfer.BackgroundTransferCompletionGroupTriggerDetails"]}
 DEFINE_IID!(IID_IBackgroundTransferContentPart, 3907081815, 55249, 20184, 131, 142, 103, 74, 194, 23, 172, 230);
 RT_INTERFACE!{interface IBackgroundTransferContentPart(IBackgroundTransferContentPartVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferContentPart] {
     fn SetHeader(&self, headerName: HSTRING, headerValue: HSTRING) -> HRESULT,
@@ -460,7 +460,7 @@ impl IBackgroundTransferContentPart {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundTransferContentPart: IBackgroundTransferContentPart}
+RT_CLASS!{class BackgroundTransferContentPart: IBackgroundTransferContentPart ["Windows.Networking.BackgroundTransfer.BackgroundTransferContentPart"]}
 impl RtActivatable<IBackgroundTransferContentPartFactory> for BackgroundTransferContentPart {}
 impl RtActivatable<IActivationFactory> for BackgroundTransferContentPart {}
 impl BackgroundTransferContentPart {
@@ -489,7 +489,7 @@ impl IBackgroundTransferContentPartFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BackgroundTransferCostPolicy: i32 {
+RT_ENUM! { enum BackgroundTransferCostPolicy: i32 ["Windows.Networking.BackgroundTransfer.BackgroundTransferCostPolicy"] {
     Default (BackgroundTransferCostPolicy_Default) = 0, UnrestrictedOnly (BackgroundTransferCostPolicy_UnrestrictedOnly) = 1, Always (BackgroundTransferCostPolicy_Always) = 2,
 }}
 RT_CLASS!{static class BackgroundTransferError}
@@ -511,7 +511,7 @@ impl IBackgroundTransferErrorStaticMethods {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct BackgroundTransferFileRange {
+RT_STRUCT! { struct BackgroundTransferFileRange ["Windows.Networking.BackgroundTransfer.BackgroundTransferFileRange"] {
     Offset: u64, Length: u64,
 }}
 DEFINE_IID!(IID_IBackgroundTransferGroup, 3636716516, 25689, 17728, 133, 235, 170, 161, 200, 144, 54, 119);
@@ -536,7 +536,7 @@ impl IBackgroundTransferGroup {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundTransferGroup: IBackgroundTransferGroup}
+RT_CLASS!{class BackgroundTransferGroup: IBackgroundTransferGroup ["Windows.Networking.BackgroundTransfer.BackgroundTransferGroup"]}
 impl RtActivatable<IBackgroundTransferGroupStatics> for BackgroundTransferGroup {}
 impl BackgroundTransferGroup {
     #[inline] pub fn create_group(name: &HStringArg) -> Result<Option<ComPtr<BackgroundTransferGroup>>> {
@@ -624,7 +624,7 @@ impl IBackgroundTransferOperationPriority {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum BackgroundTransferPriority: i32 {
+RT_ENUM! { enum BackgroundTransferPriority: i32 ["Windows.Networking.BackgroundTransfer.BackgroundTransferPriority"] {
     Default (BackgroundTransferPriority_Default) = 0, High (BackgroundTransferPriority_High) = 1, Low (BackgroundTransferPriority_Low) = 2,
 }}
 DEFINE_IID!(IID_IBackgroundTransferRangesDownloadedEventArgs, 1052537939, 48968, 19080, 146, 72, 176, 193, 101, 24, 79, 92);
@@ -650,8 +650,8 @@ impl IBackgroundTransferRangesDownloadedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundTransferRangesDownloadedEventArgs: IBackgroundTransferRangesDownloadedEventArgs}
-RT_ENUM! { enum BackgroundTransferStatus: i32 {
+RT_CLASS!{class BackgroundTransferRangesDownloadedEventArgs: IBackgroundTransferRangesDownloadedEventArgs ["Windows.Networking.BackgroundTransfer.BackgroundTransferRangesDownloadedEventArgs"]}
+RT_ENUM! { enum BackgroundTransferStatus: i32 ["Windows.Networking.BackgroundTransfer.BackgroundTransferStatus"] {
     Idle (BackgroundTransferStatus_Idle) = 0, Running (BackgroundTransferStatus_Running) = 1, PausedByApplication (BackgroundTransferStatus_PausedByApplication) = 2, PausedCostedNetwork (BackgroundTransferStatus_PausedCostedNetwork) = 3, PausedNoNetwork (BackgroundTransferStatus_PausedNoNetwork) = 4, Completed (BackgroundTransferStatus_Completed) = 5, Canceled (BackgroundTransferStatus_Canceled) = 6, Error (BackgroundTransferStatus_Error) = 7, PausedRecoverableWebErrorStatus (BackgroundTransferStatus_PausedRecoverableWebErrorStatus) = 8, PausedSystemPolicy (BackgroundTransferStatus_PausedSystemPolicy) = 32,
 }}
 DEFINE_IID!(IID_IBackgroundUploader, 3314928046, 52909, 18011, 136, 1, 197, 90, 201, 10, 1, 206);
@@ -691,7 +691,7 @@ impl IBackgroundUploader {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class BackgroundUploader: IBackgroundUploader}
+RT_CLASS!{class BackgroundUploader: IBackgroundUploader ["Windows.Networking.BackgroundTransfer.BackgroundUploader"]}
 impl RtActivatable<IBackgroundUploaderFactory> for BackgroundUploader {}
 impl RtActivatable<IBackgroundUploaderStaticMethods> for BackgroundUploader {}
 impl RtActivatable<IBackgroundUploaderStaticMethods2> for BackgroundUploader {}
@@ -836,7 +836,7 @@ impl IBackgroundUploaderUserConsent {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_STRUCT! { struct BackgroundUploadProgress {
+RT_STRUCT! { struct BackgroundUploadProgress ["Windows.Networking.BackgroundTransfer.BackgroundUploadProgress"] {
     BytesReceived: u64, BytesSent: u64, TotalBytesToReceive: u64, TotalBytesToSend: u64, Status: BackgroundTransferStatus, HasResponseChanged: bool, HasRestarted: bool,
 }}
 DEFINE_IID!(IID_IContentPrefetcher, 2832660308, 32193, 19673, 136, 16, 42, 106, 169, 65, 126, 17);
@@ -930,7 +930,7 @@ impl IDownloadOperation {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DownloadOperation: IDownloadOperation}
+RT_CLASS!{class DownloadOperation: IDownloadOperation ["Windows.Networking.BackgroundTransfer.DownloadOperation"]}
 DEFINE_IID!(IID_IDownloadOperation2, 2748116288, 36764, 17235, 156, 212, 41, 13, 238, 56, 124, 56);
 RT_INTERFACE!{interface IDownloadOperation2(IDownloadOperation2Vtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation2] {
     fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT
@@ -1038,7 +1038,7 @@ impl IResponseInformation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ResponseInformation: IResponseInformation}
+RT_CLASS!{class ResponseInformation: IResponseInformation ["Windows.Networking.BackgroundTransfer.ResponseInformation"]}
 DEFINE_IID!(IID_IUnconstrainedTransferRequestResult, 1277474847, 55620, 16658, 169, 142, 106, 105, 82, 43, 126, 187);
 RT_INTERFACE!{interface IUnconstrainedTransferRequestResult(IUnconstrainedTransferRequestResultVtbl): IInspectable(IInspectableVtbl) [IID_IUnconstrainedTransferRequestResult] {
     fn get_IsUnconstrained(&self, out: *mut bool) -> HRESULT
@@ -1050,7 +1050,7 @@ impl IUnconstrainedTransferRequestResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UnconstrainedTransferRequestResult: IUnconstrainedTransferRequestResult}
+RT_CLASS!{class UnconstrainedTransferRequestResult: IUnconstrainedTransferRequestResult ["Windows.Networking.BackgroundTransfer.UnconstrainedTransferRequestResult"]}
 DEFINE_IID!(IID_IUploadOperation, 1045832928, 29577, 17228, 139, 53, 66, 127, 211, 107, 189, 174);
 RT_INTERFACE!{interface IUploadOperation(IUploadOperationVtbl): IInspectable(IInspectableVtbl) [IID_IUploadOperation] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -1081,7 +1081,7 @@ impl IUploadOperation {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UploadOperation: IUploadOperation}
+RT_CLASS!{class UploadOperation: IUploadOperation ["Windows.Networking.BackgroundTransfer.UploadOperation"]}
 DEFINE_IID!(IID_IUploadOperation2, 1432455666, 10100, 19958, 159, 165, 32, 159, 43, 251, 18, 247);
 RT_INTERFACE!{interface IUploadOperation2(IUploadOperation2Vtbl): IInspectable(IInspectableVtbl) [IID_IUploadOperation2] {
     fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT
@@ -1141,8 +1141,8 @@ impl IAttributedNetworkUsage {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class AttributedNetworkUsage: IAttributedNetworkUsage}
-RT_ENUM! { enum CellularApnAuthenticationType: i32 {
+RT_CLASS!{class AttributedNetworkUsage: IAttributedNetworkUsage ["Windows.Networking.Connectivity.AttributedNetworkUsage"]}
+RT_ENUM! { enum CellularApnAuthenticationType: i32 ["Windows.Networking.Connectivity.CellularApnAuthenticationType"] {
     None (CellularApnAuthenticationType_None) = 0, Pap (CellularApnAuthenticationType_Pap) = 1, Chap (CellularApnAuthenticationType_Chap) = 2, Mschapv2 (CellularApnAuthenticationType_Mschapv2) = 3,
 }}
 DEFINE_IID!(IID_ICellularApnContext, 1873095156, 61437, 17730, 154, 178, 112, 91, 191, 148, 148, 58);
@@ -1216,7 +1216,7 @@ impl ICellularApnContext {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class CellularApnContext: ICellularApnContext}
+RT_CLASS!{class CellularApnContext: ICellularApnContext ["Windows.Networking.Connectivity.CellularApnContext"]}
 impl RtActivatable<IActivationFactory> for CellularApnContext {}
 DEFINE_CLSID!(CellularApnContext(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,101,108,108,117,108,97,114,65,112,110,67,111,110,116,101,120,116,0]) [CLSID_CellularApnContext]);
 DEFINE_IID!(IID_ICellularApnContext2, 1991306010, 44105, 17232, 177, 229, 220, 71, 99, 188, 105, 199);
@@ -1264,7 +1264,7 @@ impl IConnectionCost {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ConnectionCost: IConnectionCost}
+RT_CLASS!{class ConnectionCost: IConnectionCost ["Windows.Networking.Connectivity.ConnectionCost"]}
 DEFINE_IID!(IID_IConnectionCost2, 2383493637, 57865, 17737, 187, 37, 94, 13, 182, 145, 203, 5);
 RT_INTERFACE!{interface IConnectionCost2(IConnectionCost2Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionCost2] {
     fn get_BackgroundDataUsageRestricted(&self, out: *mut bool) -> HRESULT
@@ -1335,7 +1335,7 @@ impl IConnectionProfile {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ConnectionProfile: IConnectionProfile}
+RT_CLASS!{class ConnectionProfile: IConnectionProfile ["Windows.Networking.Connectivity.ConnectionProfile"]}
 DEFINE_IID!(IID_IConnectionProfile2, 3791933765, 19615, 16396, 145, 80, 126, 199, 214, 226, 136, 138);
 RT_INTERFACE!{interface IConnectionProfile2(IConnectionProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile2] {
     fn get_IsWwanConnectionProfile(&self, out: *mut bool) -> HRESULT,
@@ -1434,7 +1434,7 @@ impl IConnectionProfile5 {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ConnectionProfileDeleteStatus: i32 {
+RT_ENUM! { enum ConnectionProfileDeleteStatus: i32 ["Windows.Networking.Connectivity.ConnectionProfileDeleteStatus"] {
     Success (ConnectionProfileDeleteStatus_Success) = 0, DeniedByUser (ConnectionProfileDeleteStatus_DeniedByUser) = 1, DeniedBySystem (ConnectionProfileDeleteStatus_DeniedBySystem) = 2, UnknownError (ConnectionProfileDeleteStatus_UnknownError) = 3,
 }}
 DEFINE_IID!(IID_IConnectionProfileFilter, 541883592, 48429, 20109, 164, 179, 69, 94, 195, 55, 56, 138);
@@ -1497,7 +1497,7 @@ impl IConnectionProfileFilter {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ConnectionProfileFilter: IConnectionProfileFilter}
+RT_CLASS!{class ConnectionProfileFilter: IConnectionProfileFilter ["Windows.Networking.Connectivity.ConnectionProfileFilter"]}
 impl RtActivatable<IActivationFactory> for ConnectionProfileFilter {}
 DEFINE_CLSID!(ConnectionProfileFilter(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,111,110,110,101,99,116,105,111,110,80,114,111,102,105,108,101,70,105,108,116,101,114,0]) [CLSID_ConnectionProfileFilter]);
 DEFINE_IID!(IID_IConnectionProfileFilter2, 3439759073, 50172, 20397, 157, 220, 89, 63, 170, 75, 120, 133);
@@ -1571,7 +1571,7 @@ impl IConnectionSession {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ConnectionSession: IConnectionSession}
+RT_CLASS!{class ConnectionSession: IConnectionSession ["Windows.Networking.Connectivity.ConnectionSession"]}
 DEFINE_IID!(IID_IConnectivityInterval, 1336557567, 26438, 18468, 169, 100, 238, 216, 232, 127, 135, 9);
 RT_INTERFACE!{interface IConnectivityInterval(IConnectivityIntervalVtbl): IInspectable(IInspectableVtbl) [IID_IConnectivityInterval] {
     fn get_StartTime(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -1589,7 +1589,7 @@ impl IConnectivityInterval {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ConnectivityInterval: IConnectivityInterval}
+RT_CLASS!{class ConnectivityInterval: IConnectivityInterval ["Windows.Networking.Connectivity.ConnectivityInterval"]}
 RT_CLASS!{static class ConnectivityManager}
 impl RtActivatable<IConnectivityManagerStatics> for ConnectivityManager {}
 impl ConnectivityManager {
@@ -1666,7 +1666,7 @@ impl IDataPlanStatus {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataPlanStatus: IDataPlanStatus}
+RT_CLASS!{class DataPlanStatus: IDataPlanStatus ["Windows.Networking.Connectivity.DataPlanStatus"]}
 DEFINE_IID!(IID_IDataPlanUsage, 3105966381, 15172, 18431, 179, 97, 190, 89, 230, 158, 209, 176);
 RT_INTERFACE!{interface IDataPlanUsage(IDataPlanUsageVtbl): IInspectable(IInspectableVtbl) [IID_IDataPlanUsage] {
     fn get_MegabytesUsed(&self, out: *mut u32) -> HRESULT,
@@ -1684,7 +1684,7 @@ impl IDataPlanUsage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataPlanUsage: IDataPlanUsage}
+RT_CLASS!{class DataPlanUsage: IDataPlanUsage ["Windows.Networking.Connectivity.DataPlanUsage"]}
 DEFINE_IID!(IID_IDataUsage, 3242401235, 45382, 19769, 185, 89, 12, 105, 176, 150, 197, 18);
 RT_INTERFACE!{interface IDataUsage(IDataUsageVtbl): IInspectable(IInspectableVtbl) [IID_IDataUsage] {
     fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
@@ -1702,11 +1702,11 @@ impl IDataUsage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DataUsage: IDataUsage}
-RT_ENUM! { enum DataUsageGranularity: i32 {
+RT_CLASS!{class DataUsage: IDataUsage ["Windows.Networking.Connectivity.DataUsage"]}
+RT_ENUM! { enum DataUsageGranularity: i32 ["Windows.Networking.Connectivity.DataUsageGranularity"] {
     PerMinute (DataUsageGranularity_PerMinute) = 0, PerHour (DataUsageGranularity_PerHour) = 1, PerDay (DataUsageGranularity_PerDay) = 2, Total (DataUsageGranularity_Total) = 3,
 }}
-RT_ENUM! { enum DomainConnectivityLevel: i32 {
+RT_ENUM! { enum DomainConnectivityLevel: i32 ["Windows.Networking.Connectivity.DomainConnectivityLevel"] {
     None (DomainConnectivityLevel_None) = 0, Unauthenticated (DomainConnectivityLevel_Unauthenticated) = 1, Authenticated (DomainConnectivityLevel_Authenticated) = 2,
 }}
 DEFINE_IID!(IID_IIPInformation, 3629204960, 5007, 18391, 155, 58, 54, 187, 72, 140, 239, 51);
@@ -1749,7 +1749,7 @@ impl ILanIdentifier {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LanIdentifier: ILanIdentifier}
+RT_CLASS!{class LanIdentifier: ILanIdentifier ["Windows.Networking.Connectivity.LanIdentifier"]}
 DEFINE_IID!(IID_ILanIdentifierData, 2806940611, 54841, 17854, 163, 106, 196, 228, 174, 175, 109, 155);
 RT_INTERFACE!{interface ILanIdentifierData(ILanIdentifierDataVtbl): IInspectable(IInspectableVtbl) [IID_ILanIdentifierData] {
     fn get_Type(&self, out: *mut u32) -> HRESULT,
@@ -1767,7 +1767,7 @@ impl ILanIdentifierData {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class LanIdentifierData: ILanIdentifierData}
+RT_CLASS!{class LanIdentifierData: ILanIdentifierData ["Windows.Networking.Connectivity.LanIdentifierData"]}
 DEFINE_IID!(IID_INetworkAdapter, 995372547, 21384, 18796, 168, 163, 175, 253, 57, 174, 194, 230);
 RT_INTERFACE!{interface INetworkAdapter(INetworkAdapterVtbl): IInspectable(IInspectableVtbl) [IID_INetworkAdapter] {
     fn get_OutboundMaxBitsPerSecond(&self, out: *mut u64) -> HRESULT,
@@ -1809,17 +1809,17 @@ impl INetworkAdapter {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NetworkAdapter: INetworkAdapter}
-RT_ENUM! { enum NetworkAuthenticationType: i32 {
+RT_CLASS!{class NetworkAdapter: INetworkAdapter ["Windows.Networking.Connectivity.NetworkAdapter"]}
+RT_ENUM! { enum NetworkAuthenticationType: i32 ["Windows.Networking.Connectivity.NetworkAuthenticationType"] {
     None (NetworkAuthenticationType_None) = 0, Unknown (NetworkAuthenticationType_Unknown) = 1, Open80211 (NetworkAuthenticationType_Open80211) = 2, SharedKey80211 (NetworkAuthenticationType_SharedKey80211) = 3, Wpa (NetworkAuthenticationType_Wpa) = 4, WpaPsk (NetworkAuthenticationType_WpaPsk) = 5, WpaNone (NetworkAuthenticationType_WpaNone) = 6, Rsna (NetworkAuthenticationType_Rsna) = 7, RsnaPsk (NetworkAuthenticationType_RsnaPsk) = 8, Ihv (NetworkAuthenticationType_Ihv) = 9,
 }}
-RT_ENUM! { enum NetworkConnectivityLevel: i32 {
+RT_ENUM! { enum NetworkConnectivityLevel: i32 ["Windows.Networking.Connectivity.NetworkConnectivityLevel"] {
     None (NetworkConnectivityLevel_None) = 0, LocalAccess (NetworkConnectivityLevel_LocalAccess) = 1, ConstrainedInternetAccess (NetworkConnectivityLevel_ConstrainedInternetAccess) = 2, InternetAccess (NetworkConnectivityLevel_InternetAccess) = 3,
 }}
-RT_ENUM! { enum NetworkCostType: i32 {
+RT_ENUM! { enum NetworkCostType: i32 ["Windows.Networking.Connectivity.NetworkCostType"] {
     Unknown (NetworkCostType_Unknown) = 0, Unrestricted (NetworkCostType_Unrestricted) = 1, Fixed (NetworkCostType_Fixed) = 2, Variable (NetworkCostType_Variable) = 3,
 }}
-RT_ENUM! { enum NetworkEncryptionType: i32 {
+RT_ENUM! { enum NetworkEncryptionType: i32 ["Windows.Networking.Connectivity.NetworkEncryptionType"] {
     None (NetworkEncryptionType_None) = 0, Unknown (NetworkEncryptionType_Unknown) = 1, Wep (NetworkEncryptionType_Wep) = 2, Wep40 (NetworkEncryptionType_Wep40) = 3, Wep104 (NetworkEncryptionType_Wep104) = 4, Tkip (NetworkEncryptionType_Tkip) = 5, Ccmp (NetworkEncryptionType_Ccmp) = 6, WpaUseGroup (NetworkEncryptionType_WpaUseGroup) = 7, RsnUseGroup (NetworkEncryptionType_RsnUseGroup) = 8, Ihv (NetworkEncryptionType_Ihv) = 9,
 }}
 RT_CLASS!{static class NetworkInformation}
@@ -1935,7 +1935,7 @@ impl INetworkItem {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NetworkItem: INetworkItem}
+RT_CLASS!{class NetworkItem: INetworkItem ["Windows.Networking.Connectivity.NetworkItem"]}
 DEFINE_IID!(IID_INetworkSecuritySettings, 2090892941, 37243, 19295, 184, 77, 40, 247, 165, 172, 84, 2);
 RT_INTERFACE!{interface INetworkSecuritySettings(INetworkSecuritySettingsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkSecuritySettings] {
     fn get_NetworkAuthenticationType(&self, out: *mut NetworkAuthenticationType) -> HRESULT,
@@ -1953,7 +1953,7 @@ impl INetworkSecuritySettings {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NetworkSecuritySettings: INetworkSecuritySettings}
+RT_CLASS!{class NetworkSecuritySettings: INetworkSecuritySettings ["Windows.Networking.Connectivity.NetworkSecuritySettings"]}
 DEFINE_IID!(IID_INetworkStateChangeEventDetails, 520942387, 55206, 17629, 164, 233, 104, 124, 71, 107, 144, 61);
 RT_INTERFACE!{interface INetworkStateChangeEventDetails(INetworkStateChangeEventDetailsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkStateChangeEventDetails] {
     fn get_HasNewInternetConnectionProfile(&self, out: *mut bool) -> HRESULT,
@@ -1995,7 +1995,7 @@ impl INetworkStateChangeEventDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NetworkStateChangeEventDetails: INetworkStateChangeEventDetails}
+RT_CLASS!{class NetworkStateChangeEventDetails: INetworkStateChangeEventDetails ["Windows.Networking.Connectivity.NetworkStateChangeEventDetails"]}
 DEFINE_IID!(IID_INetworkStateChangeEventDetails2, 3594764520, 12499, 20330, 173, 71, 106, 24, 115, 206, 179, 193);
 RT_INTERFACE!{interface INetworkStateChangeEventDetails2(INetworkStateChangeEventDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_INetworkStateChangeEventDetails2] {
     fn get_HasNewTetheringOperationalState(&self, out: *mut bool) -> HRESULT,
@@ -2023,7 +2023,7 @@ impl NetworkStatusChangedEventHandler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum NetworkTypes: u32 {
+RT_ENUM! { enum NetworkTypes: u32 ["Windows.Networking.Connectivity.NetworkTypes"] {
     None (NetworkTypes_None) = 0, Internet (NetworkTypes_Internet) = 1, PrivateNetwork (NetworkTypes_PrivateNetwork) = 2,
 }}
 DEFINE_IID!(IID_INetworkUsage, 1239060430, 39301, 18727, 191, 91, 7, 43, 92, 101, 248, 217);
@@ -2049,11 +2049,11 @@ impl INetworkUsage {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NetworkUsage: INetworkUsage}
-RT_STRUCT! { struct NetworkUsageStates {
+RT_CLASS!{class NetworkUsage: INetworkUsage ["Windows.Networking.Connectivity.NetworkUsage"]}
+RT_STRUCT! { struct NetworkUsageStates ["Windows.Networking.Connectivity.NetworkUsageStates"] {
     Roaming: TriStates, Shared: TriStates,
 }}
-RT_CLASS!{class IPInformation: IIPInformation}
+RT_CLASS!{class IPInformation: IIPInformation ["Windows.Networking.Connectivity.IPInformation"]}
 DEFINE_IID!(IID_IProviderNetworkUsage, 1590074884, 31025, 18632, 184, 243, 70, 48, 15, 164, 39, 40);
 RT_INTERFACE!{interface IProviderNetworkUsage(IProviderNetworkUsageVtbl): IInspectable(IInspectableVtbl) [IID_IProviderNetworkUsage] {
     fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
@@ -2077,7 +2077,7 @@ impl IProviderNetworkUsage {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProviderNetworkUsage: IProviderNetworkUsage}
+RT_CLASS!{class ProviderNetworkUsage: IProviderNetworkUsage ["Windows.Networking.Connectivity.ProviderNetworkUsage"]}
 DEFINE_IID!(IID_IProxyConfiguration, 4013580468, 36868, 19926, 183, 216, 179, 229, 2, 244, 170, 208);
 RT_INTERFACE!{interface IProxyConfiguration(IProxyConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IProxyConfiguration] {
     fn get_ProxyUris(&self, out: *mut *mut foundation::collections::IVectorView<foundation::Uri>) -> HRESULT,
@@ -2095,8 +2095,8 @@ impl IProxyConfiguration {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProxyConfiguration: IProxyConfiguration}
-RT_ENUM! { enum RoamingStates: u32 {
+RT_CLASS!{class ProxyConfiguration: IProxyConfiguration ["Windows.Networking.Connectivity.ProxyConfiguration"]}
+RT_ENUM! { enum RoamingStates: u32 ["Windows.Networking.Connectivity.RoamingStates"] {
     None (RoamingStates_None) = 0, NotRoaming (RoamingStates_NotRoaming) = 1, Roaming (RoamingStates_Roaming) = 2,
 }}
 DEFINE_IID!(IID_IRoutePolicy, 296469676, 4039, 17124, 135, 66, 86, 153, 35, 177, 202, 17);
@@ -2122,7 +2122,7 @@ impl IRoutePolicy {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RoutePolicy: IRoutePolicy}
+RT_CLASS!{class RoutePolicy: IRoutePolicy ["Windows.Networking.Connectivity.RoutePolicy"]}
 impl RtActivatable<IRoutePolicyFactory> for RoutePolicy {}
 impl RoutePolicy {
     #[inline] pub fn create_route_policy(connectionProfile: &ConnectionProfile, hostName: &super::HostName, type_: super::DomainNameType) -> Result<ComPtr<RoutePolicy>> {
@@ -2141,7 +2141,7 @@ impl IRoutePolicyFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum TriStates: i32 {
+RT_ENUM! { enum TriStates: i32 ["Windows.Networking.Connectivity.TriStates"] {
     DoNotCare (TriStates_DoNotCare) = 0, No (TriStates_No) = 1, Yes (TriStates_Yes) = 2,
 }}
 DEFINE_IID!(IID_IWlanConnectionProfileDetails, 1444976843, 45914, 19441, 168, 132, 183, 85, 126, 136, 255, 134);
@@ -2155,7 +2155,7 @@ impl IWlanConnectionProfileDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WlanConnectionProfileDetails: IWlanConnectionProfileDetails}
+RT_CLASS!{class WlanConnectionProfileDetails: IWlanConnectionProfileDetails ["Windows.Networking.Connectivity.WlanConnectionProfileDetails"]}
 DEFINE_IID!(IID_IWwanConnectionProfileDetails, 239970558, 33631, 19955, 130, 253, 223, 85, 110, 188, 9, 239);
 RT_INTERFACE!{interface IWwanConnectionProfileDetails(IWwanConnectionProfileDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IWwanConnectionProfileDetails] {
     fn get_HomeProviderId(&self, out: *mut HSTRING) -> HRESULT,
@@ -2185,7 +2185,7 @@ impl IWwanConnectionProfileDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WwanConnectionProfileDetails: IWwanConnectionProfileDetails}
+RT_CLASS!{class WwanConnectionProfileDetails: IWwanConnectionProfileDetails ["Windows.Networking.Connectivity.WwanConnectionProfileDetails"]}
 DEFINE_IID!(IID_IWwanConnectionProfileDetails2, 2054508254, 41453, 18610, 142, 146, 180, 96, 3, 61, 82, 226);
 RT_INTERFACE!{interface IWwanConnectionProfileDetails2(IWwanConnectionProfileDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IWwanConnectionProfileDetails2] {
     fn get_IPKind(&self, out: *mut WwanNetworkIPKind) -> HRESULT,
@@ -2203,19 +2203,19 @@ impl IWwanConnectionProfileDetails2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum WwanDataClass: u32 {
+RT_ENUM! { enum WwanDataClass: u32 ["Windows.Networking.Connectivity.WwanDataClass"] {
     None (WwanDataClass_None) = 0, Gprs (WwanDataClass_Gprs) = 1, Edge (WwanDataClass_Edge) = 2, Umts (WwanDataClass_Umts) = 4, Hsdpa (WwanDataClass_Hsdpa) = 8, Hsupa (WwanDataClass_Hsupa) = 16, LteAdvanced (WwanDataClass_LteAdvanced) = 32, Cdma1xRtt (WwanDataClass_Cdma1xRtt) = 65536, Cdma1xEvdo (WwanDataClass_Cdma1xEvdo) = 131072, Cdma1xEvdoRevA (WwanDataClass_Cdma1xEvdoRevA) = 262144, Cdma1xEvdv (WwanDataClass_Cdma1xEvdv) = 524288, Cdma3xRtt (WwanDataClass_Cdma3xRtt) = 1048576, Cdma1xEvdoRevB (WwanDataClass_Cdma1xEvdoRevB) = 2097152, CdmaUmb (WwanDataClass_CdmaUmb) = 4194304, Custom (WwanDataClass_Custom) = 2147483648,
 }}
-RT_ENUM! { enum WwanNetworkIPKind: i32 {
+RT_ENUM! { enum WwanNetworkIPKind: i32 ["Windows.Networking.Connectivity.WwanNetworkIPKind"] {
     None (WwanNetworkIPKind_None) = 0, Ipv4 (WwanNetworkIPKind_Ipv4) = 1, Ipv6 (WwanNetworkIPKind_Ipv6) = 2, Ipv4v6 (WwanNetworkIPKind_Ipv4v6) = 3, Ipv4v6v4Xlat (WwanNetworkIPKind_Ipv4v6v4Xlat) = 4,
 }}
-RT_ENUM! { enum WwanNetworkRegistrationState: i32 {
+RT_ENUM! { enum WwanNetworkRegistrationState: i32 ["Windows.Networking.Connectivity.WwanNetworkRegistrationState"] {
     None (WwanNetworkRegistrationState_None) = 0, Deregistered (WwanNetworkRegistrationState_Deregistered) = 1, Searching (WwanNetworkRegistrationState_Searching) = 2, Home (WwanNetworkRegistrationState_Home) = 3, Roaming (WwanNetworkRegistrationState_Roaming) = 4, Partner (WwanNetworkRegistrationState_Partner) = 5, Denied (WwanNetworkRegistrationState_Denied) = 6,
 }}
 } // Windows.Networking.Connectivity
 pub mod networkoperators { // Windows.Networking.NetworkOperators
 use ::prelude::*;
-RT_ENUM! { enum DataClasses: u32 {
+RT_ENUM! { enum DataClasses: u32 ["Windows.Networking.NetworkOperators.DataClasses"] {
     None (DataClasses_None) = 0, Gprs (DataClasses_Gprs) = 1, Edge (DataClasses_Edge) = 2, Umts (DataClasses_Umts) = 4, Hsdpa (DataClasses_Hsdpa) = 8, Hsupa (DataClasses_Hsupa) = 16, LteAdvanced (DataClasses_LteAdvanced) = 32, Cdma1xRtt (DataClasses_Cdma1xRtt) = 65536, Cdma1xEvdo (DataClasses_Cdma1xEvdo) = 131072, Cdma1xEvdoRevA (DataClasses_Cdma1xEvdoRevA) = 262144, Cdma1xEvdv (DataClasses_Cdma1xEvdv) = 524288, Cdma3xRtt (DataClasses_Cdma3xRtt) = 1048576, Cdma1xEvdoRevB (DataClasses_Cdma1xEvdoRevB) = 2097152, CdmaUmb (DataClasses_CdmaUmb) = 4194304, Custom (DataClasses_Custom) = 2147483648,
 }}
 DEFINE_IID!(IID_IESim, 1869508134, 61731, 17277, 140, 237, 220, 29, 43, 192, 195, 169);
@@ -2294,7 +2294,7 @@ impl IESim {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ESim: IESim}
+RT_CLASS!{class ESim: IESim ["Windows.Networking.NetworkOperators.ESim"]}
 DEFINE_IID!(IID_IESimAddedEventArgs, 951913048, 19802, 19720, 141, 167, 231, 62, 255, 54, 157, 221);
 RT_INTERFACE!{interface IESimAddedEventArgs(IESimAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IESimAddedEventArgs] {
     fn get_ESim(&self, out: *mut *mut ESim) -> HRESULT
@@ -2306,8 +2306,8 @@ impl IESimAddedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ESimAddedEventArgs: IESimAddedEventArgs}
-RT_ENUM! { enum ESimAuthenticationPreference: i32 {
+RT_CLASS!{class ESimAddedEventArgs: IESimAddedEventArgs ["Windows.Networking.NetworkOperators.ESimAddedEventArgs"]}
+RT_ENUM! { enum ESimAuthenticationPreference: i32 ["Windows.Networking.NetworkOperators.ESimAuthenticationPreference"] {
     OnEntry (ESimAuthenticationPreference_OnEntry) = 0, OnAction (ESimAuthenticationPreference_OnAction) = 1, Never (ESimAuthenticationPreference_Never) = 2,
 }}
 DEFINE_IID!(IID_IESimDownloadProfileMetadataResult, 3290647966, 23254, 17005, 141, 0, 68, 52, 244, 73, 175, 236);
@@ -2327,7 +2327,7 @@ impl IESimDownloadProfileMetadataResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ESimDownloadProfileMetadataResult: IESimDownloadProfileMetadataResult}
+RT_CLASS!{class ESimDownloadProfileMetadataResult: IESimDownloadProfileMetadataResult ["Windows.Networking.NetworkOperators.ESimDownloadProfileMetadataResult"]}
 RT_CLASS!{static class ESimManager}
 impl RtActivatable<IESimManagerStatics> for ESimManager {}
 impl ESimManager {
@@ -2384,8 +2384,8 @@ impl IESimOperationResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ESimOperationResult: IESimOperationResult}
-RT_ENUM! { enum ESimOperationStatus: i32 {
+RT_CLASS!{class ESimOperationResult: IESimOperationResult ["Windows.Networking.NetworkOperators.ESimOperationResult"]}
+RT_ENUM! { enum ESimOperationStatus: i32 ["Windows.Networking.NetworkOperators.ESimOperationStatus"] {
     Success (ESimOperationStatus_Success) = 0, NotAuthorized (ESimOperationStatus_NotAuthorized) = 1, NotFound (ESimOperationStatus_NotFound) = 2, PolicyViolation (ESimOperationStatus_PolicyViolation) = 3, InsufficientSpaceOnCard (ESimOperationStatus_InsufficientSpaceOnCard) = 4, ServerFailure (ESimOperationStatus_ServerFailure) = 5, ServerNotReachable (ESimOperationStatus_ServerNotReachable) = 6, TimeoutWaitingForUserConsent (ESimOperationStatus_TimeoutWaitingForUserConsent) = 7, IncorrectConfirmationCode (ESimOperationStatus_IncorrectConfirmationCode) = 8, ConfirmationCodeMaxRetriesExceeded (ESimOperationStatus_ConfirmationCodeMaxRetriesExceeded) = 9, CardRemoved (ESimOperationStatus_CardRemoved) = 10, CardBusy (ESimOperationStatus_CardBusy) = 11, Other (ESimOperationStatus_Other) = 12, CardGeneralFailure (ESimOperationStatus_CardGeneralFailure) = 13, ConfirmationCodeMissing (ESimOperationStatus_ConfirmationCodeMissing) = 14, InvalidMatchingId (ESimOperationStatus_InvalidMatchingId) = 15, NoEligibleProfileForThisDevice (ESimOperationStatus_NoEligibleProfileForThisDevice) = 16, OperationAborted (ESimOperationStatus_OperationAborted) = 17, EidMismatch (ESimOperationStatus_EidMismatch) = 18, ProfileNotAvailableForNewBinding (ESimOperationStatus_ProfileNotAvailableForNewBinding) = 19, ProfileNotReleasedByOperator (ESimOperationStatus_ProfileNotReleasedByOperator) = 20, OperationProhibitedByProfileClass (ESimOperationStatus_OperationProhibitedByProfileClass) = 21, ProfileNotPresent (ESimOperationStatus_ProfileNotPresent) = 22, NoCorrespondingRequest (ESimOperationStatus_NoCorrespondingRequest) = 23,
 }}
 DEFINE_IID!(IID_IESimPolicy, 1105312157, 53118, 17173, 136, 43, 111, 30, 116, 176, 211, 143);
@@ -2399,7 +2399,7 @@ impl IESimPolicy {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ESimPolicy: IESimPolicy}
+RT_CLASS!{class ESimPolicy: IESimPolicy ["Windows.Networking.NetworkOperators.ESimPolicy"]}
 DEFINE_IID!(IID_IESimProfile, 3994974336, 1705, 16423, 180, 248, 221, 178, 61, 120, 16, 224);
 RT_INTERFACE!{interface IESimProfile(IESimProfileVtbl): IInspectable(IInspectableVtbl) [IID_IESimProfile] {
     fn get_Class(&self, out: *mut ESimProfileClass) -> HRESULT,
@@ -2472,11 +2472,11 @@ impl IESimProfile {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ESimProfile: IESimProfile}
-RT_ENUM! { enum ESimProfileClass: i32 {
+RT_CLASS!{class ESimProfile: IESimProfile ["Windows.Networking.NetworkOperators.ESimProfile"]}
+RT_ENUM! { enum ESimProfileClass: i32 ["Windows.Networking.NetworkOperators.ESimProfileClass"] {
     Operational (ESimProfileClass_Operational) = 0, Test (ESimProfileClass_Test) = 1, Provisioning (ESimProfileClass_Provisioning) = 2,
 }}
-RT_STRUCT! { struct ESimProfileInstallProgress {
+RT_STRUCT! { struct ESimProfileInstallProgress ["Windows.Networking.NetworkOperators.ESimProfileInstallProgress"] {
     TotalSizeInBytes: i32, InstalledSizeInBytes: i32,
 }}
 DEFINE_IID!(IID_IESimProfileMetadata, 3978658591, 37083, 18829, 167, 180, 235, 206, 128, 125, 60, 35);
@@ -2562,8 +2562,8 @@ impl IESimProfileMetadata {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ESimProfileMetadata: IESimProfileMetadata}
-RT_ENUM! { enum ESimProfileMetadataState: i32 {
+RT_CLASS!{class ESimProfileMetadata: IESimProfileMetadata ["Windows.Networking.NetworkOperators.ESimProfileMetadata"]}
+RT_ENUM! { enum ESimProfileMetadataState: i32 ["Windows.Networking.NetworkOperators.ESimProfileMetadataState"] {
     Unknown (ESimProfileMetadataState_Unknown) = 0, WaitingForInstall (ESimProfileMetadataState_WaitingForInstall) = 1, Downloading (ESimProfileMetadataState_Downloading) = 2, Installing (ESimProfileMetadataState_Installing) = 3, Expired (ESimProfileMetadataState_Expired) = 4, RejectingDownload (ESimProfileMetadataState_RejectingDownload) = 5, NoLongerAvailable (ESimProfileMetadataState_NoLongerAvailable) = 6, DeniedByPolicy (ESimProfileMetadataState_DeniedByPolicy) = 7,
 }}
 DEFINE_IID!(IID_IESimProfilePolicy, 3873247005, 40028, 18117, 162, 137, 169, 72, 153, 155, 240, 98);
@@ -2589,8 +2589,8 @@ impl IESimProfilePolicy {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ESimProfilePolicy: IESimProfilePolicy}
-RT_ENUM! { enum ESimProfileState: i32 {
+RT_CLASS!{class ESimProfilePolicy: IESimProfilePolicy ["Windows.Networking.NetworkOperators.ESimProfilePolicy"]}
+RT_ENUM! { enum ESimProfileState: i32 ["Windows.Networking.NetworkOperators.ESimProfileState"] {
     Unknown (ESimProfileState_Unknown) = 0, Disabled (ESimProfileState_Disabled) = 1, Enabled (ESimProfileState_Enabled) = 2, Deleted (ESimProfileState_Deleted) = 3,
 }}
 DEFINE_IID!(IID_IESimRemovedEventArgs, 3737462651, 12249, 20185, 131, 118, 217, 181, 228, 18, 120, 163);
@@ -2604,7 +2604,7 @@ impl IESimRemovedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ESimRemovedEventArgs: IESimRemovedEventArgs}
+RT_CLASS!{class ESimRemovedEventArgs: IESimRemovedEventArgs ["Windows.Networking.NetworkOperators.ESimRemovedEventArgs"]}
 DEFINE_IID!(IID_IESimServiceInfo, 4050299855, 32601, 19025, 132, 148, 189, 137, 213, 255, 80, 238);
 RT_INTERFACE!{interface IESimServiceInfo(IESimServiceInfoVtbl): IInspectable(IInspectableVtbl) [IID_IESimServiceInfo] {
     fn get_AuthenticationPreference(&self, out: *mut ESimAuthenticationPreference) -> HRESULT,
@@ -2622,8 +2622,8 @@ impl IESimServiceInfo {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ESimServiceInfo: IESimServiceInfo}
-RT_ENUM! { enum ESimState: i32 {
+RT_CLASS!{class ESimServiceInfo: IESimServiceInfo ["Windows.Networking.NetworkOperators.ESimServiceInfo"]}
+RT_ENUM! { enum ESimState: i32 ["Windows.Networking.NetworkOperators.ESimState"] {
     Unknown (ESimState_Unknown) = 0, Idle (ESimState_Idle) = 1, Removed (ESimState_Removed) = 2, Busy (ESimState_Busy) = 3,
 }}
 DEFINE_IID!(IID_IESimUpdatedEventArgs, 1276271852, 20621, 19336, 131, 203, 104, 190, 248, 22, 141, 18);
@@ -2637,7 +2637,7 @@ impl IESimUpdatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ESimUpdatedEventArgs: IESimUpdatedEventArgs}
+RT_CLASS!{class ESimUpdatedEventArgs: IESimUpdatedEventArgs ["Windows.Networking.NetworkOperators.ESimUpdatedEventArgs"]}
 DEFINE_IID!(IID_IESimWatcher, 3254275307, 41613, 20415, 151, 113, 110, 49, 184, 28, 207, 34);
 RT_INTERFACE!{interface IESimWatcher(IESimWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IESimWatcher] {
     fn get_Status(&self, out: *mut ESimWatcherStatus) -> HRESULT,
@@ -2714,8 +2714,8 @@ impl IESimWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ESimWatcher: IESimWatcher}
-RT_ENUM! { enum ESimWatcherStatus: i32 {
+RT_CLASS!{class ESimWatcher: IESimWatcher ["Windows.Networking.NetworkOperators.ESimWatcher"]}
+RT_ENUM! { enum ESimWatcherStatus: i32 ["Windows.Networking.NetworkOperators.ESimWatcherStatus"] {
     Created (ESimWatcherStatus_Created) = 0, Started (ESimWatcherStatus_Started) = 1, EnumerationCompleted (ESimWatcherStatus_EnumerationCompleted) = 2, Stopping (ESimWatcherStatus_Stopping) = 3, Stopped (ESimWatcherStatus_Stopped) = 4,
 }}
 DEFINE_IID!(IID_IHotspotAuthenticationContext, 3881224081, 4099, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
@@ -2774,7 +2774,7 @@ impl IHotspotAuthenticationContext {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HotspotAuthenticationContext: IHotspotAuthenticationContext}
+RT_CLASS!{class HotspotAuthenticationContext: IHotspotAuthenticationContext ["Windows.Networking.NetworkOperators.HotspotAuthenticationContext"]}
 impl RtActivatable<IHotspotAuthenticationContextStatics> for HotspotAuthenticationContext {}
 impl HotspotAuthenticationContext {
     #[inline] pub fn try_get_authentication_context(evenToken: &HStringArg) -> Result<(Option<ComPtr<HotspotAuthenticationContext>>, bool)> {
@@ -2815,8 +2815,8 @@ impl IHotspotAuthenticationEventDetails {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HotspotAuthenticationEventDetails: IHotspotAuthenticationEventDetails}
-RT_ENUM! { enum HotspotAuthenticationResponseCode: i32 {
+RT_CLASS!{class HotspotAuthenticationEventDetails: IHotspotAuthenticationEventDetails ["Windows.Networking.NetworkOperators.HotspotAuthenticationEventDetails"]}
+RT_ENUM! { enum HotspotAuthenticationResponseCode: i32 ["Windows.Networking.NetworkOperators.HotspotAuthenticationResponseCode"] {
     NoError (HotspotAuthenticationResponseCode_NoError) = 0, LoginSucceeded (HotspotAuthenticationResponseCode_LoginSucceeded) = 50, LoginFailed (HotspotAuthenticationResponseCode_LoginFailed) = 100, RadiusServerError (HotspotAuthenticationResponseCode_RadiusServerError) = 102, NetworkAdministratorError (HotspotAuthenticationResponseCode_NetworkAdministratorError) = 105, LoginAborted (HotspotAuthenticationResponseCode_LoginAborted) = 151, AccessGatewayInternalError (HotspotAuthenticationResponseCode_AccessGatewayInternalError) = 255,
 }}
 DEFINE_IID!(IID_IHotspotCredentialsAuthenticationResult, 3881224081, 4101, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
@@ -2848,7 +2848,7 @@ impl IHotspotCredentialsAuthenticationResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class HotspotCredentialsAuthenticationResult: IHotspotCredentialsAuthenticationResult}
+RT_CLASS!{class HotspotCredentialsAuthenticationResult: IHotspotCredentialsAuthenticationResult ["Windows.Networking.NetworkOperators.HotspotCredentialsAuthenticationResult"]}
 RT_CLASS!{static class KnownCSimFilePaths}
 impl RtActivatable<IKnownCSimFilePathsStatics> for KnownCSimFilePaths {}
 impl KnownCSimFilePaths {
@@ -3059,7 +3059,7 @@ impl IMobileBroadbandAccount {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandAccount: IMobileBroadbandAccount}
+RT_CLASS!{class MobileBroadbandAccount: IMobileBroadbandAccount ["Windows.Networking.NetworkOperators.MobileBroadbandAccount"]}
 impl RtActivatable<IMobileBroadbandAccountStatics> for MobileBroadbandAccount {}
 impl MobileBroadbandAccount {
     #[inline] pub fn get_available_network_account_ids() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
@@ -3103,7 +3103,7 @@ impl IMobileBroadbandAccountEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandAccountEventArgs: IMobileBroadbandAccountEventArgs}
+RT_CLASS!{class MobileBroadbandAccountEventArgs: IMobileBroadbandAccountEventArgs ["Windows.Networking.NetworkOperators.MobileBroadbandAccountEventArgs"]}
 DEFINE_IID!(IID_IMobileBroadbandAccountStatics, 2860469540, 44993, 20424, 174, 154, 169, 23, 83, 16, 250, 173);
 RT_INTERFACE!{static interface IMobileBroadbandAccountStatics(IMobileBroadbandAccountStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAccountStatics] {
     fn get_AvailableNetworkAccountIds(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
@@ -3144,7 +3144,7 @@ impl IMobileBroadbandAccountUpdatedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandAccountUpdatedEventArgs: IMobileBroadbandAccountUpdatedEventArgs}
+RT_CLASS!{class MobileBroadbandAccountUpdatedEventArgs: IMobileBroadbandAccountUpdatedEventArgs ["Windows.Networking.NetworkOperators.MobileBroadbandAccountUpdatedEventArgs"]}
 DEFINE_IID!(IID_IMobileBroadbandAccountWatcher, 1811100510, 9141, 17567, 146, 141, 94, 13, 62, 4, 71, 29);
 RT_INTERFACE!{interface IMobileBroadbandAccountWatcher(IMobileBroadbandAccountWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAccountWatcher] {
     fn add_AccountAdded(&self, handler: *mut foundation::TypedEventHandler<MobileBroadbandAccountWatcher, MobileBroadbandAccountEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -3221,10 +3221,10 @@ impl IMobileBroadbandAccountWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandAccountWatcher: IMobileBroadbandAccountWatcher}
+RT_CLASS!{class MobileBroadbandAccountWatcher: IMobileBroadbandAccountWatcher ["Windows.Networking.NetworkOperators.MobileBroadbandAccountWatcher"]}
 impl RtActivatable<IActivationFactory> for MobileBroadbandAccountWatcher {}
 DEFINE_CLSID!(MobileBroadbandAccountWatcher(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,65,99,99,111,117,110,116,87,97,116,99,104,101,114,0]) [CLSID_MobileBroadbandAccountWatcher]);
-RT_ENUM! { enum MobileBroadbandAccountWatcherStatus: i32 {
+RT_ENUM! { enum MobileBroadbandAccountWatcherStatus: i32 ["Windows.Networking.NetworkOperators.MobileBroadbandAccountWatcherStatus"] {
     Created (MobileBroadbandAccountWatcherStatus_Created) = 0, Started (MobileBroadbandAccountWatcherStatus_Started) = 1, EnumerationCompleted (MobileBroadbandAccountWatcherStatus_EnumerationCompleted) = 2, Stopped (MobileBroadbandAccountWatcherStatus_Stopped) = 3, Aborted (MobileBroadbandAccountWatcherStatus_Aborted) = 4,
 }}
 DEFINE_IID!(IID_IMobileBroadbandAntennaSar, 3115273086, 52217, 16649, 144, 190, 92, 6, 191, 213, 19, 182);
@@ -3244,7 +3244,7 @@ impl IMobileBroadbandAntennaSar {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandAntennaSar: IMobileBroadbandAntennaSar}
+RT_CLASS!{class MobileBroadbandAntennaSar: IMobileBroadbandAntennaSar ["Windows.Networking.NetworkOperators.MobileBroadbandAntennaSar"]}
 impl RtActivatable<IMobileBroadbandAntennaSarFactory> for MobileBroadbandAntennaSar {}
 impl MobileBroadbandAntennaSar {
     #[inline] pub fn create_with_index(antennaIndex: i32, sarBackoffIndex: i32) -> Result<ComPtr<MobileBroadbandAntennaSar>> {
@@ -3316,7 +3316,7 @@ impl IMobileBroadbandCellCdma {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandCellCdma: IMobileBroadbandCellCdma}
+RT_CLASS!{class MobileBroadbandCellCdma: IMobileBroadbandCellCdma ["Windows.Networking.NetworkOperators.MobileBroadbandCellCdma"]}
 DEFINE_IID!(IID_IMobileBroadbandCellGsm, 3432087302, 32480, 18360, 158, 31, 195, 180, 141, 249, 223, 91);
 RT_INTERFACE!{interface IMobileBroadbandCellGsm(IMobileBroadbandCellGsmVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandCellGsm] {
     fn get_BaseStationId(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
@@ -3364,7 +3364,7 @@ impl IMobileBroadbandCellGsm {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandCellGsm: IMobileBroadbandCellGsm}
+RT_CLASS!{class MobileBroadbandCellGsm: IMobileBroadbandCellGsm ["Windows.Networking.NetworkOperators.MobileBroadbandCellGsm"]}
 DEFINE_IID!(IID_IMobileBroadbandCellLte, 2442643579, 11128, 17773, 139, 83, 170, 162, 93, 10, 247, 65);
 RT_INTERFACE!{interface IMobileBroadbandCellLte(IMobileBroadbandCellLteVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandCellLte] {
     fn get_CellId(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
@@ -3418,7 +3418,7 @@ impl IMobileBroadbandCellLte {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandCellLte: IMobileBroadbandCellLte}
+RT_CLASS!{class MobileBroadbandCellLte: IMobileBroadbandCellLte ["Windows.Networking.NetworkOperators.MobileBroadbandCellLte"]}
 DEFINE_IID!(IID_IMobileBroadbandCellsInfo, 2309576234, 58482, 19877, 146, 156, 222, 97, 113, 29, 210, 97);
 RT_INTERFACE!{interface IMobileBroadbandCellsInfo(IMobileBroadbandCellsInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandCellsInfo] {
     fn get_NeighboringCellsCdma(&self, out: *mut *mut foundation::collections::IVectorView<MobileBroadbandCellCdma>) -> HRESULT,
@@ -3484,7 +3484,7 @@ impl IMobileBroadbandCellsInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandCellsInfo: IMobileBroadbandCellsInfo}
+RT_CLASS!{class MobileBroadbandCellsInfo: IMobileBroadbandCellsInfo ["Windows.Networking.NetworkOperators.MobileBroadbandCellsInfo"]}
 DEFINE_IID!(IID_IMobileBroadbandCellTdscdma, 249173589, 56078, 16770, 140, 218, 204, 65, 154, 123, 222, 8);
 RT_INTERFACE!{interface IMobileBroadbandCellTdscdma(IMobileBroadbandCellTdscdmaVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandCellTdscdma] {
     fn get_CellId(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
@@ -3538,7 +3538,7 @@ impl IMobileBroadbandCellTdscdma {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandCellTdscdma: IMobileBroadbandCellTdscdma}
+RT_CLASS!{class MobileBroadbandCellTdscdma: IMobileBroadbandCellTdscdma ["Windows.Networking.NetworkOperators.MobileBroadbandCellTdscdma"]}
 DEFINE_IID!(IID_IMobileBroadbandCellUmts, 2008331694, 18888, 20245, 178, 133, 76, 38, 167, 246, 114, 21);
 RT_INTERFACE!{interface IMobileBroadbandCellUmts(IMobileBroadbandCellUmtsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandCellUmts] {
     fn get_CellId(&self, out: *mut *mut foundation::IReference<i32>) -> HRESULT,
@@ -3592,7 +3592,7 @@ impl IMobileBroadbandCellUmts {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandCellUmts: IMobileBroadbandCellUmts}
+RT_CLASS!{class MobileBroadbandCellUmts: IMobileBroadbandCellUmts ["Windows.Networking.NetworkOperators.MobileBroadbandCellUmts"]}
 DEFINE_IID!(IID_IMobileBroadbandDeviceInformation, 3872424296, 58241, 19566, 155, 232, 254, 21, 105, 105, 164, 70);
 RT_INTERFACE!{interface IMobileBroadbandDeviceInformation(IMobileBroadbandDeviceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceInformation] {
     fn get_NetworkDeviceStatus(&self, out: *mut NetworkDeviceStatus) -> HRESULT,
@@ -3683,7 +3683,7 @@ impl IMobileBroadbandDeviceInformation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandDeviceInformation: IMobileBroadbandDeviceInformation}
+RT_CLASS!{class MobileBroadbandDeviceInformation: IMobileBroadbandDeviceInformation ["Windows.Networking.NetworkOperators.MobileBroadbandDeviceInformation"]}
 DEFINE_IID!(IID_IMobileBroadbandDeviceInformation2, 776370929, 63794, 18231, 167, 34, 3, 186, 114, 55, 12, 184);
 RT_INTERFACE!{interface IMobileBroadbandDeviceInformation2(IMobileBroadbandDeviceInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceInformation2] {
     fn get_PinManager(&self, out: *mut *mut MobileBroadbandPinManager) -> HRESULT,
@@ -3759,7 +3759,7 @@ impl IMobileBroadbandDeviceService {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandDeviceService: IMobileBroadbandDeviceService}
+RT_CLASS!{class MobileBroadbandDeviceService: IMobileBroadbandDeviceService ["Windows.Networking.NetworkOperators.MobileBroadbandDeviceService"]}
 DEFINE_IID!(IID_IMobileBroadbandDeviceServiceCommandResult, 2968808123, 38102, 17593, 165, 56, 240, 129, 11, 100, 83, 137);
 RT_INTERFACE!{interface IMobileBroadbandDeviceServiceCommandResult(IMobileBroadbandDeviceServiceCommandResultVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceServiceCommandResult] {
     fn get_StatusCode(&self, out: *mut u32) -> HRESULT,
@@ -3777,7 +3777,7 @@ impl IMobileBroadbandDeviceServiceCommandResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandDeviceServiceCommandResult: IMobileBroadbandDeviceServiceCommandResult}
+RT_CLASS!{class MobileBroadbandDeviceServiceCommandResult: IMobileBroadbandDeviceServiceCommandResult ["Windows.Networking.NetworkOperators.MobileBroadbandDeviceServiceCommandResult"]}
 DEFINE_IID!(IID_IMobileBroadbandDeviceServiceCommandSession, 4228483653, 37179, 18708, 182, 195, 174, 99, 4, 89, 62, 117);
 RT_INTERFACE!{interface IMobileBroadbandDeviceServiceCommandSession(IMobileBroadbandDeviceServiceCommandSessionVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceServiceCommandSession] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -3802,7 +3802,7 @@ impl IMobileBroadbandDeviceServiceCommandSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandDeviceServiceCommandSession: IMobileBroadbandDeviceServiceCommandSession}
+RT_CLASS!{class MobileBroadbandDeviceServiceCommandSession: IMobileBroadbandDeviceServiceCommandSession ["Windows.Networking.NetworkOperators.MobileBroadbandDeviceServiceCommandSession"]}
 DEFINE_IID!(IID_IMobileBroadbandDeviceServiceDataReceivedEventArgs, 3064599518, 4992, 16611, 134, 24, 115, 203, 202, 72, 19, 140);
 RT_INTERFACE!{interface IMobileBroadbandDeviceServiceDataReceivedEventArgs(IMobileBroadbandDeviceServiceDataReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceServiceDataReceivedEventArgs] {
     #[cfg(feature="windows-storage")] fn get_ReceivedData(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
@@ -3814,7 +3814,7 @@ impl IMobileBroadbandDeviceServiceDataReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandDeviceServiceDataReceivedEventArgs: IMobileBroadbandDeviceServiceDataReceivedEventArgs}
+RT_CLASS!{class MobileBroadbandDeviceServiceDataReceivedEventArgs: IMobileBroadbandDeviceServiceDataReceivedEventArgs ["Windows.Networking.NetworkOperators.MobileBroadbandDeviceServiceDataReceivedEventArgs"]}
 DEFINE_IID!(IID_IMobileBroadbandDeviceServiceDataSession, 3671466803, 35791, 17033, 138, 55, 4, 92, 33, 105, 72, 106);
 RT_INTERFACE!{interface IMobileBroadbandDeviceServiceDataSession(IMobileBroadbandDeviceServiceDataSessionVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceServiceDataSession] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -3843,7 +3843,7 @@ impl IMobileBroadbandDeviceServiceDataSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandDeviceServiceDataSession: IMobileBroadbandDeviceServiceDataSession}
+RT_CLASS!{class MobileBroadbandDeviceServiceDataSession: IMobileBroadbandDeviceServiceDataSession ["Windows.Networking.NetworkOperators.MobileBroadbandDeviceServiceDataSession"]}
 DEFINE_IID!(IID_IMobileBroadbandDeviceServiceInformation, 1406573403, 50413, 17904, 128, 58, 217, 65, 122, 109, 152, 70);
 RT_INTERFACE!{interface IMobileBroadbandDeviceServiceInformation(IMobileBroadbandDeviceServiceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceServiceInformation] {
     fn get_DeviceServiceId(&self, out: *mut Guid) -> HRESULT,
@@ -3867,7 +3867,7 @@ impl IMobileBroadbandDeviceServiceInformation {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandDeviceServiceInformation: IMobileBroadbandDeviceServiceInformation}
+RT_CLASS!{class MobileBroadbandDeviceServiceInformation: IMobileBroadbandDeviceServiceInformation ["Windows.Networking.NetworkOperators.MobileBroadbandDeviceServiceInformation"]}
 DEFINE_IID!(IID_IMobileBroadbandDeviceServiceTriggerDetails, 1241865072, 47534, 17496, 146, 65, 166, 165, 251, 241, 138, 12);
 RT_INTERFACE!{interface IMobileBroadbandDeviceServiceTriggerDetails(IMobileBroadbandDeviceServiceTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceServiceTriggerDetails] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -3891,8 +3891,8 @@ impl IMobileBroadbandDeviceServiceTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandDeviceServiceTriggerDetails: IMobileBroadbandDeviceServiceTriggerDetails}
-RT_ENUM! { enum MobileBroadbandDeviceType: i32 {
+RT_CLASS!{class MobileBroadbandDeviceServiceTriggerDetails: IMobileBroadbandDeviceServiceTriggerDetails ["Windows.Networking.NetworkOperators.MobileBroadbandDeviceServiceTriggerDetails"]}
+RT_ENUM! { enum MobileBroadbandDeviceType: i32 ["Windows.Networking.NetworkOperators.MobileBroadbandDeviceType"] {
     Unknown (MobileBroadbandDeviceType_Unknown) = 0, Embedded (MobileBroadbandDeviceType_Embedded) = 1, Removable (MobileBroadbandDeviceType_Removable) = 2, Remote (MobileBroadbandDeviceType_Remote) = 3,
 }}
 DEFINE_IID!(IID_IMobileBroadbandModem, 3493161234, 59897, 20327, 160, 61, 67, 24, 154, 49, 107, 241);
@@ -3960,7 +3960,7 @@ impl IMobileBroadbandModem {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandModem: IMobileBroadbandModem}
+RT_CLASS!{class MobileBroadbandModem: IMobileBroadbandModem ["Windows.Networking.NetworkOperators.MobileBroadbandModem"]}
 impl RtActivatable<IMobileBroadbandModemStatics> for MobileBroadbandModem {}
 impl MobileBroadbandModem {
     #[inline] pub fn get_device_selector() -> Result<HString> {
@@ -4042,7 +4042,7 @@ impl IMobileBroadbandModemConfiguration {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandModemConfiguration: IMobileBroadbandModemConfiguration}
+RT_CLASS!{class MobileBroadbandModemConfiguration: IMobileBroadbandModemConfiguration ["Windows.Networking.NetworkOperators.MobileBroadbandModemConfiguration"]}
 DEFINE_IID!(IID_IMobileBroadbandModemConfiguration2, 839906757, 58464, 17070, 170, 81, 105, 98, 30, 122, 68, 119);
 RT_INTERFACE!{interface IMobileBroadbandModemConfiguration2(IMobileBroadbandModemConfiguration2Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemConfiguration2] {
     fn get_SarManager(&self, out: *mut *mut MobileBroadbandSarManager) -> HRESULT
@@ -4081,7 +4081,7 @@ impl IMobileBroadbandModemIsolation {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandModemIsolation: IMobileBroadbandModemIsolation}
+RT_CLASS!{class MobileBroadbandModemIsolation: IMobileBroadbandModemIsolation ["Windows.Networking.NetworkOperators.MobileBroadbandModemIsolation"]}
 impl RtActivatable<IMobileBroadbandModemIsolationFactory> for MobileBroadbandModemIsolation {}
 impl MobileBroadbandModemIsolation {
     #[inline] pub fn create(modemDeviceId: &HStringArg, ruleGroupId: &HStringArg) -> Result<ComPtr<MobileBroadbandModemIsolation>> {
@@ -4123,7 +4123,7 @@ impl IMobileBroadbandModemStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MobileBroadbandModemStatus: i32 {
+RT_ENUM! { enum MobileBroadbandModemStatus: i32 ["Windows.Networking.NetworkOperators.MobileBroadbandModemStatus"] {
     Success (MobileBroadbandModemStatus_Success) = 0, OtherFailure (MobileBroadbandModemStatus_OtherFailure) = 1, Busy (MobileBroadbandModemStatus_Busy) = 2, NoDeviceSupport (MobileBroadbandModemStatus_NoDeviceSupport) = 3,
 }}
 DEFINE_IID!(IID_IMobileBroadbandNetwork, 3412300428, 777, 19638, 168, 193, 106, 90, 60, 142, 31, 246);
@@ -4190,7 +4190,7 @@ impl IMobileBroadbandNetwork {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandNetwork: IMobileBroadbandNetwork}
+RT_CLASS!{class MobileBroadbandNetwork: IMobileBroadbandNetwork ["Windows.Networking.NetworkOperators.MobileBroadbandNetwork"]}
 DEFINE_IID!(IID_IMobileBroadbandNetwork2, 1515576098, 25335, 19421, 186, 29, 71, 116, 65, 150, 11, 160);
 RT_INTERFACE!{interface IMobileBroadbandNetwork2(IMobileBroadbandNetwork2Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandNetwork2] {
     fn GetVoiceCallSupportAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
@@ -4236,7 +4236,7 @@ impl IMobileBroadbandNetworkRegistrationStateChange {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandNetworkRegistrationStateChange: IMobileBroadbandNetworkRegistrationStateChange}
+RT_CLASS!{class MobileBroadbandNetworkRegistrationStateChange: IMobileBroadbandNetworkRegistrationStateChange ["Windows.Networking.NetworkOperators.MobileBroadbandNetworkRegistrationStateChange"]}
 DEFINE_IID!(IID_IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails, 2299747583, 10424, 18090, 177, 55, 28, 75, 15, 33, 237, 254);
 RT_INTERFACE!{interface IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails(IMobileBroadbandNetworkRegistrationStateChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails] {
     fn get_NetworkRegistrationStateChanges(&self, out: *mut *mut foundation::collections::IVectorView<MobileBroadbandNetworkRegistrationStateChange>) -> HRESULT
@@ -4248,7 +4248,7 @@ impl IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandNetworkRegistrationStateChangeTriggerDetails: IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails}
+RT_CLASS!{class MobileBroadbandNetworkRegistrationStateChangeTriggerDetails: IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails ["Windows.Networking.NetworkOperators.MobileBroadbandNetworkRegistrationStateChangeTriggerDetails"]}
 DEFINE_IID!(IID_IMobileBroadbandPco, 3571776702, 58275, 17349, 168, 123, 108, 134, 210, 41, 215, 250);
 RT_INTERFACE!{interface IMobileBroadbandPco(IMobileBroadbandPcoVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPco] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -4273,7 +4273,7 @@ impl IMobileBroadbandPco {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandPco: IMobileBroadbandPco}
+RT_CLASS!{class MobileBroadbandPco: IMobileBroadbandPco ["Windows.Networking.NetworkOperators.MobileBroadbandPco"]}
 DEFINE_IID!(IID_IMobileBroadbandPcoDataChangeTriggerDetails, 641683732, 25824, 17555, 144, 155, 45, 20, 160, 25, 98, 177);
 RT_INTERFACE!{interface IMobileBroadbandPcoDataChangeTriggerDetails(IMobileBroadbandPcoDataChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPcoDataChangeTriggerDetails] {
     fn get_UpdatedData(&self, out: *mut *mut MobileBroadbandPco) -> HRESULT
@@ -4285,7 +4285,7 @@ impl IMobileBroadbandPcoDataChangeTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandPcoDataChangeTriggerDetails: IMobileBroadbandPcoDataChangeTriggerDetails}
+RT_CLASS!{class MobileBroadbandPcoDataChangeTriggerDetails: IMobileBroadbandPcoDataChangeTriggerDetails ["Windows.Networking.NetworkOperators.MobileBroadbandPcoDataChangeTriggerDetails"]}
 DEFINE_IID!(IID_IMobileBroadbandPin, 3865171721, 59257, 17855, 130, 129, 117, 50, 61, 249, 227, 33);
 RT_INTERFACE!{interface IMobileBroadbandPin(IMobileBroadbandPinVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPin] {
     fn get_Type(&self, out: *mut MobileBroadbandPinType) -> HRESULT,
@@ -4363,11 +4363,11 @@ impl IMobileBroadbandPin {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandPin: IMobileBroadbandPin}
-RT_ENUM! { enum MobileBroadbandPinFormat: i32 {
+RT_CLASS!{class MobileBroadbandPin: IMobileBroadbandPin ["Windows.Networking.NetworkOperators.MobileBroadbandPin"]}
+RT_ENUM! { enum MobileBroadbandPinFormat: i32 ["Windows.Networking.NetworkOperators.MobileBroadbandPinFormat"] {
     Unknown (MobileBroadbandPinFormat_Unknown) = 0, Numeric (MobileBroadbandPinFormat_Numeric) = 1, Alphanumeric (MobileBroadbandPinFormat_Alphanumeric) = 2,
 }}
-RT_ENUM! { enum MobileBroadbandPinLockState: i32 {
+RT_ENUM! { enum MobileBroadbandPinLockState: i32 ["Windows.Networking.NetworkOperators.MobileBroadbandPinLockState"] {
     Unknown (MobileBroadbandPinLockState_Unknown) = 0, Unlocked (MobileBroadbandPinLockState_Unlocked) = 1, PinRequired (MobileBroadbandPinLockState_PinRequired) = 2, PinUnblockKeyRequired (MobileBroadbandPinLockState_PinUnblockKeyRequired) = 3,
 }}
 DEFINE_IID!(IID_IMobileBroadbandPinLockStateChange, 3189139262, 7940, 20373, 139, 144, 231, 245, 89, 221, 231, 229);
@@ -4393,7 +4393,7 @@ impl IMobileBroadbandPinLockStateChange {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandPinLockStateChange: IMobileBroadbandPinLockStateChange}
+RT_CLASS!{class MobileBroadbandPinLockStateChange: IMobileBroadbandPinLockStateChange ["Windows.Networking.NetworkOperators.MobileBroadbandPinLockStateChange"]}
 DEFINE_IID!(IID_IMobileBroadbandPinLockStateChangeTriggerDetails, 3543711889, 16017, 19768, 144, 54, 174, 232, 58, 110, 121, 173);
 RT_INTERFACE!{interface IMobileBroadbandPinLockStateChangeTriggerDetails(IMobileBroadbandPinLockStateChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPinLockStateChangeTriggerDetails] {
     fn get_PinLockStateChanges(&self, out: *mut *mut foundation::collections::IVectorView<MobileBroadbandPinLockStateChange>) -> HRESULT
@@ -4405,7 +4405,7 @@ impl IMobileBroadbandPinLockStateChangeTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandPinLockStateChangeTriggerDetails: IMobileBroadbandPinLockStateChangeTriggerDetails}
+RT_CLASS!{class MobileBroadbandPinLockStateChangeTriggerDetails: IMobileBroadbandPinLockStateChangeTriggerDetails ["Windows.Networking.NetworkOperators.MobileBroadbandPinLockStateChangeTriggerDetails"]}
 DEFINE_IID!(IID_IMobileBroadbandPinManager, 2203483869, 28191, 19355, 164, 19, 43, 31, 80, 204, 54, 223);
 RT_INTERFACE!{interface IMobileBroadbandPinManager(IMobileBroadbandPinManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPinManager] {
     fn get_SupportedPins(&self, out: *mut *mut foundation::collections::IVectorView<MobileBroadbandPinType>) -> HRESULT,
@@ -4423,7 +4423,7 @@ impl IMobileBroadbandPinManager {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandPinManager: IMobileBroadbandPinManager}
+RT_CLASS!{class MobileBroadbandPinManager: IMobileBroadbandPinManager ["Windows.Networking.NetworkOperators.MobileBroadbandPinManager"]}
 DEFINE_IID!(IID_IMobileBroadbandPinOperationResult, 299752498, 12775, 18933, 182, 99, 18, 61, 59, 239, 3, 98);
 RT_INTERFACE!{interface IMobileBroadbandPinOperationResult(IMobileBroadbandPinOperationResultVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPinOperationResult] {
     fn get_IsSuccessful(&self, out: *mut bool) -> HRESULT,
@@ -4441,11 +4441,11 @@ impl IMobileBroadbandPinOperationResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandPinOperationResult: IMobileBroadbandPinOperationResult}
-RT_ENUM! { enum MobileBroadbandPinType: i32 {
+RT_CLASS!{class MobileBroadbandPinOperationResult: IMobileBroadbandPinOperationResult ["Windows.Networking.NetworkOperators.MobileBroadbandPinOperationResult"]}
+RT_ENUM! { enum MobileBroadbandPinType: i32 ["Windows.Networking.NetworkOperators.MobileBroadbandPinType"] {
     None (MobileBroadbandPinType_None) = 0, Custom (MobileBroadbandPinType_Custom) = 1, Pin1 (MobileBroadbandPinType_Pin1) = 2, Pin2 (MobileBroadbandPinType_Pin2) = 3, SimPin (MobileBroadbandPinType_SimPin) = 4, FirstSimPin (MobileBroadbandPinType_FirstSimPin) = 5, NetworkPin (MobileBroadbandPinType_NetworkPin) = 6, NetworkSubsetPin (MobileBroadbandPinType_NetworkSubsetPin) = 7, ServiceProviderPin (MobileBroadbandPinType_ServiceProviderPin) = 8, CorporatePin (MobileBroadbandPinType_CorporatePin) = 9, SubsidyLock (MobileBroadbandPinType_SubsidyLock) = 10,
 }}
-RT_ENUM! { enum MobileBroadbandRadioState: i32 {
+RT_ENUM! { enum MobileBroadbandRadioState: i32 ["Windows.Networking.NetworkOperators.MobileBroadbandRadioState"] {
     Off (MobileBroadbandRadioState_Off) = 0, On (MobileBroadbandRadioState_On) = 1,
 }}
 DEFINE_IID!(IID_IMobileBroadbandRadioStateChange, 2958337377, 38963, 19181, 151, 23, 67, 72, 178, 26, 36, 179);
@@ -4465,7 +4465,7 @@ impl IMobileBroadbandRadioStateChange {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandRadioStateChange: IMobileBroadbandRadioStateChange}
+RT_CLASS!{class MobileBroadbandRadioStateChange: IMobileBroadbandRadioStateChange ["Windows.Networking.NetworkOperators.MobileBroadbandRadioStateChange"]}
 DEFINE_IID!(IID_IMobileBroadbandRadioStateChangeTriggerDetails, 1898977998, 2364, 17094, 176, 219, 173, 31, 117, 166, 84, 69);
 RT_INTERFACE!{interface IMobileBroadbandRadioStateChangeTriggerDetails(IMobileBroadbandRadioStateChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandRadioStateChangeTriggerDetails] {
     fn get_RadioStateChanges(&self, out: *mut *mut foundation::collections::IVectorView<MobileBroadbandRadioStateChange>) -> HRESULT
@@ -4477,7 +4477,7 @@ impl IMobileBroadbandRadioStateChangeTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandRadioStateChangeTriggerDetails: IMobileBroadbandRadioStateChangeTriggerDetails}
+RT_CLASS!{class MobileBroadbandRadioStateChangeTriggerDetails: IMobileBroadbandRadioStateChangeTriggerDetails ["Windows.Networking.NetworkOperators.MobileBroadbandRadioStateChangeTriggerDetails"]}
 DEFINE_IID!(IID_IMobileBroadbandSarManager, 3853674547, 38526, 16585, 164, 133, 25, 192, 221, 32, 158, 34);
 RT_INTERFACE!{interface IMobileBroadbandSarManager(IMobileBroadbandSarManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandSarManager] {
     fn get_IsBackoffEnabled(&self, out: *mut bool) -> HRESULT,
@@ -4570,7 +4570,7 @@ impl IMobileBroadbandSarManager {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandSarManager: IMobileBroadbandSarManager}
+RT_CLASS!{class MobileBroadbandSarManager: IMobileBroadbandSarManager ["Windows.Networking.NetworkOperators.MobileBroadbandSarManager"]}
 DEFINE_IID!(IID_IMobileBroadbandTransmissionStateChangedEventArgs, 1630419061, 1034, 20377, 164, 249, 97, 215, 195, 45, 161, 41);
 RT_INTERFACE!{interface IMobileBroadbandTransmissionStateChangedEventArgs(IMobileBroadbandTransmissionStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandTransmissionStateChangedEventArgs] {
     fn get_IsTransmitting(&self, out: *mut bool) -> HRESULT
@@ -4582,7 +4582,7 @@ impl IMobileBroadbandTransmissionStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandTransmissionStateChangedEventArgs: IMobileBroadbandTransmissionStateChangedEventArgs}
+RT_CLASS!{class MobileBroadbandTransmissionStateChangedEventArgs: IMobileBroadbandTransmissionStateChangedEventArgs ["Windows.Networking.NetworkOperators.MobileBroadbandTransmissionStateChangedEventArgs"]}
 DEFINE_IID!(IID_IMobileBroadbandUicc, 3862230673, 21082, 19682, 143, 206, 170, 65, 98, 87, 145, 84);
 RT_INTERFACE!{interface IMobileBroadbandUicc(IMobileBroadbandUiccVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandUicc] {
     fn get_SimIccId(&self, out: *mut HSTRING) -> HRESULT,
@@ -4600,7 +4600,7 @@ impl IMobileBroadbandUicc {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandUicc: IMobileBroadbandUicc}
+RT_CLASS!{class MobileBroadbandUicc: IMobileBroadbandUicc ["Windows.Networking.NetworkOperators.MobileBroadbandUicc"]}
 DEFINE_IID!(IID_IMobileBroadbandUiccApp, 1293354326, 39073, 17373, 178, 236, 80, 201, 12, 242, 72, 223);
 RT_INTERFACE!{interface IMobileBroadbandUiccApp(IMobileBroadbandUiccAppVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandUiccApp] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -4631,8 +4631,8 @@ impl IMobileBroadbandUiccApp {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandUiccApp: IMobileBroadbandUiccApp}
-RT_ENUM! { enum MobileBroadbandUiccAppOperationStatus: i32 {
+RT_CLASS!{class MobileBroadbandUiccApp: IMobileBroadbandUiccApp ["Windows.Networking.NetworkOperators.MobileBroadbandUiccApp"]}
+RT_ENUM! { enum MobileBroadbandUiccAppOperationStatus: i32 ["Windows.Networking.NetworkOperators.MobileBroadbandUiccAppOperationStatus"] {
     Success (MobileBroadbandUiccAppOperationStatus_Success) = 0, InvalidUiccFilePath (MobileBroadbandUiccAppOperationStatus_InvalidUiccFilePath) = 1, AccessConditionNotHeld (MobileBroadbandUiccAppOperationStatus_AccessConditionNotHeld) = 2, UiccBusy (MobileBroadbandUiccAppOperationStatus_UiccBusy) = 3,
 }}
 DEFINE_IID!(IID_IMobileBroadbandUiccAppReadRecordResult, 1690915461, 13710, 18373, 130, 73, 105, 95, 56, 59, 43, 219);
@@ -4652,7 +4652,7 @@ impl IMobileBroadbandUiccAppReadRecordResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandUiccAppReadRecordResult: IMobileBroadbandUiccAppReadRecordResult}
+RT_CLASS!{class MobileBroadbandUiccAppReadRecordResult: IMobileBroadbandUiccAppReadRecordResult ["Windows.Networking.NetworkOperators.MobileBroadbandUiccAppReadRecordResult"]}
 DEFINE_IID!(IID_IMobileBroadbandUiccAppRecordDetailsResult, 3642320943, 48660, 18740, 152, 29, 47, 87, 185, 237, 131, 230);
 RT_INTERFACE!{interface IMobileBroadbandUiccAppRecordDetailsResult(IMobileBroadbandUiccAppRecordDetailsResultVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandUiccAppRecordDetailsResult] {
     fn get_Status(&self, out: *mut MobileBroadbandUiccAppOperationStatus) -> HRESULT,
@@ -4694,7 +4694,7 @@ impl IMobileBroadbandUiccAppRecordDetailsResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandUiccAppRecordDetailsResult: IMobileBroadbandUiccAppRecordDetailsResult}
+RT_CLASS!{class MobileBroadbandUiccAppRecordDetailsResult: IMobileBroadbandUiccAppRecordDetailsResult ["Windows.Networking.NetworkOperators.MobileBroadbandUiccAppRecordDetailsResult"]}
 DEFINE_IID!(IID_IMobileBroadbandUiccAppsResult, 1950953707, 33111, 19009, 132, 148, 107, 245, 76, 155, 29, 43);
 RT_INTERFACE!{interface IMobileBroadbandUiccAppsResult(IMobileBroadbandUiccAppsResultVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandUiccAppsResult] {
     fn get_Status(&self, out: *mut MobileBroadbandUiccAppOperationStatus) -> HRESULT,
@@ -4712,11 +4712,11 @@ impl IMobileBroadbandUiccAppsResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MobileBroadbandUiccAppsResult: IMobileBroadbandUiccAppsResult}
-RT_ENUM! { enum NetworkDeviceStatus: i32 {
+RT_CLASS!{class MobileBroadbandUiccAppsResult: IMobileBroadbandUiccAppsResult ["Windows.Networking.NetworkOperators.MobileBroadbandUiccAppsResult"]}
+RT_ENUM! { enum NetworkDeviceStatus: i32 ["Windows.Networking.NetworkOperators.NetworkDeviceStatus"] {
     DeviceNotReady (NetworkDeviceStatus_DeviceNotReady) = 0, DeviceReady (NetworkDeviceStatus_DeviceReady) = 1, SimNotInserted (NetworkDeviceStatus_SimNotInserted) = 2, BadSim (NetworkDeviceStatus_BadSim) = 3, DeviceHardwareFailure (NetworkDeviceStatus_DeviceHardwareFailure) = 4, AccountNotActivated (NetworkDeviceStatus_AccountNotActivated) = 5, DeviceLocked (NetworkDeviceStatus_DeviceLocked) = 6, DeviceBlocked (NetworkDeviceStatus_DeviceBlocked) = 7,
 }}
-RT_ENUM! { enum NetworkOperatorDataUsageNotificationKind: i32 {
+RT_ENUM! { enum NetworkOperatorDataUsageNotificationKind: i32 ["Windows.Networking.NetworkOperators.NetworkOperatorDataUsageNotificationKind"] {
     DataUsageProgress (NetworkOperatorDataUsageNotificationKind_DataUsageProgress) = 0,
 }}
 DEFINE_IID!(IID_INetworkOperatorDataUsageTriggerDetails, 1357058669, 42085, 20203, 147, 23, 40, 161, 103, 99, 12, 234);
@@ -4730,8 +4730,8 @@ impl INetworkOperatorDataUsageTriggerDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NetworkOperatorDataUsageTriggerDetails: INetworkOperatorDataUsageTriggerDetails}
-RT_ENUM! { enum NetworkOperatorEventMessageType: i32 {
+RT_CLASS!{class NetworkOperatorDataUsageTriggerDetails: INetworkOperatorDataUsageTriggerDetails ["Windows.Networking.NetworkOperators.NetworkOperatorDataUsageTriggerDetails"]}
+RT_ENUM! { enum NetworkOperatorEventMessageType: i32 ["Windows.Networking.NetworkOperators.NetworkOperatorEventMessageType"] {
     Gsm (NetworkOperatorEventMessageType_Gsm) = 0, Cdma (NetworkOperatorEventMessageType_Cdma) = 1, Ussd (NetworkOperatorEventMessageType_Ussd) = 2, DataPlanThresholdReached (NetworkOperatorEventMessageType_DataPlanThresholdReached) = 3, DataPlanReset (NetworkOperatorEventMessageType_DataPlanReset) = 4, DataPlanDeleted (NetworkOperatorEventMessageType_DataPlanDeleted) = 5, ProfileConnected (NetworkOperatorEventMessageType_ProfileConnected) = 6, ProfileDisconnected (NetworkOperatorEventMessageType_ProfileDisconnected) = 7, RegisteredRoaming (NetworkOperatorEventMessageType_RegisteredRoaming) = 8, RegisteredHome (NetworkOperatorEventMessageType_RegisteredHome) = 9, TetheringEntitlementCheck (NetworkOperatorEventMessageType_TetheringEntitlementCheck) = 10, TetheringOperationalStateChanged (NetworkOperatorEventMessageType_TetheringOperationalStateChanged) = 11, TetheringNumberOfClientsChanged (NetworkOperatorEventMessageType_TetheringNumberOfClientsChanged) = 12,
 }}
 DEFINE_IID!(IID_INetworkOperatorNotificationEventDetails, 3160975825, 33505, 17544, 159, 44, 18, 118, 194, 70, 143, 172);
@@ -4775,7 +4775,7 @@ impl INetworkOperatorNotificationEventDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NetworkOperatorNotificationEventDetails: INetworkOperatorNotificationEventDetails}
+RT_CLASS!{class NetworkOperatorNotificationEventDetails: INetworkOperatorNotificationEventDetails ["Windows.Networking.NetworkOperators.NetworkOperatorNotificationEventDetails"]}
 DEFINE_IID!(IID_INetworkOperatorTetheringAccessPointConfiguration, 197919364, 16686, 16445, 172, 198, 183, 87, 227, 71, 116, 164);
 RT_INTERFACE!{interface INetworkOperatorTetheringAccessPointConfiguration(INetworkOperatorTetheringAccessPointConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringAccessPointConfiguration] {
     fn get_Ssid(&self, out: *mut HSTRING) -> HRESULT,
@@ -4803,7 +4803,7 @@ impl INetworkOperatorTetheringAccessPointConfiguration {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NetworkOperatorTetheringAccessPointConfiguration: INetworkOperatorTetheringAccessPointConfiguration}
+RT_CLASS!{class NetworkOperatorTetheringAccessPointConfiguration: INetworkOperatorTetheringAccessPointConfiguration ["Windows.Networking.NetworkOperators.NetworkOperatorTetheringAccessPointConfiguration"]}
 impl RtActivatable<IActivationFactory> for NetworkOperatorTetheringAccessPointConfiguration {}
 DEFINE_CLSID!(NetworkOperatorTetheringAccessPointConfiguration(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,84,101,116,104,101,114,105,110,103,65,99,99,101,115,115,80,111,105,110,116,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_NetworkOperatorTetheringAccessPointConfiguration]);
 DEFINE_IID!(IID_INetworkOperatorTetheringClient, 1889346892, 22879, 18503, 187, 48, 100, 105, 53, 84, 41, 24);
@@ -4823,7 +4823,7 @@ impl INetworkOperatorTetheringClient {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NetworkOperatorTetheringClient: INetworkOperatorTetheringClient}
+RT_CLASS!{class NetworkOperatorTetheringClient: INetworkOperatorTetheringClient ["Windows.Networking.NetworkOperators.NetworkOperatorTetheringClient"]}
 DEFINE_IID!(IID_INetworkOperatorTetheringClientManager, 2444312598, 36298, 16933, 187, 237, 238, 248, 184, 215, 24, 215);
 RT_INTERFACE!{interface INetworkOperatorTetheringClientManager(INetworkOperatorTetheringClientManagerVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringClientManager] {
     fn GetTetheringClients(&self, out: *mut *mut foundation::collections::IVectorView<NetworkOperatorTetheringClient>) -> HRESULT
@@ -4892,7 +4892,7 @@ impl INetworkOperatorTetheringManager {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NetworkOperatorTetheringManager: INetworkOperatorTetheringManager}
+RT_CLASS!{class NetworkOperatorTetheringManager: INetworkOperatorTetheringManager ["Windows.Networking.NetworkOperators.NetworkOperatorTetheringManager"]}
 impl RtActivatable<INetworkOperatorTetheringManagerStatics> for NetworkOperatorTetheringManager {}
 impl RtActivatable<INetworkOperatorTetheringManagerStatics2> for NetworkOperatorTetheringManager {}
 impl RtActivatable<INetworkOperatorTetheringManagerStatics3> for NetworkOperatorTetheringManager {}
@@ -4976,14 +4976,14 @@ impl INetworkOperatorTetheringOperationResult {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class NetworkOperatorTetheringOperationResult: INetworkOperatorTetheringOperationResult}
-RT_ENUM! { enum NetworkRegistrationState: i32 {
+RT_CLASS!{class NetworkOperatorTetheringOperationResult: INetworkOperatorTetheringOperationResult ["Windows.Networking.NetworkOperators.NetworkOperatorTetheringOperationResult"]}
+RT_ENUM! { enum NetworkRegistrationState: i32 ["Windows.Networking.NetworkOperators.NetworkRegistrationState"] {
     None (NetworkRegistrationState_None) = 0, Deregistered (NetworkRegistrationState_Deregistered) = 1, Searching (NetworkRegistrationState_Searching) = 2, Home (NetworkRegistrationState_Home) = 3, Roaming (NetworkRegistrationState_Roaming) = 4, Partner (NetworkRegistrationState_Partner) = 5, Denied (NetworkRegistrationState_Denied) = 6,
 }}
-RT_ENUM! { enum ProfileMediaType: i32 {
+RT_ENUM! { enum ProfileMediaType: i32 ["Windows.Networking.NetworkOperators.ProfileMediaType"] {
     Wlan (ProfileMediaType_Wlan) = 0, Wwan (ProfileMediaType_Wwan) = 1,
 }}
-RT_STRUCT! { struct ProfileUsage {
+RT_STRUCT! { struct ProfileUsage ["Windows.Networking.NetworkOperators.ProfileUsage"] {
     UsageInMegabytes: u32, LastSyncTime: foundation::DateTime,
 }}
 DEFINE_IID!(IID_IProvisionedProfile, 561447136, 33282, 4575, 173, 185, 244, 206, 70, 45, 145, 55);
@@ -5001,7 +5001,7 @@ impl IProvisionedProfile {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProvisionedProfile: IProvisionedProfile}
+RT_CLASS!{class ProvisionedProfile: IProvisionedProfile ["Windows.Networking.NetworkOperators.ProvisionedProfile"]}
 DEFINE_IID!(IID_IProvisionFromXmlDocumentResults, 561447136, 33283, 4575, 173, 185, 244, 206, 70, 45, 145, 55);
 RT_INTERFACE!{interface IProvisionFromXmlDocumentResults(IProvisionFromXmlDocumentResultsVtbl): IInspectable(IInspectableVtbl) [IID_IProvisionFromXmlDocumentResults] {
     fn get_AllElementsProvisioned(&self, out: *mut bool) -> HRESULT,
@@ -5019,7 +5019,7 @@ impl IProvisionFromXmlDocumentResults {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProvisionFromXmlDocumentResults: IProvisionFromXmlDocumentResults}
+RT_CLASS!{class ProvisionFromXmlDocumentResults: IProvisionFromXmlDocumentResults ["Windows.Networking.NetworkOperators.ProvisionFromXmlDocumentResults"]}
 DEFINE_IID!(IID_IProvisioningAgent, 561447136, 33281, 4575, 173, 185, 244, 206, 70, 45, 145, 55);
 RT_INTERFACE!{interface IProvisioningAgent(IProvisioningAgentVtbl): IInspectable(IInspectableVtbl) [IID_IProvisioningAgent] {
     fn ProvisionFromXmlDocumentAsync(&self, provisioningXmlDocument: HSTRING, out: *mut *mut foundation::IAsyncOperation<ProvisionFromXmlDocumentResults>) -> HRESULT,
@@ -5037,7 +5037,7 @@ impl IProvisioningAgent {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProvisioningAgent: IProvisioningAgent}
+RT_CLASS!{class ProvisioningAgent: IProvisioningAgent ["Windows.Networking.NetworkOperators.ProvisioningAgent"]}
 impl RtActivatable<IProvisioningAgentStaticMethods> for ProvisioningAgent {}
 impl RtActivatable<IActivationFactory> for ProvisioningAgent {}
 impl ProvisioningAgent {
@@ -5057,7 +5057,7 @@ impl IProvisioningAgentStaticMethods {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum TetheringCapability: i32 {
+RT_ENUM! { enum TetheringCapability: i32 ["Windows.Networking.NetworkOperators.TetheringCapability"] {
     Enabled (TetheringCapability_Enabled) = 0, DisabledByGroupPolicy (TetheringCapability_DisabledByGroupPolicy) = 1, DisabledByHardwareLimitation (TetheringCapability_DisabledByHardwareLimitation) = 2, DisabledByOperator (TetheringCapability_DisabledByOperator) = 3, DisabledBySku (TetheringCapability_DisabledBySku) = 4, DisabledByRequiredAppNotInstalled (TetheringCapability_DisabledByRequiredAppNotInstalled) = 5, DisabledDueToUnknownCause (TetheringCapability_DisabledDueToUnknownCause) = 6, DisabledBySystemCapability (TetheringCapability_DisabledBySystemCapability) = 7,
 }}
 DEFINE_IID!(IID_ITetheringEntitlementCheckTriggerDetails, 63331997, 22822, 16883, 169, 78, 181, 9, 38, 252, 66, 27);
@@ -5081,20 +5081,20 @@ impl ITetheringEntitlementCheckTriggerDetails {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TetheringEntitlementCheckTriggerDetails: ITetheringEntitlementCheckTriggerDetails}
-RT_ENUM! { enum TetheringOperationalState: i32 {
+RT_CLASS!{class TetheringEntitlementCheckTriggerDetails: ITetheringEntitlementCheckTriggerDetails ["Windows.Networking.NetworkOperators.TetheringEntitlementCheckTriggerDetails"]}
+RT_ENUM! { enum TetheringOperationalState: i32 ["Windows.Networking.NetworkOperators.TetheringOperationalState"] {
     Unknown (TetheringOperationalState_Unknown) = 0, On (TetheringOperationalState_On) = 1, Off (TetheringOperationalState_Off) = 2, InTransition (TetheringOperationalState_InTransition) = 3,
 }}
-RT_ENUM! { enum TetheringOperationStatus: i32 {
+RT_ENUM! { enum TetheringOperationStatus: i32 ["Windows.Networking.NetworkOperators.TetheringOperationStatus"] {
     Success (TetheringOperationStatus_Success) = 0, Unknown (TetheringOperationStatus_Unknown) = 1, MobileBroadbandDeviceOff (TetheringOperationStatus_MobileBroadbandDeviceOff) = 2, WiFiDeviceOff (TetheringOperationStatus_WiFiDeviceOff) = 3, EntitlementCheckTimeout (TetheringOperationStatus_EntitlementCheckTimeout) = 4, EntitlementCheckFailure (TetheringOperationStatus_EntitlementCheckFailure) = 5, OperationInProgress (TetheringOperationStatus_OperationInProgress) = 6, BluetoothDeviceOff (TetheringOperationStatus_BluetoothDeviceOff) = 7, NetworkLimitedConnectivity (TetheringOperationStatus_NetworkLimitedConnectivity) = 8,
 }}
-RT_ENUM! { enum UiccAccessCondition: i32 {
+RT_ENUM! { enum UiccAccessCondition: i32 ["Windows.Networking.NetworkOperators.UiccAccessCondition"] {
     AlwaysAllowed (UiccAccessCondition_AlwaysAllowed) = 0, Pin1 (UiccAccessCondition_Pin1) = 1, Pin2 (UiccAccessCondition_Pin2) = 2, Pin3 (UiccAccessCondition_Pin3) = 3, Pin4 (UiccAccessCondition_Pin4) = 4, Administrative5 (UiccAccessCondition_Administrative5) = 5, Administrative6 (UiccAccessCondition_Administrative6) = 6, NeverAllowed (UiccAccessCondition_NeverAllowed) = 7,
 }}
-RT_ENUM! { enum UiccAppKind: i32 {
+RT_ENUM! { enum UiccAppKind: i32 ["Windows.Networking.NetworkOperators.UiccAppKind"] {
     Unknown (UiccAppKind_Unknown) = 0, MF (UiccAppKind_MF) = 1, MFSim (UiccAppKind_MFSim) = 2, MFRuim (UiccAppKind_MFRuim) = 3, USim (UiccAppKind_USim) = 4, CSim (UiccAppKind_CSim) = 5, ISim (UiccAppKind_ISim) = 6,
 }}
-RT_ENUM! { enum UiccAppRecordKind: i32 {
+RT_ENUM! { enum UiccAppRecordKind: i32 ["Windows.Networking.NetworkOperators.UiccAppRecordKind"] {
     Unknown (UiccAppRecordKind_Unknown) = 0, Transparent (UiccAppRecordKind_Transparent) = 1, RecordOriented (UiccAppRecordKind_RecordOriented) = 2,
 }}
 DEFINE_IID!(IID_IUssdMessage, 798674818, 8196, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
@@ -5135,7 +5135,7 @@ impl IUssdMessage {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UssdMessage: IUssdMessage}
+RT_CLASS!{class UssdMessage: IUssdMessage ["Windows.Networking.NetworkOperators.UssdMessage"]}
 impl RtActivatable<IUssdMessageFactory> for UssdMessage {}
 impl UssdMessage {
     #[inline] pub fn create_message(messageText: &HStringArg) -> Result<ComPtr<UssdMessage>> {
@@ -5171,8 +5171,8 @@ impl IUssdReply {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UssdReply: IUssdReply}
-RT_ENUM! { enum UssdResultCode: i32 {
+RT_CLASS!{class UssdReply: IUssdReply ["Windows.Networking.NetworkOperators.UssdReply"]}
+RT_ENUM! { enum UssdResultCode: i32 ["Windows.Networking.NetworkOperators.UssdResultCode"] {
     NoActionRequired (UssdResultCode_NoActionRequired) = 0, ActionRequired (UssdResultCode_ActionRequired) = 1, Terminated (UssdResultCode_Terminated) = 2, OtherLocalClient (UssdResultCode_OtherLocalClient) = 3, OperationNotSupported (UssdResultCode_OperationNotSupported) = 4, NetworkTimeout (UssdResultCode_NetworkTimeout) = 5,
 }}
 DEFINE_IID!(IID_IUssdSession, 798674818, 8194, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
@@ -5191,7 +5191,7 @@ impl IUssdSession {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class UssdSession: IUssdSession}
+RT_CLASS!{class UssdSession: IUssdSession ["Windows.Networking.NetworkOperators.UssdSession"]}
 impl RtActivatable<IUssdSessionStatics> for UssdSession {}
 impl UssdSession {
     #[inline] pub fn create_from_network_account_id(networkAccountId: &HStringArg) -> Result<Option<ComPtr<UssdSession>>> {
@@ -5233,7 +5233,7 @@ impl IConnectionRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ConnectionRequestedEventArgs: IConnectionRequestedEventArgs}
+RT_CLASS!{class ConnectionRequestedEventArgs: IConnectionRequestedEventArgs ["Windows.Networking.Proximity.ConnectionRequestedEventArgs"]}
 DEFINE_IID!(IID_DeviceArrivedEventHandler, 4020886121, 63201, 18889, 164, 158, 142, 15, 197, 143, 185, 17);
 RT_DELEGATE!{delegate DeviceArrivedEventHandler(DeviceArrivedEventHandlerVtbl, DeviceArrivedEventHandlerImpl) [IID_DeviceArrivedEventHandler] {
     fn Invoke(&self, sender: *mut ProximityDevice) -> HRESULT
@@ -5274,7 +5274,7 @@ impl MessageTransmittedHandler {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PeerDiscoveryTypes: u32 {
+RT_ENUM! { enum PeerDiscoveryTypes: u32 ["Windows.Networking.Proximity.PeerDiscoveryTypes"] {
     None (PeerDiscoveryTypes_None) = 0, Browse (PeerDiscoveryTypes_Browse) = 1, Triggered (PeerDiscoveryTypes_Triggered) = 2,
 }}
 RT_CLASS!{static class PeerFinder}
@@ -5511,7 +5511,7 @@ impl IPeerInformation {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PeerInformation: IPeerInformation}
+RT_CLASS!{class PeerInformation: IPeerInformation ["Windows.Networking.Proximity.PeerInformation"]}
 DEFINE_IID!(IID_IPeerInformation3, 2987352362, 56272, 16632, 149, 189, 45, 66, 9, 199, 131, 111);
 RT_INTERFACE!{interface IPeerInformation3(IPeerInformation3Vtbl): IInspectable(IInspectableVtbl) [IID_IPeerInformation3] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -5546,7 +5546,7 @@ impl IPeerInformationWithHostAndService {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum PeerRole: i32 {
+RT_ENUM! { enum PeerRole: i32 ["Windows.Networking.Proximity.PeerRole"] {
     Peer (PeerRole_Peer) = 0, Host (PeerRole_Host) = 1, Client (PeerRole_Client) = 2,
 }}
 DEFINE_IID!(IID_IPeerWatcher, 1022239224, 12198, 18041, 150, 145, 3, 201, 74, 66, 15, 52);
@@ -5625,8 +5625,8 @@ impl IPeerWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PeerWatcher: IPeerWatcher}
-RT_ENUM! { enum PeerWatcherStatus: i32 {
+RT_CLASS!{class PeerWatcher: IPeerWatcher ["Windows.Networking.Proximity.PeerWatcher"]}
+RT_ENUM! { enum PeerWatcherStatus: i32 ["Windows.Networking.Proximity.PeerWatcherStatus"] {
     Created (PeerWatcherStatus_Created) = 0, Started (PeerWatcherStatus_Started) = 1, EnumerationCompleted (PeerWatcherStatus_EnumerationCompleted) = 2, Stopping (PeerWatcherStatus_Stopping) = 3, Stopped (PeerWatcherStatus_Stopped) = 4, Aborted (PeerWatcherStatus_Aborted) = 5,
 }}
 DEFINE_IID!(IID_IProximityDevice, 4020806994, 63201, 17193, 160, 252, 171, 107, 15, 210, 130, 98);
@@ -5728,7 +5728,7 @@ impl IProximityDevice {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProximityDevice: IProximityDevice}
+RT_CLASS!{class ProximityDevice: IProximityDevice ["Windows.Networking.Proximity.ProximityDevice"]}
 impl RtActivatable<IProximityDeviceStatics> for ProximityDevice {}
 impl ProximityDevice {
     #[inline] pub fn get_device_selector() -> Result<HString> {
@@ -5795,7 +5795,7 @@ impl IProximityMessage {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ProximityMessage: IProximityMessage}
+RT_CLASS!{class ProximityMessage: IProximityMessage ["Windows.Networking.Proximity.ProximityMessage"]}
 DEFINE_IID!(IID_ITriggeredConnectionStateChangedEventArgs, 3332866221, 63201, 19796, 150, 226, 51, 246, 32, 188, 168, 138);
 RT_INTERFACE!{interface ITriggeredConnectionStateChangedEventArgs(ITriggeredConnectionStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITriggeredConnectionStateChangedEventArgs] {
     fn get_State(&self, out: *mut TriggeredConnectState) -> HRESULT,
@@ -5819,8 +5819,8 @@ impl ITriggeredConnectionStateChangedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class TriggeredConnectionStateChangedEventArgs: ITriggeredConnectionStateChangedEventArgs}
-RT_ENUM! { enum TriggeredConnectState: i32 {
+RT_CLASS!{class TriggeredConnectionStateChangedEventArgs: ITriggeredConnectionStateChangedEventArgs ["Windows.Networking.Proximity.TriggeredConnectionStateChangedEventArgs"]}
+RT_ENUM! { enum TriggeredConnectState: i32 ["Windows.Networking.Proximity.TriggeredConnectState"] {
     PeerFound (TriggeredConnectState_PeerFound) = 0, Listening (TriggeredConnectState_Listening) = 1, Connecting (TriggeredConnectState_Connecting) = 2, Completed (TriggeredConnectState_Completed) = 3, Canceled (TriggeredConnectState_Canceled) = 4, Failed (TriggeredConnectState_Failed) = 5,
 }}
 } // Windows.Networking.Proximity
@@ -5859,7 +5859,7 @@ impl IPushNotificationChannel {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PushNotificationChannel: IPushNotificationChannel}
+RT_CLASS!{class PushNotificationChannel: IPushNotificationChannel ["Windows.Networking.PushNotifications.PushNotificationChannel"]}
 RT_CLASS!{static class PushNotificationChannelManager}
 impl RtActivatable<IPushNotificationChannelManagerStatics> for PushNotificationChannelManager {}
 impl RtActivatable<IPushNotificationChannelManagerStatics2> for PushNotificationChannelManager {}
@@ -5911,7 +5911,7 @@ impl IPushNotificationChannelManagerForUser {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PushNotificationChannelManagerForUser: IPushNotificationChannelManagerForUser}
+RT_CLASS!{class PushNotificationChannelManagerForUser: IPushNotificationChannelManagerForUser ["Windows.Networking.PushNotifications.PushNotificationChannelManagerForUser"]}
 DEFINE_IID!(IID_IPushNotificationChannelManagerForUser2, 3280668266, 31937, 19884, 135, 253, 190, 110, 146, 4, 20, 164);
 RT_INTERFACE!{interface IPushNotificationChannelManagerForUser2(IPushNotificationChannelManagerForUser2Vtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerForUser2] {
     #[cfg(feature="windows-storage")] fn CreateRawPushNotificationChannelWithAlternateKeyForApplicationAsync(&self, appServerKey: *mut super::super::storage::streams::IBuffer, channelId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
@@ -6023,8 +6023,8 @@ impl IPushNotificationReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class PushNotificationReceivedEventArgs: IPushNotificationReceivedEventArgs}
-RT_ENUM! { enum PushNotificationType: i32 {
+RT_CLASS!{class PushNotificationReceivedEventArgs: IPushNotificationReceivedEventArgs ["Windows.Networking.PushNotifications.PushNotificationReceivedEventArgs"]}
+RT_ENUM! { enum PushNotificationType: i32 ["Windows.Networking.PushNotifications.PushNotificationType"] {
     Toast (PushNotificationType_Toast) = 0, Tile (PushNotificationType_Tile) = 1, Badge (PushNotificationType_Badge) = 2, Raw (PushNotificationType_Raw) = 3, TileFlyout (PushNotificationType_TileFlyout) = 4,
 }}
 DEFINE_IID!(IID_IRawNotification, 438465153, 15225, 17068, 153, 99, 34, 171, 0, 212, 240, 183);
@@ -6038,7 +6038,7 @@ impl IRawNotification {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class RawNotification: IRawNotification}
+RT_CLASS!{class RawNotification: IRawNotification ["Windows.Networking.PushNotifications.RawNotification"]}
 DEFINE_IID!(IID_IRawNotification2, 3872444185, 3183, 19677, 148, 36, 238, 197, 190, 1, 77, 38);
 RT_INTERFACE!{interface IRawNotification2(IRawNotification2Vtbl): IInspectable(IInspectableVtbl) [IID_IRawNotification2] {
     fn get_Headers(&self, out: *mut *mut foundation::collections::IMapView<HString, HString>) -> HRESULT,
@@ -6083,10 +6083,10 @@ impl IDnssdRegistrationResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DnssdRegistrationResult: IDnssdRegistrationResult}
+RT_CLASS!{class DnssdRegistrationResult: IDnssdRegistrationResult ["Windows.Networking.ServiceDiscovery.Dnssd.DnssdRegistrationResult"]}
 impl RtActivatable<IActivationFactory> for DnssdRegistrationResult {}
 DEFINE_CLSID!(DnssdRegistrationResult(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,101,114,118,105,99,101,68,105,115,99,111,118,101,114,121,46,68,110,115,115,100,46,68,110,115,115,100,82,101,103,105,115,116,114,97,116,105,111,110,82,101,115,117,108,116,0]) [CLSID_DnssdRegistrationResult]);
-RT_ENUM! { enum DnssdRegistrationStatus: i32 {
+RT_ENUM! { enum DnssdRegistrationStatus: i32 ["Windows.Networking.ServiceDiscovery.Dnssd.DnssdRegistrationStatus"] {
     Success (DnssdRegistrationStatus_Success) = 0, InvalidServiceName (DnssdRegistrationStatus_InvalidServiceName) = 1, ServerError (DnssdRegistrationStatus_ServerError) = 2, SecurityError (DnssdRegistrationStatus_SecurityError) = 3,
 }}
 DEFINE_IID!(IID_IDnssdServiceInstance, 3796294526, 39077, 19617, 185, 228, 194, 83, 211, 60, 53, 255);
@@ -6179,7 +6179,7 @@ impl IDnssdServiceInstance {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DnssdServiceInstance: IDnssdServiceInstance}
+RT_CLASS!{class DnssdServiceInstance: IDnssdServiceInstance ["Windows.Networking.ServiceDiscovery.Dnssd.DnssdServiceInstance"]}
 impl RtActivatable<IDnssdServiceInstanceFactory> for DnssdServiceInstance {}
 impl DnssdServiceInstance {
     #[inline] pub fn create(dnssdServiceInstanceName: &HStringArg, hostName: &super::super::HostName, port: u16) -> Result<ComPtr<DnssdServiceInstance>> {
@@ -6187,7 +6187,7 @@ impl DnssdServiceInstance {
     }
 }
 DEFINE_CLSID!(DnssdServiceInstance(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,101,114,118,105,99,101,68,105,115,99,111,118,101,114,121,46,68,110,115,115,100,46,68,110,115,115,100,83,101,114,118,105,99,101,73,110,115,116,97,110,99,101,0]) [CLSID_DnssdServiceInstance]);
-RT_CLASS!{class DnssdServiceInstanceCollection: foundation::collections::IVectorView<DnssdServiceInstance>}
+RT_CLASS!{class DnssdServiceInstanceCollection: foundation::collections::IVectorView<DnssdServiceInstance> ["Windows.Networking.ServiceDiscovery.Dnssd.DnssdServiceInstanceCollection"]}
 DEFINE_IID!(IID_IDnssdServiceInstanceFactory, 1823498657, 50296, 17201, 150, 132, 74, 242, 24, 108, 10, 43);
 RT_INTERFACE!{static interface IDnssdServiceInstanceFactory(IDnssdServiceInstanceFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDnssdServiceInstanceFactory] {
     fn Create(&self, dnssdServiceInstanceName: HSTRING, hostName: *mut super::super::HostName, port: u16, out: *mut *mut DnssdServiceInstance) -> HRESULT
@@ -6253,15 +6253,15 @@ impl IDnssdServiceWatcher {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DnssdServiceWatcher: IDnssdServiceWatcher}
-RT_ENUM! { enum DnssdServiceWatcherStatus: i32 {
+RT_CLASS!{class DnssdServiceWatcher: IDnssdServiceWatcher ["Windows.Networking.ServiceDiscovery.Dnssd.DnssdServiceWatcher"]}
+RT_ENUM! { enum DnssdServiceWatcherStatus: i32 ["Windows.Networking.ServiceDiscovery.Dnssd.DnssdServiceWatcherStatus"] {
     Created (DnssdServiceWatcherStatus_Created) = 0, Started (DnssdServiceWatcherStatus_Started) = 1, EnumerationCompleted (DnssdServiceWatcherStatus_EnumerationCompleted) = 2, Stopping (DnssdServiceWatcherStatus_Stopping) = 3, Stopped (DnssdServiceWatcherStatus_Stopped) = 4, Aborted (DnssdServiceWatcherStatus_Aborted) = 5,
 }}
 } // Windows.Networking.ServiceDiscovery.Dnssd
 } // Windows.Networking.ServiceDiscovery
 pub mod sockets { // Windows.Networking.Sockets
 use ::prelude::*;
-RT_STRUCT! { struct BandwidthStatistics {
+RT_STRUCT! { struct BandwidthStatistics ["Windows.Networking.Sockets.BandwidthStatistics"] {
     OutboundBitsPerSecond: u64, InboundBitsPerSecond: u64, OutboundBitsPerSecondInstability: u64, InboundBitsPerSecondInstability: u64, OutboundBandwidthPeaked: bool, InboundBandwidthPeaked: bool,
 }}
 DEFINE_IID!(IID_IControlChannelTrigger, 2098475431, 61078, 16616, 161, 153, 135, 3, 205, 150, 158, 195);
@@ -6333,7 +6333,7 @@ impl IControlChannelTrigger {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ControlChannelTrigger: IControlChannelTrigger}
+RT_CLASS!{class ControlChannelTrigger: IControlChannelTrigger ["Windows.Networking.Sockets.ControlChannelTrigger"]}
 impl RtActivatable<IControlChannelTriggerFactory> for ControlChannelTrigger {}
 impl ControlChannelTrigger {
     #[inline] pub fn create_control_channel_trigger(channelId: &HStringArg, serverKeepAliveIntervalInMinutes: u32) -> Result<ComPtr<ControlChannelTrigger>> {
@@ -6406,13 +6406,13 @@ impl IControlChannelTriggerResetEventDetails {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum ControlChannelTriggerResetReason: i32 {
+RT_ENUM! { enum ControlChannelTriggerResetReason: i32 ["Windows.Networking.Sockets.ControlChannelTriggerResetReason"] {
     FastUserSwitched (ControlChannelTriggerResetReason_FastUserSwitched) = 0, LowPowerExit (ControlChannelTriggerResetReason_LowPowerExit) = 1, QuietHoursExit (ControlChannelTriggerResetReason_QuietHoursExit) = 2, ApplicationRestart (ControlChannelTriggerResetReason_ApplicationRestart) = 3,
 }}
-RT_ENUM! { enum ControlChannelTriggerResourceType: i32 {
+RT_ENUM! { enum ControlChannelTriggerResourceType: i32 ["Windows.Networking.Sockets.ControlChannelTriggerResourceType"] {
     RequestSoftwareSlot (ControlChannelTriggerResourceType_RequestSoftwareSlot) = 0, RequestHardwareSlot (ControlChannelTriggerResourceType_RequestHardwareSlot) = 1,
 }}
-RT_ENUM! { enum ControlChannelTriggerStatus: i32 {
+RT_ENUM! { enum ControlChannelTriggerStatus: i32 ["Windows.Networking.Sockets.ControlChannelTriggerStatus"] {
     HardwareSlotRequested (ControlChannelTriggerStatus_HardwareSlotRequested) = 0, SoftwareSlotAllocated (ControlChannelTriggerStatus_SoftwareSlotAllocated) = 1, HardwareSlotAllocated (ControlChannelTriggerStatus_HardwareSlotAllocated) = 2, PolicyError (ControlChannelTriggerStatus_PolicyError) = 3, SystemError (ControlChannelTriggerStatus_SystemError) = 4, TransportDisconnected (ControlChannelTriggerStatus_TransportDisconnected) = 5, ServiceUnavailable (ControlChannelTriggerStatus_ServiceUnavailable) = 6,
 }}
 DEFINE_IID!(IID_IDatagramSocket, 2145541051, 50108, 18039, 132, 70, 202, 40, 164, 101, 163, 175);
@@ -6493,7 +6493,7 @@ impl IDatagramSocket {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DatagramSocket: IDatagramSocket}
+RT_CLASS!{class DatagramSocket: IDatagramSocket ["Windows.Networking.Sockets.DatagramSocket"]}
 impl RtActivatable<IDatagramSocketStatics> for DatagramSocket {}
 impl RtActivatable<IActivationFactory> for DatagramSocket {}
 impl DatagramSocket {
@@ -6579,7 +6579,7 @@ impl IDatagramSocketControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DatagramSocketControl: IDatagramSocketControl}
+RT_CLASS!{class DatagramSocketControl: IDatagramSocketControl ["Windows.Networking.Sockets.DatagramSocketControl"]}
 DEFINE_IID!(IID_IDatagramSocketControl2, 871028162, 38812, 17429, 130, 161, 60, 250, 246, 70, 193, 146);
 RT_INTERFACE!{interface IDatagramSocketControl2(IDatagramSocketControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketControl2] {
     fn get_InboundBufferSizeInBytes(&self, out: *mut u32) -> HRESULT,
@@ -6652,7 +6652,7 @@ impl IDatagramSocketInformation {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DatagramSocketInformation: IDatagramSocketInformation}
+RT_CLASS!{class DatagramSocketInformation: IDatagramSocketInformation ["Windows.Networking.Sockets.DatagramSocketInformation"]}
 DEFINE_IID!(IID_IDatagramSocketMessageReceivedEventArgs, 2653805730, 5906, 19684, 177, 121, 140, 101, 44, 109, 16, 126);
 RT_INTERFACE!{interface IDatagramSocketMessageReceivedEventArgs(IDatagramSocketMessageReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketMessageReceivedEventArgs] {
     fn get_RemoteAddress(&self, out: *mut *mut super::HostName) -> HRESULT,
@@ -6688,7 +6688,7 @@ impl IDatagramSocketMessageReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class DatagramSocketMessageReceivedEventArgs: IDatagramSocketMessageReceivedEventArgs}
+RT_CLASS!{class DatagramSocketMessageReceivedEventArgs: IDatagramSocketMessageReceivedEventArgs ["Windows.Networking.Sockets.DatagramSocketMessageReceivedEventArgs"]}
 DEFINE_IID!(IID_IDatagramSocketStatics, 3922078446, 5268, 18977, 187, 126, 133, 137, 252, 117, 29, 157);
 RT_INTERFACE!{static interface IDatagramSocketStatics(IDatagramSocketStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketStatics] {
     fn GetEndpointPairsAsync(&self, remoteHostName: *mut super::HostName, remoteServiceName: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>) -> HRESULT,
@@ -6734,7 +6734,7 @@ impl IMessageWebSocket {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MessageWebSocket: IMessageWebSocket}
+RT_CLASS!{class MessageWebSocket: IMessageWebSocket ["Windows.Networking.Sockets.MessageWebSocket"]}
 impl RtActivatable<IActivationFactory> for MessageWebSocket {}
 DEFINE_CLSID!(MessageWebSocket(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,77,101,115,115,97,103,101,87,101,98,83,111,99,107,101,116,0]) [CLSID_MessageWebSocket]);
 DEFINE_IID!(IID_IMessageWebSocket2, 3201355495, 63944, 17418, 154, 213, 115, 114, 129, 217, 116, 46);
@@ -6797,7 +6797,7 @@ impl IMessageWebSocketControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MessageWebSocketControl: IMessageWebSocketControl}
+RT_CLASS!{class MessageWebSocketControl: IMessageWebSocketControl ["Windows.Networking.Sockets.MessageWebSocketControl"]}
 DEFINE_IID!(IID_IMessageWebSocketControl2, 3809466257, 2060, 16394, 167, 18, 39, 223, 169, 231, 68, 216);
 RT_INTERFACE!{interface IMessageWebSocketControl2(IMessageWebSocketControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocketControl2] {
     fn get_DesiredUnsolicitedPongInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -6842,7 +6842,7 @@ impl IMessageWebSocketControl2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MessageWebSocketInformation: IWebSocketInformation}
+RT_CLASS!{class MessageWebSocketInformation: IWebSocketInformation ["Windows.Networking.Sockets.MessageWebSocketInformation"]}
 DEFINE_IID!(IID_IMessageWebSocketMessageReceivedEventArgs, 1200366252, 19531, 17133, 158, 215, 30, 249, 249, 79, 163, 213);
 RT_INTERFACE!{interface IMessageWebSocketMessageReceivedEventArgs(IMessageWebSocketMessageReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocketMessageReceivedEventArgs] {
     fn get_MessageType(&self, out: *mut SocketMessageType) -> HRESULT,
@@ -6866,7 +6866,7 @@ impl IMessageWebSocketMessageReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class MessageWebSocketMessageReceivedEventArgs: IMessageWebSocketMessageReceivedEventArgs}
+RT_CLASS!{class MessageWebSocketMessageReceivedEventArgs: IMessageWebSocketMessageReceivedEventArgs ["Windows.Networking.Sockets.MessageWebSocketMessageReceivedEventArgs"]}
 DEFINE_IID!(IID_IMessageWebSocketMessageReceivedEventArgs2, 2311980797, 56687, 18951, 135, 249, 249, 235, 77, 137, 216, 61);
 RT_INTERFACE!{interface IMessageWebSocketMessageReceivedEventArgs2(IMessageWebSocketMessageReceivedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocketMessageReceivedEventArgs2] {
     fn get_IsMessageComplete(&self, out: *mut bool) -> HRESULT
@@ -6878,10 +6878,10 @@ impl IMessageWebSocketMessageReceivedEventArgs2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum MessageWebSocketReceiveMode: i32 {
+RT_ENUM! { enum MessageWebSocketReceiveMode: i32 ["Windows.Networking.Sockets.MessageWebSocketReceiveMode"] {
     FullMessage (MessageWebSocketReceiveMode_FullMessage) = 0, PartialMessage (MessageWebSocketReceiveMode_PartialMessage) = 1,
 }}
-RT_STRUCT! { struct RoundTripTimeStatistics {
+RT_STRUCT! { struct RoundTripTimeStatistics ["Windows.Networking.Sockets.RoundTripTimeStatistics"] {
     Variance: u32, Max: u32, Min: u32, Sum: u32,
 }}
 DEFINE_IID!(IID_IServerMessageWebSocket, 3819737664, 33083, 24317, 126, 17, 174, 35, 5, 252, 119, 241);
@@ -6935,7 +6935,7 @@ impl IServerMessageWebSocket {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ServerMessageWebSocket: IServerMessageWebSocket}
+RT_CLASS!{class ServerMessageWebSocket: IServerMessageWebSocket ["Windows.Networking.Sockets.ServerMessageWebSocket"]}
 DEFINE_IID!(IID_IServerMessageWebSocketControl, 1774383185, 7199, 22650, 69, 25, 33, 129, 97, 1, 146, 183);
 RT_INTERFACE!{interface IServerMessageWebSocketControl(IServerMessageWebSocketControlVtbl): IInspectable(IInspectableVtbl) [IID_IServerMessageWebSocketControl] {
     fn get_MessageType(&self, out: *mut SocketMessageType) -> HRESULT,
@@ -6952,7 +6952,7 @@ impl IServerMessageWebSocketControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ServerMessageWebSocketControl: IServerMessageWebSocketControl}
+RT_CLASS!{class ServerMessageWebSocketControl: IServerMessageWebSocketControl ["Windows.Networking.Sockets.ServerMessageWebSocketControl"]}
 DEFINE_IID!(IID_IServerMessageWebSocketInformation, 4231181407, 17480, 21765, 108, 201, 9, 175, 168, 145, 95, 93);
 RT_INTERFACE!{interface IServerMessageWebSocketInformation(IServerMessageWebSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IServerMessageWebSocketInformation] {
     fn get_BandwidthStatistics(&self, out: *mut BandwidthStatistics) -> HRESULT,
@@ -6976,7 +6976,7 @@ impl IServerMessageWebSocketInformation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ServerMessageWebSocketInformation: IServerMessageWebSocketInformation}
+RT_CLASS!{class ServerMessageWebSocketInformation: IServerMessageWebSocketInformation ["Windows.Networking.Sockets.ServerMessageWebSocketInformation"]}
 DEFINE_IID!(IID_IServerStreamWebSocket, 753753023, 29942, 21988, 121, 223, 145, 50, 104, 13, 254, 232);
 RT_INTERFACE!{interface IServerStreamWebSocket(IServerStreamWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IServerStreamWebSocket] {
     fn get_Information(&self, out: *mut *mut ServerStreamWebSocketInformation) -> HRESULT,
@@ -7018,7 +7018,7 @@ impl IServerStreamWebSocket {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ServerStreamWebSocket: IServerStreamWebSocket}
+RT_CLASS!{class ServerStreamWebSocket: IServerStreamWebSocket ["Windows.Networking.Sockets.ServerStreamWebSocket"]}
 DEFINE_IID!(IID_IServerStreamWebSocketInformation, 4231181407, 17480, 21765, 108, 201, 9, 171, 168, 145, 95, 93);
 RT_INTERFACE!{interface IServerStreamWebSocketInformation(IServerStreamWebSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IServerStreamWebSocketInformation] {
     fn get_BandwidthStatistics(&self, out: *mut BandwidthStatistics) -> HRESULT,
@@ -7042,8 +7042,8 @@ impl IServerStreamWebSocketInformation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class ServerStreamWebSocketInformation: IServerStreamWebSocketInformation}
-RT_ENUM! { enum SocketActivityConnectedStandbyAction: i32 {
+RT_CLASS!{class ServerStreamWebSocketInformation: IServerStreamWebSocketInformation ["Windows.Networking.Sockets.ServerStreamWebSocketInformation"]}
+RT_ENUM! { enum SocketActivityConnectedStandbyAction: i32 ["Windows.Networking.Sockets.SocketActivityConnectedStandbyAction"] {
     DoNotWake (SocketActivityConnectedStandbyAction_DoNotWake) = 0, Wake (SocketActivityConnectedStandbyAction_Wake) = 1,
 }}
 DEFINE_IID!(IID_ISocketActivityContext, 1135627620, 19589, 17302, 166, 55, 29, 151, 63, 110, 189, 73);
@@ -7057,7 +7057,7 @@ impl ISocketActivityContext {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SocketActivityContext: ISocketActivityContext}
+RT_CLASS!{class SocketActivityContext: ISocketActivityContext ["Windows.Networking.Sockets.SocketActivityContext"]}
 impl RtActivatable<ISocketActivityContextFactory> for SocketActivityContext {}
 impl SocketActivityContext {
     #[cfg(feature="windows-storage")] #[inline] pub fn create(data: &super::super::storage::streams::IBuffer) -> Result<ComPtr<SocketActivityContext>> {
@@ -7123,7 +7123,7 @@ impl ISocketActivityInformation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SocketActivityInformation: ISocketActivityInformation}
+RT_CLASS!{class SocketActivityInformation: ISocketActivityInformation ["Windows.Networking.Sockets.SocketActivityInformation"]}
 impl RtActivatable<ISocketActivityInformationStatics> for SocketActivityInformation {}
 impl SocketActivityInformation {
     #[inline] pub fn get_all_sockets() -> Result<Option<ComPtr<foundation::collections::IMapView<HString, SocketActivityInformation>>>> {
@@ -7142,7 +7142,7 @@ impl ISocketActivityInformationStatics {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SocketActivityKind: i32 {
+RT_ENUM! { enum SocketActivityKind: i32 ["Windows.Networking.Sockets.SocketActivityKind"] {
     None (SocketActivityKind_None) = 0, StreamSocketListener (SocketActivityKind_StreamSocketListener) = 1, DatagramSocket (SocketActivityKind_DatagramSocket) = 2, StreamSocket (SocketActivityKind_StreamSocket) = 3,
 }}
 DEFINE_IID!(IID_ISocketActivityTriggerDetails, 1173620391, 64671, 20353, 172, 173, 53, 95, 239, 81, 230, 123);
@@ -7162,8 +7162,8 @@ impl ISocketActivityTriggerDetails {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class SocketActivityTriggerDetails: ISocketActivityTriggerDetails}
-RT_ENUM! { enum SocketActivityTriggerReason: i32 {
+RT_CLASS!{class SocketActivityTriggerDetails: ISocketActivityTriggerDetails ["Windows.Networking.Sockets.SocketActivityTriggerDetails"]}
+RT_ENUM! { enum SocketActivityTriggerReason: i32 ["Windows.Networking.Sockets.SocketActivityTriggerReason"] {
     None (SocketActivityTriggerReason_None) = 0, SocketActivity (SocketActivityTriggerReason_SocketActivity) = 1, ConnectionAccepted (SocketActivityTriggerReason_ConnectionAccepted) = 2, KeepAliveTimerExpired (SocketActivityTriggerReason_KeepAliveTimerExpired) = 3, SocketClosed (SocketActivityTriggerReason_SocketClosed) = 4,
 }}
 RT_CLASS!{static class SocketError}
@@ -7185,19 +7185,19 @@ impl ISocketErrorStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum SocketErrorStatus: i32 {
+RT_ENUM! { enum SocketErrorStatus: i32 ["Windows.Networking.Sockets.SocketErrorStatus"] {
     Unknown (SocketErrorStatus_Unknown) = 0, OperationAborted (SocketErrorStatus_OperationAborted) = 1, HttpInvalidServerResponse (SocketErrorStatus_HttpInvalidServerResponse) = 2, ConnectionTimedOut (SocketErrorStatus_ConnectionTimedOut) = 3, AddressFamilyNotSupported (SocketErrorStatus_AddressFamilyNotSupported) = 4, SocketTypeNotSupported (SocketErrorStatus_SocketTypeNotSupported) = 5, HostNotFound (SocketErrorStatus_HostNotFound) = 6, NoDataRecordOfRequestedType (SocketErrorStatus_NoDataRecordOfRequestedType) = 7, NonAuthoritativeHostNotFound (SocketErrorStatus_NonAuthoritativeHostNotFound) = 8, ClassTypeNotFound (SocketErrorStatus_ClassTypeNotFound) = 9, AddressAlreadyInUse (SocketErrorStatus_AddressAlreadyInUse) = 10, CannotAssignRequestedAddress (SocketErrorStatus_CannotAssignRequestedAddress) = 11, ConnectionRefused (SocketErrorStatus_ConnectionRefused) = 12, NetworkIsUnreachable (SocketErrorStatus_NetworkIsUnreachable) = 13, UnreachableHost (SocketErrorStatus_UnreachableHost) = 14, NetworkIsDown (SocketErrorStatus_NetworkIsDown) = 15, NetworkDroppedConnectionOnReset (SocketErrorStatus_NetworkDroppedConnectionOnReset) = 16, SoftwareCausedConnectionAbort (SocketErrorStatus_SoftwareCausedConnectionAbort) = 17, ConnectionResetByPeer (SocketErrorStatus_ConnectionResetByPeer) = 18, HostIsDown (SocketErrorStatus_HostIsDown) = 19, NoAddressesFound (SocketErrorStatus_NoAddressesFound) = 20, TooManyOpenFiles (SocketErrorStatus_TooManyOpenFiles) = 21, MessageTooLong (SocketErrorStatus_MessageTooLong) = 22, CertificateExpired (SocketErrorStatus_CertificateExpired) = 23, CertificateUntrustedRoot (SocketErrorStatus_CertificateUntrustedRoot) = 24, CertificateCommonNameIsIncorrect (SocketErrorStatus_CertificateCommonNameIsIncorrect) = 25, CertificateWrongUsage (SocketErrorStatus_CertificateWrongUsage) = 26, CertificateRevoked (SocketErrorStatus_CertificateRevoked) = 27, CertificateNoRevocationCheck (SocketErrorStatus_CertificateNoRevocationCheck) = 28, CertificateRevocationServerOffline (SocketErrorStatus_CertificateRevocationServerOffline) = 29, CertificateIsInvalid (SocketErrorStatus_CertificateIsInvalid) = 30,
 }}
-RT_ENUM! { enum SocketMessageType: i32 {
+RT_ENUM! { enum SocketMessageType: i32 ["Windows.Networking.Sockets.SocketMessageType"] {
     Binary (SocketMessageType_Binary) = 0, Utf8 (SocketMessageType_Utf8) = 1,
 }}
-RT_ENUM! { enum SocketProtectionLevel: i32 {
+RT_ENUM! { enum SocketProtectionLevel: i32 ["Windows.Networking.Sockets.SocketProtectionLevel"] {
     PlainSocket (SocketProtectionLevel_PlainSocket) = 0, Ssl (SocketProtectionLevel_Ssl) = 1, SslAllowNullEncryption (SocketProtectionLevel_SslAllowNullEncryption) = 2, BluetoothEncryptionAllowNullAuthentication (SocketProtectionLevel_BluetoothEncryptionAllowNullAuthentication) = 3, BluetoothEncryptionWithAuthentication (SocketProtectionLevel_BluetoothEncryptionWithAuthentication) = 4, Ssl3AllowWeakEncryption (SocketProtectionLevel_Ssl3AllowWeakEncryption) = 5, Tls10 (SocketProtectionLevel_Tls10) = 6, Tls11 (SocketProtectionLevel_Tls11) = 7, Tls12 (SocketProtectionLevel_Tls12) = 8, Unspecified (SocketProtectionLevel_Unspecified) = 9,
 }}
-RT_ENUM! { enum SocketQualityOfService: i32 {
+RT_ENUM! { enum SocketQualityOfService: i32 ["Windows.Networking.Sockets.SocketQualityOfService"] {
     Normal (SocketQualityOfService_Normal) = 0, LowLatency (SocketQualityOfService_LowLatency) = 1,
 }}
-RT_ENUM! { enum SocketSslErrorSeverity: i32 {
+RT_ENUM! { enum SocketSslErrorSeverity: i32 ["Windows.Networking.Sockets.SocketSslErrorSeverity"] {
     None (SocketSslErrorSeverity_None) = 0, Ignorable (SocketSslErrorSeverity_Ignorable) = 1, Fatal (SocketSslErrorSeverity_Fatal) = 2,
 }}
 DEFINE_IID!(IID_IStreamSocket, 1772236019, 64635, 18519, 175, 56, 246, 231, 222, 106, 91, 73);
@@ -7261,7 +7261,7 @@ impl IStreamSocket {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StreamSocket: IStreamSocket}
+RT_CLASS!{class StreamSocket: IStreamSocket ["Windows.Networking.Sockets.StreamSocket"]}
 impl RtActivatable<IStreamSocketStatics> for StreamSocket {}
 impl RtActivatable<IActivationFactory> for StreamSocket {}
 impl StreamSocket {
@@ -7380,7 +7380,7 @@ impl IStreamSocketControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StreamSocketControl: IStreamSocketControl}
+RT_CLASS!{class StreamSocketControl: IStreamSocketControl ["Windows.Networking.Sockets.StreamSocketControl"]}
 DEFINE_IID!(IID_IStreamSocketControl2, 3268450902, 1551, 17601, 184, 226, 31, 191, 96, 189, 98, 197);
 RT_INTERFACE!{interface IStreamSocketControl2(IStreamSocketControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketControl2] {
     #[cfg(feature="windows-security")] fn get_IgnorableServerCertificateErrors(&self, out: *mut *mut foundation::collections::IVector<super::super::security::cryptography::certificates::ChainValidationResult>) -> HRESULT
@@ -7500,7 +7500,7 @@ impl IStreamSocketInformation {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StreamSocketInformation: IStreamSocketInformation}
+RT_CLASS!{class StreamSocketInformation: IStreamSocketInformation ["Windows.Networking.Sockets.StreamSocketInformation"]}
 DEFINE_IID!(IID_IStreamSocketInformation2, 314737746, 19420, 20196, 151, 106, 207, 19, 14, 157, 146, 227);
 RT_INTERFACE!{interface IStreamSocketInformation2(IStreamSocketInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketInformation2] {
     fn get_ServerCertificateErrorSeverity(&self, out: *mut SocketSslErrorSeverity) -> HRESULT,
@@ -7570,7 +7570,7 @@ impl IStreamSocketListener {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StreamSocketListener: IStreamSocketListener}
+RT_CLASS!{class StreamSocketListener: IStreamSocketListener ["Windows.Networking.Sockets.StreamSocketListener"]}
 impl RtActivatable<IActivationFactory> for StreamSocketListener {}
 DEFINE_CLSID!(StreamSocketListener(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,116,114,101,97,109,83,111,99,107,101,116,76,105,115,116,101,110,101,114,0]) [CLSID_StreamSocketListener]);
 DEFINE_IID!(IID_IStreamSocketListener2, 1703788862, 47934, 17496, 178, 50, 237, 16, 136, 105, 75, 152);
@@ -7632,7 +7632,7 @@ impl IStreamSocketListenerConnectionReceivedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StreamSocketListenerConnectionReceivedEventArgs: IStreamSocketListenerConnectionReceivedEventArgs}
+RT_CLASS!{class StreamSocketListenerConnectionReceivedEventArgs: IStreamSocketListenerConnectionReceivedEventArgs ["Windows.Networking.Sockets.StreamSocketListenerConnectionReceivedEventArgs"]}
 DEFINE_IID!(IID_IStreamSocketListenerControl, 551077238, 36234, 19898, 151, 34, 161, 108, 77, 152, 73, 128);
 RT_INTERFACE!{interface IStreamSocketListenerControl(IStreamSocketListenerControlVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketListenerControl] {
     fn get_QualityOfService(&self, out: *mut SocketQualityOfService) -> HRESULT,
@@ -7649,7 +7649,7 @@ impl IStreamSocketListenerControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StreamSocketListenerControl: IStreamSocketListenerControl}
+RT_CLASS!{class StreamSocketListenerControl: IStreamSocketListenerControl ["Windows.Networking.Sockets.StreamSocketListenerControl"]}
 DEFINE_IID!(IID_IStreamSocketListenerControl2, 2492184165, 11326, 16459, 184, 176, 142, 178, 73, 162, 176, 161);
 RT_INTERFACE!{interface IStreamSocketListenerControl2(IStreamSocketListenerControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketListenerControl2] {
     fn get_NoDelay(&self, out: *mut bool) -> HRESULT,
@@ -7710,7 +7710,7 @@ impl IStreamSocketListenerInformation {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StreamSocketListenerInformation: IStreamSocketListenerInformation}
+RT_CLASS!{class StreamSocketListenerInformation: IStreamSocketListenerInformation ["Windows.Networking.Sockets.StreamSocketListenerInformation"]}
 DEFINE_IID!(IID_IStreamSocketStatics, 2753608778, 28206, 19189, 181, 86, 53, 90, 224, 205, 79, 41);
 RT_INTERFACE!{static interface IStreamSocketStatics(IStreamSocketStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketStatics] {
     fn GetEndpointPairsAsync(&self, remoteHostName: *mut super::HostName, remoteServiceName: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>) -> HRESULT,
@@ -7751,7 +7751,7 @@ impl IStreamWebSocket {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StreamWebSocket: IStreamWebSocket}
+RT_CLASS!{class StreamWebSocket: IStreamWebSocket ["Windows.Networking.Sockets.StreamWebSocket"]}
 impl RtActivatable<IActivationFactory> for StreamWebSocket {}
 DEFINE_CLSID!(StreamWebSocket(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,116,114,101,97,109,87,101,98,83,111,99,107,101,116,0]) [CLSID_StreamWebSocket]);
 DEFINE_IID!(IID_IStreamWebSocket2, 2857175243, 37877, 18040, 130, 54, 87, 204, 229, 65, 126, 213);
@@ -7786,7 +7786,7 @@ impl IStreamWebSocketControl {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StreamWebSocketControl: IStreamWebSocketControl}
+RT_CLASS!{class StreamWebSocketControl: IStreamWebSocketControl ["Windows.Networking.Sockets.StreamWebSocketControl"]}
 DEFINE_IID!(IID_IStreamWebSocketControl2, 559783806, 64088, 16602, 159, 17, 164, 141, 175, 233, 80, 55);
 RT_INTERFACE!{interface IStreamWebSocketControl2(IStreamWebSocketControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamWebSocketControl2] {
     fn get_DesiredUnsolicitedPongInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -7820,7 +7820,7 @@ impl IStreamWebSocketControl2 {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class StreamWebSocketInformation: IWebSocketInformation}
+RT_CLASS!{class StreamWebSocketInformation: IWebSocketInformation ["Windows.Networking.Sockets.StreamWebSocketInformation"]}
 DEFINE_IID!(IID_IWebSocket, 4168563055, 39345, 19992, 188, 8, 133, 12, 154, 223, 21, 110);
 RT_INTERFACE!{interface IWebSocket(IWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IWebSocket] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
@@ -7877,7 +7877,7 @@ impl IWebSocketClosedEventArgs {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebSocketClosedEventArgs: IWebSocketClosedEventArgs}
+RT_CLASS!{class WebSocketClosedEventArgs: IWebSocketClosedEventArgs ["Windows.Networking.Sockets.WebSocketClosedEventArgs"]}
 DEFINE_IID!(IID_IWebSocketControl, 784645571, 55717, 17754, 152, 17, 222, 36, 212, 83, 55, 233);
 RT_INTERFACE!{interface IWebSocketControl(IWebSocketControlVtbl): IInspectable(IInspectableVtbl) [IID_IWebSocketControl] {
     fn get_OutboundBufferSizeInBytes(&self, out: *mut u32) -> HRESULT,
@@ -8008,8 +8008,8 @@ impl IWebSocketInformation2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebSocketKeepAlive: super::super::applicationmodel::background::IBackgroundTask}
-#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebSocketKeepAlive: IInspectable}
+#[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebSocketKeepAlive: super::super::applicationmodel::background::IBackgroundTask ["Windows.Networking.Sockets.WebSocketKeepAlive"]}
+#[cfg(not(feature="windows-applicationmodel"))] RT_CLASS!{class WebSocketKeepAlive: IInspectable ["Windows.Networking.Sockets.WebSocketKeepAlive"]}
 impl RtActivatable<IActivationFactory> for WebSocketKeepAlive {}
 DEFINE_CLSID!(WebSocketKeepAlive(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,87,101,98,83,111,99,107,101,116,75,101,101,112,65,108,105,118,101,0]) [CLSID_WebSocketKeepAlive]);
 DEFINE_IID!(IID_IWebSocketServerCustomValidationRequestedEventArgs, 4293918280, 554, 19127, 139, 54, 225, 10, 244, 100, 14, 107);
@@ -8055,7 +8055,7 @@ impl IWebSocketServerCustomValidationRequestedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class WebSocketServerCustomValidationRequestedEventArgs: IWebSocketServerCustomValidationRequestedEventArgs}
+RT_CLASS!{class WebSocketServerCustomValidationRequestedEventArgs: IWebSocketServerCustomValidationRequestedEventArgs ["Windows.Networking.Sockets.WebSocketServerCustomValidationRequestedEventArgs"]}
 } // Windows.Networking.Sockets
 pub mod vpn { // Windows.Networking.Vpn
 use ::prelude::*;
@@ -8086,7 +8086,7 @@ impl IVpnAppId {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnAppId: IVpnAppId}
+RT_CLASS!{class VpnAppId: IVpnAppId ["Windows.Networking.Vpn.VpnAppId"]}
 impl RtActivatable<IVpnAppIdFactory> for VpnAppId {}
 impl VpnAppId {
     #[inline] pub fn create(type_: VpnAppIdType, value: &HStringArg) -> Result<ComPtr<VpnAppId>> {
@@ -8105,10 +8105,10 @@ impl IVpnAppIdFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum VpnAppIdType: i32 {
+RT_ENUM! { enum VpnAppIdType: i32 ["Windows.Networking.Vpn.VpnAppIdType"] {
     PackageFamilyName (VpnAppIdType_PackageFamilyName) = 0, FullyQualifiedBinaryName (VpnAppIdType_FullyQualifiedBinaryName) = 1, FilePath (VpnAppIdType_FilePath) = 2,
 }}
-RT_ENUM! { enum VpnAuthenticationMethod: i32 {
+RT_ENUM! { enum VpnAuthenticationMethod: i32 ["Windows.Networking.Vpn.VpnAuthenticationMethod"] {
     Mschapv2 (VpnAuthenticationMethod_Mschapv2) = 0, Eap (VpnAuthenticationMethod_Eap) = 1, Certificate (VpnAuthenticationMethod_Certificate) = 2, PresharedKey (VpnAuthenticationMethod_PresharedKey) = 3,
 }}
 DEFINE_IID!(IID_IVpnChannel, 1254591751, 53672, 17155, 160, 145, 200, 210, 224, 145, 91, 195);
@@ -8204,7 +8204,7 @@ impl IVpnChannel {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnChannel: IVpnChannel}
+RT_CLASS!{class VpnChannel: IVpnChannel ["Windows.Networking.Vpn.VpnChannel"]}
 impl RtActivatable<IVpnChannelStatics> for VpnChannel {}
 impl VpnChannel {
     #[inline] pub fn process_event_async(thirdPartyPlugIn: &IInspectable, event: &IInspectable) -> Result<()> {
@@ -8333,8 +8333,8 @@ impl IVpnChannelActivityEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnChannelActivityEventArgs: IVpnChannelActivityEventArgs}
-RT_ENUM! { enum VpnChannelActivityEventType: i32 {
+RT_CLASS!{class VpnChannelActivityEventArgs: IVpnChannelActivityEventArgs ["Windows.Networking.Vpn.VpnChannelActivityEventArgs"]}
+RT_ENUM! { enum VpnChannelActivityEventType: i32 ["Windows.Networking.Vpn.VpnChannelActivityEventType"] {
     Idle (VpnChannelActivityEventType_Idle) = 0, Active (VpnChannelActivityEventType_Active) = 1,
 }}
 DEFINE_IID!(IID_IVpnChannelActivityStateChangedArgs, 1031079269, 64960, 19390, 162, 59, 69, 255, 252, 109, 151, 161);
@@ -8348,7 +8348,7 @@ impl IVpnChannelActivityStateChangedArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnChannelActivityStateChangedArgs: IVpnChannelActivityStateChangedArgs}
+RT_CLASS!{class VpnChannelActivityStateChangedArgs: IVpnChannelActivityStateChangedArgs ["Windows.Networking.Vpn.VpnChannelActivityStateChangedArgs"]}
 DEFINE_IID!(IID_IVpnChannelConfiguration, 237886626, 8210, 20452, 177, 121, 140, 101, 44, 109, 16, 126);
 RT_INTERFACE!{interface IVpnChannelConfiguration(IVpnChannelConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannelConfiguration] {
     fn get_ServerServiceName(&self, out: *mut HSTRING) -> HRESULT,
@@ -8372,7 +8372,7 @@ impl IVpnChannelConfiguration {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnChannelConfiguration: IVpnChannelConfiguration}
+RT_CLASS!{class VpnChannelConfiguration: IVpnChannelConfiguration ["Windows.Networking.Vpn.VpnChannelConfiguration"]}
 DEFINE_IID!(IID_IVpnChannelConfiguration2, 4077606732, 30756, 18204, 161, 24, 99, 219, 201, 58, 228, 199);
 RT_INTERFACE!{interface IVpnChannelConfiguration2(IVpnChannelConfiguration2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannelConfiguration2] {
     fn get_ServerUris(&self, out: *mut *mut foundation::collections::IVectorView<foundation::Uri>) -> HRESULT
@@ -8384,7 +8384,7 @@ impl IVpnChannelConfiguration2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum VpnChannelRequestCredentialsOptions: u32 {
+RT_ENUM! { enum VpnChannelRequestCredentialsOptions: u32 ["Windows.Networking.Vpn.VpnChannelRequestCredentialsOptions"] {
     None (VpnChannelRequestCredentialsOptions_None) = 0, Retrying (VpnChannelRequestCredentialsOptions_Retrying) = 1, UseForSingleSignIn (VpnChannelRequestCredentialsOptions_UseForSingleSignIn) = 2,
 }}
 DEFINE_IID!(IID_IVpnChannelStatics, 2297103917, 59416, 20477, 152, 166, 54, 62, 55, 54, 201, 93);
@@ -8426,8 +8426,8 @@ impl IVpnCredential {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnCredential: IVpnCredential}
-RT_ENUM! { enum VpnCredentialType: i32 {
+RT_CLASS!{class VpnCredential: IVpnCredential ["Windows.Networking.Vpn.VpnCredential"]}
+RT_ENUM! { enum VpnCredentialType: i32 ["Windows.Networking.Vpn.VpnCredentialType"] {
     UsernamePassword (VpnCredentialType_UsernamePassword) = 0, UsernameOtpPin (VpnCredentialType_UsernameOtpPin) = 1, UsernamePasswordAndPin (VpnCredentialType_UsernamePasswordAndPin) = 2, UsernamePasswordChange (VpnCredentialType_UsernamePasswordChange) = 3, SmartCard (VpnCredentialType_SmartCard) = 4, ProtectedCertificate (VpnCredentialType_ProtectedCertificate) = 5, UnProtectedCertificate (VpnCredentialType_UnProtectedCertificate) = 6,
 }}
 DEFINE_IID!(IID_IVpnCustomCheckBox, 1132955475, 965, 20065, 147, 215, 169, 87, 113, 76, 66, 130);
@@ -8452,7 +8452,7 @@ impl IVpnCustomCheckBox {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnCustomCheckBox: IVpnCustomCheckBox}
+RT_CLASS!{class VpnCustomCheckBox: IVpnCustomCheckBox ["Windows.Networking.Vpn.VpnCustomCheckBox"]}
 impl RtActivatable<IActivationFactory> for VpnCustomCheckBox {}
 DEFINE_CLSID!(VpnCustomCheckBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,67,104,101,99,107,66,111,120,0]) [CLSID_VpnCustomCheckBox]);
 DEFINE_IID!(IID_IVpnCustomComboBox, 2586056078, 56225, 19567, 130, 112, 220, 243, 201, 118, 28, 76);
@@ -8477,7 +8477,7 @@ impl IVpnCustomComboBox {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnCustomComboBox: IVpnCustomComboBox}
+RT_CLASS!{class VpnCustomComboBox: IVpnCustomComboBox ["Windows.Networking.Vpn.VpnCustomComboBox"]}
 impl RtActivatable<IActivationFactory> for VpnCustomComboBox {}
 DEFINE_CLSID!(VpnCustomComboBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,67,111,109,98,111,66,111,120,0]) [CLSID_VpnCustomComboBox]);
 DEFINE_IID!(IID_IVpnCustomEditBox, 805493152, 53183, 19467, 143, 60, 102, 245, 3, 194, 11, 57);
@@ -8513,14 +8513,14 @@ impl IVpnCustomEditBox {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnCustomEditBox: IVpnCustomEditBox}
+RT_CLASS!{class VpnCustomEditBox: IVpnCustomEditBox ["Windows.Networking.Vpn.VpnCustomEditBox"]}
 impl RtActivatable<IActivationFactory> for VpnCustomEditBox {}
 DEFINE_CLSID!(VpnCustomEditBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,69,100,105,116,66,111,120,0]) [CLSID_VpnCustomEditBox]);
 DEFINE_IID!(IID_IVpnCustomErrorBox, 2663706546, 51522, 17071, 178, 35, 88, 139, 72, 50, 135, 33);
 RT_INTERFACE!{interface IVpnCustomErrorBox(IVpnCustomErrorBoxVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomErrorBox] {
     
 }}
-RT_CLASS!{class VpnCustomErrorBox: IVpnCustomErrorBox}
+RT_CLASS!{class VpnCustomErrorBox: IVpnCustomErrorBox ["Windows.Networking.Vpn.VpnCustomErrorBox"]}
 impl RtActivatable<IActivationFactory> for VpnCustomErrorBox {}
 DEFINE_CLSID!(VpnCustomErrorBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,69,114,114,111,114,66,111,120,0]) [CLSID_VpnCustomErrorBox]);
 DEFINE_IID!(IID_IVpnCustomPrompt, 2603531899, 34773, 17212, 180, 246, 238, 230, 170, 104, 162, 68);
@@ -8583,7 +8583,7 @@ impl IVpnCustomPromptBooleanInput {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnCustomPromptBooleanInput: IVpnCustomPromptBooleanInput}
+RT_CLASS!{class VpnCustomPromptBooleanInput: IVpnCustomPromptBooleanInput ["Windows.Networking.Vpn.VpnCustomPromptBooleanInput"]}
 impl RtActivatable<IActivationFactory> for VpnCustomPromptBooleanInput {}
 DEFINE_CLSID!(VpnCustomPromptBooleanInput(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,80,114,111,109,112,116,66,111,111,108,101,97,110,73,110,112,117,116,0]) [CLSID_VpnCustomPromptBooleanInput]);
 DEFINE_IID!(IID_IVpnCustomPromptElement, 1941788216, 28420, 16461, 147, 221, 80, 164, 73, 36, 163, 139);
@@ -8641,7 +8641,7 @@ impl IVpnCustomPromptOptionSelector {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnCustomPromptOptionSelector: IVpnCustomPromptOptionSelector}
+RT_CLASS!{class VpnCustomPromptOptionSelector: IVpnCustomPromptOptionSelector ["Windows.Networking.Vpn.VpnCustomPromptOptionSelector"]}
 impl RtActivatable<IActivationFactory> for VpnCustomPromptOptionSelector {}
 DEFINE_CLSID!(VpnCustomPromptOptionSelector(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,80,114,111,109,112,116,79,112,116,105,111,110,83,101,108,101,99,116,111,114,0]) [CLSID_VpnCustomPromptOptionSelector]);
 DEFINE_IID!(IID_IVpnCustomPromptText, 1003011566, 14914, 18851, 171, 221, 7, 178, 237, 234, 117, 45);
@@ -8660,7 +8660,7 @@ impl IVpnCustomPromptText {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnCustomPromptText: IVpnCustomPromptText}
+RT_CLASS!{class VpnCustomPromptText: IVpnCustomPromptText ["Windows.Networking.Vpn.VpnCustomPromptText"]}
 impl RtActivatable<IActivationFactory> for VpnCustomPromptText {}
 DEFINE_CLSID!(VpnCustomPromptText(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,80,114,111,109,112,116,84,101,120,116,0]) [CLSID_VpnCustomPromptText]);
 DEFINE_IID!(IID_IVpnCustomPromptTextInput, 3386547317, 37180, 18389, 136, 186, 72, 252, 72, 147, 2, 53);
@@ -8696,7 +8696,7 @@ impl IVpnCustomPromptTextInput {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnCustomPromptTextInput: IVpnCustomPromptTextInput}
+RT_CLASS!{class VpnCustomPromptTextInput: IVpnCustomPromptTextInput ["Windows.Networking.Vpn.VpnCustomPromptTextInput"]}
 impl RtActivatable<IActivationFactory> for VpnCustomPromptTextInput {}
 DEFINE_CLSID!(VpnCustomPromptTextInput(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,80,114,111,109,112,116,84,101,120,116,73,110,112,117,116,0]) [CLSID_VpnCustomPromptTextInput]);
 DEFINE_IID!(IID_IVpnCustomTextBox, 3668231114, 36643, 19766, 145, 241, 118, 217, 55, 130, 121, 66);
@@ -8715,10 +8715,10 @@ impl IVpnCustomTextBox {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnCustomTextBox: IVpnCustomTextBox}
+RT_CLASS!{class VpnCustomTextBox: IVpnCustomTextBox ["Windows.Networking.Vpn.VpnCustomTextBox"]}
 impl RtActivatable<IActivationFactory> for VpnCustomTextBox {}
 DEFINE_CLSID!(VpnCustomTextBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,84,101,120,116,66,111,120,0]) [CLSID_VpnCustomTextBox]);
-RT_ENUM! { enum VpnDataPathType: i32 {
+RT_ENUM! { enum VpnDataPathType: i32 ["Windows.Networking.Vpn.VpnDataPathType"] {
     Send (VpnDataPathType_Send) = 0, Receive (VpnDataPathType_Receive) = 1,
 }}
 DEFINE_IID!(IID_IVpnDomainNameAssignment, 1094037825, 52443, 18869, 148, 1, 3, 154, 138, 231, 103, 233);
@@ -8743,7 +8743,7 @@ impl IVpnDomainNameAssignment {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnDomainNameAssignment: IVpnDomainNameAssignment}
+RT_CLASS!{class VpnDomainNameAssignment: IVpnDomainNameAssignment ["Windows.Networking.Vpn.VpnDomainNameAssignment"]}
 impl RtActivatable<IActivationFactory> for VpnDomainNameAssignment {}
 DEFINE_CLSID!(VpnDomainNameAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,68,111,109,97,105,110,78,97,109,101,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnDomainNameAssignment]);
 DEFINE_IID!(IID_IVpnDomainNameInfo, 2905520175, 60046, 20346, 132, 62, 26, 135, 227, 46, 27, 154);
@@ -8785,7 +8785,7 @@ impl IVpnDomainNameInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnDomainNameInfo: IVpnDomainNameInfo}
+RT_CLASS!{class VpnDomainNameInfo: IVpnDomainNameInfo ["Windows.Networking.Vpn.VpnDomainNameInfo"]}
 impl RtActivatable<IVpnDomainNameInfoFactory> for VpnDomainNameInfo {}
 impl VpnDomainNameInfo {
     #[inline] pub fn create_vpn_domain_name_info(name: &HStringArg, nameType: VpnDomainNameType, dnsServerList: &foundation::collections::IIterable<super::HostName>, proxyServerList: &foundation::collections::IIterable<super::HostName>) -> Result<ComPtr<VpnDomainNameInfo>> {
@@ -8815,7 +8815,7 @@ impl IVpnDomainNameInfoFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum VpnDomainNameType: i32 {
+RT_ENUM! { enum VpnDomainNameType: i32 ["Windows.Networking.Vpn.VpnDomainNameType"] {
     Suffix (VpnDomainNameType_Suffix) = 0, FullyQualified (VpnDomainNameType_FullyQualified) = 1, Reserved (VpnDomainNameType_Reserved) = 65535,
 }}
 DEFINE_IID!(IID_IVpnInterfaceId, 2653805730, 5906, 19684, 177, 121, 140, 101, 44, 109, 16, 17);
@@ -8829,7 +8829,7 @@ impl IVpnInterfaceId {
         if hr == S_OK { Ok(ComArray::from_raw(idSize, id)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnInterfaceId: IVpnInterfaceId}
+RT_CLASS!{class VpnInterfaceId: IVpnInterfaceId ["Windows.Networking.Vpn.VpnInterfaceId"]}
 impl RtActivatable<IVpnInterfaceIdFactory> for VpnInterfaceId {}
 impl VpnInterfaceId {
     #[inline] pub fn create_vpn_interface_id(address: &[u8]) -> Result<ComPtr<VpnInterfaceId>> {
@@ -8848,7 +8848,7 @@ impl IVpnInterfaceIdFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum VpnIPProtocol: i32 {
+RT_ENUM! { enum VpnIPProtocol: i32 ["Windows.Networking.Vpn.VpnIPProtocol"] {
     None (VpnIPProtocol_None) = 0, Tcp (VpnIPProtocol_Tcp) = 6, Udp (VpnIPProtocol_Udp) = 17, Icmp (VpnIPProtocol_Icmp) = 1, Ipv6Icmp (VpnIPProtocol_Ipv6Icmp) = 58, Igmp (VpnIPProtocol_Igmp) = 2, Pgm (VpnIPProtocol_Pgm) = 113,
 }}
 DEFINE_IID!(IID_IVpnManagementAgent, 423007949, 42436, 19134, 133, 43, 120, 91, 228, 203, 62, 52);
@@ -8911,13 +8911,13 @@ impl IVpnManagementAgent {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnManagementAgent: IVpnManagementAgent}
+RT_CLASS!{class VpnManagementAgent: IVpnManagementAgent ["Windows.Networking.Vpn.VpnManagementAgent"]}
 impl RtActivatable<IActivationFactory> for VpnManagementAgent {}
 DEFINE_CLSID!(VpnManagementAgent(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,77,97,110,97,103,101,109,101,110,116,65,103,101,110,116,0]) [CLSID_VpnManagementAgent]);
-RT_ENUM! { enum VpnManagementConnectionStatus: i32 {
+RT_ENUM! { enum VpnManagementConnectionStatus: i32 ["Windows.Networking.Vpn.VpnManagementConnectionStatus"] {
     Disconnected (VpnManagementConnectionStatus_Disconnected) = 0, Disconnecting (VpnManagementConnectionStatus_Disconnecting) = 1, Connected (VpnManagementConnectionStatus_Connected) = 2, Connecting (VpnManagementConnectionStatus_Connecting) = 3,
 }}
-RT_ENUM! { enum VpnManagementErrorStatus: i32 {
+RT_ENUM! { enum VpnManagementErrorStatus: i32 ["Windows.Networking.Vpn.VpnManagementErrorStatus"] {
     Ok (VpnManagementErrorStatus_Ok) = 0, Other (VpnManagementErrorStatus_Other) = 1, InvalidXmlSyntax (VpnManagementErrorStatus_InvalidXmlSyntax) = 2, ProfileNameTooLong (VpnManagementErrorStatus_ProfileNameTooLong) = 3, ProfileInvalidAppId (VpnManagementErrorStatus_ProfileInvalidAppId) = 4, AccessDenied (VpnManagementErrorStatus_AccessDenied) = 5, CannotFindProfile (VpnManagementErrorStatus_CannotFindProfile) = 6, AlreadyDisconnecting (VpnManagementErrorStatus_AlreadyDisconnecting) = 7, AlreadyConnected (VpnManagementErrorStatus_AlreadyConnected) = 8, GeneralAuthenticationFailure (VpnManagementErrorStatus_GeneralAuthenticationFailure) = 9, EapFailure (VpnManagementErrorStatus_EapFailure) = 10, SmartCardFailure (VpnManagementErrorStatus_SmartCardFailure) = 11, CertificateFailure (VpnManagementErrorStatus_CertificateFailure) = 12, ServerConfiguration (VpnManagementErrorStatus_ServerConfiguration) = 13, NoConnection (VpnManagementErrorStatus_NoConnection) = 14, ServerConnection (VpnManagementErrorStatus_ServerConnection) = 15, UserNamePassword (VpnManagementErrorStatus_UserNamePassword) = 16, DnsNotResolvable (VpnManagementErrorStatus_DnsNotResolvable) = 17, InvalidIP (VpnManagementErrorStatus_InvalidIP) = 18,
 }}
 DEFINE_IID!(IID_IVpnNamespaceAssignment, 3623344920, 12413, 19470, 189, 98, 143, 162, 112, 187, 173, 214);
@@ -8947,7 +8947,7 @@ impl IVpnNamespaceAssignment {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnNamespaceAssignment: IVpnNamespaceAssignment}
+RT_CLASS!{class VpnNamespaceAssignment: IVpnNamespaceAssignment ["Windows.Networking.Vpn.VpnNamespaceAssignment"]}
 impl RtActivatable<IActivationFactory> for VpnNamespaceAssignment {}
 DEFINE_CLSID!(VpnNamespaceAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,78,97,109,101,115,112,97,99,101,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnNamespaceAssignment]);
 DEFINE_IID!(IID_IVpnNamespaceInfo, 820902723, 17487, 17605, 129, 103, 163, 90, 145, 241, 175, 148);
@@ -8988,7 +8988,7 @@ impl IVpnNamespaceInfo {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnNamespaceInfo: IVpnNamespaceInfo}
+RT_CLASS!{class VpnNamespaceInfo: IVpnNamespaceInfo ["Windows.Networking.Vpn.VpnNamespaceInfo"]}
 impl RtActivatable<IVpnNamespaceInfoFactory> for VpnNamespaceInfo {}
 impl VpnNamespaceInfo {
     #[inline] pub fn create_vpn_namespace_info(name: &HStringArg, dnsServerList: &foundation::collections::IVector<super::HostName>, proxyServerList: &foundation::collections::IVector<super::HostName>) -> Result<ComPtr<VpnNamespaceInfo>> {
@@ -9073,7 +9073,7 @@ impl IVpnNativeProfile {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnNativeProfile: IVpnNativeProfile}
+RT_CLASS!{class VpnNativeProfile: IVpnNativeProfile ["Windows.Networking.Vpn.VpnNativeProfile"]}
 impl RtActivatable<IActivationFactory> for VpnNativeProfile {}
 DEFINE_CLSID!(VpnNativeProfile(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,78,97,116,105,118,101,80,114,111,102,105,108,101,0]) [CLSID_VpnNativeProfile]);
 DEFINE_IID!(IID_IVpnNativeProfile2, 267134055, 52661, 19143, 181, 163, 10, 251, 94, 196, 118, 130);
@@ -9098,7 +9098,7 @@ impl IVpnNativeProfile2 {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum VpnNativeProtocolType: i32 {
+RT_ENUM! { enum VpnNativeProtocolType: i32 ["Windows.Networking.Vpn.VpnNativeProtocolType"] {
     Pptp (VpnNativeProtocolType_Pptp) = 0, L2tp (VpnNativeProtocolType_L2tp) = 1, IpsecIkev2 (VpnNativeProtocolType_IpsecIkev2) = 2,
 }}
 DEFINE_IID!(IID_IVpnPacketBuffer, 3271070204, 19804, 19043, 183, 13, 78, 48, 126, 172, 206, 85);
@@ -9135,7 +9135,7 @@ impl IVpnPacketBuffer {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnPacketBuffer: IVpnPacketBuffer}
+RT_CLASS!{class VpnPacketBuffer: IVpnPacketBuffer ["Windows.Networking.Vpn.VpnPacketBuffer"]}
 impl RtActivatable<IVpnPacketBufferFactory> for VpnPacketBuffer {}
 impl VpnPacketBuffer {
     #[inline] pub fn create_vpn_packet_buffer(parentBuffer: &VpnPacketBuffer, offset: u32, length: u32) -> Result<ComPtr<VpnPacketBuffer>> {
@@ -9230,7 +9230,7 @@ impl IVpnPacketBufferList {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnPacketBufferList: IVpnPacketBufferList}
+RT_CLASS!{class VpnPacketBufferList: IVpnPacketBufferList ["Windows.Networking.Vpn.VpnPacketBufferList"]}
 DEFINE_IID!(IID_IVpnPacketBufferList2, 1048236005, 59934, 18474, 141, 152, 192, 101, 245, 125, 137, 234);
 RT_INTERFACE!{interface IVpnPacketBufferList2(IVpnPacketBufferList2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBufferList2] {
     fn AddLeadingPacket(&self, nextVpnPacketBuffer: *mut VpnPacketBuffer) -> HRESULT,
@@ -9258,7 +9258,7 @@ impl IVpnPacketBufferList2 {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum VpnPacketBufferStatus: i32 {
+RT_ENUM! { enum VpnPacketBufferStatus: i32 ["Windows.Networking.Vpn.VpnPacketBufferStatus"] {
     Ok (VpnPacketBufferStatus_Ok) = 0, InvalidBufferSize (VpnPacketBufferStatus_InvalidBufferSize) = 1,
 }}
 DEFINE_IID!(IID_IVpnPickedCredential, 2591636167, 34900, 20050, 173, 151, 36, 221, 154, 132, 43, 206);
@@ -9284,7 +9284,7 @@ impl IVpnPickedCredential {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnPickedCredential: IVpnPickedCredential}
+RT_CLASS!{class VpnPickedCredential: IVpnPickedCredential ["Windows.Networking.Vpn.VpnPickedCredential"]}
 DEFINE_IID!(IID_IVpnPlugIn, 3468135687, 53416, 18179, 160, 145, 200, 194, 192, 145, 91, 196);
 RT_INTERFACE!{interface IVpnPlugIn(IVpnPlugInVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPlugIn] {
     fn Connect(&self, channel: *mut VpnChannel) -> HRESULT,
@@ -9349,7 +9349,7 @@ impl IVpnPlugInProfile {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnPlugInProfile: IVpnPlugInProfile}
+RT_CLASS!{class VpnPlugInProfile: IVpnPlugInProfile ["Windows.Networking.Vpn.VpnPlugInProfile"]}
 impl RtActivatable<IActivationFactory> for VpnPlugInProfile {}
 DEFINE_CLSID!(VpnPlugInProfile(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,80,108,117,103,73,110,80,114,111,102,105,108,101,0]) [CLSID_VpnPlugInProfile]);
 DEFINE_IID!(IID_IVpnPlugInProfile2, 1629243538, 53140, 19158, 186, 153, 0, 244, 255, 52, 86, 94);
@@ -9463,7 +9463,7 @@ impl IVpnRoute {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnRoute: IVpnRoute}
+RT_CLASS!{class VpnRoute: IVpnRoute ["Windows.Networking.Vpn.VpnRoute"]}
 impl RtActivatable<IVpnRouteFactory> for VpnRoute {}
 impl VpnRoute {
     #[inline] pub fn create_vpn_route(address: &super::HostName, prefixSize: u8) -> Result<ComPtr<VpnRoute>> {
@@ -9531,7 +9531,7 @@ impl IVpnRouteAssignment {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnRouteAssignment: IVpnRouteAssignment}
+RT_CLASS!{class VpnRouteAssignment: IVpnRouteAssignment ["Windows.Networking.Vpn.VpnRouteAssignment"]}
 impl RtActivatable<IActivationFactory> for VpnRouteAssignment {}
 DEFINE_CLSID!(VpnRouteAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,82,111,117,116,101,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnRouteAssignment]);
 DEFINE_IID!(IID_IVpnRouteFactory, 3186275839, 17871, 19353, 131, 251, 219, 59, 194, 103, 43, 2);
@@ -9545,7 +9545,7 @@ impl IVpnRouteFactory {
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum VpnRoutingPolicyType: i32 {
+RT_ENUM! { enum VpnRoutingPolicyType: i32 ["Windows.Networking.Vpn.VpnRoutingPolicyType"] {
     SplitRouting (VpnRoutingPolicyType_SplitRouting) = 0, ForceAllTrafficOverVpn (VpnRoutingPolicyType_ForceAllTrafficOverVpn) = 1,
 }}
 DEFINE_IID!(IID_IVpnSystemHealth, 2577987759, 49390, 20085, 129, 122, 242, 49, 174, 229, 18, 61);
@@ -9559,7 +9559,7 @@ impl IVpnSystemHealth {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnSystemHealth: IVpnSystemHealth}
+RT_CLASS!{class VpnSystemHealth: IVpnSystemHealth ["Windows.Networking.Vpn.VpnSystemHealth"]}
 DEFINE_IID!(IID_IVpnTrafficFilter, 795417440, 27807, 18421, 172, 54, 187, 27, 4, 46, 44, 80);
 RT_INTERFACE!{interface IVpnTrafficFilter(IVpnTrafficFilterVtbl): IInspectable(IInspectableVtbl) [IID_IVpnTrafficFilter] {
     fn get_AppId(&self, out: *mut *mut VpnAppId) -> HRESULT,
@@ -9628,7 +9628,7 @@ impl IVpnTrafficFilter {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnTrafficFilter: IVpnTrafficFilter}
+RT_CLASS!{class VpnTrafficFilter: IVpnTrafficFilter ["Windows.Networking.Vpn.VpnTrafficFilter"]}
 impl RtActivatable<IVpnTrafficFilterFactory> for VpnTrafficFilter {}
 impl VpnTrafficFilter {
     #[inline] pub fn create(appId: &VpnAppId) -> Result<ComPtr<VpnTrafficFilter>> {
@@ -9669,7 +9669,7 @@ impl IVpnTrafficFilterAssignment {
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
-RT_CLASS!{class VpnTrafficFilterAssignment: IVpnTrafficFilterAssignment}
+RT_CLASS!{class VpnTrafficFilterAssignment: IVpnTrafficFilterAssignment ["Windows.Networking.Vpn.VpnTrafficFilterAssignment"]}
 impl RtActivatable<IActivationFactory> for VpnTrafficFilterAssignment {}
 DEFINE_CLSID!(VpnTrafficFilterAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,84,114,97,102,102,105,99,70,105,108,116,101,114,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnTrafficFilterAssignment]);
 DEFINE_IID!(IID_IVpnTrafficFilterFactory, 1208828373, 32665, 18252, 134, 238, 150, 223, 22, 131, 24, 241);
@@ -9745,7 +9745,7 @@ impl IXboxLiveDeviceAddress {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XboxLiveDeviceAddress: IXboxLiveDeviceAddress}
+RT_CLASS!{class XboxLiveDeviceAddress: IXboxLiveDeviceAddress ["Windows.Networking.XboxLive.XboxLiveDeviceAddress"]}
 impl RtActivatable<IXboxLiveDeviceAddressStatics> for XboxLiveDeviceAddress {}
 impl XboxLiveDeviceAddress {
     #[inline] pub fn create_from_snapshot_base64(base64: &HStringArg) -> Result<Option<ComPtr<XboxLiveDeviceAddress>>> {
@@ -9875,7 +9875,7 @@ impl IXboxLiveEndpointPair {
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XboxLiveEndpointPair: IXboxLiveEndpointPair}
+RT_CLASS!{class XboxLiveEndpointPair: IXboxLiveEndpointPair ["Windows.Networking.XboxLive.XboxLiveEndpointPair"]}
 impl RtActivatable<IXboxLiveEndpointPairStatics> for XboxLiveEndpointPair {}
 impl XboxLiveEndpointPair {
     #[inline] pub fn find_endpoint_pair_by_socket_address_bytes(localSocketAddress: &[u8], remoteSocketAddress: &[u8]) -> Result<Option<ComPtr<XboxLiveEndpointPair>>> {
@@ -9886,7 +9886,7 @@ impl XboxLiveEndpointPair {
     }
 }
 DEFINE_CLSID!(XboxLiveEndpointPair(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,88,98,111,120,76,105,118,101,46,88,98,111,120,76,105,118,101,69,110,100,112,111,105,110,116,80,97,105,114,0]) [CLSID_XboxLiveEndpointPair]);
-RT_ENUM! { enum XboxLiveEndpointPairCreationBehaviors: u32 {
+RT_ENUM! { enum XboxLiveEndpointPairCreationBehaviors: u32 ["Windows.Networking.XboxLive.XboxLiveEndpointPairCreationBehaviors"] {
     None (XboxLiveEndpointPairCreationBehaviors_None) = 0, ReevaluatePath (XboxLiveEndpointPairCreationBehaviors_ReevaluatePath) = 1,
 }}
 DEFINE_IID!(IID_IXboxLiveEndpointPairCreationResult, 3651713941, 10923, 19742, 151, 148, 51, 236, 192, 220, 240, 254);
@@ -9918,11 +9918,11 @@ impl IXboxLiveEndpointPairCreationResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XboxLiveEndpointPairCreationResult: IXboxLiveEndpointPairCreationResult}
-RT_ENUM! { enum XboxLiveEndpointPairCreationStatus: i32 {
+RT_CLASS!{class XboxLiveEndpointPairCreationResult: IXboxLiveEndpointPairCreationResult ["Windows.Networking.XboxLive.XboxLiveEndpointPairCreationResult"]}
+RT_ENUM! { enum XboxLiveEndpointPairCreationStatus: i32 ["Windows.Networking.XboxLive.XboxLiveEndpointPairCreationStatus"] {
     Succeeded (XboxLiveEndpointPairCreationStatus_Succeeded) = 0, NoLocalNetworks (XboxLiveEndpointPairCreationStatus_NoLocalNetworks) = 1, NoCompatibleNetworkPaths (XboxLiveEndpointPairCreationStatus_NoCompatibleNetworkPaths) = 2, LocalSystemNotAuthorized (XboxLiveEndpointPairCreationStatus_LocalSystemNotAuthorized) = 3, Canceled (XboxLiveEndpointPairCreationStatus_Canceled) = 4, TimedOut (XboxLiveEndpointPairCreationStatus_TimedOut) = 5, RemoteSystemNotAuthorized (XboxLiveEndpointPairCreationStatus_RemoteSystemNotAuthorized) = 6, RefusedDueToConfiguration (XboxLiveEndpointPairCreationStatus_RefusedDueToConfiguration) = 7, UnexpectedInternalError (XboxLiveEndpointPairCreationStatus_UnexpectedInternalError) = 8,
 }}
-RT_ENUM! { enum XboxLiveEndpointPairState: i32 {
+RT_ENUM! { enum XboxLiveEndpointPairState: i32 ["Windows.Networking.XboxLive.XboxLiveEndpointPairState"] {
     Invalid (XboxLiveEndpointPairState_Invalid) = 0, CreatingOutbound (XboxLiveEndpointPairState_CreatingOutbound) = 1, CreatingInbound (XboxLiveEndpointPairState_CreatingInbound) = 2, Ready (XboxLiveEndpointPairState_Ready) = 3, DeletingLocally (XboxLiveEndpointPairState_DeletingLocally) = 4, RemoteEndpointTerminating (XboxLiveEndpointPairState_RemoteEndpointTerminating) = 5, Deleted (XboxLiveEndpointPairState_Deleted) = 6,
 }}
 DEFINE_IID!(IID_IXboxLiveEndpointPairStateChangedEventArgs, 1496202069, 56840, 17639, 172, 59, 185, 185, 161, 105, 88, 58);
@@ -9942,7 +9942,7 @@ impl IXboxLiveEndpointPairStateChangedEventArgs {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XboxLiveEndpointPairStateChangedEventArgs: IXboxLiveEndpointPairStateChangedEventArgs}
+RT_CLASS!{class XboxLiveEndpointPairStateChangedEventArgs: IXboxLiveEndpointPairStateChangedEventArgs ["Windows.Networking.XboxLive.XboxLiveEndpointPairStateChangedEventArgs"]}
 DEFINE_IID!(IID_IXboxLiveEndpointPairStatics, 1680960304, 8570, 16963, 142, 225, 103, 41, 40, 29, 39, 219);
 RT_INTERFACE!{static interface IXboxLiveEndpointPairStatics(IXboxLiveEndpointPairStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPairStatics] {
     fn FindEndpointPairBySocketAddressBytes(&self, localSocketAddressSize: u32, localSocketAddress: *mut u8, remoteSocketAddressSize: u32, remoteSocketAddress: *mut u8, out: *mut *mut XboxLiveEndpointPair) -> HRESULT,
@@ -10042,7 +10042,7 @@ impl IXboxLiveEndpointPairTemplate {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XboxLiveEndpointPairTemplate: IXboxLiveEndpointPairTemplate}
+RT_CLASS!{class XboxLiveEndpointPairTemplate: IXboxLiveEndpointPairTemplate ["Windows.Networking.XboxLive.XboxLiveEndpointPairTemplate"]}
 impl RtActivatable<IXboxLiveEndpointPairTemplateStatics> for XboxLiveEndpointPairTemplate {}
 impl XboxLiveEndpointPairTemplate {
     #[inline] pub fn get_template_by_name(name: &HStringArg) -> Result<Option<ComPtr<XboxLiveEndpointPairTemplate>>> {
@@ -10081,8 +10081,8 @@ impl IXboxLiveInboundEndpointPairCreatedEventArgs {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XboxLiveInboundEndpointPairCreatedEventArgs: IXboxLiveInboundEndpointPairCreatedEventArgs}
-RT_ENUM! { enum XboxLiveNetworkAccessKind: i32 {
+RT_CLASS!{class XboxLiveInboundEndpointPairCreatedEventArgs: IXboxLiveInboundEndpointPairCreatedEventArgs ["Windows.Networking.XboxLive.XboxLiveInboundEndpointPairCreatedEventArgs"]}
+RT_ENUM! { enum XboxLiveNetworkAccessKind: i32 ["Windows.Networking.XboxLive.XboxLiveNetworkAccessKind"] {
     Open (XboxLiveNetworkAccessKind_Open) = 0, Moderate (XboxLiveNetworkAccessKind_Moderate) = 1, Strict (XboxLiveNetworkAccessKind_Strict) = 2,
 }}
 DEFINE_IID!(IID_IXboxLiveQualityOfServiceMeasurement, 1298672590, 42454, 18406, 162, 54, 207, 222, 95, 189, 242, 237);
@@ -10183,7 +10183,7 @@ impl IXboxLiveQualityOfServiceMeasurement {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XboxLiveQualityOfServiceMeasurement: IXboxLiveQualityOfServiceMeasurement}
+RT_CLASS!{class XboxLiveQualityOfServiceMeasurement: IXboxLiveQualityOfServiceMeasurement ["Windows.Networking.XboxLive.XboxLiveQualityOfServiceMeasurement"]}
 impl RtActivatable<IXboxLiveQualityOfServiceMeasurementStatics> for XboxLiveQualityOfServiceMeasurement {}
 impl RtActivatable<IActivationFactory> for XboxLiveQualityOfServiceMeasurement {}
 impl XboxLiveQualityOfServiceMeasurement {
@@ -10289,10 +10289,10 @@ impl IXboxLiveQualityOfServiceMeasurementStatics {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_ENUM! { enum XboxLiveQualityOfServiceMeasurementStatus: i32 {
+RT_ENUM! { enum XboxLiveQualityOfServiceMeasurementStatus: i32 ["Windows.Networking.XboxLive.XboxLiveQualityOfServiceMeasurementStatus"] {
     NotStarted (XboxLiveQualityOfServiceMeasurementStatus_NotStarted) = 0, InProgress (XboxLiveQualityOfServiceMeasurementStatus_InProgress) = 1, InProgressWithProvisionalResults (XboxLiveQualityOfServiceMeasurementStatus_InProgressWithProvisionalResults) = 2, Succeeded (XboxLiveQualityOfServiceMeasurementStatus_Succeeded) = 3, NoLocalNetworks (XboxLiveQualityOfServiceMeasurementStatus_NoLocalNetworks) = 4, NoCompatibleNetworkPaths (XboxLiveQualityOfServiceMeasurementStatus_NoCompatibleNetworkPaths) = 5, LocalSystemNotAuthorized (XboxLiveQualityOfServiceMeasurementStatus_LocalSystemNotAuthorized) = 6, Canceled (XboxLiveQualityOfServiceMeasurementStatus_Canceled) = 7, TimedOut (XboxLiveQualityOfServiceMeasurementStatus_TimedOut) = 8, RemoteSystemNotAuthorized (XboxLiveQualityOfServiceMeasurementStatus_RemoteSystemNotAuthorized) = 9, RefusedDueToConfiguration (XboxLiveQualityOfServiceMeasurementStatus_RefusedDueToConfiguration) = 10, UnexpectedInternalError (XboxLiveQualityOfServiceMeasurementStatus_UnexpectedInternalError) = 11,
 }}
-RT_ENUM! { enum XboxLiveQualityOfServiceMetric: i32 {
+RT_ENUM! { enum XboxLiveQualityOfServiceMetric: i32 ["Windows.Networking.XboxLive.XboxLiveQualityOfServiceMetric"] {
     AverageLatencyInMilliseconds (XboxLiveQualityOfServiceMetric_AverageLatencyInMilliseconds) = 0, MinLatencyInMilliseconds (XboxLiveQualityOfServiceMetric_MinLatencyInMilliseconds) = 1, MaxLatencyInMilliseconds (XboxLiveQualityOfServiceMetric_MaxLatencyInMilliseconds) = 2, AverageOutboundBitsPerSecond (XboxLiveQualityOfServiceMetric_AverageOutboundBitsPerSecond) = 3, MinOutboundBitsPerSecond (XboxLiveQualityOfServiceMetric_MinOutboundBitsPerSecond) = 4, MaxOutboundBitsPerSecond (XboxLiveQualityOfServiceMetric_MaxOutboundBitsPerSecond) = 5, AverageInboundBitsPerSecond (XboxLiveQualityOfServiceMetric_AverageInboundBitsPerSecond) = 6, MinInboundBitsPerSecond (XboxLiveQualityOfServiceMetric_MinInboundBitsPerSecond) = 7, MaxInboundBitsPerSecond (XboxLiveQualityOfServiceMetric_MaxInboundBitsPerSecond) = 8,
 }}
 DEFINE_IID!(IID_IXboxLiveQualityOfServiceMetricResult, 2934723537, 13665, 18306, 176, 207, 211, 174, 41, 217, 250, 135);
@@ -10324,7 +10324,7 @@ impl IXboxLiveQualityOfServiceMetricResult {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XboxLiveQualityOfServiceMetricResult: IXboxLiveQualityOfServiceMetricResult}
+RT_CLASS!{class XboxLiveQualityOfServiceMetricResult: IXboxLiveQualityOfServiceMetricResult ["Windows.Networking.XboxLive.XboxLiveQualityOfServiceMetricResult"]}
 DEFINE_IID!(IID_IXboxLiveQualityOfServicePrivatePayloadResult, 1516438190, 28472, 16832, 159, 204, 234, 108, 185, 120, 202, 252);
 RT_INTERFACE!{interface IXboxLiveQualityOfServicePrivatePayloadResult(IXboxLiveQualityOfServicePrivatePayloadResultVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveQualityOfServicePrivatePayloadResult] {
     fn get_Status(&self, out: *mut XboxLiveQualityOfServiceMeasurementStatus) -> HRESULT,
@@ -10348,8 +10348,8 @@ impl IXboxLiveQualityOfServicePrivatePayloadResult {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
-RT_CLASS!{class XboxLiveQualityOfServicePrivatePayloadResult: IXboxLiveQualityOfServicePrivatePayloadResult}
-RT_ENUM! { enum XboxLiveSocketKind: i32 {
+RT_CLASS!{class XboxLiveQualityOfServicePrivatePayloadResult: IXboxLiveQualityOfServicePrivatePayloadResult ["Windows.Networking.XboxLive.XboxLiveQualityOfServicePrivatePayloadResult"]}
+RT_ENUM! { enum XboxLiveSocketKind: i32 ["Windows.Networking.XboxLive.XboxLiveSocketKind"] {
     None (XboxLiveSocketKind_None) = 0, Datagram (XboxLiveSocketKind_Datagram) = 1, Stream (XboxLiveSocketKind_Stream) = 2,
 }}
 } // Windows.Networking.XboxLive
