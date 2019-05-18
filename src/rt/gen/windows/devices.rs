@@ -1,4 +1,4 @@
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ILowLevelDevicesAggregateProvider, 2805880348, 43713, 20167, 168, 82, 71, 159, 112, 96, 208, 31);
 RT_INTERFACE!{interface ILowLevelDevicesAggregateProvider(ILowLevelDevicesAggregateProviderVtbl): IInspectable(IInspectableVtbl) [IID_ILowLevelDevicesAggregateProvider] {
     fn get_AdcControllerProvider(&self, out: *mut *mut adc::provider::IAdcControllerProvider) -> HRESULT,
@@ -85,7 +85,7 @@ impl ILowLevelDevicesControllerStatics {
     }}
 }
 pub mod adc { // Windows.Devices.Adc
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAdcChannel, 67892244, 9608, 19030, 171, 239, 115, 162, 96, 172, 198, 10);
 RT_INTERFACE!{interface IAdcChannel(IAdcChannelVtbl): IInspectable(IInspectableVtbl) [IID_IAdcChannel] {
     fn get_Controller(&self, out: *mut *mut AdcController) -> HRESULT,
@@ -200,7 +200,7 @@ impl IAdcControllerStatics2 {
     }}
 }
 pub mod provider { // Windows.Devices.Adc.Provider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAdcControllerProvider, 3193198632, 33133, 19941, 160, 72, 171, 160, 105, 88, 170, 168);
 RT_INTERFACE!{interface IAdcControllerProvider(IAdcControllerProviderVtbl): IInspectable(IInspectableVtbl) [IID_IAdcControllerProvider] {
     fn get_ChannelCount(&self, out: *mut i32) -> HRESULT,
@@ -280,7 +280,7 @@ RT_ENUM! { enum ProviderAdcChannelMode: i32 {
 } // Windows.Devices.Adc.Provider
 } // Windows.Devices.Adc
 pub mod alljoyn { // Windows.Devices.AllJoyn
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAllJoynAboutData, 3853106944, 8098, 18489, 147, 239, 249, 223, 64, 72, 144, 247);
 RT_INTERFACE!{interface IAllJoynAboutData(IAllJoynAboutDataVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynAboutData] {
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
@@ -1646,7 +1646,7 @@ impl IAllJoynWatcherStoppedEventArgsFactory {
 }
 } // Windows.Devices.AllJoyn
 pub mod background { // Windows.Devices.Background
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDeviceServicingDetails, 1252781609, 9028, 19140, 133, 39, 74, 142, 246, 144, 86, 69);
 RT_INTERFACE!{interface IDeviceServicingDetails(IDeviceServicingDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceServicingDetails] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -1691,7 +1691,7 @@ impl IDeviceUseDetails {
 RT_CLASS!{class DeviceUseDetails: IDeviceUseDetails}
 } // Windows.Devices.Background
 pub mod bluetooth { // Windows.Devices.Bluetooth
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IBluetoothAdapter, 2037706828, 24442, 18996, 146, 37, 168, 85, 248, 75, 26, 139);
 RT_INTERFACE!{interface IBluetoothAdapter(IBluetoothAdapterVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothAdapter] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -3047,7 +3047,7 @@ impl IBluetoothUuidHelperStatics {
     }}
 }
 pub mod advertisement { // Windows.Devices.Bluetooth.Advertisement
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IBluetoothLEAdvertisement, 107983543, 13265, 20093, 131, 103, 207, 129, 208, 247, 150, 83);
 RT_INTERFACE!{interface IBluetoothLEAdvertisement(IBluetoothLEAdvertisementVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisement] {
     fn get_Flags(&self, out: *mut *mut foundation::IReference<BluetoothLEAdvertisementFlags>) -> HRESULT,
@@ -3114,8 +3114,8 @@ RT_INTERFACE!{interface IBluetoothLEAdvertisementBytePattern(IBluetoothLEAdverti
     fn put_DataType(&self, value: u8) -> HRESULT,
     fn get_Offset(&self, out: *mut i16) -> HRESULT,
     fn put_Offset(&self, value: i16) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn put_Data(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_Data(&self, value: *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IBluetoothLEAdvertisementBytePattern {
     #[inline] pub fn get_data_type(&self) -> Result<u8> { unsafe { 
@@ -3136,12 +3136,12 @@ impl IBluetoothLEAdvertisementBytePattern {
         let hr = ((*self.lpVtbl).put_Offset)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Data)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_data(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_data(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Data)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -3150,17 +3150,17 @@ RT_CLASS!{class BluetoothLEAdvertisementBytePattern: IBluetoothLEAdvertisementBy
 impl RtActivatable<IBluetoothLEAdvertisementBytePatternFactory> for BluetoothLEAdvertisementBytePattern {}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementBytePattern {}
 impl BluetoothLEAdvertisementBytePattern {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(dataType: u8, offset: i16, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<BluetoothLEAdvertisementBytePattern>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(dataType: u8, offset: i16, data: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<BluetoothLEAdvertisementBytePattern>> {
         <Self as RtActivatable<IBluetoothLEAdvertisementBytePatternFactory>>::get_activation_factory().create(dataType, offset, data)
     }
 }
 DEFINE_CLSID!(BluetoothLEAdvertisementBytePattern(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,66,121,116,101,80,97,116,116,101,114,110,0]) [CLSID_BluetoothLEAdvertisementBytePattern]);
 DEFINE_IID!(IID_IBluetoothLEAdvertisementBytePatternFactory, 3269610867, 64860, 20163, 190, 42, 156, 166, 250, 17, 183, 189);
 RT_INTERFACE!{static interface IBluetoothLEAdvertisementBytePatternFactory(IBluetoothLEAdvertisementBytePatternFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementBytePatternFactory] {
-    #[cfg(feature="windows-storage")] fn Create(&self, dataType: u8, offset: i16, data: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut BluetoothLEAdvertisementBytePattern) -> HRESULT
+    #[cfg(feature="windows-storage")] fn Create(&self, dataType: u8, offset: i16, data: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut BluetoothLEAdvertisementBytePattern) -> HRESULT
 }}
 impl IBluetoothLEAdvertisementBytePatternFactory {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, dataType: u8, offset: i16, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<BluetoothLEAdvertisementBytePattern>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, dataType: u8, offset: i16, data: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<BluetoothLEAdvertisementBytePattern>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, dataType, offset, data as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -3170,8 +3170,8 @@ DEFINE_IID!(IID_IBluetoothLEAdvertisementDataSection, 3609277204, 14915, 16633, 
 RT_INTERFACE!{interface IBluetoothLEAdvertisementDataSection(IBluetoothLEAdvertisementDataSectionVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementDataSection] {
     fn get_DataType(&self, out: *mut u8) -> HRESULT,
     fn put_DataType(&self, value: u8) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn put_Data(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_Data(&self, value: *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IBluetoothLEAdvertisementDataSection {
     #[inline] pub fn get_data_type(&self) -> Result<u8> { unsafe { 
@@ -3183,12 +3183,12 @@ impl IBluetoothLEAdvertisementDataSection {
         let hr = ((*self.lpVtbl).put_DataType)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Data)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_data(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_data(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Data)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -3197,17 +3197,17 @@ RT_CLASS!{class BluetoothLEAdvertisementDataSection: IBluetoothLEAdvertisementDa
 impl RtActivatable<IBluetoothLEAdvertisementDataSectionFactory> for BluetoothLEAdvertisementDataSection {}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementDataSection {}
 impl BluetoothLEAdvertisementDataSection {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(dataType: u8, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<BluetoothLEAdvertisementDataSection>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(dataType: u8, data: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<BluetoothLEAdvertisementDataSection>> {
         <Self as RtActivatable<IBluetoothLEAdvertisementDataSectionFactory>>::get_activation_factory().create(dataType, data)
     }
 }
 DEFINE_CLSID!(BluetoothLEAdvertisementDataSection(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,68,97,116,97,83,101,99,116,105,111,110,0]) [CLSID_BluetoothLEAdvertisementDataSection]);
 DEFINE_IID!(IID_IBluetoothLEAdvertisementDataSectionFactory, 3886287170, 43077, 16453, 191, 126, 62, 153, 113, 219, 138, 107);
 RT_INTERFACE!{static interface IBluetoothLEAdvertisementDataSectionFactory(IBluetoothLEAdvertisementDataSectionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementDataSectionFactory] {
-    #[cfg(feature="windows-storage")] fn Create(&self, dataType: u8, data: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut BluetoothLEAdvertisementDataSection) -> HRESULT
+    #[cfg(feature="windows-storage")] fn Create(&self, dataType: u8, data: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut BluetoothLEAdvertisementDataSection) -> HRESULT
 }}
 impl IBluetoothLEAdvertisementDataSectionFactory {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, dataType: u8, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<BluetoothLEAdvertisementDataSection>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, dataType: u8, data: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<BluetoothLEAdvertisementDataSection>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, dataType, data as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -3706,8 +3706,8 @@ DEFINE_IID!(IID_IBluetoothLEManufacturerData, 2435693080, 26979, 17715, 176, 97,
 RT_INTERFACE!{interface IBluetoothLEManufacturerData(IBluetoothLEManufacturerDataVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEManufacturerData] {
     fn get_CompanyId(&self, out: *mut u16) -> HRESULT,
     fn put_CompanyId(&self, value: u16) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn put_Data(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_Data(&self, value: *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IBluetoothLEManufacturerData {
     #[inline] pub fn get_company_id(&self) -> Result<u16> { unsafe { 
@@ -3719,12 +3719,12 @@ impl IBluetoothLEManufacturerData {
         let hr = ((*self.lpVtbl).put_CompanyId)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Data)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_data(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_data(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Data)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -3733,17 +3733,17 @@ RT_CLASS!{class BluetoothLEManufacturerData: IBluetoothLEManufacturerData}
 impl RtActivatable<IBluetoothLEManufacturerDataFactory> for BluetoothLEManufacturerData {}
 impl RtActivatable<IActivationFactory> for BluetoothLEManufacturerData {}
 impl BluetoothLEManufacturerData {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(companyId: u16, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<BluetoothLEManufacturerData>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(companyId: u16, data: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<BluetoothLEManufacturerData>> {
         <Self as RtActivatable<IBluetoothLEManufacturerDataFactory>>::get_activation_factory().create(companyId, data)
     }
 }
 DEFINE_CLSID!(BluetoothLEManufacturerData(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,77,97,110,117,102,97,99,116,117,114,101,114,68,97,116,97,0]) [CLSID_BluetoothLEManufacturerData]);
 DEFINE_IID!(IID_IBluetoothLEManufacturerDataFactory, 3231398392, 12698, 17438, 141, 229, 102, 168, 30, 135, 122, 108);
 RT_INTERFACE!{static interface IBluetoothLEManufacturerDataFactory(IBluetoothLEManufacturerDataFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEManufacturerDataFactory] {
-    #[cfg(feature="windows-storage")] fn Create(&self, companyId: u16, data: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut BluetoothLEManufacturerData) -> HRESULT
+    #[cfg(feature="windows-storage")] fn Create(&self, companyId: u16, data: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut BluetoothLEManufacturerData) -> HRESULT
 }}
 impl IBluetoothLEManufacturerDataFactory {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, companyId: u16, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<BluetoothLEManufacturerData>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, companyId: u16, data: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<BluetoothLEManufacturerData>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, companyId, data as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -3754,7 +3754,7 @@ RT_ENUM! { enum BluetoothLEScanningMode: i32 {
 }}
 } // Windows.Devices.Bluetooth.Advertisement
 pub mod background { // Windows.Devices.Bluetooth.Background
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum BluetoothEventTriggeringMode: i32 {
     Serial = 0, Batch = 1, KeepLatest = 2,
 }}
@@ -3803,7 +3803,7 @@ RT_CLASS!{class BluetoothLEAdvertisementWatcherTriggerDetails: IBluetoothLEAdver
 DEFINE_IID!(IID_IGattCharacteristicNotificationTriggerDetails, 2610969368, 4076, 17258, 147, 177, 244, 108, 105, 117, 50, 162);
 RT_INTERFACE!{interface IGattCharacteristicNotificationTriggerDetails(IGattCharacteristicNotificationTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicNotificationTriggerDetails] {
     fn get_Characteristic(&self, out: *mut *mut super::genericattributeprofile::GattCharacteristic) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IGattCharacteristicNotificationTriggerDetails {
     #[inline] pub fn get_characteristic(&self) -> Result<Option<ComPtr<super::genericattributeprofile::GattCharacteristic>>> { unsafe { 
@@ -3811,7 +3811,7 @@ impl IGattCharacteristicNotificationTriggerDetails {
         let hr = ((*self.lpVtbl).get_Characteristic)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3897,12 +3897,12 @@ RT_CLASS!{class GattServiceProviderTriggerDetails: IGattServiceProviderTriggerDe
 DEFINE_IID!(IID_IRfcommConnectionTriggerDetails, 4179784525, 11836, 20220, 171, 89, 252, 92, 249, 111, 151, 227);
 RT_INTERFACE!{interface IRfcommConnectionTriggerDetails(IRfcommConnectionTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommConnectionTriggerDetails] {
     #[cfg(not(feature="windows-networking"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-networking")] fn get_Socket(&self, out: *mut *mut ::rt::gen::windows::networking::sockets::StreamSocket) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn get_Socket(&self, out: *mut *mut crate::windows::networking::sockets::StreamSocket) -> HRESULT,
     fn get_Incoming(&self, out: *mut bool) -> HRESULT,
     fn get_RemoteDevice(&self, out: *mut *mut super::BluetoothDevice) -> HRESULT
 }}
 impl IRfcommConnectionTriggerDetails {
-    #[cfg(feature="windows-networking")] #[inline] pub fn get_socket(&self) -> Result<Option<ComPtr<::rt::gen::windows::networking::sockets::StreamSocket>>> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn get_socket(&self) -> Result<Option<ComPtr<crate::windows::networking::sockets::StreamSocket>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Socket)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -3922,21 +3922,21 @@ RT_CLASS!{class RfcommConnectionTriggerDetails: IRfcommConnectionTriggerDetails}
 DEFINE_IID!(IID_IRfcommInboundConnectionInformation, 1832809896, 21545, 16473, 146, 227, 30, 139, 101, 82, 135, 7);
 RT_INTERFACE!{interface IRfcommInboundConnectionInformation(IRfcommInboundConnectionInformationVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommInboundConnectionInformation] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_SdpRecord(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_SdpRecord(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_SdpRecord(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_SdpRecord(&self, value: *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn get_LocalServiceId(&self, out: *mut *mut super::rfcomm::RfcommServiceId) -> HRESULT,
     fn put_LocalServiceId(&self, value: *mut super::rfcomm::RfcommServiceId) -> HRESULT,
     fn get_ServiceCapabilities(&self, out: *mut super::BluetoothServiceCapabilities) -> HRESULT,
     fn put_ServiceCapabilities(&self, value: super::BluetoothServiceCapabilities) -> HRESULT
 }}
 impl IRfcommInboundConnectionInformation {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_sdp_record(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_sdp_record(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SdpRecord)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_sdp_record(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_sdp_record(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_SdpRecord)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -3979,7 +3979,7 @@ impl IRfcommOutboundConnectionInformation {
 RT_CLASS!{class RfcommOutboundConnectionInformation: IRfcommOutboundConnectionInformation}
 } // Windows.Devices.Bluetooth.Background
 pub mod genericattributeprofile { // Windows.Devices.Bluetooth.GenericAttributeProfile
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IGattCharacteristic, 1506496705, 22836, 20328, 161, 152, 235, 134, 79, 164, 78, 107);
 RT_INTERFACE!{interface IGattCharacteristic(IGattCharacteristicVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristic] {
     fn GetDescriptors(&self, descriptorUuid: Guid, out: *mut *mut foundation::collections::IVectorView<GattDescriptor>) -> HRESULT,
@@ -3993,9 +3993,9 @@ RT_INTERFACE!{interface IGattCharacteristic(IGattCharacteristicVtbl): IInspectab
     fn ReadValueAsync(&self, out: *mut *mut foundation::IAsyncOperation<GattReadResult>) -> HRESULT,
     fn ReadValueWithCacheModeAsync(&self, cacheMode: super::BluetoothCacheMode, out: *mut *mut foundation::IAsyncOperation<GattReadResult>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy10(&self) -> (),
-    #[cfg(feature="windows-storage")] fn WriteValueAsync(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<GattCommunicationStatus>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn WriteValueAsync(&self, value: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<GattCommunicationStatus>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy11(&self) -> (),
-    #[cfg(feature="windows-storage")] fn WriteValueWithOptionAsync(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer, writeOption: GattWriteOption, out: *mut *mut foundation::IAsyncOperation<GattCommunicationStatus>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn WriteValueWithOptionAsync(&self, value: *mut crate::windows::storage::streams::IBuffer, writeOption: GattWriteOption, out: *mut *mut foundation::IAsyncOperation<GattCommunicationStatus>) -> HRESULT,
     fn ReadClientCharacteristicConfigurationDescriptorAsync(&self, out: *mut *mut foundation::IAsyncOperation<GattReadClientCharacteristicConfigurationDescriptorResult>) -> HRESULT,
     fn WriteClientCharacteristicConfigurationDescriptorAsync(&self, clientCharacteristicConfigurationDescriptorValue: GattClientCharacteristicConfigurationDescriptorValue, out: *mut *mut foundation::IAsyncOperation<GattCommunicationStatus>) -> HRESULT,
     fn add_ValueChanged(&self, valueChangedHandler: *mut foundation::TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -4051,12 +4051,12 @@ impl IGattCharacteristic {
         let hr = ((*self.lpVtbl).ReadValueWithCacheModeAsync)(self as *const _ as *mut _, cacheMode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn write_value_async(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<GattCommunicationStatus>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn write_value_async(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<GattCommunicationStatus>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).WriteValueAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn write_value_with_option_async(&self, value: &::rt::gen::windows::storage::streams::IBuffer, writeOption: GattWriteOption) -> Result<ComPtr<foundation::IAsyncOperation<GattCommunicationStatus>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn write_value_with_option_async(&self, value: &crate::windows::storage::streams::IBuffer, writeOption: GattWriteOption) -> Result<ComPtr<foundation::IAsyncOperation<GattCommunicationStatus>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).WriteValueWithOptionAsync)(self as *const _ as *mut _, value as *const _ as *mut _, writeOption, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -4113,9 +4113,9 @@ RT_INTERFACE!{interface IGattCharacteristic3(IGattCharacteristic3Vtbl): IInspect
     fn GetDescriptorsForUuidAsync(&self, descriptorUuid: Guid, out: *mut *mut foundation::IAsyncOperation<GattDescriptorsResult>) -> HRESULT,
     fn GetDescriptorsForUuidWithCacheModeAsync(&self, descriptorUuid: Guid, cacheMode: super::BluetoothCacheMode, out: *mut *mut foundation::IAsyncOperation<GattDescriptorsResult>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-storage")] fn WriteValueWithResultAsync(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<GattWriteResult>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn WriteValueWithResultAsync(&self, value: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<GattWriteResult>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-storage")] fn WriteValueWithResultAndOptionAsync(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer, writeOption: GattWriteOption, out: *mut *mut foundation::IAsyncOperation<GattWriteResult>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn WriteValueWithResultAndOptionAsync(&self, value: *mut crate::windows::storage::streams::IBuffer, writeOption: GattWriteOption, out: *mut *mut foundation::IAsyncOperation<GattWriteResult>) -> HRESULT,
     fn WriteClientCharacteristicConfigurationDescriptorWithResultAsync(&self, clientCharacteristicConfigurationDescriptorValue: GattClientCharacteristicConfigurationDescriptorValue, out: *mut *mut foundation::IAsyncOperation<GattWriteResult>) -> HRESULT
 }}
 impl IGattCharacteristic3 {
@@ -4139,12 +4139,12 @@ impl IGattCharacteristic3 {
         let hr = ((*self.lpVtbl).GetDescriptorsForUuidWithCacheModeAsync)(self as *const _ as *mut _, descriptorUuid, cacheMode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn write_value_with_result_async(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<GattWriteResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn write_value_with_result_async(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<GattWriteResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).WriteValueWithResultAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn write_value_with_result_and_option_async(&self, value: &::rt::gen::windows::storage::streams::IBuffer, writeOption: GattWriteOption) -> Result<ComPtr<foundation::IAsyncOperation<GattWriteResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn write_value_with_result_and_option_async(&self, value: &crate::windows::storage::streams::IBuffer, writeOption: GattWriteOption) -> Result<ComPtr<foundation::IAsyncOperation<GattWriteResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).WriteValueWithResultAndOptionAsync)(self as *const _ as *mut _, value as *const _ as *mut _, writeOption, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -4987,7 +4987,7 @@ RT_INTERFACE!{interface IGattDescriptor(IGattDescriptorVtbl): IInspectable(IInsp
     fn get_AttributeHandle(&self, out: *mut u16) -> HRESULT,
     fn ReadValueAsync(&self, out: *mut *mut foundation::IAsyncOperation<GattReadResult>) -> HRESULT,
     fn ReadValueWithCacheModeAsync(&self, cacheMode: super::BluetoothCacheMode, out: *mut *mut foundation::IAsyncOperation<GattReadResult>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn WriteValueAsync(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<GattCommunicationStatus>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn WriteValueAsync(&self, value: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<GattCommunicationStatus>) -> HRESULT
 }}
 impl IGattDescriptor {
     #[inline] pub fn get_protection_level(&self) -> Result<GattProtectionLevel> { unsafe { 
@@ -5019,7 +5019,7 @@ impl IGattDescriptor {
         let hr = ((*self.lpVtbl).ReadValueWithCacheModeAsync)(self as *const _ as *mut _, cacheMode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn write_value_async(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<GattCommunicationStatus>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn write_value_async(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<GattCommunicationStatus>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).WriteValueAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -5035,10 +5035,10 @@ impl GattDescriptor {
 DEFINE_CLSID!(GattDescriptor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_GattDescriptor]);
 DEFINE_IID!(IID_IGattDescriptor2, 2404793657, 54832, 16492, 186, 17, 16, 205, 209, 107, 14, 94);
 RT_INTERFACE!{interface IGattDescriptor2(IGattDescriptor2Vtbl): IInspectable(IInspectableVtbl) [IID_IGattDescriptor2] {
-    #[cfg(feature="windows-storage")] fn WriteValueWithResultAsync(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<GattWriteResult>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn WriteValueWithResultAsync(&self, value: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<GattWriteResult>) -> HRESULT
 }}
 impl IGattDescriptor2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn write_value_with_result_async(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<GattWriteResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn write_value_with_result_async(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<GattWriteResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).WriteValueWithResultAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -5414,7 +5414,7 @@ impl IGattDeviceServiceStatics2 {
 DEFINE_IID!(IID_IGattLocalCharacteristic, 2933798765, 21522, 19828, 146, 168, 141, 235, 133, 38, 130, 156);
 RT_INTERFACE!{interface IGattLocalCharacteristic(IGattLocalCharacteristicVtbl): IInspectable(IInspectableVtbl) [IID_IGattLocalCharacteristic] {
     fn get_Uuid(&self, out: *mut Guid) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_StaticValue(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_StaticValue(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn get_CharacteristicProperties(&self, out: *mut GattCharacteristicProperties) -> HRESULT,
     fn get_ReadProtectionLevel(&self, out: *mut GattProtectionLevel) -> HRESULT,
     fn get_WriteProtectionLevel(&self, out: *mut GattProtectionLevel) -> HRESULT,
@@ -5429,8 +5429,8 @@ RT_INTERFACE!{interface IGattLocalCharacteristic(IGattLocalCharacteristicVtbl): 
     fn remove_ReadRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_WriteRequested(&self, handler: *mut foundation::TypedEventHandler<GattLocalCharacteristic, GattWriteRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_WriteRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn NotifyValueAsync(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<GattClientNotificationResult>>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn NotifyValueForSubscribedClientAsync(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer, subscribedClient: *mut GattSubscribedClient, out: *mut *mut foundation::IAsyncOperation<GattClientNotificationResult>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn NotifyValueAsync(&self, value: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<GattClientNotificationResult>>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn NotifyValueForSubscribedClientAsync(&self, value: *mut crate::windows::storage::streams::IBuffer, subscribedClient: *mut GattSubscribedClient, out: *mut *mut foundation::IAsyncOperation<GattClientNotificationResult>) -> HRESULT
 }}
 impl IGattLocalCharacteristic {
     #[inline] pub fn get_uuid(&self) -> Result<Guid> { unsafe { 
@@ -5438,7 +5438,7 @@ impl IGattLocalCharacteristic {
         let hr = ((*self.lpVtbl).get_Uuid)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_static_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_static_value(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StaticValue)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -5510,12 +5510,12 @@ impl IGattLocalCharacteristic {
         let hr = ((*self.lpVtbl).remove_WriteRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn notify_value_async(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GattClientNotificationResult>>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn notify_value_async(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GattClientNotificationResult>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).NotifyValueAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn notify_value_for_subscribed_client_async(&self, value: &::rt::gen::windows::storage::streams::IBuffer, subscribedClient: &GattSubscribedClient) -> Result<ComPtr<foundation::IAsyncOperation<GattClientNotificationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn notify_value_for_subscribed_client_async(&self, value: &crate::windows::storage::streams::IBuffer, subscribedClient: &GattSubscribedClient) -> Result<ComPtr<foundation::IAsyncOperation<GattClientNotificationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).NotifyValueForSubscribedClientAsync)(self as *const _ as *mut _, value as *const _ as *mut _, subscribedClient as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -5525,9 +5525,9 @@ RT_CLASS!{class GattLocalCharacteristic: IGattLocalCharacteristic}
 DEFINE_IID!(IID_IGattLocalCharacteristicParameters, 4210507188, 19711, 17607, 132, 69, 4, 14, 110, 173, 0, 99);
 RT_INTERFACE!{interface IGattLocalCharacteristicParameters(IGattLocalCharacteristicParametersVtbl): IInspectable(IInspectableVtbl) [IID_IGattLocalCharacteristicParameters] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_StaticValue(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_StaticValue(&self, value: *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_StaticValue(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_StaticValue(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn put_CharacteristicProperties(&self, value: GattCharacteristicProperties) -> HRESULT,
     fn get_CharacteristicProperties(&self, out: *mut GattCharacteristicProperties) -> HRESULT,
     fn put_ReadProtectionLevel(&self, value: GattProtectionLevel) -> HRESULT,
@@ -5539,11 +5539,11 @@ RT_INTERFACE!{interface IGattLocalCharacteristicParameters(IGattLocalCharacteris
     fn get_PresentationFormats(&self, out: *mut *mut foundation::collections::IVector<GattPresentationFormat>) -> HRESULT
 }}
 impl IGattLocalCharacteristicParameters {
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_static_value(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_static_value(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_StaticValue)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_static_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_static_value(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StaticValue)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -5615,7 +5615,7 @@ DEFINE_IID!(IID_IGattLocalDescriptor, 4102995462, 30877, 19019, 134, 82, 189, 1,
 RT_INTERFACE!{interface IGattLocalDescriptor(IGattLocalDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IGattLocalDescriptor] {
     fn get_Uuid(&self, out: *mut Guid) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_StaticValue(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_StaticValue(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn get_ReadProtectionLevel(&self, out: *mut GattProtectionLevel) -> HRESULT,
     fn get_WriteProtectionLevel(&self, out: *mut GattProtectionLevel) -> HRESULT,
     fn add_ReadRequested(&self, handler: *mut foundation::TypedEventHandler<GattLocalDescriptor, GattReadRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5629,7 +5629,7 @@ impl IGattLocalDescriptor {
         let hr = ((*self.lpVtbl).get_Uuid)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_static_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_static_value(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StaticValue)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -5667,20 +5667,20 @@ RT_CLASS!{class GattLocalDescriptor: IGattLocalDescriptor}
 DEFINE_IID!(IID_IGattLocalDescriptorParameters, 1608441450, 62401, 19302, 140, 75, 227, 210, 41, 59, 64, 233);
 RT_INTERFACE!{interface IGattLocalDescriptorParameters(IGattLocalDescriptorParametersVtbl): IInspectable(IInspectableVtbl) [IID_IGattLocalDescriptorParameters] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_StaticValue(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_StaticValue(&self, value: *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_StaticValue(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_StaticValue(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn put_ReadProtectionLevel(&self, value: GattProtectionLevel) -> HRESULT,
     fn get_ReadProtectionLevel(&self, out: *mut GattProtectionLevel) -> HRESULT,
     fn put_WriteProtectionLevel(&self, value: GattProtectionLevel) -> HRESULT,
     fn get_WriteProtectionLevel(&self, out: *mut GattProtectionLevel) -> HRESULT
 }}
 impl IGattLocalDescriptorParameters {
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_static_value(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_static_value(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_StaticValue)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_static_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_static_value(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StaticValue)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -6277,7 +6277,7 @@ RT_INTERFACE!{interface IGattReadRequest(IGattReadRequestVtbl): IInspectable(IIn
     fn add_StateChanged(&self, handler: *mut foundation::TypedEventHandler<GattReadRequest, GattRequestStateChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_StateChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-storage")] fn RespondWithValue(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn RespondWithValue(&self, value: *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn RespondWithProtocolError(&self, protocolError: u8) -> HRESULT
 }}
 impl IGattReadRequest {
@@ -6305,7 +6305,7 @@ impl IGattReadRequest {
         let hr = ((*self.lpVtbl).remove_StateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn respond_with_value(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn respond_with_value(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).RespondWithValue)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -6342,7 +6342,7 @@ RT_CLASS!{class GattReadRequestedEventArgs: IGattReadRequestedEventArgs}
 DEFINE_IID!(IID_IGattReadResult, 1671851784, 6890, 19532, 165, 15, 151, 186, 228, 116, 179, 72);
 RT_INTERFACE!{interface IGattReadResult(IGattReadResultVtbl): IInspectable(IInspectableVtbl) [IID_IGattReadResult] {
     fn get_Status(&self, out: *mut GattCommunicationStatus) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IGattReadResult {
     #[inline] pub fn get_status(&self) -> Result<GattCommunicationStatus> { unsafe { 
@@ -6350,7 +6350,7 @@ impl IGattReadResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -6371,11 +6371,11 @@ impl IGattReadResult2 {
 DEFINE_IID!(IID_IGattReliableWriteTransaction, 1671851783, 6890, 19532, 165, 15, 151, 186, 228, 116, 179, 72);
 RT_INTERFACE!{interface IGattReliableWriteTransaction(IGattReliableWriteTransactionVtbl): IInspectable(IInspectableVtbl) [IID_IGattReliableWriteTransaction] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn WriteValue(&self, characteristic: *mut GattCharacteristic, value: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn WriteValue(&self, characteristic: *mut GattCharacteristic, value: *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn CommitAsync(&self, out: *mut *mut foundation::IAsyncOperation<GattCommunicationStatus>) -> HRESULT
 }}
 impl IGattReliableWriteTransaction {
-    #[cfg(feature="windows-storage")] #[inline] pub fn write_value(&self, characteristic: &GattCharacteristic, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn write_value(&self, characteristic: &GattCharacteristic, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).WriteValue)(self as *const _ as *mut _, characteristic as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -6902,11 +6902,11 @@ RT_CLASS!{class GattSubscribedClient: IGattSubscribedClient}
 DEFINE_IID!(IID_IGattValueChangedEventArgs, 3525040980, 1763, 20184, 162, 99, 172, 250, 200, 186, 115, 19);
 RT_INTERFACE!{interface IGattValueChangedEventArgs(IGattValueChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGattValueChangedEventArgs] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_CharacteristicValue(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_CharacteristicValue(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT
 }}
 impl IGattValueChangedEventArgs {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_characteristic_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_characteristic_value(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CharacteristicValue)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -6924,7 +6924,7 @@ RT_ENUM! { enum GattWriteOption: i32 {
 DEFINE_IID!(IID_IGattWriteRequest, 2931206637, 56879, 20418, 169, 168, 148, 234, 120, 68, 241, 61);
 RT_INTERFACE!{interface IGattWriteRequest(IGattWriteRequestVtbl): IInspectable(IInspectableVtbl) [IID_IGattWriteRequest] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn get_Offset(&self, out: *mut u32) -> HRESULT,
     fn get_Option(&self, out: *mut GattWriteOption) -> HRESULT,
     fn get_State(&self, out: *mut GattRequestState) -> HRESULT,
@@ -6934,7 +6934,7 @@ RT_INTERFACE!{interface IGattWriteRequest(IGattWriteRequestVtbl): IInspectable(I
     fn RespondWithProtocolError(&self, protocolError: u8) -> HRESULT
 }}
 impl IGattWriteRequest {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -7017,22 +7017,22 @@ impl IGattWriteResult {
 RT_CLASS!{class GattWriteResult: IGattWriteResult}
 } // Windows.Devices.Bluetooth.GenericAttributeProfile
 pub mod rfcomm { // Windows.Devices.Bluetooth.Rfcomm
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IRfcommDeviceService, 2927755039, 50593, 19520, 140, 40, 243, 239, 214, 144, 98, 243);
 RT_INTERFACE!{interface IRfcommDeviceService(IRfcommDeviceServiceVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommDeviceService] {
     #[cfg(not(feature="windows-networking"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-networking")] fn get_ConnectionHostName(&self, out: *mut *mut ::rt::gen::windows::networking::HostName) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn get_ConnectionHostName(&self, out: *mut *mut crate::windows::networking::HostName) -> HRESULT,
     fn get_ConnectionServiceName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ServiceId(&self, out: *mut *mut RfcommServiceId) -> HRESULT,
     #[cfg(not(feature="windows-networking"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-networking")] fn get_ProtectionLevel(&self, out: *mut ::rt::gen::windows::networking::sockets::SocketProtectionLevel) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn get_ProtectionLevel(&self, out: *mut crate::windows::networking::sockets::SocketProtectionLevel) -> HRESULT,
     #[cfg(not(feature="windows-networking"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-networking")] fn get_MaxProtectionLevel(&self, out: *mut ::rt::gen::windows::networking::sockets::SocketProtectionLevel) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn GetSdpRawAttributesAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IMapView<u32, ::rt::gen::windows::storage::streams::IBuffer>>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn GetSdpRawAttributesWithCacheModeAsync(&self, cacheMode: super::BluetoothCacheMode, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IMapView<u32, ::rt::gen::windows::storage::streams::IBuffer>>) -> HRESULT
+    #[cfg(feature="windows-networking")] fn get_MaxProtectionLevel(&self, out: *mut crate::windows::networking::sockets::SocketProtectionLevel) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn GetSdpRawAttributesAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IMapView<u32, crate::windows::storage::streams::IBuffer>>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn GetSdpRawAttributesWithCacheModeAsync(&self, cacheMode: super::BluetoothCacheMode, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IMapView<u32, crate::windows::storage::streams::IBuffer>>) -> HRESULT
 }}
 impl IRfcommDeviceService {
-    #[cfg(feature="windows-networking")] #[inline] pub fn get_connection_host_name(&self) -> Result<Option<ComPtr<::rt::gen::windows::networking::HostName>>> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn get_connection_host_name(&self) -> Result<Option<ComPtr<crate::windows::networking::HostName>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ConnectionHostName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -7047,22 +7047,22 @@ impl IRfcommDeviceService {
         let hr = ((*self.lpVtbl).get_ServiceId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn get_protection_level(&self) -> Result<::rt::gen::windows::networking::sockets::SocketProtectionLevel> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn get_protection_level(&self) -> Result<crate::windows::networking::sockets::SocketProtectionLevel> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ProtectionLevel)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn get_max_protection_level(&self) -> Result<::rt::gen::windows::networking::sockets::SocketProtectionLevel> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn get_max_protection_level(&self) -> Result<crate::windows::networking::sockets::SocketProtectionLevel> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_MaxProtectionLevel)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_sdp_raw_attributes_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<u32, ::rt::gen::windows::storage::streams::IBuffer>>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_sdp_raw_attributes_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<u32, crate::windows::storage::streams::IBuffer>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetSdpRawAttributesAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_sdp_raw_attributes_with_cache_mode_async(&self, cacheMode: super::BluetoothCacheMode) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<u32, ::rt::gen::windows::storage::streams::IBuffer>>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_sdp_raw_attributes_with_cache_mode_async(&self, cacheMode: super::BluetoothCacheMode) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<u32, crate::windows::storage::streams::IBuffer>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetSdpRawAttributesWithCacheModeAsync)(self as *const _ as *mut _, cacheMode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -7293,9 +7293,9 @@ DEFINE_IID!(IID_IRfcommServiceProvider, 3940285892, 45558, 17663, 159, 124, 231,
 RT_INTERFACE!{interface IRfcommServiceProvider(IRfcommServiceProviderVtbl): IInspectable(IInspectableVtbl) [IID_IRfcommServiceProvider] {
     fn get_ServiceId(&self, out: *mut *mut RfcommServiceId) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_SdpRawAttributes(&self, out: *mut *mut foundation::collections::IMap<u32, ::rt::gen::windows::storage::streams::IBuffer>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_SdpRawAttributes(&self, out: *mut *mut foundation::collections::IMap<u32, crate::windows::storage::streams::IBuffer>) -> HRESULT,
     #[cfg(not(feature="windows-networking"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-networking")] fn StartAdvertising(&self, listener: *mut ::rt::gen::windows::networking::sockets::StreamSocketListener) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn StartAdvertising(&self, listener: *mut crate::windows::networking::sockets::StreamSocketListener) -> HRESULT,
     fn StopAdvertising(&self) -> HRESULT
 }}
 impl IRfcommServiceProvider {
@@ -7304,12 +7304,12 @@ impl IRfcommServiceProvider {
         let hr = ((*self.lpVtbl).get_ServiceId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_sdp_raw_attributes(&self) -> Result<Option<ComPtr<foundation::collections::IMap<u32, ::rt::gen::windows::storage::streams::IBuffer>>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_sdp_raw_attributes(&self) -> Result<Option<ComPtr<foundation::collections::IMap<u32, crate::windows::storage::streams::IBuffer>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SdpRawAttributes)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn start_advertising(&self, listener: &::rt::gen::windows::networking::sockets::StreamSocketListener) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn start_advertising(&self, listener: &crate::windows::networking::sockets::StreamSocketListener) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).StartAdvertising)(self as *const _ as *mut _, listener as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -7328,10 +7328,10 @@ impl RfcommServiceProvider {
 DEFINE_CLSID!(RfcommServiceProvider(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,82,102,99,111,109,109,46,82,102,99,111,109,109,83,101,114,118,105,99,101,80,114,111,118,105,100,101,114,0]) [CLSID_RfcommServiceProvider]);
 DEFINE_IID!(IID_IRfcommServiceProvider2, 1936449478, 15489, 19742, 186, 242, 221, 187, 129, 40, 69, 18);
 RT_INTERFACE!{interface IRfcommServiceProvider2(IRfcommServiceProvider2Vtbl): IInspectable(IInspectableVtbl) [IID_IRfcommServiceProvider2] {
-    #[cfg(feature="windows-networking")] fn StartAdvertisingWithRadioDiscoverability(&self, listener: *mut ::rt::gen::windows::networking::sockets::StreamSocketListener, radioDiscoverable: bool) -> HRESULT
+    #[cfg(feature="windows-networking")] fn StartAdvertisingWithRadioDiscoverability(&self, listener: *mut crate::windows::networking::sockets::StreamSocketListener, radioDiscoverable: bool) -> HRESULT
 }}
 impl IRfcommServiceProvider2 {
-    #[cfg(feature="windows-networking")] #[inline] pub fn start_advertising_with_radio_discoverability(&self, listener: &::rt::gen::windows::networking::sockets::StreamSocketListener, radioDiscoverable: bool) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn start_advertising_with_radio_discoverability(&self, listener: &crate::windows::networking::sockets::StreamSocketListener, radioDiscoverable: bool) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).StartAdvertisingWithRadioDiscoverability)(self as *const _ as *mut _, listener as *const _ as *mut _, radioDiscoverable);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -7350,7 +7350,7 @@ impl IRfcommServiceProviderStatics {
 } // Windows.Devices.Bluetooth.Rfcomm
 } // Windows.Devices.Bluetooth
 pub mod custom { // Windows.Devices.Custom
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICustomDevice, 3710919967, 50315, 17341, 188, 177, 222, 200, 143, 21, 20, 62);
 RT_INTERFACE!{interface ICustomDevice(ICustomDeviceVtbl): IInspectable(IInspectableVtbl) [IID_ICustomDevice] {
     #[cfg(feature="windows-storage")] fn get_InputStream(&self, out: *mut *mut super::super::storage::streams::IInputStream) -> HRESULT,
@@ -7495,7 +7495,7 @@ impl IOControlCode {
 DEFINE_CLSID!(IOControlCode(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,67,117,115,116,111,109,46,73,79,67,111,110,116,114,111,108,67,111,100,101,0]) [CLSID_IOControlCode]);
 } // Windows.Devices.Custom
 pub mod display { // Windows.Devices.Display
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDisplayMonitor, 527111636, 7425, 19537, 135, 226, 111, 149, 74, 119, 43, 89);
 RT_INTERFACE!{interface IDisplayMonitor(IDisplayMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayMonitor] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -7673,11 +7673,11 @@ RT_ENUM! { enum DisplayMonitorUsageKind: i32 {
     Standard = 0, HeadMounted = 1, SpecialPurpose = 2,
 }}
 pub mod core { // Windows.Devices.Display.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDisplayAdapter, 2775536263, 61440, 24366, 181, 172, 55, 131, 162, 182, 154, 245);
 RT_INTERFACE!{interface IDisplayAdapter(IDisplayAdapterVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayAdapter] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_Id(&self, out: *mut ::rt::gen::windows::graphics::DisplayAdapterId) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_Id(&self, out: *mut crate::windows::graphics::DisplayAdapterId) -> HRESULT,
     fn get_DeviceInterfacePath(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SourceCount(&self, out: *mut u32) -> HRESULT,
     fn get_PciVendorId(&self, out: *mut u32) -> HRESULT,
@@ -7687,7 +7687,7 @@ RT_INTERFACE!{interface IDisplayAdapter(IDisplayAdapterVtbl): IInspectable(IInsp
     fn get_Properties(&self, out: *mut *mut foundation::collections::IMapView<Guid, IInspectable>) -> HRESULT
 }}
 impl IDisplayAdapter {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_id(&self) -> Result<::rt::gen::windows::graphics::DisplayAdapterId> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_id(&self) -> Result<crate::windows::graphics::DisplayAdapterId> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -7731,17 +7731,17 @@ impl IDisplayAdapter {
 RT_CLASS!{class DisplayAdapter: IDisplayAdapter}
 impl RtActivatable<IDisplayAdapterStatics> for DisplayAdapter {}
 impl DisplayAdapter {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn from_id(id: ::rt::gen::windows::graphics::DisplayAdapterId) -> Result<Option<ComPtr<DisplayAdapter>>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn from_id(id: crate::windows::graphics::DisplayAdapterId) -> Result<Option<ComPtr<DisplayAdapter>>> {
         <Self as RtActivatable<IDisplayAdapterStatics>>::get_activation_factory().from_id(id)
     }
 }
 DEFINE_CLSID!(DisplayAdapter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,68,105,115,112,108,97,121,46,67,111,114,101,46,68,105,115,112,108,97,121,65,100,97,112,116,101,114,0]) [CLSID_DisplayAdapter]);
 DEFINE_IID!(IID_IDisplayAdapterStatics, 497827034, 18463, 21609, 132, 112, 130, 196, 186, 104, 10, 40);
 RT_INTERFACE!{static interface IDisplayAdapterStatics(IDisplayAdapterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayAdapterStatics] {
-    #[cfg(feature="windows-graphics")] fn FromId(&self, id: ::rt::gen::windows::graphics::DisplayAdapterId, out: *mut *mut DisplayAdapter) -> HRESULT
+    #[cfg(feature="windows-graphics")] fn FromId(&self, id: crate::windows::graphics::DisplayAdapterId, out: *mut *mut DisplayAdapter) -> HRESULT
 }}
 impl IDisplayAdapterStatics {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn from_id(&self, id: ::rt::gen::windows::graphics::DisplayAdapterId) -> Result<Option<ComPtr<DisplayAdapter>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn from_id(&self, id: crate::windows::graphics::DisplayAdapterId) -> Result<Option<ComPtr<DisplayAdapter>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FromId)(self as *const _ as *mut _, id, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -8061,12 +8061,12 @@ impl IDisplayManagerStatics {
 DEFINE_IID!(IID_IDisplayModeInfo, 1221923744, 63387, 23156, 160, 94, 218, 130, 31, 71, 8, 104);
 RT_INTERFACE!{interface IDisplayModeInfo(IDisplayModeInfoVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayModeInfo] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_SourceResolution(&self, out: *mut ::rt::gen::windows::graphics::SizeInt32) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_SourceResolution(&self, out: *mut crate::windows::graphics::SizeInt32) -> HRESULT,
     fn get_IsStereo(&self, out: *mut bool) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_SourcePixelFormat(&self, out: *mut ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_SourcePixelFormat(&self, out: *mut crate::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_TargetResolution(&self, out: *mut ::rt::gen::windows::graphics::SizeInt32) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_TargetResolution(&self, out: *mut crate::windows::graphics::SizeInt32) -> HRESULT,
     fn get_PresentationRate(&self, out: *mut DisplayPresentationRate) -> HRESULT,
     fn get_IsInterlaced(&self, out: *mut bool) -> HRESULT,
     fn GetWireFormatSupportedBitsPerChannel(&self, encoding: DisplayWireFormatPixelEncoding, out: *mut DisplayBitsPerChannel) -> HRESULT,
@@ -8074,7 +8074,7 @@ RT_INTERFACE!{interface IDisplayModeInfo(IDisplayModeInfoVtbl): IInspectable(IIn
     fn get_Properties(&self, out: *mut *mut foundation::collections::IMapView<Guid, IInspectable>) -> HRESULT
 }}
 impl IDisplayModeInfo {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_source_resolution(&self) -> Result<::rt::gen::windows::graphics::SizeInt32> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_source_resolution(&self) -> Result<crate::windows::graphics::SizeInt32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_SourceResolution)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -8084,12 +8084,12 @@ impl IDisplayModeInfo {
         let hr = ((*self.lpVtbl).get_IsStereo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_source_pixel_format(&self) -> Result<::rt::gen::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_source_pixel_format(&self) -> Result<crate::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_SourcePixelFormat)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_target_resolution(&self) -> Result<::rt::gen::windows::graphics::SizeInt32> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_target_resolution(&self) -> Result<crate::windows::graphics::SizeInt32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_TargetResolution)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -8130,19 +8130,19 @@ RT_INTERFACE!{interface IDisplayPath(IDisplayPathVtbl): IInspectable(IInspectabl
     fn get_Target(&self, out: *mut *mut DisplayTarget) -> HRESULT,
     fn get_Status(&self, out: *mut DisplayPathStatus) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_SourceResolution(&self, out: *mut *mut foundation::IReference<::rt::gen::windows::graphics::SizeInt32>) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_SourceResolution(&self, out: *mut *mut foundation::IReference<crate::windows::graphics::SizeInt32>) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn put_SourceResolution(&self, value: *mut foundation::IReference<::rt::gen::windows::graphics::SizeInt32>) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn put_SourceResolution(&self, value: *mut foundation::IReference<crate::windows::graphics::SizeInt32>) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_SourcePixelFormat(&self, out: *mut ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_SourcePixelFormat(&self, out: *mut crate::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy6(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn put_SourcePixelFormat(&self, value: ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn put_SourcePixelFormat(&self, value: crate::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
     fn get_IsStereo(&self, out: *mut bool) -> HRESULT,
     fn put_IsStereo(&self, value: bool) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy9(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_TargetResolution(&self, out: *mut *mut foundation::IReference<::rt::gen::windows::graphics::SizeInt32>) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_TargetResolution(&self, out: *mut *mut foundation::IReference<crate::windows::graphics::SizeInt32>) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy10(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn put_TargetResolution(&self, value: *mut foundation::IReference<::rt::gen::windows::graphics::SizeInt32>) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn put_TargetResolution(&self, value: *mut foundation::IReference<crate::windows::graphics::SizeInt32>) -> HRESULT,
     fn get_PresentationRate(&self, out: *mut *mut foundation::IReference<DisplayPresentationRate>) -> HRESULT,
     fn put_PresentationRate(&self, value: *mut foundation::IReference<DisplayPresentationRate>) -> HRESULT,
     fn get_IsInterlaced(&self, out: *mut *mut foundation::IReference<bool>) -> HRESULT,
@@ -8173,21 +8173,21 @@ impl IDisplayPath {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_source_resolution(&self) -> Result<Option<ComPtr<foundation::IReference<::rt::gen::windows::graphics::SizeInt32>>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_source_resolution(&self) -> Result<Option<ComPtr<foundation::IReference<crate::windows::graphics::SizeInt32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SourceResolution)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_source_resolution(&self, value: &foundation::IReference<::rt::gen::windows::graphics::SizeInt32>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_source_resolution(&self, value: &foundation::IReference<crate::windows::graphics::SizeInt32>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_SourceResolution)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_source_pixel_format(&self) -> Result<::rt::gen::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_source_pixel_format(&self) -> Result<crate::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_SourcePixelFormat)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_source_pixel_format(&self, value: ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_source_pixel_format(&self, value: crate::windows::graphics::directx::DirectXPixelFormat) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_SourcePixelFormat)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -8200,12 +8200,12 @@ impl IDisplayPath {
         let hr = ((*self.lpVtbl).put_IsStereo)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_target_resolution(&self) -> Result<Option<ComPtr<foundation::IReference<::rt::gen::windows::graphics::SizeInt32>>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_target_resolution(&self) -> Result<Option<ComPtr<foundation::IReference<crate::windows::graphics::SizeInt32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TargetResolution)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_target_resolution(&self, value: &foundation::IReference<::rt::gen::windows::graphics::SizeInt32>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_target_resolution(&self, value: &foundation::IReference<crate::windows::graphics::SizeInt32>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_TargetResolution)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -8284,12 +8284,12 @@ RT_INTERFACE!{interface IDisplayPrimaryDescription(IDisplayPrimaryDescriptionVtb
     fn get_Width(&self, out: *mut u32) -> HRESULT,
     fn get_Height(&self, out: *mut u32) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_Format(&self, out: *mut ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_Format(&self, out: *mut crate::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_ColorSpace(&self, out: *mut ::rt::gen::windows::graphics::directx::DirectXColorSpace) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_ColorSpace(&self, out: *mut crate::windows::graphics::directx::DirectXColorSpace) -> HRESULT,
     fn get_IsStereo(&self, out: *mut bool) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_MultisampleDescription(&self, out: *mut ::rt::gen::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_MultisampleDescription(&self, out: *mut crate::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription) -> HRESULT,
     fn get_Properties(&self, out: *mut *mut foundation::collections::IMapView<Guid, IInspectable>) -> HRESULT
 }}
 impl IDisplayPrimaryDescription {
@@ -8303,12 +8303,12 @@ impl IDisplayPrimaryDescription {
         let hr = ((*self.lpVtbl).get_Height)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_format(&self) -> Result<::rt::gen::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_format(&self) -> Result<crate::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Format)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_color_space(&self) -> Result<::rt::gen::windows::graphics::directx::DirectXColorSpace> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_color_space(&self) -> Result<crate::windows::graphics::directx::DirectXColorSpace> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ColorSpace)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -8318,7 +8318,7 @@ impl IDisplayPrimaryDescription {
         let hr = ((*self.lpVtbl).get_IsStereo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_multisample_description(&self) -> Result<::rt::gen::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_multisample_description(&self) -> Result<crate::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_MultisampleDescription)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -8333,20 +8333,20 @@ RT_CLASS!{class DisplayPrimaryDescription: IDisplayPrimaryDescription}
 impl RtActivatable<IDisplayPrimaryDescriptionFactory> for DisplayPrimaryDescription {}
 impl RtActivatable<IDisplayPrimaryDescriptionStatics> for DisplayPrimaryDescription {}
 impl DisplayPrimaryDescription {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_instance(width: u32, height: u32, pixelFormat: ::rt::gen::windows::graphics::directx::DirectXPixelFormat, colorSpace: ::rt::gen::windows::graphics::directx::DirectXColorSpace, isStereo: bool, multisampleDescription: ::rt::gen::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription) -> Result<ComPtr<DisplayPrimaryDescription>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_instance(width: u32, height: u32, pixelFormat: crate::windows::graphics::directx::DirectXPixelFormat, colorSpace: crate::windows::graphics::directx::DirectXColorSpace, isStereo: bool, multisampleDescription: crate::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription) -> Result<ComPtr<DisplayPrimaryDescription>> {
         <Self as RtActivatable<IDisplayPrimaryDescriptionFactory>>::get_activation_factory().create_instance(width, height, pixelFormat, colorSpace, isStereo, multisampleDescription)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_properties(extraProperties: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<Guid, IInspectable>>, width: u32, height: u32, pixelFormat: ::rt::gen::windows::graphics::directx::DirectXPixelFormat, colorSpace: ::rt::gen::windows::graphics::directx::DirectXColorSpace, isStereo: bool, multisampleDescription: ::rt::gen::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription) -> Result<Option<ComPtr<DisplayPrimaryDescription>>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_properties(extraProperties: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<Guid, IInspectable>>, width: u32, height: u32, pixelFormat: crate::windows::graphics::directx::DirectXPixelFormat, colorSpace: crate::windows::graphics::directx::DirectXColorSpace, isStereo: bool, multisampleDescription: crate::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription) -> Result<Option<ComPtr<DisplayPrimaryDescription>>> {
         <Self as RtActivatable<IDisplayPrimaryDescriptionStatics>>::get_activation_factory().create_with_properties(extraProperties, width, height, pixelFormat, colorSpace, isStereo, multisampleDescription)
     }
 }
 DEFINE_CLSID!(DisplayPrimaryDescription(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,68,105,115,112,108,97,121,46,67,111,114,101,46,68,105,115,112,108,97,121,80,114,105,109,97,114,121,68,101,115,99,114,105,112,116,105,111,110,0]) [CLSID_DisplayPrimaryDescription]);
 DEFINE_IID!(IID_IDisplayPrimaryDescriptionFactory, 443219835, 13879, 23622, 180, 121, 118, 213, 118, 33, 110, 101);
 RT_INTERFACE!{static interface IDisplayPrimaryDescriptionFactory(IDisplayPrimaryDescriptionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayPrimaryDescriptionFactory] {
-    #[cfg(feature="windows-graphics")] fn CreateInstance(&self, width: u32, height: u32, pixelFormat: ::rt::gen::windows::graphics::directx::DirectXPixelFormat, colorSpace: ::rt::gen::windows::graphics::directx::DirectXColorSpace, isStereo: bool, multisampleDescription: ::rt::gen::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription, out: *mut *mut DisplayPrimaryDescription) -> HRESULT
+    #[cfg(feature="windows-graphics")] fn CreateInstance(&self, width: u32, height: u32, pixelFormat: crate::windows::graphics::directx::DirectXPixelFormat, colorSpace: crate::windows::graphics::directx::DirectXColorSpace, isStereo: bool, multisampleDescription: crate::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription, out: *mut *mut DisplayPrimaryDescription) -> HRESULT
 }}
 impl IDisplayPrimaryDescriptionFactory {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_instance(&self, width: u32, height: u32, pixelFormat: ::rt::gen::windows::graphics::directx::DirectXPixelFormat, colorSpace: ::rt::gen::windows::graphics::directx::DirectXColorSpace, isStereo: bool, multisampleDescription: ::rt::gen::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription) -> Result<ComPtr<DisplayPrimaryDescription>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_instance(&self, width: u32, height: u32, pixelFormat: crate::windows::graphics::directx::DirectXPixelFormat, colorSpace: crate::windows::graphics::directx::DirectXColorSpace, isStereo: bool, multisampleDescription: crate::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription) -> Result<ComPtr<DisplayPrimaryDescription>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateInstance)(self as *const _ as *mut _, width, height, pixelFormat, colorSpace, isStereo, multisampleDescription, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -8354,10 +8354,10 @@ impl IDisplayPrimaryDescriptionFactory {
 }
 DEFINE_IID!(IID_IDisplayPrimaryDescriptionStatics, 3859696891, 14025, 22237, 143, 161, 111, 248, 196, 224, 255, 7);
 RT_INTERFACE!{static interface IDisplayPrimaryDescriptionStatics(IDisplayPrimaryDescriptionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayPrimaryDescriptionStatics] {
-    #[cfg(feature="windows-graphics")] fn CreateWithProperties(&self, extraProperties: *mut foundation::collections::IIterable<foundation::collections::IKeyValuePair<Guid, IInspectable>>, width: u32, height: u32, pixelFormat: ::rt::gen::windows::graphics::directx::DirectXPixelFormat, colorSpace: ::rt::gen::windows::graphics::directx::DirectXColorSpace, isStereo: bool, multisampleDescription: ::rt::gen::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription, out: *mut *mut DisplayPrimaryDescription) -> HRESULT
+    #[cfg(feature="windows-graphics")] fn CreateWithProperties(&self, extraProperties: *mut foundation::collections::IIterable<foundation::collections::IKeyValuePair<Guid, IInspectable>>, width: u32, height: u32, pixelFormat: crate::windows::graphics::directx::DirectXPixelFormat, colorSpace: crate::windows::graphics::directx::DirectXColorSpace, isStereo: bool, multisampleDescription: crate::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription, out: *mut *mut DisplayPrimaryDescription) -> HRESULT
 }}
 impl IDisplayPrimaryDescriptionStatics {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_properties(&self, extraProperties: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<Guid, IInspectable>>, width: u32, height: u32, pixelFormat: ::rt::gen::windows::graphics::directx::DirectXPixelFormat, colorSpace: ::rt::gen::windows::graphics::directx::DirectXColorSpace, isStereo: bool, multisampleDescription: ::rt::gen::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription) -> Result<Option<ComPtr<DisplayPrimaryDescription>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_properties(&self, extraProperties: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<Guid, IInspectable>>, width: u32, height: u32, pixelFormat: crate::windows::graphics::directx::DirectXPixelFormat, colorSpace: crate::windows::graphics::directx::DirectXColorSpace, isStereo: bool, multisampleDescription: crate::windows::graphics::directx::direct3d11::Direct3DMultisampleDescription) -> Result<Option<ComPtr<DisplayPrimaryDescription>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateWithProperties)(self as *const _ as *mut _, extraProperties as *const _ as *mut _, width, height, pixelFormat, colorSpace, isStereo, multisampleDescription, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -8374,12 +8374,12 @@ RT_CLASS!{class DisplayScanout: IDisplayScanout}
 DEFINE_IID!(IID_IDisplaySource, 3973144513, 60124, 20924, 151, 29, 59, 198, 40, 219, 45, 212);
 RT_INTERFACE!{interface IDisplaySource(IDisplaySourceVtbl): IInspectable(IInspectableVtbl) [IID_IDisplaySource] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_AdapterId(&self, out: *mut ::rt::gen::windows::graphics::DisplayAdapterId) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_AdapterId(&self, out: *mut crate::windows::graphics::DisplayAdapterId) -> HRESULT,
     fn get_SourceId(&self, out: *mut u32) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn GetMetadata(&self, key: Guid, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
+    #[cfg(feature="windows-storage")] fn GetMetadata(&self, key: Guid, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IDisplaySource {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_adapter_id(&self) -> Result<::rt::gen::windows::graphics::DisplayAdapterId> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_adapter_id(&self) -> Result<crate::windows::graphics::DisplayAdapterId> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_AdapterId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -8389,7 +8389,7 @@ impl IDisplaySource {
         let hr = ((*self.lpVtbl).get_SourceId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_metadata(&self, key: Guid) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_metadata(&self, key: Guid) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetMetadata)(self as *const _ as *mut _, key, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -8650,9 +8650,9 @@ DEFINE_IID!(IID_IDisplayView, 2965998753, 46937, 23385, 177, 173, 240, 120, 106,
 RT_INTERFACE!{interface IDisplayView(IDisplayViewVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayView] {
     fn get_Paths(&self, out: *mut *mut foundation::collections::IVectorView<DisplayPath>) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_ContentResolution(&self, out: *mut *mut foundation::IReference<::rt::gen::windows::graphics::SizeInt32>) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_ContentResolution(&self, out: *mut *mut foundation::IReference<crate::windows::graphics::SizeInt32>) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn put_ContentResolution(&self, value: *mut foundation::IReference<::rt::gen::windows::graphics::SizeInt32>) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn put_ContentResolution(&self, value: *mut foundation::IReference<crate::windows::graphics::SizeInt32>) -> HRESULT,
     fn SetPrimaryPath(&self, path: *mut DisplayPath) -> HRESULT,
     fn get_Properties(&self, out: *mut *mut foundation::collections::IMap<Guid, IInspectable>) -> HRESULT
 }}
@@ -8662,12 +8662,12 @@ impl IDisplayView {
         let hr = ((*self.lpVtbl).get_Paths)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_content_resolution(&self) -> Result<Option<ComPtr<foundation::IReference<::rt::gen::windows::graphics::SizeInt32>>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_content_resolution(&self) -> Result<Option<ComPtr<foundation::IReference<crate::windows::graphics::SizeInt32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ContentResolution)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_content_resolution(&self, value: &foundation::IReference<::rt::gen::windows::graphics::SizeInt32>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_content_resolution(&self, value: &foundation::IReference<crate::windows::graphics::SizeInt32>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_ContentResolution)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -8772,7 +8772,7 @@ impl IDisplayWireFormatStatics {
 } // Windows.Devices.Display.Core
 } // Windows.Devices.Display
 pub mod enumeration { // Windows.Devices.Enumeration
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDeviceAccessChangedEventArgs, 3738831820, 20381, 20312, 157, 186, 169, 188, 128, 4, 8, 213);
 RT_INTERFACE!{interface IDeviceAccessChangedEventArgs(IDeviceAccessChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceAccessChangedEventArgs] {
     fn get_Status(&self, out: *mut DeviceAccessStatus) -> HRESULT
@@ -9728,7 +9728,7 @@ RT_ENUM! { enum Panel: i32 {
     Unknown = 0, Front = 1, Back = 2, Top = 3, Bottom = 4, Left = 5, Right = 6,
 }}
 pub mod pnp { // Windows.Devices.Enumeration.Pnp
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPnpObject, 2512806488, 29499, 19087, 147, 163, 219, 7, 138, 200, 112, 193);
 RT_INTERFACE!{interface IPnpObject(IPnpObjectVtbl): IInspectable(IInspectableVtbl) [IID_IPnpObject] {
     fn get_Type(&self, out: *mut PnpObjectType) -> HRESULT,
@@ -9920,7 +9920,7 @@ RT_CLASS!{class PnpObjectWatcher: IPnpObjectWatcher}
 } // Windows.Devices.Enumeration.Pnp
 } // Windows.Devices.Enumeration
 pub mod geolocation { // Windows.Devices.Geolocation
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum AltitudeReferenceSystem: i32 {
     Unspecified = 0, Terrain = 1, Ellipsoid = 2, Geoid = 3, Surface = 4,
 }}
@@ -10725,7 +10725,7 @@ RT_ENUM! { enum VisitStateChange: i32 {
     TrackingLost = 0, Arrived = 1, Departed = 2, OtherMovement = 3,
 }}
 pub mod geofencing { // Windows.Devices.Geolocation.Geofencing
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IGeofence, 2617837603, 60856, 18400, 130, 69, 91, 246, 29, 50, 31, 45);
 RT_INTERFACE!{interface IGeofence(IGeofenceVtbl): IInspectable(IInspectableVtbl) [IID_IGeofence] {
     fn get_StartTime(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -10934,7 +10934,7 @@ RT_ENUM! { enum MonitoredGeofenceStates: u32 {
 } // Windows.Devices.Geolocation.Geofencing
 } // Windows.Devices.Geolocation
 pub mod gpio { // Windows.Devices.Gpio
-use ::prelude::*;
+use crate::prelude::*;
 RT_STRUCT! { struct GpioChangeCount {
     Count: u64, RelativeTime: foundation::TimeSpan,
 }}
@@ -11288,7 +11288,7 @@ RT_ENUM! { enum GpioSharingMode: i32 {
     Exclusive = 0, SharedReadOnly = 1,
 }}
 pub mod provider { // Windows.Devices.Gpio.Provider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IGpioControllerProvider, 2903625415, 6634, 19233, 135, 79, 185, 26, 237, 74, 37, 219);
 RT_INTERFACE!{interface IGpioControllerProvider(IGpioControllerProviderVtbl): IInspectable(IInspectableVtbl) [IID_IGpioControllerProvider] {
     fn get_PinCount(&self, out: *mut i32) -> HRESULT,
@@ -11429,7 +11429,7 @@ RT_ENUM! { enum ProviderGpioSharingMode: i32 {
 } // Windows.Devices.Gpio.Provider
 } // Windows.Devices.Gpio
 pub mod haptics { // Windows.Devices.Haptics
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class KnownSimpleHapticsControllerWaveforms}
 impl RtActivatable<IKnownSimpleHapticsControllerWaveformsStatics> for KnownSimpleHapticsControllerWaveforms {}
 impl KnownSimpleHapticsControllerWaveforms {
@@ -11647,7 +11647,7 @@ impl IVibrationDeviceStatics {
 }
 } // Windows.Devices.Haptics
 pub mod humaninterfacedevice { // Windows.Devices.HumanInterfaceDevice
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IHidBooleanControl, 1380840586, 13973, 16524, 187, 162, 226, 235, 90, 191, 188, 32);
 RT_INTERFACE!{interface IHidBooleanControl(IHidBooleanControlVtbl): IInspectable(IInspectableVtbl) [IID_IHidBooleanControl] {
     fn get_Id(&self, out: *mut u32) -> HRESULT,
@@ -12260,7 +12260,7 @@ RT_ENUM! { enum HidReportType: i32 {
 }}
 } // Windows.Devices.HumanInterfaceDevice
 pub mod i2c { // Windows.Devices.I2c
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum I2cBusSpeed: i32 {
     StandardMode = 0, FastMode = 1,
 }}
@@ -12457,7 +12457,7 @@ RT_ENUM! { enum I2cTransferStatus: i32 {
     FullTransfer = 0, PartialTransfer = 1, SlaveAddressNotAcknowledged = 2, ClockStretchTimeout = 3, UnknownError = 4,
 }}
 pub mod provider { // Windows.Devices.I2c.Provider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_II2cControllerProvider, 1640151938, 17680, 16739, 168, 124, 78, 21, 169, 85, 137, 128);
 RT_INTERFACE!{interface II2cControllerProvider(II2cControllerProviderVtbl): IInspectable(IInspectableVtbl) [IID_II2cControllerProvider] {
     fn GetDeviceProvider(&self, settings: *mut ProviderI2cConnectionSettings, out: *mut *mut II2cDeviceProvider) -> HRESULT
@@ -12578,7 +12578,7 @@ RT_ENUM! { enum ProviderI2cTransferStatus: i32 {
 } // Windows.Devices.I2c.Provider
 } // Windows.Devices.I2c
 pub mod input { // Windows.Devices.Input
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IKeyboardCapabilities, 977247062, 26520, 19388, 131, 62, 15, 52, 177, 124, 101, 255);
 RT_INTERFACE!{interface IKeyboardCapabilities(IKeyboardCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IKeyboardCapabilities] {
     fn get_KeyboardPresent(&self, out: *mut i32) -> HRESULT
@@ -12788,7 +12788,7 @@ RT_CLASS!{class TouchCapabilities: ITouchCapabilities}
 impl RtActivatable<IActivationFactory> for TouchCapabilities {}
 DEFINE_CLSID!(TouchCapabilities(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,73,110,112,117,116,46,84,111,117,99,104,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_TouchCapabilities]);
 pub mod preview { // Windows.Devices.Input.Preview
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum GazeDeviceConfigurationStatePreview: i32 {
     Unknown = 0, Ready = 1, Configuring = 2, ScreenSetupNeeded = 3, UserCalibrationNeeded = 4,
 }}
@@ -13116,7 +13116,7 @@ RT_CLASS!{class GazePointPreview: IGazePointPreview}
 } // Windows.Devices.Input.Preview
 } // Windows.Devices.Input
 pub mod lights { // Windows.Devices.Lights
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ILamp, 75324314, 59973, 19243, 177, 162, 20, 223, 240, 11, 222, 123);
 RT_INTERFACE!{interface ILamp(ILampVtbl): IInspectable(IInspectableVtbl) [IID_ILamp] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -13492,7 +13492,7 @@ impl ILampStatics {
     }}
 }
 pub mod effects { // Windows.Devices.Lights.Effects
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ILampArrayBitmapEffect, 842588261, 55415, 17959, 137, 229, 42, 136, 247, 5, 47, 166);
 RT_INTERFACE!{interface ILampArrayBitmapEffect(ILampArrayBitmapEffectVtbl): IInspectable(IInspectableVtbl) [IID_ILampArrayBitmapEffect] {
     fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -13570,7 +13570,7 @@ impl ILampArrayBitmapEffectFactory {
 DEFINE_IID!(IID_ILampArrayBitmapRequestedEventArgs, 3367284638, 65123, 19793, 186, 189, 97, 157, 239, 180, 84, 186);
 RT_INTERFACE!{interface ILampArrayBitmapRequestedEventArgs(ILampArrayBitmapRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ILampArrayBitmapRequestedEventArgs] {
     fn get_SinceStarted(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    #[cfg(feature="windows-graphics")] fn UpdateBitmap(&self, bitmap: *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> HRESULT
+    #[cfg(feature="windows-graphics")] fn UpdateBitmap(&self, bitmap: *mut crate::windows::graphics::imaging::SoftwareBitmap) -> HRESULT
 }}
 impl ILampArrayBitmapRequestedEventArgs {
     #[inline] pub fn get_since_started(&self) -> Result<foundation::TimeSpan> { unsafe { 
@@ -13578,7 +13578,7 @@ impl ILampArrayBitmapRequestedEventArgs {
         let hr = ((*self.lpVtbl).get_SinceStarted)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn update_bitmap(&self, bitmap: &::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn update_bitmap(&self, bitmap: &crate::windows::graphics::imaging::SoftwareBitmap) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).UpdateBitmap)(self as *const _ as *mut _, bitmap as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -13587,9 +13587,9 @@ RT_CLASS!{class LampArrayBitmapRequestedEventArgs: ILampArrayBitmapRequestedEven
 DEFINE_IID!(IID_ILampArrayBlinkEffect, 3955176950, 12229, 19379, 179, 195, 98, 33, 167, 104, 13, 19);
 RT_INTERFACE!{interface ILampArrayBlinkEffect(ILampArrayBlinkEffectVtbl): IInspectable(IInspectableVtbl) [IID_ILampArrayBlinkEffect] {
     #[cfg(not(feature="windows-ui"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_Color(&self, out: *mut ::rt::gen::windows::ui::Color) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_Color(&self, out: *mut crate::windows::ui::Color) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-ui")] fn put_Color(&self, value: ::rt::gen::windows::ui::Color) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_Color(&self, value: crate::windows::ui::Color) -> HRESULT,
     fn get_AttackDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_AttackDuration(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_SustainDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -13606,12 +13606,12 @@ RT_INTERFACE!{interface ILampArrayBlinkEffect(ILampArrayBlinkEffectVtbl): IInspe
     fn put_RepetitionMode(&self, value: LampArrayRepetitionMode) -> HRESULT
 }}
 impl ILampArrayBlinkEffect {
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_color(&self) -> Result<::rt::gen::windows::ui::Color> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_color(&self) -> Result<crate::windows::ui::Color> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Color)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_color(&self, value: ::rt::gen::windows::ui::Color) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_color(&self, value: crate::windows::ui::Color) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Color)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -13701,9 +13701,9 @@ impl ILampArrayBlinkEffectFactory {
 DEFINE_IID!(IID_ILampArrayColorRampEffect, 721437751, 16551, 17198, 160, 185, 13, 87, 12, 33, 83, 255);
 RT_INTERFACE!{interface ILampArrayColorRampEffect(ILampArrayColorRampEffectVtbl): IInspectable(IInspectableVtbl) [IID_ILampArrayColorRampEffect] {
     #[cfg(not(feature="windows-ui"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_Color(&self, out: *mut ::rt::gen::windows::ui::Color) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_Color(&self, out: *mut crate::windows::ui::Color) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-ui")] fn put_Color(&self, value: ::rt::gen::windows::ui::Color) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_Color(&self, value: crate::windows::ui::Color) -> HRESULT,
     fn get_RampDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_RampDuration(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_StartDelay(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -13712,12 +13712,12 @@ RT_INTERFACE!{interface ILampArrayColorRampEffect(ILampArrayColorRampEffectVtbl)
     fn put_CompletionBehavior(&self, value: LampArrayEffectCompletionBehavior) -> HRESULT
 }}
 impl ILampArrayColorRampEffect {
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_color(&self) -> Result<::rt::gen::windows::ui::Color> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_color(&self) -> Result<crate::windows::ui::Color> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Color)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_color(&self, value: ::rt::gen::windows::ui::Color) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_color(&self, value: crate::windows::ui::Color) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Color)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -13951,9 +13951,9 @@ RT_ENUM! { enum LampArrayRepetitionMode: i32 {
 DEFINE_IID!(IID_ILampArraySolidEffect, 1142915603, 17356, 19251, 128, 235, 198, 221, 222, 125, 200, 237);
 RT_INTERFACE!{interface ILampArraySolidEffect(ILampArraySolidEffectVtbl): IInspectable(IInspectableVtbl) [IID_ILampArraySolidEffect] {
     #[cfg(not(feature="windows-ui"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_Color(&self, out: *mut ::rt::gen::windows::ui::Color) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_Color(&self, out: *mut crate::windows::ui::Color) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-ui")] fn put_Color(&self, value: ::rt::gen::windows::ui::Color) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_Color(&self, value: crate::windows::ui::Color) -> HRESULT,
     fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_Duration(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_StartDelay(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -13962,12 +13962,12 @@ RT_INTERFACE!{interface ILampArraySolidEffect(ILampArraySolidEffectVtbl): IInspe
     fn put_CompletionBehavior(&self, value: LampArrayEffectCompletionBehavior) -> HRESULT
 }}
 impl ILampArraySolidEffect {
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_color(&self) -> Result<::rt::gen::windows::ui::Color> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_color(&self) -> Result<crate::windows::ui::Color> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Color)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_color(&self, value: ::rt::gen::windows::ui::Color) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_color(&self, value: crate::windows::ui::Color) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Color)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -14021,10 +14021,10 @@ impl ILampArraySolidEffectFactory {
 DEFINE_IID!(IID_ILampArrayUpdateRequestedEventArgs, 1935019370, 22378, 18607, 133, 57, 103, 255, 160, 171, 53, 22);
 RT_INTERFACE!{interface ILampArrayUpdateRequestedEventArgs(ILampArrayUpdateRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ILampArrayUpdateRequestedEventArgs] {
     fn get_SinceStarted(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn SetColor(&self, desiredColor: ::rt::gen::windows::ui::Color) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn SetColorForIndex(&self, lampIndex: i32, desiredColor: ::rt::gen::windows::ui::Color) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn SetSingleColorForIndices(&self, desiredColor: ::rt::gen::windows::ui::Color, lampIndexesSize: u32, lampIndexes: *mut i32) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn SetColorsForIndices(&self, desiredColorsSize: u32, desiredColors: *mut ::rt::gen::windows::ui::Color, lampIndexesSize: u32, lampIndexes: *mut i32) -> HRESULT
+    #[cfg(feature="windows-ui")] fn SetColor(&self, desiredColor: crate::windows::ui::Color) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn SetColorForIndex(&self, lampIndex: i32, desiredColor: crate::windows::ui::Color) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn SetSingleColorForIndices(&self, desiredColor: crate::windows::ui::Color, lampIndexesSize: u32, lampIndexes: *mut i32) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn SetColorsForIndices(&self, desiredColorsSize: u32, desiredColors: *mut crate::windows::ui::Color, lampIndexesSize: u32, lampIndexes: *mut i32) -> HRESULT
 }}
 impl ILampArrayUpdateRequestedEventArgs {
     #[inline] pub fn get_since_started(&self) -> Result<foundation::TimeSpan> { unsafe { 
@@ -14032,19 +14032,19 @@ impl ILampArrayUpdateRequestedEventArgs {
         let hr = ((*self.lpVtbl).get_SinceStarted)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_color(&self, desiredColor: ::rt::gen::windows::ui::Color) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_color(&self, desiredColor: crate::windows::ui::Color) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetColor)(self as *const _ as *mut _, desiredColor);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_color_for_index(&self, lampIndex: i32, desiredColor: ::rt::gen::windows::ui::Color) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_color_for_index(&self, lampIndex: i32, desiredColor: crate::windows::ui::Color) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetColorForIndex)(self as *const _ as *mut _, lampIndex, desiredColor);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_single_color_for_indices(&self, desiredColor: ::rt::gen::windows::ui::Color, lampIndexes: &[i32]) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_single_color_for_indices(&self, desiredColor: crate::windows::ui::Color, lampIndexes: &[i32]) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetSingleColorForIndices)(self as *const _ as *mut _, desiredColor, lampIndexes.len() as u32, lampIndexes.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_colors_for_indices(&self, desiredColors: &[::rt::gen::windows::ui::Color], lampIndexes: &[i32]) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_colors_for_indices(&self, desiredColors: &[crate::windows::ui::Color], lampIndexes: &[i32]) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetColorsForIndices)(self as *const _ as *mut _, desiredColors.len() as u32, desiredColors.as_ptr() as *mut _, lampIndexes.len() as u32, lampIndexes.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -14053,7 +14053,7 @@ RT_CLASS!{class LampArrayUpdateRequestedEventArgs: ILampArrayUpdateRequestedEven
 } // Windows.Devices.Lights.Effects
 } // Windows.Devices.Lights
 pub mod midi { // Windows.Devices.Midi
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{class MidiActiveSensingMessage: IMidiMessage}
 impl RtActivatable<IActivationFactory> for MidiActiveSensingMessage {}
 DEFINE_CLSID!(MidiActiveSensingMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,65,99,116,105,118,101,83,101,110,115,105,110,103,77,101,115,115,97,103,101,0]) [CLSID_MidiActiveSensingMessage]);
@@ -14666,7 +14666,7 @@ impl RtActivatable<IActivationFactory> for MidiTuneRequestMessage {}
 DEFINE_CLSID!(MidiTuneRequestMessage(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,77,105,100,105,46,77,105,100,105,84,117,110,101,82,101,113,117,101,115,116,77,101,115,115,97,103,101,0]) [CLSID_MidiTuneRequestMessage]);
 } // Windows.Devices.Midi
 pub mod perception { // Windows.Devices.Perception
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class KnownCameraIntrinsicsProperties}
 impl RtActivatable<IKnownCameraIntrinsicsPropertiesStatics> for KnownCameraIntrinsicsProperties {}
 impl KnownCameraIntrinsicsProperties {
@@ -16375,7 +16375,7 @@ impl IPerceptionVideoProfile {
 }
 RT_CLASS!{class PerceptionVideoProfile: IPerceptionVideoProfile}
 pub mod provider { // Windows.Devices.Perception.Provider
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class KnownPerceptionFrameKind}
 impl RtActivatable<IKnownPerceptionFrameKindStatics> for KnownPerceptionFrameKind {}
 impl KnownPerceptionFrameKind {
@@ -16835,7 +16835,7 @@ impl PerceptionStopFaceAuthenticationHandler {
 DEFINE_IID!(IID_IPerceptionVideoFrameAllocator, 1278781402, 64984, 20180, 160, 57, 42, 111, 155, 35, 80, 56);
 RT_INTERFACE!{interface IPerceptionVideoFrameAllocator(IPerceptionVideoFrameAllocatorVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionVideoFrameAllocator] {
     fn AllocateFrame(&self, out: *mut *mut PerceptionFrame) -> HRESULT,
-    #[cfg(feature="windows-media")] fn CopyFromVideoFrame(&self, frame: *mut ::rt::gen::windows::media::VideoFrame, out: *mut *mut PerceptionFrame) -> HRESULT
+    #[cfg(feature="windows-media")] fn CopyFromVideoFrame(&self, frame: *mut crate::windows::media::VideoFrame, out: *mut *mut PerceptionFrame) -> HRESULT
 }}
 impl IPerceptionVideoFrameAllocator {
     #[inline] pub fn allocate_frame(&self) -> Result<Option<ComPtr<PerceptionFrame>>> { unsafe { 
@@ -16843,7 +16843,7 @@ impl IPerceptionVideoFrameAllocator {
         let hr = ((*self.lpVtbl).AllocateFrame)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-media")] #[inline] pub fn copy_from_video_frame(&self, frame: &::rt::gen::windows::media::VideoFrame) -> Result<Option<ComPtr<PerceptionFrame>>> { unsafe { 
+    #[cfg(feature="windows-media")] #[inline] pub fn copy_from_video_frame(&self, frame: &crate::windows::media::VideoFrame) -> Result<Option<ComPtr<PerceptionFrame>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CopyFromVideoFrame)(self as *const _ as *mut _, frame as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -16852,17 +16852,17 @@ impl IPerceptionVideoFrameAllocator {
 RT_CLASS!{class PerceptionVideoFrameAllocator: IPerceptionVideoFrameAllocator}
 impl RtActivatable<IPerceptionVideoFrameAllocatorFactory> for PerceptionVideoFrameAllocator {}
 impl PerceptionVideoFrameAllocator {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create(maxOutstandingFrameCountForWrite: u32, format: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, resolution: foundation::Size, alpha: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode) -> Result<ComPtr<PerceptionVideoFrameAllocator>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create(maxOutstandingFrameCountForWrite: u32, format: crate::windows::graphics::imaging::BitmapPixelFormat, resolution: foundation::Size, alpha: crate::windows::graphics::imaging::BitmapAlphaMode) -> Result<ComPtr<PerceptionVideoFrameAllocator>> {
         <Self as RtActivatable<IPerceptionVideoFrameAllocatorFactory>>::get_activation_factory().create(maxOutstandingFrameCountForWrite, format, resolution, alpha)
     }
 }
 DEFINE_CLSID!(PerceptionVideoFrameAllocator(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,101,114,99,101,112,116,105,111,110,46,80,114,111,118,105,100,101,114,46,80,101,114,99,101,112,116,105,111,110,86,105,100,101,111,70,114,97,109,101,65,108,108,111,99,97,116,111,114,0]) [CLSID_PerceptionVideoFrameAllocator]);
 DEFINE_IID!(IID_IPerceptionVideoFrameAllocatorFactory, 442020065, 59674, 18462, 184, 118, 168, 158, 43, 188, 107, 51);
 RT_INTERFACE!{static interface IPerceptionVideoFrameAllocatorFactory(IPerceptionVideoFrameAllocatorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionVideoFrameAllocatorFactory] {
-    #[cfg(feature="windows-graphics")] fn Create(&self, maxOutstandingFrameCountForWrite: u32, format: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, resolution: foundation::Size, alpha: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode, out: *mut *mut PerceptionVideoFrameAllocator) -> HRESULT
+    #[cfg(feature="windows-graphics")] fn Create(&self, maxOutstandingFrameCountForWrite: u32, format: crate::windows::graphics::imaging::BitmapPixelFormat, resolution: foundation::Size, alpha: crate::windows::graphics::imaging::BitmapAlphaMode, out: *mut *mut PerceptionVideoFrameAllocator) -> HRESULT
 }}
 impl IPerceptionVideoFrameAllocatorFactory {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create(&self, maxOutstandingFrameCountForWrite: u32, format: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, resolution: foundation::Size, alpha: ::rt::gen::windows::graphics::imaging::BitmapAlphaMode) -> Result<ComPtr<PerceptionVideoFrameAllocator>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create(&self, maxOutstandingFrameCountForWrite: u32, format: crate::windows::graphics::imaging::BitmapPixelFormat, resolution: foundation::Size, alpha: crate::windows::graphics::imaging::BitmapAlphaMode) -> Result<ComPtr<PerceptionVideoFrameAllocator>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, maxOutstandingFrameCountForWrite, format, resolution, alpha, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -16871,7 +16871,7 @@ impl IPerceptionVideoFrameAllocatorFactory {
 } // Windows.Devices.Perception.Provider
 } // Windows.Devices.Perception
 pub mod pointofservice { // Windows.Devices.PointOfService
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IBarcodeScanner, 3198369286, 45668, 20227, 169, 193, 69, 178, 15, 1, 19, 79);
 RT_INTERFACE!{interface IBarcodeScanner(IBarcodeScannerVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScanner] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -21591,7 +21591,7 @@ RT_ENUM! { enum UnifiedPosPowerReportingType: i32 {
     UnknownPowerReportingType = 0, Standard = 1, Advanced = 2,
 }}
 pub mod provider { // Windows.Devices.PointOfService.Provider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IBarcodeScannerDisableScannerRequest, 2297231296, 14265, 17013, 142, 119, 200, 229, 42, 229, 169, 200);
 RT_INTERFACE!{interface IBarcodeScannerDisableScannerRequest(IBarcodeScannerDisableScannerRequestVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerDisableScannerRequest] {
     fn ReportCompletedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
@@ -22040,8 +22040,8 @@ RT_CLASS!{class BarcodeScannerProviderConnection: IBarcodeScannerProviderConnect
 DEFINE_IID!(IID_IBarcodeScannerProviderConnection2, 3197850573, 4404, 16780, 160, 107, 4, 66, 58, 115, 243, 215);
 RT_INTERFACE!{interface IBarcodeScannerProviderConnection2(IBarcodeScannerProviderConnection2Vtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerProviderConnection2] {
     fn CreateFrameReaderAsync(&self, out: *mut *mut foundation::IAsyncOperation<BarcodeScannerFrameReader>) -> HRESULT,
-    #[cfg(feature="windows-graphics")] fn CreateFrameReaderWithFormatAsync(&self, preferredFormat: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, out: *mut *mut foundation::IAsyncOperation<BarcodeScannerFrameReader>) -> HRESULT,
-    #[cfg(feature="windows-graphics")] fn CreateFrameReaderWithFormatAndSizeAsync(&self, preferredFormat: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, preferredSize: ::rt::gen::windows::graphics::imaging::BitmapSize, out: *mut *mut foundation::IAsyncOperation<BarcodeScannerFrameReader>) -> HRESULT
+    #[cfg(feature="windows-graphics")] fn CreateFrameReaderWithFormatAsync(&self, preferredFormat: crate::windows::graphics::imaging::BitmapPixelFormat, out: *mut *mut foundation::IAsyncOperation<BarcodeScannerFrameReader>) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn CreateFrameReaderWithFormatAndSizeAsync(&self, preferredFormat: crate::windows::graphics::imaging::BitmapPixelFormat, preferredSize: crate::windows::graphics::imaging::BitmapSize, out: *mut *mut foundation::IAsyncOperation<BarcodeScannerFrameReader>) -> HRESULT
 }}
 impl IBarcodeScannerProviderConnection2 {
     #[inline] pub fn create_frame_reader_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<BarcodeScannerFrameReader>>> { unsafe { 
@@ -22049,12 +22049,12 @@ impl IBarcodeScannerProviderConnection2 {
         let hr = ((*self.lpVtbl).CreateFrameReaderAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_frame_reader_with_format_async(&self, preferredFormat: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat) -> Result<ComPtr<foundation::IAsyncOperation<BarcodeScannerFrameReader>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_frame_reader_with_format_async(&self, preferredFormat: crate::windows::graphics::imaging::BitmapPixelFormat) -> Result<ComPtr<foundation::IAsyncOperation<BarcodeScannerFrameReader>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFrameReaderWithFormatAsync)(self as *const _ as *mut _, preferredFormat, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_frame_reader_with_format_and_size_async(&self, preferredFormat: ::rt::gen::windows::graphics::imaging::BitmapPixelFormat, preferredSize: ::rt::gen::windows::graphics::imaging::BitmapSize) -> Result<ComPtr<foundation::IAsyncOperation<BarcodeScannerFrameReader>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_frame_reader_with_format_and_size_async(&self, preferredFormat: crate::windows::graphics::imaging::BitmapPixelFormat, preferredSize: crate::windows::graphics::imaging::BitmapSize) -> Result<ComPtr<foundation::IAsyncOperation<BarcodeScannerFrameReader>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFrameReaderWithFormatAndSizeAsync)(self as *const _ as *mut _, preferredFormat, preferredSize, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -22308,13 +22308,13 @@ RT_ENUM! { enum BarcodeScannerTriggerState: i32 {
 DEFINE_IID!(IID_IBarcodeScannerVideoFrame, 2119717448, 40439, 16673, 161, 117, 128, 29, 128, 0, 17, 46);
 RT_INTERFACE!{interface IBarcodeScannerVideoFrame(IBarcodeScannerVideoFrameVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerVideoFrame] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_Format(&self, out: *mut ::rt::gen::windows::graphics::imaging::BitmapPixelFormat) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_Format(&self, out: *mut crate::windows::graphics::imaging::BitmapPixelFormat) -> HRESULT,
     fn get_Width(&self, out: *mut u32) -> HRESULT,
     fn get_Height(&self, out: *mut u32) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_PixelData(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_PixelData(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IBarcodeScannerVideoFrame {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_format(&self) -> Result<::rt::gen::windows::graphics::imaging::BitmapPixelFormat> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_format(&self) -> Result<crate::windows::graphics::imaging::BitmapPixelFormat> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Format)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -22329,7 +22329,7 @@ impl IBarcodeScannerVideoFrame {
         let hr = ((*self.lpVtbl).get_Height)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_pixel_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_pixel_data(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_PixelData)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -22386,7 +22386,7 @@ DEFINE_CLSID!(BarcodeSymbologyAttributesBuilder(&[87,105,110,100,111,119,115,46,
 } // Windows.Devices.PointOfService.Provider
 } // Windows.Devices.PointOfService
 pub mod portable { // Windows.Devices.Portable
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class ServiceDevice}
 impl RtActivatable<IServiceDeviceStatics> for ServiceDevice {}
 impl ServiceDevice {
@@ -22449,7 +22449,7 @@ impl IStorageDeviceStatics {
 }
 } // Windows.Devices.Portable
 pub mod power { // Windows.Devices.Power
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IBattery, 3163115462, 114, 18376, 139, 93, 97, 74, 170, 122, 67, 126);
 RT_INTERFACE!{interface IBattery(IBatteryVtbl): IInspectable(IInspectableVtbl) [IID_IBattery] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -22553,7 +22553,7 @@ impl IBatteryStatics {
 }
 } // Windows.Devices.Power
 pub mod printers { // Windows.Devices.Printers
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPrint3DDevice, 68959513, 38675, 17058, 152, 19, 125, 195, 51, 116, 40, 211);
 RT_INTERFACE!{interface IPrint3DDevice(IPrint3DDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DDevice] {
     fn get_PrintSchema(&self, out: *mut *mut PrintSchema) -> HRESULT
@@ -22618,7 +22618,7 @@ impl IPrintSchema {
 }
 RT_CLASS!{class PrintSchema: IPrintSchema}
 pub mod extensions { // Windows.Devices.Printers.Extensions
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPrint3DWorkflow, 3312415933, 13929, 19046, 171, 66, 200, 21, 25, 48, 205, 52);
 RT_INTERFACE!{interface IPrint3DWorkflow(IPrint3DWorkflowVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DWorkflow] {
     fn get_DeviceID(&self, out: *mut HSTRING) -> HRESULT,
@@ -22839,7 +22839,7 @@ RT_CLASS!{class PrintTaskConfigurationSaveRequestedEventArgs: IPrintTaskConfigur
 } // Windows.Devices.Printers.Extensions
 } // Windows.Devices.Printers
 pub mod pwm { // Windows.Devices.Pwm
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPwmController, 3294583941, 53992, 17103, 155, 214, 207, 94, 208, 41, 230, 167);
 RT_INTERFACE!{interface IPwmController(IPwmControllerVtbl): IInspectable(IInspectableVtbl) [IID_IPwmController] {
     fn get_PinCount(&self, out: *mut i32) -> HRESULT,
@@ -23002,7 +23002,7 @@ RT_ENUM! { enum PwmPulsePolarity: i32 {
     ActiveHigh = 0, ActiveLow = 1,
 }}
 pub mod provider { // Windows.Devices.Pwm.Provider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPwmControllerProvider, 318789947, 58083, 16548, 183, 217, 72, 223, 240, 55, 122, 82);
 RT_INTERFACE!{interface IPwmControllerProvider(IPwmControllerProviderVtbl): IInspectable(IInspectableVtbl) [IID_IPwmControllerProvider] {
     fn get_PinCount(&self, out: *mut i32) -> HRESULT,
@@ -23077,7 +23077,7 @@ impl IPwmProvider {
 } // Windows.Devices.Pwm.Provider
 } // Windows.Devices.Pwm
 pub mod radios { // Windows.Devices.Radios
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IRadio, 622926047, 45886, 16746, 135, 95, 28, 243, 138, 226, 216, 62);
 RT_INTERFACE!{interface IRadio(IRadioVtbl): IInspectable(IInspectableVtbl) [IID_IRadio] {
     fn SetStateAsync(&self, value: RadioState, out: *mut *mut foundation::IAsyncOperation<RadioAccessStatus>) -> HRESULT,
@@ -23175,7 +23175,7 @@ impl IRadioStatics {
 }
 } // Windows.Devices.Radios
 pub mod scanners { // Windows.Devices.Scanners
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IImageScanner, 1403555704, 21144, 18592, 141, 163, 128, 135, 81, 150, 101, 224);
 RT_INTERFACE!{interface IImageScanner(IImageScannerVtbl): IInspectable(IInspectableVtbl) [IID_IImageScanner] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
@@ -23620,7 +23620,7 @@ impl IImageScannerStatics {
 }
 } // Windows.Devices.Scanners
 pub mod sensors { // Windows.Devices.Sensors
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAccelerometer, 3742909768, 10001, 19879, 128, 152, 75, 130, 32, 93, 60, 125);
 RT_INTERFACE!{interface IAccelerometer(IAccelerometerVtbl): IInspectable(IInspectableVtbl) [IID_IAccelerometer] {
     fn GetCurrentReading(&self, out: *mut *mut AccelerometerReading) -> HRESULT,
@@ -26259,7 +26259,7 @@ impl ISimpleOrientationSensorStatics2 {
     }}
 }
 pub mod custom { // Windows.Devices.Sensors.Custom
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICustomSensor, 2704734637, 16436, 19277, 153, 221, 83, 26, 172, 100, 156, 9);
 RT_INTERFACE!{interface ICustomSensor(ICustomSensorVtbl): IInspectable(IInspectableVtbl) [IID_ICustomSensor] {
     fn GetCurrentReading(&self, out: *mut *mut CustomSensorReading) -> HRESULT,
@@ -26399,7 +26399,7 @@ impl ICustomSensorStatics {
 } // Windows.Devices.Sensors.Custom
 } // Windows.Devices.Sensors
 pub mod serialcommunication { // Windows.Devices.SerialCommunication
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IErrorReceivedEventArgs, 4240883545, 4739, 19850, 191, 223, 86, 107, 51, 221, 178, 143);
 RT_INTERFACE!{interface IErrorReceivedEventArgs(IErrorReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorReceivedEventArgs] {
     fn get_Error(&self, out: *mut SerialError) -> HRESULT
@@ -26680,7 +26680,7 @@ RT_ENUM! { enum SerialStopBitCount: i32 {
 }}
 } // Windows.Devices.SerialCommunication
 pub mod smartcards { // Windows.Devices.SmartCards
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICardAddedEventArgs, 414969752, 61835, 19923, 177, 24, 223, 178, 200, 226, 60, 198);
 RT_INTERFACE!{interface ICardAddedEventArgs(ICardAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICardAddedEventArgs] {
     fn get_SmartCard(&self, out: *mut *mut SmartCard) -> HRESULT
@@ -28352,7 +28352,7 @@ RT_ENUM! { enum SmartCardUnlockPromptingBehavior: i32 {
 }}
 } // Windows.Devices.SmartCards
 pub mod sms { // Windows.Devices.Sms
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum CellularClass: i32 {
     None = 0, Gsm = 1, Cdma = 2,
 }}
@@ -29651,7 +29651,7 @@ impl ISmsWapMessage {
 RT_CLASS!{class SmsWapMessage: ISmsWapMessage}
 } // Windows.Devices.Sms
 pub mod spi { // Windows.Devices.Spi
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ISpiBusInfo, 2569618506, 21746, 18630, 185, 82, 156, 50, 252, 2, 198, 105);
 RT_INTERFACE!{interface ISpiBusInfo(ISpiBusInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISpiBusInfo] {
     fn get_ChipSelectLineCount(&self, out: *mut i32) -> HRESULT,
@@ -29890,7 +29890,7 @@ RT_ENUM! { enum SpiSharingMode: i32 {
     Exclusive = 0, Shared = 1,
 }}
 pub mod provider { // Windows.Devices.Spi.Provider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IProviderSpiConnectionSettings, 4127409488, 42306, 20160, 150, 1, 164, 221, 104, 248, 105, 123);
 RT_INTERFACE!{interface IProviderSpiConnectionSettings(IProviderSpiConnectionSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IProviderSpiConnectionSettings] {
     fn get_ChipSelectLine(&self, out: *mut i32) -> HRESULT,
@@ -30038,7 +30038,7 @@ impl ISpiProvider {
 } // Windows.Devices.Spi.Provider
 } // Windows.Devices.Spi
 pub mod usb { // Windows.Devices.Usb
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IUsbBulkInEndpointDescriptor, 1013860422, 1743, 17065, 157, 194, 151, 28, 27, 20, 182, 227);
 RT_INTERFACE!{interface IUsbBulkInEndpointDescriptor(IUsbBulkInEndpointDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IUsbBulkInEndpointDescriptor] {
     fn get_MaxPacketSize(&self, out: *mut u32) -> HRESULT,
@@ -31083,7 +31083,7 @@ RT_ENUM! { enum UsbWriteOptions: u32 {
 }}
 } // Windows.Devices.Usb
 pub mod wifi { // Windows.Devices.WiFi
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum WiFiAccessStatus: i32 {
     Unspecified = 0, Allowed = 1, DeniedByUser = 2, DeniedBySystem = 3,
 }}
@@ -31354,7 +31354,7 @@ RT_ENUM! { enum WiFiWpsKind: i32 {
 }}
 } // Windows.Devices.WiFi
 pub mod wifidirect { // Windows.Devices.WiFiDirect
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IWiFiDirectAdvertisement, 2874219053, 10758, 18849, 165, 132, 97, 67, 92, 121, 5, 166);
 RT_INTERFACE!{interface IWiFiDirectAdvertisement(IWiFiDirectAdvertisementVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectAdvertisement] {
     fn get_InformationElements(&self, out: *mut *mut foundation::collections::IVector<WiFiDirectInformationElement>) -> HRESULT,
@@ -31786,18 +31786,18 @@ RT_ENUM! { enum WiFiDirectPairingProcedure: i32 {
     GroupOwnerNegotiation = 0, Invitation = 1,
 }}
 pub mod services { // Windows.Devices.WiFiDirect.Services
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IWiFiDirectService, 1353366456, 24433, 17900, 132, 241, 161, 228, 252, 120, 121, 163);
 RT_INTERFACE!{interface IWiFiDirectService(IWiFiDirectServiceVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectService] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_RemoteServiceInfo(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_RemoteServiceInfo(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn get_SupportedConfigurationMethods(&self, out: *mut *mut foundation::collections::IVectorView<WiFiDirectServiceConfigurationMethod>) -> HRESULT,
     fn get_PreferGroupOwnerMode(&self, out: *mut bool) -> HRESULT,
     fn put_PreferGroupOwnerMode(&self, value: bool) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_SessionInfo(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_SessionInfo(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_SessionInfo(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_SessionInfo(&self, value: *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn get_ServiceError(&self, out: *mut WiFiDirectServiceError) -> HRESULT,
     fn add_SessionDeferred(&self, handler: *mut foundation::TypedEventHandler<WiFiDirectService, WiFiDirectServiceSessionDeferredEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SessionDeferred(&self, token: foundation::EventRegistrationToken) -> HRESULT,
@@ -31806,7 +31806,7 @@ RT_INTERFACE!{interface IWiFiDirectService(IWiFiDirectServiceVtbl): IInspectable
     fn ConnectAsyncWithPin(&self, pin: HSTRING, out: *mut *mut foundation::IAsyncOperation<WiFiDirectServiceSession>) -> HRESULT
 }}
 impl IWiFiDirectService {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_remote_service_info(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_remote_service_info(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RemoteServiceInfo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -31825,12 +31825,12 @@ impl IWiFiDirectService {
         let hr = ((*self.lpVtbl).put_PreferGroupOwnerMode)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_session_info(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_session_info(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SessionInfo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_session_info(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_session_info(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_SessionInfo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -31870,7 +31870,7 @@ impl WiFiDirectService {
     #[inline] pub fn get_selector(serviceName: &HStringArg) -> Result<HString> {
         <Self as RtActivatable<IWiFiDirectServiceStatics>>::get_activation_factory().get_selector(serviceName)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_selector_with_filter(serviceName: &HStringArg, serviceInfoFilter: &::rt::gen::windows::storage::streams::IBuffer) -> Result<HString> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_selector_with_filter(serviceName: &HStringArg, serviceInfoFilter: &crate::windows::storage::streams::IBuffer) -> Result<HString> {
         <Self as RtActivatable<IWiFiDirectServiceStatics>>::get_activation_factory().get_selector_with_filter(serviceName, serviceInfoFilter)
     }
     #[inline] pub fn from_id_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<WiFiDirectService>>> {
@@ -31886,9 +31886,9 @@ RT_INTERFACE!{interface IWiFiDirectServiceAdvertiser(IWiFiDirectServiceAdvertise
     fn get_ServiceName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ServiceNamePrefixes(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_ServiceInfo(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_ServiceInfo(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_ServiceInfo(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_ServiceInfo(&self, value: *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn get_AutoAcceptSession(&self, out: *mut bool) -> HRESULT,
     fn put_AutoAcceptSession(&self, value: bool) -> HRESULT,
     fn get_PreferGroupOwnerMode(&self, out: *mut bool) -> HRESULT,
@@ -31899,9 +31899,9 @@ RT_INTERFACE!{interface IWiFiDirectServiceAdvertiser(IWiFiDirectServiceAdvertise
     fn get_CustomServiceStatusCode(&self, out: *mut u32) -> HRESULT,
     fn put_CustomServiceStatusCode(&self, value: u32) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy13(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_DeferredSessionInfo(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_DeferredSessionInfo(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy14(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_DeferredSessionInfo(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_DeferredSessionInfo(&self, value: *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn get_AdvertisementStatus(&self, out: *mut WiFiDirectServiceAdvertisementStatus) -> HRESULT,
     fn get_ServiceError(&self, out: *mut WiFiDirectServiceError) -> HRESULT,
     fn add_SessionRequested(&self, handler: *mut foundation::TypedEventHandler<WiFiDirectServiceAdvertiser, WiFiDirectServiceSessionRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -31926,12 +31926,12 @@ impl IWiFiDirectServiceAdvertiser {
         let hr = ((*self.lpVtbl).get_ServiceNamePrefixes)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_service_info(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_service_info(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ServiceInfo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_service_info(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_service_info(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_ServiceInfo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -31976,12 +31976,12 @@ impl IWiFiDirectServiceAdvertiser {
         let hr = ((*self.lpVtbl).put_CustomServiceStatusCode)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_deferred_session_info(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_deferred_session_info(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DeferredSessionInfo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_deferred_session_info(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_deferred_session_info(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_DeferredSessionInfo)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -32063,7 +32063,7 @@ impl IWiFiDirectServiceAdvertiserFactory {
 DEFINE_IID!(IID_IWiFiDirectServiceAutoAcceptSessionConnectedEventArgs, 3705266206, 33759, 17381, 143, 67, 203, 232, 71, 158, 132, 235);
 RT_INTERFACE!{interface IWiFiDirectServiceAutoAcceptSessionConnectedEventArgs(IWiFiDirectServiceAutoAcceptSessionConnectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceAutoAcceptSessionConnectedEventArgs] {
     fn get_Session(&self, out: *mut *mut WiFiDirectServiceSession) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_SessionInfo(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_SessionInfo(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IWiFiDirectServiceAutoAcceptSessionConnectedEventArgs {
     #[inline] pub fn get_session(&self) -> Result<Option<ComPtr<WiFiDirectServiceSession>>> { unsafe { 
@@ -32071,7 +32071,7 @@ impl IWiFiDirectServiceAutoAcceptSessionConnectedEventArgs {
         let hr = ((*self.lpVtbl).get_Session)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_session_info(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_session_info(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SessionInfo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -32108,11 +32108,11 @@ RT_CLASS!{class WiFiDirectServiceProvisioningInfo: IWiFiDirectServiceProvisionin
 DEFINE_IID!(IID_IWiFiDirectServiceRemotePortAddedEventArgs, 3570318017, 16339, 20238, 183, 189, 120, 41, 6, 244, 68, 17);
 RT_INTERFACE!{interface IWiFiDirectServiceRemotePortAddedEventArgs(IWiFiDirectServiceRemotePortAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceRemotePortAddedEventArgs] {
     #[cfg(not(feature="windows-networking"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-networking")] fn get_EndpointPairs(&self, out: *mut *mut foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn get_EndpointPairs(&self, out: *mut *mut foundation::collections::IVectorView<crate::windows::networking::EndpointPair>) -> HRESULT,
     fn get_Protocol(&self, out: *mut WiFiDirectServiceIPProtocol) -> HRESULT
 }}
 impl IWiFiDirectServiceRemotePortAddedEventArgs {
-    #[cfg(feature="windows-networking")] #[inline] pub fn get_endpoint_pairs(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>>>> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn get_endpoint_pairs(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::networking::EndpointPair>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_EndpointPairs)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -32134,13 +32134,13 @@ RT_INTERFACE!{interface IWiFiDirectServiceSession(IWiFiDirectServiceSessionVtbl)
     fn get_ServiceAddress(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SessionAddress(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-networking"))] fn __Dummy7(&self) -> (),
-    #[cfg(feature="windows-networking")] fn GetConnectionEndpointPairs(&self, out: *mut *mut foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn GetConnectionEndpointPairs(&self, out: *mut *mut foundation::collections::IVectorView<crate::windows::networking::EndpointPair>) -> HRESULT,
     fn add_SessionStatusChanged(&self, handler: *mut foundation::TypedEventHandler<WiFiDirectServiceSession, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SessionStatusChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     #[cfg(not(feature="windows-networking"))] fn __Dummy10(&self) -> (),
-    #[cfg(feature="windows-networking")] fn AddStreamSocketListenerAsync(&self, value: *mut ::rt::gen::windows::networking::sockets::StreamSocketListener, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn AddStreamSocketListenerAsync(&self, value: *mut crate::windows::networking::sockets::StreamSocketListener, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     #[cfg(not(feature="windows-networking"))] fn __Dummy11(&self) -> (),
-    #[cfg(feature="windows-networking")] fn AddDatagramSocketAsync(&self, value: *mut ::rt::gen::windows::networking::sockets::DatagramSocket, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn AddDatagramSocketAsync(&self, value: *mut crate::windows::networking::sockets::DatagramSocket, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn add_RemotePortAdded(&self, handler: *mut foundation::TypedEventHandler<WiFiDirectServiceSession, WiFiDirectServiceRemotePortAddedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_RemotePortAdded(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
@@ -32180,7 +32180,7 @@ impl IWiFiDirectServiceSession {
         let hr = ((*self.lpVtbl).get_SessionAddress)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn get_connection_endpoint_pairs(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<::rt::gen::windows::networking::EndpointPair>>>> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn get_connection_endpoint_pairs(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::networking::EndpointPair>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetConnectionEndpointPairs)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -32194,12 +32194,12 @@ impl IWiFiDirectServiceSession {
         let hr = ((*self.lpVtbl).remove_SessionStatusChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn add_stream_socket_listener_async(&self, value: &::rt::gen::windows::networking::sockets::StreamSocketListener) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn add_stream_socket_listener_async(&self, value: &crate::windows::networking::sockets::StreamSocketListener) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).AddStreamSocketListenerAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn add_datagram_socket_async(&self, value: &::rt::gen::windows::networking::sockets::DatagramSocket) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn add_datagram_socket_async(&self, value: &crate::windows::networking::sockets::DatagramSocket) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).AddDatagramSocketAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -32217,10 +32217,10 @@ impl IWiFiDirectServiceSession {
 RT_CLASS!{class WiFiDirectServiceSession: IWiFiDirectServiceSession}
 DEFINE_IID!(IID_IWiFiDirectServiceSessionDeferredEventArgs, 2382109055, 4609, 20255, 182, 244, 93, 241, 183, 185, 251, 46);
 RT_INTERFACE!{interface IWiFiDirectServiceSessionDeferredEventArgs(IWiFiDirectServiceSessionDeferredEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceSessionDeferredEventArgs] {
-    #[cfg(feature="windows-storage")] fn get_DeferredSessionInfo(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_DeferredSessionInfo(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IWiFiDirectServiceSessionDeferredEventArgs {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_deferred_session_info(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_deferred_session_info(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DeferredSessionInfo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -32234,7 +32234,7 @@ DEFINE_IID!(IID_IWiFiDirectServiceSessionRequest, 2699197579, 20683, 19032, 155,
 RT_INTERFACE!{interface IWiFiDirectServiceSessionRequest(IWiFiDirectServiceSessionRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceSessionRequest] {
     fn get_DeviceInformation(&self, out: *mut *mut super::super::enumeration::DeviceInformation) -> HRESULT,
     fn get_ProvisioningInfo(&self, out: *mut *mut WiFiDirectServiceProvisioningInfo) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_SessionInfo(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_SessionInfo(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IWiFiDirectServiceSessionRequest {
     #[inline] pub fn get_device_information(&self) -> Result<Option<ComPtr<super::super::enumeration::DeviceInformation>>> { unsafe { 
@@ -32247,7 +32247,7 @@ impl IWiFiDirectServiceSessionRequest {
         let hr = ((*self.lpVtbl).get_ProvisioningInfo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_session_info(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_session_info(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SessionInfo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -32273,7 +32273,7 @@ DEFINE_IID!(IID_IWiFiDirectServiceStatics, 2108948549, 64884, 18056, 183, 37, 93
 RT_INTERFACE!{static interface IWiFiDirectServiceStatics(IWiFiDirectServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceStatics] {
     fn GetSelector(&self, serviceName: HSTRING, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetSelectorWithFilter(&self, serviceName: HSTRING, serviceInfoFilter: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut HSTRING) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn GetSelectorWithFilter(&self, serviceName: HSTRING, serviceInfoFilter: *mut crate::windows::storage::streams::IBuffer, out: *mut HSTRING) -> HRESULT,
     fn FromIdAsync(&self, deviceId: HSTRING, out: *mut *mut foundation::IAsyncOperation<WiFiDirectService>) -> HRESULT
 }}
 impl IWiFiDirectServiceStatics {
@@ -32282,7 +32282,7 @@ impl IWiFiDirectServiceStatics {
         let hr = ((*self.lpVtbl).GetSelector)(self as *const _ as *mut _, serviceName.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_selector_with_filter(&self, serviceName: &HStringArg, serviceInfoFilter: &::rt::gen::windows::storage::streams::IBuffer) -> Result<HString> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_selector_with_filter(&self, serviceName: &HStringArg, serviceInfoFilter: &crate::windows::storage::streams::IBuffer) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetSelectorWithFilter)(self as *const _ as *mut _, serviceName.get(), serviceInfoFilter as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }

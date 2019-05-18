@@ -1,4 +1,4 @@
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IMdmAlert, 2969289511, 10433, 19282, 165, 72, 197, 128, 124, 175, 112, 182);
 RT_INTERFACE!{interface IMdmAlert(IMdmAlertVtbl): IInspectable(IInspectableVtbl) [IID_IMdmAlert] {
     fn get_Data(&self, out: *mut HSTRING) -> HRESULT,
@@ -187,7 +187,7 @@ RT_ENUM! { enum MdmSessionState: i32 {
     NotStarted = 0, Starting = 1, Connecting = 2, Communicating = 3, AlertStatusAvailable = 4, Retrying = 5, Completed = 6,
 }}
 pub mod core { // Windows.Management.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IApplicationDataManager, 1959855154, 11929, 16384, 154, 58, 100, 48, 126, 133, 129, 41);
 RT_INTERFACE!{interface IApplicationDataManager(IApplicationDataManagerVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationDataManager] {
     
@@ -213,7 +213,7 @@ impl IApplicationDataManagerStatics {
 }
 } // Windows.Management.Core
 pub mod deployment { // Windows.Management.Deployment
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum AddPackageByAppInstallerOptions: u32 {
     None = 0, InstallAllResources = 32, ForceTargetAppShutdown = 64, RequiredContentGroupOnly = 256,
 }}
@@ -831,7 +831,7 @@ RT_ENUM! { enum RemovalOptions: u32 {
     None = 0, PreserveApplicationData = 4096, RemoveForAllUsers = 524288,
 }}
 pub mod preview { // Windows.Management.Deployment.Preview
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class ClassicAppManager}
 impl RtActivatable<IClassicAppManagerStatics> for ClassicAppManager {}
 impl ClassicAppManager {
@@ -872,7 +872,7 @@ RT_CLASS!{class InstalledClassicAppInfo: IInstalledClassicAppInfo}
 } // Windows.Management.Deployment.Preview
 } // Windows.Management.Deployment
 pub mod policies { // Windows.Management.Policies
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class NamedPolicy}
 impl RtActivatable<INamedPolicyStatics> for NamedPolicy {}
 impl NamedPolicy {
@@ -991,7 +991,7 @@ impl INamedPolicyStatics {
 }
 } // Windows.Management.Policies
 pub mod update { // Windows.Management.Update
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPreviewBuildsManager, 4194819425, 32335, 23031, 124, 159, 222, 249, 5, 28, 95, 98);
 RT_INTERFACE!{interface IPreviewBuildsManager(IPreviewBuildsManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPreviewBuildsManager] {
     fn get_ArePreviewBuildsAllowed(&self, out: *mut bool) -> HRESULT,
@@ -1062,7 +1062,7 @@ impl IPreviewBuildsState {
 RT_CLASS!{class PreviewBuildsState: IPreviewBuildsState}
 } // Windows.Management.Update
 pub mod workplace { // Windows.Management.Workplace
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IMdmAllowPolicyStatics, 3281455591, 29724, 16882, 164, 182, 49, 76, 49, 80, 37, 134);
 RT_INTERFACE!{static interface IMdmAllowPolicyStatics(IMdmAllowPolicyStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMdmAllowPolicyStatics] {
     fn IsBrowserAllowed(&self, out: *mut bool) -> HRESULT,

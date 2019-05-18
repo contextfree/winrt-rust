@@ -15,7 +15,7 @@ const CHUNK_SIZE: usize = 4096;
 
 fn main() {
     // Use the current executable as source file (because we know that will exist).
-    let exe_path = ::std::env::current_exe().expect("current_exe failed");
+    let exe_path = std::env::current_exe().expect("current_exe failed");
     let exe_path_str = exe_path.to_str().expect("invalid unicode path");
 
     let file = StorageFile::get_file_from_path_async(&*FastHString::new(&exe_path_str)).unwrap().blocking_get().expect("get_file_from_path_async failed").unwrap();

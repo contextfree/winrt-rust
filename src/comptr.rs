@@ -1,7 +1,7 @@
 use std::ops::{Deref, DerefMut};
 use std::fmt;
 use std::ptr;
-use ::{ComIid, ComInterface, RtInterface, RtClassInterface, IInspectable, Guid};
+use crate::{ComIid, ComInterface, RtInterface, RtClassInterface, IInspectable, Guid};
 
 use w::shared::ntdef::VOID;
 use w::shared::minwindef::LPVOID;
@@ -38,7 +38,7 @@ pub fn query_interface<T, Target>(interface: &T) -> Option<ComPtr<Target>> where
 
 // This trait is not exported in the library interface
 pub trait HiddenGetRuntimeClassName {
-    fn get_runtime_class_name(&self) -> ::HString;
+    fn get_runtime_class_name(&self) -> crate::HString;
 }
 
 impl<T> ComPtr<T> {
@@ -80,7 +80,7 @@ impl<T> ComPtr<T> {
     /// This is a runtime no-op, but you need to be sure that the interface is compatible.
     #[inline]
     pub unsafe fn into_unchecked<Interface>(self) -> ComPtr<Interface> where Interface: ComInterface {
-        ::std::mem::transmute(self)
+        std::mem::transmute(self)
     }
     
     /// Gets the fully qualified name of the current Windows Runtime object.
@@ -100,7 +100,7 @@ impl<T> ComPtr<T> {
     /// assert_eq!("Windows.Foundation.Uri", uri.get_runtime_class_name().to_string());
     /// ```
     #[inline]
-    pub fn get_runtime_class_name(&self) -> ::HString where T: RtClassInterface {
+    pub fn get_runtime_class_name(&self) -> crate::HString where T: RtClassInterface {
         HiddenGetRuntimeClassName::get_runtime_class_name(self.as_inspectable())
     }
     
@@ -150,12 +150,12 @@ impl<T> PartialEq<ComPtr<T>> for ComPtr<T> {
 /// Owned array type that is used as return type when WinRT methods return arrays.
 /// It wraps a block of memory that has been allocated by WinRT and will be deallocated
 /// using `CoTaskMemFree` on drop.
-pub struct ComArray<T> where T: ::RtType {
+pub struct ComArray<T> where T: crate::RtType {
     size: u32,
     first: ptr::NonNull<T::Abi>
 }
 
-impl<T> ComArray<T> where T: ::RtType {
+impl<T> ComArray<T> where T: crate::RtType {
     #[inline]
     pub unsafe fn from_raw(size: u32, first: *mut T::Abi) -> ComArray<T> {
         assert!(!first.is_null());
@@ -172,25 +172,25 @@ impl<T> ComArray<T> where T: ::RtType {
     }
 }
 
-impl<T> Deref for ComArray<T> where T: ::RtType {
+impl<T> Deref for ComArray<T> where T: crate::RtType {
     type Target = [T::OutNonNull];
     #[inline]
     fn deref(&self) -> &[T::OutNonNull] {
-        unsafe { ::std::slice::from_raw_parts(self.first.as_ptr() as *mut T::OutNonNull, self.size as usize) }
+        unsafe { std::slice::from_raw_parts(self.first.as_ptr() as *mut T::OutNonNull, self.size as usize) }
     }
 }
-impl<T> DerefMut for ComArray<T> where T: ::RtType {
+impl<T> DerefMut for ComArray<T> where T: crate::RtType {
     #[inline]
     fn deref_mut(&mut self) -> &mut [T::OutNonNull] {
-        unsafe { ::std::slice::from_raw_parts_mut(self.first.as_ptr() as *mut T::OutNonNull, self.size as usize) }
+        unsafe { std::slice::from_raw_parts_mut(self.first.as_ptr() as *mut T::OutNonNull, self.size as usize) }
     }
 }
 
-impl<T> Drop for ComArray<T> where T: ::RtType {
+impl<T> Drop for ComArray<T> where T: crate::RtType {
     #[inline]
     fn drop(&mut self) {
         unsafe {
-            ::std::ptr::drop_in_place(&mut self[..]);
+            std::ptr::drop_in_place(&mut self[..]);
             CoTaskMemFree(self.first.as_ptr() as LPVOID)
         };
     }
@@ -201,8 +201,8 @@ mod extra {
     // i.e. when a compiler version is used that still has dropflags
     #[inline]
     fn assert_no_dropflags() {
-        let p: *mut ::IInspectable = ::std::ptr::null_mut();
-        let _: ::ComPtr<::IInspectable> = unsafe { ::std::mem::transmute(p) };
+        let p: *mut crate::IInspectable = std::ptr::null_mut();
+        let _: crate::ComPtr<crate::IInspectable> = unsafe { std::mem::transmute(p) };
     }
 }
 
@@ -212,10 +212,10 @@ mod tests {
 
     #[test]
     fn check_sizes() {
-        use ::std::mem::size_of;
+        use std::mem::size_of;
 
         // make sure that ComPtr is pointer-sized
-        assert_eq!(size_of::<::ComPtr<::IInspectable>>(), size_of::<*mut ::IInspectable>());
-        assert_eq!(size_of::<Option<::ComPtr<::IInspectable>>>(), size_of::<*mut ::IInspectable>());
+        assert_eq!(size_of::<crate::ComPtr<crate::IInspectable>>(), size_of::<*mut crate::IInspectable>());
+        assert_eq!(size_of::<Option<crate::ComPtr<crate::IInspectable>>>(), size_of::<*mut crate::IInspectable>());
     }
 }

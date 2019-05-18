@@ -1,5 +1,5 @@
 pub mod machinelearning { // Windows.AI.MachineLearning
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IImageFeatureDescriptor, 911574437, 5914, 18986, 152, 95, 38, 81, 89, 211, 137, 90);
 RT_INTERFACE!{interface IImageFeatureDescriptor(IImageFeatureDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IImageFeatureDescriptor] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
@@ -1252,19 +1252,19 @@ impl ITensorUInt8BitStatics {
     }}
 }
 pub mod preview { // Windows.AI.MachineLearning.Preview
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum FeatureElementKindPreview: i32 {
     Undefined = 0, Float = 1, UInt8 = 2, Int8 = 3, UInt16 = 4, Int16 = 5, Int32 = 6, Int64 = 7, String = 8, Boolean = 9, Float16 = 10, Double = 11, UInt32 = 12, UInt64 = 13, Complex64 = 14, Complex128 = 15,
 }}
 DEFINE_IID!(IID_IImageVariableDescriptorPreview, 2061630066, 670, 19909, 162, 248, 95, 183, 99, 21, 65, 80);
 RT_INTERFACE!{interface IImageVariableDescriptorPreview(IImageVariableDescriptorPreviewVtbl): IInspectable(IInspectableVtbl) [IID_IImageVariableDescriptorPreview] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_BitmapPixelFormat(&self, out: *mut ::rt::gen::windows::graphics::imaging::BitmapPixelFormat) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_BitmapPixelFormat(&self, out: *mut crate::windows::graphics::imaging::BitmapPixelFormat) -> HRESULT,
     fn get_Width(&self, out: *mut u32) -> HRESULT,
     fn get_Height(&self, out: *mut u32) -> HRESULT
 }}
 impl IImageVariableDescriptorPreview {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_bitmap_pixel_format(&self) -> Result<::rt::gen::windows::graphics::imaging::BitmapPixelFormat> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_bitmap_pixel_format(&self) -> Result<crate::windows::graphics::imaging::BitmapPixelFormat> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_BitmapPixelFormat)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -1496,26 +1496,26 @@ impl ILearningModelPreview {
 RT_CLASS!{class LearningModelPreview: ILearningModelPreview}
 impl RtActivatable<ILearningModelPreviewStatics> for LearningModelPreview {}
 impl LearningModelPreview {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_storage_file_async(modelFile: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_storage_file_async(modelFile: &crate::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> {
         <Self as RtActivatable<ILearningModelPreviewStatics>>::get_activation_factory().load_model_from_storage_file_async(modelFile)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_stream_async(modelStream: &::rt::gen::windows::storage::streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_stream_async(modelStream: &crate::windows::storage::streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> {
         <Self as RtActivatable<ILearningModelPreviewStatics>>::get_activation_factory().load_model_from_stream_async(modelStream)
     }
 }
 DEFINE_CLSID!(LearningModelPreview(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,80,114,101,118,105,101,119,46,76,101,97,114,110,105,110,103,77,111,100,101,108,80,114,101,118,105,101,119,0]) [CLSID_LearningModelPreview]);
 DEFINE_IID!(IID_ILearningModelPreviewStatics, 374061920, 33893, 18310, 139, 147, 44, 22, 168, 146, 137, 215);
 RT_INTERFACE!{static interface ILearningModelPreviewStatics(ILearningModelPreviewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILearningModelPreviewStatics] {
-    #[cfg(feature="windows-storage")] fn LoadModelFromStorageFileAsync(&self, modelFile: *mut ::rt::gen::windows::storage::IStorageFile, out: *mut *mut foundation::IAsyncOperation<LearningModelPreview>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadModelFromStreamAsync(&self, modelStream: *mut ::rt::gen::windows::storage::streams::IRandomAccessStreamReference, out: *mut *mut foundation::IAsyncOperation<LearningModelPreview>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn LoadModelFromStorageFileAsync(&self, modelFile: *mut crate::windows::storage::IStorageFile, out: *mut *mut foundation::IAsyncOperation<LearningModelPreview>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn LoadModelFromStreamAsync(&self, modelStream: *mut crate::windows::storage::streams::IRandomAccessStreamReference, out: *mut *mut foundation::IAsyncOperation<LearningModelPreview>) -> HRESULT
 }}
 impl ILearningModelPreviewStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_storage_file_async(&self, modelFile: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_storage_file_async(&self, modelFile: &crate::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadModelFromStorageFileAsync)(self as *const _ as *mut _, modelFile as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_stream_async(&self, modelStream: &::rt::gen::windows::storage::streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_stream_async(&self, modelStream: &crate::windows::storage::streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadModelFromStreamAsync)(self as *const _ as *mut _, modelStream as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }

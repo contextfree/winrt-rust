@@ -1,4 +1,4 @@
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class ApplicationLanguages}
 impl RtActivatable<IApplicationLanguagesStatics> for ApplicationLanguages {}
 impl RtActivatable<IApplicationLanguagesStatics2> for ApplicationLanguages {}
@@ -3060,7 +3060,7 @@ impl ITimeZoneOnCalendar {
     }}
 }
 pub mod collation { // Windows.Globalization.Collation
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICharacterGrouping, 4209467835, 32861, 19376, 149, 187, 193, 247, 195, 232, 235, 142);
 RT_INTERFACE!{interface ICharacterGrouping(ICharacterGroupingVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGrouping] {
     fn get_First(&self, out: *mut HSTRING) -> HRESULT,
@@ -3112,7 +3112,7 @@ impl ICharacterGroupingsFactory {
 }
 } // Windows.Globalization.Collation
 pub mod datetimeformatting { // Windows.Globalization.DateTimeFormatting
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDateTimeFormatter, 2515454480, 29664, 20043, 161, 131, 61, 106, 208, 186, 53, 236);
 RT_INTERFACE!{interface IDateTimeFormatter(IDateTimeFormatterVtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatter] {
     fn get_Languages(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
@@ -3374,7 +3374,7 @@ RT_ENUM! { enum YearFormat: i32 {
 }}
 } // Windows.Globalization.DateTimeFormatting
 pub mod fonts { // Windows.Globalization.Fonts
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ILanguageFont, 2972605498, 46957, 17819, 190, 235, 144, 17, 81, 205, 119, 209);
 RT_INTERFACE!{interface ILanguageFont(ILanguageFontVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFont] {
     fn get_FontFamily(&self, out: *mut HSTRING) -> HRESULT,
@@ -3506,7 +3506,7 @@ impl ILanguageFontGroupFactory {
 }
 } // Windows.Globalization.Fonts
 pub mod numberformatting { // Windows.Globalization.NumberFormatting
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICurrencyFormatter, 292752549, 19200, 16818, 179, 50, 115, 177, 42, 73, 125, 84);
 RT_INTERFACE!{interface ICurrencyFormatter(ICurrencyFormatterVtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyFormatter] {
     fn get_Currency(&self, out: *mut HSTRING) -> HRESULT,
@@ -3996,7 +3996,7 @@ impl ISignificantDigitsOption {
 }
 } // Windows.Globalization.NumberFormatting
 pub mod phonenumberformatting { // Windows.Globalization.PhoneNumberFormatting
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum PhoneNumberFormat: i32 {
     E164 = 0, International = 1, National = 2, Rfc3966 = 3,
 }}

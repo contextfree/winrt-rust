@@ -11,6 +11,7 @@ keywords = ["winrt", "uwp", "windows", "runtime", "com"]
 categories = ["os::windows-apis", "api-bindings", "external-ffi-bindings"]
 license = "MIT OR Apache-2.0"
 exclude = ["Generator/**"]
+edition = "2018"
 
 [dependencies]
 winapi = { version = "0.3", features = ["winnt", "combaseapi", "oleauto", "roapi", "roerrorapi", "hstring", "winstring", "winerror", "restrictederrorinfo"] }

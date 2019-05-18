@@ -1,4 +1,4 @@
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPerceptionTimestamp, 2277656580, 41518, 19163, 186, 38, 215, 142, 246, 57, 188, 244);
 RT_INTERFACE!{interface IPerceptionTimestamp(IPerceptionTimestampVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionTimestamp] {
     fn get_TargetTime(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -64,7 +64,7 @@ impl IPerceptionTimestampHelperStatics2 {
 }
 pub mod automation { // Windows.Perception.Automation
 pub mod core { // Windows.Perception.Automation.Core
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class CorePerceptionAutomation}
 impl RtActivatable<ICorePerceptionAutomationStatics> for CorePerceptionAutomation {}
 impl CorePerceptionAutomation {
@@ -86,7 +86,7 @@ impl ICorePerceptionAutomationStatics {
 } // Windows.Perception.Automation.Core
 } // Windows.Perception.Automation
 pub mod people { // Windows.Perception.People
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IHeadPose, 2136655269, 18907, 14239, 148, 41, 50, 162, 250, 243, 79, 166);
 RT_INTERFACE!{interface IHeadPose(IHeadPoseVtbl): IInspectable(IInspectableVtbl) [IID_IHeadPose] {
     fn get_Position(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
@@ -113,7 +113,7 @@ impl IHeadPose {
 RT_CLASS!{class HeadPose: IHeadPose}
 } // Windows.Perception.People
 pub mod spatial { // Windows.Perception.Spatial
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ISpatialAnchor, 86631886, 7476, 14082, 188, 236, 234, 191, 245, 120, 168, 105);
 RT_INTERFACE!{interface ISpatialAnchor(ISpatialAnchorVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchor] {
     fn get_CoordinateSystem(&self, out: *mut *mut SpatialCoordinateSystem) -> HRESULT,
@@ -973,7 +973,7 @@ impl ISpatialStationaryFrameOfReference {
 }
 RT_CLASS!{class SpatialStationaryFrameOfReference: ISpatialStationaryFrameOfReference}
 pub mod preview { // Windows.Perception.Spatial.Preview
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class SpatialGraphInteropPreview}
 impl RtActivatable<ISpatialGraphInteropPreviewStatics> for SpatialGraphInteropPreview {}
 impl SpatialGraphInteropPreview {
@@ -1022,7 +1022,7 @@ impl ISpatialGraphInteropPreviewStatics {
 }
 } // Windows.Perception.Spatial.Preview
 pub mod surfaces { // Windows.Perception.Spatial.Surfaces
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ISpatialSurfaceInfo, 4176079847, 14775, 14690, 187, 3, 87, 245, 110, 31, 176, 161);
 RT_INTERFACE!{interface ISpatialSurfaceInfo(ISpatialSurfaceInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceInfo] {
     fn get_Id(&self, out: *mut Guid) -> HRESULT,
@@ -1104,13 +1104,13 @@ RT_CLASS!{class SpatialSurfaceMesh: ISpatialSurfaceMesh}
 DEFINE_IID!(IID_ISpatialSurfaceMeshBuffer, 2479839712, 34591, 13304, 152, 178, 3, 209, 1, 69, 143, 111);
 RT_INTERFACE!{interface ISpatialSurfaceMeshBuffer(ISpatialSurfaceMeshBufferVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceMeshBuffer] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_Format(&self, out: *mut ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_Format(&self, out: *mut crate::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
     fn get_Stride(&self, out: *mut u32) -> HRESULT,
     fn get_ElementCount(&self, out: *mut u32) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl ISpatialSurfaceMeshBuffer {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_format(&self) -> Result<::rt::gen::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_format(&self) -> Result<crate::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Format)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -1125,7 +1125,7 @@ impl ISpatialSurfaceMeshBuffer {
         let hr = ((*self.lpVtbl).get_ElementCount)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Data)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1135,45 +1135,45 @@ RT_CLASS!{class SpatialSurfaceMeshBuffer: ISpatialSurfaceMeshBuffer}
 DEFINE_IID!(IID_ISpatialSurfaceMeshOptions, 3530923913, 13682, 15661, 161, 13, 95, 238, 147, 148, 170, 55);
 RT_INTERFACE!{interface ISpatialSurfaceMeshOptions(ISpatialSurfaceMeshOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceMeshOptions] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_VertexPositionFormat(&self, out: *mut ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_VertexPositionFormat(&self, out: *mut crate::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn put_VertexPositionFormat(&self, value: ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn put_VertexPositionFormat(&self, value: crate::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_TriangleIndexFormat(&self, out: *mut ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_TriangleIndexFormat(&self, out: *mut crate::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn put_TriangleIndexFormat(&self, value: ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn put_TriangleIndexFormat(&self, value: crate::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_VertexNormalFormat(&self, out: *mut ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_VertexNormalFormat(&self, out: *mut crate::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn put_VertexNormalFormat(&self, value: ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn put_VertexNormalFormat(&self, value: crate::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
     fn get_IncludeVertexNormals(&self, out: *mut bool) -> HRESULT,
     fn put_IncludeVertexNormals(&self, value: bool) -> HRESULT
 }}
 impl ISpatialSurfaceMeshOptions {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_vertex_position_format(&self) -> Result<::rt::gen::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_vertex_position_format(&self) -> Result<crate::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_VertexPositionFormat)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_vertex_position_format(&self, value: ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_vertex_position_format(&self, value: crate::windows::graphics::directx::DirectXPixelFormat) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_VertexPositionFormat)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_triangle_index_format(&self) -> Result<::rt::gen::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_triangle_index_format(&self) -> Result<crate::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_TriangleIndexFormat)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_triangle_index_format(&self, value: ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_triangle_index_format(&self, value: crate::windows::graphics::directx::DirectXPixelFormat) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_TriangleIndexFormat)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_vertex_normal_format(&self) -> Result<::rt::gen::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_vertex_normal_format(&self) -> Result<crate::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_VertexNormalFormat)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_vertex_normal_format(&self, value: ::rt::gen::windows::graphics::directx::DirectXPixelFormat) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_vertex_normal_format(&self, value: crate::windows::graphics::directx::DirectXPixelFormat) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_VertexNormalFormat)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -1191,35 +1191,35 @@ RT_CLASS!{class SpatialSurfaceMeshOptions: ISpatialSurfaceMeshOptions}
 impl RtActivatable<ISpatialSurfaceMeshOptionsStatics> for SpatialSurfaceMeshOptions {}
 impl RtActivatable<IActivationFactory> for SpatialSurfaceMeshOptions {}
 impl SpatialSurfaceMeshOptions {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_position_formats() -> Result<Option<ComPtr<foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_position_formats() -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat>>>> {
         <Self as RtActivatable<ISpatialSurfaceMeshOptionsStatics>>::get_activation_factory().get_supported_vertex_position_formats()
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_triangle_index_formats() -> Result<Option<ComPtr<foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_triangle_index_formats() -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat>>>> {
         <Self as RtActivatable<ISpatialSurfaceMeshOptionsStatics>>::get_activation_factory().get_supported_triangle_index_formats()
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_normal_formats() -> Result<Option<ComPtr<foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>>> {
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_normal_formats() -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat>>>> {
         <Self as RtActivatable<ISpatialSurfaceMeshOptionsStatics>>::get_activation_factory().get_supported_vertex_normal_formats()
     }
 }
 DEFINE_CLSID!(SpatialSurfaceMeshOptions(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,117,114,102,97,99,101,115,46,83,112,97,116,105,97,108,83,117,114,102,97,99,101,77,101,115,104,79,112,116,105,111,110,115,0]) [CLSID_SpatialSurfaceMeshOptions]);
 DEFINE_IID!(IID_ISpatialSurfaceMeshOptionsStatics, 2603879103, 38785, 17669, 137, 53, 1, 53, 117, 202, 174, 94);
 RT_INTERFACE!{static interface ISpatialSurfaceMeshOptionsStatics(ISpatialSurfaceMeshOptionsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceMeshOptionsStatics] {
-    #[cfg(feature="windows-graphics")] fn get_SupportedVertexPositionFormats(&self, out: *mut *mut foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>) -> HRESULT,
-    #[cfg(feature="windows-graphics")] fn get_SupportedTriangleIndexFormats(&self, out: *mut *mut foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>) -> HRESULT,
-    #[cfg(feature="windows-graphics")] fn get_SupportedVertexNormalFormats(&self, out: *mut *mut foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>) -> HRESULT
+    #[cfg(feature="windows-graphics")] fn get_SupportedVertexPositionFormats(&self, out: *mut *mut foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat>) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_SupportedTriangleIndexFormats(&self, out: *mut *mut foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat>) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_SupportedVertexNormalFormats(&self, out: *mut *mut foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat>) -> HRESULT
 }}
 impl ISpatialSurfaceMeshOptionsStatics {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_position_formats(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_position_formats(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedVertexPositionFormats)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_triangle_index_formats(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_triangle_index_formats(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedTriangleIndexFormats)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_normal_formats(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<::rt::gen::windows::graphics::directx::DirectXPixelFormat>>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_normal_formats(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SupportedVertexNormalFormats)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }

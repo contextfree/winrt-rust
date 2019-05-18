@@ -1,4 +1,4 @@
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAsyncAction, 1516535814, 33850, 19881, 134, 91, 157, 38, 229, 223, 173, 123);
 RT_INTERFACE!{interface IAsyncAction(IAsyncActionVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncAction] {
     fn put_Completed(&self, handler: *mut AsyncActionCompletedHandler) -> HRESULT,
@@ -3407,7 +3407,7 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for TypedEventHandler<super::web::ui::IWebViewControl, super::web::ui::WebViewControlUnviewableContentIdentifiedEventArgs> => [0x571626e3,0x9780,0x5b37,0xbe,0x8a,0xab,0x8e,0x4e,0x78,0x98,0xcf] as IID_TypedEventHandler_2_Windows_Web_UI_IWebViewControl_Windows_Web_UI_WebViewControlUnviewableContentIdentifiedEventArgs }
 #[cfg(feature="windows-web")] RT_PINTERFACE!{ for TypedEventHandler<super::web::ui::IWebViewControl, super::web::ui::WebViewControlWebResourceRequestedEventArgs> => [0x3a6ed2bc,0x032b,0x5ec7,0xa2,0x0a,0xc1,0xef,0x49,0x25,0x0c,0x3c] as IID_TypedEventHandler_2_Windows_Web_UI_IWebViewControl_Windows_Web_UI_WebViewControlWebResourceRequestedEventArgs }
 pub mod collections { // Windows.Foundation.Collections
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum CollectionChange: i32 {
     Reset = 0, ItemInserted = 1, ItemRemoved = 2, ItemChanged = 3,
 }}
@@ -5677,7 +5677,7 @@ RT_PINTERFACE!{ for VectorChangedEventHandler<IInspectable> => [0xb423a801,0xd35
 #[cfg(feature="windows-ui-xaml")] RT_PINTERFACE!{ for VectorChangedEventHandler<super::super::ui::xaml::DependencyObject> => [0xb62dec93,0xa7a5,0x5ff5,0xb2,0xd2,0x6b,0xd2,0x0c,0xa0,0xbd,0x4d] as IID_VectorChangedEventHandler_1_Windows_UI_Xaml_DependencyObject }
 } // Windows.Foundation.Collections
 pub mod diagnostics { // Windows.Foundation.Diagnostics
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class AsyncCausalityTracer}
 impl RtActivatable<IAsyncCausalityTracerStatics> for AsyncCausalityTracer {}
 impl AsyncCausalityTracer {
@@ -6933,7 +6933,7 @@ impl ITracingStatusChangedEventArgs {
 RT_CLASS!{class TracingStatusChangedEventArgs: ITracingStatusChangedEventArgs}
 } // Windows.Foundation.Diagnostics
 pub mod metadata { // Windows.Foundation.Metadata
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class ApiInformation}
 impl RtActivatable<IApiInformationStatics> for ApiInformation {}
 impl ApiInformation {
@@ -7060,7 +7060,7 @@ RT_ENUM! { enum ThreadingModel: i32 {
 }}
 } // Windows.Foundation.Metadata
 pub mod numerics { // Windows.Foundation.Numerics
-use ::prelude::*;
+use crate::prelude::*;
 RT_STRUCT! { struct Matrix3x2 {
     M11: f32, M12: f32, M21: f32, M22: f32, M31: f32, M32: f32,
 }}

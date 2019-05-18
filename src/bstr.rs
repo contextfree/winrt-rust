@@ -1,5 +1,5 @@
-use ::std::ptr;
-use ::std::fmt;
+use std::ptr;
+use std::fmt;
 
 use w::shared::wtypes::BSTR;
 use w::shared::basetsd::UINT32;
@@ -63,7 +63,7 @@ impl BStr {
         } else {
             unsafe {
                 let len = self.len();
-                let slice: &[u16] = ::std::slice::from_raw_parts(self.0, len as usize);
+                let slice: &[u16] = std::slice::from_raw_parts(self.0, len as usize);
                 String::from_utf16_lossy(slice)
             }
         }

@@ -1,5 +1,5 @@
 pub mod html { // Windows.Data.Html
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IHtmlUtilities, 4273998557, 9113, 20396, 181, 167, 5, 233, 172, 215, 24, 29);
 RT_INTERFACE!{static interface IHtmlUtilities(IHtmlUtilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IHtmlUtilities] {
     fn ConvertToText(&self, html: HSTRING, out: *mut HSTRING) -> HRESULT
@@ -21,7 +21,7 @@ impl HtmlUtilities {
 DEFINE_CLSID!(HtmlUtilities(&[87,105,110,100,111,119,115,46,68,97,116,97,46,72,116,109,108,46,72,116,109,108,85,116,105,108,105,116,105,101,115,0]) [CLSID_HtmlUtilities]);
 } // Windows.Data.Html
 pub mod json { // Windows.Data.Json
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IJsonArray, 146922934, 3261, 19098, 181, 211, 47, 133, 45, 195, 126, 129);
 RT_INTERFACE!{interface IJsonArray(IJsonArrayVtbl): IInspectable(IInspectableVtbl) [IID_IJsonArray] {
     fn GetObjectAt(&self, index: u32, out: *mut *mut JsonObject) -> HRESULT,
@@ -346,7 +346,7 @@ RT_ENUM! { enum JsonValueType: i32 {
 }}
 } // Windows.Data.Json
 pub mod pdf { // Windows.Data.Pdf
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPdfDocument, 2893987549, 33018, 16521, 132, 110, 129, 183, 127, 245, 168, 108);
 RT_INTERFACE!{interface IPdfDocument(IPdfDocumentVtbl): IInspectable(IInspectableVtbl) [IID_IPdfDocument] {
     fn GetPage(&self, pageIndex: u32, out: *mut *mut PdfPage) -> HRESULT,
@@ -589,7 +589,7 @@ RT_ENUM! { enum PdfPageRotation: i32 {
 }}
 } // Windows.Data.Pdf
 pub mod text { // Windows.Data.Text
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum AlternateNormalizationFormat: i32 {
     NotNormalized = 0, Number = 1, Currency = 3, Date = 4, Time = 5,
 }}
@@ -1191,7 +1191,7 @@ impl IWordsSegmenterFactory {
 } // Windows.Data.Text
 pub mod xml { // Windows.Data.Xml
 pub mod dom { // Windows.Data.Xml.Dom
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDtdEntity, 1779130364, 25524, 18447, 158, 106, 138, 146, 129, 106, 173, 228);
 RT_INTERFACE!{interface IDtdEntity(IDtdEntityVtbl): IInspectable(IInspectableVtbl) [IID_IDtdEntity] {
     fn get_PublicId(&self, out: *mut *mut IInspectable) -> HRESULT,
@@ -1441,10 +1441,10 @@ impl XmlDocument {
     #[inline] pub fn load_from_uri_with_settings_async(uri: &foundation::Uri, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
         <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_uri_with_settings_async(uri, loadSettings)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &crate::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
         <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_file_async(file)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(file: &::rt::gen::windows::storage::IStorageFile, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(file: &crate::windows::storage::IStorageFile, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
         <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_file_with_settings_async(file, loadSettings)
     }
 }
@@ -1458,7 +1458,7 @@ DEFINE_IID!(IID_IXmlDocumentIO, 1825630030, 61029, 17545, 158, 191, 202, 67, 232
 RT_INTERFACE!{interface IXmlDocumentIO(IXmlDocumentIOVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentIO] {
     fn LoadXml(&self, xml: HSTRING) -> HRESULT,
     fn LoadXmlWithSettings(&self, xml: HSTRING, loadSettings: *mut XmlLoadSettings) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn SaveToFileAsync(&self, file: *mut ::rt::gen::windows::storage::IStorageFile, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+    #[cfg(feature="windows-storage")] fn SaveToFileAsync(&self, file: *mut crate::windows::storage::IStorageFile, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IXmlDocumentIO {
     #[inline] pub fn load_xml(&self, xml: &HStringArg) -> Result<()> { unsafe { 
@@ -1469,7 +1469,7 @@ impl IXmlDocumentIO {
         let hr = ((*self.lpVtbl).LoadXmlWithSettings)(self as *const _ as *mut _, xml.get(), loadSettings as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_to_file_async(&self, file: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_to_file_async(&self, file: &crate::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SaveToFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1477,15 +1477,15 @@ impl IXmlDocumentIO {
 }
 DEFINE_IID!(IID_IXmlDocumentIO2, 1560495713, 31704, 19157, 158, 191, 129, 230, 52, 114, 99, 177);
 RT_INTERFACE!{interface IXmlDocumentIO2(IXmlDocumentIO2Vtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentIO2] {
-    #[cfg(feature="windows-storage")] fn LoadXmlFromBuffer(&self, buffer: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadXmlFromBufferWithSettings(&self, buffer: *mut ::rt::gen::windows::storage::streams::IBuffer, loadSettings: *mut XmlLoadSettings) -> HRESULT
+    #[cfg(feature="windows-storage")] fn LoadXmlFromBuffer(&self, buffer: *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn LoadXmlFromBufferWithSettings(&self, buffer: *mut crate::windows::storage::streams::IBuffer, loadSettings: *mut XmlLoadSettings) -> HRESULT
 }}
 impl IXmlDocumentIO2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_xml_from_buffer(&self, buffer: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_xml_from_buffer(&self, buffer: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).LoadXmlFromBuffer)(self as *const _ as *mut _, buffer as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_xml_from_buffer_with_settings(&self, buffer: &::rt::gen::windows::storage::streams::IBuffer, loadSettings: &XmlLoadSettings) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_xml_from_buffer_with_settings(&self, buffer: &crate::windows::storage::streams::IBuffer, loadSettings: &XmlLoadSettings) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).LoadXmlFromBufferWithSettings)(self as *const _ as *mut _, buffer as *const _ as *mut _, loadSettings as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -1494,8 +1494,8 @@ DEFINE_IID!(IID_IXmlDocumentStatics, 1430508116, 55127, 19321, 149, 57, 35, 43, 
 RT_INTERFACE!{static interface IXmlDocumentStatics(IXmlDocumentStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentStatics] {
     fn LoadFromUriAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
     fn LoadFromUriWithSettingsAsync(&self, uri: *mut foundation::Uri, loadSettings: *mut XmlLoadSettings, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadFromFileAsync(&self, file: *mut ::rt::gen::windows::storage::IStorageFile, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadFromFileWithSettingsAsync(&self, file: *mut ::rt::gen::windows::storage::IStorageFile, loadSettings: *mut XmlLoadSettings, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn LoadFromFileAsync(&self, file: *mut crate::windows::storage::IStorageFile, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn LoadFromFileWithSettingsAsync(&self, file: *mut crate::windows::storage::IStorageFile, loadSettings: *mut XmlLoadSettings, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT
 }}
 impl IXmlDocumentStatics {
     #[inline] pub fn load_from_uri_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
@@ -1508,12 +1508,12 @@ impl IXmlDocumentStatics {
         let hr = ((*self.lpVtbl).LoadFromUriWithSettingsAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, loadSettings as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(&self, file: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(&self, file: &crate::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadFromFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(&self, file: &::rt::gen::windows::storage::IStorageFile, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(&self, file: &crate::windows::storage::IStorageFile, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadFromFileWithSettingsAsync)(self as *const _ as *mut _, file as *const _ as *mut _, loadSettings as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -2003,7 +2003,7 @@ impl IXmlText {
 RT_CLASS!{class XmlText: IXmlText}
 } // Windows.Data.Xml.Dom
 pub mod xsl { // Windows.Data.Xml.Xsl
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IXsltProcessor, 2070179903, 21772, 18630, 169, 15, 147, 165, 185, 100, 81, 143);
 RT_INTERFACE!{interface IXsltProcessor(IXsltProcessorVtbl): IInspectable(IInspectableVtbl) [IID_IXsltProcessor] {
     fn TransformToString(&self, inputNode: *mut super::dom::IXmlNode, out: *mut HSTRING) -> HRESULT

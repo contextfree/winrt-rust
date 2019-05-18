@@ -1,5 +1,5 @@
 pub mod input { // Windows.Gaming.Input
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IArcadeStick, 2974438301, 48891, 19585, 128, 81, 21, 236, 243, 177, 48, 54);
 RT_INTERFACE!{interface IArcadeStick(IArcadeStickVtbl): IInspectable(IInspectableVtbl) [IID_IArcadeStick] {
     fn GetButtonLabel(&self, button: ArcadeStickButtons, out: *mut GameControllerButtonLabel) -> HRESULT,
@@ -759,7 +759,7 @@ RT_STRUCT! { struct UINavigationReading {
     Timestamp: u64, RequiredButtons: RequiredUINavigationButtons, OptionalButtons: OptionalUINavigationButtons,
 }}
 pub mod custom { // Windows.Gaming.Input.Custom
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICustomGameControllerFactory, 1772138078, 30094, 19646, 172, 230, 98, 21, 95, 233, 18, 111);
 RT_INTERFACE!{interface ICustomGameControllerFactory(ICustomGameControllerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICustomGameControllerFactory] {
     fn CreateGameController(&self, provider: *mut IGameControllerProvider, out: *mut *mut IInspectable) -> HRESULT,
@@ -932,7 +932,7 @@ DEFINE_IID!(IID_IGipGameControllerProvider, 3687783961, 6901, 17832, 191, 2, 160
 RT_INTERFACE!{interface IGipGameControllerProvider(IGipGameControllerProviderVtbl): IInspectable(IInspectableVtbl) [IID_IGipGameControllerProvider] {
     fn SendMessage(&self, messageClass: GipMessageClass, messageId: u8, messageBufferSize: u32, messageBuffer: *mut u8) -> HRESULT,
     fn SendReceiveMessage(&self, messageClass: GipMessageClass, messageId: u8, requestMessageBufferSize: u32, requestMessageBuffer: *mut u8, responseMessageBufferSize: u32, responseMessageBuffer: *mut u8) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn UpdateFirmwareAsync(&self, firmwareImage: *mut ::rt::gen::windows::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncOperationWithProgress<GipFirmwareUpdateResult, GipFirmwareUpdateProgress>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn UpdateFirmwareAsync(&self, firmwareImage: *mut crate::windows::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncOperationWithProgress<GipFirmwareUpdateResult, GipFirmwareUpdateProgress>) -> HRESULT
 }}
 impl IGipGameControllerProvider {
     #[inline] pub fn send_message(&self, messageClass: GipMessageClass, messageId: u8, messageBuffer: &[u8]) -> Result<()> { unsafe { 
@@ -943,7 +943,7 @@ impl IGipGameControllerProvider {
         let hr = ((*self.lpVtbl).SendReceiveMessage)(self as *const _ as *mut _, messageClass, messageId, requestMessageBuffer.len() as u32, requestMessageBuffer.as_ptr() as *mut _, responseMessageBuffer.len() as u32, responseMessageBuffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn update_firmware_async(&self, firmwareImage: &::rt::gen::windows::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<GipFirmwareUpdateResult, GipFirmwareUpdateProgress>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn update_firmware_async(&self, firmwareImage: &crate::windows::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<GipFirmwareUpdateResult, GipFirmwareUpdateProgress>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).UpdateFirmwareAsync)(self as *const _ as *mut _, firmwareImage as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1025,7 +1025,7 @@ impl IXusbGameControllerProvider {
 RT_CLASS!{class XusbGameControllerProvider: IXusbGameControllerProvider}
 } // Windows.Gaming.Input.Custom
 pub mod forcefeedback { // Windows.Gaming.Input.ForceFeedback
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IConditionForceEffect, 852617832, 13973, 20073, 133, 192, 205, 25, 68, 24, 145, 64);
 RT_INTERFACE!{interface IConditionForceEffect(IConditionForceEffectVtbl): IInspectable(IInspectableVtbl) [IID_IConditionForceEffect] {
     fn get_Kind(&self, out: *mut ConditionForceEffectKind) -> HRESULT,
@@ -1266,7 +1266,7 @@ impl RtActivatable<IActivationFactory> for RampForceEffect {}
 DEFINE_CLSID!(RampForceEffect(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,111,114,99,101,70,101,101,100,98,97,99,107,46,82,97,109,112,70,111,114,99,101,69,102,102,101,99,116,0]) [CLSID_RampForceEffect]);
 } // Windows.Gaming.Input.ForceFeedback
 pub mod preview { // Windows.Gaming.Input.Preview
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class GameControllerProviderInfo}
 impl RtActivatable<IGameControllerProviderInfoStatics> for GameControllerProviderInfo {}
 impl GameControllerProviderInfo {
@@ -1299,7 +1299,7 @@ impl IGameControllerProviderInfoStatics {
 } // Windows.Gaming.Input
 pub mod preview { // Windows.Gaming.Preview
 pub mod gamesenumeration { // Windows.Gaming.Preview.GamesEnumeration
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class GameList}
 impl RtActivatable<IGameListStatics> for GameList {}
 impl RtActivatable<IGameListStatics2> for GameList {}
@@ -1352,14 +1352,14 @@ impl GameListChangedEventHandler {
 DEFINE_IID!(IID_IGameListEntry, 1935221971, 33055, 17556, 182, 156, 198, 65, 160, 198, 21, 67);
 RT_INTERFACE!{interface IGameListEntry(IGameListEntryVtbl): IInspectable(IInspectableVtbl) [IID_IGameListEntry] {
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-applicationmodel")] fn get_DisplayInfo(&self, out: *mut *mut ::rt::gen::windows::applicationmodel::AppDisplayInfo) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn get_DisplayInfo(&self, out: *mut *mut crate::windows::applicationmodel::AppDisplayInfo) -> HRESULT,
     fn LaunchAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
     fn get_Category(&self, out: *mut GameListCategory) -> HRESULT,
     fn get_Properties(&self, out: *mut *mut foundation::collections::IMapView<HString, IInspectable>) -> HRESULT,
     fn SetCategoryAsync(&self, value: GameListCategory, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IGameListEntry {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_display_info(&self) -> Result<Option<ComPtr<::rt::gen::windows::applicationmodel::AppDisplayInfo>>> { unsafe { 
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_display_info(&self) -> Result<Option<ComPtr<crate::windows::applicationmodel::AppDisplayInfo>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DisplayInfo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1390,12 +1390,12 @@ DEFINE_IID!(IID_IGameListEntry2, 3628765067, 34633, 18981, 144, 211, 246, 197, 1
 RT_INTERFACE!{interface IGameListEntry2(IGameListEntry2Vtbl): IInspectable(IInspectableVtbl) [IID_IGameListEntry2] {
     fn get_LaunchableState(&self, out: *mut GameListEntryLaunchableState) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_LauncherExecutable(&self, out: *mut *mut ::rt::gen::windows::storage::IStorageFile) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_LauncherExecutable(&self, out: *mut *mut crate::windows::storage::IStorageFile) -> HRESULT,
     fn get_LaunchParameters(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn SetLauncherExecutableFileAsync(&self, executableFile: *mut ::rt::gen::windows::storage::IStorageFile, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn SetLauncherExecutableFileAsync(&self, executableFile: *mut crate::windows::storage::IStorageFile, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-storage")] fn SetLauncherExecutableFileWithParamsAsync(&self, executableFile: *mut ::rt::gen::windows::storage::IStorageFile, launchParams: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn SetLauncherExecutableFileWithParamsAsync(&self, executableFile: *mut crate::windows::storage::IStorageFile, launchParams: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn get_TitleId(&self, out: *mut HSTRING) -> HRESULT,
     fn SetTitleIdAsync(&self, id: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn get_GameModeConfiguration(&self, out: *mut *mut GameModeConfiguration) -> HRESULT
@@ -1406,7 +1406,7 @@ impl IGameListEntry2 {
         let hr = ((*self.lpVtbl).get_LaunchableState)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_launcher_executable(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::IStorageFile>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_launcher_executable(&self) -> Result<Option<ComPtr<crate::windows::storage::IStorageFile>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_LauncherExecutable)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1416,12 +1416,12 @@ impl IGameListEntry2 {
         let hr = ((*self.lpVtbl).get_LaunchParameters)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_launcher_executable_file_async(&self, executableFile: &::rt::gen::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_launcher_executable_file_async(&self, executableFile: &crate::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetLauncherExecutableFileAsync)(self as *const _ as *mut _, executableFile as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_launcher_executable_file_with_params_async(&self, executableFile: &::rt::gen::windows::storage::IStorageFile, launchParams: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_launcher_executable_file_with_params_async(&self, executableFile: &crate::windows::storage::IStorageFile, launchParams: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetLauncherExecutableFileWithParamsAsync)(self as *const _ as *mut _, executableFile as *const _ as *mut _, launchParams.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -1667,7 +1667,7 @@ impl IGameModeUserConfigurationStatics {
 } // Windows.Gaming.Preview.GamesEnumeration
 } // Windows.Gaming.Preview
 pub mod ui { // Windows.Gaming.UI
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class GameBar}
 impl RtActivatable<IGameBarStatics> for GameBar {}
 impl GameBar {
@@ -1856,11 +1856,11 @@ RT_CLASS!{class GameUIProviderActivatedEventArgs: IGameUIProviderActivatedEventA
 } // Windows.Gaming.UI
 pub mod xboxlive { // Windows.Gaming.XboxLive
 pub mod storage { // Windows.Gaming.XboxLive.Storage
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IGameSaveBlobGetResult, 2440200672, 29185, 18771, 170, 44, 64, 8, 240, 58, 239, 69);
 RT_INTERFACE!{interface IGameSaveBlobGetResult(IGameSaveBlobGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveBlobGetResult] {
     fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut *mut foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut *mut foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>) -> HRESULT
 }}
 impl IGameSaveBlobGetResult {
     #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
@@ -1868,7 +1868,7 @@ impl IGameSaveBlobGetResult {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1940,9 +1940,9 @@ RT_INTERFACE!{interface IGameSaveContainer(IGameSaveContainerVtbl): IInspectable
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Provider(&self, out: *mut *mut GameSaveProvider) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn SubmitUpdatesAsync(&self, blobsToWrite: *mut foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, blobsToDelete: *mut foundation::collections::IIterable<HString>, displayName: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn SubmitUpdatesAsync(&self, blobsToWrite: *mut foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>, blobsToDelete: *mut foundation::collections::IIterable<HString>, displayName: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn ReadAsync(&self, blobsToRead: *mut foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn ReadAsync(&self, blobsToRead: *mut foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
     fn GetAsync(&self, blobsToRead: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<GameSaveBlobGetResult>) -> HRESULT,
     fn SubmitPropertySetUpdatesAsync(&self, blobsToWrite: *mut foundation::collections::IPropertySet, blobsToDelete: *mut foundation::collections::IIterable<HString>, displayName: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
     fn CreateBlobInfoQuery(&self, blobNamePrefix: HSTRING, out: *mut *mut GameSaveBlobInfoQuery) -> HRESULT
@@ -1958,12 +1958,12 @@ impl IGameSaveContainer {
         let hr = ((*self.lpVtbl).get_Provider)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn submit_updates_async(&self, blobsToWrite: &foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>, blobsToDelete: &foundation::collections::IIterable<HString>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn submit_updates_async(&self, blobsToWrite: &foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>, blobsToDelete: &foundation::collections::IIterable<HString>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SubmitUpdatesAsync)(self as *const _ as *mut _, blobsToWrite as *const _ as *mut _, blobsToDelete as *const _ as *mut _, displayName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn read_async(&self, blobsToRead: &foundation::collections::IMapView<HString, ::rt::gen::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn read_async(&self, blobsToRead: &foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ReadAsync)(self as *const _ as *mut _, blobsToRead as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -2081,7 +2081,7 @@ RT_CLASS!{class GameSaveOperationResult: IGameSaveOperationResult}
 DEFINE_IID!(IID_IGameSaveProvider, 2426798996, 33022, 16913, 151, 248, 165, 222, 20, 221, 149, 210);
 RT_INTERFACE!{interface IGameSaveProvider(IGameSaveProviderVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProvider] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut ::rt::gen::windows::system::User) -> HRESULT,
+    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut crate::windows::system::User) -> HRESULT,
     fn CreateContainer(&self, name: HSTRING, out: *mut *mut GameSaveContainer) -> HRESULT,
     fn DeleteContainerAsync(&self, name: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
     fn CreateContainerInfoQuery(&self, out: *mut *mut GameSaveContainerInfoQuery) -> HRESULT,
@@ -2090,7 +2090,7 @@ RT_INTERFACE!{interface IGameSaveProvider(IGameSaveProviderVtbl): IInspectable(I
     fn get_ContainersChangedSinceLastSync(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
 }}
 impl IGameSaveProvider {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<::rt::gen::windows::system::User>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<crate::windows::system::User>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -2129,10 +2129,10 @@ impl IGameSaveProvider {
 RT_CLASS!{class GameSaveProvider: IGameSaveProvider}
 impl RtActivatable<IGameSaveProviderStatics> for GameSaveProvider {}
 impl GameSaveProvider {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &crate::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
         <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().get_for_user_async(user, serviceConfigId)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(user: &crate::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
         <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().get_sync_on_demand_for_user_async(user, serviceConfigId)
     }
 }
@@ -2157,16 +2157,16 @@ impl IGameSaveProviderGetResult {
 RT_CLASS!{class GameSaveProviderGetResult: IGameSaveProviderGetResult}
 DEFINE_IID!(IID_IGameSaveProviderStatics, 3491577552, 31491, 17565, 140, 189, 52, 2, 132, 42, 16, 72);
 RT_INTERFACE!{static interface IGameSaveProviderStatics(IGameSaveProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProviderStatics] {
-    #[cfg(feature="windows-system")] fn GetForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn GetSyncOnDemandForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT
+    #[cfg(feature="windows-system")] fn GetForUserAsync(&self, user: *mut crate::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn GetSyncOnDemandForUserAsync(&self, user: *mut crate::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT
 }}
 impl IGameSaveProviderStatics {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(&self, user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(&self, user: &crate::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, serviceConfigId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(&self, user: &::rt::gen::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(&self, user: &crate::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetSyncOnDemandForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, serviceConfigId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }

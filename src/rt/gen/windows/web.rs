@@ -1,4 +1,4 @@
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IUriToStreamResolver, 2964039786, 39659, 19770, 149, 144, 0, 62, 60, 167, 226, 144);
 RT_INTERFACE!{interface IUriToStreamResolver(IUriToStreamResolverVtbl): IInspectable(IInspectableVtbl) [IID_IUriToStreamResolver] {
     #[cfg(feature="windows-storage")] fn UriToStreamAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<super::storage::streams::IInputStream>) -> HRESULT
@@ -33,7 +33,7 @@ RT_ENUM! { enum WebErrorStatus: i32 {
     Unknown = 0, CertificateCommonNameIsIncorrect = 1, CertificateExpired = 2, CertificateContainsErrors = 3, CertificateRevoked = 4, CertificateIsInvalid = 5, ServerUnreachable = 6, Timeout = 7, ErrorHttpInvalidServerResponse = 8, ConnectionAborted = 9, ConnectionReset = 10, Disconnected = 11, HttpToHttpsOnRedirection = 12, HttpsToHttpOnRedirection = 13, CannotConnect = 14, HostNameNotResolved = 15, OperationCanceled = 16, RedirectFailed = 17, UnexpectedStatusCode = 18, UnexpectedRedirection = 19, UnexpectedClientError = 20, UnexpectedServerError = 21, InsufficientRangeSupport = 22, MissingContentLengthSupport = 23, MultipleChoices = 300, MovedPermanently = 301, Found = 302, SeeOther = 303, NotModified = 304, UseProxy = 305, TemporaryRedirect = 307, BadRequest = 400, Unauthorized = 401, PaymentRequired = 402, Forbidden = 403, NotFound = 404, MethodNotAllowed = 405, NotAcceptable = 406, ProxyAuthenticationRequired = 407, RequestTimeout = 408, Conflict = 409, Gone = 410, LengthRequired = 411, PreconditionFailed = 412, RequestEntityTooLarge = 413, RequestUriTooLong = 414, UnsupportedMediaType = 415, RequestedRangeNotSatisfiable = 416, ExpectationFailed = 417, InternalServerError = 500, NotImplemented = 501, BadGateway = 502, ServiceUnavailable = 503, GatewayTimeout = 504, HttpVersionNotSupported = 505,
 }}
 pub mod atompub { // Windows.Web.AtomPub
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAtomPubClient, 892939320, 52717, 19788, 150, 55, 5, 241, 92, 28, 148, 6);
 RT_INTERFACE!{interface IAtomPubClient(IAtomPubClientVtbl): IInspectable(IInspectableVtbl) [IID_IAtomPubClient] {
     fn RetrieveServiceDocumentAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperationWithProgress<ServiceDocument, super::syndication::RetrievalProgress>) -> HRESULT,
@@ -189,7 +189,7 @@ impl IWorkspace {
 RT_CLASS!{class Workspace: IWorkspace}
 } // Windows.Web.AtomPub
 pub mod http { // Windows.Web.Http
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{class HttpBufferContent: IHttpContent}
 impl RtActivatable<IHttpBufferContentFactory> for HttpBufferContent {}
 impl HttpBufferContent {
@@ -962,7 +962,7 @@ RT_ENUM! { enum HttpVersion: i32 {
     None = 0, Http10 = 1, Http11 = 2, Http20 = 3,
 }}
 pub mod diagnostics { // Windows.Web.Http.Diagnostics
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IHttpDiagnosticProvider, 3179353345, 41046, 19769, 177, 116, 131, 59, 123, 3, 176, 44);
 RT_INTERFACE!{interface IHttpDiagnosticProvider(IHttpDiagnosticProviderVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProvider] {
     fn Start(&self) -> HRESULT,
@@ -1014,7 +1014,7 @@ impl IHttpDiagnosticProvider {
 RT_CLASS!{class HttpDiagnosticProvider: IHttpDiagnosticProvider}
 impl RtActivatable<IHttpDiagnosticProviderStatics> for HttpDiagnosticProvider {}
 impl HttpDiagnosticProvider {
-    #[cfg(feature="windows-system")] #[inline] pub fn create_from_process_diagnostic_info(processDiagnosticInfo: &::rt::gen::windows::system::diagnostics::ProcessDiagnosticInfo) -> Result<Option<ComPtr<HttpDiagnosticProvider>>> {
+    #[cfg(feature="windows-system")] #[inline] pub fn create_from_process_diagnostic_info(processDiagnosticInfo: &crate::windows::system::diagnostics::ProcessDiagnosticInfo) -> Result<Option<ComPtr<HttpDiagnosticProvider>>> {
         <Self as RtActivatable<IHttpDiagnosticProviderStatics>>::get_activation_factory().create_from_process_diagnostic_info(processDiagnosticInfo)
     }
 }
@@ -1201,10 +1201,10 @@ impl IHttpDiagnosticProviderResponseReceivedEventArgs {
 RT_CLASS!{class HttpDiagnosticProviderResponseReceivedEventArgs: IHttpDiagnosticProviderResponseReceivedEventArgs}
 DEFINE_IID!(IID_IHttpDiagnosticProviderStatics, 1535266497, 27244, 18380, 175, 236, 30, 134, 188, 38, 5, 59);
 RT_INTERFACE!{static interface IHttpDiagnosticProviderStatics(IHttpDiagnosticProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderStatics] {
-    #[cfg(feature="windows-system")] fn CreateFromProcessDiagnosticInfo(&self, processDiagnosticInfo: *mut ::rt::gen::windows::system::diagnostics::ProcessDiagnosticInfo, out: *mut *mut HttpDiagnosticProvider) -> HRESULT
+    #[cfg(feature="windows-system")] fn CreateFromProcessDiagnosticInfo(&self, processDiagnosticInfo: *mut crate::windows::system::diagnostics::ProcessDiagnosticInfo, out: *mut *mut HttpDiagnosticProvider) -> HRESULT
 }}
 impl IHttpDiagnosticProviderStatics {
-    #[cfg(feature="windows-system")] #[inline] pub fn create_from_process_diagnostic_info(&self, processDiagnosticInfo: &::rt::gen::windows::system::diagnostics::ProcessDiagnosticInfo) -> Result<Option<ComPtr<HttpDiagnosticProvider>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn create_from_process_diagnostic_info(&self, processDiagnosticInfo: &crate::windows::system::diagnostics::ProcessDiagnosticInfo) -> Result<Option<ComPtr<HttpDiagnosticProvider>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromProcessDiagnosticInfo)(self as *const _ as *mut _, processDiagnosticInfo as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1239,7 +1239,7 @@ impl IHttpDiagnosticSourceLocation {
 RT_CLASS!{class HttpDiagnosticSourceLocation: IHttpDiagnosticSourceLocation}
 } // Windows.Web.Http.Diagnostics
 pub mod filters { // Windows.Web.Http.Filters
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IHttpBaseProtocolFilter, 1908972297, 57649, 19284, 165, 60, 235, 67, 255, 55, 233, 187);
 RT_INTERFACE!{interface IHttpBaseProtocolFilter(IHttpBaseProtocolFilterVtbl): IInspectable(IInspectableVtbl) [IID_IHttpBaseProtocolFilter] {
     fn get_AllowAutoRedirect(&self, out: *mut bool) -> HRESULT,
@@ -1251,21 +1251,21 @@ RT_INTERFACE!{interface IHttpBaseProtocolFilter(IHttpBaseProtocolFilterVtbl): II
     fn get_CacheControl(&self, out: *mut *mut HttpCacheControl) -> HRESULT,
     fn get_CookieManager(&self, out: *mut *mut super::HttpCookieManager) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy8(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ClientCertificate(&self, out: *mut *mut ::rt::gen::windows::security::cryptography::certificates::Certificate) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ClientCertificate(&self, out: *mut *mut crate::windows::security::cryptography::certificates::Certificate) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy9(&self) -> (),
-    #[cfg(feature="windows-security")] fn put_ClientCertificate(&self, value: *mut ::rt::gen::windows::security::cryptography::certificates::Certificate) -> HRESULT,
+    #[cfg(feature="windows-security")] fn put_ClientCertificate(&self, value: *mut crate::windows::security::cryptography::certificates::Certificate) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy10(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_IgnorableServerCertificateErrors(&self, out: *mut *mut foundation::collections::IVector<::rt::gen::windows::security::cryptography::certificates::ChainValidationResult>) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_IgnorableServerCertificateErrors(&self, out: *mut *mut foundation::collections::IVector<crate::windows::security::cryptography::certificates::ChainValidationResult>) -> HRESULT,
     fn get_MaxConnectionsPerServer(&self, out: *mut u32) -> HRESULT,
     fn put_MaxConnectionsPerServer(&self, value: u32) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy13(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ProxyCredential(&self, out: *mut *mut ::rt::gen::windows::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ProxyCredential(&self, out: *mut *mut crate::windows::security::credentials::PasswordCredential) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy14(&self) -> (),
-    #[cfg(feature="windows-security")] fn put_ProxyCredential(&self, value: *mut ::rt::gen::windows::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn put_ProxyCredential(&self, value: *mut crate::windows::security::credentials::PasswordCredential) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy15(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ServerCredential(&self, out: *mut *mut ::rt::gen::windows::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ServerCredential(&self, out: *mut *mut crate::windows::security::credentials::PasswordCredential) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy16(&self) -> (),
-    #[cfg(feature="windows-security")] fn put_ServerCredential(&self, value: *mut ::rt::gen::windows::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn put_ServerCredential(&self, value: *mut crate::windows::security::credentials::PasswordCredential) -> HRESULT,
     fn get_UseProxy(&self, out: *mut bool) -> HRESULT,
     fn put_UseProxy(&self, value: bool) -> HRESULT
 }}
@@ -1307,16 +1307,16 @@ impl IHttpBaseProtocolFilter {
         let hr = ((*self.lpVtbl).get_CookieManager)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_client_certificate(&self) -> Result<Option<ComPtr<::rt::gen::windows::security::cryptography::certificates::Certificate>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_client_certificate(&self) -> Result<Option<ComPtr<crate::windows::security::cryptography::certificates::Certificate>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ClientCertificate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_client_certificate(&self, value: &::rt::gen::windows::security::cryptography::certificates::Certificate) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn set_client_certificate(&self, value: &crate::windows::security::cryptography::certificates::Certificate) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_ClientCertificate)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_ignorable_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<::rt::gen::windows::security::cryptography::certificates::ChainValidationResult>>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_ignorable_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<crate::windows::security::cryptography::certificates::ChainValidationResult>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IgnorableServerCertificateErrors)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1330,21 +1330,21 @@ impl IHttpBaseProtocolFilter {
         let hr = ((*self.lpVtbl).put_MaxConnectionsPerServer)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_proxy_credential(&self) -> Result<Option<ComPtr<::rt::gen::windows::security::credentials::PasswordCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_proxy_credential(&self) -> Result<Option<ComPtr<crate::windows::security::credentials::PasswordCredential>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ProxyCredential)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_proxy_credential(&self, value: &::rt::gen::windows::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn set_proxy_credential(&self, value: &crate::windows::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_ProxyCredential)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_server_credential(&self) -> Result<Option<ComPtr<::rt::gen::windows::security::credentials::PasswordCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_server_credential(&self) -> Result<Option<ComPtr<crate::windows::security::credentials::PasswordCredential>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ServerCredential)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_server_credential(&self, value: &::rt::gen::windows::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn set_server_credential(&self, value: &crate::windows::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_ServerCredential)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -1466,13 +1466,13 @@ DEFINE_IID!(IID_IHttpServerCustomValidationRequestedEventArgs, 828767794, 59357,
 RT_INTERFACE!{interface IHttpServerCustomValidationRequestedEventArgs(IHttpServerCustomValidationRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpServerCustomValidationRequestedEventArgs] {
     fn get_RequestMessage(&self, out: *mut *mut super::HttpRequestMessage) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut *mut ::rt::gen::windows::security::cryptography::certificates::Certificate) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut *mut crate::windows::security::cryptography::certificates::Certificate) -> HRESULT,
     #[cfg(not(feature="windows-networking"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-networking")] fn get_ServerCertificateErrorSeverity(&self, out: *mut ::rt::gen::windows::networking::sockets::SocketSslErrorSeverity) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn get_ServerCertificateErrorSeverity(&self, out: *mut crate::windows::networking::sockets::SocketSslErrorSeverity) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ServerCertificateErrors(&self, out: *mut *mut foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::ChainValidationResult>) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ServerCertificateErrors(&self, out: *mut *mut foundation::collections::IVectorView<crate::windows::security::cryptography::certificates::ChainValidationResult>) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ServerIntermediateCertificates(&self, out: *mut *mut foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::Certificate>) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ServerIntermediateCertificates(&self, out: *mut *mut foundation::collections::IVectorView<crate::windows::security::cryptography::certificates::Certificate>) -> HRESULT,
     fn Reject(&self) -> HRESULT,
     fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
 }}
@@ -1482,22 +1482,22 @@ impl IHttpServerCustomValidationRequestedEventArgs {
         let hr = ((*self.lpVtbl).get_RequestMessage)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate(&self) -> Result<Option<ComPtr<::rt::gen::windows::security::cryptography::certificates::Certificate>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate(&self) -> Result<Option<ComPtr<crate::windows::security::cryptography::certificates::Certificate>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ServerCertificate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn get_server_certificate_error_severity(&self) -> Result<::rt::gen::windows::networking::sockets::SocketSslErrorSeverity> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn get_server_certificate_error_severity(&self) -> Result<crate::windows::networking::sockets::SocketSslErrorSeverity> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ServerCertificateErrorSeverity)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::ChainValidationResult>>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::security::cryptography::certificates::ChainValidationResult>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ServerCertificateErrors)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_server_intermediate_certificates(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::Certificate>>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_server_intermediate_certificates(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::security::cryptography::certificates::Certificate>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ServerIntermediateCertificates)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1515,7 +1515,7 @@ impl IHttpServerCustomValidationRequestedEventArgs {
 RT_CLASS!{class HttpServerCustomValidationRequestedEventArgs: IHttpServerCustomValidationRequestedEventArgs}
 } // Windows.Web.Http.Filters
 pub mod headers { // Windows.Web.Http.Headers
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IHttpCacheDirectiveHeaderValueCollection, 2589485961, 54736, 20414, 189, 157, 181, 179, 99, 104, 17, 180);
 RT_INTERFACE!{interface IHttpCacheDirectiveHeaderValueCollection(IHttpCacheDirectiveHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCacheDirectiveHeaderValueCollection] {
     fn get_MaxAge(&self, out: *mut *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT,
@@ -2017,9 +2017,9 @@ RT_INTERFACE!{interface IHttpContentHeaderCollection(IHttpContentHeaderCollectio
     fn get_ContentLocation(&self, out: *mut *mut foundation::Uri) -> HRESULT,
     fn put_ContentLocation(&self, value: *mut foundation::Uri) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy8(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_ContentMD5(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_ContentMD5(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy9(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_ContentMD5(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_ContentMD5(&self, value: *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn get_ContentRange(&self, out: *mut *mut HttpContentRangeHeaderValue) -> HRESULT,
     fn put_ContentRange(&self, value: *mut HttpContentRangeHeaderValue) -> HRESULT,
     fn get_ContentType(&self, out: *mut *mut HttpMediaTypeHeaderValue) -> HRESULT,
@@ -2069,12 +2069,12 @@ impl IHttpContentHeaderCollection {
         let hr = ((*self.lpVtbl).put_ContentLocation)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_content_md5(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_content_md5(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ContentMD5)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_content_md5(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_content_md5(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_ContentMD5)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -3084,9 +3084,9 @@ RT_INTERFACE!{interface IHttpRequestHeaderCollection(IHttpRequestHeaderCollectio
     fn get_From(&self, out: *mut HSTRING) -> HRESULT,
     fn put_From(&self, value: HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-networking"))] fn __Dummy13(&self) -> (),
-    #[cfg(feature="windows-networking")] fn get_Host(&self, out: *mut *mut ::rt::gen::windows::networking::HostName) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn get_Host(&self, out: *mut *mut crate::windows::networking::HostName) -> HRESULT,
     #[cfg(not(feature="windows-networking"))] fn __Dummy14(&self) -> (),
-    #[cfg(feature="windows-networking")] fn put_Host(&self, value: *mut ::rt::gen::windows::networking::HostName) -> HRESULT,
+    #[cfg(feature="windows-networking")] fn put_Host(&self, value: *mut crate::windows::networking::HostName) -> HRESULT,
     fn get_IfModifiedSince(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
     fn put_IfModifiedSince(&self, value: *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
     fn get_IfUnmodifiedSince(&self, out: *mut *mut foundation::IReference<foundation::DateTime>) -> HRESULT,
@@ -3165,12 +3165,12 @@ impl IHttpRequestHeaderCollection {
         let hr = ((*self.lpVtbl).put_From)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn get_host(&self) -> Result<Option<ComPtr<::rt::gen::windows::networking::HostName>>> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn get_host(&self) -> Result<Option<ComPtr<crate::windows::networking::HostName>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Host)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn set_host(&self, value: &::rt::gen::windows::networking::HostName) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn set_host(&self, value: &crate::windows::networking::HostName) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Host)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -3417,7 +3417,7 @@ impl IHttpTransferCodingHeaderValueStatics {
 } // Windows.Web.Http.Headers
 } // Windows.Web.Http
 pub mod syndication { // Windows.Web.Syndication
-use ::prelude::*;
+use crate::prelude::*;
 RT_STRUCT! { struct RetrievalProgress {
     BytesRetrieved: u32, TotalBytesToRetrieve: u32,
 }}
@@ -4474,7 +4474,7 @@ RT_STRUCT! { struct TransferProgress {
 }}
 } // Windows.Web.Syndication
 pub mod ui { // Windows.Web.UI
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IWebViewControl, 1066537750, 48240, 19418, 145, 54, 201, 67, 112, 137, 159, 171);
 RT_INTERFACE!{interface IWebViewControl(IWebViewControlVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControl] {
     fn get_Source(&self, out: *mut *mut foundation::Uri) -> HRESULT,
@@ -5185,32 +5185,32 @@ impl IWebViewControlWebResourceRequestedEventArgs {
 }
 RT_CLASS!{class WebViewControlWebResourceRequestedEventArgs: IWebViewControlWebResourceRequestedEventArgs}
 pub mod interop { // Windows.Web.UI.Interop
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{class WebViewControl: super::IWebViewControl}
 DEFINE_IID!(IID_IWebViewControlAcceleratorKeyPressedEventArgs, 2007147838, 31860, 17277, 162, 144, 58, 192, 216, 205, 86, 85);
 RT_INTERFACE!{interface IWebViewControlAcceleratorKeyPressedEventArgs(IWebViewControlAcceleratorKeyPressedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlAcceleratorKeyPressedEventArgs] {
     #[cfg(not(feature="windows-ui"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_EventType(&self, out: *mut ::rt::gen::windows::ui::core::CoreAcceleratorKeyEventType) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_EventType(&self, out: *mut crate::windows::ui::core::CoreAcceleratorKeyEventType) -> HRESULT,
     #[cfg(not(feature="windows-system"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-system")] fn get_VirtualKey(&self, out: *mut ::rt::gen::windows::system::VirtualKey) -> HRESULT,
+    #[cfg(feature="windows-system")] fn get_VirtualKey(&self, out: *mut crate::windows::system::VirtualKey) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_KeyStatus(&self, out: *mut ::rt::gen::windows::ui::core::CorePhysicalKeyStatus) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_KeyStatus(&self, out: *mut crate::windows::ui::core::CorePhysicalKeyStatus) -> HRESULT,
     fn get_RoutingStage(&self, out: *mut WebViewControlAcceleratorKeyRoutingStage) -> HRESULT,
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
     fn put_Handled(&self, value: bool) -> HRESULT
 }}
 impl IWebViewControlAcceleratorKeyPressedEventArgs {
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_event_type(&self) -> Result<::rt::gen::windows::ui::core::CoreAcceleratorKeyEventType> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_event_type(&self) -> Result<crate::windows::ui::core::CoreAcceleratorKeyEventType> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_EventType)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_virtual_key(&self) -> Result<::rt::gen::windows::system::VirtualKey> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_virtual_key(&self) -> Result<crate::windows::system::VirtualKey> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_VirtualKey)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_key_status(&self) -> Result<::rt::gen::windows::ui::core::CorePhysicalKeyStatus> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_key_status(&self) -> Result<crate::windows::ui::core::CorePhysicalKeyStatus> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_KeyStatus)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }

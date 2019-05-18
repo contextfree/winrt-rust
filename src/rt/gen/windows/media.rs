@@ -1,4 +1,4 @@
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAudioBuffer, 890722343, 29259, 19562, 177, 48, 246, 83, 127, 154, 224, 208);
 RT_INTERFACE!{interface IAudioBuffer(IAudioBufferVtbl): IInspectable(IInspectableVtbl) [IID_IAudioBuffer] {
     fn get_Capacity(&self, out: *mut u32) -> HRESULT,
@@ -1494,7 +1494,7 @@ impl IVideoFrameStatics {
     }}
 }
 pub mod appbroadcasting { // Windows.Media.AppBroadcasting
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAppBroadcastingMonitor, 16341608, 35079, 18592, 184, 239, 36, 210, 8, 19, 117, 66);
 RT_INTERFACE!{interface IAppBroadcastingMonitor(IAppBroadcastingMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastingMonitor] {
     fn get_IsCurrentAppBroadcasting(&self, out: *mut bool) -> HRESULT,
@@ -1638,7 +1638,7 @@ impl IAppBroadcastingUIStatics {
 }
 } // Windows.Media.AppBroadcasting
 pub mod apprecording { // Windows.Media.AppRecording
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAppRecordingManager, 3890372726, 41028, 18658, 165, 18, 48, 148, 213, 116, 199, 204);
 RT_INTERFACE!{interface IAppRecordingManager(IAppRecordingManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAppRecordingManager] {
     fn GetStatus(&self, out: *mut *mut AppRecordingStatus) -> HRESULT,
@@ -1861,7 +1861,7 @@ impl IAppRecordingStatusDetails {
 RT_CLASS!{class AppRecordingStatusDetails: IAppRecordingStatusDetails}
 } // Windows.Media.AppRecording
 pub mod audio { // Windows.Media.Audio
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAudioDeviceInputNode, 2954587105, 28494, 18914, 172, 1, 85, 157, 98, 190, 179, 169);
 RT_INTERFACE!{interface IAudioDeviceInputNode(IAudioDeviceInputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioDeviceInputNode] {
     #[cfg(feature="windows-devices")] fn get_Device(&self, out: *mut *mut super::super::devices::enumeration::DeviceInformation) -> HRESULT
@@ -3958,7 +3958,7 @@ RT_ENUM! { enum SpatialAudioModel: i32 {
 }}
 } // Windows.Media.Audio
 pub mod capture { // Windows.Media.Capture
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAdvancedCapturedPhoto, 4034032267, 45714, 17553, 157, 65, 153, 128, 122, 85, 11, 191);
 RT_INTERFACE!{interface IAdvancedCapturedPhoto(IAdvancedCapturedPhotoVtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedCapturedPhoto] {
     fn get_Frame(&self, out: *mut *mut CapturedFrame) -> HRESULT,
@@ -8166,7 +8166,7 @@ RT_STRUCT! { struct WhiteBalanceGain {
     R: f64, G: f64, B: f64,
 }}
 pub mod core { // Windows.Media.Capture.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IVariablePhotoCapturedEventArgs, 3521858652, 6995, 20042, 139, 92, 219, 120, 135, 172, 148, 155);
 RT_INTERFACE!{interface IVariablePhotoCapturedEventArgs(IVariablePhotoCapturedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVariablePhotoCapturedEventArgs] {
     fn get_Frame(&self, out: *mut *mut super::CapturedFrame) -> HRESULT,
@@ -8256,7 +8256,7 @@ impl IVariablePhotoSequenceCapture2 {
 }
 } // Windows.Media.Capture.Core
 pub mod frames { // Windows.Media.Capture.Frames
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAudioMediaFrame, 2745827071, 32801, 17435, 154, 70, 231, 240, 19, 123, 121, 129);
 RT_INTERFACE!{interface IAudioMediaFrame(IAudioMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IAudioMediaFrame] {
     fn get_FrameReference(&self, out: *mut *mut MediaFrameReference) -> HRESULT,
@@ -8284,7 +8284,7 @@ RT_CLASS!{class AudioMediaFrame: IAudioMediaFrame}
 DEFINE_IID!(IID_IBufferMediaFrame, 3048297415, 39812, 16482, 183, 156, 163, 101, 178, 89, 104, 84);
 RT_INTERFACE!{interface IBufferMediaFrame(IBufferMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IBufferMediaFrame] {
     fn get_FrameReference(&self, out: *mut *mut MediaFrameReference) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn get_Buffer(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_Buffer(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IBufferMediaFrame {
     #[inline] pub fn get_frame_reference(&self) -> Result<Option<ComPtr<MediaFrameReference>>> { unsafe { 
@@ -8292,7 +8292,7 @@ impl IBufferMediaFrame {
         let hr = ((*self.lpVtbl).get_FrameReference)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_buffer(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_buffer(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Buffer)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -8304,7 +8304,7 @@ RT_INTERFACE!{interface IDepthMediaFrame(IDepthMediaFrameVtbl): IInspectable(IIn
     fn get_FrameReference(&self, out: *mut *mut MediaFrameReference) -> HRESULT,
     fn get_VideoMediaFrame(&self, out: *mut *mut VideoMediaFrame) -> HRESULT,
     fn get_DepthFormat(&self, out: *mut *mut DepthMediaFrameFormat) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn TryCreateCoordinateMapper(&self, cameraIntrinsics: *mut super::super::devices::core::CameraIntrinsics, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut super::super::devices::core::DepthCorrelatedCoordinateMapper) -> HRESULT
+    #[cfg(feature="windows-perception")] fn TryCreateCoordinateMapper(&self, cameraIntrinsics: *mut super::super::devices::core::CameraIntrinsics, coordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut super::super::devices::core::DepthCorrelatedCoordinateMapper) -> HRESULT
 }}
 impl IDepthMediaFrame {
     #[inline] pub fn get_frame_reference(&self) -> Result<Option<ComPtr<MediaFrameReference>>> { unsafe { 
@@ -8322,7 +8322,7 @@ impl IDepthMediaFrame {
         let hr = ((*self.lpVtbl).get_DepthFormat)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_create_coordinate_mapper(&self, cameraIntrinsics: &super::super::devices::core::CameraIntrinsics, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<super::super::devices::core::DepthCorrelatedCoordinateMapper>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_create_coordinate_mapper(&self, cameraIntrinsics: &super::super::devices::core::CameraIntrinsics, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<super::super::devices::core::DepthCorrelatedCoordinateMapper>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryCreateCoordinateMapper)(self as *const _ as *mut _, cameraIntrinsics as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -8506,7 +8506,7 @@ RT_INTERFACE!{interface IMediaFrameReference(IMediaFrameReferenceVtbl): IInspect
     fn get_Properties(&self, out: *mut *mut foundation::collections::IMapView<Guid, IInspectable>) -> HRESULT,
     fn get_BufferMediaFrame(&self, out: *mut *mut BufferMediaFrame) -> HRESULT,
     fn get_VideoMediaFrame(&self, out: *mut *mut VideoMediaFrame) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn get_CoordinateSystem(&self, out: *mut *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> HRESULT
+    #[cfg(feature="windows-perception")] fn get_CoordinateSystem(&self, out: *mut *mut crate::windows::perception::spatial::SpatialCoordinateSystem) -> HRESULT
 }}
 impl IMediaFrameReference {
     #[inline] pub fn get_source_kind(&self) -> Result<MediaFrameSourceKind> { unsafe { 
@@ -8544,7 +8544,7 @@ impl IMediaFrameReference {
         let hr = ((*self.lpVtbl).get_VideoMediaFrame)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn get_coordinate_system(&self) -> Result<Option<ComPtr<::rt::gen::windows::perception::spatial::SpatialCoordinateSystem>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn get_coordinate_system(&self) -> Result<Option<ComPtr<crate::windows::perception::spatial::SpatialCoordinateSystem>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CoordinateSystem)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -8755,9 +8755,9 @@ RT_INTERFACE!{interface IMediaFrameSourceInfo(IMediaFrameSourceInfoVtbl): IInspe
     fn get_SourceKind(&self, out: *mut MediaFrameSourceKind) -> HRESULT,
     fn get_SourceGroup(&self, out: *mut *mut MediaFrameSourceGroup) -> HRESULT,
     #[cfg(not(feature="windows-devices"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_DeviceInformation(&self, out: *mut *mut ::rt::gen::windows::devices::enumeration::DeviceInformation) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_DeviceInformation(&self, out: *mut *mut crate::windows::devices::enumeration::DeviceInformation) -> HRESULT,
     fn get_Properties(&self, out: *mut *mut foundation::collections::IMapView<Guid, IInspectable>) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn get_CoordinateSystem(&self, out: *mut *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> HRESULT
+    #[cfg(feature="windows-perception")] fn get_CoordinateSystem(&self, out: *mut *mut crate::windows::perception::spatial::SpatialCoordinateSystem) -> HRESULT
 }}
 impl IMediaFrameSourceInfo {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
@@ -8780,7 +8780,7 @@ impl IMediaFrameSourceInfo {
         let hr = ((*self.lpVtbl).get_SourceGroup)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_device_information(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::enumeration::DeviceInformation>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_device_information(&self) -> Result<Option<ComPtr<crate::windows::devices::enumeration::DeviceInformation>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DeviceInformation)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -8790,7 +8790,7 @@ impl IMediaFrameSourceInfo {
         let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn get_coordinate_system(&self) -> Result<Option<ComPtr<::rt::gen::windows::perception::spatial::SpatialCoordinateSystem>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn get_coordinate_system(&self) -> Result<Option<ComPtr<crate::windows::perception::spatial::SpatialCoordinateSystem>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_CoordinateSystem)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -8896,9 +8896,9 @@ RT_INTERFACE!{interface IVideoMediaFrame(IVideoMediaFrameVtbl): IInspectable(IIn
     fn get_FrameReference(&self, out: *mut *mut MediaFrameReference) -> HRESULT,
     fn get_VideoFormat(&self, out: *mut *mut VideoMediaFrameFormat) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_SoftwareBitmap(&self, out: *mut *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_SoftwareBitmap(&self, out: *mut *mut crate::windows::graphics::imaging::SoftwareBitmap) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_Direct3DSurface(&self, out: *mut *mut ::rt::gen::windows::graphics::directx::direct3d11::IDirect3DSurface) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_Direct3DSurface(&self, out: *mut *mut crate::windows::graphics::directx::direct3d11::IDirect3DSurface) -> HRESULT,
     fn get_CameraIntrinsics(&self, out: *mut *mut super::super::devices::core::CameraIntrinsics) -> HRESULT,
     fn get_InfraredMediaFrame(&self, out: *mut *mut InfraredMediaFrame) -> HRESULT,
     fn get_DepthMediaFrame(&self, out: *mut *mut DepthMediaFrame) -> HRESULT,
@@ -8915,12 +8915,12 @@ impl IVideoMediaFrame {
         let hr = ((*self.lpVtbl).get_VideoFormat)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_software_bitmap(&self) -> Result<Option<ComPtr<::rt::gen::windows::graphics::imaging::SoftwareBitmap>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_software_bitmap(&self) -> Result<Option<ComPtr<crate::windows::graphics::imaging::SoftwareBitmap>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SoftwareBitmap)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3d_surface(&self) -> Result<Option<ComPtr<::rt::gen::windows::graphics::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3d_surface(&self) -> Result<Option<ComPtr<crate::windows::graphics::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Direct3DSurface)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -8980,7 +8980,7 @@ RT_CLASS!{class VideoMediaFrameFormat: IVideoMediaFrameFormat}
 } // Windows.Media.Capture.Frames
 } // Windows.Media.Capture
 pub mod casting { // Windows.Media.Casting
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICastingConnection, 3449099859, 49905, 17560, 139, 120, 95, 180, 205, 54, 64, 221);
 RT_INTERFACE!{interface ICastingConnection(ICastingConnectionVtbl): IInspectable(IInspectableVtbl) [IID_ICastingConnection] {
     fn get_State(&self, out: *mut CastingConnectionState) -> HRESULT,
@@ -9288,7 +9288,7 @@ impl ICastingSource {
 RT_CLASS!{class CastingSource: ICastingSource}
 } // Windows.Media.Casting
 pub mod closedcaptioning { // Windows.Media.ClosedCaptioning
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum ClosedCaptionColor: i32 {
     Default = 0, White = 1, Black = 2, Red = 3, Green = 4, Blue = 5, Yellow = 6, Magenta = 7, Cyan = 8,
 }}
@@ -9427,7 +9427,7 @@ RT_ENUM! { enum ClosedCaptionStyle: i32 {
 }}
 } // Windows.Media.ClosedCaptioning
 pub mod contentrestrictions { // Windows.Media.ContentRestrictions
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum ContentAccessRestrictionLevel: i32 {
     Allow = 0, Warn = 1, Block = 2, Hide = 3,
 }}
@@ -9595,7 +9595,7 @@ impl IRatedContentRestrictionsFactory {
 }
 } // Windows.Media.ContentRestrictions
 pub mod control { // Windows.Media.Control
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICurrentSessionChangedEventArgs, 1768540985, 3066, 24544, 141, 115, 9, 204, 94, 84, 8, 225);
 RT_INTERFACE!{interface ICurrentSessionChangedEventArgs(ICurrentSessionChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICurrentSessionChangedEventArgs] {
     
@@ -10083,7 +10083,7 @@ RT_INTERFACE!{interface ITimelinePropertiesChangedEventArgs(ITimelinePropertiesC
 RT_CLASS!{class TimelinePropertiesChangedEventArgs: ITimelinePropertiesChangedEventArgs}
 } // Windows.Media.Control
 pub mod core { // Windows.Media.Core
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum AudioDecoderDegradation: i32 {
     None = 0, DownmixTo2Channels = 1, DownmixTo6Channels = 2, DownmixTo8Channels = 3,
 }}
@@ -13663,7 +13663,7 @@ impl IVideoTrackSupportInfo {
 }
 RT_CLASS!{class VideoTrackSupportInfo: IVideoTrackSupportInfo}
 pub mod preview { // Windows.Media.Core.Preview
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class SoundLevelBroker}
 impl RtActivatable<ISoundLevelBrokerStatics> for SoundLevelBroker {}
 impl SoundLevelBroker {
@@ -13703,7 +13703,7 @@ impl ISoundLevelBrokerStatics {
 } // Windows.Media.Core.Preview
 } // Windows.Media.Core
 pub mod devices { // Windows.Media.Devices
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAdvancedPhotoCaptureSettings, 150177338, 24, 17499, 147, 210, 100, 109, 28, 94, 208, 92);
 RT_INTERFACE!{interface IAdvancedPhotoCaptureSettings(IAdvancedPhotoCaptureSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedPhotoCaptureSettings] {
     fn get_Mode(&self, out: *mut AdvancedPhotoMode) -> HRESULT,
@@ -15820,7 +15820,7 @@ RT_ENUM! { enum ZoomTransitionMode: i32 {
     Auto = 0, Direct = 1, Smooth = 2,
 }}
 pub mod core { // Windows.Media.Devices.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICameraIntrinsics, 178711858, 25993, 18906, 175, 222, 89, 66, 112, 202, 10, 172);
 RT_INTERFACE!{interface ICameraIntrinsics(ICameraIntrinsicsVtbl): IInspectable(IInspectableVtbl) [IID_ICameraIntrinsics] {
     fn get_FocalLength(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
@@ -15938,27 +15938,27 @@ impl ICameraIntrinsicsFactory {
 }
 DEFINE_IID!(IID_IDepthCorrelatedCoordinateMapper, 4183656955, 35568, 19632, 146, 109, 105, 104, 102, 229, 4, 106);
 RT_INTERFACE!{interface IDepthCorrelatedCoordinateMapper(IDepthCorrelatedCoordinateMapperVtbl): IInspectable(IInspectableVtbl) [IID_IDepthCorrelatedCoordinateMapper] {
-    #[cfg(feature="windows-perception")] fn UnprojectPoint(&self, sourcePoint: foundation::Point, targetCoordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut foundation::numerics::Vector3) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn UnprojectPoints(&self, sourcePointsSize: u32, sourcePoints: *mut foundation::Point, targetCoordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, resultsSize: u32, results: *mut foundation::numerics::Vector3) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn MapPoint(&self, sourcePoint: foundation::Point, targetCoordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: *mut CameraIntrinsics, out: *mut foundation::Point) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn MapPoints(&self, sourcePointsSize: u32, sourcePoints: *mut foundation::Point, targetCoordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: *mut CameraIntrinsics, resultsSize: u32, results: *mut foundation::Point) -> HRESULT
+    #[cfg(feature="windows-perception")] fn UnprojectPoint(&self, sourcePoint: foundation::Point, targetCoordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, out: *mut foundation::numerics::Vector3) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn UnprojectPoints(&self, sourcePointsSize: u32, sourcePoints: *mut foundation::Point, targetCoordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, resultsSize: u32, results: *mut foundation::numerics::Vector3) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn MapPoint(&self, sourcePoint: foundation::Point, targetCoordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: *mut CameraIntrinsics, out: *mut foundation::Point) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn MapPoints(&self, sourcePointsSize: u32, sourcePoints: *mut foundation::Point, targetCoordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: *mut CameraIntrinsics, resultsSize: u32, results: *mut foundation::Point) -> HRESULT
 }}
 impl IDepthCorrelatedCoordinateMapper {
-    #[cfg(feature="windows-perception")] #[inline] pub fn unproject_point(&self, sourcePoint: foundation::Point, targetCoordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<foundation::numerics::Vector3> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn unproject_point(&self, sourcePoint: foundation::Point, targetCoordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<foundation::numerics::Vector3> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).UnprojectPoint)(self as *const _ as *mut _, sourcePoint, targetCoordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn unproject_points(&self, sourcePoints: &[foundation::Point], targetCoordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, results: &mut [foundation::numerics::Vector3]) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn unproject_points(&self, sourcePoints: &[foundation::Point], targetCoordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem, results: &mut [foundation::numerics::Vector3]) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).UnprojectPoints)(self as *const _ as *mut _, sourcePoints.len() as u32, sourcePoints.as_ptr() as *mut _, targetCoordinateSystem as *const _ as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn map_point(&self, sourcePoint: foundation::Point, targetCoordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: &CameraIntrinsics) -> Result<foundation::Point> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn map_point(&self, sourcePoint: foundation::Point, targetCoordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: &CameraIntrinsics) -> Result<foundation::Point> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).MapPoint)(self as *const _ as *mut _, sourcePoint, targetCoordinateSystem as *const _ as *mut _, targetCameraIntrinsics as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn map_points(&self, sourcePoints: &[foundation::Point], targetCoordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: &CameraIntrinsics, results: &mut [foundation::Point]) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn map_points(&self, sourcePoints: &[foundation::Point], targetCoordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: &CameraIntrinsics, results: &mut [foundation::Point]) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).MapPoints)(self as *const _ as *mut _, sourcePoints.len() as u32, sourcePoints.as_ptr() as *mut _, targetCoordinateSystem as *const _ as *mut _, targetCameraIntrinsics as *const _ as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -16408,7 +16408,7 @@ RT_CLASS!{class VariablePhotoSequenceController: IVariablePhotoSequenceControlle
 } // Windows.Media.Devices.Core
 } // Windows.Media.Devices
 pub mod dialprotocol { // Windows.Media.DialProtocol
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDialApp, 1432353747, 17847, 18931, 187, 215, 48, 45, 182, 8, 70, 70);
 RT_INTERFACE!{interface IDialApp(IDialAppVtbl): IInspectable(IInspectableVtbl) [IID_IDialApp] {
     fn get_AppName(&self, out: *mut HSTRING) -> HRESULT,
@@ -16713,7 +16713,7 @@ impl IDialReceiverAppStatics {
 }
 } // Windows.Media.DialProtocol
 pub mod editing { // Windows.Media.Editing
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IBackgroundAudioTrack, 1267839933, 40481, 16998, 169, 194, 103, 221, 1, 26, 35, 87);
 RT_INTERFACE!{interface IBackgroundAudioTrack(IBackgroundAudioTrackVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundAudioTrack] {
     fn get_TrimTimeFromStart(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -17273,7 +17273,7 @@ RT_ENUM! { enum VideoFramePrecision: i32 {
 }}
 } // Windows.Media.Editing
 pub mod effects { // Windows.Media.Effects
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAudioCaptureEffectsManager, 2407907953, 909, 17299, 130, 152, 84, 1, 16, 96, 142, 239);
 RT_INTERFACE!{interface IAudioCaptureEffectsManager(IAudioCaptureEffectsManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAudioCaptureEffectsManager] {
     fn add_AudioCaptureEffectsChanged(&self, handler: *mut foundation::TypedEventHandler<AudioCaptureEffectsManager, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -17880,7 +17880,7 @@ impl IVideoTransformSphericalProjection {
 RT_CLASS!{class VideoTransformSphericalProjection: IVideoTransformSphericalProjection}
 } // Windows.Media.Effects
 pub mod faceanalysis { // Windows.Media.FaceAnalysis
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDetectedFace, 2181092436, 26300, 13535, 148, 16, 232, 148, 0, 25, 84, 20);
 RT_INTERFACE!{interface IDetectedFace(IDetectedFaceVtbl): IInspectable(IInspectableVtbl) [IID_IDetectedFace] {
     #[cfg(feature="windows-graphics")] fn get_FaceBox(&self, out: *mut super::super::graphics::imaging::BitmapBounds) -> HRESULT
@@ -18063,7 +18063,7 @@ impl IFaceTrackerStatics {
 }
 } // Windows.Media.FaceAnalysis
 pub mod import { // Windows.Media.Import
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum PhotoImportAccessMode: i32 {
     ReadWrite = 0, ReadOnly = 1, ReadAndDelete = 2,
 }}
@@ -19026,7 +19026,7 @@ impl IPhotoImportVideoSegment {
 RT_CLASS!{class PhotoImportVideoSegment: IPhotoImportVideoSegment}
 } // Windows.Media.Import
 pub mod mediaproperties { // Windows.Media.MediaProperties
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAudioEncodingProperties, 1656519190, 92, 19259, 138, 11, 10, 9, 14, 150, 135, 243);
 RT_INTERFACE!{interface IAudioEncodingProperties(IAudioEncodingPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IAudioEncodingProperties] {
     fn put_Bitrate(&self, value: u32) -> HRESULT,
@@ -20433,7 +20433,7 @@ RT_ENUM! { enum VideoEncodingQuality: i32 {
 }}
 } // Windows.Media.MediaProperties
 pub mod ocr { // Windows.Media.Ocr
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IOcrEngine, 1511308353, 23414, 12608, 182, 128, 136, 37, 86, 38, 131, 172);
 RT_INTERFACE!{interface IOcrEngine(IOcrEngineVtbl): IInspectable(IInspectableVtbl) [IID_IOcrEngine] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
@@ -20572,7 +20572,7 @@ impl IOcrWord {
 RT_CLASS!{class OcrWord: IOcrWord}
 } // Windows.Media.Ocr
 pub mod playto { // Windows.Media.PlayTo
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICurrentTimeChangeRequestedEventArgs, 2574324516, 60871, 19445, 145, 246, 60, 134, 39, 219, 89, 229);
 RT_INTERFACE!{interface ICurrentTimeChangeRequestedEventArgs(ICurrentTimeChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICurrentTimeChangeRequestedEventArgs] {
     fn get_Time(&self, out: *mut foundation::TimeSpan) -> HRESULT
@@ -21222,7 +21222,7 @@ impl IVolumeChangeRequestedEventArgs {
 RT_CLASS!{class VolumeChangeRequestedEventArgs: IVolumeChangeRequestedEventArgs}
 } // Windows.Media.PlayTo
 pub mod playback { // Windows.Media.Playback
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum AutoLoadedDisplayPropertyKind: i32 {
     None = 0, MusicOrVideo = 1, Music = 2, Video = 3,
 }}
@@ -23803,7 +23803,7 @@ RT_ENUM! { enum TimedMetadataTrackPresentationMode: i32 {
 }}
 } // Windows.Media.Playback
 pub mod playlists { // Windows.Media.Playlists
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPlaylist, 2151102197, 53060, 19863, 131, 179, 122, 8, 158, 154, 182, 99);
 RT_INTERFACE!{interface IPlaylist(IPlaylistVtbl): IInspectable(IInspectableVtbl) [IID_IPlaylist] {
     #[cfg(feature="windows-storage")] fn get_Files(&self, out: *mut *mut foundation::collections::IVector<super::super::storage::StorageFile>) -> HRESULT,
@@ -23858,7 +23858,7 @@ impl IPlaylistStatics {
 }
 } // Windows.Media.Playlists
 pub mod protection { // Windows.Media.Protection
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IComponentLoadFailedEventArgs, 2509713043, 30534, 16766, 132, 149, 240, 49, 187, 197, 134, 44);
 RT_INTERFACE!{interface IComponentLoadFailedEventArgs(IComponentLoadFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IComponentLoadFailedEventArgs] {
     fn get_Information(&self, out: *mut *mut RevocationAndRenewalInformation) -> HRESULT,
@@ -24178,7 +24178,7 @@ impl ServiceRequestedEventHandler {
     }}
 }
 pub mod playready { // Windows.Media.Protection.PlayReady
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum NDCertificateFeature: i32 {
     Transmitter = 1, Receiver = 2, SharedCertificate = 3, SecureClock = 4, AntiRollBackClock = 5, CRLS = 9, PlayReady3Features = 13,
 }}
@@ -24617,10 +24617,10 @@ impl INDStartResult {
 }
 DEFINE_IID!(IID_INDStorageFileHelper, 3639656184, 37330, 19783, 163, 249, 234, 255, 78, 219, 114, 159);
 RT_INTERFACE!{interface INDStorageFileHelper(INDStorageFileHelperVtbl): IInspectable(IInspectableVtbl) [IID_INDStorageFileHelper] {
-    #[cfg(feature="windows-storage")] fn GetFileURLs(&self, file: *mut ::rt::gen::windows::storage::IStorageFile, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn GetFileURLs(&self, file: *mut crate::windows::storage::IStorageFile, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT
 }}
 impl INDStorageFileHelper {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_file_urls(&self, file: &::rt::gen::windows::storage::IStorageFile) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_file_urls(&self, file: &crate::windows::storage::IStorageFile) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetFileURLs)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -25677,13 +25677,13 @@ impl IPlayReadyStatics5 {
 } // Windows.Media.Protection.PlayReady
 } // Windows.Media.Protection
 pub mod render { // Windows.Media.Render
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum AudioRenderCategory: i32 {
     Other = 0, ForegroundOnlyMedia = 1, BackgroundCapableMedia = 2, Communications = 3, Alerts = 4, SoundEffects = 5, GameEffects = 6, GameMedia = 7, GameChat = 8, Speech = 9, Movie = 10, Media = 11,
 }}
 } // Windows.Media.Render
 pub mod speechrecognition { // Windows.Media.SpeechRecognition
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ISpeechContinuousRecognitionCompletedEventArgs, 3822086587, 58124, 24088, 66, 75, 127, 190, 129, 248, 251, 208);
 RT_INTERFACE!{interface ISpeechContinuousRecognitionCompletedEventArgs(ISpeechContinuousRecognitionCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechContinuousRecognitionCompletedEventArgs] {
     fn get_Status(&self, out: *mut SpeechRecognitionResultStatus) -> HRESULT
@@ -26384,7 +26384,7 @@ impl ISpeechRecognizerUIOptions {
 RT_CLASS!{class SpeechRecognizerUIOptions: ISpeechRecognizerUIOptions}
 } // Windows.Media.SpeechRecognition
 pub mod speechsynthesis { // Windows.Media.SpeechSynthesis
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IInstalledVoicesStatic, 2102554316, 30003, 19519, 133, 190, 136, 140, 43, 174, 235, 220);
 RT_INTERFACE!{static interface IInstalledVoicesStatic(IInstalledVoicesStaticVtbl): IInspectable(IInspectableVtbl) [IID_IInstalledVoicesStatic] {
     fn get_AllVoices(&self, out: *mut *mut foundation::collections::IVectorView<VoiceInformation>) -> HRESULT,
@@ -26621,7 +26621,7 @@ RT_CLASS!{class VoiceInformation: IVoiceInformation}
 } // Windows.Media.SpeechSynthesis
 pub mod streaming { // Windows.Media.Streaming
 pub mod adaptive { // Windows.Media.Streaming.Adaptive
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAdaptiveMediaSource, 1282618095, 54175, 17302, 180, 217, 4, 57, 87, 167, 201, 100);
 RT_INTERFACE!{interface IAdaptiveMediaSource(IAdaptiveMediaSourceVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSource] {
     fn get_IsLive(&self, out: *mut bool) -> HRESULT,
@@ -26782,13 +26782,13 @@ impl AdaptiveMediaSource {
     #[inline] pub fn create_from_uri_async(uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
         <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().create_from_uri_async(uri)
     }
-    #[cfg(feature="windows-web")] #[inline] pub fn create_from_uri_with_downloader_async(uri: &foundation::Uri, httpClient: &::rt::gen::windows::web::http::HttpClient) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
+    #[cfg(feature="windows-web")] #[inline] pub fn create_from_uri_with_downloader_async(uri: &foundation::Uri, httpClient: &crate::windows::web::http::HttpClient) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
         <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().create_from_uri_with_downloader_async(uri, httpClient)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(stream: &::rt::gen::windows::storage::streams::IInputStream, uri: &foundation::Uri, contentType: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(stream: &crate::windows::storage::streams::IInputStream, uri: &foundation::Uri, contentType: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
         <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().create_from_stream_async(stream, uri, contentType)
     }
-    #[cfg(all(feature="windows-storage",feature="windows-web"))] #[inline] pub fn create_from_stream_with_downloader_async(stream: &::rt::gen::windows::storage::streams::IInputStream, uri: &foundation::Uri, contentType: &HStringArg, httpClient: &::rt::gen::windows::web::http::HttpClient) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
+    #[cfg(all(feature="windows-storage",feature="windows-web"))] #[inline] pub fn create_from_stream_with_downloader_async(stream: &crate::windows::storage::streams::IInputStream, uri: &foundation::Uri, contentType: &HStringArg, httpClient: &crate::windows::web::http::HttpClient) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
         <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().create_from_stream_with_downloader_async(stream, uri, contentType, httpClient)
     }
 }
@@ -26911,7 +26911,7 @@ DEFINE_IID!(IID_IAdaptiveMediaSourceCreationResult, 1183233714, 32783, 20017, 14
 RT_INTERFACE!{interface IAdaptiveMediaSourceCreationResult(IAdaptiveMediaSourceCreationResultVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceCreationResult] {
     fn get_Status(&self, out: *mut AdaptiveMediaSourceCreationStatus) -> HRESULT,
     fn get_MediaSource(&self, out: *mut *mut AdaptiveMediaSource) -> HRESULT,
-    #[cfg(feature="windows-web")] fn get_HttpResponseMessage(&self, out: *mut *mut ::rt::gen::windows::web::http::HttpResponseMessage) -> HRESULT
+    #[cfg(feature="windows-web")] fn get_HttpResponseMessage(&self, out: *mut *mut crate::windows::web::http::HttpResponseMessage) -> HRESULT
 }}
 impl IAdaptiveMediaSourceCreationResult {
     #[inline] pub fn get_status(&self) -> Result<AdaptiveMediaSourceCreationStatus> { unsafe { 
@@ -26924,7 +26924,7 @@ impl IAdaptiveMediaSourceCreationResult {
         let hr = ((*self.lpVtbl).get_MediaSource)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-web")] #[inline] pub fn get_http_response_message(&self) -> Result<Option<ComPtr<::rt::gen::windows::web::http::HttpResponseMessage>>> { unsafe { 
+    #[cfg(feature="windows-web")] #[inline] pub fn get_http_response_message(&self) -> Result<Option<ComPtr<crate::windows::web::http::HttpResponseMessage>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_HttpResponseMessage)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -27091,7 +27091,7 @@ RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadCompletedEventArgs(IAdaptive
     fn get_ResourceUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
     fn get_ResourceByteRangeOffset(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
     fn get_ResourceByteRangeLength(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
-    #[cfg(feature="windows-web")] fn get_HttpResponseMessage(&self, out: *mut *mut ::rt::gen::windows::web::http::HttpResponseMessage) -> HRESULT
+    #[cfg(feature="windows-web")] fn get_HttpResponseMessage(&self, out: *mut *mut crate::windows::web::http::HttpResponseMessage) -> HRESULT
 }}
 impl IAdaptiveMediaSourceDownloadCompletedEventArgs {
     #[inline] pub fn get_resource_type(&self) -> Result<AdaptiveMediaSourceResourceType> { unsafe { 
@@ -27114,7 +27114,7 @@ impl IAdaptiveMediaSourceDownloadCompletedEventArgs {
         let hr = ((*self.lpVtbl).get_ResourceByteRangeLength)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-web")] #[inline] pub fn get_http_response_message(&self) -> Result<Option<ComPtr<::rt::gen::windows::web::http::HttpResponseMessage>>> { unsafe { 
+    #[cfg(feature="windows-web")] #[inline] pub fn get_http_response_message(&self) -> Result<Option<ComPtr<crate::windows::web::http::HttpResponseMessage>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_HttpResponseMessage)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -27167,7 +27167,7 @@ RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadFailedEventArgs(IAdaptiveMed
     fn get_ResourceUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
     fn get_ResourceByteRangeOffset(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
     fn get_ResourceByteRangeLength(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
-    #[cfg(feature="windows-web")] fn get_HttpResponseMessage(&self, out: *mut *mut ::rt::gen::windows::web::http::HttpResponseMessage) -> HRESULT
+    #[cfg(feature="windows-web")] fn get_HttpResponseMessage(&self, out: *mut *mut crate::windows::web::http::HttpResponseMessage) -> HRESULT
 }}
 impl IAdaptiveMediaSourceDownloadFailedEventArgs {
     #[inline] pub fn get_resource_type(&self) -> Result<AdaptiveMediaSourceResourceType> { unsafe { 
@@ -27190,7 +27190,7 @@ impl IAdaptiveMediaSourceDownloadFailedEventArgs {
         let hr = ((*self.lpVtbl).get_ResourceByteRangeLength)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-web")] #[inline] pub fn get_http_response_message(&self) -> Result<Option<ComPtr<::rt::gen::windows::web::http::HttpResponseMessage>>> { unsafe { 
+    #[cfg(feature="windows-web")] #[inline] pub fn get_http_response_message(&self) -> Result<Option<ComPtr<crate::windows::web::http::HttpResponseMessage>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_HttpResponseMessage)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -27335,13 +27335,13 @@ RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadResult(IAdaptiveMediaSourceD
     fn get_ResourceUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
     fn put_ResourceUri(&self, value: *mut foundation::Uri) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_InputStream(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IInputStream) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_InputStream(&self, out: *mut *mut crate::windows::storage::streams::IInputStream) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_InputStream(&self, value: *mut ::rt::gen::windows::storage::streams::IInputStream) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_InputStream(&self, value: *mut crate::windows::storage::streams::IInputStream) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_Buffer(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_Buffer(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_Buffer(&self, value: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_Buffer(&self, value: *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn get_ContentType(&self, out: *mut HSTRING) -> HRESULT,
     fn put_ContentType(&self, value: HSTRING) -> HRESULT,
     fn get_ExtendedStatus(&self, out: *mut u32) -> HRESULT,
@@ -27357,21 +27357,21 @@ impl IAdaptiveMediaSourceDownloadResult {
         let hr = ((*self.lpVtbl).put_ResourceUri)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_input_stream(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IInputStream>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_input_stream(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IInputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InputStream)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_input_stream(&self, value: &::rt::gen::windows::storage::streams::IInputStream) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_input_stream(&self, value: &crate::windows::storage::streams::IInputStream) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_InputStream)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_buffer(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_buffer(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Buffer)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_buffer(&self, value: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_buffer(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Buffer)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -27484,10 +27484,10 @@ RT_INTERFACE!{static interface IAdaptiveMediaSourceStatics(IAdaptiveMediaSourceS
     fn IsContentTypeSupported(&self, contentType: HSTRING, out: *mut bool) -> HRESULT,
     fn CreateFromUriAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>) -> HRESULT,
     #[cfg(not(feature="windows-web"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-web")] fn CreateFromUriWithDownloaderAsync(&self, uri: *mut foundation::Uri, httpClient: *mut ::rt::gen::windows::web::http::HttpClient, out: *mut *mut foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>) -> HRESULT,
+    #[cfg(feature="windows-web")] fn CreateFromUriWithDownloaderAsync(&self, uri: *mut foundation::Uri, httpClient: *mut crate::windows::web::http::HttpClient, out: *mut *mut foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn CreateFromStreamAsync(&self, stream: *mut ::rt::gen::windows::storage::streams::IInputStream, uri: *mut foundation::Uri, contentType: HSTRING, out: *mut *mut foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>) -> HRESULT,
-    #[cfg(all(feature="windows-storage",feature="windows-web"))] fn CreateFromStreamWithDownloaderAsync(&self, stream: *mut ::rt::gen::windows::storage::streams::IInputStream, uri: *mut foundation::Uri, contentType: HSTRING, httpClient: *mut ::rt::gen::windows::web::http::HttpClient, out: *mut *mut foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn CreateFromStreamAsync(&self, stream: *mut crate::windows::storage::streams::IInputStream, uri: *mut foundation::Uri, contentType: HSTRING, out: *mut *mut foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>) -> HRESULT,
+    #[cfg(all(feature="windows-storage",feature="windows-web"))] fn CreateFromStreamWithDownloaderAsync(&self, stream: *mut crate::windows::storage::streams::IInputStream, uri: *mut foundation::Uri, contentType: HSTRING, httpClient: *mut crate::windows::web::http::HttpClient, out: *mut *mut foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>) -> HRESULT
 }}
 impl IAdaptiveMediaSourceStatics {
     #[inline] pub fn is_content_type_supported(&self, contentType: &HStringArg) -> Result<bool> { unsafe { 
@@ -27500,17 +27500,17 @@ impl IAdaptiveMediaSourceStatics {
         let hr = ((*self.lpVtbl).CreateFromUriAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-web")] #[inline] pub fn create_from_uri_with_downloader_async(&self, uri: &foundation::Uri, httpClient: &::rt::gen::windows::web::http::HttpClient) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
+    #[cfg(feature="windows-web")] #[inline] pub fn create_from_uri_with_downloader_async(&self, uri: &foundation::Uri, httpClient: &crate::windows::web::http::HttpClient) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromUriWithDownloaderAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, httpClient as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(&self, stream: &::rt::gen::windows::storage::streams::IInputStream, uri: &foundation::Uri, contentType: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(&self, stream: &crate::windows::storage::streams::IInputStream, uri: &foundation::Uri, contentType: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromStreamAsync)(self as *const _ as *mut _, stream as *const _ as *mut _, uri as *const _ as *mut _, contentType.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(all(feature="windows-storage",feature="windows-web"))] #[inline] pub fn create_from_stream_with_downloader_async(&self, stream: &::rt::gen::windows::storage::streams::IInputStream, uri: &foundation::Uri, contentType: &HStringArg, httpClient: &::rt::gen::windows::web::http::HttpClient) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
+    #[cfg(all(feature="windows-storage",feature="windows-web"))] #[inline] pub fn create_from_stream_with_downloader_async(&self, stream: &crate::windows::storage::streams::IInputStream, uri: &foundation::Uri, contentType: &HStringArg, httpClient: &crate::windows::web::http::HttpClient) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateFromStreamWithDownloaderAsync)(self as *const _ as *mut _, stream as *const _ as *mut _, uri as *const _ as *mut _, contentType.get(), httpClient as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -27519,7 +27519,7 @@ impl IAdaptiveMediaSourceStatics {
 } // Windows.Media.Streaming.Adaptive
 } // Windows.Media.Streaming
 pub mod transcoding { // Windows.Media.Transcoding
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IMediaTranscoder, 420256210, 41130, 19764, 134, 188, 238, 209, 177, 44, 47, 91);
 RT_INTERFACE!{interface IMediaTranscoder(IMediaTranscoderVtbl): IInspectable(IInspectableVtbl) [IID_IMediaTranscoder] {
     fn put_TrimStartTime(&self, value: foundation::TimeSpan) -> HRESULT,

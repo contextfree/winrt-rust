@@ -130,7 +130,7 @@ namespace Generator
         {
             if (mod.IsEmpty) return;
 
-            const string IMPORTS = "use ::prelude::*;";
+            const string IMPORTS = "use crate::prelude::*;";
 
             string name = mod.Name.ToLower();
             string newPath = path == null ? mod.Name : (path + "." + mod.Name);

@@ -1,6 +1,6 @@
 use std::sync::atomic;
 
-use {IUnknown, IAgileObject, ComInterface, ComIid, ComPtr, Guid};
+use crate::{IUnknown, IAgileObject, ComInterface, ComIid, ComPtr, Guid};
 
 use w::shared::ntdef::{VOID, ULONG};
 use w::shared::winerror::S_OK;
@@ -8,7 +8,7 @@ use w::shared::winerror::E_NOINTERFACE;
 use w::shared::guiddef::REFIID;
 use w::um::unknwnbase::IUnknownVtbl;
 
-use result::HRESULT;
+use crate::result::HRESULT;
 
 #[repr(C)]
 pub struct ComRepr<T, Vtbl> {
@@ -54,7 +54,7 @@ pub unsafe extern "system" fn ComReprHandler_QueryInterface<T, I>(this_: *mut IU
 
     // IAgileObject is only supported for Send objects
     if guid != *IUnknown::iid() && guid != *IAgileObject::iid() && guid != *<I as ComIid>::iid() { 
-        *ppv = ::std::ptr::null_mut();
+        *ppv = std::ptr::null_mut();
         return E_NOINTERFACE;
     }
     *ppv = this_ as *mut _ as *mut VOID;
@@ -84,7 +84,7 @@ impl<T, Interface: ComInterface> IntoInterface<Interface> for T where T: ComClas
     fn into_interface(self) -> ComPtr<Interface> {
         let com = Box::new(ComRepr {
             vtbl: Box::new(Self::get_vtbl()),
-            refcount: ::std::sync::atomic::AtomicUsize::new(1),
+            refcount: std::sync::atomic::AtomicUsize::new(1),
             data: self
         });
         unsafe { ComPtr::wrap(Box::into_raw(com) as *mut Interface) }

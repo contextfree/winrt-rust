@@ -21,7 +21,7 @@ fn internal_to_string(hstr: HSTRING) -> String {
     unsafe {
         let mut len = 0;
         let buf = WindowsGetStringRawBuffer(hstr, &mut len);
-        let slice: &[u16] = ::std::slice::from_raw_parts(buf, len as usize);
+        let slice: &[u16] = std::slice::from_raw_parts(buf, len as usize);
         String::from_utf16_lossy(slice)
     }
 }
@@ -453,7 +453,7 @@ impl HString {
     pub fn make_reference<'a>(&'a self) -> HStringReference<'a> {
         let mut len = 0;
         let buf = unsafe { WindowsGetStringRawBuffer(self.0, &mut len) };
-        unsafe { HStringReference::from_utf16_unchecked(::std::slice::from_raw_parts(buf, len as usize + 1)) }
+        unsafe { HStringReference::from_utf16_unchecked(std::slice::from_raw_parts(buf, len as usize + 1)) }
     }
 }
 
@@ -467,7 +467,7 @@ impl Drop for HString {
 
 unsafe impl Send for HString {}
 
-impl ::std::clone::Clone for HString {
+impl std::clone::Clone for HString {
     #[inline]
     fn clone(&self) -> Self {
         let mut clone = HString::empty();
@@ -577,9 +577,9 @@ mod tests {
 
     #[test]
     fn check_sizes() {
-        use ::std::mem::size_of;
-        assert_eq!(size_of::<::HString>(), size_of::<::w::winrt::hstring::HSTRING>());
-        assert_eq!(size_of::<&::HStringArg>(), size_of::<::w::winrt::hstring::HSTRING>());
+        use std::mem::size_of;
+        assert_eq!(size_of::<crate::HString>(), size_of::<w::winrt::hstring::HSTRING>());
+        assert_eq!(size_of::<&crate::HStringArg>(), size_of::<w::winrt::hstring::HSTRING>());
     }
 
     #[test]

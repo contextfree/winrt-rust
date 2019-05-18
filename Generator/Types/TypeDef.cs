@@ -214,7 +214,7 @@ namespace Generator.Types
                 }
                 else
                 {
-                    name = $"::rt::gen::{ Module.Path }::{ Name }";
+                    name = $"crate::{ Module.Path }::{ Name }";
                 }
                 var relative = $"{ Module.GetRelativePath(requestingModule) }::{ Name }";
                 if (relative.Length < name.Length)
