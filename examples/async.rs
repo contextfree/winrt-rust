@@ -16,6 +16,8 @@ use winrt::*;
 use winrt::windows::foundation::*;
 use winrt::windows::devices::enumeration::*;
 use winrt::windows::devices::midi::*;
+use winrt::windows::media::*;
+use winrt::windows::storage::StorageFile;
 
 fn main() {
     let rt = RuntimeContext::init();
@@ -78,4 +80,48 @@ async fn run() {
         let device_name = current.get_name().unwrap();
         println!("Device Name ({}): {}", i, device_name);
     }
+
+    print!("Transcoding media: ");
+    let source = StorageFile::get_file_from_path_async(&*FastHString::new("D:\\Desktop\\test-transcode\\test.mp3")).unwrap().await.expect("get_file_from_path_async failed").unwrap();
+    let dest = StorageFile::get_file_from_path_async(&*FastHString::new("D:\\Desktop\\test-transcode\\test.flac")).unwrap().await.expect("get_file_from_path_async failed").unwrap();
+    let profile = mediaproperties::MediaEncodingProfile::create_flac(mediaproperties::AudioEncodingQuality::Medium).unwrap().unwrap();
+    let transcoder = transcoding::MediaTranscoder::new();
+    let prepared = transcoder.prepare_file_transcode_async(&source, &dest, &profile).unwrap().await.unwrap().unwrap();
+    assert!(prepared.get_can_transcode().unwrap());
+
+    let mut interval = Interval::new(Duration::from_millis(100));
+    let async_op = prepared.transcode_async().unwrap();
+    // TODO: there should be a way to await the created AsyncActionProgressHandler (and any other delegate) as an async stream
+    async_op.set_progress(&AsyncActionProgressHandler::new(|_info, progress| {
+        print_progress(progress);
+        Ok(())
+    })).unwrap();
+    let mut async_op = async_op.fuse();
+
+    let work = async {
+        let mut result = None;
+        loop {
+            select! {
+                _ = interval.next() => {
+                    use std::io::Write;
+                    print!(".");
+                    std::io::stdout().flush().unwrap();
+                },
+                res = async_op => {
+                    result = Some(res);
+                    println!("");
+                    break;
+                }
+            };
+        }
+        result.unwrap()
+    };
+
+    work.await
+}
+
+fn print_progress(progress: f64) {
+    use std::io::Write;
+    print!("{:.0}%", progress);
+    std::io::stdout().flush().unwrap();
 }
