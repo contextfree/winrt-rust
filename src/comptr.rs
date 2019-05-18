@@ -11,8 +11,9 @@ use w::um::combaseapi::CoTaskMemFree;
 
 /// Smart pointer for Windows Runtime objects. This pointer automatically maintains the
 /// reference count of the underlying COM object.
-#[repr(C)] #[derive(Debug)]
-pub struct ComPtr<T>(*mut T); // TODO: use ptr::NonNull<T> when stabilized (and lang-compat feature is disabled), see https://github.com/rust-lang/rust/issues/27730
+#[repr(transparent)]
+#[derive(Debug)]
+pub struct ComPtr<T>(ptr::NonNull<T>);
 
 impl<T> fmt::Pointer for ComPtr<T> {
     #[inline]
@@ -48,7 +49,7 @@ impl<T> ComPtr<T> {
     #[inline]
     pub unsafe fn wrap(ptr: *mut T) -> ComPtr<T> { // TODO: Add T: ComInterface bound
         debug_assert!(!ptr.is_null());
-        ComPtr(ptr)
+        ComPtr(ptr::NonNull::new_unchecked(ptr))
     }
 
     /// Creates an optional `ComPtr` to wrap a raw pointer that may be null.
@@ -59,20 +60,20 @@ impl<T> ComPtr<T> {
         if ptr.is_null() {
             None
         } else {
-            Some(ComPtr(ptr))
+            Some(ComPtr(ptr::NonNull::new_unchecked(ptr)))
         }
     }
 
     /// Returns the underlying WinRT object as a reference to an `IInspectable` object.
     #[inline]
     fn as_inspectable(&self) -> &mut IInspectable where T: RtInterface {
-        unsafe { &mut *(self.0 as *mut IInspectable) }
+        unsafe { &mut *(self.0.as_ptr() as *mut IInspectable) }
     }
     
     /// Returns the underlying WinRT or COM object as a reference to an `IUnknown` object.
     #[inline]
     fn as_unknown(&self) -> &mut IUnknown {
-        unsafe { &mut *(self.0 as *mut IUnknown) }
+        unsafe { &mut *(self.0.as_ptr() as *mut IUnknown) }
     }
 
     /// Changes the type of the underlying COM object to a different interface without doing `QueryInterface`.
@@ -116,13 +117,13 @@ impl<T> Deref for ComPtr<T> {
 
     #[inline]
     fn deref(&self) -> &T {
-        unsafe { &*self.0 }
+        unsafe { self.0.as_ref() }
     }
 }
 impl<T> DerefMut for ComPtr<T> {
     #[inline]
     fn deref_mut(&mut self) -> &mut T {
-        unsafe { &mut*self.0 }
+        unsafe { self.0.as_mut() }
     }
 }
 impl<T> Clone for ComPtr<T> {
@@ -130,7 +131,7 @@ impl<T> Clone for ComPtr<T> {
     fn clone(&self) -> Self {
         unsafe { 
             self.as_unknown().AddRef();
-            ComPtr::wrap(self.0)
+            ComPtr::wrap(self.0.as_ptr())
         }
     }
 }
@@ -152,7 +153,7 @@ impl<T> PartialEq<ComPtr<T>> for ComPtr<T> {
 /// using `CoTaskMemFree` on drop.
 pub struct ComArray<T> where T: ::RtType {
     size: u32,
-    first: *mut T::Abi
+    first: ptr::NonNull<T::Abi>
 }
 
 impl<T> ComArray<T> where T: ::RtType {
@@ -161,7 +162,7 @@ impl<T> ComArray<T> where T: ::RtType {
         assert!(!first.is_null());
         ComArray {
             size: size,
-            first: first
+            first: ptr::NonNull::new_unchecked(first)
         }
     }
 
@@ -176,13 +177,13 @@ impl<T> Deref for ComArray<T> where T: ::RtType {
     type Target = [T::OutNonNull];
     #[inline]
     fn deref(&self) -> &[T::OutNonNull] {
-        unsafe { ::std::slice::from_raw_parts(self.first as *mut T::OutNonNull, self.size as usize) }
+        unsafe { ::std::slice::from_raw_parts(self.first.as_ptr() as *mut T::OutNonNull, self.size as usize) }
     }
 }
 impl<T> DerefMut for ComArray<T> where T: ::RtType {
     #[inline]
     fn deref_mut(&mut self) -> &mut [T::OutNonNull] {
-        unsafe { ::std::slice::from_raw_parts_mut(self.first as *mut T::OutNonNull, self.size as usize) }
+        unsafe { ::std::slice::from_raw_parts_mut(self.first.as_ptr() as *mut T::OutNonNull, self.size as usize) }
     }
 }
 
@@ -191,7 +192,7 @@ impl<T> Drop for ComArray<T> where T: ::RtType {
     fn drop(&mut self) {
         unsafe {
             ::std::ptr::drop_in_place(&mut self[..]);
-            CoTaskMemFree(self.first as LPVOID)
+            CoTaskMemFree(self.first.as_ptr() as LPVOID)
         };
     }
 }
@@ -216,8 +217,6 @@ mod tests {
 
         // make sure that ComPtr is pointer-sized
         assert_eq!(size_of::<::ComPtr<::IInspectable>>(), size_of::<*mut ::IInspectable>());
-        
-        // TODO: enable this once the null-pointer optimization can be used for Option<ComPtr>
-        //assert_eq!(size_of::<Option<::ComPtr<::IInspectable>>>(), size_of::<*mut ::IInspectable>());
+        assert_eq!(size_of::<Option<::ComPtr<::IInspectable>>>(), size_of::<*mut ::IInspectable>());
     }
 }
