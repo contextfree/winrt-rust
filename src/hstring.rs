@@ -461,6 +461,8 @@ impl Drop for HString {
     }
 }
 
+unsafe impl Send for HString {}
+
 impl ::std::clone::Clone for HString {
     #[inline]
     fn clone(&self) -> Self {
@@ -559,6 +561,15 @@ mod tests {
     
     use super::*;
     use self::test::Bencher;
+
+    #[test]
+    fn test_trait_impls() {
+        // make sure that all the structs implement `Send`
+        fn is_send<T: Send>() {}
+        is_send::<HString>();
+        is_send::<FastHString>();
+        is_send::<HStringReference>();
+    }
 
     #[test]
     fn check_sizes() {
