@@ -1,12 +1,12 @@
 use std::sync::{Arc, Mutex, Condvar};
 
-use ::{
+use crate::{
     RtType,
     ComIid,
     Result
 };
 
-use ::windows::foundation::{
+use crate::windows::foundation::{
     IAsyncInfo,
     IAsyncAction,
     AsyncActionCompletedHandler,
@@ -44,10 +44,10 @@ macro_rules! impl_blocking_wait {
     ($handler:ident) => {
         #[inline]
         fn blocking_wait(&self) {
-            let info = ::comptr::query_interface::<_, IAsyncInfo>(self).expect("query_interface failed");
+            let info = crate::comptr::query_interface::<_, IAsyncInfo>(self).expect("query_interface failed");
             let status = info.get_status().expect("get_status failed");
 
-            if status == ::windows::foundation::AsyncStatus::Completed {
+            if status == crate::windows::foundation::AsyncStatus::Completed {
                 return;
             }
             

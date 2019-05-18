@@ -1,5 +1,5 @@
 pub mod cortana { // Windows.Services.Cortana
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICortanaActionableInsights, 2501822129, 64643, 22637, 139, 132, 36, 82, 200, 152, 22, 37);
 RT_INTERFACE!{interface ICortanaActionableInsights(ICortanaActionableInsightsVtbl): IInspectable(IInspectableVtbl) [IID_ICortanaActionableInsights] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
@@ -220,7 +220,7 @@ impl ICortanaSettingsStatics {
 }
 } // Windows.Services.Cortana
 pub mod maps { // Windows.Services.Maps
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IEnhancedWaypoint, 3978726516, 22803, 4582, 139, 119, 134, 243, 12, 168, 147, 211);
 RT_INTERFACE!{interface IEnhancedWaypoint(IEnhancedWaypointVtbl): IInspectable(IInspectableVtbl) [IID_IEnhancedWaypoint] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
@@ -1245,7 +1245,7 @@ RT_ENUM! { enum WaypointKind: i32 {
     Stop = 0, Via = 1,
 }}
 pub mod guidance { // Windows.Services.Maps.Guidance
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum GuidanceAudioMeasurementSystem: i32 {
     Meters = 0, MilesAndYards = 1, MilesAndFeet = 2,
 }}
@@ -1303,7 +1303,7 @@ RT_ENUM! { enum GuidanceLaneMarkers: u32 {
 DEFINE_IID!(IID_IGuidanceManeuver, 4228461164, 60617, 18728, 162, 161, 114, 50, 185, 155, 148, 161);
 RT_INTERFACE!{interface IGuidanceManeuver(IGuidanceManeuverVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceManeuver] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_StartLocation(&self, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geopoint) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_StartLocation(&self, out: *mut *mut crate::windows::devices::geolocation::Geopoint) -> HRESULT,
     fn get_DistanceFromRouteStart(&self, out: *mut i32) -> HRESULT,
     fn get_DistanceFromPreviousManeuver(&self, out: *mut i32) -> HRESULT,
     fn get_DepartureRoadName(&self, out: *mut HSTRING) -> HRESULT,
@@ -1317,7 +1317,7 @@ RT_INTERFACE!{interface IGuidanceManeuver(IGuidanceManeuverVtbl): IInspectable(I
     fn get_InstructionText(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IGuidanceManeuver {
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_start_location(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::geolocation::Geopoint>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_start_location(&self) -> Result<Option<ComPtr<crate::windows::devices::geolocation::Geopoint>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_StartLocation)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1385,14 +1385,14 @@ RT_ENUM! { enum GuidanceManeuverKind: i32 {
 DEFINE_IID!(IID_IGuidanceMapMatchedCoordinate, 3081548136, 10514, 19097, 175, 241, 121, 134, 9, 185, 129, 254);
 RT_INTERFACE!{interface IGuidanceMapMatchedCoordinate(IGuidanceMapMatchedCoordinateVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceMapMatchedCoordinate] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_Location(&self, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geopoint) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_Location(&self, out: *mut *mut crate::windows::devices::geolocation::Geopoint) -> HRESULT,
     fn get_CurrentHeading(&self, out: *mut f64) -> HRESULT,
     fn get_CurrentSpeed(&self, out: *mut f64) -> HRESULT,
     fn get_IsOnStreet(&self, out: *mut bool) -> HRESULT,
     fn get_Road(&self, out: *mut *mut GuidanceRoadSegment) -> HRESULT
 }}
 impl IGuidanceMapMatchedCoordinate {
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_location(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::geolocation::Geopoint>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_location(&self) -> Result<Option<ComPtr<crate::windows::devices::geolocation::Geopoint>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Location)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1450,8 +1450,8 @@ RT_INTERFACE!{interface IGuidanceNavigator(IGuidanceNavigatorVtbl): IInspectable
     fn add_UserLocationRestored(&self, handler: *mut foundation::TypedEventHandler<GuidanceNavigator, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_UserLocationRestored(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn SetGuidanceVoice(&self, voiceId: i32, voiceFolder: HSTRING) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn UpdateUserLocation(&self, userLocation: *mut ::rt::gen::windows::devices::geolocation::Geocoordinate) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn UpdateUserLocationWithPositionOverride(&self, userLocation: *mut ::rt::gen::windows::devices::geolocation::Geocoordinate, positionOverride: ::rt::gen::windows::devices::geolocation::BasicGeoposition) -> HRESULT
+    #[cfg(feature="windows-devices")] fn UpdateUserLocation(&self, userLocation: *mut crate::windows::devices::geolocation::Geocoordinate) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn UpdateUserLocationWithPositionOverride(&self, userLocation: *mut crate::windows::devices::geolocation::Geocoordinate, positionOverride: crate::windows::devices::geolocation::BasicGeoposition) -> HRESULT
 }}
 impl IGuidanceNavigator {
     #[inline] pub fn start_navigating(&self, route: &GuidanceRoute) -> Result<()> { unsafe { 
@@ -1567,11 +1567,11 @@ impl IGuidanceNavigator {
         let hr = ((*self.lpVtbl).SetGuidanceVoice)(self as *const _ as *mut _, voiceId, voiceFolder.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn update_user_location(&self, userLocation: &::rt::gen::windows::devices::geolocation::Geocoordinate) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn update_user_location(&self, userLocation: &crate::windows::devices::geolocation::Geocoordinate) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).UpdateUserLocation)(self as *const _ as *mut _, userLocation as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn update_user_location_with_position_override(&self, userLocation: &::rt::gen::windows::devices::geolocation::Geocoordinate, positionOverride: ::rt::gen::windows::devices::geolocation::BasicGeoposition) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn update_user_location_with_position_override(&self, userLocation: &crate::windows::devices::geolocation::Geocoordinate, positionOverride: crate::windows::devices::geolocation::BasicGeoposition) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).UpdateUserLocationWithPositionOverride)(self as *const _ as *mut _, userLocation as *const _ as *mut _, positionOverride);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -1656,7 +1656,7 @@ RT_INTERFACE!{interface IGuidanceRoadSegment(IGuidanceRoadSegmentVtbl): IInspect
     fn get_SpeedLimit(&self, out: *mut f64) -> HRESULT,
     fn get_TravelTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     #[cfg(not(feature="windows-devices"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_Path(&self, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geopath) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_Path(&self, out: *mut *mut crate::windows::devices::geolocation::Geopath) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IsHighway(&self, out: *mut bool) -> HRESULT,
     fn get_IsTunnel(&self, out: *mut bool) -> HRESULT,
@@ -1683,7 +1683,7 @@ impl IGuidanceRoadSegment {
         let hr = ((*self.lpVtbl).get_TravelTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_path(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::geolocation::Geopath>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_path(&self) -> Result<Option<ComPtr<crate::windows::devices::geolocation::Geopath>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Path)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1726,9 +1726,9 @@ RT_INTERFACE!{interface IGuidanceRoadSignpost(IGuidanceRoadSignpostVtbl): IInspe
     fn get_ExitNumber(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Exit(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_BackgroundColor(&self, out: *mut ::rt::gen::windows::ui::Color) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_BackgroundColor(&self, out: *mut crate::windows::ui::Color) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_ForegroundColor(&self, out: *mut ::rt::gen::windows::ui::Color) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_ForegroundColor(&self, out: *mut crate::windows::ui::Color) -> HRESULT,
     fn get_ExitDirections(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
 }}
 impl IGuidanceRoadSignpost {
@@ -1742,12 +1742,12 @@ impl IGuidanceRoadSignpost {
         let hr = ((*self.lpVtbl).get_Exit)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_background_color(&self) -> Result<::rt::gen::windows::ui::Color> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_background_color(&self) -> Result<crate::windows::ui::Color> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_BackgroundColor)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_foreground_color(&self) -> Result<::rt::gen::windows::ui::Color> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_foreground_color(&self) -> Result<crate::windows::ui::Color> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_ForegroundColor)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -1765,9 +1765,9 @@ RT_INTERFACE!{interface IGuidanceRoute(IGuidanceRouteVtbl): IInspectable(IInspec
     fn get_Distance(&self, out: *mut i32) -> HRESULT,
     fn get_Maneuvers(&self, out: *mut *mut foundation::collections::IVectorView<GuidanceManeuver>) -> HRESULT,
     #[cfg(not(feature="windows-devices"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_BoundingBox(&self, out: *mut *mut ::rt::gen::windows::devices::geolocation::GeoboundingBox) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_BoundingBox(&self, out: *mut *mut crate::windows::devices::geolocation::GeoboundingBox) -> HRESULT,
     #[cfg(not(feature="windows-devices"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_Path(&self, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geopath) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_Path(&self, out: *mut *mut crate::windows::devices::geolocation::Geopath) -> HRESULT,
     fn get_RoadSegments(&self, out: *mut *mut foundation::collections::IVectorView<GuidanceRoadSegment>) -> HRESULT,
     fn ConvertToMapRoute(&self, out: *mut *mut super::MapRoute) -> HRESULT
 }}
@@ -1787,12 +1787,12 @@ impl IGuidanceRoute {
         let hr = ((*self.lpVtbl).get_Maneuvers)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_bounding_box(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::geolocation::GeoboundingBox>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_bounding_box(&self) -> Result<Option<ComPtr<crate::windows::devices::geolocation::GeoboundingBox>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_BoundingBox)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_path(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::geolocation::Geopath>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_path(&self) -> Result<Option<ComPtr<crate::windows::devices::geolocation::Geopath>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Path)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1990,7 +1990,7 @@ impl IGuidanceUpdatedEventArgs {
 RT_CLASS!{class GuidanceUpdatedEventArgs: IGuidanceUpdatedEventArgs}
 } // Windows.Services.Maps.Guidance
 pub mod localsearch { // Windows.Services.Maps.LocalSearch
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class LocalCategories}
 impl RtActivatable<ILocalCategoriesStatics> for LocalCategories {}
 impl LocalCategories {
@@ -2080,7 +2080,7 @@ RT_INTERFACE!{interface ILocalLocation(ILocalLocationVtbl): IInspectable(IInspec
     fn get_Description(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-devices"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_Point(&self, out: *mut *mut ::rt::gen::windows::devices::geolocation::Geopoint) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_Point(&self, out: *mut *mut crate::windows::devices::geolocation::Geopoint) -> HRESULT,
     fn get_PhoneNumber(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DataAttribution(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -2105,7 +2105,7 @@ impl ILocalLocation {
         let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_point(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::geolocation::Geopoint>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_point(&self) -> Result<Option<ComPtr<crate::windows::devices::geolocation::Geopoint>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Point)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -2148,7 +2148,7 @@ impl ILocalLocation2 {
 RT_CLASS!{static class LocalLocationFinder}
 impl RtActivatable<ILocalLocationFinderStatics> for LocalLocationFinder {}
 impl LocalLocationFinder {
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_local_locations_async(searchTerm: &HStringArg, searchArea: &::rt::gen::windows::devices::geolocation::Geocircle, localCategory: &HStringArg, maxResults: u32) -> Result<ComPtr<foundation::IAsyncOperation<LocalLocationFinderResult>>> {
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_local_locations_async(searchTerm: &HStringArg, searchArea: &crate::windows::devices::geolocation::Geocircle, localCategory: &HStringArg, maxResults: u32) -> Result<ComPtr<foundation::IAsyncOperation<LocalLocationFinderResult>>> {
         <Self as RtActivatable<ILocalLocationFinderStatics>>::get_activation_factory().find_local_locations_async(searchTerm, searchArea, localCategory, maxResults)
     }
 }
@@ -2173,10 +2173,10 @@ impl ILocalLocationFinderResult {
 RT_CLASS!{class LocalLocationFinderResult: ILocalLocationFinderResult}
 DEFINE_IID!(IID_ILocalLocationFinderStatics, 3538907972, 41182, 18634, 129, 168, 7, 199, 220, 253, 55, 171);
 RT_INTERFACE!{static interface ILocalLocationFinderStatics(ILocalLocationFinderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationFinderStatics] {
-    #[cfg(feature="windows-devices")] fn FindLocalLocationsAsync(&self, searchTerm: HSTRING, searchArea: *mut ::rt::gen::windows::devices::geolocation::Geocircle, localCategory: HSTRING, maxResults: u32, out: *mut *mut foundation::IAsyncOperation<LocalLocationFinderResult>) -> HRESULT
+    #[cfg(feature="windows-devices")] fn FindLocalLocationsAsync(&self, searchTerm: HSTRING, searchArea: *mut crate::windows::devices::geolocation::Geocircle, localCategory: HSTRING, maxResults: u32, out: *mut *mut foundation::IAsyncOperation<LocalLocationFinderResult>) -> HRESULT
 }}
 impl ILocalLocationFinderStatics {
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_local_locations_async(&self, searchTerm: &HStringArg, searchArea: &::rt::gen::windows::devices::geolocation::Geocircle, localCategory: &HStringArg, maxResults: u32) -> Result<ComPtr<foundation::IAsyncOperation<LocalLocationFinderResult>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_local_locations_async(&self, searchTerm: &HStringArg, searchArea: &crate::windows::devices::geolocation::Geocircle, localCategory: &HStringArg, maxResults: u32) -> Result<ComPtr<foundation::IAsyncOperation<LocalLocationFinderResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindLocalLocationsAsync)(self as *const _ as *mut _, searchTerm.get(), searchArea as *const _ as *mut _, localCategory.get(), maxResults, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -2188,12 +2188,12 @@ RT_ENUM! { enum LocalLocationFinderStatus: i32 {
 DEFINE_IID!(IID_ILocalLocationHoursOfOperationItem, 592743538, 41415, 17393, 164, 240, 16, 145, 195, 158, 198, 64);
 RT_INTERFACE!{interface ILocalLocationHoursOfOperationItem(ILocalLocationHoursOfOperationItemVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationHoursOfOperationItem] {
     #[cfg(not(feature="windows-globalization"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-globalization")] fn get_Day(&self, out: *mut ::rt::gen::windows::globalization::DayOfWeek) -> HRESULT,
+    #[cfg(feature="windows-globalization")] fn get_Day(&self, out: *mut crate::windows::globalization::DayOfWeek) -> HRESULT,
     fn get_Start(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_Span(&self, out: *mut foundation::TimeSpan) -> HRESULT
 }}
 impl ILocalLocationHoursOfOperationItem {
-    #[cfg(feature="windows-globalization")] #[inline] pub fn get_day(&self) -> Result<::rt::gen::windows::globalization::DayOfWeek> { unsafe { 
+    #[cfg(feature="windows-globalization")] #[inline] pub fn get_day(&self) -> Result<crate::windows::globalization::DayOfWeek> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Day)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -2255,7 +2255,7 @@ impl IPlaceInfoHelperStatics {
 }
 } // Windows.Services.Maps.LocalSearch
 pub mod offlinemaps { // Windows.Services.Maps.OfflineMaps
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IOfflineMapPackage, 2811717435, 42421, 16708, 181, 37, 230, 140, 136, 98, 102, 75);
 RT_INTERFACE!{interface IOfflineMapPackage(IOfflineMapPackageVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackage] {
     fn get_Status(&self, out: *mut OfflineMapPackageStatus) -> HRESULT,
@@ -2305,13 +2305,13 @@ impl IOfflineMapPackage {
 RT_CLASS!{class OfflineMapPackage: IOfflineMapPackage}
 impl RtActivatable<IOfflineMapPackageStatics> for OfflineMapPackage {}
 impl OfflineMapPackage {
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_async(queryPoint: &::rt::gen::windows::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> {
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_async(queryPoint: &crate::windows::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> {
         <Self as RtActivatable<IOfflineMapPackageStatics>>::get_activation_factory().find_packages_async(queryPoint)
     }
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_bounding_box_async(queryBoundingBox: &::rt::gen::windows::devices::geolocation::GeoboundingBox) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> {
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_bounding_box_async(queryBoundingBox: &crate::windows::devices::geolocation::GeoboundingBox) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> {
         <Self as RtActivatable<IOfflineMapPackageStatics>>::get_activation_factory().find_packages_in_bounding_box_async(queryBoundingBox)
     }
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_geocircle_async(queryCircle: &::rt::gen::windows::devices::geolocation::Geocircle) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> {
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_geocircle_async(queryCircle: &crate::windows::devices::geolocation::Geocircle) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> {
         <Self as RtActivatable<IOfflineMapPackageStatics>>::get_activation_factory().find_packages_in_geocircle_async(queryCircle)
     }
 }
@@ -2354,22 +2354,22 @@ RT_ENUM! { enum OfflineMapPackageStartDownloadStatus: i32 {
 }}
 DEFINE_IID!(IID_IOfflineMapPackageStatics, 408844578, 43057, 19120, 148, 31, 105, 152, 250, 146, 146, 133);
 RT_INTERFACE!{static interface IOfflineMapPackageStatics(IOfflineMapPackageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackageStatics] {
-    #[cfg(feature="windows-devices")] fn FindPackagesAsync(&self, queryPoint: *mut ::rt::gen::windows::devices::geolocation::Geopoint, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageQueryResult>) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn FindPackagesInBoundingBoxAsync(&self, queryBoundingBox: *mut ::rt::gen::windows::devices::geolocation::GeoboundingBox, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageQueryResult>) -> HRESULT,
-    #[cfg(feature="windows-devices")] fn FindPackagesInGeocircleAsync(&self, queryCircle: *mut ::rt::gen::windows::devices::geolocation::Geocircle, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageQueryResult>) -> HRESULT
+    #[cfg(feature="windows-devices")] fn FindPackagesAsync(&self, queryPoint: *mut crate::windows::devices::geolocation::Geopoint, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageQueryResult>) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn FindPackagesInBoundingBoxAsync(&self, queryBoundingBox: *mut crate::windows::devices::geolocation::GeoboundingBox, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageQueryResult>) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn FindPackagesInGeocircleAsync(&self, queryCircle: *mut crate::windows::devices::geolocation::Geocircle, out: *mut *mut foundation::IAsyncOperation<OfflineMapPackageQueryResult>) -> HRESULT
 }}
 impl IOfflineMapPackageStatics {
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_async(&self, queryPoint: &::rt::gen::windows::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_async(&self, queryPoint: &crate::windows::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesAsync)(self as *const _ as *mut _, queryPoint as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_bounding_box_async(&self, queryBoundingBox: &::rt::gen::windows::devices::geolocation::GeoboundingBox) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_bounding_box_async(&self, queryBoundingBox: &crate::windows::devices::geolocation::GeoboundingBox) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesInBoundingBoxAsync)(self as *const _ as *mut _, queryBoundingBox as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_geocircle_async(&self, queryCircle: &::rt::gen::windows::devices::geolocation::Geocircle) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_geocircle_async(&self, queryCircle: &crate::windows::devices::geolocation::Geocircle) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).FindPackagesInGeocircleAsync)(self as *const _ as *mut _, queryCircle as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -2381,7 +2381,7 @@ RT_ENUM! { enum OfflineMapPackageStatus: i32 {
 } // Windows.Services.Maps.OfflineMaps
 } // Windows.Services.Maps
 pub mod store { // Windows.Services.Store
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IStoreAcquireLicenseResult, 4225209453, 61504, 19635, 154, 57, 41, 188, 236, 219, 226, 45);
 RT_INTERFACE!{interface IStoreAcquireLicenseResult(IStoreAcquireLicenseResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreAcquireLicenseResult] {
     fn get_StorePackageLicense(&self, out: *mut *mut StorePackageLicense) -> HRESULT,
@@ -3822,7 +3822,7 @@ impl IStoreVideo {
 RT_CLASS!{class StoreVideo: IStoreVideo}
 } // Windows.Services.Store
 pub mod targetedcontent { // Windows.Services.TargetedContent
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ITargetedContentAction, 3613092126, 27862, 19616, 157, 143, 71, 40, 176, 183, 230, 182);
 RT_INTERFACE!{interface ITargetedContentAction(ITargetedContentActionVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentAction] {
     fn InvokeAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT

@@ -50,8 +50,8 @@ mod tests {
 
     #[test]
     fn check_size() {
-        use ::std::mem::size_of;
+        use std::mem::size_of;
 
-        assert_eq!(size_of::<::Guid>(), size_of::<::w::shared::guiddef::GUID>());
+        assert_eq!(size_of::<crate::Guid>(), size_of::<w::shared::guiddef::GUID>());
     }
 }

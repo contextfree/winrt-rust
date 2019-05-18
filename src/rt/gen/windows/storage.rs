@@ -1,4 +1,4 @@
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAppDataPaths, 1929500170, 31138, 18633, 158, 192, 63, 218, 9, 47, 121, 225);
 RT_INTERFACE!{interface IAppDataPaths(IAppDataPathsVtbl): IInspectable(IInspectableVtbl) [IID_IAppDataPaths] {
     fn get_Cookies(&self, out: *mut HSTRING) -> HRESULT,
@@ -2226,7 +2226,7 @@ impl IUserDataPathsStatics {
     }}
 }
 pub mod accesscache { // Windows.Storage.AccessCache
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum AccessCacheOptions: u32 {
     None = 0, DisallowUserInput = 1, FastLocationsOnly = 2, UseReadOnlyCachedCopy = 4, SuppressAccessTimeUpdate = 8,
 }}
@@ -2410,7 +2410,7 @@ impl IStorageItemMostRecentlyUsedList2 {
 }
 } // Windows.Storage.AccessCache
 pub mod bulkaccess { // Windows.Storage.BulkAccess
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{class FileInformation: IStorageItemInformation}
 DEFINE_IID!(IID_IFileInformationFactory, 1075677374, 38415, 19821, 167, 208, 26, 56, 97, 231, 108, 131);
 RT_INTERFACE!{interface IFileInformationFactory(IFileInformationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileInformationFactory] {
@@ -2583,7 +2583,7 @@ impl IStorageItemInformation {
 }
 } // Windows.Storage.BulkAccess
 pub mod compression { // Windows.Storage.Compression
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum CompressAlgorithm: i32 {
     InvalidAlgorithm = 0, NullAlgorithm = 1, Mszip = 2, Xpress = 3, XpressHuff = 4, Lzms = 5,
 }}
@@ -2664,7 +2664,7 @@ impl IDecompressorFactory {
 }
 } // Windows.Storage.Compression
 pub mod fileproperties { // Windows.Storage.FileProperties
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IBasicProperties, 3495777755, 30814, 19046, 190, 2, 155, 238, 197, 138, 234, 129);
 RT_INTERFACE!{interface IBasicProperties(IBasicPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IBasicProperties] {
     fn get_Size(&self, out: *mut u64) -> HRESULT,
@@ -3246,7 +3246,7 @@ impl IVideoProperties {
 RT_CLASS!{class VideoProperties: IVideoProperties}
 } // Windows.Storage.FileProperties
 pub mod pickers { // Windows.Storage.Pickers
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{class FileExtensionVector: foundation::collections::IVector<HString>}
 DEFINE_IID!(IID_IFileOpenPicker, 749217674, 4805, 19551, 137, 119, 148, 84, 119, 147, 194, 65);
 RT_INTERFACE!{interface IFileOpenPicker(IFileOpenPickerVtbl): IInspectable(IInspectableVtbl) [IID_IFileOpenPicker] {
@@ -3574,7 +3574,7 @@ RT_ENUM! { enum PickerViewMode: i32 {
     List = 0, Thumbnail = 1,
 }}
 pub mod provider { // Windows.Storage.Pickers.Provider
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum AddFileResult: i32 {
     Added = 0, AlreadyAdded = 1, NotAllowed = 2, Unavailable = 3,
 }}
@@ -3835,7 +3835,7 @@ RT_CLASS!{class TargetFileRequestedEventArgs: ITargetFileRequestedEventArgs}
 } // Windows.Storage.Pickers.Provider
 } // Windows.Storage.Pickers
 pub mod provider { // Windows.Storage.Provider
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum CachedFileOptions: u32 {
     None = 0, RequireUpdateOnAccess = 1, UseCachedFileWhenOffline = 2, DenyAccessWhenOffline = 4,
 }}
@@ -4488,7 +4488,7 @@ RT_ENUM! { enum WriteActivationMode: i32 {
 }}
 } // Windows.Storage.Provider
 pub mod search { // Windows.Storage.Search
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum CommonFileQuery: i32 {
     DefaultQuery = 0, OrderByName = 1, OrderByTitle = 2, OrderByMusicProperties = 3, OrderBySearchRank = 4, OrderByDate = 5,
 }}
@@ -5139,7 +5139,7 @@ impl RtActivatable<IActivationFactory> for ValueAndLanguage {}
 DEFINE_CLSID!(ValueAndLanguage(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,86,97,108,117,101,65,110,100,76,97,110,103,117,97,103,101,0]) [CLSID_ValueAndLanguage]);
 } // Windows.Storage.Search
 pub mod streams { // Windows.Storage.Streams
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IBuffer, 2421821408, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
 RT_INTERFACE!{interface IBuffer(IBufferVtbl): IInspectable(IInspectableVtbl) [IID_IBuffer] {
     fn get_Capacity(&self, out: *mut u32) -> HRESULT,

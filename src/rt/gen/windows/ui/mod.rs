@@ -1,4 +1,4 @@
-use ::prelude::*;
+use crate::prelude::*;
 RT_STRUCT! { struct Color {
     A: u8, R: u8, G: u8, B: u8,
 }}
@@ -1324,7 +1324,7 @@ impl IColorsStatics {
     }}
 }
 pub mod accessibility { // Windows.UI.Accessibility
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IScreenReaderPositionChangedEventArgs, 1434367461, 21712, 23757, 159, 197, 237, 51, 53, 127, 138, 159);
 RT_INTERFACE!{interface IScreenReaderPositionChangedEventArgs(IScreenReaderPositionChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IScreenReaderPositionChangedEventArgs] {
     fn get_ScreenPositionInRawPixels(&self, out: *mut foundation::Rect) -> HRESULT,
@@ -1370,7 +1370,7 @@ impl RtActivatable<IActivationFactory> for ScreenReaderService {}
 DEFINE_CLSID!(ScreenReaderService(&[87,105,110,100,111,119,115,46,85,73,46,65,99,99,101,115,115,105,98,105,108,105,116,121,46,83,99,114,101,101,110,82,101,97,100,101,114,83,101,114,118,105,99,101,0]) [CLSID_ScreenReaderService]);
 } // Windows.UI.Accessibility
 pub mod applicationsettings { // Windows.UI.ApplicationSettings
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAccountsSettingsPane, 2179634220, 20233, 17414, 165, 56, 131, 141, 155, 20, 183, 230);
 RT_INTERFACE!{interface IAccountsSettingsPane(IAccountsSettingsPaneVtbl): IInspectable(IInspectableVtbl) [IID_IAccountsSettingsPane] {
     fn add_AccountCommandsRequested(&self, handler: *mut foundation::TypedEventHandler<AccountsSettingsPane, AccountsSettingsPaneCommandsRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -1820,7 +1820,7 @@ impl WebAccountProviderCommandInvokedHandler {
 }
 } // Windows.UI.ApplicationSettings
 pub mod composition { // Windows.UI.Composition
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAmbientLight, 2759930017, 47044, 18167, 185, 191, 218, 244, 58, 68, 230, 238);
 RT_INTERFACE!{interface IAmbientLight(IAmbientLightVtbl): IInspectable(IInspectableVtbl) [IID_IAmbientLight] {
     fn get_Color(&self, out: *mut super::Color) -> HRESULT,
@@ -6020,7 +6020,7 @@ impl IVisualUnorderedCollection {
 }
 RT_CLASS!{class VisualUnorderedCollection: IVisualUnorderedCollection}
 pub mod core { // Windows.UI.Composition.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICompositorController, 762704730, 28839, 17301, 186, 45, 206, 240, 177, 131, 153, 249);
 RT_INTERFACE!{interface ICompositorController(ICompositorControllerVtbl): IInspectable(IInspectableVtbl) [IID_ICompositorController] {
     fn get_Compositor(&self, out: *mut *mut super::Compositor) -> HRESULT,
@@ -6059,7 +6059,7 @@ impl RtActivatable<IActivationFactory> for CompositorController {}
 DEFINE_CLSID!(CompositorController(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,67,111,114,101,46,67,111,109,112,111,115,105,116,111,114,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_CompositorController]);
 } // Windows.UI.Composition.Core
 pub mod desktop { // Windows.UI.Composition.Desktop
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDesktopWindowTarget, 1663686346, 13158, 18702, 157, 179, 37, 49, 41, 41, 172, 81);
 RT_INTERFACE!{interface IDesktopWindowTarget(IDesktopWindowTargetVtbl): IInspectable(IInspectableVtbl) [IID_IDesktopWindowTarget] {
     fn get_IsTopmost(&self, out: *mut bool) -> HRESULT
@@ -6074,7 +6074,7 @@ impl IDesktopWindowTarget {
 RT_CLASS!{class DesktopWindowTarget: IDesktopWindowTarget}
 } // Windows.UI.Composition.Desktop
 pub mod diagnostics { // Windows.UI.Composition.Diagnostics
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICompositionDebugHeatMaps, 3835465900, 12275, 22533, 113, 140, 183, 37, 238, 7, 101, 15);
 RT_INTERFACE!{interface ICompositionDebugHeatMaps(ICompositionDebugHeatMapsVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionDebugHeatMaps] {
     fn Hide(&self, subtree: *mut super::Visual) -> HRESULT,
@@ -6136,7 +6136,7 @@ impl ICompositionDebugSettingsStatics {
 }
 } // Windows.UI.Composition.Diagnostics
 pub mod effects { // Windows.UI.Composition.Effects
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ISceneLightingEffect, 2444975698, 38353, 20363, 154, 90, 100, 8, 178, 75, 140, 106);
 RT_INTERFACE!{interface ISceneLightingEffect(ISceneLightingEffectVtbl): IInspectable(IInspectableVtbl) [IID_ISceneLightingEffect] {
     fn get_AmbientAmount(&self, out: *mut f32) -> HRESULT,
@@ -6144,9 +6144,9 @@ RT_INTERFACE!{interface ISceneLightingEffect(ISceneLightingEffectVtbl): IInspect
     fn get_DiffuseAmount(&self, out: *mut f32) -> HRESULT,
     fn put_DiffuseAmount(&self, value: f32) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn get_NormalMapSource(&self, out: *mut *mut ::rt::gen::windows::graphics::effects::IGraphicsEffectSource) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn get_NormalMapSource(&self, out: *mut *mut crate::windows::graphics::effects::IGraphicsEffectSource) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn put_NormalMapSource(&self, value: *mut ::rt::gen::windows::graphics::effects::IGraphicsEffectSource) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn put_NormalMapSource(&self, value: *mut crate::windows::graphics::effects::IGraphicsEffectSource) -> HRESULT,
     fn get_SpecularAmount(&self, out: *mut f32) -> HRESULT,
     fn put_SpecularAmount(&self, value: f32) -> HRESULT,
     fn get_SpecularShine(&self, out: *mut f32) -> HRESULT,
@@ -6171,12 +6171,12 @@ impl ISceneLightingEffect {
         let hr = ((*self.lpVtbl).put_DiffuseAmount)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_normal_map_source(&self) -> Result<Option<ComPtr<::rt::gen::windows::graphics::effects::IGraphicsEffectSource>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_normal_map_source(&self) -> Result<Option<ComPtr<crate::windows::graphics::effects::IGraphicsEffectSource>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_NormalMapSource)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_normal_map_source(&self, value: &::rt::gen::windows::graphics::effects::IGraphicsEffectSource) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_normal_map_source(&self, value: &crate::windows::graphics::effects::IGraphicsEffectSource) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_NormalMapSource)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -6223,7 +6223,7 @@ RT_ENUM! { enum SceneLightingEffectReflectanceModel: i32 {
 }}
 } // Windows.UI.Composition.Effects
 pub mod interactions { // Windows.UI.Composition.Interactions
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICompositionConditionalValue, 1126499640, 60275, 17761, 167, 29, 26, 67, 234, 235, 122, 155);
 RT_INTERFACE!{interface ICompositionConditionalValue(ICompositionConditionalValueVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionConditionalValue] {
     fn get_Condition(&self, out: *mut *mut super::ExpressionAnimation) -> HRESULT,
@@ -7209,7 +7209,7 @@ impl IVisualInteractionSourceStatics {
 } // Windows.UI.Composition.Interactions
 } // Windows.UI.Composition
 pub mod core { // Windows.UI.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAcceleratorKeyEventArgs, 4280044618, 37511, 18187, 131, 110, 144, 134, 227, 18, 106, 222);
 RT_INTERFACE!{interface IAcceleratorKeyEventArgs(IAcceleratorKeyEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAcceleratorKeyEventArgs] {
     fn get_EventType(&self, out: *mut CoreAcceleratorKeyEventType) -> HRESULT,
@@ -8747,7 +8747,7 @@ impl IWindowSizeChangedEventArgs {
 }
 RT_CLASS!{class WindowSizeChangedEventArgs: IWindowSizeChangedEventArgs}
 pub mod animationmetrics { // Windows.UI.Core.AnimationMetrics
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAnimationDescription, 2098308425, 48701, 16862, 176, 129, 5, 193, 73, 150, 47, 155);
 RT_INTERFACE!{interface IAnimationDescription(IAnimationDescriptionVtbl): IInspectable(IInspectableVtbl) [IID_IAnimationDescription] {
     fn get_Animations(&self, out: *mut *mut foundation::collections::IVectorView<IPropertyAnimation>) -> HRESULT,
@@ -8904,7 +8904,7 @@ RT_CLASS!{class ScaleAnimation: IScaleAnimation}
 RT_CLASS!{class TranslationAnimation: IPropertyAnimation}
 } // Windows.UI.Core.AnimationMetrics
 pub mod preview { // Windows.UI.Core.Preview
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ISystemNavigationCloseRequestedPreviewEventArgs, 2211450337, 52197, 20273, 132, 20, 54, 29, 160, 70, 81, 143);
 RT_INTERFACE!{interface ISystemNavigationCloseRequestedPreviewEventArgs(ISystemNavigationCloseRequestedPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemNavigationCloseRequestedPreviewEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -8966,7 +8966,7 @@ impl ISystemNavigationManagerPreviewStatics {
 } // Windows.UI.Core.Preview
 } // Windows.UI.Core
 pub mod input { // Windows.UI.Input
-use ::prelude::*;
+use crate::prelude::*;
 RT_STRUCT! { struct CrossSlideThresholds {
     SelectionStart: f32, SpeedBumpStart: f32, SpeedBumpEnd: f32, RearrangeStart: f32,
 }}
@@ -10726,7 +10726,7 @@ impl ITappedEventArgs {
 }
 RT_CLASS!{class TappedEventArgs: ITappedEventArgs}
 pub mod core { // Windows.UI.Input.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IRadialControllerIndependentInputSource, 1029144310, 19694, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{interface IRadialControllerIndependentInputSource(IRadialControllerIndependentInputSourceVtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerIndependentInputSource] {
     fn get_Controller(&self, out: *mut *mut super::RadialController) -> HRESULT,
@@ -10747,17 +10747,17 @@ impl IRadialControllerIndependentInputSource {
 RT_CLASS!{class RadialControllerIndependentInputSource: IRadialControllerIndependentInputSource}
 impl RtActivatable<IRadialControllerIndependentInputSourceStatics> for RadialControllerIndependentInputSource {}
 impl RadialControllerIndependentInputSource {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn create_for_view(view: &::rt::gen::windows::applicationmodel::core::CoreApplicationView) -> Result<Option<ComPtr<RadialControllerIndependentInputSource>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn create_for_view(view: &crate::windows::applicationmodel::core::CoreApplicationView) -> Result<Option<ComPtr<RadialControllerIndependentInputSource>>> {
         <Self as RtActivatable<IRadialControllerIndependentInputSourceStatics>>::get_activation_factory().create_for_view(view)
     }
 }
 DEFINE_CLSID!(RadialControllerIndependentInputSource(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,67,111,114,101,46,82,97,100,105,97,108,67,111,110,116,114,111,108,108,101,114,73,110,100,101,112,101,110,100,101,110,116,73,110,112,117,116,83,111,117,114,99,101,0]) [CLSID_RadialControllerIndependentInputSource]);
 DEFINE_IID!(IID_IRadialControllerIndependentInputSource2, 1886628568, 13811, 20203, 135, 81, 190, 77, 10, 102, 250, 244);
 RT_INTERFACE!{interface IRadialControllerIndependentInputSource2(IRadialControllerIndependentInputSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerIndependentInputSource2] {
-    #[cfg(feature="windows-system")] fn get_DispatcherQueue(&self, out: *mut *mut ::rt::gen::windows::system::DispatcherQueue) -> HRESULT
+    #[cfg(feature="windows-system")] fn get_DispatcherQueue(&self, out: *mut *mut crate::windows::system::DispatcherQueue) -> HRESULT
 }}
 impl IRadialControllerIndependentInputSource2 {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_dispatcher_queue(&self) -> Result<Option<ComPtr<::rt::gen::windows::system::DispatcherQueue>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_dispatcher_queue(&self) -> Result<Option<ComPtr<crate::windows::system::DispatcherQueue>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DispatcherQueue)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -10765,10 +10765,10 @@ impl IRadialControllerIndependentInputSource2 {
 }
 DEFINE_IID!(IID_IRadialControllerIndependentInputSourceStatics, 1029144309, 19694, 4582, 181, 53, 0, 27, 220, 6, 171, 59);
 RT_INTERFACE!{static interface IRadialControllerIndependentInputSourceStatics(IRadialControllerIndependentInputSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerIndependentInputSourceStatics] {
-    #[cfg(feature="windows-applicationmodel")] fn CreateForView(&self, view: *mut ::rt::gen::windows::applicationmodel::core::CoreApplicationView, out: *mut *mut RadialControllerIndependentInputSource) -> HRESULT
+    #[cfg(feature="windows-applicationmodel")] fn CreateForView(&self, view: *mut crate::windows::applicationmodel::core::CoreApplicationView, out: *mut *mut RadialControllerIndependentInputSource) -> HRESULT
 }}
 impl IRadialControllerIndependentInputSourceStatics {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn create_for_view(&self, view: &::rt::gen::windows::applicationmodel::core::CoreApplicationView) -> Result<Option<ComPtr<RadialControllerIndependentInputSource>>> { unsafe { 
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn create_for_view(&self, view: &crate::windows::applicationmodel::core::CoreApplicationView) -> Result<Option<ComPtr<RadialControllerIndependentInputSource>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateForView)(self as *const _ as *mut _, view as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -10776,7 +10776,7 @@ impl IRadialControllerIndependentInputSourceStatics {
 }
 } // Windows.UI.Input.Core
 pub mod inking { // Windows.UI.Input.Inking
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum HandwritingLineHeight: i32 {
     Small = 0, Medium = 1, Large = 2,
 }}
@@ -11775,9 +11775,9 @@ RT_INTERFACE!{interface IInkStrokeContainer(IInkStrokeContainerVtbl): IInspectab
     fn PasteFromClipboard(&self, position: foundation::Point, out: *mut foundation::Rect) -> HRESULT,
     fn CanPasteFromClipboard(&self, out: *mut bool) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy9(&self) -> (),
-    #[cfg(feature="windows-storage")] fn LoadAsync(&self, inputStream: *mut ::rt::gen::windows::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncActionWithProgress<u64>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn LoadAsync(&self, inputStream: *mut crate::windows::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncActionWithProgress<u64>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy10(&self) -> (),
-    #[cfg(feature="windows-storage")] fn SaveAsync(&self, outputStream: *mut ::rt::gen::windows::storage::streams::IOutputStream, out: *mut *mut foundation::IAsyncOperationWithProgress<u32, u32>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn SaveAsync(&self, outputStream: *mut crate::windows::storage::streams::IOutputStream, out: *mut *mut foundation::IAsyncOperationWithProgress<u32, u32>) -> HRESULT,
     fn UpdateRecognitionResults(&self, recognitionResults: *mut foundation::collections::IVectorView<InkRecognitionResult>) -> HRESULT,
     fn GetStrokes(&self, out: *mut *mut foundation::collections::IVectorView<InkStroke>) -> HRESULT,
     fn GetRecognitionResults(&self, out: *mut *mut foundation::collections::IVectorView<InkRecognitionResult>) -> HRESULT
@@ -11826,12 +11826,12 @@ impl IInkStrokeContainer {
         let hr = ((*self.lpVtbl).CanPasteFromClipboard)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(&self, inputStream: &::rt::gen::windows::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncActionWithProgress<u64>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(&self, inputStream: &crate::windows::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncActionWithProgress<u64>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).LoadAsync)(self as *const _ as *mut _, inputStream as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_async(&self, outputStream: &::rt::gen::windows::storage::streams::IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u32, u32>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_async(&self, outputStream: &crate::windows::storage::streams::IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u32, u32>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SaveAsync)(self as *const _ as *mut _, outputStream as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -11872,11 +11872,11 @@ impl IInkStrokeContainer2 {
 DEFINE_IID!(IID_IInkStrokeContainer3, 1023917733, 47850, 19586, 167, 25, 123, 131, 218, 16, 103, 210);
 RT_INTERFACE!{interface IInkStrokeContainer3(IInkStrokeContainer3Vtbl): IInspectable(IInspectableVtbl) [IID_IInkStrokeContainer3] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn SaveWithFormatAsync(&self, outputStream: *mut ::rt::gen::windows::storage::streams::IOutputStream, inkPersistenceFormat: InkPersistenceFormat, out: *mut *mut foundation::IAsyncOperationWithProgress<u32, u32>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn SaveWithFormatAsync(&self, outputStream: *mut crate::windows::storage::streams::IOutputStream, inkPersistenceFormat: InkPersistenceFormat, out: *mut *mut foundation::IAsyncOperationWithProgress<u32, u32>) -> HRESULT,
     fn GetStrokeById(&self, id: u32, out: *mut *mut InkStroke) -> HRESULT
 }}
 impl IInkStrokeContainer3 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_with_format_async(&self, outputStream: &::rt::gen::windows::storage::streams::IOutputStream, inkPersistenceFormat: InkPersistenceFormat) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u32, u32>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_with_format_async(&self, outputStream: &crate::windows::storage::streams::IOutputStream, inkPersistenceFormat: InkPersistenceFormat) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u32, u32>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SaveWithFormatAsync)(self as *const _ as *mut _, outputStream as *const _ as *mut _, inkPersistenceFormat, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -12188,7 +12188,7 @@ RT_ENUM! { enum PenTipShape: i32 {
     Circle = 0, Rectangle = 1,
 }}
 pub mod analysis { // Windows.UI.Input.Inking.Analysis
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum InkAnalysisDrawingKind: i32 {
     Drawing = 0, Circle = 1, Ellipse = 2, Triangle = 3, IsoscelesTriangle = 4, EquilateralTriangle = 5, RightTriangle = 6, Quadrilateral = 7, Rectangle = 8, Square = 9, Diamond = 10, Trapezoid = 11, Parallelogram = 12, Pentagon = 13, Hexagon = 14,
 }}
@@ -12461,7 +12461,7 @@ impl IInkAnalyzerFactory {
 }
 } // Windows.UI.Input.Inking.Analysis
 pub mod core { // Windows.UI.Input.Inking.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICoreIncrementalInkStroke, 4255126995, 40294, 20349, 165, 127, 204, 112, 185, 207, 170, 118);
 RT_INTERFACE!{interface ICoreIncrementalInkStroke(ICoreIncrementalInkStrokeVtbl): IInspectable(IInspectableVtbl) [IID_ICoreIncrementalInkStroke] {
     fn AppendInkPoints(&self, inkPoints: *mut foundation::collections::IIterable<super::InkPoint>, out: *mut foundation::Rect) -> HRESULT,
@@ -12518,24 +12518,24 @@ impl ICoreIncrementalInkStrokeFactory {
 }
 DEFINE_IID!(IID_ICoreInkIndependentInputSource, 968068521, 30265, 17561, 165, 181, 25, 29, 0, 227, 91, 22);
 RT_INTERFACE!{interface ICoreInkIndependentInputSource(ICoreInkIndependentInputSourceVtbl): IInspectable(IInspectableVtbl) [IID_ICoreInkIndependentInputSource] {
-    fn add_PointerEntering(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn add_PointerEntering(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_PointerEntering(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_PointerHovering(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn add_PointerHovering(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_PointerHovering(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_PointerExiting(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn add_PointerExiting(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_PointerExiting(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_PointerPressing(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn add_PointerPressing(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_PointerPressing(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_PointerMoving(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn add_PointerMoving(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_PointerMoving(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_PointerReleasing(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn add_PointerReleasing(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_PointerReleasing(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn add_PointerLost(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
+    fn add_PointerLost(&self, handler: *mut foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_PointerLost(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
     fn get_InkPresenter(&self, out: *mut *mut super::InkPresenter) -> HRESULT
 }}
 impl ICoreInkIndependentInputSource {
-    #[inline] pub fn add_pointer_entering(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_pointer_entering(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_PointerEntering)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -12544,7 +12544,7 @@ impl ICoreInkIndependentInputSource {
         let hr = ((*self.lpVtbl).remove_PointerEntering)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_pointer_hovering(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_pointer_hovering(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_PointerHovering)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -12553,7 +12553,7 @@ impl ICoreInkIndependentInputSource {
         let hr = ((*self.lpVtbl).remove_PointerHovering)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_pointer_exiting(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_pointer_exiting(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_PointerExiting)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -12562,7 +12562,7 @@ impl ICoreInkIndependentInputSource {
         let hr = ((*self.lpVtbl).remove_PointerExiting)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_pointer_pressing(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_pointer_pressing(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_PointerPressing)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -12571,7 +12571,7 @@ impl ICoreInkIndependentInputSource {
         let hr = ((*self.lpVtbl).remove_PointerPressing)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_pointer_moving(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_pointer_moving(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_PointerMoving)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -12580,7 +12580,7 @@ impl ICoreInkIndependentInputSource {
         let hr = ((*self.lpVtbl).remove_PointerMoving)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_pointer_releasing(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_pointer_releasing(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_PointerReleasing)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -12589,7 +12589,7 @@ impl ICoreInkIndependentInputSource {
         let hr = ((*self.lpVtbl).remove_PointerReleasing)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_pointer_lost(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, super::super::super::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_pointer_lost(&self, handler: &foundation::TypedEventHandler<CoreInkIndependentInputSource, crate::windows::ui::core::PointerEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).add_PointerLost)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -12626,8 +12626,8 @@ impl ICoreInkIndependentInputSourceStatics {
 DEFINE_IID!(IID_ICoreInkPresenterHost, 963545574, 32085, 17943, 158, 88, 104, 199, 12, 145, 105, 185);
 RT_INTERFACE!{interface ICoreInkPresenterHost(ICoreInkPresenterHostVtbl): IInspectable(IInspectableVtbl) [IID_ICoreInkPresenterHost] {
     fn get_InkPresenter(&self, out: *mut *mut super::InkPresenter) -> HRESULT,
-    fn get_RootVisual(&self, out: *mut *mut super::super::super::composition::ContainerVisual) -> HRESULT,
-    fn put_RootVisual(&self, value: *mut super::super::super::composition::ContainerVisual) -> HRESULT
+    fn get_RootVisual(&self, out: *mut *mut crate::windows::ui::composition::ContainerVisual) -> HRESULT,
+    fn put_RootVisual(&self, value: *mut crate::windows::ui::composition::ContainerVisual) -> HRESULT
 }}
 impl ICoreInkPresenterHost {
     #[inline] pub fn get_ink_presenter(&self) -> Result<Option<ComPtr<super::InkPresenter>>> { unsafe { 
@@ -12635,12 +12635,12 @@ impl ICoreInkPresenterHost {
         let hr = ((*self.lpVtbl).get_InkPresenter)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_root_visual(&self) -> Result<Option<ComPtr<super::super::super::composition::ContainerVisual>>> { unsafe { 
+    #[inline] pub fn get_root_visual(&self) -> Result<Option<ComPtr<crate::windows::ui::composition::ContainerVisual>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RootVisual)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_root_visual(&self, value: &super::super::super::composition::ContainerVisual) -> Result<()> { unsafe { 
+    #[inline] pub fn set_root_visual(&self, value: &crate::windows::ui::composition::ContainerVisual) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_RootVisual)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -12767,7 +12767,7 @@ impl ICoreWetStrokeUpdateSourceStatics {
 }
 } // Windows.UI.Input.Inking.Core
 pub mod preview { // Windows.UI.Input.Inking.Preview
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPalmRejectionDelayZonePreview, 1656002251, 21405, 21315, 166, 95, 65, 245, 48, 14, 199, 12);
 RT_INTERFACE!{interface IPalmRejectionDelayZonePreview(IPalmRejectionDelayZonePreviewVtbl): IInspectable(IInspectableVtbl) [IID_IPalmRejectionDelayZonePreview] {
     
@@ -12775,26 +12775,26 @@ RT_INTERFACE!{interface IPalmRejectionDelayZonePreview(IPalmRejectionDelayZonePr
 RT_CLASS!{class PalmRejectionDelayZonePreview: IPalmRejectionDelayZonePreview}
 impl RtActivatable<IPalmRejectionDelayZonePreviewStatics> for PalmRejectionDelayZonePreview {}
 impl PalmRejectionDelayZonePreview {
-    #[inline] pub fn create_for_visual(inputPanelVisual: &super::super::super::composition::Visual, inputPanelRect: foundation::Rect) -> Result<Option<ComPtr<PalmRejectionDelayZonePreview>>> {
+    #[inline] pub fn create_for_visual(inputPanelVisual: &crate::windows::ui::composition::Visual, inputPanelRect: foundation::Rect) -> Result<Option<ComPtr<PalmRejectionDelayZonePreview>>> {
         <Self as RtActivatable<IPalmRejectionDelayZonePreviewStatics>>::get_activation_factory().create_for_visual(inputPanelVisual, inputPanelRect)
     }
-    #[inline] pub fn create_for_visual_with_viewport_clip(inputPanelVisual: &super::super::super::composition::Visual, inputPanelRect: foundation::Rect, viewportVisual: &super::super::super::composition::Visual, viewportRect: foundation::Rect) -> Result<Option<ComPtr<PalmRejectionDelayZonePreview>>> {
+    #[inline] pub fn create_for_visual_with_viewport_clip(inputPanelVisual: &crate::windows::ui::composition::Visual, inputPanelRect: foundation::Rect, viewportVisual: &crate::windows::ui::composition::Visual, viewportRect: foundation::Rect) -> Result<Option<ComPtr<PalmRejectionDelayZonePreview>>> {
         <Self as RtActivatable<IPalmRejectionDelayZonePreviewStatics>>::get_activation_factory().create_for_visual_with_viewport_clip(inputPanelVisual, inputPanelRect, viewportVisual, viewportRect)
     }
 }
 DEFINE_CLSID!(PalmRejectionDelayZonePreview(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,80,114,101,118,105,101,119,46,80,97,108,109,82,101,106,101,99,116,105,111,110,68,101,108,97,121,90,111,110,101,80,114,101,118,105,101,119,0]) [CLSID_PalmRejectionDelayZonePreview]);
 DEFINE_IID!(IID_IPalmRejectionDelayZonePreviewStatics, 3455016672, 37840, 21417, 143, 14, 154, 55, 159, 143, 117, 48);
 RT_INTERFACE!{static interface IPalmRejectionDelayZonePreviewStatics(IPalmRejectionDelayZonePreviewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPalmRejectionDelayZonePreviewStatics] {
-    fn CreateForVisual(&self, inputPanelVisual: *mut super::super::super::composition::Visual, inputPanelRect: foundation::Rect, out: *mut *mut PalmRejectionDelayZonePreview) -> HRESULT,
-    fn CreateForVisualWithViewportClip(&self, inputPanelVisual: *mut super::super::super::composition::Visual, inputPanelRect: foundation::Rect, viewportVisual: *mut super::super::super::composition::Visual, viewportRect: foundation::Rect, out: *mut *mut PalmRejectionDelayZonePreview) -> HRESULT
+    fn CreateForVisual(&self, inputPanelVisual: *mut crate::windows::ui::composition::Visual, inputPanelRect: foundation::Rect, out: *mut *mut PalmRejectionDelayZonePreview) -> HRESULT,
+    fn CreateForVisualWithViewportClip(&self, inputPanelVisual: *mut crate::windows::ui::composition::Visual, inputPanelRect: foundation::Rect, viewportVisual: *mut crate::windows::ui::composition::Visual, viewportRect: foundation::Rect, out: *mut *mut PalmRejectionDelayZonePreview) -> HRESULT
 }}
 impl IPalmRejectionDelayZonePreviewStatics {
-    #[inline] pub fn create_for_visual(&self, inputPanelVisual: &super::super::super::composition::Visual, inputPanelRect: foundation::Rect) -> Result<Option<ComPtr<PalmRejectionDelayZonePreview>>> { unsafe { 
+    #[inline] pub fn create_for_visual(&self, inputPanelVisual: &crate::windows::ui::composition::Visual, inputPanelRect: foundation::Rect) -> Result<Option<ComPtr<PalmRejectionDelayZonePreview>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateForVisual)(self as *const _ as *mut _, inputPanelVisual as *const _ as *mut _, inputPanelRect, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_for_visual_with_viewport_clip(&self, inputPanelVisual: &super::super::super::composition::Visual, inputPanelRect: foundation::Rect, viewportVisual: &super::super::super::composition::Visual, viewportRect: foundation::Rect) -> Result<Option<ComPtr<PalmRejectionDelayZonePreview>>> { unsafe { 
+    #[inline] pub fn create_for_visual_with_viewport_clip(&self, inputPanelVisual: &crate::windows::ui::composition::Visual, inputPanelRect: foundation::Rect, viewportVisual: &crate::windows::ui::composition::Visual, viewportRect: foundation::Rect) -> Result<Option<ComPtr<PalmRejectionDelayZonePreview>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateForVisualWithViewportClip)(self as *const _ as *mut _, inputPanelVisual as *const _ as *mut _, inputPanelRect, viewportVisual as *const _ as *mut _, viewportRect, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -12804,16 +12804,16 @@ impl IPalmRejectionDelayZonePreviewStatics {
 } // Windows.UI.Input.Inking
 pub mod preview { // Windows.UI.Input.Preview
 pub mod injection { // Windows.UI.Input.Preview.Injection
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum InjectedInputButtonChangeKind: i32 {
     None = 0, FirstButtonDown = 1, FirstButtonUp = 2, SecondButtonDown = 3, SecondButtonUp = 4, ThirdButtonDown = 5, ThirdButtonUp = 6, FourthButtonDown = 7, FourthButtonUp = 8, FifthButtonDown = 9, FifthButtonUp = 10,
 }}
 DEFINE_IID!(IID_IInjectedInputGamepadInfo, 548313663, 57105, 17778, 169, 171, 215, 91, 138, 94, 72, 173);
 RT_INTERFACE!{interface IInjectedInputGamepadInfo(IInjectedInputGamepadInfoVtbl): IInspectable(IInspectableVtbl) [IID_IInjectedInputGamepadInfo] {
     #[cfg(not(feature="windows-gaming"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-gaming")] fn get_Buttons(&self, out: *mut ::rt::gen::windows::gaming::input::GamepadButtons) -> HRESULT,
+    #[cfg(feature="windows-gaming")] fn get_Buttons(&self, out: *mut crate::windows::gaming::input::GamepadButtons) -> HRESULT,
     #[cfg(not(feature="windows-gaming"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-gaming")] fn put_Buttons(&self, value: ::rt::gen::windows::gaming::input::GamepadButtons) -> HRESULT,
+    #[cfg(feature="windows-gaming")] fn put_Buttons(&self, value: crate::windows::gaming::input::GamepadButtons) -> HRESULT,
     fn get_LeftThumbstickX(&self, out: *mut f64) -> HRESULT,
     fn put_LeftThumbstickX(&self, value: f64) -> HRESULT,
     fn get_LeftThumbstickY(&self, out: *mut f64) -> HRESULT,
@@ -12828,12 +12828,12 @@ RT_INTERFACE!{interface IInjectedInputGamepadInfo(IInjectedInputGamepadInfoVtbl)
     fn put_RightTrigger(&self, value: f64) -> HRESULT
 }}
 impl IInjectedInputGamepadInfo {
-    #[cfg(feature="windows-gaming")] #[inline] pub fn get_buttons(&self) -> Result<::rt::gen::windows::gaming::input::GamepadButtons> { unsafe { 
+    #[cfg(feature="windows-gaming")] #[inline] pub fn get_buttons(&self) -> Result<crate::windows::gaming::input::GamepadButtons> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).get_Buttons)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-gaming")] #[inline] pub fn set_buttons(&self, value: ::rt::gen::windows::gaming::input::GamepadButtons) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-gaming")] #[inline] pub fn set_buttons(&self, value: crate::windows::gaming::input::GamepadButtons) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Buttons)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -12896,17 +12896,17 @@ RT_CLASS!{class InjectedInputGamepadInfo: IInjectedInputGamepadInfo}
 impl RtActivatable<IInjectedInputGamepadInfoFactory> for InjectedInputGamepadInfo {}
 impl RtActivatable<IActivationFactory> for InjectedInputGamepadInfo {}
 impl InjectedInputGamepadInfo {
-    #[cfg(feature="windows-gaming")] #[inline] pub fn create_instance_from_gamepad_reading(reading: ::rt::gen::windows::gaming::input::GamepadReading) -> Result<ComPtr<InjectedInputGamepadInfo>> {
+    #[cfg(feature="windows-gaming")] #[inline] pub fn create_instance_from_gamepad_reading(reading: crate::windows::gaming::input::GamepadReading) -> Result<ComPtr<InjectedInputGamepadInfo>> {
         <Self as RtActivatable<IInjectedInputGamepadInfoFactory>>::get_activation_factory().create_instance_from_gamepad_reading(reading)
     }
 }
 DEFINE_CLSID!(InjectedInputGamepadInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,71,97,109,101,112,97,100,73,110,102,111,0]) [CLSID_InjectedInputGamepadInfo]);
 DEFINE_IID!(IID_IInjectedInputGamepadInfoFactory, 1499031670, 27705, 20164, 139, 42, 41, 239, 125, 225, 138, 202);
 RT_INTERFACE!{static interface IInjectedInputGamepadInfoFactory(IInjectedInputGamepadInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IInjectedInputGamepadInfoFactory] {
-    #[cfg(feature="windows-gaming")] fn CreateInstanceFromGamepadReading(&self, reading: ::rt::gen::windows::gaming::input::GamepadReading, out: *mut *mut InjectedInputGamepadInfo) -> HRESULT
+    #[cfg(feature="windows-gaming")] fn CreateInstanceFromGamepadReading(&self, reading: crate::windows::gaming::input::GamepadReading, out: *mut *mut InjectedInputGamepadInfo) -> HRESULT
 }}
 impl IInjectedInputGamepadInfoFactory {
-    #[cfg(feature="windows-gaming")] #[inline] pub fn create_instance_from_gamepad_reading(&self, reading: ::rt::gen::windows::gaming::input::GamepadReading) -> Result<ComPtr<InjectedInputGamepadInfo>> { unsafe { 
+    #[cfg(feature="windows-gaming")] #[inline] pub fn create_instance_from_gamepad_reading(&self, reading: crate::windows::gaming::input::GamepadReading) -> Result<ComPtr<InjectedInputGamepadInfo>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateInstanceFromGamepadReading)(self as *const _ as *mut _, reading, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -13304,7 +13304,7 @@ impl IInputInjectorStatics2 {
 } // Windows.UI.Input.Preview.Injection
 } // Windows.UI.Input.Preview
 pub mod spatial { // Windows.UI.Input.Spatial
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ISpatialGestureRecognizer, 1902140364, 3125, 18035, 173, 189, 204, 4, 202, 166, 239, 69);
 RT_INTERFACE!{interface ISpatialGestureRecognizer(ISpatialGestureRecognizerVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialGestureRecognizer] {
     fn add_RecognitionStarted(&self, handler: *mut foundation::TypedEventHandler<SpatialGestureRecognizer, SpatialRecognitionStartedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -13535,7 +13535,7 @@ RT_CLASS!{class SpatialHoldCompletedEventArgs: ISpatialHoldCompletedEventArgs}
 DEFINE_IID!(IID_ISpatialHoldStartedEventArgs, 2385788281, 44214, 16708, 134, 21, 44, 251, 168, 163, 203, 63);
 RT_INTERFACE!{interface ISpatialHoldStartedEventArgs(ISpatialHoldStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialHoldStartedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT
+    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT
 }}
 impl ISpatialHoldStartedEventArgs {
     #[inline] pub fn get_interaction_source_kind(&self) -> Result<SpatialInteractionSourceKind> { unsafe { 
@@ -13543,7 +13543,7 @@ impl ISpatialHoldStartedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -13567,7 +13567,7 @@ RT_INTERFACE!{interface ISpatialInteractionController(ISpatialInteractionControl
     fn get_HasTouchpad(&self, out: *mut bool) -> HRESULT,
     fn get_HasThumbstick(&self, out: *mut bool) -> HRESULT,
     #[cfg(not(feature="windows-devices"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-devices")] fn get_SimpleHapticsController(&self, out: *mut *mut ::rt::gen::windows::devices::haptics::SimpleHapticsController) -> HRESULT,
+    #[cfg(feature="windows-devices")] fn get_SimpleHapticsController(&self, out: *mut *mut crate::windows::devices::haptics::SimpleHapticsController) -> HRESULT,
     fn get_VendorId(&self, out: *mut u16) -> HRESULT,
     fn get_ProductId(&self, out: *mut u16) -> HRESULT,
     fn get_Version(&self, out: *mut u16) -> HRESULT
@@ -13583,7 +13583,7 @@ impl ISpatialInteractionController {
         let hr = ((*self.lpVtbl).get_HasThumbstick)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_simple_haptics_controller(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::haptics::SimpleHapticsController>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_simple_haptics_controller(&self) -> Result<Option<ComPtr<crate::windows::devices::haptics::SimpleHapticsController>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_SimpleHapticsController)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -13607,10 +13607,10 @@ impl ISpatialInteractionController {
 RT_CLASS!{class SpatialInteractionController: ISpatialInteractionController}
 DEFINE_IID!(IID_ISpatialInteractionController2, 901175588, 51106, 18871, 183, 46, 84, 54, 178, 251, 143, 156);
 RT_INTERFACE!{interface ISpatialInteractionController2(ISpatialInteractionController2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionController2] {
-    #[cfg(feature="windows-storage")] fn TryGetRenderableModelAsync(&self, out: *mut *mut foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn TryGetRenderableModelAsync(&self, out: *mut *mut foundation::IAsyncOperation<crate::windows::storage::streams::IRandomAccessStreamWithContentType>) -> HRESULT
 }}
 impl ISpatialInteractionController2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn try_get_renderable_model_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn try_get_renderable_model_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IRandomAccessStreamWithContentType>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetRenderableModelAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -13618,10 +13618,10 @@ impl ISpatialInteractionController2 {
 }
 DEFINE_IID!(IID_ISpatialInteractionController3, 1652844192, 40337, 18955, 136, 141, 22, 94, 103, 10, 140, 213);
 RT_INTERFACE!{interface ISpatialInteractionController3(ISpatialInteractionController3Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionController3] {
-    #[cfg(feature="windows-devices")] fn TryGetBatteryReport(&self, out: *mut *mut ::rt::gen::windows::devices::power::BatteryReport) -> HRESULT
+    #[cfg(feature="windows-devices")] fn TryGetBatteryReport(&self, out: *mut *mut crate::windows::devices::power::BatteryReport) -> HRESULT
 }}
 impl ISpatialInteractionController3 {
-    #[cfg(feature="windows-devices")] #[inline] pub fn try_get_battery_report(&self) -> Result<Option<ComPtr<::rt::gen::windows::devices::power::BatteryReport>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn try_get_battery_report(&self) -> Result<Option<ComPtr<crate::windows::devices::power::BatteryReport>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetBatteryReport)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -13679,7 +13679,7 @@ DEFINE_IID!(IID_ISpatialInteractionDetectedEventArgs, 123238628, 22881, 15169, 1
 RT_INTERFACE!{interface ISpatialInteractionDetectedEventArgs(ISpatialInteractionDetectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionDetectedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
     #[cfg(not(feature="windows-perception"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT,
     fn get_Interaction(&self, out: *mut *mut SpatialInteraction) -> HRESULT
 }}
 impl ISpatialInteractionDetectedEventArgs {
@@ -13688,7 +13688,7 @@ impl ISpatialInteractionDetectedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -13725,7 +13725,7 @@ RT_INTERFACE!{interface ISpatialInteractionManager(ISpatialInteractionManagerVtb
     fn remove_SourceReleased(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_InteractionDetected(&self, handler: *mut foundation::TypedEventHandler<SpatialInteractionManager, SpatialInteractionDetectedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_InteractionDetected(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn GetDetectedSourcesAtTimestamp(&self, timeStamp: *mut ::rt::gen::windows::perception::PerceptionTimestamp, out: *mut *mut foundation::collections::IVectorView<SpatialInteractionSourceState>) -> HRESULT
+    #[cfg(feature="windows-perception")] fn GetDetectedSourcesAtTimestamp(&self, timeStamp: *mut crate::windows::perception::PerceptionTimestamp, out: *mut *mut foundation::collections::IVectorView<SpatialInteractionSourceState>) -> HRESULT
 }}
 impl ISpatialInteractionManager {
     #[inline] pub fn add_source_detected(&self, handler: &foundation::TypedEventHandler<SpatialInteractionManager, SpatialInteractionSourceEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
@@ -13782,7 +13782,7 @@ impl ISpatialInteractionManager {
         let hr = ((*self.lpVtbl).remove_InteractionDetected)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn get_detected_sources_at_timestamp(&self, timeStamp: &::rt::gen::windows::perception::PerceptionTimestamp) -> Result<Option<ComPtr<foundation::collections::IVectorView<SpatialInteractionSourceState>>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn get_detected_sources_at_timestamp(&self, timeStamp: &crate::windows::perception::PerceptionTimestamp) -> Result<Option<ComPtr<foundation::collections::IVectorView<SpatialInteractionSourceState>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetDetectedSourcesAtTimestamp)(self as *const _ as *mut _, timeStamp as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -13834,7 +13834,7 @@ RT_INTERFACE!{interface ISpatialInteractionSource2(ISpatialInteractionSource2Vtb
     fn get_IsMenuSupported(&self, out: *mut bool) -> HRESULT,
     fn get_IsGraspSupported(&self, out: *mut bool) -> HRESULT,
     fn get_Controller(&self, out: *mut *mut SpatialInteractionController) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn TryGetStateAtTimestamp(&self, timestamp: *mut ::rt::gen::windows::perception::PerceptionTimestamp, out: *mut *mut SpatialInteractionSourceState) -> HRESULT
+    #[cfg(feature="windows-perception")] fn TryGetStateAtTimestamp(&self, timestamp: *mut crate::windows::perception::PerceptionTimestamp, out: *mut *mut SpatialInteractionSourceState) -> HRESULT
 }}
 impl ISpatialInteractionSource2 {
     #[inline] pub fn get_is_pointing_supported(&self) -> Result<bool> { unsafe { 
@@ -13857,7 +13857,7 @@ impl ISpatialInteractionSource2 {
         let hr = ((*self.lpVtbl).get_Controller)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_state_at_timestamp(&self, timestamp: &::rt::gen::windows::perception::PerceptionTimestamp) -> Result<Option<ComPtr<SpatialInteractionSourceState>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_state_at_timestamp(&self, timestamp: &crate::windows::perception::PerceptionTimestamp) -> Result<Option<ComPtr<SpatialInteractionSourceState>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetStateAtTimestamp)(self as *const _ as *mut _, timestamp as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -13960,12 +13960,12 @@ RT_ENUM! { enum SpatialInteractionSourcePositionAccuracy: i32 {
 }}
 DEFINE_IID!(IID_ISpatialInteractionSourceProperties, 90195266, 16119, 12834, 159, 83, 99, 201, 203, 126, 59, 199);
 RT_INTERFACE!{interface ISpatialInteractionSourceProperties(ISpatialInteractionSourcePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionSourceProperties] {
-    #[cfg(feature="windows-perception")] fn TryGetSourceLossMitigationDirection(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut foundation::IReference<foundation::numerics::Vector3>) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn TryGetSourceLossMitigationDirection(&self, coordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut foundation::IReference<foundation::numerics::Vector3>) -> HRESULT,
     fn get_SourceLossRisk(&self, out: *mut f64) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn TryGetLocation(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialInteractionSourceLocation) -> HRESULT
+    #[cfg(feature="windows-perception")] fn TryGetLocation(&self, coordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialInteractionSourceLocation) -> HRESULT
 }}
 impl ISpatialInteractionSourceProperties {
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_source_loss_mitigation_direction(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<foundation::IReference<foundation::numerics::Vector3>>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_source_loss_mitigation_direction(&self, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<foundation::IReference<foundation::numerics::Vector3>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetSourceLossMitigationDirection)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -13975,7 +13975,7 @@ impl ISpatialInteractionSourceProperties {
         let hr = ((*self.lpVtbl).get_SourceLossRisk)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_location(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialInteractionSourceLocation>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_location(&self, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialInteractionSourceLocation>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetLocation)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -13987,8 +13987,8 @@ RT_INTERFACE!{interface ISpatialInteractionSourceState(ISpatialInteractionSource
     fn get_Source(&self, out: *mut *mut SpatialInteractionSource) -> HRESULT,
     fn get_Properties(&self, out: *mut *mut SpatialInteractionSourceProperties) -> HRESULT,
     fn get_IsPressed(&self, out: *mut bool) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn get_Timestamp(&self, out: *mut *mut ::rt::gen::windows::perception::PerceptionTimestamp) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT
+    #[cfg(feature="windows-perception")] fn get_Timestamp(&self, out: *mut *mut crate::windows::perception::PerceptionTimestamp) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT
 }}
 impl ISpatialInteractionSourceState {
     #[inline] pub fn get_source(&self) -> Result<Option<ComPtr<SpatialInteractionSource>>> { unsafe { 
@@ -14006,12 +14006,12 @@ impl ISpatialInteractionSourceState {
         let hr = ((*self.lpVtbl).get_IsPressed)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn get_timestamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::perception::PerceptionTimestamp>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn get_timestamp(&self) -> Result<Option<ComPtr<crate::windows::perception::PerceptionTimestamp>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Timestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -14068,7 +14068,7 @@ RT_CLASS!{class SpatialManipulationCanceledEventArgs: ISpatialManipulationCancel
 DEFINE_IID!(IID_ISpatialManipulationCompletedEventArgs, 84436994, 62209, 17219, 146, 80, 47, 186, 165, 248, 122, 55);
 RT_INTERFACE!{interface ISpatialManipulationCompletedEventArgs(ISpatialManipulationCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialManipulationCompletedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn TryGetCumulativeDelta(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialManipulationDelta) -> HRESULT
+    #[cfg(feature="windows-perception")] fn TryGetCumulativeDelta(&self, coordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialManipulationDelta) -> HRESULT
 }}
 impl ISpatialManipulationCompletedEventArgs {
     #[inline] pub fn get_interaction_source_kind(&self) -> Result<SpatialInteractionSourceKind> { unsafe { 
@@ -14076,7 +14076,7 @@ impl ISpatialManipulationCompletedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_cumulative_delta(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialManipulationDelta>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_cumulative_delta(&self, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialManipulationDelta>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetCumulativeDelta)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -14098,7 +14098,7 @@ RT_CLASS!{class SpatialManipulationDelta: ISpatialManipulationDelta}
 DEFINE_IID!(IID_ISpatialManipulationStartedEventArgs, 2715204558, 17061, 14203, 173, 166, 210, 142, 61, 56, 71, 55);
 RT_INTERFACE!{interface ISpatialManipulationStartedEventArgs(ISpatialManipulationStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialManipulationStartedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT
+    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT
 }}
 impl ISpatialManipulationStartedEventArgs {
     #[inline] pub fn get_interaction_source_kind(&self) -> Result<SpatialInteractionSourceKind> { unsafe { 
@@ -14106,7 +14106,7 @@ impl ISpatialManipulationStartedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -14116,7 +14116,7 @@ RT_CLASS!{class SpatialManipulationStartedEventArgs: ISpatialManipulationStarted
 DEFINE_IID!(IID_ISpatialManipulationUpdatedEventArgs, 1596132251, 24774, 19910, 189, 201, 159, 74, 111, 21, 254, 73);
 RT_INTERFACE!{interface ISpatialManipulationUpdatedEventArgs(ISpatialManipulationUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialManipulationUpdatedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn TryGetCumulativeDelta(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialManipulationDelta) -> HRESULT
+    #[cfg(feature="windows-perception")] fn TryGetCumulativeDelta(&self, coordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialManipulationDelta) -> HRESULT
 }}
 impl ISpatialManipulationUpdatedEventArgs {
     #[inline] pub fn get_interaction_source_kind(&self) -> Result<SpatialInteractionSourceKind> { unsafe { 
@@ -14124,7 +14124,7 @@ impl ISpatialManipulationUpdatedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_cumulative_delta(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialManipulationDelta>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_cumulative_delta(&self, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialManipulationDelta>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetCumulativeDelta)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -14165,7 +14165,7 @@ DEFINE_IID!(IID_ISpatialNavigationStartedEventArgs, 1967797386, 64356, 18006, 14
 RT_INTERFACE!{interface ISpatialNavigationStartedEventArgs(ISpatialNavigationStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialNavigationStartedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
     #[cfg(not(feature="windows-perception"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT,
     fn get_IsNavigatingX(&self, out: *mut bool) -> HRESULT,
     fn get_IsNavigatingY(&self, out: *mut bool) -> HRESULT,
     fn get_IsNavigatingZ(&self, out: *mut bool) -> HRESULT
@@ -14176,7 +14176,7 @@ impl ISpatialNavigationStartedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -14259,16 +14259,16 @@ impl ISpatialPointerInteractionSourcePose2 {
 }
 DEFINE_IID!(IID_ISpatialPointerPose, 1767089198, 49534, 13693, 151, 161, 114, 105, 208, 237, 45, 16);
 RT_INTERFACE!{interface ISpatialPointerPose(ISpatialPointerPoseVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialPointerPose] {
-    #[cfg(feature="windows-perception")] fn get_Timestamp(&self, out: *mut *mut ::rt::gen::windows::perception::PerceptionTimestamp) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn get_Head(&self, out: *mut *mut ::rt::gen::windows::perception::people::HeadPose) -> HRESULT
+    #[cfg(feature="windows-perception")] fn get_Timestamp(&self, out: *mut *mut crate::windows::perception::PerceptionTimestamp) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn get_Head(&self, out: *mut *mut crate::windows::perception::people::HeadPose) -> HRESULT
 }}
 impl ISpatialPointerPose {
-    #[cfg(feature="windows-perception")] #[inline] pub fn get_timestamp(&self) -> Result<Option<ComPtr<::rt::gen::windows::perception::PerceptionTimestamp>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn get_timestamp(&self) -> Result<Option<ComPtr<crate::windows::perception::PerceptionTimestamp>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Timestamp)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn get_head(&self) -> Result<Option<ComPtr<::rt::gen::windows::perception::people::HeadPose>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn get_head(&self) -> Result<Option<ComPtr<crate::windows::perception::people::HeadPose>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Head)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -14277,7 +14277,7 @@ impl ISpatialPointerPose {
 RT_CLASS!{class SpatialPointerPose: ISpatialPointerPose}
 impl RtActivatable<ISpatialPointerPoseStatics> for SpatialPointerPose {}
 impl SpatialPointerPose {
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_at_timestamp(coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, timestamp: &::rt::gen::windows::perception::PerceptionTimestamp) -> Result<Option<ComPtr<SpatialPointerPose>>> {
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_at_timestamp(coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem, timestamp: &crate::windows::perception::PerceptionTimestamp) -> Result<Option<ComPtr<SpatialPointerPose>>> {
         <Self as RtActivatable<ISpatialPointerPoseStatics>>::get_activation_factory().try_get_at_timestamp(coordinateSystem, timestamp)
     }
 }
@@ -14295,10 +14295,10 @@ impl ISpatialPointerPose2 {
 }
 DEFINE_IID!(IID_ISpatialPointerPoseStatics, 2723516841, 44193, 16096, 152, 22, 120, 92, 251, 46, 63, 184);
 RT_INTERFACE!{static interface ISpatialPointerPoseStatics(ISpatialPointerPoseStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialPointerPoseStatics] {
-    #[cfg(feature="windows-perception")] fn TryGetAtTimestamp(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, timestamp: *mut ::rt::gen::windows::perception::PerceptionTimestamp, out: *mut *mut SpatialPointerPose) -> HRESULT
+    #[cfg(feature="windows-perception")] fn TryGetAtTimestamp(&self, coordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, timestamp: *mut crate::windows::perception::PerceptionTimestamp, out: *mut *mut SpatialPointerPose) -> HRESULT
 }}
 impl ISpatialPointerPoseStatics {
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_at_timestamp(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, timestamp: &::rt::gen::windows::perception::PerceptionTimestamp) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_at_timestamp(&self, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem, timestamp: &crate::windows::perception::PerceptionTimestamp) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetAtTimestamp)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, timestamp as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -14320,7 +14320,7 @@ DEFINE_IID!(IID_ISpatialRecognitionStartedEventArgs, 618271375, 8, 19053, 170, 8
 RT_INTERFACE!{interface ISpatialRecognitionStartedEventArgs(ISpatialRecognitionStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialRecognitionStartedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
     #[cfg(not(feature="windows-perception"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT,
     fn IsGesturePossible(&self, gesture: SpatialGestureSettings, out: *mut bool) -> HRESULT
 }}
 impl ISpatialRecognitionStartedEventArgs {
@@ -14329,7 +14329,7 @@ impl ISpatialRecognitionStartedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -14345,7 +14345,7 @@ DEFINE_IID!(IID_ISpatialTappedEventArgs, 695043038, 62532, 19105, 178, 191, 157,
 RT_INTERFACE!{interface ISpatialTappedEventArgs(ISpatialTappedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialTappedEventArgs] {
     fn get_InteractionSourceKind(&self, out: *mut SpatialInteractionSourceKind) -> HRESULT,
     #[cfg(not(feature="windows-perception"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut ::rt::gen::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn TryGetPointerPose(&self, coordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, out: *mut *mut SpatialPointerPose) -> HRESULT,
     fn get_TapCount(&self, out: *mut u32) -> HRESULT
 }}
 impl ISpatialTappedEventArgs {
@@ -14354,7 +14354,7 @@ impl ISpatialTappedEventArgs {
         let hr = ((*self.lpVtbl).get_InteractionSourceKind)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &::rt::gen::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_pointer_pose(&self, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<SpatialPointerPose>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).TryGetPointerPose)(self as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -14369,7 +14369,7 @@ RT_CLASS!{class SpatialTappedEventArgs: ISpatialTappedEventArgs}
 } // Windows.UI.Input.Spatial
 } // Windows.UI.Input
 pub mod notifications { // Windows.UI.Notifications
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAdaptiveNotificationContent, 3943546470, 29768, 17549, 157, 184, 215, 138, 205, 42, 187, 169);
 RT_INTERFACE!{interface IAdaptiveNotificationContent(IAdaptiveNotificationContentVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveNotificationContent] {
     fn get_Kind(&self, out: *mut AdaptiveNotificationContentKind) -> HRESULT,
@@ -16340,7 +16340,7 @@ RT_ENUM! { enum UserNotificationChangedKind: i32 {
     Added = 0, Removed = 1,
 }}
 pub mod management { // Windows.UI.Notifications.Management
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IUserNotificationListener, 1649753665, 35334, 19695, 130, 21, 96, 51, 165, 190, 75, 3);
 RT_INTERFACE!{interface IUserNotificationListener(IUserNotificationListenerVtbl): IInspectable(IInspectableVtbl) [IID_IUserNotificationListener] {
     fn RequestAccessAsync(&self, out: *mut *mut foundation::IAsyncOperation<UserNotificationListenerAccessStatus>) -> HRESULT,
@@ -16416,7 +16416,7 @@ impl IUserNotificationListenerStatics {
 } // Windows.UI.Notifications.Management
 } // Windows.UI.Notifications
 pub mod popups { // Windows.UI.Popups
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IMessageDialog, 871734017, 21285, 17323, 154, 179, 189, 174, 68, 14, 65, 33);
 RT_INTERFACE!{interface IMessageDialog(IMessageDialogVtbl): IInspectable(IInspectableVtbl) [IID_IMessageDialog] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
@@ -16646,7 +16646,7 @@ impl RtActivatable<IActivationFactory> for UICommandSeparator {}
 DEFINE_CLSID!(UICommandSeparator(&[87,105,110,100,111,119,115,46,85,73,46,80,111,112,117,112,115,46,85,73,67,111,109,109,97,110,100,83,101,112,97,114,97,116,111,114,0]) [CLSID_UICommandSeparator]);
 } // Windows.UI.Popups
 pub mod shell { // Windows.UI.Shell
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAdaptiveCard, 1926256268, 41588, 16845, 130, 168, 152, 157, 64, 185, 176, 94);
 RT_INTERFACE!{interface IAdaptiveCard(IAdaptiveCardVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveCard] {
     fn ToJson(&self, out: *mut HSTRING) -> HRESULT
@@ -16795,7 +16795,7 @@ impl ITaskbarManagerStatics {
 }
 } // Windows.UI.Shell
 pub mod startscreen { // Windows.UI.StartScreen
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum ForegroundText: i32 {
     Dark = 0, Light = 1,
 }}
@@ -17628,7 +17628,7 @@ impl IVisualElementsRequestedEventArgs {
 RT_CLASS!{class VisualElementsRequestedEventArgs: IVisualElementsRequestedEventArgs}
 } // Windows.UI.StartScreen
 pub mod text { // Windows.UI.Text
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum CaretType: i32 {
     Normal = 0, Null = 1,
 }}
@@ -19095,7 +19095,7 @@ RT_ENUM! { enum VerticalCharacterAlignment: i32 {
     Top = 0, Baseline = 1, Bottom = 2,
 }}
 pub mod core { // Windows.UI.Text.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICoreTextCompositionCompletedEventArgs, 523561910, 47007, 16673, 165, 231, 253, 169, 184, 97, 110, 48);
 RT_INTERFACE!{interface ICoreTextCompositionCompletedEventArgs(ICoreTextCompositionCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextCompositionCompletedEventArgs] {
     fn get_IsCanceled(&self, out: *mut bool) -> HRESULT,
@@ -19597,13 +19597,13 @@ DEFINE_CLSID!(CoreTextServicesConstants(&[87,105,110,100,111,119,115,46,85,73,46
 DEFINE_IID!(IID_ICoreTextServicesManager, 3260054915, 28170, 19082, 189, 248, 25, 72, 135, 72, 84, 186);
 RT_INTERFACE!{interface ICoreTextServicesManager(ICoreTextServicesManagerVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextServicesManager] {
     #[cfg(not(feature="windows-globalization"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-globalization")] fn get_InputLanguage(&self, out: *mut *mut ::rt::gen::windows::globalization::Language) -> HRESULT,
+    #[cfg(feature="windows-globalization")] fn get_InputLanguage(&self, out: *mut *mut crate::windows::globalization::Language) -> HRESULT,
     fn add_InputLanguageChanged(&self, handler: *mut foundation::TypedEventHandler<CoreTextServicesManager, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_InputLanguageChanged(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
     fn CreateEditContext(&self, out: *mut *mut CoreTextEditContext) -> HRESULT
 }}
 impl ICoreTextServicesManager {
-    #[cfg(feature="windows-globalization")] #[inline] pub fn get_input_language(&self) -> Result<Option<ComPtr<::rt::gen::windows::globalization::Language>>> { unsafe { 
+    #[cfg(feature="windows-globalization")] #[inline] pub fn get_input_language(&self) -> Result<Option<ComPtr<crate::windows::globalization::Language>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InputLanguage)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -19706,7 +19706,7 @@ RT_INTERFACE!{interface ICoreTextTextUpdatingEventArgs(ICoreTextTextUpdatingEven
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
     fn get_NewSelection(&self, out: *mut CoreTextRange) -> HRESULT,
     #[cfg(not(feature="windows-globalization"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-globalization")] fn get_InputLanguage(&self, out: *mut *mut ::rt::gen::windows::globalization::Language) -> HRESULT,
+    #[cfg(feature="windows-globalization")] fn get_InputLanguage(&self, out: *mut *mut crate::windows::globalization::Language) -> HRESULT,
     fn get_Result(&self, out: *mut CoreTextTextUpdatingResult) -> HRESULT,
     fn put_Result(&self, value: CoreTextTextUpdatingResult) -> HRESULT,
     fn get_IsCanceled(&self, out: *mut bool) -> HRESULT,
@@ -19728,7 +19728,7 @@ impl ICoreTextTextUpdatingEventArgs {
         let hr = ((*self.lpVtbl).get_NewSelection)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-globalization")] #[inline] pub fn get_input_language(&self) -> Result<Option<ComPtr<::rt::gen::windows::globalization::Language>>> { unsafe { 
+    #[cfg(feature="windows-globalization")] #[inline] pub fn get_input_language(&self) -> Result<Option<ComPtr<crate::windows::globalization::Language>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_InputLanguage)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -19760,7 +19760,7 @@ RT_ENUM! { enum CoreTextTextUpdatingResult: i32 {
 } // Windows.UI.Text.Core
 } // Windows.UI.Text
 pub mod viewmanagement { // Windows.UI.ViewManagement
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAccessibilitySettings, 4262363463, 50368, 17762, 185, 98, 19, 39, 181, 42, 213, 185);
 RT_INTERFACE!{interface IAccessibilitySettings(IAccessibilitySettingsVtbl): IInspectable(IInspectableVtbl) [IID_IAccessibilitySettings] {
     fn get_HighContrast(&self, out: *mut bool) -> HRESULT,
@@ -20982,7 +20982,7 @@ RT_ENUM! { enum ViewSizePreference: i32 {
     Default = 0, UseLess = 1, UseHalf = 2, UseMore = 3, UseMinimum = 4, UseNone = 5, Custom = 6,
 }}
 pub mod core { // Windows.UI.ViewManagement.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICoreInputView, 3346058618, 28673, 19506, 191, 148, 37, 193, 245, 84, 203, 241);
 RT_INTERFACE!{interface ICoreInputView(ICoreInputViewVtbl): IInspectable(IInspectableVtbl) [IID_ICoreInputView] {
     fn add_OcclusionsChanged(&self, handler: *mut foundation::TypedEventHandler<CoreInputView, CoreInputViewOcclusionsChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -21185,7 +21185,7 @@ RT_ENUM! { enum CoreInputViewXYFocusTransferDirection: i32 {
 } // Windows.UI.ViewManagement.Core
 } // Windows.UI.ViewManagement
 pub mod webui { // Windows.UI.WebUI
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IActivatedDeferral, 3283949944, 42033, 18904, 167, 106, 57, 90, 78, 3, 220, 243);
 RT_INTERFACE!{interface IActivatedDeferral(IActivatedDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IActivatedDeferral] {
     fn Complete(&self) -> HRESULT

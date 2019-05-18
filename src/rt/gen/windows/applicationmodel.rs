@@ -1,4 +1,4 @@
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum AddResourcePackageOptions: u32 {
     None = 0, ForceTargetAppShutdown = 1, ApplyUpdateIfAvailable = 2,
 }}
@@ -1279,7 +1279,7 @@ impl ISuspendingOperation {
 }
 RT_CLASS!{class SuspendingOperation: ISuspendingOperation}
 pub mod activation { // Windows.ApplicationModel.Activation
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IActivatedEventArgs, 3479508755, 52488, 20440, 182, 151, 162, 129, 182, 84, 78, 46);
 RT_INTERFACE!{interface IActivatedEventArgs(IActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IActivatedEventArgs] {
     fn get_Kind(&self, out: *mut ActivationKind) -> HRESULT,
@@ -2214,7 +2214,7 @@ impl IWebAuthenticationBrokerContinuationEventArgs {
 RT_CLASS!{class WebAuthenticationBrokerContinuationEventArgs: IWebAuthenticationBrokerContinuationEventArgs}
 } // Windows.ApplicationModel.Activation
 pub mod appextensions { // Windows.ApplicationModel.AppExtensions
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAppExtension, 2219872300, 5613, 20399, 147, 234, 34, 55, 187, 248, 203, 214);
 RT_INTERFACE!{interface IAppExtension(IAppExtensionVtbl): IInspectable(IInspectableVtbl) [IID_IAppExtension] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -2458,7 +2458,7 @@ impl IAppExtensionPackageUpdatingEventArgs {
 RT_CLASS!{class AppExtensionPackageUpdatingEventArgs: IAppExtensionPackageUpdatingEventArgs}
 } // Windows.ApplicationModel.AppExtensions
 pub mod appservice { // Windows.ApplicationModel.AppService
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class AppServiceCatalog}
 impl RtActivatable<IAppServiceCatalogStatics> for AppServiceCatalog {}
 impl AppServiceCatalog {
@@ -2698,7 +2698,7 @@ impl IAppServiceTriggerDetails3 {
 }
 } // Windows.ApplicationModel.AppService
 pub mod appointments { // Windows.ApplicationModel.Appointments
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAppointment, 3707776815, 11229, 16502, 144, 163, 34, 194, 117, 49, 41, 101);
 RT_INTERFACE!{interface IAppointment(IAppointmentVtbl): IInspectable(IInspectableVtbl) [IID_IAppointment] {
     fn get_StartTime(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -4474,7 +4474,7 @@ RT_ENUM! { enum RecurrenceType: i32 {
     Master = 0, Instance = 1, ExceptionInstance = 2,
 }}
 pub mod appointmentsprovider { // Windows.ApplicationModel.Appointments.AppointmentsProvider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAddAppointmentOperation, 3964312307, 25101, 19561, 173, 215, 151, 148, 233, 24, 8, 31);
 RT_INTERFACE!{interface IAddAppointmentOperation(IAddAppointmentOperationVtbl): IInspectable(IInspectableVtbl) [IID_IAddAppointmentOperation] {
     fn get_AppointmentInformation(&self, out: *mut *mut super::Appointment) -> HRESULT,
@@ -4670,7 +4670,7 @@ impl IReplaceAppointmentOperation {
 RT_CLASS!{class ReplaceAppointmentOperation: IReplaceAppointmentOperation}
 } // Windows.ApplicationModel.Appointments.AppointmentsProvider
 pub mod dataprovider { // Windows.ApplicationModel.Appointments.DataProvider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAppointmentCalendarCancelMeetingRequest, 1229328269, 25652, 16599, 173, 70, 98, 151, 65, 147, 20, 209);
 RT_INTERFACE!{interface IAppointmentCalendarCancelMeetingRequest(IAppointmentCalendarCancelMeetingRequestVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarCancelMeetingRequest] {
     fn get_AppointmentCalendarLocalId(&self, out: *mut HSTRING) -> HRESULT,
@@ -5171,7 +5171,7 @@ RT_CLASS!{class AppointmentDataProviderTriggerDetails: IAppointmentDataProviderT
 } // Windows.ApplicationModel.Appointments.DataProvider
 } // Windows.ApplicationModel.Appointments
 pub mod background { // Windows.ApplicationModel.Background
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IActivitySensorTrigger, 3504161602, 58235, 18467, 165, 254, 107, 49, 223, 239, 222, 176);
 RT_INTERFACE!{interface IActivitySensorTrigger(IActivitySensorTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IActivitySensorTrigger] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
@@ -7012,7 +7012,7 @@ impl IUserNotificationChangedTriggerFactory {
 }
 } // Windows.ApplicationModel.Background
 pub mod calls { // Windows.ApplicationModel.Calls
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICallAnswerEventArgs, 4252538391, 11735, 19596, 178, 189, 149, 209, 122, 91, 183, 51);
 RT_INTERFACE!{interface ICallAnswerEventArgs(ICallAnswerEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICallAnswerEventArgs] {
     fn get_AcceptedMedia(&self, out: *mut VoipPhoneCallMedia) -> HRESULT
@@ -8437,7 +8437,7 @@ RT_ENUM! { enum VoipPhoneCallState: i32 {
     Ended = 0, Held = 1, Active = 2, Incoming = 3, Outgoing = 4,
 }}
 pub mod background { // Windows.ApplicationModel.Calls.Background
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum PhoneCallBlockedReason: i32 {
     InCallBlockingList = 0, PrivateNumber = 1, UnknownNumber = 2,
 }}
@@ -8542,7 +8542,7 @@ RT_ENUM! { enum PhoneTriggerType: i32 {
 }}
 } // Windows.ApplicationModel.Calls.Background
 pub mod provider { // Windows.ApplicationModel.Calls.Provider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPhoneCallOrigin, 543241337, 3833, 17492, 135, 28, 175, 182, 106, 20, 182, 165);
 RT_INTERFACE!{interface IPhoneCallOrigin(IPhoneCallOriginVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneCallOrigin] {
     fn get_Category(&self, out: *mut HSTRING) -> HRESULT,
@@ -8602,16 +8602,16 @@ impl IPhoneCallOrigin2 {
 }
 DEFINE_IID!(IID_IPhoneCallOrigin3, 1228083124, 53671, 17314, 174, 238, 192, 123, 109, 186, 240, 104);
 RT_INTERFACE!{interface IPhoneCallOrigin3(IPhoneCallOrigin3Vtbl): IInspectable(IInspectableVtbl) [IID_IPhoneCallOrigin3] {
-    #[cfg(feature="windows-storage")] fn get_DisplayPicture(&self, out: *mut *mut ::rt::gen::windows::storage::StorageFile) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn put_DisplayPicture(&self, value: *mut ::rt::gen::windows::storage::StorageFile) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_DisplayPicture(&self, out: *mut *mut crate::windows::storage::StorageFile) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_DisplayPicture(&self, value: *mut crate::windows::storage::StorageFile) -> HRESULT
 }}
 impl IPhoneCallOrigin3 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_display_picture(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::StorageFile>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_display_picture(&self) -> Result<Option<ComPtr<crate::windows::storage::StorageFile>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_DisplayPicture)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_display_picture(&self, value: &::rt::gen::windows::storage::StorageFile) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_display_picture(&self, value: &crate::windows::storage::StorageFile) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_DisplayPicture)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -8669,7 +8669,7 @@ impl IPhoneCallOriginManagerStatics2 {
 } // Windows.ApplicationModel.Calls.Provider
 } // Windows.ApplicationModel.Calls
 pub mod chat { // Windows.ApplicationModel.Chat
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IChatCapabilities, 989820860, 14793, 19921, 173, 45, 57, 100, 221, 157, 64, 63);
 RT_INTERFACE!{interface IChatCapabilities(IChatCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IChatCapabilities] {
     fn get_IsOnline(&self, out: *mut bool) -> HRESULT,
@@ -10494,7 +10494,7 @@ impl IRemoteParticipantComposingChangedEventArgs {
 RT_CLASS!{class RemoteParticipantComposingChangedEventArgs: IRemoteParticipantComposingChangedEventArgs}
 } // Windows.ApplicationModel.Chat
 pub mod communicationblocking { // Windows.ApplicationModel.CommunicationBlocking
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class CommunicationBlockingAccessManager}
 impl RtActivatable<ICommunicationBlockingAccessManagerStatics> for CommunicationBlockingAccessManager {}
 impl CommunicationBlockingAccessManager {
@@ -10601,7 +10601,7 @@ impl ICommunicationBlockingAppManagerStatics2 {
 }
 } // Windows.ApplicationModel.CommunicationBlocking
 pub mod contacts { // Windows.ApplicationModel.Contacts
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAggregateContactManager, 58316253, 56154, 20435, 181, 78, 77, 241, 121, 23, 162, 18);
 RT_INTERFACE!{interface IAggregateContactManager(IAggregateContactManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAggregateContactManager] {
     fn FindRawContactsAsync(&self, contact: *mut Contact, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<Contact>>) -> HRESULT,
@@ -13760,7 +13760,7 @@ RT_ENUM! { enum PinnedContactSurface: i32 {
     StartMenu = 0, Taskbar = 1,
 }}
 pub mod dataprovider { // Windows.ApplicationModel.Contacts.DataProvider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IContactDataProviderConnection, 439978578, 35997, 19823, 164, 224, 17, 30, 154, 18, 90, 48);
 RT_INTERFACE!{interface IContactDataProviderConnection(IContactDataProviderConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IContactDataProviderConnection] {
     fn add_SyncRequested(&self, handler: *mut foundation::TypedEventHandler<ContactDataProviderConnection, ContactListSyncManagerSyncRequestEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -14039,7 +14039,7 @@ impl IContactListSyncManagerSyncRequestEventArgs {
 RT_CLASS!{class ContactListSyncManagerSyncRequestEventArgs: IContactListSyncManagerSyncRequestEventArgs}
 } // Windows.ApplicationModel.Contacts.DataProvider
 pub mod provider { // Windows.ApplicationModel.Contacts.Provider
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum AddContactResult: i32 {
     Added = 0, AlreadyAdded = 1, Unavailable = 2,
 }}
@@ -14121,7 +14121,7 @@ RT_CLASS!{class ContactRemovedEventArgs: IContactRemovedEventArgs}
 } // Windows.ApplicationModel.Contacts.Provider
 } // Windows.ApplicationModel.Contacts
 pub mod core { // Windows.ApplicationModel.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAppListEntry, 4009816191, 8456, 18698, 135, 122, 138, 159, 23, 194, 95, 173);
 RT_INTERFACE!{interface IAppListEntry(IAppListEntryVtbl): IInspectable(IInspectableVtbl) [IID_IAppListEntry] {
     fn get_DisplayInfo(&self, out: *mut *mut super::AppDisplayInfo) -> HRESULT,
@@ -14725,7 +14725,7 @@ impl IUnhandledErrorDetectedEventArgs {
 RT_CLASS!{class UnhandledErrorDetectedEventArgs: IUnhandledErrorDetectedEventArgs}
 } // Windows.ApplicationModel.Core
 pub mod datatransfer { // Windows.ApplicationModel.DataTransfer
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class Clipboard}
 impl RtActivatable<IClipboardStatics> for Clipboard {}
 impl RtActivatable<IClipboardStatics2> for Clipboard {}
@@ -16139,12 +16139,12 @@ impl ITargetApplicationChosenEventArgs {
 }
 RT_CLASS!{class TargetApplicationChosenEventArgs: ITargetApplicationChosenEventArgs}
 pub mod dragdrop { // Windows.ApplicationModel.DataTransfer.DragDrop
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum DragDropModifiers: u32 {
     None = 0, Shift = 1, Control = 2, Alt = 4, LeftButton = 8, MiddleButton = 16, RightButton = 32,
 }}
 pub mod core { // Windows.ApplicationModel.DataTransfer.DragDrop.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICoreDragDropManager, 2102842180, 33892, 20399, 170, 73, 55, 234, 110, 45, 123, 209);
 RT_INTERFACE!{interface ICoreDragDropManager(ICoreDragDropManagerVtbl): IInspectable(IInspectableVtbl) [IID_ICoreDragDropManager] {
     fn add_TargetRequested(&self, value: *mut foundation::TypedEventHandler<CoreDragDropManager, CoreDropOperationTargetRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -16231,9 +16231,9 @@ RT_INTERFACE!{interface ICoreDragOperation(ICoreDragOperationVtbl): IInspectable
     fn get_Data(&self, out: *mut *mut super::super::DataPackage) -> HRESULT,
     fn SetPointerId(&self, pointerId: u32) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn SetDragUIContentFromSoftwareBitmap(&self, softwareBitmap: *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn SetDragUIContentFromSoftwareBitmap(&self, softwareBitmap: *mut crate::windows::graphics::imaging::SoftwareBitmap) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn SetDragUIContentFromSoftwareBitmapWithAnchorPoint(&self, softwareBitmap: *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap, anchorPoint: foundation::Point) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn SetDragUIContentFromSoftwareBitmapWithAnchorPoint(&self, softwareBitmap: *mut crate::windows::graphics::imaging::SoftwareBitmap, anchorPoint: foundation::Point) -> HRESULT,
     fn get_DragUIContentMode(&self, out: *mut CoreDragUIContentMode) -> HRESULT,
     fn put_DragUIContentMode(&self, value: CoreDragUIContentMode) -> HRESULT,
     fn StartAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::super::DataPackageOperation>) -> HRESULT
@@ -16248,11 +16248,11 @@ impl ICoreDragOperation {
         let hr = ((*self.lpVtbl).SetPointerId)(self as *const _ as *mut _, pointerId);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_drag_ui_content_from_software_bitmap(&self, softwareBitmap: &::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_drag_ui_content_from_software_bitmap(&self, softwareBitmap: &crate::windows::graphics::imaging::SoftwareBitmap) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetDragUIContentFromSoftwareBitmap)(self as *const _ as *mut _, softwareBitmap as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_drag_ui_content_from_software_bitmap_with_anchor_point(&self, softwareBitmap: &::rt::gen::windows::graphics::imaging::SoftwareBitmap, anchorPoint: foundation::Point) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_drag_ui_content_from_software_bitmap_with_anchor_point(&self, softwareBitmap: &crate::windows::graphics::imaging::SoftwareBitmap, anchorPoint: foundation::Point) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetDragUIContentFromSoftwareBitmapWithAnchorPoint)(self as *const _ as *mut _, softwareBitmap as *const _ as *mut _, anchorPoint);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -16296,9 +16296,9 @@ RT_ENUM! { enum CoreDragUIContentMode: u32 {
 DEFINE_IID!(IID_ICoreDragUIOverride, 2309509220, 13193, 20303, 136, 151, 126, 138, 63, 251, 60, 147);
 RT_INTERFACE!{interface ICoreDragUIOverride(ICoreDragUIOverrideVtbl): IInspectable(IInspectableVtbl) [IID_ICoreDragUIOverride] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn SetContentFromSoftwareBitmap(&self, softwareBitmap: *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn SetContentFromSoftwareBitmap(&self, softwareBitmap: *mut crate::windows::graphics::imaging::SoftwareBitmap) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-graphics")] fn SetContentFromSoftwareBitmapWithAnchorPoint(&self, softwareBitmap: *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap, anchorPoint: foundation::Point) -> HRESULT,
+    #[cfg(feature="windows-graphics")] fn SetContentFromSoftwareBitmapWithAnchorPoint(&self, softwareBitmap: *mut crate::windows::graphics::imaging::SoftwareBitmap, anchorPoint: foundation::Point) -> HRESULT,
     fn get_IsContentVisible(&self, out: *mut bool) -> HRESULT,
     fn put_IsContentVisible(&self, value: bool) -> HRESULT,
     fn get_Caption(&self, out: *mut HSTRING) -> HRESULT,
@@ -16310,11 +16310,11 @@ RT_INTERFACE!{interface ICoreDragUIOverride(ICoreDragUIOverrideVtbl): IInspectab
     fn Clear(&self) -> HRESULT
 }}
 impl ICoreDragUIOverride {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_content_from_software_bitmap(&self, softwareBitmap: &::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_content_from_software_bitmap(&self, softwareBitmap: &crate::windows::graphics::imaging::SoftwareBitmap) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetContentFromSoftwareBitmap)(self as *const _ as *mut _, softwareBitmap as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_content_from_software_bitmap_with_anchor_point(&self, softwareBitmap: &::rt::gen::windows::graphics::imaging::SoftwareBitmap, anchorPoint: foundation::Point) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_content_from_software_bitmap_with_anchor_point(&self, softwareBitmap: &crate::windows::graphics::imaging::SoftwareBitmap, anchorPoint: foundation::Point) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetContentFromSoftwareBitmapWithAnchorPoint)(self as *const _ as *mut _, softwareBitmap as *const _ as *mut _, anchorPoint);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -16403,15 +16403,15 @@ RT_CLASS!{class CoreDropOperationTargetRequestedEventArgs: ICoreDropOperationTar
 } // Windows.ApplicationModel.DataTransfer.DragDrop.Core
 } // Windows.ApplicationModel.DataTransfer.DragDrop
 pub mod sharetarget { // Windows.ApplicationModel.DataTransfer.ShareTarget
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IQuickLink, 1614693128, 61630, 19164, 172, 201, 139, 39, 171, 156, 245, 86);
 RT_INTERFACE!{interface IQuickLink(IQuickLinkVtbl): IInspectable(IInspectableVtbl) [IID_IQuickLink] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Title(&self, value: HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_Thumbnail(&self, out: *mut *mut ::rt::gen::windows::storage::streams::RandomAccessStreamReference) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_Thumbnail(&self, out: *mut *mut crate::windows::storage::streams::RandomAccessStreamReference) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn put_Thumbnail(&self, value: *mut ::rt::gen::windows::storage::streams::RandomAccessStreamReference) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn put_Thumbnail(&self, value: *mut crate::windows::storage::streams::RandomAccessStreamReference) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Id(&self, value: HSTRING) -> HRESULT,
     fn get_SupportedDataFormats(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
@@ -16427,12 +16427,12 @@ impl IQuickLink {
         let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_thumbnail(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::RandomAccessStreamReference>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_thumbnail(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::RandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_thumbnail(&self, value: &::rt::gen::windows::storage::streams::RandomAccessStreamReference) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_thumbnail(&self, value: &crate::windows::storage::streams::RandomAccessStreamReference) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -16536,7 +16536,7 @@ impl IShareOperation3 {
 } // Windows.ApplicationModel.DataTransfer.ShareTarget
 } // Windows.ApplicationModel.DataTransfer
 pub mod email { // Windows.ApplicationModel.Email
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IEmailAttachment, 4082354937, 22472, 19163, 185, 146, 96, 252, 235, 88, 79, 84);
 RT_INTERFACE!{interface IEmailAttachment(IEmailAttachmentVtbl): IInspectable(IInspectableVtbl) [IID_IEmailAttachment] {
     fn get_FileName(&self, out: *mut HSTRING) -> HRESULT,
@@ -19142,7 +19142,7 @@ RT_INTERFACE!{interface IEmailStoreNotificationTriggerDetails(IEmailStoreNotific
 }}
 RT_CLASS!{class EmailStoreNotificationTriggerDetails: IEmailStoreNotificationTriggerDetails}
 pub mod dataprovider { // Windows.ApplicationModel.Email.DataProvider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IEmailDataProviderConnection, 1000119751, 14258, 19440, 174, 48, 123, 100, 74, 28, 150, 225);
 RT_INTERFACE!{interface IEmailDataProviderConnection(IEmailDataProviderConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IEmailDataProviderConnection] {
     fn add_MailboxSyncRequested(&self, handler: *mut foundation::TypedEventHandler<EmailDataProviderConnection, EmailMailboxSyncManagerSyncRequestEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -20127,7 +20127,7 @@ DEFINE_IID!(IID_IEmailMailboxValidateCertificatesRequest, 2840410417, 57626, 203
 RT_INTERFACE!{interface IEmailMailboxValidateCertificatesRequest(IEmailMailboxValidateCertificatesRequestVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxValidateCertificatesRequest] {
     fn get_EmailMailboxId(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_Certificates(&self, out: *mut *mut foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::Certificate>) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_Certificates(&self, out: *mut *mut foundation::collections::IVectorView<crate::windows::security::cryptography::certificates::Certificate>) -> HRESULT,
     fn ReportCompletedAsync(&self, validationStatuses: *mut foundation::collections::IIterable<super::EmailCertificateValidationStatus>, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn ReportFailedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
@@ -20137,7 +20137,7 @@ impl IEmailMailboxValidateCertificatesRequest {
         let hr = ((*self.lpVtbl).get_EmailMailboxId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_certificates(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<::rt::gen::windows::security::cryptography::certificates::Certificate>>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_certificates(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::security::cryptography::certificates::Certificate>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Certificates)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -20175,7 +20175,7 @@ RT_CLASS!{class EmailMailboxValidateCertificatesRequestEventArgs: IEmailMailboxV
 } // Windows.ApplicationModel.Email.DataProvider
 } // Windows.ApplicationModel.Email
 pub mod extendedexecution { // Windows.ApplicationModel.ExtendedExecution
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum ExtendedExecutionReason: i32 {
     Unspecified = 0, LocationTracking = 1, SavingData = 2,
 }}
@@ -20256,7 +20256,7 @@ RT_CLASS!{class ExtendedExecutionSession: IExtendedExecutionSession}
 impl RtActivatable<IActivationFactory> for ExtendedExecutionSession {}
 DEFINE_CLSID!(ExtendedExecutionSession(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,69,120,116,101,110,100,101,100,69,120,101,99,117,116,105,111,110,46,69,120,116,101,110,100,101,100,69,120,101,99,117,116,105,111,110,83,101,115,115,105,111,110,0]) [CLSID_ExtendedExecutionSession]);
 pub mod foreground { // Windows.ApplicationModel.ExtendedExecution.Foreground
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum ExtendedExecutionForegroundReason: i32 {
     Unspecified = 0, SavingData = 1, BackgroundAudio = 2, Unconstrained = 3,
 }}
@@ -20328,7 +20328,7 @@ DEFINE_CLSID!(ExtendedExecutionForegroundSession(&[87,105,110,100,111,119,115,46
 } // Windows.ApplicationModel.ExtendedExecution.Foreground
 } // Windows.ApplicationModel.ExtendedExecution
 pub mod lockscreen { // Windows.ApplicationModel.LockScreen
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ILockApplicationHost, 955134381, 55631, 20092, 129, 250, 79, 68, 54, 80, 98, 129);
 RT_INTERFACE!{interface ILockApplicationHost(ILockApplicationHostVtbl): IInspectable(IInspectableVtbl) [IID_ILockApplicationHost] {
     fn RequestUnlock(&self) -> HRESULT,
@@ -20511,7 +20511,7 @@ impl ILockScreenUnlockingEventArgs {
 RT_CLASS!{class LockScreenUnlockingEventArgs: ILockScreenUnlockingEventArgs}
 } // Windows.ApplicationModel.LockScreen
 pub mod payments { // Windows.ApplicationModel.Payments
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPaymentAddress, 1596089577, 28474, 16742, 160, 24, 10, 11, 6, 187, 50, 181);
 RT_INTERFACE!{interface IPaymentAddress(IPaymentAddressVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentAddress] {
     fn get_Country(&self, out: *mut HSTRING) -> HRESULT,
@@ -21539,7 +21539,7 @@ impl IPaymentTokenFactory {
     }}
 }
 pub mod provider { // Windows.ApplicationModel.Payments.Provider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPaymentAppCanMakePaymentTriggerDetails, 216138224, 35731, 20150, 140, 70, 46, 74, 108, 106, 38, 246);
 RT_INTERFACE!{interface IPaymentAppCanMakePaymentTriggerDetails(IPaymentAppCanMakePaymentTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentAppCanMakePaymentTriggerDetails] {
     fn get_Request(&self, out: *mut *mut super::PaymentRequest) -> HRESULT,
@@ -21695,7 +21695,7 @@ impl IPaymentTransactionStatics {
 } // Windows.ApplicationModel.Payments
 pub mod preview { // Windows.ApplicationModel.Preview
 pub mod holographic { // Windows.ApplicationModel.Preview.Holographic
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class HolographicApplicationPreview}
 impl RtActivatable<IHolographicApplicationPreviewStatics> for HolographicApplicationPreview {}
 impl HolographicApplicationPreview {
@@ -21726,13 +21726,13 @@ impl IHolographicApplicationPreviewStatics {
 }
 } // Windows.ApplicationModel.Preview.Holographic
 pub mod inkworkspace { // Windows.ApplicationModel.Preview.InkWorkspace
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IInkWorkspaceHostedAppManager, 4262099344, 24153, 19383, 138, 99, 125, 33, 140, 217, 99, 0);
 RT_INTERFACE!{interface IInkWorkspaceHostedAppManager(IInkWorkspaceHostedAppManagerVtbl): IInspectable(IInspectableVtbl) [IID_IInkWorkspaceHostedAppManager] {
-    #[cfg(feature="windows-graphics")] fn SetThumbnailAsync(&self, bitmap: *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+    #[cfg(feature="windows-graphics")] fn SetThumbnailAsync(&self, bitmap: *mut crate::windows::graphics::imaging::SoftwareBitmap, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IInkWorkspaceHostedAppManager {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_thumbnail_async(&self, bitmap: &::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_thumbnail_async(&self, bitmap: &crate::windows::graphics::imaging::SoftwareBitmap) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetThumbnailAsync)(self as *const _ as *mut _, bitmap as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -21759,7 +21759,7 @@ impl IInkWorkspaceHostedAppManagerStatics {
 }
 } // Windows.ApplicationModel.Preview.InkWorkspace
 pub mod notes { // Windows.ApplicationModel.Preview.Notes
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_INotePlacementChangedPreviewEventArgs, 1226659767, 63360, 20095, 169, 57, 154, 76, 175, 150, 82, 20);
 RT_INTERFACE!{interface INotePlacementChangedPreviewEventArgs(INotePlacementChangedPreviewEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_INotePlacementChangedPreviewEventArgs] {
     fn get_ViewId(&self, out: *mut i32) -> HRESULT
@@ -21778,14 +21778,14 @@ RT_INTERFACE!{interface INotesWindowManagerPreview(INotesWindowManagerPreviewVtb
     fn ShowNote(&self, noteViewId: i32) -> HRESULT,
     fn ShowNoteRelativeTo(&self, noteViewId: i32, anchorNoteViewId: i32) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn ShowNoteWithPlacement(&self, noteViewId: i32, data: *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn ShowNoteWithPlacement(&self, noteViewId: i32, data: *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn HideNote(&self, noteViewId: i32) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetNotePlacement(&self, noteViewId: i32, out: *mut *mut ::rt::gen::windows::storage::streams::IBuffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn GetNotePlacement(&self, noteViewId: i32, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
     fn TrySetNoteSize(&self, noteViewId: i32, size: foundation::Size, out: *mut bool) -> HRESULT,
     fn SetFocusToNextView(&self) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy8(&self) -> (),
-    #[cfg(feature="windows-storage")] fn SetNotesThumbnailAsync(&self, thumbnail: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn SetNotesThumbnailAsync(&self, thumbnail: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn add_SystemLockStateChanged(&self, handler: *mut foundation::TypedEventHandler<NotesWindowManagerPreview, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SystemLockStateChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_NotePlacementChanged(&self, handler: *mut foundation::TypedEventHandler<NotesWindowManagerPreview, NotePlacementChangedPreviewEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -21807,7 +21807,7 @@ impl INotesWindowManagerPreview {
         let hr = ((*self.lpVtbl).ShowNoteRelativeTo)(self as *const _ as *mut _, noteViewId, anchorNoteViewId);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn show_note_with_placement(&self, noteViewId: i32, data: &::rt::gen::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn show_note_with_placement(&self, noteViewId: i32, data: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ShowNoteWithPlacement)(self as *const _ as *mut _, noteViewId, data as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -21815,7 +21815,7 @@ impl INotesWindowManagerPreview {
         let hr = ((*self.lpVtbl).HideNote)(self as *const _ as *mut _, noteViewId);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_note_placement(&self, noteViewId: i32) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_note_placement(&self, noteViewId: i32) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetNotePlacement)(self as *const _ as *mut _, noteViewId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -21829,7 +21829,7 @@ impl INotesWindowManagerPreview {
         let hr = ((*self.lpVtbl).SetFocusToNextView)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_notes_thumbnail_async(&self, thumbnail: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_notes_thumbnail_async(&self, thumbnail: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetNotesThumbnailAsync)(self as *const _ as *mut _, thumbnail as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -21874,16 +21874,16 @@ DEFINE_IID!(IID_INotesWindowManagerPreview2, 3992880714, 8020, 19209, 152, 35, 2
 RT_INTERFACE!{interface INotesWindowManagerPreview2(INotesWindowManagerPreview2Vtbl): IInspectable(IInspectableVtbl) [IID_INotesWindowManagerPreview2] {
     fn ShowNoteRelativeToWithOptions(&self, noteViewId: i32, anchorNoteViewId: i32, options: *mut NotesWindowManagerPreviewShowNoteOptions) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn ShowNoteWithPlacementWithOptions(&self, noteViewId: i32, data: *mut ::rt::gen::windows::storage::streams::IBuffer, options: *mut NotesWindowManagerPreviewShowNoteOptions) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn ShowNoteWithPlacementWithOptions(&self, noteViewId: i32, data: *mut crate::windows::storage::streams::IBuffer, options: *mut NotesWindowManagerPreviewShowNoteOptions) -> HRESULT,
     fn SetFocusToPreviousView(&self) -> HRESULT,
-    #[cfg(feature="windows-graphics")] fn SetThumbnailImageForTaskSwitcherAsync(&self, bitmap: *mut ::rt::gen::windows::graphics::imaging::SoftwareBitmap, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+    #[cfg(feature="windows-graphics")] fn SetThumbnailImageForTaskSwitcherAsync(&self, bitmap: *mut crate::windows::graphics::imaging::SoftwareBitmap, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl INotesWindowManagerPreview2 {
     #[inline] pub fn show_note_relative_to_with_options(&self, noteViewId: i32, anchorNoteViewId: i32, options: &NotesWindowManagerPreviewShowNoteOptions) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ShowNoteRelativeToWithOptions)(self as *const _ as *mut _, noteViewId, anchorNoteViewId, options as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn show_note_with_placement_with_options(&self, noteViewId: i32, data: &::rt::gen::windows::storage::streams::IBuffer, options: &NotesWindowManagerPreviewShowNoteOptions) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn show_note_with_placement_with_options(&self, noteViewId: i32, data: &crate::windows::storage::streams::IBuffer, options: &NotesWindowManagerPreviewShowNoteOptions) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ShowNoteWithPlacementWithOptions)(self as *const _ as *mut _, noteViewId, data as *const _ as *mut _, options as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -21891,7 +21891,7 @@ impl INotesWindowManagerPreview2 {
         let hr = ((*self.lpVtbl).SetFocusToPreviousView)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_thumbnail_image_for_task_switcher_async(&self, bitmap: &::rt::gen::windows::graphics::imaging::SoftwareBitmap) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_thumbnail_image_for_task_switcher_async(&self, bitmap: &crate::windows::graphics::imaging::SoftwareBitmap) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SetThumbnailImageForTaskSwitcherAsync)(self as *const _ as *mut _, bitmap as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -21948,7 +21948,7 @@ RT_CLASS!{class NoteVisibilityChangedPreviewEventArgs: INoteVisibilityChangedPre
 } // Windows.ApplicationModel.Preview.Notes
 } // Windows.ApplicationModel.Preview
 pub mod resources { // Windows.ApplicationModel.Resources
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IResourceLoader, 139610376, 5871, 17837, 166, 2, 41, 54, 55, 215, 230, 26);
 RT_INTERFACE!{interface IResourceLoader(IResourceLoaderVtbl): IInspectable(IInspectableVtbl) [IID_IResourceLoader] {
     fn GetString(&self, resource: HSTRING, out: *mut HSTRING) -> HRESULT
@@ -22049,7 +22049,7 @@ impl IResourceLoaderStatics2 {
     }}
 }
 pub mod core { // Windows.ApplicationModel.Resources.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_INamedResource, 479773209, 2835, 16960, 137, 165, 212, 149, 220, 24, 154, 0);
 RT_INTERFACE!{interface INamedResource(INamedResourceVtbl): IInspectable(IInspectableVtbl) [IID_INamedResource] {
     fn get_Uri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
@@ -22100,7 +22100,7 @@ RT_INTERFACE!{interface IResourceCandidate(IResourceCandidateVtbl): IInspectable
     fn get_IsDefault(&self, out: *mut bool) -> HRESULT,
     fn get_ValueAsString(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetValueAsFileAsync(&self, out: *mut *mut foundation::IAsyncOperation<::rt::gen::windows::storage::StorageFile>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn GetValueAsFileAsync(&self, out: *mut *mut foundation::IAsyncOperation<crate::windows::storage::StorageFile>) -> HRESULT,
     fn GetQualifierValue(&self, qualifierName: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
 impl IResourceCandidate {
@@ -22129,7 +22129,7 @@ impl IResourceCandidate {
         let hr = ((*self.lpVtbl).get_ValueAsString)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_value_as_file_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<::rt::gen::windows::storage::StorageFile>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_value_as_file_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::StorageFile>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetValueAsFileAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -22143,10 +22143,10 @@ impl IResourceCandidate {
 RT_CLASS!{class ResourceCandidate: IResourceCandidate}
 DEFINE_IID!(IID_IResourceCandidate2, 1776661608, 63228, 16403, 170, 162, 213, 63, 23, 87, 211, 181);
 RT_INTERFACE!{interface IResourceCandidate2(IResourceCandidate2Vtbl): IInspectable(IInspectableVtbl) [IID_IResourceCandidate2] {
-    #[cfg(feature="windows-storage")] fn GetValueAsStreamAsync(&self, out: *mut *mut foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IRandomAccessStream>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn GetValueAsStreamAsync(&self, out: *mut *mut foundation::IAsyncOperation<crate::windows::storage::streams::IRandomAccessStream>) -> HRESULT
 }}
 impl IResourceCandidate2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_value_as_stream_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IRandomAccessStream>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_value_as_stream_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetValueAsStreamAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -22287,8 +22287,8 @@ RT_INTERFACE!{interface IResourceManager(IResourceManagerVtbl): IInspectable(IIn
     fn get_MainResourceMap(&self, out: *mut *mut ResourceMap) -> HRESULT,
     fn get_AllResourceMaps(&self, out: *mut *mut foundation::collections::IMapView<HString, ResourceMap>) -> HRESULT,
     fn get_DefaultContext(&self, out: *mut *mut ResourceContext) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadPriFiles(&self, files: *mut foundation::collections::IIterable<::rt::gen::windows::storage::IStorageFile>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn UnloadPriFiles(&self, files: *mut foundation::collections::IIterable<::rt::gen::windows::storage::IStorageFile>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn LoadPriFiles(&self, files: *mut foundation::collections::IIterable<crate::windows::storage::IStorageFile>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn UnloadPriFiles(&self, files: *mut foundation::collections::IIterable<crate::windows::storage::IStorageFile>) -> HRESULT
 }}
 impl IResourceManager {
     #[inline] pub fn get_main_resource_map(&self) -> Result<Option<ComPtr<ResourceMap>>> { unsafe { 
@@ -22306,11 +22306,11 @@ impl IResourceManager {
         let hr = ((*self.lpVtbl).get_DefaultContext)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_pri_files(&self, files: &foundation::collections::IIterable<::rt::gen::windows::storage::IStorageFile>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_pri_files(&self, files: &foundation::collections::IIterable<crate::windows::storage::IStorageFile>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).LoadPriFiles)(self as *const _ as *mut _, files as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn unload_pri_files(&self, files: &foundation::collections::IIterable<::rt::gen::windows::storage::IStorageFile>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn unload_pri_files(&self, files: &foundation::collections::IIterable<crate::windows::storage::IStorageFile>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).UnloadPriFiles)(self as *const _ as *mut _, files as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -22437,7 +22437,7 @@ RT_ENUM! { enum ResourceQualifierPersistence: i32 {
 RT_CLASS!{class ResourceQualifierVectorView: foundation::collections::IVectorView<ResourceQualifier>}
 } // Windows.ApplicationModel.Resources.Core
 pub mod management { // Windows.ApplicationModel.Resources.Management
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IIndexedResourceCandidate, 241278707, 64236, 17428, 169, 215, 84, 172, 213, 149, 63, 41);
 RT_INTERFACE!{interface IIndexedResourceCandidate(IIndexedResourceCandidateVtbl): IInspectable(IInspectableVtbl) [IID_IIndexedResourceCandidate] {
     fn get_Type(&self, out: *mut IndexedResourceType) -> HRESULT,
@@ -22555,7 +22555,7 @@ impl IResourceIndexerFactory2 {
 } // Windows.ApplicationModel.Resources.Management
 } // Windows.ApplicationModel.Resources
 pub mod search { // Windows.ApplicationModel.Search
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ILocalContentSuggestionSettings, 4004425826, 29757, 17774, 132, 163, 35, 240, 111, 45, 21, 215);
 RT_INTERFACE!{interface ILocalContentSuggestionSettings(ILocalContentSuggestionSettingsVtbl): IInspectable(IInspectableVtbl) [IID_ILocalContentSuggestionSettings] {
     fn put_Enabled(&self, value: bool) -> HRESULT,
@@ -23034,7 +23034,7 @@ impl ISearchSuggestionsRequestDeferral {
 }
 RT_CLASS!{class SearchSuggestionsRequestDeferral: ISearchSuggestionsRequestDeferral}
 pub mod core { // Windows.ApplicationModel.Search.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IRequestingFocusOnKeyboardInputEventArgs, 2702794535, 45479, 16802, 135, 157, 106, 104, 104, 126, 89, 133);
 RT_INTERFACE!{interface IRequestingFocusOnKeyboardInputEventArgs(IRequestingFocusOnKeyboardInputEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRequestingFocusOnKeyboardInputEventArgs] {
     
@@ -23047,7 +23047,7 @@ RT_INTERFACE!{interface ISearchSuggestion(ISearchSuggestionVtbl): IInspectable(I
     fn get_Tag(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DetailText(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_Image(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IRandomAccessStreamReference) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_Image(&self, out: *mut *mut crate::windows::storage::streams::IRandomAccessStreamReference) -> HRESULT,
     fn get_ImageAlternateText(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ISearchSuggestion {
@@ -23071,7 +23071,7 @@ impl ISearchSuggestion {
         let hr = ((*self.lpVtbl).get_DetailText)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_image(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_image(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_Image)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -23212,7 +23212,7 @@ RT_CLASS!{class SearchSuggestionsRequestedEventArgs: ISearchSuggestionsRequested
 } // Windows.ApplicationModel.Search.Core
 } // Windows.ApplicationModel.Search
 pub mod socialinfo { // Windows.ApplicationModel.SocialInfo
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ISocialFeedChildItem, 191535194, 54685, 16574, 152, 12, 72, 138, 42, 179, 10, 131);
 RT_INTERFACE!{interface ISocialFeedChildItem(ISocialFeedChildItemVtbl): IInspectable(IInspectableVtbl) [IID_ISocialFeedChildItem] {
     fn get_Author(&self, out: *mut *mut SocialUserInfo) -> HRESULT,
@@ -23607,7 +23607,7 @@ impl ISocialUserInfo {
 }
 RT_CLASS!{class SocialUserInfo: ISocialUserInfo}
 pub mod provider { // Windows.ApplicationModel.SocialInfo.Provider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ISocialDashboardItemUpdater, 1021222345, 18432, 18125, 134, 155, 25, 115, 236, 104, 91, 222);
 RT_INTERFACE!{interface ISocialDashboardItemUpdater(ISocialDashboardItemUpdaterVtbl): IInspectable(IInspectableVtbl) [IID_ISocialDashboardItemUpdater] {
     fn get_OwnerRemoteId(&self, out: *mut HSTRING) -> HRESULT,
@@ -23760,7 +23760,7 @@ impl ISocialInfoProviderManagerStatics {
 } // Windows.ApplicationModel.SocialInfo.Provider
 } // Windows.ApplicationModel.SocialInfo
 pub mod store { // Windows.ApplicationModel.Store
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_ICurrentApp, 3576545381, 55871, 18053, 153, 94, 155, 72, 46, 181, 230, 3);
 RT_INTERFACE!{static interface ICurrentApp(ICurrentAppVtbl): IInspectable(IInspectableVtbl) [IID_ICurrentApp] {
     fn get_LicenseInformation(&self, out: *mut *mut LicenseInformation) -> HRESULT,
@@ -24506,12 +24506,12 @@ impl IUnfulfilledConsumable {
 }
 RT_CLASS!{class UnfulfilledConsumable: IUnfulfilledConsumable}
 pub mod licensemanagement { // Windows.ApplicationModel.Store.LicenseManagement
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class LicenseManager}
 impl RtActivatable<ILicenseManagerStatics> for LicenseManager {}
 impl RtActivatable<ILicenseManagerStatics2> for LicenseManager {}
 impl LicenseManager {
-    #[cfg(feature="windows-storage")] #[inline] pub fn add_license_async(license: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn add_license_async(license: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> {
         <Self as RtActivatable<ILicenseManagerStatics>>::get_activation_factory().add_license_async(license)
     }
     #[inline] pub fn get_satisfaction_infos_async(contentIds: &foundation::collections::IIterable<HString>, keyIds: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<LicenseSatisfactionResult>>> {
@@ -24525,11 +24525,11 @@ DEFINE_CLSID!(LicenseManager(&[87,105,110,100,111,119,115,46,65,112,112,108,105,
 DEFINE_IID!(IID_ILicenseManagerStatics, 3047963360, 55879, 20256, 154, 35, 9, 24, 44, 148, 118, 255);
 RT_INTERFACE!{static interface ILicenseManagerStatics(ILicenseManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILicenseManagerStatics] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn AddLicenseAsync(&self, license: *mut ::rt::gen::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn AddLicenseAsync(&self, license: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn GetSatisfactionInfosAsync(&self, contentIds: *mut foundation::collections::IIterable<HString>, keyIds: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<LicenseSatisfactionResult>) -> HRESULT
 }}
 impl ILicenseManagerStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn add_license_async(&self, license: &::rt::gen::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn add_license_async(&self, license: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).AddLicenseAsync)(self as *const _ as *mut _, license as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -24622,7 +24622,7 @@ impl ILicenseSatisfactionResult {
 RT_CLASS!{class LicenseSatisfactionResult: ILicenseSatisfactionResult}
 } // Windows.ApplicationModel.Store.LicenseManagement
 pub mod preview { // Windows.ApplicationModel.Store.Preview
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum DeliveryOptimizationDownloadMode: i32 {
     Simple = 0, HttpOnly = 1, Lan = 2, Group = 3, Internet = 4, Bypass = 5,
 }}
@@ -24699,46 +24699,46 @@ impl StoreConfiguration {
     #[inline] pub fn has_store_web_account() -> Result<bool> {
         <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().has_store_web_account()
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn has_store_web_account_for_user(user: &::rt::gen::windows::system::User) -> Result<bool> {
+    #[cfg(feature="windows-system")] #[inline] pub fn has_store_web_account_for_user(user: &crate::windows::system::User) -> Result<bool> {
         <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().has_store_web_account_for_user(user)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_store_log_data_async(options: StoreLogOptions) -> Result<ComPtr<foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IRandomAccessStreamReference>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_store_log_data_async(options: StoreLogOptions) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IRandomAccessStreamReference>>> {
         <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().get_store_log_data_async(options)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn set_store_web_account_id_for_user(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg) -> Result<()> {
+    #[cfg(feature="windows-system")] #[inline] pub fn set_store_web_account_id_for_user(user: &crate::windows::system::User, webAccountId: &HStringArg) -> Result<()> {
         <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().set_store_web_account_id_for_user(user, webAccountId)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn is_store_web_account_id_for_user(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg) -> Result<bool> {
+    #[cfg(feature="windows-system")] #[inline] pub fn is_store_web_account_id_for_user(user: &crate::windows::system::User, webAccountId: &HStringArg) -> Result<bool> {
         <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().is_store_web_account_id_for_user(user, webAccountId)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_purchase_prompting_policy_for_user(user: &::rt::gen::windows::system::User) -> Result<Option<ComPtr<foundation::IReference<u32>>>> {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_purchase_prompting_policy_for_user(user: &crate::windows::system::User) -> Result<Option<ComPtr<foundation::IReference<u32>>>> {
         <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().get_purchase_prompting_policy_for_user(user)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn set_purchase_prompting_policy_for_user(user: &::rt::gen::windows::system::User, value: &foundation::IReference<u32>) -> Result<()> {
+    #[cfg(feature="windows-system")] #[inline] pub fn set_purchase_prompting_policy_for_user(user: &crate::windows::system::User, value: &foundation::IReference<u32>) -> Result<()> {
         <Self as RtActivatable<IStoreConfigurationStatics3>>::get_activation_factory().set_purchase_prompting_policy_for_user(user, value)
     }
     #[inline] pub fn get_store_web_account_id() -> Result<HString> {
         <Self as RtActivatable<IStoreConfigurationStatics4>>::get_activation_factory().get_store_web_account_id()
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_store_web_account_id_for_user(user: &::rt::gen::windows::system::User) -> Result<HString> {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_store_web_account_id_for_user(user: &crate::windows::system::User) -> Result<HString> {
         <Self as RtActivatable<IStoreConfigurationStatics4>>::get_activation_factory().get_store_web_account_id_for_user(user)
     }
     #[inline] pub fn set_enterprise_store_web_account_id(webAccountId: &HStringArg) -> Result<()> {
         <Self as RtActivatable<IStoreConfigurationStatics4>>::get_activation_factory().set_enterprise_store_web_account_id(webAccountId)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn set_enterprise_store_web_account_id_for_user(user: &::rt::gen::windows::system::User, webAccountId: &HStringArg) -> Result<()> {
+    #[cfg(feature="windows-system")] #[inline] pub fn set_enterprise_store_web_account_id_for_user(user: &crate::windows::system::User, webAccountId: &HStringArg) -> Result<()> {
         <Self as RtActivatable<IStoreConfigurationStatics4>>::get_activation_factory().set_enterprise_store_web_account_id_for_user(user, webAccountId)
     }
     #[inline] pub fn get_enterprise_store_web_account_id() -> Result<HString> {
         <Self as RtActivatable<IStoreConfigurationStatics4>>::get_activation_factory().get_enterprise_store_web_account_id()
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_enterprise_store_web_account_id_for_user(user: &::rt::gen::windows::system::User) -> Result<HString> {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_enterprise_store_web_account_id_for_user(user: &crate::windows::system::User) -> Result<HString> {
         <Self as RtActivatable<IStoreConfigurationStatics4>>::get_activation_factory().get_enterprise_store_web_account_id_for_user(user)
     }
     #[inline] pub fn should_restrict_to_enterprise_store_only() -> Result<bool> {
         <Self as RtActivatable<IStoreConfigurationStatics4>>::get_activation_factory().should_restrict_to_enterprise_store_only()
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn should_restrict_to_enterprise_store_only_for_user(user: &::rt::gen::windows::system::User) -> Result<bool> {
+    #[cfg(feature="windows-system")] #[inline] pub fn should_restrict_to_enterprise_store_only_for_user(user: &crate::windows::system::User) -> Result<bool> {
         <Self as RtActivatable<IStoreConfigurationStatics4>>::get_activation_factory().should_restrict_to_enterprise_store_only_for_user(user)
     }
     #[inline] pub fn is_pin_to_desktop_supported() -> Result<bool> {
@@ -24753,7 +24753,7 @@ impl StoreConfiguration {
     #[inline] pub fn pin_to_desktop(appPackageFamilyName: &HStringArg) -> Result<()> {
         <Self as RtActivatable<IStoreConfigurationStatics5>>::get_activation_factory().pin_to_desktop(appPackageFamilyName)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn pin_to_desktop_for_user(user: &::rt::gen::windows::system::User, appPackageFamilyName: &HStringArg) -> Result<()> {
+    #[cfg(feature="windows-system")] #[inline] pub fn pin_to_desktop_for_user(user: &crate::windows::system::User, appPackageFamilyName: &HStringArg) -> Result<()> {
         <Self as RtActivatable<IStoreConfigurationStatics5>>::get_activation_factory().pin_to_desktop_for_user(user, appPackageFamilyName)
     }
 }
@@ -24815,13 +24815,13 @@ impl IStoreConfigurationStatics2 {
 DEFINE_IID!(IID_IStoreConfigurationStatics3, 1833301372, 61764, 19637, 157, 63, 78, 176, 94, 48, 182, 211);
 RT_INTERFACE!{static interface IStoreConfigurationStatics3(IStoreConfigurationStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreConfigurationStatics3] {
     fn HasStoreWebAccount(&self, out: *mut bool) -> HRESULT,
-    #[cfg(feature="windows-system")] fn HasStoreWebAccountForUser(&self, user: *mut ::rt::gen::windows::system::User, out: *mut bool) -> HRESULT,
+    #[cfg(feature="windows-system")] fn HasStoreWebAccountForUser(&self, user: *mut crate::windows::system::User, out: *mut bool) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetStoreLogDataAsync(&self, options: StoreLogOptions, out: *mut *mut foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IRandomAccessStreamReference>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn SetStoreWebAccountIdForUser(&self, user: *mut ::rt::gen::windows::system::User, webAccountId: HSTRING) -> HRESULT,
-    #[cfg(feature="windows-system")] fn IsStoreWebAccountIdForUser(&self, user: *mut ::rt::gen::windows::system::User, webAccountId: HSTRING, out: *mut bool) -> HRESULT,
-    #[cfg(feature="windows-system")] fn GetPurchasePromptingPolicyForUser(&self, user: *mut ::rt::gen::windows::system::User, out: *mut *mut foundation::IReference<u32>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn SetPurchasePromptingPolicyForUser(&self, user: *mut ::rt::gen::windows::system::User, value: *mut foundation::IReference<u32>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn GetStoreLogDataAsync(&self, options: StoreLogOptions, out: *mut *mut foundation::IAsyncOperation<crate::windows::storage::streams::IRandomAccessStreamReference>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn SetStoreWebAccountIdForUser(&self, user: *mut crate::windows::system::User, webAccountId: HSTRING) -> HRESULT,
+    #[cfg(feature="windows-system")] fn IsStoreWebAccountIdForUser(&self, user: *mut crate::windows::system::User, webAccountId: HSTRING, out: *mut bool) -> HRESULT,
+    #[cfg(feature="windows-system")] fn GetPurchasePromptingPolicyForUser(&self, user: *mut crate::windows::system::User, out: *mut *mut foundation::IReference<u32>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn SetPurchasePromptingPolicyForUser(&self, user: *mut crate::windows::system::User, value: *mut foundation::IReference<u32>) -> HRESULT
 }}
 impl IStoreConfigurationStatics3 {
     #[inline] pub fn has_store_web_account(&self) -> Result<bool> { unsafe { 
@@ -24829,31 +24829,31 @@ impl IStoreConfigurationStatics3 {
         let hr = ((*self.lpVtbl).HasStoreWebAccount)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn has_store_web_account_for_user(&self, user: &::rt::gen::windows::system::User) -> Result<bool> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn has_store_web_account_for_user(&self, user: &crate::windows::system::User) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).HasStoreWebAccountForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_store_log_data_async(&self, options: StoreLogOptions) -> Result<ComPtr<foundation::IAsyncOperation<::rt::gen::windows::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_store_log_data_async(&self, options: StoreLogOptions) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetStoreLogDataAsync)(self as *const _ as *mut _, options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn set_store_web_account_id_for_user(&self, user: &::rt::gen::windows::system::User, webAccountId: &HStringArg) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn set_store_web_account_id_for_user(&self, user: &crate::windows::system::User, webAccountId: &HStringArg) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetStoreWebAccountIdForUser)(self as *const _ as *mut _, user as *const _ as *mut _, webAccountId.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn is_store_web_account_id_for_user(&self, user: &::rt::gen::windows::system::User, webAccountId: &HStringArg) -> Result<bool> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn is_store_web_account_id_for_user(&self, user: &crate::windows::system::User, webAccountId: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).IsStoreWebAccountIdForUser)(self as *const _ as *mut _, user as *const _ as *mut _, webAccountId.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_purchase_prompting_policy_for_user(&self, user: &::rt::gen::windows::system::User) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_purchase_prompting_policy_for_user(&self, user: &crate::windows::system::User) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetPurchasePromptingPolicyForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn set_purchase_prompting_policy_for_user(&self, user: &::rt::gen::windows::system::User, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn set_purchase_prompting_policy_for_user(&self, user: &crate::windows::system::User, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetPurchasePromptingPolicyForUser)(self as *const _ as *mut _, user as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -24861,13 +24861,13 @@ impl IStoreConfigurationStatics3 {
 DEFINE_IID!(IID_IStoreConfigurationStatics4, 553604818, 20195, 19696, 155, 18, 85, 44, 3, 49, 15, 117);
 RT_INTERFACE!{static interface IStoreConfigurationStatics4(IStoreConfigurationStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreConfigurationStatics4] {
     fn GetStoreWebAccountId(&self, out: *mut HSTRING) -> HRESULT,
-    #[cfg(feature="windows-system")] fn GetStoreWebAccountIdForUser(&self, user: *mut ::rt::gen::windows::system::User, out: *mut HSTRING) -> HRESULT,
+    #[cfg(feature="windows-system")] fn GetStoreWebAccountIdForUser(&self, user: *mut crate::windows::system::User, out: *mut HSTRING) -> HRESULT,
     fn SetEnterpriseStoreWebAccountId(&self, webAccountId: HSTRING) -> HRESULT,
-    #[cfg(feature="windows-system")] fn SetEnterpriseStoreWebAccountIdForUser(&self, user: *mut ::rt::gen::windows::system::User, webAccountId: HSTRING) -> HRESULT,
+    #[cfg(feature="windows-system")] fn SetEnterpriseStoreWebAccountIdForUser(&self, user: *mut crate::windows::system::User, webAccountId: HSTRING) -> HRESULT,
     fn GetEnterpriseStoreWebAccountId(&self, out: *mut HSTRING) -> HRESULT,
-    #[cfg(feature="windows-system")] fn GetEnterpriseStoreWebAccountIdForUser(&self, user: *mut ::rt::gen::windows::system::User, out: *mut HSTRING) -> HRESULT,
+    #[cfg(feature="windows-system")] fn GetEnterpriseStoreWebAccountIdForUser(&self, user: *mut crate::windows::system::User, out: *mut HSTRING) -> HRESULT,
     fn ShouldRestrictToEnterpriseStoreOnly(&self, out: *mut bool) -> HRESULT,
-    #[cfg(feature="windows-system")] fn ShouldRestrictToEnterpriseStoreOnlyForUser(&self, user: *mut ::rt::gen::windows::system::User, out: *mut bool) -> HRESULT
+    #[cfg(feature="windows-system")] fn ShouldRestrictToEnterpriseStoreOnlyForUser(&self, user: *mut crate::windows::system::User, out: *mut bool) -> HRESULT
 }}
 impl IStoreConfigurationStatics4 {
     #[inline] pub fn get_store_web_account_id(&self) -> Result<HString> { unsafe { 
@@ -24875,7 +24875,7 @@ impl IStoreConfigurationStatics4 {
         let hr = ((*self.lpVtbl).GetStoreWebAccountId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_store_web_account_id_for_user(&self, user: &::rt::gen::windows::system::User) -> Result<HString> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_store_web_account_id_for_user(&self, user: &crate::windows::system::User) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetStoreWebAccountIdForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -24884,7 +24884,7 @@ impl IStoreConfigurationStatics4 {
         let hr = ((*self.lpVtbl).SetEnterpriseStoreWebAccountId)(self as *const _ as *mut _, webAccountId.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn set_enterprise_store_web_account_id_for_user(&self, user: &::rt::gen::windows::system::User, webAccountId: &HStringArg) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn set_enterprise_store_web_account_id_for_user(&self, user: &crate::windows::system::User, webAccountId: &HStringArg) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).SetEnterpriseStoreWebAccountIdForUser)(self as *const _ as *mut _, user as *const _ as *mut _, webAccountId.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -24893,7 +24893,7 @@ impl IStoreConfigurationStatics4 {
         let hr = ((*self.lpVtbl).GetEnterpriseStoreWebAccountId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_enterprise_store_web_account_id_for_user(&self, user: &::rt::gen::windows::system::User) -> Result<HString> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_enterprise_store_web_account_id_for_user(&self, user: &crate::windows::system::User) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetEnterpriseStoreWebAccountIdForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -24903,7 +24903,7 @@ impl IStoreConfigurationStatics4 {
         let hr = ((*self.lpVtbl).ShouldRestrictToEnterpriseStoreOnly)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn should_restrict_to_enterprise_store_only_for_user(&self, user: &::rt::gen::windows::system::User) -> Result<bool> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn should_restrict_to_enterprise_store_only_for_user(&self, user: &crate::windows::system::User) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.lpVtbl).ShouldRestrictToEnterpriseStoreOnlyForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -24915,7 +24915,7 @@ RT_INTERFACE!{static interface IStoreConfigurationStatics5(IStoreConfigurationSt
     fn IsPinToTaskbarSupported(&self, out: *mut bool) -> HRESULT,
     fn IsPinToStartSupported(&self, out: *mut bool) -> HRESULT,
     fn PinToDesktop(&self, appPackageFamilyName: HSTRING) -> HRESULT,
-    #[cfg(feature="windows-system")] fn PinToDesktopForUser(&self, user: *mut ::rt::gen::windows::system::User, appPackageFamilyName: HSTRING) -> HRESULT
+    #[cfg(feature="windows-system")] fn PinToDesktopForUser(&self, user: *mut crate::windows::system::User, appPackageFamilyName: HSTRING) -> HRESULT
 }}
 impl IStoreConfigurationStatics5 {
     #[inline] pub fn is_pin_to_desktop_supported(&self) -> Result<bool> { unsafe { 
@@ -24937,7 +24937,7 @@ impl IStoreConfigurationStatics5 {
         let hr = ((*self.lpVtbl).PinToDesktop)(self as *const _ as *mut _, appPackageFamilyName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn pin_to_desktop_for_user(&self, user: &::rt::gen::windows::system::User, appPackageFamilyName: &HStringArg) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn pin_to_desktop_for_user(&self, user: &crate::windows::system::User, appPackageFamilyName: &HStringArg) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).PinToDesktopForUser)(self as *const _ as *mut _, user as *const _ as *mut _, appPackageFamilyName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -25119,16 +25119,16 @@ RT_ENUM! { enum StoreSystemFeature: i32 {
 }}
 DEFINE_IID!(IID_IWebAuthenticationCoreManagerHelper, 111478053, 59157, 16675, 146, 118, 157, 111, 134, 91, 165, 95);
 RT_INTERFACE!{static interface IWebAuthenticationCoreManagerHelper(IWebAuthenticationCoreManagerHelperVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerHelper] {
-    #[cfg(all(feature="windows-security",feature="windows-ui-xaml"))] fn RequestTokenWithUIElementHostingAsync(&self, request: *mut ::rt::gen::windows::security::authentication::web::core::WebTokenRequest, uiElement: *mut ::rt::gen::windows::ui::xaml::UIElement, out: *mut *mut foundation::IAsyncOperation<::rt::gen::windows::security::authentication::web::core::WebTokenRequestResult>) -> HRESULT,
-    #[cfg(all(feature="windows-security",feature="windows-ui-xaml"))] fn RequestTokenWithUIElementHostingAndWebAccountAsync(&self, request: *mut ::rt::gen::windows::security::authentication::web::core::WebTokenRequest, webAccount: *mut ::rt::gen::windows::security::credentials::WebAccount, uiElement: *mut ::rt::gen::windows::ui::xaml::UIElement, out: *mut *mut foundation::IAsyncOperation<::rt::gen::windows::security::authentication::web::core::WebTokenRequestResult>) -> HRESULT
+    #[cfg(all(feature="windows-security",feature="windows-ui-xaml"))] fn RequestTokenWithUIElementHostingAsync(&self, request: *mut crate::windows::security::authentication::web::core::WebTokenRequest, uiElement: *mut crate::windows::ui::xaml::UIElement, out: *mut *mut foundation::IAsyncOperation<crate::windows::security::authentication::web::core::WebTokenRequestResult>) -> HRESULT,
+    #[cfg(all(feature="windows-security",feature="windows-ui-xaml"))] fn RequestTokenWithUIElementHostingAndWebAccountAsync(&self, request: *mut crate::windows::security::authentication::web::core::WebTokenRequest, webAccount: *mut crate::windows::security::credentials::WebAccount, uiElement: *mut crate::windows::ui::xaml::UIElement, out: *mut *mut foundation::IAsyncOperation<crate::windows::security::authentication::web::core::WebTokenRequestResult>) -> HRESULT
 }}
 impl IWebAuthenticationCoreManagerHelper {
-    #[cfg(all(feature="windows-security",feature="windows-ui-xaml"))] #[inline] pub fn request_token_with_uielement_hosting_async(&self, request: &::rt::gen::windows::security::authentication::web::core::WebTokenRequest, uiElement: &::rt::gen::windows::ui::xaml::UIElement) -> Result<ComPtr<foundation::IAsyncOperation<::rt::gen::windows::security::authentication::web::core::WebTokenRequestResult>>> { unsafe { 
+    #[cfg(all(feature="windows-security",feature="windows-ui-xaml"))] #[inline] pub fn request_token_with_uielement_hosting_async(&self, request: &crate::windows::security::authentication::web::core::WebTokenRequest, uiElement: &crate::windows::ui::xaml::UIElement) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::security::authentication::web::core::WebTokenRequestResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RequestTokenWithUIElementHostingAsync)(self as *const _ as *mut _, request as *const _ as *mut _, uiElement as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(all(feature="windows-security",feature="windows-ui-xaml"))] #[inline] pub fn request_token_with_uielement_hosting_and_web_account_async(&self, request: &::rt::gen::windows::security::authentication::web::core::WebTokenRequest, webAccount: &::rt::gen::windows::security::credentials::WebAccount, uiElement: &::rt::gen::windows::ui::xaml::UIElement) -> Result<ComPtr<foundation::IAsyncOperation<::rt::gen::windows::security::authentication::web::core::WebTokenRequestResult>>> { unsafe { 
+    #[cfg(all(feature="windows-security",feature="windows-ui-xaml"))] #[inline] pub fn request_token_with_uielement_hosting_and_web_account_async(&self, request: &crate::windows::security::authentication::web::core::WebTokenRequest, webAccount: &crate::windows::security::credentials::WebAccount, uiElement: &crate::windows::ui::xaml::UIElement) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::security::authentication::web::core::WebTokenRequestResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).RequestTokenWithUIElementHostingAndWebAccountAsync)(self as *const _ as *mut _, request as *const _ as *mut _, webAccount as *const _ as *mut _, uiElement as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -25137,16 +25137,16 @@ impl IWebAuthenticationCoreManagerHelper {
 RT_CLASS!{static class WebAuthenticationCoreManagerHelper}
 impl RtActivatable<IWebAuthenticationCoreManagerHelper> for WebAuthenticationCoreManagerHelper {}
 impl WebAuthenticationCoreManagerHelper {
-    #[cfg(all(feature="windows-security",feature="windows-ui-xaml"))] #[inline] pub fn request_token_with_uielement_hosting_async(request: &::rt::gen::windows::security::authentication::web::core::WebTokenRequest, uiElement: &::rt::gen::windows::ui::xaml::UIElement) -> Result<ComPtr<foundation::IAsyncOperation<::rt::gen::windows::security::authentication::web::core::WebTokenRequestResult>>> {
+    #[cfg(all(feature="windows-security",feature="windows-ui-xaml"))] #[inline] pub fn request_token_with_uielement_hosting_async(request: &crate::windows::security::authentication::web::core::WebTokenRequest, uiElement: &crate::windows::ui::xaml::UIElement) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::security::authentication::web::core::WebTokenRequestResult>>> {
         <Self as RtActivatable<IWebAuthenticationCoreManagerHelper>>::get_activation_factory().request_token_with_uielement_hosting_async(request, uiElement)
     }
-    #[cfg(all(feature="windows-security",feature="windows-ui-xaml"))] #[inline] pub fn request_token_with_uielement_hosting_and_web_account_async(request: &::rt::gen::windows::security::authentication::web::core::WebTokenRequest, webAccount: &::rt::gen::windows::security::credentials::WebAccount, uiElement: &::rt::gen::windows::ui::xaml::UIElement) -> Result<ComPtr<foundation::IAsyncOperation<::rt::gen::windows::security::authentication::web::core::WebTokenRequestResult>>> {
+    #[cfg(all(feature="windows-security",feature="windows-ui-xaml"))] #[inline] pub fn request_token_with_uielement_hosting_and_web_account_async(request: &crate::windows::security::authentication::web::core::WebTokenRequest, webAccount: &crate::windows::security::credentials::WebAccount, uiElement: &crate::windows::ui::xaml::UIElement) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::security::authentication::web::core::WebTokenRequestResult>>> {
         <Self as RtActivatable<IWebAuthenticationCoreManagerHelper>>::get_activation_factory().request_token_with_uielement_hosting_and_web_account_async(request, webAccount, uiElement)
     }
 }
 DEFINE_CLSID!(WebAuthenticationCoreManagerHelper(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,111,114,101,46,80,114,101,118,105,101,119,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,67,111,114,101,77,97,110,97,103,101,114,72,101,108,112,101,114,0]) [CLSID_WebAuthenticationCoreManagerHelper]);
 pub mod installcontrol { // Windows.ApplicationModel.Store.Preview.InstallControl
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum AppInstallationToastNotificationMode: i32 {
     Default = 0, Toast = 1, ToastWithoutPopup = 2, NoToast = 3,
 }}
@@ -25504,53 +25504,53 @@ impl IAppInstallManager2 {
 DEFINE_IID!(IID_IAppInstallManager3, 2511489815, 59754, 19726, 132, 225, 200, 203, 65, 122, 1, 120);
 RT_INTERFACE!{interface IAppInstallManager3(IAppInstallManager3Vtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallManager3] {
     #[cfg(not(feature="windows-management"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-management")] fn StartProductInstallAsync(&self, productId: HSTRING, catalogId: HSTRING, flightId: HSTRING, clientId: HSTRING, repair: bool, forceUseOfNonRemovableStorage: bool, correlationVector: HSTRING, targetVolume: *mut ::rt::gen::windows::management::deployment::PackageVolume, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
+    #[cfg(feature="windows-management")] fn StartProductInstallAsync(&self, productId: HSTRING, catalogId: HSTRING, flightId: HSTRING, clientId: HSTRING, repair: bool, forceUseOfNonRemovableStorage: bool, correlationVector: HSTRING, targetVolume: *mut crate::windows::management::deployment::PackageVolume, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
     #[cfg(not(all(feature="windows-management",feature="windows-system")))] fn __Dummy1(&self) -> (),
-    #[cfg(all(feature="windows-management",feature="windows-system"))] fn StartProductInstallForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, productId: HSTRING, catalogId: HSTRING, flightId: HSTRING, clientId: HSTRING, repair: bool, forceUseOfNonRemovableStorage: bool, correlationVector: HSTRING, targetVolume: *mut ::rt::gen::windows::management::deployment::PackageVolume, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
+    #[cfg(all(feature="windows-management",feature="windows-system"))] fn StartProductInstallForUserAsync(&self, user: *mut crate::windows::system::User, productId: HSTRING, catalogId: HSTRING, flightId: HSTRING, clientId: HSTRING, repair: bool, forceUseOfNonRemovableStorage: bool, correlationVector: HSTRING, targetVolume: *mut crate::windows::management::deployment::PackageVolume, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
     #[cfg(not(feature="windows-system"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-system")] fn UpdateAppByPackageFamilyNameForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, packageFamilyName: HSTRING, correlationVector: HSTRING, out: *mut *mut foundation::IAsyncOperation<AppInstallItem>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn UpdateAppByPackageFamilyNameForUserAsync(&self, user: *mut crate::windows::system::User, packageFamilyName: HSTRING, correlationVector: HSTRING, out: *mut *mut foundation::IAsyncOperation<AppInstallItem>) -> HRESULT,
     #[cfg(not(feature="windows-system"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-system")] fn SearchForUpdatesForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, productId: HSTRING, skuId: HSTRING, catalogId: HSTRING, correlationVector: HSTRING, out: *mut *mut foundation::IAsyncOperation<AppInstallItem>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn SearchForUpdatesForUserAsync(&self, user: *mut crate::windows::system::User, productId: HSTRING, skuId: HSTRING, catalogId: HSTRING, correlationVector: HSTRING, out: *mut *mut foundation::IAsyncOperation<AppInstallItem>) -> HRESULT,
     #[cfg(not(feature="windows-system"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-system")] fn SearchForAllUpdatesForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, correlationVector: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn SearchForAllUpdatesForUserAsync(&self, user: *mut crate::windows::system::User, correlationVector: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
     #[cfg(not(feature="windows-system"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-system")] fn GetIsAppAllowedToInstallForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, productId: HSTRING, skuId: HSTRING, catalogId: HSTRING, correlationVector: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn GetIsAppAllowedToInstallForUserAsync(&self, user: *mut crate::windows::system::User, productId: HSTRING, skuId: HSTRING, catalogId: HSTRING, correlationVector: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
     #[cfg(not(feature="windows-system"))] fn __Dummy6(&self) -> (),
-    #[cfg(feature="windows-system")] fn GetIsApplicableForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, productId: HSTRING, skuId: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn GetIsApplicableForUserAsync(&self, user: *mut crate::windows::system::User, productId: HSTRING, skuId: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
     fn MoveToFrontOfDownloadQueue(&self, productId: HSTRING, correlationVector: HSTRING) -> HRESULT
 }}
 impl IAppInstallManager3 {
-    #[cfg(feature="windows-management")] #[inline] pub fn start_product_install_async(&self, productId: &HStringArg, catalogId: &HStringArg, flightId: &HStringArg, clientId: &HStringArg, repair: bool, forceUseOfNonRemovableStorage: bool, correlationVector: &HStringArg, targetVolume: &::rt::gen::windows::management::deployment::PackageVolume) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
+    #[cfg(feature="windows-management")] #[inline] pub fn start_product_install_async(&self, productId: &HStringArg, catalogId: &HStringArg, flightId: &HStringArg, clientId: &HStringArg, repair: bool, forceUseOfNonRemovableStorage: bool, correlationVector: &HStringArg, targetVolume: &crate::windows::management::deployment::PackageVolume) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).StartProductInstallAsync)(self as *const _ as *mut _, productId.get(), catalogId.get(), flightId.get(), clientId.get(), repair, forceUseOfNonRemovableStorage, correlationVector.get(), targetVolume as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(all(feature="windows-management",feature="windows-system"))] #[inline] pub fn start_product_install_for_user_async(&self, user: &::rt::gen::windows::system::User, productId: &HStringArg, catalogId: &HStringArg, flightId: &HStringArg, clientId: &HStringArg, repair: bool, forceUseOfNonRemovableStorage: bool, correlationVector: &HStringArg, targetVolume: &::rt::gen::windows::management::deployment::PackageVolume) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
+    #[cfg(all(feature="windows-management",feature="windows-system"))] #[inline] pub fn start_product_install_for_user_async(&self, user: &crate::windows::system::User, productId: &HStringArg, catalogId: &HStringArg, flightId: &HStringArg, clientId: &HStringArg, repair: bool, forceUseOfNonRemovableStorage: bool, correlationVector: &HStringArg, targetVolume: &crate::windows::management::deployment::PackageVolume) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).StartProductInstallForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, productId.get(), catalogId.get(), flightId.get(), clientId.get(), repair, forceUseOfNonRemovableStorage, correlationVector.get(), targetVolume as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn update_app_by_package_family_name_for_user_async(&self, user: &::rt::gen::windows::system::User, packageFamilyName: &HStringArg, correlationVector: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<AppInstallItem>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn update_app_by_package_family_name_for_user_async(&self, user: &crate::windows::system::User, packageFamilyName: &HStringArg, correlationVector: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<AppInstallItem>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).UpdateAppByPackageFamilyNameForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, packageFamilyName.get(), correlationVector.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn search_for_updates_for_user_async(&self, user: &::rt::gen::windows::system::User, productId: &HStringArg, skuId: &HStringArg, catalogId: &HStringArg, correlationVector: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<AppInstallItem>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn search_for_updates_for_user_async(&self, user: &crate::windows::system::User, productId: &HStringArg, skuId: &HStringArg, catalogId: &HStringArg, correlationVector: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<AppInstallItem>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SearchForUpdatesForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, productId.get(), skuId.get(), catalogId.get(), correlationVector.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn search_for_all_updates_for_user_async(&self, user: &::rt::gen::windows::system::User, correlationVector: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn search_for_all_updates_for_user_async(&self, user: &crate::windows::system::User, correlationVector: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SearchForAllUpdatesForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, correlationVector.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_is_app_allowed_to_install_for_user_async(&self, user: &::rt::gen::windows::system::User, productId: &HStringArg, skuId: &HStringArg, catalogId: &HStringArg, correlationVector: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_is_app_allowed_to_install_for_user_async(&self, user: &crate::windows::system::User, productId: &HStringArg, skuId: &HStringArg, catalogId: &HStringArg, correlationVector: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetIsAppAllowedToInstallForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, productId.get(), skuId.get(), catalogId.get(), correlationVector.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_is_applicable_for_user_async(&self, user: &::rt::gen::windows::system::User, productId: &HStringArg, skuId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_is_applicable_for_user_async(&self, user: &crate::windows::system::User, productId: &HStringArg, skuId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetIsApplicableForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, productId.get(), skuId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -25564,7 +25564,7 @@ DEFINE_IID!(IID_IAppInstallManager4, 638200342, 23198, 20157, 185, 68, 242, 186,
 RT_INTERFACE!{interface IAppInstallManager4(IAppInstallManager4Vtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallManager4] {
     fn GetFreeUserEntitlementAsync(&self, storeId: HSTRING, campaignId: HSTRING, correlationVector: HSTRING, out: *mut *mut foundation::IAsyncOperation<GetEntitlementResult>) -> HRESULT,
     #[cfg(not(feature="windows-system"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-system")] fn GetFreeUserEntitlementForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, storeId: HSTRING, campaignId: HSTRING, correlationVector: HSTRING, out: *mut *mut foundation::IAsyncOperation<GetEntitlementResult>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn GetFreeUserEntitlementForUserAsync(&self, user: *mut crate::windows::system::User, storeId: HSTRING, campaignId: HSTRING, correlationVector: HSTRING, out: *mut *mut foundation::IAsyncOperation<GetEntitlementResult>) -> HRESULT,
     fn GetFreeDeviceEntitlementAsync(&self, storeId: HSTRING, campaignId: HSTRING, correlationVector: HSTRING, out: *mut *mut foundation::IAsyncOperation<GetEntitlementResult>) -> HRESULT
 }}
 impl IAppInstallManager4 {
@@ -25573,7 +25573,7 @@ impl IAppInstallManager4 {
         let hr = ((*self.lpVtbl).GetFreeUserEntitlementAsync)(self as *const _ as *mut _, storeId.get(), campaignId.get(), correlationVector.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_free_user_entitlement_for_user_async(&self, user: &::rt::gen::windows::system::User, storeId: &HStringArg, campaignId: &HStringArg, correlationVector: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GetEntitlementResult>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_free_user_entitlement_for_user_async(&self, user: &crate::windows::system::User, storeId: &HStringArg, campaignId: &HStringArg, correlationVector: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GetEntitlementResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetFreeUserEntitlementForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, storeId.get(), campaignId.get(), correlationVector.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -25598,13 +25598,13 @@ impl IAppInstallManager5 {
 DEFINE_IID!(IID_IAppInstallManager6, 3387413512, 62074, 17521, 178, 244, 231, 110, 252, 190, 188, 202);
 RT_INTERFACE!{interface IAppInstallManager6(IAppInstallManager6Vtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallManager6] {
     fn SearchForAllUpdatesWithUpdateOptionsAsync(&self, correlationVector: HSTRING, clientId: HSTRING, updateOptions: *mut AppUpdateOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn SearchForAllUpdatesWithUpdateOptionsForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, correlationVector: HSTRING, clientId: HSTRING, updateOptions: *mut AppUpdateOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn SearchForAllUpdatesWithUpdateOptionsForUserAsync(&self, user: *mut crate::windows::system::User, correlationVector: HSTRING, clientId: HSTRING, updateOptions: *mut AppUpdateOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
     fn SearchForUpdatesWithUpdateOptionsAsync(&self, productId: HSTRING, skuId: HSTRING, correlationVector: HSTRING, clientId: HSTRING, updateOptions: *mut AppUpdateOptions, out: *mut *mut foundation::IAsyncOperation<AppInstallItem>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn SearchForUpdatesWithUpdateOptionsForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, productId: HSTRING, skuId: HSTRING, correlationVector: HSTRING, clientId: HSTRING, updateOptions: *mut AppUpdateOptions, out: *mut *mut foundation::IAsyncOperation<AppInstallItem>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn SearchForUpdatesWithUpdateOptionsForUserAsync(&self, user: *mut crate::windows::system::User, productId: HSTRING, skuId: HSTRING, correlationVector: HSTRING, clientId: HSTRING, updateOptions: *mut AppUpdateOptions, out: *mut *mut foundation::IAsyncOperation<AppInstallItem>) -> HRESULT,
     fn StartProductInstallWithOptionsAsync(&self, productId: HSTRING, flightId: HSTRING, clientId: HSTRING, correlationVector: HSTRING, installOptions: *mut AppInstallOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn StartProductInstallWithOptionsForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, productId: HSTRING, flightId: HSTRING, clientId: HSTRING, correlationVector: HSTRING, installOptions: *mut AppInstallOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn StartProductInstallWithOptionsForUserAsync(&self, user: *mut crate::windows::system::User, productId: HSTRING, flightId: HSTRING, clientId: HSTRING, correlationVector: HSTRING, installOptions: *mut AppInstallOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>) -> HRESULT,
     fn GetIsPackageIdentityAllowedToInstallAsync(&self, correlationVector: HSTRING, packageIdentityName: HSTRING, publisherCertificateName: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn GetIsPackageIdentityAllowedToInstallForUserAsync(&self, user: *mut ::rt::gen::windows::system::User, correlationVector: HSTRING, packageIdentityName: HSTRING, publisherCertificateName: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+    #[cfg(feature="windows-system")] fn GetIsPackageIdentityAllowedToInstallForUserAsync(&self, user: *mut crate::windows::system::User, correlationVector: HSTRING, packageIdentityName: HSTRING, publisherCertificateName: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
 impl IAppInstallManager6 {
     #[inline] pub fn search_for_all_updates_with_update_options_async(&self, correlationVector: &HStringArg, clientId: &HStringArg, updateOptions: &AppUpdateOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
@@ -25612,7 +25612,7 @@ impl IAppInstallManager6 {
         let hr = ((*self.lpVtbl).SearchForAllUpdatesWithUpdateOptionsAsync)(self as *const _ as *mut _, correlationVector.get(), clientId.get(), updateOptions as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn search_for_all_updates_with_update_options_for_user_async(&self, user: &::rt::gen::windows::system::User, correlationVector: &HStringArg, clientId: &HStringArg, updateOptions: &AppUpdateOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn search_for_all_updates_with_update_options_for_user_async(&self, user: &crate::windows::system::User, correlationVector: &HStringArg, clientId: &HStringArg, updateOptions: &AppUpdateOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SearchForAllUpdatesWithUpdateOptionsForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, correlationVector.get(), clientId.get(), updateOptions as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -25622,7 +25622,7 @@ impl IAppInstallManager6 {
         let hr = ((*self.lpVtbl).SearchForUpdatesWithUpdateOptionsAsync)(self as *const _ as *mut _, productId.get(), skuId.get(), correlationVector.get(), clientId.get(), updateOptions as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn search_for_updates_with_update_options_for_user_async(&self, user: &::rt::gen::windows::system::User, productId: &HStringArg, skuId: &HStringArg, correlationVector: &HStringArg, clientId: &HStringArg, updateOptions: &AppUpdateOptions) -> Result<ComPtr<foundation::IAsyncOperation<AppInstallItem>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn search_for_updates_with_update_options_for_user_async(&self, user: &crate::windows::system::User, productId: &HStringArg, skuId: &HStringArg, correlationVector: &HStringArg, clientId: &HStringArg, updateOptions: &AppUpdateOptions) -> Result<ComPtr<foundation::IAsyncOperation<AppInstallItem>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).SearchForUpdatesWithUpdateOptionsForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, productId.get(), skuId.get(), correlationVector.get(), clientId.get(), updateOptions as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -25632,7 +25632,7 @@ impl IAppInstallManager6 {
         let hr = ((*self.lpVtbl).StartProductInstallWithOptionsAsync)(self as *const _ as *mut _, productId.get(), flightId.get(), clientId.get(), correlationVector.get(), installOptions as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn start_product_install_with_options_for_user_async(&self, user: &::rt::gen::windows::system::User, productId: &HStringArg, flightId: &HStringArg, clientId: &HStringArg, correlationVector: &HStringArg, installOptions: &AppInstallOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn start_product_install_with_options_for_user_async(&self, user: &crate::windows::system::User, productId: &HStringArg, flightId: &HStringArg, clientId: &HStringArg, correlationVector: &HStringArg, installOptions: &AppInstallOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AppInstallItem>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).StartProductInstallWithOptionsForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, productId.get(), flightId.get(), clientId.get(), correlationVector.get(), installOptions as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -25642,7 +25642,7 @@ impl IAppInstallManager6 {
         let hr = ((*self.lpVtbl).GetIsPackageIdentityAllowedToInstallAsync)(self as *const _ as *mut _, correlationVector.get(), packageIdentityName.get(), publisherCertificateName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_is_package_identity_allowed_to_install_for_user_async(&self, user: &::rt::gen::windows::system::User, correlationVector: &HStringArg, packageIdentityName: &HStringArg, publisherCertificateName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_is_package_identity_allowed_to_install_for_user_async(&self, user: &crate::windows::system::User, correlationVector: &HStringArg, packageIdentityName: &HStringArg, publisherCertificateName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetIsPackageIdentityAllowedToInstallForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, correlationVector.get(), packageIdentityName.get(), publisherCertificateName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
@@ -25682,9 +25682,9 @@ RT_INTERFACE!{interface IAppInstallOptions(IAppInstallOptionsVtbl): IInspectable
     fn get_Repair(&self, out: *mut bool) -> HRESULT,
     fn put_Repair(&self, value: bool) -> HRESULT,
     #[cfg(not(feature="windows-management"))] fn __Dummy8(&self) -> (),
-    #[cfg(feature="windows-management")] fn get_TargetVolume(&self, out: *mut *mut ::rt::gen::windows::management::deployment::PackageVolume) -> HRESULT,
+    #[cfg(feature="windows-management")] fn get_TargetVolume(&self, out: *mut *mut crate::windows::management::deployment::PackageVolume) -> HRESULT,
     #[cfg(not(feature="windows-management"))] fn __Dummy9(&self) -> (),
-    #[cfg(feature="windows-management")] fn put_TargetVolume(&self, value: *mut ::rt::gen::windows::management::deployment::PackageVolume) -> HRESULT,
+    #[cfg(feature="windows-management")] fn put_TargetVolume(&self, value: *mut crate::windows::management::deployment::PackageVolume) -> HRESULT,
     fn get_LaunchAfterInstall(&self, out: *mut bool) -> HRESULT,
     fn put_LaunchAfterInstall(&self, value: bool) -> HRESULT
 }}
@@ -25725,12 +25725,12 @@ impl IAppInstallOptions {
         let hr = ((*self.lpVtbl).put_Repair)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-management")] #[inline] pub fn get_target_volume(&self) -> Result<Option<ComPtr<::rt::gen::windows::management::deployment::PackageVolume>>> { unsafe { 
+    #[cfg(feature="windows-management")] #[inline] pub fn get_target_volume(&self) -> Result<Option<ComPtr<crate::windows::management::deployment::PackageVolume>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_TargetVolume)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-management")] #[inline] pub fn set_target_volume(&self, value: &::rt::gen::windows::management::deployment::PackageVolume) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-management")] #[inline] pub fn set_target_volume(&self, value: &crate::windows::management::deployment::PackageVolume) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_TargetVolume)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -25893,11 +25893,11 @@ RT_CLASS!{class AppInstallStatus: IAppInstallStatus}
 DEFINE_IID!(IID_IAppInstallStatus2, 2531754378, 24210, 19113, 142, 220, 88, 254, 212, 184, 126, 0);
 RT_INTERFACE!{interface IAppInstallStatus2(IAppInstallStatus2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallStatus2] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut ::rt::gen::windows::system::User) -> HRESULT,
+    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut crate::windows::system::User) -> HRESULT,
     fn get_ReadyForLaunch(&self, out: *mut bool) -> HRESULT
 }}
 impl IAppInstallStatus2 {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<::rt::gen::windows::system::User>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<crate::windows::system::User>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_User)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -25990,7 +25990,7 @@ RT_ENUM! { enum GetEntitlementStatus: i32 {
 } // Windows.ApplicationModel.Store.Preview
 } // Windows.ApplicationModel.Store
 pub mod useractivities { // Windows.ApplicationModel.UserActivities
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IUserActivity, 4228923038, 11435, 19766, 174, 162, 180, 187, 85, 108, 239, 15);
 RT_INTERFACE!{interface IUserActivity(IUserActivityVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivity] {
     fn get_State(&self, out: *mut UserActivityState) -> HRESULT,
@@ -26511,7 +26511,7 @@ impl IUserActivityVisualElements2 {
     }}
 }
 pub mod core { // Windows.ApplicationModel.UserActivities.Core
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class CoreUserActivityManager}
 impl RtActivatable<ICoreUserActivityManagerStatics> for CoreUserActivityManager {}
 impl CoreUserActivityManager {
@@ -26543,7 +26543,7 @@ impl ICoreUserActivityManagerStatics {
 } // Windows.ApplicationModel.UserActivities.Core
 } // Windows.ApplicationModel.UserActivities
 pub mod userdataaccounts { // Windows.ApplicationModel.UserDataAccounts
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IUserDataAccount, 3116643966, 45896, 18704, 190, 148, 74, 212, 187, 166, 222, 167);
 RT_INTERFACE!{interface IUserDataAccount(IUserDataAccountVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccount] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -26880,7 +26880,7 @@ impl IUserDataAccountStoreChangedEventArgs {
 }
 RT_CLASS!{class UserDataAccountStoreChangedEventArgs: IUserDataAccountStoreChangedEventArgs}
 pub mod provider { // Windows.ApplicationModel.UserDataAccounts.Provider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IUserDataAccountPartnerAccountInfo, 1595932727, 63215, 20163, 134, 48, 1, 44, 89, 193, 20, 159);
 RT_INTERFACE!{interface IUserDataAccountPartnerAccountInfo(IUserDataAccountPartnerAccountInfoVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccountPartnerAccountInfo] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -26981,7 +26981,7 @@ impl IUserDataAccountProviderSettingsOperation {
 RT_CLASS!{class UserDataAccountProviderSettingsOperation: IUserDataAccountProviderSettingsOperation}
 } // Windows.ApplicationModel.UserDataAccounts.Provider
 pub mod systemaccess { // Windows.ApplicationModel.UserDataAccounts.SystemAccess
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum DeviceAccountAuthenticationType: i32 {
     Basic = 0, OAuth = 1, SingleSignOn = 2,
 }}
@@ -27172,13 +27172,13 @@ DEFINE_CLSID!(DeviceAccountConfiguration(&[87,105,110,100,111,119,115,46,65,112,
 DEFINE_IID!(IID_IDeviceAccountConfiguration2, 4071810470, 29325, 19018, 137, 69, 43, 248, 88, 1, 54, 222);
 RT_INTERFACE!{interface IDeviceAccountConfiguration2(IDeviceAccountConfiguration2Vtbl): IInspectable(IInspectableVtbl) [IID_IDeviceAccountConfiguration2] {
     #[cfg(not(feature="windows-security"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_IncomingServerCredential(&self, out: *mut *mut ::rt::gen::windows::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_IncomingServerCredential(&self, out: *mut *mut crate::windows::security::credentials::PasswordCredential) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-security")] fn put_IncomingServerCredential(&self, value: *mut ::rt::gen::windows::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn put_IncomingServerCredential(&self, value: *mut crate::windows::security::credentials::PasswordCredential) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_OutgoingServerCredential(&self, out: *mut *mut ::rt::gen::windows::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_OutgoingServerCredential(&self, out: *mut *mut crate::windows::security::credentials::PasswordCredential) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-security")] fn put_OutgoingServerCredential(&self, value: *mut ::rt::gen::windows::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn put_OutgoingServerCredential(&self, value: *mut crate::windows::security::credentials::PasswordCredential) -> HRESULT,
     fn get_OAuthRefreshToken(&self, out: *mut HSTRING) -> HRESULT,
     fn put_OAuthRefreshToken(&self, value: HSTRING) -> HRESULT,
     fn get_IsExternallyManaged(&self, out: *mut bool) -> HRESULT,
@@ -27233,21 +27233,21 @@ RT_INTERFACE!{interface IDeviceAccountConfiguration2(IDeviceAccountConfiguration
     fn put_IsSyncScheduleManagedBySystem(&self, value: bool) -> HRESULT
 }}
 impl IDeviceAccountConfiguration2 {
-    #[cfg(feature="windows-security")] #[inline] pub fn get_incoming_server_credential(&self) -> Result<Option<ComPtr<::rt::gen::windows::security::credentials::PasswordCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_incoming_server_credential(&self) -> Result<Option<ComPtr<crate::windows::security::credentials::PasswordCredential>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_IncomingServerCredential)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_incoming_server_credential(&self, value: &::rt::gen::windows::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn set_incoming_server_credential(&self, value: &crate::windows::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_IncomingServerCredential)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_outgoing_server_credential(&self) -> Result<Option<ComPtr<::rt::gen::windows::security::credentials::PasswordCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_outgoing_server_credential(&self) -> Result<Option<ComPtr<crate::windows::security::credentials::PasswordCredential>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_OutgoingServerCredential)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_outgoing_server_credential(&self, value: &::rt::gen::windows::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn set_outgoing_server_credential(&self, value: &crate::windows::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).put_OutgoingServerCredential)(self as *const _ as *mut _, value as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -27563,7 +27563,7 @@ impl IUserDataAccountSystemAccessManagerStatics2 {
 } // Windows.ApplicationModel.UserDataAccounts.SystemAccess
 } // Windows.ApplicationModel.UserDataAccounts
 pub mod userdatatasks { // Windows.ApplicationModel.UserDataTasks
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IUserDataTask, 2087028177, 57556, 20377, 174, 226, 188, 45, 93, 218, 223, 76);
 RT_INTERFACE!{interface IUserDataTask(IUserDataTaskVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTask] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -28245,7 +28245,7 @@ RT_ENUM! { enum UserDataTaskWeekOfMonth: i32 {
     First = 0, Second = 1, Third = 2, Fourth = 3, Last = 4,
 }}
 pub mod dataprovider { // Windows.ApplicationModel.UserDataTasks.DataProvider
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IUserDataTaskDataProviderConnection, 2683542813, 42055, 17035, 175, 233, 229, 64, 43, 222, 176, 65);
 RT_INTERFACE!{interface IUserDataTaskDataProviderConnection(IUserDataTaskDataProviderConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskDataProviderConnection] {
     fn add_CreateOrUpdateTaskRequested(&self, handler: *mut foundation::TypedEventHandler<UserDataTaskDataProviderConnection, UserDataTaskListCreateOrUpdateTaskRequestEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -28561,7 +28561,7 @@ RT_CLASS!{class UserDataTaskListSyncManagerSyncRequestEventArgs: IUserDataTaskLi
 } // Windows.ApplicationModel.UserDataTasks.DataProvider
 } // Windows.ApplicationModel.UserDataTasks
 pub mod voicecommands { // Windows.ApplicationModel.VoiceCommands
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IVoiceCommand, 2473546355, 60546, 17062, 165, 92, 210, 215, 158, 198, 249, 32);
 RT_INTERFACE!{interface IVoiceCommand(IVoiceCommandVtbl): IInspectable(IInspectableVtbl) [IID_IVoiceCommand] {
     fn get_CommandName(&self, out: *mut HSTRING) -> HRESULT,
@@ -28994,7 +28994,7 @@ impl RtActivatable<IActivationFactory> for VoiceCommandUserMessage {}
 DEFINE_CLSID!(VoiceCommandUserMessage(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,86,111,105,99,101,67,111,109,109,97,110,100,115,46,86,111,105,99,101,67,111,109,109,97,110,100,85,115,101,114,77,101,115,115,97,103,101,0]) [CLSID_VoiceCommandUserMessage]);
 } // Windows.ApplicationModel.VoiceCommands
 pub mod wallet { // Windows.ApplicationModel.Wallet
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum WalletActionKind: i32 {
     OpenItem = 0, Transaction = 1, MoreTransactions = 2, Message = 3, Verb = 4,
 }}
@@ -29719,7 +29719,7 @@ impl IWalletVerbFactory {
     }}
 }
 pub mod system { // Windows.ApplicationModel.Wallet.System
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum WalletItemAppAssociation: i32 {
     None = 0, AppInstalled = 1, AppNotInstalled = 2,
 }}
@@ -29728,7 +29728,7 @@ RT_INTERFACE!{interface IWalletItemSystemStore(IWalletItemSystemStoreVtbl): IIns
     fn GetItemsAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::WalletItem>>) -> HRESULT,
     fn DeleteAsync(&self, item: *mut super::WalletItem, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-storage")] fn ImportItemAsync(&self, stream: *mut ::rt::gen::windows::storage::streams::IRandomAccessStreamReference, out: *mut *mut foundation::IAsyncOperation<super::WalletItem>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn ImportItemAsync(&self, stream: *mut crate::windows::storage::streams::IRandomAccessStreamReference, out: *mut *mut foundation::IAsyncOperation<super::WalletItem>) -> HRESULT,
     fn GetAppStatusForItem(&self, item: *mut super::WalletItem, out: *mut WalletItemAppAssociation) -> HRESULT,
     fn LaunchAppForItemAsync(&self, item: *mut super::WalletItem, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
@@ -29743,7 +29743,7 @@ impl IWalletItemSystemStore {
         let hr = ((*self.lpVtbl).DeleteAsync)(self as *const _ as *mut _, item as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn import_item_async(&self, stream: &::rt::gen::windows::storage::streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<super::WalletItem>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn import_item_async(&self, stream: &crate::windows::storage::streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<super::WalletItem>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).ImportItemAsync)(self as *const _ as *mut _, stream as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }

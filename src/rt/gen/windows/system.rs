@@ -1,4 +1,4 @@
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAppActivationResult, 1800571136, 62574, 20144, 170, 108, 56, 175, 85, 124, 249, 237);
 RT_INTERFACE!{interface IAppActivationResult(IAppActivationResultVtbl): IInspectable(IInspectableVtbl) [IID_IAppActivationResult] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
@@ -2321,7 +2321,7 @@ RT_ENUM! { enum VirtualKeyModifiers: u32 {
     None = 0, Control = 1, Menu = 2, Shift = 4, Windows = 8,
 }}
 pub mod diagnostics { // Windows.System.Diagnostics
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDiagnosticActionResult, 3261440662, 59195, 16535, 178, 143, 52, 66, 240, 61, 216, 49);
 RT_INTERFACE!{interface IDiagnosticActionResult(IDiagnosticActionResultVtbl): IInspectable(IInspectableVtbl) [IID_IDiagnosticActionResult] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
@@ -2792,7 +2792,7 @@ impl ISystemMemoryUsageReport {
 }
 RT_CLASS!{class SystemMemoryUsageReport: ISystemMemoryUsageReport}
 pub mod deviceportal { // Windows.System.Diagnostics.DevicePortal
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDevicePortalConnection, 256147281, 4504, 19873, 141, 84, 189, 239, 57, 62, 9, 182);
 RT_INTERFACE!{interface IDevicePortalConnection(IDevicePortalConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalConnection] {
     fn add_Closed(&self, handler: *mut foundation::TypedEventHandler<DevicePortalConnection, DevicePortalConnectionClosedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -2823,7 +2823,7 @@ impl IDevicePortalConnection {
 RT_CLASS!{class DevicePortalConnection: IDevicePortalConnection}
 impl RtActivatable<IDevicePortalConnectionStatics> for DevicePortalConnection {}
 impl DevicePortalConnection {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_for_app_service_connection(appServiceConnection: &::rt::gen::windows::applicationmodel::appservice::AppServiceConnection) -> Result<Option<ComPtr<DevicePortalConnection>>> {
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_for_app_service_connection(appServiceConnection: &crate::windows::applicationmodel::appservice::AppServiceConnection) -> Result<Option<ComPtr<DevicePortalConnection>>> {
         <Self as RtActivatable<IDevicePortalConnectionStatics>>::get_activation_factory().get_for_app_service_connection(appServiceConnection)
     }
 }
@@ -2845,16 +2845,16 @@ RT_ENUM! { enum DevicePortalConnectionClosedReason: i32 {
 }}
 DEFINE_IID!(IID_IDevicePortalConnectionRequestReceivedEventArgs, 1692065861, 28634, 17497, 158, 189, 236, 206, 34, 227, 133, 89);
 RT_INTERFACE!{interface IDevicePortalConnectionRequestReceivedEventArgs(IDevicePortalConnectionRequestReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalConnectionRequestReceivedEventArgs] {
-    #[cfg(feature="windows-web")] fn get_RequestMessage(&self, out: *mut *mut ::rt::gen::windows::web::http::HttpRequestMessage) -> HRESULT,
-    #[cfg(feature="windows-web")] fn get_ResponseMessage(&self, out: *mut *mut ::rt::gen::windows::web::http::HttpResponseMessage) -> HRESULT
+    #[cfg(feature="windows-web")] fn get_RequestMessage(&self, out: *mut *mut crate::windows::web::http::HttpRequestMessage) -> HRESULT,
+    #[cfg(feature="windows-web")] fn get_ResponseMessage(&self, out: *mut *mut crate::windows::web::http::HttpResponseMessage) -> HRESULT
 }}
 impl IDevicePortalConnectionRequestReceivedEventArgs {
-    #[cfg(feature="windows-web")] #[inline] pub fn get_request_message(&self) -> Result<Option<ComPtr<::rt::gen::windows::web::http::HttpRequestMessage>>> { unsafe { 
+    #[cfg(feature="windows-web")] #[inline] pub fn get_request_message(&self) -> Result<Option<ComPtr<crate::windows::web::http::HttpRequestMessage>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_RequestMessage)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-web")] #[inline] pub fn get_response_message(&self) -> Result<Option<ComPtr<::rt::gen::windows::web::http::HttpResponseMessage>>> { unsafe { 
+    #[cfg(feature="windows-web")] #[inline] pub fn get_response_message(&self) -> Result<Option<ComPtr<crate::windows::web::http::HttpResponseMessage>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_ResponseMessage)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -2863,10 +2863,10 @@ impl IDevicePortalConnectionRequestReceivedEventArgs {
 RT_CLASS!{class DevicePortalConnectionRequestReceivedEventArgs: IDevicePortalConnectionRequestReceivedEventArgs}
 DEFINE_IID!(IID_IDevicePortalConnectionStatics, 1270755815, 59833, 17989, 143, 237, 165, 62, 234, 14, 219, 214);
 RT_INTERFACE!{static interface IDevicePortalConnectionStatics(IDevicePortalConnectionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalConnectionStatics] {
-    #[cfg(feature="windows-applicationmodel")] fn GetForAppServiceConnection(&self, appServiceConnection: *mut ::rt::gen::windows::applicationmodel::appservice::AppServiceConnection, out: *mut *mut DevicePortalConnection) -> HRESULT
+    #[cfg(feature="windows-applicationmodel")] fn GetForAppServiceConnection(&self, appServiceConnection: *mut crate::windows::applicationmodel::appservice::AppServiceConnection, out: *mut *mut DevicePortalConnection) -> HRESULT
 }}
 impl IDevicePortalConnectionStatics {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_for_app_service_connection(&self, appServiceConnection: &::rt::gen::windows::applicationmodel::appservice::AppServiceConnection) -> Result<Option<ComPtr<DevicePortalConnection>>> { unsafe { 
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_for_app_service_connection(&self, appServiceConnection: &crate::windows::applicationmodel::appservice::AppServiceConnection) -> Result<Option<ComPtr<DevicePortalConnection>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetForAppServiceConnection)(self as *const _ as *mut _, appServiceConnection as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -2874,34 +2874,34 @@ impl IDevicePortalConnectionStatics {
 }
 DEFINE_IID!(IID_IDevicePortalWebSocketConnection, 1734703392, 54874, 17136, 174, 244, 120, 120, 8, 9, 139, 123);
 RT_INTERFACE!{interface IDevicePortalWebSocketConnection(IDevicePortalWebSocketConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalWebSocketConnection] {
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerMessageWebSocketForRequest(&self, request: *mut ::rt::gen::windows::web::http::HttpRequestMessage, out: *mut *mut ::rt::gen::windows::networking::sockets::ServerMessageWebSocket) -> HRESULT,
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerMessageWebSocketForRequest2(&self, request: *mut ::rt::gen::windows::web::http::HttpRequestMessage, messageType: ::rt::gen::windows::networking::sockets::SocketMessageType, protocol: HSTRING, out: *mut *mut ::rt::gen::windows::networking::sockets::ServerMessageWebSocket) -> HRESULT,
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerMessageWebSocketForRequest3(&self, request: *mut ::rt::gen::windows::web::http::HttpRequestMessage, messageType: ::rt::gen::windows::networking::sockets::SocketMessageType, protocol: HSTRING, outboundBufferSizeInBytes: u32, maxMessageSize: u32, receiveMode: ::rt::gen::windows::networking::sockets::MessageWebSocketReceiveMode, out: *mut *mut ::rt::gen::windows::networking::sockets::ServerMessageWebSocket) -> HRESULT,
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerStreamWebSocketForRequest(&self, request: *mut ::rt::gen::windows::web::http::HttpRequestMessage, out: *mut *mut ::rt::gen::windows::networking::sockets::ServerStreamWebSocket) -> HRESULT,
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerStreamWebSocketForRequest2(&self, request: *mut ::rt::gen::windows::web::http::HttpRequestMessage, protocol: HSTRING, outboundBufferSizeInBytes: u32, noDelay: bool, out: *mut *mut ::rt::gen::windows::networking::sockets::ServerStreamWebSocket) -> HRESULT
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerMessageWebSocketForRequest(&self, request: *mut crate::windows::web::http::HttpRequestMessage, out: *mut *mut crate::windows::networking::sockets::ServerMessageWebSocket) -> HRESULT,
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerMessageWebSocketForRequest2(&self, request: *mut crate::windows::web::http::HttpRequestMessage, messageType: crate::windows::networking::sockets::SocketMessageType, protocol: HSTRING, out: *mut *mut crate::windows::networking::sockets::ServerMessageWebSocket) -> HRESULT,
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerMessageWebSocketForRequest3(&self, request: *mut crate::windows::web::http::HttpRequestMessage, messageType: crate::windows::networking::sockets::SocketMessageType, protocol: HSTRING, outboundBufferSizeInBytes: u32, maxMessageSize: u32, receiveMode: crate::windows::networking::sockets::MessageWebSocketReceiveMode, out: *mut *mut crate::windows::networking::sockets::ServerMessageWebSocket) -> HRESULT,
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerStreamWebSocketForRequest(&self, request: *mut crate::windows::web::http::HttpRequestMessage, out: *mut *mut crate::windows::networking::sockets::ServerStreamWebSocket) -> HRESULT,
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerStreamWebSocketForRequest2(&self, request: *mut crate::windows::web::http::HttpRequestMessage, protocol: HSTRING, outboundBufferSizeInBytes: u32, noDelay: bool, out: *mut *mut crate::windows::networking::sockets::ServerStreamWebSocket) -> HRESULT
 }}
 impl IDevicePortalWebSocketConnection {
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request(&self, request: &::rt::gen::windows::web::http::HttpRequestMessage) -> Result<Option<ComPtr<::rt::gen::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request(&self, request: &crate::windows::web::http::HttpRequestMessage) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetServerMessageWebSocketForRequest)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request2(&self, request: &::rt::gen::windows::web::http::HttpRequestMessage, messageType: ::rt::gen::windows::networking::sockets::SocketMessageType, protocol: &HStringArg) -> Result<Option<ComPtr<::rt::gen::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request2(&self, request: &crate::windows::web::http::HttpRequestMessage, messageType: crate::windows::networking::sockets::SocketMessageType, protocol: &HStringArg) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetServerMessageWebSocketForRequest2)(self as *const _ as *mut _, request as *const _ as *mut _, messageType, protocol.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request3(&self, request: &::rt::gen::windows::web::http::HttpRequestMessage, messageType: ::rt::gen::windows::networking::sockets::SocketMessageType, protocol: &HStringArg, outboundBufferSizeInBytes: u32, maxMessageSize: u32, receiveMode: ::rt::gen::windows::networking::sockets::MessageWebSocketReceiveMode) -> Result<Option<ComPtr<::rt::gen::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request3(&self, request: &crate::windows::web::http::HttpRequestMessage, messageType: crate::windows::networking::sockets::SocketMessageType, protocol: &HStringArg, outboundBufferSizeInBytes: u32, maxMessageSize: u32, receiveMode: crate::windows::networking::sockets::MessageWebSocketReceiveMode) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetServerMessageWebSocketForRequest3)(self as *const _ as *mut _, request as *const _ as *mut _, messageType, protocol.get(), outboundBufferSizeInBytes, maxMessageSize, receiveMode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_stream_web_socket_for_request(&self, request: &::rt::gen::windows::web::http::HttpRequestMessage) -> Result<Option<ComPtr<::rt::gen::windows::networking::sockets::ServerStreamWebSocket>>> { unsafe { 
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_stream_web_socket_for_request(&self, request: &crate::windows::web::http::HttpRequestMessage) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerStreamWebSocket>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetServerStreamWebSocketForRequest)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_stream_web_socket_for_request2(&self, request: &::rt::gen::windows::web::http::HttpRequestMessage, protocol: &HStringArg, outboundBufferSizeInBytes: u32, noDelay: bool) -> Result<Option<ComPtr<::rt::gen::windows::networking::sockets::ServerStreamWebSocket>>> { unsafe { 
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_stream_web_socket_for_request2(&self, request: &crate::windows::web::http::HttpRequestMessage, protocol: &HStringArg, outboundBufferSizeInBytes: u32, noDelay: bool) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerStreamWebSocket>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetServerStreamWebSocketForRequest2)(self as *const _ as *mut _, request as *const _ as *mut _, protocol.get(), outboundBufferSizeInBytes, noDelay, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -2932,7 +2932,7 @@ impl IDevicePortalWebSocketConnectionRequestReceivedEventArgs {
 }
 } // Windows.System.Diagnostics.DevicePortal
 pub mod telemetry { // Windows.System.Diagnostics.Telemetry
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class PlatformTelemetryClient}
 impl RtActivatable<IPlatformTelemetryClientStatics> for PlatformTelemetryClient {}
 impl PlatformTelemetryClient {
@@ -3008,7 +3008,7 @@ RT_ENUM! { enum PlatformTelemetryRegistrationStatus: i32 {
 }}
 } // Windows.System.Diagnostics.Telemetry
 pub mod tracereporting { // Windows.System.Diagnostics.TraceReporting
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class PlatformDiagnosticActions}
 impl RtActivatable<IPlatformDiagnosticActionsStatics> for PlatformDiagnosticActions {}
 impl PlatformDiagnosticActions {
@@ -3172,7 +3172,7 @@ RT_ENUM! { enum PlatformDiagnosticTraceSlotType: i32 {
 } // Windows.System.Diagnostics.TraceReporting
 } // Windows.System.Diagnostics
 pub mod display { // Windows.System.Display
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDisplayRequest, 3849527364, 62623, 19296, 141, 212, 94, 126, 58, 99, 42, 192);
 RT_INTERFACE!{interface IDisplayRequest(IDisplayRequestVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayRequest] {
     fn RequestActive(&self) -> HRESULT,
@@ -3193,7 +3193,7 @@ impl RtActivatable<IActivationFactory> for DisplayRequest {}
 DEFINE_CLSID!(DisplayRequest(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,115,112,108,97,121,46,68,105,115,112,108,97,121,82,101,113,117,101,115,116,0]) [CLSID_DisplayRequest]);
 } // Windows.System.Display
 pub mod inventory { // Windows.System.Inventory
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IInstalledDesktopApp, 1978317037, 49340, 21348, 76, 40, 22, 110, 5, 69, 22, 122);
 RT_INTERFACE!{interface IInstalledDesktopApp(IInstalledDesktopAppVtbl): IInspectable(IInspectableVtbl) [IID_IInstalledDesktopApp] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -3244,7 +3244,7 @@ impl IInstalledDesktopAppStatics {
 }
 } // Windows.System.Inventory
 pub mod power { // Windows.System.Power
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class BackgroundEnergyManager}
 impl RtActivatable<IBackgroundEnergyManagerStatics> for BackgroundEnergyManager {}
 impl BackgroundEnergyManager {
@@ -3609,7 +3609,7 @@ RT_ENUM! { enum PowerSupplyStatus: i32 {
     NotPresent = 0, Inadequate = 1, Adequate = 2,
 }}
 pub mod diagnostics { // Windows.System.Power.Diagnostics
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class BackgroundEnergyDiagnostics}
 impl RtActivatable<IBackgroundEnergyDiagnosticsStatics> for BackgroundEnergyDiagnostics {}
 impl BackgroundEnergyDiagnostics {
@@ -3685,7 +3685,7 @@ impl IForegroundEnergyDiagnosticsStatics {
 } // Windows.System.Power.Diagnostics
 } // Windows.System.Power
 pub mod preview { // Windows.System.Preview
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum HingeState: i32 {
     Unknown = 0, Closed = 1, Concave = 2, Flat = 3, Convex = 4, Full = 5,
 }}
@@ -3788,7 +3788,7 @@ impl ITwoPanelHingedDevicePosturePreviewStatics {
 }
 } // Windows.System.Preview
 pub mod profile { // Windows.System.Profile
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class AnalyticsInfo}
 impl RtActivatable<IAnalyticsInfoStatics> for AnalyticsInfo {}
 impl RtActivatable<IAnalyticsInfoStatics2> for AnalyticsInfo {}
@@ -4383,7 +4383,7 @@ impl IWindowsIntegrityPolicyStatics {
     }}
 }
 pub mod systemmanufacturers { // Windows.System.Profile.SystemManufacturers
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IOemSupportInfo, 2368646741, 34799, 16998, 134, 208, 196, 175, 190, 178, 155, 185);
 RT_INTERFACE!{interface IOemSupportInfo(IOemSupportInfoVtbl): IInspectable(IInspectableVtbl) [IID_IOemSupportInfo] {
     fn get_SupportLink(&self, out: *mut *mut foundation::Uri) -> HRESULT,
@@ -4521,7 +4521,7 @@ impl ISystemSupportInfoStatics2 {
 } // Windows.System.Profile.SystemManufacturers
 } // Windows.System.Profile
 pub mod remotedesktop { // Windows.System.RemoteDesktop
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class InteractiveSession}
 impl RtActivatable<IInteractiveSessionStatics> for InteractiveSession {}
 impl InteractiveSession {
@@ -4543,7 +4543,7 @@ impl IInteractiveSessionStatics {
 }
 } // Windows.System.RemoteDesktop
 pub mod remotesystems { // Windows.System.RemoteSystems
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class KnownRemoteSystemCapabilities}
 impl RtActivatable<IKnownRemoteSystemCapabilitiesStatics> for KnownRemoteSystemCapabilities {}
 impl KnownRemoteSystemCapabilities {
@@ -5898,7 +5898,7 @@ impl IRemoteSystemWebAccountFilterFactory {
 }
 } // Windows.System.RemoteSystems
 pub mod threading { // Windows.System.Threading
-use ::prelude::*;
+use crate::prelude::*;
 RT_CLASS!{static class ThreadPool}
 impl RtActivatable<IThreadPoolStatics> for ThreadPool {}
 impl ThreadPool {
@@ -6041,7 +6041,7 @@ RT_ENUM! { enum WorkItemPriority: i32 {
     Low = -1, Normal = 0, High = 1,
 }}
 pub mod core { // Windows.System.Threading.Core
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPreallocatedWorkItem, 3067783676, 48219, 16410, 168, 178, 110, 117, 77, 20, 218, 166);
 RT_INTERFACE!{interface IPreallocatedWorkItem(IPreallocatedWorkItemVtbl): IInspectable(IInspectableVtbl) [IID_IPreallocatedWorkItem] {
     fn RunAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
@@ -6164,7 +6164,7 @@ impl ISignalNotifierStatics {
 } // Windows.System.Threading.Core
 } // Windows.System.Threading
 pub mod update { // Windows.System.Update
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum SystemUpdateAttentionRequiredReason: i32 {
     None = 0, NetworkRequired = 1, InsufficientDiskSpace = 2, InsufficientBattery = 3, UpdateBlocked = 4,
 }}
@@ -6479,7 +6479,7 @@ RT_ENUM! { enum SystemUpdateStartInstallAction: i32 {
 }}
 } // Windows.System.Update
 pub mod userprofile { // Windows.System.UserProfile
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum AccountPictureKind: i32 {
     SmallImage = 0, LargeImage = 1, Video = 2,
 }}

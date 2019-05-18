@@ -1,4 +1,4 @@
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum DomainNameType: i32 {
     Suffix = 0, FullyQualified = 1,
 }}
@@ -152,7 +152,7 @@ RT_ENUM! { enum HostNameType: i32 {
     DomainName = 0, Ipv4 = 1, Ipv6 = 2, Bluetooth = 3,
 }}
 pub mod backgroundtransfer { // Windows.Networking.BackgroundTransfer
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IBackgroundDownloader, 3251082035, 26185, 19229, 168, 38, 164, 179, 221, 35, 77, 11);
 RT_INTERFACE!{interface IBackgroundDownloader(IBackgroundDownloaderVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader] {
     #[cfg(feature="windows-storage")] fn CreateDownload(&self, uri: *mut foundation::Uri, resultFile: *mut super::super::storage::IStorageFile, out: *mut *mut DownloadOperation) -> HRESULT,
@@ -1105,7 +1105,7 @@ impl IUploadOperation3 {
 }
 } // Windows.Networking.BackgroundTransfer
 pub mod connectivity { // Windows.Networking.Connectivity
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAttributedNetworkUsage, 4150898745, 60578, 17899, 173, 225, 176, 54, 139, 117, 108, 73);
 RT_INTERFACE!{interface IAttributedNetworkUsage(IAttributedNetworkUsageVtbl): IInspectable(IInspectableVtbl) [IID_IAttributedNetworkUsage] {
     fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
@@ -2214,7 +2214,7 @@ RT_ENUM! { enum WwanNetworkRegistrationState: i32 {
 }}
 } // Windows.Networking.Connectivity
 pub mod networkoperators { // Windows.Networking.NetworkOperators
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum DataClasses: u32 {
     None = 0, Gprs = 1, Edge = 2, Umts = 4, Hsdpa = 8, Hsupa = 16, LteAdvanced = 32, Cdma1xRtt = 65536, Cdma1xEvdo = 131072, Cdma1xEvdoRevA = 262144, Cdma1xEvdv = 524288, Cdma3xRtt = 1048576, Cdma1xEvdoRevB = 2097152, CdmaUmb = 4194304, Custom = 2147483648,
 }}
@@ -5221,7 +5221,7 @@ impl IUssdSessionStatics {
 }
 } // Windows.Networking.NetworkOperators
 pub mod proximity { // Windows.Networking.Proximity
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IConnectionRequestedEventArgs, 3949498798, 20254, 19558, 189, 13, 70, 146, 74, 148, 46, 8);
 RT_INTERFACE!{interface IConnectionRequestedEventArgs(IConnectionRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionRequestedEventArgs] {
     fn get_PeerInformation(&self, out: *mut *mut PeerInformation) -> HRESULT
@@ -5825,7 +5825,7 @@ RT_ENUM! { enum TriggeredConnectState: i32 {
 }}
 } // Windows.Networking.Proximity
 pub mod pushnotifications { // Windows.Networking.PushNotifications
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPushNotificationChannel, 724045870, 61195, 20281, 155, 138, 163, 193, 148, 222, 112, 129);
 RT_INTERFACE!{interface IPushNotificationChannel(IPushNotificationChannelVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannel] {
     fn get_Uri(&self, out: *mut HSTRING) -> HRESULT,
@@ -6059,7 +6059,7 @@ impl IRawNotification2 {
 } // Windows.Networking.PushNotifications
 pub mod servicediscovery { // Windows.Networking.ServiceDiscovery
 pub mod dnssd { // Windows.Networking.ServiceDiscovery.Dnssd
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDnssdRegistrationResult, 1031301842, 58886, 21328, 115, 234, 126, 151, 240, 102, 22, 47);
 RT_INTERFACE!{interface IDnssdRegistrationResult(IDnssdRegistrationResultVtbl): IInspectable(IInspectableVtbl) [IID_IDnssdRegistrationResult] {
     fn get_Status(&self, out: *mut DnssdRegistrationStatus) -> HRESULT,
@@ -6260,7 +6260,7 @@ RT_ENUM! { enum DnssdServiceWatcherStatus: i32 {
 } // Windows.Networking.ServiceDiscovery.Dnssd
 } // Windows.Networking.ServiceDiscovery
 pub mod sockets { // Windows.Networking.Sockets
-use ::prelude::*;
+use crate::prelude::*;
 RT_STRUCT! { struct BandwidthStatistics {
     OutboundBitsPerSecond: u64, InboundBitsPerSecond: u64, OutboundBitsPerSecondInstability: u64, InboundBitsPerSecondInstability: u64, OutboundBandwidthPeaked: bool, InboundBandwidthPeaked: bool,
 }}
@@ -8058,7 +8058,7 @@ impl IWebSocketServerCustomValidationRequestedEventArgs {
 RT_CLASS!{class WebSocketServerCustomValidationRequestedEventArgs: IWebSocketServerCustomValidationRequestedEventArgs}
 } // Windows.Networking.Sockets
 pub mod vpn { // Windows.Networking.Vpn
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IVpnAppId, 2064033333, 23640, 16857, 148, 167, 191, 188, 241, 216, 202, 84);
 RT_INTERFACE!{interface IVpnAppId(IVpnAppIdVtbl): IInspectable(IInspectableVtbl) [IID_IVpnAppId] {
     fn get_Type(&self, out: *mut VpnAppIdType) -> HRESULT,
@@ -9685,7 +9685,7 @@ impl IVpnTrafficFilterFactory {
 }
 } // Windows.Networking.Vpn
 pub mod xboxlive { // Windows.Networking.XboxLive
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IXboxLiveDeviceAddress, 4122727033, 15494, 19287, 163, 26, 185, 70, 36, 8, 253, 1);
 RT_INTERFACE!{interface IXboxLiveDeviceAddress(IXboxLiveDeviceAddressVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveDeviceAddress] {
     fn add_SnapshotChanged(&self, handler: *mut foundation::TypedEventHandler<XboxLiveDeviceAddress, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,

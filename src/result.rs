@@ -1,7 +1,7 @@
 use std::fmt;
 
 /// Re-export from WinAPI crate
-pub type HRESULT = ::w::um::winnt::HRESULT;
+pub type HRESULT = w::um::winnt::HRESULT;
 
 // TODO: add more codes from https://msdn.microsoft.com/en-us/library/windows/desktop/dd542643(v=vs.85).aspx, especially the `RO_`-prefixed
 
@@ -53,7 +53,7 @@ impl Error {
     #[inline]
     pub fn from_hresult(hr: HRESULT) -> Error {
         use Error::*;
-        use ::w::shared::winerror::*;
+        use w::shared::winerror::*;
 
         match hr {
             E_ABORT => OperationAborted,
@@ -77,7 +77,7 @@ impl Error {
     #[inline]
     pub fn as_hresult(&self) -> HRESULT {
         use Error::*;
-        use ::w::shared::winerror::*;
+        use w::shared::winerror::*;
 
         match *self { 
             OperationAborted => E_ABORT,
@@ -100,4 +100,4 @@ impl Error {
 }
 
 /// A specialized `Result` type for Windows Runtime method calls.
-pub type Result<T> = ::std::result::Result<T, Error>;
+pub type Result<T> = std::result::Result<T, Error>;

@@ -1,4 +1,4 @@
-use ::prelude::*;
+use crate::prelude::*;
 RT_STRUCT! { struct DisplayAdapterId {
     LowPart: u32, HighPart: i32,
 }}
@@ -16,7 +16,7 @@ RT_STRUCT! { struct SizeInt32 {
     Width: i32, Height: i32,
 }}
 pub mod capture { // Windows.Graphics.Capture
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IDirect3D11CaptureFrame, 4199597603, 14554, 19250, 172, 243, 250, 151, 52, 173, 128, 14);
 RT_INTERFACE!{interface IDirect3D11CaptureFrame(IDirect3D11CaptureFrameVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFrame] {
     fn get_Surface(&self, out: *mut *mut super::directx::direct3d11::IDirect3DSurface) -> HRESULT,
@@ -206,7 +206,7 @@ impl IGraphicsCaptureSessionStatics {
 }
 } // Windows.Graphics.Capture
 pub mod directx { // Windows.Graphics.DirectX
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum DirectXAlphaMode: i32 {
     Unspecified = 0, Premultiplied = 1, Straight = 2, Ignore = 3,
 }}
@@ -217,7 +217,7 @@ RT_ENUM! { enum DirectXPixelFormat: i32 {
     Unknown = 0, R32G32B32A32Typeless = 1, R32G32B32A32Float = 2, R32G32B32A32UInt = 3, R32G32B32A32Int = 4, R32G32B32Typeless = 5, R32G32B32Float = 6, R32G32B32UInt = 7, R32G32B32Int = 8, R16G16B16A16Typeless = 9, R16G16B16A16Float = 10, R16G16B16A16UIntNormalized = 11, R16G16B16A16UInt = 12, R16G16B16A16IntNormalized = 13, R16G16B16A16Int = 14, R32G32Typeless = 15, R32G32Float = 16, R32G32UInt = 17, R32G32Int = 18, R32G8X24Typeless = 19, D32FloatS8X24UInt = 20, R32FloatX8X24Typeless = 21, X32TypelessG8X24UInt = 22, R10G10B10A2Typeless = 23, R10G10B10A2UIntNormalized = 24, R10G10B10A2UInt = 25, R11G11B10Float = 26, R8G8B8A8Typeless = 27, R8G8B8A8UIntNormalized = 28, R8G8B8A8UIntNormalizedSrgb = 29, R8G8B8A8UInt = 30, R8G8B8A8IntNormalized = 31, R8G8B8A8Int = 32, R16G16Typeless = 33, R16G16Float = 34, R16G16UIntNormalized = 35, R16G16UInt = 36, R16G16IntNormalized = 37, R16G16Int = 38, R32Typeless = 39, D32Float = 40, R32Float = 41, R32UInt = 42, R32Int = 43, R24G8Typeless = 44, D24UIntNormalizedS8UInt = 45, R24UIntNormalizedX8Typeless = 46, X24TypelessG8UInt = 47, R8G8Typeless = 48, R8G8UIntNormalized = 49, R8G8UInt = 50, R8G8IntNormalized = 51, R8G8Int = 52, R16Typeless = 53, R16Float = 54, D16UIntNormalized = 55, R16UIntNormalized = 56, R16UInt = 57, R16IntNormalized = 58, R16Int = 59, R8Typeless = 60, R8UIntNormalized = 61, R8UInt = 62, R8IntNormalized = 63, R8Int = 64, A8UIntNormalized = 65, R1UIntNormalized = 66, R9G9B9E5SharedExponent = 67, R8G8B8G8UIntNormalized = 68, G8R8G8B8UIntNormalized = 69, BC1Typeless = 70, BC1UIntNormalized = 71, BC1UIntNormalizedSrgb = 72, BC2Typeless = 73, BC2UIntNormalized = 74, BC2UIntNormalizedSrgb = 75, BC3Typeless = 76, BC3UIntNormalized = 77, BC3UIntNormalizedSrgb = 78, BC4Typeless = 79, BC4UIntNormalized = 80, BC4IntNormalized = 81, BC5Typeless = 82, BC5UIntNormalized = 83, BC5IntNormalized = 84, B5G6R5UIntNormalized = 85, B5G5R5A1UIntNormalized = 86, B8G8R8A8UIntNormalized = 87, B8G8R8X8UIntNormalized = 88, R10G10B10XRBiasA2UIntNormalized = 89, B8G8R8A8Typeless = 90, B8G8R8A8UIntNormalizedSrgb = 91, B8G8R8X8Typeless = 92, B8G8R8X8UIntNormalizedSrgb = 93, BC6HTypeless = 94, BC6H16UnsignedFloat = 95, BC6H16Float = 96, BC7Typeless = 97, BC7UIntNormalized = 98, BC7UIntNormalizedSrgb = 99, Ayuv = 100, Y410 = 101, Y416 = 102, NV12 = 103, P010 = 104, P016 = 105, Opaque420 = 106, Yuy2 = 107, Y210 = 108, Y216 = 109, NV11 = 110, AI44 = 111, IA44 = 112, P8 = 113, A8P8 = 114, B4G4R4A4UIntNormalized = 115, P208 = 130, V208 = 131, V408 = 132,
 }}
 pub mod direct3d11 { // Windows.Graphics.DirectX.Direct3D11
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum Direct3DBindings: u32 {
     VertexBuffer = 1, IndexBuffer = 2, ConstantBuffer = 4, ShaderResource = 8, StreamOutput = 16, RenderTarget = 32, DepthStencil = 64, UnorderedAccess = 128, Decoder = 512, VideoEncoder = 1024,
 }}
@@ -254,7 +254,7 @@ RT_ENUM! { enum Direct3DUsage: i32 {
 } // Windows.Graphics.DirectX.Direct3D11
 } // Windows.Graphics.DirectX
 pub mod display { // Windows.Graphics.Display
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IAdvancedColorInfo, 2274876667, 45609, 16513, 174, 154, 44, 200, 94, 52, 173, 106);
 RT_INTERFACE!{interface IAdvancedColorInfo(IAdvancedColorInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedColorInfo] {
     fn get_CurrentAdvancedColorKind(&self, out: *mut AdvancedColorKind) -> HRESULT,
@@ -1090,7 +1090,7 @@ RT_ENUM! { enum ResolutionScale: i32 {
     Invalid = 0, Scale100Percent = 100, Scale120Percent = 120, Scale125Percent = 125, Scale140Percent = 140, Scale150Percent = 150, Scale160Percent = 160, Scale175Percent = 175, Scale180Percent = 180, Scale200Percent = 200, Scale225Percent = 225, Scale250Percent = 250, Scale300Percent = 300, Scale350Percent = 350, Scale400Percent = 400, Scale450Percent = 450, Scale500Percent = 500,
 }}
 pub mod core { // Windows.Graphics.Display.Core
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum HdmiDisplayColorSpace: i32 {
     RgbLimited = 0, RgbFull = 1, BT2020 = 2, BT709 = 3,
 }}
@@ -1260,7 +1260,7 @@ RT_ENUM! { enum HdmiDisplayPixelEncoding: i32 {
 } // Windows.Graphics.Display.Core
 } // Windows.Graphics.Display
 pub mod effects { // Windows.Graphics.Effects
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IGraphicsEffect, 3411132622, 36838, 17974, 178, 2, 134, 31, 170, 7, 216, 243);
 RT_INTERFACE!{interface IGraphicsEffect(IGraphicsEffectVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsEffect] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -1283,7 +1283,7 @@ RT_INTERFACE!{interface IGraphicsEffectSource(IGraphicsEffectSourceVtbl): IInspe
 }}
 } // Windows.Graphics.Effects
 pub mod holographic { // Windows.Graphics.Holographic
-use ::prelude::*;
+use crate::prelude::*;
 RT_STRUCT! { struct HolographicAdapterId {
     LowPart: u32, HighPart: i32,
 }}
@@ -2095,7 +2095,7 @@ RT_STRUCT! { struct HolographicStereoTransform {
 }}
 } // Windows.Graphics.Holographic
 pub mod imaging { // Windows.Graphics.Imaging
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum BitmapAlphaMode: i32 {
     Premultiplied = 0, Straight = 1, Ignore = 2,
 }}
@@ -3006,7 +3006,7 @@ RT_ENUM! { enum TiffCompressionMode: i32 {
 }}
 } // Windows.Graphics.Imaging
 pub mod printing { // Windows.Graphics.Printing
-use ::prelude::*;
+use crate::prelude::*;
 RT_ENUM! { enum PrintBinding: i32 {
     Default = 0, NotAvailable = 1, PrinterCustom = 2, None = 3, Bale = 4, BindBottom = 5, BindLeft = 6, BindRight = 7, BindTop = 8, Booklet = 9, EdgeStitchBottom = 10, EdgeStitchLeft = 11, EdgeStitchRight = 12, EdgeStitchTop = 13, Fold = 14, JogOffset = 15, Trim = 16,
 }}
@@ -3841,7 +3841,7 @@ impl IStandardPrintTaskOptionsStatic3 {
     }}
 }
 pub mod optiondetails { // Windows.Graphics.Printing.OptionDetails
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPrintBindingOptionDetails, 3287600280, 38244, 20246, 160, 85, 169, 139, 154, 73, 233, 211);
 RT_INTERFACE!{interface IPrintBindingOptionDetails(IPrintBindingOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintBindingOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
@@ -4018,10 +4018,10 @@ impl IPrintCustomItemListOptionDetails {
 RT_CLASS!{class PrintCustomItemListOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintCustomItemListOptionDetails2, 3386258749, 25884, 19001, 144, 110, 16, 145, 161, 128, 27, 241);
 RT_INTERFACE!{interface IPrintCustomItemListOptionDetails2(IPrintCustomItemListOptionDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomItemListOptionDetails2] {
-    #[cfg(feature="windows-storage")] fn AddItem(&self, itemId: HSTRING, displayName: HSTRING, description: HSTRING, icon: *mut ::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType) -> HRESULT
+    #[cfg(feature="windows-storage")] fn AddItem(&self, itemId: HSTRING, displayName: HSTRING, description: HSTRING, icon: *mut crate::windows::storage::streams::IRandomAccessStreamWithContentType) -> HRESULT
 }}
 impl IPrintCustomItemListOptionDetails2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn add_item(&self, itemId: &HStringArg, displayName: &HStringArg, description: &HStringArg, icon: &::rt::gen::windows::storage::streams::IRandomAccessStreamWithContentType) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn add_item(&self, itemId: &HStringArg, displayName: &HStringArg, description: &HStringArg, icon: &crate::windows::storage::streams::IRandomAccessStreamWithContentType) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).AddItem)(self as *const _ as *mut _, itemId.get(), displayName.get(), description.get(), icon as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -4550,13 +4550,13 @@ impl IPrintTextOptionDetails {
 }
 } // Windows.Graphics.Printing.OptionDetails
 pub mod printticket { // Windows.Graphics.Printing.PrintTicket
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPrintTicketCapabilities, 2353352843, 48092, 16982, 161, 66, 47, 214, 21, 236, 180, 22);
 RT_INTERFACE!{interface IPrintTicketCapabilities(IPrintTicketCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTicketCapabilities] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut ::rt::gen::windows::data::xml::dom::IXmlNode) -> HRESULT,
+    #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
     fn get_DocumentBindingFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
     fn get_DocumentCollateFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
     fn get_DocumentDuplexFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
@@ -4586,7 +4586,7 @@ impl IPrintTicketCapabilities {
         let hr = ((*self.lpVtbl).get_XmlNamespace)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<::rt::gen::windows::data::xml::dom::IXmlNode>>> { unsafe { 
+    #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_XmlNode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -4683,7 +4683,7 @@ RT_INTERFACE!{interface IPrintTicketFeature(IPrintTicketFeatureVtbl): IInspectab
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut ::rt::gen::windows::data::xml::dom::IXmlNode) -> HRESULT,
+    #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn GetOption(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut PrintTicketOption) -> HRESULT,
     fn get_Options(&self, out: *mut *mut foundation::collections::IVectorView<PrintTicketOption>) -> HRESULT,
@@ -4702,7 +4702,7 @@ impl IPrintTicketFeature {
         let hr = ((*self.lpVtbl).get_XmlNamespace)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<::rt::gen::windows::data::xml::dom::IXmlNode>>> { unsafe { 
+    #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_XmlNode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -4746,12 +4746,12 @@ RT_INTERFACE!{interface IPrintTicketOption(IPrintTicketOptionVtbl): IInspectable
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut ::rt::gen::windows::data::xml::dom::IXmlNode) -> HRESULT,
+    #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-data")] fn GetPropertyNode(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut ::rt::gen::windows::data::xml::dom::IXmlNode) -> HRESULT,
+    #[cfg(feature="windows-data")] fn GetPropertyNode(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-data")] fn GetScoredPropertyNode(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut ::rt::gen::windows::data::xml::dom::IXmlNode) -> HRESULT,
+    #[cfg(feature="windows-data")] fn GetScoredPropertyNode(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
     fn GetPropertyValue(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut PrintTicketValue) -> HRESULT,
     fn GetScoredPropertyValue(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut PrintTicketValue) -> HRESULT
 }}
@@ -4766,7 +4766,7 @@ impl IPrintTicketOption {
         let hr = ((*self.lpVtbl).get_XmlNamespace)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<::rt::gen::windows::data::xml::dom::IXmlNode>>> { unsafe { 
+    #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_XmlNode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -4776,12 +4776,12 @@ impl IPrintTicketOption {
         let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_property_node(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<ComPtr<::rt::gen::windows::data::xml::dom::IXmlNode>>> { unsafe { 
+    #[cfg(feature="windows-data")] #[inline] pub fn get_property_node(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetPropertyNode)(self as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_scored_property_node(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<ComPtr<::rt::gen::windows::data::xml::dom::IXmlNode>>> { unsafe { 
+    #[cfg(feature="windows-data")] #[inline] pub fn get_scored_property_node(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetScoredPropertyNode)(self as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -4806,7 +4806,7 @@ RT_INTERFACE!{interface IPrintTicketParameterDefinition(IPrintTicketParameterDef
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut ::rt::gen::windows::data::xml::dom::IXmlNode) -> HRESULT,
+    #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
     fn get_DataType(&self, out: *mut PrintTicketParameterDataType) -> HRESULT,
     fn get_UnitType(&self, out: *mut HSTRING) -> HRESULT,
     fn get_RangeMin(&self, out: *mut i32) -> HRESULT,
@@ -4823,7 +4823,7 @@ impl IPrintTicketParameterDefinition {
         let hr = ((*self.lpVtbl).get_XmlNamespace)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<::rt::gen::windows::data::xml::dom::IXmlNode>>> { unsafe { 
+    #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_XmlNode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -4855,7 +4855,7 @@ RT_INTERFACE!{interface IPrintTicketParameterInitializer(IPrintTicketParameterIn
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut ::rt::gen::windows::data::xml::dom::IXmlNode) -> HRESULT,
+    #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
     fn put_Value(&self, value: *mut PrintTicketValue) -> HRESULT,
     fn get_Value(&self, out: *mut *mut PrintTicketValue) -> HRESULT
 }}
@@ -4870,7 +4870,7 @@ impl IPrintTicketParameterInitializer {
         let hr = ((*self.lpVtbl).get_XmlNamespace)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<::rt::gen::windows::data::xml::dom::IXmlNode>>> { unsafe { 
+    #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_XmlNode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -4918,7 +4918,7 @@ RT_INTERFACE!{interface IWorkflowPrintTicket(IWorkflowPrintTicketVtbl): IInspect
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut ::rt::gen::windows::data::xml::dom::IXmlNode) -> HRESULT,
+    #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
     fn GetCapabilities(&self, out: *mut *mut PrintTicketCapabilities) -> HRESULT,
     fn get_DocumentBindingFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
     fn get_DocumentCollateFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
@@ -4954,7 +4954,7 @@ impl IWorkflowPrintTicket {
         let hr = ((*self.lpVtbl).get_XmlNamespace)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<::rt::gen::windows::data::xml::dom::IXmlNode>>> { unsafe { 
+    #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).get_XmlNode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -5096,7 +5096,7 @@ impl IWorkflowPrintTicketValidationResult {
 RT_CLASS!{class WorkflowPrintTicketValidationResult: IWorkflowPrintTicketValidationResult}
 } // Windows.Graphics.Printing.PrintTicket
 pub mod workflow { // Windows.Graphics.Printing.Workflow
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPrintWorkflowBackgroundSession, 1534661562, 3166, 21130, 116, 88, 134, 164, 108, 189, 220, 69);
 RT_INTERFACE!{interface IPrintWorkflowBackgroundSession(IPrintWorkflowBackgroundSessionVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowBackgroundSession] {
     fn add_SetupRequested(&self, setupEventHandler: *mut foundation::TypedEventHandler<PrintWorkflowBackgroundSession, PrintWorkflowBackgroundSetupRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5291,10 +5291,10 @@ impl IPrintWorkflowSourceContent {
 RT_CLASS!{class PrintWorkflowSourceContent: IPrintWorkflowSourceContent}
 DEFINE_IID!(IID_IPrintWorkflowSpoolStreamContent, 1927634638, 58374, 19316, 132, 225, 63, 243, 253, 205, 175, 112);
 RT_INTERFACE!{interface IPrintWorkflowSpoolStreamContent(IPrintWorkflowSpoolStreamContentVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowSpoolStreamContent] {
-    #[cfg(feature="windows-storage")] fn GetInputStream(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IInputStream) -> HRESULT
+    #[cfg(feature="windows-storage")] fn GetInputStream(&self, out: *mut *mut crate::windows::storage::streams::IInputStream) -> HRESULT
 }}
 impl IPrintWorkflowSpoolStreamContent {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_input_stream(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IInputStream>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_input_stream(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IInputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetInputStream)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -5303,10 +5303,10 @@ impl IPrintWorkflowSpoolStreamContent {
 RT_CLASS!{class PrintWorkflowSpoolStreamContent: IPrintWorkflowSpoolStreamContent}
 DEFINE_IID!(IID_IPrintWorkflowStreamTarget, 2990258820, 34149, 18571, 152, 57, 28, 158, 124, 122, 169, 22);
 RT_INTERFACE!{interface IPrintWorkflowStreamTarget(IPrintWorkflowStreamTargetVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowStreamTarget] {
-    #[cfg(feature="windows-storage")] fn GetOutputStream(&self, out: *mut *mut ::rt::gen::windows::storage::streams::IOutputStream) -> HRESULT
+    #[cfg(feature="windows-storage")] fn GetOutputStream(&self, out: *mut *mut crate::windows::storage::streams::IOutputStream) -> HRESULT
 }}
 impl IPrintWorkflowStreamTarget {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream(&self) -> Result<Option<ComPtr<::rt::gen::windows::storage::streams::IOutputStream>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IOutputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).GetOutputStream)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -5426,7 +5426,7 @@ RT_CLASS!{class PrintWorkflowXpsDataAvailableEventArgs: IPrintWorkflowXpsDataAva
 } // Windows.Graphics.Printing.Workflow
 } // Windows.Graphics.Printing
 pub mod printing3d { // Windows.Graphics.Printing3D
-use ::prelude::*;
+use crate::prelude::*;
 DEFINE_IID!(IID_IPrint3DManager, 1294977802, 29542, 18801, 139, 213, 23, 196, 227, 232, 198, 192);
 RT_INTERFACE!{interface IPrint3DManager(IPrint3DManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DManager] {
     fn add_TaskRequested(&self, eventHandler: *mut foundation::TypedEventHandler<Print3DManager, Print3DTaskRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
