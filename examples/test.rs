@@ -11,12 +11,6 @@ use winrt::windows::devices::midi::*;
 use winrt::windows::storage::*;
 
 fn main() {
-    let rt = RuntimeContext::init();
-    run();
-    rt.uninit();
-}
-
-fn run() {
     let base = FastHString::new("https://github.com");
     let relative = FastHString::new("contextfree/winrt-rust");
     let uri = Uri::create_with_relative_uri(&base, &relative).unwrap();
@@ -44,7 +38,7 @@ fn run() {
         let res = DeviceInformation::find_all_async_aqs_filter(&wrong_deviceselector);
         if let Err(e) = res {
             println!("HRESULT (FindAllAsyncAqsFilter) = {:?}", e);
-            let mut error_info = {
+            let error_info = {
                 let mut res = ptr::null_mut();
                 assert_eq!(GetRestrictedErrorInfo(&mut res), S_OK);
                 ComPtr::wrap(res)

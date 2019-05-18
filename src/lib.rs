@@ -10,7 +10,6 @@
 //! use winrt::windows::system::diagnostics::*; // import namespace Windows.System.Diagnostics
 //!
 //! fn main() {
-//!     let rt = RuntimeContext::init(); // initialize the Windows Runtime
 //!     let infos = ProcessDiagnosticInfo::get_for_processes().unwrap().unwrap();
 //!     println!("Currently executed processes ({}):", infos.get_size().unwrap());
 //!     for p in &infos {
@@ -66,7 +65,8 @@ pub use cominterfaces::{ComInterface, ComIid, IUnknown, IRestrictedErrorInfo, IA
 mod rt;
 pub use rt::{RtInterface, RtClassInterface, RtNamedClass, RtValueType, RtType, RtActivatable,
              RtDefaultConstructible, IInspectable, IInspectableVtbl, IActivationFactory,
-             IMemoryBufferByteAccess, Char, RuntimeContext, IteratorAdaptor};
+             IMemoryBufferByteAccess, Char, IteratorAdaptor,
+             ApartmentType, init_apartment, uninit_apartment};
 pub use rt::async::{RtAsyncAction, RtAsyncOperation};
 
 mod result;

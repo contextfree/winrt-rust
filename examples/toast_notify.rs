@@ -10,12 +10,6 @@ use winrt::windows::data::xml::dom::*;
 use winrt::windows::ui::notifications::*;
 
 fn main() {
-    let rt = RuntimeContext::init();
-    run();
-    rt.uninit();
-}
-
-fn run() {
     // Get a toast XML template
     let toast_xml = ToastNotificationManager::get_template_content(ToastTemplateType::ToastText02).unwrap().unwrap();
 
