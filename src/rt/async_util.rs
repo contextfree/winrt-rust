@@ -95,19 +95,24 @@ impl<T: RtType + 'static> RtAsyncAction for IAsyncOperation<T>
     impl_blocking_wait!{ AsyncOperationCompletedHandler }
 }
 
-impl<'a, T: RtType + 'static> Future for &'a IAsyncOperation<T>
+impl<'a, T: RtType + 'static> Future for crate::ComPtr<IAsyncOperation<T>>
     where AsyncOperationCompletedHandler<T>: ComIid
 {
     type Output = Result<<T as RtType>::Out>;
 
     fn poll(self: Pin<&mut Self>, cx: &mut Context) -> Poll<Self::Output> {
-        let info = crate::comptr::query_interface::<_, IAsyncInfo>(*self).expect("query_interface failed");
+        use std::ops::Deref;
+
+        let info = crate::comptr::query_interface::<_, IAsyncInfo>(self.deref().deref()).expect("query_interface failed");
         let status = info.get_status().expect("get_status failed");
         match status {
             crate::langcompat::ASYNC_STATUS_COMPLETED => {
                 Poll::Ready(self.get_results())
             },
             crate::langcompat::ASYNC_STATUS_STARTED => {
+                if self.get_completed().expect("get_completed failed").is_some() {
+                    return Poll::Pending;
+                }
                 let waker = cx.waker().clone();
 
                 let handler = AsyncOperationCompletedHandler::new(move |_op, _status| {
