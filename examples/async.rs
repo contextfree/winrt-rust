@@ -47,7 +47,7 @@ async fn run() {
     // println!("status: {:?}", status);
 
     let mut interval = Interval::new(Duration::from_millis(100));
-    let mut async_op = DeviceInformation::find_all_async().unwrap().fuse(); // TODO: get rid of fuse()
+    let mut async_op = DeviceInformation::find_all_async().unwrap().fuse();
 
     let work = async {
         let mut result = None;
