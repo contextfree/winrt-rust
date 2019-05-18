@@ -30,7 +30,7 @@ impl IWebErrorStatics {
     }}
 }
 RT_ENUM! { enum WebErrorStatus: i32 {
-    Unknown (WebErrorStatus_Unknown) = 0, CertificateCommonNameIsIncorrect (WebErrorStatus_CertificateCommonNameIsIncorrect) = 1, CertificateExpired (WebErrorStatus_CertificateExpired) = 2, CertificateContainsErrors (WebErrorStatus_CertificateContainsErrors) = 3, CertificateRevoked (WebErrorStatus_CertificateRevoked) = 4, CertificateIsInvalid (WebErrorStatus_CertificateIsInvalid) = 5, ServerUnreachable (WebErrorStatus_ServerUnreachable) = 6, Timeout (WebErrorStatus_Timeout) = 7, ErrorHttpInvalidServerResponse (WebErrorStatus_ErrorHttpInvalidServerResponse) = 8, ConnectionAborted (WebErrorStatus_ConnectionAborted) = 9, ConnectionReset (WebErrorStatus_ConnectionReset) = 10, Disconnected (WebErrorStatus_Disconnected) = 11, HttpToHttpsOnRedirection (WebErrorStatus_HttpToHttpsOnRedirection) = 12, HttpsToHttpOnRedirection (WebErrorStatus_HttpsToHttpOnRedirection) = 13, CannotConnect (WebErrorStatus_CannotConnect) = 14, HostNameNotResolved (WebErrorStatus_HostNameNotResolved) = 15, OperationCanceled (WebErrorStatus_OperationCanceled) = 16, RedirectFailed (WebErrorStatus_RedirectFailed) = 17, UnexpectedStatusCode (WebErrorStatus_UnexpectedStatusCode) = 18, UnexpectedRedirection (WebErrorStatus_UnexpectedRedirection) = 19, UnexpectedClientError (WebErrorStatus_UnexpectedClientError) = 20, UnexpectedServerError (WebErrorStatus_UnexpectedServerError) = 21, InsufficientRangeSupport (WebErrorStatus_InsufficientRangeSupport) = 22, MissingContentLengthSupport (WebErrorStatus_MissingContentLengthSupport) = 23, MultipleChoices (WebErrorStatus_MultipleChoices) = 300, MovedPermanently (WebErrorStatus_MovedPermanently) = 301, Found (WebErrorStatus_Found) = 302, SeeOther (WebErrorStatus_SeeOther) = 303, NotModified (WebErrorStatus_NotModified) = 304, UseProxy (WebErrorStatus_UseProxy) = 305, TemporaryRedirect (WebErrorStatus_TemporaryRedirect) = 307, BadRequest (WebErrorStatus_BadRequest) = 400, Unauthorized (WebErrorStatus_Unauthorized) = 401, PaymentRequired (WebErrorStatus_PaymentRequired) = 402, Forbidden (WebErrorStatus_Forbidden) = 403, NotFound (WebErrorStatus_NotFound) = 404, MethodNotAllowed (WebErrorStatus_MethodNotAllowed) = 405, NotAcceptable (WebErrorStatus_NotAcceptable) = 406, ProxyAuthenticationRequired (WebErrorStatus_ProxyAuthenticationRequired) = 407, RequestTimeout (WebErrorStatus_RequestTimeout) = 408, Conflict (WebErrorStatus_Conflict) = 409, Gone (WebErrorStatus_Gone) = 410, LengthRequired (WebErrorStatus_LengthRequired) = 411, PreconditionFailed (WebErrorStatus_PreconditionFailed) = 412, RequestEntityTooLarge (WebErrorStatus_RequestEntityTooLarge) = 413, RequestUriTooLong (WebErrorStatus_RequestUriTooLong) = 414, UnsupportedMediaType (WebErrorStatus_UnsupportedMediaType) = 415, RequestedRangeNotSatisfiable (WebErrorStatus_RequestedRangeNotSatisfiable) = 416, ExpectationFailed (WebErrorStatus_ExpectationFailed) = 417, InternalServerError (WebErrorStatus_InternalServerError) = 500, NotImplemented (WebErrorStatus_NotImplemented) = 501, BadGateway (WebErrorStatus_BadGateway) = 502, ServiceUnavailable (WebErrorStatus_ServiceUnavailable) = 503, GatewayTimeout (WebErrorStatus_GatewayTimeout) = 504, HttpVersionNotSupported (WebErrorStatus_HttpVersionNotSupported) = 505,
+    Unknown = 0, CertificateCommonNameIsIncorrect = 1, CertificateExpired = 2, CertificateContainsErrors = 3, CertificateRevoked = 4, CertificateIsInvalid = 5, ServerUnreachable = 6, Timeout = 7, ErrorHttpInvalidServerResponse = 8, ConnectionAborted = 9, ConnectionReset = 10, Disconnected = 11, HttpToHttpsOnRedirection = 12, HttpsToHttpOnRedirection = 13, CannotConnect = 14, HostNameNotResolved = 15, OperationCanceled = 16, RedirectFailed = 17, UnexpectedStatusCode = 18, UnexpectedRedirection = 19, UnexpectedClientError = 20, UnexpectedServerError = 21, InsufficientRangeSupport = 22, MissingContentLengthSupport = 23, MultipleChoices = 300, MovedPermanently = 301, Found = 302, SeeOther = 303, NotModified = 304, UseProxy = 305, TemporaryRedirect = 307, BadRequest = 400, Unauthorized = 401, PaymentRequired = 402, Forbidden = 403, NotFound = 404, MethodNotAllowed = 405, NotAcceptable = 406, ProxyAuthenticationRequired = 407, RequestTimeout = 408, Conflict = 409, Gone = 410, LengthRequired = 411, PreconditionFailed = 412, RequestEntityTooLarge = 413, RequestUriTooLong = 414, UnsupportedMediaType = 415, RequestedRangeNotSatisfiable = 416, ExpectationFailed = 417, InternalServerError = 500, NotImplemented = 501, BadGateway = 502, ServiceUnavailable = 503, GatewayTimeout = 504, HttpVersionNotSupported = 505,
 }}
 pub mod atompub { // Windows.Web.AtomPub
 use ::prelude::*;
@@ -312,7 +312,7 @@ impl IHttpClientFactory {
     }}
 }
 RT_ENUM! { enum HttpCompletionOption: i32 {
-    ResponseContentRead (HttpCompletionOption_ResponseContentRead) = 0, ResponseHeadersRead (HttpCompletionOption_ResponseHeadersRead) = 1,
+    ResponseContentRead = 0, ResponseHeadersRead = 1,
 }}
 DEFINE_IID!(IID_IHttpContent, 1796514881, 64423, 19410, 175, 10, 131, 157, 231, 194, 149, 218);
 RT_INTERFACE!{interface IHttpContent(IHttpContentVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContent] {
@@ -678,7 +678,7 @@ RT_STRUCT! { struct HttpProgress {
     Stage: HttpProgressStage, BytesSent: u64, TotalBytesToSend: *mut foundation::IReference<u64>, BytesReceived: u64, TotalBytesToReceive: *mut foundation::IReference<u64>, Retries: u32,
 }}
 RT_ENUM! { enum HttpProgressStage: i32 {
-    None (HttpProgressStage_None) = 0, DetectingProxy (HttpProgressStage_DetectingProxy) = 10, ResolvingName (HttpProgressStage_ResolvingName) = 20, ConnectingToServer (HttpProgressStage_ConnectingToServer) = 30, NegotiatingSsl (HttpProgressStage_NegotiatingSsl) = 40, SendingHeaders (HttpProgressStage_SendingHeaders) = 50, SendingContent (HttpProgressStage_SendingContent) = 60, WaitingForResponse (HttpProgressStage_WaitingForResponse) = 70, ReceivingHeaders (HttpProgressStage_ReceivingHeaders) = 80, ReceivingContent (HttpProgressStage_ReceivingContent) = 90,
+    None = 0, DetectingProxy = 10, ResolvingName = 20, ConnectingToServer = 30, NegotiatingSsl = 40, SendingHeaders = 50, SendingContent = 60, WaitingForResponse = 70, ReceivingHeaders = 80, ReceivingContent = 90,
 }}
 DEFINE_IID!(IID_IHttpRequestMessage, 4118162236, 29908, 18449, 181, 220, 159, 139, 78, 47, 154, 191);
 RT_INTERFACE!{interface IHttpRequestMessage(IHttpRequestMessageVtbl): IInspectable(IInspectableVtbl) [IID_IHttpRequestMessage] {
@@ -866,10 +866,10 @@ impl IHttpResponseMessageFactory {
     }}
 }
 RT_ENUM! { enum HttpResponseMessageSource: i32 {
-    None (HttpResponseMessageSource_None) = 0, Cache (HttpResponseMessageSource_Cache) = 1, Network (HttpResponseMessageSource_Network) = 2,
+    None = 0, Cache = 1, Network = 2,
 }}
 RT_ENUM! { enum HttpStatusCode: i32 {
-    None (HttpStatusCode_None) = 0, Continue (HttpStatusCode_Continue) = 100, SwitchingProtocols (HttpStatusCode_SwitchingProtocols) = 101, Processing (HttpStatusCode_Processing) = 102, Ok (HttpStatusCode_Ok) = 200, Created (HttpStatusCode_Created) = 201, Accepted (HttpStatusCode_Accepted) = 202, NonAuthoritativeInformation (HttpStatusCode_NonAuthoritativeInformation) = 203, NoContent (HttpStatusCode_NoContent) = 204, ResetContent (HttpStatusCode_ResetContent) = 205, PartialContent (HttpStatusCode_PartialContent) = 206, MultiStatus (HttpStatusCode_MultiStatus) = 207, AlreadyReported (HttpStatusCode_AlreadyReported) = 208, IMUsed (HttpStatusCode_IMUsed) = 226, MultipleChoices (HttpStatusCode_MultipleChoices) = 300, MovedPermanently (HttpStatusCode_MovedPermanently) = 301, Found (HttpStatusCode_Found) = 302, SeeOther (HttpStatusCode_SeeOther) = 303, NotModified (HttpStatusCode_NotModified) = 304, UseProxy (HttpStatusCode_UseProxy) = 305, TemporaryRedirect (HttpStatusCode_TemporaryRedirect) = 307, PermanentRedirect (HttpStatusCode_PermanentRedirect) = 308, BadRequest (HttpStatusCode_BadRequest) = 400, Unauthorized (HttpStatusCode_Unauthorized) = 401, PaymentRequired (HttpStatusCode_PaymentRequired) = 402, Forbidden (HttpStatusCode_Forbidden) = 403, NotFound (HttpStatusCode_NotFound) = 404, MethodNotAllowed (HttpStatusCode_MethodNotAllowed) = 405, NotAcceptable (HttpStatusCode_NotAcceptable) = 406, ProxyAuthenticationRequired (HttpStatusCode_ProxyAuthenticationRequired) = 407, RequestTimeout (HttpStatusCode_RequestTimeout) = 408, Conflict (HttpStatusCode_Conflict) = 409, Gone (HttpStatusCode_Gone) = 410, LengthRequired (HttpStatusCode_LengthRequired) = 411, PreconditionFailed (HttpStatusCode_PreconditionFailed) = 412, RequestEntityTooLarge (HttpStatusCode_RequestEntityTooLarge) = 413, RequestUriTooLong (HttpStatusCode_RequestUriTooLong) = 414, UnsupportedMediaType (HttpStatusCode_UnsupportedMediaType) = 415, RequestedRangeNotSatisfiable (HttpStatusCode_RequestedRangeNotSatisfiable) = 416, ExpectationFailed (HttpStatusCode_ExpectationFailed) = 417, UnprocessableEntity (HttpStatusCode_UnprocessableEntity) = 422, Locked (HttpStatusCode_Locked) = 423, FailedDependency (HttpStatusCode_FailedDependency) = 424, UpgradeRequired (HttpStatusCode_UpgradeRequired) = 426, PreconditionRequired (HttpStatusCode_PreconditionRequired) = 428, TooManyRequests (HttpStatusCode_TooManyRequests) = 429, RequestHeaderFieldsTooLarge (HttpStatusCode_RequestHeaderFieldsTooLarge) = 431, InternalServerError (HttpStatusCode_InternalServerError) = 500, NotImplemented (HttpStatusCode_NotImplemented) = 501, BadGateway (HttpStatusCode_BadGateway) = 502, ServiceUnavailable (HttpStatusCode_ServiceUnavailable) = 503, GatewayTimeout (HttpStatusCode_GatewayTimeout) = 504, HttpVersionNotSupported (HttpStatusCode_HttpVersionNotSupported) = 505, VariantAlsoNegotiates (HttpStatusCode_VariantAlsoNegotiates) = 506, InsufficientStorage (HttpStatusCode_InsufficientStorage) = 507, LoopDetected (HttpStatusCode_LoopDetected) = 508, NotExtended (HttpStatusCode_NotExtended) = 510, NetworkAuthenticationRequired (HttpStatusCode_NetworkAuthenticationRequired) = 511,
+    None = 0, Continue = 100, SwitchingProtocols = 101, Processing = 102, Ok = 200, Created = 201, Accepted = 202, NonAuthoritativeInformation = 203, NoContent = 204, ResetContent = 205, PartialContent = 206, MultiStatus = 207, AlreadyReported = 208, IMUsed = 226, MultipleChoices = 300, MovedPermanently = 301, Found = 302, SeeOther = 303, NotModified = 304, UseProxy = 305, TemporaryRedirect = 307, PermanentRedirect = 308, BadRequest = 400, Unauthorized = 401, PaymentRequired = 402, Forbidden = 403, NotFound = 404, MethodNotAllowed = 405, NotAcceptable = 406, ProxyAuthenticationRequired = 407, RequestTimeout = 408, Conflict = 409, Gone = 410, LengthRequired = 411, PreconditionFailed = 412, RequestEntityTooLarge = 413, RequestUriTooLong = 414, UnsupportedMediaType = 415, RequestedRangeNotSatisfiable = 416, ExpectationFailed = 417, UnprocessableEntity = 422, Locked = 423, FailedDependency = 424, UpgradeRequired = 426, PreconditionRequired = 428, TooManyRequests = 429, RequestHeaderFieldsTooLarge = 431, InternalServerError = 500, NotImplemented = 501, BadGateway = 502, ServiceUnavailable = 503, GatewayTimeout = 504, HttpVersionNotSupported = 505, VariantAlsoNegotiates = 506, InsufficientStorage = 507, LoopDetected = 508, NotExtended = 510, NetworkAuthenticationRequired = 511,
 }}
 RT_CLASS!{class HttpStreamContent: IHttpContent}
 impl RtActivatable<IHttpStreamContentFactory> for HttpStreamContent {}
@@ -959,7 +959,7 @@ impl IHttpTransportInformation {
 }
 RT_CLASS!{class HttpTransportInformation: IHttpTransportInformation}
 RT_ENUM! { enum HttpVersion: i32 {
-    None (HttpVersion_None) = 0, Http10 (HttpVersion_Http10) = 1, Http11 (HttpVersion_Http11) = 2, Http20 (HttpVersion_Http20) = 3,
+    None = 0, Http10 = 1, Http11 = 2, Http20 = 3,
 }}
 pub mod diagnostics { // Windows.Web.Http.Diagnostics
 use ::prelude::*;
@@ -1211,7 +1211,7 @@ impl IHttpDiagnosticProviderStatics {
     }}
 }
 RT_ENUM! { enum HttpDiagnosticRequestInitiator: i32 {
-    ParsedElement (HttpDiagnosticRequestInitiator_ParsedElement) = 0, Script (HttpDiagnosticRequestInitiator_Script) = 1, Image (HttpDiagnosticRequestInitiator_Image) = 2, Link (HttpDiagnosticRequestInitiator_Link) = 3, Style (HttpDiagnosticRequestInitiator_Style) = 4, XmlHttpRequest (HttpDiagnosticRequestInitiator_XmlHttpRequest) = 5, Media (HttpDiagnosticRequestInitiator_Media) = 6, HtmlDownload (HttpDiagnosticRequestInitiator_HtmlDownload) = 7, Prefetch (HttpDiagnosticRequestInitiator_Prefetch) = 8, Other (HttpDiagnosticRequestInitiator_Other) = 9, CrossOriginPreFlight (HttpDiagnosticRequestInitiator_CrossOriginPreFlight) = 10, Fetch (HttpDiagnosticRequestInitiator_Fetch) = 11, Beacon (HttpDiagnosticRequestInitiator_Beacon) = 12,
+    ParsedElement = 0, Script = 1, Image = 2, Link = 3, Style = 4, XmlHttpRequest = 5, Media = 6, HtmlDownload = 7, Prefetch = 8, Other = 9, CrossOriginPreFlight = 10, Fetch = 11, Beacon = 12,
 }}
 DEFINE_IID!(IID_IHttpDiagnosticSourceLocation, 1420415584, 34912, 16959, 182, 250, 215, 119, 22, 246, 71, 167);
 RT_INTERFACE!{interface IHttpDiagnosticSourceLocation(IHttpDiagnosticSourceLocationVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticSourceLocation] {
@@ -1443,13 +1443,13 @@ impl IHttpCacheControl {
 }
 RT_CLASS!{class HttpCacheControl: IHttpCacheControl}
 RT_ENUM! { enum HttpCacheReadBehavior: i32 {
-    Default (HttpCacheReadBehavior_Default) = 0, MostRecent (HttpCacheReadBehavior_MostRecent) = 1, OnlyFromCache (HttpCacheReadBehavior_OnlyFromCache) = 2, NoCache (HttpCacheReadBehavior_NoCache) = 3,
+    Default = 0, MostRecent = 1, OnlyFromCache = 2, NoCache = 3,
 }}
 RT_ENUM! { enum HttpCacheWriteBehavior: i32 {
-    Default (HttpCacheWriteBehavior_Default) = 0, NoCache (HttpCacheWriteBehavior_NoCache) = 1,
+    Default = 0, NoCache = 1,
 }}
 RT_ENUM! { enum HttpCookieUsageBehavior: i32 {
-    Default (HttpCookieUsageBehavior_Default) = 0, NoCookies (HttpCookieUsageBehavior_NoCookies) = 1,
+    Default = 0, NoCookies = 1,
 }}
 DEFINE_IID!(IID_IHttpFilter, 2764795349, 2306, 17310, 191, 215, 225, 37, 82, 177, 101, 206);
 RT_INTERFACE!{interface IHttpFilter(IHttpFilterVtbl): IInspectable(IInspectableVtbl) [IID_IHttpFilter] {
@@ -3706,7 +3706,7 @@ impl ISyndicationErrorStatics {
     }}
 }
 RT_ENUM! { enum SyndicationErrorStatus: i32 {
-    Unknown (SyndicationErrorStatus_Unknown) = 0, MissingRequiredElement (SyndicationErrorStatus_MissingRequiredElement) = 1, MissingRequiredAttribute (SyndicationErrorStatus_MissingRequiredAttribute) = 2, InvalidXml (SyndicationErrorStatus_InvalidXml) = 3, UnexpectedContent (SyndicationErrorStatus_UnexpectedContent) = 4, UnsupportedFormat (SyndicationErrorStatus_UnsupportedFormat) = 5,
+    Unknown = 0, MissingRequiredElement = 1, MissingRequiredAttribute = 2, InvalidXml = 3, UnexpectedContent = 4, UnsupportedFormat = 5,
 }}
 DEFINE_IID!(IID_ISyndicationFeed, 2147368146, 23398, 19810, 132, 3, 27, 193, 13, 145, 13, 107);
 RT_INTERFACE!{interface ISyndicationFeed(ISyndicationFeedVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationFeed] {
@@ -3892,7 +3892,7 @@ impl ISyndicationFeedFactory {
     }}
 }
 RT_ENUM! { enum SyndicationFormat: i32 {
-    Atom10 (SyndicationFormat_Atom10) = 0, Rss20 (SyndicationFormat_Rss20) = 1, Rss10 (SyndicationFormat_Rss10) = 2, Rss092 (SyndicationFormat_Rss092) = 3, Rss091 (SyndicationFormat_Rss091) = 4, Atom03 (SyndicationFormat_Atom03) = 5,
+    Atom10 = 0, Rss20 = 1, Rss10 = 2, Rss092 = 3, Rss091 = 4, Atom03 = 5,
 }}
 DEFINE_IID!(IID_ISyndicationGenerator, 2540221305, 64299, 20333, 180, 28, 8, 138, 88, 104, 130, 92);
 RT_INTERFACE!{interface ISyndicationGenerator(ISyndicationGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationGenerator] {
@@ -4467,7 +4467,7 @@ impl ISyndicationTextFactory {
     }}
 }
 RT_ENUM! { enum SyndicationTextType: i32 {
-    Text (SyndicationTextType_Text) = 0, Html (SyndicationTextType_Html) = 1, Xhtml (SyndicationTextType_Xhtml) = 2,
+    Text = 0, Html = 1, Xhtml = 2,
 }}
 RT_STRUCT! { struct TransferProgress {
     BytesSent: u32, TotalBytesToSend: u32, BytesRetrieved: u32, TotalBytesToRetrieve: u32,
@@ -5046,10 +5046,10 @@ impl IWebViewControlPermissionRequestedEventArgs {
 }
 RT_CLASS!{class WebViewControlPermissionRequestedEventArgs: IWebViewControlPermissionRequestedEventArgs}
 RT_ENUM! { enum WebViewControlPermissionState: i32 {
-    Unknown (WebViewControlPermissionState_Unknown) = 0, Defer (WebViewControlPermissionState_Defer) = 1, Allow (WebViewControlPermissionState_Allow) = 2, Deny (WebViewControlPermissionState_Deny) = 3,
+    Unknown = 0, Defer = 1, Allow = 2, Deny = 3,
 }}
 RT_ENUM! { enum WebViewControlPermissionType: i32 {
-    Geolocation (WebViewControlPermissionType_Geolocation) = 0, UnlimitedIndexedDBQuota (WebViewControlPermissionType_UnlimitedIndexedDBQuota) = 1, Media (WebViewControlPermissionType_Media) = 2, PointerLock (WebViewControlPermissionType_PointerLock) = 3, WebNotifications (WebViewControlPermissionType_WebNotifications) = 4, Screen (WebViewControlPermissionType_Screen) = 5, ImmersiveView (WebViewControlPermissionType_ImmersiveView) = 6,
+    Geolocation = 0, UnlimitedIndexedDBQuota = 1, Media = 2, PointerLock = 3, WebNotifications = 4, Screen = 5, ImmersiveView = 6,
 }}
 DEFINE_IID!(IID_IWebViewControlScriptNotifyEventArgs, 1226696059, 28489, 16827, 181, 145, 81, 184, 91, 129, 112, 55);
 RT_INTERFACE!{interface IWebViewControlScriptNotifyEventArgs(IWebViewControlScriptNotifyEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlScriptNotifyEventArgs] {
@@ -5232,10 +5232,10 @@ impl IWebViewControlAcceleratorKeyPressedEventArgs {
 }
 RT_CLASS!{class WebViewControlAcceleratorKeyPressedEventArgs: IWebViewControlAcceleratorKeyPressedEventArgs}
 RT_ENUM! { enum WebViewControlAcceleratorKeyRoutingStage: i32 {
-    Tunneling (WebViewControlAcceleratorKeyRoutingStage_Tunneling) = 0, Bubbling (WebViewControlAcceleratorKeyRoutingStage_Bubbling) = 1,
+    Tunneling = 0, Bubbling = 1,
 }}
 RT_ENUM! { enum WebViewControlMoveFocusReason: i32 {
-    Programmatic (WebViewControlMoveFocusReason_Programmatic) = 0, Next (WebViewControlMoveFocusReason_Next) = 1, Previous (WebViewControlMoveFocusReason_Previous) = 2,
+    Programmatic = 0, Next = 1, Previous = 2,
 }}
 DEFINE_IID!(IID_IWebViewControlMoveFocusRequestedEventArgs, 1797927949, 19408, 16478, 183, 193, 30, 114, 164, 146, 244, 70);
 RT_INTERFACE!{interface IWebViewControlMoveFocusRequestedEventArgs(IWebViewControlMoveFocusRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlMoveFocusRequestedEventArgs] {
@@ -5310,7 +5310,7 @@ impl WebViewControlProcess {
 }
 DEFINE_CLSID!(WebViewControlProcess(&[87,105,110,100,111,119,115,46,87,101,98,46,85,73,46,73,110,116,101,114,111,112,46,87,101,98,86,105,101,119,67,111,110,116,114,111,108,80,114,111,99,101,115,115,0]) [CLSID_WebViewControlProcess]);
 RT_ENUM! { enum WebViewControlProcessCapabilityState: i32 {
-    Default (WebViewControlProcessCapabilityState_Default) = 0, Disabled (WebViewControlProcessCapabilityState_Disabled) = 1, Enabled (WebViewControlProcessCapabilityState_Enabled) = 2,
+    Default = 0, Disabled = 1, Enabled = 2,
 }}
 DEFINE_IID!(IID_IWebViewControlProcessFactory, 1203133689, 41682, 17724, 176, 151, 246, 119, 157, 75, 142, 2);
 RT_INTERFACE!{static interface IWebViewControlProcessFactory(IWebViewControlProcessFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlProcessFactory] {

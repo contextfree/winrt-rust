@@ -111,7 +111,7 @@ impl IAdcChannel {
 }
 RT_CLASS!{class AdcChannel: IAdcChannel}
 RT_ENUM! { enum AdcChannelMode: i32 {
-    SingleEnded (AdcChannelMode_SingleEnded) = 0, Differential (AdcChannelMode_Differential) = 1,
+    SingleEnded = 0, Differential = 1,
 }}
 DEFINE_IID!(IID_IAdcController, 712434864, 43158, 16921, 134, 182, 234, 140, 220, 233, 143, 86);
 RT_INTERFACE!{interface IAdcController(IAdcControllerVtbl): IInspectable(IInspectableVtbl) [IID_IAdcController] {
@@ -275,7 +275,7 @@ impl IAdcProvider {
     }}
 }
 RT_ENUM! { enum ProviderAdcChannelMode: i32 {
-    SingleEnded (ProviderAdcChannelMode_SingleEnded) = 0, Differential (ProviderAdcChannelMode_Differential) = 1,
+    SingleEnded = 0, Differential = 1,
 }}
 } // Windows.Devices.Adc.Provider
 } // Windows.Devices.Adc
@@ -629,7 +629,7 @@ impl IAllJoynAuthenticationCompleteEventArgs {
 }
 RT_CLASS!{class AllJoynAuthenticationCompleteEventArgs: IAllJoynAuthenticationCompleteEventArgs}
 RT_ENUM! { enum AllJoynAuthenticationMechanism: i32 {
-    None (AllJoynAuthenticationMechanism_None) = 0, SrpAnonymous (AllJoynAuthenticationMechanism_SrpAnonymous) = 1, SrpLogon (AllJoynAuthenticationMechanism_SrpLogon) = 2, EcdheNull (AllJoynAuthenticationMechanism_EcdheNull) = 3, EcdhePsk (AllJoynAuthenticationMechanism_EcdhePsk) = 4, EcdheEcdsa (AllJoynAuthenticationMechanism_EcdheEcdsa) = 5, EcdheSpeke (AllJoynAuthenticationMechanism_EcdheSpeke) = 6,
+    None = 0, SrpAnonymous = 1, SrpLogon = 2, EcdheNull = 3, EcdhePsk = 4, EcdheEcdsa = 5, EcdheSpeke = 6,
 }}
 DEFINE_IID!(IID_IAllJoynBusAttachment, 4077515091, 7917, 17091, 162, 14, 67, 109, 65, 254, 98, 246);
 RT_INTERFACE!{interface IAllJoynBusAttachment(IAllJoynBusAttachmentVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusAttachment] {
@@ -794,7 +794,7 @@ impl IAllJoynBusAttachmentFactory {
     }}
 }
 RT_ENUM! { enum AllJoynBusAttachmentState: i32 {
-    Disconnected (AllJoynBusAttachmentState_Disconnected) = 0, Connecting (AllJoynBusAttachmentState_Connecting) = 1, Connected (AllJoynBusAttachmentState_Connected) = 2, Disconnecting (AllJoynBusAttachmentState_Disconnecting) = 3,
+    Disconnected = 0, Connecting = 1, Connected = 2, Disconnecting = 3,
 }}
 DEFINE_IID!(IID_IAllJoynBusAttachmentStateChangedEventArgs, 3626923508, 49194, 16876, 168, 213, 234, 177, 85, 137, 83, 170);
 RT_INTERFACE!{interface IAllJoynBusAttachmentStateChangedEventArgs(IAllJoynBusAttachmentStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynBusAttachmentStateChangedEventArgs] {
@@ -1360,7 +1360,7 @@ impl IAllJoynSessionLostEventArgsFactory {
     }}
 }
 RT_ENUM! { enum AllJoynSessionLostReason: i32 {
-    None (AllJoynSessionLostReason_None) = 0, ProducerLeftSession (AllJoynSessionLostReason_ProducerLeftSession) = 1, ProducerClosedAbruptly (AllJoynSessionLostReason_ProducerClosedAbruptly) = 2, RemovedByProducer (AllJoynSessionLostReason_RemovedByProducer) = 3, LinkTimeout (AllJoynSessionLostReason_LinkTimeout) = 4, Other (AllJoynSessionLostReason_Other) = 5,
+    None = 0, ProducerLeftSession = 1, ProducerClosedAbruptly = 2, RemovedByProducer = 3, LinkTimeout = 4, Other = 5,
 }}
 DEFINE_IID!(IID_IAllJoynSessionMemberAddedEventArgs, 1235384714, 3537, 18113, 156, 214, 39, 25, 14, 80, 58, 94);
 RT_INTERFACE!{interface IAllJoynSessionMemberAddedEventArgs(IAllJoynSessionMemberAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynSessionMemberAddedEventArgs] {
@@ -1612,7 +1612,7 @@ impl IAllJoynStatusStatics {
     }}
 }
 RT_ENUM! { enum AllJoynTrafficType: i32 {
-    Unknown (AllJoynTrafficType_Unknown) = 0, Messages (AllJoynTrafficType_Messages) = 1, RawUnreliable (AllJoynTrafficType_RawUnreliable) = 2, RawReliable (AllJoynTrafficType_RawReliable) = 4,
+    Unknown = 0, Messages = 1, RawUnreliable = 2, RawReliable = 4,
 }}
 DEFINE_IID!(IID_IAllJoynWatcherStoppedEventArgs, 3388776507, 28701, 19112, 151, 221, 162, 187, 10, 143, 95, 163);
 RT_INTERFACE!{interface IAllJoynWatcherStoppedEventArgs(IAllJoynWatcherStoppedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAllJoynWatcherStoppedEventArgs] {
@@ -1800,10 +1800,10 @@ impl IBluetoothAdapterStatics {
     }}
 }
 RT_ENUM! { enum BluetoothAddressType: i32 {
-    Public (BluetoothAddressType_Public) = 0, Random (BluetoothAddressType_Random) = 1, Unspecified (BluetoothAddressType_Unspecified) = 2,
+    Public = 0, Random = 1, Unspecified = 2,
 }}
 RT_ENUM! { enum BluetoothCacheMode: i32 {
-    Cached (BluetoothCacheMode_Cached) = 0, Uncached (BluetoothCacheMode_Uncached) = 1,
+    Cached = 0, Uncached = 1,
 }}
 DEFINE_IID!(IID_IBluetoothClassOfDevice, 3594527358, 55255, 18017, 148, 84, 101, 3, 156, 161, 122, 43);
 RT_INTERFACE!{interface IBluetoothClassOfDevice(IBluetoothClassOfDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothClassOfDevice] {
@@ -1863,7 +1863,7 @@ impl IBluetoothClassOfDeviceStatics {
     }}
 }
 RT_ENUM! { enum BluetoothConnectionStatus: i32 {
-    Disconnected (BluetoothConnectionStatus_Disconnected) = 0, Connected (BluetoothConnectionStatus_Connected) = 1,
+    Disconnected = 0, Connected = 1,
 }}
 DEFINE_IID!(IID_IBluetoothDevice, 590721366, 37074, 18948, 174, 245, 14, 32, 185, 230, 183, 7);
 RT_INTERFACE!{interface IBluetoothDevice(IBluetoothDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothDevice] {
@@ -2168,7 +2168,7 @@ impl IBluetoothDeviceStatics2 {
     }}
 }
 RT_ENUM! { enum BluetoothError: i32 {
-    Success (BluetoothError_Success) = 0, RadioNotAvailable (BluetoothError_RadioNotAvailable) = 1, ResourceInUse (BluetoothError_ResourceInUse) = 2, DeviceNotConnected (BluetoothError_DeviceNotConnected) = 3, OtherError (BluetoothError_OtherError) = 4, DisabledByPolicy (BluetoothError_DisabledByPolicy) = 5, NotSupported (BluetoothError_NotSupported) = 6, DisabledByUser (BluetoothError_DisabledByUser) = 7, ConsentRequired (BluetoothError_ConsentRequired) = 8, TransportNotSupported (BluetoothError_TransportNotSupported) = 9,
+    Success = 0, RadioNotAvailable = 1, ResourceInUse = 2, DeviceNotConnected = 3, OtherError = 4, DisabledByPolicy = 5, NotSupported = 6, DisabledByUser = 7, ConsentRequired = 8, TransportNotSupported = 9,
 }}
 DEFINE_IID!(IID_IBluetoothLEAppearance, 1562409458, 26280, 16984, 152, 94, 2, 180, 217, 80, 159, 24);
 RT_INTERFACE!{interface IBluetoothLEAppearance(IBluetoothLEAppearanceVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAppearance] {
@@ -2958,13 +2958,13 @@ impl IBluetoothLEDeviceStatics2 {
     }}
 }
 RT_ENUM! { enum BluetoothMajorClass: i32 {
-    Miscellaneous (BluetoothMajorClass_Miscellaneous) = 0, Computer (BluetoothMajorClass_Computer) = 1, Phone (BluetoothMajorClass_Phone) = 2, NetworkAccessPoint (BluetoothMajorClass_NetworkAccessPoint) = 3, AudioVideo (BluetoothMajorClass_AudioVideo) = 4, Peripheral (BluetoothMajorClass_Peripheral) = 5, Imaging (BluetoothMajorClass_Imaging) = 6, Wearable (BluetoothMajorClass_Wearable) = 7, Toy (BluetoothMajorClass_Toy) = 8, Health (BluetoothMajorClass_Health) = 9,
+    Miscellaneous = 0, Computer = 1, Phone = 2, NetworkAccessPoint = 3, AudioVideo = 4, Peripheral = 5, Imaging = 6, Wearable = 7, Toy = 8, Health = 9,
 }}
 RT_ENUM! { enum BluetoothMinorClass: i32 {
-    Uncategorized (BluetoothMinorClass_Uncategorized) = 0, ComputerDesktop (BluetoothMinorClass_ComputerDesktop) = 1, ComputerServer (BluetoothMinorClass_ComputerServer) = 2, ComputerLaptop (BluetoothMinorClass_ComputerLaptop) = 3, ComputerHandheld (BluetoothMinorClass_ComputerHandheld) = 4, ComputerPalmSize (BluetoothMinorClass_ComputerPalmSize) = 5, ComputerWearable (BluetoothMinorClass_ComputerWearable) = 6, ComputerTablet (BluetoothMinorClass_ComputerTablet) = 7, PhoneCellular (BluetoothMinorClass_PhoneCellular) = 1, PhoneCordless (BluetoothMinorClass_PhoneCordless) = 2, PhoneSmartPhone (BluetoothMinorClass_PhoneSmartPhone) = 3, PhoneWired (BluetoothMinorClass_PhoneWired) = 4, PhoneIsdn (BluetoothMinorClass_PhoneIsdn) = 5, NetworkFullyAvailable (BluetoothMinorClass_NetworkFullyAvailable) = 0, NetworkUsed01To17Percent (BluetoothMinorClass_NetworkUsed01To17Percent) = 8, NetworkUsed17To33Percent (BluetoothMinorClass_NetworkUsed17To33Percent) = 16, NetworkUsed33To50Percent (BluetoothMinorClass_NetworkUsed33To50Percent) = 24, NetworkUsed50To67Percent (BluetoothMinorClass_NetworkUsed50To67Percent) = 32, NetworkUsed67To83Percent (BluetoothMinorClass_NetworkUsed67To83Percent) = 40, NetworkUsed83To99Percent (BluetoothMinorClass_NetworkUsed83To99Percent) = 48, NetworkNoServiceAvailable (BluetoothMinorClass_NetworkNoServiceAvailable) = 56, AudioVideoWearableHeadset (BluetoothMinorClass_AudioVideoWearableHeadset) = 1, AudioVideoHandsFree (BluetoothMinorClass_AudioVideoHandsFree) = 2, AudioVideoMicrophone (BluetoothMinorClass_AudioVideoMicrophone) = 4, AudioVideoLoudspeaker (BluetoothMinorClass_AudioVideoLoudspeaker) = 5, AudioVideoHeadphones (BluetoothMinorClass_AudioVideoHeadphones) = 6, AudioVideoPortableAudio (BluetoothMinorClass_AudioVideoPortableAudio) = 7, AudioVideoCarAudio (BluetoothMinorClass_AudioVideoCarAudio) = 8, AudioVideoSetTopBox (BluetoothMinorClass_AudioVideoSetTopBox) = 9, AudioVideoHifiAudioDevice (BluetoothMinorClass_AudioVideoHifiAudioDevice) = 10, AudioVideoVcr (BluetoothMinorClass_AudioVideoVcr) = 11, AudioVideoVideoCamera (BluetoothMinorClass_AudioVideoVideoCamera) = 12, AudioVideoCamcorder (BluetoothMinorClass_AudioVideoCamcorder) = 13, AudioVideoVideoMonitor (BluetoothMinorClass_AudioVideoVideoMonitor) = 14, AudioVideoVideoDisplayAndLoudspeaker (BluetoothMinorClass_AudioVideoVideoDisplayAndLoudspeaker) = 15, AudioVideoVideoConferencing (BluetoothMinorClass_AudioVideoVideoConferencing) = 16, AudioVideoGamingOrToy (BluetoothMinorClass_AudioVideoGamingOrToy) = 18, PeripheralJoystick (BluetoothMinorClass_PeripheralJoystick) = 1, PeripheralGamepad (BluetoothMinorClass_PeripheralGamepad) = 2, PeripheralRemoteControl (BluetoothMinorClass_PeripheralRemoteControl) = 3, PeripheralSensing (BluetoothMinorClass_PeripheralSensing) = 4, PeripheralDigitizerTablet (BluetoothMinorClass_PeripheralDigitizerTablet) = 5, PeripheralCardReader (BluetoothMinorClass_PeripheralCardReader) = 6, PeripheralDigitalPen (BluetoothMinorClass_PeripheralDigitalPen) = 7, PeripheralHandheldScanner (BluetoothMinorClass_PeripheralHandheldScanner) = 8, PeripheralHandheldGesture (BluetoothMinorClass_PeripheralHandheldGesture) = 9, WearableWristwatch (BluetoothMinorClass_WearableWristwatch) = 1, WearablePager (BluetoothMinorClass_WearablePager) = 2, WearableJacket (BluetoothMinorClass_WearableJacket) = 3, WearableHelmet (BluetoothMinorClass_WearableHelmet) = 4, WearableGlasses (BluetoothMinorClass_WearableGlasses) = 5, ToyRobot (BluetoothMinorClass_ToyRobot) = 1, ToyVehicle (BluetoothMinorClass_ToyVehicle) = 2, ToyDoll (BluetoothMinorClass_ToyDoll) = 3, ToyController (BluetoothMinorClass_ToyController) = 4, ToyGame (BluetoothMinorClass_ToyGame) = 5, HealthBloodPressureMonitor (BluetoothMinorClass_HealthBloodPressureMonitor) = 1, HealthThermometer (BluetoothMinorClass_HealthThermometer) = 2, HealthWeighingScale (BluetoothMinorClass_HealthWeighingScale) = 3, HealthGlucoseMeter (BluetoothMinorClass_HealthGlucoseMeter) = 4, HealthPulseOximeter (BluetoothMinorClass_HealthPulseOximeter) = 5, HealthHeartRateMonitor (BluetoothMinorClass_HealthHeartRateMonitor) = 6, HealthHealthDataDisplay (BluetoothMinorClass_HealthHealthDataDisplay) = 7, HealthStepCounter (BluetoothMinorClass_HealthStepCounter) = 8, HealthBodyCompositionAnalyzer (BluetoothMinorClass_HealthBodyCompositionAnalyzer) = 9, HealthPeakFlowMonitor (BluetoothMinorClass_HealthPeakFlowMonitor) = 10, HealthMedicationMonitor (BluetoothMinorClass_HealthMedicationMonitor) = 11, HealthKneeProsthesis (BluetoothMinorClass_HealthKneeProsthesis) = 12, HealthAnkleProsthesis (BluetoothMinorClass_HealthAnkleProsthesis) = 13, HealthGenericHealthManager (BluetoothMinorClass_HealthGenericHealthManager) = 14, HealthPersonalMobilityDevice (BluetoothMinorClass_HealthPersonalMobilityDevice) = 15,
+    Uncategorized = 0, ComputerDesktop = 1, ComputerServer = 2, ComputerLaptop = 3, ComputerHandheld = 4, ComputerPalmSize = 5, ComputerWearable = 6, ComputerTablet = 7, PhoneCellular = 1, PhoneCordless = 2, PhoneSmartPhone = 3, PhoneWired = 4, PhoneIsdn = 5, NetworkFullyAvailable = 0, NetworkUsed01To17Percent = 8, NetworkUsed17To33Percent = 16, NetworkUsed33To50Percent = 24, NetworkUsed50To67Percent = 32, NetworkUsed67To83Percent = 40, NetworkUsed83To99Percent = 48, NetworkNoServiceAvailable = 56, AudioVideoWearableHeadset = 1, AudioVideoHandsFree = 2, AudioVideoMicrophone = 4, AudioVideoLoudspeaker = 5, AudioVideoHeadphones = 6, AudioVideoPortableAudio = 7, AudioVideoCarAudio = 8, AudioVideoSetTopBox = 9, AudioVideoHifiAudioDevice = 10, AudioVideoVcr = 11, AudioVideoVideoCamera = 12, AudioVideoCamcorder = 13, AudioVideoVideoMonitor = 14, AudioVideoVideoDisplayAndLoudspeaker = 15, AudioVideoVideoConferencing = 16, AudioVideoGamingOrToy = 18, PeripheralJoystick = 1, PeripheralGamepad = 2, PeripheralRemoteControl = 3, PeripheralSensing = 4, PeripheralDigitizerTablet = 5, PeripheralCardReader = 6, PeripheralDigitalPen = 7, PeripheralHandheldScanner = 8, PeripheralHandheldGesture = 9, WearableWristwatch = 1, WearablePager = 2, WearableJacket = 3, WearableHelmet = 4, WearableGlasses = 5, ToyRobot = 1, ToyVehicle = 2, ToyDoll = 3, ToyController = 4, ToyGame = 5, HealthBloodPressureMonitor = 1, HealthThermometer = 2, HealthWeighingScale = 3, HealthGlucoseMeter = 4, HealthPulseOximeter = 5, HealthHeartRateMonitor = 6, HealthHealthDataDisplay = 7, HealthStepCounter = 8, HealthBodyCompositionAnalyzer = 9, HealthPeakFlowMonitor = 10, HealthMedicationMonitor = 11, HealthKneeProsthesis = 12, HealthAnkleProsthesis = 13, HealthGenericHealthManager = 14, HealthPersonalMobilityDevice = 15,
 }}
 RT_ENUM! { enum BluetoothServiceCapabilities: u32 {
-    None (BluetoothServiceCapabilities_None) = 0, LimitedDiscoverableMode (BluetoothServiceCapabilities_LimitedDiscoverableMode) = 1, PositioningService (BluetoothServiceCapabilities_PositioningService) = 8, NetworkingService (BluetoothServiceCapabilities_NetworkingService) = 16, RenderingService (BluetoothServiceCapabilities_RenderingService) = 32, CapturingService (BluetoothServiceCapabilities_CapturingService) = 64, ObjectTransferService (BluetoothServiceCapabilities_ObjectTransferService) = 128, AudioService (BluetoothServiceCapabilities_AudioService) = 256, TelephoneService (BluetoothServiceCapabilities_TelephoneService) = 512, InformationService (BluetoothServiceCapabilities_InformationService) = 1024,
+    None = 0, LimitedDiscoverableMode = 1, PositioningService = 8, NetworkingService = 16, RenderingService = 32, CapturingService = 64, ObjectTransferService = 128, AudioService = 256, TelephoneService = 512, InformationService = 1024,
 }}
 DEFINE_IID!(IID_IBluetoothSignalStrengthFilter, 3749409681, 27573, 19710, 144, 177, 93, 115, 36, 237, 207, 127);
 RT_INTERFACE!{interface IBluetoothSignalStrengthFilter(IBluetoothSignalStrengthFilterVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothSignalStrengthFilter] {
@@ -3447,7 +3447,7 @@ RT_CLASS!{class BluetoothLEAdvertisementFilter: IBluetoothLEAdvertisementFilter}
 impl RtActivatable<IActivationFactory> for BluetoothLEAdvertisementFilter {}
 DEFINE_CLSID!(BluetoothLEAdvertisementFilter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,65,100,118,101,114,116,105,115,101,109,101,110,116,46,66,108,117,101,116,111,111,116,104,76,69,65,100,118,101,114,116,105,115,101,109,101,110,116,70,105,108,116,101,114,0]) [CLSID_BluetoothLEAdvertisementFilter]);
 RT_ENUM! { enum BluetoothLEAdvertisementFlags: u32 {
-    None (BluetoothLEAdvertisementFlags_None) = 0, LimitedDiscoverableMode (BluetoothLEAdvertisementFlags_LimitedDiscoverableMode) = 1, GeneralDiscoverableMode (BluetoothLEAdvertisementFlags_GeneralDiscoverableMode) = 2, ClassicNotSupported (BluetoothLEAdvertisementFlags_ClassicNotSupported) = 4, DualModeControllerCapable (BluetoothLEAdvertisementFlags_DualModeControllerCapable) = 8, DualModeHostCapable (BluetoothLEAdvertisementFlags_DualModeHostCapable) = 16,
+    None = 0, LimitedDiscoverableMode = 1, GeneralDiscoverableMode = 2, ClassicNotSupported = 4, DualModeControllerCapable = 8, DualModeHostCapable = 16,
 }}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementPublisher, 3454542073, 55802, 17366, 162, 100, 221, 216, 183, 218, 139, 120);
 RT_INTERFACE!{interface IBluetoothLEAdvertisementPublisher(IBluetoothLEAdvertisementPublisherVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementPublisher] {
@@ -3508,7 +3508,7 @@ impl IBluetoothLEAdvertisementPublisherFactory {
     }}
 }
 RT_ENUM! { enum BluetoothLEAdvertisementPublisherStatus: i32 {
-    Created (BluetoothLEAdvertisementPublisherStatus_Created) = 0, Waiting (BluetoothLEAdvertisementPublisherStatus_Waiting) = 1, Started (BluetoothLEAdvertisementPublisherStatus_Started) = 2, Stopping (BluetoothLEAdvertisementPublisherStatus_Stopping) = 3, Stopped (BluetoothLEAdvertisementPublisherStatus_Stopped) = 4, Aborted (BluetoothLEAdvertisementPublisherStatus_Aborted) = 5,
+    Created = 0, Waiting = 1, Started = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementPublisherStatusChangedEventArgs, 163757471, 11775, 19235, 134, 238, 13, 20, 251, 148, 174, 174);
 RT_INTERFACE!{interface IBluetoothLEAdvertisementPublisherStatusChangedEventArgs(IBluetoothLEAdvertisementPublisherStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementPublisherStatusChangedEventArgs] {
@@ -3565,7 +3565,7 @@ impl IBluetoothLEAdvertisementReceivedEventArgs {
 }
 RT_CLASS!{class BluetoothLEAdvertisementReceivedEventArgs: IBluetoothLEAdvertisementReceivedEventArgs}
 RT_ENUM! { enum BluetoothLEAdvertisementType: i32 {
-    ConnectableUndirected (BluetoothLEAdvertisementType_ConnectableUndirected) = 0, ConnectableDirected (BluetoothLEAdvertisementType_ConnectableDirected) = 1, ScannableUndirected (BluetoothLEAdvertisementType_ScannableUndirected) = 2, NonConnectableUndirected (BluetoothLEAdvertisementType_NonConnectableUndirected) = 3, ScanResponse (BluetoothLEAdvertisementType_ScanResponse) = 4,
+    ConnectableUndirected = 0, ConnectableDirected = 1, ScannableUndirected = 2, NonConnectableUndirected = 3, ScanResponse = 4,
 }}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementWatcher, 2796303215, 62419, 17047, 141, 108, 200, 30, 166, 98, 63, 64);
 RT_INTERFACE!{interface IBluetoothLEAdvertisementWatcher(IBluetoothLEAdvertisementWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementWatcher] {
@@ -3688,7 +3688,7 @@ impl IBluetoothLEAdvertisementWatcherFactory {
     }}
 }
 RT_ENUM! { enum BluetoothLEAdvertisementWatcherStatus: i32 {
-    Created (BluetoothLEAdvertisementWatcherStatus_Created) = 0, Started (BluetoothLEAdvertisementWatcherStatus_Started) = 1, Stopping (BluetoothLEAdvertisementWatcherStatus_Stopping) = 2, Stopped (BluetoothLEAdvertisementWatcherStatus_Stopped) = 3, Aborted (BluetoothLEAdvertisementWatcherStatus_Aborted) = 4,
+    Created = 0, Started = 1, Stopping = 2, Stopped = 3, Aborted = 4,
 }}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementWatcherStoppedEventArgs, 3712022605, 59321, 17379, 156, 4, 6, 133, 208, 133, 253, 140);
 RT_INTERFACE!{interface IBluetoothLEAdvertisementWatcherStoppedEventArgs(IBluetoothLEAdvertisementWatcherStoppedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementWatcherStoppedEventArgs] {
@@ -3750,13 +3750,13 @@ impl IBluetoothLEManufacturerDataFactory {
     }}
 }
 RT_ENUM! { enum BluetoothLEScanningMode: i32 {
-    Passive (BluetoothLEScanningMode_Passive) = 0, Active (BluetoothLEScanningMode_Active) = 1,
+    Passive = 0, Active = 1,
 }}
 } // Windows.Devices.Bluetooth.Advertisement
 pub mod background { // Windows.Devices.Bluetooth.Background
 use ::prelude::*;
 RT_ENUM! { enum BluetoothEventTriggeringMode: i32 {
-    Serial (BluetoothEventTriggeringMode_Serial) = 0, Batch (BluetoothEventTriggeringMode_Batch) = 1, KeepLatest (BluetoothEventTriggeringMode_KeepLatest) = 2,
+    Serial = 0, Batch = 1, KeepLatest = 2,
 }}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementPublisherTriggerDetails, 1628359302, 13440, 16841, 169, 24, 125, 218, 223, 32, 126, 0);
 RT_INTERFACE!{interface IBluetoothLEAdvertisementPublisherTriggerDetails(IBluetoothLEAdvertisementPublisherTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementPublisherTriggerDetails] {
@@ -4156,7 +4156,7 @@ impl IGattCharacteristic3 {
     }}
 }
 RT_ENUM! { enum GattCharacteristicProperties: u32 {
-    None (GattCharacteristicProperties_None) = 0, Broadcast (GattCharacteristicProperties_Broadcast) = 1, Read (GattCharacteristicProperties_Read) = 2, WriteWithoutResponse (GattCharacteristicProperties_WriteWithoutResponse) = 4, Write (GattCharacteristicProperties_Write) = 8, Notify (GattCharacteristicProperties_Notify) = 16, Indicate (GattCharacteristicProperties_Indicate) = 32, AuthenticatedSignedWrites (GattCharacteristicProperties_AuthenticatedSignedWrites) = 64, ExtendedProperties (GattCharacteristicProperties_ExtendedProperties) = 128, ReliableWrites (GattCharacteristicProperties_ReliableWrites) = 256, WritableAuxiliaries (GattCharacteristicProperties_WritableAuxiliaries) = 512,
+    None = 0, Broadcast = 1, Read = 2, WriteWithoutResponse = 4, Write = 8, Notify = 16, Indicate = 32, AuthenticatedSignedWrites = 64, ExtendedProperties = 128, ReliableWrites = 256, WritableAuxiliaries = 512,
 }}
 DEFINE_IID!(IID_IGattCharacteristicsResult, 294949980, 45655, 20286, 157, 183, 246, 139, 201, 169, 174, 242);
 RT_INTERFACE!{interface IGattCharacteristicsResult(IGattCharacteristicsResultVtbl): IInspectable(IInspectableVtbl) [IID_IGattCharacteristicsResult] {
@@ -4939,7 +4939,7 @@ impl IGattCharacteristicUuidsStatics2 {
     }}
 }
 RT_ENUM! { enum GattClientCharacteristicConfigurationDescriptorValue: i32 {
-    None (GattClientCharacteristicConfigurationDescriptorValue_None) = 0, Notify (GattClientCharacteristicConfigurationDescriptorValue_Notify) = 1, Indicate (GattClientCharacteristicConfigurationDescriptorValue_Indicate) = 2,
+    None = 0, Notify = 1, Indicate = 2,
 }}
 DEFINE_IID!(IID_IGattClientNotificationResult, 1349342617, 274, 16794, 142, 59, 174, 33, 175, 171, 210, 194);
 RT_INTERFACE!{interface IGattClientNotificationResult(IGattClientNotificationResultVtbl): IInspectable(IInspectableVtbl) [IID_IGattClientNotificationResult] {
@@ -4977,7 +4977,7 @@ impl IGattClientNotificationResult2 {
     }}
 }
 RT_ENUM! { enum GattCommunicationStatus: i32 {
-    Success (GattCommunicationStatus_Success) = 0, Unreachable (GattCommunicationStatus_Unreachable) = 1, ProtocolError (GattCommunicationStatus_ProtocolError) = 2, AccessDenied (GattCommunicationStatus_AccessDenied) = 3,
+    Success = 0, Unreachable = 1, ProtocolError = 2, AccessDenied = 3,
 }}
 DEFINE_IID!(IID_IGattDescriptor, 2449825579, 32900, 17220, 180, 194, 40, 77, 225, 154, 133, 6);
 RT_INTERFACE!{interface IGattDescriptor(IGattDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IGattDescriptor] {
@@ -5750,7 +5750,7 @@ impl IGattLocalService {
 }
 RT_CLASS!{class GattLocalService: IGattLocalService}
 RT_ENUM! { enum GattOpenStatus: i32 {
-    Unspecified (GattOpenStatus_Unspecified) = 0, Success (GattOpenStatus_Success) = 1, AlreadyOpened (GattOpenStatus_AlreadyOpened) = 2, NotFound (GattOpenStatus_NotFound) = 3, SharingViolation (GattOpenStatus_SharingViolation) = 4, AccessDenied (GattOpenStatus_AccessDenied) = 5,
+    Unspecified = 0, Success = 1, AlreadyOpened = 2, NotFound = 3, SharingViolation = 4, AccessDenied = 5,
 }}
 DEFINE_IID!(IID_IGattPresentationFormat, 426573857, 64173, 17884, 174, 91, 42, 195, 24, 78, 132, 219);
 RT_INTERFACE!{interface IGattPresentationFormat(IGattPresentationFormatVtbl): IInspectable(IInspectableVtbl) [IID_IGattPresentationFormat] {
@@ -6075,7 +6075,7 @@ impl IGattPresentationFormatTypesStatics {
     }}
 }
 RT_ENUM! { enum GattProtectionLevel: i32 {
-    Plain (GattProtectionLevel_Plain) = 0, AuthenticationRequired (GattProtectionLevel_AuthenticationRequired) = 1, EncryptionRequired (GattProtectionLevel_EncryptionRequired) = 2, EncryptionAndAuthenticationRequired (GattProtectionLevel_EncryptionAndAuthenticationRequired) = 3,
+    Plain = 0, AuthenticationRequired = 1, EncryptionRequired = 2, EncryptionAndAuthenticationRequired = 3,
 }}
 RT_CLASS!{static class GattProtocolError}
 impl RtActivatable<IGattProtocolErrorStatics> for GattProtocolError {}
@@ -6400,7 +6400,7 @@ impl IGattReliableWriteTransaction2 {
     }}
 }
 RT_ENUM! { enum GattRequestState: i32 {
-    Pending (GattRequestState_Pending) = 0, Completed (GattRequestState_Completed) = 1, Canceled (GattRequestState_Canceled) = 2,
+    Pending = 0, Completed = 1, Canceled = 2,
 }}
 DEFINE_IID!(IID_IGattRequestStateChangedEventArgs, 3895777580, 10174, 17587, 157, 13, 79, 198, 232, 8, 221, 63);
 RT_INTERFACE!{interface IGattRequestStateChangedEventArgs(IGattRequestStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGattRequestStateChangedEventArgs] {
@@ -6472,7 +6472,7 @@ impl GattServiceProvider {
 }
 DEFINE_CLSID!(GattServiceProvider(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,66,108,117,101,116,111,111,116,104,46,71,101,110,101,114,105,99,65,116,116,114,105,98,117,116,101,80,114,111,102,105,108,101,46,71,97,116,116,83,101,114,118,105,99,101,80,114,111,118,105,100,101,114,0]) [CLSID_GattServiceProvider]);
 RT_ENUM! { enum GattServiceProviderAdvertisementStatus: i32 {
-    Created (GattServiceProviderAdvertisementStatus_Created) = 0, Stopped (GattServiceProviderAdvertisementStatus_Stopped) = 1, Started (GattServiceProviderAdvertisementStatus_Started) = 2, Aborted (GattServiceProviderAdvertisementStatus_Aborted) = 3,
+    Created = 0, Stopped = 1, Started = 2, Aborted = 3,
 }}
 DEFINE_IID!(IID_IGattServiceProviderAdvertisementStatusChangedEventArgs, 1504029285, 64033, 20476, 177, 85, 4, 217, 40, 1, 38, 134);
 RT_INTERFACE!{interface IGattServiceProviderAdvertisementStatusChangedEventArgs(IGattServiceProviderAdvertisementStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGattServiceProviderAdvertisementStatusChangedEventArgs] {
@@ -6847,7 +6847,7 @@ impl IGattSessionStatics {
     }}
 }
 RT_ENUM! { enum GattSessionStatus: i32 {
-    Closed (GattSessionStatus_Closed) = 0, Active (GattSessionStatus_Active) = 1,
+    Closed = 0, Active = 1,
 }}
 DEFINE_IID!(IID_IGattSessionStatusChangedEventArgs, 1980086062, 33663, 16460, 171, 52, 49, 99, 243, 157, 223, 50);
 RT_INTERFACE!{interface IGattSessionStatusChangedEventArgs(IGattSessionStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGattSessionStatusChangedEventArgs] {
@@ -6868,7 +6868,7 @@ impl IGattSessionStatusChangedEventArgs {
 }
 RT_CLASS!{class GattSessionStatusChangedEventArgs: IGattSessionStatusChangedEventArgs}
 RT_ENUM! { enum GattSharingMode: i32 {
-    Unspecified (GattSharingMode_Unspecified) = 0, Exclusive (GattSharingMode_Exclusive) = 1, SharedReadOnly (GattSharingMode_SharedReadOnly) = 2, SharedReadAndWrite (GattSharingMode_SharedReadAndWrite) = 3,
+    Unspecified = 0, Exclusive = 1, SharedReadOnly = 2, SharedReadAndWrite = 3,
 }}
 DEFINE_IID!(IID_IGattSubscribedClient, 1936625665, 5540, 20162, 146, 72, 227, 242, 13, 70, 59, 233);
 RT_INTERFACE!{interface IGattSubscribedClient(IGattSubscribedClientVtbl): IInspectable(IInspectableVtbl) [IID_IGattSubscribedClient] {
@@ -6919,7 +6919,7 @@ impl IGattValueChangedEventArgs {
 }
 RT_CLASS!{class GattValueChangedEventArgs: IGattValueChangedEventArgs}
 RT_ENUM! { enum GattWriteOption: i32 {
-    WriteWithResponse (GattWriteOption_WriteWithResponse) = 0, WriteWithoutResponse (GattWriteOption_WriteWithoutResponse) = 1,
+    WriteWithResponse = 0, WriteWithoutResponse = 1,
 }}
 DEFINE_IID!(IID_IGattWriteRequest, 2931206637, 56879, 20418, 169, 168, 148, 234, 120, 68, 241, 61);
 RT_INTERFACE!{interface IGattWriteRequest(IGattWriteRequestVtbl): IInspectable(IInspectableVtbl) [IID_IGattWriteRequest] {
@@ -7409,10 +7409,10 @@ impl ICustomDeviceStatics {
     }}
 }
 RT_ENUM! { enum DeviceAccessMode: i32 {
-    Read (DeviceAccessMode_Read) = 0, Write (DeviceAccessMode_Write) = 1, ReadWrite (DeviceAccessMode_ReadWrite) = 2,
+    Read = 0, Write = 1, ReadWrite = 2,
 }}
 RT_ENUM! { enum DeviceSharingMode: i32 {
-    Shared (DeviceSharingMode_Shared) = 0, Exclusive (DeviceSharingMode_Exclusive) = 1,
+    Shared = 0, Exclusive = 1,
 }}
 DEFINE_IID!(IID_IIOControlCode, 244668903, 24776, 17269, 167, 97, 127, 136, 8, 6, 108, 96);
 RT_INTERFACE!{interface IIOControlCode(IIOControlCodeVtbl): IInspectable(IInspectableVtbl) [IID_IIOControlCode] {
@@ -7480,10 +7480,10 @@ impl IKnownDeviceTypesStatics {
     }}
 }
 RT_ENUM! { enum IOControlAccessMode: i32 {
-    Any (IOControlAccessMode_Any) = 0, Read (IOControlAccessMode_Read) = 1, Write (IOControlAccessMode_Write) = 2, ReadWrite (IOControlAccessMode_ReadWrite) = 3,
+    Any = 0, Read = 1, Write = 2, ReadWrite = 3,
 }}
 RT_ENUM! { enum IOControlBufferingMethod: i32 {
-    Buffered (IOControlBufferingMethod_Buffered) = 0, DirectInput (IOControlBufferingMethod_DirectInput) = 1, DirectOutput (IOControlBufferingMethod_DirectOutput) = 2, Neither (IOControlBufferingMethod_Neither) = 3,
+    Buffered = 0, DirectInput = 1, DirectOutput = 2, Neither = 3,
 }}
 RT_CLASS!{class IOControlCode: IIOControlCode}
 impl RtActivatable<IIOControlCodeFactory> for IOControlCode {}
@@ -7638,13 +7638,13 @@ impl DisplayMonitor {
 }
 DEFINE_CLSID!(DisplayMonitor(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,68,105,115,112,108,97,121,46,68,105,115,112,108,97,121,77,111,110,105,116,111,114,0]) [CLSID_DisplayMonitor]);
 RT_ENUM! { enum DisplayMonitorConnectionKind: i32 {
-    Internal (DisplayMonitorConnectionKind_Internal) = 0, Wired (DisplayMonitorConnectionKind_Wired) = 1, Wireless (DisplayMonitorConnectionKind_Wireless) = 2, Virtual (DisplayMonitorConnectionKind_Virtual) = 3,
+    Internal = 0, Wired = 1, Wireless = 2, Virtual = 3,
 }}
 RT_ENUM! { enum DisplayMonitorDescriptorKind: i32 {
-    Edid (DisplayMonitorDescriptorKind_Edid) = 0, DisplayId (DisplayMonitorDescriptorKind_DisplayId) = 1,
+    Edid = 0, DisplayId = 1,
 }}
 RT_ENUM! { enum DisplayMonitorPhysicalConnectorKind: i32 {
-    Unknown (DisplayMonitorPhysicalConnectorKind_Unknown) = 0, HD15 (DisplayMonitorPhysicalConnectorKind_HD15) = 1, AnalogTV (DisplayMonitorPhysicalConnectorKind_AnalogTV) = 2, Dvi (DisplayMonitorPhysicalConnectorKind_Dvi) = 3, Hdmi (DisplayMonitorPhysicalConnectorKind_Hdmi) = 4, Lvds (DisplayMonitorPhysicalConnectorKind_Lvds) = 5, Sdi (DisplayMonitorPhysicalConnectorKind_Sdi) = 6, DisplayPort (DisplayMonitorPhysicalConnectorKind_DisplayPort) = 7,
+    Unknown = 0, HD15 = 1, AnalogTV = 2, Dvi = 3, Hdmi = 4, Lvds = 5, Sdi = 6, DisplayPort = 7,
 }}
 DEFINE_IID!(IID_IDisplayMonitorStatics, 1856924047, 41512, 19461, 130, 29, 182, 149, 214, 103, 222, 142);
 RT_INTERFACE!{static interface IDisplayMonitorStatics(IDisplayMonitorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayMonitorStatics] {
@@ -7670,7 +7670,7 @@ impl IDisplayMonitorStatics {
     }}
 }
 RT_ENUM! { enum DisplayMonitorUsageKind: i32 {
-    Standard (DisplayMonitorUsageKind_Standard) = 0, HeadMounted (DisplayMonitorUsageKind_HeadMounted) = 1, SpecialPurpose (DisplayMonitorUsageKind_SpecialPurpose) = 2,
+    Standard = 0, HeadMounted = 1, SpecialPurpose = 2,
 }}
 pub mod core { // Windows.Devices.Display.Core
 use ::prelude::*;
@@ -7748,7 +7748,7 @@ impl IDisplayAdapterStatics {
     }}
 }
 RT_ENUM! { enum DisplayBitsPerChannel: u32 {
-    None (DisplayBitsPerChannel_None) = 0, Bpc6 (DisplayBitsPerChannel_Bpc6) = 1, Bpc8 (DisplayBitsPerChannel_Bpc8) = 2, Bpc10 (DisplayBitsPerChannel_Bpc10) = 4, Bpc12 (DisplayBitsPerChannel_Bpc12) = 8, Bpc14 (DisplayBitsPerChannel_Bpc14) = 16, Bpc16 (DisplayBitsPerChannel_Bpc16) = 32,
+    None = 0, Bpc6 = 1, Bpc8 = 2, Bpc10 = 4, Bpc12 = 8, Bpc14 = 16, Bpc16 = 32,
 }}
 DEFINE_IID!(IID_IDisplayDevice, 2764682796, 13151, 22321, 140, 180, 193, 204, 212, 115, 16, 112);
 RT_INTERFACE!{interface IDisplayDevice(IDisplayDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayDevice] {
@@ -7798,7 +7798,7 @@ impl IDisplayDevice {
 }
 RT_CLASS!{class DisplayDevice: IDisplayDevice}
 RT_ENUM! { enum DisplayDeviceCapability: i32 {
-    FlipOverride (DisplayDeviceCapability_FlipOverride) = 0,
+    FlipOverride = 0,
 }}
 DEFINE_IID!(IID_IDisplayFence, 81590767, 13318, 22272, 143, 236, 119, 235, 164, 197, 167, 75);
 RT_INTERFACE!{interface IDisplayFence(IDisplayFenceVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayFence] {
@@ -7995,7 +7995,7 @@ impl IDisplayManagerEnabledEventArgs {
 }
 RT_CLASS!{class DisplayManagerEnabledEventArgs: IDisplayManagerEnabledEventArgs}
 RT_ENUM! { enum DisplayManagerOptions: u32 {
-    None (DisplayManagerOptions_None) = 0, EnforceSourceOwnership (DisplayManagerOptions_EnforceSourceOwnership) = 1,
+    None = 0, EnforceSourceOwnership = 1,
 }}
 DEFINE_IID!(IID_IDisplayManagerPathsFailedOrInvalidatedEventArgs, 61232729, 7660, 23573, 178, 162, 143, 233, 18, 152, 105, 254);
 RT_INTERFACE!{interface IDisplayManagerPathsFailedOrInvalidatedEventArgs(IDisplayManagerPathsFailedOrInvalidatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayManagerPathsFailedOrInvalidatedEventArgs] {
@@ -8021,7 +8021,7 @@ impl IDisplayManagerPathsFailedOrInvalidatedEventArgs {
 }
 RT_CLASS!{class DisplayManagerPathsFailedOrInvalidatedEventArgs: IDisplayManagerPathsFailedOrInvalidatedEventArgs}
 RT_ENUM! { enum DisplayManagerResult: i32 {
-    Success (DisplayManagerResult_Success) = 0, UnknownFailure (DisplayManagerResult_UnknownFailure) = 1, TargetAccessDenied (DisplayManagerResult_TargetAccessDenied) = 2, TargetStale (DisplayManagerResult_TargetStale) = 3, RemoteSessionNotSupported (DisplayManagerResult_RemoteSessionNotSupported) = 4,
+    Success = 0, UnknownFailure = 1, TargetAccessDenied = 2, TargetStale = 3, RemoteSessionNotSupported = 4,
 }}
 DEFINE_IID!(IID_IDisplayManagerResultWithState, 2389011110, 26132, 21694, 191, 239, 73, 148, 84, 127, 123, 225);
 RT_INTERFACE!{interface IDisplayManagerResultWithState(IDisplayManagerResultWithStateVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayManagerResultWithState] {
@@ -8122,7 +8122,7 @@ impl IDisplayModeInfo {
 }
 RT_CLASS!{class DisplayModeInfo: IDisplayModeInfo}
 RT_ENUM! { enum DisplayModeQueryOptions: u32 {
-    None (DisplayModeQueryOptions_None) = 0, OnlyPreferredResolution (DisplayModeQueryOptions_OnlyPreferredResolution) = 1,
+    None = 0, OnlyPreferredResolution = 1,
 }}
 DEFINE_IID!(IID_IDisplayPath, 3017791050, 29792, 23774, 129, 27, 213, 174, 159, 61, 159, 132);
 RT_INTERFACE!{interface IDisplayPath(IDisplayPathVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayPath] {
@@ -8271,10 +8271,10 @@ impl IDisplayPath {
 }
 RT_CLASS!{class DisplayPath: IDisplayPath}
 RT_ENUM! { enum DisplayPathScaling: i32 {
-    Identity (DisplayPathScaling_Identity) = 0, Centered (DisplayPathScaling_Centered) = 1, Stretched (DisplayPathScaling_Stretched) = 2, AspectRatioStretched (DisplayPathScaling_AspectRatioStretched) = 3, Custom (DisplayPathScaling_Custom) = 4, DriverPreferred (DisplayPathScaling_DriverPreferred) = 5,
+    Identity = 0, Centered = 1, Stretched = 2, AspectRatioStretched = 3, Custom = 4, DriverPreferred = 5,
 }}
 RT_ENUM! { enum DisplayPathStatus: i32 {
-    Unknown (DisplayPathStatus_Unknown) = 0, Succeeded (DisplayPathStatus_Succeeded) = 1, Pending (DisplayPathStatus_Pending) = 2, Failed (DisplayPathStatus_Failed) = 3, FailedAsync (DisplayPathStatus_FailedAsync) = 4, InvalidatedAsync (DisplayPathStatus_InvalidatedAsync) = 5,
+    Unknown = 0, Succeeded = 1, Pending = 2, Failed = 3, FailedAsync = 4, InvalidatedAsync = 5,
 }}
 RT_STRUCT! { struct DisplayPresentationRate {
     VerticalSyncRate: foundation::numerics::Rational, VerticalSyncsPerPresentation: i32,
@@ -8364,7 +8364,7 @@ impl IDisplayPrimaryDescriptionStatics {
     }}
 }
 RT_ENUM! { enum DisplayRotation: i32 {
-    None (DisplayRotation_None) = 0, Clockwise90Degrees (DisplayRotation_Clockwise90Degrees) = 1, Clockwise180Degrees (DisplayRotation_Clockwise180Degrees) = 2, Clockwise270Degrees (DisplayRotation_Clockwise270Degrees) = 3,
+    None = 0, Clockwise90Degrees = 1, Clockwise180Degrees = 2, Clockwise270Degrees = 3,
 }}
 DEFINE_IID!(IID_IDisplayScanout, 3808761896, 7077, 20711, 138, 57, 187, 31, 210, 244, 248, 185);
 RT_INTERFACE!{interface IDisplayScanout(IDisplayScanoutVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayScanout] {
@@ -8486,10 +8486,10 @@ impl IDisplayState {
 }
 RT_CLASS!{class DisplayState: IDisplayState}
 RT_ENUM! { enum DisplayStateApplyOptions: u32 {
-    None (DisplayStateApplyOptions_None) = 0, FailIfStateChanged (DisplayStateApplyOptions_FailIfStateChanged) = 1, ForceReapply (DisplayStateApplyOptions_ForceReapply) = 2, ForceModeEnumeration (DisplayStateApplyOptions_ForceModeEnumeration) = 4,
+    None = 0, FailIfStateChanged = 1, ForceReapply = 2, ForceModeEnumeration = 4,
 }}
 RT_ENUM! { enum DisplayStateFunctionalizeOptions: u32 {
-    None (DisplayStateFunctionalizeOptions_None) = 0, FailIfStateChanged (DisplayStateFunctionalizeOptions_FailIfStateChanged) = 1, ValidateTopologyOnly (DisplayStateFunctionalizeOptions_ValidateTopologyOnly) = 2,
+    None = 0, FailIfStateChanged = 1, ValidateTopologyOnly = 2,
 }}
 DEFINE_IID!(IID_IDisplayStateOperationResult, 4239245279, 56359, 22072, 183, 242, 235, 223, 164, 247, 234, 147);
 RT_INTERFACE!{interface IDisplayStateOperationResult(IDisplayStateOperationResultVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayStateOperationResult] {
@@ -8510,7 +8510,7 @@ impl IDisplayStateOperationResult {
 }
 RT_CLASS!{class DisplayStateOperationResult: IDisplayStateOperationResult}
 RT_ENUM! { enum DisplayStateOperationStatus: i32 {
-    Success (DisplayStateOperationStatus_Success) = 0, PartialFailure (DisplayStateOperationStatus_PartialFailure) = 1, UnknownFailure (DisplayStateOperationStatus_UnknownFailure) = 2, TargetOwnershipLost (DisplayStateOperationStatus_TargetOwnershipLost) = 3, SystemStateChanged (DisplayStateOperationStatus_SystemStateChanged) = 4, TooManyPathsForAdapter (DisplayStateOperationStatus_TooManyPathsForAdapter) = 5, ModesNotSupported (DisplayStateOperationStatus_ModesNotSupported) = 6, RemoteSessionNotSupported (DisplayStateOperationStatus_RemoteSessionNotSupported) = 7,
+    Success = 0, PartialFailure = 1, UnknownFailure = 2, TargetOwnershipLost = 3, SystemStateChanged = 4, TooManyPathsForAdapter = 5, ModesNotSupported = 6, RemoteSessionNotSupported = 7,
 }}
 DEFINE_IID!(IID_IDisplaySurface, 1498377414, 5018, 22230, 164, 177, 21, 254, 44, 183, 106, 219);
 RT_INTERFACE!{interface IDisplaySurface(IDisplaySurfaceVtbl): IInspectable(IInspectableVtbl) [IID_IDisplaySurface] {
@@ -8608,7 +8608,7 @@ impl IDisplayTarget {
 }
 RT_CLASS!{class DisplayTarget: IDisplayTarget}
 RT_ENUM! { enum DisplayTargetPersistence: i32 {
-    None (DisplayTargetPersistence_None) = 0, BootPersisted (DisplayTargetPersistence_BootPersisted) = 1, TemporaryPersisted (DisplayTargetPersistence_TemporaryPersisted) = 2, PathPersisted (DisplayTargetPersistence_PathPersisted) = 3,
+    None = 0, BootPersisted = 1, TemporaryPersisted = 2, PathPersisted = 3,
 }}
 DEFINE_IID!(IID_IDisplayTask, 1577612360, 4955, 23472, 191, 99, 99, 127, 132, 34, 124, 122);
 RT_INTERFACE!{interface IDisplayTask(IDisplayTaskVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayTask] {
@@ -8644,7 +8644,7 @@ impl IDisplayTaskPool {
 }
 RT_CLASS!{class DisplayTaskPool: IDisplayTaskPool}
 RT_ENUM! { enum DisplayTaskSignalKind: i32 {
-    OnPresentFlipAway (DisplayTaskSignalKind_OnPresentFlipAway) = 0,
+    OnPresentFlipAway = 0,
 }}
 DEFINE_IID!(IID_IDisplayView, 2965998753, 46937, 23385, 177, 173, 240, 120, 106, 169, 229, 61);
 RT_INTERFACE!{interface IDisplayView(IDisplayViewVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayView] {
@@ -8736,10 +8736,10 @@ impl DisplayWireFormat {
 }
 DEFINE_CLSID!(DisplayWireFormat(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,68,105,115,112,108,97,121,46,67,111,114,101,46,68,105,115,112,108,97,121,87,105,114,101,70,111,114,109,97,116,0]) [CLSID_DisplayWireFormat]);
 RT_ENUM! { enum DisplayWireFormatColorSpace: i32 {
-    BT709 (DisplayWireFormatColorSpace_BT709) = 0, BT2020 (DisplayWireFormatColorSpace_BT2020) = 1, ProfileDefinedWideColorGamut (DisplayWireFormatColorSpace_ProfileDefinedWideColorGamut) = 2,
+    BT709 = 0, BT2020 = 1, ProfileDefinedWideColorGamut = 2,
 }}
 RT_ENUM! { enum DisplayWireFormatEotf: i32 {
-    Sdr (DisplayWireFormatEotf_Sdr) = 0, HdrSmpte2084 (DisplayWireFormatEotf_HdrSmpte2084) = 1,
+    Sdr = 0, HdrSmpte2084 = 1,
 }}
 DEFINE_IID!(IID_IDisplayWireFormatFactory, 3002058965, 2518, 21990, 173, 34, 144, 20, 179, 210, 82, 41);
 RT_INTERFACE!{static interface IDisplayWireFormatFactory(IDisplayWireFormatFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayWireFormatFactory] {
@@ -8753,10 +8753,10 @@ impl IDisplayWireFormatFactory {
     }}
 }
 RT_ENUM! { enum DisplayWireFormatHdrMetadata: i32 {
-    None (DisplayWireFormatHdrMetadata_None) = 0, Hdr10 (DisplayWireFormatHdrMetadata_Hdr10) = 1, Hdr10Plus (DisplayWireFormatHdrMetadata_Hdr10Plus) = 2, DolbyVisionLowLatency (DisplayWireFormatHdrMetadata_DolbyVisionLowLatency) = 3,
+    None = 0, Hdr10 = 1, Hdr10Plus = 2, DolbyVisionLowLatency = 3,
 }}
 RT_ENUM! { enum DisplayWireFormatPixelEncoding: i32 {
-    Rgb444 (DisplayWireFormatPixelEncoding_Rgb444) = 0, Ycc444 (DisplayWireFormatPixelEncoding_Ycc444) = 1, Ycc422 (DisplayWireFormatPixelEncoding_Ycc422) = 2, Ycc420 (DisplayWireFormatPixelEncoding_Ycc420) = 3, Intensity (DisplayWireFormatPixelEncoding_Intensity) = 4,
+    Rgb444 = 0, Ycc444 = 1, Ycc422 = 2, Ycc420 = 3, Intensity = 4,
 }}
 DEFINE_IID!(IID_IDisplayWireFormatStatics, 3312820781, 50150, 24442, 189, 251, 135, 198, 171, 134, 97, 213);
 RT_INTERFACE!{static interface IDisplayWireFormatStatics(IDisplayWireFormatStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayWireFormatStatics] {
@@ -8856,10 +8856,10 @@ impl IDeviceAccessInformationStatics {
     }}
 }
 RT_ENUM! { enum DeviceAccessStatus: i32 {
-    Unspecified (DeviceAccessStatus_Unspecified) = 0, Allowed (DeviceAccessStatus_Allowed) = 1, DeniedByUser (DeviceAccessStatus_DeniedByUser) = 2, DeniedBySystem (DeviceAccessStatus_DeniedBySystem) = 3,
+    Unspecified = 0, Allowed = 1, DeniedByUser = 2, DeniedBySystem = 3,
 }}
 RT_ENUM! { enum DeviceClass: i32 {
-    All (DeviceClass_All) = 0, AudioCapture (DeviceClass_AudioCapture) = 1, AudioRender (DeviceClass_AudioRender) = 2, PortableStorageDevice (DeviceClass_PortableStorageDevice) = 3, VideoCapture (DeviceClass_VideoCapture) = 4, ImageScanner (DeviceClass_ImageScanner) = 5, Location (DeviceClass_Location) = 6,
+    All = 0, AudioCapture = 1, AudioRender = 2, PortableStorageDevice = 3, VideoCapture = 4, ImageScanner = 5, Location = 6,
 }}
 DEFINE_IID!(IID_IDeviceConnectionChangeTriggerDetails, 3092745228, 48065, 18507, 191, 250, 123, 49, 220, 194, 0, 178);
 RT_INTERFACE!{interface IDeviceConnectionChangeTriggerDetails(IDeviceConnectionChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceConnectionChangeTriggerDetails] {
@@ -9045,7 +9045,7 @@ impl IDeviceInformationCustomPairing {
 }
 RT_CLASS!{class DeviceInformationCustomPairing: IDeviceInformationCustomPairing}
 RT_ENUM! { enum DeviceInformationKind: i32 {
-    Unknown (DeviceInformationKind_Unknown) = 0, DeviceInterface (DeviceInformationKind_DeviceInterface) = 1, DeviceContainer (DeviceInformationKind_DeviceContainer) = 2, Device (DeviceInformationKind_Device) = 3, DeviceInterfaceClass (DeviceInformationKind_DeviceInterfaceClass) = 4, AssociationEndpoint (DeviceInformationKind_AssociationEndpoint) = 5, AssociationEndpointContainer (DeviceInformationKind_AssociationEndpointContainer) = 6, AssociationEndpointService (DeviceInformationKind_AssociationEndpointService) = 7, DevicePanel (DeviceInformationKind_DevicePanel) = 8,
+    Unknown = 0, DeviceInterface = 1, DeviceContainer = 2, Device = 3, DeviceInterfaceClass = 4, AssociationEndpoint = 5, AssociationEndpointContainer = 6, AssociationEndpointService = 7, DevicePanel = 8,
 }}
 DEFINE_IID!(IID_IDeviceInformationPairing, 742877685, 63108, 16597, 132, 105, 232, 219, 170, 183, 4, 133);
 RT_INTERFACE!{interface IDeviceInformationPairing(IDeviceInformationPairingVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceInformationPairing] {
@@ -9263,10 +9263,10 @@ impl IDeviceInformationUpdate2 {
     }}
 }
 RT_ENUM! { enum DevicePairingKinds: u32 {
-    None (DevicePairingKinds_None) = 0, ConfirmOnly (DevicePairingKinds_ConfirmOnly) = 1, DisplayPin (DevicePairingKinds_DisplayPin) = 2, ProvidePin (DevicePairingKinds_ProvidePin) = 4, ConfirmPinMatch (DevicePairingKinds_ConfirmPinMatch) = 8,
+    None = 0, ConfirmOnly = 1, DisplayPin = 2, ProvidePin = 4, ConfirmPinMatch = 8,
 }}
 RT_ENUM! { enum DevicePairingProtectionLevel: i32 {
-    Default (DevicePairingProtectionLevel_Default) = 0, None (DevicePairingProtectionLevel_None) = 1, Encryption (DevicePairingProtectionLevel_Encryption) = 2, EncryptionAndAuthentication (DevicePairingProtectionLevel_EncryptionAndAuthentication) = 3,
+    Default = 0, None = 1, Encryption = 2, EncryptionAndAuthentication = 3,
 }}
 DEFINE_IID!(IID_IDevicePairingRequestedEventArgs, 4145544278, 56939, 18559, 131, 118, 1, 128, 172, 166, 153, 99);
 RT_INTERFACE!{interface IDevicePairingRequestedEventArgs(IDevicePairingRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePairingRequestedEventArgs] {
@@ -9327,7 +9327,7 @@ impl IDevicePairingResult {
 }
 RT_CLASS!{class DevicePairingResult: IDevicePairingResult}
 RT_ENUM! { enum DevicePairingResultStatus: i32 {
-    Paired (DevicePairingResultStatus_Paired) = 0, NotReadyToPair (DevicePairingResultStatus_NotReadyToPair) = 1, NotPaired (DevicePairingResultStatus_NotPaired) = 2, AlreadyPaired (DevicePairingResultStatus_AlreadyPaired) = 3, ConnectionRejected (DevicePairingResultStatus_ConnectionRejected) = 4, TooManyConnections (DevicePairingResultStatus_TooManyConnections) = 5, HardwareFailure (DevicePairingResultStatus_HardwareFailure) = 6, AuthenticationTimeout (DevicePairingResultStatus_AuthenticationTimeout) = 7, AuthenticationNotAllowed (DevicePairingResultStatus_AuthenticationNotAllowed) = 8, AuthenticationFailure (DevicePairingResultStatus_AuthenticationFailure) = 9, NoSupportedProfiles (DevicePairingResultStatus_NoSupportedProfiles) = 10, ProtectionLevelCouldNotBeMet (DevicePairingResultStatus_ProtectionLevelCouldNotBeMet) = 11, AccessDenied (DevicePairingResultStatus_AccessDenied) = 12, InvalidCeremonyData (DevicePairingResultStatus_InvalidCeremonyData) = 13, PairingCanceled (DevicePairingResultStatus_PairingCanceled) = 14, OperationAlreadyInProgress (DevicePairingResultStatus_OperationAlreadyInProgress) = 15, RequiredHandlerNotRegistered (DevicePairingResultStatus_RequiredHandlerNotRegistered) = 16, RejectedByHandler (DevicePairingResultStatus_RejectedByHandler) = 17, RemoteDeviceHasAssociation (DevicePairingResultStatus_RemoteDeviceHasAssociation) = 18, Failed (DevicePairingResultStatus_Failed) = 19,
+    Paired = 0, NotReadyToPair = 1, NotPaired = 2, AlreadyPaired = 3, ConnectionRejected = 4, TooManyConnections = 5, HardwareFailure = 6, AuthenticationTimeout = 7, AuthenticationNotAllowed = 8, AuthenticationFailure = 9, NoSupportedProfiles = 10, ProtectionLevelCouldNotBeMet = 11, AccessDenied = 12, InvalidCeremonyData = 13, PairingCanceled = 14, OperationAlreadyInProgress = 15, RequiredHandlerNotRegistered = 16, RejectedByHandler = 17, RemoteDeviceHasAssociation = 18, Failed = 19,
 }}
 DEFINE_IID!(IID_IDevicePairingSettings, 1210888828, 33723, 16910, 190, 81, 102, 2, 178, 34, 222, 84);
 RT_INTERFACE!{interface IDevicePairingSettings(IDevicePairingSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePairingSettings] {
@@ -9510,7 +9510,7 @@ impl IDevicePickerAppearance {
 }
 RT_CLASS!{class DevicePickerAppearance: IDevicePickerAppearance}
 RT_ENUM! { enum DevicePickerDisplayStatusOptions: u32 {
-    None (DevicePickerDisplayStatusOptions_None) = 0, ShowProgress (DevicePickerDisplayStatusOptions_ShowProgress) = 1, ShowDisconnectButton (DevicePickerDisplayStatusOptions_ShowDisconnectButton) = 2, ShowRetryButton (DevicePickerDisplayStatusOptions_ShowRetryButton) = 4,
+    None = 0, ShowProgress = 1, ShowDisconnectButton = 2, ShowRetryButton = 4,
 }}
 DEFINE_IID!(IID_IDevicePickerFilter, 2447086242, 22475, 18673, 155, 89, 165, 155, 122, 31, 2, 162);
 RT_INTERFACE!{interface IDevicePickerFilter(IDevicePickerFilterVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePickerFilter] {
@@ -9557,7 +9557,7 @@ impl IDeviceUnpairingResult {
 }
 RT_CLASS!{class DeviceUnpairingResult: IDeviceUnpairingResult}
 RT_ENUM! { enum DeviceUnpairingResultStatus: i32 {
-    Unpaired (DeviceUnpairingResultStatus_Unpaired) = 0, AlreadyUnpaired (DeviceUnpairingResultStatus_AlreadyUnpaired) = 1, OperationAlreadyInProgress (DeviceUnpairingResultStatus_OperationAlreadyInProgress) = 2, AccessDenied (DeviceUnpairingResultStatus_AccessDenied) = 3, Failed (DeviceUnpairingResultStatus_Failed) = 4,
+    Unpaired = 0, AlreadyUnpaired = 1, OperationAlreadyInProgress = 2, AccessDenied = 3, Failed = 4,
 }}
 DEFINE_IID!(IID_IDeviceWatcher, 3387603325, 36715, 20374, 169, 244, 171, 200, 20, 226, 34, 113);
 RT_INTERFACE!{interface IDeviceWatcher(IDeviceWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceWatcher] {
@@ -9672,10 +9672,10 @@ impl IDeviceWatcherEvent {
 }
 RT_CLASS!{class DeviceWatcherEvent: IDeviceWatcherEvent}
 RT_ENUM! { enum DeviceWatcherEventKind: i32 {
-    Add (DeviceWatcherEventKind_Add) = 0, Update (DeviceWatcherEventKind_Update) = 1, Remove (DeviceWatcherEventKind_Remove) = 2,
+    Add = 0, Update = 1, Remove = 2,
 }}
 RT_ENUM! { enum DeviceWatcherStatus: i32 {
-    Created (DeviceWatcherStatus_Created) = 0, Started (DeviceWatcherStatus_Started) = 1, EnumerationCompleted (DeviceWatcherStatus_EnumerationCompleted) = 2, Stopping (DeviceWatcherStatus_Stopping) = 3, Stopped (DeviceWatcherStatus_Stopped) = 4, Aborted (DeviceWatcherStatus_Aborted) = 5,
+    Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 DEFINE_IID!(IID_IDeviceWatcherTriggerDetails, 947945753, 19639, 20055, 165, 109, 119, 109, 7, 203, 254, 249);
 RT_INTERFACE!{interface IDeviceWatcherTriggerDetails(IDeviceWatcherTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceWatcherTriggerDetails] {
@@ -9725,7 +9725,7 @@ impl IEnclosureLocation2 {
     }}
 }
 RT_ENUM! { enum Panel: i32 {
-    Unknown (Panel_Unknown) = 0, Front (Panel_Front) = 1, Back (Panel_Back) = 2, Top (Panel_Top) = 3, Bottom (Panel_Bottom) = 4, Left (Panel_Left) = 5, Right (Panel_Right) = 6,
+    Unknown = 0, Front = 1, Back = 2, Top = 3, Bottom = 4, Left = 5, Right = 6,
 }}
 pub mod pnp { // Windows.Devices.Enumeration.Pnp
 use ::prelude::*;
@@ -9814,7 +9814,7 @@ impl IPnpObjectStatics {
     }}
 }
 RT_ENUM! { enum PnpObjectType: i32 {
-    Unknown (PnpObjectType_Unknown) = 0, DeviceInterface (PnpObjectType_DeviceInterface) = 1, DeviceContainer (PnpObjectType_DeviceContainer) = 2, Device (PnpObjectType_Device) = 3, DeviceInterfaceClass (PnpObjectType_DeviceInterfaceClass) = 4, AssociationEndpoint (PnpObjectType_AssociationEndpoint) = 5, AssociationEndpointContainer (PnpObjectType_AssociationEndpointContainer) = 6, AssociationEndpointService (PnpObjectType_AssociationEndpointService) = 7, DevicePanel (PnpObjectType_DevicePanel) = 8,
+    Unknown = 0, DeviceInterface = 1, DeviceContainer = 2, Device = 3, DeviceInterfaceClass = 4, AssociationEndpoint = 5, AssociationEndpointContainer = 6, AssociationEndpointService = 7, DevicePanel = 8,
 }}
 DEFINE_IID!(IID_IPnpObjectUpdate, 1868163090, 30, 18500, 188, 198, 67, 40, 134, 133, 106, 23);
 RT_INTERFACE!{interface IPnpObjectUpdate(IPnpObjectUpdateVtbl): IInspectable(IInspectableVtbl) [IID_IPnpObjectUpdate] {
@@ -9922,7 +9922,7 @@ RT_CLASS!{class PnpObjectWatcher: IPnpObjectWatcher}
 pub mod geolocation { // Windows.Devices.Geolocation
 use ::prelude::*;
 RT_ENUM! { enum AltitudeReferenceSystem: i32 {
-    Unspecified (AltitudeReferenceSystem_Unspecified) = 0, Terrain (AltitudeReferenceSystem_Terrain) = 1, Ellipsoid (AltitudeReferenceSystem_Ellipsoid) = 2, Geoid (AltitudeReferenceSystem_Geoid) = 3, Surface (AltitudeReferenceSystem_Surface) = 4,
+    Unspecified = 0, Terrain = 1, Ellipsoid = 2, Geoid = 3, Surface = 4,
 }}
 RT_STRUCT! { struct BasicGeoposition {
     Latitude: f64, Longitude: f64, Altitude: f64,
@@ -10240,7 +10240,7 @@ impl IGeocoordinateWithPositionSourceTimestamp {
     }}
 }
 RT_ENUM! { enum GeolocationAccessStatus: i32 {
-    Unspecified (GeolocationAccessStatus_Unspecified) = 0, Allowed (GeolocationAccessStatus_Allowed) = 1, Denied (GeolocationAccessStatus_Denied) = 2,
+    Unspecified = 0, Allowed = 1, Denied = 2,
 }}
 DEFINE_IID!(IID_IGeolocator, 2848178018, 17700, 18825, 138, 169, 222, 1, 157, 46, 85, 31);
 RT_INTERFACE!{interface IGeolocator(IGeolocatorVtbl): IInspectable(IInspectableVtbl) [IID_IGeolocator] {
@@ -10565,7 +10565,7 @@ impl IGeoshape {
     }}
 }
 RT_ENUM! { enum GeoshapeType: i32 {
-    Geopoint (GeoshapeType_Geopoint) = 0, Geocircle (GeoshapeType_Geocircle) = 1, Geopath (GeoshapeType_Geopath) = 2, GeoboundingBox (GeoshapeType_GeoboundingBox) = 3,
+    Geopoint = 0, Geocircle = 1, Geopath = 2, GeoboundingBox = 3,
 }}
 DEFINE_IID!(IID_IGeovisit, 2978445942, 40694, 16811, 160, 221, 121, 62, 206, 118, 226, 222);
 RT_INTERFACE!{interface IGeovisit(IGeovisitVtbl): IInspectable(IInspectableVtbl) [IID_IGeovisit] {
@@ -10668,7 +10668,7 @@ impl IGeovisitTriggerDetails {
 }
 RT_CLASS!{class GeovisitTriggerDetails: IGeovisitTriggerDetails}
 RT_ENUM! { enum PositionAccuracy: i32 {
-    Default (PositionAccuracy_Default) = 0, High (PositionAccuracy_High) = 1,
+    Default = 0, High = 1,
 }}
 DEFINE_IID!(IID_IPositionChangedEventArgs, 931503333, 40222, 18117, 191, 59, 106, 216, 202, 193, 160, 147);
 RT_INTERFACE!{interface IPositionChangedEventArgs(IPositionChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPositionChangedEventArgs] {
@@ -10683,10 +10683,10 @@ impl IPositionChangedEventArgs {
 }
 RT_CLASS!{class PositionChangedEventArgs: IPositionChangedEventArgs}
 RT_ENUM! { enum PositionSource: i32 {
-    Cellular (PositionSource_Cellular) = 0, Satellite (PositionSource_Satellite) = 1, WiFi (PositionSource_WiFi) = 2, IPAddress (PositionSource_IPAddress) = 3, Unknown (PositionSource_Unknown) = 4, Default (PositionSource_Default) = 5, Obfuscated (PositionSource_Obfuscated) = 6,
+    Cellular = 0, Satellite = 1, WiFi = 2, IPAddress = 3, Unknown = 4, Default = 5, Obfuscated = 6,
 }}
 RT_ENUM! { enum PositionStatus: i32 {
-    Ready (PositionStatus_Ready) = 0, Initializing (PositionStatus_Initializing) = 1, NoData (PositionStatus_NoData) = 2, Disabled (PositionStatus_Disabled) = 3, NotInitialized (PositionStatus_NotInitialized) = 4, NotAvailable (PositionStatus_NotAvailable) = 5,
+    Ready = 0, Initializing = 1, NoData = 2, Disabled = 3, NotInitialized = 4, NotAvailable = 5,
 }}
 DEFINE_IID!(IID_IStatusChangedEventArgs, 877908698, 35987, 16657, 162, 5, 154, 236, 252, 155, 229, 192);
 RT_INTERFACE!{interface IStatusChangedEventArgs(IStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IStatusChangedEventArgs] {
@@ -10719,10 +10719,10 @@ impl IVenueData {
 }
 RT_CLASS!{class VenueData: IVenueData}
 RT_ENUM! { enum VisitMonitoringScope: i32 {
-    Venue (VisitMonitoringScope_Venue) = 0, City (VisitMonitoringScope_City) = 1,
+    Venue = 0, City = 1,
 }}
 RT_ENUM! { enum VisitStateChange: i32 {
-    TrackingLost (VisitStateChange_TrackingLost) = 0, Arrived (VisitStateChange_Arrived) = 1, Departed (VisitStateChange_Departed) = 2, OtherMovement (VisitStateChange_OtherMovement) = 3,
+    TrackingLost = 0, Arrived = 1, Departed = 2, OtherMovement = 3,
 }}
 pub mod geofencing { // Windows.Devices.Geolocation.Geofencing
 use ::prelude::*;
@@ -10890,13 +10890,13 @@ impl IGeofenceMonitorStatics {
     }}
 }
 RT_ENUM! { enum GeofenceMonitorStatus: i32 {
-    Ready (GeofenceMonitorStatus_Ready) = 0, Initializing (GeofenceMonitorStatus_Initializing) = 1, NoData (GeofenceMonitorStatus_NoData) = 2, Disabled (GeofenceMonitorStatus_Disabled) = 3, NotInitialized (GeofenceMonitorStatus_NotInitialized) = 4, NotAvailable (GeofenceMonitorStatus_NotAvailable) = 5,
+    Ready = 0, Initializing = 1, NoData = 2, Disabled = 3, NotInitialized = 4, NotAvailable = 5,
 }}
 RT_ENUM! { enum GeofenceRemovalReason: i32 {
-    Used (GeofenceRemovalReason_Used) = 0, Expired (GeofenceRemovalReason_Expired) = 1,
+    Used = 0, Expired = 1,
 }}
 RT_ENUM! { enum GeofenceState: u32 {
-    None (GeofenceState_None) = 0, Entered (GeofenceState_Entered) = 1, Exited (GeofenceState_Exited) = 2, Removed (GeofenceState_Removed) = 4,
+    None = 0, Entered = 1, Exited = 2, Removed = 4,
 }}
 DEFINE_IID!(IID_IGeofenceStateChangeReport, 2586065944, 9316, 19593, 190, 5, 179, 255, 255, 91, 171, 197);
 RT_INTERFACE!{interface IGeofenceStateChangeReport(IGeofenceStateChangeReportVtbl): IInspectable(IInspectableVtbl) [IID_IGeofenceStateChangeReport] {
@@ -10929,7 +10929,7 @@ impl IGeofenceStateChangeReport {
 }
 RT_CLASS!{class GeofenceStateChangeReport: IGeofenceStateChangeReport}
 RT_ENUM! { enum MonitoredGeofenceStates: u32 {
-    None (MonitoredGeofenceStates_None) = 0, Entered (MonitoredGeofenceStates_Entered) = 1, Exited (MonitoredGeofenceStates_Exited) = 2, Removed (MonitoredGeofenceStates_Removed) = 4,
+    None = 0, Entered = 1, Exited = 2, Removed = 4,
 }}
 } // Windows.Devices.Geolocation.Geofencing
 } // Windows.Devices.Geolocation
@@ -11002,7 +11002,7 @@ impl IGpioChangeCounterFactory {
     }}
 }
 RT_ENUM! { enum GpioChangePolarity: i32 {
-    Falling (GpioChangePolarity_Falling) = 0, Rising (GpioChangePolarity_Rising) = 1, Both (GpioChangePolarity_Both) = 2,
+    Falling = 0, Rising = 1, Both = 2,
 }}
 DEFINE_IID!(IID_IGpioChangeReader, 180127839, 57393, 18664, 133, 144, 112, 222, 120, 54, 60, 109);
 RT_INTERFACE!{interface IGpioChangeReader(IGpioChangeReaderVtbl): IInspectable(IInspectableVtbl) [IID_IGpioChangeReader] {
@@ -11193,7 +11193,7 @@ impl IGpioControllerStatics2 {
     }}
 }
 RT_ENUM! { enum GpioOpenStatus: i32 {
-    PinOpened (GpioOpenStatus_PinOpened) = 0, PinUnavailable (GpioOpenStatus_PinUnavailable) = 1, SharingViolation (GpioOpenStatus_SharingViolation) = 2, MuxingConflict (GpioOpenStatus_MuxingConflict) = 3, UnknownError (GpioOpenStatus_UnknownError) = 4,
+    PinOpened = 0, PinUnavailable = 1, SharingViolation = 2, MuxingConflict = 3, UnknownError = 4,
 }}
 DEFINE_IID!(IID_IGpioPin, 299479175, 44974, 18320, 158, 233, 224, 234, 201, 66, 210, 1);
 RT_INTERFACE!{interface IGpioPin(IGpioPinVtbl): IInspectable(IInspectableVtbl) [IID_IGpioPin] {
@@ -11264,13 +11264,13 @@ impl IGpioPin {
 }
 RT_CLASS!{class GpioPin: IGpioPin}
 RT_ENUM! { enum GpioPinDriveMode: i32 {
-    Input (GpioPinDriveMode_Input) = 0, Output (GpioPinDriveMode_Output) = 1, InputPullUp (GpioPinDriveMode_InputPullUp) = 2, InputPullDown (GpioPinDriveMode_InputPullDown) = 3, OutputOpenDrain (GpioPinDriveMode_OutputOpenDrain) = 4, OutputOpenDrainPullUp (GpioPinDriveMode_OutputOpenDrainPullUp) = 5, OutputOpenSource (GpioPinDriveMode_OutputOpenSource) = 6, OutputOpenSourcePullDown (GpioPinDriveMode_OutputOpenSourcePullDown) = 7,
+    Input = 0, Output = 1, InputPullUp = 2, InputPullDown = 3, OutputOpenDrain = 4, OutputOpenDrainPullUp = 5, OutputOpenSource = 6, OutputOpenSourcePullDown = 7,
 }}
 RT_ENUM! { enum GpioPinEdge: i32 {
-    FallingEdge (GpioPinEdge_FallingEdge) = 0, RisingEdge (GpioPinEdge_RisingEdge) = 1,
+    FallingEdge = 0, RisingEdge = 1,
 }}
 RT_ENUM! { enum GpioPinValue: i32 {
-    Low (GpioPinValue_Low) = 0, High (GpioPinValue_High) = 1,
+    Low = 0, High = 1,
 }}
 DEFINE_IID!(IID_IGpioPinValueChangedEventArgs, 825731809, 28733, 16473, 189, 36, 181, 178, 93, 255, 184, 78);
 RT_INTERFACE!{interface IGpioPinValueChangedEventArgs(IGpioPinValueChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGpioPinValueChangedEventArgs] {
@@ -11285,7 +11285,7 @@ impl IGpioPinValueChangedEventArgs {
 }
 RT_CLASS!{class GpioPinValueChangedEventArgs: IGpioPinValueChangedEventArgs}
 RT_ENUM! { enum GpioSharingMode: i32 {
-    Exclusive (GpioSharingMode_Exclusive) = 0, SharedReadOnly (GpioSharingMode_SharedReadOnly) = 1,
+    Exclusive = 0, SharedReadOnly = 1,
 }}
 pub mod provider { // Windows.Devices.Gpio.Provider
 use ::prelude::*;
@@ -11415,16 +11415,16 @@ impl IGpioProvider {
     }}
 }
 RT_ENUM! { enum ProviderGpioPinDriveMode: i32 {
-    Input (ProviderGpioPinDriveMode_Input) = 0, Output (ProviderGpioPinDriveMode_Output) = 1, InputPullUp (ProviderGpioPinDriveMode_InputPullUp) = 2, InputPullDown (ProviderGpioPinDriveMode_InputPullDown) = 3, OutputOpenDrain (ProviderGpioPinDriveMode_OutputOpenDrain) = 4, OutputOpenDrainPullUp (ProviderGpioPinDriveMode_OutputOpenDrainPullUp) = 5, OutputOpenSource (ProviderGpioPinDriveMode_OutputOpenSource) = 6, OutputOpenSourcePullDown (ProviderGpioPinDriveMode_OutputOpenSourcePullDown) = 7,
+    Input = 0, Output = 1, InputPullUp = 2, InputPullDown = 3, OutputOpenDrain = 4, OutputOpenDrainPullUp = 5, OutputOpenSource = 6, OutputOpenSourcePullDown = 7,
 }}
 RT_ENUM! { enum ProviderGpioPinEdge: i32 {
-    FallingEdge (ProviderGpioPinEdge_FallingEdge) = 0, RisingEdge (ProviderGpioPinEdge_RisingEdge) = 1,
+    FallingEdge = 0, RisingEdge = 1,
 }}
 RT_ENUM! { enum ProviderGpioPinValue: i32 {
-    Low (ProviderGpioPinValue_Low) = 0, High (ProviderGpioPinValue_High) = 1,
+    Low = 0, High = 1,
 }}
 RT_ENUM! { enum ProviderGpioSharingMode: i32 {
-    Exclusive (ProviderGpioSharingMode_Exclusive) = 0, SharedReadOnly (ProviderGpioSharingMode_SharedReadOnly) = 1,
+    Exclusive = 0, SharedReadOnly = 1,
 }}
 } // Windows.Devices.Gpio.Provider
 } // Windows.Devices.Gpio
@@ -11571,7 +11571,7 @@ impl ISimpleHapticsControllerFeedback {
 }
 RT_CLASS!{class SimpleHapticsControllerFeedback: ISimpleHapticsControllerFeedback}
 RT_ENUM! { enum VibrationAccessStatus: i32 {
-    Allowed (VibrationAccessStatus_Allowed) = 0, DeniedByUser (VibrationAccessStatus_DeniedByUser) = 1, DeniedBySystem (VibrationAccessStatus_DeniedBySystem) = 2, DeniedByEnergySaver (VibrationAccessStatus_DeniedByEnergySaver) = 3,
+    Allowed = 0, DeniedByUser = 1, DeniedBySystem = 2, DeniedByEnergySaver = 3,
 }}
 DEFINE_IID!(IID_IVibrationDevice, 1089608254, 34884, 18431, 179, 18, 6, 24, 90, 56, 68, 218);
 RT_INTERFACE!{interface IVibrationDevice(IVibrationDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IVibrationDevice] {
@@ -11773,7 +11773,7 @@ impl IHidCollection {
 }
 RT_CLASS!{class HidCollection: IHidCollection}
 RT_ENUM! { enum HidCollectionType: i32 {
-    Physical (HidCollectionType_Physical) = 0, Application (HidCollectionType_Application) = 1, Logical (HidCollectionType_Logical) = 2, Report (HidCollectionType_Report) = 3, NamedArray (HidCollectionType_NamedArray) = 4, UsageSwitch (HidCollectionType_UsageSwitch) = 5, UsageModifier (HidCollectionType_UsageModifier) = 6, Other (HidCollectionType_Other) = 7,
+    Physical = 0, Application = 1, Logical = 2, Report = 3, NamedArray = 4, UsageSwitch = 5, UsageModifier = 6, Other = 7,
 }}
 DEFINE_IID!(IID_IHidDevice, 1602884839, 8704, 17198, 149, 218, 208, 155, 135, 213, 116, 168);
 RT_INTERFACE!{interface IHidDevice(IHidDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IHidDevice] {
@@ -12256,13 +12256,13 @@ impl IHidOutputReport {
 }
 RT_CLASS!{class HidOutputReport: IHidOutputReport}
 RT_ENUM! { enum HidReportType: i32 {
-    Input (HidReportType_Input) = 0, Output (HidReportType_Output) = 1, Feature (HidReportType_Feature) = 2,
+    Input = 0, Output = 1, Feature = 2,
 }}
 } // Windows.Devices.HumanInterfaceDevice
 pub mod i2c { // Windows.Devices.I2c
 use ::prelude::*;
 RT_ENUM! { enum I2cBusSpeed: i32 {
-    StandardMode (I2cBusSpeed_StandardMode) = 0, FastMode (I2cBusSpeed_FastMode) = 1,
+    StandardMode = 0, FastMode = 1,
 }}
 DEFINE_IID!(IID_II2cConnectionSettings, 4074443527, 43887, 17977, 167, 103, 84, 83, 109, 195, 70, 15);
 RT_INTERFACE!{interface II2cConnectionSettings(II2cConnectionSettingsVtbl): IInspectable(IInspectableVtbl) [IID_II2cConnectionSettings] {
@@ -12448,13 +12448,13 @@ impl II2cDeviceStatics {
     }}
 }
 RT_ENUM! { enum I2cSharingMode: i32 {
-    Exclusive (I2cSharingMode_Exclusive) = 0, Shared (I2cSharingMode_Shared) = 1,
+    Exclusive = 0, Shared = 1,
 }}
 RT_STRUCT! { struct I2cTransferResult {
     Status: I2cTransferStatus, BytesTransferred: u32,
 }}
 RT_ENUM! { enum I2cTransferStatus: i32 {
-    FullTransfer (I2cTransferStatus_FullTransfer) = 0, PartialTransfer (I2cTransferStatus_PartialTransfer) = 1, SlaveAddressNotAcknowledged (I2cTransferStatus_SlaveAddressNotAcknowledged) = 2, ClockStretchTimeout (I2cTransferStatus_ClockStretchTimeout) = 3, UnknownError (I2cTransferStatus_UnknownError) = 4,
+    FullTransfer = 0, PartialTransfer = 1, SlaveAddressNotAcknowledged = 2, ClockStretchTimeout = 3, UnknownError = 4,
 }}
 pub mod provider { // Windows.Devices.I2c.Provider
 use ::prelude::*;
@@ -12525,7 +12525,7 @@ impl II2cProvider {
     }}
 }
 RT_ENUM! { enum ProviderI2cBusSpeed: i32 {
-    StandardMode (ProviderI2cBusSpeed_StandardMode) = 0, FastMode (ProviderI2cBusSpeed_FastMode) = 1,
+    StandardMode = 0, FastMode = 1,
 }}
 DEFINE_IID!(IID_IProviderI2cConnectionSettings, 3923463732, 58640, 17591, 128, 157, 242, 248, 91, 85, 83, 57);
 RT_INTERFACE!{interface IProviderI2cConnectionSettings(IProviderI2cConnectionSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IProviderI2cConnectionSettings] {
@@ -12567,13 +12567,13 @@ impl IProviderI2cConnectionSettings {
 }
 RT_CLASS!{class ProviderI2cConnectionSettings: IProviderI2cConnectionSettings}
 RT_ENUM! { enum ProviderI2cSharingMode: i32 {
-    Exclusive (ProviderI2cSharingMode_Exclusive) = 0, Shared (ProviderI2cSharingMode_Shared) = 1,
+    Exclusive = 0, Shared = 1,
 }}
 RT_STRUCT! { struct ProviderI2cTransferResult {
     Status: ProviderI2cTransferStatus, BytesTransferred: u32,
 }}
 RT_ENUM! { enum ProviderI2cTransferStatus: i32 {
-    FullTransfer (ProviderI2cTransferStatus_FullTransfer) = 0, PartialTransfer (ProviderI2cTransferStatus_PartialTransfer) = 1, SlaveAddressNotAcknowledged (ProviderI2cTransferStatus_SlaveAddressNotAcknowledged) = 2,
+    FullTransfer = 0, PartialTransfer = 1, SlaveAddressNotAcknowledged = 2,
 }}
 } // Windows.Devices.I2c.Provider
 } // Windows.Devices.I2c
@@ -12762,7 +12762,7 @@ impl IPointerDeviceStatics {
     }}
 }
 RT_ENUM! { enum PointerDeviceType: i32 {
-    Touch (PointerDeviceType_Touch) = 0, Pen (PointerDeviceType_Pen) = 1, Mouse (PointerDeviceType_Mouse) = 2,
+    Touch = 0, Pen = 1, Mouse = 2,
 }}
 RT_STRUCT! { struct PointerDeviceUsage {
     UsagePage: u32, Usage: u32, MinLogical: i32, MaxLogical: i32, MinPhysical: i32, MaxPhysical: i32, Unit: u32, PhysicalMultiplier: f32,
@@ -12790,7 +12790,7 @@ DEFINE_CLSID!(TouchCapabilities(&[87,105,110,100,111,119,115,46,68,101,118,105,9
 pub mod preview { // Windows.Devices.Input.Preview
 use ::prelude::*;
 RT_ENUM! { enum GazeDeviceConfigurationStatePreview: i32 {
-    Unknown (GazeDeviceConfigurationStatePreview_Unknown) = 0, Ready (GazeDeviceConfigurationStatePreview_Ready) = 1, Configuring (GazeDeviceConfigurationStatePreview_Configuring) = 2, ScreenSetupNeeded (GazeDeviceConfigurationStatePreview_ScreenSetupNeeded) = 3, UserCalibrationNeeded (GazeDeviceConfigurationStatePreview_UserCalibrationNeeded) = 4,
+    Unknown = 0, Ready = 1, Configuring = 2, ScreenSetupNeeded = 3, UserCalibrationNeeded = 4,
 }}
 DEFINE_IID!(IID_IGazeDevicePreview, 3885924073, 45961, 4583, 178, 1, 200, 211, 255, 183, 87, 33);
 RT_INTERFACE!{interface IGazeDevicePreview(IGazeDevicePreviewVtbl): IInspectable(IInspectableVtbl) [IID_IGazeDevicePreview] {
@@ -13366,7 +13366,7 @@ impl LampArray {
 }
 DEFINE_CLSID!(LampArray(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,76,105,103,104,116,115,46,76,97,109,112,65,114,114,97,121,0]) [CLSID_LampArray]);
 RT_ENUM! { enum LampArrayKind: i32 {
-    Undefined (LampArrayKind_Undefined) = 0, Keyboard (LampArrayKind_Keyboard) = 1, Mouse (LampArrayKind_Mouse) = 2, GameController (LampArrayKind_GameController) = 3, Peripheral (LampArrayKind_Peripheral) = 4, Scene (LampArrayKind_Scene) = 5, Notification (LampArrayKind_Notification) = 6, Chassis (LampArrayKind_Chassis) = 7, Wearable (LampArrayKind_Wearable) = 8, Furniture (LampArrayKind_Furniture) = 9, Art (LampArrayKind_Art) = 10,
+    Undefined = 0, Keyboard = 1, Mouse = 2, GameController = 3, Peripheral = 4, Scene = 5, Notification = 6, Chassis = 7, Wearable = 8, Furniture = 9, Art = 10,
 }}
 DEFINE_IID!(IID_ILampArrayStatics, 2075707789, 24513, 17709, 187, 31, 74, 212, 16, 211, 152, 255);
 RT_INTERFACE!{static interface ILampArrayStatics(ILampArrayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILampArrayStatics] {
@@ -13466,7 +13466,7 @@ impl ILampInfo {
 }
 RT_CLASS!{class LampInfo: ILampInfo}
 RT_ENUM! { enum LampPurposes: u32 {
-    Undefined (LampPurposes_Undefined) = 0, Control (LampPurposes_Control) = 1, Accent (LampPurposes_Accent) = 2, Branding (LampPurposes_Branding) = 4, Status (LampPurposes_Status) = 8, Illumination (LampPurposes_Illumination) = 16, Presentation (LampPurposes_Presentation) = 32,
+    Undefined = 0, Control = 1, Accent = 2, Branding = 4, Status = 8, Illumination = 16, Presentation = 32,
 }}
 DEFINE_IID!(IID_ILampStatics, 2820817260, 34949, 16414, 184, 33, 142, 139, 56, 168, 232, 236);
 RT_INTERFACE!{static interface ILampStatics(ILampStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILampStatics] {
@@ -13842,7 +13842,7 @@ impl ILampArrayEffect {
     }}
 }
 RT_ENUM! { enum LampArrayEffectCompletionBehavior: i32 {
-    ClearState (LampArrayEffectCompletionBehavior_ClearState) = 0, KeepState (LampArrayEffectCompletionBehavior_KeepState) = 1,
+    ClearState = 0, KeepState = 1,
 }}
 DEFINE_IID!(IID_ILampArrayEffectPlaylist, 2112195582, 28513, 16643, 152, 199, 214, 99, 47, 123, 145, 105);
 RT_INTERFACE!{interface ILampArrayEffectPlaylist(ILampArrayEffectPlaylistVtbl): IInspectable(IInspectableVtbl) [IID_ILampArrayEffectPlaylist] {
@@ -13943,10 +13943,10 @@ impl ILampArrayEffectPlaylistStatics {
     }}
 }
 RT_ENUM! { enum LampArrayEffectStartMode: i32 {
-    Sequential (LampArrayEffectStartMode_Sequential) = 0, Simultaneous (LampArrayEffectStartMode_Simultaneous) = 1,
+    Sequential = 0, Simultaneous = 1,
 }}
 RT_ENUM! { enum LampArrayRepetitionMode: i32 {
-    Occurrences (LampArrayRepetitionMode_Occurrences) = 0, Forever (LampArrayRepetitionMode_Forever) = 1,
+    Occurrences = 0, Forever = 1,
 }}
 DEFINE_IID!(IID_ILampArraySolidEffect, 1142915603, 17356, 19251, 128, 235, 198, 221, 222, 125, 200, 237);
 RT_INTERFACE!{interface ILampArraySolidEffect(ILampArraySolidEffectVtbl): IInspectable(IInspectableVtbl) [IID_ILampArraySolidEffect] {
@@ -14225,7 +14225,7 @@ impl IMidiMessageReceivedEventArgs {
 }
 RT_CLASS!{class MidiMessageReceivedEventArgs: IMidiMessageReceivedEventArgs}
 RT_ENUM! { enum MidiMessageType: i32 {
-    None (MidiMessageType_None) = 0, NoteOff (MidiMessageType_NoteOff) = 128, NoteOn (MidiMessageType_NoteOn) = 144, PolyphonicKeyPressure (MidiMessageType_PolyphonicKeyPressure) = 160, ControlChange (MidiMessageType_ControlChange) = 176, ProgramChange (MidiMessageType_ProgramChange) = 192, ChannelPressure (MidiMessageType_ChannelPressure) = 208, PitchBendChange (MidiMessageType_PitchBendChange) = 224, SystemExclusive (MidiMessageType_SystemExclusive) = 240, MidiTimeCode (MidiMessageType_MidiTimeCode) = 241, SongPositionPointer (MidiMessageType_SongPositionPointer) = 242, SongSelect (MidiMessageType_SongSelect) = 243, TuneRequest (MidiMessageType_TuneRequest) = 246, EndSystemExclusive (MidiMessageType_EndSystemExclusive) = 247, TimingClock (MidiMessageType_TimingClock) = 248, Start (MidiMessageType_Start) = 250, Continue (MidiMessageType_Continue) = 251, Stop (MidiMessageType_Stop) = 252, ActiveSensing (MidiMessageType_ActiveSensing) = 254, SystemReset (MidiMessageType_SystemReset) = 255,
+    None = 0, NoteOff = 128, NoteOn = 144, PolyphonicKeyPressure = 160, ControlChange = 176, ProgramChange = 192, ChannelPressure = 208, PitchBendChange = 224, SystemExclusive = 240, MidiTimeCode = 241, SongPositionPointer = 242, SongSelect = 243, TuneRequest = 246, EndSystemExclusive = 247, TimingClock = 248, Start = 250, Continue = 251, Stop = 252, ActiveSensing = 254, SystemReset = 255,
 }}
 DEFINE_IID!(IID_IMidiNoteOffMessage, 385714932, 6542, 19855, 166, 84, 211, 5, 162, 147, 84, 143);
 RT_INTERFACE!{interface IMidiNoteOffMessage(IMidiNoteOffMessageVtbl): IInspectable(IInspectableVtbl) [IID_IMidiNoteOffMessage] {
@@ -15897,7 +15897,7 @@ impl IPerceptionDepthFrameSourceWatcher {
 }
 RT_CLASS!{class PerceptionDepthFrameSourceWatcher: IPerceptionDepthFrameSourceWatcher}
 RT_ENUM! { enum PerceptionFrameSourceAccessStatus: i32 {
-    Unspecified (PerceptionFrameSourceAccessStatus_Unspecified) = 0, Allowed (PerceptionFrameSourceAccessStatus_Allowed) = 1, DeniedByUser (PerceptionFrameSourceAccessStatus_DeniedByUser) = 2, DeniedBySystem (PerceptionFrameSourceAccessStatus_DeniedBySystem) = 3,
+    Unspecified = 0, Allowed = 1, DeniedByUser = 2, DeniedBySystem = 3,
 }}
 DEFINE_IID!(IID_IPerceptionFrameSourcePropertiesChangedEventArgs, 1818812520, 48369, 20172, 184, 145, 118, 37, 209, 36, 75, 107);
 RT_INTERFACE!{interface IPerceptionFrameSourcePropertiesChangedEventArgs(IPerceptionFrameSourcePropertiesChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionFrameSourcePropertiesChangedEventArgs] {
@@ -15936,7 +15936,7 @@ impl IPerceptionFrameSourcePropertyChangeResult {
 }
 RT_CLASS!{class PerceptionFrameSourcePropertyChangeResult: IPerceptionFrameSourcePropertyChangeResult}
 RT_ENUM! { enum PerceptionFrameSourcePropertyChangeStatus: i32 {
-    Unknown (PerceptionFrameSourcePropertyChangeStatus_Unknown) = 0, Accepted (PerceptionFrameSourcePropertyChangeStatus_Accepted) = 1, LostControl (PerceptionFrameSourcePropertyChangeStatus_LostControl) = 2, PropertyNotSupported (PerceptionFrameSourcePropertyChangeStatus_PropertyNotSupported) = 3, PropertyReadOnly (PerceptionFrameSourcePropertyChangeStatus_PropertyReadOnly) = 4, ValueOutOfRange (PerceptionFrameSourcePropertyChangeStatus_ValueOutOfRange) = 5,
+    Unknown = 0, Accepted = 1, LostControl = 2, PropertyNotSupported = 3, PropertyReadOnly = 4, ValueOutOfRange = 5,
 }}
 DEFINE_IID!(IID_IPerceptionInfraredFrame, 2961728118, 33950, 19578, 138, 230, 181, 96, 100, 83, 33, 83);
 RT_INTERFACE!{interface IPerceptionInfraredFrame(IPerceptionInfraredFrameVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionInfraredFrame] {
@@ -17149,7 +17149,7 @@ impl IBarcodeScannerStatics2 {
     }}
 }
 RT_ENUM! { enum BarcodeScannerStatus: i32 {
-    Online (BarcodeScannerStatus_Online) = 0, Off (BarcodeScannerStatus_Off) = 1, Offline (BarcodeScannerStatus_Offline) = 2, OffOrOffline (BarcodeScannerStatus_OffOrOffline) = 3, Extended (BarcodeScannerStatus_Extended) = 4,
+    Online = 0, Off = 1, Offline = 2, OffOrOffline = 3, Extended = 4,
 }}
 DEFINE_IID!(IID_IBarcodeScannerStatusUpdatedEventArgs, 895321478, 40003, 17963, 169, 26, 129, 109, 201, 127, 69, 44);
 RT_INTERFACE!{interface IBarcodeScannerStatusUpdatedEventArgs(IBarcodeScannerStatusUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerStatusUpdatedEventArgs] {
@@ -18120,7 +18120,7 @@ impl IBarcodeSymbologyAttributes {
 }
 RT_CLASS!{class BarcodeSymbologyAttributes: IBarcodeSymbologyAttributes}
 RT_ENUM! { enum BarcodeSymbologyDecodeLengthKind: i32 {
-    AnyLength (BarcodeSymbologyDecodeLengthKind_AnyLength) = 0, Discrete (BarcodeSymbologyDecodeLengthKind_Discrete) = 1, Range (BarcodeSymbologyDecodeLengthKind_Range) = 2,
+    AnyLength = 0, Discrete = 1, Range = 2,
 }}
 DEFINE_IID!(IID_ICashDrawer, 2676553160, 56916, 19182, 168, 144, 146, 11, 203, 254, 48, 252);
 RT_INTERFACE!{interface ICashDrawer(ICashDrawerVtbl): IInspectable(IInspectableVtbl) [IID_ICashDrawer] {
@@ -18407,7 +18407,7 @@ impl ICashDrawerStatus {
 }
 RT_CLASS!{class CashDrawerStatus: ICashDrawerStatus}
 RT_ENUM! { enum CashDrawerStatusKind: i32 {
-    Online (CashDrawerStatusKind_Online) = 0, Off (CashDrawerStatusKind_Off) = 1, Offline (CashDrawerStatusKind_Offline) = 2, OffOrOffline (CashDrawerStatusKind_OffOrOffline) = 3, Extended (CashDrawerStatusKind_Extended) = 4,
+    Online = 0, Off = 1, Offline = 2, OffOrOffline = 3, Extended = 4,
 }}
 DEFINE_IID!(IID_ICashDrawerStatusUpdatedEventArgs, 816507274, 3440, 17820, 149, 83, 135, 225, 36, 197, 36, 136);
 RT_INTERFACE!{interface ICashDrawerStatusUpdatedEventArgs(ICashDrawerStatusUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICashDrawerStatusUpdatedEventArgs] {
@@ -20122,7 +20122,7 @@ impl ILineDisplayCursorAttributes {
 }
 RT_CLASS!{class LineDisplayCursorAttributes: ILineDisplayCursorAttributes}
 RT_ENUM! { enum LineDisplayCursorType: i32 {
-    None (LineDisplayCursorType_None) = 0, Block (LineDisplayCursorType_Block) = 1, HalfBlock (LineDisplayCursorType_HalfBlock) = 2, Underline (LineDisplayCursorType_Underline) = 3, Reverse (LineDisplayCursorType_Reverse) = 4, Other (LineDisplayCursorType_Other) = 5,
+    None = 0, Block = 1, HalfBlock = 2, Underline = 3, Reverse = 4, Other = 5,
 }}
 DEFINE_IID!(IID_ILineDisplayCustomGlyphs, 576190012, 62051, 17649, 161, 160, 231, 80, 166, 160, 236, 84);
 RT_INTERFACE!{interface ILineDisplayCustomGlyphs(ILineDisplayCustomGlyphsVtbl): IInspectable(IInspectableVtbl) [IID_ILineDisplayCustomGlyphs] {
@@ -20149,10 +20149,10 @@ impl ILineDisplayCustomGlyphs {
 }
 RT_CLASS!{class LineDisplayCustomGlyphs: ILineDisplayCustomGlyphs}
 RT_ENUM! { enum LineDisplayDescriptorState: i32 {
-    Off (LineDisplayDescriptorState_Off) = 0, On (LineDisplayDescriptorState_On) = 1, Blink (LineDisplayDescriptorState_Blink) = 2,
+    Off = 0, On = 1, Blink = 2,
 }}
 RT_ENUM! { enum LineDisplayHorizontalAlignment: i32 {
-    Left (LineDisplayHorizontalAlignment_Left) = 0, Center (LineDisplayHorizontalAlignment_Center) = 1, Right (LineDisplayHorizontalAlignment_Right) = 2,
+    Left = 0, Center = 1, Right = 2,
 }}
 DEFINE_IID!(IID_ILineDisplayMarquee, 2748530238, 62570, 19322, 188, 33, 83, 235, 59, 87, 248, 180);
 RT_INTERFACE!{interface ILineDisplayMarquee(ILineDisplayMarqueeVtbl): IInspectable(IInspectableVtbl) [IID_ILineDisplayMarquee] {
@@ -20206,13 +20206,13 @@ impl ILineDisplayMarquee {
 }
 RT_CLASS!{class LineDisplayMarquee: ILineDisplayMarquee}
 RT_ENUM! { enum LineDisplayMarqueeFormat: i32 {
-    None (LineDisplayMarqueeFormat_None) = 0, Walk (LineDisplayMarqueeFormat_Walk) = 1, Place (LineDisplayMarqueeFormat_Place) = 2,
+    None = 0, Walk = 1, Place = 2,
 }}
 RT_ENUM! { enum LineDisplayPowerStatus: i32 {
-    Unknown (LineDisplayPowerStatus_Unknown) = 0, Online (LineDisplayPowerStatus_Online) = 1, Off (LineDisplayPowerStatus_Off) = 2, Offline (LineDisplayPowerStatus_Offline) = 3, OffOrOffline (LineDisplayPowerStatus_OffOrOffline) = 4,
+    Unknown = 0, Online = 1, Off = 2, Offline = 3, OffOrOffline = 4,
 }}
 RT_ENUM! { enum LineDisplayScrollDirection: i32 {
-    Up (LineDisplayScrollDirection_Up) = 0, Down (LineDisplayScrollDirection_Down) = 1, Left (LineDisplayScrollDirection_Left) = 2, Right (LineDisplayScrollDirection_Right) = 3,
+    Up = 0, Down = 1, Left = 2, Right = 3,
 }}
 DEFINE_IID!(IID_ILineDisplayStatics, 36552886, 4528, 18064, 149, 71, 11, 57, 197, 175, 33, 20);
 RT_INTERFACE!{static interface ILineDisplayStatics(ILineDisplayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILineDisplayStatics] {
@@ -20309,13 +20309,13 @@ impl ILineDisplayStoredBitmap {
 }
 RT_CLASS!{class LineDisplayStoredBitmap: ILineDisplayStoredBitmap}
 RT_ENUM! { enum LineDisplayTextAttribute: i32 {
-    Normal (LineDisplayTextAttribute_Normal) = 0, Blink (LineDisplayTextAttribute_Blink) = 1, Reverse (LineDisplayTextAttribute_Reverse) = 2, ReverseBlink (LineDisplayTextAttribute_ReverseBlink) = 3,
+    Normal = 0, Blink = 1, Reverse = 2, ReverseBlink = 3,
 }}
 RT_ENUM! { enum LineDisplayTextAttributeGranularity: i32 {
-    NotSupported (LineDisplayTextAttributeGranularity_NotSupported) = 0, EntireDisplay (LineDisplayTextAttributeGranularity_EntireDisplay) = 1, PerCharacter (LineDisplayTextAttributeGranularity_PerCharacter) = 2,
+    NotSupported = 0, EntireDisplay = 1, PerCharacter = 2,
 }}
 RT_ENUM! { enum LineDisplayVerticalAlignment: i32 {
-    Top (LineDisplayVerticalAlignment_Top) = 0, Center (LineDisplayVerticalAlignment_Center) = 1, Bottom (LineDisplayVerticalAlignment_Bottom) = 2,
+    Top = 0, Center = 1, Bottom = 2,
 }}
 DEFINE_IID!(IID_ILineDisplayWindow, 3525308148, 9060, 19429, 190, 225, 133, 22, 128, 175, 73, 100);
 RT_INTERFACE!{interface ILineDisplayWindow(ILineDisplayWindowVtbl): IInspectable(IInspectableVtbl) [IID_ILineDisplayWindow] {
@@ -20639,10 +20639,10 @@ impl IMagneticStripeReaderAamvaCardDataReceivedEventArgs {
 }
 RT_CLASS!{class MagneticStripeReaderAamvaCardDataReceivedEventArgs: IMagneticStripeReaderAamvaCardDataReceivedEventArgs}
 RT_ENUM! { enum MagneticStripeReaderAuthenticationLevel: i32 {
-    NotSupported (MagneticStripeReaderAuthenticationLevel_NotSupported) = 0, Optional (MagneticStripeReaderAuthenticationLevel_Optional) = 1, Required (MagneticStripeReaderAuthenticationLevel_Required) = 2,
+    NotSupported = 0, Optional = 1, Required = 2,
 }}
 RT_ENUM! { enum MagneticStripeReaderAuthenticationProtocol: i32 {
-    None (MagneticStripeReaderAuthenticationProtocol_None) = 0, ChallengeResponse (MagneticStripeReaderAuthenticationProtocol_ChallengeResponse) = 1,
+    None = 0, ChallengeResponse = 1,
 }}
 DEFINE_IID!(IID_IMagneticStripeReaderBankCardDataReceivedEventArgs, 781551651, 41754, 18275, 136, 44, 35, 114, 94, 57, 176, 142);
 RT_INTERFACE!{interface IMagneticStripeReaderBankCardDataReceivedEventArgs(IMagneticStripeReaderBankCardDataReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderBankCardDataReceivedEventArgs] {
@@ -20902,7 +20902,7 @@ impl IMagneticStripeReaderErrorOccurredEventArgs {
 }
 RT_CLASS!{class MagneticStripeReaderErrorOccurredEventArgs: IMagneticStripeReaderErrorOccurredEventArgs}
 RT_ENUM! { enum MagneticStripeReaderErrorReportingType: i32 {
-    CardLevel (MagneticStripeReaderErrorReportingType_CardLevel) = 0, TrackLevel (MagneticStripeReaderErrorReportingType_TrackLevel) = 1,
+    CardLevel = 0, TrackLevel = 1,
 }}
 DEFINE_IID!(IID_IMagneticStripeReaderReport, 1784373319, 39344, 16776, 190, 241, 237, 223, 121, 247, 143, 230);
 RT_INTERFACE!{interface IMagneticStripeReaderReport(IMagneticStripeReaderReportVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderReport] {
@@ -20999,7 +20999,7 @@ impl IMagneticStripeReaderStatics2 {
     }}
 }
 RT_ENUM! { enum MagneticStripeReaderStatus: i32 {
-    Unauthenticated (MagneticStripeReaderStatus_Unauthenticated) = 0, Authenticated (MagneticStripeReaderStatus_Authenticated) = 1, Extended (MagneticStripeReaderStatus_Extended) = 2,
+    Unauthenticated = 0, Authenticated = 1, Extended = 2,
 }}
 DEFINE_IID!(IID_IMagneticStripeReaderStatusUpdatedEventArgs, 164391856, 12898, 16413, 158, 138, 232, 13, 99, 88, 144, 107);
 RT_INTERFACE!{interface IMagneticStripeReaderStatusUpdatedEventArgs(IMagneticStripeReaderStatusUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderStatusUpdatedEventArgs] {
@@ -21044,10 +21044,10 @@ impl IMagneticStripeReaderTrackData {
 }
 RT_CLASS!{class MagneticStripeReaderTrackData: IMagneticStripeReaderTrackData}
 RT_ENUM! { enum MagneticStripeReaderTrackErrorType: i32 {
-    None (MagneticStripeReaderTrackErrorType_None) = 0, StartSentinelError (MagneticStripeReaderTrackErrorType_StartSentinelError) = 1, EndSentinelError (MagneticStripeReaderTrackErrorType_EndSentinelError) = 2, ParityError (MagneticStripeReaderTrackErrorType_ParityError) = 3, LrcError (MagneticStripeReaderTrackErrorType_LrcError) = 4, Unknown (MagneticStripeReaderTrackErrorType_Unknown) = -1,
+    None = 0, StartSentinelError = 1, EndSentinelError = 2, ParityError = 3, LrcError = 4, Unknown = -1,
 }}
 RT_ENUM! { enum MagneticStripeReaderTrackIds: i32 {
-    None (MagneticStripeReaderTrackIds_None) = 0, Track1 (MagneticStripeReaderTrackIds_Track1) = 1, Track2 (MagneticStripeReaderTrackIds_Track2) = 2, Track3 (MagneticStripeReaderTrackIds_Track3) = 4, Track4 (MagneticStripeReaderTrackIds_Track4) = 8,
+    None = 0, Track1 = 1, Track2 = 2, Track3 = 4, Track4 = 8,
 }}
 DEFINE_IID!(IID_IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs, 2936689940, 22988, 19040, 153, 232, 153, 165, 61, 172, 229, 170);
 RT_INTERFACE!{interface IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs(IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs] {
@@ -21062,7 +21062,7 @@ impl IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs {
 }
 RT_CLASS!{class MagneticStripeReaderVendorSpecificCardDataReceivedEventArgs: IMagneticStripeReaderVendorSpecificCardDataReceivedEventArgs}
 RT_ENUM! { enum PosConnectionTypes: u32 {
-    Local (PosConnectionTypes_Local) = 1, IP (PosConnectionTypes_IP) = 2, Bluetooth (PosConnectionTypes_Bluetooth) = 4, All (PosConnectionTypes_All) = 4294967295,
+    Local = 1, IP = 2, Bluetooth = 4, All = 4294967295,
 }}
 DEFINE_IID!(IID_IPosPrinter, 704889102, 39449, 18945, 153, 79, 18, 223, 173, 106, 220, 191);
 RT_INTERFACE!{interface IPosPrinter(IPosPrinterVtbl): IInspectable(IInspectableVtbl) [IID_IPosPrinter] {
@@ -21147,10 +21147,10 @@ impl PosPrinter {
 }
 DEFINE_CLSID!(PosPrinter(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,80,111,105,110,116,79,102,83,101,114,118,105,99,101,46,80,111,115,80,114,105,110,116,101,114,0]) [CLSID_PosPrinter]);
 RT_ENUM! { enum PosPrinterAlignment: i32 {
-    Left (PosPrinterAlignment_Left) = 0, Center (PosPrinterAlignment_Center) = 1, Right (PosPrinterAlignment_Right) = 2,
+    Left = 0, Center = 1, Right = 2,
 }}
 RT_ENUM! { enum PosPrinterBarcodeTextPosition: i32 {
-    None (PosPrinterBarcodeTextPosition_None) = 0, Above (PosPrinterBarcodeTextPosition_Above) = 1, Below (PosPrinterBarcodeTextPosition_Below) = 2,
+    None = 0, Above = 1, Below = 2,
 }}
 DEFINE_IID!(IID_IPosPrinterCapabilities, 3454621473, 17280, 18821, 173, 197, 57, 219, 48, 205, 147, 188);
 RT_INTERFACE!{interface IPosPrinterCapabilities(IPosPrinterCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IPosPrinterCapabilities] {
@@ -21219,7 +21219,7 @@ impl IPosPrinterCapabilities {
 }
 RT_CLASS!{class PosPrinterCapabilities: IPosPrinterCapabilities}
 RT_ENUM! { enum PosPrinterCartridgeSensors: u32 {
-    None (PosPrinterCartridgeSensors_None) = 0, Removed (PosPrinterCartridgeSensors_Removed) = 1, Empty (PosPrinterCartridgeSensors_Empty) = 2, HeadCleaning (PosPrinterCartridgeSensors_HeadCleaning) = 4, NearEnd (PosPrinterCartridgeSensors_NearEnd) = 8,
+    None = 0, Removed = 1, Empty = 2, HeadCleaning = 4, NearEnd = 8,
 }}
 RT_CLASS!{static class PosPrinterCharacterSetIds}
 impl RtActivatable<IPosPrinterCharacterSetIdsStatics> for PosPrinterCharacterSetIds {}
@@ -21259,10 +21259,10 @@ impl IPosPrinterCharacterSetIdsStatics {
     }}
 }
 RT_ENUM! { enum PosPrinterColorCapabilities: u32 {
-    None (PosPrinterColorCapabilities_None) = 0, Primary (PosPrinterColorCapabilities_Primary) = 1, Custom1 (PosPrinterColorCapabilities_Custom1) = 2, Custom2 (PosPrinterColorCapabilities_Custom2) = 4, Custom3 (PosPrinterColorCapabilities_Custom3) = 8, Custom4 (PosPrinterColorCapabilities_Custom4) = 16, Custom5 (PosPrinterColorCapabilities_Custom5) = 32, Custom6 (PosPrinterColorCapabilities_Custom6) = 64, Cyan (PosPrinterColorCapabilities_Cyan) = 128, Magenta (PosPrinterColorCapabilities_Magenta) = 256, Yellow (PosPrinterColorCapabilities_Yellow) = 512, Full (PosPrinterColorCapabilities_Full) = 1024,
+    None = 0, Primary = 1, Custom1 = 2, Custom2 = 4, Custom3 = 8, Custom4 = 16, Custom5 = 32, Custom6 = 64, Cyan = 128, Magenta = 256, Yellow = 512, Full = 1024,
 }}
 RT_ENUM! { enum PosPrinterColorCartridge: i32 {
-    Unknown (PosPrinterColorCartridge_Unknown) = 0, Primary (PosPrinterColorCartridge_Primary) = 1, Custom1 (PosPrinterColorCartridge_Custom1) = 2, Custom2 (PosPrinterColorCartridge_Custom2) = 3, Custom3 (PosPrinterColorCartridge_Custom3) = 4, Custom4 (PosPrinterColorCartridge_Custom4) = 5, Custom5 (PosPrinterColorCartridge_Custom5) = 6, Custom6 (PosPrinterColorCartridge_Custom6) = 7, Cyan (PosPrinterColorCartridge_Cyan) = 8, Magenta (PosPrinterColorCartridge_Magenta) = 9, Yellow (PosPrinterColorCartridge_Yellow) = 10,
+    Unknown = 0, Primary = 1, Custom1 = 2, Custom2 = 3, Custom3 = 4, Custom4 = 5, Custom5 = 6, Custom6 = 7, Cyan = 8, Magenta = 9, Yellow = 10,
 }}
 DEFINE_IID!(IID_IPosPrinterJob, 2593390684, 1557, 17809, 165, 143, 48, 248, 126, 223, 226, 228);
 RT_INTERFACE!{interface IPosPrinterJob(IPosPrinterJobVtbl): IInspectable(IInspectableVtbl) [IID_IPosPrinterJob] {
@@ -21291,22 +21291,22 @@ impl IPosPrinterJob {
     }}
 }
 RT_ENUM! { enum PosPrinterLineDirection: i32 {
-    Horizontal (PosPrinterLineDirection_Horizontal) = 0, Vertical (PosPrinterLineDirection_Vertical) = 1,
+    Horizontal = 0, Vertical = 1,
 }}
 RT_ENUM! { enum PosPrinterLineStyle: i32 {
-    SingleSolid (PosPrinterLineStyle_SingleSolid) = 0, DoubleSolid (PosPrinterLineStyle_DoubleSolid) = 1, Broken (PosPrinterLineStyle_Broken) = 2, Chain (PosPrinterLineStyle_Chain) = 3,
+    SingleSolid = 0, DoubleSolid = 1, Broken = 2, Chain = 3,
 }}
 RT_ENUM! { enum PosPrinterMapMode: i32 {
-    Dots (PosPrinterMapMode_Dots) = 0, Twips (PosPrinterMapMode_Twips) = 1, English (PosPrinterMapMode_English) = 2, Metric (PosPrinterMapMode_Metric) = 3,
+    Dots = 0, Twips = 1, English = 2, Metric = 3,
 }}
 RT_ENUM! { enum PosPrinterMarkFeedCapabilities: u32 {
-    None (PosPrinterMarkFeedCapabilities_None) = 0, ToTakeUp (PosPrinterMarkFeedCapabilities_ToTakeUp) = 1, ToCutter (PosPrinterMarkFeedCapabilities_ToCutter) = 2, ToCurrentTopOfForm (PosPrinterMarkFeedCapabilities_ToCurrentTopOfForm) = 4, ToNextTopOfForm (PosPrinterMarkFeedCapabilities_ToNextTopOfForm) = 8,
+    None = 0, ToTakeUp = 1, ToCutter = 2, ToCurrentTopOfForm = 4, ToNextTopOfForm = 8,
 }}
 RT_ENUM! { enum PosPrinterMarkFeedKind: i32 {
-    ToTakeUp (PosPrinterMarkFeedKind_ToTakeUp) = 0, ToCutter (PosPrinterMarkFeedKind_ToCutter) = 1, ToCurrentTopOfForm (PosPrinterMarkFeedKind_ToCurrentTopOfForm) = 2, ToNextTopOfForm (PosPrinterMarkFeedKind_ToNextTopOfForm) = 3,
+    ToTakeUp = 0, ToCutter = 1, ToCurrentTopOfForm = 2, ToNextTopOfForm = 3,
 }}
 RT_ENUM! { enum PosPrinterPrintSide: i32 {
-    Unknown (PosPrinterPrintSide_Unknown) = 0, Side1 (PosPrinterPrintSide_Side1) = 1, Side2 (PosPrinterPrintSide_Side2) = 2,
+    Unknown = 0, Side1 = 1, Side2 = 2,
 }}
 DEFINE_IID!(IID_IPosPrinterReleaseDeviceRequestedEventArgs, 734765913, 7407, 16562, 158, 203, 249, 39, 248, 86, 174, 60);
 RT_INTERFACE!{interface IPosPrinterReleaseDeviceRequestedEventArgs(IPosPrinterReleaseDeviceRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPosPrinterReleaseDeviceRequestedEventArgs] {
@@ -21314,10 +21314,10 @@ RT_INTERFACE!{interface IPosPrinterReleaseDeviceRequestedEventArgs(IPosPrinterRe
 }}
 RT_CLASS!{class PosPrinterReleaseDeviceRequestedEventArgs: IPosPrinterReleaseDeviceRequestedEventArgs}
 RT_ENUM! { enum PosPrinterRotation: i32 {
-    Normal (PosPrinterRotation_Normal) = 0, Right90 (PosPrinterRotation_Right90) = 1, Left90 (PosPrinterRotation_Left90) = 2, Rotate180 (PosPrinterRotation_Rotate180) = 3,
+    Normal = 0, Right90 = 1, Left90 = 2, Rotate180 = 3,
 }}
 RT_ENUM! { enum PosPrinterRuledLineCapabilities: u32 {
-    None (PosPrinterRuledLineCapabilities_None) = 0, Horizontal (PosPrinterRuledLineCapabilities_Horizontal) = 1, Vertical (PosPrinterRuledLineCapabilities_Vertical) = 2,
+    None = 0, Horizontal = 1, Vertical = 2,
 }}
 DEFINE_IID!(IID_IPosPrinterStatics, 2363544810, 4911, 19679, 166, 74, 45, 13, 124, 150, 168, 91);
 RT_INTERFACE!{static interface IPosPrinterStatics(IPosPrinterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPosPrinterStatics] {
@@ -21372,7 +21372,7 @@ impl IPosPrinterStatus {
 }
 RT_CLASS!{class PosPrinterStatus: IPosPrinterStatus}
 RT_ENUM! { enum PosPrinterStatusKind: i32 {
-    Online (PosPrinterStatusKind_Online) = 0, Off (PosPrinterStatusKind_Off) = 1, Offline (PosPrinterStatusKind_Offline) = 2, OffOrOffline (PosPrinterStatusKind_OffOrOffline) = 3, Extended (PosPrinterStatusKind_Extended) = 4,
+    Online = 0, Off = 1, Offline = 2, OffOrOffline = 3, Extended = 4,
 }}
 DEFINE_IID!(IID_IPosPrinterStatusUpdatedEventArgs, 786139103, 5030, 17037, 186, 129, 176, 231, 195, 229, 163, 205);
 RT_INTERFACE!{interface IPosPrinterStatusUpdatedEventArgs(IPosPrinterStatusUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPosPrinterStatusUpdatedEventArgs] {
@@ -21579,16 +21579,16 @@ impl IUnifiedPosErrorDataFactory {
     }}
 }
 RT_ENUM! { enum UnifiedPosErrorReason: i32 {
-    UnknownErrorReason (UnifiedPosErrorReason_UnknownErrorReason) = 0, NoService (UnifiedPosErrorReason_NoService) = 1, Disabled (UnifiedPosErrorReason_Disabled) = 2, Illegal (UnifiedPosErrorReason_Illegal) = 3, NoHardware (UnifiedPosErrorReason_NoHardware) = 4, Closed (UnifiedPosErrorReason_Closed) = 5, Offline (UnifiedPosErrorReason_Offline) = 6, Failure (UnifiedPosErrorReason_Failure) = 7, Timeout (UnifiedPosErrorReason_Timeout) = 8, Busy (UnifiedPosErrorReason_Busy) = 9, Extended (UnifiedPosErrorReason_Extended) = 10,
+    UnknownErrorReason = 0, NoService = 1, Disabled = 2, Illegal = 3, NoHardware = 4, Closed = 5, Offline = 6, Failure = 7, Timeout = 8, Busy = 9, Extended = 10,
 }}
 RT_ENUM! { enum UnifiedPosErrorSeverity: i32 {
-    UnknownErrorSeverity (UnifiedPosErrorSeverity_UnknownErrorSeverity) = 0, Warning (UnifiedPosErrorSeverity_Warning) = 1, Recoverable (UnifiedPosErrorSeverity_Recoverable) = 2, Unrecoverable (UnifiedPosErrorSeverity_Unrecoverable) = 3, AssistanceRequired (UnifiedPosErrorSeverity_AssistanceRequired) = 4, Fatal (UnifiedPosErrorSeverity_Fatal) = 5,
+    UnknownErrorSeverity = 0, Warning = 1, Recoverable = 2, Unrecoverable = 3, AssistanceRequired = 4, Fatal = 5,
 }}
 RT_ENUM! { enum UnifiedPosHealthCheckLevel: i32 {
-    UnknownHealthCheckLevel (UnifiedPosHealthCheckLevel_UnknownHealthCheckLevel) = 0, POSInternal (UnifiedPosHealthCheckLevel_POSInternal) = 1, External (UnifiedPosHealthCheckLevel_External) = 2, Interactive (UnifiedPosHealthCheckLevel_Interactive) = 3,
+    UnknownHealthCheckLevel = 0, POSInternal = 1, External = 2, Interactive = 3,
 }}
 RT_ENUM! { enum UnifiedPosPowerReportingType: i32 {
-    UnknownPowerReportingType (UnifiedPosPowerReportingType_UnknownPowerReportingType) = 0, Standard (UnifiedPosPowerReportingType_Standard) = 1, Advanced (UnifiedPosPowerReportingType_Advanced) = 2,
+    UnknownPowerReportingType = 0, Standard = 1, Advanced = 2,
 }}
 pub mod provider { // Windows.Devices.PointOfService.Provider
 use ::prelude::*;
@@ -22303,7 +22303,7 @@ impl IBarcodeScannerStopSoftwareTriggerRequestEventArgs {
 }
 RT_CLASS!{class BarcodeScannerStopSoftwareTriggerRequestEventArgs: IBarcodeScannerStopSoftwareTriggerRequestEventArgs}
 RT_ENUM! { enum BarcodeScannerTriggerState: i32 {
-    Released (BarcodeScannerTriggerState_Released) = 0, Pressed (BarcodeScannerTriggerState_Pressed) = 1,
+    Released = 0, Pressed = 1,
 }}
 DEFINE_IID!(IID_IBarcodeScannerVideoFrame, 2119717448, 40439, 16673, 161, 117, 128, 29, 128, 0, 17, 46);
 RT_INTERFACE!{interface IBarcodeScannerVideoFrame(IBarcodeScannerVideoFrameVtbl): IInspectable(IInspectableVtbl) [IID_IBarcodeScannerVideoFrame] {
@@ -22416,7 +22416,7 @@ impl IServiceDeviceStatics {
     }}
 }
 RT_ENUM! { enum ServiceDeviceType: i32 {
-    CalendarService (ServiceDeviceType_CalendarService) = 0, ContactsService (ServiceDeviceType_ContactsService) = 1, DeviceStatusService (ServiceDeviceType_DeviceStatusService) = 2, NotesService (ServiceDeviceType_NotesService) = 3, RingtonesService (ServiceDeviceType_RingtonesService) = 4, SmsService (ServiceDeviceType_SmsService) = 5, TasksService (ServiceDeviceType_TasksService) = 6,
+    CalendarService = 0, ContactsService = 1, DeviceStatusService = 2, NotesService = 3, RingtonesService = 4, SmsService = 5, TasksService = 6,
 }}
 RT_CLASS!{static class StorageDevice}
 impl RtActivatable<IStorageDeviceStatics> for StorageDevice {}
@@ -22676,7 +22676,7 @@ impl IPrint3DWorkflow2 {
     }}
 }
 RT_ENUM! { enum Print3DWorkflowDetail: i32 {
-    Unknown (Print3DWorkflowDetail_Unknown) = 0, ModelExceedsPrintBed (Print3DWorkflowDetail_ModelExceedsPrintBed) = 1, UploadFailed (Print3DWorkflowDetail_UploadFailed) = 2, InvalidMaterialSelection (Print3DWorkflowDetail_InvalidMaterialSelection) = 3, InvalidModel (Print3DWorkflowDetail_InvalidModel) = 4, ModelNotManifold (Print3DWorkflowDetail_ModelNotManifold) = 5, InvalidPrintTicket (Print3DWorkflowDetail_InvalidPrintTicket) = 6,
+    Unknown = 0, ModelExceedsPrintBed = 1, UploadFailed = 2, InvalidMaterialSelection = 3, InvalidModel = 4, ModelNotManifold = 5, InvalidPrintTicket = 6,
 }}
 DEFINE_IID!(IID_IPrint3DWorkflowPrinterChangedEventArgs, 1159881730, 38396, 18503, 147, 179, 19, 77, 191, 92, 96, 247);
 RT_INTERFACE!{interface IPrint3DWorkflowPrinterChangedEventArgs(IPrint3DWorkflowPrinterChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DWorkflowPrinterChangedEventArgs] {
@@ -22718,7 +22718,7 @@ impl IPrint3DWorkflowPrintRequestedEventArgs {
 }
 RT_CLASS!{class Print3DWorkflowPrintRequestedEventArgs: IPrint3DWorkflowPrintRequestedEventArgs}
 RT_ENUM! { enum Print3DWorkflowStatus: i32 {
-    Abandoned (Print3DWorkflowStatus_Abandoned) = 0, Canceled (Print3DWorkflowStatus_Canceled) = 1, Failed (Print3DWorkflowStatus_Failed) = 2, Slicing (Print3DWorkflowStatus_Slicing) = 3, Submitted (Print3DWorkflowStatus_Submitted) = 4,
+    Abandoned = 0, Canceled = 1, Failed = 2, Slicing = 3, Submitted = 4,
 }}
 RT_CLASS!{static class PrintExtensionContext}
 impl RtActivatable<IPrintExtensionContextStatic> for PrintExtensionContext {}
@@ -22999,7 +22999,7 @@ impl IPwmPin {
 }
 RT_CLASS!{class PwmPin: IPwmPin}
 RT_ENUM! { enum PwmPulsePolarity: i32 {
-    ActiveHigh (PwmPulsePolarity_ActiveHigh) = 0, ActiveLow (PwmPulsePolarity_ActiveLow) = 1,
+    ActiveHigh = 0, ActiveLow = 1,
 }}
 pub mod provider { // Windows.Devices.Pwm.Provider
 use ::prelude::*;
@@ -23136,13 +23136,13 @@ impl Radio {
 }
 DEFINE_CLSID!(Radio(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,82,97,100,105,111,115,46,82,97,100,105,111,0]) [CLSID_Radio]);
 RT_ENUM! { enum RadioAccessStatus: i32 {
-    Unspecified (RadioAccessStatus_Unspecified) = 0, Allowed (RadioAccessStatus_Allowed) = 1, DeniedByUser (RadioAccessStatus_DeniedByUser) = 2, DeniedBySystem (RadioAccessStatus_DeniedBySystem) = 3,
+    Unspecified = 0, Allowed = 1, DeniedByUser = 2, DeniedBySystem = 3,
 }}
 RT_ENUM! { enum RadioKind: i32 {
-    Other (RadioKind_Other) = 0, WiFi (RadioKind_WiFi) = 1, MobileBroadband (RadioKind_MobileBroadband) = 2, Bluetooth (RadioKind_Bluetooth) = 3, FM (RadioKind_FM) = 4,
+    Other = 0, WiFi = 1, MobileBroadband = 2, Bluetooth = 3, FM = 4,
 }}
 RT_ENUM! { enum RadioState: i32 {
-    Unknown (RadioState_Unknown) = 0, On (RadioState_On) = 1, Off (RadioState_Off) = 2, Disabled (RadioState_Disabled) = 3,
+    Unknown = 0, On = 1, Off = 2, Disabled = 3,
 }}
 DEFINE_IID!(IID_IRadioStatics, 1605804334, 26571, 18094, 170, 233, 101, 145, 159, 134, 239, 244);
 RT_INTERFACE!{static interface IRadioStatics(IRadioStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRadioStatics] {
@@ -23248,10 +23248,10 @@ impl ImageScanner {
 DEFINE_CLSID!(ImageScanner(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,99,97,110,110,101,114,115,46,73,109,97,103,101,83,99,97,110,110,101,114,0]) [CLSID_ImageScanner]);
 RT_CLASS!{class ImageScannerAutoConfiguration: IImageScannerFormatConfiguration}
 RT_ENUM! { enum ImageScannerAutoCroppingMode: i32 {
-    Disabled (ImageScannerAutoCroppingMode_Disabled) = 0, SingleRegion (ImageScannerAutoCroppingMode_SingleRegion) = 1, MultipleRegion (ImageScannerAutoCroppingMode_MultipleRegion) = 2,
+    Disabled = 0, SingleRegion = 1, MultipleRegion = 2,
 }}
 RT_ENUM! { enum ImageScannerColorMode: i32 {
-    Color (ImageScannerColorMode_Color) = 0, Grayscale (ImageScannerColorMode_Grayscale) = 1, Monochrome (ImageScannerColorMode_Monochrome) = 2, AutoColor (ImageScannerColorMode_AutoColor) = 3,
+    Color = 0, Grayscale = 1, Monochrome = 2, AutoColor = 3,
 }}
 DEFINE_IID!(IID_IImageScannerFeederConfiguration, 1958587630, 64151, 19479, 130, 128, 64, 227, 156, 109, 204, 103);
 RT_INTERFACE!{interface IImageScannerFeederConfiguration(IImageScannerFeederConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IImageScannerFeederConfiguration] {
@@ -23362,7 +23362,7 @@ impl IImageScannerFeederConfiguration {
 RT_CLASS!{class ImageScannerFeederConfiguration: IImageScannerFormatConfiguration}
 RT_CLASS!{class ImageScannerFlatbedConfiguration: IImageScannerFormatConfiguration}
 RT_ENUM! { enum ImageScannerFormat: i32 {
-    Jpeg (ImageScannerFormat_Jpeg) = 0, Png (ImageScannerFormat_Png) = 1, DeviceIndependentBitmap (ImageScannerFormat_DeviceIndependentBitmap) = 2, Tiff (ImageScannerFormat_Tiff) = 3, Xps (ImageScannerFormat_Xps) = 4, OpenXps (ImageScannerFormat_OpenXps) = 5, Pdf (ImageScannerFormat_Pdf) = 6,
+    Jpeg = 0, Png = 1, DeviceIndependentBitmap = 2, Tiff = 3, Xps = 4, OpenXps = 5, Pdf = 6,
 }}
 DEFINE_IID!(IID_IImageScannerFormatConfiguration, 2921815313, 56031, 16400, 191, 16, 204, 165, 200, 61, 203, 176);
 RT_INTERFACE!{interface IImageScannerFormatConfiguration(IImageScannerFormatConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IImageScannerFormatConfiguration] {
@@ -23426,7 +23426,7 @@ impl IImageScannerScanResult {
 }
 RT_CLASS!{class ImageScannerScanResult: IImageScannerScanResult}
 RT_ENUM! { enum ImageScannerScanSource: i32 {
-    Default (ImageScannerScanSource_Default) = 0, Flatbed (ImageScannerScanSource_Flatbed) = 1, Feeder (ImageScannerScanSource_Feeder) = 2, AutoConfigured (ImageScannerScanSource_AutoConfigured) = 3,
+    Default = 0, Flatbed = 1, Feeder = 2, AutoConfigured = 3,
 }}
 DEFINE_IID!(IID_IImageScannerSourceConfiguration, 3216310357, 2884, 19586, 158, 137, 32, 95, 156, 35, 78, 89);
 RT_INTERFACE!{interface IImageScannerSourceConfiguration(IImageScannerSourceConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IImageScannerSourceConfiguration] {
@@ -23810,7 +23810,7 @@ impl IAccelerometerReadingChangedEventArgs {
 }
 RT_CLASS!{class AccelerometerReadingChangedEventArgs: IAccelerometerReadingChangedEventArgs}
 RT_ENUM! { enum AccelerometerReadingType: i32 {
-    Standard (AccelerometerReadingType_Standard) = 0, Linear (AccelerometerReadingType_Linear) = 1, Gravity (AccelerometerReadingType_Gravity) = 2,
+    Standard = 0, Linear = 1, Gravity = 2,
 }}
 DEFINE_IID!(IID_IAccelerometerShakenEventArgs, 2516517329, 18984, 20277, 152, 232, 129, 120, 170, 228, 8, 74);
 RT_INTERFACE!{interface IAccelerometerShakenEventArgs(IAccelerometerShakenEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAccelerometerShakenEventArgs] {
@@ -23984,7 +23984,7 @@ impl IActivitySensorReadingChangeReport {
 }
 RT_CLASS!{class ActivitySensorReadingChangeReport: IActivitySensorReadingChangeReport}
 RT_ENUM! { enum ActivitySensorReadingConfidence: i32 {
-    High (ActivitySensorReadingConfidence_High) = 0, Low (ActivitySensorReadingConfidence_Low) = 1,
+    High = 0, Low = 1,
 }}
 DEFINE_IID!(IID_IActivitySensorStatics, 2803764893, 61067, 17873, 178, 91, 8, 204, 13, 249, 42, 182);
 RT_INTERFACE!{static interface IActivitySensorStatics(IActivitySensorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IActivitySensorStatics] {
@@ -24034,7 +24034,7 @@ impl IActivitySensorTriggerDetails {
 }
 RT_CLASS!{class ActivitySensorTriggerDetails: IActivitySensorTriggerDetails}
 RT_ENUM! { enum ActivityType: i32 {
-    Unknown (ActivityType_Unknown) = 0, Idle (ActivityType_Idle) = 1, Stationary (ActivityType_Stationary) = 2, Fidgeting (ActivityType_Fidgeting) = 3, Walking (ActivityType_Walking) = 4, Running (ActivityType_Running) = 5, InVehicle (ActivityType_InVehicle) = 6, Biking (ActivityType_Biking) = 7,
+    Unknown = 0, Idle = 1, Stationary = 2, Fidgeting = 3, Walking = 4, Running = 5, InVehicle = 6, Biking = 7,
 }}
 DEFINE_IID!(IID_IAltimeter, 1928353789, 36612, 18929, 180, 167, 244, 227, 99, 183, 1, 162);
 RT_INTERFACE!{interface IAltimeter(IAltimeterVtbl): IInspectable(IInspectableVtbl) [IID_IAltimeter] {
@@ -25332,7 +25332,7 @@ impl IMagnetometer3 {
     }}
 }
 RT_ENUM! { enum MagnetometerAccuracy: i32 {
-    Unknown (MagnetometerAccuracy_Unknown) = 0, Unreliable (MagnetometerAccuracy_Unreliable) = 1, Approximate (MagnetometerAccuracy_Approximate) = 2, High (MagnetometerAccuracy_High) = 3,
+    Unknown = 0, Unreliable = 1, Approximate = 2, High = 3,
 }}
 DEFINE_IID!(IID_IMagnetometerDeviceId, 1488230594, 32331, 16460, 159, 197, 93, 232, 180, 14, 186, 227);
 RT_INTERFACE!{interface IMagnetometerDeviceId(IMagnetometerDeviceIdVtbl): IInspectable(IInspectableVtbl) [IID_IMagnetometerDeviceId] {
@@ -25877,7 +25877,7 @@ impl IPedometerStatics2 {
     }}
 }
 RT_ENUM! { enum PedometerStepKind: i32 {
-    Unknown (PedometerStepKind_Unknown) = 0, Walking (PedometerStepKind_Walking) = 1, Running (PedometerStepKind_Running) = 2,
+    Unknown = 0, Walking = 1, Running = 2,
 }}
 DEFINE_IID!(IID_IProximitySensor, 1421899448, 60667, 18756, 185, 40, 116, 252, 80, 77, 71, 238);
 RT_INTERFACE!{interface IProximitySensor(IProximitySensorVtbl): IInspectable(IInspectableVtbl) [IID_IProximitySensor] {
@@ -26047,7 +26047,7 @@ impl ISensorDataThresholdTriggerDetails {
 }
 RT_CLASS!{class SensorDataThresholdTriggerDetails: ISensorDataThresholdTriggerDetails}
 RT_ENUM! { enum SensorOptimizationGoal: i32 {
-    Precision (SensorOptimizationGoal_Precision) = 0, PowerEfficiency (SensorOptimizationGoal_PowerEfficiency) = 1,
+    Precision = 0, PowerEfficiency = 1,
 }}
 DEFINE_IID!(IID_ISensorQuaternion, 3385182247, 50972, 18151, 157, 163, 54, 161, 147, 178, 50, 188);
 RT_INTERFACE!{interface ISensorQuaternion(ISensorQuaternionVtbl): IInspectable(IInspectableVtbl) [IID_ISensorQuaternion] {
@@ -26080,7 +26080,7 @@ impl ISensorQuaternion {
 }
 RT_CLASS!{class SensorQuaternion: ISensorQuaternion}
 RT_ENUM! { enum SensorReadingType: i32 {
-    Absolute (SensorReadingType_Absolute) = 0, Relative (SensorReadingType_Relative) = 1,
+    Absolute = 0, Relative = 1,
 }}
 DEFINE_IID!(IID_ISensorRotationMatrix, 171792999, 8948, 17298, 149, 56, 101, 208, 189, 6, 74, 166);
 RT_INTERFACE!{interface ISensorRotationMatrix(ISensorRotationMatrixVtbl): IInspectable(IInspectableVtbl) [IID_ISensorRotationMatrix] {
@@ -26143,10 +26143,10 @@ impl ISensorRotationMatrix {
 }
 RT_CLASS!{class SensorRotationMatrix: ISensorRotationMatrix}
 RT_ENUM! { enum SensorType: i32 {
-    Accelerometer (SensorType_Accelerometer) = 0, ActivitySensor (SensorType_ActivitySensor) = 1, Barometer (SensorType_Barometer) = 2, Compass (SensorType_Compass) = 3, CustomSensor (SensorType_CustomSensor) = 4, Gyroscope (SensorType_Gyroscope) = 5, ProximitySensor (SensorType_ProximitySensor) = 6, Inclinometer (SensorType_Inclinometer) = 7, LightSensor (SensorType_LightSensor) = 8, OrientationSensor (SensorType_OrientationSensor) = 9, Pedometer (SensorType_Pedometer) = 10, RelativeInclinometer (SensorType_RelativeInclinometer) = 11, RelativeOrientationSensor (SensorType_RelativeOrientationSensor) = 12, SimpleOrientationSensor (SensorType_SimpleOrientationSensor) = 13,
+    Accelerometer = 0, ActivitySensor = 1, Barometer = 2, Compass = 3, CustomSensor = 4, Gyroscope = 5, ProximitySensor = 6, Inclinometer = 7, LightSensor = 8, OrientationSensor = 9, Pedometer = 10, RelativeInclinometer = 11, RelativeOrientationSensor = 12, SimpleOrientationSensor = 13,
 }}
 RT_ENUM! { enum SimpleOrientation: i32 {
-    NotRotated (SimpleOrientation_NotRotated) = 0, Rotated90DegreesCounterclockwise (SimpleOrientation_Rotated90DegreesCounterclockwise) = 1, Rotated180DegreesCounterclockwise (SimpleOrientation_Rotated180DegreesCounterclockwise) = 2, Rotated270DegreesCounterclockwise (SimpleOrientation_Rotated270DegreesCounterclockwise) = 3, Faceup (SimpleOrientation_Faceup) = 4, Facedown (SimpleOrientation_Facedown) = 5,
+    NotRotated = 0, Rotated90DegreesCounterclockwise = 1, Rotated180DegreesCounterclockwise = 2, Rotated270DegreesCounterclockwise = 3, Faceup = 4, Facedown = 5,
 }}
 DEFINE_IID!(IID_ISimpleOrientationSensor, 1609906262, 8522, 19950, 163, 249, 97, 111, 26, 176, 111, 253);
 RT_INTERFACE!{interface ISimpleOrientationSensor(ISimpleOrientationSensorVtbl): IInspectable(IInspectableVtbl) [IID_ISimpleOrientationSensor] {
@@ -26664,19 +26664,19 @@ impl ISerialDeviceStatics {
     }}
 }
 RT_ENUM! { enum SerialError: i32 {
-    Frame (SerialError_Frame) = 0, BufferOverrun (SerialError_BufferOverrun) = 1, ReceiveFull (SerialError_ReceiveFull) = 2, ReceiveParity (SerialError_ReceiveParity) = 3, TransmitFull (SerialError_TransmitFull) = 4,
+    Frame = 0, BufferOverrun = 1, ReceiveFull = 2, ReceiveParity = 3, TransmitFull = 4,
 }}
 RT_ENUM! { enum SerialHandshake: i32 {
-    None (SerialHandshake_None) = 0, RequestToSend (SerialHandshake_RequestToSend) = 1, XOnXOff (SerialHandshake_XOnXOff) = 2, RequestToSendXOnXOff (SerialHandshake_RequestToSendXOnXOff) = 3,
+    None = 0, RequestToSend = 1, XOnXOff = 2, RequestToSendXOnXOff = 3,
 }}
 RT_ENUM! { enum SerialParity: i32 {
-    None (SerialParity_None) = 0, Odd (SerialParity_Odd) = 1, Even (SerialParity_Even) = 2, Mark (SerialParity_Mark) = 3, Space (SerialParity_Space) = 4,
+    None = 0, Odd = 1, Even = 2, Mark = 3, Space = 4,
 }}
 RT_ENUM! { enum SerialPinChange: i32 {
-    BreakSignal (SerialPinChange_BreakSignal) = 0, CarrierDetect (SerialPinChange_CarrierDetect) = 1, ClearToSend (SerialPinChange_ClearToSend) = 2, DataSetReady (SerialPinChange_DataSetReady) = 3, RingIndicator (SerialPinChange_RingIndicator) = 4,
+    BreakSignal = 0, CarrierDetect = 1, ClearToSend = 2, DataSetReady = 3, RingIndicator = 4,
 }}
 RT_ENUM! { enum SerialStopBitCount: i32 {
-    One (SerialStopBitCount_One) = 0, OnePointFive (SerialStopBitCount_OnePointFive) = 1, Two (SerialStopBitCount_Two) = 2,
+    One = 0, OnePointFive = 1, Two = 2,
 }}
 } // Windows.Devices.SerialCommunication
 pub mod smartcards { // Windows.Devices.SmartCards
@@ -26758,7 +26758,7 @@ impl ISmartCard {
 }
 RT_CLASS!{class SmartCard: ISmartCard}
 RT_ENUM! { enum SmartCardActivationPolicyChangeResult: i32 {
-    Denied (SmartCardActivationPolicyChangeResult_Denied) = 0, Allowed (SmartCardActivationPolicyChangeResult_Allowed) = 1,
+    Denied = 0, Allowed = 1,
 }}
 DEFINE_IID!(IID_ISmartCardAppletIdGroup, 2108777958, 25188, 22260, 94, 3, 200, 99, 133, 57, 94, 177);
 RT_INTERFACE!{interface ISmartCardAppletIdGroup(ISmartCardAppletIdGroupVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAppletIdGroup] {
@@ -26876,7 +26876,7 @@ impl ISmartCardAppletIdGroup2 {
     }}
 }
 RT_ENUM! { enum SmartCardAppletIdGroupActivationPolicy: i32 {
-    Disabled (SmartCardAppletIdGroupActivationPolicy_Disabled) = 0, ForegroundOverride (SmartCardAppletIdGroupActivationPolicy_ForegroundOverride) = 1, Enabled (SmartCardAppletIdGroupActivationPolicy_Enabled) = 2,
+    Disabled = 0, ForegroundOverride = 1, Enabled = 2,
 }}
 DEFINE_IID!(IID_ISmartCardAppletIdGroupFactory, 2433084237, 19045, 20033, 128, 97, 203, 232, 63, 54, 149, 229);
 RT_INTERFACE!{static interface ISmartCardAppletIdGroupFactory(ISmartCardAppletIdGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardAppletIdGroupFactory] {
@@ -27076,7 +27076,7 @@ impl ISmartCardAutomaticResponseApduFactory {
     }}
 }
 RT_ENUM! { enum SmartCardAutomaticResponseStatus: i32 {
-    None (SmartCardAutomaticResponseStatus_None) = 0, Success (SmartCardAutomaticResponseStatus_Success) = 1, UnknownError (SmartCardAutomaticResponseStatus_UnknownError) = 2,
+    None = 0, Success = 1, UnknownError = 2,
 }}
 DEFINE_IID!(IID_ISmartCardChallengeContext, 422204185, 51652, 18759, 129, 204, 68, 121, 74, 97, 239, 145);
 RT_INTERFACE!{interface ISmartCardChallengeContext(ISmartCardChallengeContextVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardChallengeContext] {
@@ -27138,7 +27138,7 @@ impl ISmartCardConnection {
 }
 RT_CLASS!{class SmartCardConnection: ISmartCardConnection}
 RT_ENUM! { enum SmartCardCryptogramAlgorithm: i32 {
-    None (SmartCardCryptogramAlgorithm_None) = 0, CbcMac (SmartCardCryptogramAlgorithm_CbcMac) = 1, Cvc3Umd (SmartCardCryptogramAlgorithm_Cvc3Umd) = 2, DecimalizedMsd (SmartCardCryptogramAlgorithm_DecimalizedMsd) = 3, Cvc3MD (SmartCardCryptogramAlgorithm_Cvc3MD) = 4, Sha1 (SmartCardCryptogramAlgorithm_Sha1) = 5, SignedDynamicApplicationData (SmartCardCryptogramAlgorithm_SignedDynamicApplicationData) = 6, RsaPkcs1 (SmartCardCryptogramAlgorithm_RsaPkcs1) = 7, Sha256Hmac (SmartCardCryptogramAlgorithm_Sha256Hmac) = 8,
+    None = 0, CbcMac = 1, Cvc3Umd = 2, DecimalizedMsd = 3, Cvc3MD = 4, Sha1 = 5, SignedDynamicApplicationData = 6, RsaPkcs1 = 7, Sha256Hmac = 8,
 }}
 DEFINE_IID!(IID_ISmartCardCryptogramGenerator, 3818870907, 60883, 20041, 181, 148, 15, 245, 228, 208, 199, 111);
 RT_INTERFACE!{interface ISmartCardCryptogramGenerator(ISmartCardCryptogramGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGenerator] {
@@ -27269,7 +27269,7 @@ impl ISmartCardCryptogramGenerator2 {
     }}
 }
 RT_ENUM! { enum SmartCardCryptogramGeneratorOperationStatus: i32 {
-    Success (SmartCardCryptogramGeneratorOperationStatus_Success) = 0, AuthorizationFailed (SmartCardCryptogramGeneratorOperationStatus_AuthorizationFailed) = 1, AuthorizationCanceled (SmartCardCryptogramGeneratorOperationStatus_AuthorizationCanceled) = 2, AuthorizationRequired (SmartCardCryptogramGeneratorOperationStatus_AuthorizationRequired) = 3, CryptogramMaterialPackageStorageKeyExists (SmartCardCryptogramGeneratorOperationStatus_CryptogramMaterialPackageStorageKeyExists) = 4, NoCryptogramMaterialPackageStorageKey (SmartCardCryptogramGeneratorOperationStatus_NoCryptogramMaterialPackageStorageKey) = 5, NoCryptogramMaterialPackage (SmartCardCryptogramGeneratorOperationStatus_NoCryptogramMaterialPackage) = 6, UnsupportedCryptogramMaterialPackage (SmartCardCryptogramGeneratorOperationStatus_UnsupportedCryptogramMaterialPackage) = 7, UnknownCryptogramMaterialName (SmartCardCryptogramGeneratorOperationStatus_UnknownCryptogramMaterialName) = 8, InvalidCryptogramMaterialUsage (SmartCardCryptogramGeneratorOperationStatus_InvalidCryptogramMaterialUsage) = 9, ApduResponseNotSent (SmartCardCryptogramGeneratorOperationStatus_ApduResponseNotSent) = 10, OtherError (SmartCardCryptogramGeneratorOperationStatus_OtherError) = 11, ValidationFailed (SmartCardCryptogramGeneratorOperationStatus_ValidationFailed) = 12, NotSupported (SmartCardCryptogramGeneratorOperationStatus_NotSupported) = 13,
+    Success = 0, AuthorizationFailed = 1, AuthorizationCanceled = 2, AuthorizationRequired = 3, CryptogramMaterialPackageStorageKeyExists = 4, NoCryptogramMaterialPackageStorageKey = 5, NoCryptogramMaterialPackage = 6, UnsupportedCryptogramMaterialPackage = 7, UnknownCryptogramMaterialName = 8, InvalidCryptogramMaterialUsage = 9, ApduResponseNotSent = 10, OtherError = 11, ValidationFailed = 12, NotSupported = 13,
 }}
 DEFINE_IID!(IID_ISmartCardCryptogramGeneratorStatics, 160643344, 52124, 16405, 150, 125, 82, 52, 243, 176, 41, 0);
 RT_INTERFACE!{static interface ISmartCardCryptogramGeneratorStatics(ISmartCardCryptogramGeneratorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramGeneratorStatics] {
@@ -27442,10 +27442,10 @@ RT_CLASS!{class SmartCardCryptogramMaterialPackageCharacteristics: ISmartCardCry
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramMaterialPackageCharacteristics {}
 DEFINE_CLSID!(SmartCardCryptogramMaterialPackageCharacteristics(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,77,97,116,101,114,105,97,108,80,97,99,107,97,103,101,67,104,97,114,97,99,116,101,114,105,115,116,105,99,115,0]) [CLSID_SmartCardCryptogramMaterialPackageCharacteristics]);
 RT_ENUM! { enum SmartCardCryptogramMaterialPackageConfirmationResponseFormat: i32 {
-    None (SmartCardCryptogramMaterialPackageConfirmationResponseFormat_None) = 0, VisaHmac (SmartCardCryptogramMaterialPackageConfirmationResponseFormat_VisaHmac) = 1,
+    None = 0, VisaHmac = 1,
 }}
 RT_ENUM! { enum SmartCardCryptogramMaterialPackageFormat: i32 {
-    None (SmartCardCryptogramMaterialPackageFormat_None) = 0, JweRsaPki (SmartCardCryptogramMaterialPackageFormat_JweRsaPki) = 1,
+    None = 0, JweRsaPki = 1,
 }}
 DEFINE_IID!(IID_ISmartCardCryptogramMaterialPossessionProof, 3854150540, 41281, 16693, 154, 221, 176, 210, 227, 170, 31, 201);
 RT_INTERFACE!{interface ISmartCardCryptogramMaterialPossessionProof(ISmartCardCryptogramMaterialPossessionProofVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramMaterialPossessionProof] {
@@ -27466,13 +27466,13 @@ impl ISmartCardCryptogramMaterialPossessionProof {
 }
 RT_CLASS!{class SmartCardCryptogramMaterialPossessionProof: ISmartCardCryptogramMaterialPossessionProof}
 RT_ENUM! { enum SmartCardCryptogramMaterialProtectionMethod: i32 {
-    None (SmartCardCryptogramMaterialProtectionMethod_None) = 0, WhiteBoxing (SmartCardCryptogramMaterialProtectionMethod_WhiteBoxing) = 1,
+    None = 0, WhiteBoxing = 1,
 }}
 RT_ENUM! { enum SmartCardCryptogramMaterialType: i32 {
-    None (SmartCardCryptogramMaterialType_None) = 0, StaticDataAuthentication (SmartCardCryptogramMaterialType_StaticDataAuthentication) = 1, TripleDes112 (SmartCardCryptogramMaterialType_TripleDes112) = 2, Aes (SmartCardCryptogramMaterialType_Aes) = 3, RsaPkcs1 (SmartCardCryptogramMaterialType_RsaPkcs1) = 4,
+    None = 0, StaticDataAuthentication = 1, TripleDes112 = 2, Aes = 3, RsaPkcs1 = 4,
 }}
 RT_ENUM! { enum SmartCardCryptogramPlacementOptions: u32 {
-    None (SmartCardCryptogramPlacementOptions_None) = 0, UnitsAreInNibbles (SmartCardCryptogramPlacementOptions_UnitsAreInNibbles) = 1, ChainOutput (SmartCardCryptogramPlacementOptions_ChainOutput) = 2,
+    None = 0, UnitsAreInNibbles = 1, ChainOutput = 2,
 }}
 DEFINE_IID!(IID_ISmartCardCryptogramPlacementStep, 2491089899, 33602, 18322, 162, 229, 146, 86, 54, 55, 138, 83);
 RT_INTERFACE!{interface ISmartCardCryptogramPlacementStep(ISmartCardCryptogramPlacementStepVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramPlacementStep] {
@@ -27584,10 +27584,10 @@ RT_CLASS!{class SmartCardCryptogramPlacementStep: ISmartCardCryptogramPlacementS
 impl RtActivatable<IActivationFactory> for SmartCardCryptogramPlacementStep {}
 DEFINE_CLSID!(SmartCardCryptogramPlacementStep(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,67,114,121,112,116,111,103,114,97,109,80,108,97,99,101,109,101,110,116,83,116,101,112,0]) [CLSID_SmartCardCryptogramPlacementStep]);
 RT_ENUM! { enum SmartCardCryptogramStorageKeyAlgorithm: i32 {
-    None (SmartCardCryptogramStorageKeyAlgorithm_None) = 0, Rsa2048 (SmartCardCryptogramStorageKeyAlgorithm_Rsa2048) = 1,
+    None = 0, Rsa2048 = 1,
 }}
 RT_ENUM! { enum SmartCardCryptogramStorageKeyCapabilities: u32 {
-    None (SmartCardCryptogramStorageKeyCapabilities_None) = 0, HardwareProtection (SmartCardCryptogramStorageKeyCapabilities_HardwareProtection) = 1, UnlockPrompt (SmartCardCryptogramStorageKeyCapabilities_UnlockPrompt) = 2,
+    None = 0, HardwareProtection = 1, UnlockPrompt = 2,
 }}
 DEFINE_IID!(IID_ISmartCardCryptogramStorageKeyCharacteristics, 2236765294, 17495, 18469, 180, 100, 99, 84, 113, 163, 159, 92);
 RT_INTERFACE!{interface ISmartCardCryptogramStorageKeyCharacteristics(ISmartCardCryptogramStorageKeyCharacteristicsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardCryptogramStorageKeyCharacteristics] {
@@ -27685,13 +27685,13 @@ impl ISmartCardCryptogramStorageKeyInfo2 {
     }}
 }
 RT_ENUM! { enum SmartCardCryptographicKeyAttestationStatus: i32 {
-    NoAttestation (SmartCardCryptographicKeyAttestationStatus_NoAttestation) = 0, SoftwareKeyWithoutTpm (SmartCardCryptographicKeyAttestationStatus_SoftwareKeyWithoutTpm) = 1, SoftwareKeyWithTpm (SmartCardCryptographicKeyAttestationStatus_SoftwareKeyWithTpm) = 2, TpmKeyUnknownAttestationStatus (SmartCardCryptographicKeyAttestationStatus_TpmKeyUnknownAttestationStatus) = 3, TpmKeyWithoutAttestationCapability (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithoutAttestationCapability) = 4, TpmKeyWithTemporaryAttestationFailure (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithTemporaryAttestationFailure) = 5, TpmKeyWithLongTermAttestationFailure (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithLongTermAttestationFailure) = 6, TpmKeyWithAttestation (SmartCardCryptographicKeyAttestationStatus_TpmKeyWithAttestation) = 7,
+    NoAttestation = 0, SoftwareKeyWithoutTpm = 1, SoftwareKeyWithTpm = 2, TpmKeyUnknownAttestationStatus = 3, TpmKeyWithoutAttestationCapability = 4, TpmKeyWithTemporaryAttestationFailure = 5, TpmKeyWithLongTermAttestationFailure = 6, TpmKeyWithAttestation = 7,
 }}
 RT_ENUM! { enum SmartCardEmulationCategory: i32 {
-    Other (SmartCardEmulationCategory_Other) = 0, Payment (SmartCardEmulationCategory_Payment) = 1,
+    Other = 0, Payment = 1,
 }}
 RT_ENUM! { enum SmartCardEmulationType: i32 {
-    Host (SmartCardEmulationType_Host) = 0, Uicc (SmartCardEmulationType_Uicc) = 1, EmbeddedSE (SmartCardEmulationType_EmbeddedSE) = 2,
+    Host = 0, Uicc = 1, EmbeddedSE = 2,
 }}
 DEFINE_IID!(IID_ISmartCardEmulator, 3753445042, 34654, 18405, 128, 119, 232, 191, 241, 177, 198, 251);
 RT_INTERFACE!{interface ISmartCardEmulator(ISmartCardEmulatorVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulator] {
@@ -27852,7 +27852,7 @@ impl ISmartCardEmulatorConnectionDeactivatedEventArgs {
 }
 RT_CLASS!{class SmartCardEmulatorConnectionDeactivatedEventArgs: ISmartCardEmulatorConnectionDeactivatedEventArgs}
 RT_ENUM! { enum SmartCardEmulatorConnectionDeactivatedReason: i32 {
-    ConnectionLost (SmartCardEmulatorConnectionDeactivatedReason_ConnectionLost) = 0, ConnectionRedirected (SmartCardEmulatorConnectionDeactivatedReason_ConnectionRedirected) = 1,
+    ConnectionLost = 0, ConnectionRedirected = 1,
 }}
 DEFINE_IID!(IID_ISmartCardEmulatorConnectionProperties, 1311548910, 63849, 20605, 108, 249, 52, 226, 209, 141, 243, 17);
 RT_INTERFACE!{interface ISmartCardEmulatorConnectionProperties(ISmartCardEmulatorConnectionPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorConnectionProperties] {
@@ -27873,10 +27873,10 @@ impl ISmartCardEmulatorConnectionProperties {
 }
 RT_CLASS!{class SmartCardEmulatorConnectionProperties: ISmartCardEmulatorConnectionProperties}
 RT_ENUM! { enum SmartCardEmulatorConnectionSource: i32 {
-    Unknown (SmartCardEmulatorConnectionSource_Unknown) = 0, NfcReader (SmartCardEmulatorConnectionSource_NfcReader) = 1,
+    Unknown = 0, NfcReader = 1,
 }}
 RT_ENUM! { enum SmartCardEmulatorEnablementPolicy: i32 {
-    Never (SmartCardEmulatorEnablementPolicy_Never) = 0, Always (SmartCardEmulatorEnablementPolicy_Always) = 1, ScreenOn (SmartCardEmulatorEnablementPolicy_ScreenOn) = 2, ScreenUnlocked (SmartCardEmulatorEnablementPolicy_ScreenUnlocked) = 3,
+    Never = 0, Always = 1, ScreenOn = 2, ScreenUnlocked = 3,
 }}
 DEFINE_IID!(IID_ISmartCardEmulatorStatics, 2057043019, 50387, 18767, 184, 162, 98, 21, 216, 30, 133, 178);
 RT_INTERFACE!{static interface ISmartCardEmulatorStatics(ISmartCardEmulatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardEmulatorStatics] {
@@ -27930,10 +27930,10 @@ impl ISmartCardEmulatorStatics3 {
     }}
 }
 RT_ENUM! { enum SmartCardLaunchBehavior: i32 {
-    Default (SmartCardLaunchBehavior_Default) = 0, AboveLock (SmartCardLaunchBehavior_AboveLock) = 1,
+    Default = 0, AboveLock = 1,
 }}
 RT_ENUM! { enum SmartCardPinCharacterPolicyOption: i32 {
-    Allow (SmartCardPinCharacterPolicyOption_Allow) = 0, RequireAtLeastOne (SmartCardPinCharacterPolicyOption_RequireAtLeastOne) = 1, Disallow (SmartCardPinCharacterPolicyOption_Disallow) = 2,
+    Allow = 0, RequireAtLeastOne = 1, Disallow = 2,
 }}
 DEFINE_IID!(IID_ISmartCardPinPolicy, 406643076, 19894, 18497, 172, 158, 42, 193, 243, 155, 115, 4);
 RT_INTERFACE!{interface ISmartCardPinPolicy(ISmartCardPinPolicyVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardPinPolicy] {
@@ -28255,7 +28255,7 @@ impl SmartCardReader {
 }
 DEFINE_CLSID!(SmartCardReader(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,83,109,97,114,116,67,97,114,100,115,46,83,109,97,114,116,67,97,114,100,82,101,97,100,101,114,0]) [CLSID_SmartCardReader]);
 RT_ENUM! { enum SmartCardReaderKind: i32 {
-    Any (SmartCardReaderKind_Any) = 0, Generic (SmartCardReaderKind_Generic) = 1, Tpm (SmartCardReaderKind_Tpm) = 2, Nfc (SmartCardReaderKind_Nfc) = 3, Uicc (SmartCardReaderKind_Uicc) = 4, EmbeddedSE (SmartCardReaderKind_EmbeddedSE) = 5,
+    Any = 0, Generic = 1, Tpm = 2, Nfc = 3, Uicc = 4, EmbeddedSE = 5,
 }}
 DEFINE_IID!(IID_ISmartCardReaderStatics, 272368865, 41418, 18674, 162, 129, 91, 111, 102, 154, 241, 7);
 RT_INTERFACE!{static interface ISmartCardReaderStatics(ISmartCardReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardReaderStatics] {
@@ -28281,10 +28281,10 @@ impl ISmartCardReaderStatics {
     }}
 }
 RT_ENUM! { enum SmartCardReaderStatus: i32 {
-    Disconnected (SmartCardReaderStatus_Disconnected) = 0, Ready (SmartCardReaderStatus_Ready) = 1, Exclusive (SmartCardReaderStatus_Exclusive) = 2,
+    Disconnected = 0, Ready = 1, Exclusive = 2,
 }}
 RT_ENUM! { enum SmartCardStatus: i32 {
-    Disconnected (SmartCardStatus_Disconnected) = 0, Ready (SmartCardStatus_Ready) = 1, Shared (SmartCardStatus_Shared) = 2, Exclusive (SmartCardStatus_Exclusive) = 3, Unresponsive (SmartCardStatus_Unresponsive) = 4,
+    Disconnected = 0, Ready = 1, Shared = 2, Exclusive = 3, Unresponsive = 4,
 }}
 DEFINE_IID!(IID_ISmartCardTriggerDetails, 1604055326, 14831, 20267, 180, 79, 10, 145, 85, 177, 119, 188);
 RT_INTERFACE!{interface ISmartCardTriggerDetails(ISmartCardTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ISmartCardTriggerDetails] {
@@ -28345,16 +28345,16 @@ impl ISmartCardTriggerDetails3 {
     }}
 }
 RT_ENUM! { enum SmartCardTriggerType: i32 {
-    EmulatorTransaction (SmartCardTriggerType_EmulatorTransaction) = 0, EmulatorNearFieldEntry (SmartCardTriggerType_EmulatorNearFieldEntry) = 1, EmulatorNearFieldExit (SmartCardTriggerType_EmulatorNearFieldExit) = 2, EmulatorHostApplicationActivated (SmartCardTriggerType_EmulatorHostApplicationActivated) = 3, EmulatorAppletIdGroupRegistrationChanged (SmartCardTriggerType_EmulatorAppletIdGroupRegistrationChanged) = 4, ReaderCardAdded (SmartCardTriggerType_ReaderCardAdded) = 5,
+    EmulatorTransaction = 0, EmulatorNearFieldEntry = 1, EmulatorNearFieldExit = 2, EmulatorHostApplicationActivated = 3, EmulatorAppletIdGroupRegistrationChanged = 4, ReaderCardAdded = 5,
 }}
 RT_ENUM! { enum SmartCardUnlockPromptingBehavior: i32 {
-    AllowUnlockPrompt (SmartCardUnlockPromptingBehavior_AllowUnlockPrompt) = 0, RequireUnlockPrompt (SmartCardUnlockPromptingBehavior_RequireUnlockPrompt) = 1, PreventUnlockPrompt (SmartCardUnlockPromptingBehavior_PreventUnlockPrompt) = 2,
+    AllowUnlockPrompt = 0, RequireUnlockPrompt = 1, PreventUnlockPrompt = 2,
 }}
 } // Windows.Devices.SmartCards
 pub mod sms { // Windows.Devices.Sms
 use ::prelude::*;
 RT_ENUM! { enum CellularClass: i32 {
-    None (CellularClass_None) = 0, Gsm (CellularClass_Gsm) = 1, Cdma (CellularClass_Cdma) = 2,
+    None = 0, Gsm = 1, Cdma = 2,
 }}
 RT_CLASS!{class DeleteSmsMessageOperation: foundation::IAsyncAction}
 RT_CLASS!{class DeleteSmsMessagesOperation: foundation::IAsyncAction}
@@ -28589,10 +28589,10 @@ impl ISmsBroadcastMessage {
 }
 RT_CLASS!{class SmsBroadcastMessage: ISmsBroadcastMessage}
 RT_ENUM! { enum SmsBroadcastType: i32 {
-    Other (SmsBroadcastType_Other) = 0, CmasPresidential (SmsBroadcastType_CmasPresidential) = 1, CmasExtreme (SmsBroadcastType_CmasExtreme) = 2, CmasSevere (SmsBroadcastType_CmasSevere) = 3, CmasAmber (SmsBroadcastType_CmasAmber) = 4, CmasTest (SmsBroadcastType_CmasTest) = 5, EUAlert1 (SmsBroadcastType_EUAlert1) = 6, EUAlert2 (SmsBroadcastType_EUAlert2) = 7, EUAlert3 (SmsBroadcastType_EUAlert3) = 8, EUAlertAmber (SmsBroadcastType_EUAlertAmber) = 9, EUAlertInfo (SmsBroadcastType_EUAlertInfo) = 10, EtwsEarthquake (SmsBroadcastType_EtwsEarthquake) = 11, EtwsTsunami (SmsBroadcastType_EtwsTsunami) = 12, EtwsTsunamiAndEarthquake (SmsBroadcastType_EtwsTsunamiAndEarthquake) = 13, LatAlertLocal (SmsBroadcastType_LatAlertLocal) = 14,
+    Other = 0, CmasPresidential = 1, CmasExtreme = 2, CmasSevere = 3, CmasAmber = 4, CmasTest = 5, EUAlert1 = 6, EUAlert2 = 7, EUAlert3 = 8, EUAlertAmber = 9, EUAlertInfo = 10, EtwsEarthquake = 11, EtwsTsunami = 12, EtwsTsunamiAndEarthquake = 13, LatAlertLocal = 14,
 }}
 RT_ENUM! { enum SmsDataFormat: i32 {
-    Unknown (SmsDataFormat_Unknown) = 0, CdmaSubmit (SmsDataFormat_CdmaSubmit) = 1, GsmSubmit (SmsDataFormat_GsmSubmit) = 2, CdmaDeliver (SmsDataFormat_CdmaDeliver) = 3, GsmDeliver (SmsDataFormat_GsmDeliver) = 4,
+    Unknown = 0, CdmaSubmit = 1, GsmSubmit = 2, CdmaDeliver = 3, GsmDeliver = 4,
 }}
 DEFINE_IID!(IID_ISmsDevice, 152539629, 34603, 20204, 156, 114, 171, 17, 98, 123, 52, 236);
 RT_INTERFACE!{interface ISmsDevice(ISmsDeviceVtbl): IInspectable(IInspectableVtbl) [IID_ISmsDevice] {
@@ -28861,7 +28861,7 @@ impl ISmsDeviceStatics2 {
     }}
 }
 RT_ENUM! { enum SmsDeviceStatus: i32 {
-    Off (SmsDeviceStatus_Off) = 0, Ready (SmsDeviceStatus_Ready) = 1, SimNotInserted (SmsDeviceStatus_SimNotInserted) = 2, BadSim (SmsDeviceStatus_BadSim) = 3, DeviceFailure (SmsDeviceStatus_DeviceFailure) = 4, SubscriptionNotActivated (SmsDeviceStatus_SubscriptionNotActivated) = 5, DeviceLocked (SmsDeviceStatus_DeviceLocked) = 6, DeviceBlocked (SmsDeviceStatus_DeviceBlocked) = 7,
+    Off = 0, Ready = 1, SimNotInserted = 2, BadSim = 3, DeviceFailure = 4, SubscriptionNotActivated = 5, DeviceLocked = 6, DeviceBlocked = 7,
 }}
 DEFINE_IID!(IID_SmsDeviceStatusChangedEventHandler, 2552959330, 15831, 17944, 175, 137, 12, 39, 45, 93, 6, 216);
 RT_DELEGATE!{delegate SmsDeviceStatusChangedEventHandler(SmsDeviceStatusChangedEventHandlerVtbl, SmsDeviceStatusChangedEventHandlerImpl) [IID_SmsDeviceStatusChangedEventHandler] {
@@ -28877,10 +28877,10 @@ RT_STRUCT! { struct SmsEncodedLength {
     SegmentCount: u32, CharacterCountLastSegment: u32, CharactersPerSegment: u32, ByteCountLastSegment: u32, BytesPerSegment: u32,
 }}
 RT_ENUM! { enum SmsEncoding: i32 {
-    Unknown (SmsEncoding_Unknown) = 0, Optimal (SmsEncoding_Optimal) = 1, SevenBitAscii (SmsEncoding_SevenBitAscii) = 2, Unicode (SmsEncoding_Unicode) = 3, GsmSevenBit (SmsEncoding_GsmSevenBit) = 4, EightBit (SmsEncoding_EightBit) = 5, Latin (SmsEncoding_Latin) = 6, Korean (SmsEncoding_Korean) = 7, IA5 (SmsEncoding_IA5) = 8, ShiftJis (SmsEncoding_ShiftJis) = 9, LatinHebrew (SmsEncoding_LatinHebrew) = 10,
+    Unknown = 0, Optimal = 1, SevenBitAscii = 2, Unicode = 3, GsmSevenBit = 4, EightBit = 5, Latin = 6, Korean = 7, IA5 = 8, ShiftJis = 9, LatinHebrew = 10,
 }}
 RT_ENUM! { enum SmsFilterActionType: i32 {
-    AcceptImmediately (SmsFilterActionType_AcceptImmediately) = 0, Drop (SmsFilterActionType_Drop) = 1, Peek (SmsFilterActionType_Peek) = 2, Accept (SmsFilterActionType_Accept) = 3,
+    AcceptImmediately = 0, Drop = 1, Peek = 2, Accept = 3,
 }}
 DEFINE_IID!(IID_ISmsFilterRule, 1088630702, 45129, 20412, 175, 233, 226, 166, 16, 239, 245, 92);
 RT_INTERFACE!{interface ISmsFilterRule(ISmsFilterRuleVtbl): IInspectable(IInspectableVtbl) [IID_ISmsFilterRule] {
@@ -29026,7 +29026,7 @@ impl ISmsFilterRulesFactory {
     }}
 }
 RT_ENUM! { enum SmsGeographicalScope: i32 {
-    None (SmsGeographicalScope_None) = 0, CellWithImmediateDisplay (SmsGeographicalScope_CellWithImmediateDisplay) = 1, LocationArea (SmsGeographicalScope_LocationArea) = 2, Plmn (SmsGeographicalScope_Plmn) = 3, Cell (SmsGeographicalScope_Cell) = 4,
+    None = 0, CellWithImmediateDisplay = 1, LocationArea = 2, Plmn = 3, Cell = 4,
 }}
 DEFINE_IID!(IID_ISmsMessage, 3980156456, 27012, 19207, 129, 29, 141, 89, 6, 237, 60, 234);
 RT_INTERFACE!{interface ISmsMessage(ISmsMessageVtbl): IInspectable(IInspectableVtbl) [IID_ISmsMessage] {
@@ -29081,10 +29081,10 @@ impl ISmsMessageBase {
     }}
 }
 RT_ENUM! { enum SmsMessageClass: i32 {
-    None (SmsMessageClass_None) = 0, Class0 (SmsMessageClass_Class0) = 1, Class1 (SmsMessageClass_Class1) = 2, Class2 (SmsMessageClass_Class2) = 3, Class3 (SmsMessageClass_Class3) = 4,
+    None = 0, Class0 = 1, Class1 = 2, Class2 = 3, Class3 = 4,
 }}
 RT_ENUM! { enum SmsMessageFilter: i32 {
-    All (SmsMessageFilter_All) = 0, Unread (SmsMessageFilter_Unread) = 1, Read (SmsMessageFilter_Read) = 2, Sent (SmsMessageFilter_Sent) = 3, Draft (SmsMessageFilter_Draft) = 4,
+    All = 0, Unread = 1, Read = 2, Sent = 3, Draft = 4,
 }}
 DEFINE_IID!(IID_ISmsMessageReceivedEventArgs, 149424792, 47333, 16833, 163, 216, 211, 171, 250, 226, 38, 117);
 RT_INTERFACE!{interface ISmsMessageReceivedEventArgs(ISmsMessageReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsMessageReceivedEventArgs] {
@@ -29228,10 +29228,10 @@ impl ISmsMessageRegistrationStatics {
     }}
 }
 RT_ENUM! { enum SmsMessageType: i32 {
-    Binary (SmsMessageType_Binary) = 0, Text (SmsMessageType_Text) = 1, Wap (SmsMessageType_Wap) = 2, App (SmsMessageType_App) = 3, Broadcast (SmsMessageType_Broadcast) = 4, Voicemail (SmsMessageType_Voicemail) = 5, Status (SmsMessageType_Status) = 6,
+    Binary = 0, Text = 1, Wap = 2, App = 3, Broadcast = 4, Voicemail = 5, Status = 6,
 }}
 RT_ENUM! { enum SmsModemErrorCode: i32 {
-    Other (SmsModemErrorCode_Other) = 0, MessagingNetworkError (SmsModemErrorCode_MessagingNetworkError) = 1, SmsOperationNotSupportedByDevice (SmsModemErrorCode_SmsOperationNotSupportedByDevice) = 2, SmsServiceNotSupportedByNetwork (SmsModemErrorCode_SmsServiceNotSupportedByNetwork) = 3, DeviceFailure (SmsModemErrorCode_DeviceFailure) = 4, MessageNotEncodedProperly (SmsModemErrorCode_MessageNotEncodedProperly) = 5, MessageTooLarge (SmsModemErrorCode_MessageTooLarge) = 6, DeviceNotReady (SmsModemErrorCode_DeviceNotReady) = 7, NetworkNotReady (SmsModemErrorCode_NetworkNotReady) = 8, InvalidSmscAddress (SmsModemErrorCode_InvalidSmscAddress) = 9, NetworkFailure (SmsModemErrorCode_NetworkFailure) = 10, FixedDialingNumberRestricted (SmsModemErrorCode_FixedDialingNumberRestricted) = 11,
+    Other = 0, MessagingNetworkError = 1, SmsOperationNotSupportedByDevice = 2, SmsServiceNotSupportedByNetwork = 3, DeviceFailure = 4, MessageNotEncodedProperly = 5, MessageTooLarge = 6, DeviceNotReady = 7, NetworkNotReady = 8, InvalidSmscAddress = 9, NetworkFailure = 10, FixedDialingNumberRestricted = 11,
 }}
 DEFINE_IID!(IID_ISmsReceivedEventDetails, 1538592533, 58477, 19586, 132, 125, 90, 3, 4, 193, 213, 61);
 RT_INTERFACE!{interface ISmsReceivedEventDetails(ISmsReceivedEventDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ISmsReceivedEventDetails] {
@@ -29884,10 +29884,10 @@ impl ISpiDeviceStatics {
     }}
 }
 RT_ENUM! { enum SpiMode: i32 {
-    Mode0 (SpiMode_Mode0) = 0, Mode1 (SpiMode_Mode1) = 1, Mode2 (SpiMode_Mode2) = 2, Mode3 (SpiMode_Mode3) = 3,
+    Mode0 = 0, Mode1 = 1, Mode2 = 2, Mode3 = 3,
 }}
 RT_ENUM! { enum SpiSharingMode: i32 {
-    Exclusive (SpiSharingMode_Exclusive) = 0, Shared (SpiSharingMode_Shared) = 1,
+    Exclusive = 0, Shared = 1,
 }}
 pub mod provider { // Windows.Devices.Spi.Provider
 use ::prelude::*;
@@ -29971,10 +29971,10 @@ impl IProviderSpiConnectionSettingsFactory {
     }}
 }
 RT_ENUM! { enum ProviderSpiMode: i32 {
-    Mode0 (ProviderSpiMode_Mode0) = 0, Mode1 (ProviderSpiMode_Mode1) = 1, Mode2 (ProviderSpiMode_Mode2) = 2, Mode3 (ProviderSpiMode_Mode3) = 3,
+    Mode0 = 0, Mode1 = 1, Mode2 = 2, Mode3 = 3,
 }}
 RT_ENUM! { enum ProviderSpiSharingMode: i32 {
-    Exclusive (ProviderSpiSharingMode_Exclusive) = 0, Shared (ProviderSpiSharingMode_Shared) = 1,
+    Exclusive = 0, Shared = 1,
 }}
 DEFINE_IID!(IID_ISpiControllerProvider, 3244844292, 718, 16934, 163, 133, 79, 17, 251, 4, 180, 27);
 RT_INTERFACE!{interface ISpiControllerProvider(ISpiControllerProviderVtbl): IInspectable(IInspectableVtbl) [IID_ISpiControllerProvider] {
@@ -30250,7 +30250,7 @@ impl IUsbConfigurationDescriptorStatics {
     }}
 }
 RT_ENUM! { enum UsbControlRecipient: i32 {
-    Device (UsbControlRecipient_Device) = 0, SpecifiedInterface (UsbControlRecipient_SpecifiedInterface) = 1, Endpoint (UsbControlRecipient_Endpoint) = 2, Other (UsbControlRecipient_Other) = 3, DefaultInterface (UsbControlRecipient_DefaultInterface) = 4,
+    Device = 0, SpecifiedInterface = 1, Endpoint = 2, Other = 3, DefaultInterface = 4,
 }}
 DEFINE_IID!(IID_IUsbControlRequestType, 2392090022, 55101, 18142, 148, 190, 170, 231, 240, 124, 15, 92);
 RT_INTERFACE!{interface IUsbControlRequestType(IUsbControlRequestTypeVtbl): IInspectable(IInspectableVtbl) [IID_IUsbControlRequestType] {
@@ -30305,7 +30305,7 @@ RT_CLASS!{class UsbControlRequestType: IUsbControlRequestType}
 impl RtActivatable<IActivationFactory> for UsbControlRequestType {}
 DEFINE_CLSID!(UsbControlRequestType(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,85,115,98,46,85,115,98,67,111,110,116,114,111,108,82,101,113,117,101,115,116,84,121,112,101,0]) [CLSID_UsbControlRequestType]);
 RT_ENUM! { enum UsbControlTransferType: i32 {
-    Standard (UsbControlTransferType_Standard) = 0, Class (UsbControlTransferType_Class) = 1, Vendor (UsbControlTransferType_Vendor) = 2,
+    Standard = 0, Class = 1, Vendor = 2,
 }}
 DEFINE_IID!(IID_IUsbDescriptor, 176812566, 24477, 18548, 137, 4, 218, 154, 211, 245, 82, 143);
 RT_INTERFACE!{interface IUsbDescriptor(IUsbDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IUsbDescriptor] {
@@ -30689,7 +30689,7 @@ impl IUsbEndpointDescriptorStatics {
     }}
 }
 RT_ENUM! { enum UsbEndpointType: i32 {
-    Control (UsbEndpointType_Control) = 0, Isochronous (UsbEndpointType_Isochronous) = 1, Bulk (UsbEndpointType_Bulk) = 2, Interrupt (UsbEndpointType_Interrupt) = 3,
+    Control = 0, Isochronous = 1, Bulk = 2, Interrupt = 3,
 }}
 DEFINE_IID!(IID_IUsbInterface, 2687642517, 32583, 18603, 167, 39, 103, 140, 37, 190, 33, 18);
 RT_INTERFACE!{interface IUsbInterface(IUsbInterfaceVtbl): IInspectable(IInspectableVtbl) [IID_IUsbInterface] {
@@ -30993,7 +30993,7 @@ impl IUsbInterruptOutPipe {
 }
 RT_CLASS!{class UsbInterruptOutPipe: IUsbInterruptOutPipe}
 RT_ENUM! { enum UsbReadOptions: u32 {
-    None (UsbReadOptions_None) = 0, AutoClearStall (UsbReadOptions_AutoClearStall) = 1, OverrideAutomaticBufferManagement (UsbReadOptions_OverrideAutomaticBufferManagement) = 2, IgnoreShortPacket (UsbReadOptions_IgnoreShortPacket) = 4, AllowPartialReads (UsbReadOptions_AllowPartialReads) = 8,
+    None = 0, AutoClearStall = 1, OverrideAutomaticBufferManagement = 2, IgnoreShortPacket = 4, AllowPartialReads = 8,
 }}
 DEFINE_IID!(IID_IUsbSetupPacket, 273391922, 51087, 19537, 182, 84, 228, 157, 2, 242, 203, 3);
 RT_INTERFACE!{interface IUsbSetupPacket(IUsbSetupPacketVtbl): IInspectable(IInspectableVtbl) [IID_IUsbSetupPacket] {
@@ -31076,16 +31076,16 @@ impl IUsbSetupPacketFactory {
     }}
 }
 RT_ENUM! { enum UsbTransferDirection: i32 {
-    Out (UsbTransferDirection_Out) = 0, In (UsbTransferDirection_In) = 1,
+    Out = 0, In = 1,
 }}
 RT_ENUM! { enum UsbWriteOptions: u32 {
-    None (UsbWriteOptions_None) = 0, AutoClearStall (UsbWriteOptions_AutoClearStall) = 1, ShortPacketTerminate (UsbWriteOptions_ShortPacketTerminate) = 2,
+    None = 0, AutoClearStall = 1, ShortPacketTerminate = 2,
 }}
 } // Windows.Devices.Usb
 pub mod wifi { // Windows.Devices.WiFi
 use ::prelude::*;
 RT_ENUM! { enum WiFiAccessStatus: i32 {
-    Unspecified (WiFiAccessStatus_Unspecified) = 0, Allowed (WiFiAccessStatus_Allowed) = 1, DeniedByUser (WiFiAccessStatus_DeniedByUser) = 2, DeniedBySystem (WiFiAccessStatus_DeniedBySystem) = 3,
+    Unspecified = 0, Allowed = 1, DeniedByUser = 2, DeniedBySystem = 3,
 }}
 DEFINE_IID!(IID_IWiFiAdapter, 2797921315, 15733, 17316, 185, 222, 17, 226, 107, 114, 217, 176);
 RT_INTERFACE!{interface IWiFiAdapter(IWiFiAdapterVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiAdapter] {
@@ -31284,7 +31284,7 @@ impl IWiFiAvailableNetwork {
 }
 RT_CLASS!{class WiFiAvailableNetwork: IWiFiAvailableNetwork}
 RT_ENUM! { enum WiFiConnectionMethod: i32 {
-    Default (WiFiConnectionMethod_Default) = 0, WpsPin (WiFiConnectionMethod_WpsPin) = 1, WpsPushButton (WiFiConnectionMethod_WpsPushButton) = 2,
+    Default = 0, WpsPin = 1, WpsPushButton = 2,
 }}
 DEFINE_IID!(IID_IWiFiConnectionResult, 339468249, 50045, 16574, 165, 200, 133, 123, 206, 133, 169, 49);
 RT_INTERFACE!{interface IWiFiConnectionResult(IWiFiConnectionResultVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiConnectionResult] {
@@ -31299,10 +31299,10 @@ impl IWiFiConnectionResult {
 }
 RT_CLASS!{class WiFiConnectionResult: IWiFiConnectionResult}
 RT_ENUM! { enum WiFiConnectionStatus: i32 {
-    UnspecifiedFailure (WiFiConnectionStatus_UnspecifiedFailure) = 0, Success (WiFiConnectionStatus_Success) = 1, AccessRevoked (WiFiConnectionStatus_AccessRevoked) = 2, InvalidCredential (WiFiConnectionStatus_InvalidCredential) = 3, NetworkNotAvailable (WiFiConnectionStatus_NetworkNotAvailable) = 4, Timeout (WiFiConnectionStatus_Timeout) = 5, UnsupportedAuthenticationProtocol (WiFiConnectionStatus_UnsupportedAuthenticationProtocol) = 6,
+    UnspecifiedFailure = 0, Success = 1, AccessRevoked = 2, InvalidCredential = 3, NetworkNotAvailable = 4, Timeout = 5, UnsupportedAuthenticationProtocol = 6,
 }}
 RT_ENUM! { enum WiFiNetworkKind: i32 {
-    Any (WiFiNetworkKind_Any) = 0, Infrastructure (WiFiNetworkKind_Infrastructure) = 1, Adhoc (WiFiNetworkKind_Adhoc) = 2,
+    Any = 0, Infrastructure = 1, Adhoc = 2,
 }}
 DEFINE_IID!(IID_IWiFiNetworkReport, 2502221522, 22801, 17502, 129, 148, 190, 79, 26, 112, 72, 149);
 RT_INTERFACE!{interface IWiFiNetworkReport(IWiFiNetworkReportVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiNetworkReport] {
@@ -31323,10 +31323,10 @@ impl IWiFiNetworkReport {
 }
 RT_CLASS!{class WiFiNetworkReport: IWiFiNetworkReport}
 RT_ENUM! { enum WiFiPhyKind: i32 {
-    Unknown (WiFiPhyKind_Unknown) = 0, Fhss (WiFiPhyKind_Fhss) = 1, Dsss (WiFiPhyKind_Dsss) = 2, IRBaseband (WiFiPhyKind_IRBaseband) = 3, Ofdm (WiFiPhyKind_Ofdm) = 4, Hrdsss (WiFiPhyKind_Hrdsss) = 5, Erp (WiFiPhyKind_Erp) = 6, HT (WiFiPhyKind_HT) = 7, Vht (WiFiPhyKind_Vht) = 8, Dmg (WiFiPhyKind_Dmg) = 9, HE (WiFiPhyKind_HE) = 10,
+    Unknown = 0, Fhss = 1, Dsss = 2, IRBaseband = 3, Ofdm = 4, Hrdsss = 5, Erp = 6, HT = 7, Vht = 8, Dmg = 9, HE = 10,
 }}
 RT_ENUM! { enum WiFiReconnectionKind: i32 {
-    Automatic (WiFiReconnectionKind_Automatic) = 0, Manual (WiFiReconnectionKind_Manual) = 1,
+    Automatic = 0, Manual = 1,
 }}
 DEFINE_IID!(IID_IWiFiWpsConfigurationResult, 1739888753, 6126, 17105, 177, 79, 90, 17, 241, 34, 111, 181);
 RT_INTERFACE!{interface IWiFiWpsConfigurationResult(IWiFiWpsConfigurationResultVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiWpsConfigurationResult] {
@@ -31347,10 +31347,10 @@ impl IWiFiWpsConfigurationResult {
 }
 RT_CLASS!{class WiFiWpsConfigurationResult: IWiFiWpsConfigurationResult}
 RT_ENUM! { enum WiFiWpsConfigurationStatus: i32 {
-    UnspecifiedFailure (WiFiWpsConfigurationStatus_UnspecifiedFailure) = 0, Success (WiFiWpsConfigurationStatus_Success) = 1, Timeout (WiFiWpsConfigurationStatus_Timeout) = 2,
+    UnspecifiedFailure = 0, Success = 1, Timeout = 2,
 }}
 RT_ENUM! { enum WiFiWpsKind: i32 {
-    Unknown (WiFiWpsKind_Unknown) = 0, Pin (WiFiWpsKind_Pin) = 1, PushButton (WiFiWpsKind_PushButton) = 2, Nfc (WiFiWpsKind_Nfc) = 3, Ethernet (WiFiWpsKind_Ethernet) = 4, Usb (WiFiWpsKind_Usb) = 5,
+    Unknown = 0, Pin = 1, PushButton = 2, Nfc = 3, Ethernet = 4, Usb = 5,
 }}
 } // Windows.Devices.WiFi
 pub mod wifidirect { // Windows.Devices.WiFiDirect
@@ -31412,7 +31412,7 @@ impl IWiFiDirectAdvertisement2 {
     }}
 }
 RT_ENUM! { enum WiFiDirectAdvertisementListenStateDiscoverability: i32 {
-    None (WiFiDirectAdvertisementListenStateDiscoverability_None) = 0, Normal (WiFiDirectAdvertisementListenStateDiscoverability_Normal) = 1, Intensive (WiFiDirectAdvertisementListenStateDiscoverability_Intensive) = 2,
+    None = 0, Normal = 1, Intensive = 2,
 }}
 DEFINE_IID!(IID_IWiFiDirectAdvertisementPublisher, 3009031450, 39711, 17881, 146, 90, 105, 77, 102, 223, 104, 239);
 RT_INTERFACE!{interface IWiFiDirectAdvertisementPublisher(IWiFiDirectAdvertisementPublisherVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectAdvertisementPublisher] {
@@ -31456,7 +31456,7 @@ RT_CLASS!{class WiFiDirectAdvertisementPublisher: IWiFiDirectAdvertisementPublis
 impl RtActivatable<IActivationFactory> for WiFiDirectAdvertisementPublisher {}
 DEFINE_CLSID!(WiFiDirectAdvertisementPublisher(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,87,105,70,105,68,105,114,101,99,116,65,100,118,101,114,116,105,115,101,109,101,110,116,80,117,98,108,105,115,104,101,114,0]) [CLSID_WiFiDirectAdvertisementPublisher]);
 RT_ENUM! { enum WiFiDirectAdvertisementPublisherStatus: i32 {
-    Created (WiFiDirectAdvertisementPublisherStatus_Created) = 0, Started (WiFiDirectAdvertisementPublisherStatus_Started) = 1, Stopped (WiFiDirectAdvertisementPublisherStatus_Stopped) = 2, Aborted (WiFiDirectAdvertisementPublisherStatus_Aborted) = 3,
+    Created = 0, Started = 1, Stopped = 2, Aborted = 3,
 }}
 DEFINE_IID!(IID_IWiFiDirectAdvertisementPublisherStatusChangedEventArgs, 2868766012, 21633, 18150, 144, 221, 50, 17, 101, 24, 241, 146);
 RT_INTERFACE!{interface IWiFiDirectAdvertisementPublisherStatusChangedEventArgs(IWiFiDirectAdvertisementPublisherStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectAdvertisementPublisherStatusChangedEventArgs] {
@@ -31477,7 +31477,7 @@ impl IWiFiDirectAdvertisementPublisherStatusChangedEventArgs {
 }
 RT_CLASS!{class WiFiDirectAdvertisementPublisherStatusChangedEventArgs: IWiFiDirectAdvertisementPublisherStatusChangedEventArgs}
 RT_ENUM! { enum WiFiDirectConfigurationMethod: i32 {
-    ProvidePin (WiFiDirectConfigurationMethod_ProvidePin) = 0, DisplayPin (WiFiDirectConfigurationMethod_DisplayPin) = 1, PushButton (WiFiDirectConfigurationMethod_PushButton) = 2,
+    ProvidePin = 0, DisplayPin = 1, PushButton = 2,
 }}
 DEFINE_IID!(IID_IWiFiDirectConnectionListener, 1771838221, 36115, 20201, 185, 236, 156, 114, 248, 37, 31, 125);
 RT_INTERFACE!{interface IWiFiDirectConnectionListener(IWiFiDirectConnectionListenerVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectConnectionListener] {
@@ -31581,7 +31581,7 @@ impl IWiFiDirectConnectionRequestedEventArgs {
 }
 RT_CLASS!{class WiFiDirectConnectionRequestedEventArgs: IWiFiDirectConnectionRequestedEventArgs}
 RT_ENUM! { enum WiFiDirectConnectionStatus: i32 {
-    Disconnected (WiFiDirectConnectionStatus_Disconnected) = 0, Connected (WiFiDirectConnectionStatus_Connected) = 1,
+    Disconnected = 0, Connected = 1,
 }}
 DEFINE_IID!(IID_IWiFiDirectDevice, 1927195304, 29419, 19886, 138, 40, 133, 19, 53, 93, 39, 119);
 RT_INTERFACE!{interface IWiFiDirectDevice(IWiFiDirectDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectDevice] {
@@ -31636,7 +31636,7 @@ impl WiFiDirectDevice {
 }
 DEFINE_CLSID!(WiFiDirectDevice(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,87,105,70,105,68,105,114,101,99,116,68,101,118,105,99,101,0]) [CLSID_WiFiDirectDevice]);
 RT_ENUM! { enum WiFiDirectDeviceSelectorType: i32 {
-    DeviceInterface (WiFiDirectDeviceSelectorType_DeviceInterface) = 0, AssociationEndpoint (WiFiDirectDeviceSelectorType_AssociationEndpoint) = 1,
+    DeviceInterface = 0, AssociationEndpoint = 1,
 }}
 DEFINE_IID!(IID_IWiFiDirectDeviceStatics, 3899438460, 15020, 18513, 167, 146, 72, 42, 175, 147, 27, 4);
 RT_INTERFACE!{static interface IWiFiDirectDeviceStatics(IWiFiDirectDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectDeviceStatics] {
@@ -31673,7 +31673,7 @@ impl IWiFiDirectDeviceStatics2 {
     }}
 }
 RT_ENUM! { enum WiFiDirectError: i32 {
-    Success (WiFiDirectError_Success) = 0, RadioNotAvailable (WiFiDirectError_RadioNotAvailable) = 1, ResourceInUse (WiFiDirectError_ResourceInUse) = 2,
+    Success = 0, RadioNotAvailable = 1, ResourceInUse = 2,
 }}
 DEFINE_IID!(IID_IWiFiDirectInformationElement, 2952491734, 30395, 18814, 172, 139, 220, 114, 131, 139, 195, 9);
 RT_INTERFACE!{interface IWiFiDirectInformationElement(IWiFiDirectInformationElementVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectInformationElement] {
@@ -31783,7 +31783,7 @@ impl IWiFiDirectLegacySettings {
 }
 RT_CLASS!{class WiFiDirectLegacySettings: IWiFiDirectLegacySettings}
 RT_ENUM! { enum WiFiDirectPairingProcedure: i32 {
-    GroupOwnerNegotiation (WiFiDirectPairingProcedure_GroupOwnerNegotiation) = 0, Invitation (WiFiDirectPairingProcedure_Invitation) = 1,
+    GroupOwnerNegotiation = 0, Invitation = 1,
 }}
 pub mod services { // Windows.Devices.WiFiDirect.Services
 use ::prelude::*;
@@ -31879,7 +31879,7 @@ impl WiFiDirectService {
 }
 DEFINE_CLSID!(WiFiDirectService(&[87,105,110,100,111,119,115,46,68,101,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,46,83,101,114,118,105,99,101,115,46,87,105,70,105,68,105,114,101,99,116,83,101,114,118,105,99,101,0]) [CLSID_WiFiDirectService]);
 RT_ENUM! { enum WiFiDirectServiceAdvertisementStatus: i32 {
-    Created (WiFiDirectServiceAdvertisementStatus_Created) = 0, Started (WiFiDirectServiceAdvertisementStatus_Started) = 1, Stopped (WiFiDirectServiceAdvertisementStatus_Stopped) = 2, Aborted (WiFiDirectServiceAdvertisementStatus_Aborted) = 3,
+    Created = 0, Started = 1, Stopped = 2, Aborted = 3,
 }}
 DEFINE_IID!(IID_IWiFiDirectServiceAdvertiser, 2762612449, 40335, 20303, 147, 238, 125, 222, 162, 227, 127, 70);
 RT_INTERFACE!{interface IWiFiDirectServiceAdvertiser(IWiFiDirectServiceAdvertiserVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceAdvertiser] {
@@ -32079,13 +32079,13 @@ impl IWiFiDirectServiceAutoAcceptSessionConnectedEventArgs {
 }
 RT_CLASS!{class WiFiDirectServiceAutoAcceptSessionConnectedEventArgs: IWiFiDirectServiceAutoAcceptSessionConnectedEventArgs}
 RT_ENUM! { enum WiFiDirectServiceConfigurationMethod: i32 {
-    Default (WiFiDirectServiceConfigurationMethod_Default) = 0, PinDisplay (WiFiDirectServiceConfigurationMethod_PinDisplay) = 1, PinEntry (WiFiDirectServiceConfigurationMethod_PinEntry) = 2,
+    Default = 0, PinDisplay = 1, PinEntry = 2,
 }}
 RT_ENUM! { enum WiFiDirectServiceError: i32 {
-    Success (WiFiDirectServiceError_Success) = 0, RadioNotAvailable (WiFiDirectServiceError_RadioNotAvailable) = 1, ResourceInUse (WiFiDirectServiceError_ResourceInUse) = 2, UnsupportedHardware (WiFiDirectServiceError_UnsupportedHardware) = 3, NoHardware (WiFiDirectServiceError_NoHardware) = 4,
+    Success = 0, RadioNotAvailable = 1, ResourceInUse = 2, UnsupportedHardware = 3, NoHardware = 4,
 }}
 RT_ENUM! { enum WiFiDirectServiceIPProtocol: i32 {
-    Tcp (WiFiDirectServiceIPProtocol_Tcp) = 6, Udp (WiFiDirectServiceIPProtocol_Udp) = 17,
+    Tcp = 6, Udp = 17,
 }}
 DEFINE_IID!(IID_IWiFiDirectServiceProvisioningInfo, 2346417406, 38873, 17826, 142, 153, 219, 80, 145, 15, 182, 166);
 RT_INTERFACE!{interface IWiFiDirectServiceProvisioningInfo(IWiFiDirectServiceProvisioningInfoVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceProvisioningInfo] {
@@ -32228,7 +32228,7 @@ impl IWiFiDirectServiceSessionDeferredEventArgs {
 }
 RT_CLASS!{class WiFiDirectServiceSessionDeferredEventArgs: IWiFiDirectServiceSessionDeferredEventArgs}
 RT_ENUM! { enum WiFiDirectServiceSessionErrorStatus: i32 {
-    Ok (WiFiDirectServiceSessionErrorStatus_Ok) = 0, Disassociated (WiFiDirectServiceSessionErrorStatus_Disassociated) = 1, LocalClose (WiFiDirectServiceSessionErrorStatus_LocalClose) = 2, RemoteClose (WiFiDirectServiceSessionErrorStatus_RemoteClose) = 3, SystemFailure (WiFiDirectServiceSessionErrorStatus_SystemFailure) = 4, NoResponseFromRemote (WiFiDirectServiceSessionErrorStatus_NoResponseFromRemote) = 5,
+    Ok = 0, Disassociated = 1, LocalClose = 2, RemoteClose = 3, SystemFailure = 4, NoResponseFromRemote = 5,
 }}
 DEFINE_IID!(IID_IWiFiDirectServiceSessionRequest, 2699197579, 20683, 19032, 155, 207, 228, 114, 185, 159, 186, 4);
 RT_INTERFACE!{interface IWiFiDirectServiceSessionRequest(IWiFiDirectServiceSessionRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceSessionRequest] {
@@ -32267,7 +32267,7 @@ impl IWiFiDirectServiceSessionRequestedEventArgs {
 }
 RT_CLASS!{class WiFiDirectServiceSessionRequestedEventArgs: IWiFiDirectServiceSessionRequestedEventArgs}
 RT_ENUM! { enum WiFiDirectServiceSessionStatus: i32 {
-    Closed (WiFiDirectServiceSessionStatus_Closed) = 0, Initiated (WiFiDirectServiceSessionStatus_Initiated) = 1, Requested (WiFiDirectServiceSessionStatus_Requested) = 2, Open (WiFiDirectServiceSessionStatus_Open) = 3,
+    Closed = 0, Initiated = 1, Requested = 2, Open = 3,
 }}
 DEFINE_IID!(IID_IWiFiDirectServiceStatics, 2108948549, 64884, 18056, 183, 37, 93, 206, 134, 172, 242, 51);
 RT_INTERFACE!{static interface IWiFiDirectServiceStatics(IWiFiDirectServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWiFiDirectServiceStatics] {
@@ -32294,7 +32294,7 @@ impl IWiFiDirectServiceStatics {
     }}
 }
 RT_ENUM! { enum WiFiDirectServiceStatus: i32 {
-    Available (WiFiDirectServiceStatus_Available) = 0, Busy (WiFiDirectServiceStatus_Busy) = 1, Custom (WiFiDirectServiceStatus_Custom) = 2,
+    Available = 0, Busy = 1, Custom = 2,
 }}
 } // Windows.Devices.WiFiDirect.Services
 } // Windows.Devices.WiFiDirect

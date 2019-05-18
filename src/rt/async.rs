@@ -47,7 +47,7 @@ macro_rules! impl_blocking_wait {
             let info = ::comptr::query_interface::<_, IAsyncInfo>(self).expect("query_interface failed");
             let status = info.get_status().expect("get_status failed");
 
-            if status == ::langcompat::ASYNC_STATUS_COMPLETED {
+            if status == ::windows::foundation::AsyncStatus::Completed {
                 return;
             }
             

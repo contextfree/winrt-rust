@@ -143,7 +143,7 @@ impl MicrosoftAccountMultiFactorAuthenticationManager {
 }
 DEFINE_CLSID!(MicrosoftAccountMultiFactorAuthenticationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,67,111,114,101,46,77,105,99,114,111,115,111,102,116,65,99,99,111,117,110,116,77,117,108,116,105,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MicrosoftAccountMultiFactorAuthenticationManager]);
 RT_ENUM! { enum MicrosoftAccountMultiFactorAuthenticationType: i32 {
-    User (MicrosoftAccountMultiFactorAuthenticationType_User) = 0, Device (MicrosoftAccountMultiFactorAuthenticationType_Device) = 1,
+    User = 0, Device = 1,
 }}
 DEFINE_IID!(IID_IMicrosoftAccountMultiFactorAuthenticatorStatics, 3647259366, 62534, 19569, 139, 121, 110, 164, 2, 74, 169, 184);
 RT_INTERFACE!{static interface IMicrosoftAccountMultiFactorAuthenticatorStatics(IMicrosoftAccountMultiFactorAuthenticatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorAuthenticatorStatics] {
@@ -205,13 +205,13 @@ impl IMicrosoftAccountMultiFactorOneTimeCodedInfo {
 }
 RT_CLASS!{class MicrosoftAccountMultiFactorOneTimeCodedInfo: IMicrosoftAccountMultiFactorOneTimeCodedInfo}
 RT_ENUM! { enum MicrosoftAccountMultiFactorServiceResponse: i32 {
-    Success (MicrosoftAccountMultiFactorServiceResponse_Success) = 0, Error (MicrosoftAccountMultiFactorServiceResponse_Error) = 1, NoNetworkConnection (MicrosoftAccountMultiFactorServiceResponse_NoNetworkConnection) = 2, ServiceUnavailable (MicrosoftAccountMultiFactorServiceResponse_ServiceUnavailable) = 3, TotpSetupDenied (MicrosoftAccountMultiFactorServiceResponse_TotpSetupDenied) = 4, NgcNotSetup (MicrosoftAccountMultiFactorServiceResponse_NgcNotSetup) = 5, SessionAlreadyDenied (MicrosoftAccountMultiFactorServiceResponse_SessionAlreadyDenied) = 6, SessionAlreadyApproved (MicrosoftAccountMultiFactorServiceResponse_SessionAlreadyApproved) = 7, SessionExpired (MicrosoftAccountMultiFactorServiceResponse_SessionExpired) = 8, NgcNonceExpired (MicrosoftAccountMultiFactorServiceResponse_NgcNonceExpired) = 9, InvalidSessionId (MicrosoftAccountMultiFactorServiceResponse_InvalidSessionId) = 10, InvalidSessionType (MicrosoftAccountMultiFactorServiceResponse_InvalidSessionType) = 11, InvalidOperation (MicrosoftAccountMultiFactorServiceResponse_InvalidOperation) = 12, InvalidStateTransition (MicrosoftAccountMultiFactorServiceResponse_InvalidStateTransition) = 13, DeviceNotFound (MicrosoftAccountMultiFactorServiceResponse_DeviceNotFound) = 14, FlowDisabled (MicrosoftAccountMultiFactorServiceResponse_FlowDisabled) = 15, SessionNotApproved (MicrosoftAccountMultiFactorServiceResponse_SessionNotApproved) = 16, OperationCanceledByUser (MicrosoftAccountMultiFactorServiceResponse_OperationCanceledByUser) = 17, NgcDisabledByServer (MicrosoftAccountMultiFactorServiceResponse_NgcDisabledByServer) = 18, NgcKeyNotFoundOnServer (MicrosoftAccountMultiFactorServiceResponse_NgcKeyNotFoundOnServer) = 19, UIRequired (MicrosoftAccountMultiFactorServiceResponse_UIRequired) = 20, DeviceIdChanged (MicrosoftAccountMultiFactorServiceResponse_DeviceIdChanged) = 21,
+    Success = 0, Error = 1, NoNetworkConnection = 2, ServiceUnavailable = 3, TotpSetupDenied = 4, NgcNotSetup = 5, SessionAlreadyDenied = 6, SessionAlreadyApproved = 7, SessionExpired = 8, NgcNonceExpired = 9, InvalidSessionId = 10, InvalidSessionType = 11, InvalidOperation = 12, InvalidStateTransition = 13, DeviceNotFound = 14, FlowDisabled = 15, SessionNotApproved = 16, OperationCanceledByUser = 17, NgcDisabledByServer = 18, NgcKeyNotFoundOnServer = 19, UIRequired = 20, DeviceIdChanged = 21,
 }}
 RT_ENUM! { enum MicrosoftAccountMultiFactorSessionApprovalStatus: i32 {
-    Pending (MicrosoftAccountMultiFactorSessionApprovalStatus_Pending) = 0, Approved (MicrosoftAccountMultiFactorSessionApprovalStatus_Approved) = 1, Denied (MicrosoftAccountMultiFactorSessionApprovalStatus_Denied) = 2,
+    Pending = 0, Approved = 1, Denied = 2,
 }}
 RT_ENUM! { enum MicrosoftAccountMultiFactorSessionAuthenticationStatus: i32 {
-    Authenticated (MicrosoftAccountMultiFactorSessionAuthenticationStatus_Authenticated) = 0, Unauthenticated (MicrosoftAccountMultiFactorSessionAuthenticationStatus_Unauthenticated) = 1,
+    Authenticated = 0, Unauthenticated = 1,
 }}
 DEFINE_IID!(IID_IMicrosoftAccountMultiFactorSessionInfo, 1602137012, 41592, 17973, 183, 101, 180, 148, 235, 38, 10, 244);
 RT_INTERFACE!{interface IMicrosoftAccountMultiFactorSessionInfo(IMicrosoftAccountMultiFactorSessionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorSessionInfo] {
@@ -355,7 +355,7 @@ impl SecondaryAuthenticationFactorAuthentication {
 }
 DEFINE_CLSID!(SecondaryAuthenticationFactorAuthentication(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,80,114,111,118,105,100,101,114,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,0]) [CLSID_SecondaryAuthenticationFactorAuthentication]);
 RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationMessage: i32 {
-    Invalid (SecondaryAuthenticationFactorAuthenticationMessage_Invalid) = 0, SwipeUpWelcome (SecondaryAuthenticationFactorAuthenticationMessage_SwipeUpWelcome) = 1, TapWelcome (SecondaryAuthenticationFactorAuthenticationMessage_TapWelcome) = 2, DeviceNeedsAttention (SecondaryAuthenticationFactorAuthenticationMessage_DeviceNeedsAttention) = 3, LookingForDevice (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevice) = 4, LookingForDevicePluggedin (SecondaryAuthenticationFactorAuthenticationMessage_LookingForDevicePluggedin) = 5, BluetoothIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_BluetoothIsDisabled) = 6, NfcIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_NfcIsDisabled) = 7, WiFiIsDisabled (SecondaryAuthenticationFactorAuthenticationMessage_WiFiIsDisabled) = 8, ExtraTapIsRequired (SecondaryAuthenticationFactorAuthenticationMessage_ExtraTapIsRequired) = 9, DisabledByPolicy (SecondaryAuthenticationFactorAuthenticationMessage_DisabledByPolicy) = 10, TapOnDeviceRequired (SecondaryAuthenticationFactorAuthenticationMessage_TapOnDeviceRequired) = 11, HoldFinger (SecondaryAuthenticationFactorAuthenticationMessage_HoldFinger) = 12, ScanFinger (SecondaryAuthenticationFactorAuthenticationMessage_ScanFinger) = 13, UnauthorizedUser (SecondaryAuthenticationFactorAuthenticationMessage_UnauthorizedUser) = 14, ReregisterRequired (SecondaryAuthenticationFactorAuthenticationMessage_ReregisterRequired) = 15, TryAgain (SecondaryAuthenticationFactorAuthenticationMessage_TryAgain) = 16, SayPassphrase (SecondaryAuthenticationFactorAuthenticationMessage_SayPassphrase) = 17, ReadyToSignIn (SecondaryAuthenticationFactorAuthenticationMessage_ReadyToSignIn) = 18, UseAnotherSignInOption (SecondaryAuthenticationFactorAuthenticationMessage_UseAnotherSignInOption) = 19, ConnectionRequired (SecondaryAuthenticationFactorAuthenticationMessage_ConnectionRequired) = 20, TimeLimitExceeded (SecondaryAuthenticationFactorAuthenticationMessage_TimeLimitExceeded) = 21, CanceledByUser (SecondaryAuthenticationFactorAuthenticationMessage_CanceledByUser) = 22, CenterHand (SecondaryAuthenticationFactorAuthenticationMessage_CenterHand) = 23, MoveHandCloser (SecondaryAuthenticationFactorAuthenticationMessage_MoveHandCloser) = 24, MoveHandFarther (SecondaryAuthenticationFactorAuthenticationMessage_MoveHandFarther) = 25, PlaceHandAbove (SecondaryAuthenticationFactorAuthenticationMessage_PlaceHandAbove) = 26, RecognitionFailed (SecondaryAuthenticationFactorAuthenticationMessage_RecognitionFailed) = 27, DeviceUnavailable (SecondaryAuthenticationFactorAuthenticationMessage_DeviceUnavailable) = 28,
+    Invalid = 0, SwipeUpWelcome = 1, TapWelcome = 2, DeviceNeedsAttention = 3, LookingForDevice = 4, LookingForDevicePluggedin = 5, BluetoothIsDisabled = 6, NfcIsDisabled = 7, WiFiIsDisabled = 8, ExtraTapIsRequired = 9, DisabledByPolicy = 10, TapOnDeviceRequired = 11, HoldFinger = 12, ScanFinger = 13, UnauthorizedUser = 14, ReregisterRequired = 15, TryAgain = 16, SayPassphrase = 17, ReadyToSignIn = 18, UseAnotherSignInOption = 19, ConnectionRequired = 20, TimeLimitExceeded = 21, CanceledByUser = 22, CenterHand = 23, MoveHandCloser = 24, MoveHandFarther = 25, PlaceHandAbove = 26, RecognitionFailed = 27, DeviceUnavailable = 28,
 }}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationResult, 2629523847, 61293, 19394, 191, 73, 70, 23, 81, 90, 15, 154);
 RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationResult(ISecondaryAuthenticationFactorAuthenticationResultVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationResult] {
@@ -376,10 +376,10 @@ impl ISecondaryAuthenticationFactorAuthenticationResult {
 }
 RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationResult: ISecondaryAuthenticationFactorAuthenticationResult}
 RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationScenario: i32 {
-    SignIn (SecondaryAuthenticationFactorAuthenticationScenario_SignIn) = 0, CredentialPrompt (SecondaryAuthenticationFactorAuthenticationScenario_CredentialPrompt) = 1,
+    SignIn = 0, CredentialPrompt = 1,
 }}
 RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationStage: i32 {
-    NotStarted (SecondaryAuthenticationFactorAuthenticationStage_NotStarted) = 0, WaitingForUserConfirmation (SecondaryAuthenticationFactorAuthenticationStage_WaitingForUserConfirmation) = 1, CollectingCredential (SecondaryAuthenticationFactorAuthenticationStage_CollectingCredential) = 2, SuspendingAuthentication (SecondaryAuthenticationFactorAuthenticationStage_SuspendingAuthentication) = 3, CredentialCollected (SecondaryAuthenticationFactorAuthenticationStage_CredentialCollected) = 4, CredentialAuthenticated (SecondaryAuthenticationFactorAuthenticationStage_CredentialAuthenticated) = 5, StoppingAuthentication (SecondaryAuthenticationFactorAuthenticationStage_StoppingAuthentication) = 6, ReadyForLock (SecondaryAuthenticationFactorAuthenticationStage_ReadyForLock) = 7, CheckingDevicePresence (SecondaryAuthenticationFactorAuthenticationStage_CheckingDevicePresence) = 8,
+    NotStarted = 0, WaitingForUserConfirmation = 1, CollectingCredential = 2, SuspendingAuthentication = 3, CredentialCollected = 4, CredentialAuthenticated = 5, StoppingAuthentication = 6, ReadyForLock = 7, CheckingDevicePresence = 8,
 }}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs, 3567644246, 29329, 16499, 188, 31, 204, 184, 245, 175, 223, 150);
 RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs(ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs] {
@@ -453,19 +453,19 @@ impl ISecondaryAuthenticationFactorAuthenticationStatics {
     }}
 }
 RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationStatus: i32 {
-    Failed (SecondaryAuthenticationFactorAuthenticationStatus_Failed) = 0, Started (SecondaryAuthenticationFactorAuthenticationStatus_Started) = 1, UnknownDevice (SecondaryAuthenticationFactorAuthenticationStatus_UnknownDevice) = 2, DisabledByPolicy (SecondaryAuthenticationFactorAuthenticationStatus_DisabledByPolicy) = 3, InvalidAuthenticationStage (SecondaryAuthenticationFactorAuthenticationStatus_InvalidAuthenticationStage) = 4,
+    Failed = 0, Started = 1, UnknownDevice = 2, DisabledByPolicy = 3, InvalidAuthenticationStage = 4,
 }}
 RT_ENUM! { enum SecondaryAuthenticationFactorDeviceCapabilities: u32 {
-    None (SecondaryAuthenticationFactorDeviceCapabilities_None) = 0, SecureStorage (SecondaryAuthenticationFactorDeviceCapabilities_SecureStorage) = 1, StoreKeys (SecondaryAuthenticationFactorDeviceCapabilities_StoreKeys) = 2, ConfirmUserIntentToAuthenticate (SecondaryAuthenticationFactorDeviceCapabilities_ConfirmUserIntentToAuthenticate) = 4, SupportSecureUserPresenceCheck (SecondaryAuthenticationFactorDeviceCapabilities_SupportSecureUserPresenceCheck) = 8, TransmittedDataIsEncrypted (SecondaryAuthenticationFactorDeviceCapabilities_TransmittedDataIsEncrypted) = 16, HMacSha256 (SecondaryAuthenticationFactorDeviceCapabilities_HMacSha256) = 32, CloseRangeDataTransmission (SecondaryAuthenticationFactorDeviceCapabilities_CloseRangeDataTransmission) = 64,
+    None = 0, SecureStorage = 1, StoreKeys = 2, ConfirmUserIntentToAuthenticate = 4, SupportSecureUserPresenceCheck = 8, TransmittedDataIsEncrypted = 16, HMacSha256 = 32, CloseRangeDataTransmission = 64,
 }}
 RT_ENUM! { enum SecondaryAuthenticationFactorDeviceFindScope: i32 {
-    User (SecondaryAuthenticationFactorDeviceFindScope_User) = 0, AllUsers (SecondaryAuthenticationFactorDeviceFindScope_AllUsers) = 1,
+    User = 0, AllUsers = 1,
 }}
 RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresence: i32 {
-    Absent (SecondaryAuthenticationFactorDevicePresence_Absent) = 0, Present (SecondaryAuthenticationFactorDevicePresence_Present) = 1,
+    Absent = 0, Present = 1,
 }}
 RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresenceMonitoringMode: i32 {
-    Unsupported (SecondaryAuthenticationFactorDevicePresenceMonitoringMode_Unsupported) = 0, AppManaged (SecondaryAuthenticationFactorDevicePresenceMonitoringMode_AppManaged) = 1, SystemManaged (SecondaryAuthenticationFactorDevicePresenceMonitoringMode_SystemManaged) = 2,
+    Unsupported = 0, AppManaged = 1, SystemManaged = 2,
 }}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics, 2420742681, 32498, 17699, 149, 28, 164, 23, 162, 74, 207, 147);
 RT_INTERFACE!{static interface ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics(ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics] {
@@ -498,10 +498,10 @@ impl ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics {
     }}
 }
 RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus: i32 {
-    Unsupported (SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus_Unsupported) = 0, Succeeded (SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus_Succeeded) = 1, DisabledByPolicy (SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus_DisabledByPolicy) = 2,
+    Unsupported = 0, Succeeded = 1, DisabledByPolicy = 2,
 }}
 RT_ENUM! { enum SecondaryAuthenticationFactorFinishAuthenticationStatus: i32 {
-    Failed (SecondaryAuthenticationFactorFinishAuthenticationStatus_Failed) = 0, Completed (SecondaryAuthenticationFactorFinishAuthenticationStatus_Completed) = 1, NonceExpired (SecondaryAuthenticationFactorFinishAuthenticationStatus_NonceExpired) = 2,
+    Failed = 0, Completed = 1, NonceExpired = 2,
 }}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorInfo, 506177633, 34099, 20430, 131, 155, 236, 183, 36, 16, 172, 20);
 RT_INTERFACE!{interface ISecondaryAuthenticationFactorInfo(ISecondaryAuthenticationFactorInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorInfo] {
@@ -652,14 +652,14 @@ impl ISecondaryAuthenticationFactorRegistrationStatics {
     }}
 }
 RT_ENUM! { enum SecondaryAuthenticationFactorRegistrationStatus: i32 {
-    Failed (SecondaryAuthenticationFactorRegistrationStatus_Failed) = 0, Started (SecondaryAuthenticationFactorRegistrationStatus_Started) = 1, CanceledByUser (SecondaryAuthenticationFactorRegistrationStatus_CanceledByUser) = 2, PinSetupRequired (SecondaryAuthenticationFactorRegistrationStatus_PinSetupRequired) = 3, DisabledByPolicy (SecondaryAuthenticationFactorRegistrationStatus_DisabledByPolicy) = 4,
+    Failed = 0, Started = 1, CanceledByUser = 2, PinSetupRequired = 3, DisabledByPolicy = 4,
 }}
 } // Windows.Security.Authentication.Identity.Provider
 } // Windows.Security.Authentication.Identity
 pub mod onlineid { // Windows.Security.Authentication.OnlineId
 use ::prelude::*;
 RT_ENUM! { enum CredentialPromptType: i32 {
-    PromptIfNeeded (CredentialPromptType_PromptIfNeeded) = 0, RetypeCredentials (CredentialPromptType_RetypeCredentials) = 1, DoNotPrompt (CredentialPromptType_DoNotPrompt) = 2,
+    PromptIfNeeded = 0, RetypeCredentials = 1, DoNotPrompt = 2,
 }}
 DEFINE_IID!(IID_IOnlineIdAuthenticator, 2684614026, 10667, 18455, 184, 132, 215, 81, 109, 173, 24, 185);
 RT_INTERFACE!{interface IOnlineIdAuthenticator(IOnlineIdAuthenticatorVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdAuthenticator] {
@@ -879,7 +879,7 @@ impl IOnlineIdSystemTicketResult {
 }
 RT_CLASS!{class OnlineIdSystemTicketResult: IOnlineIdSystemTicketResult}
 RT_ENUM! { enum OnlineIdSystemTicketStatus: i32 {
-    Success (OnlineIdSystemTicketStatus_Success) = 0, Error (OnlineIdSystemTicketStatus_Error) = 1, ServiceConnectionError (OnlineIdSystemTicketStatus_ServiceConnectionError) = 2,
+    Success = 0, Error = 1, ServiceConnectionError = 2,
 }}
 RT_CLASS!{class SignOutUserOperation: foundation::IAsyncAction}
 RT_CLASS!{class UserAuthenticationOperation: foundation::IAsyncOperation<UserIdentity>}
@@ -941,7 +941,7 @@ RT_CLASS!{class UserIdentity: IUserIdentity}
 pub mod web { // Windows.Security.Authentication.Web
 use ::prelude::*;
 RT_ENUM! { enum TokenBindingKeyType: i32 {
-    Rsa2048 (TokenBindingKeyType_Rsa2048) = 0, EcdsaP256 (TokenBindingKeyType_EcdsaP256) = 1, AnyExisting (TokenBindingKeyType_AnyExisting) = 2,
+    Rsa2048 = 0, EcdsaP256 = 1, AnyExisting = 2,
 }}
 RT_CLASS!{static class WebAuthenticationBroker}
 impl RtActivatable<IWebAuthenticationBrokerStatics> for WebAuthenticationBroker {}
@@ -1029,7 +1029,7 @@ impl IWebAuthenticationBrokerStatics2 {
     }}
 }
 RT_ENUM! { enum WebAuthenticationOptions: u32 {
-    None (WebAuthenticationOptions_None) = 0, SilentMode (WebAuthenticationOptions_SilentMode) = 1, UseTitle (WebAuthenticationOptions_UseTitle) = 2, UseHttpPost (WebAuthenticationOptions_UseHttpPost) = 4, UseCorporateNetwork (WebAuthenticationOptions_UseCorporateNetwork) = 8,
+    None = 0, SilentMode = 1, UseTitle = 2, UseHttpPost = 4, UseCorporateNetwork = 8,
 }}
 DEFINE_IID!(IID_IWebAuthenticationResult, 1677732683, 60905, 18186, 165, 205, 3, 35, 250, 246, 226, 98);
 RT_INTERFACE!{interface IWebAuthenticationResult(IWebAuthenticationResultVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationResult] {
@@ -1056,7 +1056,7 @@ impl IWebAuthenticationResult {
 }
 RT_CLASS!{class WebAuthenticationResult: IWebAuthenticationResult}
 RT_ENUM! { enum WebAuthenticationStatus: i32 {
-    Success (WebAuthenticationStatus_Success) = 0, UserCancel (WebAuthenticationStatus_UserCancel) = 1, ErrorHttp (WebAuthenticationStatus_ErrorHttp) = 2,
+    Success = 0, UserCancel = 1, ErrorHttp = 2,
 }}
 pub mod core { // Windows.Security.Authentication.Web.Core
 use ::prelude::*;
@@ -1085,7 +1085,7 @@ impl IFindAllAccountsResult {
 }
 RT_CLASS!{class FindAllAccountsResult: IFindAllAccountsResult}
 RT_ENUM! { enum FindAllWebAccountsStatus: i32 {
-    Success (FindAllWebAccountsStatus_Success) = 0, NotAllowedByProvider (FindAllWebAccountsStatus_NotAllowedByProvider) = 1, NotSupportedByProvider (FindAllWebAccountsStatus_NotSupportedByProvider) = 2, ProviderError (FindAllWebAccountsStatus_ProviderError) = 3,
+    Success = 0, NotAllowedByProvider = 1, NotSupportedByProvider = 2, ProviderError = 3,
 }}
 DEFINE_IID!(IID_IWebAccountEventArgs, 1874264957, 16974, 17644, 151, 124, 239, 36, 21, 70, 42, 90);
 RT_INTERFACE!{interface IWebAccountEventArgs(IWebAccountEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountEventArgs] {
@@ -1443,7 +1443,7 @@ impl IWebTokenRequestFactory {
     }}
 }
 RT_ENUM! { enum WebTokenRequestPromptType: i32 {
-    Default (WebTokenRequestPromptType_Default) = 0, ForceAuthentication (WebTokenRequestPromptType_ForceAuthentication) = 1,
+    Default = 0, ForceAuthentication = 1,
 }}
 DEFINE_IID!(IID_IWebTokenRequestResult, 3240788741, 53752, 17539, 141, 84, 56, 254, 41, 39, 132, 255);
 RT_INTERFACE!{interface IWebTokenRequestResult(IWebTokenRequestResultVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequestResult] {
@@ -1476,7 +1476,7 @@ impl IWebTokenRequestResult {
 }
 RT_CLASS!{class WebTokenRequestResult: IWebTokenRequestResult}
 RT_ENUM! { enum WebTokenRequestStatus: i32 {
-    Success (WebTokenRequestStatus_Success) = 0, UserCancel (WebTokenRequestStatus_UserCancel) = 1, AccountSwitch (WebTokenRequestStatus_AccountSwitch) = 2, UserInteractionRequired (WebTokenRequestStatus_UserInteractionRequired) = 3, AccountProviderNotAvailable (WebTokenRequestStatus_AccountProviderNotAvailable) = 4, ProviderError (WebTokenRequestStatus_ProviderError) = 5,
+    Success = 0, UserCancel = 1, AccountSwitch = 2, UserInteractionRequired = 3, AccountProviderNotAvailable = 4, ProviderError = 5,
 }}
 DEFINE_IID!(IID_IWebTokenResponse, 1739048394, 33782, 17606, 163, 177, 14, 182, 158, 65, 250, 138);
 RT_INTERFACE!{interface IWebTokenResponse(IWebTokenResponseVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenResponse] {
@@ -1600,7 +1600,7 @@ impl IWebAccountClientViewFactory {
     }}
 }
 RT_ENUM! { enum WebAccountClientViewType: i32 {
-    IdOnly (WebAccountClientViewType_IdOnly) = 0, IdAndProperties (WebAccountClientViewType_IdAndProperties) = 1,
+    IdOnly = 0, IdAndProperties = 1,
 }}
 RT_CLASS!{static class WebAccountManager}
 impl RtActivatable<IWebAccountManagerStatics> for WebAccountManager {}
@@ -1905,7 +1905,7 @@ impl IWebAccountProviderOperation {
     }}
 }
 RT_ENUM! { enum WebAccountProviderOperationKind: i32 {
-    RequestToken (WebAccountProviderOperationKind_RequestToken) = 0, GetTokenSilently (WebAccountProviderOperationKind_GetTokenSilently) = 1, AddAccount (WebAccountProviderOperationKind_AddAccount) = 2, ManageAccount (WebAccountProviderOperationKind_ManageAccount) = 3, DeleteAccount (WebAccountProviderOperationKind_DeleteAccount) = 4, RetrieveCookies (WebAccountProviderOperationKind_RetrieveCookies) = 5, SignOutAccount (WebAccountProviderOperationKind_SignOutAccount) = 6,
+    RequestToken = 0, GetTokenSilently = 1, AddAccount = 2, ManageAccount = 3, DeleteAccount = 4, RetrieveCookies = 5, SignOutAccount = 6,
 }}
 RT_CLASS!{class WebAccountProviderRequestTokenOperation: IWebAccountProviderTokenOperation}
 DEFINE_IID!(IID_IWebAccountProviderRetrieveCookiesOperation, 1510212673, 4003, 19121, 160, 28, 32, 177, 16, 53, 133, 148);
@@ -2045,7 +2045,7 @@ impl IWebAccountProviderUIReportOperation {
     }}
 }
 RT_ENUM! { enum WebAccountScope: i32 {
-    PerUser (WebAccountScope_PerUser) = 0, PerApplication (WebAccountScope_PerApplication) = 1,
+    PerUser = 0, PerApplication = 1,
 }}
 DEFINE_IID!(IID_IWebAccountScopeManagerStatics, 1550639996, 4786, 16954, 191, 61, 133, 184, 215, 229, 54, 86);
 RT_INTERFACE!{static interface IWebAccountScopeManagerStatics(IWebAccountScopeManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountScopeManagerStatics] {
@@ -2071,7 +2071,7 @@ impl IWebAccountScopeManagerStatics {
     }}
 }
 RT_ENUM! { enum WebAccountSelectionOptions: u32 {
-    Default (WebAccountSelectionOptions_Default) = 0, New (WebAccountSelectionOptions_New) = 1,
+    Default = 0, New = 1,
 }}
 DEFINE_IID!(IID_IWebProviderTokenRequest, 504919947, 34821, 17739, 159, 17, 70, 141, 42, 241, 9, 90);
 RT_INTERFACE!{interface IWebProviderTokenRequest(IWebProviderTokenRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenRequest] {
@@ -2255,10 +2255,10 @@ impl IKeyCredentialAttestationResult {
 }
 RT_CLASS!{class KeyCredentialAttestationResult: IKeyCredentialAttestationResult}
 RT_ENUM! { enum KeyCredentialAttestationStatus: i32 {
-    Success (KeyCredentialAttestationStatus_Success) = 0, UnknownError (KeyCredentialAttestationStatus_UnknownError) = 1, NotSupported (KeyCredentialAttestationStatus_NotSupported) = 2, TemporaryFailure (KeyCredentialAttestationStatus_TemporaryFailure) = 3,
+    Success = 0, UnknownError = 1, NotSupported = 2, TemporaryFailure = 3,
 }}
 RT_ENUM! { enum KeyCredentialCreationOption: i32 {
-    ReplaceExisting (KeyCredentialCreationOption_ReplaceExisting) = 0, FailIfExists (KeyCredentialCreationOption_FailIfExists) = 1,
+    ReplaceExisting = 0, FailIfExists = 1,
 }}
 RT_CLASS!{static class KeyCredentialManager}
 impl RtActivatable<IKeyCredentialManagerStatics> for KeyCredentialManager {}
@@ -2353,7 +2353,7 @@ impl IKeyCredentialRetrievalResult {
 }
 RT_CLASS!{class KeyCredentialRetrievalResult: IKeyCredentialRetrievalResult}
 RT_ENUM! { enum KeyCredentialStatus: i32 {
-    Success (KeyCredentialStatus_Success) = 0, UnknownError (KeyCredentialStatus_UnknownError) = 1, NotFound (KeyCredentialStatus_NotFound) = 2, UserCanceled (KeyCredentialStatus_UserCanceled) = 3, UserPrefersPassword (KeyCredentialStatus_UserPrefersPassword) = 4, CredentialAlreadyExists (KeyCredentialStatus_CredentialAlreadyExists) = 5, SecurityDeviceLocked (KeyCredentialStatus_SecurityDeviceLocked) = 6,
+    Success = 0, UnknownError = 1, NotFound = 2, UserCanceled = 3, UserPrefersPassword = 4, CredentialAlreadyExists = 5, SecurityDeviceLocked = 6,
 }}
 DEFINE_IID!(IID_IPasswordCredential, 1790019977, 50976, 16807, 166, 193, 254, 173, 179, 99, 41, 160);
 RT_INTERFACE!{interface IPasswordCredential(IPasswordCredentialVtbl): IInspectable(IInspectableVtbl) [IID_IPasswordCredential] {
@@ -2537,7 +2537,7 @@ impl IWebAccountFactory {
     }}
 }
 RT_ENUM! { enum WebAccountPictureSize: i32 {
-    Size64x64 (WebAccountPictureSize_Size64x64) = 64, Size208x208 (WebAccountPictureSize_Size208x208) = 208, Size424x424 (WebAccountPictureSize_Size424x424) = 424, Size1080x1080 (WebAccountPictureSize_Size1080x1080) = 1080,
+    Size64x64 = 64, Size208x208 = 208, Size424x424 = 424, Size1080x1080 = 1080,
 }}
 DEFINE_IID!(IID_IWebAccountProvider, 702335171, 31417, 19068, 163, 54, 185, 66, 249, 219, 247, 199);
 RT_INTERFACE!{interface IWebAccountProvider(IWebAccountProviderVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProvider] {
@@ -2621,12 +2621,12 @@ impl IWebAccountProviderFactory {
     }}
 }
 RT_ENUM! { enum WebAccountState: i32 {
-    None (WebAccountState_None) = 0, Connected (WebAccountState_Connected) = 1, Error (WebAccountState_Error) = 2,
+    None = 0, Connected = 1, Error = 2,
 }}
 pub mod ui { // Windows.Security.Credentials.UI
 use ::prelude::*;
 RT_ENUM! { enum AuthenticationProtocol: i32 {
-    Basic (AuthenticationProtocol_Basic) = 0, Digest (AuthenticationProtocol_Digest) = 1, Ntlm (AuthenticationProtocol_Ntlm) = 2, Kerberos (AuthenticationProtocol_Kerberos) = 3, Negotiate (AuthenticationProtocol_Negotiate) = 4, CredSsp (AuthenticationProtocol_CredSsp) = 5, Custom (AuthenticationProtocol_Custom) = 6,
+    Basic = 0, Digest = 1, Ntlm = 2, Kerberos = 3, Negotiate = 4, CredSsp = 5, Custom = 6,
 }}
 RT_CLASS!{static class CredentialPicker}
 impl RtActivatable<ICredentialPickerStatics> for CredentialPicker {}
@@ -2835,10 +2835,10 @@ impl ICredentialPickerStatics {
     }}
 }
 RT_ENUM! { enum CredentialSaveOption: i32 {
-    Unselected (CredentialSaveOption_Unselected) = 0, Selected (CredentialSaveOption_Selected) = 1, Hidden (CredentialSaveOption_Hidden) = 2,
+    Unselected = 0, Selected = 1, Hidden = 2,
 }}
 RT_ENUM! { enum UserConsentVerificationResult: i32 {
-    Verified (UserConsentVerificationResult_Verified) = 0, DeviceNotPresent (UserConsentVerificationResult_DeviceNotPresent) = 1, NotConfiguredForUser (UserConsentVerificationResult_NotConfiguredForUser) = 2, DisabledByPolicy (UserConsentVerificationResult_DisabledByPolicy) = 3, DeviceBusy (UserConsentVerificationResult_DeviceBusy) = 4, RetriesExhausted (UserConsentVerificationResult_RetriesExhausted) = 5, Canceled (UserConsentVerificationResult_Canceled) = 6,
+    Verified = 0, DeviceNotPresent = 1, NotConfiguredForUser = 2, DisabledByPolicy = 3, DeviceBusy = 4, RetriesExhausted = 5, Canceled = 6,
 }}
 RT_CLASS!{static class UserConsentVerifier}
 impl RtActivatable<IUserConsentVerifierStatics> for UserConsentVerifier {}
@@ -2852,7 +2852,7 @@ impl UserConsentVerifier {
 }
 DEFINE_CLSID!(UserConsentVerifier(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,85,73,46,85,115,101,114,67,111,110,115,101,110,116,86,101,114,105,102,105,101,114,0]) [CLSID_UserConsentVerifier]);
 RT_ENUM! { enum UserConsentVerifierAvailability: i32 {
-    Available (UserConsentVerifierAvailability_Available) = 0, DeviceNotPresent (UserConsentVerifierAvailability_DeviceNotPresent) = 1, NotConfiguredForUser (UserConsentVerifierAvailability_NotConfiguredForUser) = 2, DisabledByPolicy (UserConsentVerifierAvailability_DisabledByPolicy) = 3, DeviceBusy (UserConsentVerifierAvailability_DeviceBusy) = 4,
+    Available = 0, DeviceNotPresent = 1, NotConfiguredForUser = 2, DisabledByPolicy = 3, DeviceBusy = 4,
 }}
 DEFINE_IID!(IID_IUserConsentVerifierStatics, 2941206417, 22092, 19932, 184, 181, 151, 52, 71, 98, 124, 101);
 RT_INTERFACE!{static interface IUserConsentVerifierStatics(IUserConsentVerifierStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserConsentVerifierStatics] {
@@ -2876,7 +2876,7 @@ impl IUserConsentVerifierStatics {
 pub mod cryptography { // Windows.Security.Cryptography
 use ::prelude::*;
 RT_ENUM! { enum BinaryStringEncoding: i32 {
-    Utf8 (BinaryStringEncoding_Utf8) = 0, Utf16LE (BinaryStringEncoding_Utf16LE) = 1, Utf16BE (BinaryStringEncoding_Utf16BE) = 2,
+    Utf8 = 0, Utf16LE = 1, Utf16BE = 2,
 }}
 RT_CLASS!{static class CryptographicBuffer}
 impl RtActivatable<ICryptographicBufferStatics> for CryptographicBuffer {}
@@ -3181,7 +3181,7 @@ impl ICertificateChain {
 }
 RT_CLASS!{class CertificateChain: ICertificateChain}
 RT_ENUM! { enum CertificateChainPolicy: i32 {
-    Base (CertificateChainPolicy_Base) = 0, Ssl (CertificateChainPolicy_Ssl) = 1, NTAuthentication (CertificateChainPolicy_NTAuthentication) = 2, MicrosoftRoot (CertificateChainPolicy_MicrosoftRoot) = 3,
+    Base = 0, Ssl = 1, NTAuthentication = 2, MicrosoftRoot = 3,
 }}
 RT_CLASS!{static class CertificateEnrollmentManager}
 impl RtActivatable<ICertificateEnrollmentManagerStatics> for CertificateEnrollmentManager {}
@@ -3939,7 +3939,7 @@ RT_CLASS!{class ChainValidationParameters: IChainValidationParameters}
 impl RtActivatable<IActivationFactory> for ChainValidationParameters {}
 DEFINE_CLSID!(ChainValidationParameters(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,104,97,105,110,86,97,108,105,100,97,116,105,111,110,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_ChainValidationParameters]);
 RT_ENUM! { enum ChainValidationResult: i32 {
-    Success (ChainValidationResult_Success) = 0, Untrusted (ChainValidationResult_Untrusted) = 1, Revoked (ChainValidationResult_Revoked) = 2, Expired (ChainValidationResult_Expired) = 3, IncompleteChain (ChainValidationResult_IncompleteChain) = 4, InvalidSignature (ChainValidationResult_InvalidSignature) = 5, WrongUsage (ChainValidationResult_WrongUsage) = 6, InvalidName (ChainValidationResult_InvalidName) = 7, InvalidCertificateAuthorityPolicy (ChainValidationResult_InvalidCertificateAuthorityPolicy) = 8, BasicConstraintsError (ChainValidationResult_BasicConstraintsError) = 9, UnknownCriticalExtension (ChainValidationResult_UnknownCriticalExtension) = 10, RevocationInformationMissing (ChainValidationResult_RevocationInformationMissing) = 11, RevocationFailure (ChainValidationResult_RevocationFailure) = 12, OtherErrors (ChainValidationResult_OtherErrors) = 13,
+    Success = 0, Untrusted = 1, Revoked = 2, Expired = 3, IncompleteChain = 4, InvalidSignature = 5, WrongUsage = 6, InvalidName = 7, InvalidCertificateAuthorityPolicy = 8, BasicConstraintsError = 9, UnknownCriticalExtension = 10, RevocationInformationMissing = 11, RevocationFailure = 12, OtherErrors = 13,
 }}
 DEFINE_IID!(IID_ICmsAttachedSignature, 1636408733, 14167, 20171, 189, 220, 12, 163, 87, 215, 169, 54);
 RT_INTERFACE!{interface ICmsAttachedSignature(ICmsAttachedSignatureVtbl): IInspectable(IInspectableVtbl) [IID_ICmsAttachedSignature] {
@@ -4122,13 +4122,13 @@ impl ICmsTimestampInfo {
 }
 RT_CLASS!{class CmsTimestampInfo: ICmsTimestampInfo}
 RT_ENUM! { enum EnrollKeyUsages: u32 {
-    None (EnrollKeyUsages_None) = 0, Decryption (EnrollKeyUsages_Decryption) = 1, Signing (EnrollKeyUsages_Signing) = 2, KeyAgreement (EnrollKeyUsages_KeyAgreement) = 4, All (EnrollKeyUsages_All) = 16777215,
+    None = 0, Decryption = 1, Signing = 2, KeyAgreement = 4, All = 16777215,
 }}
 RT_ENUM! { enum ExportOption: i32 {
-    NotExportable (ExportOption_NotExportable) = 0, Exportable (ExportOption_Exportable) = 1,
+    NotExportable = 0, Exportable = 1,
 }}
 RT_ENUM! { enum InstallOptions: u32 {
-    None (InstallOptions_None) = 0, DeleteExpired (InstallOptions_DeleteExpired) = 1,
+    None = 0, DeleteExpired = 1,
 }}
 RT_CLASS!{static class KeyAlgorithmNames}
 impl RtActivatable<IKeyAlgorithmNamesStatics> for KeyAlgorithmNames {}
@@ -4280,10 +4280,10 @@ impl IKeyAttestationHelperStatics2 {
     }}
 }
 RT_ENUM! { enum KeyProtectionLevel: i32 {
-    NoConsent (KeyProtectionLevel_NoConsent) = 0, ConsentOnly (KeyProtectionLevel_ConsentOnly) = 1, ConsentWithPassword (KeyProtectionLevel_ConsentWithPassword) = 2, ConsentWithFingerprint (KeyProtectionLevel_ConsentWithFingerprint) = 3,
+    NoConsent = 0, ConsentOnly = 1, ConsentWithPassword = 2, ConsentWithFingerprint = 3,
 }}
 RT_ENUM! { enum KeySize: i32 {
-    Invalid (KeySize_Invalid) = 0, Rsa2048 (KeySize_Rsa2048) = 2048, Rsa4096 (KeySize_Rsa4096) = 4096,
+    Invalid = 0, Rsa2048 = 2048, Rsa4096 = 4096,
 }}
 RT_CLASS!{static class KeyStorageProviderNames}
 impl RtActivatable<IKeyStorageProviderNamesStatics> for KeyStorageProviderNames {}
@@ -4423,7 +4423,7 @@ RT_CLASS!{class PfxImportParameters: IPfxImportParameters}
 impl RtActivatable<IActivationFactory> for PfxImportParameters {}
 DEFINE_CLSID!(PfxImportParameters(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,80,102,120,73,109,112,111,114,116,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_PfxImportParameters]);
 RT_ENUM! { enum SignatureValidationResult: i32 {
-    Success (SignatureValidationResult_Success) = 0, InvalidParameter (SignatureValidationResult_InvalidParameter) = 1, BadMessage (SignatureValidationResult_BadMessage) = 2, InvalidSignature (SignatureValidationResult_InvalidSignature) = 3, OtherErrors (SignatureValidationResult_OtherErrors) = 4,
+    Success = 0, InvalidParameter = 1, BadMessage = 2, InvalidSignature = 3, OtherErrors = 4,
 }}
 RT_CLASS!{static class StandardCertificateStoreNames}
 impl RtActivatable<IStandardCertificateStoreNamesStatics> for StandardCertificateStoreNames {}
@@ -4904,7 +4904,7 @@ impl IAsymmetricKeyAlgorithmProviderStatics {
     }}
 }
 RT_ENUM! { enum Capi1KdfTargetAlgorithm: i32 {
-    NotAes (Capi1KdfTargetAlgorithm_NotAes) = 0, Aes (Capi1KdfTargetAlgorithm_Aes) = 1,
+    NotAes = 0, Aes = 1,
 }}
 RT_CLASS!{static class CryptographicEngine}
 impl RtActivatable<ICryptographicEngineStatics> for CryptographicEngine {}
@@ -5068,13 +5068,13 @@ impl ICryptographicKey {
 }
 RT_CLASS!{class CryptographicKey: ICryptographicKey}
 RT_ENUM! { enum CryptographicPadding: i32 {
-    None (CryptographicPadding_None) = 0, RsaOaep (CryptographicPadding_RsaOaep) = 1, RsaPkcs1V15 (CryptographicPadding_RsaPkcs1V15) = 2, RsaPss (CryptographicPadding_RsaPss) = 3,
+    None = 0, RsaOaep = 1, RsaPkcs1V15 = 2, RsaPss = 3,
 }}
 RT_ENUM! { enum CryptographicPrivateKeyBlobType: i32 {
-    Pkcs8RawPrivateKeyInfo (CryptographicPrivateKeyBlobType_Pkcs8RawPrivateKeyInfo) = 0, Pkcs1RsaPrivateKey (CryptographicPrivateKeyBlobType_Pkcs1RsaPrivateKey) = 1, BCryptPrivateKey (CryptographicPrivateKeyBlobType_BCryptPrivateKey) = 2, Capi1PrivateKey (CryptographicPrivateKeyBlobType_Capi1PrivateKey) = 3, BCryptEccFullPrivateKey (CryptographicPrivateKeyBlobType_BCryptEccFullPrivateKey) = 4,
+    Pkcs8RawPrivateKeyInfo = 0, Pkcs1RsaPrivateKey = 1, BCryptPrivateKey = 2, Capi1PrivateKey = 3, BCryptEccFullPrivateKey = 4,
 }}
 RT_ENUM! { enum CryptographicPublicKeyBlobType: i32 {
-    X509SubjectPublicKeyInfo (CryptographicPublicKeyBlobType_X509SubjectPublicKeyInfo) = 0, Pkcs1RsaPublicKey (CryptographicPublicKeyBlobType_Pkcs1RsaPublicKey) = 1, BCryptPublicKey (CryptographicPublicKeyBlobType_BCryptPublicKey) = 2, Capi1PublicKey (CryptographicPublicKeyBlobType_Capi1PublicKey) = 3, BCryptEccFullPublicKey (CryptographicPublicKeyBlobType_BCryptEccFullPublicKey) = 4,
+    X509SubjectPublicKeyInfo = 0, Pkcs1RsaPublicKey = 1, BCryptPublicKey = 2, Capi1PublicKey = 3, BCryptEccFullPublicKey = 4,
 }}
 RT_CLASS!{static class EccCurveNames}
 impl RtActivatable<IEccCurveNamesStatics> for EccCurveNames {}
@@ -6488,10 +6488,10 @@ impl IDataProtectionManagerStatics {
     }}
 }
 RT_ENUM! { enum DataProtectionStatus: i32 {
-    ProtectedToOtherIdentity (DataProtectionStatus_ProtectedToOtherIdentity) = 0, Protected (DataProtectionStatus_Protected) = 1, Revoked (DataProtectionStatus_Revoked) = 2, Unprotected (DataProtectionStatus_Unprotected) = 3, LicenseExpired (DataProtectionStatus_LicenseExpired) = 4, AccessSuspended (DataProtectionStatus_AccessSuspended) = 5,
+    ProtectedToOtherIdentity = 0, Protected = 1, Revoked = 2, Unprotected = 3, LicenseExpired = 4, AccessSuspended = 5,
 }}
 RT_ENUM! { enum EnforcementLevel: i32 {
-    NoProtection (EnforcementLevel_NoProtection) = 0, Silent (EnforcementLevel_Silent) = 1, Override (EnforcementLevel_Override) = 2, Block (EnforcementLevel_Block) = 3,
+    NoProtection = 0, Silent = 1, Override = 2, Block = 3,
 }}
 DEFINE_IID!(IID_IFileProtectionInfo, 1323918470, 5246, 19920, 143, 175, 82, 83, 237, 145, 173, 12);
 RT_INTERFACE!{interface IFileProtectionInfo(IFileProtectionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IFileProtectionInfo] {
@@ -6659,7 +6659,7 @@ impl IFileProtectionManagerStatics3 {
     }}
 }
 RT_ENUM! { enum FileProtectionStatus: i32 {
-    Undetermined (FileProtectionStatus_Undetermined) = 0, Unknown (FileProtectionStatus_Unknown) = 0, Unprotected (FileProtectionStatus_Unprotected) = 1, Revoked (FileProtectionStatus_Revoked) = 2, Protected (FileProtectionStatus_Protected) = 3, ProtectedByOtherUser (FileProtectionStatus_ProtectedByOtherUser) = 4, ProtectedToOtherEnterprise (FileProtectionStatus_ProtectedToOtherEnterprise) = 5, NotProtectable (FileProtectionStatus_NotProtectable) = 6, ProtectedToOtherIdentity (FileProtectionStatus_ProtectedToOtherIdentity) = 7, LicenseExpired (FileProtectionStatus_LicenseExpired) = 8, AccessSuspended (FileProtectionStatus_AccessSuspended) = 9, FileInUse (FileProtectionStatus_FileInUse) = 10,
+    Undetermined = 0, Unknown = 0, Unprotected = 1, Revoked = 2, Protected = 3, ProtectedByOtherUser = 4, ProtectedToOtherEnterprise = 5, NotProtectable = 6, ProtectedToOtherIdentity = 7, LicenseExpired = 8, AccessSuspended = 9, FileInUse = 10,
 }}
 RT_CLASS!{static class FileRevocationManager}
 impl RtActivatable<IFileRevocationManagerStatics> for FileRevocationManager {}
@@ -6852,10 +6852,10 @@ impl IProtectedFileCreateResult {
 }
 RT_CLASS!{class ProtectedFileCreateResult: IProtectedFileCreateResult}
 RT_ENUM! { enum ProtectedImportExportStatus: i32 {
-    Ok (ProtectedImportExportStatus_Ok) = 0, Undetermined (ProtectedImportExportStatus_Undetermined) = 1, Unprotected (ProtectedImportExportStatus_Unprotected) = 2, Revoked (ProtectedImportExportStatus_Revoked) = 3, NotRoamable (ProtectedImportExportStatus_NotRoamable) = 4, ProtectedToOtherIdentity (ProtectedImportExportStatus_ProtectedToOtherIdentity) = 5, LicenseExpired (ProtectedImportExportStatus_LicenseExpired) = 6, AccessSuspended (ProtectedImportExportStatus_AccessSuspended) = 7,
+    Ok = 0, Undetermined = 1, Unprotected = 2, Revoked = 3, NotRoamable = 4, ProtectedToOtherIdentity = 5, LicenseExpired = 6, AccessSuspended = 7,
 }}
 RT_ENUM! { enum ProtectionPolicyAuditAction: i32 {
-    Decrypt (ProtectionPolicyAuditAction_Decrypt) = 0, CopyToLocation (ProtectionPolicyAuditAction_CopyToLocation) = 1, SendToRecipient (ProtectionPolicyAuditAction_SendToRecipient) = 2, Other (ProtectionPolicyAuditAction_Other) = 3,
+    Decrypt = 0, CopyToLocation = 1, SendToRecipient = 2, Other = 3,
 }}
 DEFINE_IID!(IID_IProtectionPolicyAuditInfo, 1113241572, 65207, 17660, 179, 187, 195, 196, 215, 236, 190, 187);
 RT_INTERFACE!{interface IProtectionPolicyAuditInfo(IProtectionPolicyAuditInfoVtbl): IInspectable(IInspectableVtbl) [IID_IProtectionPolicyAuditInfo] {
@@ -6935,7 +6935,7 @@ impl IProtectionPolicyAuditInfoFactory {
     }}
 }
 RT_ENUM! { enum ProtectionPolicyEvaluationResult: i32 {
-    Allowed (ProtectionPolicyEvaluationResult_Allowed) = 0, Blocked (ProtectionPolicyEvaluationResult_Blocked) = 1, ConsentRequired (ProtectionPolicyEvaluationResult_ConsentRequired) = 2,
+    Allowed = 0, Blocked = 1, ConsentRequired = 2,
 }}
 DEFINE_IID!(IID_IProtectionPolicyManager, 3580902936, 41101, 18406, 162, 64, 153, 52, 215, 22, 94, 181);
 RT_INTERFACE!{interface IProtectionPolicyManager(IProtectionPolicyManagerVtbl): IInspectable(IInspectableVtbl) [IID_IProtectionPolicyManager] {
@@ -7358,7 +7358,7 @@ impl IProtectionPolicyManagerStatics4 {
     }}
 }
 RT_ENUM! { enum ProtectionPolicyRequestAccessBehavior: i32 {
-    Decrypt (ProtectionPolicyRequestAccessBehavior_Decrypt) = 0, TreatOverridePolicyAsBlock (ProtectionPolicyRequestAccessBehavior_TreatOverridePolicyAsBlock) = 1,
+    Decrypt = 0, TreatOverridePolicyAsBlock = 1,
 }}
 DEFINE_IID!(IID_IThreadNetworkContext, 4199459049, 61203, 16474, 177, 44, 215, 52, 140, 111, 65, 252);
 RT_INTERFACE!{interface IThreadNetworkContext(IThreadNetworkContextVtbl): IInspectable(IInspectableVtbl) [IID_IThreadNetworkContext] {
@@ -7609,30 +7609,30 @@ impl IEasComplianceResults2 {
     }}
 }
 RT_ENUM! { enum EasDisallowConvenienceLogonResult: i32 {
-    NotEvaluated (EasDisallowConvenienceLogonResult_NotEvaluated) = 0, Compliant (EasDisallowConvenienceLogonResult_Compliant) = 1, CanBeCompliant (EasDisallowConvenienceLogonResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasDisallowConvenienceLogonResult_RequestedPolicyIsStricter) = 3,
+    NotEvaluated = 0, Compliant = 1, CanBeCompliant = 2, RequestedPolicyIsStricter = 3,
 }}
 RT_ENUM! { enum EasEncryptionProviderType: i32 {
-    NotEvaluated (EasEncryptionProviderType_NotEvaluated) = 0, WindowsEncryption (EasEncryptionProviderType_WindowsEncryption) = 1, OtherEncryption (EasEncryptionProviderType_OtherEncryption) = 2,
+    NotEvaluated = 0, WindowsEncryption = 1, OtherEncryption = 2,
 }}
 RT_ENUM! { enum EasMaxInactivityTimeLockResult: i32 {
-    NotEvaluated (EasMaxInactivityTimeLockResult_NotEvaluated) = 0, Compliant (EasMaxInactivityTimeLockResult_Compliant) = 1, CanBeCompliant (EasMaxInactivityTimeLockResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasMaxInactivityTimeLockResult_RequestedPolicyIsStricter) = 3, InvalidParameter (EasMaxInactivityTimeLockResult_InvalidParameter) = 4,
+    NotEvaluated = 0, Compliant = 1, CanBeCompliant = 2, RequestedPolicyIsStricter = 3, InvalidParameter = 4,
 }}
 RT_ENUM! { enum EasMaxPasswordFailedAttemptsResult: i32 {
-    NotEvaluated (EasMaxPasswordFailedAttemptsResult_NotEvaluated) = 0, Compliant (EasMaxPasswordFailedAttemptsResult_Compliant) = 1, CanBeCompliant (EasMaxPasswordFailedAttemptsResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasMaxPasswordFailedAttemptsResult_RequestedPolicyIsStricter) = 3, InvalidParameter (EasMaxPasswordFailedAttemptsResult_InvalidParameter) = 4,
+    NotEvaluated = 0, Compliant = 1, CanBeCompliant = 2, RequestedPolicyIsStricter = 3, InvalidParameter = 4,
 }}
 RT_ENUM! { enum EasMinPasswordComplexCharactersResult: i32 {
-    NotEvaluated (EasMinPasswordComplexCharactersResult_NotEvaluated) = 0, Compliant (EasMinPasswordComplexCharactersResult_Compliant) = 1, CanBeCompliant (EasMinPasswordComplexCharactersResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasMinPasswordComplexCharactersResult_RequestedPolicyIsStricter) = 3, RequestedPolicyNotEnforceable (EasMinPasswordComplexCharactersResult_RequestedPolicyNotEnforceable) = 4, InvalidParameter (EasMinPasswordComplexCharactersResult_InvalidParameter) = 5, CurrentUserHasBlankPassword (EasMinPasswordComplexCharactersResult_CurrentUserHasBlankPassword) = 6, AdminsHaveBlankPassword (EasMinPasswordComplexCharactersResult_AdminsHaveBlankPassword) = 7, UserCannotChangePassword (EasMinPasswordComplexCharactersResult_UserCannotChangePassword) = 8, AdminsCannotChangePassword (EasMinPasswordComplexCharactersResult_AdminsCannotChangePassword) = 9, LocalControlledUsersCannotChangePassword (EasMinPasswordComplexCharactersResult_LocalControlledUsersCannotChangePassword) = 10, ConnectedAdminsProviderPolicyIsWeak (EasMinPasswordComplexCharactersResult_ConnectedAdminsProviderPolicyIsWeak) = 11, ConnectedUserProviderPolicyIsWeak (EasMinPasswordComplexCharactersResult_ConnectedUserProviderPolicyIsWeak) = 12, ChangeConnectedAdminsPassword (EasMinPasswordComplexCharactersResult_ChangeConnectedAdminsPassword) = 13, ChangeConnectedUserPassword (EasMinPasswordComplexCharactersResult_ChangeConnectedUserPassword) = 14,
+    NotEvaluated = 0, Compliant = 1, CanBeCompliant = 2, RequestedPolicyIsStricter = 3, RequestedPolicyNotEnforceable = 4, InvalidParameter = 5, CurrentUserHasBlankPassword = 6, AdminsHaveBlankPassword = 7, UserCannotChangePassword = 8, AdminsCannotChangePassword = 9, LocalControlledUsersCannotChangePassword = 10, ConnectedAdminsProviderPolicyIsWeak = 11, ConnectedUserProviderPolicyIsWeak = 12, ChangeConnectedAdminsPassword = 13, ChangeConnectedUserPassword = 14,
 }}
 RT_ENUM! { enum EasMinPasswordLengthResult: i32 {
-    NotEvaluated (EasMinPasswordLengthResult_NotEvaluated) = 0, Compliant (EasMinPasswordLengthResult_Compliant) = 1, CanBeCompliant (EasMinPasswordLengthResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasMinPasswordLengthResult_RequestedPolicyIsStricter) = 3, RequestedPolicyNotEnforceable (EasMinPasswordLengthResult_RequestedPolicyNotEnforceable) = 4, InvalidParameter (EasMinPasswordLengthResult_InvalidParameter) = 5, CurrentUserHasBlankPassword (EasMinPasswordLengthResult_CurrentUserHasBlankPassword) = 6, AdminsHaveBlankPassword (EasMinPasswordLengthResult_AdminsHaveBlankPassword) = 7, UserCannotChangePassword (EasMinPasswordLengthResult_UserCannotChangePassword) = 8, AdminsCannotChangePassword (EasMinPasswordLengthResult_AdminsCannotChangePassword) = 9, LocalControlledUsersCannotChangePassword (EasMinPasswordLengthResult_LocalControlledUsersCannotChangePassword) = 10, ConnectedAdminsProviderPolicyIsWeak (EasMinPasswordLengthResult_ConnectedAdminsProviderPolicyIsWeak) = 11, ConnectedUserProviderPolicyIsWeak (EasMinPasswordLengthResult_ConnectedUserProviderPolicyIsWeak) = 12, ChangeConnectedAdminsPassword (EasMinPasswordLengthResult_ChangeConnectedAdminsPassword) = 13, ChangeConnectedUserPassword (EasMinPasswordLengthResult_ChangeConnectedUserPassword) = 14,
+    NotEvaluated = 0, Compliant = 1, CanBeCompliant = 2, RequestedPolicyIsStricter = 3, RequestedPolicyNotEnforceable = 4, InvalidParameter = 5, CurrentUserHasBlankPassword = 6, AdminsHaveBlankPassword = 7, UserCannotChangePassword = 8, AdminsCannotChangePassword = 9, LocalControlledUsersCannotChangePassword = 10, ConnectedAdminsProviderPolicyIsWeak = 11, ConnectedUserProviderPolicyIsWeak = 12, ChangeConnectedAdminsPassword = 13, ChangeConnectedUserPassword = 14,
 }}
 RT_ENUM! { enum EasPasswordExpirationResult: i32 {
-    NotEvaluated (EasPasswordExpirationResult_NotEvaluated) = 0, Compliant (EasPasswordExpirationResult_Compliant) = 1, CanBeCompliant (EasPasswordExpirationResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasPasswordExpirationResult_RequestedPolicyIsStricter) = 3, RequestedExpirationIncompatible (EasPasswordExpirationResult_RequestedExpirationIncompatible) = 4, InvalidParameter (EasPasswordExpirationResult_InvalidParameter) = 5, UserCannotChangePassword (EasPasswordExpirationResult_UserCannotChangePassword) = 6, AdminsCannotChangePassword (EasPasswordExpirationResult_AdminsCannotChangePassword) = 7, LocalControlledUsersCannotChangePassword (EasPasswordExpirationResult_LocalControlledUsersCannotChangePassword) = 8,
+    NotEvaluated = 0, Compliant = 1, CanBeCompliant = 2, RequestedPolicyIsStricter = 3, RequestedExpirationIncompatible = 4, InvalidParameter = 5, UserCannotChangePassword = 6, AdminsCannotChangePassword = 7, LocalControlledUsersCannotChangePassword = 8,
 }}
 RT_ENUM! { enum EasPasswordHistoryResult: i32 {
-    NotEvaluated (EasPasswordHistoryResult_NotEvaluated) = 0, Compliant (EasPasswordHistoryResult_Compliant) = 1, CanBeCompliant (EasPasswordHistoryResult_CanBeCompliant) = 2, RequestedPolicyIsStricter (EasPasswordHistoryResult_RequestedPolicyIsStricter) = 3, InvalidParameter (EasPasswordHistoryResult_InvalidParameter) = 4,
+    NotEvaluated = 0, Compliant = 1, CanBeCompliant = 2, RequestedPolicyIsStricter = 3, InvalidParameter = 4,
 }}
 RT_ENUM! { enum EasRequireEncryptionResult: i32 {
-    NotEvaluated (EasRequireEncryptionResult_NotEvaluated) = 0, Compliant (EasRequireEncryptionResult_Compliant) = 1, CanBeCompliant (EasRequireEncryptionResult_CanBeCompliant) = 2, NotProvisionedOnAllVolumes (EasRequireEncryptionResult_NotProvisionedOnAllVolumes) = 3, DeFixedDataNotSupported (EasRequireEncryptionResult_DeFixedDataNotSupported) = 4, FixedDataNotSupported (EasRequireEncryptionResult_FixedDataNotSupported) = 4, DeHardwareNotCompliant (EasRequireEncryptionResult_DeHardwareNotCompliant) = 5, HardwareNotCompliant (EasRequireEncryptionResult_HardwareNotCompliant) = 5, DeWinReNotConfigured (EasRequireEncryptionResult_DeWinReNotConfigured) = 6, LockNotConfigured (EasRequireEncryptionResult_LockNotConfigured) = 6, DeProtectionSuspended (EasRequireEncryptionResult_DeProtectionSuspended) = 7, ProtectionSuspended (EasRequireEncryptionResult_ProtectionSuspended) = 7, DeOsVolumeNotProtected (EasRequireEncryptionResult_DeOsVolumeNotProtected) = 8, OsVolumeNotProtected (EasRequireEncryptionResult_OsVolumeNotProtected) = 8, DeProtectionNotYetEnabled (EasRequireEncryptionResult_DeProtectionNotYetEnabled) = 9, ProtectionNotYetEnabled (EasRequireEncryptionResult_ProtectionNotYetEnabled) = 9, NoFeatureLicense (EasRequireEncryptionResult_NoFeatureLicense) = 10, OsNotProtected (EasRequireEncryptionResult_OsNotProtected) = 11, UnexpectedFailure (EasRequireEncryptionResult_UnexpectedFailure) = 12,
+    NotEvaluated = 0, Compliant = 1, CanBeCompliant = 2, NotProvisionedOnAllVolumes = 3, DeFixedDataNotSupported = 4, FixedDataNotSupported = 4, DeHardwareNotCompliant = 5, HardwareNotCompliant = 5, DeWinReNotConfigured = 6, LockNotConfigured = 6, DeProtectionSuspended = 7, ProtectionSuspended = 7, DeOsVolumeNotProtected = 8, OsVolumeNotProtected = 8, DeProtectionNotYetEnabled = 9, ProtectionNotYetEnabled = 9, NoFeatureLicense = 10, OsNotProtected = 11, UnexpectedFailure = 12,
 }}
 } // Windows.Security.ExchangeActiveSyncProvisioning

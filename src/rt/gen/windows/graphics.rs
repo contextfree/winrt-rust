@@ -208,18 +208,18 @@ impl IGraphicsCaptureSessionStatics {
 pub mod directx { // Windows.Graphics.DirectX
 use ::prelude::*;
 RT_ENUM! { enum DirectXAlphaMode: i32 {
-    Unspecified (DirectXAlphaMode_Unspecified) = 0, Premultiplied (DirectXAlphaMode_Premultiplied) = 1, Straight (DirectXAlphaMode_Straight) = 2, Ignore (DirectXAlphaMode_Ignore) = 3,
+    Unspecified = 0, Premultiplied = 1, Straight = 2, Ignore = 3,
 }}
 RT_ENUM! { enum DirectXColorSpace: i32 {
-    RgbFullG22NoneP709 (DirectXColorSpace_RgbFullG22NoneP709) = 0, RgbFullG10NoneP709 (DirectXColorSpace_RgbFullG10NoneP709) = 1, RgbStudioG22NoneP709 (DirectXColorSpace_RgbStudioG22NoneP709) = 2, RgbStudioG22NoneP2020 (DirectXColorSpace_RgbStudioG22NoneP2020) = 3, Reserved (DirectXColorSpace_Reserved) = 4, YccFullG22NoneP709X601 (DirectXColorSpace_YccFullG22NoneP709X601) = 5, YccStudioG22LeftP601 (DirectXColorSpace_YccStudioG22LeftP601) = 6, YccFullG22LeftP601 (DirectXColorSpace_YccFullG22LeftP601) = 7, YccStudioG22LeftP709 (DirectXColorSpace_YccStudioG22LeftP709) = 8, YccFullG22LeftP709 (DirectXColorSpace_YccFullG22LeftP709) = 9, YccStudioG22LeftP2020 (DirectXColorSpace_YccStudioG22LeftP2020) = 10, YccFullG22LeftP2020 (DirectXColorSpace_YccFullG22LeftP2020) = 11, RgbFullG2084NoneP2020 (DirectXColorSpace_RgbFullG2084NoneP2020) = 12, YccStudioG2084LeftP2020 (DirectXColorSpace_YccStudioG2084LeftP2020) = 13, RgbStudioG2084NoneP2020 (DirectXColorSpace_RgbStudioG2084NoneP2020) = 14, YccStudioG22TopLeftP2020 (DirectXColorSpace_YccStudioG22TopLeftP2020) = 15, YccStudioG2084TopLeftP2020 (DirectXColorSpace_YccStudioG2084TopLeftP2020) = 16, RgbFullG22NoneP2020 (DirectXColorSpace_RgbFullG22NoneP2020) = 17, YccStudioGHlgTopLeftP2020 (DirectXColorSpace_YccStudioGHlgTopLeftP2020) = 18, YccFullGHlgTopLeftP2020 (DirectXColorSpace_YccFullGHlgTopLeftP2020) = 19, RgbStudioG24NoneP709 (DirectXColorSpace_RgbStudioG24NoneP709) = 20, RgbStudioG24NoneP2020 (DirectXColorSpace_RgbStudioG24NoneP2020) = 21, YccStudioG24LeftP709 (DirectXColorSpace_YccStudioG24LeftP709) = 22, YccStudioG24LeftP2020 (DirectXColorSpace_YccStudioG24LeftP2020) = 23, YccStudioG24TopLeftP2020 (DirectXColorSpace_YccStudioG24TopLeftP2020) = 24,
+    RgbFullG22NoneP709 = 0, RgbFullG10NoneP709 = 1, RgbStudioG22NoneP709 = 2, RgbStudioG22NoneP2020 = 3, Reserved = 4, YccFullG22NoneP709X601 = 5, YccStudioG22LeftP601 = 6, YccFullG22LeftP601 = 7, YccStudioG22LeftP709 = 8, YccFullG22LeftP709 = 9, YccStudioG22LeftP2020 = 10, YccFullG22LeftP2020 = 11, RgbFullG2084NoneP2020 = 12, YccStudioG2084LeftP2020 = 13, RgbStudioG2084NoneP2020 = 14, YccStudioG22TopLeftP2020 = 15, YccStudioG2084TopLeftP2020 = 16, RgbFullG22NoneP2020 = 17, YccStudioGHlgTopLeftP2020 = 18, YccFullGHlgTopLeftP2020 = 19, RgbStudioG24NoneP709 = 20, RgbStudioG24NoneP2020 = 21, YccStudioG24LeftP709 = 22, YccStudioG24LeftP2020 = 23, YccStudioG24TopLeftP2020 = 24,
 }}
 RT_ENUM! { enum DirectXPixelFormat: i32 {
-    Unknown (DirectXPixelFormat_Unknown) = 0, R32G32B32A32Typeless (DirectXPixelFormat_R32G32B32A32Typeless) = 1, R32G32B32A32Float (DirectXPixelFormat_R32G32B32A32Float) = 2, R32G32B32A32UInt (DirectXPixelFormat_R32G32B32A32UInt) = 3, R32G32B32A32Int (DirectXPixelFormat_R32G32B32A32Int) = 4, R32G32B32Typeless (DirectXPixelFormat_R32G32B32Typeless) = 5, R32G32B32Float (DirectXPixelFormat_R32G32B32Float) = 6, R32G32B32UInt (DirectXPixelFormat_R32G32B32UInt) = 7, R32G32B32Int (DirectXPixelFormat_R32G32B32Int) = 8, R16G16B16A16Typeless (DirectXPixelFormat_R16G16B16A16Typeless) = 9, R16G16B16A16Float (DirectXPixelFormat_R16G16B16A16Float) = 10, R16G16B16A16UIntNormalized (DirectXPixelFormat_R16G16B16A16UIntNormalized) = 11, R16G16B16A16UInt (DirectXPixelFormat_R16G16B16A16UInt) = 12, R16G16B16A16IntNormalized (DirectXPixelFormat_R16G16B16A16IntNormalized) = 13, R16G16B16A16Int (DirectXPixelFormat_R16G16B16A16Int) = 14, R32G32Typeless (DirectXPixelFormat_R32G32Typeless) = 15, R32G32Float (DirectXPixelFormat_R32G32Float) = 16, R32G32UInt (DirectXPixelFormat_R32G32UInt) = 17, R32G32Int (DirectXPixelFormat_R32G32Int) = 18, R32G8X24Typeless (DirectXPixelFormat_R32G8X24Typeless) = 19, D32FloatS8X24UInt (DirectXPixelFormat_D32FloatS8X24UInt) = 20, R32FloatX8X24Typeless (DirectXPixelFormat_R32FloatX8X24Typeless) = 21, X32TypelessG8X24UInt (DirectXPixelFormat_X32TypelessG8X24UInt) = 22, R10G10B10A2Typeless (DirectXPixelFormat_R10G10B10A2Typeless) = 23, R10G10B10A2UIntNormalized (DirectXPixelFormat_R10G10B10A2UIntNormalized) = 24, R10G10B10A2UInt (DirectXPixelFormat_R10G10B10A2UInt) = 25, R11G11B10Float (DirectXPixelFormat_R11G11B10Float) = 26, R8G8B8A8Typeless (DirectXPixelFormat_R8G8B8A8Typeless) = 27, R8G8B8A8UIntNormalized (DirectXPixelFormat_R8G8B8A8UIntNormalized) = 28, R8G8B8A8UIntNormalizedSrgb (DirectXPixelFormat_R8G8B8A8UIntNormalizedSrgb) = 29, R8G8B8A8UInt (DirectXPixelFormat_R8G8B8A8UInt) = 30, R8G8B8A8IntNormalized (DirectXPixelFormat_R8G8B8A8IntNormalized) = 31, R8G8B8A8Int (DirectXPixelFormat_R8G8B8A8Int) = 32, R16G16Typeless (DirectXPixelFormat_R16G16Typeless) = 33, R16G16Float (DirectXPixelFormat_R16G16Float) = 34, R16G16UIntNormalized (DirectXPixelFormat_R16G16UIntNormalized) = 35, R16G16UInt (DirectXPixelFormat_R16G16UInt) = 36, R16G16IntNormalized (DirectXPixelFormat_R16G16IntNormalized) = 37, R16G16Int (DirectXPixelFormat_R16G16Int) = 38, R32Typeless (DirectXPixelFormat_R32Typeless) = 39, D32Float (DirectXPixelFormat_D32Float) = 40, R32Float (DirectXPixelFormat_R32Float) = 41, R32UInt (DirectXPixelFormat_R32UInt) = 42, R32Int (DirectXPixelFormat_R32Int) = 43, R24G8Typeless (DirectXPixelFormat_R24G8Typeless) = 44, D24UIntNormalizedS8UInt (DirectXPixelFormat_D24UIntNormalizedS8UInt) = 45, R24UIntNormalizedX8Typeless (DirectXPixelFormat_R24UIntNormalizedX8Typeless) = 46, X24TypelessG8UInt (DirectXPixelFormat_X24TypelessG8UInt) = 47, R8G8Typeless (DirectXPixelFormat_R8G8Typeless) = 48, R8G8UIntNormalized (DirectXPixelFormat_R8G8UIntNormalized) = 49, R8G8UInt (DirectXPixelFormat_R8G8UInt) = 50, R8G8IntNormalized (DirectXPixelFormat_R8G8IntNormalized) = 51, R8G8Int (DirectXPixelFormat_R8G8Int) = 52, R16Typeless (DirectXPixelFormat_R16Typeless) = 53, R16Float (DirectXPixelFormat_R16Float) = 54, D16UIntNormalized (DirectXPixelFormat_D16UIntNormalized) = 55, R16UIntNormalized (DirectXPixelFormat_R16UIntNormalized) = 56, R16UInt (DirectXPixelFormat_R16UInt) = 57, R16IntNormalized (DirectXPixelFormat_R16IntNormalized) = 58, R16Int (DirectXPixelFormat_R16Int) = 59, R8Typeless (DirectXPixelFormat_R8Typeless) = 60, R8UIntNormalized (DirectXPixelFormat_R8UIntNormalized) = 61, R8UInt (DirectXPixelFormat_R8UInt) = 62, R8IntNormalized (DirectXPixelFormat_R8IntNormalized) = 63, R8Int (DirectXPixelFormat_R8Int) = 64, A8UIntNormalized (DirectXPixelFormat_A8UIntNormalized) = 65, R1UIntNormalized (DirectXPixelFormat_R1UIntNormalized) = 66, R9G9B9E5SharedExponent (DirectXPixelFormat_R9G9B9E5SharedExponent) = 67, R8G8B8G8UIntNormalized (DirectXPixelFormat_R8G8B8G8UIntNormalized) = 68, G8R8G8B8UIntNormalized (DirectXPixelFormat_G8R8G8B8UIntNormalized) = 69, BC1Typeless (DirectXPixelFormat_BC1Typeless) = 70, BC1UIntNormalized (DirectXPixelFormat_BC1UIntNormalized) = 71, BC1UIntNormalizedSrgb (DirectXPixelFormat_BC1UIntNormalizedSrgb) = 72, BC2Typeless (DirectXPixelFormat_BC2Typeless) = 73, BC2UIntNormalized (DirectXPixelFormat_BC2UIntNormalized) = 74, BC2UIntNormalizedSrgb (DirectXPixelFormat_BC2UIntNormalizedSrgb) = 75, BC3Typeless (DirectXPixelFormat_BC3Typeless) = 76, BC3UIntNormalized (DirectXPixelFormat_BC3UIntNormalized) = 77, BC3UIntNormalizedSrgb (DirectXPixelFormat_BC3UIntNormalizedSrgb) = 78, BC4Typeless (DirectXPixelFormat_BC4Typeless) = 79, BC4UIntNormalized (DirectXPixelFormat_BC4UIntNormalized) = 80, BC4IntNormalized (DirectXPixelFormat_BC4IntNormalized) = 81, BC5Typeless (DirectXPixelFormat_BC5Typeless) = 82, BC5UIntNormalized (DirectXPixelFormat_BC5UIntNormalized) = 83, BC5IntNormalized (DirectXPixelFormat_BC5IntNormalized) = 84, B5G6R5UIntNormalized (DirectXPixelFormat_B5G6R5UIntNormalized) = 85, B5G5R5A1UIntNormalized (DirectXPixelFormat_B5G5R5A1UIntNormalized) = 86, B8G8R8A8UIntNormalized (DirectXPixelFormat_B8G8R8A8UIntNormalized) = 87, B8G8R8X8UIntNormalized (DirectXPixelFormat_B8G8R8X8UIntNormalized) = 88, R10G10B10XRBiasA2UIntNormalized (DirectXPixelFormat_R10G10B10XRBiasA2UIntNormalized) = 89, B8G8R8A8Typeless (DirectXPixelFormat_B8G8R8A8Typeless) = 90, B8G8R8A8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8A8UIntNormalizedSrgb) = 91, B8G8R8X8Typeless (DirectXPixelFormat_B8G8R8X8Typeless) = 92, B8G8R8X8UIntNormalizedSrgb (DirectXPixelFormat_B8G8R8X8UIntNormalizedSrgb) = 93, BC6HTypeless (DirectXPixelFormat_BC6HTypeless) = 94, BC6H16UnsignedFloat (DirectXPixelFormat_BC6H16UnsignedFloat) = 95, BC6H16Float (DirectXPixelFormat_BC6H16Float) = 96, BC7Typeless (DirectXPixelFormat_BC7Typeless) = 97, BC7UIntNormalized (DirectXPixelFormat_BC7UIntNormalized) = 98, BC7UIntNormalizedSrgb (DirectXPixelFormat_BC7UIntNormalizedSrgb) = 99, Ayuv (DirectXPixelFormat_Ayuv) = 100, Y410 (DirectXPixelFormat_Y410) = 101, Y416 (DirectXPixelFormat_Y416) = 102, NV12 (DirectXPixelFormat_NV12) = 103, P010 (DirectXPixelFormat_P010) = 104, P016 (DirectXPixelFormat_P016) = 105, Opaque420 (DirectXPixelFormat_Opaque420) = 106, Yuy2 (DirectXPixelFormat_Yuy2) = 107, Y210 (DirectXPixelFormat_Y210) = 108, Y216 (DirectXPixelFormat_Y216) = 109, NV11 (DirectXPixelFormat_NV11) = 110, AI44 (DirectXPixelFormat_AI44) = 111, IA44 (DirectXPixelFormat_IA44) = 112, P8 (DirectXPixelFormat_P8) = 113, A8P8 (DirectXPixelFormat_A8P8) = 114, B4G4R4A4UIntNormalized (DirectXPixelFormat_B4G4R4A4UIntNormalized) = 115, P208 (DirectXPixelFormat_P208) = 130, V208 (DirectXPixelFormat_V208) = 131, V408 (DirectXPixelFormat_V408) = 132,
+    Unknown = 0, R32G32B32A32Typeless = 1, R32G32B32A32Float = 2, R32G32B32A32UInt = 3, R32G32B32A32Int = 4, R32G32B32Typeless = 5, R32G32B32Float = 6, R32G32B32UInt = 7, R32G32B32Int = 8, R16G16B16A16Typeless = 9, R16G16B16A16Float = 10, R16G16B16A16UIntNormalized = 11, R16G16B16A16UInt = 12, R16G16B16A16IntNormalized = 13, R16G16B16A16Int = 14, R32G32Typeless = 15, R32G32Float = 16, R32G32UInt = 17, R32G32Int = 18, R32G8X24Typeless = 19, D32FloatS8X24UInt = 20, R32FloatX8X24Typeless = 21, X32TypelessG8X24UInt = 22, R10G10B10A2Typeless = 23, R10G10B10A2UIntNormalized = 24, R10G10B10A2UInt = 25, R11G11B10Float = 26, R8G8B8A8Typeless = 27, R8G8B8A8UIntNormalized = 28, R8G8B8A8UIntNormalizedSrgb = 29, R8G8B8A8UInt = 30, R8G8B8A8IntNormalized = 31, R8G8B8A8Int = 32, R16G16Typeless = 33, R16G16Float = 34, R16G16UIntNormalized = 35, R16G16UInt = 36, R16G16IntNormalized = 37, R16G16Int = 38, R32Typeless = 39, D32Float = 40, R32Float = 41, R32UInt = 42, R32Int = 43, R24G8Typeless = 44, D24UIntNormalizedS8UInt = 45, R24UIntNormalizedX8Typeless = 46, X24TypelessG8UInt = 47, R8G8Typeless = 48, R8G8UIntNormalized = 49, R8G8UInt = 50, R8G8IntNormalized = 51, R8G8Int = 52, R16Typeless = 53, R16Float = 54, D16UIntNormalized = 55, R16UIntNormalized = 56, R16UInt = 57, R16IntNormalized = 58, R16Int = 59, R8Typeless = 60, R8UIntNormalized = 61, R8UInt = 62, R8IntNormalized = 63, R8Int = 64, A8UIntNormalized = 65, R1UIntNormalized = 66, R9G9B9E5SharedExponent = 67, R8G8B8G8UIntNormalized = 68, G8R8G8B8UIntNormalized = 69, BC1Typeless = 70, BC1UIntNormalized = 71, BC1UIntNormalizedSrgb = 72, BC2Typeless = 73, BC2UIntNormalized = 74, BC2UIntNormalizedSrgb = 75, BC3Typeless = 76, BC3UIntNormalized = 77, BC3UIntNormalizedSrgb = 78, BC4Typeless = 79, BC4UIntNormalized = 80, BC4IntNormalized = 81, BC5Typeless = 82, BC5UIntNormalized = 83, BC5IntNormalized = 84, B5G6R5UIntNormalized = 85, B5G5R5A1UIntNormalized = 86, B8G8R8A8UIntNormalized = 87, B8G8R8X8UIntNormalized = 88, R10G10B10XRBiasA2UIntNormalized = 89, B8G8R8A8Typeless = 90, B8G8R8A8UIntNormalizedSrgb = 91, B8G8R8X8Typeless = 92, B8G8R8X8UIntNormalizedSrgb = 93, BC6HTypeless = 94, BC6H16UnsignedFloat = 95, BC6H16Float = 96, BC7Typeless = 97, BC7UIntNormalized = 98, BC7UIntNormalizedSrgb = 99, Ayuv = 100, Y410 = 101, Y416 = 102, NV12 = 103, P010 = 104, P016 = 105, Opaque420 = 106, Yuy2 = 107, Y210 = 108, Y216 = 109, NV11 = 110, AI44 = 111, IA44 = 112, P8 = 113, A8P8 = 114, B4G4R4A4UIntNormalized = 115, P208 = 130, V208 = 131, V408 = 132,
 }}
 pub mod direct3d11 { // Windows.Graphics.DirectX.Direct3D11
 use ::prelude::*;
 RT_ENUM! { enum Direct3DBindings: u32 {
-    VertexBuffer (Direct3DBindings_VertexBuffer) = 1, IndexBuffer (Direct3DBindings_IndexBuffer) = 2, ConstantBuffer (Direct3DBindings_ConstantBuffer) = 4, ShaderResource (Direct3DBindings_ShaderResource) = 8, StreamOutput (Direct3DBindings_StreamOutput) = 16, RenderTarget (Direct3DBindings_RenderTarget) = 32, DepthStencil (Direct3DBindings_DepthStencil) = 64, UnorderedAccess (Direct3DBindings_UnorderedAccess) = 128, Decoder (Direct3DBindings_Decoder) = 512, VideoEncoder (Direct3DBindings_VideoEncoder) = 1024,
+    VertexBuffer = 1, IndexBuffer = 2, ConstantBuffer = 4, ShaderResource = 8, StreamOutput = 16, RenderTarget = 32, DepthStencil = 64, UnorderedAccess = 128, Decoder = 512, VideoEncoder = 1024,
 }}
 DEFINE_IID!(IID_IDirect3DDevice, 2742428843, 36191, 18000, 157, 62, 158, 174, 61, 155, 198, 112);
 RT_INTERFACE!{interface IDirect3DDevice(IDirect3DDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3DDevice] {
@@ -249,7 +249,7 @@ RT_STRUCT! { struct Direct3DSurfaceDescription {
     Width: i32, Height: i32, Format: super::DirectXPixelFormat, MultisampleDescription: Direct3DMultisampleDescription,
 }}
 RT_ENUM! { enum Direct3DUsage: i32 {
-    Default (Direct3DUsage_Default) = 0, Immutable (Direct3DUsage_Immutable) = 1, Dynamic (Direct3DUsage_Dynamic) = 2, Staging (Direct3DUsage_Staging) = 3,
+    Default = 0, Immutable = 1, Dynamic = 2, Staging = 3,
 }}
 } // Windows.Graphics.DirectX.Direct3D11
 } // Windows.Graphics.DirectX
@@ -328,7 +328,7 @@ impl IAdvancedColorInfo {
 }
 RT_CLASS!{class AdvancedColorInfo: IAdvancedColorInfo}
 RT_ENUM! { enum AdvancedColorKind: i32 {
-    StandardDynamicRange (AdvancedColorKind_StandardDynamicRange) = 0, WideColorGamut (AdvancedColorKind_WideColorGamut) = 1, HighDynamicRange (AdvancedColorKind_HighDynamicRange) = 2,
+    StandardDynamicRange = 0, WideColorGamut = 1, HighDynamicRange = 2,
 }}
 DEFINE_IID!(IID_IBrightnessOverride, 2529780250, 49475, 17298, 190, 221, 74, 126, 149, 116, 200, 253);
 RT_INTERFACE!{interface IBrightnessOverride(IBrightnessOverrideVtbl): IInspectable(IInspectableVtbl) [IID_IBrightnessOverride] {
@@ -534,16 +534,16 @@ impl IColorOverrideSettingsStatics {
     }}
 }
 RT_ENUM! { enum DisplayBrightnessOverrideOptions: u32 {
-    None (DisplayBrightnessOverrideOptions_None) = 0, UseDimmedPolicyWhenBatteryIsLow (DisplayBrightnessOverrideOptions_UseDimmedPolicyWhenBatteryIsLow) = 1,
+    None = 0, UseDimmedPolicyWhenBatteryIsLow = 1,
 }}
 RT_ENUM! { enum DisplayBrightnessOverrideScenario: i32 {
-    IdleBrightness (DisplayBrightnessOverrideScenario_IdleBrightness) = 0, BarcodeReadingBrightness (DisplayBrightnessOverrideScenario_BarcodeReadingBrightness) = 1, FullBrightness (DisplayBrightnessOverrideScenario_FullBrightness) = 2,
+    IdleBrightness = 0, BarcodeReadingBrightness = 1, FullBrightness = 2,
 }}
 RT_ENUM! { enum DisplayBrightnessScenario: i32 {
-    DefaultBrightness (DisplayBrightnessScenario_DefaultBrightness) = 0, IdleBrightness (DisplayBrightnessScenario_IdleBrightness) = 1, BarcodeReadingBrightness (DisplayBrightnessScenario_BarcodeReadingBrightness) = 2, FullBrightness (DisplayBrightnessScenario_FullBrightness) = 3,
+    DefaultBrightness = 0, IdleBrightness = 1, BarcodeReadingBrightness = 2, FullBrightness = 3,
 }}
 RT_ENUM! { enum DisplayColorOverrideScenario: i32 {
-    Accurate (DisplayColorOverrideScenario_Accurate) = 0,
+    Accurate = 0,
 }}
 DEFINE_IID!(IID_IDisplayEnhancementOverride, 1117099215, 55674, 19202, 164, 40, 92, 66, 146, 247, 245, 34);
 RT_INTERFACE!{interface IDisplayEnhancementOverride(IDisplayEnhancementOverrideVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverride] {
@@ -901,7 +901,7 @@ impl IDisplayInformationStatics {
     }}
 }
 RT_ENUM! { enum DisplayOrientations: u32 {
-    None (DisplayOrientations_None) = 0, Landscape (DisplayOrientations_Landscape) = 1, Portrait (DisplayOrientations_Portrait) = 2, LandscapeFlipped (DisplayOrientations_LandscapeFlipped) = 4, PortraitFlipped (DisplayOrientations_PortraitFlipped) = 8,
+    None = 0, Landscape = 1, Portrait = 2, LandscapeFlipped = 4, PortraitFlipped = 8,
 }}
 RT_CLASS!{static class DisplayProperties}
 impl RtActivatable<IDisplayPropertiesStatics> for DisplayProperties {}
@@ -1081,24 +1081,24 @@ impl IDisplayPropertiesStatics {
     }}
 }
 RT_ENUM! { enum HdrMetadataFormat: i32 {
-    Hdr10 (HdrMetadataFormat_Hdr10) = 0, Hdr10Plus (HdrMetadataFormat_Hdr10Plus) = 1,
+    Hdr10 = 0, Hdr10Plus = 1,
 }}
 RT_STRUCT! { struct NitRange {
     MinNits: f32, MaxNits: f32, StepSizeNits: f32,
 }}
 RT_ENUM! { enum ResolutionScale: i32 {
-    Invalid (ResolutionScale_Invalid) = 0, Scale100Percent (ResolutionScale_Scale100Percent) = 100, Scale120Percent (ResolutionScale_Scale120Percent) = 120, Scale125Percent (ResolutionScale_Scale125Percent) = 125, Scale140Percent (ResolutionScale_Scale140Percent) = 140, Scale150Percent (ResolutionScale_Scale150Percent) = 150, Scale160Percent (ResolutionScale_Scale160Percent) = 160, Scale175Percent (ResolutionScale_Scale175Percent) = 175, Scale180Percent (ResolutionScale_Scale180Percent) = 180, Scale200Percent (ResolutionScale_Scale200Percent) = 200, Scale225Percent (ResolutionScale_Scale225Percent) = 225, Scale250Percent (ResolutionScale_Scale250Percent) = 250, Scale300Percent (ResolutionScale_Scale300Percent) = 300, Scale350Percent (ResolutionScale_Scale350Percent) = 350, Scale400Percent (ResolutionScale_Scale400Percent) = 400, Scale450Percent (ResolutionScale_Scale450Percent) = 450, Scale500Percent (ResolutionScale_Scale500Percent) = 500,
+    Invalid = 0, Scale100Percent = 100, Scale120Percent = 120, Scale125Percent = 125, Scale140Percent = 140, Scale150Percent = 150, Scale160Percent = 160, Scale175Percent = 175, Scale180Percent = 180, Scale200Percent = 200, Scale225Percent = 225, Scale250Percent = 250, Scale300Percent = 300, Scale350Percent = 350, Scale400Percent = 400, Scale450Percent = 450, Scale500Percent = 500,
 }}
 pub mod core { // Windows.Graphics.Display.Core
 use ::prelude::*;
 RT_ENUM! { enum HdmiDisplayColorSpace: i32 {
-    RgbLimited (HdmiDisplayColorSpace_RgbLimited) = 0, RgbFull (HdmiDisplayColorSpace_RgbFull) = 1, BT2020 (HdmiDisplayColorSpace_BT2020) = 2, BT709 (HdmiDisplayColorSpace_BT709) = 3,
+    RgbLimited = 0, RgbFull = 1, BT2020 = 2, BT709 = 3,
 }}
 RT_STRUCT! { struct HdmiDisplayHdr2086Metadata {
     RedPrimaryX: u16, RedPrimaryY: u16, GreenPrimaryX: u16, GreenPrimaryY: u16, BluePrimaryX: u16, BluePrimaryY: u16, WhitePointX: u16, WhitePointY: u16, MaxMasteringLuminance: u16, MinMasteringLuminance: u16, MaxContentLightLevel: u16, MaxFrameAverageLightLevel: u16,
 }}
 RT_ENUM! { enum HdmiDisplayHdrOption: i32 {
-    None (HdmiDisplayHdrOption_None) = 0, EotfSdr (HdmiDisplayHdrOption_EotfSdr) = 1, Eotf2084 (HdmiDisplayHdrOption_Eotf2084) = 2, DolbyVisionLowLatency (HdmiDisplayHdrOption_DolbyVisionLowLatency) = 3,
+    None = 0, EotfSdr = 1, Eotf2084 = 2, DolbyVisionLowLatency = 3,
 }}
 DEFINE_IID!(IID_IHdmiDisplayInformation, 319503370, 62821, 18286, 171, 213, 234, 5, 174, 231, 76, 105);
 RT_INTERFACE!{interface IHdmiDisplayInformation(IHdmiDisplayInformationVtbl): IInspectable(IInspectableVtbl) [IID_IHdmiDisplayInformation] {
@@ -1255,7 +1255,7 @@ impl IHdmiDisplayMode2 {
     }}
 }
 RT_ENUM! { enum HdmiDisplayPixelEncoding: i32 {
-    Rgb444 (HdmiDisplayPixelEncoding_Rgb444) = 0, Ycc444 (HdmiDisplayPixelEncoding_Ycc444) = 1, Ycc422 (HdmiDisplayPixelEncoding_Ycc422) = 2, Ycc420 (HdmiDisplayPixelEncoding_Ycc420) = 3,
+    Rgb444 = 0, Ycc444 = 1, Ycc422 = 2, Ycc420 = 3,
 }}
 } // Windows.Graphics.Display.Core
 } // Windows.Graphics.Display
@@ -1792,10 +1792,10 @@ impl IHolographicFramePresentationReport {
 }
 RT_CLASS!{class HolographicFramePresentationReport: IHolographicFramePresentationReport}
 RT_ENUM! { enum HolographicFramePresentResult: i32 {
-    Success (HolographicFramePresentResult_Success) = 0, DeviceRemoved (HolographicFramePresentResult_DeviceRemoved) = 1,
+    Success = 0, DeviceRemoved = 1,
 }}
 RT_ENUM! { enum HolographicFramePresentWaitBehavior: i32 {
-    WaitForFrameToFinish (HolographicFramePresentWaitBehavior_WaitForFrameToFinish) = 0, DoNotWaitForFrameToFinish (HolographicFramePresentWaitBehavior_DoNotWaitForFrameToFinish) = 1,
+    WaitForFrameToFinish = 0, DoNotWaitForFrameToFinish = 1,
 }}
 DEFINE_IID!(IID_IHolographicQuadLayer, 2419351753, 51673, 23900, 65, 172, 162, 213, 171, 15, 211, 49);
 RT_INTERFACE!{interface IHolographicQuadLayer(IHolographicQuadLayerVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayer] {
@@ -1898,7 +1898,7 @@ impl IHolographicQuadLayerUpdateParameters2 {
     }}
 }
 RT_ENUM! { enum HolographicReprojectionMode: i32 {
-    PositionAndOrientation (HolographicReprojectionMode_PositionAndOrientation) = 0, OrientationOnly (HolographicReprojectionMode_OrientationOnly) = 1, Disabled (HolographicReprojectionMode_Disabled) = 2,
+    PositionAndOrientation = 0, OrientationOnly = 1, Disabled = 2,
 }}
 DEFINE_IID!(IID_IHolographicSpace, 1132518310, 24184, 17231, 128, 124, 52, 51, 209, 239, 232, 183);
 RT_INTERFACE!{interface IHolographicSpace(IHolographicSpaceVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpace] {
@@ -2088,7 +2088,7 @@ impl IHolographicSpaceStatics3 {
     }}
 }
 RT_ENUM! { enum HolographicSpaceUserPresence: i32 {
-    Absent (HolographicSpaceUserPresence_Absent) = 0, PresentPassive (HolographicSpaceUserPresence_PresentPassive) = 1, PresentActive (HolographicSpaceUserPresence_PresentActive) = 2,
+    Absent = 0, PresentPassive = 1, PresentActive = 2,
 }}
 RT_STRUCT! { struct HolographicStereoTransform {
     Left: foundation::numerics::Matrix4x4, Right: foundation::numerics::Matrix4x4,
@@ -2097,7 +2097,7 @@ RT_STRUCT! { struct HolographicStereoTransform {
 pub mod imaging { // Windows.Graphics.Imaging
 use ::prelude::*;
 RT_ENUM! { enum BitmapAlphaMode: i32 {
-    Premultiplied (BitmapAlphaMode_Premultiplied) = 0, Straight (BitmapAlphaMode_Straight) = 1, Ignore (BitmapAlphaMode_Ignore) = 2,
+    Premultiplied = 0, Straight = 1, Ignore = 2,
 }}
 RT_STRUCT! { struct BitmapBounds {
     X: u32, Y: u32, Width: u32, Height: u32,
@@ -2121,7 +2121,7 @@ impl IBitmapBuffer {
 }
 RT_CLASS!{class BitmapBuffer: IBitmapBuffer}
 RT_ENUM! { enum BitmapBufferAccessMode: i32 {
-    Read (BitmapBufferAccessMode_Read) = 0, ReadWrite (BitmapBufferAccessMode_ReadWrite) = 1, Write (BitmapBufferAccessMode_Write) = 2,
+    Read = 0, ReadWrite = 1, Write = 2,
 }}
 DEFINE_IID!(IID_IBitmapCodecInformation, 1074572018, 50352, 17298, 163, 176, 111, 111, 155, 169, 92, 180);
 RT_INTERFACE!{interface IBitmapCodecInformation(IBitmapCodecInformationVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapCodecInformation] {
@@ -2535,7 +2535,7 @@ impl IBitmapEncoderWithSoftwareBitmap {
     }}
 }
 RT_ENUM! { enum BitmapFlip: i32 {
-    None (BitmapFlip_None) = 0, Horizontal (BitmapFlip_Horizontal) = 1, Vertical (BitmapFlip_Vertical) = 2,
+    None = 0, Horizontal = 1, Vertical = 2,
 }}
 DEFINE_IID!(IID_IBitmapFrame, 1923389980, 32897, 17293, 145, 188, 148, 236, 252, 129, 133, 198);
 RT_INTERFACE!{interface IBitmapFrame(IBitmapFrameVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapFrame] {
@@ -2639,10 +2639,10 @@ impl IBitmapFrameWithSoftwareBitmap {
     }}
 }
 RT_ENUM! { enum BitmapInterpolationMode: i32 {
-    NearestNeighbor (BitmapInterpolationMode_NearestNeighbor) = 0, Linear (BitmapInterpolationMode_Linear) = 1, Cubic (BitmapInterpolationMode_Cubic) = 2, Fant (BitmapInterpolationMode_Fant) = 3,
+    NearestNeighbor = 0, Linear = 1, Cubic = 2, Fant = 3,
 }}
 RT_ENUM! { enum BitmapPixelFormat: i32 {
-    Unknown (BitmapPixelFormat_Unknown) = 0, Rgba16 (BitmapPixelFormat_Rgba16) = 12, Rgba8 (BitmapPixelFormat_Rgba8) = 30, Gray16 (BitmapPixelFormat_Gray16) = 57, Gray8 (BitmapPixelFormat_Gray8) = 62, Bgra8 (BitmapPixelFormat_Bgra8) = 87, Nv12 (BitmapPixelFormat_Nv12) = 103, P010 (BitmapPixelFormat_P010) = 104, Yuy2 (BitmapPixelFormat_Yuy2) = 107,
+    Unknown = 0, Rgba16 = 12, Rgba8 = 30, Gray16 = 57, Gray8 = 62, Bgra8 = 87, Nv12 = 103, P010 = 104, Yuy2 = 107,
 }}
 RT_STRUCT! { struct BitmapPlaneDescription {
     StartIndex: i32, Width: i32, Height: i32, Stride: i32,
@@ -2675,7 +2675,7 @@ RT_CLASS!{class BitmapPropertySet: foundation::collections::IMap<HString, Bitmap
 impl RtActivatable<IActivationFactory> for BitmapPropertySet {}
 DEFINE_CLSID!(BitmapPropertySet(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,80,114,111,112,101,114,116,121,83,101,116,0]) [CLSID_BitmapPropertySet]);
 RT_ENUM! { enum BitmapRotation: i32 {
-    None (BitmapRotation_None) = 0, Clockwise90Degrees (BitmapRotation_Clockwise90Degrees) = 1, Clockwise180Degrees (BitmapRotation_Clockwise180Degrees) = 2, Clockwise270Degrees (BitmapRotation_Clockwise270Degrees) = 3,
+    None = 0, Clockwise90Degrees = 1, Clockwise180Degrees = 2, Clockwise270Degrees = 3,
 }}
 RT_STRUCT! { struct BitmapSize {
     Width: u32, Height: u32,
@@ -2791,15 +2791,15 @@ impl IBitmapTypedValueFactory {
     }}
 }
 RT_ENUM! { enum ColorManagementMode: i32 {
-    DoNotColorManage (ColorManagementMode_DoNotColorManage) = 0, ColorManageToSRgb (ColorManagementMode_ColorManageToSRgb) = 1,
+    DoNotColorManage = 0, ColorManageToSRgb = 1,
 }}
 RT_ENUM! { enum ExifOrientationMode: i32 {
-    IgnoreExifOrientation (ExifOrientationMode_IgnoreExifOrientation) = 0, RespectExifOrientation (ExifOrientationMode_RespectExifOrientation) = 1,
+    IgnoreExifOrientation = 0, RespectExifOrientation = 1,
 }}
 #[cfg(feature="windows-storage")] RT_CLASS!{class ImageStream: super::super::storage::streams::IRandomAccessStreamWithContentType}
 #[cfg(not(feature="windows-storage"))] RT_CLASS!{class ImageStream: IInspectable}
 RT_ENUM! { enum JpegSubsamplingMode: i32 {
-    Default (JpegSubsamplingMode_Default) = 0, Y4Cb2Cr0 (JpegSubsamplingMode_Y4Cb2Cr0) = 1, Y4Cb2Cr2 (JpegSubsamplingMode_Y4Cb2Cr2) = 2, Y4Cb4Cr4 (JpegSubsamplingMode_Y4Cb4Cr4) = 3,
+    Default = 0, Y4Cb2Cr0 = 1, Y4Cb2Cr2 = 2, Y4Cb4Cr4 = 3,
 }}
 DEFINE_IID!(IID_IPixelDataProvider, 3716357925, 6236, 17813, 159, 185, 204, 190, 110, 193, 138, 111);
 RT_INTERFACE!{interface IPixelDataProvider(IPixelDataProviderVtbl): IInspectable(IInspectableVtbl) [IID_IPixelDataProvider] {
@@ -2814,7 +2814,7 @@ impl IPixelDataProvider {
 }
 RT_CLASS!{class PixelDataProvider: IPixelDataProvider}
 RT_ENUM! { enum PngFilterMode: i32 {
-    Automatic (PngFilterMode_Automatic) = 0, None (PngFilterMode_None) = 1, Sub (PngFilterMode_Sub) = 2, Up (PngFilterMode_Up) = 3, Average (PngFilterMode_Average) = 4, Paeth (PngFilterMode_Paeth) = 5, Adaptive (PngFilterMode_Adaptive) = 6,
+    Automatic = 0, None = 1, Sub = 2, Up = 3, Average = 4, Paeth = 5, Adaptive = 6,
 }}
 DEFINE_IID!(IID_ISoftwareBitmap, 1755186952, 32495, 18495, 150, 63, 218, 147, 136, 24, 224, 115);
 RT_INTERFACE!{interface ISoftwareBitmap(ISoftwareBitmapVtbl): IInspectable(IInspectableVtbl) [IID_ISoftwareBitmap] {
@@ -3002,32 +3002,32 @@ impl ISoftwareBitmapStatics {
     }}
 }
 RT_ENUM! { enum TiffCompressionMode: i32 {
-    Automatic (TiffCompressionMode_Automatic) = 0, None (TiffCompressionMode_None) = 1, Ccitt3 (TiffCompressionMode_Ccitt3) = 2, Ccitt4 (TiffCompressionMode_Ccitt4) = 3, Lzw (TiffCompressionMode_Lzw) = 4, Rle (TiffCompressionMode_Rle) = 5, Zip (TiffCompressionMode_Zip) = 6, LzwhDifferencing (TiffCompressionMode_LzwhDifferencing) = 7,
+    Automatic = 0, None = 1, Ccitt3 = 2, Ccitt4 = 3, Lzw = 4, Rle = 5, Zip = 6, LzwhDifferencing = 7,
 }}
 } // Windows.Graphics.Imaging
 pub mod printing { // Windows.Graphics.Printing
 use ::prelude::*;
 RT_ENUM! { enum PrintBinding: i32 {
-    Default (PrintBinding_Default) = 0, NotAvailable (PrintBinding_NotAvailable) = 1, PrinterCustom (PrintBinding_PrinterCustom) = 2, None (PrintBinding_None) = 3, Bale (PrintBinding_Bale) = 4, BindBottom (PrintBinding_BindBottom) = 5, BindLeft (PrintBinding_BindLeft) = 6, BindRight (PrintBinding_BindRight) = 7, BindTop (PrintBinding_BindTop) = 8, Booklet (PrintBinding_Booklet) = 9, EdgeStitchBottom (PrintBinding_EdgeStitchBottom) = 10, EdgeStitchLeft (PrintBinding_EdgeStitchLeft) = 11, EdgeStitchRight (PrintBinding_EdgeStitchRight) = 12, EdgeStitchTop (PrintBinding_EdgeStitchTop) = 13, Fold (PrintBinding_Fold) = 14, JogOffset (PrintBinding_JogOffset) = 15, Trim (PrintBinding_Trim) = 16,
+    Default = 0, NotAvailable = 1, PrinterCustom = 2, None = 3, Bale = 4, BindBottom = 5, BindLeft = 6, BindRight = 7, BindTop = 8, Booklet = 9, EdgeStitchBottom = 10, EdgeStitchLeft = 11, EdgeStitchRight = 12, EdgeStitchTop = 13, Fold = 14, JogOffset = 15, Trim = 16,
 }}
 RT_ENUM! { enum PrintBordering: i32 {
-    Default (PrintBordering_Default) = 0, NotAvailable (PrintBordering_NotAvailable) = 1, PrinterCustom (PrintBordering_PrinterCustom) = 2, Bordered (PrintBordering_Bordered) = 3, Borderless (PrintBordering_Borderless) = 4,
+    Default = 0, NotAvailable = 1, PrinterCustom = 2, Bordered = 3, Borderless = 4,
 }}
 RT_ENUM! { enum PrintCollation: i32 {
-    Default (PrintCollation_Default) = 0, NotAvailable (PrintCollation_NotAvailable) = 1, PrinterCustom (PrintCollation_PrinterCustom) = 2, Collated (PrintCollation_Collated) = 3, Uncollated (PrintCollation_Uncollated) = 4,
+    Default = 0, NotAvailable = 1, PrinterCustom = 2, Collated = 3, Uncollated = 4,
 }}
 RT_ENUM! { enum PrintColorMode: i32 {
-    Default (PrintColorMode_Default) = 0, NotAvailable (PrintColorMode_NotAvailable) = 1, PrinterCustom (PrintColorMode_PrinterCustom) = 2, Color (PrintColorMode_Color) = 3, Grayscale (PrintColorMode_Grayscale) = 4, Monochrome (PrintColorMode_Monochrome) = 5,
+    Default = 0, NotAvailable = 1, PrinterCustom = 2, Color = 3, Grayscale = 4, Monochrome = 5,
 }}
 DEFINE_IID!(IID_IPrintDocumentSource, 3738962992, 61931, 18399, 170, 230, 237, 84, 39, 81, 31, 1);
 RT_INTERFACE!{interface IPrintDocumentSource(IPrintDocumentSourceVtbl): IInspectable(IInspectableVtbl) [IID_IPrintDocumentSource] {
     
 }}
 RT_ENUM! { enum PrintDuplex: i32 {
-    Default (PrintDuplex_Default) = 0, NotAvailable (PrintDuplex_NotAvailable) = 1, PrinterCustom (PrintDuplex_PrinterCustom) = 2, OneSided (PrintDuplex_OneSided) = 3, TwoSidedShortEdge (PrintDuplex_TwoSidedShortEdge) = 4, TwoSidedLongEdge (PrintDuplex_TwoSidedLongEdge) = 5,
+    Default = 0, NotAvailable = 1, PrinterCustom = 2, OneSided = 3, TwoSidedShortEdge = 4, TwoSidedLongEdge = 5,
 }}
 RT_ENUM! { enum PrintHolePunch: i32 {
-    Default (PrintHolePunch_Default) = 0, NotAvailable (PrintHolePunch_NotAvailable) = 1, PrinterCustom (PrintHolePunch_PrinterCustom) = 2, None (PrintHolePunch_None) = 3, LeftEdge (PrintHolePunch_LeftEdge) = 4, RightEdge (PrintHolePunch_RightEdge) = 5, TopEdge (PrintHolePunch_TopEdge) = 6, BottomEdge (PrintHolePunch_BottomEdge) = 7,
+    Default = 0, NotAvailable = 1, PrinterCustom = 2, None = 3, LeftEdge = 4, RightEdge = 5, TopEdge = 6, BottomEdge = 7,
 }}
 DEFINE_IID!(IID_IPrintManager, 4280981140, 35993, 17661, 174, 74, 25, 217, 170, 154, 15, 10);
 RT_INTERFACE!{interface IPrintManager(IPrintManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPrintManager] {
@@ -3089,13 +3089,13 @@ impl IPrintManagerStatic2 {
     }}
 }
 RT_ENUM! { enum PrintMediaSize: i32 {
-    Default (PrintMediaSize_Default) = 0, NotAvailable (PrintMediaSize_NotAvailable) = 1, PrinterCustom (PrintMediaSize_PrinterCustom) = 2, BusinessCard (PrintMediaSize_BusinessCard) = 3, CreditCard (PrintMediaSize_CreditCard) = 4, IsoA0 (PrintMediaSize_IsoA0) = 5, IsoA1 (PrintMediaSize_IsoA1) = 6, IsoA10 (PrintMediaSize_IsoA10) = 7, IsoA2 (PrintMediaSize_IsoA2) = 8, IsoA3 (PrintMediaSize_IsoA3) = 9, IsoA3Extra (PrintMediaSize_IsoA3Extra) = 10, IsoA3Rotated (PrintMediaSize_IsoA3Rotated) = 11, IsoA4 (PrintMediaSize_IsoA4) = 12, IsoA4Extra (PrintMediaSize_IsoA4Extra) = 13, IsoA4Rotated (PrintMediaSize_IsoA4Rotated) = 14, IsoA5 (PrintMediaSize_IsoA5) = 15, IsoA5Extra (PrintMediaSize_IsoA5Extra) = 16, IsoA5Rotated (PrintMediaSize_IsoA5Rotated) = 17, IsoA6 (PrintMediaSize_IsoA6) = 18, IsoA6Rotated (PrintMediaSize_IsoA6Rotated) = 19, IsoA7 (PrintMediaSize_IsoA7) = 20, IsoA8 (PrintMediaSize_IsoA8) = 21, IsoA9 (PrintMediaSize_IsoA9) = 22, IsoB0 (PrintMediaSize_IsoB0) = 23, IsoB1 (PrintMediaSize_IsoB1) = 24, IsoB10 (PrintMediaSize_IsoB10) = 25, IsoB2 (PrintMediaSize_IsoB2) = 26, IsoB3 (PrintMediaSize_IsoB3) = 27, IsoB4 (PrintMediaSize_IsoB4) = 28, IsoB4Envelope (PrintMediaSize_IsoB4Envelope) = 29, IsoB5Envelope (PrintMediaSize_IsoB5Envelope) = 30, IsoB5Extra (PrintMediaSize_IsoB5Extra) = 31, IsoB7 (PrintMediaSize_IsoB7) = 32, IsoB8 (PrintMediaSize_IsoB8) = 33, IsoB9 (PrintMediaSize_IsoB9) = 34, IsoC0 (PrintMediaSize_IsoC0) = 35, IsoC1 (PrintMediaSize_IsoC1) = 36, IsoC10 (PrintMediaSize_IsoC10) = 37, IsoC2 (PrintMediaSize_IsoC2) = 38, IsoC3 (PrintMediaSize_IsoC3) = 39, IsoC3Envelope (PrintMediaSize_IsoC3Envelope) = 40, IsoC4 (PrintMediaSize_IsoC4) = 41, IsoC4Envelope (PrintMediaSize_IsoC4Envelope) = 42, IsoC5 (PrintMediaSize_IsoC5) = 43, IsoC5Envelope (PrintMediaSize_IsoC5Envelope) = 44, IsoC6 (PrintMediaSize_IsoC6) = 45, IsoC6C5Envelope (PrintMediaSize_IsoC6C5Envelope) = 46, IsoC6Envelope (PrintMediaSize_IsoC6Envelope) = 47, IsoC7 (PrintMediaSize_IsoC7) = 48, IsoC8 (PrintMediaSize_IsoC8) = 49, IsoC9 (PrintMediaSize_IsoC9) = 50, IsoDLEnvelope (PrintMediaSize_IsoDLEnvelope) = 51, IsoDLEnvelopeRotated (PrintMediaSize_IsoDLEnvelopeRotated) = 52, IsoSRA3 (PrintMediaSize_IsoSRA3) = 53, Japan2LPhoto (PrintMediaSize_Japan2LPhoto) = 54, JapanChou3Envelope (PrintMediaSize_JapanChou3Envelope) = 55, JapanChou3EnvelopeRotated (PrintMediaSize_JapanChou3EnvelopeRotated) = 56, JapanChou4Envelope (PrintMediaSize_JapanChou4Envelope) = 57, JapanChou4EnvelopeRotated (PrintMediaSize_JapanChou4EnvelopeRotated) = 58, JapanDoubleHagakiPostcard (PrintMediaSize_JapanDoubleHagakiPostcard) = 59, JapanDoubleHagakiPostcardRotated (PrintMediaSize_JapanDoubleHagakiPostcardRotated) = 60, JapanHagakiPostcard (PrintMediaSize_JapanHagakiPostcard) = 61, JapanHagakiPostcardRotated (PrintMediaSize_JapanHagakiPostcardRotated) = 62, JapanKaku2Envelope (PrintMediaSize_JapanKaku2Envelope) = 63, JapanKaku2EnvelopeRotated (PrintMediaSize_JapanKaku2EnvelopeRotated) = 64, JapanKaku3Envelope (PrintMediaSize_JapanKaku3Envelope) = 65, JapanKaku3EnvelopeRotated (PrintMediaSize_JapanKaku3EnvelopeRotated) = 66, JapanLPhoto (PrintMediaSize_JapanLPhoto) = 67, JapanQuadrupleHagakiPostcard (PrintMediaSize_JapanQuadrupleHagakiPostcard) = 68, JapanYou1Envelope (PrintMediaSize_JapanYou1Envelope) = 69, JapanYou2Envelope (PrintMediaSize_JapanYou2Envelope) = 70, JapanYou3Envelope (PrintMediaSize_JapanYou3Envelope) = 71, JapanYou4Envelope (PrintMediaSize_JapanYou4Envelope) = 72, JapanYou4EnvelopeRotated (PrintMediaSize_JapanYou4EnvelopeRotated) = 73, JapanYou6Envelope (PrintMediaSize_JapanYou6Envelope) = 74, JapanYou6EnvelopeRotated (PrintMediaSize_JapanYou6EnvelopeRotated) = 75, JisB0 (PrintMediaSize_JisB0) = 76, JisB1 (PrintMediaSize_JisB1) = 77, JisB10 (PrintMediaSize_JisB10) = 78, JisB2 (PrintMediaSize_JisB2) = 79, JisB3 (PrintMediaSize_JisB3) = 80, JisB4 (PrintMediaSize_JisB4) = 81, JisB4Rotated (PrintMediaSize_JisB4Rotated) = 82, JisB5 (PrintMediaSize_JisB5) = 83, JisB5Rotated (PrintMediaSize_JisB5Rotated) = 84, JisB6 (PrintMediaSize_JisB6) = 85, JisB6Rotated (PrintMediaSize_JisB6Rotated) = 86, JisB7 (PrintMediaSize_JisB7) = 87, JisB8 (PrintMediaSize_JisB8) = 88, JisB9 (PrintMediaSize_JisB9) = 89, NorthAmerica10x11 (PrintMediaSize_NorthAmerica10x11) = 90, NorthAmerica10x12 (PrintMediaSize_NorthAmerica10x12) = 91, NorthAmerica10x14 (PrintMediaSize_NorthAmerica10x14) = 92, NorthAmerica11x17 (PrintMediaSize_NorthAmerica11x17) = 93, NorthAmerica14x17 (PrintMediaSize_NorthAmerica14x17) = 94, NorthAmerica4x6 (PrintMediaSize_NorthAmerica4x6) = 95, NorthAmerica4x8 (PrintMediaSize_NorthAmerica4x8) = 96, NorthAmerica5x7 (PrintMediaSize_NorthAmerica5x7) = 97, NorthAmerica8x10 (PrintMediaSize_NorthAmerica8x10) = 98, NorthAmerica9x11 (PrintMediaSize_NorthAmerica9x11) = 99, NorthAmericaArchitectureASheet (PrintMediaSize_NorthAmericaArchitectureASheet) = 100, NorthAmericaArchitectureBSheet (PrintMediaSize_NorthAmericaArchitectureBSheet) = 101, NorthAmericaArchitectureCSheet (PrintMediaSize_NorthAmericaArchitectureCSheet) = 102, NorthAmericaArchitectureDSheet (PrintMediaSize_NorthAmericaArchitectureDSheet) = 103, NorthAmericaArchitectureESheet (PrintMediaSize_NorthAmericaArchitectureESheet) = 104, NorthAmericaCSheet (PrintMediaSize_NorthAmericaCSheet) = 105, NorthAmericaDSheet (PrintMediaSize_NorthAmericaDSheet) = 106, NorthAmericaESheet (PrintMediaSize_NorthAmericaESheet) = 107, NorthAmericaExecutive (PrintMediaSize_NorthAmericaExecutive) = 108, NorthAmericaGermanLegalFanfold (PrintMediaSize_NorthAmericaGermanLegalFanfold) = 109, NorthAmericaGermanStandardFanfold (PrintMediaSize_NorthAmericaGermanStandardFanfold) = 110, NorthAmericaLegal (PrintMediaSize_NorthAmericaLegal) = 111, NorthAmericaLegalExtra (PrintMediaSize_NorthAmericaLegalExtra) = 112, NorthAmericaLetter (PrintMediaSize_NorthAmericaLetter) = 113, NorthAmericaLetterExtra (PrintMediaSize_NorthAmericaLetterExtra) = 114, NorthAmericaLetterPlus (PrintMediaSize_NorthAmericaLetterPlus) = 115, NorthAmericaLetterRotated (PrintMediaSize_NorthAmericaLetterRotated) = 116, NorthAmericaMonarchEnvelope (PrintMediaSize_NorthAmericaMonarchEnvelope) = 117, NorthAmericaNote (PrintMediaSize_NorthAmericaNote) = 118, NorthAmericaNumber10Envelope (PrintMediaSize_NorthAmericaNumber10Envelope) = 119, NorthAmericaNumber10EnvelopeRotated (PrintMediaSize_NorthAmericaNumber10EnvelopeRotated) = 120, NorthAmericaNumber11Envelope (PrintMediaSize_NorthAmericaNumber11Envelope) = 121, NorthAmericaNumber12Envelope (PrintMediaSize_NorthAmericaNumber12Envelope) = 122, NorthAmericaNumber14Envelope (PrintMediaSize_NorthAmericaNumber14Envelope) = 123, NorthAmericaNumber9Envelope (PrintMediaSize_NorthAmericaNumber9Envelope) = 124, NorthAmericaPersonalEnvelope (PrintMediaSize_NorthAmericaPersonalEnvelope) = 125, NorthAmericaQuarto (PrintMediaSize_NorthAmericaQuarto) = 126, NorthAmericaStatement (PrintMediaSize_NorthAmericaStatement) = 127, NorthAmericaSuperA (PrintMediaSize_NorthAmericaSuperA) = 128, NorthAmericaSuperB (PrintMediaSize_NorthAmericaSuperB) = 129, NorthAmericaTabloid (PrintMediaSize_NorthAmericaTabloid) = 130, NorthAmericaTabloidExtra (PrintMediaSize_NorthAmericaTabloidExtra) = 131, OtherMetricA3Plus (PrintMediaSize_OtherMetricA3Plus) = 132, OtherMetricA4Plus (PrintMediaSize_OtherMetricA4Plus) = 133, OtherMetricFolio (PrintMediaSize_OtherMetricFolio) = 134, OtherMetricInviteEnvelope (PrintMediaSize_OtherMetricInviteEnvelope) = 135, OtherMetricItalianEnvelope (PrintMediaSize_OtherMetricItalianEnvelope) = 136, Prc10Envelope (PrintMediaSize_Prc10Envelope) = 137, Prc10EnvelopeRotated (PrintMediaSize_Prc10EnvelopeRotated) = 138, Prc16K (PrintMediaSize_Prc16K) = 139, Prc16KRotated (PrintMediaSize_Prc16KRotated) = 140, Prc1Envelope (PrintMediaSize_Prc1Envelope) = 141, Prc1EnvelopeRotated (PrintMediaSize_Prc1EnvelopeRotated) = 142, Prc2Envelope (PrintMediaSize_Prc2Envelope) = 143, Prc2EnvelopeRotated (PrintMediaSize_Prc2EnvelopeRotated) = 144, Prc32K (PrintMediaSize_Prc32K) = 145, Prc32KBig (PrintMediaSize_Prc32KBig) = 146, Prc32KRotated (PrintMediaSize_Prc32KRotated) = 147, Prc3Envelope (PrintMediaSize_Prc3Envelope) = 148, Prc3EnvelopeRotated (PrintMediaSize_Prc3EnvelopeRotated) = 149, Prc4Envelope (PrintMediaSize_Prc4Envelope) = 150, Prc4EnvelopeRotated (PrintMediaSize_Prc4EnvelopeRotated) = 151, Prc5Envelope (PrintMediaSize_Prc5Envelope) = 152, Prc5EnvelopeRotated (PrintMediaSize_Prc5EnvelopeRotated) = 153, Prc6Envelope (PrintMediaSize_Prc6Envelope) = 154, Prc6EnvelopeRotated (PrintMediaSize_Prc6EnvelopeRotated) = 155, Prc7Envelope (PrintMediaSize_Prc7Envelope) = 156, Prc7EnvelopeRotated (PrintMediaSize_Prc7EnvelopeRotated) = 157, Prc8Envelope (PrintMediaSize_Prc8Envelope) = 158, Prc8EnvelopeRotated (PrintMediaSize_Prc8EnvelopeRotated) = 159, Prc9Envelope (PrintMediaSize_Prc9Envelope) = 160, Prc9EnvelopeRotated (PrintMediaSize_Prc9EnvelopeRotated) = 161, Roll04Inch (PrintMediaSize_Roll04Inch) = 162, Roll06Inch (PrintMediaSize_Roll06Inch) = 163, Roll08Inch (PrintMediaSize_Roll08Inch) = 164, Roll12Inch (PrintMediaSize_Roll12Inch) = 165, Roll15Inch (PrintMediaSize_Roll15Inch) = 166, Roll18Inch (PrintMediaSize_Roll18Inch) = 167, Roll22Inch (PrintMediaSize_Roll22Inch) = 168, Roll24Inch (PrintMediaSize_Roll24Inch) = 169, Roll30Inch (PrintMediaSize_Roll30Inch) = 170, Roll36Inch (PrintMediaSize_Roll36Inch) = 171, Roll54Inch (PrintMediaSize_Roll54Inch) = 172,
+    Default = 0, NotAvailable = 1, PrinterCustom = 2, BusinessCard = 3, CreditCard = 4, IsoA0 = 5, IsoA1 = 6, IsoA10 = 7, IsoA2 = 8, IsoA3 = 9, IsoA3Extra = 10, IsoA3Rotated = 11, IsoA4 = 12, IsoA4Extra = 13, IsoA4Rotated = 14, IsoA5 = 15, IsoA5Extra = 16, IsoA5Rotated = 17, IsoA6 = 18, IsoA6Rotated = 19, IsoA7 = 20, IsoA8 = 21, IsoA9 = 22, IsoB0 = 23, IsoB1 = 24, IsoB10 = 25, IsoB2 = 26, IsoB3 = 27, IsoB4 = 28, IsoB4Envelope = 29, IsoB5Envelope = 30, IsoB5Extra = 31, IsoB7 = 32, IsoB8 = 33, IsoB9 = 34, IsoC0 = 35, IsoC1 = 36, IsoC10 = 37, IsoC2 = 38, IsoC3 = 39, IsoC3Envelope = 40, IsoC4 = 41, IsoC4Envelope = 42, IsoC5 = 43, IsoC5Envelope = 44, IsoC6 = 45, IsoC6C5Envelope = 46, IsoC6Envelope = 47, IsoC7 = 48, IsoC8 = 49, IsoC9 = 50, IsoDLEnvelope = 51, IsoDLEnvelopeRotated = 52, IsoSRA3 = 53, Japan2LPhoto = 54, JapanChou3Envelope = 55, JapanChou3EnvelopeRotated = 56, JapanChou4Envelope = 57, JapanChou4EnvelopeRotated = 58, JapanDoubleHagakiPostcard = 59, JapanDoubleHagakiPostcardRotated = 60, JapanHagakiPostcard = 61, JapanHagakiPostcardRotated = 62, JapanKaku2Envelope = 63, JapanKaku2EnvelopeRotated = 64, JapanKaku3Envelope = 65, JapanKaku3EnvelopeRotated = 66, JapanLPhoto = 67, JapanQuadrupleHagakiPostcard = 68, JapanYou1Envelope = 69, JapanYou2Envelope = 70, JapanYou3Envelope = 71, JapanYou4Envelope = 72, JapanYou4EnvelopeRotated = 73, JapanYou6Envelope = 74, JapanYou6EnvelopeRotated = 75, JisB0 = 76, JisB1 = 77, JisB10 = 78, JisB2 = 79, JisB3 = 80, JisB4 = 81, JisB4Rotated = 82, JisB5 = 83, JisB5Rotated = 84, JisB6 = 85, JisB6Rotated = 86, JisB7 = 87, JisB8 = 88, JisB9 = 89, NorthAmerica10x11 = 90, NorthAmerica10x12 = 91, NorthAmerica10x14 = 92, NorthAmerica11x17 = 93, NorthAmerica14x17 = 94, NorthAmerica4x6 = 95, NorthAmerica4x8 = 96, NorthAmerica5x7 = 97, NorthAmerica8x10 = 98, NorthAmerica9x11 = 99, NorthAmericaArchitectureASheet = 100, NorthAmericaArchitectureBSheet = 101, NorthAmericaArchitectureCSheet = 102, NorthAmericaArchitectureDSheet = 103, NorthAmericaArchitectureESheet = 104, NorthAmericaCSheet = 105, NorthAmericaDSheet = 106, NorthAmericaESheet = 107, NorthAmericaExecutive = 108, NorthAmericaGermanLegalFanfold = 109, NorthAmericaGermanStandardFanfold = 110, NorthAmericaLegal = 111, NorthAmericaLegalExtra = 112, NorthAmericaLetter = 113, NorthAmericaLetterExtra = 114, NorthAmericaLetterPlus = 115, NorthAmericaLetterRotated = 116, NorthAmericaMonarchEnvelope = 117, NorthAmericaNote = 118, NorthAmericaNumber10Envelope = 119, NorthAmericaNumber10EnvelopeRotated = 120, NorthAmericaNumber11Envelope = 121, NorthAmericaNumber12Envelope = 122, NorthAmericaNumber14Envelope = 123, NorthAmericaNumber9Envelope = 124, NorthAmericaPersonalEnvelope = 125, NorthAmericaQuarto = 126, NorthAmericaStatement = 127, NorthAmericaSuperA = 128, NorthAmericaSuperB = 129, NorthAmericaTabloid = 130, NorthAmericaTabloidExtra = 131, OtherMetricA3Plus = 132, OtherMetricA4Plus = 133, OtherMetricFolio = 134, OtherMetricInviteEnvelope = 135, OtherMetricItalianEnvelope = 136, Prc10Envelope = 137, Prc10EnvelopeRotated = 138, Prc16K = 139, Prc16KRotated = 140, Prc1Envelope = 141, Prc1EnvelopeRotated = 142, Prc2Envelope = 143, Prc2EnvelopeRotated = 144, Prc32K = 145, Prc32KBig = 146, Prc32KRotated = 147, Prc3Envelope = 148, Prc3EnvelopeRotated = 149, Prc4Envelope = 150, Prc4EnvelopeRotated = 151, Prc5Envelope = 152, Prc5EnvelopeRotated = 153, Prc6Envelope = 154, Prc6EnvelopeRotated = 155, Prc7Envelope = 156, Prc7EnvelopeRotated = 157, Prc8Envelope = 158, Prc8EnvelopeRotated = 159, Prc9Envelope = 160, Prc9EnvelopeRotated = 161, Roll04Inch = 162, Roll06Inch = 163, Roll08Inch = 164, Roll12Inch = 165, Roll15Inch = 166, Roll18Inch = 167, Roll22Inch = 168, Roll24Inch = 169, Roll30Inch = 170, Roll36Inch = 171, Roll54Inch = 172,
 }}
 RT_ENUM! { enum PrintMediaType: i32 {
-    Default (PrintMediaType_Default) = 0, NotAvailable (PrintMediaType_NotAvailable) = 1, PrinterCustom (PrintMediaType_PrinterCustom) = 2, AutoSelect (PrintMediaType_AutoSelect) = 3, Archival (PrintMediaType_Archival) = 4, BackPrintFilm (PrintMediaType_BackPrintFilm) = 5, Bond (PrintMediaType_Bond) = 6, CardStock (PrintMediaType_CardStock) = 7, Continuous (PrintMediaType_Continuous) = 8, EnvelopePlain (PrintMediaType_EnvelopePlain) = 9, EnvelopeWindow (PrintMediaType_EnvelopeWindow) = 10, Fabric (PrintMediaType_Fabric) = 11, HighResolution (PrintMediaType_HighResolution) = 12, Label (PrintMediaType_Label) = 13, MultiLayerForm (PrintMediaType_MultiLayerForm) = 14, MultiPartForm (PrintMediaType_MultiPartForm) = 15, Photographic (PrintMediaType_Photographic) = 16, PhotographicFilm (PrintMediaType_PhotographicFilm) = 17, PhotographicGlossy (PrintMediaType_PhotographicGlossy) = 18, PhotographicHighGloss (PrintMediaType_PhotographicHighGloss) = 19, PhotographicMatte (PrintMediaType_PhotographicMatte) = 20, PhotographicSatin (PrintMediaType_PhotographicSatin) = 21, PhotographicSemiGloss (PrintMediaType_PhotographicSemiGloss) = 22, Plain (PrintMediaType_Plain) = 23, Screen (PrintMediaType_Screen) = 24, ScreenPaged (PrintMediaType_ScreenPaged) = 25, Stationery (PrintMediaType_Stationery) = 26, TabStockFull (PrintMediaType_TabStockFull) = 27, TabStockPreCut (PrintMediaType_TabStockPreCut) = 28, Transparency (PrintMediaType_Transparency) = 29, TShirtTransfer (PrintMediaType_TShirtTransfer) = 30, None (PrintMediaType_None) = 31,
+    Default = 0, NotAvailable = 1, PrinterCustom = 2, AutoSelect = 3, Archival = 4, BackPrintFilm = 5, Bond = 6, CardStock = 7, Continuous = 8, EnvelopePlain = 9, EnvelopeWindow = 10, Fabric = 11, HighResolution = 12, Label = 13, MultiLayerForm = 14, MultiPartForm = 15, Photographic = 16, PhotographicFilm = 17, PhotographicGlossy = 18, PhotographicHighGloss = 19, PhotographicMatte = 20, PhotographicSatin = 21, PhotographicSemiGloss = 22, Plain = 23, Screen = 24, ScreenPaged = 25, Stationery = 26, TabStockFull = 27, TabStockPreCut = 28, Transparency = 29, TShirtTransfer = 30, None = 31,
 }}
 RT_ENUM! { enum PrintOrientation: i32 {
-    Default (PrintOrientation_Default) = 0, NotAvailable (PrintOrientation_NotAvailable) = 1, PrinterCustom (PrintOrientation_PrinterCustom) = 2, Portrait (PrintOrientation_Portrait) = 3, PortraitFlipped (PrintOrientation_PortraitFlipped) = 4, Landscape (PrintOrientation_Landscape) = 5, LandscapeFlipped (PrintOrientation_LandscapeFlipped) = 6,
+    Default = 0, NotAvailable = 1, PrinterCustom = 2, Portrait = 3, PortraitFlipped = 4, Landscape = 5, LandscapeFlipped = 6,
 }}
 RT_STRUCT! { struct PrintPageDescription {
     PageSize: foundation::Size, ImageableRect: foundation::Rect, DpiX: u32, DpiY: u32,
@@ -3248,10 +3248,10 @@ impl IPrintPageRangeOptions {
 }
 RT_CLASS!{class PrintPageRangeOptions: IPrintPageRangeOptions}
 RT_ENUM! { enum PrintQuality: i32 {
-    Default (PrintQuality_Default) = 0, NotAvailable (PrintQuality_NotAvailable) = 1, PrinterCustom (PrintQuality_PrinterCustom) = 2, Automatic (PrintQuality_Automatic) = 3, Draft (PrintQuality_Draft) = 4, Fax (PrintQuality_Fax) = 5, High (PrintQuality_High) = 6, Normal (PrintQuality_Normal) = 7, Photographic (PrintQuality_Photographic) = 8, Text (PrintQuality_Text) = 9,
+    Default = 0, NotAvailable = 1, PrinterCustom = 2, Automatic = 3, Draft = 4, Fax = 5, High = 6, Normal = 7, Photographic = 8, Text = 9,
 }}
 RT_ENUM! { enum PrintStaple: i32 {
-    Default (PrintStaple_Default) = 0, NotAvailable (PrintStaple_NotAvailable) = 1, PrinterCustom (PrintStaple_PrinterCustom) = 2, None (PrintStaple_None) = 3, StapleTopLeft (PrintStaple_StapleTopLeft) = 4, StapleTopRight (PrintStaple_StapleTopRight) = 5, StapleBottomLeft (PrintStaple_StapleBottomLeft) = 6, StapleBottomRight (PrintStaple_StapleBottomRight) = 7, StapleDualLeft (PrintStaple_StapleDualLeft) = 8, StapleDualRight (PrintStaple_StapleDualRight) = 9, StapleDualTop (PrintStaple_StapleDualTop) = 10, StapleDualBottom (PrintStaple_StapleDualBottom) = 11, SaddleStitch (PrintStaple_SaddleStitch) = 12,
+    Default = 0, NotAvailable = 1, PrinterCustom = 2, None = 3, StapleTopLeft = 4, StapleTopRight = 5, StapleBottomLeft = 6, StapleBottomRight = 7, StapleDualLeft = 8, StapleDualRight = 9, StapleDualTop = 10, StapleDualBottom = 11, SaddleStitch = 12,
 }}
 DEFINE_IID!(IID_IPrintTask, 1641546311, 27894, 20397, 132, 226, 165, 232, 46, 45, 76, 235);
 RT_INTERFACE!{interface IPrintTask(IPrintTaskVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTask] {
@@ -3351,7 +3351,7 @@ impl IPrintTaskCompletedEventArgs {
 }
 RT_CLASS!{class PrintTaskCompletedEventArgs: IPrintTaskCompletedEventArgs}
 RT_ENUM! { enum PrintTaskCompletion: i32 {
-    Abandoned (PrintTaskCompletion_Abandoned) = 0, Canceled (PrintTaskCompletion_Canceled) = 1, Failed (PrintTaskCompletion_Failed) = 2, Submitted (PrintTaskCompletion_Submitted) = 3,
+    Abandoned = 0, Canceled = 1, Failed = 2, Submitted = 3,
 }}
 DEFINE_IID!(IID_IPrintTaskOptions, 1510631099, 53897, 16827, 150, 221, 87, 226, 131, 56, 174, 63);
 RT_INTERFACE!{interface IPrintTaskOptions(IPrintTaskOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptions] {
@@ -4333,10 +4333,10 @@ impl IPrintOptionDetails {
     }}
 }
 RT_ENUM! { enum PrintOptionStates: u32 {
-    None (PrintOptionStates_None) = 0, Enabled (PrintOptionStates_Enabled) = 1, Constrained (PrintOptionStates_Constrained) = 2,
+    None = 0, Enabled = 1, Constrained = 2,
 }}
 RT_ENUM! { enum PrintOptionType: i32 {
-    Unknown (PrintOptionType_Unknown) = 0, Number (PrintOptionType_Number) = 1, Text (PrintOptionType_Text) = 2, ItemList (PrintOptionType_ItemList) = 3, Toggle (PrintOptionType_Toggle) = 4,
+    Unknown = 0, Number = 1, Text = 2, ItemList = 3, Toggle = 4,
 }}
 DEFINE_IID!(IID_IPrintOrientationOptionDetails, 1187219577, 26336, 19872, 135, 180, 210, 84, 87, 130, 78, 183);
 RT_INTERFACE!{interface IPrintOrientationOptionDetails(IPrintOrientationOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintOrientationOptionDetails] {
@@ -4739,7 +4739,7 @@ impl IPrintTicketFeature {
 }
 RT_CLASS!{class PrintTicketFeature: IPrintTicketFeature}
 RT_ENUM! { enum PrintTicketFeatureSelectionType: i32 {
-    PickOne (PrintTicketFeatureSelectionType_PickOne) = 0, PickMany (PrintTicketFeatureSelectionType_PickMany) = 1,
+    PickOne = 0, PickMany = 1,
 }}
 DEFINE_IID!(IID_IPrintTicketOption, 2961624976, 45927, 20043, 189, 72, 156, 120, 160, 187, 49, 206);
 RT_INTERFACE!{interface IPrintTicketOption(IPrintTicketOptionVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTicketOption] {
@@ -4799,7 +4799,7 @@ impl IPrintTicketOption {
 }
 RT_CLASS!{class PrintTicketOption: IPrintTicketOption}
 RT_ENUM! { enum PrintTicketParameterDataType: i32 {
-    Integer (PrintTicketParameterDataType_Integer) = 0, NumericString (PrintTicketParameterDataType_NumericString) = 1, String (PrintTicketParameterDataType_String) = 2,
+    Integer = 0, NumericString = 1, String = 2,
 }}
 DEFINE_IID!(IID_IPrintTicketParameterDefinition, 3602560228, 10594, 19457, 183, 243, 154, 146, 148, 235, 131, 53);
 RT_INTERFACE!{interface IPrintTicketParameterDefinition(IPrintTicketParameterDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTicketParameterDefinition] {
@@ -4911,7 +4911,7 @@ impl IPrintTicketValue {
 }
 RT_CLASS!{class PrintTicketValue: IPrintTicketValue}
 RT_ENUM! { enum PrintTicketValueType: i32 {
-    Integer (PrintTicketValueType_Integer) = 0, String (PrintTicketValueType_String) = 1, Unknown (PrintTicketValueType_Unknown) = 2,
+    Integer = 0, String = 1, Unknown = 2,
 }}
 DEFINE_IID!(IID_IWorkflowPrintTicket, 1104487045, 13800, 17550, 168, 197, 228, 182, 162, 207, 130, 108);
 RT_INTERFACE!{interface IWorkflowPrintTicket(IWorkflowPrintTicketVtbl): IInspectable(IInspectableVtbl) [IID_IWorkflowPrintTicket] {
@@ -5263,7 +5263,7 @@ RT_INTERFACE!{interface IPrintWorkflowObjectModelTargetPackage(IPrintWorkflowObj
 }}
 RT_CLASS!{class PrintWorkflowObjectModelTargetPackage: IPrintWorkflowObjectModelTargetPackage}
 RT_ENUM! { enum PrintWorkflowSessionStatus: i32 {
-    Started (PrintWorkflowSessionStatus_Started) = 0, Completed (PrintWorkflowSessionStatus_Completed) = 1, Aborted (PrintWorkflowSessionStatus_Aborted) = 2, Closed (PrintWorkflowSessionStatus_Closed) = 3,
+    Started = 0, Completed = 1, Aborted = 2, Closed = 3,
 }}
 DEFINE_IID!(IID_IPrintWorkflowSourceContent, 438879809, 52913, 17715, 187, 115, 251, 230, 62, 239, 219, 24);
 RT_INTERFACE!{interface IPrintWorkflowSourceContent(IPrintWorkflowSourceContentVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowSourceContent] {
@@ -5361,7 +5361,7 @@ impl IPrintWorkflowSubmittedOperation {
 }
 RT_CLASS!{class PrintWorkflowSubmittedOperation: IPrintWorkflowSubmittedOperation}
 RT_ENUM! { enum PrintWorkflowSubmittedStatus: i32 {
-    Succeeded (PrintWorkflowSubmittedStatus_Succeeded) = 0, Canceled (PrintWorkflowSubmittedStatus_Canceled) = 1, Failed (PrintWorkflowSubmittedStatus_Failed) = 2,
+    Succeeded = 0, Canceled = 1, Failed = 2,
 }}
 DEFINE_IID!(IID_IPrintWorkflowTarget, 702162796, 2675, 23277, 79, 61, 151, 13, 50, 81, 240, 87);
 RT_INTERFACE!{interface IPrintWorkflowTarget(IPrintWorkflowTargetVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowTarget] {
@@ -5535,10 +5535,10 @@ impl IPrint3DTaskCompletedEventArgs {
 }
 RT_CLASS!{class Print3DTaskCompletedEventArgs: IPrint3DTaskCompletedEventArgs}
 RT_ENUM! { enum Print3DTaskCompletion: i32 {
-    Abandoned (Print3DTaskCompletion_Abandoned) = 0, Canceled (Print3DTaskCompletion_Canceled) = 1, Failed (Print3DTaskCompletion_Failed) = 2, Slicing (Print3DTaskCompletion_Slicing) = 3, Submitted (Print3DTaskCompletion_Submitted) = 4,
+    Abandoned = 0, Canceled = 1, Failed = 2, Slicing = 3, Submitted = 4,
 }}
 RT_ENUM! { enum Print3DTaskDetail: i32 {
-    Unknown (Print3DTaskDetail_Unknown) = 0, ModelExceedsPrintBed (Print3DTaskDetail_ModelExceedsPrintBed) = 1, UploadFailed (Print3DTaskDetail_UploadFailed) = 2, InvalidMaterialSelection (Print3DTaskDetail_InvalidMaterialSelection) = 3, InvalidModel (Print3DTaskDetail_InvalidModel) = 4, ModelNotManifold (Print3DTaskDetail_ModelNotManifold) = 5, InvalidPrintTicket (Print3DTaskDetail_InvalidPrintTicket) = 6,
+    Unknown = 0, ModelExceedsPrintBed = 1, UploadFailed = 2, InvalidMaterialSelection = 3, InvalidModel = 4, ModelNotManifold = 5, InvalidPrintTicket = 6,
 }}
 DEFINE_IID!(IID_IPrint3DTaskRequest, 630572143, 8773, 19546, 135, 49, 13, 96, 77, 198, 188, 60);
 RT_INTERFACE!{interface IPrint3DTaskRequest(IPrint3DTaskRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskRequest] {
@@ -5797,7 +5797,7 @@ RT_STRUCT! { struct Printing3DBufferDescription {
     Format: Printing3DBufferFormat, Stride: u32,
 }}
 RT_ENUM! { enum Printing3DBufferFormat: i32 {
-    Unknown (Printing3DBufferFormat_Unknown) = 0, R32G32B32A32Float (Printing3DBufferFormat_R32G32B32A32Float) = 2, R32G32B32A32UInt (Printing3DBufferFormat_R32G32B32A32UInt) = 3, R32G32B32Float (Printing3DBufferFormat_R32G32B32Float) = 6, R32G32B32UInt (Printing3DBufferFormat_R32G32B32UInt) = 7, Printing3DDouble (Printing3DBufferFormat_Printing3DDouble) = 500, Printing3DUInt (Printing3DBufferFormat_Printing3DUInt) = 501,
+    Unknown = 0, R32G32B32A32Float = 2, R32G32B32A32UInt = 3, R32G32B32Float = 6, R32G32B32UInt = 7, Printing3DDouble = 500, Printing3DUInt = 501,
 }}
 DEFINE_IID!(IID_IPrinting3DColorMaterial, 3783891240, 31975, 17029, 163, 93, 241, 69, 201, 81, 12, 123);
 RT_INTERFACE!{interface IPrinting3DColorMaterial(IPrinting3DColorMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterial] {
@@ -6261,7 +6261,7 @@ RT_CLASS!{class Printing3DMesh: IPrinting3DMesh}
 impl RtActivatable<IActivationFactory> for Printing3DMesh {}
 DEFINE_CLSID!(Printing3DMesh(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,101,115,104,0]) [CLSID_Printing3DMesh]);
 RT_ENUM! { enum Printing3DMeshVerificationMode: i32 {
-    FindFirstError (Printing3DMeshVerificationMode_FindFirstError) = 0, FindAllErrors (Printing3DMeshVerificationMode_FindAllErrors) = 1,
+    FindFirstError = 0, FindAllErrors = 1,
 }}
 DEFINE_IID!(IID_IPrinting3DMeshVerificationResult, 425095610, 59706, 20106, 164, 111, 222, 168, 232, 82, 25, 126);
 RT_INTERFACE!{interface IPrinting3DMeshVerificationResult(IPrinting3DMeshVerificationResultVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMeshVerificationResult] {
@@ -6464,7 +6464,7 @@ RT_CLASS!{class Printing3DModelTexture: IPrinting3DModelTexture}
 impl RtActivatable<IActivationFactory> for Printing3DModelTexture {}
 DEFINE_CLSID!(Printing3DModelTexture(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,111,100,101,108,84,101,120,116,117,114,101,0]) [CLSID_Printing3DModelTexture]);
 RT_ENUM! { enum Printing3DModelUnit: i32 {
-    Meter (Printing3DModelUnit_Meter) = 0, Micron (Printing3DModelUnit_Micron) = 1, Millimeter (Printing3DModelUnit_Millimeter) = 2, Centimeter (Printing3DModelUnit_Centimeter) = 3, Inch (Printing3DModelUnit_Inch) = 4, Foot (Printing3DModelUnit_Foot) = 5,
+    Meter = 0, Micron = 1, Millimeter = 2, Centimeter = 3, Inch = 4, Foot = 5,
 }}
 DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterial, 631645515, 50921, 18509, 162, 20, 162, 94, 87, 118, 186, 98);
 RT_INTERFACE!{interface IPrinting3DMultiplePropertyMaterial(IPrinting3DMultiplePropertyMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMultiplePropertyMaterial] {
@@ -6523,10 +6523,10 @@ impl IPrinting3DMultiplePropertyMaterialGroupFactory {
     }}
 }
 RT_ENUM! { enum Printing3DObjectType: i32 {
-    Model (Printing3DObjectType_Model) = 0, Support (Printing3DObjectType_Support) = 1, Others (Printing3DObjectType_Others) = 2,
+    Model = 0, Support = 1, Others = 2,
 }}
 RT_ENUM! { enum Printing3DPackageCompression: i32 {
-    Low (Printing3DPackageCompression_Low) = 0, Medium (Printing3DPackageCompression_Medium) = 1, High (Printing3DPackageCompression_High) = 2,
+    Low = 0, Medium = 1, High = 2,
 }}
 DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterial, 2374257659, 2025, 18822, 152, 51, 141, 211, 212, 140, 104, 89);
 RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterial(IPrinting3DTexture2CoordMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterial] {
@@ -6622,7 +6622,7 @@ impl IPrinting3DTexture2CoordMaterialGroupFactory {
     }}
 }
 RT_ENUM! { enum Printing3DTextureEdgeBehavior: i32 {
-    None (Printing3DTextureEdgeBehavior_None) = 0, Wrap (Printing3DTextureEdgeBehavior_Wrap) = 1, Mirror (Printing3DTextureEdgeBehavior_Mirror) = 2, Clamp (Printing3DTextureEdgeBehavior_Clamp) = 3,
+    None = 0, Wrap = 1, Mirror = 2, Clamp = 3,
 }}
 DEFINE_IID!(IID_IPrinting3DTextureResource, 2802709293, 27313, 17582, 188, 69, 162, 115, 130, 192, 211, 140);
 RT_INTERFACE!{interface IPrinting3DTextureResource(IPrinting3DTextureResourceVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTextureResource] {

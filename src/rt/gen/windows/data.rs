@@ -106,7 +106,7 @@ impl IJsonErrorStatics2 {
     }}
 }
 RT_ENUM! { enum JsonErrorStatus: i32 {
-    Unknown (JsonErrorStatus_Unknown) = 0, InvalidJsonString (JsonErrorStatus_InvalidJsonString) = 1, InvalidJsonNumber (JsonErrorStatus_InvalidJsonNumber) = 2, JsonValueNotFound (JsonErrorStatus_JsonValueNotFound) = 3, ImplementationLimit (JsonErrorStatus_ImplementationLimit) = 4,
+    Unknown = 0, InvalidJsonString = 1, InvalidJsonNumber = 2, JsonValueNotFound = 3, ImplementationLimit = 4,
 }}
 DEFINE_IID!(IID_IJsonObject, 105784541, 10690, 20355, 154, 193, 158, 225, 21, 120, 190, 179);
 RT_INTERFACE!{interface IJsonObject(IJsonObjectVtbl): IInspectable(IInspectableVtbl) [IID_IJsonObject] {
@@ -342,7 +342,7 @@ impl IJsonValueStatics2 {
     }}
 }
 RT_ENUM! { enum JsonValueType: i32 {
-    Null (JsonValueType_Null) = 0, Boolean (JsonValueType_Boolean) = 1, Number (JsonValueType_Number) = 2, String (JsonValueType_String) = 3, Array (JsonValueType_Array) = 4, Object (JsonValueType_Object) = 5,
+    Null = 0, Boolean = 1, Number = 2, String = 3, Array = 4, Object = 5,
 }}
 } // Windows.Data.Json
 pub mod pdf { // Windows.Data.Pdf
@@ -585,13 +585,13 @@ RT_CLASS!{class PdfPageRenderOptions: IPdfPageRenderOptions}
 impl RtActivatable<IActivationFactory> for PdfPageRenderOptions {}
 DEFINE_CLSID!(PdfPageRenderOptions(&[87,105,110,100,111,119,115,46,68,97,116,97,46,80,100,102,46,80,100,102,80,97,103,101,82,101,110,100,101,114,79,112,116,105,111,110,115,0]) [CLSID_PdfPageRenderOptions]);
 RT_ENUM! { enum PdfPageRotation: i32 {
-    Normal (PdfPageRotation_Normal) = 0, Rotate90 (PdfPageRotation_Rotate90) = 1, Rotate180 (PdfPageRotation_Rotate180) = 2, Rotate270 (PdfPageRotation_Rotate270) = 3,
+    Normal = 0, Rotate90 = 1, Rotate180 = 2, Rotate270 = 3,
 }}
 } // Windows.Data.Pdf
 pub mod text { // Windows.Data.Text
 use ::prelude::*;
 RT_ENUM! { enum AlternateNormalizationFormat: i32 {
-    NotNormalized (AlternateNormalizationFormat_NotNormalized) = 0, Number (AlternateNormalizationFormat_Number) = 1, Currency (AlternateNormalizationFormat_Currency) = 3, Date (AlternateNormalizationFormat_Date) = 4, Time (AlternateNormalizationFormat_Time) = 5,
+    NotNormalized = 0, Number = 1, Currency = 3, Date = 4, Time = 5,
 }}
 DEFINE_IID!(IID_IAlternateWordForm, 1194945566, 20921, 16903, 145, 70, 36, 142, 99, 106, 29, 29);
 RT_INTERFACE!{interface IAlternateWordForm(IAlternateWordFormVtbl): IInspectable(IInspectableVtbl) [IID_IAlternateWordForm] {
@@ -880,7 +880,7 @@ impl ITextPredictionGeneratorFactory {
     }}
 }
 RT_ENUM! { enum TextPredictionOptions: u32 {
-    None (TextPredictionOptions_None) = 0, Predictions (TextPredictionOptions_Predictions) = 1, Corrections (TextPredictionOptions_Corrections) = 2,
+    None = 0, Predictions = 1, Corrections = 2,
 }}
 DEFINE_IID!(IID_ITextReverseConversionGenerator, 1374156052, 40017, 19846, 174, 27, 180, 152, 251, 173, 131, 19);
 RT_INTERFACE!{interface ITextReverseConversionGenerator(ITextReverseConversionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGenerator] {
@@ -1102,10 +1102,10 @@ impl IUnicodeCharactersStatics {
     }}
 }
 RT_ENUM! { enum UnicodeGeneralCategory: i32 {
-    UppercaseLetter (UnicodeGeneralCategory_UppercaseLetter) = 0, LowercaseLetter (UnicodeGeneralCategory_LowercaseLetter) = 1, TitlecaseLetter (UnicodeGeneralCategory_TitlecaseLetter) = 2, ModifierLetter (UnicodeGeneralCategory_ModifierLetter) = 3, OtherLetter (UnicodeGeneralCategory_OtherLetter) = 4, NonspacingMark (UnicodeGeneralCategory_NonspacingMark) = 5, SpacingCombiningMark (UnicodeGeneralCategory_SpacingCombiningMark) = 6, EnclosingMark (UnicodeGeneralCategory_EnclosingMark) = 7, DecimalDigitNumber (UnicodeGeneralCategory_DecimalDigitNumber) = 8, LetterNumber (UnicodeGeneralCategory_LetterNumber) = 9, OtherNumber (UnicodeGeneralCategory_OtherNumber) = 10, SpaceSeparator (UnicodeGeneralCategory_SpaceSeparator) = 11, LineSeparator (UnicodeGeneralCategory_LineSeparator) = 12, ParagraphSeparator (UnicodeGeneralCategory_ParagraphSeparator) = 13, Control (UnicodeGeneralCategory_Control) = 14, Format (UnicodeGeneralCategory_Format) = 15, Surrogate (UnicodeGeneralCategory_Surrogate) = 16, PrivateUse (UnicodeGeneralCategory_PrivateUse) = 17, ConnectorPunctuation (UnicodeGeneralCategory_ConnectorPunctuation) = 18, DashPunctuation (UnicodeGeneralCategory_DashPunctuation) = 19, OpenPunctuation (UnicodeGeneralCategory_OpenPunctuation) = 20, ClosePunctuation (UnicodeGeneralCategory_ClosePunctuation) = 21, InitialQuotePunctuation (UnicodeGeneralCategory_InitialQuotePunctuation) = 22, FinalQuotePunctuation (UnicodeGeneralCategory_FinalQuotePunctuation) = 23, OtherPunctuation (UnicodeGeneralCategory_OtherPunctuation) = 24, MathSymbol (UnicodeGeneralCategory_MathSymbol) = 25, CurrencySymbol (UnicodeGeneralCategory_CurrencySymbol) = 26, ModifierSymbol (UnicodeGeneralCategory_ModifierSymbol) = 27, OtherSymbol (UnicodeGeneralCategory_OtherSymbol) = 28, NotAssigned (UnicodeGeneralCategory_NotAssigned) = 29,
+    UppercaseLetter = 0, LowercaseLetter = 1, TitlecaseLetter = 2, ModifierLetter = 3, OtherLetter = 4, NonspacingMark = 5, SpacingCombiningMark = 6, EnclosingMark = 7, DecimalDigitNumber = 8, LetterNumber = 9, OtherNumber = 10, SpaceSeparator = 11, LineSeparator = 12, ParagraphSeparator = 13, Control = 14, Format = 15, Surrogate = 16, PrivateUse = 17, ConnectorPunctuation = 18, DashPunctuation = 19, OpenPunctuation = 20, ClosePunctuation = 21, InitialQuotePunctuation = 22, FinalQuotePunctuation = 23, OtherPunctuation = 24, MathSymbol = 25, CurrencySymbol = 26, ModifierSymbol = 27, OtherSymbol = 28, NotAssigned = 29,
 }}
 RT_ENUM! { enum UnicodeNumericType: i32 {
-    None (UnicodeNumericType_None) = 0, Decimal (UnicodeNumericType_Decimal) = 1, Digit (UnicodeNumericType_Digit) = 2, Numeric (UnicodeNumericType_Numeric) = 3,
+    None = 0, Decimal = 1, Digit = 2, Numeric = 3,
 }}
 DEFINE_IID!(IID_IWordSegment, 3537156717, 39036, 19648, 182, 189, 212, 154, 17, 179, 143, 154);
 RT_INTERFACE!{interface IWordSegment(IWordSegmentVtbl): IInspectable(IInspectableVtbl) [IID_IWordSegment] {
@@ -1235,7 +1235,7 @@ impl IDtdNotation {
 }
 RT_CLASS!{class DtdNotation: IDtdNotation}
 RT_ENUM! { enum NodeType: i32 {
-    Invalid (NodeType_Invalid) = 0, ElementNode (NodeType_ElementNode) = 1, AttributeNode (NodeType_AttributeNode) = 2, TextNode (NodeType_TextNode) = 3, DataSectionNode (NodeType_DataSectionNode) = 4, EntityReferenceNode (NodeType_EntityReferenceNode) = 5, EntityNode (NodeType_EntityNode) = 6, ProcessingInstructionNode (NodeType_ProcessingInstructionNode) = 7, CommentNode (NodeType_CommentNode) = 8, DocumentNode (NodeType_DocumentNode) = 9, DocumentTypeNode (NodeType_DocumentTypeNode) = 10, DocumentFragmentNode (NodeType_DocumentFragmentNode) = 11, NotationNode (NodeType_NotationNode) = 12,
+    Invalid = 0, ElementNode = 1, AttributeNode = 2, TextNode = 3, DataSectionNode = 4, EntityReferenceNode = 5, EntityNode = 6, ProcessingInstructionNode = 7, CommentNode = 8, DocumentNode = 9, DocumentTypeNode = 10, DocumentFragmentNode = 11, NotationNode = 12,
 }}
 DEFINE_IID!(IID_IXmlAttribute, 2887010980, 46321, 19894, 178, 6, 138, 34, 195, 8, 219, 10);
 RT_INTERFACE!{interface IXmlAttribute(IXmlAttributeVtbl): IInspectable(IInspectableVtbl) [IID_IXmlAttribute] {

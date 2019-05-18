@@ -97,14 +97,3 @@ mod prelude {
         Err(::result::Error::from_hresult(hr))
     }
 }
-
-// For definitions that are different depending on the lang-compat feature
-#[cfg(not(feature = "lang-compat"))]
-mod langcompat {
-    pub const ASYNC_STATUS_COMPLETED: ::windows::foundation::AsyncStatus = ::windows::foundation::AsyncStatus::Completed;
-}
-
-#[cfg(feature = "lang-compat")]
-mod langcompat {
-    pub const ASYNC_STATUS_COMPLETED: ::windows::foundation::AsyncStatus = ::windows::foundation::AsyncStatus_Completed;
-}

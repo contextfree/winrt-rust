@@ -224,7 +224,7 @@ impl ILearningModelDeviceFactory {
     }}
 }
 RT_ENUM! { enum LearningModelDeviceKind: i32 {
-    Default (LearningModelDeviceKind_Default) = 0, Cpu (LearningModelDeviceKind_Cpu) = 1, DirectX (LearningModelDeviceKind_DirectX) = 2, DirectXHighPerformance (LearningModelDeviceKind_DirectXHighPerformance) = 3, DirectXMinPower (LearningModelDeviceKind_DirectXMinPower) = 4,
+    Default = 0, Cpu = 1, DirectX = 2, DirectXHighPerformance = 3, DirectXMinPower = 4,
 }}
 DEFINE_IID!(IID_ILearningModelDeviceStatics, 1240670471, 43199, 17083, 146, 199, 16, 177, 45, 197, 210, 31);
 RT_INTERFACE!{static interface ILearningModelDeviceStatics(ILearningModelDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILearningModelDeviceStatics] {
@@ -297,7 +297,7 @@ impl ILearningModelFeatureDescriptor {
     }}
 }
 RT_ENUM! { enum LearningModelFeatureKind: i32 {
-    Tensor (LearningModelFeatureKind_Tensor) = 0, Sequence (LearningModelFeatureKind_Sequence) = 1, Map (LearningModelFeatureKind_Map) = 2, Image (LearningModelFeatureKind_Image) = 3,
+    Tensor = 0, Sequence = 1, Map = 2, Image = 3,
 }}
 DEFINE_IID!(IID_ILearningModelFeatureValue, 4111467995, 16517, 19966, 159, 237, 149, 235, 12, 12, 247, 92);
 RT_INTERFACE!{interface ILearningModelFeatureValue(ILearningModelFeatureValueVtbl): IInspectable(IInspectableVtbl) [IID_ILearningModelFeatureValue] {
@@ -964,7 +964,7 @@ impl ITensorInt8BitStatics {
     }}
 }
 RT_ENUM! { enum TensorKind: i32 {
-    Undefined (TensorKind_Undefined) = 0, Float (TensorKind_Float) = 1, UInt8 (TensorKind_UInt8) = 2, Int8 (TensorKind_Int8) = 3, UInt16 (TensorKind_UInt16) = 4, Int16 (TensorKind_Int16) = 5, Int32 (TensorKind_Int32) = 6, Int64 (TensorKind_Int64) = 7, String (TensorKind_String) = 8, Boolean (TensorKind_Boolean) = 9, Float16 (TensorKind_Float16) = 10, Double (TensorKind_Double) = 11, UInt32 (TensorKind_UInt32) = 12, UInt64 (TensorKind_UInt64) = 13, Complex64 (TensorKind_Complex64) = 14, Complex128 (TensorKind_Complex128) = 15,
+    Undefined = 0, Float = 1, UInt8 = 2, Int8 = 3, UInt16 = 4, Int16 = 5, Int32 = 6, Int64 = 7, String = 8, Boolean = 9, Float16 = 10, Double = 11, UInt32 = 12, UInt64 = 13, Complex64 = 14, Complex128 = 15,
 }}
 DEFINE_IID!(IID_ITensorString, 1478702536, 48561, 17936, 188, 117, 53, 233, 203, 240, 9, 183);
 RT_INTERFACE!{interface ITensorString(ITensorStringVtbl): IInspectable(IInspectableVtbl) [IID_ITensorString] {
@@ -1254,7 +1254,7 @@ impl ITensorUInt8BitStatics {
 pub mod preview { // Windows.AI.MachineLearning.Preview
 use ::prelude::*;
 RT_ENUM! { enum FeatureElementKindPreview: i32 {
-    Undefined (FeatureElementKindPreview_Undefined) = 0, Float (FeatureElementKindPreview_Float) = 1, UInt8 (FeatureElementKindPreview_UInt8) = 2, Int8 (FeatureElementKindPreview_Int8) = 3, UInt16 (FeatureElementKindPreview_UInt16) = 4, Int16 (FeatureElementKindPreview_Int16) = 5, Int32 (FeatureElementKindPreview_Int32) = 6, Int64 (FeatureElementKindPreview_Int64) = 7, String (FeatureElementKindPreview_String) = 8, Boolean (FeatureElementKindPreview_Boolean) = 9, Float16 (FeatureElementKindPreview_Float16) = 10, Double (FeatureElementKindPreview_Double) = 11, UInt32 (FeatureElementKindPreview_UInt32) = 12, UInt64 (FeatureElementKindPreview_UInt64) = 13, Complex64 (FeatureElementKindPreview_Complex64) = 14, Complex128 (FeatureElementKindPreview_Complex128) = 15,
+    Undefined = 0, Float = 1, UInt8 = 2, Int8 = 3, UInt16 = 4, Int16 = 5, Int32 = 6, Int64 = 7, String = 8, Boolean = 9, Float16 = 10, Double = 11, UInt32 = 12, UInt64 = 13, Complex64 = 14, Complex128 = 15,
 }}
 DEFINE_IID!(IID_IImageVariableDescriptorPreview, 2061630066, 670, 19909, 162, 248, 95, 183, 99, 21, 65, 80);
 RT_INTERFACE!{interface IImageVariableDescriptorPreview(IImageVariableDescriptorPreviewVtbl): IInspectable(IInspectableVtbl) [IID_IImageVariableDescriptorPreview] {
@@ -1436,7 +1436,7 @@ impl ILearningModelDescriptionPreview {
 }
 RT_CLASS!{class LearningModelDescriptionPreview: ILearningModelDescriptionPreview}
 RT_ENUM! { enum LearningModelDeviceKindPreview: i32 {
-    LearningDeviceAny (LearningModelDeviceKindPreview_LearningDeviceAny) = 0, LearningDeviceCpu (LearningModelDeviceKindPreview_LearningDeviceCpu) = 1, LearningDeviceGpu (LearningModelDeviceKindPreview_LearningDeviceGpu) = 2, LearningDeviceNpu (LearningModelDeviceKindPreview_LearningDeviceNpu) = 3, LearningDeviceDsp (LearningModelDeviceKindPreview_LearningDeviceDsp) = 4, LearningDeviceFpga (LearningModelDeviceKindPreview_LearningDeviceFpga) = 5,
+    LearningDeviceAny = 0, LearningDeviceCpu = 1, LearningDeviceGpu = 2, LearningDeviceNpu = 3, LearningDeviceDsp = 4, LearningDeviceFpga = 5,
 }}
 DEFINE_IID!(IID_ILearningModelEvaluationResultPreview, 3743804063, 39011, 16520, 132, 152, 135, 161, 244, 104, 111, 146);
 RT_INTERFACE!{interface ILearningModelEvaluationResultPreview(ILearningModelEvaluationResultPreviewVtbl): IInspectable(IInspectableVtbl) [IID_ILearningModelEvaluationResultPreview] {
@@ -1457,7 +1457,7 @@ impl ILearningModelEvaluationResultPreview {
 }
 RT_CLASS!{class LearningModelEvaluationResultPreview: ILearningModelEvaluationResultPreview}
 RT_ENUM! { enum LearningModelFeatureKindPreview: i32 {
-    Undefined (LearningModelFeatureKindPreview_Undefined) = 0, Tensor (LearningModelFeatureKindPreview_Tensor) = 1, Sequence (LearningModelFeatureKindPreview_Sequence) = 2, Map (LearningModelFeatureKindPreview_Map) = 3, Image (LearningModelFeatureKindPreview_Image) = 4,
+    Undefined = 0, Tensor = 1, Sequence = 2, Map = 3, Image = 4,
 }}
 DEFINE_IID!(IID_ILearningModelPreview, 77342314, 37812, 18316, 174, 184, 112, 21, 123, 240, 255, 148);
 RT_INTERFACE!{interface ILearningModelPreview(ILearningModelPreviewVtbl): IInspectable(IInspectableVtbl) [IID_ILearningModelPreview] {

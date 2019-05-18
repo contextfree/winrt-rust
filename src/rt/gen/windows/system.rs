@@ -205,7 +205,7 @@ impl IAppDiagnosticInfoWatcherEventArgs {
 }
 RT_CLASS!{class AppDiagnosticInfoWatcherEventArgs: IAppDiagnosticInfoWatcherEventArgs}
 RT_ENUM! { enum AppDiagnosticInfoWatcherStatus: i32 {
-    Created (AppDiagnosticInfoWatcherStatus_Created) = 0, Started (AppDiagnosticInfoWatcherStatus_Started) = 1, EnumerationCompleted (AppDiagnosticInfoWatcherStatus_EnumerationCompleted) = 2, Stopping (AppDiagnosticInfoWatcherStatus_Stopping) = 3, Stopped (AppDiagnosticInfoWatcherStatus_Stopped) = 4, Aborted (AppDiagnosticInfoWatcherStatus_Aborted) = 5,
+    Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 DEFINE_IID!(IID_IAppExecutionStateChangeResult, 1862507504, 63771, 19960, 174, 119, 48, 51, 204, 182, 145, 20);
 RT_INTERFACE!{interface IAppExecutionStateChangeResult(IAppExecutionStateChangeResultVtbl): IInspectable(IInspectableVtbl) [IID_IAppExecutionStateChangeResult] {
@@ -261,7 +261,7 @@ impl IAppMemoryReport2 {
     }}
 }
 RT_ENUM! { enum AppMemoryUsageLevel: i32 {
-    Low (AppMemoryUsageLevel_Low) = 0, Medium (AppMemoryUsageLevel_Medium) = 1, High (AppMemoryUsageLevel_High) = 2, OverLimit (AppMemoryUsageLevel_OverLimit) = 3,
+    Low = 0, Medium = 1, High = 2, OverLimit = 3,
 }}
 DEFINE_IID!(IID_IAppMemoryUsageLimitChangingEventArgs, 2046322276, 65226, 19877, 158, 64, 43, 198, 62, 253, 201, 121);
 RT_INTERFACE!{interface IAppMemoryUsageLimitChangingEventArgs(IAppMemoryUsageLimitChangingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppMemoryUsageLimitChangingEventArgs] {
@@ -312,10 +312,10 @@ impl IAppResourceGroupBackgroundTaskReport {
 }
 RT_CLASS!{class AppResourceGroupBackgroundTaskReport: IAppResourceGroupBackgroundTaskReport}
 RT_ENUM! { enum AppResourceGroupEnergyQuotaState: i32 {
-    Unknown (AppResourceGroupEnergyQuotaState_Unknown) = 0, Over (AppResourceGroupEnergyQuotaState_Over) = 1, Under (AppResourceGroupEnergyQuotaState_Under) = 2,
+    Unknown = 0, Over = 1, Under = 2,
 }}
 RT_ENUM! { enum AppResourceGroupExecutionState: i32 {
-    Unknown (AppResourceGroupExecutionState_Unknown) = 0, Running (AppResourceGroupExecutionState_Running) = 1, Suspending (AppResourceGroupExecutionState_Suspending) = 2, Suspended (AppResourceGroupExecutionState_Suspended) = 3, NotRunning (AppResourceGroupExecutionState_NotRunning) = 4,
+    Unknown = 0, Running = 1, Suspending = 2, Suspended = 3, NotRunning = 4,
 }}
 DEFINE_IID!(IID_IAppResourceGroupInfo, 3105093498, 59399, 18932, 132, 94, 123, 139, 220, 254, 142, 231);
 RT_INTERFACE!{interface IAppResourceGroupInfo(IAppResourceGroupInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupInfo] {
@@ -496,7 +496,7 @@ impl IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs {
 }
 RT_CLASS!{class AppResourceGroupInfoWatcherExecutionStateChangedEventArgs: IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs}
 RT_ENUM! { enum AppResourceGroupInfoWatcherStatus: i32 {
-    Created (AppResourceGroupInfoWatcherStatus_Created) = 0, Started (AppResourceGroupInfoWatcherStatus_Started) = 1, EnumerationCompleted (AppResourceGroupInfoWatcherStatus_EnumerationCompleted) = 2, Stopping (AppResourceGroupInfoWatcherStatus_Stopping) = 3, Stopped (AppResourceGroupInfoWatcherStatus_Stopped) = 4, Aborted (AppResourceGroupInfoWatcherStatus_Aborted) = 5,
+    Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 DEFINE_IID!(IID_IAppResourceGroupMemoryReport, 747374257, 32177, 19537, 162, 37, 127, 174, 45, 73, 228, 49);
 RT_INTERFACE!{interface IAppResourceGroupMemoryReport(IAppResourceGroupMemoryReportVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupMemoryReport] {
@@ -658,7 +658,7 @@ impl IAppUriHandlerRegistrationManagerStatics {
     }}
 }
 RT_ENUM! { enum AutoUpdateTimeZoneStatus: i32 {
-    Attempted (AutoUpdateTimeZoneStatus_Attempted) = 0, TimedOut (AutoUpdateTimeZoneStatus_TimedOut) = 1, Failed (AutoUpdateTimeZoneStatus_Failed) = 2,
+    Attempted = 0, TimedOut = 1, Failed = 2,
 }}
 RT_CLASS!{static class DateTimeSettings}
 impl RtActivatable<IDateTimeSettingsStatics> for DateTimeSettings {}
@@ -679,7 +679,7 @@ impl IDateTimeSettingsStatics {
     }}
 }
 RT_ENUM! { enum DiagnosticAccessStatus: i32 {
-    Unspecified (DiagnosticAccessStatus_Unspecified) = 0, Denied (DiagnosticAccessStatus_Denied) = 1, Limited (DiagnosticAccessStatus_Limited) = 2, Allowed (DiagnosticAccessStatus_Allowed) = 3,
+    Unspecified = 0, Denied = 1, Limited = 2, Allowed = 3,
 }}
 DEFINE_IID!(IID_IDispatcherQueue, 1614711012, 41784, 20478, 164, 87, 165, 207, 185, 206, 184, 153);
 RT_INTERFACE!{interface IDispatcherQueue(IDispatcherQueueVtbl): IInspectable(IInspectableVtbl) [IID_IDispatcherQueue] {
@@ -781,7 +781,7 @@ impl DispatcherQueueHandler {
     }}
 }
 RT_ENUM! { enum DispatcherQueuePriority: i32 {
-    Low (DispatcherQueuePriority_Low) = -10, Normal (DispatcherQueuePriority_Normal) = 0, High (DispatcherQueuePriority_High) = 10,
+    Low = -10, Normal = 0, High = 10,
 }}
 DEFINE_IID!(IID_IDispatcherQueueShutdownStartingEventArgs, 3295824972, 65431, 16576, 162, 38, 204, 10, 170, 84, 94, 137);
 RT_INTERFACE!{interface IDispatcherQueueShutdownStartingEventArgs(IDispatcherQueueShutdownStartingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDispatcherQueueShutdownStartingEventArgs] {
@@ -1452,13 +1452,13 @@ impl ILauncherViewOptions {
     }}
 }
 RT_ENUM! { enum LaunchFileStatus: i32 {
-    Success (LaunchFileStatus_Success) = 0, AppUnavailable (LaunchFileStatus_AppUnavailable) = 1, DeniedByPolicy (LaunchFileStatus_DeniedByPolicy) = 2, FileTypeNotSupported (LaunchFileStatus_FileTypeNotSupported) = 3, Unknown (LaunchFileStatus_Unknown) = 4,
+    Success = 0, AppUnavailable = 1, DeniedByPolicy = 2, FileTypeNotSupported = 3, Unknown = 4,
 }}
 RT_ENUM! { enum LaunchQuerySupportStatus: i32 {
-    Available (LaunchQuerySupportStatus_Available) = 0, AppNotInstalled (LaunchQuerySupportStatus_AppNotInstalled) = 1, AppUnavailable (LaunchQuerySupportStatus_AppUnavailable) = 2, NotSupported (LaunchQuerySupportStatus_NotSupported) = 3, Unknown (LaunchQuerySupportStatus_Unknown) = 4,
+    Available = 0, AppNotInstalled = 1, AppUnavailable = 2, NotSupported = 3, Unknown = 4,
 }}
 RT_ENUM! { enum LaunchQuerySupportType: i32 {
-    Uri (LaunchQuerySupportType_Uri) = 0, UriForResults (LaunchQuerySupportType_UriForResults) = 1,
+    Uri = 0, UriForResults = 1,
 }}
 DEFINE_IID!(IID_ILaunchUriResult, 3962022111, 63189, 17866, 145, 58, 112, 164, 12, 92, 130, 33);
 RT_INTERFACE!{interface ILaunchUriResult(ILaunchUriResultVtbl): IInspectable(IInspectableVtbl) [IID_ILaunchUriResult] {
@@ -1479,7 +1479,7 @@ impl ILaunchUriResult {
 }
 RT_CLASS!{class LaunchUriResult: ILaunchUriResult}
 RT_ENUM! { enum LaunchUriStatus: i32 {
-    Success (LaunchUriStatus_Success) = 0, AppUnavailable (LaunchUriStatus_AppUnavailable) = 1, ProtocolUnavailable (LaunchUriStatus_ProtocolUnavailable) = 2, Unknown (LaunchUriStatus_Unknown) = 3,
+    Success = 0, AppUnavailable = 1, ProtocolUnavailable = 2, Unknown = 3,
 }}
 RT_CLASS!{static class MemoryManager}
 impl RtActivatable<IMemoryManagerStatics> for MemoryManager {}
@@ -1624,7 +1624,7 @@ impl IMemoryManagerStatics4 {
     }}
 }
 RT_ENUM! { enum PowerState: i32 {
-    ConnectedStandby (PowerState_ConnectedStandby) = 0, SleepS3 (PowerState_SleepS3) = 1,
+    ConnectedStandby = 0, SleepS3 = 1,
 }}
 RT_CLASS!{static class ProcessLauncher}
 impl RtActivatable<IProcessLauncherStatics> for ProcessLauncher {}
@@ -1743,7 +1743,7 @@ impl IProcessMemoryReport {
 }
 RT_CLASS!{class ProcessMemoryReport: IProcessMemoryReport}
 RT_ENUM! { enum ProcessorArchitecture: i32 {
-    X86 (ProcessorArchitecture_X86) = 0, Arm (ProcessorArchitecture_Arm) = 5, X64 (ProcessorArchitecture_X64) = 9, Neutral (ProcessorArchitecture_Neutral) = 11, Unknown (ProcessorArchitecture_Unknown) = 65535,
+    X86 = 0, Arm = 5, X64 = 9, Neutral = 11, Unknown = 65535,
 }}
 DEFINE_IID!(IID_IProtocolForResultsOperation, 3582011706, 28137, 19752, 147, 120, 248, 103, 130, 225, 130, 187);
 RT_INTERFACE!{interface IProtocolForResultsOperation(IProtocolForResultsOperationVtbl): IInspectable(IInspectableVtbl) [IID_IProtocolForResultsOperation] {
@@ -1819,10 +1819,10 @@ impl IRemoteLauncherStatics {
     }}
 }
 RT_ENUM! { enum RemoteLaunchUriStatus: i32 {
-    Unknown (RemoteLaunchUriStatus_Unknown) = 0, Success (RemoteLaunchUriStatus_Success) = 1, AppUnavailable (RemoteLaunchUriStatus_AppUnavailable) = 2, ProtocolUnavailable (RemoteLaunchUriStatus_ProtocolUnavailable) = 3, RemoteSystemUnavailable (RemoteLaunchUriStatus_RemoteSystemUnavailable) = 4, ValueSetTooLarge (RemoteLaunchUriStatus_ValueSetTooLarge) = 5, DeniedByLocalSystem (RemoteLaunchUriStatus_DeniedByLocalSystem) = 6, DeniedByRemoteSystem (RemoteLaunchUriStatus_DeniedByRemoteSystem) = 7,
+    Unknown = 0, Success = 1, AppUnavailable = 2, ProtocolUnavailable = 3, RemoteSystemUnavailable = 4, ValueSetTooLarge = 5, DeniedByLocalSystem = 6, DeniedByRemoteSystem = 7,
 }}
 RT_ENUM! { enum ShutdownKind: i32 {
-    Shutdown (ShutdownKind_Shutdown) = 0, Restart (ShutdownKind_Restart) = 1,
+    Shutdown = 0, Restart = 1,
 }}
 RT_CLASS!{static class ShutdownManager}
 impl RtActivatable<IShutdownManagerStatics> for ShutdownManager {}
@@ -2003,7 +2003,7 @@ impl User {
 }
 DEFINE_CLSID!(User(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,0]) [CLSID_User]);
 RT_ENUM! { enum UserAuthenticationStatus: i32 {
-    Unauthenticated (UserAuthenticationStatus_Unauthenticated) = 0, LocallyAuthenticated (UserAuthenticationStatus_LocallyAuthenticated) = 1, RemotelyAuthenticated (UserAuthenticationStatus_RemotelyAuthenticated) = 2,
+    Unauthenticated = 0, LocallyAuthenticated = 1, RemotelyAuthenticated = 2,
 }}
 DEFINE_IID!(IID_IUserAuthenticationStatusChangeDeferral, 2293601640, 47920, 17147, 162, 112, 233, 144, 46, 64, 239, 167);
 RT_INTERFACE!{interface IUserAuthenticationStatusChangeDeferral(IUserAuthenticationStatusChangeDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IUserAuthenticationStatusChangeDeferral] {
@@ -2172,7 +2172,7 @@ impl IUserPickerStatics {
     }}
 }
 RT_ENUM! { enum UserPictureSize: i32 {
-    Size64x64 (UserPictureSize_Size64x64) = 0, Size208x208 (UserPictureSize_Size208x208) = 1, Size424x424 (UserPictureSize_Size424x424) = 2, Size1080x1080 (UserPictureSize_Size1080x1080) = 3,
+    Size64x64 = 0, Size208x208 = 1, Size424x424 = 2, Size1080x1080 = 3,
 }}
 DEFINE_IID!(IID_IUserStatics, 358527547, 9258, 17888, 162, 233, 49, 113, 252, 106, 127, 221);
 RT_INTERFACE!{static interface IUserStatics(IUserStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserStatics] {
@@ -2210,7 +2210,7 @@ impl IUserStatics {
     }}
 }
 RT_ENUM! { enum UserType: i32 {
-    LocalUser (UserType_LocalUser) = 0, RemoteUser (UserType_RemoteUser) = 1, LocalGuest (UserType_LocalGuest) = 2, RemoteGuest (UserType_RemoteGuest) = 3,
+    LocalUser = 0, RemoteUser = 1, LocalGuest = 2, RemoteGuest = 3,
 }}
 DEFINE_IID!(IID_IUserWatcher, 358527547, 9258, 17888, 162, 233, 49, 113, 252, 106, 127, 187);
 RT_INTERFACE!{interface IUserWatcher(IUserWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IUserWatcher] {
@@ -2312,13 +2312,13 @@ impl IUserWatcher {
 }
 RT_CLASS!{class UserWatcher: IUserWatcher}
 RT_ENUM! { enum UserWatcherStatus: i32 {
-    Created (UserWatcherStatus_Created) = 0, Started (UserWatcherStatus_Started) = 1, EnumerationCompleted (UserWatcherStatus_EnumerationCompleted) = 2, Stopping (UserWatcherStatus_Stopping) = 3, Stopped (UserWatcherStatus_Stopped) = 4, Aborted (UserWatcherStatus_Aborted) = 5,
+    Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 RT_ENUM! { enum VirtualKey: i32 {
-    None (VirtualKey_None) = 0, LeftButton (VirtualKey_LeftButton) = 1, RightButton (VirtualKey_RightButton) = 2, Cancel (VirtualKey_Cancel) = 3, MiddleButton (VirtualKey_MiddleButton) = 4, XButton1 (VirtualKey_XButton1) = 5, XButton2 (VirtualKey_XButton2) = 6, Back (VirtualKey_Back) = 8, Tab (VirtualKey_Tab) = 9, Clear (VirtualKey_Clear) = 12, Enter (VirtualKey_Enter) = 13, Shift (VirtualKey_Shift) = 16, Control (VirtualKey_Control) = 17, Menu (VirtualKey_Menu) = 18, Pause (VirtualKey_Pause) = 19, CapitalLock (VirtualKey_CapitalLock) = 20, Kana (VirtualKey_Kana) = 21, Hangul (VirtualKey_Hangul) = 21, Junja (VirtualKey_Junja) = 23, Final (VirtualKey_Final) = 24, Hanja (VirtualKey_Hanja) = 25, Kanji (VirtualKey_Kanji) = 25, Escape (VirtualKey_Escape) = 27, Convert (VirtualKey_Convert) = 28, NonConvert (VirtualKey_NonConvert) = 29, Accept (VirtualKey_Accept) = 30, ModeChange (VirtualKey_ModeChange) = 31, Space (VirtualKey_Space) = 32, PageUp (VirtualKey_PageUp) = 33, PageDown (VirtualKey_PageDown) = 34, End (VirtualKey_End) = 35, Home (VirtualKey_Home) = 36, Left (VirtualKey_Left) = 37, Up (VirtualKey_Up) = 38, Right (VirtualKey_Right) = 39, Down (VirtualKey_Down) = 40, Select (VirtualKey_Select) = 41, Print (VirtualKey_Print) = 42, Execute (VirtualKey_Execute) = 43, Snapshot (VirtualKey_Snapshot) = 44, Insert (VirtualKey_Insert) = 45, Delete (VirtualKey_Delete) = 46, Help (VirtualKey_Help) = 47, Number0 (VirtualKey_Number0) = 48, Number1 (VirtualKey_Number1) = 49, Number2 (VirtualKey_Number2) = 50, Number3 (VirtualKey_Number3) = 51, Number4 (VirtualKey_Number4) = 52, Number5 (VirtualKey_Number5) = 53, Number6 (VirtualKey_Number6) = 54, Number7 (VirtualKey_Number7) = 55, Number8 (VirtualKey_Number8) = 56, Number9 (VirtualKey_Number9) = 57, A (VirtualKey_A) = 65, B (VirtualKey_B) = 66, C (VirtualKey_C) = 67, D (VirtualKey_D) = 68, E (VirtualKey_E) = 69, F (VirtualKey_F) = 70, G (VirtualKey_G) = 71, H (VirtualKey_H) = 72, I (VirtualKey_I) = 73, J (VirtualKey_J) = 74, K (VirtualKey_K) = 75, L (VirtualKey_L) = 76, M (VirtualKey_M) = 77, N (VirtualKey_N) = 78, O (VirtualKey_O) = 79, P (VirtualKey_P) = 80, Q (VirtualKey_Q) = 81, R (VirtualKey_R) = 82, S (VirtualKey_S) = 83, T (VirtualKey_T) = 84, U (VirtualKey_U) = 85, V (VirtualKey_V) = 86, W (VirtualKey_W) = 87, X (VirtualKey_X) = 88, Y (VirtualKey_Y) = 89, Z (VirtualKey_Z) = 90, LeftWindows (VirtualKey_LeftWindows) = 91, RightWindows (VirtualKey_RightWindows) = 92, Application (VirtualKey_Application) = 93, Sleep (VirtualKey_Sleep) = 95, NumberPad0 (VirtualKey_NumberPad0) = 96, NumberPad1 (VirtualKey_NumberPad1) = 97, NumberPad2 (VirtualKey_NumberPad2) = 98, NumberPad3 (VirtualKey_NumberPad3) = 99, NumberPad4 (VirtualKey_NumberPad4) = 100, NumberPad5 (VirtualKey_NumberPad5) = 101, NumberPad6 (VirtualKey_NumberPad6) = 102, NumberPad7 (VirtualKey_NumberPad7) = 103, NumberPad8 (VirtualKey_NumberPad8) = 104, NumberPad9 (VirtualKey_NumberPad9) = 105, Multiply (VirtualKey_Multiply) = 106, Add (VirtualKey_Add) = 107, Separator (VirtualKey_Separator) = 108, Subtract (VirtualKey_Subtract) = 109, Decimal (VirtualKey_Decimal) = 110, Divide (VirtualKey_Divide) = 111, F1 (VirtualKey_F1) = 112, F2 (VirtualKey_F2) = 113, F3 (VirtualKey_F3) = 114, F4 (VirtualKey_F4) = 115, F5 (VirtualKey_F5) = 116, F6 (VirtualKey_F6) = 117, F7 (VirtualKey_F7) = 118, F8 (VirtualKey_F8) = 119, F9 (VirtualKey_F9) = 120, F10 (VirtualKey_F10) = 121, F11 (VirtualKey_F11) = 122, F12 (VirtualKey_F12) = 123, F13 (VirtualKey_F13) = 124, F14 (VirtualKey_F14) = 125, F15 (VirtualKey_F15) = 126, F16 (VirtualKey_F16) = 127, F17 (VirtualKey_F17) = 128, F18 (VirtualKey_F18) = 129, F19 (VirtualKey_F19) = 130, F20 (VirtualKey_F20) = 131, F21 (VirtualKey_F21) = 132, F22 (VirtualKey_F22) = 133, F23 (VirtualKey_F23) = 134, F24 (VirtualKey_F24) = 135, NavigationView (VirtualKey_NavigationView) = 136, NavigationMenu (VirtualKey_NavigationMenu) = 137, NavigationUp (VirtualKey_NavigationUp) = 138, NavigationDown (VirtualKey_NavigationDown) = 139, NavigationLeft (VirtualKey_NavigationLeft) = 140, NavigationRight (VirtualKey_NavigationRight) = 141, NavigationAccept (VirtualKey_NavigationAccept) = 142, NavigationCancel (VirtualKey_NavigationCancel) = 143, NumberKeyLock (VirtualKey_NumberKeyLock) = 144, Scroll (VirtualKey_Scroll) = 145, LeftShift (VirtualKey_LeftShift) = 160, RightShift (VirtualKey_RightShift) = 161, LeftControl (VirtualKey_LeftControl) = 162, RightControl (VirtualKey_RightControl) = 163, LeftMenu (VirtualKey_LeftMenu) = 164, RightMenu (VirtualKey_RightMenu) = 165, GoBack (VirtualKey_GoBack) = 166, GoForward (VirtualKey_GoForward) = 167, Refresh (VirtualKey_Refresh) = 168, Stop (VirtualKey_Stop) = 169, Search (VirtualKey_Search) = 170, Favorites (VirtualKey_Favorites) = 171, GoHome (VirtualKey_GoHome) = 172, GamepadA (VirtualKey_GamepadA) = 195, GamepadB (VirtualKey_GamepadB) = 196, GamepadX (VirtualKey_GamepadX) = 197, GamepadY (VirtualKey_GamepadY) = 198, GamepadRightShoulder (VirtualKey_GamepadRightShoulder) = 199, GamepadLeftShoulder (VirtualKey_GamepadLeftShoulder) = 200, GamepadLeftTrigger (VirtualKey_GamepadLeftTrigger) = 201, GamepadRightTrigger (VirtualKey_GamepadRightTrigger) = 202, GamepadDPadUp (VirtualKey_GamepadDPadUp) = 203, GamepadDPadDown (VirtualKey_GamepadDPadDown) = 204, GamepadDPadLeft (VirtualKey_GamepadDPadLeft) = 205, GamepadDPadRight (VirtualKey_GamepadDPadRight) = 206, GamepadMenu (VirtualKey_GamepadMenu) = 207, GamepadView (VirtualKey_GamepadView) = 208, GamepadLeftThumbstickButton (VirtualKey_GamepadLeftThumbstickButton) = 209, GamepadRightThumbstickButton (VirtualKey_GamepadRightThumbstickButton) = 210, GamepadLeftThumbstickUp (VirtualKey_GamepadLeftThumbstickUp) = 211, GamepadLeftThumbstickDown (VirtualKey_GamepadLeftThumbstickDown) = 212, GamepadLeftThumbstickRight (VirtualKey_GamepadLeftThumbstickRight) = 213, GamepadLeftThumbstickLeft (VirtualKey_GamepadLeftThumbstickLeft) = 214, GamepadRightThumbstickUp (VirtualKey_GamepadRightThumbstickUp) = 215, GamepadRightThumbstickDown (VirtualKey_GamepadRightThumbstickDown) = 216, GamepadRightThumbstickRight (VirtualKey_GamepadRightThumbstickRight) = 217, GamepadRightThumbstickLeft (VirtualKey_GamepadRightThumbstickLeft) = 218,
+    None = 0, LeftButton = 1, RightButton = 2, Cancel = 3, MiddleButton = 4, XButton1 = 5, XButton2 = 6, Back = 8, Tab = 9, Clear = 12, Enter = 13, Shift = 16, Control = 17, Menu = 18, Pause = 19, CapitalLock = 20, Kana = 21, Hangul = 21, Junja = 23, Final = 24, Hanja = 25, Kanji = 25, Escape = 27, Convert = 28, NonConvert = 29, Accept = 30, ModeChange = 31, Space = 32, PageUp = 33, PageDown = 34, End = 35, Home = 36, Left = 37, Up = 38, Right = 39, Down = 40, Select = 41, Print = 42, Execute = 43, Snapshot = 44, Insert = 45, Delete = 46, Help = 47, Number0 = 48, Number1 = 49, Number2 = 50, Number3 = 51, Number4 = 52, Number5 = 53, Number6 = 54, Number7 = 55, Number8 = 56, Number9 = 57, A = 65, B = 66, C = 67, D = 68, E = 69, F = 70, G = 71, H = 72, I = 73, J = 74, K = 75, L = 76, M = 77, N = 78, O = 79, P = 80, Q = 81, R = 82, S = 83, T = 84, U = 85, V = 86, W = 87, X = 88, Y = 89, Z = 90, LeftWindows = 91, RightWindows = 92, Application = 93, Sleep = 95, NumberPad0 = 96, NumberPad1 = 97, NumberPad2 = 98, NumberPad3 = 99, NumberPad4 = 100, NumberPad5 = 101, NumberPad6 = 102, NumberPad7 = 103, NumberPad8 = 104, NumberPad9 = 105, Multiply = 106, Add = 107, Separator = 108, Subtract = 109, Decimal = 110, Divide = 111, F1 = 112, F2 = 113, F3 = 114, F4 = 115, F5 = 116, F6 = 117, F7 = 118, F8 = 119, F9 = 120, F10 = 121, F11 = 122, F12 = 123, F13 = 124, F14 = 125, F15 = 126, F16 = 127, F17 = 128, F18 = 129, F19 = 130, F20 = 131, F21 = 132, F22 = 133, F23 = 134, F24 = 135, NavigationView = 136, NavigationMenu = 137, NavigationUp = 138, NavigationDown = 139, NavigationLeft = 140, NavigationRight = 141, NavigationAccept = 142, NavigationCancel = 143, NumberKeyLock = 144, Scroll = 145, LeftShift = 160, RightShift = 161, LeftControl = 162, RightControl = 163, LeftMenu = 164, RightMenu = 165, GoBack = 166, GoForward = 167, Refresh = 168, Stop = 169, Search = 170, Favorites = 171, GoHome = 172, GamepadA = 195, GamepadB = 196, GamepadX = 197, GamepadY = 198, GamepadRightShoulder = 199, GamepadLeftShoulder = 200, GamepadLeftTrigger = 201, GamepadRightTrigger = 202, GamepadDPadUp = 203, GamepadDPadDown = 204, GamepadDPadLeft = 205, GamepadDPadRight = 206, GamepadMenu = 207, GamepadView = 208, GamepadLeftThumbstickButton = 209, GamepadRightThumbstickButton = 210, GamepadLeftThumbstickUp = 211, GamepadLeftThumbstickDown = 212, GamepadLeftThumbstickRight = 213, GamepadLeftThumbstickLeft = 214, GamepadRightThumbstickUp = 215, GamepadRightThumbstickDown = 216, GamepadRightThumbstickRight = 217, GamepadRightThumbstickLeft = 218,
 }}
 RT_ENUM! { enum VirtualKeyModifiers: u32 {
-    None (VirtualKeyModifiers_None) = 0, Control (VirtualKeyModifiers_Control) = 1, Menu (VirtualKeyModifiers_Menu) = 2, Shift (VirtualKeyModifiers_Shift) = 4, Windows (VirtualKeyModifiers_Windows) = 8,
+    None = 0, Control = 1, Menu = 2, Shift = 4, Windows = 8,
 }}
 pub mod diagnostics { // Windows.System.Diagnostics
 use ::prelude::*;
@@ -2341,7 +2341,7 @@ impl IDiagnosticActionResult {
 }
 RT_CLASS!{class DiagnosticActionResult: IDiagnosticActionResult}
 RT_ENUM! { enum DiagnosticActionState: i32 {
-    Initializing (DiagnosticActionState_Initializing) = 0, Downloading (DiagnosticActionState_Downloading) = 1, VerifyingTrust (DiagnosticActionState_VerifyingTrust) = 2, Detecting (DiagnosticActionState_Detecting) = 3, Resolving (DiagnosticActionState_Resolving) = 4, VerifyingResolution (DiagnosticActionState_VerifyingResolution) = 5,
+    Initializing = 0, Downloading = 1, VerifyingTrust = 2, Detecting = 3, Resolving = 4, VerifyingResolution = 5,
 }}
 DEFINE_IID!(IID_IDiagnosticInvoker, 410724106, 739, 20358, 132, 252, 253, 216, 146, 181, 148, 15);
 RT_INTERFACE!{interface IDiagnosticInvoker(IDiagnosticInvokerVtbl): IInspectable(IInspectableVtbl) [IID_IDiagnosticInvoker] {
@@ -2841,7 +2841,7 @@ impl IDevicePortalConnectionClosedEventArgs {
 }
 RT_CLASS!{class DevicePortalConnectionClosedEventArgs: IDevicePortalConnectionClosedEventArgs}
 RT_ENUM! { enum DevicePortalConnectionClosedReason: i32 {
-    Unknown (DevicePortalConnectionClosedReason_Unknown) = 0, ResourceLimitsExceeded (DevicePortalConnectionClosedReason_ResourceLimitsExceeded) = 1, ProtocolError (DevicePortalConnectionClosedReason_ProtocolError) = 2, NotAuthorized (DevicePortalConnectionClosedReason_NotAuthorized) = 3, UserNotPresent (DevicePortalConnectionClosedReason_UserNotPresent) = 4, ServiceTerminated (DevicePortalConnectionClosedReason_ServiceTerminated) = 5,
+    Unknown = 0, ResourceLimitsExceeded = 1, ProtocolError = 2, NotAuthorized = 3, UserNotPresent = 4, ServiceTerminated = 5,
 }}
 DEFINE_IID!(IID_IDevicePortalConnectionRequestReceivedEventArgs, 1692065861, 28634, 17497, 158, 189, 236, 206, 34, 227, 133, 89);
 RT_INTERFACE!{interface IDevicePortalConnectionRequestReceivedEventArgs(IDevicePortalConnectionRequestReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalConnectionRequestReceivedEventArgs] {
@@ -3004,7 +3004,7 @@ RT_CLASS!{class PlatformTelemetryRegistrationSettings: IPlatformTelemetryRegistr
 impl RtActivatable<IActivationFactory> for PlatformTelemetryRegistrationSettings {}
 DEFINE_CLSID!(PlatformTelemetryRegistrationSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,84,101,108,101,109,101,116,114,121,46,80,108,97,116,102,111,114,109,84,101,108,101,109,101,116,114,121,82,101,103,105,115,116,114,97,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_PlatformTelemetryRegistrationSettings]);
 RT_ENUM! { enum PlatformTelemetryRegistrationStatus: i32 {
-    Success (PlatformTelemetryRegistrationStatus_Success) = 0, SettingsOutOfRange (PlatformTelemetryRegistrationStatus_SettingsOutOfRange) = 1, UnknownFailure (PlatformTelemetryRegistrationStatus_UnknownFailure) = 2,
+    Success = 0, SettingsOutOfRange = 1, UnknownFailure = 2,
 }}
 } // Windows.System.Diagnostics.Telemetry
 pub mod tracereporting { // Windows.System.Diagnostics.TraceReporting
@@ -3092,13 +3092,13 @@ impl IPlatformDiagnosticActionsStatics {
     }}
 }
 RT_ENUM! { enum PlatformDiagnosticActionState: i32 {
-    Success (PlatformDiagnosticActionState_Success) = 0, FreeNetworkNotAvailable (PlatformDiagnosticActionState_FreeNetworkNotAvailable) = 1, ACPowerNotAvailable (PlatformDiagnosticActionState_ACPowerNotAvailable) = 2,
+    Success = 0, FreeNetworkNotAvailable = 1, ACPowerNotAvailable = 2,
 }}
 RT_ENUM! { enum PlatformDiagnosticEscalationType: i32 {
-    OnCompletion (PlatformDiagnosticEscalationType_OnCompletion) = 0, OnFailure (PlatformDiagnosticEscalationType_OnFailure) = 1,
+    OnCompletion = 0, OnFailure = 1,
 }}
 RT_ENUM! { enum PlatformDiagnosticEventBufferLatencies: u32 {
-    Normal (PlatformDiagnosticEventBufferLatencies_Normal) = 1, CostDeferred (PlatformDiagnosticEventBufferLatencies_CostDeferred) = 2, Realtime (PlatformDiagnosticEventBufferLatencies_Realtime) = 4,
+    Normal = 1, CostDeferred = 2, Realtime = 4,
 }}
 DEFINE_IID!(IID_IPlatformDiagnosticTraceInfo, 4168150423, 54679, 19447, 136, 220, 207, 92, 125, 194, 161, 210);
 RT_INTERFACE!{interface IPlatformDiagnosticTraceInfo(IPlatformDiagnosticTraceInfoVtbl): IInspectable(IInspectableVtbl) [IID_IPlatformDiagnosticTraceInfo] {
@@ -3143,7 +3143,7 @@ impl IPlatformDiagnosticTraceInfo {
 }
 RT_CLASS!{class PlatformDiagnosticTraceInfo: IPlatformDiagnosticTraceInfo}
 RT_ENUM! { enum PlatformDiagnosticTracePriority: i32 {
-    Normal (PlatformDiagnosticTracePriority_Normal) = 0, UserElevated (PlatformDiagnosticTracePriority_UserElevated) = 1,
+    Normal = 0, UserElevated = 1,
 }}
 DEFINE_IID!(IID_IPlatformDiagnosticTraceRuntimeInfo, 1028480557, 472, 18280, 133, 84, 30, 177, 202, 97, 9, 134);
 RT_INTERFACE!{interface IPlatformDiagnosticTraceRuntimeInfo(IPlatformDiagnosticTraceRuntimeInfoVtbl): IInspectable(IInspectableVtbl) [IID_IPlatformDiagnosticTraceRuntimeInfo] {
@@ -3164,10 +3164,10 @@ impl IPlatformDiagnosticTraceRuntimeInfo {
 }
 RT_CLASS!{class PlatformDiagnosticTraceRuntimeInfo: IPlatformDiagnosticTraceRuntimeInfo}
 RT_ENUM! { enum PlatformDiagnosticTraceSlotState: i32 {
-    NotRunning (PlatformDiagnosticTraceSlotState_NotRunning) = 0, Running (PlatformDiagnosticTraceSlotState_Running) = 1, Throttled (PlatformDiagnosticTraceSlotState_Throttled) = 2,
+    NotRunning = 0, Running = 1, Throttled = 2,
 }}
 RT_ENUM! { enum PlatformDiagnosticTraceSlotType: i32 {
-    Alternative (PlatformDiagnosticTraceSlotType_Alternative) = 0, AlwaysOn (PlatformDiagnosticTraceSlotType_AlwaysOn) = 1, Mini (PlatformDiagnosticTraceSlotType_Mini) = 2,
+    Alternative = 0, AlwaysOn = 1, Mini = 2,
 }}
 } // Windows.System.Diagnostics.TraceReporting
 } // Windows.System.Diagnostics
@@ -3362,10 +3362,10 @@ impl IBackgroundEnergyManagerStatics {
     }}
 }
 RT_ENUM! { enum BatteryStatus: i32 {
-    NotPresent (BatteryStatus_NotPresent) = 0, Discharging (BatteryStatus_Discharging) = 1, Idle (BatteryStatus_Idle) = 2, Charging (BatteryStatus_Charging) = 3,
+    NotPresent = 0, Discharging = 1, Idle = 2, Charging = 3,
 }}
 RT_ENUM! { enum EnergySaverStatus: i32 {
-    Disabled (EnergySaverStatus_Disabled) = 0, Off (EnergySaverStatus_Off) = 1, On (EnergySaverStatus_On) = 2,
+    Disabled = 0, Off = 1, On = 2,
 }}
 RT_CLASS!{static class ForegroundEnergyManager}
 impl RtActivatable<IForegroundEnergyManagerStatics> for ForegroundEnergyManager {}
@@ -3606,7 +3606,7 @@ impl IPowerManagerStatics {
     }}
 }
 RT_ENUM! { enum PowerSupplyStatus: i32 {
-    NotPresent (PowerSupplyStatus_NotPresent) = 0, Inadequate (PowerSupplyStatus_Inadequate) = 1, Adequate (PowerSupplyStatus_Adequate) = 2,
+    NotPresent = 0, Inadequate = 1, Adequate = 2,
 }}
 pub mod diagnostics { // Windows.System.Power.Diagnostics
 use ::prelude::*;
@@ -3687,7 +3687,7 @@ impl IForegroundEnergyDiagnosticsStatics {
 pub mod preview { // Windows.System.Preview
 use ::prelude::*;
 RT_ENUM! { enum HingeState: i32 {
-    Unknown (HingeState_Unknown) = 0, Closed (HingeState_Closed) = 1, Concave (HingeState_Concave) = 2, Flat (HingeState_Flat) = 3, Convex (HingeState_Convex) = 4, Full (HingeState_Full) = 5,
+    Unknown = 0, Closed = 1, Concave = 2, Flat = 3, Convex = 4, Full = 5,
 }}
 DEFINE_IID!(IID_ITwoPanelHingedDevicePosturePreview, 1914985521, 19257, 17062, 142, 115, 114, 53, 173, 225, 104, 83);
 RT_INTERFACE!{interface ITwoPanelHingedDevicePosturePreview(ITwoPanelHingedDevicePosturePreviewVtbl): IInspectable(IInspectableVtbl) [IID_ITwoPanelHingedDevicePosturePreview] {
@@ -4121,7 +4121,7 @@ impl IKnownRetailInfoPropertiesStatics {
     }}
 }
 RT_ENUM! { enum PlatformDataCollectionLevel: i32 {
-    Security (PlatformDataCollectionLevel_Security) = 0, Basic (PlatformDataCollectionLevel_Basic) = 1, Enhanced (PlatformDataCollectionLevel_Enhanced) = 2, Full (PlatformDataCollectionLevel_Full) = 3,
+    Security = 0, Basic = 1, Enhanced = 2, Full = 3,
 }}
 RT_CLASS!{static class PlatformDiagnosticsAndUsageDataSettings}
 impl RtActivatable<IPlatformDiagnosticsAndUsageDataSettingsStatics> for PlatformDiagnosticsAndUsageDataSettings {}
@@ -4261,7 +4261,7 @@ impl ISystemIdentificationInfo {
 }
 RT_CLASS!{class SystemIdentificationInfo: ISystemIdentificationInfo}
 RT_ENUM! { enum SystemIdentificationSource: i32 {
-    None (SystemIdentificationSource_None) = 0, Tpm (SystemIdentificationSource_Tpm) = 1, Uefi (SystemIdentificationSource_Uefi) = 2, Registry (SystemIdentificationSource_Registry) = 3,
+    None = 0, Tpm = 1, Uefi = 2, Registry = 3,
 }}
 DEFINE_IID!(IID_ISystemIdentificationStatics, 1434580010, 54239, 19859, 163, 125, 196, 26, 97, 108, 109, 1);
 RT_INTERFACE!{static interface ISystemIdentificationStatics(ISystemIdentificationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemIdentificationStatics] {
@@ -4281,7 +4281,7 @@ impl ISystemIdentificationStatics {
     }}
 }
 RT_ENUM! { enum SystemOutOfBoxExperienceState: i32 {
-    NotStarted (SystemOutOfBoxExperienceState_NotStarted) = 0, InProgress (SystemOutOfBoxExperienceState_InProgress) = 1, Completed (SystemOutOfBoxExperienceState_Completed) = 2,
+    NotStarted = 0, InProgress = 1, Completed = 2,
 }}
 RT_CLASS!{static class SystemSetupInfo}
 impl RtActivatable<ISystemSetupInfoStatics> for SystemSetupInfo {}
@@ -4703,7 +4703,7 @@ impl IRemoteSystem5 {
     }}
 }
 RT_ENUM! { enum RemoteSystemAccessStatus: i32 {
-    Unspecified (RemoteSystemAccessStatus_Unspecified) = 0, Allowed (RemoteSystemAccessStatus_Allowed) = 1, DeniedByUser (RemoteSystemAccessStatus_DeniedByUser) = 2, DeniedBySystem (RemoteSystemAccessStatus_DeniedBySystem) = 3,
+    Unspecified = 0, Allowed = 1, DeniedByUser = 2, DeniedBySystem = 3,
 }}
 DEFINE_IID!(IID_IRemoteSystemAddedEventArgs, 2402899471, 58676, 18071, 136, 54, 122, 190, 161, 81, 81, 110);
 RT_INTERFACE!{interface IRemoteSystemAddedEventArgs(IRemoteSystemAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemAddedEventArgs] {
@@ -4805,7 +4805,7 @@ impl IRemoteSystemAppRegistrationStatics {
     }}
 }
 RT_ENUM! { enum RemoteSystemAuthorizationKind: i32 {
-    SameUser (RemoteSystemAuthorizationKind_SameUser) = 0, Anonymous (RemoteSystemAuthorizationKind_Anonymous) = 1,
+    SameUser = 0, Anonymous = 1,
 }}
 DEFINE_IID!(IID_IRemoteSystemAuthorizationKindFilter, 1796071054, 1232, 16628, 162, 127, 194, 172, 187, 214, 183, 52);
 RT_INTERFACE!{interface IRemoteSystemAuthorizationKindFilter(IRemoteSystemAuthorizationKindFilterVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemAuthorizationKindFilter] {
@@ -4924,7 +4924,7 @@ impl IRemoteSystemConnectionRequestStatics {
     }}
 }
 RT_ENUM! { enum RemoteSystemDiscoveryType: i32 {
-    Any (RemoteSystemDiscoveryType_Any) = 0, Proximal (RemoteSystemDiscoveryType_Proximal) = 1, Cloud (RemoteSystemDiscoveryType_Cloud) = 2, SpatiallyProximal (RemoteSystemDiscoveryType_SpatiallyProximal) = 3,
+    Any = 0, Proximal = 1, Cloud = 2, SpatiallyProximal = 3,
 }}
 DEFINE_IID!(IID_IRemoteSystemDiscoveryTypeFilter, 1121518623, 61018, 17370, 172, 106, 111, 238, 37, 70, 7, 65);
 RT_INTERFACE!{interface IRemoteSystemDiscoveryTypeFilter(IRemoteSystemDiscoveryTypeFilterVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemDiscoveryTypeFilter] {
@@ -5084,7 +5084,7 @@ impl IRemoteSystemKindStatics2 {
     }}
 }
 RT_ENUM! { enum RemoteSystemPlatform: i32 {
-    Unknown (RemoteSystemPlatform_Unknown) = 0, Windows (RemoteSystemPlatform_Windows) = 1, Android (RemoteSystemPlatform_Android) = 2, Ios (RemoteSystemPlatform_Ios) = 3, Linux (RemoteSystemPlatform_Linux) = 4,
+    Unknown = 0, Windows = 1, Android = 2, Ios = 3, Linux = 4,
 }}
 DEFINE_IID!(IID_IRemoteSystemRemovedEventArgs, 2336036539, 29446, 18922, 183, 223, 103, 213, 113, 76, 176, 19);
 RT_INTERFACE!{interface IRemoteSystemRemovedEventArgs(IRemoteSystemRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemRemovedEventArgs] {
@@ -5239,7 +5239,7 @@ impl IRemoteSystemSessionCreationResult {
 }
 RT_CLASS!{class RemoteSystemSessionCreationResult: IRemoteSystemSessionCreationResult}
 RT_ENUM! { enum RemoteSystemSessionCreationStatus: i32 {
-    Success (RemoteSystemSessionCreationStatus_Success) = 0, SessionLimitsExceeded (RemoteSystemSessionCreationStatus_SessionLimitsExceeded) = 1, OperationAborted (RemoteSystemSessionCreationStatus_OperationAborted) = 2,
+    Success = 0, SessionLimitsExceeded = 1, OperationAborted = 2,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionDisconnectedEventArgs, 3725313691, 30661, 17948, 130, 9, 124, 108, 93, 49, 17, 171);
 RT_INTERFACE!{interface IRemoteSystemSessionDisconnectedEventArgs(IRemoteSystemSessionDisconnectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionDisconnectedEventArgs] {
@@ -5254,7 +5254,7 @@ impl IRemoteSystemSessionDisconnectedEventArgs {
 }
 RT_CLASS!{class RemoteSystemSessionDisconnectedEventArgs: IRemoteSystemSessionDisconnectedEventArgs}
 RT_ENUM! { enum RemoteSystemSessionDisconnectedReason: i32 {
-    SessionUnavailable (RemoteSystemSessionDisconnectedReason_SessionUnavailable) = 0, RemovedByController (RemoteSystemSessionDisconnectedReason_RemovedByController) = 1, SessionClosed (RemoteSystemSessionDisconnectedReason_SessionClosed) = 2,
+    SessionUnavailable = 0, RemovedByController = 1, SessionClosed = 2,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionInfo, 4283299400, 35594, 20122, 153, 5, 105, 228, 184, 65, 197, 136);
 RT_INTERFACE!{interface IRemoteSystemSessionInfo(IRemoteSystemSessionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionInfo] {
@@ -5383,7 +5383,7 @@ impl IRemoteSystemSessionJoinResult {
 }
 RT_CLASS!{class RemoteSystemSessionJoinResult: IRemoteSystemSessionJoinResult}
 RT_ENUM! { enum RemoteSystemSessionJoinStatus: i32 {
-    Success (RemoteSystemSessionJoinStatus_Success) = 0, SessionLimitsExceeded (RemoteSystemSessionJoinStatus_SessionLimitsExceeded) = 1, OperationAborted (RemoteSystemSessionJoinStatus_OperationAborted) = 2, SessionUnavailable (RemoteSystemSessionJoinStatus_SessionUnavailable) = 3, RejectedByController (RemoteSystemSessionJoinStatus_RejectedByController) = 4,
+    Success = 0, SessionLimitsExceeded = 1, OperationAborted = 2, SessionUnavailable = 3, RejectedByController = 4,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionMessageChannel, 2502218026, 29657, 19472, 183, 81, 194, 103, 132, 67, 113, 39);
 RT_INTERFACE!{interface IRemoteSystemSessionMessageChannel(IRemoteSystemSessionMessageChannelVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionMessageChannel] {
@@ -5454,7 +5454,7 @@ impl IRemoteSystemSessionMessageChannelFactory {
     }}
 }
 RT_ENUM! { enum RemoteSystemSessionMessageChannelReliability: i32 {
-    Reliable (RemoteSystemSessionMessageChannelReliability_Reliable) = 0, Unreliable (RemoteSystemSessionMessageChannelReliability_Unreliable) = 1,
+    Reliable = 0, Unreliable = 1,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionOptions, 1947129685, 33816, 20225, 147, 83, 226, 28, 158, 204, 108, 252);
 RT_INTERFACE!{interface IRemoteSystemSessionOptions(IRemoteSystemSessionOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionOptions] {
@@ -5573,7 +5573,7 @@ impl IRemoteSystemSessionParticipantWatcher {
 }
 RT_CLASS!{class RemoteSystemSessionParticipantWatcher: IRemoteSystemSessionParticipantWatcher}
 RT_ENUM! { enum RemoteSystemSessionParticipantWatcherStatus: i32 {
-    Created (RemoteSystemSessionParticipantWatcherStatus_Created) = 0, Started (RemoteSystemSessionParticipantWatcherStatus_Started) = 1, EnumerationCompleted (RemoteSystemSessionParticipantWatcherStatus_EnumerationCompleted) = 2, Stopping (RemoteSystemSessionParticipantWatcherStatus_Stopping) = 3, Stopped (RemoteSystemSessionParticipantWatcherStatus_Stopped) = 4, Aborted (RemoteSystemSessionParticipantWatcherStatus_Aborted) = 5,
+    Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionRemovedEventArgs, 2944569678, 14753, 19946, 157, 99, 67, 121, 141, 91, 187, 208);
 RT_INTERFACE!{interface IRemoteSystemSessionRemovedEventArgs(IRemoteSystemSessionRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionRemovedEventArgs] {
@@ -5684,7 +5684,7 @@ impl IRemoteSystemSessionWatcher {
 }
 RT_CLASS!{class RemoteSystemSessionWatcher: IRemoteSystemSessionWatcher}
 RT_ENUM! { enum RemoteSystemSessionWatcherStatus: i32 {
-    Created (RemoteSystemSessionWatcherStatus_Created) = 0, Started (RemoteSystemSessionWatcherStatus_Started) = 1, EnumerationCompleted (RemoteSystemSessionWatcherStatus_EnumerationCompleted) = 2, Stopping (RemoteSystemSessionWatcherStatus_Stopping) = 3, Stopped (RemoteSystemSessionWatcherStatus_Stopped) = 4, Aborted (RemoteSystemSessionWatcherStatus_Aborted) = 5,
+    Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 DEFINE_IID!(IID_IRemoteSystemStatics, 2760225682, 65323, 19271, 190, 98, 116, 63, 47, 20, 15, 48);
 RT_INTERFACE!{static interface IRemoteSystemStatics(IRemoteSystemStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemStatics] {
@@ -5728,10 +5728,10 @@ impl IRemoteSystemStatics2 {
     }}
 }
 RT_ENUM! { enum RemoteSystemStatus: i32 {
-    Unavailable (RemoteSystemStatus_Unavailable) = 0, DiscoveringAvailability (RemoteSystemStatus_DiscoveringAvailability) = 1, Available (RemoteSystemStatus_Available) = 2, Unknown (RemoteSystemStatus_Unknown) = 3,
+    Unavailable = 0, DiscoveringAvailability = 1, Available = 2, Unknown = 3,
 }}
 RT_ENUM! { enum RemoteSystemStatusType: i32 {
-    Any (RemoteSystemStatusType_Any) = 0, Available (RemoteSystemStatusType_Available) = 1,
+    Any = 0, Available = 1,
 }}
 DEFINE_IID!(IID_IRemoteSystemStatusTypeFilter, 205082958, 52150, 18295, 133, 52, 46, 12, 82, 26, 255, 162);
 RT_INTERFACE!{interface IRemoteSystemStatusTypeFilter(IRemoteSystemStatusTypeFilterVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemStatusTypeFilter] {
@@ -5852,7 +5852,7 @@ impl IRemoteSystemWatcher2 {
     }}
 }
 RT_ENUM! { enum RemoteSystemWatcherError: i32 {
-    Unknown (RemoteSystemWatcherError_Unknown) = 0, InternetNotAvailable (RemoteSystemWatcherError_InternetNotAvailable) = 1, AuthenticationError (RemoteSystemWatcherError_AuthenticationError) = 2,
+    Unknown = 0, InternetNotAvailable = 1, AuthenticationError = 2,
 }}
 DEFINE_IID!(IID_IRemoteSystemWatcherErrorOccurredEventArgs, 1959118511, 20756, 17446, 146, 22, 32, 216, 31, 133, 25, 174);
 RT_INTERFACE!{interface IRemoteSystemWatcherErrorOccurredEventArgs(IRemoteSystemWatcherErrorOccurredEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemWatcherErrorOccurredEventArgs] {
@@ -6035,10 +6035,10 @@ impl WorkItemHandler {
     }}
 }
 RT_ENUM! { enum WorkItemOptions: u32 {
-    None (WorkItemOptions_None) = 0, TimeSliced (WorkItemOptions_TimeSliced) = 1,
+    None = 0, TimeSliced = 1,
 }}
 RT_ENUM! { enum WorkItemPriority: i32 {
-    Low (WorkItemPriority_Low) = -1, Normal (WorkItemPriority_Normal) = 0, High (WorkItemPriority_High) = 1,
+    Low = -1, Normal = 0, High = 1,
 }}
 pub mod core { // Windows.System.Threading.Core
 use ::prelude::*;
@@ -6166,7 +6166,7 @@ impl ISignalNotifierStatics {
 pub mod update { // Windows.System.Update
 use ::prelude::*;
 RT_ENUM! { enum SystemUpdateAttentionRequiredReason: i32 {
-    None (SystemUpdateAttentionRequiredReason_None) = 0, NetworkRequired (SystemUpdateAttentionRequiredReason_NetworkRequired) = 1, InsufficientDiskSpace (SystemUpdateAttentionRequiredReason_InsufficientDiskSpace) = 2, InsufficientBattery (SystemUpdateAttentionRequiredReason_InsufficientBattery) = 3, UpdateBlocked (SystemUpdateAttentionRequiredReason_UpdateBlocked) = 4,
+    None = 0, NetworkRequired = 1, InsufficientDiskSpace = 2, InsufficientBattery = 3, UpdateBlocked = 4,
 }}
 DEFINE_IID!(IID_ISystemUpdateItem, 2006401259, 22052, 20894, 168, 226, 9, 233, 23, 59, 63, 183);
 RT_INTERFACE!{interface ISystemUpdateItem(ISystemUpdateItemVtbl): IInspectable(IInspectableVtbl) [IID_ISystemUpdateItem] {
@@ -6223,7 +6223,7 @@ impl ISystemUpdateItem {
 }
 RT_CLASS!{class SystemUpdateItem: ISystemUpdateItem}
 RT_ENUM! { enum SystemUpdateItemState: i32 {
-    NotStarted (SystemUpdateItemState_NotStarted) = 0, Initializing (SystemUpdateItemState_Initializing) = 1, Preparing (SystemUpdateItemState_Preparing) = 2, Calculating (SystemUpdateItemState_Calculating) = 3, Downloading (SystemUpdateItemState_Downloading) = 4, Installing (SystemUpdateItemState_Installing) = 5, Completed (SystemUpdateItemState_Completed) = 6, RebootRequired (SystemUpdateItemState_RebootRequired) = 7, Error (SystemUpdateItemState_Error) = 8,
+    NotStarted = 0, Initializing = 1, Preparing = 2, Calculating = 3, Downloading = 4, Installing = 5, Completed = 6, RebootRequired = 7, Error = 8,
 }}
 DEFINE_IID!(IID_ISystemUpdateLastErrorInfo, 2129168375, 35396, 23406, 189, 7, 122, 236, 228, 17, 110, 169);
 RT_INTERFACE!{interface ISystemUpdateLastErrorInfo(ISystemUpdateLastErrorInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISystemUpdateLastErrorInfo] {
@@ -6327,7 +6327,7 @@ impl SystemUpdateManager {
 }
 DEFINE_CLSID!(SystemUpdateManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,112,100,97,116,101,46,83,121,115,116,101,109,85,112,100,97,116,101,77,97,110,97,103,101,114,0]) [CLSID_SystemUpdateManager]);
 RT_ENUM! { enum SystemUpdateManagerState: i32 {
-    Idle (SystemUpdateManagerState_Idle) = 0, Detecting (SystemUpdateManagerState_Detecting) = 1, ReadyToDownload (SystemUpdateManagerState_ReadyToDownload) = 2, Downloading (SystemUpdateManagerState_Downloading) = 3, ReadyToInstall (SystemUpdateManagerState_ReadyToInstall) = 4, Installing (SystemUpdateManagerState_Installing) = 5, RebootRequired (SystemUpdateManagerState_RebootRequired) = 6, ReadyToFinalize (SystemUpdateManagerState_ReadyToFinalize) = 7, Finalizing (SystemUpdateManagerState_Finalizing) = 8, Completed (SystemUpdateManagerState_Completed) = 9, AttentionRequired (SystemUpdateManagerState_AttentionRequired) = 10, Error (SystemUpdateManagerState_Error) = 11,
+    Idle = 0, Detecting = 1, ReadyToDownload = 2, Downloading = 3, ReadyToInstall = 4, Installing = 5, RebootRequired = 6, ReadyToFinalize = 7, Finalizing = 8, Completed = 9, AttentionRequired = 10, Error = 11,
 }}
 DEFINE_IID!(IID_ISystemUpdateManagerStatics, 3000237295, 10609, 20926, 180, 26, 139, 215, 3, 187, 112, 26);
 RT_INTERFACE!{static interface ISystemUpdateManagerStatics(ISystemUpdateManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemUpdateManagerStatics] {
@@ -6475,13 +6475,13 @@ impl ISystemUpdateManagerStatics {
     }}
 }
 RT_ENUM! { enum SystemUpdateStartInstallAction: i32 {
-    UpToReboot (SystemUpdateStartInstallAction_UpToReboot) = 0, AllowReboot (SystemUpdateStartInstallAction_AllowReboot) = 1,
+    UpToReboot = 0, AllowReboot = 1,
 }}
 } // Windows.System.Update
 pub mod userprofile { // Windows.System.UserProfile
 use ::prelude::*;
 RT_ENUM! { enum AccountPictureKind: i32 {
-    SmallImage (AccountPictureKind_SmallImage) = 0, LargeImage (AccountPictureKind_LargeImage) = 1, Video (AccountPictureKind_Video) = 2,
+    SmallImage = 0, LargeImage = 1, Video = 2,
 }}
 RT_CLASS!{static class AdvertisingManager}
 impl RtActivatable<IAdvertisingManagerStatics> for AdvertisingManager {}
@@ -6876,10 +6876,10 @@ impl ILockScreenStatics {
     }}
 }
 RT_ENUM! { enum SetAccountPictureResult: i32 {
-    Success (SetAccountPictureResult_Success) = 0, ChangeDisabled (SetAccountPictureResult_ChangeDisabled) = 1, LargeOrDynamicError (SetAccountPictureResult_LargeOrDynamicError) = 2, VideoFrameSizeError (SetAccountPictureResult_VideoFrameSizeError) = 3, FileSizeError (SetAccountPictureResult_FileSizeError) = 4, Failure (SetAccountPictureResult_Failure) = 5,
+    Success = 0, ChangeDisabled = 1, LargeOrDynamicError = 2, VideoFrameSizeError = 3, FileSizeError = 4, Failure = 5,
 }}
 RT_ENUM! { enum SetImageFeedResult: i32 {
-    Success (SetImageFeedResult_Success) = 0, ChangeDisabled (SetImageFeedResult_ChangeDisabled) = 1, UserCanceled (SetImageFeedResult_UserCanceled) = 2,
+    Success = 0, ChangeDisabled = 1, UserCanceled = 2,
 }}
 RT_CLASS!{static class UserInformation}
 impl RtActivatable<IUserInformationStatics> for UserInformation {}

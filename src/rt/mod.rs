@@ -648,13 +648,11 @@ macro_rules! DEFINE_CLSID {
 }
 
 macro_rules! RT_ENUM {
-    {enum $name:ident : $t:ty { $($variant:ident ($longvariant:ident) = $value:expr,)+ }} => {
+    {enum $name:ident : $t:ty { $($variant:ident = $value:expr,)+ }} => {
         #[repr(C)] #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
         #[allow(non_upper_case_globals)]
         pub struct $name(pub $t);
-        $(#[cfg(feature = "lang-compat")] pub const $longvariant: $name = $name($value);)+
 
-        #[cfg(not(feature = "lang-compat"))]
         impl $name {
             $(pub const $variant: $name = $name($value);)+
         }

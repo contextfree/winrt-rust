@@ -23,7 +23,7 @@ impl IAudioBuffer {
 }
 RT_CLASS!{class AudioBuffer: IAudioBuffer}
 RT_ENUM! { enum AudioBufferAccessMode: i32 {
-    Read (AudioBufferAccessMode_Read) = 0, ReadWrite (AudioBufferAccessMode_ReadWrite) = 1, Write (AudioBufferAccessMode_Write) = 2,
+    Read = 0, ReadWrite = 1, Write = 2,
 }}
 DEFINE_IID!(IID_IAudioFrame, 3815424772, 43698, 17015, 158, 208, 67, 206, 223, 142, 41, 198);
 RT_INTERFACE!{interface IAudioFrame(IAudioFrameVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFrame] {
@@ -56,7 +56,7 @@ impl IAudioFrameFactory {
     }}
 }
 RT_ENUM! { enum AudioProcessing: i32 {
-    Default (AudioProcessing_Default) = 0, Raw (AudioProcessing_Raw) = 1,
+    Default = 0, Raw = 1,
 }}
 DEFINE_IID!(IID_IAutoRepeatModeChangeRequestedEventArgs, 3927146234, 55378, 17294, 136, 43, 201, 144, 16, 154, 120, 244);
 RT_INTERFACE!{interface IAutoRepeatModeChangeRequestedEventArgs(IAutoRepeatModeChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAutoRepeatModeChangeRequestedEventArgs] {
@@ -598,13 +598,13 @@ impl IMediaMarkerTypesStatics {
     }}
 }
 RT_ENUM! { enum MediaPlaybackAutoRepeatMode: i32 {
-    None (MediaPlaybackAutoRepeatMode_None) = 0, Track (MediaPlaybackAutoRepeatMode_Track) = 1, List (MediaPlaybackAutoRepeatMode_List) = 2,
+    None = 0, Track = 1, List = 2,
 }}
 RT_ENUM! { enum MediaPlaybackStatus: i32 {
-    Closed (MediaPlaybackStatus_Closed) = 0, Changing (MediaPlaybackStatus_Changing) = 1, Stopped (MediaPlaybackStatus_Stopped) = 2, Playing (MediaPlaybackStatus_Playing) = 3, Paused (MediaPlaybackStatus_Paused) = 4,
+    Closed = 0, Changing = 1, Stopped = 2, Playing = 3, Paused = 4,
 }}
 RT_ENUM! { enum MediaPlaybackType: i32 {
-    Unknown (MediaPlaybackType_Unknown) = 0, Music (MediaPlaybackType_Music) = 1, Video (MediaPlaybackType_Video) = 2, Image (MediaPlaybackType_Image) = 3,
+    Unknown = 0, Music = 1, Video = 2, Image = 3,
 }}
 DEFINE_IID!(IID_IMediaProcessingTriggerDetails, 3951387820, 41809, 20302, 180, 240, 155, 242, 64, 137, 147, 219);
 RT_INTERFACE!{interface IMediaProcessingTriggerDetails(IMediaProcessingTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaProcessingTriggerDetails] {
@@ -753,7 +753,7 @@ impl IMediaTimelineControllerFailedEventArgs {
 }
 RT_CLASS!{class MediaTimelineControllerFailedEventArgs: IMediaTimelineControllerFailedEventArgs}
 RT_ENUM! { enum MediaTimelineControllerState: i32 {
-    Paused (MediaTimelineControllerState_Paused) = 0, Running (MediaTimelineControllerState_Running) = 1, Stalled (MediaTimelineControllerState_Stalled) = 2, Error (MediaTimelineControllerState_Error) = 3,
+    Paused = 0, Running = 1, Stalled = 2, Error = 3,
 }}
 RT_STRUCT! { struct MediaTimeRange {
     Start: foundation::TimeSpan, End: foundation::TimeSpan,
@@ -883,7 +883,7 @@ impl IShuffleEnabledChangeRequestedEventArgs {
 }
 RT_CLASS!{class ShuffleEnabledChangeRequestedEventArgs: IShuffleEnabledChangeRequestedEventArgs}
 RT_ENUM! { enum SoundLevel: i32 {
-    Muted (SoundLevel_Muted) = 0, Low (SoundLevel_Low) = 1, Full (SoundLevel_Full) = 2,
+    Muted = 0, Low = 1, Full = 2,
 }}
 DEFINE_IID!(IID_ISystemMediaTransportControls, 2583314420, 5954, 17062, 144, 46, 8, 125, 65, 249, 101, 236);
 RT_INTERFACE!{interface ISystemMediaTransportControls(ISystemMediaTransportControlsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaTransportControls] {
@@ -1152,7 +1152,7 @@ impl ISystemMediaTransportControls2 {
     }}
 }
 RT_ENUM! { enum SystemMediaTransportControlsButton: i32 {
-    Play (SystemMediaTransportControlsButton_Play) = 0, Pause (SystemMediaTransportControlsButton_Pause) = 1, Stop (SystemMediaTransportControlsButton_Stop) = 2, Record (SystemMediaTransportControlsButton_Record) = 3, FastForward (SystemMediaTransportControlsButton_FastForward) = 4, Rewind (SystemMediaTransportControlsButton_Rewind) = 5, Next (SystemMediaTransportControlsButton_Next) = 6, Previous (SystemMediaTransportControlsButton_Previous) = 7, ChannelUp (SystemMediaTransportControlsButton_ChannelUp) = 8, ChannelDown (SystemMediaTransportControlsButton_ChannelDown) = 9,
+    Play = 0, Pause = 1, Stop = 2, Record = 3, FastForward = 4, Rewind = 5, Next = 6, Previous = 7, ChannelUp = 8, ChannelDown = 9,
 }}
 DEFINE_IID!(IID_ISystemMediaTransportControlsButtonPressedEventArgs, 3086250262, 42351, 19912, 158, 17, 146, 3, 31, 74, 135, 194);
 RT_INTERFACE!{interface ISystemMediaTransportControlsButtonPressedEventArgs(ISystemMediaTransportControlsButtonPressedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaTransportControlsButtonPressedEventArgs] {
@@ -1243,7 +1243,7 @@ impl ISystemMediaTransportControlsDisplayUpdater {
 }
 RT_CLASS!{class SystemMediaTransportControlsDisplayUpdater: ISystemMediaTransportControlsDisplayUpdater}
 RT_ENUM! { enum SystemMediaTransportControlsProperty: i32 {
-    SoundLevel (SystemMediaTransportControlsProperty_SoundLevel) = 0,
+    SoundLevel = 0,
 }}
 DEFINE_IID!(IID_ISystemMediaTransportControlsPropertyChangedEventArgs, 3502901558, 13211, 19635, 142, 235, 115, 118, 7, 245, 110, 8);
 RT_INTERFACE!{interface ISystemMediaTransportControlsPropertyChangedEventArgs(ISystemMediaTransportControlsPropertyChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaTransportControlsPropertyChangedEventArgs] {
@@ -1743,7 +1743,7 @@ impl IAppRecordingSavedScreenshotInfo {
 }
 RT_CLASS!{class AppRecordingSavedScreenshotInfo: IAppRecordingSavedScreenshotInfo}
 RT_ENUM! { enum AppRecordingSaveScreenshotOption: i32 {
-    None (AppRecordingSaveScreenshotOption_None) = 0, HdrContentVisible (AppRecordingSaveScreenshotOption_HdrContentVisible) = 1,
+    None = 0, HdrContentVisible = 1,
 }}
 DEFINE_IID!(IID_IAppRecordingSaveScreenshotResult, 2623245578, 2747, 17495, 170, 238, 36, 249, 193, 46, 199, 120);
 RT_INTERFACE!{interface IAppRecordingSaveScreenshotResult(IAppRecordingSaveScreenshotResultVtbl): IInspectable(IInspectableVtbl) [IID_IAppRecordingSaveScreenshotResult] {
@@ -1875,7 +1875,7 @@ impl IAudioDeviceInputNode {
 }
 RT_CLASS!{class AudioDeviceInputNode: IAudioDeviceInputNode}
 RT_ENUM! { enum AudioDeviceNodeCreationStatus: i32 {
-    Success (AudioDeviceNodeCreationStatus_Success) = 0, DeviceNotAvailable (AudioDeviceNodeCreationStatus_DeviceNotAvailable) = 1, FormatNotSupported (AudioDeviceNodeCreationStatus_FormatNotSupported) = 2, UnknownFailure (AudioDeviceNodeCreationStatus_UnknownFailure) = 3, AccessDenied (AudioDeviceNodeCreationStatus_AccessDenied) = 4,
+    Success = 0, DeviceNotAvailable = 1, FormatNotSupported = 2, UnknownFailure = 3, AccessDenied = 4,
 }}
 DEFINE_IID!(IID_IAudioDeviceOutputNode, 909040639, 65308, 17460, 158, 15, 189, 46, 245, 34, 172, 130);
 RT_INTERFACE!{interface IAudioDeviceOutputNode(IAudioDeviceOutputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioDeviceOutputNode] {
@@ -1975,7 +1975,7 @@ impl IAudioFileInputNode {
 }
 RT_CLASS!{class AudioFileInputNode: IAudioFileInputNode}
 RT_ENUM! { enum AudioFileNodeCreationStatus: i32 {
-    Success (AudioFileNodeCreationStatus_Success) = 0, FileNotFound (AudioFileNodeCreationStatus_FileNotFound) = 1, InvalidFileType (AudioFileNodeCreationStatus_InvalidFileType) = 2, FormatNotSupported (AudioFileNodeCreationStatus_FormatNotSupported) = 3, UnknownFailure (AudioFileNodeCreationStatus_UnknownFailure) = 4,
+    Success = 0, FileNotFound = 1, InvalidFileType = 2, FormatNotSupported = 3, UnknownFailure = 4,
 }}
 DEFINE_IID!(IID_IAudioFileOutputNode, 1356863872, 20838, 16531, 128, 248, 173, 160, 0, 137, 233, 207);
 RT_INTERFACE!{interface IAudioFileOutputNode(IAudioFileOutputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFileOutputNode] {
@@ -2340,7 +2340,7 @@ impl IAudioGraphConnection {
 }
 RT_CLASS!{class AudioGraphConnection: IAudioGraphConnection}
 RT_ENUM! { enum AudioGraphCreationStatus: i32 {
-    Success (AudioGraphCreationStatus_Success) = 0, DeviceNotAvailable (AudioGraphCreationStatus_DeviceNotAvailable) = 1, FormatNotSupported (AudioGraphCreationStatus_FormatNotSupported) = 2, UnknownFailure (AudioGraphCreationStatus_UnknownFailure) = 3,
+    Success = 0, DeviceNotAvailable = 1, FormatNotSupported = 2, UnknownFailure = 3,
 }}
 DEFINE_IID!(IID_IAudioGraphSettings, 492397695, 59134, 17960, 132, 248, 157, 139, 219, 162, 87, 133);
 RT_INTERFACE!{interface IAudioGraphSettings(IAudioGraphSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraphSettings] {
@@ -2462,7 +2462,7 @@ impl IAudioGraphStatics {
     }}
 }
 RT_ENUM! { enum AudioGraphUnrecoverableError: i32 {
-    None (AudioGraphUnrecoverableError_None) = 0, AudioDeviceLost (AudioGraphUnrecoverableError_AudioDeviceLost) = 1, AudioSessionDisconnected (AudioGraphUnrecoverableError_AudioSessionDisconnected) = 2, UnknownFailure (AudioGraphUnrecoverableError_UnknownFailure) = 3,
+    None = 0, AudioDeviceLost = 1, AudioSessionDisconnected = 2, UnknownFailure = 3,
 }}
 DEFINE_IID!(IID_IAudioGraphUnrecoverableErrorOccurredEventArgs, 3285830624, 16374, 20403, 178, 98, 80, 212, 53, 197, 84, 35);
 RT_INTERFACE!{interface IAudioGraphUnrecoverableErrorOccurredEventArgs(IAudioGraphUnrecoverableErrorOccurredEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraphUnrecoverableErrorOccurredEventArgs] {
@@ -2716,7 +2716,7 @@ impl IAudioNodeEmitterConeProperties {
 }
 RT_CLASS!{class AudioNodeEmitterConeProperties: IAudioNodeEmitterConeProperties}
 RT_ENUM! { enum AudioNodeEmitterDecayKind: i32 {
-    Natural (AudioNodeEmitterDecayKind_Natural) = 0, Custom (AudioNodeEmitterDecayKind_Custom) = 1,
+    Natural = 0, Custom = 1,
 }}
 DEFINE_IID!(IID_IAudioNodeEmitterDecayModel, 488463095, 3411, 20393, 189, 132, 213, 129, 106, 134, 243, 255);
 RT_INTERFACE!{interface IAudioNodeEmitterDecayModel(IAudioNodeEmitterDecayModelVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitterDecayModel] {
@@ -2805,7 +2805,7 @@ impl IAudioNodeEmitterNaturalDecayModelProperties {
 }
 RT_CLASS!{class AudioNodeEmitterNaturalDecayModelProperties: IAudioNodeEmitterNaturalDecayModelProperties}
 RT_ENUM! { enum AudioNodeEmitterSettings: u32 {
-    None (AudioNodeEmitterSettings_None) = 0, DisableDoppler (AudioNodeEmitterSettings_DisableDoppler) = 1,
+    None = 0, DisableDoppler = 1,
 }}
 DEFINE_IID!(IID_IAudioNodeEmitterShape, 3926069701, 59197, 17596, 133, 156, 69, 85, 59, 188, 72, 40);
 RT_INTERFACE!{interface IAudioNodeEmitterShape(IAudioNodeEmitterShapeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitterShape] {
@@ -2836,7 +2836,7 @@ impl AudioNodeEmitterShape {
 }
 DEFINE_CLSID!(AudioNodeEmitterShape(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,78,111,100,101,69,109,105,116,116,101,114,83,104,97,112,101,0]) [CLSID_AudioNodeEmitterShape]);
 RT_ENUM! { enum AudioNodeEmitterShapeKind: i32 {
-    Omnidirectional (AudioNodeEmitterShapeKind_Omnidirectional) = 0, Cone (AudioNodeEmitterShapeKind_Cone) = 1,
+    Omnidirectional = 0, Cone = 1,
 }}
 DEFINE_IID!(IID_IAudioNodeEmitterShapeStatics, 1471883121, 65445, 19334, 167, 121, 226, 100, 174, 185, 20, 95);
 RT_INTERFACE!{static interface IAudioNodeEmitterShapeStatics(IAudioNodeEmitterShapeStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitterShapeStatics] {
@@ -3471,13 +3471,13 @@ impl IMediaSourceAudioInputNode {
 }
 RT_CLASS!{class MediaSourceAudioInputNode: IMediaSourceAudioInputNode}
 RT_ENUM! { enum MediaSourceAudioInputNodeCreationStatus: i32 {
-    Success (MediaSourceAudioInputNodeCreationStatus_Success) = 0, FormatNotSupported (MediaSourceAudioInputNodeCreationStatus_FormatNotSupported) = 1, NetworkError (MediaSourceAudioInputNodeCreationStatus_NetworkError) = 2, UnknownFailure (MediaSourceAudioInputNodeCreationStatus_UnknownFailure) = 3,
+    Success = 0, FormatNotSupported = 1, NetworkError = 2, UnknownFailure = 3,
 }}
 RT_ENUM! { enum MixedRealitySpatialAudioFormatPolicy: i32 {
-    UseMixedRealityDefaultSpatialAudioFormat (MixedRealitySpatialAudioFormatPolicy_UseMixedRealityDefaultSpatialAudioFormat) = 0, UseDeviceConfigurationDefaultSpatialAudioFormat (MixedRealitySpatialAudioFormatPolicy_UseDeviceConfigurationDefaultSpatialAudioFormat) = 1,
+    UseMixedRealityDefaultSpatialAudioFormat = 0, UseDeviceConfigurationDefaultSpatialAudioFormat = 1,
 }}
 RT_ENUM! { enum QuantumSizeSelectionMode: i32 {
-    SystemDefault (QuantumSizeSelectionMode_SystemDefault) = 0, LowestLatency (QuantumSizeSelectionMode_LowestLatency) = 1, ClosestToDesired (QuantumSizeSelectionMode_ClosestToDesired) = 2,
+    SystemDefault = 0, LowestLatency = 1, ClosestToDesired = 2,
 }}
 DEFINE_IID!(IID_IReverbEffectDefinition, 1174841993, 62819, 19722, 143, 110, 240, 205, 223, 243, 93, 132);
 RT_INTERFACE!{interface IReverbEffectDefinition(IReverbEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IReverbEffectDefinition] {
@@ -3769,7 +3769,7 @@ impl ISetDefaultSpatialAudioFormatResult {
 }
 RT_CLASS!{class SetDefaultSpatialAudioFormatResult: ISetDefaultSpatialAudioFormatResult}
 RT_ENUM! { enum SetDefaultSpatialAudioFormatStatus: i32 {
-    Succeeded (SetDefaultSpatialAudioFormatStatus_Succeeded) = 0, AccessDenied (SetDefaultSpatialAudioFormatStatus_AccessDenied) = 1, LicenseExpired (SetDefaultSpatialAudioFormatStatus_LicenseExpired) = 2, LicenseNotValidForAudioEndpoint (SetDefaultSpatialAudioFormatStatus_LicenseNotValidForAudioEndpoint) = 3, NotSupportedOnAudioEndpoint (SetDefaultSpatialAudioFormatStatus_NotSupportedOnAudioEndpoint) = 4, UnknownError (SetDefaultSpatialAudioFormatStatus_UnknownError) = 5,
+    Succeeded = 0, AccessDenied = 1, LicenseExpired = 2, LicenseNotValidForAudioEndpoint = 3, NotSupportedOnAudioEndpoint = 4, UnknownError = 5,
 }}
 DEFINE_IID!(IID_ISpatialAudioDeviceConfiguration, 4001562676, 25039, 22345, 157, 164, 16, 240, 254, 2, 129, 153);
 RT_INTERFACE!{interface ISpatialAudioDeviceConfiguration(ISpatialAudioDeviceConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAudioDeviceConfiguration] {
@@ -3954,7 +3954,7 @@ impl ISpatialAudioFormatSubtypeStatics {
     }}
 }
 RT_ENUM! { enum SpatialAudioModel: i32 {
-    ObjectBased (SpatialAudioModel_ObjectBased) = 0, FoldDown (SpatialAudioModel_FoldDown) = 1,
+    ObjectBased = 0, FoldDown = 1,
 }}
 } // Windows.Media.Audio
 pub mod capture { // Windows.Media.Capture
@@ -4363,7 +4363,7 @@ impl IAppBroadcastBackgroundServiceStreamInfo2 {
     }}
 }
 RT_ENUM! { enum AppBroadcastCameraCaptureState: i32 {
-    Stopped (AppBroadcastCameraCaptureState_Stopped) = 0, Started (AppBroadcastCameraCaptureState_Started) = 1, Failed (AppBroadcastCameraCaptureState_Failed) = 2,
+    Stopped = 0, Started = 1, Failed = 2,
 }}
 DEFINE_IID!(IID_IAppBroadcastCameraCaptureStateChangedEventArgs, 506678480, 47234, 19336, 134, 146, 5, 153, 154, 206, 183, 15);
 RT_INTERFACE!{interface IAppBroadcastCameraCaptureStateChangedEventArgs(IAppBroadcastCameraCaptureStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastCameraCaptureStateChangedEventArgs] {
@@ -4384,16 +4384,16 @@ impl IAppBroadcastCameraCaptureStateChangedEventArgs {
 }
 RT_CLASS!{class AppBroadcastCameraCaptureStateChangedEventArgs: IAppBroadcastCameraCaptureStateChangedEventArgs}
 RT_ENUM! { enum AppBroadcastCameraOverlayLocation: i32 {
-    TopLeft (AppBroadcastCameraOverlayLocation_TopLeft) = 0, TopCenter (AppBroadcastCameraOverlayLocation_TopCenter) = 1, TopRight (AppBroadcastCameraOverlayLocation_TopRight) = 2, MiddleLeft (AppBroadcastCameraOverlayLocation_MiddleLeft) = 3, MiddleCenter (AppBroadcastCameraOverlayLocation_MiddleCenter) = 4, MiddleRight (AppBroadcastCameraOverlayLocation_MiddleRight) = 5, BottomLeft (AppBroadcastCameraOverlayLocation_BottomLeft) = 6, BottomCenter (AppBroadcastCameraOverlayLocation_BottomCenter) = 7, BottomRight (AppBroadcastCameraOverlayLocation_BottomRight) = 8,
+    TopLeft = 0, TopCenter = 1, TopRight = 2, MiddleLeft = 3, MiddleCenter = 4, MiddleRight = 5, BottomLeft = 6, BottomCenter = 7, BottomRight = 8,
 }}
 RT_ENUM! { enum AppBroadcastCameraOverlaySize: i32 {
-    Small (AppBroadcastCameraOverlaySize_Small) = 0, Medium (AppBroadcastCameraOverlaySize_Medium) = 1, Large (AppBroadcastCameraOverlaySize_Large) = 2,
+    Small = 0, Medium = 1, Large = 2,
 }}
 RT_ENUM! { enum AppBroadcastCaptureTargetType: i32 {
-    AppView (AppBroadcastCaptureTargetType_AppView) = 0, EntireDisplay (AppBroadcastCaptureTargetType_EntireDisplay) = 1,
+    AppView = 0, EntireDisplay = 1,
 }}
 RT_ENUM! { enum AppBroadcastExitBroadcastModeReason: i32 {
-    NormalExit (AppBroadcastExitBroadcastModeReason_NormalExit) = 0, UserCanceled (AppBroadcastExitBroadcastModeReason_UserCanceled) = 1, AuthorizationFail (AppBroadcastExitBroadcastModeReason_AuthorizationFail) = 2, ForegroundAppActivated (AppBroadcastExitBroadcastModeReason_ForegroundAppActivated) = 3,
+    NormalExit = 0, UserCanceled = 1, AuthorizationFail = 2, ForegroundAppActivated = 3,
 }}
 DEFINE_IID!(IID_IAppBroadcastGlobalSettings, 2999658405, 28924, 19991, 128, 189, 107, 160, 253, 63, 243, 160);
 RT_INTERFACE!{interface IAppBroadcastGlobalSettings(IAppBroadcastGlobalSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastGlobalSettings] {
@@ -4597,7 +4597,7 @@ impl IAppBroadcastManagerStatics {
     }}
 }
 RT_ENUM! { enum AppBroadcastMicrophoneCaptureState: i32 {
-    Stopped (AppBroadcastMicrophoneCaptureState_Stopped) = 0, Started (AppBroadcastMicrophoneCaptureState_Started) = 1, Failed (AppBroadcastMicrophoneCaptureState_Failed) = 2,
+    Stopped = 0, Started = 1, Failed = 2,
 }}
 DEFINE_IID!(IID_IAppBroadcastMicrophoneCaptureStateChangedEventArgs, 2825573865, 37952, 18696, 157, 9, 101, 183, 227, 21, 215, 149);
 RT_INTERFACE!{interface IAppBroadcastMicrophoneCaptureStateChangedEventArgs(IAppBroadcastMicrophoneCaptureStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastMicrophoneCaptureStateChangedEventArgs] {
@@ -4705,7 +4705,7 @@ impl IAppBroadcastPlugInManagerStatics {
     }}
 }
 RT_ENUM! { enum AppBroadcastPlugInState: i32 {
-    Unknown (AppBroadcastPlugInState_Unknown) = 0, Initialized (AppBroadcastPlugInState_Initialized) = 1, MicrosoftSignInRequired (AppBroadcastPlugInState_MicrosoftSignInRequired) = 2, OAuthSignInRequired (AppBroadcastPlugInState_OAuthSignInRequired) = 3, ProviderSignInRequired (AppBroadcastPlugInState_ProviderSignInRequired) = 4, InBandwidthTest (AppBroadcastPlugInState_InBandwidthTest) = 5, ReadyToBroadcast (AppBroadcastPlugInState_ReadyToBroadcast) = 6,
+    Unknown = 0, Initialized = 1, MicrosoftSignInRequired = 2, OAuthSignInRequired = 3, ProviderSignInRequired = 4, InBandwidthTest = 5, ReadyToBroadcast = 6,
 }}
 DEFINE_IID!(IID_IAppBroadcastPlugInStateChangedEventArgs, 1216467186, 43973, 20422, 132, 176, 137, 55, 11, 180, 114, 18);
 RT_INTERFACE!{interface IAppBroadcastPlugInStateChangedEventArgs(IAppBroadcastPlugInStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPlugInStateChangedEventArgs] {
@@ -4760,7 +4760,7 @@ impl IAppBroadcastPreview {
 }
 RT_CLASS!{class AppBroadcastPreview: IAppBroadcastPreview}
 RT_ENUM! { enum AppBroadcastPreviewState: i32 {
-    Started (AppBroadcastPreviewState_Started) = 0, Stopped (AppBroadcastPreviewState_Stopped) = 1, Failed (AppBroadcastPreviewState_Failed) = 2,
+    Started = 0, Stopped = 1, Failed = 2,
 }}
 DEFINE_IID!(IID_IAppBroadcastPreviewStateChangedEventArgs, 1515713246, 36330, 20102, 144, 173, 3, 252, 38, 185, 101, 60);
 RT_INTERFACE!{interface IAppBroadcastPreviewStateChangedEventArgs(IAppBroadcastPreviewStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPreviewStateChangedEventArgs] {
@@ -5056,10 +5056,10 @@ impl IAppBroadcastServices {
 }
 RT_CLASS!{class AppBroadcastServices: IAppBroadcastServices}
 RT_ENUM! { enum AppBroadcastSignInResult: i32 {
-    Success (AppBroadcastSignInResult_Success) = 0, AuthenticationFailed (AppBroadcastSignInResult_AuthenticationFailed) = 1, Unauthorized (AppBroadcastSignInResult_Unauthorized) = 2, ServiceUnavailable (AppBroadcastSignInResult_ServiceUnavailable) = 3, Unknown (AppBroadcastSignInResult_Unknown) = 4,
+    Success = 0, AuthenticationFailed = 1, Unauthorized = 2, ServiceUnavailable = 3, Unknown = 4,
 }}
 RT_ENUM! { enum AppBroadcastSignInState: i32 {
-    NotSignedIn (AppBroadcastSignInState_NotSignedIn) = 0, MicrosoftSignInInProgress (AppBroadcastSignInState_MicrosoftSignInInProgress) = 1, MicrosoftSignInComplete (AppBroadcastSignInState_MicrosoftSignInComplete) = 2, OAuthSignInInProgress (AppBroadcastSignInState_OAuthSignInInProgress) = 3, OAuthSignInComplete (AppBroadcastSignInState_OAuthSignInComplete) = 4,
+    NotSignedIn = 0, MicrosoftSignInInProgress = 1, MicrosoftSignInComplete = 2, OAuthSignInInProgress = 3, OAuthSignInComplete = 4,
 }}
 DEFINE_IID!(IID_IAppBroadcastSignInStateChangedEventArgs, 45519524, 22809, 19102, 141, 94, 201, 187, 13, 211, 55, 122);
 RT_INTERFACE!{interface IAppBroadcastSignInStateChangedEventArgs(IAppBroadcastSignInStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastSignInStateChangedEventArgs] {
@@ -5423,7 +5423,7 @@ impl IAppBroadcastStreamReader {
 }
 RT_CLASS!{class AppBroadcastStreamReader: IAppBroadcastStreamReader}
 RT_ENUM! { enum AppBroadcastStreamState: i32 {
-    Initializing (AppBroadcastStreamState_Initializing) = 0, StreamReady (AppBroadcastStreamState_StreamReady) = 1, Started (AppBroadcastStreamState_Started) = 2, Paused (AppBroadcastStreamState_Paused) = 3, Terminated (AppBroadcastStreamState_Terminated) = 4,
+    Initializing = 0, StreamReady = 1, Started = 2, Paused = 3, Terminated = 4,
 }}
 DEFINE_IID!(IID_IAppBroadcastStreamStateChangedEventArgs, 1359521587, 53256, 19081, 147, 190, 88, 174, 217, 97, 55, 78);
 RT_INTERFACE!{interface IAppBroadcastStreamStateChangedEventArgs(IAppBroadcastStreamStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastStreamStateChangedEventArgs] {
@@ -5498,7 +5498,7 @@ impl IAppBroadcastStreamVideoHeader {
 }
 RT_CLASS!{class AppBroadcastStreamVideoHeader: IAppBroadcastStreamVideoHeader}
 RT_ENUM! { enum AppBroadcastTerminationReason: i32 {
-    NormalTermination (AppBroadcastTerminationReason_NormalTermination) = 0, LostConnectionToService (AppBroadcastTerminationReason_LostConnectionToService) = 1, NoNetworkConnectivity (AppBroadcastTerminationReason_NoNetworkConnectivity) = 2, ServiceAbort (AppBroadcastTerminationReason_ServiceAbort) = 3, ServiceError (AppBroadcastTerminationReason_ServiceError) = 4, ServiceUnavailable (AppBroadcastTerminationReason_ServiceUnavailable) = 5, InternalError (AppBroadcastTerminationReason_InternalError) = 6, UnsupportedFormat (AppBroadcastTerminationReason_UnsupportedFormat) = 7, BackgroundTaskTerminated (AppBroadcastTerminationReason_BackgroundTaskTerminated) = 8, BackgroundTaskUnresponsive (AppBroadcastTerminationReason_BackgroundTaskUnresponsive) = 9,
+    NormalTermination = 0, LostConnectionToService = 1, NoNetworkConnectivity = 2, ServiceAbort = 3, ServiceError = 4, ServiceUnavailable = 5, InternalError = 6, UnsupportedFormat = 7, BackgroundTaskTerminated = 8, BackgroundTaskUnresponsive = 9,
 }}
 DEFINE_IID!(IID_IAppBroadcastTriggerDetails, 3739986741, 60510, 19855, 177, 192, 93, 166, 232, 199, 86, 56);
 RT_INTERFACE!{interface IAppBroadcastTriggerDetails(IAppBroadcastTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastTriggerDetails] {
@@ -5513,10 +5513,10 @@ impl IAppBroadcastTriggerDetails {
 }
 RT_CLASS!{class AppBroadcastTriggerDetails: IAppBroadcastTriggerDetails}
 RT_ENUM! { enum AppBroadcastVideoEncodingBitrateMode: i32 {
-    Custom (AppBroadcastVideoEncodingBitrateMode_Custom) = 0, Auto (AppBroadcastVideoEncodingBitrateMode_Auto) = 1,
+    Custom = 0, Auto = 1,
 }}
 RT_ENUM! { enum AppBroadcastVideoEncodingResolutionMode: i32 {
-    Custom (AppBroadcastVideoEncodingResolutionMode_Custom) = 0, Auto (AppBroadcastVideoEncodingResolutionMode_Auto) = 1,
+    Custom = 0, Auto = 1,
 }}
 DEFINE_IID!(IID_IAppBroadcastViewerCountChangedEventArgs, 3873511461, 21505, 19166, 139, 210, 193, 78, 206, 230, 128, 125);
 RT_INTERFACE!{interface IAppBroadcastViewerCountChangedEventArgs(IAppBroadcastViewerCountChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastViewerCountChangedEventArgs] {
@@ -5787,7 +5787,7 @@ impl IAppCaptureFileGeneratedEventArgs {
 }
 RT_CLASS!{class AppCaptureFileGeneratedEventArgs: IAppCaptureFileGeneratedEventArgs}
 RT_ENUM! { enum AppCaptureHistoricalBufferLengthUnit: i32 {
-    Megabytes (AppCaptureHistoricalBufferLengthUnit_Megabytes) = 0, Seconds (AppCaptureHistoricalBufferLengthUnit_Seconds) = 1,
+    Megabytes = 0, Seconds = 1,
 }}
 RT_CLASS!{static class AppCaptureManager}
 impl RtActivatable<IAppCaptureManagerStatics> for AppCaptureManager {}
@@ -5817,7 +5817,7 @@ impl IAppCaptureManagerStatics {
     }}
 }
 RT_ENUM! { enum AppCaptureMetadataPriority: i32 {
-    Informational (AppCaptureMetadataPriority_Informational) = 0, Important (AppCaptureMetadataPriority_Important) = 1,
+    Informational = 0, Important = 1,
 }}
 DEFINE_IID!(IID_IAppCaptureMetadataWriter, 3771615351, 39599, 18100, 173, 49, 106, 96, 180, 65, 199, 128);
 RT_INTERFACE!{interface IAppCaptureMetadataWriter(IAppCaptureMetadataWriterVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureMetadataWriter] {
@@ -5885,7 +5885,7 @@ RT_CLASS!{class AppCaptureMetadataWriter: IAppCaptureMetadataWriter}
 impl RtActivatable<IActivationFactory> for AppCaptureMetadataWriter {}
 DEFINE_CLSID!(AppCaptureMetadataWriter(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,67,97,112,116,117,114,101,77,101,116,97,100,97,116,97,87,114,105,116,101,114,0]) [CLSID_AppCaptureMetadataWriter]);
 RT_ENUM! { enum AppCaptureMicrophoneCaptureState: i32 {
-    Stopped (AppCaptureMicrophoneCaptureState_Stopped) = 0, Started (AppCaptureMicrophoneCaptureState_Started) = 1, Failed (AppCaptureMicrophoneCaptureState_Failed) = 2,
+    Stopped = 0, Started = 1, Failed = 2,
 }}
 DEFINE_IID!(IID_IAppCaptureMicrophoneCaptureStateChangedEventArgs, 843916446, 17852, 19509, 188, 53, 228, 105, 252, 122, 105, 224);
 RT_INTERFACE!{interface IAppCaptureMicrophoneCaptureStateChangedEventArgs(IAppCaptureMicrophoneCaptureStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureMicrophoneCaptureStateChangedEventArgs] {
@@ -5906,7 +5906,7 @@ impl IAppCaptureMicrophoneCaptureStateChangedEventArgs {
 }
 RT_CLASS!{class AppCaptureMicrophoneCaptureStateChangedEventArgs: IAppCaptureMicrophoneCaptureStateChangedEventArgs}
 RT_ENUM! { enum AppCaptureRecordingState: i32 {
-    InProgress (AppCaptureRecordingState_InProgress) = 0, Completed (AppCaptureRecordingState_Completed) = 1, Failed (AppCaptureRecordingState_Failed) = 2,
+    InProgress = 0, Completed = 1, Failed = 2,
 }}
 DEFINE_IID!(IID_IAppCaptureRecordingStateChangedEventArgs, 620529426, 58117, 18701, 180, 21, 107, 28, 144, 73, 115, 107);
 RT_INTERFACE!{interface IAppCaptureRecordingStateChangedEventArgs(IAppCaptureRecordingStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureRecordingStateChangedEventArgs] {
@@ -6441,13 +6441,13 @@ impl IAppCaptureStatics2 {
     }}
 }
 RT_ENUM! { enum AppCaptureVideoEncodingBitrateMode: i32 {
-    Custom (AppCaptureVideoEncodingBitrateMode_Custom) = 0, High (AppCaptureVideoEncodingBitrateMode_High) = 1, Standard (AppCaptureVideoEncodingBitrateMode_Standard) = 2,
+    Custom = 0, High = 1, Standard = 2,
 }}
 RT_ENUM! { enum AppCaptureVideoEncodingFrameRateMode: i32 {
-    Standard (AppCaptureVideoEncodingFrameRateMode_Standard) = 0, High (AppCaptureVideoEncodingFrameRateMode_High) = 1,
+    Standard = 0, High = 1,
 }}
 RT_ENUM! { enum AppCaptureVideoEncodingResolutionMode: i32 {
-    Custom (AppCaptureVideoEncodingResolutionMode_Custom) = 0, High (AppCaptureVideoEncodingResolutionMode_High) = 1, Standard (AppCaptureVideoEncodingResolutionMode_Standard) = 2,
+    Custom = 0, High = 1, Standard = 2,
 }}
 DEFINE_IID!(IID_ICameraCaptureUI, 1213756736, 28563, 19380, 184, 243, 232, 158, 72, 148, 140, 145);
 RT_INTERFACE!{interface ICameraCaptureUI(ICameraCaptureUIVtbl): IInspectable(IInspectableVtbl) [IID_ICameraCaptureUI] {
@@ -6476,13 +6476,13 @@ RT_CLASS!{class CameraCaptureUI: ICameraCaptureUI}
 impl RtActivatable<IActivationFactory> for CameraCaptureUI {}
 DEFINE_CLSID!(CameraCaptureUI(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,67,97,109,101,114,97,67,97,112,116,117,114,101,85,73,0]) [CLSID_CameraCaptureUI]);
 RT_ENUM! { enum CameraCaptureUIMaxPhotoResolution: i32 {
-    HighestAvailable (CameraCaptureUIMaxPhotoResolution_HighestAvailable) = 0, VerySmallQvga (CameraCaptureUIMaxPhotoResolution_VerySmallQvga) = 1, SmallVga (CameraCaptureUIMaxPhotoResolution_SmallVga) = 2, MediumXga (CameraCaptureUIMaxPhotoResolution_MediumXga) = 3, Large3M (CameraCaptureUIMaxPhotoResolution_Large3M) = 4, VeryLarge5M (CameraCaptureUIMaxPhotoResolution_VeryLarge5M) = 5,
+    HighestAvailable = 0, VerySmallQvga = 1, SmallVga = 2, MediumXga = 3, Large3M = 4, VeryLarge5M = 5,
 }}
 RT_ENUM! { enum CameraCaptureUIMaxVideoResolution: i32 {
-    HighestAvailable (CameraCaptureUIMaxVideoResolution_HighestAvailable) = 0, LowDefinition (CameraCaptureUIMaxVideoResolution_LowDefinition) = 1, StandardDefinition (CameraCaptureUIMaxVideoResolution_StandardDefinition) = 2, HighDefinition (CameraCaptureUIMaxVideoResolution_HighDefinition) = 3,
+    HighestAvailable = 0, LowDefinition = 1, StandardDefinition = 2, HighDefinition = 3,
 }}
 RT_ENUM! { enum CameraCaptureUIMode: i32 {
-    PhotoOrVideo (CameraCaptureUIMode_PhotoOrVideo) = 0, Photo (CameraCaptureUIMode_Photo) = 1, Video (CameraCaptureUIMode_Video) = 2,
+    PhotoOrVideo = 0, Photo = 1, Video = 2,
 }}
 DEFINE_IID!(IID_ICameraCaptureUIPhotoCaptureSettings, 3119890071, 13426, 18088, 138, 158, 4, 206, 66, 204, 201, 125);
 RT_INTERFACE!{interface ICameraCaptureUIPhotoCaptureSettings(ICameraCaptureUIPhotoCaptureSettingsVtbl): IInspectable(IInspectableVtbl) [IID_ICameraCaptureUIPhotoCaptureSettings] {
@@ -6546,7 +6546,7 @@ impl ICameraCaptureUIPhotoCaptureSettings {
 }
 RT_CLASS!{class CameraCaptureUIPhotoCaptureSettings: ICameraCaptureUIPhotoCaptureSettings}
 RT_ENUM! { enum CameraCaptureUIPhotoFormat: i32 {
-    Jpeg (CameraCaptureUIPhotoFormat_Jpeg) = 0, Png (CameraCaptureUIPhotoFormat_Png) = 1, JpegXR (CameraCaptureUIPhotoFormat_JpegXR) = 2,
+    Jpeg = 0, Png = 1, JpegXR = 2,
 }}
 DEFINE_IID!(IID_ICameraCaptureUIVideoCaptureSettings, 1693003039, 41613, 16986, 184, 79, 229, 104, 51, 95, 242, 78);
 RT_INTERFACE!{interface ICameraCaptureUIVideoCaptureSettings(ICameraCaptureUIVideoCaptureSettingsVtbl): IInspectable(IInspectableVtbl) [IID_ICameraCaptureUIVideoCaptureSettings] {
@@ -6599,7 +6599,7 @@ impl ICameraCaptureUIVideoCaptureSettings {
 }
 RT_CLASS!{class CameraCaptureUIVideoCaptureSettings: ICameraCaptureUIVideoCaptureSettings}
 RT_ENUM! { enum CameraCaptureUIVideoFormat: i32 {
-    Mp4 (CameraCaptureUIVideoFormat_Mp4) = 0, Wmv (CameraCaptureUIVideoFormat_Wmv) = 1,
+    Mp4 = 0, Wmv = 1,
 }}
 RT_CLASS!{static class CameraOptionsUI}
 impl RtActivatable<ICameraOptionsUIStatics> for CameraOptionsUI {}
@@ -6779,13 +6779,13 @@ impl ICapturedPhoto {
 }
 RT_CLASS!{class CapturedPhoto: ICapturedPhoto}
 RT_ENUM! { enum ForegroundActivationArgument: i32 {
-    SignInRequired (ForegroundActivationArgument_SignInRequired) = 0, MoreSettings (ForegroundActivationArgument_MoreSettings) = 1,
+    SignInRequired = 0, MoreSettings = 1,
 }}
 RT_ENUM! { enum GameBarCommand: i32 {
-    OpenGameBar (GameBarCommand_OpenGameBar) = 0, RecordHistoricalBuffer (GameBarCommand_RecordHistoricalBuffer) = 1, ToggleStartStopRecord (GameBarCommand_ToggleStartStopRecord) = 2, StartRecord (GameBarCommand_StartRecord) = 3, StopRecord (GameBarCommand_StopRecord) = 4, TakeScreenshot (GameBarCommand_TakeScreenshot) = 5, StartBroadcast (GameBarCommand_StartBroadcast) = 6, StopBroadcast (GameBarCommand_StopBroadcast) = 7, PauseBroadcast (GameBarCommand_PauseBroadcast) = 8, ResumeBroadcast (GameBarCommand_ResumeBroadcast) = 9, ToggleStartStopBroadcast (GameBarCommand_ToggleStartStopBroadcast) = 10, ToggleMicrophoneCapture (GameBarCommand_ToggleMicrophoneCapture) = 11, ToggleCameraCapture (GameBarCommand_ToggleCameraCapture) = 12, ToggleRecordingIndicator (GameBarCommand_ToggleRecordingIndicator) = 13,
+    OpenGameBar = 0, RecordHistoricalBuffer = 1, ToggleStartStopRecord = 2, StartRecord = 3, StopRecord = 4, TakeScreenshot = 5, StartBroadcast = 6, StopBroadcast = 7, PauseBroadcast = 8, ResumeBroadcast = 9, ToggleStartStopBroadcast = 10, ToggleMicrophoneCapture = 11, ToggleCameraCapture = 12, ToggleRecordingIndicator = 13,
 }}
 RT_ENUM! { enum GameBarCommandOrigin: i32 {
-    ShortcutKey (GameBarCommandOrigin_ShortcutKey) = 0, Cortana (GameBarCommandOrigin_Cortana) = 1, AppCommand (GameBarCommandOrigin_AppCommand) = 2,
+    ShortcutKey = 0, Cortana = 1, AppCommand = 2,
 }}
 DEFINE_IID!(IID_IGameBarServices, 767470935, 20646, 18846, 140, 108, 211, 48, 167, 49, 23, 150);
 RT_INTERFACE!{interface IGameBarServices(IGameBarServicesVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarServices] {
@@ -6863,7 +6863,7 @@ impl IGameBarServicesCommandEventArgs {
 }
 RT_CLASS!{class GameBarServicesCommandEventArgs: IGameBarServicesCommandEventArgs}
 RT_ENUM! { enum GameBarServicesDisplayMode: i32 {
-    Windowed (GameBarServicesDisplayMode_Windowed) = 0, FullScreenExclusive (GameBarServicesDisplayMode_FullScreenExclusive) = 1,
+    Windowed = 0, FullScreenExclusive = 1,
 }}
 DEFINE_IID!(IID_IGameBarServicesManager, 978033914, 32651, 19552, 157, 187, 11, 205, 38, 45, 255, 198);
 RT_INTERFACE!{interface IGameBarServicesManager(IGameBarServicesManagerVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarServicesManager] {
@@ -6943,10 +6943,10 @@ impl IGameBarServicesTargetInfo {
 }
 RT_CLASS!{class GameBarServicesTargetInfo: IGameBarServicesTargetInfo}
 RT_ENUM! { enum GameBarTargetCapturePolicy: i32 {
-    EnabledBySystem (GameBarTargetCapturePolicy_EnabledBySystem) = 0, EnabledByUser (GameBarTargetCapturePolicy_EnabledByUser) = 1, NotEnabled (GameBarTargetCapturePolicy_NotEnabled) = 2, ProhibitedBySystem (GameBarTargetCapturePolicy_ProhibitedBySystem) = 3, ProhibitedByPublisher (GameBarTargetCapturePolicy_ProhibitedByPublisher) = 4,
+    EnabledBySystem = 0, EnabledByUser = 1, NotEnabled = 2, ProhibitedBySystem = 3, ProhibitedByPublisher = 4,
 }}
 RT_ENUM! { enum KnownVideoProfile: i32 {
-    VideoRecording (KnownVideoProfile_VideoRecording) = 0, HighQualityPhoto (KnownVideoProfile_HighQualityPhoto) = 1, BalancedVideoAndPhoto (KnownVideoProfile_BalancedVideoAndPhoto) = 2, VideoConferencing (KnownVideoProfile_VideoConferencing) = 3, PhotoSequence (KnownVideoProfile_PhotoSequence) = 4, HighFrameRate (KnownVideoProfile_HighFrameRate) = 5, VariablePhotoSequence (KnownVideoProfile_VariablePhotoSequence) = 6, HdrWithWcgVideo (KnownVideoProfile_HdrWithWcgVideo) = 7, HdrWithWcgPhoto (KnownVideoProfile_HdrWithWcgPhoto) = 8, VideoHdr8 (KnownVideoProfile_VideoHdr8) = 9,
+    VideoRecording = 0, HighQualityPhoto = 1, BalancedVideoAndPhoto = 2, VideoConferencing = 3, PhotoSequence = 4, HighFrameRate = 5, VariablePhotoSequence = 6, HdrWithWcgVideo = 7, HdrWithWcgPhoto = 8, VideoHdr8 = 9,
 }}
 DEFINE_IID!(IID_ILowLagMediaRecording, 1103674103, 65343, 18928, 164, 119, 241, 149, 227, 206, 81, 8);
 RT_INTERFACE!{interface ILowLagMediaRecording(ILowLagMediaRecordingVtbl): IInspectable(IInspectableVtbl) [IID_ILowLagMediaRecording] {
@@ -7469,7 +7469,7 @@ impl IMediaCapture6 {
     }}
 }
 RT_ENUM! { enum MediaCaptureDeviceExclusiveControlStatus: i32 {
-    ExclusiveControlAvailable (MediaCaptureDeviceExclusiveControlStatus_ExclusiveControlAvailable) = 0, SharedReadOnlyAvailable (MediaCaptureDeviceExclusiveControlStatus_SharedReadOnlyAvailable) = 1,
+    ExclusiveControlAvailable = 0, SharedReadOnlyAvailable = 1,
 }}
 DEFINE_IID!(IID_IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs, 2637140493, 42376, 17350, 137, 214, 90, 211, 34, 175, 0, 106);
 RT_INTERFACE!{interface IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs(IMediaCaptureDeviceExclusiveControlStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs] {
@@ -7739,7 +7739,7 @@ impl IMediaCaptureInitializationSettings6 {
     }}
 }
 RT_ENUM! { enum MediaCaptureMemoryPreference: i32 {
-    Auto (MediaCaptureMemoryPreference_Auto) = 0, Cpu (MediaCaptureMemoryPreference_Cpu) = 1,
+    Auto = 0, Cpu = 1,
 }}
 DEFINE_IID!(IID_IMediaCapturePauseResult, 2932112547, 17527, 19204, 160, 111, 44, 28, 81, 130, 254, 157);
 RT_INTERFACE!{interface IMediaCapturePauseResult(IMediaCapturePauseResultVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCapturePauseResult] {
@@ -7860,7 +7860,7 @@ impl IMediaCaptureSettings3 {
     }}
 }
 RT_ENUM! { enum MediaCaptureSharingMode: i32 {
-    ExclusiveControl (MediaCaptureSharingMode_ExclusiveControl) = 0, SharedReadOnly (MediaCaptureSharingMode_SharedReadOnly) = 1,
+    ExclusiveControl = 0, SharedReadOnly = 1,
 }}
 DEFINE_IID!(IID_IMediaCaptureStatics, 2901377535, 39405, 17989, 150, 94, 25, 37, 207, 198, 56, 52);
 RT_INTERFACE!{static interface IMediaCaptureStatics(IMediaCaptureStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureStatics] {
@@ -7910,7 +7910,7 @@ impl IMediaCaptureStopResult {
 }
 RT_CLASS!{class MediaCaptureStopResult: IMediaCaptureStopResult}
 RT_ENUM! { enum MediaCaptureThermalStatus: i32 {
-    Normal (MediaCaptureThermalStatus_Normal) = 0, Overheated (MediaCaptureThermalStatus_Overheated) = 1,
+    Normal = 0, Overheated = 1,
 }}
 DEFINE_IID!(IID_IMediaCaptureVideoPreview, 661811315, 21662, 17535, 162, 10, 79, 3, 196, 121, 216, 192);
 RT_INTERFACE!{interface IMediaCaptureVideoPreview(IMediaCaptureVideoPreviewVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureVideoPreview] {
@@ -8054,10 +8054,10 @@ impl IMediaCaptureVideoProfileMediaDescription2 {
     }}
 }
 RT_ENUM! { enum MediaCategory: i32 {
-    Other (MediaCategory_Other) = 0, Communications (MediaCategory_Communications) = 1, Media (MediaCategory_Media) = 2, GameChat (MediaCategory_GameChat) = 3, Speech (MediaCategory_Speech) = 4,
+    Other = 0, Communications = 1, Media = 2, GameChat = 3, Speech = 4,
 }}
 RT_ENUM! { enum MediaStreamType: i32 {
-    VideoPreview (MediaStreamType_VideoPreview) = 0, VideoRecord (MediaStreamType_VideoRecord) = 1, Audio (MediaStreamType_Audio) = 2, Photo (MediaStreamType_Photo) = 3,
+    VideoPreview = 0, VideoRecord = 1, Audio = 2, Photo = 3,
 }}
 DEFINE_IID!(IID_IOptionalReferencePhotoCapturedEventArgs, 1192200371, 7789, 16465, 156, 139, 241, 216, 90, 240, 71, 183);
 RT_INTERFACE!{interface IOptionalReferencePhotoCapturedEventArgs(IOptionalReferencePhotoCapturedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IOptionalReferencePhotoCapturedEventArgs] {
@@ -8102,7 +8102,7 @@ impl IPhotoCapturedEventArgs {
 }
 RT_CLASS!{class PhotoCapturedEventArgs: IPhotoCapturedEventArgs}
 RT_ENUM! { enum PhotoCaptureSource: i32 {
-    Auto (PhotoCaptureSource_Auto) = 0, VideoPreview (PhotoCaptureSource_VideoPreview) = 1, Photo (PhotoCaptureSource_Photo) = 2,
+    Auto = 0, VideoPreview = 1, Photo = 2,
 }}
 DEFINE_IID!(IID_IPhotoConfirmationCapturedEventArgs, 2873570930, 49802, 18471, 143, 141, 54, 54, 211, 190, 181, 30);
 RT_INTERFACE!{interface IPhotoConfirmationCapturedEventArgs(IPhotoConfirmationCapturedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoConfirmationCapturedEventArgs] {
@@ -8123,7 +8123,7 @@ impl IPhotoConfirmationCapturedEventArgs {
 }
 RT_CLASS!{class PhotoConfirmationCapturedEventArgs: IPhotoConfirmationCapturedEventArgs}
 RT_ENUM! { enum PowerlineFrequency: i32 {
-    Disabled (PowerlineFrequency_Disabled) = 0, FiftyHertz (PowerlineFrequency_FiftyHertz) = 1, SixtyHertz (PowerlineFrequency_SixtyHertz) = 2, Auto (PowerlineFrequency_Auto) = 3,
+    Disabled = 0, FiftyHertz = 1, SixtyHertz = 2, Auto = 3,
 }}
 DEFINE_IID!(IID_RecordLimitationExceededEventHandler, 1068404526, 20449, 20477, 170, 186, 225, 241, 51, 125, 78, 83);
 RT_DELEGATE!{delegate RecordLimitationExceededEventHandler(RecordLimitationExceededEventHandlerVtbl, RecordLimitationExceededEventHandlerImpl) [IID_RecordLimitationExceededEventHandler] {
@@ -8136,13 +8136,13 @@ impl RecordLimitationExceededEventHandler {
     }}
 }
 RT_ENUM! { enum StreamingCaptureMode: i32 {
-    AudioAndVideo (StreamingCaptureMode_AudioAndVideo) = 0, Audio (StreamingCaptureMode_Audio) = 1, Video (StreamingCaptureMode_Video) = 2,
+    AudioAndVideo = 0, Audio = 1, Video = 2,
 }}
 RT_ENUM! { enum VideoDeviceCharacteristic: i32 {
-    AllStreamsIndependent (VideoDeviceCharacteristic_AllStreamsIndependent) = 0, PreviewRecordStreamsIdentical (VideoDeviceCharacteristic_PreviewRecordStreamsIdentical) = 1, PreviewPhotoStreamsIdentical (VideoDeviceCharacteristic_PreviewPhotoStreamsIdentical) = 2, RecordPhotoStreamsIdentical (VideoDeviceCharacteristic_RecordPhotoStreamsIdentical) = 3, AllStreamsIdentical (VideoDeviceCharacteristic_AllStreamsIdentical) = 4,
+    AllStreamsIndependent = 0, PreviewRecordStreamsIdentical = 1, PreviewPhotoStreamsIdentical = 2, RecordPhotoStreamsIdentical = 3, AllStreamsIdentical = 4,
 }}
 RT_ENUM! { enum VideoRotation: i32 {
-    None (VideoRotation_None) = 0, Clockwise90Degrees (VideoRotation_Clockwise90Degrees) = 1, Clockwise180Degrees (VideoRotation_Clockwise180Degrees) = 2, Clockwise270Degrees (VideoRotation_Clockwise270Degrees) = 3,
+    None = 0, Clockwise90Degrees = 1, Clockwise180Degrees = 2, Clockwise270Degrees = 3,
 }}
 DEFINE_IID!(IID_IVideoStreamConfiguration, 3631680111, 17296, 19294, 173, 62, 15, 138, 240, 150, 52, 144);
 RT_INTERFACE!{interface IVideoStreamConfiguration(IVideoStreamConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IVideoStreamConfiguration] {
@@ -8492,10 +8492,10 @@ impl IMediaFrameReader2 {
     }}
 }
 RT_ENUM! { enum MediaFrameReaderAcquisitionMode: i32 {
-    Realtime (MediaFrameReaderAcquisitionMode_Realtime) = 0, Buffered (MediaFrameReaderAcquisitionMode_Buffered) = 1,
+    Realtime = 0, Buffered = 1,
 }}
 RT_ENUM! { enum MediaFrameReaderStartStatus: i32 {
-    Success (MediaFrameReaderStartStatus_Success) = 0, UnknownFailure (MediaFrameReaderStartStatus_UnknownFailure) = 1, DeviceNotAvailable (MediaFrameReaderStartStatus_DeviceNotAvailable) = 2, OutputFormatNotSupported (MediaFrameReaderStartStatus_OutputFormatNotSupported) = 3, ExclusiveControlNotAvailable (MediaFrameReaderStartStatus_ExclusiveControlNotAvailable) = 4,
+    Success = 0, UnknownFailure = 1, DeviceNotAvailable = 2, OutputFormatNotSupported = 3, ExclusiveControlNotAvailable = 4,
 }}
 DEFINE_IID!(IID_IMediaFrameReference, 4139288129, 61660, 16452, 141, 201, 150, 28, 237, 208, 91, 173);
 RT_INTERFACE!{interface IMediaFrameReference(IMediaFrameReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameReference] {
@@ -8686,7 +8686,7 @@ impl IMediaFrameSourceGetPropertyResult {
 }
 RT_CLASS!{class MediaFrameSourceGetPropertyResult: IMediaFrameSourceGetPropertyResult}
 RT_ENUM! { enum MediaFrameSourceGetPropertyStatus: i32 {
-    Success (MediaFrameSourceGetPropertyStatus_Success) = 0, UnknownFailure (MediaFrameSourceGetPropertyStatus_UnknownFailure) = 1, NotSupported (MediaFrameSourceGetPropertyStatus_NotSupported) = 2, DeviceNotAvailable (MediaFrameSourceGetPropertyStatus_DeviceNotAvailable) = 3, MaxPropertyValueSizeTooSmall (MediaFrameSourceGetPropertyStatus_MaxPropertyValueSizeTooSmall) = 4, MaxPropertyValueSizeRequired (MediaFrameSourceGetPropertyStatus_MaxPropertyValueSizeRequired) = 5,
+    Success = 0, UnknownFailure = 1, NotSupported = 2, DeviceNotAvailable = 3, MaxPropertyValueSizeTooSmall = 4, MaxPropertyValueSizeRequired = 5,
 }}
 DEFINE_IID!(IID_IMediaFrameSourceGroup, 2137021319, 18482, 19295, 174, 61, 65, 47, 170, 179, 125, 52);
 RT_INTERFACE!{interface IMediaFrameSourceGroup(IMediaFrameSourceGroupVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceGroup] {
@@ -8815,10 +8815,10 @@ impl IMediaFrameSourceInfo2 {
     }}
 }
 RT_ENUM! { enum MediaFrameSourceKind: i32 {
-    Custom (MediaFrameSourceKind_Custom) = 0, Color (MediaFrameSourceKind_Color) = 1, Infrared (MediaFrameSourceKind_Infrared) = 2, Depth (MediaFrameSourceKind_Depth) = 3, Audio (MediaFrameSourceKind_Audio) = 4, Image (MediaFrameSourceKind_Image) = 5,
+    Custom = 0, Color = 1, Infrared = 2, Depth = 3, Audio = 4, Image = 5,
 }}
 RT_ENUM! { enum MediaFrameSourceSetPropertyStatus: i32 {
-    Success (MediaFrameSourceSetPropertyStatus_Success) = 0, UnknownFailure (MediaFrameSourceSetPropertyStatus_UnknownFailure) = 1, NotSupported (MediaFrameSourceSetPropertyStatus_NotSupported) = 2, InvalidValue (MediaFrameSourceSetPropertyStatus_InvalidValue) = 3, DeviceNotAvailable (MediaFrameSourceSetPropertyStatus_DeviceNotAvailable) = 4, NotInControl (MediaFrameSourceSetPropertyStatus_NotInControl) = 5,
+    Success = 0, UnknownFailure = 1, NotSupported = 2, InvalidValue = 3, DeviceNotAvailable = 4, NotInControl = 5,
 }}
 DEFINE_IID!(IID_IMultiSourceMediaFrameArrivedEventArgs, 1662082561, 53073, 18685, 170, 176, 109, 105, 62, 180, 129, 39);
 RT_INTERFACE!{interface IMultiSourceMediaFrameArrivedEventArgs(IMultiSourceMediaFrameArrivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMultiSourceMediaFrameArrivedEventArgs] {
@@ -8877,7 +8877,7 @@ impl IMultiSourceMediaFrameReader2 {
     }}
 }
 RT_ENUM! { enum MultiSourceMediaFrameReaderStartStatus: i32 {
-    Success (MultiSourceMediaFrameReaderStartStatus_Success) = 0, NotSupported (MultiSourceMediaFrameReaderStartStatus_NotSupported) = 1, InsufficientResources (MultiSourceMediaFrameReaderStartStatus_InsufficientResources) = 2, DeviceNotAvailable (MultiSourceMediaFrameReaderStartStatus_DeviceNotAvailable) = 3, UnknownFailure (MultiSourceMediaFrameReaderStartStatus_UnknownFailure) = 4,
+    Success = 0, NotSupported = 1, InsufficientResources = 2, DeviceNotAvailable = 3, UnknownFailure = 4,
 }}
 DEFINE_IID!(IID_IMultiSourceMediaFrameReference, 563497754, 32738, 17622, 146, 229, 41, 142, 109, 40, 16, 233);
 RT_INTERFACE!{interface IMultiSourceMediaFrameReference(IMultiSourceMediaFrameReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IMultiSourceMediaFrameReference] {
@@ -9063,10 +9063,10 @@ impl ICastingConnectionErrorOccurredEventArgs {
 }
 RT_CLASS!{class CastingConnectionErrorOccurredEventArgs: ICastingConnectionErrorOccurredEventArgs}
 RT_ENUM! { enum CastingConnectionErrorStatus: i32 {
-    Succeeded (CastingConnectionErrorStatus_Succeeded) = 0, DeviceDidNotRespond (CastingConnectionErrorStatus_DeviceDidNotRespond) = 1, DeviceError (CastingConnectionErrorStatus_DeviceError) = 2, DeviceLocked (CastingConnectionErrorStatus_DeviceLocked) = 3, ProtectedPlaybackFailed (CastingConnectionErrorStatus_ProtectedPlaybackFailed) = 4, InvalidCastingSource (CastingConnectionErrorStatus_InvalidCastingSource) = 5, Unknown (CastingConnectionErrorStatus_Unknown) = 6,
+    Succeeded = 0, DeviceDidNotRespond = 1, DeviceError = 2, DeviceLocked = 3, ProtectedPlaybackFailed = 4, InvalidCastingSource = 5, Unknown = 6,
 }}
 RT_ENUM! { enum CastingConnectionState: i32 {
-    Disconnected (CastingConnectionState_Disconnected) = 0, Connected (CastingConnectionState_Connected) = 1, Rendering (CastingConnectionState_Rendering) = 2, Disconnecting (CastingConnectionState_Disconnecting) = 3, Connecting (CastingConnectionState_Connecting) = 4,
+    Disconnected = 0, Connected = 1, Rendering = 2, Disconnecting = 3, Connecting = 4,
 }}
 DEFINE_IID!(IID_ICastingDevice, 3732020355, 19011, 19153, 166, 210, 36, 146, 167, 150, 195, 242);
 RT_INTERFACE!{interface ICastingDevice(ICastingDeviceVtbl): IInspectable(IInspectableVtbl) [IID_ICastingDevice] {
@@ -9267,7 +9267,7 @@ impl ICastingDeviceStatics {
     }}
 }
 RT_ENUM! { enum CastingPlaybackTypes: u32 {
-    None (CastingPlaybackTypes_None) = 0, Audio (CastingPlaybackTypes_Audio) = 1, Video (CastingPlaybackTypes_Video) = 2, Picture (CastingPlaybackTypes_Picture) = 4,
+    None = 0, Audio = 1, Video = 2, Picture = 4,
 }}
 DEFINE_IID!(IID_ICastingSource, 4096387698, 13415, 18406, 160, 39, 82, 41, 35, 233, 215, 39);
 RT_INTERFACE!{interface ICastingSource(ICastingSourceVtbl): IInspectable(IInspectableVtbl) [IID_ICastingSource] {
@@ -9290,13 +9290,13 @@ RT_CLASS!{class CastingSource: ICastingSource}
 pub mod closedcaptioning { // Windows.Media.ClosedCaptioning
 use ::prelude::*;
 RT_ENUM! { enum ClosedCaptionColor: i32 {
-    Default (ClosedCaptionColor_Default) = 0, White (ClosedCaptionColor_White) = 1, Black (ClosedCaptionColor_Black) = 2, Red (ClosedCaptionColor_Red) = 3, Green (ClosedCaptionColor_Green) = 4, Blue (ClosedCaptionColor_Blue) = 5, Yellow (ClosedCaptionColor_Yellow) = 6, Magenta (ClosedCaptionColor_Magenta) = 7, Cyan (ClosedCaptionColor_Cyan) = 8,
+    Default = 0, White = 1, Black = 2, Red = 3, Green = 4, Blue = 5, Yellow = 6, Magenta = 7, Cyan = 8,
 }}
 RT_ENUM! { enum ClosedCaptionEdgeEffect: i32 {
-    Default (ClosedCaptionEdgeEffect_Default) = 0, None (ClosedCaptionEdgeEffect_None) = 1, Raised (ClosedCaptionEdgeEffect_Raised) = 2, Depressed (ClosedCaptionEdgeEffect_Depressed) = 3, Uniform (ClosedCaptionEdgeEffect_Uniform) = 4, DropShadow (ClosedCaptionEdgeEffect_DropShadow) = 5,
+    Default = 0, None = 1, Raised = 2, Depressed = 3, Uniform = 4, DropShadow = 5,
 }}
 RT_ENUM! { enum ClosedCaptionOpacity: i32 {
-    Default (ClosedCaptionOpacity_Default) = 0, OneHundredPercent (ClosedCaptionOpacity_OneHundredPercent) = 1, SeventyFivePercent (ClosedCaptionOpacity_SeventyFivePercent) = 2, TwentyFivePercent (ClosedCaptionOpacity_TwentyFivePercent) = 3, ZeroPercent (ClosedCaptionOpacity_ZeroPercent) = 4,
+    Default = 0, OneHundredPercent = 1, SeventyFivePercent = 2, TwentyFivePercent = 3, ZeroPercent = 4,
 }}
 RT_CLASS!{static class ClosedCaptionProperties}
 impl RtActivatable<IClosedCaptionPropertiesStatics> for ClosedCaptionProperties {}
@@ -9420,16 +9420,16 @@ impl IClosedCaptionPropertiesStatics {
     }}
 }
 RT_ENUM! { enum ClosedCaptionSize: i32 {
-    Default (ClosedCaptionSize_Default) = 0, FiftyPercent (ClosedCaptionSize_FiftyPercent) = 1, OneHundredPercent (ClosedCaptionSize_OneHundredPercent) = 2, OneHundredFiftyPercent (ClosedCaptionSize_OneHundredFiftyPercent) = 3, TwoHundredPercent (ClosedCaptionSize_TwoHundredPercent) = 4,
+    Default = 0, FiftyPercent = 1, OneHundredPercent = 2, OneHundredFiftyPercent = 3, TwoHundredPercent = 4,
 }}
 RT_ENUM! { enum ClosedCaptionStyle: i32 {
-    Default (ClosedCaptionStyle_Default) = 0, MonospacedWithSerifs (ClosedCaptionStyle_MonospacedWithSerifs) = 1, ProportionalWithSerifs (ClosedCaptionStyle_ProportionalWithSerifs) = 2, MonospacedWithoutSerifs (ClosedCaptionStyle_MonospacedWithoutSerifs) = 3, ProportionalWithoutSerifs (ClosedCaptionStyle_ProportionalWithoutSerifs) = 4, Casual (ClosedCaptionStyle_Casual) = 5, Cursive (ClosedCaptionStyle_Cursive) = 6, SmallCapitals (ClosedCaptionStyle_SmallCapitals) = 7,
+    Default = 0, MonospacedWithSerifs = 1, ProportionalWithSerifs = 2, MonospacedWithoutSerifs = 3, ProportionalWithoutSerifs = 4, Casual = 5, Cursive = 6, SmallCapitals = 7,
 }}
 } // Windows.Media.ClosedCaptioning
 pub mod contentrestrictions { // Windows.Media.ContentRestrictions
 use ::prelude::*;
 RT_ENUM! { enum ContentAccessRestrictionLevel: i32 {
-    Allow (ContentAccessRestrictionLevel_Allow) = 0, Warn (ContentAccessRestrictionLevel_Warn) = 1, Block (ContentAccessRestrictionLevel_Block) = 2, Hide (ContentAccessRestrictionLevel_Hide) = 3,
+    Allow = 0, Warn = 1, Block = 2, Hide = 3,
 }}
 DEFINE_IID!(IID_IContentRestrictionsBrowsePolicy, 2348888996, 17454, 17946, 135, 87, 250, 210, 245, 189, 55, 228);
 RT_INTERFACE!{interface IContentRestrictionsBrowsePolicy(IContentRestrictionsBrowsePolicyVtbl): IInspectable(IInspectableVtbl) [IID_IContentRestrictionsBrowsePolicy] {
@@ -9456,7 +9456,7 @@ impl IContentRestrictionsBrowsePolicy {
 }
 RT_CLASS!{class ContentRestrictionsBrowsePolicy: IContentRestrictionsBrowsePolicy}
 RT_ENUM! { enum RatedContentCategory: i32 {
-    General (RatedContentCategory_General) = 0, Application (RatedContentCategory_Application) = 1, Game (RatedContentCategory_Game) = 2, Movie (RatedContentCategory_Movie) = 3, Television (RatedContentCategory_Television) = 4, Music (RatedContentCategory_Music) = 5,
+    General = 0, Application = 1, Game = 2, Movie = 3, Television = 4, Music = 5,
 }}
 DEFINE_IID!(IID_IRatedContentDescription, 1766352607, 26290, 19907, 150, 177, 240, 144, 238, 222, 226, 85);
 RT_INTERFACE!{interface IRatedContentDescription(IRatedContentDescriptionVtbl): IInspectable(IInspectableVtbl) [IID_IRatedContentDescription] {
@@ -10017,7 +10017,7 @@ impl IGlobalSystemMediaTransportControlsSessionPlaybackInfo {
 }
 RT_CLASS!{class GlobalSystemMediaTransportControlsSessionPlaybackInfo: IGlobalSystemMediaTransportControlsSessionPlaybackInfo}
 RT_ENUM! { enum GlobalSystemMediaTransportControlsSessionPlaybackStatus: i32 {
-    Closed (GlobalSystemMediaTransportControlsSessionPlaybackStatus_Closed) = 0, Opened (GlobalSystemMediaTransportControlsSessionPlaybackStatus_Opened) = 1, Changing (GlobalSystemMediaTransportControlsSessionPlaybackStatus_Changing) = 2, Stopped (GlobalSystemMediaTransportControlsSessionPlaybackStatus_Stopped) = 3, Playing (GlobalSystemMediaTransportControlsSessionPlaybackStatus_Playing) = 4, Paused (GlobalSystemMediaTransportControlsSessionPlaybackStatus_Paused) = 5,
+    Closed = 0, Opened = 1, Changing = 2, Stopped = 3, Playing = 4, Paused = 5,
 }}
 DEFINE_IID!(IID_IGlobalSystemMediaTransportControlsSessionTimelineProperties, 3991093558, 28453, 22669, 142, 207, 234, 91, 103, 53, 170, 165);
 RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionTimelineProperties(IGlobalSystemMediaTransportControlsSessionTimelinePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalSystemMediaTransportControlsSessionTimelineProperties] {
@@ -10085,10 +10085,10 @@ RT_CLASS!{class TimelinePropertiesChangedEventArgs: ITimelinePropertiesChangedEv
 pub mod core { // Windows.Media.Core
 use ::prelude::*;
 RT_ENUM! { enum AudioDecoderDegradation: i32 {
-    None (AudioDecoderDegradation_None) = 0, DownmixTo2Channels (AudioDecoderDegradation_DownmixTo2Channels) = 1, DownmixTo6Channels (AudioDecoderDegradation_DownmixTo6Channels) = 2, DownmixTo8Channels (AudioDecoderDegradation_DownmixTo8Channels) = 3,
+    None = 0, DownmixTo2Channels = 1, DownmixTo6Channels = 2, DownmixTo8Channels = 3,
 }}
 RT_ENUM! { enum AudioDecoderDegradationReason: i32 {
-    None (AudioDecoderDegradationReason_None) = 0, LicensingRequirement (AudioDecoderDegradationReason_LicensingRequirement) = 1, SpatialAudioNotSupported (AudioDecoderDegradationReason_SpatialAudioNotSupported) = 2,
+    None = 0, LicensingRequirement = 1, SpatialAudioNotSupported = 2,
 }}
 DEFINE_IID!(IID_IAudioStreamDescriptor, 506893028, 16423, 18503, 167, 11, 223, 29, 154, 42, 123, 4);
 RT_INTERFACE!{interface IAudioStreamDescriptor(IAudioStreamDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IAudioStreamDescriptor] {
@@ -10261,7 +10261,7 @@ RT_CLASS!{class ChapterCue: IChapterCue}
 impl RtActivatable<IActivationFactory> for ChapterCue {}
 DEFINE_CLSID!(ChapterCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,67,104,97,112,116,101,114,67,117,101,0]) [CLSID_ChapterCue]);
 RT_ENUM! { enum CodecCategory: i32 {
-    Encoder (CodecCategory_Encoder) = 0, Decoder (CodecCategory_Decoder) = 1,
+    Encoder = 0, Decoder = 1,
 }}
 DEFINE_IID!(IID_ICodecInfo, 1374199685, 60055, 18844, 134, 172, 76, 229, 231, 63, 58, 66);
 RT_INTERFACE!{interface ICodecInfo(ICodecInfoVtbl): IInspectable(IInspectableVtbl) [IID_ICodecInfo] {
@@ -10300,7 +10300,7 @@ impl ICodecInfo {
 }
 RT_CLASS!{class CodecInfo: ICodecInfo}
 RT_ENUM! { enum CodecKind: i32 {
-    Audio (CodecKind_Audio) = 0, Video (CodecKind_Video) = 1,
+    Audio = 0, Video = 1,
 }}
 DEFINE_IID!(IID_ICodecQuery, 573216058, 44897, 19972, 128, 138, 164, 99, 78, 47, 58, 196);
 RT_INTERFACE!{interface ICodecQuery(ICodecQueryVtbl): IInspectable(IInspectableVtbl) [IID_ICodecQuery] {
@@ -10909,7 +10909,7 @@ impl IFaceDetectionEffectFrame {
 }
 RT_CLASS!{class FaceDetectionEffectFrame: IFaceDetectionEffectFrame}
 RT_ENUM! { enum FaceDetectionMode: i32 {
-    HighPerformance (FaceDetectionMode_HighPerformance) = 0, Balanced (FaceDetectionMode_Balanced) = 1, HighQuality (FaceDetectionMode_HighQuality) = 2,
+    HighPerformance = 0, Balanced = 1, HighQuality = 2,
 }}
 DEFINE_IID!(IID_IHighDynamicRangeControl, 1441900462, 55639, 19913, 157, 28, 133, 83, 168, 42, 125, 153);
 RT_INTERFACE!{interface IHighDynamicRangeControl(IHighDynamicRangeControlVtbl): IInspectable(IInspectableVtbl) [IID_IHighDynamicRangeControl] {
@@ -11217,7 +11217,7 @@ impl IMediaCueEventArgs {
 }
 RT_CLASS!{class MediaCueEventArgs: IMediaCueEventArgs}
 RT_ENUM! { enum MediaDecoderStatus: i32 {
-    FullySupported (MediaDecoderStatus_FullySupported) = 0, UnsupportedSubtype (MediaDecoderStatus_UnsupportedSubtype) = 1, UnsupportedEncoderProperties (MediaDecoderStatus_UnsupportedEncoderProperties) = 2, Degraded (MediaDecoderStatus_Degraded) = 3,
+    FullySupported = 0, UnsupportedSubtype = 1, UnsupportedEncoderProperties = 2, Degraded = 3,
 }}
 DEFINE_IID!(IID_IMediaSource, 3888100761, 41117, 19489, 188, 223, 32, 175, 79, 134, 179, 217);
 RT_INTERFACE!{interface IMediaSource(IMediaSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSource] {
@@ -11448,7 +11448,7 @@ impl IMediaSourceOpenOperationCompletedEventArgs {
 }
 RT_CLASS!{class MediaSourceOpenOperationCompletedEventArgs: IMediaSourceOpenOperationCompletedEventArgs}
 RT_ENUM! { enum MediaSourceState: i32 {
-    Initial (MediaSourceState_Initial) = 0, Opening (MediaSourceState_Opening) = 1, Opened (MediaSourceState_Opened) = 2, Failed (MediaSourceState_Failed) = 3, Closed (MediaSourceState_Closed) = 4,
+    Initial = 0, Opening = 1, Opened = 2, Failed = 3, Closed = 4,
 }}
 DEFINE_IID!(IID_IMediaSourceStateChangedEventArgs, 170962818, 36977, 19372, 188, 57, 202, 42, 147, 183, 23, 169);
 RT_INTERFACE!{interface IMediaSourceStateChangedEventArgs(IMediaSourceStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceStateChangedEventArgs] {
@@ -11558,7 +11558,7 @@ impl IMediaSourceStatics4 {
     }}
 }
 RT_ENUM! { enum MediaSourceStatus: i32 {
-    FullySupported (MediaSourceStatus_FullySupported) = 0, Unknown (MediaSourceStatus_Unknown) = 1,
+    FullySupported = 0, Unknown = 1,
 }}
 DEFINE_IID!(IID_IMediaStreamDescriptor, 2163306094, 37623, 17694, 151, 210, 175, 216, 7, 66, 218, 112);
 RT_INTERFACE!{interface IMediaStreamDescriptor(IMediaStreamDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamDescriptor] {
@@ -12011,7 +12011,7 @@ impl IMediaStreamSourceClosedEventArgs {
 }
 RT_CLASS!{class MediaStreamSourceClosedEventArgs: IMediaStreamSourceClosedEventArgs}
 RT_ENUM! { enum MediaStreamSourceClosedReason: i32 {
-    Done (MediaStreamSourceClosedReason_Done) = 0, UnknownError (MediaStreamSourceClosedReason_UnknownError) = 1, AppReportedError (MediaStreamSourceClosedReason_AppReportedError) = 2, UnsupportedProtectionSystem (MediaStreamSourceClosedReason_UnsupportedProtectionSystem) = 3, ProtectionSystemFailure (MediaStreamSourceClosedReason_ProtectionSystemFailure) = 4, UnsupportedEncodingFormat (MediaStreamSourceClosedReason_UnsupportedEncodingFormat) = 5, MissingSampleRequestedEventHandler (MediaStreamSourceClosedReason_MissingSampleRequestedEventHandler) = 6,
+    Done = 0, UnknownError = 1, AppReportedError = 2, UnsupportedProtectionSystem = 3, ProtectionSystemFailure = 4, UnsupportedEncodingFormat = 5, MissingSampleRequestedEventHandler = 6,
 }}
 DEFINE_IID!(IID_IMediaStreamSourceClosedRequest, 2424045801, 6307, 18769, 136, 122, 44, 30, 235, 213, 198, 158);
 RT_INTERFACE!{interface IMediaStreamSourceClosedRequest(IMediaStreamSourceClosedRequestVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceClosedRequest] {
@@ -12026,7 +12026,7 @@ impl IMediaStreamSourceClosedRequest {
 }
 RT_CLASS!{class MediaStreamSourceClosedRequest: IMediaStreamSourceClosedRequest}
 RT_ENUM! { enum MediaStreamSourceErrorStatus: i32 {
-    Other (MediaStreamSourceErrorStatus_Other) = 0, OutOfMemory (MediaStreamSourceErrorStatus_OutOfMemory) = 1, FailedToOpenFile (MediaStreamSourceErrorStatus_FailedToOpenFile) = 2, FailedToConnectToServer (MediaStreamSourceErrorStatus_FailedToConnectToServer) = 3, ConnectionToServerLost (MediaStreamSourceErrorStatus_ConnectionToServerLost) = 4, UnspecifiedNetworkError (MediaStreamSourceErrorStatus_UnspecifiedNetworkError) = 5, DecodeError (MediaStreamSourceErrorStatus_DecodeError) = 6, UnsupportedMediaFormat (MediaStreamSourceErrorStatus_UnsupportedMediaFormat) = 7,
+    Other = 0, OutOfMemory = 1, FailedToOpenFile = 2, FailedToConnectToServer = 3, ConnectionToServerLost = 4, UnspecifiedNetworkError = 5, DecodeError = 6, UnsupportedMediaFormat = 7,
 }}
 DEFINE_IID!(IID_IMediaStreamSourceFactory, 4017610969, 53592, 19322, 134, 63, 32, 51, 66, 251, 253, 65);
 RT_INTERFACE!{static interface IMediaStreamSourceFactory(IMediaStreamSourceFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceFactory] {
@@ -12242,16 +12242,16 @@ impl IMediaTrack {
     }}
 }
 RT_ENUM! { enum MediaTrackKind: i32 {
-    Audio (MediaTrackKind_Audio) = 0, Video (MediaTrackKind_Video) = 1, TimedMetadata (MediaTrackKind_TimedMetadata) = 2,
+    Audio = 0, Video = 1, TimedMetadata = 2,
 }}
 RT_ENUM! { enum MseAppendMode: i32 {
-    Segments (MseAppendMode_Segments) = 0, Sequence (MseAppendMode_Sequence) = 1,
+    Segments = 0, Sequence = 1,
 }}
 RT_ENUM! { enum MseEndOfStreamStatus: i32 {
-    Success (MseEndOfStreamStatus_Success) = 0, NetworkError (MseEndOfStreamStatus_NetworkError) = 1, DecodeError (MseEndOfStreamStatus_DecodeError) = 2, UnknownError (MseEndOfStreamStatus_UnknownError) = 3,
+    Success = 0, NetworkError = 1, DecodeError = 2, UnknownError = 3,
 }}
 RT_ENUM! { enum MseReadyState: i32 {
-    Closed (MseReadyState_Closed) = 0, Open (MseReadyState_Open) = 1, Ended (MseReadyState_Ended) = 2,
+    Closed = 0, Open = 1, Ended = 2,
 }}
 DEFINE_IID!(IID_IMseSourceBuffer, 203072483, 57229, 16505, 163, 254, 104, 73, 24, 75, 78, 47);
 RT_INTERFACE!{interface IMseSourceBuffer(IMseSourceBufferVtbl): IInspectable(IInspectableVtbl) [IID_IMseSourceBuffer] {
@@ -12621,7 +12621,7 @@ impl ISceneAnalysisEffectFrame2 {
     }}
 }
 RT_ENUM! { enum SceneAnalysisRecommendation: i32 {
-    Standard (SceneAnalysisRecommendation_Standard) = 0, Hdr (SceneAnalysisRecommendation_Hdr) = 1, LowLight (SceneAnalysisRecommendation_LowLight) = 2,
+    Standard = 0, Hdr = 1, LowLight = 2,
 }}
 DEFINE_IID!(IID_ISceneAnalyzedEventArgs, 342594952, 10321, 17892, 173, 85, 68, 207, 141, 248, 219, 77);
 RT_INTERFACE!{interface ISceneAnalyzedEventArgs(ISceneAnalyzedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISceneAnalyzedEventArgs] {
@@ -12704,7 +12704,7 @@ RT_CLASS!{class SpeechCue: ISpeechCue}
 impl RtActivatable<IActivationFactory> for SpeechCue {}
 DEFINE_CLSID!(SpeechCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,83,112,101,101,99,104,67,117,101,0]) [CLSID_SpeechCue]);
 RT_ENUM! { enum TimedMetadataKind: i32 {
-    Caption (TimedMetadataKind_Caption) = 0, Chapter (TimedMetadataKind_Chapter) = 1, Custom (TimedMetadataKind_Custom) = 2, Data (TimedMetadataKind_Data) = 3, Description (TimedMetadataKind_Description) = 4, Subtitle (TimedMetadataKind_Subtitle) = 5, ImageSubtitle (TimedMetadataKind_ImageSubtitle) = 6, Speech (TimedMetadataKind_Speech) = 7,
+    Caption = 0, Chapter = 1, Custom = 2, Data = 3, Description = 4, Subtitle = 5, ImageSubtitle = 6, Speech = 7,
 }}
 DEFINE_IID!(IID_ITimedMetadataStreamDescriptor, 322123455, 10602, 17982, 159, 249, 1, 205, 37, 105, 20, 8);
 RT_INTERFACE!{interface ITimedMetadataStreamDescriptor(ITimedMetadataStreamDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataStreamDescriptor] {
@@ -12858,7 +12858,7 @@ impl ITimedMetadataTrackError {
 }
 RT_CLASS!{class TimedMetadataTrackError: ITimedMetadataTrackError}
 RT_ENUM! { enum TimedMetadataTrackErrorCode: i32 {
-    None (TimedMetadataTrackErrorCode_None) = 0, DataFormatError (TimedMetadataTrackErrorCode_DataFormatError) = 1, NetworkError (TimedMetadataTrackErrorCode_NetworkError) = 2, InternalError (TimedMetadataTrackErrorCode_InternalError) = 3,
+    None = 0, DataFormatError = 1, NetworkError = 2, InternalError = 3,
 }}
 DEFINE_IID!(IID_ITimedMetadataTrackFactory, 2379576849, 38835, 19999, 133, 44, 15, 72, 44, 129, 173, 38);
 RT_INTERFACE!{static interface ITimedMetadataTrackFactory(ITimedMetadataTrackFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataTrackFactory] {
@@ -12931,16 +12931,16 @@ RT_CLASS!{class TimedTextCue: ITimedTextCue}
 impl RtActivatable<IActivationFactory> for TimedTextCue {}
 DEFINE_CLSID!(TimedTextCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,67,117,101,0]) [CLSID_TimedTextCue]);
 RT_ENUM! { enum TimedTextDisplayAlignment: i32 {
-    Before (TimedTextDisplayAlignment_Before) = 0, After (TimedTextDisplayAlignment_After) = 1, Center (TimedTextDisplayAlignment_Center) = 2,
+    Before = 0, After = 1, Center = 2,
 }}
 RT_STRUCT! { struct TimedTextDouble {
     Value: f64, Unit: TimedTextUnit,
 }}
 RT_ENUM! { enum TimedTextFlowDirection: i32 {
-    LeftToRight (TimedTextFlowDirection_LeftToRight) = 0, RightToLeft (TimedTextFlowDirection_RightToLeft) = 1,
+    LeftToRight = 0, RightToLeft = 1,
 }}
 RT_ENUM! { enum TimedTextFontStyle: i32 {
-    Normal (TimedTextFontStyle_Normal) = 0, Oblique (TimedTextFontStyle_Oblique) = 1, Italic (TimedTextFontStyle_Italic) = 2,
+    Normal = 0, Oblique = 1, Italic = 2,
 }}
 DEFINE_IID!(IID_ITimedTextLine, 2542632162, 29448, 19558, 190, 80, 101, 119, 114, 137, 245, 223);
 RT_INTERFACE!{interface ITimedTextLine(ITimedTextLineVtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextLine] {
@@ -12968,7 +12968,7 @@ RT_CLASS!{class TimedTextLine: ITimedTextLine}
 impl RtActivatable<IActivationFactory> for TimedTextLine {}
 DEFINE_CLSID!(TimedTextLine(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,76,105,110,101,0]) [CLSID_TimedTextLine]);
 RT_ENUM! { enum TimedTextLineAlignment: i32 {
-    Start (TimedTextLineAlignment_Start) = 0, End (TimedTextLineAlignment_End) = 1, Center (TimedTextLineAlignment_Center) = 2,
+    Start = 0, End = 1, Center = 2,
 }}
 RT_STRUCT! { struct TimedTextPadding {
     Before: f64, After: f64, Start: f64, End: f64, Unit: TimedTextUnit,
@@ -13119,7 +13119,7 @@ RT_CLASS!{class TimedTextRegion: ITimedTextRegion}
 impl RtActivatable<IActivationFactory> for TimedTextRegion {}
 DEFINE_CLSID!(TimedTextRegion(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,82,101,103,105,111,110,0]) [CLSID_TimedTextRegion]);
 RT_ENUM! { enum TimedTextScrollMode: i32 {
-    Popon (TimedTextScrollMode_Popon) = 0, Rollup (TimedTextScrollMode_Rollup) = 1,
+    Popon = 0, Rollup = 1,
 }}
 RT_STRUCT! { struct TimedTextSize {
     Height: f64, Width: f64, Unit: TimedTextUnit,
@@ -13487,16 +13487,16 @@ RT_CLASS!{class TimedTextSubformat: ITimedTextSubformat}
 impl RtActivatable<IActivationFactory> for TimedTextSubformat {}
 DEFINE_CLSID!(TimedTextSubformat(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,83,117,98,102,111,114,109,97,116,0]) [CLSID_TimedTextSubformat]);
 RT_ENUM! { enum TimedTextUnit: i32 {
-    Pixels (TimedTextUnit_Pixels) = 0, Percentage (TimedTextUnit_Percentage) = 1,
+    Pixels = 0, Percentage = 1,
 }}
 RT_ENUM! { enum TimedTextWeight: i32 {
-    Normal (TimedTextWeight_Normal) = 400, Bold (TimedTextWeight_Bold) = 700,
+    Normal = 400, Bold = 700,
 }}
 RT_ENUM! { enum TimedTextWrapping: i32 {
-    NoWrap (TimedTextWrapping_NoWrap) = 0, Wrap (TimedTextWrapping_Wrap) = 1,
+    NoWrap = 0, Wrap = 1,
 }}
 RT_ENUM! { enum TimedTextWritingMode: i32 {
-    LeftRightTopBottom (TimedTextWritingMode_LeftRightTopBottom) = 0, RightLeftTopBottom (TimedTextWritingMode_RightLeftTopBottom) = 1, TopBottomRightLeft (TimedTextWritingMode_TopBottomRightLeft) = 2, TopBottomLeftRight (TimedTextWritingMode_TopBottomLeftRight) = 3, LeftRight (TimedTextWritingMode_LeftRight) = 4, RightLeft (TimedTextWritingMode_RightLeft) = 5, TopBottom (TimedTextWritingMode_TopBottom) = 6,
+    LeftRightTopBottom = 0, RightLeftTopBottom = 1, TopBottomRightLeft = 2, TopBottomLeftRight = 3, LeftRight = 4, RightLeft = 5, TopBottom = 6,
 }}
 DEFINE_IID!(IID_IVideoStabilizationEffect, 134784592, 38552, 20055, 135, 123, 189, 124, 178, 238, 15, 138);
 RT_INTERFACE!{interface IVideoStabilizationEffect(IVideoStabilizationEffectVtbl): IInspectable(IInspectableVtbl) [IID_IVideoStabilizationEffect] {
@@ -13548,7 +13548,7 @@ impl IVideoStabilizationEffectEnabledChangedEventArgs {
 }
 RT_CLASS!{class VideoStabilizationEffectEnabledChangedEventArgs: IVideoStabilizationEffectEnabledChangedEventArgs}
 RT_ENUM! { enum VideoStabilizationEffectEnabledChangedReason: i32 {
-    Programmatic (VideoStabilizationEffectEnabledChangedReason_Programmatic) = 0, PixelRateTooHigh (VideoStabilizationEffectEnabledChangedReason_PixelRateTooHigh) = 1, RunningSlowly (VideoStabilizationEffectEnabledChangedReason_RunningSlowly) = 2,
+    Programmatic = 0, PixelRateTooHigh = 1, RunningSlowly = 2,
 }}
 DEFINE_IID!(IID_IVideoStreamDescriptor, 317590869, 39979, 17472, 128, 87, 44, 122, 144, 240, 203, 236);
 RT_INTERFACE!{interface IVideoStreamDescriptor(IVideoStreamDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IVideoStreamDescriptor] {
@@ -13753,7 +13753,7 @@ impl IAdvancedPhotoControl {
 }
 RT_CLASS!{class AdvancedPhotoControl: IAdvancedPhotoControl}
 RT_ENUM! { enum AdvancedPhotoMode: i32 {
-    Auto (AdvancedPhotoMode_Auto) = 0, Standard (AdvancedPhotoMode_Standard) = 1, Hdr (AdvancedPhotoMode_Hdr) = 2, LowLight (AdvancedPhotoMode_LowLight) = 3,
+    Auto = 0, Standard = 1, Hdr = 2, LowLight = 3,
 }}
 DEFINE_IID!(IID_IAdvancedVideoCaptureDeviceController, 3731879123, 11158, 17795, 128, 171, 181, 176, 29, 198, 168, 215);
 RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController(IAdvancedVideoCaptureDeviceControllerVtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedVideoCaptureDeviceController] {
@@ -14098,10 +14098,10 @@ impl IAudioDeviceModulesManagerFactory {
     }}
 }
 RT_ENUM! { enum AudioDeviceRole: i32 {
-    Default (AudioDeviceRole_Default) = 0, Communications (AudioDeviceRole_Communications) = 1,
+    Default = 0, Communications = 1,
 }}
 RT_ENUM! { enum AutoFocusRange: i32 {
-    FullRange (AutoFocusRange_FullRange) = 0, Macro (AutoFocusRange_Macro) = 1, Normal (AutoFocusRange_Normal) = 2,
+    FullRange = 0, Macro = 1, Normal = 2,
 }}
 DEFINE_IID!(IID_ICallControl, 2770391254, 44685, 17883, 128, 17, 202, 73, 211, 179, 229, 120);
 RT_INTERFACE!{interface ICallControl(ICallControlVtbl): IInspectable(IInspectableVtbl) [IID_ICallControl] {
@@ -14241,16 +14241,16 @@ impl ICallControlStatics {
     }}
 }
 RT_ENUM! { enum CameraStreamState: i32 {
-    NotStreaming (CameraStreamState_NotStreaming) = 0, Streaming (CameraStreamState_Streaming) = 1, BlockedForPrivacy (CameraStreamState_BlockedForPrivacy) = 2, Shutdown (CameraStreamState_Shutdown) = 3,
+    NotStreaming = 0, Streaming = 1, BlockedForPrivacy = 2, Shutdown = 3,
 }}
 RT_ENUM! { enum CaptureSceneMode: i32 {
-    Auto (CaptureSceneMode_Auto) = 0, Manual (CaptureSceneMode_Manual) = 1, Macro (CaptureSceneMode_Macro) = 2, Portrait (CaptureSceneMode_Portrait) = 3, Sport (CaptureSceneMode_Sport) = 4, Snow (CaptureSceneMode_Snow) = 5, Night (CaptureSceneMode_Night) = 6, Beach (CaptureSceneMode_Beach) = 7, Sunset (CaptureSceneMode_Sunset) = 8, Candlelight (CaptureSceneMode_Candlelight) = 9, Landscape (CaptureSceneMode_Landscape) = 10, NightPortrait (CaptureSceneMode_NightPortrait) = 11, Backlit (CaptureSceneMode_Backlit) = 12,
+    Auto = 0, Manual = 1, Macro = 2, Portrait = 3, Sport = 4, Snow = 5, Night = 6, Beach = 7, Sunset = 8, Candlelight = 9, Landscape = 10, NightPortrait = 11, Backlit = 12,
 }}
 RT_ENUM! { enum CaptureUse: i32 {
-    None (CaptureUse_None) = 0, Photo (CaptureUse_Photo) = 1, Video (CaptureUse_Video) = 2,
+    None = 0, Photo = 1, Video = 2,
 }}
 RT_ENUM! { enum ColorTemperaturePreset: i32 {
-    Auto (ColorTemperaturePreset_Auto) = 0, Manual (ColorTemperaturePreset_Manual) = 1, Cloudy (ColorTemperaturePreset_Cloudy) = 2, Daylight (ColorTemperaturePreset_Daylight) = 3, Flash (ColorTemperaturePreset_Flash) = 4, Fluorescent (ColorTemperaturePreset_Fluorescent) = 5, Tungsten (ColorTemperaturePreset_Tungsten) = 6, Candlelight (ColorTemperaturePreset_Candlelight) = 7,
+    Auto = 0, Manual = 1, Cloudy = 2, Daylight = 3, Flash = 4, Fluorescent = 5, Tungsten = 6, Candlelight = 7,
 }}
 RT_CLASS!{class DefaultAudioCaptureDeviceChangedEventArgs: IDefaultAudioDeviceChangedEventArgs}
 DEFINE_IID!(IID_IDefaultAudioDeviceChangedEventArgs, 286230575, 7173, 18007, 161, 142, 71, 201, 182, 159, 7, 171);
@@ -14644,10 +14644,10 @@ impl IFocusControl2 {
     }}
 }
 RT_ENUM! { enum FocusMode: i32 {
-    Auto (FocusMode_Auto) = 0, Single (FocusMode_Single) = 1, Continuous (FocusMode_Continuous) = 2, Manual (FocusMode_Manual) = 3,
+    Auto = 0, Single = 1, Continuous = 2, Manual = 3,
 }}
 RT_ENUM! { enum FocusPreset: i32 {
-    Auto (FocusPreset_Auto) = 0, Manual (FocusPreset_Manual) = 1, AutoMacro (FocusPreset_AutoMacro) = 2, AutoNormal (FocusPreset_AutoNormal) = 3, AutoInfinity (FocusPreset_AutoInfinity) = 4, AutoHyperfocal (FocusPreset_AutoHyperfocal) = 5,
+    Auto = 0, Manual = 1, AutoMacro = 2, AutoNormal = 3, AutoInfinity = 4, AutoHyperfocal = 5,
 }}
 DEFINE_IID!(IID_IFocusSettings, 2039844715, 12899, 17013, 133, 214, 174, 174, 137, 28, 150, 238);
 RT_INTERFACE!{interface IFocusSettings(IFocusSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IFocusSettings] {
@@ -14753,7 +14753,7 @@ impl IHdrVideoControl {
 }
 RT_CLASS!{class HdrVideoControl: IHdrVideoControl}
 RT_ENUM! { enum HdrVideoMode: i32 {
-    Off (HdrVideoMode_Off) = 0, On (HdrVideoMode_On) = 1, Auto (HdrVideoMode_Auto) = 2,
+    Off = 0, On = 1, Auto = 2,
 }}
 DEFINE_IID!(IID_IIsoSpeedControl, 666288930, 9645, 20251, 170, 171, 82, 74, 179, 118, 202, 51);
 RT_INTERFACE!{interface IIsoSpeedControl(IIsoSpeedControlVtbl): IInspectable(IInspectableVtbl) [IID_IIsoSpeedControl] {
@@ -14833,7 +14833,7 @@ impl IIsoSpeedControl2 {
     }}
 }
 RT_ENUM! { enum IsoSpeedPreset: i32 {
-    Auto (IsoSpeedPreset_Auto) = 0, Iso50 (IsoSpeedPreset_Iso50) = 1, Iso80 (IsoSpeedPreset_Iso80) = 2, Iso100 (IsoSpeedPreset_Iso100) = 3, Iso200 (IsoSpeedPreset_Iso200) = 4, Iso400 (IsoSpeedPreset_Iso400) = 5, Iso800 (IsoSpeedPreset_Iso800) = 6, Iso1600 (IsoSpeedPreset_Iso1600) = 7, Iso3200 (IsoSpeedPreset_Iso3200) = 8, Iso6400 (IsoSpeedPreset_Iso6400) = 9, Iso12800 (IsoSpeedPreset_Iso12800) = 10, Iso25600 (IsoSpeedPreset_Iso25600) = 11,
+    Auto = 0, Iso50 = 1, Iso80 = 2, Iso100 = 3, Iso200 = 4, Iso400 = 5, Iso800 = 6, Iso1600 = 7, Iso3200 = 8, Iso6400 = 9, Iso12800 = 10, Iso25600 = 11,
 }}
 DEFINE_IID!(IID_IKeypadPressedEventArgs, 3550755072, 46330, 18893, 148, 66, 137, 175, 101, 104, 246, 1);
 RT_INTERFACE!{interface IKeypadPressedEventArgs(IKeypadPressedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IKeypadPressedEventArgs] {
@@ -15012,16 +15012,16 @@ impl ILowLagPhotoSequenceControl {
 }
 RT_CLASS!{class LowLagPhotoSequenceControl: ILowLagPhotoSequenceControl}
 RT_ENUM! { enum ManualFocusDistance: i32 {
-    Infinity (ManualFocusDistance_Infinity) = 0, Hyperfocal (ManualFocusDistance_Hyperfocal) = 1, Nearest (ManualFocusDistance_Nearest) = 2,
+    Infinity = 0, Hyperfocal = 1, Nearest = 2,
 }}
 RT_ENUM! { enum MediaCaptureFocusState: i32 {
-    Uninitialized (MediaCaptureFocusState_Uninitialized) = 0, Lost (MediaCaptureFocusState_Lost) = 1, Searching (MediaCaptureFocusState_Searching) = 2, Focused (MediaCaptureFocusState_Focused) = 3, Failed (MediaCaptureFocusState_Failed) = 4,
+    Uninitialized = 0, Lost = 1, Searching = 2, Focused = 3, Failed = 4,
 }}
 RT_ENUM! { enum MediaCaptureOptimization: i32 {
-    Default (MediaCaptureOptimization_Default) = 0, Quality (MediaCaptureOptimization_Quality) = 1, Latency (MediaCaptureOptimization_Latency) = 2, Power (MediaCaptureOptimization_Power) = 3, LatencyThenQuality (MediaCaptureOptimization_LatencyThenQuality) = 4, LatencyThenPower (MediaCaptureOptimization_LatencyThenPower) = 5, PowerAndQuality (MediaCaptureOptimization_PowerAndQuality) = 6,
+    Default = 0, Quality = 1, Latency = 2, Power = 3, LatencyThenQuality = 4, LatencyThenPower = 5, PowerAndQuality = 6,
 }}
 RT_ENUM! { enum MediaCapturePauseBehavior: i32 {
-    RetainHardwareResources (MediaCapturePauseBehavior_RetainHardwareResources) = 0, ReleaseHardwareResources (MediaCapturePauseBehavior_ReleaseHardwareResources) = 1,
+    RetainHardwareResources = 0, ReleaseHardwareResources = 1,
 }}
 RT_CLASS!{static class MediaDevice}
 impl RtActivatable<IMediaDeviceStatics> for MediaDevice {}
@@ -15261,7 +15261,7 @@ impl IOpticalImageStabilizationControl {
 }
 RT_CLASS!{class OpticalImageStabilizationControl: IOpticalImageStabilizationControl}
 RT_ENUM! { enum OpticalImageStabilizationMode: i32 {
-    Off (OpticalImageStabilizationMode_Off) = 0, On (OpticalImageStabilizationMode_On) = 1, Auto (OpticalImageStabilizationMode_Auto) = 2,
+    Off = 0, On = 1, Auto = 2,
 }}
 DEFINE_IID!(IID_IPhotoConfirmationControl, 3371430755, 65374, 17794, 169, 168, 5, 80, 248, 90, 74, 118);
 RT_INTERFACE!{interface IPhotoConfirmationControl(IPhotoConfirmationControlVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoConfirmationControl] {
@@ -15409,7 +15409,7 @@ impl IRegionOfInterest2 {
     }}
 }
 RT_ENUM! { enum RegionOfInterestType: i32 {
-    Unknown (RegionOfInterestType_Unknown) = 0, Face (RegionOfInterestType_Face) = 1,
+    Unknown = 0, Face = 1,
 }}
 DEFINE_IID!(IID_IRegionsOfInterestControl, 3273913639, 43787, 17752, 139, 91, 223, 86, 147, 219, 3, 120);
 RT_INTERFACE!{interface IRegionsOfInterestControl(IRegionsOfInterestControlVtbl): IInspectable(IInspectableVtbl) [IID_IRegionsOfInterestControl] {
@@ -15484,10 +15484,10 @@ impl ISceneModeControl {
 }
 RT_CLASS!{class SceneModeControl: ISceneModeControl}
 RT_ENUM! { enum SendCommandStatus: i32 {
-    Success (SendCommandStatus_Success) = 0, DeviceNotAvailable (SendCommandStatus_DeviceNotAvailable) = 1,
+    Success = 0, DeviceNotAvailable = 1,
 }}
 RT_ENUM! { enum TelephonyKey: i32 {
-    D0 (TelephonyKey_D0) = 0, D1 (TelephonyKey_D1) = 1, D2 (TelephonyKey_D2) = 2, D3 (TelephonyKey_D3) = 3, D4 (TelephonyKey_D4) = 4, D5 (TelephonyKey_D5) = 5, D6 (TelephonyKey_D6) = 6, D7 (TelephonyKey_D7) = 7, D8 (TelephonyKey_D8) = 8, D9 (TelephonyKey_D9) = 9, Star (TelephonyKey_Star) = 10, Pound (TelephonyKey_Pound) = 11, A (TelephonyKey_A) = 12, B (TelephonyKey_B) = 13, C (TelephonyKey_C) = 14, D (TelephonyKey_D) = 15,
+    D0 = 0, D1 = 1, D2 = 2, D3 = 3, D4 = 4, D5 = 5, D6 = 6, D7 = 7, D8 = 8, D9 = 9, Star = 10, Pound = 11, A = 12, B = 13, C = 14, D = 15,
 }}
 DEFINE_IID!(IID_ITorchControl, 2785359461, 33360, 16748, 145, 154, 114, 66, 150, 175, 163, 6);
 RT_INTERFACE!{interface ITorchControl(ITorchControlVtbl): IInspectable(IInspectableVtbl) [IID_ITorchControl] {
@@ -15632,10 +15632,10 @@ impl IVideoDeviceControllerGetDevicePropertyResult {
 }
 RT_CLASS!{class VideoDeviceControllerGetDevicePropertyResult: IVideoDeviceControllerGetDevicePropertyResult}
 RT_ENUM! { enum VideoDeviceControllerGetDevicePropertyStatus: i32 {
-    Success (VideoDeviceControllerGetDevicePropertyStatus_Success) = 0, UnknownFailure (VideoDeviceControllerGetDevicePropertyStatus_UnknownFailure) = 1, BufferTooSmall (VideoDeviceControllerGetDevicePropertyStatus_BufferTooSmall) = 2, NotSupported (VideoDeviceControllerGetDevicePropertyStatus_NotSupported) = 3, DeviceNotAvailable (VideoDeviceControllerGetDevicePropertyStatus_DeviceNotAvailable) = 4, MaxPropertyValueSizeTooSmall (VideoDeviceControllerGetDevicePropertyStatus_MaxPropertyValueSizeTooSmall) = 5, MaxPropertyValueSizeRequired (VideoDeviceControllerGetDevicePropertyStatus_MaxPropertyValueSizeRequired) = 6,
+    Success = 0, UnknownFailure = 1, BufferTooSmall = 2, NotSupported = 3, DeviceNotAvailable = 4, MaxPropertyValueSizeTooSmall = 5, MaxPropertyValueSizeRequired = 6,
 }}
 RT_ENUM! { enum VideoDeviceControllerSetDevicePropertyStatus: i32 {
-    Success (VideoDeviceControllerSetDevicePropertyStatus_Success) = 0, UnknownFailure (VideoDeviceControllerSetDevicePropertyStatus_UnknownFailure) = 1, NotSupported (VideoDeviceControllerSetDevicePropertyStatus_NotSupported) = 2, InvalidValue (VideoDeviceControllerSetDevicePropertyStatus_InvalidValue) = 3, DeviceNotAvailable (VideoDeviceControllerSetDevicePropertyStatus_DeviceNotAvailable) = 4, NotInControl (VideoDeviceControllerSetDevicePropertyStatus_NotInControl) = 5,
+    Success = 0, UnknownFailure = 1, NotSupported = 2, InvalidValue = 3, DeviceNotAvailable = 4, NotInControl = 5,
 }}
 DEFINE_IID!(IID_IVideoTemporalDenoisingControl, 2058569525, 15914, 18994, 186, 255, 67, 88, 196, 251, 221, 87);
 RT_INTERFACE!{interface IVideoTemporalDenoisingControl(IVideoTemporalDenoisingControlVtbl): IInspectable(IInspectableVtbl) [IID_IVideoTemporalDenoisingControl] {
@@ -15667,7 +15667,7 @@ impl IVideoTemporalDenoisingControl {
 }
 RT_CLASS!{class VideoTemporalDenoisingControl: IVideoTemporalDenoisingControl}
 RT_ENUM! { enum VideoTemporalDenoisingMode: i32 {
-    Off (VideoTemporalDenoisingMode_Off) = 0, On (VideoTemporalDenoisingMode_On) = 1, Auto (VideoTemporalDenoisingMode_Auto) = 2,
+    Off = 0, On = 1, Auto = 2,
 }}
 DEFINE_IID!(IID_IWhiteBalanceControl, 2015298686, 29026, 18888, 168, 249, 148, 129, 197, 101, 54, 62);
 RT_INTERFACE!{interface IWhiteBalanceControl(IWhiteBalanceControlVtbl): IInspectable(IInspectableVtbl) [IID_IWhiteBalanceControl] {
@@ -15817,7 +15817,7 @@ RT_CLASS!{class ZoomSettings: IZoomSettings}
 impl RtActivatable<IActivationFactory> for ZoomSettings {}
 DEFINE_CLSID!(ZoomSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,90,111,111,109,83,101,116,116,105,110,103,115,0]) [CLSID_ZoomSettings]);
 RT_ENUM! { enum ZoomTransitionMode: i32 {
-    Auto (ZoomTransitionMode_Auto) = 0, Direct (ZoomTransitionMode_Direct) = 1, Smooth (ZoomTransitionMode_Smooth) = 2,
+    Auto = 0, Direct = 1, Smooth = 2,
 }}
 pub mod core { // Windows.Media.Devices.Core
 use ::prelude::*;
@@ -16245,7 +16245,7 @@ impl IFrameFlashControl {
 }
 RT_CLASS!{class FrameFlashControl: IFrameFlashControl}
 RT_ENUM! { enum FrameFlashMode: i32 {
-    Disable (FrameFlashMode_Disable) = 0, Enable (FrameFlashMode_Enable) = 1, Global (FrameFlashMode_Global) = 2,
+    Disable = 0, Enable = 1, Global = 2,
 }}
 DEFINE_IID!(IID_IFrameFocusCapabilities, 2066074968, 448, 16485, 156, 64, 193, 167, 33, 66, 92, 26);
 RT_INTERFACE!{interface IFrameFocusCapabilities(IFrameFocusCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IFrameFocusCapabilities] {
@@ -16440,10 +16440,10 @@ impl IDialApp {
 }
 RT_CLASS!{class DialApp: IDialApp}
 RT_ENUM! { enum DialAppLaunchResult: i32 {
-    Launched (DialAppLaunchResult_Launched) = 0, FailedToLaunch (DialAppLaunchResult_FailedToLaunch) = 1, NotFound (DialAppLaunchResult_NotFound) = 2, NetworkFailure (DialAppLaunchResult_NetworkFailure) = 3,
+    Launched = 0, FailedToLaunch = 1, NotFound = 2, NetworkFailure = 3,
 }}
 RT_ENUM! { enum DialAppState: i32 {
-    Unknown (DialAppState_Unknown) = 0, Stopped (DialAppState_Stopped) = 1, Running (DialAppState_Running) = 2, NetworkFailure (DialAppState_NetworkFailure) = 3,
+    Unknown = 0, Stopped = 1, Running = 2, NetworkFailure = 3,
 }}
 DEFINE_IID!(IID_IDialAppStateDetails, 3720651937, 62942, 16397, 190, 164, 140, 132, 102, 187, 41, 97);
 RT_INTERFACE!{interface IDialAppStateDetails(IDialAppStateDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IDialAppStateDetails] {
@@ -16464,7 +16464,7 @@ impl IDialAppStateDetails {
 }
 RT_CLASS!{class DialAppStateDetails: IDialAppStateDetails}
 RT_ENUM! { enum DialAppStopResult: i32 {
-    Stopped (DialAppStopResult_Stopped) = 0, StopFailed (DialAppStopResult_StopFailed) = 1, OperationNotSupported (DialAppStopResult_OperationNotSupported) = 2, NetworkFailure (DialAppStopResult_NetworkFailure) = 3,
+    Stopped = 0, StopFailed = 1, OperationNotSupported = 2, NetworkFailure = 3,
 }}
 DEFINE_IID!(IID_IDialDevice, 4293979567, 30111, 16850, 162, 10, 127, 41, 206, 11, 55, 132);
 RT_INTERFACE!{interface IDialDevice(IDialDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IDialDevice] {
@@ -16515,7 +16515,7 @@ impl IDialDevice2 {
     }}
 }
 RT_ENUM! { enum DialDeviceDisplayStatus: i32 {
-    None (DialDeviceDisplayStatus_None) = 0, Connecting (DialDeviceDisplayStatus_Connecting) = 1, Connected (DialDeviceDisplayStatus_Connected) = 2, Disconnecting (DialDeviceDisplayStatus_Disconnecting) = 3, Disconnected (DialDeviceDisplayStatus_Disconnected) = 4, Error (DialDeviceDisplayStatus_Error) = 5,
+    None = 0, Connecting = 1, Connected = 2, Disconnecting = 3, Disconnected = 4, Error = 5,
 }}
 DEFINE_IID!(IID_IDialDevicePicker, 3128840714, 65369, 20299, 189, 172, 216, 159, 73, 90, 214, 225);
 RT_INTERFACE!{interface IDialDevicePicker(IDialDevicePickerVtbl): IInspectable(IInspectableVtbl) [IID_IDialDevicePicker] {
@@ -17266,10 +17266,10 @@ impl IMediaOverlayLayerFactory {
     }}
 }
 RT_ENUM! { enum MediaTrimmingPreference: i32 {
-    Fast (MediaTrimmingPreference_Fast) = 0, Precise (MediaTrimmingPreference_Precise) = 1,
+    Fast = 0, Precise = 1,
 }}
 RT_ENUM! { enum VideoFramePrecision: i32 {
-    NearestFrame (VideoFramePrecision_NearestFrame) = 0, NearestKeyFrame (VideoFramePrecision_NearestKeyFrame) = 1,
+    NearestFrame = 0, NearestKeyFrame = 1,
 }}
 } // Windows.Media.Editing
 pub mod effects { // Windows.Media.Effects
@@ -17401,7 +17401,7 @@ impl IAudioEffectsManagerStatics {
     }}
 }
 RT_ENUM! { enum AudioEffectType: i32 {
-    Other (AudioEffectType_Other) = 0, AcousticEchoCancellation (AudioEffectType_AcousticEchoCancellation) = 1, NoiseSuppression (AudioEffectType_NoiseSuppression) = 2, AutomaticGainControl (AudioEffectType_AutomaticGainControl) = 3, BeamForming (AudioEffectType_BeamForming) = 4, ConstantToneRemoval (AudioEffectType_ConstantToneRemoval) = 5, Equalizer (AudioEffectType_Equalizer) = 6, LoudnessEqualizer (AudioEffectType_LoudnessEqualizer) = 7, BassBoost (AudioEffectType_BassBoost) = 8, VirtualSurround (AudioEffectType_VirtualSurround) = 9, VirtualHeadphones (AudioEffectType_VirtualHeadphones) = 10, SpeakerFill (AudioEffectType_SpeakerFill) = 11, RoomCorrection (AudioEffectType_RoomCorrection) = 12, BassManagement (AudioEffectType_BassManagement) = 13, EnvironmentalEffects (AudioEffectType_EnvironmentalEffects) = 14, SpeakerProtection (AudioEffectType_SpeakerProtection) = 15, SpeakerCompensation (AudioEffectType_SpeakerCompensation) = 16, DynamicRangeCompression (AudioEffectType_DynamicRangeCompression) = 17,
+    Other = 0, AcousticEchoCancellation = 1, NoiseSuppression = 2, AutomaticGainControl = 3, BeamForming = 4, ConstantToneRemoval = 5, Equalizer = 6, LoudnessEqualizer = 7, BassBoost = 8, VirtualSurround = 9, VirtualHeadphones = 10, SpeakerFill = 11, RoomCorrection = 12, BassManagement = 13, EnvironmentalEffects = 14, SpeakerProtection = 15, SpeakerCompensation = 16, DynamicRangeCompression = 17,
 }}
 DEFINE_IID!(IID_IAudioRenderEffectsManager, 1305053542, 34641, 17074, 191, 203, 57, 202, 120, 100, 189, 71);
 RT_INTERFACE!{interface IAudioRenderEffectsManager(IAudioRenderEffectsManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAudioRenderEffectsManager] {
@@ -17567,10 +17567,10 @@ impl ICompositeVideoFrameContext {
 }
 RT_CLASS!{class CompositeVideoFrameContext: ICompositeVideoFrameContext}
 RT_ENUM! { enum MediaEffectClosedReason: i32 {
-    Done (MediaEffectClosedReason_Done) = 0, UnknownError (MediaEffectClosedReason_UnknownError) = 1, UnsupportedEncodingFormat (MediaEffectClosedReason_UnsupportedEncodingFormat) = 2, EffectCurrentlyUnloaded (MediaEffectClosedReason_EffectCurrentlyUnloaded) = 3,
+    Done = 0, UnknownError = 1, UnsupportedEncodingFormat = 2, EffectCurrentlyUnloaded = 3,
 }}
 RT_ENUM! { enum MediaMemoryTypes: i32 {
-    Gpu (MediaMemoryTypes_Gpu) = 0, Cpu (MediaMemoryTypes_Cpu) = 1, GpuAndCpu (MediaMemoryTypes_GpuAndCpu) = 2,
+    Gpu = 0, Cpu = 1, GpuAndCpu = 2,
 }}
 DEFINE_IID!(IID_IProcessAudioFrameContext, 1289300294, 4642, 18983, 165, 134, 251, 62, 32, 39, 50, 85);
 RT_INTERFACE!{interface IProcessAudioFrameContext(IProcessAudioFrameContextVtbl): IInspectable(IInspectableVtbl) [IID_IProcessAudioFrameContext] {
@@ -18065,16 +18065,16 @@ impl IFaceTrackerStatics {
 pub mod import { // Windows.Media.Import
 use ::prelude::*;
 RT_ENUM! { enum PhotoImportAccessMode: i32 {
-    ReadWrite (PhotoImportAccessMode_ReadWrite) = 0, ReadOnly (PhotoImportAccessMode_ReadOnly) = 1, ReadAndDelete (PhotoImportAccessMode_ReadAndDelete) = 2,
+    ReadWrite = 0, ReadOnly = 1, ReadAndDelete = 2,
 }}
 RT_ENUM! { enum PhotoImportConnectionTransport: i32 {
-    Unknown (PhotoImportConnectionTransport_Unknown) = 0, Usb (PhotoImportConnectionTransport_Usb) = 1, IP (PhotoImportConnectionTransport_IP) = 2, Bluetooth (PhotoImportConnectionTransport_Bluetooth) = 3,
+    Unknown = 0, Usb = 1, IP = 2, Bluetooth = 3,
 }}
 RT_ENUM! { enum PhotoImportContentType: i32 {
-    Unknown (PhotoImportContentType_Unknown) = 0, Image (PhotoImportContentType_Image) = 1, Video (PhotoImportContentType_Video) = 2,
+    Unknown = 0, Image = 1, Video = 2,
 }}
 RT_ENUM! { enum PhotoImportContentTypeFilter: i32 {
-    OnlyImages (PhotoImportContentTypeFilter_OnlyImages) = 0, OnlyVideos (PhotoImportContentTypeFilter_OnlyVideos) = 1, ImagesAndVideos (PhotoImportContentTypeFilter_ImagesAndVideos) = 2, ImagesAndVideosFromCameraRoll (PhotoImportContentTypeFilter_ImagesAndVideosFromCameraRoll) = 3,
+    OnlyImages = 0, OnlyVideos = 1, ImagesAndVideos = 2, ImagesAndVideosFromCameraRoll = 3,
 }}
 DEFINE_IID!(IID_IPhotoImportDeleteImportedItemsFromSourceResult, 4108391160, 33853, 17034, 161, 166, 129, 81, 2, 146, 176, 174);
 RT_INTERFACE!{interface IPhotoImportDeleteImportedItemsFromSourceResult(IPhotoImportDeleteImportedItemsFromSourceResultVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportDeleteImportedItemsFromSourceResult] {
@@ -18460,7 +18460,7 @@ impl IPhotoImportImportItemsResult {
 }
 RT_CLASS!{class PhotoImportImportItemsResult: IPhotoImportImportItemsResult}
 RT_ENUM! { enum PhotoImportImportMode: i32 {
-    ImportEverything (PhotoImportImportMode_ImportEverything) = 0, IgnoreSidecars (PhotoImportImportMode_IgnoreSidecars) = 1, IgnoreSiblings (PhotoImportImportMode_IgnoreSiblings) = 2, IgnoreSidecarsAndSiblings (PhotoImportImportMode_IgnoreSidecarsAndSiblings) = 3,
+    ImportEverything = 0, IgnoreSidecars = 1, IgnoreSiblings = 2, IgnoreSidecarsAndSiblings = 3,
 }}
 DEFINE_IID!(IID_IPhotoImportItem, 2849013366, 39932, 17336, 179, 86, 99, 59, 106, 152, 140, 158);
 RT_INTERFACE!{interface IPhotoImportItem(IPhotoImportItemVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportItem] {
@@ -18570,7 +18570,7 @@ impl IPhotoImportItemImportedEventArgs {
 }
 RT_CLASS!{class PhotoImportItemImportedEventArgs: IPhotoImportItemImportedEventArgs}
 RT_ENUM! { enum PhotoImportItemSelectionMode: i32 {
-    SelectAll (PhotoImportItemSelectionMode_SelectAll) = 0, SelectNone (PhotoImportItemSelectionMode_SelectNone) = 1, SelectNew (PhotoImportItemSelectionMode_SelectNew) = 2,
+    SelectAll = 0, SelectNone = 1, SelectNew = 2,
 }}
 RT_CLASS!{static class PhotoImportManager}
 impl RtActivatable<IPhotoImportManagerStatics> for PhotoImportManager {}
@@ -18646,7 +18646,7 @@ impl IPhotoImportOperation {
 }
 RT_CLASS!{class PhotoImportOperation: IPhotoImportOperation}
 RT_ENUM! { enum PhotoImportPowerSource: i32 {
-    Unknown (PhotoImportPowerSource_Unknown) = 0, Battery (PhotoImportPowerSource_Battery) = 1, External (PhotoImportPowerSource_External) = 2,
+    Unknown = 0, Battery = 1, External = 2,
 }}
 RT_STRUCT! { struct PhotoImportProgress {
     ItemsImported: u32, TotalItemsToImport: u32, BytesImported: u64, TotalBytesToImport: u64, ImportProgress: f64,
@@ -18921,10 +18921,10 @@ impl IPhotoImportSourceStatics {
     }}
 }
 RT_ENUM! { enum PhotoImportSourceType: i32 {
-    Generic (PhotoImportSourceType_Generic) = 0, Camera (PhotoImportSourceType_Camera) = 1, MediaPlayer (PhotoImportSourceType_MediaPlayer) = 2, Phone (PhotoImportSourceType_Phone) = 3, Video (PhotoImportSourceType_Video) = 4, PersonalInfoManager (PhotoImportSourceType_PersonalInfoManager) = 5, AudioRecorder (PhotoImportSourceType_AudioRecorder) = 6,
+    Generic = 0, Camera = 1, MediaPlayer = 2, Phone = 3, Video = 4, PersonalInfoManager = 5, AudioRecorder = 6,
 }}
 RT_ENUM! { enum PhotoImportStage: i32 {
-    NotStarted (PhotoImportStage_NotStarted) = 0, FindingItems (PhotoImportStage_FindingItems) = 1, ImportingItems (PhotoImportStage_ImportingItems) = 2, DeletingImportedItemsFromSource (PhotoImportStage_DeletingImportedItemsFromSource) = 3,
+    NotStarted = 0, FindingItems = 1, ImportingItems = 2, DeletingImportedItemsFromSource = 3,
 }}
 DEFINE_IID!(IID_IPhotoImportStorageMedium, 4072255635, 64645, 18559, 135, 194, 88, 214, 117, 208, 91, 7);
 RT_INTERFACE!{interface IPhotoImportStorageMedium(IPhotoImportStorageMediumVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportStorageMedium] {
@@ -18980,13 +18980,13 @@ impl IPhotoImportStorageMedium {
 }
 RT_CLASS!{class PhotoImportStorageMedium: IPhotoImportStorageMedium}
 RT_ENUM! { enum PhotoImportStorageMediumType: i32 {
-    Undefined (PhotoImportStorageMediumType_Undefined) = 0, Fixed (PhotoImportStorageMediumType_Fixed) = 1, Removable (PhotoImportStorageMediumType_Removable) = 2,
+    Undefined = 0, Fixed = 1, Removable = 2,
 }}
 RT_ENUM! { enum PhotoImportSubfolderCreationMode: i32 {
-    DoNotCreateSubfolders (PhotoImportSubfolderCreationMode_DoNotCreateSubfolders) = 0, CreateSubfoldersFromFileDate (PhotoImportSubfolderCreationMode_CreateSubfoldersFromFileDate) = 1, CreateSubfoldersFromExifDate (PhotoImportSubfolderCreationMode_CreateSubfoldersFromExifDate) = 2, KeepOriginalFolderStructure (PhotoImportSubfolderCreationMode_KeepOriginalFolderStructure) = 3,
+    DoNotCreateSubfolders = 0, CreateSubfoldersFromFileDate = 1, CreateSubfoldersFromExifDate = 2, KeepOriginalFolderStructure = 3,
 }}
 RT_ENUM! { enum PhotoImportSubfolderDateFormat: i32 {
-    Year (PhotoImportSubfolderDateFormat_Year) = 0, YearMonth (PhotoImportSubfolderDateFormat_YearMonth) = 1, YearMonthDay (PhotoImportSubfolderDateFormat_YearMonthDay) = 2,
+    Year = 0, YearMonth = 1, YearMonthDay = 2,
 }}
 DEFINE_IID!(IID_IPhotoImportVideoSegment, 1648099977, 12826, 16856, 145, 102, 140, 98, 163, 51, 39, 108);
 RT_INTERFACE!{interface IPhotoImportVideoSegment(IPhotoImportVideoSegmentVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportVideoSegment] {
@@ -19195,7 +19195,7 @@ impl IAudioEncodingPropertiesWithFormatUserData {
     }}
 }
 RT_ENUM! { enum AudioEncodingQuality: i32 {
-    Auto (AudioEncodingQuality_Auto) = 0, High (AudioEncodingQuality_High) = 1, Medium (AudioEncodingQuality_Medium) = 2, Low (AudioEncodingQuality_Low) = 3,
+    Auto = 0, High = 1, Medium = 2, Low = 3,
 }}
 DEFINE_IID!(IID_IContainerEncodingProperties, 1504455255, 45866, 18334, 138, 97, 75, 127, 46, 158, 126, 160);
 RT_INTERFACE!{interface IContainerEncodingProperties(IContainerEncodingPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IContainerEncodingProperties] {
@@ -20137,10 +20137,10 @@ impl IMediaEncodingSubtypesStatics5 {
     }}
 }
 RT_ENUM! { enum MediaMirroringOptions: u32 {
-    None (MediaMirroringOptions_None) = 0, Horizontal (MediaMirroringOptions_Horizontal) = 1, Vertical (MediaMirroringOptions_Vertical) = 2,
+    None = 0, Horizontal = 1, Vertical = 2,
 }}
 RT_ENUM! { enum MediaPixelFormat: i32 {
-    Nv12 (MediaPixelFormat_Nv12) = 0, Bgra8 (MediaPixelFormat_Bgra8) = 1, P010 (MediaPixelFormat_P010) = 2,
+    Nv12 = 0, Bgra8 = 1, P010 = 2,
 }}
 RT_CLASS!{class MediaPropertySet: foundation::collections::IMap<Guid, IInspectable>}
 impl RtActivatable<IActivationFactory> for MediaPropertySet {}
@@ -20174,10 +20174,10 @@ impl IMediaRatio {
 }
 RT_CLASS!{class MediaRatio: IMediaRatio}
 RT_ENUM! { enum MediaRotation: i32 {
-    None (MediaRotation_None) = 0, Clockwise90Degrees (MediaRotation_Clockwise90Degrees) = 1, Clockwise180Degrees (MediaRotation_Clockwise180Degrees) = 2, Clockwise270Degrees (MediaRotation_Clockwise270Degrees) = 3,
+    None = 0, Clockwise90Degrees = 1, Clockwise180Degrees = 2, Clockwise270Degrees = 3,
 }}
 RT_ENUM! { enum MediaThumbnailFormat: i32 {
-    Bmp (MediaThumbnailFormat_Bmp) = 0, Bgra8 (MediaThumbnailFormat_Bgra8) = 1,
+    Bmp = 0, Bgra8 = 1,
 }}
 RT_CLASS!{static class Mpeg2ProfileIds}
 impl RtActivatable<IMpeg2ProfileIdsStatics> for Mpeg2ProfileIds {}
@@ -20235,10 +20235,10 @@ impl IMpeg2ProfileIdsStatics {
     }}
 }
 RT_ENUM! { enum SphericalVideoFrameFormat: i32 {
-    None (SphericalVideoFrameFormat_None) = 0, Unsupported (SphericalVideoFrameFormat_Unsupported) = 1, Equirectangular (SphericalVideoFrameFormat_Equirectangular) = 2,
+    None = 0, Unsupported = 1, Equirectangular = 2,
 }}
 RT_ENUM! { enum StereoscopicVideoPackingMode: i32 {
-    None (StereoscopicVideoPackingMode_None) = 0, SideBySide (StereoscopicVideoPackingMode_SideBySide) = 1, TopBottom (StereoscopicVideoPackingMode_TopBottom) = 2,
+    None = 0, SideBySide = 1, TopBottom = 2,
 }}
 DEFINE_IID!(IID_ITimedMetadataEncodingProperties, 1372401875, 54928, 19706, 151, 244, 74, 57, 142, 157, 180, 32);
 RT_INTERFACE!{interface ITimedMetadataEncodingProperties(ITimedMetadataEncodingPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataEncodingProperties] {
@@ -20429,7 +20429,7 @@ impl IVideoEncodingPropertiesStatics2 {
     }}
 }
 RT_ENUM! { enum VideoEncodingQuality: i32 {
-    Auto (VideoEncodingQuality_Auto) = 0, HD1080p (VideoEncodingQuality_HD1080p) = 1, HD720p (VideoEncodingQuality_HD720p) = 2, Wvga (VideoEncodingQuality_Wvga) = 3, Ntsc (VideoEncodingQuality_Ntsc) = 4, Pal (VideoEncodingQuality_Pal) = 5, Vga (VideoEncodingQuality_Vga) = 6, Qvga (VideoEncodingQuality_Qvga) = 7, Uhd2160p (VideoEncodingQuality_Uhd2160p) = 8, Uhd4320p (VideoEncodingQuality_Uhd4320p) = 9,
+    Auto = 0, HD1080p = 1, HD720p = 2, Wvga = 3, Ntsc = 4, Pal = 5, Vga = 6, Qvga = 7, Uhd2160p = 8, Uhd4320p = 9,
 }}
 } // Windows.Media.MediaProperties
 pub mod ocr { // Windows.Media.Ocr
@@ -20655,7 +20655,7 @@ impl IPlayToConnection {
 }
 RT_CLASS!{class PlayToConnection: IPlayToConnection}
 RT_ENUM! { enum PlayToConnectionError: i32 {
-    None (PlayToConnectionError_None) = 0, DeviceNotResponding (PlayToConnectionError_DeviceNotResponding) = 1, DeviceError (PlayToConnectionError_DeviceError) = 2, DeviceLocked (PlayToConnectionError_DeviceLocked) = 3, ProtectedPlaybackFailed (PlayToConnectionError_ProtectedPlaybackFailed) = 4,
+    None = 0, DeviceNotResponding = 1, DeviceError = 2, DeviceLocked = 3, ProtectedPlaybackFailed = 4,
 }}
 DEFINE_IID!(IID_IPlayToConnectionErrorEventArgs, 3210653094, 35046, 17503, 157, 64, 217, 185, 248, 147, 152, 150);
 RT_INTERFACE!{interface IPlayToConnectionErrorEventArgs(IPlayToConnectionErrorEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToConnectionErrorEventArgs] {
@@ -20676,7 +20676,7 @@ impl IPlayToConnectionErrorEventArgs {
 }
 RT_CLASS!{class PlayToConnectionErrorEventArgs: IPlayToConnectionErrorEventArgs}
 RT_ENUM! { enum PlayToConnectionState: i32 {
-    Disconnected (PlayToConnectionState_Disconnected) = 0, Connected (PlayToConnectionState_Connected) = 1, Rendering (PlayToConnectionState_Rendering) = 2,
+    Disconnected = 0, Connected = 1, Rendering = 2,
 }}
 DEFINE_IID!(IID_IPlayToConnectionStateChangedEventArgs, 1757721871, 3104, 18816, 134, 2, 88, 198, 34, 56, 212, 35);
 RT_INTERFACE!{interface IPlayToConnectionStateChangedEventArgs(IPlayToConnectionStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToConnectionStateChangedEventArgs] {
@@ -21224,7 +21224,7 @@ RT_CLASS!{class VolumeChangeRequestedEventArgs: IVolumeChangeRequestedEventArgs}
 pub mod playback { // Windows.Media.Playback
 use ::prelude::*;
 RT_ENUM! { enum AutoLoadedDisplayPropertyKind: i32 {
-    None (AutoLoadedDisplayPropertyKind_None) = 0, MusicOrVideo (AutoLoadedDisplayPropertyKind_MusicOrVideo) = 1, Music (AutoLoadedDisplayPropertyKind_Music) = 2, Video (AutoLoadedDisplayPropertyKind_Video) = 3,
+    None = 0, MusicOrVideo = 1, Music = 2, Video = 3,
 }}
 RT_CLASS!{static class BackgroundMediaPlayer}
 impl RtActivatable<IBackgroundMediaPlayerStatics> for BackgroundMediaPlayer {}
@@ -21342,7 +21342,7 @@ impl ICurrentMediaPlaybackItemChangedEventArgs2 {
     }}
 }
 RT_ENUM! { enum FailedMediaStreamKind: i32 {
-    Unknown (FailedMediaStreamKind_Unknown) = 0, Audio (FailedMediaStreamKind_Audio) = 1, Video (FailedMediaStreamKind_Video) = 2,
+    Unknown = 0, Audio = 1, Video = 2,
 }}
 DEFINE_IID!(IID_IMediaBreak, 1900798576, 3567, 20156, 164, 137, 107, 52, 147, 14, 21, 88);
 RT_INTERFACE!{interface IMediaBreak(IMediaBreakVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreak] {
@@ -21425,7 +21425,7 @@ impl IMediaBreakFactory {
     }}
 }
 RT_ENUM! { enum MediaBreakInsertionMethod: i32 {
-    Interrupt (MediaBreakInsertionMethod_Interrupt) = 0, Replace (MediaBreakInsertionMethod_Replace) = 1,
+    Interrupt = 0, Replace = 1,
 }}
 DEFINE_IID!(IID_IMediaBreakManager, 2824134065, 65204, 19867, 157, 151, 15, 219, 229, 142, 94, 57);
 RT_INTERFACE!{interface IMediaBreakManager(IMediaBreakManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakManager] {
@@ -21609,7 +21609,7 @@ impl IMediaBreakStartedEventArgs {
 }
 RT_CLASS!{class MediaBreakStartedEventArgs: IMediaBreakStartedEventArgs}
 RT_ENUM! { enum MediaCommandEnablingRule: i32 {
-    Auto (MediaCommandEnablingRule_Auto) = 0, Always (MediaCommandEnablingRule_Always) = 1, Never (MediaCommandEnablingRule_Never) = 2,
+    Auto = 0, Always = 1, Never = 2,
 }}
 DEFINE_IID!(IID_IMediaEnginePlaybackSource, 1545407399, 14422, 18617, 141, 198, 36, 75, 241, 7, 191, 140);
 RT_INTERFACE!{interface IMediaEnginePlaybackSource(IMediaEnginePlaybackSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaEnginePlaybackSource] {
@@ -22322,7 +22322,7 @@ impl IMediaPlaybackItem3 {
     }}
 }
 RT_ENUM! { enum MediaPlaybackItemChangedReason: i32 {
-    InitialItem (MediaPlaybackItemChangedReason_InitialItem) = 0, EndOfStream (MediaPlaybackItemChangedReason_EndOfStream) = 1, Error (MediaPlaybackItemChangedReason_Error) = 2, AppRequested (MediaPlaybackItemChangedReason_AppRequested) = 3,
+    InitialItem = 0, EndOfStream = 1, Error = 2, AppRequested = 3,
 }}
 DEFINE_IID!(IID_IMediaPlaybackItemError, 1778118443, 56534, 19961, 164, 80, 219, 244, 198, 241, 194, 194);
 RT_INTERFACE!{interface IMediaPlaybackItemError(IMediaPlaybackItemErrorVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItemError] {
@@ -22343,7 +22343,7 @@ impl IMediaPlaybackItemError {
 }
 RT_CLASS!{class MediaPlaybackItemError: IMediaPlaybackItemError}
 RT_ENUM! { enum MediaPlaybackItemErrorCode: i32 {
-    None (MediaPlaybackItemErrorCode_None) = 0, Aborted (MediaPlaybackItemErrorCode_Aborted) = 1, NetworkError (MediaPlaybackItemErrorCode_NetworkError) = 2, DecodeError (MediaPlaybackItemErrorCode_DecodeError) = 3, SourceNotSupportedError (MediaPlaybackItemErrorCode_SourceNotSupportedError) = 4, EncryptionError (MediaPlaybackItemErrorCode_EncryptionError) = 5,
+    None = 0, Aborted = 1, NetworkError = 2, DecodeError = 3, SourceNotSupportedError = 4, EncryptionError = 5,
 }}
 DEFINE_IID!(IID_IMediaPlaybackItemFactory, 1899232481, 5993, 20473, 167, 193, 56, 210, 196, 212, 35, 96);
 RT_INTERFACE!{static interface IMediaPlaybackItemFactory(IMediaPlaybackItemFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItemFactory] {
@@ -22924,7 +22924,7 @@ impl IMediaPlaybackSessionOutputDegradationPolicyState {
 }
 RT_CLASS!{class MediaPlaybackSessionOutputDegradationPolicyState: IMediaPlaybackSessionOutputDegradationPolicyState}
 RT_ENUM! { enum MediaPlaybackSessionVideoConstrictionReason: i32 {
-    None (MediaPlaybackSessionVideoConstrictionReason_None) = 0, VirtualMachine (MediaPlaybackSessionVideoConstrictionReason_VirtualMachine) = 1, UnsupportedDisplayAdapter (MediaPlaybackSessionVideoConstrictionReason_UnsupportedDisplayAdapter) = 2, UnsignedDriver (MediaPlaybackSessionVideoConstrictionReason_UnsignedDriver) = 3, FrameServerEnabled (MediaPlaybackSessionVideoConstrictionReason_FrameServerEnabled) = 4, OutputProtectionFailed (MediaPlaybackSessionVideoConstrictionReason_OutputProtectionFailed) = 5, Unknown (MediaPlaybackSessionVideoConstrictionReason_Unknown) = 6,
+    None = 0, VirtualMachine = 1, UnsupportedDisplayAdapter = 2, UnsignedDriver = 3, FrameServerEnabled = 4, OutputProtectionFailed = 5, Unknown = 6,
 }}
 DEFINE_IID!(IID_IMediaPlaybackSource, 4020093628, 37655, 18070, 176, 81, 43, 173, 100, 49, 119, 181);
 RT_INTERFACE!{interface IMediaPlaybackSource(IMediaPlaybackSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSource] {
@@ -22992,7 +22992,7 @@ impl IMediaPlaybackSphericalVideoProjection {
 }
 RT_CLASS!{class MediaPlaybackSphericalVideoProjection: IMediaPlaybackSphericalVideoProjection}
 RT_ENUM! { enum MediaPlaybackState: i32 {
-    None (MediaPlaybackState_None) = 0, Opening (MediaPlaybackState_Opening) = 1, Buffering (MediaPlaybackState_Buffering) = 2, Playing (MediaPlaybackState_Playing) = 3, Paused (MediaPlaybackState_Paused) = 4,
+    None = 0, Opening = 1, Buffering = 2, Playing = 3, Paused = 4,
 }}
 DEFINE_IID!(IID_IMediaPlaybackTimedMetadataTrackList, 1924403993, 48123, 18083, 147, 114, 156, 156, 116, 75, 148, 56);
 RT_INTERFACE!{interface IMediaPlaybackTimedMetadataTrackList(IMediaPlaybackTimedMetadataTrackListVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackTimedMetadataTrackList] {
@@ -23524,10 +23524,10 @@ impl IMediaPlayer7 {
     }}
 }
 RT_ENUM! { enum MediaPlayerAudioCategory: i32 {
-    Other (MediaPlayerAudioCategory_Other) = 0, Communications (MediaPlayerAudioCategory_Communications) = 3, Alerts (MediaPlayerAudioCategory_Alerts) = 4, SoundEffects (MediaPlayerAudioCategory_SoundEffects) = 5, GameEffects (MediaPlayerAudioCategory_GameEffects) = 6, GameMedia (MediaPlayerAudioCategory_GameMedia) = 7, GameChat (MediaPlayerAudioCategory_GameChat) = 8, Speech (MediaPlayerAudioCategory_Speech) = 9, Movie (MediaPlayerAudioCategory_Movie) = 10, Media (MediaPlayerAudioCategory_Media) = 11,
+    Other = 0, Communications = 3, Alerts = 4, SoundEffects = 5, GameEffects = 6, GameMedia = 7, GameChat = 8, Speech = 9, Movie = 10, Media = 11,
 }}
 RT_ENUM! { enum MediaPlayerAudioDeviceType: i32 {
-    Console (MediaPlayerAudioDeviceType_Console) = 0, Multimedia (MediaPlayerAudioDeviceType_Multimedia) = 1, Communications (MediaPlayerAudioDeviceType_Communications) = 2,
+    Console = 0, Multimedia = 1, Communications = 2,
 }}
 DEFINE_IID!(IID_IMediaPlayerDataReceivedEventArgs, 3344602117, 51201, 16682, 131, 91, 131, 252, 14, 98, 42, 142);
 RT_INTERFACE!{interface IMediaPlayerDataReceivedEventArgs(IMediaPlayerDataReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerDataReceivedEventArgs] {
@@ -23567,7 +23567,7 @@ impl IMediaPlayerEffects2 {
     }}
 }
 RT_ENUM! { enum MediaPlayerError: i32 {
-    Unknown (MediaPlayerError_Unknown) = 0, Aborted (MediaPlayerError_Aborted) = 1, NetworkError (MediaPlayerError_NetworkError) = 2, DecodingError (MediaPlayerError_DecodingError) = 3, SourceNotSupported (MediaPlayerError_SourceNotSupported) = 4,
+    Unknown = 0, Aborted = 1, NetworkError = 2, DecodingError = 3, SourceNotSupported = 4,
 }}
 DEFINE_IID!(IID_IMediaPlayerFailedEventArgs, 658827705, 42979, 20246, 186, 196, 121, 20, 235, 192, 131, 1);
 RT_INTERFACE!{interface IMediaPlayerFailedEventArgs(IMediaPlayerFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerFailedEventArgs] {
@@ -23655,7 +23655,7 @@ impl IMediaPlayerSource2 {
     }}
 }
 RT_ENUM! { enum MediaPlayerState: i32 {
-    Closed (MediaPlayerState_Closed) = 0, Opening (MediaPlayerState_Opening) = 1, Buffering (MediaPlayerState_Buffering) = 2, Playing (MediaPlayerState_Playing) = 3, Paused (MediaPlayerState_Paused) = 4, Stopped (MediaPlayerState_Stopped) = 5,
+    Closed = 0, Opening = 1, Buffering = 2, Playing = 3, Paused = 4, Stopped = 5,
 }}
 DEFINE_IID!(IID_IMediaPlayerSurface, 248927164, 46902, 18883, 131, 11, 118, 74, 56, 69, 49, 58);
 RT_INTERFACE!{interface IMediaPlayerSurface(IMediaPlayerSurfaceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerSurface] {
@@ -23769,10 +23769,10 @@ impl IPlaybackMediaMarkerSequence {
 }
 RT_CLASS!{class PlaybackMediaMarkerSequence: IPlaybackMediaMarkerSequence}
 RT_ENUM! { enum SphericalVideoProjectionMode: i32 {
-    Spherical (SphericalVideoProjectionMode_Spherical) = 0, Flat (SphericalVideoProjectionMode_Flat) = 1,
+    Spherical = 0, Flat = 1,
 }}
 RT_ENUM! { enum StereoscopicVideoRenderMode: i32 {
-    Mono (StereoscopicVideoRenderMode_Mono) = 0, Stereo (StereoscopicVideoRenderMode_Stereo) = 1,
+    Mono = 0, Stereo = 1,
 }}
 DEFINE_IID!(IID_ITimedMetadataPresentationModeChangedEventArgs, 3512950937, 26079, 17838, 140, 239, 220, 11, 83, 253, 194, 187);
 RT_INTERFACE!{interface ITimedMetadataPresentationModeChangedEventArgs(ITimedMetadataPresentationModeChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataPresentationModeChangedEventArgs] {
@@ -23799,7 +23799,7 @@ impl ITimedMetadataPresentationModeChangedEventArgs {
 }
 RT_CLASS!{class TimedMetadataPresentationModeChangedEventArgs: ITimedMetadataPresentationModeChangedEventArgs}
 RT_ENUM! { enum TimedMetadataTrackPresentationMode: i32 {
-    Disabled (TimedMetadataTrackPresentationMode_Disabled) = 0, Hidden (TimedMetadataTrackPresentationMode_Hidden) = 1, ApplicationPresented (TimedMetadataTrackPresentationMode_ApplicationPresented) = 2, PlatformPresented (TimedMetadataTrackPresentationMode_PlatformPresented) = 3,
+    Disabled = 0, Hidden = 1, ApplicationPresented = 2, PlatformPresented = 3,
 }}
 } // Windows.Media.Playback
 pub mod playlists { // Windows.Media.Playlists
@@ -23843,7 +23843,7 @@ impl Playlist {
 }
 DEFINE_CLSID!(Playlist(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,108,105,115,116,115,46,80,108,97,121,108,105,115,116,0]) [CLSID_Playlist]);
 RT_ENUM! { enum PlaylistFormat: i32 {
-    WindowsMedia (PlaylistFormat_WindowsMedia) = 0, Zune (PlaylistFormat_Zune) = 1, M3u (PlaylistFormat_M3u) = 2,
+    WindowsMedia = 0, Zune = 1, M3u = 2,
 }}
 DEFINE_IID!(IID_IPlaylistStatics, 3317903821, 33273, 20467, 149, 185, 112, 182, 255, 4, 107, 104);
 RT_INTERFACE!{static interface IPlaylistStatics(IPlaylistStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaylistStatics] {
@@ -23907,10 +23907,10 @@ impl IComponentRenewalStatics {
     }}
 }
 RT_ENUM! { enum GraphicsTrustStatus: i32 {
-    TrustNotRequired (GraphicsTrustStatus_TrustNotRequired) = 0, TrustEstablished (GraphicsTrustStatus_TrustEstablished) = 1, EnvironmentNotSupported (GraphicsTrustStatus_EnvironmentNotSupported) = 2, DriverNotSupported (GraphicsTrustStatus_DriverNotSupported) = 3, DriverSigningFailure (GraphicsTrustStatus_DriverSigningFailure) = 4, UnknownFailure (GraphicsTrustStatus_UnknownFailure) = 5,
+    TrustNotRequired = 0, TrustEstablished = 1, EnvironmentNotSupported = 2, DriverNotSupported = 3, DriverSigningFailure = 4, UnknownFailure = 5,
 }}
 RT_ENUM! { enum HdcpProtection: i32 {
-    Off (HdcpProtection_Off) = 0, On (HdcpProtection_On) = 1, OnWithTypeEnforcement (HdcpProtection_OnWithTypeEnforcement) = 2,
+    Off = 0, On = 1, OnWithTypeEnforcement = 2,
 }}
 DEFINE_IID!(IID_IHdcpSession, 1904756201, 25815, 17005, 128, 155, 27, 228, 97, 148, 26, 42);
 RT_INTERFACE!{interface IHdcpSession(IHdcpSessionVtbl): IInspectable(IInspectableVtbl) [IID_IHdcpSession] {
@@ -23950,7 +23950,7 @@ RT_CLASS!{class HdcpSession: IHdcpSession}
 impl RtActivatable<IActivationFactory> for HdcpSession {}
 DEFINE_CLSID!(HdcpSession(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,72,100,99,112,83,101,115,115,105,111,110,0]) [CLSID_HdcpSession]);
 RT_ENUM! { enum HdcpSetProtectionResult: i32 {
-    Success (HdcpSetProtectionResult_Success) = 0, TimedOut (HdcpSetProtectionResult_TimedOut) = 1, NotSupported (HdcpSetProtectionResult_NotSupported) = 2, UnknownFailure (HdcpSetProtectionResult_UnknownFailure) = 3,
+    Success = 0, TimedOut = 1, NotSupported = 2, UnknownFailure = 3,
 }}
 DEFINE_IID!(IID_IMediaProtectionManager, 1164527943, 51009, 17227, 167, 158, 71, 76, 18, 217, 61, 47);
 RT_INTERFACE!{interface IMediaProtectionManager(IMediaProtectionManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaProtectionManager] {
@@ -24072,7 +24072,7 @@ RT_CLASS!{class ProtectionCapabilities: IProtectionCapabilities}
 impl RtActivatable<IActivationFactory> for ProtectionCapabilities {}
 DEFINE_CLSID!(ProtectionCapabilities(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,114,111,116,101,99,116,105,111,110,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_ProtectionCapabilities]);
 RT_ENUM! { enum ProtectionCapabilityResult: i32 {
-    NotSupported (ProtectionCapabilityResult_NotSupported) = 0, Maybe (ProtectionCapabilityResult_Maybe) = 1, Probably (ProtectionCapabilityResult_Probably) = 2,
+    NotSupported = 0, Maybe = 1, Probably = 2,
 }}
 DEFINE_IID!(IID_RebootNeededEventHandler, 1692478021, 38715, 19002, 178, 96, 145, 137, 138, 73, 168, 44);
 RT_DELEGATE!{delegate RebootNeededEventHandler(RebootNeededEventHandlerVtbl, RebootNeededEventHandlerImpl) [IID_RebootNeededEventHandler] {
@@ -24085,7 +24085,7 @@ impl RebootNeededEventHandler {
     }}
 }
 RT_ENUM! { enum RenewalStatus: i32 {
-    NotStarted (RenewalStatus_NotStarted) = 0, UpdatesInProgress (RenewalStatus_UpdatesInProgress) = 1, UserCancelled (RenewalStatus_UserCancelled) = 2, AppComponentsMayNeedUpdating (RenewalStatus_AppComponentsMayNeedUpdating) = 3, NoComponentsFound (RenewalStatus_NoComponentsFound) = 4,
+    NotStarted = 0, UpdatesInProgress = 1, UserCancelled = 2, AppComponentsMayNeedUpdating = 3, NoComponentsFound = 4,
 }}
 DEFINE_IID!(IID_IRevocationAndRenewalInformation, 4087452539, 9473, 17310, 166, 231, 111, 201, 94, 23, 95, 207);
 RT_INTERFACE!{interface IRevocationAndRenewalInformation(IRevocationAndRenewalInformationVtbl): IInspectable(IInspectableVtbl) [IID_IRevocationAndRenewalInformation] {
@@ -24136,7 +24136,7 @@ impl IRevocationAndRenewalItem {
 }
 RT_CLASS!{class RevocationAndRenewalItem: IRevocationAndRenewalItem}
 RT_ENUM! { enum RevocationAndRenewalReasons: u32 {
-    UserModeComponentLoad (RevocationAndRenewalReasons_UserModeComponentLoad) = 1, KernelModeComponentLoad (RevocationAndRenewalReasons_KernelModeComponentLoad) = 2, AppComponent (RevocationAndRenewalReasons_AppComponent) = 4, GlobalRevocationListLoadFailed (RevocationAndRenewalReasons_GlobalRevocationListLoadFailed) = 16, InvalidGlobalRevocationListSignature (RevocationAndRenewalReasons_InvalidGlobalRevocationListSignature) = 32, GlobalRevocationListAbsent (RevocationAndRenewalReasons_GlobalRevocationListAbsent) = 4096, ComponentRevoked (RevocationAndRenewalReasons_ComponentRevoked) = 8192, InvalidComponentCertificateExtendedKeyUse (RevocationAndRenewalReasons_InvalidComponentCertificateExtendedKeyUse) = 16384, ComponentCertificateRevoked (RevocationAndRenewalReasons_ComponentCertificateRevoked) = 32768, InvalidComponentCertificateRoot (RevocationAndRenewalReasons_InvalidComponentCertificateRoot) = 65536, ComponentHighSecurityCertificateRevoked (RevocationAndRenewalReasons_ComponentHighSecurityCertificateRevoked) = 131072, ComponentLowSecurityCertificateRevoked (RevocationAndRenewalReasons_ComponentLowSecurityCertificateRevoked) = 262144, BootDriverVerificationFailed (RevocationAndRenewalReasons_BootDriverVerificationFailed) = 1048576, ComponentSignedWithTestCertificate (RevocationAndRenewalReasons_ComponentSignedWithTestCertificate) = 16777216, EncryptionFailure (RevocationAndRenewalReasons_EncryptionFailure) = 268435456,
+    UserModeComponentLoad = 1, KernelModeComponentLoad = 2, AppComponent = 4, GlobalRevocationListLoadFailed = 16, InvalidGlobalRevocationListSignature = 32, GlobalRevocationListAbsent = 4096, ComponentRevoked = 8192, InvalidComponentCertificateExtendedKeyUse = 16384, ComponentCertificateRevoked = 32768, InvalidComponentCertificateRoot = 65536, ComponentHighSecurityCertificateRevoked = 131072, ComponentLowSecurityCertificateRevoked = 262144, BootDriverVerificationFailed = 1048576, ComponentSignedWithTestCertificate = 16777216, EncryptionFailure = 268435456,
 }}
 DEFINE_IID!(IID_IServiceRequestedEventArgs, 875051951, 43956, 20417, 189, 137, 147, 241, 6, 87, 58, 73);
 RT_INTERFACE!{interface IServiceRequestedEventArgs(IServiceRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IServiceRequestedEventArgs] {
@@ -24180,13 +24180,13 @@ impl ServiceRequestedEventHandler {
 pub mod playready { // Windows.Media.Protection.PlayReady
 use ::prelude::*;
 RT_ENUM! { enum NDCertificateFeature: i32 {
-    Transmitter (NDCertificateFeature_Transmitter) = 1, Receiver (NDCertificateFeature_Receiver) = 2, SharedCertificate (NDCertificateFeature_SharedCertificate) = 3, SecureClock (NDCertificateFeature_SecureClock) = 4, AntiRollBackClock (NDCertificateFeature_AntiRollBackClock) = 5, CRLS (NDCertificateFeature_CRLS) = 9, PlayReady3Features (NDCertificateFeature_PlayReady3Features) = 13,
+    Transmitter = 1, Receiver = 2, SharedCertificate = 3, SecureClock = 4, AntiRollBackClock = 5, CRLS = 9, PlayReady3Features = 13,
 }}
 RT_ENUM! { enum NDCertificatePlatformID: i32 {
-    Windows (NDCertificatePlatformID_Windows) = 0, OSX (NDCertificatePlatformID_OSX) = 1, WindowsOnARM (NDCertificatePlatformID_WindowsOnARM) = 2, WindowsMobile7 (NDCertificatePlatformID_WindowsMobile7) = 5, iOSOnARM (NDCertificatePlatformID_iOSOnARM) = 6, XBoxOnPPC (NDCertificatePlatformID_XBoxOnPPC) = 7, WindowsPhone8OnARM (NDCertificatePlatformID_WindowsPhone8OnARM) = 8, WindowsPhone8OnX86 (NDCertificatePlatformID_WindowsPhone8OnX86) = 9, XboxOne (NDCertificatePlatformID_XboxOne) = 10, AndroidOnARM (NDCertificatePlatformID_AndroidOnARM) = 11, WindowsPhone81OnARM (NDCertificatePlatformID_WindowsPhone81OnARM) = 12, WindowsPhone81OnX86 (NDCertificatePlatformID_WindowsPhone81OnX86) = 13,
+    Windows = 0, OSX = 1, WindowsOnARM = 2, WindowsMobile7 = 5, iOSOnARM = 6, XBoxOnPPC = 7, WindowsPhone8OnARM = 8, WindowsPhone8OnX86 = 9, XboxOne = 10, AndroidOnARM = 11, WindowsPhone81OnARM = 12, WindowsPhone81OnX86 = 13,
 }}
 RT_ENUM! { enum NDCertificateType: i32 {
-    Unknown (NDCertificateType_Unknown) = 0, PC (NDCertificateType_PC) = 1, Device (NDCertificateType_Device) = 2, Domain (NDCertificateType_Domain) = 3, Issuer (NDCertificateType_Issuer) = 4, CrlSigner (NDCertificateType_CrlSigner) = 5, Service (NDCertificateType_Service) = 6, Silverlight (NDCertificateType_Silverlight) = 7, Application (NDCertificateType_Application) = 8, Metering (NDCertificateType_Metering) = 9, KeyFileSigner (NDCertificateType_KeyFileSigner) = 10, Server (NDCertificateType_Server) = 11, LicenseSigner (NDCertificateType_LicenseSigner) = 12,
+    Unknown = 0, PC = 1, Device = 2, Domain = 3, Issuer = 4, CrlSigner = 5, Service = 6, Silverlight = 7, Application = 8, Metering = 9, KeyFileSigner = 10, Server = 11, LicenseSigner = 12,
 }}
 DEFINE_IID!(IID_INDClient, 1003911195, 25016, 18146, 153, 165, 138, 188, 182, 185, 247, 214);
 RT_INTERFACE!{interface INDClient(INDClientVtbl): IInspectable(IInspectableVtbl) [IID_INDClient] {
@@ -24314,10 +24314,10 @@ impl INDClosedCaptionDataReceivedEventArgs {
     }}
 }
 RT_ENUM! { enum NDClosedCaptionFormat: i32 {
-    ATSC (NDClosedCaptionFormat_ATSC) = 0, SCTE20 (NDClosedCaptionFormat_SCTE20) = 1, Unknown (NDClosedCaptionFormat_Unknown) = 2,
+    ATSC = 0, SCTE20 = 1, Unknown = 2,
 }}
 RT_ENUM! { enum NDContentIDType: i32 {
-    KeyID (NDContentIDType_KeyID) = 1, PlayReadyObject (NDContentIDType_PlayReadyObject) = 2, Custom (NDContentIDType_Custom) = 3,
+    KeyID = 1, PlayReadyObject = 2, Custom = 3,
 }}
 DEFINE_IID!(IID_INDCustomData, 4123725788, 11529, 20249, 181, 225, 118, 160, 179, 238, 146, 103);
 RT_INTERFACE!{interface INDCustomData(INDCustomDataVtbl): IInspectable(IInspectableVtbl) [IID_INDCustomData] {
@@ -24517,7 +24517,7 @@ impl INDLicenseFetchResult {
     }}
 }
 RT_ENUM! { enum NDMediaStreamType: i32 {
-    Audio (NDMediaStreamType_Audio) = 1, Video (NDMediaStreamType_Video) = 2,
+    Audio = 1, Video = 2,
 }}
 DEFINE_IID!(IID_INDMessenger, 3559782749, 42843, 18367, 130, 73, 188, 131, 130, 13, 163, 138);
 RT_INTERFACE!{interface INDMessenger(INDMessengerVtbl): IInspectable(IInspectableVtbl) [IID_INDMessenger] {
@@ -24560,7 +24560,7 @@ impl INDProximityDetectionCompletedEventArgs {
     }}
 }
 RT_ENUM! { enum NDProximityDetectionType: i32 {
-    UDP (NDProximityDetectionType_UDP) = 1, TCP (NDProximityDetectionType_TCP) = 2, TransportAgnostic (NDProximityDetectionType_TransportAgnostic) = 4,
+    UDP = 1, TCP = 2, TransportAgnostic = 4,
 }}
 DEFINE_IID!(IID_INDRegistrationCompletedEventArgs, 2654582349, 43867, 18693, 172, 220, 120, 122, 119, 198, 55, 77);
 RT_INTERFACE!{interface INDRegistrationCompletedEventArgs(INDRegistrationCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_INDRegistrationCompletedEventArgs] {
@@ -24602,7 +24602,7 @@ impl INDSendResult {
     }}
 }
 RT_ENUM! { enum NDStartAsyncOptions: i32 {
-    MutualAuthentication (NDStartAsyncOptions_MutualAuthentication) = 1, WaitForLicenseDescriptor (NDStartAsyncOptions_WaitForLicenseDescriptor) = 2,
+    MutualAuthentication = 1, WaitForLicenseDescriptor = 2,
 }}
 DEFINE_IID!(IID_INDStartResult, 2046224750, 62735, 16405, 139, 164, 194, 188, 52, 78, 189, 78);
 RT_INTERFACE!{interface INDStartResult(INDStartResultVtbl): IInspectable(IInspectableVtbl) [IID_INDStartResult] {
@@ -24933,7 +24933,7 @@ impl PlayReadyContentResolver {
 }
 DEFINE_CLSID!(PlayReadyContentResolver(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,67,111,110,116,101,110,116,82,101,115,111,108,118,101,114,0]) [CLSID_PlayReadyContentResolver]);
 RT_ENUM! { enum PlayReadyDecryptorSetup: i32 {
-    Uninitialized (PlayReadyDecryptorSetup_Uninitialized) = 0, OnDemand (PlayReadyDecryptorSetup_OnDemand) = 1,
+    Uninitialized = 0, OnDemand = 1,
 }}
 DEFINE_IID!(IID_IPlayReadyDomain, 2915865516, 38886, 17391, 149, 228, 215, 134, 143, 59, 22, 169);
 RT_INTERFACE!{interface IPlayReadyDomain(IPlayReadyDomainVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyDomain] {
@@ -25063,10 +25063,10 @@ RT_CLASS!{class PlayReadyDomainLeaveServiceRequest: IPlayReadyDomainLeaveService
 impl RtActivatable<IActivationFactory> for PlayReadyDomainLeaveServiceRequest {}
 DEFINE_CLSID!(PlayReadyDomainLeaveServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,68,111,109,97,105,110,76,101,97,118,101,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyDomainLeaveServiceRequest]);
 RT_ENUM! { enum PlayReadyEncryptionAlgorithm: i32 {
-    Unprotected (PlayReadyEncryptionAlgorithm_Unprotected) = 0, Aes128Ctr (PlayReadyEncryptionAlgorithm_Aes128Ctr) = 1, Cocktail (PlayReadyEncryptionAlgorithm_Cocktail) = 4, Aes128Cbc (PlayReadyEncryptionAlgorithm_Aes128Cbc) = 5, Unspecified (PlayReadyEncryptionAlgorithm_Unspecified) = 65535, Uninitialized (PlayReadyEncryptionAlgorithm_Uninitialized) = 2147483647,
+    Unprotected = 0, Aes128Ctr = 1, Cocktail = 4, Aes128Cbc = 5, Unspecified = 65535, Uninitialized = 2147483647,
 }}
 RT_ENUM! { enum PlayReadyHardwareDRMFeatures: i32 {
-    HardwareDRM (PlayReadyHardwareDRMFeatures_HardwareDRM) = 1, HEVC (PlayReadyHardwareDRMFeatures_HEVC) = 2, Aes128Cbc (PlayReadyHardwareDRMFeatures_Aes128Cbc) = 3,
+    HardwareDRM = 1, HEVC = 2, Aes128Cbc = 3,
 }}
 DEFINE_IID!(IID_IPlayReadyIndividualizationServiceRequest, 569747563, 140, 17937, 171, 47, 170, 166, 198, 159, 14, 36);
 RT_INTERFACE!{interface IPlayReadyIndividualizationServiceRequest(IPlayReadyIndividualizationServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyIndividualizationServiceRequest] {
@@ -25076,7 +25076,7 @@ RT_CLASS!{class PlayReadyIndividualizationServiceRequest: IPlayReadyIndividualiz
 impl RtActivatable<IActivationFactory> for PlayReadyIndividualizationServiceRequest {}
 DEFINE_CLSID!(PlayReadyIndividualizationServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,73,110,100,105,118,105,100,117,97,108,105,122,97,116,105,111,110,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyIndividualizationServiceRequest]);
 RT_ENUM! { enum PlayReadyITADataFormat: i32 {
-    SerializedProperties (PlayReadyITADataFormat_SerializedProperties) = 0, SerializedProperties_WithContentProtectionWrapper (PlayReadyITADataFormat_SerializedProperties_WithContentProtectionWrapper) = 1,
+    SerializedProperties = 0, SerializedProperties_WithContentProtectionWrapper = 1,
 }}
 DEFINE_IID!(IID_IPlayReadyITADataGenerator, 608463758, 4281, 17712, 178, 91, 144, 26, 128, 41, 169, 178);
 RT_INTERFACE!{interface IPlayReadyITADataGenerator(IPlayReadyITADataGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyITADataGenerator] {
@@ -25679,7 +25679,7 @@ impl IPlayReadyStatics5 {
 pub mod render { // Windows.Media.Render
 use ::prelude::*;
 RT_ENUM! { enum AudioRenderCategory: i32 {
-    Other (AudioRenderCategory_Other) = 0, ForegroundOnlyMedia (AudioRenderCategory_ForegroundOnlyMedia) = 1, BackgroundCapableMedia (AudioRenderCategory_BackgroundCapableMedia) = 2, Communications (AudioRenderCategory_Communications) = 3, Alerts (AudioRenderCategory_Alerts) = 4, SoundEffects (AudioRenderCategory_SoundEffects) = 5, GameEffects (AudioRenderCategory_GameEffects) = 6, GameMedia (AudioRenderCategory_GameMedia) = 7, GameChat (AudioRenderCategory_GameChat) = 8, Speech (AudioRenderCategory_Speech) = 9, Movie (AudioRenderCategory_Movie) = 10, Media (AudioRenderCategory_Media) = 11,
+    Other = 0, ForegroundOnlyMedia = 1, BackgroundCapableMedia = 2, Communications = 3, Alerts = 4, SoundEffects = 5, GameEffects = 6, GameMedia = 7, GameChat = 8, Speech = 9, Movie = 10, Media = 11,
 }}
 } // Windows.Media.Render
 pub mod speechrecognition { // Windows.Media.SpeechRecognition
@@ -25697,7 +25697,7 @@ impl ISpeechContinuousRecognitionCompletedEventArgs {
 }
 RT_CLASS!{class SpeechContinuousRecognitionCompletedEventArgs: ISpeechContinuousRecognitionCompletedEventArgs}
 RT_ENUM! { enum SpeechContinuousRecognitionMode: i32 {
-    Default (SpeechContinuousRecognitionMode_Default) = 0, PauseOnRecognition (SpeechContinuousRecognitionMode_PauseOnRecognition) = 1,
+    Default = 0, PauseOnRecognition = 1,
 }}
 DEFINE_IID!(IID_ISpeechContinuousRecognitionResultGeneratedEventArgs, 420027934, 28286, 23110, 64, 251, 118, 89, 79, 120, 101, 4);
 RT_INTERFACE!{interface ISpeechContinuousRecognitionResultGeneratedEventArgs(ISpeechContinuousRecognitionResultGeneratedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechContinuousRecognitionResultGeneratedEventArgs] {
@@ -25786,7 +25786,7 @@ impl ISpeechContinuousRecognitionSession {
 }
 RT_CLASS!{class SpeechContinuousRecognitionSession: ISpeechContinuousRecognitionSession}
 RT_ENUM! { enum SpeechRecognitionAudioProblem: i32 {
-    None (SpeechRecognitionAudioProblem_None) = 0, TooNoisy (SpeechRecognitionAudioProblem_TooNoisy) = 1, NoSignal (SpeechRecognitionAudioProblem_NoSignal) = 2, TooLoud (SpeechRecognitionAudioProblem_TooLoud) = 3, TooQuiet (SpeechRecognitionAudioProblem_TooQuiet) = 4, TooFast (SpeechRecognitionAudioProblem_TooFast) = 5, TooSlow (SpeechRecognitionAudioProblem_TooSlow) = 6,
+    None = 0, TooNoisy = 1, NoSignal = 2, TooLoud = 3, TooQuiet = 4, TooFast = 5, TooSlow = 6,
 }}
 DEFINE_IID!(IID_ISpeechRecognitionCompilationResult, 1082027101, 27335, 19876, 156, 193, 47, 206, 50, 207, 116, 137);
 RT_INTERFACE!{interface ISpeechRecognitionCompilationResult(ISpeechRecognitionCompilationResultVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionCompilationResult] {
@@ -25801,7 +25801,7 @@ impl ISpeechRecognitionCompilationResult {
 }
 RT_CLASS!{class SpeechRecognitionCompilationResult: ISpeechRecognitionCompilationResult}
 RT_ENUM! { enum SpeechRecognitionConfidence: i32 {
-    High (SpeechRecognitionConfidence_High) = 0, Medium (SpeechRecognitionConfidence_Medium) = 1, Low (SpeechRecognitionConfidence_Low) = 2, Rejected (SpeechRecognitionConfidence_Rejected) = 3,
+    High = 0, Medium = 1, Low = 2, Rejected = 3,
 }}
 DEFINE_IID!(IID_ISpeechRecognitionConstraint, 2041321000, 19816, 17348, 137, 17, 64, 220, 65, 1, 181, 91);
 RT_INTERFACE!{interface ISpeechRecognitionConstraint(ISpeechRecognitionConstraintVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionConstraint] {
@@ -25848,10 +25848,10 @@ impl ISpeechRecognitionConstraint {
     }}
 }
 RT_ENUM! { enum SpeechRecognitionConstraintProbability: i32 {
-    Default (SpeechRecognitionConstraintProbability_Default) = 0, Min (SpeechRecognitionConstraintProbability_Min) = 1, Max (SpeechRecognitionConstraintProbability_Max) = 2,
+    Default = 0, Min = 1, Max = 2,
 }}
 RT_ENUM! { enum SpeechRecognitionConstraintType: i32 {
-    Topic (SpeechRecognitionConstraintType_Topic) = 0, List (SpeechRecognitionConstraintType_List) = 1, Grammar (SpeechRecognitionConstraintType_Grammar) = 2, VoiceCommandDefinition (SpeechRecognitionConstraintType_VoiceCommandDefinition) = 3,
+    Topic = 0, List = 1, Grammar = 2, VoiceCommandDefinition = 3,
 }}
 DEFINE_IID!(IID_ISpeechRecognitionGrammarFileConstraint, 3036879503, 34250, 20388, 177, 26, 71, 79, 196, 27, 56, 53);
 RT_INTERFACE!{interface ISpeechRecognitionGrammarFileConstraint(ISpeechRecognitionGrammarFileConstraintVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionGrammarFileConstraint] {
@@ -26039,10 +26039,10 @@ impl ISpeechRecognitionResult2 {
     }}
 }
 RT_ENUM! { enum SpeechRecognitionResultStatus: i32 {
-    Success (SpeechRecognitionResultStatus_Success) = 0, TopicLanguageNotSupported (SpeechRecognitionResultStatus_TopicLanguageNotSupported) = 1, GrammarLanguageMismatch (SpeechRecognitionResultStatus_GrammarLanguageMismatch) = 2, GrammarCompilationFailure (SpeechRecognitionResultStatus_GrammarCompilationFailure) = 3, AudioQualityFailure (SpeechRecognitionResultStatus_AudioQualityFailure) = 4, UserCanceled (SpeechRecognitionResultStatus_UserCanceled) = 5, Unknown (SpeechRecognitionResultStatus_Unknown) = 6, TimeoutExceeded (SpeechRecognitionResultStatus_TimeoutExceeded) = 7, PauseLimitExceeded (SpeechRecognitionResultStatus_PauseLimitExceeded) = 8, NetworkFailure (SpeechRecognitionResultStatus_NetworkFailure) = 9, MicrophoneUnavailable (SpeechRecognitionResultStatus_MicrophoneUnavailable) = 10,
+    Success = 0, TopicLanguageNotSupported = 1, GrammarLanguageMismatch = 2, GrammarCompilationFailure = 3, AudioQualityFailure = 4, UserCanceled = 5, Unknown = 6, TimeoutExceeded = 7, PauseLimitExceeded = 8, NetworkFailure = 9, MicrophoneUnavailable = 10,
 }}
 RT_ENUM! { enum SpeechRecognitionScenario: i32 {
-    WebSearch (SpeechRecognitionScenario_WebSearch) = 0, Dictation (SpeechRecognitionScenario_Dictation) = 1, FormFilling (SpeechRecognitionScenario_FormFilling) = 2,
+    WebSearch = 0, Dictation = 1, FormFilling = 2,
 }}
 DEFINE_IID!(IID_ISpeechRecognitionSemanticInterpretation, 2866928283, 32306, 19487, 137, 254, 12, 101, 244, 134, 245, 46);
 RT_INTERFACE!{interface ISpeechRecognitionSemanticInterpretation(ISpeechRecognitionSemanticInterpretationVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionSemanticInterpretation] {
@@ -26245,7 +26245,7 @@ impl ISpeechRecognizerFactory {
     }}
 }
 RT_ENUM! { enum SpeechRecognizerState: i32 {
-    Idle (SpeechRecognizerState_Idle) = 0, Capturing (SpeechRecognizerState_Capturing) = 1, Processing (SpeechRecognizerState_Processing) = 2, SoundStarted (SpeechRecognizerState_SoundStarted) = 3, SoundEnded (SpeechRecognizerState_SoundEnded) = 4, SpeechDetected (SpeechRecognizerState_SpeechDetected) = 5, Paused (SpeechRecognizerState_Paused) = 6,
+    Idle = 0, Capturing = 1, Processing = 2, SoundStarted = 3, SoundEnded = 4, SpeechDetected = 5, Paused = 6,
 }}
 DEFINE_IID!(IID_ISpeechRecognizerStateChangedEventArgs, 1446858505, 47619, 19373, 173, 129, 221, 198, 196, 218, 176, 195);
 RT_INTERFACE!{interface ISpeechRecognizerStateChangedEventArgs(ISpeechRecognizerStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognizerStateChangedEventArgs] {
@@ -26414,10 +26414,10 @@ impl IInstalledVoicesStatic2 {
     }}
 }
 RT_ENUM! { enum SpeechAppendedSilence: i32 {
-    Default (SpeechAppendedSilence_Default) = 0, Min (SpeechAppendedSilence_Min) = 1,
+    Default = 0, Min = 1,
 }}
 RT_ENUM! { enum SpeechPunctuationSilence: i32 {
-    Default (SpeechPunctuationSilence_Default) = 0, Min (SpeechPunctuationSilence_Min) = 1,
+    Default = 0, Min = 1,
 }}
 DEFINE_IID!(IID_ISpeechSynthesisStream, 2212785811, 9292, 17954, 186, 11, 98, 41, 196, 208, 214, 93);
 RT_INTERFACE!{interface ISpeechSynthesisStream(ISpeechSynthesisStreamVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechSynthesisStream] {
@@ -26580,7 +26580,7 @@ impl ISpeechSynthesizerOptions3 {
     }}
 }
 RT_ENUM! { enum VoiceGender: i32 {
-    Male (VoiceGender_Male) = 0, Female (VoiceGender_Female) = 1,
+    Male = 0, Female = 1,
 }}
 DEFINE_IID!(IID_IVoiceInformation, 2972178084, 4753, 17924, 170, 156, 131, 19, 64, 131, 53, 44);
 RT_INTERFACE!{interface IVoiceInformation(IVoiceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IVoiceInformation] {
@@ -26943,7 +26943,7 @@ impl IAdaptiveMediaSourceCreationResult2 {
     }}
 }
 RT_ENUM! { enum AdaptiveMediaSourceCreationStatus: i32 {
-    Success (AdaptiveMediaSourceCreationStatus_Success) = 0, ManifestDownloadFailure (AdaptiveMediaSourceCreationStatus_ManifestDownloadFailure) = 1, ManifestParseFailure (AdaptiveMediaSourceCreationStatus_ManifestParseFailure) = 2, UnsupportedManifestContentType (AdaptiveMediaSourceCreationStatus_UnsupportedManifestContentType) = 3, UnsupportedManifestVersion (AdaptiveMediaSourceCreationStatus_UnsupportedManifestVersion) = 4, UnsupportedManifestProfile (AdaptiveMediaSourceCreationStatus_UnsupportedManifestProfile) = 5, UnknownFailure (AdaptiveMediaSourceCreationStatus_UnknownFailure) = 6,
+    Success = 0, ManifestDownloadFailure = 1, ManifestParseFailure = 2, UnsupportedManifestContentType = 3, UnsupportedManifestVersion = 4, UnsupportedManifestProfile = 5, UnknownFailure = 6,
 }}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs, 989220614, 28060, 18762, 183, 169, 179, 165, 222, 230, 173, 104);
 RT_INTERFACE!{interface IAdaptiveMediaSourceDiagnosticAvailableEventArgs(IAdaptiveMediaSourceDiagnosticAvailableEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs] {
@@ -27051,7 +27051,7 @@ impl IAdaptiveMediaSourceDiagnostics {
 }
 RT_CLASS!{class AdaptiveMediaSourceDiagnostics: IAdaptiveMediaSourceDiagnostics}
 RT_ENUM! { enum AdaptiveMediaSourceDiagnosticType: i32 {
-    ManifestUnchangedUponReload (AdaptiveMediaSourceDiagnosticType_ManifestUnchangedUponReload) = 0, ManifestMismatchUponReload (AdaptiveMediaSourceDiagnosticType_ManifestMismatchUponReload) = 1, ManifestSignaledEndOfLiveEventUponReload (AdaptiveMediaSourceDiagnosticType_ManifestSignaledEndOfLiveEventUponReload) = 2, MediaSegmentSkipped (AdaptiveMediaSourceDiagnosticType_MediaSegmentSkipped) = 3, ResourceNotFound (AdaptiveMediaSourceDiagnosticType_ResourceNotFound) = 4, ResourceTimedOut (AdaptiveMediaSourceDiagnosticType_ResourceTimedOut) = 5, ResourceParsingError (AdaptiveMediaSourceDiagnosticType_ResourceParsingError) = 6, BitrateDisabled (AdaptiveMediaSourceDiagnosticType_BitrateDisabled) = 7, FatalMediaSourceError (AdaptiveMediaSourceDiagnosticType_FatalMediaSourceError) = 8,
+    ManifestUnchangedUponReload = 0, ManifestMismatchUponReload = 1, ManifestSignaledEndOfLiveEventUponReload = 2, MediaSegmentSkipped = 3, ResourceNotFound = 4, ResourceTimedOut = 5, ResourceParsingError = 6, BitrateDisabled = 7, FatalMediaSourceError = 8,
 }}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadBitrateChangedEventArgs, 1728842308, 57422, 20223, 129, 106, 23, 57, 159, 120, 244, 186);
 RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadBitrateChangedEventArgs(IAdaptiveMediaSourceDownloadBitrateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadBitrateChangedEventArgs] {
@@ -27083,7 +27083,7 @@ impl IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2 {
     }}
 }
 RT_ENUM! { enum AdaptiveMediaSourceDownloadBitrateChangedReason: i32 {
-    SufficientInboundBitsPerSecond (AdaptiveMediaSourceDownloadBitrateChangedReason_SufficientInboundBitsPerSecond) = 0, InsufficientInboundBitsPerSecond (AdaptiveMediaSourceDownloadBitrateChangedReason_InsufficientInboundBitsPerSecond) = 1, LowBufferLevel (AdaptiveMediaSourceDownloadBitrateChangedReason_LowBufferLevel) = 2, PositionChanged (AdaptiveMediaSourceDownloadBitrateChangedReason_PositionChanged) = 3, TrackSelectionChanged (AdaptiveMediaSourceDownloadBitrateChangedReason_TrackSelectionChanged) = 4, DesiredBitratesChanged (AdaptiveMediaSourceDownloadBitrateChangedReason_DesiredBitratesChanged) = 5, ErrorInPreviousBitrate (AdaptiveMediaSourceDownloadBitrateChangedReason_ErrorInPreviousBitrate) = 6,
+    SufficientInboundBitsPerSecond = 0, InsufficientInboundBitsPerSecond = 1, LowBufferLevel = 2, PositionChanged = 3, TrackSelectionChanged = 4, DesiredBitratesChanged = 5, ErrorInPreviousBitrate = 6,
 }}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadCompletedEventArgs, 421793219, 23351, 18970, 137, 112, 214, 33, 203, 108, 168, 59);
 RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadCompletedEventArgs(IAdaptiveMediaSourceDownloadCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadCompletedEventArgs] {
@@ -27477,7 +27477,7 @@ impl IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs {
 }
 RT_CLASS!{class AdaptiveMediaSourcePlaybackBitrateChangedEventArgs: IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs}
 RT_ENUM! { enum AdaptiveMediaSourceResourceType: i32 {
-    Manifest (AdaptiveMediaSourceResourceType_Manifest) = 0, InitializationSegment (AdaptiveMediaSourceResourceType_InitializationSegment) = 1, MediaSegment (AdaptiveMediaSourceResourceType_MediaSegment) = 2, Key (AdaptiveMediaSourceResourceType_Key) = 3, InitializationVector (AdaptiveMediaSourceResourceType_InitializationVector) = 4, MediaSegmentIndex (AdaptiveMediaSourceResourceType_MediaSegmentIndex) = 5,
+    Manifest = 0, InitializationSegment = 1, MediaSegment = 2, Key = 3, InitializationVector = 4, MediaSegmentIndex = 5,
 }}
 DEFINE_IID!(IID_IAdaptiveMediaSourceStatics, 1353104733, 26351, 19667, 149, 121, 158, 102, 5, 7, 220, 63);
 RT_INTERFACE!{static interface IAdaptiveMediaSourceStatics(IAdaptiveMediaSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceStatics] {
@@ -27633,7 +27633,7 @@ impl IMediaTranscoder2 {
     }}
 }
 RT_ENUM! { enum MediaVideoProcessingAlgorithm: i32 {
-    Default (MediaVideoProcessingAlgorithm_Default) = 0, MrfCrf444 (MediaVideoProcessingAlgorithm_MrfCrf444) = 1,
+    Default = 0, MrfCrf444 = 1,
 }}
 DEFINE_IID!(IID_IPrepareTranscodeResult, 99769806, 39247, 18996, 157, 104, 151, 204, 206, 23, 48, 214);
 RT_INTERFACE!{interface IPrepareTranscodeResult(IPrepareTranscodeResultVtbl): IInspectable(IInspectableVtbl) [IID_IPrepareTranscodeResult] {
@@ -27660,6 +27660,6 @@ impl IPrepareTranscodeResult {
 }
 RT_CLASS!{class PrepareTranscodeResult: IPrepareTranscodeResult}
 RT_ENUM! { enum TranscodeFailureReason: i32 {
-    None (TranscodeFailureReason_None) = 0, Unknown (TranscodeFailureReason_Unknown) = 1, InvalidProfile (TranscodeFailureReason_InvalidProfile) = 2, CodecNotFound (TranscodeFailureReason_CodecNotFound) = 3,
+    None = 0, Unknown = 1, InvalidProfile = 2, CodecNotFound = 3,
 }}
 } // Windows.Media.Transcoding

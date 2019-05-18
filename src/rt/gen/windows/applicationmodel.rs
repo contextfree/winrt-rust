@@ -1,6 +1,6 @@
 use ::prelude::*;
 RT_ENUM! { enum AddResourcePackageOptions: u32 {
-    None (AddResourcePackageOptions_None) = 0, ForceTargetAppShutdown (AddResourcePackageOptions_ForceTargetAppShutdown) = 1, ApplyUpdateIfAvailable (AddResourcePackageOptions_ApplyUpdateIfAvailable) = 2,
+    None = 0, ForceTargetAppShutdown = 1, ApplyUpdateIfAvailable = 2,
 }}
 DEFINE_IID!(IID_IAppDisplayInfo, 451612931, 58580, 16810, 164, 246, 196, 162, 118, 231, 158, 172);
 RT_INTERFACE!{interface IAppDisplayInfo(IAppDisplayInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppDisplayInfo] {
@@ -292,7 +292,7 @@ impl ILimitedAccessFeaturesStatics {
     }}
 }
 RT_ENUM! { enum LimitedAccessFeatureStatus: i32 {
-    Unavailable (LimitedAccessFeatureStatus_Unavailable) = 0, Available (LimitedAccessFeatureStatus_Available) = 1, AvailableWithoutToken (LimitedAccessFeatureStatus_AvailableWithoutToken) = 2, Unknown (LimitedAccessFeatureStatus_Unknown) = 3,
+    Unavailable = 0, Available = 1, AvailableWithoutToken = 2, Unknown = 3,
 }}
 DEFINE_IID!(IID_IPackage, 373061935, 48501, 16700, 191, 35, 177, 254, 123, 149, 216, 37);
 RT_INTERFACE!{interface IPackage(IPackageVtbl): IInspectable(IInspectableVtbl) [IID_IPackage] {
@@ -779,7 +779,7 @@ impl IPackageContentGroupStagingEventArgs {
 }
 RT_CLASS!{class PackageContentGroupStagingEventArgs: IPackageContentGroupStagingEventArgs}
 RT_ENUM! { enum PackageContentGroupState: i32 {
-    NotStaged (PackageContentGroupState_NotStaged) = 0, Queued (PackageContentGroupState_Queued) = 1, Staging (PackageContentGroupState_Staging) = 2, Staged (PackageContentGroupState_Staged) = 3,
+    NotStaged = 0, Queued = 1, Staging = 2, Staged = 3,
 }}
 DEFINE_IID!(IID_IPackageContentGroupStatics, 1894675993, 24338, 19346, 185, 234, 108, 202, 218, 19, 188, 117);
 RT_INTERFACE!{static interface IPackageContentGroupStatics(IPackageContentGroupStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPackageContentGroupStatics] {
@@ -904,7 +904,7 @@ RT_STRUCT! { struct PackageInstallProgress {
     PercentComplete: u32,
 }}
 RT_ENUM! { enum PackageSignatureKind: i32 {
-    None (PackageSignatureKind_None) = 0, Developer (PackageSignatureKind_Developer) = 1, Enterprise (PackageSignatureKind_Enterprise) = 2, Store (PackageSignatureKind_Store) = 3, System (PackageSignatureKind_System) = 4,
+    None = 0, Developer = 1, Enterprise = 2, Store = 3, System = 4,
 }}
 DEFINE_IID!(IID_IPackageStagingEventArgs, 272721965, 21730, 20305, 184, 40, 158, 247, 4, 108, 33, 15);
 RT_INTERFACE!{interface IPackageStagingEventArgs(IPackageStagingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPackageStagingEventArgs] {
@@ -1091,7 +1091,7 @@ impl IPackageUninstallingEventArgs {
 }
 RT_CLASS!{class PackageUninstallingEventArgs: IPackageUninstallingEventArgs}
 RT_ENUM! { enum PackageUpdateAvailability: i32 {
-    Unknown (PackageUpdateAvailability_Unknown) = 0, NoUpdates (PackageUpdateAvailability_NoUpdates) = 1, Available (PackageUpdateAvailability_Available) = 2, Required (PackageUpdateAvailability_Required) = 3, Error (PackageUpdateAvailability_Error) = 4,
+    Unknown = 0, NoUpdates = 1, Available = 2, Required = 3, Error = 4,
 }}
 DEFINE_IID!(IID_IPackageUpdateAvailabilityResult, 290344969, 6554, 18593, 160, 121, 49, 60, 69, 99, 74, 113);
 RT_INTERFACE!{interface IPackageUpdateAvailabilityResult(IPackageUpdateAvailabilityResultVtbl): IInspectable(IInspectableVtbl) [IID_IPackageUpdateAvailabilityResult] {
@@ -1218,7 +1218,7 @@ impl StartupTask {
 }
 DEFINE_CLSID!(StartupTask(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,116,97,114,116,117,112,84,97,115,107,0]) [CLSID_StartupTask]);
 RT_ENUM! { enum StartupTaskState: i32 {
-    Disabled (StartupTaskState_Disabled) = 0, DisabledByUser (StartupTaskState_DisabledByUser) = 1, Enabled (StartupTaskState_Enabled) = 2, DisabledByPolicy (StartupTaskState_DisabledByPolicy) = 3, EnabledByPolicy (StartupTaskState_EnabledByPolicy) = 4,
+    Disabled = 0, DisabledByUser = 1, Enabled = 2, DisabledByPolicy = 3, EnabledByPolicy = 4,
 }}
 DEFINE_IID!(IID_IStartupTaskStatics, 3998965949, 41288, 16807, 178, 110, 232, 184, 138, 30, 98, 248);
 RT_INTERFACE!{static interface IStartupTaskStatics(IStartupTaskStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStartupTaskStatics] {
@@ -1315,10 +1315,10 @@ impl IActivatedEventArgsWithUser {
     }}
 }
 RT_ENUM! { enum ActivationKind: i32 {
-    Launch (ActivationKind_Launch) = 0, Search (ActivationKind_Search) = 1, ShareTarget (ActivationKind_ShareTarget) = 2, File (ActivationKind_File) = 3, Protocol (ActivationKind_Protocol) = 4, FileOpenPicker (ActivationKind_FileOpenPicker) = 5, FileSavePicker (ActivationKind_FileSavePicker) = 6, CachedFileUpdater (ActivationKind_CachedFileUpdater) = 7, ContactPicker (ActivationKind_ContactPicker) = 8, Device (ActivationKind_Device) = 9, PrintTaskSettings (ActivationKind_PrintTaskSettings) = 10, CameraSettings (ActivationKind_CameraSettings) = 11, RestrictedLaunch (ActivationKind_RestrictedLaunch) = 12, AppointmentsProvider (ActivationKind_AppointmentsProvider) = 13, Contact (ActivationKind_Contact) = 14, LockScreenCall (ActivationKind_LockScreenCall) = 15, VoiceCommand (ActivationKind_VoiceCommand) = 16, LockScreen (ActivationKind_LockScreen) = 17, PickerReturned (ActivationKind_PickerReturned) = 1000, WalletAction (ActivationKind_WalletAction) = 1001, PickFileContinuation (ActivationKind_PickFileContinuation) = 1002, PickSaveFileContinuation (ActivationKind_PickSaveFileContinuation) = 1003, PickFolderContinuation (ActivationKind_PickFolderContinuation) = 1004, WebAuthenticationBrokerContinuation (ActivationKind_WebAuthenticationBrokerContinuation) = 1005, WebAccountProvider (ActivationKind_WebAccountProvider) = 1006, ComponentUI (ActivationKind_ComponentUI) = 1007, ProtocolForResults (ActivationKind_ProtocolForResults) = 1009, ToastNotification (ActivationKind_ToastNotification) = 1010, Print3DWorkflow (ActivationKind_Print3DWorkflow) = 1011, DialReceiver (ActivationKind_DialReceiver) = 1012, DevicePairing (ActivationKind_DevicePairing) = 1013, UserDataAccountsProvider (ActivationKind_UserDataAccountsProvider) = 1014, FilePickerExperience (ActivationKind_FilePickerExperience) = 1015, LockScreenComponent (ActivationKind_LockScreenComponent) = 1016, ContactPanel (ActivationKind_ContactPanel) = 1017, PrintWorkflowForegroundTask (ActivationKind_PrintWorkflowForegroundTask) = 1018, GameUIProvider (ActivationKind_GameUIProvider) = 1019, StartupTask (ActivationKind_StartupTask) = 1020, CommandLineLaunch (ActivationKind_CommandLineLaunch) = 1021, BarcodeScannerProvider (ActivationKind_BarcodeScannerProvider) = 1022,
+    Launch = 0, Search = 1, ShareTarget = 2, File = 3, Protocol = 4, FileOpenPicker = 5, FileSavePicker = 6, CachedFileUpdater = 7, ContactPicker = 8, Device = 9, PrintTaskSettings = 10, CameraSettings = 11, RestrictedLaunch = 12, AppointmentsProvider = 13, Contact = 14, LockScreenCall = 15, VoiceCommand = 16, LockScreen = 17, PickerReturned = 1000, WalletAction = 1001, PickFileContinuation = 1002, PickSaveFileContinuation = 1003, PickFolderContinuation = 1004, WebAuthenticationBrokerContinuation = 1005, WebAccountProvider = 1006, ComponentUI = 1007, ProtocolForResults = 1009, ToastNotification = 1010, Print3DWorkflow = 1011, DialReceiver = 1012, DevicePairing = 1013, UserDataAccountsProvider = 1014, FilePickerExperience = 1015, LockScreenComponent = 1016, ContactPanel = 1017, PrintWorkflowForegroundTask = 1018, GameUIProvider = 1019, StartupTask = 1020, CommandLineLaunch = 1021, BarcodeScannerProvider = 1022,
 }}
 RT_ENUM! { enum ApplicationExecutionState: i32 {
-    NotRunning (ApplicationExecutionState_NotRunning) = 0, Running (ApplicationExecutionState_Running) = 1, Suspended (ApplicationExecutionState_Suspended) = 2, Terminated (ApplicationExecutionState_Terminated) = 3, ClosedByUser (ApplicationExecutionState_ClosedByUser) = 4,
+    NotRunning = 0, Running = 1, Suspended = 2, Terminated = 3, ClosedByUser = 4,
 }}
 DEFINE_IID!(IID_IApplicationViewActivatedEventArgs, 2467098443, 47145, 16636, 136, 244, 133, 19, 232, 166, 71, 56);
 RT_INTERFACE!{interface IApplicationViewActivatedEventArgs(IApplicationViewActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationViewActivatedEventArgs] {
@@ -2491,7 +2491,7 @@ impl IAppServiceClosedEventArgs {
 }
 RT_CLASS!{class AppServiceClosedEventArgs: IAppServiceClosedEventArgs}
 RT_ENUM! { enum AppServiceClosedStatus: i32 {
-    Completed (AppServiceClosedStatus_Completed) = 0, Canceled (AppServiceClosedStatus_Canceled) = 1, ResourceLimitsExceeded (AppServiceClosedStatus_ResourceLimitsExceeded) = 2, Unknown (AppServiceClosedStatus_Unknown) = 3,
+    Completed = 0, Canceled = 1, ResourceLimitsExceeded = 2, Unknown = 3,
 }}
 DEFINE_IID!(IID_IAppServiceConnection, 2647946402, 34591, 19794, 137, 169, 158, 9, 5, 49, 189, 39);
 RT_INTERFACE!{interface IAppServiceConnection(IAppServiceConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IAppServiceConnection] {
@@ -2580,7 +2580,7 @@ impl IAppServiceConnection2 {
     }}
 }
 RT_ENUM! { enum AppServiceConnectionStatus: i32 {
-    Success (AppServiceConnectionStatus_Success) = 0, AppNotInstalled (AppServiceConnectionStatus_AppNotInstalled) = 1, AppUnavailable (AppServiceConnectionStatus_AppUnavailable) = 2, AppServiceUnavailable (AppServiceConnectionStatus_AppServiceUnavailable) = 3, Unknown (AppServiceConnectionStatus_Unknown) = 4, RemoteSystemUnavailable (AppServiceConnectionStatus_RemoteSystemUnavailable) = 5, RemoteSystemNotSupportedByApp (AppServiceConnectionStatus_RemoteSystemNotSupportedByApp) = 6, NotAuthorized (AppServiceConnectionStatus_NotAuthorized) = 7,
+    Success = 0, AppNotInstalled = 1, AppUnavailable = 2, AppServiceUnavailable = 3, Unknown = 4, RemoteSystemUnavailable = 5, RemoteSystemNotSupportedByApp = 6, NotAuthorized = 7,
 }}
 DEFINE_IID!(IID_IAppServiceDeferral, 2115719970, 60080, 16968, 174, 4, 253, 249, 56, 56, 228, 114);
 RT_INTERFACE!{interface IAppServiceDeferral(IAppServiceDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IAppServiceDeferral] {
@@ -2648,7 +2648,7 @@ impl IAppServiceResponse {
 }
 RT_CLASS!{class AppServiceResponse: IAppServiceResponse}
 RT_ENUM! { enum AppServiceResponseStatus: i32 {
-    Success (AppServiceResponseStatus_Success) = 0, Failure (AppServiceResponseStatus_Failure) = 1, ResourceLimitsExceeded (AppServiceResponseStatus_ResourceLimitsExceeded) = 2, Unknown (AppServiceResponseStatus_Unknown) = 3, RemoteSystemUnavailable (AppServiceResponseStatus_RemoteSystemUnavailable) = 4, MessageSizeTooLarge (AppServiceResponseStatus_MessageSizeTooLarge) = 5,
+    Success = 0, Failure = 1, ResourceLimitsExceeded = 2, Unknown = 3, RemoteSystemUnavailable = 4, MessageSizeTooLarge = 5,
 }}
 DEFINE_IID!(IID_IAppServiceTriggerDetails, 2292374700, 44328, 16824, 128, 187, 189, 241, 178, 22, 158, 25);
 RT_INTERFACE!{interface IAppServiceTriggerDetails(IAppServiceTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IAppServiceTriggerDetails] {
@@ -2996,7 +2996,7 @@ impl IAppointment3 {
     }}
 }
 RT_ENUM! { enum AppointmentBusyStatus: i32 {
-    Busy (AppointmentBusyStatus_Busy) = 0, Tentative (AppointmentBusyStatus_Tentative) = 1, Free (AppointmentBusyStatus_Free) = 2, OutOfOffice (AppointmentBusyStatus_OutOfOffice) = 3, WorkingElsewhere (AppointmentBusyStatus_WorkingElsewhere) = 4,
+    Busy = 0, Tentative = 1, Free = 2, OutOfOffice = 3, WorkingElsewhere = 4,
 }}
 DEFINE_IID!(IID_IAppointmentCalendar, 1383301533, 33593, 15695, 160, 47, 100, 8, 68, 82, 187, 93);
 RT_INTERFACE!{interface IAppointmentCalendar(IAppointmentCalendarVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendar] {
@@ -3315,10 +3315,10 @@ impl IAppointmentCalendar3 {
     }}
 }
 RT_ENUM! { enum AppointmentCalendarOtherAppReadAccess: i32 {
-    SystemOnly (AppointmentCalendarOtherAppReadAccess_SystemOnly) = 0, Limited (AppointmentCalendarOtherAppReadAccess_Limited) = 1, Full (AppointmentCalendarOtherAppReadAccess_Full) = 2, None (AppointmentCalendarOtherAppReadAccess_None) = 3,
+    SystemOnly = 0, Limited = 1, Full = 2, None = 3,
 }}
 RT_ENUM! { enum AppointmentCalendarOtherAppWriteAccess: i32 {
-    None (AppointmentCalendarOtherAppWriteAccess_None) = 0, SystemOnly (AppointmentCalendarOtherAppWriteAccess_SystemOnly) = 1, Limited (AppointmentCalendarOtherAppWriteAccess_Limited) = 2,
+    None = 0, SystemOnly = 1, Limited = 2,
 }}
 DEFINE_IID!(IID_IAppointmentCalendarSyncManager, 723628960, 19199, 17298, 188, 95, 86, 69, 255, 207, 251, 23);
 RT_INTERFACE!{interface IAppointmentCalendarSyncManager(IAppointmentCalendarSyncManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentCalendarSyncManager] {
@@ -3382,7 +3382,7 @@ impl IAppointmentCalendarSyncManager2 {
     }}
 }
 RT_ENUM! { enum AppointmentCalendarSyncStatus: i32 {
-    Idle (AppointmentCalendarSyncStatus_Idle) = 0, Syncing (AppointmentCalendarSyncStatus_Syncing) = 1, UpToDate (AppointmentCalendarSyncStatus_UpToDate) = 2, AuthenticationError (AppointmentCalendarSyncStatus_AuthenticationError) = 3, PolicyError (AppointmentCalendarSyncStatus_PolicyError) = 4, UnknownError (AppointmentCalendarSyncStatus_UnknownError) = 5, ManualAccountRemovalRequired (AppointmentCalendarSyncStatus_ManualAccountRemovalRequired) = 6,
+    Idle = 0, Syncing = 1, UpToDate = 2, AuthenticationError = 3, PolicyError = 4, UnknownError = 5, ManualAccountRemovalRequired = 6,
 }}
 DEFINE_IID!(IID_IAppointmentConflictResult, 3587043518, 12079, 15229, 175, 10, 167, 226, 15, 58, 70, 227);
 RT_INTERFACE!{interface IAppointmentConflictResult(IAppointmentConflictResultVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentConflictResult] {
@@ -3403,13 +3403,13 @@ impl IAppointmentConflictResult {
 }
 RT_CLASS!{class AppointmentConflictResult: IAppointmentConflictResult}
 RT_ENUM! { enum AppointmentConflictType: i32 {
-    None (AppointmentConflictType_None) = 0, Adjacent (AppointmentConflictType_Adjacent) = 1, Overlap (AppointmentConflictType_Overlap) = 2,
+    None = 0, Adjacent = 1, Overlap = 2,
 }}
 RT_ENUM! { enum AppointmentDaysOfWeek: u32 {
-    None (AppointmentDaysOfWeek_None) = 0, Sunday (AppointmentDaysOfWeek_Sunday) = 1, Monday (AppointmentDaysOfWeek_Monday) = 2, Tuesday (AppointmentDaysOfWeek_Tuesday) = 4, Wednesday (AppointmentDaysOfWeek_Wednesday) = 8, Thursday (AppointmentDaysOfWeek_Thursday) = 16, Friday (AppointmentDaysOfWeek_Friday) = 32, Saturday (AppointmentDaysOfWeek_Saturday) = 64,
+    None = 0, Sunday = 1, Monday = 2, Tuesday = 4, Wednesday = 8, Thursday = 16, Friday = 32, Saturday = 64,
 }}
 RT_ENUM! { enum AppointmentDetailsKind: i32 {
-    PlainText (AppointmentDetailsKind_PlainText) = 0, Html (AppointmentDetailsKind_Html) = 1,
+    PlainText = 0, Html = 1,
 }}
 DEFINE_IID!(IID_IAppointmentException, 2718394215, 5878, 19406, 159, 90, 134, 0, 184, 1, 159, 203);
 RT_INTERFACE!{interface IAppointmentException(IAppointmentExceptionVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentException] {
@@ -3744,10 +3744,10 @@ impl IAppointmentParticipant {
     }}
 }
 RT_ENUM! { enum AppointmentParticipantResponse: i32 {
-    None (AppointmentParticipantResponse_None) = 0, Tentative (AppointmentParticipantResponse_Tentative) = 1, Accepted (AppointmentParticipantResponse_Accepted) = 2, Declined (AppointmentParticipantResponse_Declined) = 3, Unknown (AppointmentParticipantResponse_Unknown) = 4,
+    None = 0, Tentative = 1, Accepted = 2, Declined = 3, Unknown = 4,
 }}
 RT_ENUM! { enum AppointmentParticipantRole: i32 {
-    RequiredAttendee (AppointmentParticipantRole_RequiredAttendee) = 0, OptionalAttendee (AppointmentParticipantRole_OptionalAttendee) = 1, Resource (AppointmentParticipantRole_Resource) = 2,
+    RequiredAttendee = 0, OptionalAttendee = 1, Resource = 2,
 }}
 RT_CLASS!{static class AppointmentProperties}
 impl RtActivatable<IAppointmentPropertiesStatics> for AppointmentProperties {}
@@ -4129,10 +4129,10 @@ impl IAppointmentRecurrence3 {
     }}
 }
 RT_ENUM! { enum AppointmentRecurrenceUnit: i32 {
-    Daily (AppointmentRecurrenceUnit_Daily) = 0, Weekly (AppointmentRecurrenceUnit_Weekly) = 1, Monthly (AppointmentRecurrenceUnit_Monthly) = 2, MonthlyOnDay (AppointmentRecurrenceUnit_MonthlyOnDay) = 3, Yearly (AppointmentRecurrenceUnit_Yearly) = 4, YearlyOnDay (AppointmentRecurrenceUnit_YearlyOnDay) = 5,
+    Daily = 0, Weekly = 1, Monthly = 2, MonthlyOnDay = 3, Yearly = 4, YearlyOnDay = 5,
 }}
 RT_ENUM! { enum AppointmentSensitivity: i32 {
-    Public (AppointmentSensitivity_Public) = 0, Private (AppointmentSensitivity_Private) = 1,
+    Public = 0, Private = 1,
 }}
 DEFINE_IID!(IID_IAppointmentStore, 2757857676, 31303, 19862, 150, 201, 21, 205, 138, 5, 167, 53);
 RT_INTERFACE!{interface IAppointmentStore(IAppointmentStoreVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStore] {
@@ -4302,7 +4302,7 @@ impl IAppointmentStore3 {
     }}
 }
 RT_ENUM! { enum AppointmentStoreAccessType: i32 {
-    AppCalendarsReadWrite (AppointmentStoreAccessType_AppCalendarsReadWrite) = 0, AllCalendarsReadOnly (AppointmentStoreAccessType_AllCalendarsReadOnly) = 1, AllCalendarsReadWrite (AppointmentStoreAccessType_AllCalendarsReadWrite) = 2,
+    AppCalendarsReadWrite = 0, AllCalendarsReadOnly = 1, AllCalendarsReadWrite = 2,
 }}
 DEFINE_IID!(IID_IAppointmentStoreChange, 2779177013, 2611, 13908, 132, 99, 181, 67, 233, 12, 59, 121);
 RT_INTERFACE!{interface IAppointmentStoreChange(IAppointmentStoreChangeVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStoreChange] {
@@ -4412,7 +4412,7 @@ impl IAppointmentStoreChangeTracker2 {
     }}
 }
 RT_ENUM! { enum AppointmentStoreChangeType: i32 {
-    AppointmentCreated (AppointmentStoreChangeType_AppointmentCreated) = 0, AppointmentModified (AppointmentStoreChangeType_AppointmentModified) = 1, AppointmentDeleted (AppointmentStoreChangeType_AppointmentDeleted) = 2, ChangeTrackingLost (AppointmentStoreChangeType_ChangeTrackingLost) = 3, CalendarCreated (AppointmentStoreChangeType_CalendarCreated) = 4, CalendarModified (AppointmentStoreChangeType_CalendarModified) = 5, CalendarDeleted (AppointmentStoreChangeType_CalendarDeleted) = 6,
+    AppointmentCreated = 0, AppointmentModified = 1, AppointmentDeleted = 2, ChangeTrackingLost = 3, CalendarCreated = 4, CalendarModified = 5, CalendarDeleted = 6,
 }}
 DEFINE_IID!(IID_IAppointmentStoreNotificationTriggerDetails, 2603862801, 49921, 16926, 175, 239, 4, 126, 207, 167, 106, 219);
 RT_INTERFACE!{interface IAppointmentStoreNotificationTriggerDetails(IAppointmentStoreNotificationTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStoreNotificationTriggerDetails] {
@@ -4420,13 +4420,13 @@ RT_INTERFACE!{interface IAppointmentStoreNotificationTriggerDetails(IAppointment
 }}
 RT_CLASS!{class AppointmentStoreNotificationTriggerDetails: IAppointmentStoreNotificationTriggerDetails}
 RT_ENUM! { enum AppointmentSummaryCardView: i32 {
-    System (AppointmentSummaryCardView_System) = 0, App (AppointmentSummaryCardView_App) = 1,
+    System = 0, App = 1,
 }}
 RT_ENUM! { enum AppointmentWeekOfMonth: i32 {
-    First (AppointmentWeekOfMonth_First) = 0, Second (AppointmentWeekOfMonth_Second) = 1, Third (AppointmentWeekOfMonth_Third) = 2, Fourth (AppointmentWeekOfMonth_Fourth) = 3, Last (AppointmentWeekOfMonth_Last) = 4,
+    First = 0, Second = 1, Third = 2, Fourth = 3, Last = 4,
 }}
 RT_ENUM! { enum FindAppointmentCalendarsOptions: u32 {
-    None (FindAppointmentCalendarsOptions_None) = 0, IncludeHidden (FindAppointmentCalendarsOptions_IncludeHidden) = 1,
+    None = 0, IncludeHidden = 1,
 }}
 DEFINE_IID!(IID_IFindAppointmentsOptions, 1442307157, 39234, 12422, 130, 181, 44, 178, 159, 100, 213, 245);
 RT_INTERFACE!{interface IFindAppointmentsOptions(IFindAppointmentsOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IFindAppointmentsOptions] {
@@ -4471,7 +4471,7 @@ RT_CLASS!{class FindAppointmentsOptions: IFindAppointmentsOptions}
 impl RtActivatable<IActivationFactory> for FindAppointmentsOptions {}
 DEFINE_CLSID!(FindAppointmentsOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,65,112,112,111,105,110,116,109,101,110,116,115,46,70,105,110,100,65,112,112,111,105,110,116,109,101,110,116,115,79,112,116,105,111,110,115,0]) [CLSID_FindAppointmentsOptions]);
 RT_ENUM! { enum RecurrenceType: i32 {
-    Master (RecurrenceType_Master) = 0, Instance (RecurrenceType_Instance) = 1, ExceptionInstance (RecurrenceType_ExceptionInstance) = 2,
+    Master = 0, Instance = 1, ExceptionInstance = 2,
 }}
 pub mod appointmentsprovider { // Windows.ApplicationModel.Appointments.AppointmentsProvider
 use ::prelude::*;
@@ -5223,7 +5223,7 @@ impl IActivitySensorTriggerFactory {
     }}
 }
 RT_ENUM! { enum AlarmAccessStatus: i32 {
-    Unspecified (AlarmAccessStatus_Unspecified) = 0, AllowedWithWakeupCapability (AlarmAccessStatus_AllowedWithWakeupCapability) = 1, AllowedWithoutWakeupCapability (AlarmAccessStatus_AllowedWithoutWakeupCapability) = 2, Denied (AlarmAccessStatus_Denied) = 3,
+    Unspecified = 0, AllowedWithWakeupCapability = 1, AllowedWithoutWakeupCapability = 2, Denied = 3,
 }}
 RT_CLASS!{static class AlarmApplicationManager}
 impl RtActivatable<IAlarmApplicationManagerStatics> for AlarmApplicationManager {}
@@ -5393,7 +5393,7 @@ impl IApplicationTriggerDetails {
 }
 RT_CLASS!{class ApplicationTriggerDetails: IApplicationTriggerDetails}
 RT_ENUM! { enum ApplicationTriggerResult: i32 {
-    Allowed (ApplicationTriggerResult_Allowed) = 0, CurrentlyRunning (ApplicationTriggerResult_CurrentlyRunning) = 1, DisabledByPolicy (ApplicationTriggerResult_DisabledByPolicy) = 2, UnknownError (ApplicationTriggerResult_UnknownError) = 3,
+    Allowed = 0, CurrentlyRunning = 1, DisabledByPolicy = 2, UnknownError = 3,
 }}
 DEFINE_IID!(IID_IAppointmentStoreNotificationTrigger, 1691616268, 49665, 17069, 170, 42, 226, 27, 163, 66, 91, 109);
 RT_INTERFACE!{interface IAppointmentStoreNotificationTrigger(IAppointmentStoreNotificationTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IAppointmentStoreNotificationTrigger] {
@@ -5403,10 +5403,10 @@ RT_CLASS!{class AppointmentStoreNotificationTrigger: IAppointmentStoreNotificati
 impl RtActivatable<IActivationFactory> for AppointmentStoreNotificationTrigger {}
 DEFINE_CLSID!(AppointmentStoreNotificationTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,65,112,112,111,105,110,116,109,101,110,116,83,116,111,114,101,78,111,116,105,102,105,99,97,116,105,111,110,84,114,105,103,103,101,114,0]) [CLSID_AppointmentStoreNotificationTrigger]);
 RT_ENUM! { enum BackgroundAccessRequestKind: i32 {
-    AlwaysAllowed (BackgroundAccessRequestKind_AlwaysAllowed) = 0, AllowedSubjectToSystemPolicy (BackgroundAccessRequestKind_AllowedSubjectToSystemPolicy) = 1,
+    AlwaysAllowed = 0, AllowedSubjectToSystemPolicy = 1,
 }}
 RT_ENUM! { enum BackgroundAccessStatus: i32 {
-    Unspecified (BackgroundAccessStatus_Unspecified) = 0, AllowedWithAlwaysOnRealTimeConnectivity (BackgroundAccessStatus_AllowedWithAlwaysOnRealTimeConnectivity) = 1, AllowedMayUseActiveRealTimeConnectivity (BackgroundAccessStatus_AllowedMayUseActiveRealTimeConnectivity) = 2, Denied (BackgroundAccessStatus_Denied) = 3, AlwaysAllowed (BackgroundAccessStatus_AlwaysAllowed) = 4, AllowedSubjectToSystemPolicy (BackgroundAccessStatus_AllowedSubjectToSystemPolicy) = 5, DeniedBySystemPolicy (BackgroundAccessStatus_DeniedBySystemPolicy) = 6, DeniedByUser (BackgroundAccessStatus_DeniedByUser) = 7,
+    Unspecified = 0, AllowedWithAlwaysOnRealTimeConnectivity = 1, AllowedMayUseActiveRealTimeConnectivity = 2, Denied = 3, AlwaysAllowed = 4, AllowedSubjectToSystemPolicy = 5, DeniedBySystemPolicy = 6, DeniedByUser = 7,
 }}
 DEFINE_IID!(IID_IBackgroundCondition, 2923995630, 35153, 16394, 131, 2, 156, 156, 154, 42, 58, 59);
 RT_INTERFACE!{interface IBackgroundCondition(IBackgroundConditionVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundCondition] {
@@ -5604,7 +5604,7 @@ impl BackgroundTaskCanceledEventHandler {
     }}
 }
 RT_ENUM! { enum BackgroundTaskCancellationReason: i32 {
-    Abort (BackgroundTaskCancellationReason_Abort) = 0, Terminating (BackgroundTaskCancellationReason_Terminating) = 1, LoggingOff (BackgroundTaskCancellationReason_LoggingOff) = 2, ServicingUpdate (BackgroundTaskCancellationReason_ServicingUpdate) = 3, IdleTask (BackgroundTaskCancellationReason_IdleTask) = 4, Uninstall (BackgroundTaskCancellationReason_Uninstall) = 5, ConditionLoss (BackgroundTaskCancellationReason_ConditionLoss) = 6, SystemPolicy (BackgroundTaskCancellationReason_SystemPolicy) = 7, QuietHoursEntered (BackgroundTaskCancellationReason_QuietHoursEntered) = 8, ExecutionTimeExceeded (BackgroundTaskCancellationReason_ExecutionTimeExceeded) = 9, ResourceRevocation (BackgroundTaskCancellationReason_ResourceRevocation) = 10, EnergySaver (BackgroundTaskCancellationReason_EnergySaver) = 11,
+    Abort = 0, Terminating = 1, LoggingOff = 2, ServicingUpdate = 3, IdleTask = 4, Uninstall = 5, ConditionLoss = 6, SystemPolicy = 7, QuietHoursEntered = 8, ExecutionTimeExceeded = 9, ResourceRevocation = 10, EnergySaver = 11,
 }}
 DEFINE_IID!(IID_IBackgroundTaskCompletedEventArgs, 1448945103, 61961, 18676, 153, 103, 43, 24, 79, 123, 251, 240);
 RT_INTERFACE!{interface IBackgroundTaskCompletedEventArgs(IBackgroundTaskCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTaskCompletedEventArgs] {
@@ -5923,7 +5923,7 @@ impl IBackgroundTaskRegistrationStatics2 {
     }}
 }
 RT_ENUM! { enum BackgroundTaskThrottleCounter: i32 {
-    All (BackgroundTaskThrottleCounter_All) = 0, Cpu (BackgroundTaskThrottleCounter_Cpu) = 1, Network (BackgroundTaskThrottleCounter_Network) = 2,
+    All = 0, Cpu = 1, Network = 2,
 }}
 DEFINE_IID!(IID_IBackgroundTrigger, 2226364504, 24615, 19335, 151, 144, 189, 243, 247, 87, 219, 215);
 RT_INTERFACE!{interface IBackgroundTrigger(IBackgroundTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTrigger] {
@@ -5949,7 +5949,7 @@ impl IBackgroundWorkCostStatics {
     }}
 }
 RT_ENUM! { enum BackgroundWorkCostValue: i32 {
-    Low (BackgroundWorkCostValue_Low) = 0, Medium (BackgroundWorkCostValue_Medium) = 1, High (BackgroundWorkCostValue_High) = 2,
+    Low = 0, Medium = 1, High = 2,
 }}
 DEFINE_IID!(IID_IBluetoothLEAdvertisementPublisherTrigger, 2872976914, 9683, 18606, 135, 36, 216, 24, 119, 174, 97, 41);
 RT_INTERFACE!{interface IBluetoothLEAdvertisementPublisherTrigger(IBluetoothLEAdvertisementPublisherTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IBluetoothLEAdvertisementPublisherTrigger] {
@@ -6148,7 +6148,7 @@ impl ICustomSystemEventTriggerFactory {
     }}
 }
 RT_ENUM! { enum CustomSystemEventTriggerRecurrence: i32 {
-    Once (CustomSystemEventTriggerRecurrence_Once) = 0, Always (CustomSystemEventTriggerRecurrence_Always) = 1,
+    Once = 0, Always = 1,
 }}
 DEFINE_IID!(IID_IDeviceConnectionChangeTrigger, 2424790628, 15581, 20219, 171, 28, 91, 59, 106, 96, 206, 52);
 RT_INTERFACE!{interface IDeviceConnectionChangeTrigger(IDeviceConnectionChangeTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceConnectionChangeTrigger] {
@@ -6254,7 +6254,7 @@ RT_CLASS!{class DeviceServicingTrigger: IDeviceServicingTrigger}
 impl RtActivatable<IActivationFactory> for DeviceServicingTrigger {}
 DEFINE_CLSID!(DeviceServicingTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,68,101,118,105,99,101,83,101,114,118,105,99,105,110,103,84,114,105,103,103,101,114,0]) [CLSID_DeviceServicingTrigger]);
 RT_ENUM! { enum DeviceTriggerResult: i32 {
-    Allowed (DeviceTriggerResult_Allowed) = 0, DeniedByUser (DeviceTriggerResult_DeniedByUser) = 1, DeniedBySystem (DeviceTriggerResult_DeniedBySystem) = 2, LowBattery (DeviceTriggerResult_LowBattery) = 3,
+    Allowed = 0, DeniedByUser = 1, DeniedBySystem = 2, LowBattery = 3,
 }}
 DEFINE_IID!(IID_IDeviceUseTrigger, 229015569, 13135, 19799, 182, 236, 109, 202, 100, 180, 18, 228);
 RT_INTERFACE!{interface IDeviceUseTrigger(IDeviceUseTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceUseTrigger] {
@@ -6459,7 +6459,7 @@ impl ILocationTriggerFactory {
     }}
 }
 RT_ENUM! { enum LocationTriggerType: i32 {
-    Geofence (LocationTriggerType_Geofence) = 0,
+    Geofence = 0,
 }}
 DEFINE_IID!(IID_IMaintenanceTrigger, 1746422915, 64546, 19685, 132, 26, 114, 57, 169, 129, 0, 71);
 RT_INTERFACE!{interface IMaintenanceTrigger(IMaintenanceTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IMaintenanceTrigger] {
@@ -6518,7 +6518,7 @@ RT_CLASS!{class MediaProcessingTrigger: IMediaProcessingTrigger}
 impl RtActivatable<IActivationFactory> for MediaProcessingTrigger {}
 DEFINE_CLSID!(MediaProcessingTrigger(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,66,97,99,107,103,114,111,117,110,100,46,77,101,100,105,97,80,114,111,99,101,115,115,105,110,103,84,114,105,103,103,101,114,0]) [CLSID_MediaProcessingTrigger]);
 RT_ENUM! { enum MediaProcessingTriggerResult: i32 {
-    Allowed (MediaProcessingTriggerResult_Allowed) = 0, CurrentlyRunning (MediaProcessingTriggerResult_CurrentlyRunning) = 1, DisabledByPolicy (MediaProcessingTriggerResult_DisabledByPolicy) = 2, UnknownError (MediaProcessingTriggerResult_UnknownError) = 3,
+    Allowed = 0, CurrentlyRunning = 1, DisabledByPolicy = 2, UnknownError = 3,
 }}
 RT_CLASS!{class MobileBroadbandDeviceServiceNotificationTrigger: IBackgroundTrigger}
 impl RtActivatable<IActivationFactory> for MobileBroadbandDeviceServiceNotificationTrigger {}
@@ -6871,7 +6871,7 @@ impl ISystemConditionFactory {
     }}
 }
 RT_ENUM! { enum SystemConditionType: i32 {
-    Invalid (SystemConditionType_Invalid) = 0, UserPresent (SystemConditionType_UserPresent) = 1, UserNotPresent (SystemConditionType_UserNotPresent) = 2, InternetAvailable (SystemConditionType_InternetAvailable) = 3, InternetNotAvailable (SystemConditionType_InternetNotAvailable) = 4, SessionConnected (SystemConditionType_SessionConnected) = 5, SessionDisconnected (SystemConditionType_SessionDisconnected) = 6, FreeNetworkAvailable (SystemConditionType_FreeNetworkAvailable) = 7, BackgroundWorkCostNotHigh (SystemConditionType_BackgroundWorkCostNotHigh) = 8,
+    Invalid = 0, UserPresent = 1, UserNotPresent = 2, InternetAvailable = 3, InternetNotAvailable = 4, SessionConnected = 5, SessionDisconnected = 6, FreeNetworkAvailable = 7, BackgroundWorkCostNotHigh = 8,
 }}
 DEFINE_IID!(IID_ISystemTrigger, 494978934, 14152, 17507, 141, 126, 39, 109, 193, 57, 172, 28);
 RT_INTERFACE!{interface ISystemTrigger(ISystemTriggerVtbl): IInspectable(IInspectableVtbl) [IID_ISystemTrigger] {
@@ -6910,7 +6910,7 @@ impl ISystemTriggerFactory {
     }}
 }
 RT_ENUM! { enum SystemTriggerType: i32 {
-    Invalid (SystemTriggerType_Invalid) = 0, SmsReceived (SystemTriggerType_SmsReceived) = 1, UserPresent (SystemTriggerType_UserPresent) = 2, UserAway (SystemTriggerType_UserAway) = 3, NetworkStateChange (SystemTriggerType_NetworkStateChange) = 4, ControlChannelReset (SystemTriggerType_ControlChannelReset) = 5, InternetAvailable (SystemTriggerType_InternetAvailable) = 6, SessionConnected (SystemTriggerType_SessionConnected) = 7, ServicingComplete (SystemTriggerType_ServicingComplete) = 8, LockScreenApplicationAdded (SystemTriggerType_LockScreenApplicationAdded) = 9, LockScreenApplicationRemoved (SystemTriggerType_LockScreenApplicationRemoved) = 10, TimeZoneChange (SystemTriggerType_TimeZoneChange) = 11, OnlineIdConnectedStateChange (SystemTriggerType_OnlineIdConnectedStateChange) = 12, BackgroundWorkCostChange (SystemTriggerType_BackgroundWorkCostChange) = 13, PowerStateChange (SystemTriggerType_PowerStateChange) = 14, DefaultSignInAccountChange (SystemTriggerType_DefaultSignInAccountChange) = 15,
+    Invalid = 0, SmsReceived = 1, UserPresent = 2, UserAway = 3, NetworkStateChange = 4, ControlChannelReset = 5, InternetAvailable = 6, SessionConnected = 7, ServicingComplete = 8, LockScreenApplicationAdded = 9, LockScreenApplicationRemoved = 10, TimeZoneChange = 11, OnlineIdConnectedStateChange = 12, BackgroundWorkCostChange = 13, PowerStateChange = 14, DefaultSignInAccountChange = 15,
 }}
 RT_CLASS!{class TetheringEntitlementCheckTrigger: IBackgroundTrigger}
 impl RtActivatable<IActivationFactory> for TetheringEntitlementCheckTrigger {}
@@ -7050,7 +7050,7 @@ impl ICallStateChangeEventArgs {
 }
 RT_CLASS!{class CallStateChangeEventArgs: ICallStateChangeEventArgs}
 RT_ENUM! { enum CellularDtmfMode: i32 {
-    Continuous (CellularDtmfMode_Continuous) = 0, Burst (CellularDtmfMode_Burst) = 1,
+    Continuous = 0, Burst = 1,
 }}
 DEFINE_IID!(IID_ILockScreenCallEndCallDeferral, 769125645, 39149, 16449, 150, 50, 80, 255, 129, 43, 119, 63);
 RT_INTERFACE!{interface ILockScreenCallEndCallDeferral(ILockScreenCallEndCallDeferralVtbl): IInspectable(IInspectableVtbl) [IID_ILockScreenCallEndCallDeferral] {
@@ -7138,7 +7138,7 @@ impl IMuteChangeEventArgs {
 }
 RT_CLASS!{class MuteChangeEventArgs: IMuteChangeEventArgs}
 RT_ENUM! { enum PhoneAudioRoutingEndpoint: i32 {
-    Default (PhoneAudioRoutingEndpoint_Default) = 0, Bluetooth (PhoneAudioRoutingEndpoint_Bluetooth) = 1, Speakerphone (PhoneAudioRoutingEndpoint_Speakerphone) = 2,
+    Default = 0, Bluetooth = 1, Speakerphone = 2,
 }}
 RT_CLASS!{static class PhoneCallBlocking}
 impl RtActivatable<IPhoneCallBlockingStatics> for PhoneCallBlocking {}
@@ -7459,13 +7459,13 @@ impl IPhoneCallHistoryEntryAddressFactory {
     }}
 }
 RT_ENUM! { enum PhoneCallHistoryEntryMedia: i32 {
-    Audio (PhoneCallHistoryEntryMedia_Audio) = 0, Video (PhoneCallHistoryEntryMedia_Video) = 1,
+    Audio = 0, Video = 1,
 }}
 RT_ENUM! { enum PhoneCallHistoryEntryOtherAppReadAccess: i32 {
-    Full (PhoneCallHistoryEntryOtherAppReadAccess_Full) = 0, SystemOnly (PhoneCallHistoryEntryOtherAppReadAccess_SystemOnly) = 1,
+    Full = 0, SystemOnly = 1,
 }}
 RT_ENUM! { enum PhoneCallHistoryEntryQueryDesiredMedia: u32 {
-    None (PhoneCallHistoryEntryQueryDesiredMedia_None) = 0, Audio (PhoneCallHistoryEntryQueryDesiredMedia_Audio) = 1, Video (PhoneCallHistoryEntryQueryDesiredMedia_Video) = 2, All (PhoneCallHistoryEntryQueryDesiredMedia_All) = 4294967295,
+    None = 0, Audio = 1, Video = 2, All = 4294967295,
 }}
 DEFINE_IID!(IID_IPhoneCallHistoryEntryQueryOptions, 2623529308, 35821, 16586, 176, 110, 196, 202, 142, 174, 92, 135);
 RT_INTERFACE!{interface IPhoneCallHistoryEntryQueryOptions(IPhoneCallHistoryEntryQueryOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneCallHistoryEntryQueryOptions] {
@@ -7493,7 +7493,7 @@ RT_CLASS!{class PhoneCallHistoryEntryQueryOptions: IPhoneCallHistoryEntryQueryOp
 impl RtActivatable<IActivationFactory> for PhoneCallHistoryEntryQueryOptions {}
 DEFINE_CLSID!(PhoneCallHistoryEntryQueryOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,97,108,108,115,46,80,104,111,110,101,67,97,108,108,72,105,115,116,111,114,121,69,110,116,114,121,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_PhoneCallHistoryEntryQueryOptions]);
 RT_ENUM! { enum PhoneCallHistoryEntryRawAddressKind: i32 {
-    PhoneNumber (PhoneCallHistoryEntryRawAddressKind_PhoneNumber) = 0, Custom (PhoneCallHistoryEntryRawAddressKind_Custom) = 1,
+    PhoneNumber = 0, Custom = 1,
 }}
 DEFINE_IID!(IID_IPhoneCallHistoryEntryReader, 1642915006, 36230, 18335, 132, 4, 169, 132, 105, 32, 254, 230);
 RT_INTERFACE!{interface IPhoneCallHistoryEntryReader(IPhoneCallHistoryEntryReaderVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneCallHistoryEntryReader] {
@@ -7560,7 +7560,7 @@ impl IPhoneCallHistoryManagerStatics2 {
     }}
 }
 RT_ENUM! { enum PhoneCallHistorySourceIdKind: i32 {
-    CellularPhoneLineId (PhoneCallHistorySourceIdKind_CellularPhoneLineId) = 0, PackageFamilyName (PhoneCallHistorySourceIdKind_PackageFamilyName) = 1,
+    CellularPhoneLineId = 0, PackageFamilyName = 1,
 }}
 DEFINE_IID!(IID_IPhoneCallHistoryStore, 797998520, 46094, 16939, 133, 69, 203, 25, 16, 166, 28, 82);
 RT_INTERFACE!{interface IPhoneCallHistoryStore(IPhoneCallHistoryStoreVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneCallHistoryStore] {
@@ -7641,7 +7641,7 @@ impl IPhoneCallHistoryStore {
 }
 RT_CLASS!{class PhoneCallHistoryStore: IPhoneCallHistoryStore}
 RT_ENUM! { enum PhoneCallHistoryStoreAccessType: i32 {
-    AppEntriesReadWrite (PhoneCallHistoryStoreAccessType_AppEntriesReadWrite) = 0, AllEntriesLimitedReadWrite (PhoneCallHistoryStoreAccessType_AllEntriesLimitedReadWrite) = 1, AllEntriesReadWrite (PhoneCallHistoryStoreAccessType_AllEntriesReadWrite) = 2,
+    AppEntriesReadWrite = 0, AllEntriesLimitedReadWrite = 1, AllEntriesReadWrite = 2,
 }}
 RT_CLASS!{static class PhoneCallManager}
 impl RtActivatable<IPhoneCallManagerStatics> for PhoneCallManager {}
@@ -7720,7 +7720,7 @@ impl IPhoneCallManagerStatics2 {
     }}
 }
 RT_ENUM! { enum PhoneCallMedia: i32 {
-    Audio (PhoneCallMedia_Audio) = 0, AudioAndVideo (PhoneCallMedia_AudioAndVideo) = 1, AudioAndRealTimeText (PhoneCallMedia_AudioAndRealTimeText) = 2,
+    Audio = 0, AudioAndVideo = 1, AudioAndRealTimeText = 2,
 }}
 DEFINE_IID!(IID_IPhoneCallStore, 1600194376, 6310, 16755, 134, 209, 40, 190, 157, 198, 45, 186);
 RT_INTERFACE!{interface IPhoneCallStore(IPhoneCallStoreVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneCallStore] {
@@ -8019,7 +8019,7 @@ impl IPhoneLineConfiguration {
 }
 RT_CLASS!{class PhoneLineConfiguration: IPhoneLineConfiguration}
 RT_ENUM! { enum PhoneLineNetworkOperatorDisplayTextLocation: i32 {
-    Default (PhoneLineNetworkOperatorDisplayTextLocation_Default) = 0, Tile (PhoneLineNetworkOperatorDisplayTextLocation_Tile) = 1, Dialer (PhoneLineNetworkOperatorDisplayTextLocation_Dialer) = 2, InCallUI (PhoneLineNetworkOperatorDisplayTextLocation_InCallUI) = 3,
+    Default = 0, Tile = 1, Dialer = 2, InCallUI = 3,
 }}
 DEFINE_IID!(IID_IPhoneLineStatics, 4085997347, 52912, 16463, 188, 242, 186, 159, 105, 125, 138, 223);
 RT_INTERFACE!{static interface IPhoneLineStatics(IPhoneLineStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneLineStatics] {
@@ -8033,7 +8033,7 @@ impl IPhoneLineStatics {
     }}
 }
 RT_ENUM! { enum PhoneLineTransport: i32 {
-    Cellular (PhoneLineTransport_Cellular) = 0, VoipApp (PhoneLineTransport_VoipApp) = 1,
+    Cellular = 0, VoipApp = 1,
 }}
 DEFINE_IID!(IID_IPhoneLineWatcher, 2319830282, 25379, 17632, 166, 246, 159, 33, 246, 77, 201, 10);
 RT_INTERFACE!{interface IPhoneLineWatcher(IPhoneLineWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneLineWatcher] {
@@ -8125,13 +8125,13 @@ impl IPhoneLineWatcherEventArgs {
 }
 RT_CLASS!{class PhoneLineWatcherEventArgs: IPhoneLineWatcherEventArgs}
 RT_ENUM! { enum PhoneLineWatcherStatus: i32 {
-    Created (PhoneLineWatcherStatus_Created) = 0, Started (PhoneLineWatcherStatus_Started) = 1, EnumerationCompleted (PhoneLineWatcherStatus_EnumerationCompleted) = 2, Stopped (PhoneLineWatcherStatus_Stopped) = 3,
+    Created = 0, Started = 1, EnumerationCompleted = 2, Stopped = 3,
 }}
 RT_ENUM! { enum PhoneNetworkState: i32 {
-    Unknown (PhoneNetworkState_Unknown) = 0, NoSignal (PhoneNetworkState_NoSignal) = 1, Deregistered (PhoneNetworkState_Deregistered) = 2, Denied (PhoneNetworkState_Denied) = 3, Searching (PhoneNetworkState_Searching) = 4, Home (PhoneNetworkState_Home) = 5, RoamingInternational (PhoneNetworkState_RoamingInternational) = 6, RoamingDomestic (PhoneNetworkState_RoamingDomestic) = 7,
+    Unknown = 0, NoSignal = 1, Deregistered = 2, Denied = 3, Searching = 4, Home = 5, RoamingInternational = 6, RoamingDomestic = 7,
 }}
 RT_ENUM! { enum PhoneSimState: i32 {
-    Unknown (PhoneSimState_Unknown) = 0, PinNotRequired (PhoneSimState_PinNotRequired) = 1, PinUnlocked (PhoneSimState_PinUnlocked) = 2, PinLocked (PhoneSimState_PinLocked) = 3, PukLocked (PhoneSimState_PukLocked) = 4, NotInserted (PhoneSimState_NotInserted) = 5, Invalid (PhoneSimState_Invalid) = 6, Disabled (PhoneSimState_Disabled) = 7,
+    Unknown = 0, PinNotRequired = 1, PinUnlocked = 2, PinLocked = 3, PukLocked = 4, NotInserted = 5, Invalid = 6, Disabled = 7,
 }}
 DEFINE_IID!(IID_IPhoneVoicemail, 3385751542, 28319, 14987, 183, 39, 110, 12, 246, 153, 130, 36);
 RT_INTERFACE!{interface IPhoneVoicemail(IPhoneVoicemailVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneVoicemail] {
@@ -8164,7 +8164,7 @@ impl IPhoneVoicemail {
 }
 RT_CLASS!{class PhoneVoicemail: IPhoneVoicemail}
 RT_ENUM! { enum PhoneVoicemailType: i32 {
-    None (PhoneVoicemailType_None) = 0, Traditional (PhoneVoicemailType_Traditional) = 1, Visual (PhoneVoicemailType_Visual) = 2,
+    None = 0, Traditional = 1, Visual = 2,
 }}
 DEFINE_IID!(IID_IVoipCallCoordinator, 1326549967, 59631, 17460, 156, 95, 168, 216, 147, 250, 254, 121);
 RT_INTERFACE!{interface IVoipCallCoordinator(IVoipCallCoordinatorVtbl): IInspectable(IInspectableVtbl) [IID_IVoipCallCoordinator] {
@@ -8425,21 +8425,21 @@ impl IVoipPhoneCall3 {
     }}
 }
 RT_ENUM! { enum VoipPhoneCallMedia: u32 {
-    None (VoipPhoneCallMedia_None) = 0, Audio (VoipPhoneCallMedia_Audio) = 1, Video (VoipPhoneCallMedia_Video) = 2,
+    None = 0, Audio = 1, Video = 2,
 }}
 RT_ENUM! { enum VoipPhoneCallRejectReason: i32 {
-    UserIgnored (VoipPhoneCallRejectReason_UserIgnored) = 0, TimedOut (VoipPhoneCallRejectReason_TimedOut) = 1, OtherIncomingCall (VoipPhoneCallRejectReason_OtherIncomingCall) = 2, EmergencyCallExists (VoipPhoneCallRejectReason_EmergencyCallExists) = 3, InvalidCallState (VoipPhoneCallRejectReason_InvalidCallState) = 4,
+    UserIgnored = 0, TimedOut = 1, OtherIncomingCall = 2, EmergencyCallExists = 3, InvalidCallState = 4,
 }}
 RT_ENUM! { enum VoipPhoneCallResourceReservationStatus: i32 {
-    Success (VoipPhoneCallResourceReservationStatus_Success) = 0, ResourcesNotAvailable (VoipPhoneCallResourceReservationStatus_ResourcesNotAvailable) = 1,
+    Success = 0, ResourcesNotAvailable = 1,
 }}
 RT_ENUM! { enum VoipPhoneCallState: i32 {
-    Ended (VoipPhoneCallState_Ended) = 0, Held (VoipPhoneCallState_Held) = 1, Active (VoipPhoneCallState_Active) = 2, Incoming (VoipPhoneCallState_Incoming) = 3, Outgoing (VoipPhoneCallState_Outgoing) = 4,
+    Ended = 0, Held = 1, Active = 2, Incoming = 3, Outgoing = 4,
 }}
 pub mod background { // Windows.ApplicationModel.Calls.Background
 use ::prelude::*;
 RT_ENUM! { enum PhoneCallBlockedReason: i32 {
-    InCallBlockingList (PhoneCallBlockedReason_InCallBlockingList) = 0, PrivateNumber (PhoneCallBlockedReason_PrivateNumber) = 1, UnknownNumber (PhoneCallBlockedReason_UnknownNumber) = 2,
+    InCallBlockingList = 0, PrivateNumber = 1, UnknownNumber = 2,
 }}
 DEFINE_IID!(IID_IPhoneCallBlockedTriggerDetails, 2762379426, 58561, 17023, 134, 78, 228, 112, 71, 125, 219, 103);
 RT_INTERFACE!{interface IPhoneCallBlockedTriggerDetails(IPhoneCallBlockedTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneCallBlockedTriggerDetails] {
@@ -8508,10 +8508,10 @@ impl IPhoneLineChangedTriggerDetails {
 }
 RT_CLASS!{class PhoneLineChangedTriggerDetails: IPhoneLineChangedTriggerDetails}
 RT_ENUM! { enum PhoneLineChangeKind: i32 {
-    Added (PhoneLineChangeKind_Added) = 0, Removed (PhoneLineChangeKind_Removed) = 1, PropertiesChanged (PhoneLineChangeKind_PropertiesChanged) = 2,
+    Added = 0, Removed = 1, PropertiesChanged = 2,
 }}
 RT_ENUM! { enum PhoneLineProperties: u32 {
-    None (PhoneLineProperties_None) = 0, BrandingOptions (PhoneLineProperties_BrandingOptions) = 1, CanDial (PhoneLineProperties_CanDial) = 2, CellularDetails (PhoneLineProperties_CellularDetails) = 4, DisplayColor (PhoneLineProperties_DisplayColor) = 8, DisplayName (PhoneLineProperties_DisplayName) = 16, NetworkName (PhoneLineProperties_NetworkName) = 32, NetworkState (PhoneLineProperties_NetworkState) = 64, Transport (PhoneLineProperties_Transport) = 128, Voicemail (PhoneLineProperties_Voicemail) = 256,
+    None = 0, BrandingOptions = 1, CanDial = 2, CellularDetails = 4, DisplayColor = 8, DisplayName = 16, NetworkName = 32, NetworkState = 64, Transport = 128, Voicemail = 256,
 }}
 DEFINE_IID!(IID_IPhoneNewVoicemailMessageTriggerDetails, 329826331, 47153, 18643, 139, 169, 141, 34, 166, 88, 13, 207);
 RT_INTERFACE!{interface IPhoneNewVoicemailMessageTriggerDetails(IPhoneNewVoicemailMessageTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNewVoicemailMessageTriggerDetails] {
@@ -8538,7 +8538,7 @@ impl IPhoneNewVoicemailMessageTriggerDetails {
 }
 RT_CLASS!{class PhoneNewVoicemailMessageTriggerDetails: IPhoneNewVoicemailMessageTriggerDetails}
 RT_ENUM! { enum PhoneTriggerType: i32 {
-    NewVoicemailMessage (PhoneTriggerType_NewVoicemailMessage) = 0, CallHistoryChanged (PhoneTriggerType_CallHistoryChanged) = 1, LineChanged (PhoneTriggerType_LineChanged) = 2, AirplaneModeDisabledForEmergencyCall (PhoneTriggerType_AirplaneModeDisabledForEmergencyCall) = 3, CallOriginDataRequest (PhoneTriggerType_CallOriginDataRequest) = 4, CallBlocked (PhoneTriggerType_CallBlocked) = 5,
+    NewVoicemailMessage = 0, CallHistoryChanged = 1, LineChanged = 2, AirplaneModeDisabledForEmergencyCall = 3, CallOriginDataRequest = 4, CallBlocked = 5,
 }}
 } // Windows.ApplicationModel.Calls.Background
 pub mod provider { // Windows.ApplicationModel.Calls.Provider
@@ -8960,7 +8960,7 @@ RT_CLASS!{class ChatConversationThreadingInfo: IChatConversationThreadingInfo}
 impl RtActivatable<IActivationFactory> for ChatConversationThreadingInfo {}
 DEFINE_CLSID!(ChatConversationThreadingInfo(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,67,111,110,118,101,114,115,97,116,105,111,110,84,104,114,101,97,100,105,110,103,73,110,102,111,0]) [CLSID_ChatConversationThreadingInfo]);
 RT_ENUM! { enum ChatConversationThreadingKind: i32 {
-    Participants (ChatConversationThreadingKind_Participants) = 0, ContactId (ChatConversationThreadingKind_ContactId) = 1, ConversationId (ChatConversationThreadingKind_ConversationId) = 2, Custom (ChatConversationThreadingKind_Custom) = 3,
+    Participants = 0, ContactId = 1, ConversationId = 2, Custom = 3,
 }}
 DEFINE_IID!(IID_IChatItem, 2270285824, 52913, 16963, 184, 3, 21, 212, 90, 29, 212, 40);
 RT_INTERFACE!{interface IChatItem(IChatItemVtbl): IInspectable(IInspectableVtbl) [IID_IChatItem] {
@@ -8974,7 +8974,7 @@ impl IChatItem {
     }}
 }
 RT_ENUM! { enum ChatItemKind: i32 {
-    Message (ChatItemKind_Message) = 0, Conversation (ChatItemKind_Conversation) = 1,
+    Message = 0, Conversation = 1,
 }}
 DEFINE_IID!(IID_IChatMessage, 1262028074, 4418, 20617, 118, 218, 242, 219, 61, 23, 205, 5);
 RT_INTERFACE!{interface IChatMessage(IChatMessageVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessage] {
@@ -9482,10 +9482,10 @@ impl IChatMessageChangeTracker {
 }
 RT_CLASS!{class ChatMessageChangeTracker: IChatMessageChangeTracker}
 RT_ENUM! { enum ChatMessageChangeType: i32 {
-    MessageCreated (ChatMessageChangeType_MessageCreated) = 0, MessageModified (ChatMessageChangeType_MessageModified) = 1, MessageDeleted (ChatMessageChangeType_MessageDeleted) = 2, ChangeTrackingLost (ChatMessageChangeType_ChangeTrackingLost) = 3,
+    MessageCreated = 0, MessageModified = 1, MessageDeleted = 2, ChangeTrackingLost = 3,
 }}
 RT_ENUM! { enum ChatMessageKind: i32 {
-    Standard (ChatMessageKind_Standard) = 0, FileTransferRequest (ChatMessageKind_FileTransferRequest) = 1, TransportCustom (ChatMessageKind_TransportCustom) = 2, JoinedConversation (ChatMessageKind_JoinedConversation) = 3, LeftConversation (ChatMessageKind_LeftConversation) = 4, OtherParticipantJoinedConversation (ChatMessageKind_OtherParticipantJoinedConversation) = 5, OtherParticipantLeftConversation (ChatMessageKind_OtherParticipantLeftConversation) = 6,
+    Standard = 0, FileTransferRequest = 1, TransportCustom = 2, JoinedConversation = 3, LeftConversation = 4, OtherParticipantJoinedConversation = 5, OtherParticipantLeftConversation = 6,
 }}
 RT_CLASS!{static class ChatMessageManager}
 impl RtActivatable<IChatMessageManager2Statics> for ChatMessageManager {}
@@ -9613,7 +9613,7 @@ impl IChatMessageNotificationTriggerDetails2 {
     }}
 }
 RT_ENUM! { enum ChatMessageOperatorKind: i32 {
-    Unspecified (ChatMessageOperatorKind_Unspecified) = 0, Sms (ChatMessageOperatorKind_Sms) = 1, Mms (ChatMessageOperatorKind_Mms) = 2, Rcs (ChatMessageOperatorKind_Rcs) = 3,
+    Unspecified = 0, Sms = 1, Mms = 2, Rcs = 3,
 }}
 DEFINE_IID!(IID_IChatMessageReader, 3068819662, 17545, 22265, 118, 170, 226, 4, 104, 37, 20, 207);
 RT_INTERFACE!{interface IChatMessageReader(IChatMessageReaderVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageReader] {
@@ -9639,7 +9639,7 @@ impl IChatMessageReader2 {
     }}
 }
 RT_ENUM! { enum ChatMessageStatus: i32 {
-    Draft (ChatMessageStatus_Draft) = 0, Sending (ChatMessageStatus_Sending) = 1, Sent (ChatMessageStatus_Sent) = 2, SendRetryNeeded (ChatMessageStatus_SendRetryNeeded) = 3, SendFailed (ChatMessageStatus_SendFailed) = 4, Received (ChatMessageStatus_Received) = 5, ReceiveDownloadNeeded (ChatMessageStatus_ReceiveDownloadNeeded) = 6, ReceiveDownloadFailed (ChatMessageStatus_ReceiveDownloadFailed) = 7, ReceiveDownloading (ChatMessageStatus_ReceiveDownloading) = 8, Deleted (ChatMessageStatus_Deleted) = 9, Declined (ChatMessageStatus_Declined) = 10, Cancelled (ChatMessageStatus_Cancelled) = 11, Recalled (ChatMessageStatus_Recalled) = 12, ReceiveRetryNeeded (ChatMessageStatus_ReceiveRetryNeeded) = 13,
+    Draft = 0, Sending = 1, Sent = 2, SendRetryNeeded = 3, SendFailed = 4, Received = 5, ReceiveDownloadNeeded = 6, ReceiveDownloadFailed = 7, ReceiveDownloading = 8, Deleted = 9, Declined = 10, Cancelled = 11, Recalled = 12, ReceiveRetryNeeded = 13,
 }}
 DEFINE_IID!(IID_IChatMessageStore, 838008065, 52470, 22539, 73, 118, 10, 7, 221, 93, 59, 71);
 RT_INTERFACE!{interface IChatMessageStore(IChatMessageStoreVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageStore] {
@@ -9944,7 +9944,7 @@ impl IChatMessageTransportConfiguration {
 }
 RT_CLASS!{class ChatMessageTransportConfiguration: IChatMessageTransportConfiguration}
 RT_ENUM! { enum ChatMessageTransportKind: i32 {
-    Text (ChatMessageTransportKind_Text) = 0, Untriaged (ChatMessageTransportKind_Untriaged) = 1, Blocked (ChatMessageTransportKind_Blocked) = 2, Custom (ChatMessageTransportKind_Custom) = 3,
+    Text = 0, Untriaged = 1, Blocked = 2, Custom = 3,
 }}
 DEFINE_IID!(IID_IChatMessageValidationResult, 636041731, 10476, 22665, 86, 155, 126, 72, 107, 18, 111, 24);
 RT_INTERFACE!{interface IChatMessageValidationResult(IChatMessageValidationResultVtbl): IInspectable(IInspectableVtbl) [IID_IChatMessageValidationResult] {
@@ -9977,7 +9977,7 @@ impl IChatMessageValidationResult {
 }
 RT_CLASS!{class ChatMessageValidationResult: IChatMessageValidationResult}
 RT_ENUM! { enum ChatMessageValidationStatus: i32 {
-    Valid (ChatMessageValidationStatus_Valid) = 0, NoRecipients (ChatMessageValidationStatus_NoRecipients) = 1, InvalidData (ChatMessageValidationStatus_InvalidData) = 2, MessageTooLarge (ChatMessageValidationStatus_MessageTooLarge) = 3, TooManyRecipients (ChatMessageValidationStatus_TooManyRecipients) = 4, TransportInactive (ChatMessageValidationStatus_TransportInactive) = 5, TransportNotFound (ChatMessageValidationStatus_TransportNotFound) = 6, TooManyAttachments (ChatMessageValidationStatus_TooManyAttachments) = 7, InvalidRecipients (ChatMessageValidationStatus_InvalidRecipients) = 8, InvalidBody (ChatMessageValidationStatus_InvalidBody) = 9, InvalidOther (ChatMessageValidationStatus_InvalidOther) = 10, ValidWithLargeMessage (ChatMessageValidationStatus_ValidWithLargeMessage) = 11, VoiceRoamingRestriction (ChatMessageValidationStatus_VoiceRoamingRestriction) = 12, DataRoamingRestriction (ChatMessageValidationStatus_DataRoamingRestriction) = 13,
+    Valid = 0, NoRecipients = 1, InvalidData = 2, MessageTooLarge = 3, TooManyRecipients = 4, TransportInactive = 5, TransportNotFound = 6, TooManyAttachments = 7, InvalidRecipients = 8, InvalidBody = 9, InvalidOther = 10, ValidWithLargeMessage = 11, VoiceRoamingRestriction = 12, DataRoamingRestriction = 13,
 }}
 DEFINE_IID!(IID_IChatQueryOptions, 802383014, 48950, 17143, 183, 231, 146, 60, 10, 171, 254, 22);
 RT_INTERFACE!{interface IChatQueryOptions(IChatQueryOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IChatQueryOptions] {
@@ -10070,7 +10070,7 @@ RT_CLASS!{class ChatRecipientDeliveryInfo: IChatRecipientDeliveryInfo}
 impl RtActivatable<IActivationFactory> for ChatRecipientDeliveryInfo {}
 DEFINE_CLSID!(ChatRecipientDeliveryInfo(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,104,97,116,46,67,104,97,116,82,101,99,105,112,105,101,110,116,68,101,108,105,118,101,114,121,73,110,102,111,0]) [CLSID_ChatRecipientDeliveryInfo]);
 RT_ENUM! { enum ChatRestoreHistorySpan: i32 {
-    LastMonth (ChatRestoreHistorySpan_LastMonth) = 0, LastYear (ChatRestoreHistorySpan_LastYear) = 1, AnyTime (ChatRestoreHistorySpan_AnyTime) = 2,
+    LastMonth = 0, LastYear = 1, AnyTime = 2,
 }}
 DEFINE_IID!(IID_IChatSearchReader, 1181089353, 36896, 18258, 152, 13, 57, 97, 35, 37, 245, 137);
 RT_INTERFACE!{interface IChatSearchReader(IChatSearchReaderVtbl): IInspectable(IInspectableVtbl) [IID_IChatSearchReader] {
@@ -10091,7 +10091,7 @@ impl IChatSearchReader {
 }
 RT_CLASS!{class ChatSearchReader: IChatSearchReader}
 RT_ENUM! { enum ChatStoreChangedEventKind: i32 {
-    NotificationsMissed (ChatStoreChangedEventKind_NotificationsMissed) = 0, StoreModified (ChatStoreChangedEventKind_StoreModified) = 1, MessageCreated (ChatStoreChangedEventKind_MessageCreated) = 2, MessageModified (ChatStoreChangedEventKind_MessageModified) = 3, MessageDeleted (ChatStoreChangedEventKind_MessageDeleted) = 4, ConversationModified (ChatStoreChangedEventKind_ConversationModified) = 5, ConversationDeleted (ChatStoreChangedEventKind_ConversationDeleted) = 6, ConversationTransportDeleted (ChatStoreChangedEventKind_ConversationTransportDeleted) = 7,
+    NotificationsMissed = 0, StoreModified = 1, MessageCreated = 2, MessageModified = 3, MessageDeleted = 4, ConversationModified = 5, ConversationDeleted = 6, ConversationTransportDeleted = 7,
 }}
 DEFINE_IID!(IID_IChatSyncConfiguration, 167274930, 27124, 19199, 130, 182, 6, 153, 47, 244, 2, 210);
 RT_INTERFACE!{interface IChatSyncConfiguration(IChatSyncConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IChatSyncConfiguration] {
@@ -10165,10 +10165,10 @@ impl IChatSyncManager {
 }
 RT_CLASS!{class ChatSyncManager: IChatSyncManager}
 RT_ENUM! { enum ChatTransportErrorCodeCategory: i32 {
-    None (ChatTransportErrorCodeCategory_None) = 0, Http (ChatTransportErrorCodeCategory_Http) = 1, Network (ChatTransportErrorCodeCategory_Network) = 2, MmsServer (ChatTransportErrorCodeCategory_MmsServer) = 3,
+    None = 0, Http = 1, Network = 2, MmsServer = 3,
 }}
 RT_ENUM! { enum ChatTransportInterpretedErrorCode: i32 {
-    None (ChatTransportInterpretedErrorCode_None) = 0, Unknown (ChatTransportInterpretedErrorCode_Unknown) = 1, InvalidRecipientAddress (ChatTransportInterpretedErrorCode_InvalidRecipientAddress) = 2, NetworkConnectivity (ChatTransportInterpretedErrorCode_NetworkConnectivity) = 3, ServiceDenied (ChatTransportInterpretedErrorCode_ServiceDenied) = 4, Timeout (ChatTransportInterpretedErrorCode_Timeout) = 5,
+    None = 0, Unknown = 1, InvalidRecipientAddress = 2, NetworkConnectivity = 3, ServiceDenied = 4, Timeout = 5,
 }}
 DEFINE_IID!(IID_IRcsEndUserMessage, 3620578795, 52183, 20283, 133, 38, 181, 6, 222, 195, 92, 83);
 RT_INTERFACE!{interface IRcsEndUserMessage(IRcsEndUserMessageVtbl): IInspectable(IInspectableVtbl) [IID_IRcsEndUserMessage] {
@@ -10353,7 +10353,7 @@ impl IRcsManagerStatics2 {
     }}
 }
 RT_ENUM! { enum RcsServiceKind: i32 {
-    Chat (RcsServiceKind_Chat) = 0, GroupChat (RcsServiceKind_GroupChat) = 1, FileTransfer (RcsServiceKind_FileTransfer) = 2, Capability (RcsServiceKind_Capability) = 3,
+    Chat = 0, GroupChat = 1, FileTransfer = 2, Capability = 3,
 }}
 DEFINE_IID!(IID_IRcsServiceKindSupportedChangedEventArgs, 4101939780, 59267, 18534, 179, 167, 78, 92, 207, 2, 48, 112);
 RT_INTERFACE!{interface IRcsServiceKindSupportedChangedEventArgs(IRcsServiceKindSupportedChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRcsServiceKindSupportedChangedEventArgs] {
@@ -10994,7 +10994,7 @@ RT_CLASS!{class ContactAddress: IContactAddress}
 impl RtActivatable<IActivationFactory> for ContactAddress {}
 DEFINE_CLSID!(ContactAddress(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,65,100,100,114,101,115,115,0]) [CLSID_ContactAddress]);
 RT_ENUM! { enum ContactAddressKind: i32 {
-    Home (ContactAddressKind_Home) = 0, Work (ContactAddressKind_Work) = 1, Other (ContactAddressKind_Other) = 2,
+    Home = 0, Work = 1, Other = 2,
 }}
 DEFINE_IID!(IID_IContactAnnotation, 2183119599, 32065, 17570, 132, 195, 96, 162, 129, 221, 123, 134);
 RT_INTERFACE!{interface IContactAnnotation(IContactAnnotationVtbl): IInspectable(IInspectableVtbl) [IID_IContactAnnotation] {
@@ -11138,7 +11138,7 @@ impl IContactAnnotationList {
 }
 RT_CLASS!{class ContactAnnotationList: IContactAnnotationList}
 RT_ENUM! { enum ContactAnnotationOperations: u32 {
-    None (ContactAnnotationOperations_None) = 0, ContactProfile (ContactAnnotationOperations_ContactProfile) = 1, Message (ContactAnnotationOperations_Message) = 2, AudioCall (ContactAnnotationOperations_AudioCall) = 4, VideoCall (ContactAnnotationOperations_VideoCall) = 8, SocialFeeds (ContactAnnotationOperations_SocialFeeds) = 16, Share (ContactAnnotationOperations_Share) = 32,
+    None = 0, ContactProfile = 1, Message = 2, AudioCall = 4, VideoCall = 8, SocialFeeds = 16, Share = 32,
 }}
 DEFINE_IID!(IID_IContactAnnotationStore, 598537386, 31351, 17789, 130, 3, 152, 127, 75, 49, 175, 9);
 RT_INTERFACE!{interface IContactAnnotationStore(IContactAnnotationStoreVtbl): IInspectable(IInspectableVtbl) [IID_IContactAnnotationStore] {
@@ -11206,7 +11206,7 @@ impl IContactAnnotationStore2 {
     }}
 }
 RT_ENUM! { enum ContactAnnotationStoreAccessType: i32 {
-    AppAnnotationsReadWrite (ContactAnnotationStoreAccessType_AppAnnotationsReadWrite) = 0, AllAnnotationsReadWrite (ContactAnnotationStoreAccessType_AllAnnotationsReadWrite) = 1,
+    AppAnnotationsReadWrite = 0, AllAnnotationsReadWrite = 1,
 }}
 DEFINE_IID!(IID_IContactBatch, 902928173, 49102, 18107, 147, 248, 165, 176, 110, 197, 226, 1);
 RT_INTERFACE!{interface IContactBatch(IContactBatchVtbl): IInspectable(IInspectableVtbl) [IID_IContactBatch] {
@@ -11227,7 +11227,7 @@ impl IContactBatch {
 }
 RT_CLASS!{class ContactBatch: IContactBatch}
 RT_ENUM! { enum ContactBatchStatus: i32 {
-    Success (ContactBatchStatus_Success) = 0, ServerSearchSyncManagerError (ContactBatchStatus_ServerSearchSyncManagerError) = 1, ServerSearchUnknownError (ContactBatchStatus_ServerSearchUnknownError) = 2,
+    Success = 0, ServerSearchSyncManagerError = 1, ServerSearchUnknownError = 2,
 }}
 DEFINE_IID!(IID_IContactCardDelayedDataLoader, 3054172418, 5446, 17229, 134, 156, 110, 53, 32, 118, 14, 243);
 RT_INTERFACE!{interface IContactCardDelayedDataLoader(IContactCardDelayedDataLoaderVtbl): IInspectable(IInspectableVtbl) [IID_IContactCardDelayedDataLoader] {
@@ -11241,7 +11241,7 @@ impl IContactCardDelayedDataLoader {
 }
 RT_CLASS!{class ContactCardDelayedDataLoader: IContactCardDelayedDataLoader}
 RT_ENUM! { enum ContactCardHeaderKind: i32 {
-    Default (ContactCardHeaderKind_Default) = 0, Basic (ContactCardHeaderKind_Basic) = 1, Enterprise (ContactCardHeaderKind_Enterprise) = 2,
+    Default = 0, Basic = 1, Enterprise = 2,
 }}
 DEFINE_IID!(IID_IContactCardOptions, 2349485950, 27318, 20287, 190, 114, 129, 114, 54, 238, 234, 91);
 RT_INTERFACE!{interface IContactCardOptions(IContactCardOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IContactCardOptions] {
@@ -11285,7 +11285,7 @@ impl IContactCardOptions2 {
     }}
 }
 RT_ENUM! { enum ContactCardTabKind: i32 {
-    Default (ContactCardTabKind_Default) = 0, Email (ContactCardTabKind_Email) = 1, Messaging (ContactCardTabKind_Messaging) = 2, Phone (ContactCardTabKind_Phone) = 3, Video (ContactCardTabKind_Video) = 4, OrganizationalHierarchy (ContactCardTabKind_OrganizationalHierarchy) = 5,
+    Default = 0, Email = 1, Messaging = 2, Phone = 3, Video = 4, OrganizationalHierarchy = 5,
 }}
 DEFINE_IID!(IID_IContactChange, 2501724944, 27225, 18208, 164, 225, 54, 61, 152, 193, 53, 213);
 RT_INTERFACE!{interface IContactChange(IContactChangeVtbl): IInspectable(IInspectableVtbl) [IID_IContactChange] {
@@ -11384,7 +11384,7 @@ impl IContactChangeTracker2 {
     }}
 }
 RT_ENUM! { enum ContactChangeType: i32 {
-    Created (ContactChangeType_Created) = 0, Modified (ContactChangeType_Modified) = 1, Deleted (ContactChangeType_Deleted) = 2, ChangeTrackingLost (ContactChangeType_ChangeTrackingLost) = 3,
+    Created = 0, Modified = 1, Deleted = 2, ChangeTrackingLost = 3,
 }}
 DEFINE_IID!(IID_IContactConnectedServiceAccount, 4143461715, 43559, 18225, 142, 74, 61, 236, 92, 233, 238, 201);
 RT_INTERFACE!{interface IContactConnectedServiceAccount(IContactConnectedServiceAccountVtbl): IInspectable(IInspectableVtbl) [IID_IContactConnectedServiceAccount] {
@@ -11480,7 +11480,7 @@ RT_CLASS!{class ContactDate: IContactDate}
 impl RtActivatable<IActivationFactory> for ContactDate {}
 DEFINE_CLSID!(ContactDate(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,68,97,116,101,0]) [CLSID_ContactDate]);
 RT_ENUM! { enum ContactDateKind: i32 {
-    Birthday (ContactDateKind_Birthday) = 0, Anniversary (ContactDateKind_Anniversary) = 1, Other (ContactDateKind_Other) = 2,
+    Birthday = 0, Anniversary = 1, Other = 2,
 }}
 DEFINE_IID!(IID_IContactEmail, 2426542505, 58323, 19811, 153, 59, 5, 185, 165, 57, 58, 191);
 RT_INTERFACE!{interface IContactEmail(IContactEmailVtbl): IInspectable(IInspectableVtbl) [IID_IContactEmail] {
@@ -11524,7 +11524,7 @@ RT_CLASS!{class ContactEmail: IContactEmail}
 impl RtActivatable<IActivationFactory> for ContactEmail {}
 DEFINE_CLSID!(ContactEmail(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,69,109,97,105,108,0]) [CLSID_ContactEmail]);
 RT_ENUM! { enum ContactEmailKind: i32 {
-    Personal (ContactEmailKind_Personal) = 0, Work (ContactEmailKind_Work) = 1, Other (ContactEmailKind_Other) = 2,
+    Personal = 0, Work = 1, Other = 2,
 }}
 DEFINE_IID!(IID_IContactField, 2977319018, 53907, 18732, 160, 88, 219, 87, 91, 62, 60, 15);
 RT_INTERFACE!{interface IContactField(IContactFieldVtbl): IInspectable(IInspectableVtbl) [IID_IContactField] {
@@ -11570,7 +11570,7 @@ impl ContactField {
 }
 DEFINE_CLSID!(ContactField(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,70,105,101,108,100,0]) [CLSID_ContactField]);
 RT_ENUM! { enum ContactFieldCategory: i32 {
-    None (ContactFieldCategory_None) = 0, Home (ContactFieldCategory_Home) = 1, Work (ContactFieldCategory_Work) = 2, Mobile (ContactFieldCategory_Mobile) = 3, Other (ContactFieldCategory_Other) = 4,
+    None = 0, Home = 1, Work = 2, Mobile = 3, Other = 4,
 }}
 DEFINE_IID!(IID_IContactFieldFactory, 2246218047, 3658, 19006, 137, 148, 64, 106, 231, 237, 100, 110);
 RT_INTERFACE!{static interface IContactFieldFactory(IContactFieldFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IContactFieldFactory] {
@@ -11599,7 +11599,7 @@ RT_CLASS!{class ContactFieldFactory: IContactFieldFactory}
 impl RtActivatable<IActivationFactory> for ContactFieldFactory {}
 DEFINE_CLSID!(ContactFieldFactory(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,70,105,101,108,100,70,97,99,116,111,114,121,0]) [CLSID_ContactFieldFactory]);
 RT_ENUM! { enum ContactFieldType: i32 {
-    Email (ContactFieldType_Email) = 0, PhoneNumber (ContactFieldType_PhoneNumber) = 1, Location (ContactFieldType_Location) = 2, InstantMessage (ContactFieldType_InstantMessage) = 3, Custom (ContactFieldType_Custom) = 4, ConnectedServiceAccount (ContactFieldType_ConnectedServiceAccount) = 5, ImportantDate (ContactFieldType_ImportantDate) = 6, Address (ContactFieldType_Address) = 7, SignificantOther (ContactFieldType_SignificantOther) = 8, Notes (ContactFieldType_Notes) = 9, Website (ContactFieldType_Website) = 10, JobInfo (ContactFieldType_JobInfo) = 11,
+    Email = 0, PhoneNumber = 1, Location = 2, InstantMessage = 3, Custom = 4, ConnectedServiceAccount = 5, ImportantDate = 6, Address = 7, SignificantOther = 8, Notes = 9, Website = 10, JobInfo = 11,
 }}
 DEFINE_IID!(IID_IContactGroup, 1505618689, 40602, 18269, 191, 229, 163, 123, 128, 109, 133, 44);
 RT_INTERFACE!{interface IContactGroup(IContactGroupVtbl): IInspectable(IInspectableVtbl) [IID_IContactGroup] {
@@ -12087,10 +12087,10 @@ impl IContactListLimitedWriteOperations {
 }
 RT_CLASS!{class ContactListLimitedWriteOperations: IContactListLimitedWriteOperations}
 RT_ENUM! { enum ContactListOtherAppReadAccess: i32 {
-    SystemOnly (ContactListOtherAppReadAccess_SystemOnly) = 0, Limited (ContactListOtherAppReadAccess_Limited) = 1, Full (ContactListOtherAppReadAccess_Full) = 2, None (ContactListOtherAppReadAccess_None) = 3,
+    SystemOnly = 0, Limited = 1, Full = 2, None = 3,
 }}
 RT_ENUM! { enum ContactListOtherAppWriteAccess: i32 {
-    None (ContactListOtherAppWriteAccess_None) = 0, SystemOnly (ContactListOtherAppWriteAccess_SystemOnly) = 1, Limited (ContactListOtherAppWriteAccess_Limited) = 2,
+    None = 0, SystemOnly = 1, Limited = 2,
 }}
 DEFINE_IID!(IID_IContactListSyncConstraints, 2997927681, 12386, 20014, 150, 157, 1, 141, 25, 135, 243, 20);
 RT_INTERFACE!{interface IContactListSyncConstraints(IContactListSyncConstraintsVtbl): IInspectable(IInspectableVtbl) [IID_IContactListSyncConstraints] {
@@ -12468,7 +12468,7 @@ impl IContactListSyncManager2 {
     }}
 }
 RT_ENUM! { enum ContactListSyncStatus: i32 {
-    Idle (ContactListSyncStatus_Idle) = 0, Syncing (ContactListSyncStatus_Syncing) = 1, UpToDate (ContactListSyncStatus_UpToDate) = 2, AuthenticationError (ContactListSyncStatus_AuthenticationError) = 3, PolicyError (ContactListSyncStatus_PolicyError) = 4, UnknownError (ContactListSyncStatus_UnknownError) = 5, ManualAccountRemovalRequired (ContactListSyncStatus_ManualAccountRemovalRequired) = 6,
+    Idle = 0, Syncing = 1, UpToDate = 2, AuthenticationError = 3, PolicyError = 4, UnknownError = 5, ManualAccountRemovalRequired = 6,
 }}
 DEFINE_IID!(IID_IContactLocationField, 2663387010, 43886, 19254, 137, 227, 178, 59, 192, 161, 218, 204);
 RT_INTERFACE!{interface IContactLocationField(IContactLocationFieldVtbl): IInspectable(IInspectableVtbl) [IID_IContactLocationField] {
@@ -12881,7 +12881,7 @@ impl IContactMatchReason {
 }
 RT_CLASS!{class ContactMatchReason: IContactMatchReason}
 RT_ENUM! { enum ContactMatchReasonKind: i32 {
-    Name (ContactMatchReasonKind_Name) = 0, EmailAddress (ContactMatchReasonKind_EmailAddress) = 1, PhoneNumber (ContactMatchReasonKind_PhoneNumber) = 2, JobInfo (ContactMatchReasonKind_JobInfo) = 3, YomiName (ContactMatchReasonKind_YomiName) = 4, Other (ContactMatchReasonKind_Other) = 5,
+    Name = 0, EmailAddress = 1, PhoneNumber = 2, JobInfo = 3, YomiName = 4, Other = 5,
 }}
 DEFINE_IID!(IID_IContactName, 4093962619, 36916, 17724, 142, 191, 20, 10, 56, 200, 111, 29);
 RT_INTERFACE!{interface IContactName(IContactNameVtbl): IInspectable(IInspectableVtbl) [IID_IContactName] {
@@ -12978,7 +12978,7 @@ impl IContactName {
     }}
 }
 RT_ENUM! { enum ContactNameOrder: i32 {
-    FirstNameLastName (ContactNameOrder_FirstNameLastName) = 0, LastNameFirstName (ContactNameOrder_LastNameFirstName) = 1,
+    FirstNameLastName = 0, LastNameFirstName = 1,
 }}
 DEFINE_IID!(IID_IContactPanel, 1103041125, 53998, 19351, 168, 10, 125, 141, 100, 204, 166, 245);
 RT_INTERFACE!{interface IContactPanel(IContactPanelVtbl): IInspectable(IInspectableVtbl) [IID_IContactPanel] {
@@ -13097,7 +13097,7 @@ RT_CLASS!{class ContactPhone: IContactPhone}
 impl RtActivatable<IActivationFactory> for ContactPhone {}
 DEFINE_CLSID!(ContactPhone(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,67,111,110,116,97,99,116,115,46,67,111,110,116,97,99,116,80,104,111,110,101,0]) [CLSID_ContactPhone]);
 RT_ENUM! { enum ContactPhoneKind: i32 {
-    Home (ContactPhoneKind_Home) = 0, Mobile (ContactPhoneKind_Mobile) = 1, Work (ContactPhoneKind_Work) = 2, Other (ContactPhoneKind_Other) = 3, Pager (ContactPhoneKind_Pager) = 4, BusinessFax (ContactPhoneKind_BusinessFax) = 5, HomeFax (ContactPhoneKind_HomeFax) = 6, Company (ContactPhoneKind_Company) = 7, Assistant (ContactPhoneKind_Assistant) = 8, Radio (ContactPhoneKind_Radio) = 9,
+    Home = 0, Mobile = 1, Work = 2, Other = 3, Pager = 4, BusinessFax = 5, HomeFax = 6, Company = 7, Assistant = 8, Radio = 9,
 }}
 DEFINE_IID!(IID_IContactPicker, 235535761, 17144, 16469, 144, 160, 137, 111, 150, 115, 137, 54);
 RT_INTERFACE!{interface IContactPicker(IContactPickerVtbl): IInspectable(IInspectableVtbl) [IID_IContactPicker] {
@@ -13209,7 +13209,7 @@ impl IContactPickerStatics {
     }}
 }
 RT_ENUM! { enum ContactQueryDesiredFields: u32 {
-    None (ContactQueryDesiredFields_None) = 0, PhoneNumber (ContactQueryDesiredFields_PhoneNumber) = 1, EmailAddress (ContactQueryDesiredFields_EmailAddress) = 2, PostalAddress (ContactQueryDesiredFields_PostalAddress) = 4,
+    None = 0, PhoneNumber = 1, EmailAddress = 2, PostalAddress = 4,
 }}
 DEFINE_IID!(IID_IContactQueryOptions, 1141427358, 32124, 17136, 138, 199, 245, 7, 51, 236, 219, 193);
 RT_INTERFACE!{interface IContactQueryOptions(IContactQueryOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IContactQueryOptions] {
@@ -13297,10 +13297,10 @@ impl IContactQueryOptionsFactory {
     }}
 }
 RT_ENUM! { enum ContactQuerySearchFields: u32 {
-    None (ContactQuerySearchFields_None) = 0, Name (ContactQuerySearchFields_Name) = 1, Email (ContactQuerySearchFields_Email) = 2, Phone (ContactQuerySearchFields_Phone) = 4, All (ContactQuerySearchFields_All) = 4294967295,
+    None = 0, Name = 1, Email = 2, Phone = 4, All = 4294967295,
 }}
 RT_ENUM! { enum ContactQuerySearchScope: i32 {
-    Local (ContactQuerySearchScope_Local) = 0, Server (ContactQuerySearchScope_Server) = 1,
+    Local = 0, Server = 1,
 }}
 DEFINE_IID!(IID_IContactQueryTextSearch, 4158912971, 43351, 17307, 160, 183, 28, 2, 161, 150, 63, 240);
 RT_INTERFACE!{interface IContactQueryTextSearch(IContactQueryTextSearchVtbl): IInspectable(IInspectableVtbl) [IID_IContactQueryTextSearch] {
@@ -13360,10 +13360,10 @@ impl IContactReader {
 }
 RT_CLASS!{class ContactReader: IContactReader}
 RT_ENUM! { enum ContactRelationship: i32 {
-    Other (ContactRelationship_Other) = 0, Spouse (ContactRelationship_Spouse) = 1, Partner (ContactRelationship_Partner) = 2, Sibling (ContactRelationship_Sibling) = 3, Parent (ContactRelationship_Parent) = 4, Child (ContactRelationship_Child) = 5,
+    Other = 0, Spouse = 1, Partner = 2, Sibling = 3, Parent = 4, Child = 5,
 }}
 RT_ENUM! { enum ContactSelectionMode: i32 {
-    Contacts (ContactSelectionMode_Contacts) = 0, Fields (ContactSelectionMode_Fields) = 1,
+    Contacts = 0, Fields = 1,
 }}
 DEFINE_IID!(IID_IContactSignificantOther, 2289284523, 50683, 18136, 147, 254, 218, 63, 241, 147, 64, 84);
 RT_INTERFACE!{interface IContactSignificantOther(IContactSignificantOtherVtbl): IInspectable(IInspectableVtbl) [IID_IContactSignificantOther] {
@@ -13517,7 +13517,7 @@ impl IContactStore3 {
     }}
 }
 RT_ENUM! { enum ContactStoreAccessType: i32 {
-    AppContactsReadWrite (ContactStoreAccessType_AppContactsReadWrite) = 0, AllContactsReadOnly (ContactStoreAccessType_AllContactsReadOnly) = 1, AllContactsReadWrite (ContactStoreAccessType_AllContactsReadWrite) = 2,
+    AppContactsReadWrite = 0, AllContactsReadOnly = 1, AllContactsReadWrite = 2,
 }}
 DEFINE_IID!(IID_IContactStoreNotificationTriggerDetails, 2880608470, 34698, 20363, 169, 206, 70, 187, 125, 28, 132, 206);
 RT_INTERFACE!{interface IContactStoreNotificationTriggerDetails(IContactStoreNotificationTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IContactStoreNotificationTriggerDetails] {
@@ -13757,7 +13757,7 @@ impl IPinnedContactManagerStatics {
     }}
 }
 RT_ENUM! { enum PinnedContactSurface: i32 {
-    StartMenu (PinnedContactSurface_StartMenu) = 0, Taskbar (PinnedContactSurface_Taskbar) = 1,
+    StartMenu = 0, Taskbar = 1,
 }}
 pub mod dataprovider { // Windows.ApplicationModel.Contacts.DataProvider
 use ::prelude::*;
@@ -14041,7 +14041,7 @@ RT_CLASS!{class ContactListSyncManagerSyncRequestEventArgs: IContactListSyncMana
 pub mod provider { // Windows.ApplicationModel.Contacts.Provider
 use ::prelude::*;
 RT_ENUM! { enum AddContactResult: i32 {
-    Added (AddContactResult_Added) = 0, AlreadyAdded (AddContactResult_AlreadyAdded) = 1, Unavailable (AddContactResult_Unavailable) = 2,
+    Added = 0, AlreadyAdded = 1, Unavailable = 2,
 }}
 DEFINE_IID!(IID_IContactPickerUI, 3805025126, 53094, 17348, 169, 106, 165, 161, 18, 219, 71, 70);
 RT_INTERFACE!{interface IContactPickerUI(IContactPickerUIVtbl): IInspectable(IInspectableVtbl) [IID_IContactPickerUI] {
@@ -14163,7 +14163,7 @@ impl IAppListEntry3 {
     }}
 }
 RT_ENUM! { enum AppRestartFailureReason: i32 {
-    RestartPending (AppRestartFailureReason_RestartPending) = 0, NotInForeground (AppRestartFailureReason_NotInForeground) = 1, InvalidUser (AppRestartFailureReason_InvalidUser) = 2, Other (AppRestartFailureReason_Other) = 3,
+    RestartPending = 0, NotInForeground = 1, InvalidUser = 2, Other = 3,
 }}
 DEFINE_IID!(IID_ICoreApplication, 179107748, 24093, 18911, 128, 52, 251, 106, 104, 188, 94, 209);
 RT_INTERFACE!{static interface ICoreApplication(ICoreApplicationVtbl): IInspectable(IInspectableVtbl) [IID_ICoreApplication] {
@@ -14879,7 +14879,7 @@ impl IClipboardHistoryItemsResult {
 }
 RT_CLASS!{class ClipboardHistoryItemsResult: IClipboardHistoryItemsResult}
 RT_ENUM! { enum ClipboardHistoryItemsResultStatus: i32 {
-    Success (ClipboardHistoryItemsResultStatus_Success) = 0, AccessDenied (ClipboardHistoryItemsResultStatus_AccessDenied) = 1, ClipboardHistoryDisabled (ClipboardHistoryItemsResultStatus_ClipboardHistoryDisabled) = 2,
+    Success = 0, AccessDenied = 1, ClipboardHistoryDisabled = 2,
 }}
 DEFINE_IID!(IID_IClipboardStatics, 3324502673, 13538, 18787, 142, 237, 147, 203, 176, 234, 61, 112);
 RT_INTERFACE!{static interface IClipboardStatics(IClipboardStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IClipboardStatics] {
@@ -15134,7 +15134,7 @@ impl IDataPackage3 {
     }}
 }
 RT_ENUM! { enum DataPackageOperation: u32 {
-    None (DataPackageOperation_None) = 0, Copy (DataPackageOperation_Copy) = 1, Move (DataPackageOperation_Move) = 2, Link (DataPackageOperation_Link) = 4,
+    None = 0, Copy = 1, Move = 2, Link = 4,
 }}
 DEFINE_IID!(IID_IDataPackagePropertySet, 3441202155, 19532, 17466, 168, 211, 245, 194, 65, 233, 22, 137);
 RT_INTERFACE!{interface IDataPackagePropertySet(IDataPackagePropertySetVtbl): IInspectable(IInspectableVtbl) [IID_IDataPackagePropertySet] {
@@ -15808,7 +15808,7 @@ impl IOperationCompletedEventArgs2 {
     }}
 }
 RT_ENUM! { enum SetHistoryItemAsContentStatus: i32 {
-    Success (SetHistoryItemAsContentStatus_Success) = 0, AccessDenied (SetHistoryItemAsContentStatus_AccessDenied) = 1, ItemDeleted (SetHistoryItemAsContentStatus_ItemDeleted) = 2,
+    Success = 0, AccessDenied = 1, ItemDeleted = 2,
 }}
 DEFINE_IID!(IID_IShareCompletedEventArgs, 1165280322, 63763, 20320, 157, 247, 204, 64, 96, 171, 25, 22);
 RT_INTERFACE!{interface IShareCompletedEventArgs(IShareCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IShareCompletedEventArgs] {
@@ -16021,7 +16021,7 @@ RT_CLASS!{class ShareUIOptions: IShareUIOptions}
 impl RtActivatable<IActivationFactory> for ShareUIOptions {}
 DEFINE_CLSID!(ShareUIOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,68,97,116,97,84,114,97,110,115,102,101,114,46,83,104,97,114,101,85,73,79,112,116,105,111,110,115,0]) [CLSID_ShareUIOptions]);
 RT_ENUM! { enum ShareUITheme: i32 {
-    Default (ShareUITheme_Default) = 0, Light (ShareUITheme_Light) = 1, Dark (ShareUITheme_Dark) = 2,
+    Default = 0, Light = 1, Dark = 2,
 }}
 RT_CLASS!{static class StandardDataFormats}
 impl RtActivatable<IStandardDataFormatsStatics> for StandardDataFormats {}
@@ -16141,7 +16141,7 @@ RT_CLASS!{class TargetApplicationChosenEventArgs: ITargetApplicationChosenEventA
 pub mod dragdrop { // Windows.ApplicationModel.DataTransfer.DragDrop
 use ::prelude::*;
 RT_ENUM! { enum DragDropModifiers: u32 {
-    None (DragDropModifiers_None) = 0, Shift (DragDropModifiers_Shift) = 1, Control (DragDropModifiers_Control) = 2, Alt (DragDropModifiers_Alt) = 4, LeftButton (DragDropModifiers_LeftButton) = 8, MiddleButton (DragDropModifiers_MiddleButton) = 16, RightButton (DragDropModifiers_RightButton) = 32,
+    None = 0, Shift = 1, Control = 2, Alt = 4, LeftButton = 8, MiddleButton = 16, RightButton = 32,
 }}
 pub mod core { // Windows.ApplicationModel.DataTransfer.DragDrop.Core
 use ::prelude::*;
@@ -16291,7 +16291,7 @@ impl ICoreDragOperation2 {
     }}
 }
 RT_ENUM! { enum CoreDragUIContentMode: u32 {
-    Auto (CoreDragUIContentMode_Auto) = 0, Deferred (CoreDragUIContentMode_Deferred) = 1,
+    Auto = 0, Deferred = 1,
 }}
 DEFINE_IID!(IID_ICoreDragUIOverride, 2309509220, 13193, 20303, 136, 151, 126, 138, 63, 251, 60, 147);
 RT_INTERFACE!{interface ICoreDragUIOverride(ICoreDragUIOverrideVtbl): IInspectable(IInspectableVtbl) [IID_ICoreDragUIOverride] {
@@ -16661,7 +16661,7 @@ impl IEmailAttachment2 {
     }}
 }
 RT_ENUM! { enum EmailAttachmentDownloadState: i32 {
-    NotDownloaded (EmailAttachmentDownloadState_NotDownloaded) = 0, Downloading (EmailAttachmentDownloadState_Downloading) = 1, Downloaded (EmailAttachmentDownloadState_Downloaded) = 2, Failed (EmailAttachmentDownloadState_Failed) = 3,
+    NotDownloaded = 0, Downloading = 1, Downloaded = 2, Failed = 3,
 }}
 DEFINE_IID!(IID_IEmailAttachmentFactory, 2037296198, 60758, 18809, 135, 8, 171, 184, 188, 133, 75, 125);
 RT_INTERFACE!{static interface IEmailAttachmentFactory(IEmailAttachmentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEmailAttachmentFactory] {
@@ -16686,10 +16686,10 @@ impl IEmailAttachmentFactory2 {
     }}
 }
 RT_ENUM! { enum EmailBatchStatus: i32 {
-    Success (EmailBatchStatus_Success) = 0, ServerSearchSyncManagerError (EmailBatchStatus_ServerSearchSyncManagerError) = 1, ServerSearchUnknownError (EmailBatchStatus_ServerSearchUnknownError) = 2,
+    Success = 0, ServerSearchSyncManagerError = 1, ServerSearchUnknownError = 2,
 }}
 RT_ENUM! { enum EmailCertificateValidationStatus: i32 {
-    Success (EmailCertificateValidationStatus_Success) = 0, NoMatch (EmailCertificateValidationStatus_NoMatch) = 1, InvalidUsage (EmailCertificateValidationStatus_InvalidUsage) = 2, InvalidCertificate (EmailCertificateValidationStatus_InvalidCertificate) = 3, Revoked (EmailCertificateValidationStatus_Revoked) = 4, ChainRevoked (EmailCertificateValidationStatus_ChainRevoked) = 5, RevocationServerFailure (EmailCertificateValidationStatus_RevocationServerFailure) = 6, Expired (EmailCertificateValidationStatus_Expired) = 7, Untrusted (EmailCertificateValidationStatus_Untrusted) = 8, ServerError (EmailCertificateValidationStatus_ServerError) = 9, UnknownFailure (EmailCertificateValidationStatus_UnknownFailure) = 10,
+    Success = 0, NoMatch = 1, InvalidUsage = 2, InvalidCertificate = 3, Revoked = 4, ChainRevoked = 5, RevocationServerFailure = 6, Expired = 7, Untrusted = 8, ServerError = 9, UnknownFailure = 10,
 }}
 DEFINE_IID!(IID_IEmailConversation, 3659055688, 41148, 17225, 144, 45, 144, 246, 99, 137, 245, 27);
 RT_INTERFACE!{interface IEmailConversation(IEmailConversationVtbl): IInspectable(IInspectableVtbl) [IID_IEmailConversation] {
@@ -16818,7 +16818,7 @@ impl IEmailConversationReader {
 }
 RT_CLASS!{class EmailConversationReader: IEmailConversationReader}
 RT_ENUM! { enum EmailFlagState: i32 {
-    Unflagged (EmailFlagState_Unflagged) = 0, Flagged (EmailFlagState_Flagged) = 1, Completed (EmailFlagState_Completed) = 2, Cleared (EmailFlagState_Cleared) = 3,
+    Unflagged = 0, Flagged = 1, Completed = 2, Cleared = 3,
 }}
 DEFINE_IID!(IID_IEmailFolder, 2723116913, 39276, 18532, 177, 186, 237, 18, 64, 229, 125, 17);
 RT_INTERFACE!{interface IEmailFolder(IEmailFolderVtbl): IInspectable(IInspectableVtbl) [IID_IEmailFolder] {
@@ -16973,7 +16973,7 @@ impl IEmailFolder {
 }
 RT_CLASS!{class EmailFolder: IEmailFolder}
 RT_ENUM! { enum EmailImportance: i32 {
-    Normal (EmailImportance_Normal) = 0, High (EmailImportance_High) = 1, Low (EmailImportance_Low) = 2,
+    Normal = 0, High = 1, Low = 2,
 }}
 DEFINE_IID!(IID_IEmailIrmInfo, 2431984019, 45472, 20157, 166, 182, 221, 202, 85, 96, 110, 14);
 RT_INTERFACE!{interface IEmailIrmInfo(IEmailIrmInfoVtbl): IInspectable(IInspectableVtbl) [IID_IEmailIrmInfo] {
@@ -17621,10 +17621,10 @@ impl IEmailMailboxAction {
 }
 RT_CLASS!{class EmailMailboxAction: IEmailMailboxAction}
 RT_ENUM! { enum EmailMailboxActionKind: i32 {
-    MarkMessageAsSeen (EmailMailboxActionKind_MarkMessageAsSeen) = 0, MarkMessageRead (EmailMailboxActionKind_MarkMessageRead) = 1, ChangeMessageFlagState (EmailMailboxActionKind_ChangeMessageFlagState) = 2, MoveMessage (EmailMailboxActionKind_MoveMessage) = 3, SaveDraft (EmailMailboxActionKind_SaveDraft) = 4, SendMessage (EmailMailboxActionKind_SendMessage) = 5, CreateResponseReplyMessage (EmailMailboxActionKind_CreateResponseReplyMessage) = 6, CreateResponseReplyAllMessage (EmailMailboxActionKind_CreateResponseReplyAllMessage) = 7, CreateResponseForwardMessage (EmailMailboxActionKind_CreateResponseForwardMessage) = 8, MoveFolder (EmailMailboxActionKind_MoveFolder) = 9, MarkFolderForSyncEnabled (EmailMailboxActionKind_MarkFolderForSyncEnabled) = 10,
+    MarkMessageAsSeen = 0, MarkMessageRead = 1, ChangeMessageFlagState = 2, MoveMessage = 3, SaveDraft = 4, SendMessage = 5, CreateResponseReplyMessage = 6, CreateResponseReplyAllMessage = 7, CreateResponseForwardMessage = 8, MoveFolder = 9, MarkFolderForSyncEnabled = 10,
 }}
 RT_ENUM! { enum EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation: i32 {
-    None (EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation_None) = 0, StrongAlgorithm (EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation_StrongAlgorithm) = 1, AnyAlgorithm (EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation_AnyAlgorithm) = 2,
+    None = 0, StrongAlgorithm = 1, AnyAlgorithm = 2,
 }}
 DEFINE_IID!(IID_IEmailMailboxAutoReply, 3793954124, 35508, 18523, 179, 31, 4, 209, 84, 118, 189, 89);
 RT_INTERFACE!{interface IEmailMailboxAutoReply(IEmailMailboxAutoReplyVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxAutoReply] {
@@ -17655,7 +17655,7 @@ impl IEmailMailboxAutoReply {
 }
 RT_CLASS!{class EmailMailboxAutoReply: IEmailMailboxAutoReply}
 RT_ENUM! { enum EmailMailboxAutoReplyMessageResponseKind: i32 {
-    Html (EmailMailboxAutoReplyMessageResponseKind_Html) = 0, PlainText (EmailMailboxAutoReplyMessageResponseKind_PlainText) = 1,
+    Html = 0, PlainText = 1,
 }}
 DEFINE_IID!(IID_IEmailMailboxAutoReplySettings, 2826608552, 2758, 19319, 186, 119, 166, 185, 158, 154, 39, 184);
 RT_INTERFACE!{interface IEmailMailboxAutoReplySettings(IEmailMailboxAutoReplySettingsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxAutoReplySettings] {
@@ -18001,7 +18001,7 @@ impl IEmailMailboxChangeTracker {
 }
 RT_CLASS!{class EmailMailboxChangeTracker: IEmailMailboxChangeTracker}
 RT_ENUM! { enum EmailMailboxChangeType: i32 {
-    MessageCreated (EmailMailboxChangeType_MessageCreated) = 0, MessageModified (EmailMailboxChangeType_MessageModified) = 1, MessageDeleted (EmailMailboxChangeType_MessageDeleted) = 2, FolderCreated (EmailMailboxChangeType_FolderCreated) = 3, FolderModified (EmailMailboxChangeType_FolderModified) = 4, FolderDeleted (EmailMailboxChangeType_FolderDeleted) = 5, ChangeTrackingLost (EmailMailboxChangeType_ChangeTrackingLost) = 6,
+    MessageCreated = 0, MessageModified = 1, MessageDeleted = 2, FolderCreated = 3, FolderModified = 4, FolderDeleted = 5, ChangeTrackingLost = 6,
 }}
 DEFINE_IID!(IID_IEmailMailboxCreateFolderResult, 2988987775, 10373, 18840, 181, 149, 138, 45, 55, 76, 233, 80);
 RT_INTERFACE!{interface IEmailMailboxCreateFolderResult(IEmailMailboxCreateFolderResultVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxCreateFolderResult] {
@@ -18022,19 +18022,19 @@ impl IEmailMailboxCreateFolderResult {
 }
 RT_CLASS!{class EmailMailboxCreateFolderResult: IEmailMailboxCreateFolderResult}
 RT_ENUM! { enum EmailMailboxCreateFolderStatus: i32 {
-    Success (EmailMailboxCreateFolderStatus_Success) = 0, NetworkError (EmailMailboxCreateFolderStatus_NetworkError) = 1, PermissionsError (EmailMailboxCreateFolderStatus_PermissionsError) = 2, ServerError (EmailMailboxCreateFolderStatus_ServerError) = 3, UnknownFailure (EmailMailboxCreateFolderStatus_UnknownFailure) = 4, NameCollision (EmailMailboxCreateFolderStatus_NameCollision) = 5, ServerRejected (EmailMailboxCreateFolderStatus_ServerRejected) = 6,
+    Success = 0, NetworkError = 1, PermissionsError = 2, ServerError = 3, UnknownFailure = 4, NameCollision = 5, ServerRejected = 6,
 }}
 RT_ENUM! { enum EmailMailboxDeleteFolderStatus: i32 {
-    Success (EmailMailboxDeleteFolderStatus_Success) = 0, NetworkError (EmailMailboxDeleteFolderStatus_NetworkError) = 1, PermissionsError (EmailMailboxDeleteFolderStatus_PermissionsError) = 2, ServerError (EmailMailboxDeleteFolderStatus_ServerError) = 3, UnknownFailure (EmailMailboxDeleteFolderStatus_UnknownFailure) = 4, CouldNotDeleteEverything (EmailMailboxDeleteFolderStatus_CouldNotDeleteEverything) = 5,
+    Success = 0, NetworkError = 1, PermissionsError = 2, ServerError = 3, UnknownFailure = 4, CouldNotDeleteEverything = 5,
 }}
 RT_ENUM! { enum EmailMailboxEmptyFolderStatus: i32 {
-    Success (EmailMailboxEmptyFolderStatus_Success) = 0, NetworkError (EmailMailboxEmptyFolderStatus_NetworkError) = 1, PermissionsError (EmailMailboxEmptyFolderStatus_PermissionsError) = 2, ServerError (EmailMailboxEmptyFolderStatus_ServerError) = 3, UnknownFailure (EmailMailboxEmptyFolderStatus_UnknownFailure) = 4, CouldNotDeleteEverything (EmailMailboxEmptyFolderStatus_CouldNotDeleteEverything) = 5,
+    Success = 0, NetworkError = 1, PermissionsError = 2, ServerError = 3, UnknownFailure = 4, CouldNotDeleteEverything = 5,
 }}
 RT_ENUM! { enum EmailMailboxOtherAppReadAccess: i32 {
-    SystemOnly (EmailMailboxOtherAppReadAccess_SystemOnly) = 0, Full (EmailMailboxOtherAppReadAccess_Full) = 1, None (EmailMailboxOtherAppReadAccess_None) = 2,
+    SystemOnly = 0, Full = 1, None = 2,
 }}
 RT_ENUM! { enum EmailMailboxOtherAppWriteAccess: i32 {
-    None (EmailMailboxOtherAppWriteAccess_None) = 0, Limited (EmailMailboxOtherAppWriteAccess_Limited) = 1,
+    None = 0, Limited = 1,
 }}
 DEFINE_IID!(IID_IEmailMailboxPolicies, 523453893, 7227, 19911, 180, 16, 99, 115, 120, 62, 84, 93);
 RT_INTERFACE!{interface IEmailMailboxPolicies(IEmailMailboxPoliciesVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxPolicies] {
@@ -18119,10 +18119,10 @@ impl IEmailMailboxPolicies3 {
     }}
 }
 RT_ENUM! { enum EmailMailboxSmimeEncryptionAlgorithm: i32 {
-    Any (EmailMailboxSmimeEncryptionAlgorithm_Any) = 0, TripleDes (EmailMailboxSmimeEncryptionAlgorithm_TripleDes) = 1, Des (EmailMailboxSmimeEncryptionAlgorithm_Des) = 2, RC2128Bit (EmailMailboxSmimeEncryptionAlgorithm_RC2128Bit) = 3, RC264Bit (EmailMailboxSmimeEncryptionAlgorithm_RC264Bit) = 4, RC240Bit (EmailMailboxSmimeEncryptionAlgorithm_RC240Bit) = 5,
+    Any = 0, TripleDes = 1, Des = 2, RC2128Bit = 3, RC264Bit = 4, RC240Bit = 5,
 }}
 RT_ENUM! { enum EmailMailboxSmimeSigningAlgorithm: i32 {
-    Any (EmailMailboxSmimeSigningAlgorithm_Any) = 0, Sha1 (EmailMailboxSmimeSigningAlgorithm_Sha1) = 1, MD5 (EmailMailboxSmimeSigningAlgorithm_MD5) = 2,
+    Any = 0, Sha1 = 1, MD5 = 2,
 }}
 DEFINE_IID!(IID_IEmailMailboxSyncManager, 1367000410, 13713, 19293, 133, 188, 199, 29, 222, 134, 34, 99);
 RT_INTERFACE!{interface IEmailMailboxSyncManager(IEmailMailboxSyncManagerVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMailboxSyncManager] {
@@ -18186,7 +18186,7 @@ impl IEmailMailboxSyncManager2 {
     }}
 }
 RT_ENUM! { enum EmailMailboxSyncStatus: i32 {
-    Idle (EmailMailboxSyncStatus_Idle) = 0, Syncing (EmailMailboxSyncStatus_Syncing) = 1, UpToDate (EmailMailboxSyncStatus_UpToDate) = 2, AuthenticationError (EmailMailboxSyncStatus_AuthenticationError) = 3, PolicyError (EmailMailboxSyncStatus_PolicyError) = 4, UnknownError (EmailMailboxSyncStatus_UnknownError) = 5, ManualAccountRemovalRequired (EmailMailboxSyncStatus_ManualAccountRemovalRequired) = 6,
+    Idle = 0, Syncing = 1, UpToDate = 2, AuthenticationError = 3, PolicyError = 4, UnknownError = 5, ManualAccountRemovalRequired = 6,
 }}
 RT_CLASS!{static class EmailManager}
 impl RtActivatable<IEmailManagerStatics> for EmailManager {}
@@ -18424,7 +18424,7 @@ impl IEmailMeetingInfo2 {
     }}
 }
 RT_ENUM! { enum EmailMeetingResponseType: i32 {
-    Accept (EmailMeetingResponseType_Accept) = 0, Decline (EmailMeetingResponseType_Decline) = 1, Tentative (EmailMeetingResponseType_Tentative) = 2,
+    Accept = 0, Decline = 1, Tentative = 2,
 }}
 DEFINE_IID!(IID_IEmailMessage, 1819120781, 32949, 18680, 176, 177, 224, 78, 67, 15, 68, 229);
 RT_INTERFACE!{interface IEmailMessage(IEmailMessageVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMessage] {
@@ -18808,10 +18808,10 @@ impl IEmailMessageBatch {
 }
 RT_CLASS!{class EmailMessageBatch: IEmailMessageBatch}
 RT_ENUM! { enum EmailMessageBodyKind: i32 {
-    Html (EmailMessageBodyKind_Html) = 0, PlainText (EmailMessageBodyKind_PlainText) = 1,
+    Html = 0, PlainText = 1,
 }}
 RT_ENUM! { enum EmailMessageDownloadState: i32 {
-    PartiallyDownloaded (EmailMessageDownloadState_PartiallyDownloaded) = 0, Downloading (EmailMessageDownloadState_Downloading) = 1, Downloaded (EmailMessageDownloadState_Downloaded) = 2, Failed (EmailMessageDownloadState_Failed) = 3,
+    PartiallyDownloaded = 0, Downloading = 1, Downloaded = 2, Failed = 3,
 }}
 DEFINE_IID!(IID_IEmailMessageReader, 793427615, 25107, 19077, 163, 176, 249, 45, 26, 131, 157, 25);
 RT_INTERFACE!{interface IEmailMessageReader(IEmailMessageReaderVtbl): IInspectable(IInspectableVtbl) [IID_IEmailMessageReader] {
@@ -18826,13 +18826,13 @@ impl IEmailMessageReader {
 }
 RT_CLASS!{class EmailMessageReader: IEmailMessageReader}
 RT_ENUM! { enum EmailMessageResponseKind: i32 {
-    None (EmailMessageResponseKind_None) = 0, Reply (EmailMessageResponseKind_Reply) = 1, ReplyAll (EmailMessageResponseKind_ReplyAll) = 2, Forward (EmailMessageResponseKind_Forward) = 3,
+    None = 0, Reply = 1, ReplyAll = 2, Forward = 3,
 }}
 RT_ENUM! { enum EmailMessageSmimeKind: i32 {
-    None (EmailMessageSmimeKind_None) = 0, ClearSigned (EmailMessageSmimeKind_ClearSigned) = 1, OpaqueSigned (EmailMessageSmimeKind_OpaqueSigned) = 2, Encrypted (EmailMessageSmimeKind_Encrypted) = 3,
+    None = 0, ClearSigned = 1, OpaqueSigned = 2, Encrypted = 3,
 }}
 RT_ENUM! { enum EmailQueryKind: i32 {
-    All (EmailQueryKind_All) = 0, Important (EmailQueryKind_Important) = 1, Flagged (EmailQueryKind_Flagged) = 2, Unread (EmailQueryKind_Unread) = 3, Read (EmailQueryKind_Read) = 4, Unseen (EmailQueryKind_Unseen) = 5,
+    All = 0, Important = 1, Flagged = 2, Unread = 3, Read = 4, Unseen = 5,
 }}
 DEFINE_IID!(IID_IEmailQueryOptions, 1162890139, 15999, 19794, 182, 221, 214, 253, 78, 31, 189, 154);
 RT_INTERFACE!{interface IEmailQueryOptions(IEmailQueryOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailQueryOptions] {
@@ -18914,16 +18914,16 @@ impl IEmailQueryOptionsFactory {
     }}
 }
 RT_ENUM! { enum EmailQuerySearchFields: u32 {
-    None (EmailQuerySearchFields_None) = 0, Subject (EmailQuerySearchFields_Subject) = 1, Sender (EmailQuerySearchFields_Sender) = 2, Preview (EmailQuerySearchFields_Preview) = 4, Recipients (EmailQuerySearchFields_Recipients) = 8, All (EmailQuerySearchFields_All) = 4294967295,
+    None = 0, Subject = 1, Sender = 2, Preview = 4, Recipients = 8, All = 4294967295,
 }}
 RT_ENUM! { enum EmailQuerySearchScope: i32 {
-    Local (EmailQuerySearchScope_Local) = 0, Server (EmailQuerySearchScope_Server) = 1,
+    Local = 0, Server = 1,
 }}
 RT_ENUM! { enum EmailQuerySortDirection: i32 {
-    Descending (EmailQuerySortDirection_Descending) = 0, Ascending (EmailQuerySortDirection_Ascending) = 1,
+    Descending = 0, Ascending = 1,
 }}
 RT_ENUM! { enum EmailQuerySortProperty: i32 {
-    Date (EmailQuerySortProperty_Date) = 0,
+    Date = 0,
 }}
 DEFINE_IID!(IID_IEmailQueryTextSearch, 2678104712, 15453, 18085, 166, 226, 49, 214, 253, 23, 229, 64);
 RT_INTERFACE!{interface IEmailQueryTextSearch(IEmailQueryTextSearchVtbl): IInspectable(IInspectableVtbl) [IID_IEmailQueryTextSearch] {
@@ -19056,10 +19056,10 @@ impl IEmailRecipientResolutionResult2 {
     }}
 }
 RT_ENUM! { enum EmailRecipientResolutionStatus: i32 {
-    Success (EmailRecipientResolutionStatus_Success) = 0, RecipientNotFound (EmailRecipientResolutionStatus_RecipientNotFound) = 1, AmbiguousRecipient (EmailRecipientResolutionStatus_AmbiguousRecipient) = 2, NoCertificate (EmailRecipientResolutionStatus_NoCertificate) = 3, CertificateRequestLimitReached (EmailRecipientResolutionStatus_CertificateRequestLimitReached) = 4, CannotResolveDistributionList (EmailRecipientResolutionStatus_CannotResolveDistributionList) = 5, ServerError (EmailRecipientResolutionStatus_ServerError) = 6, UnknownFailure (EmailRecipientResolutionStatus_UnknownFailure) = 7,
+    Success = 0, RecipientNotFound = 1, AmbiguousRecipient = 2, NoCertificate = 3, CertificateRequestLimitReached = 4, CannotResolveDistributionList = 5, ServerError = 6, UnknownFailure = 7,
 }}
 RT_ENUM! { enum EmailSpecialFolderKind: i32 {
-    None (EmailSpecialFolderKind_None) = 0, Root (EmailSpecialFolderKind_Root) = 1, Inbox (EmailSpecialFolderKind_Inbox) = 2, Outbox (EmailSpecialFolderKind_Outbox) = 3, Drafts (EmailSpecialFolderKind_Drafts) = 4, DeletedItems (EmailSpecialFolderKind_DeletedItems) = 5, Sent (EmailSpecialFolderKind_Sent) = 6,
+    None = 0, Root = 1, Inbox = 2, Outbox = 3, Drafts = 4, DeletedItems = 5, Sent = 6,
 }}
 DEFINE_IID!(IID_IEmailStore, 4160954990, 37175, 20363, 164, 112, 39, 154, 195, 5, 142, 182);
 RT_INTERFACE!{interface IEmailStore(IEmailStoreVtbl): IInspectable(IInspectableVtbl) [IID_IEmailStore] {
@@ -19134,7 +19134,7 @@ impl IEmailStore {
 }
 RT_CLASS!{class EmailStore: IEmailStore}
 RT_ENUM! { enum EmailStoreAccessType: i32 {
-    AppMailboxesReadWrite (EmailStoreAccessType_AppMailboxesReadWrite) = 0, AllMailboxesLimitedReadWrite (EmailStoreAccessType_AllMailboxesLimitedReadWrite) = 1,
+    AppMailboxesReadWrite = 0, AllMailboxesLimitedReadWrite = 1,
 }}
 DEFINE_IID!(IID_IEmailStoreNotificationTriggerDetails, 3457635900, 18150, 17353, 150, 247, 250, 207, 125, 215, 16, 203);
 RT_INTERFACE!{interface IEmailStoreNotificationTriggerDetails(IEmailStoreNotificationTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IEmailStoreNotificationTriggerDetails] {
@@ -20177,10 +20177,10 @@ RT_CLASS!{class EmailMailboxValidateCertificatesRequestEventArgs: IEmailMailboxV
 pub mod extendedexecution { // Windows.ApplicationModel.ExtendedExecution
 use ::prelude::*;
 RT_ENUM! { enum ExtendedExecutionReason: i32 {
-    Unspecified (ExtendedExecutionReason_Unspecified) = 0, LocationTracking (ExtendedExecutionReason_LocationTracking) = 1, SavingData (ExtendedExecutionReason_SavingData) = 2,
+    Unspecified = 0, LocationTracking = 1, SavingData = 2,
 }}
 RT_ENUM! { enum ExtendedExecutionResult: i32 {
-    Allowed (ExtendedExecutionResult_Allowed) = 0, Denied (ExtendedExecutionResult_Denied) = 1,
+    Allowed = 0, Denied = 1,
 }}
 DEFINE_IID!(IID_IExtendedExecutionRevokedEventArgs, 3216809750, 25525, 19467, 170, 214, 130, 138, 245, 55, 62, 195);
 RT_INTERFACE!{interface IExtendedExecutionRevokedEventArgs(IExtendedExecutionRevokedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IExtendedExecutionRevokedEventArgs] {
@@ -20195,7 +20195,7 @@ impl IExtendedExecutionRevokedEventArgs {
 }
 RT_CLASS!{class ExtendedExecutionRevokedEventArgs: IExtendedExecutionRevokedEventArgs}
 RT_ENUM! { enum ExtendedExecutionRevokedReason: i32 {
-    Resumed (ExtendedExecutionRevokedReason_Resumed) = 0, SystemPolicy (ExtendedExecutionRevokedReason_SystemPolicy) = 1,
+    Resumed = 0, SystemPolicy = 1,
 }}
 DEFINE_IID!(IID_IExtendedExecutionSession, 2945485357, 4491, 18673, 147, 8, 12, 79, 196, 30, 32, 15);
 RT_INTERFACE!{interface IExtendedExecutionSession(IExtendedExecutionSessionVtbl): IInspectable(IInspectableVtbl) [IID_IExtendedExecutionSession] {
@@ -20258,10 +20258,10 @@ DEFINE_CLSID!(ExtendedExecutionSession(&[87,105,110,100,111,119,115,46,65,112,11
 pub mod foreground { // Windows.ApplicationModel.ExtendedExecution.Foreground
 use ::prelude::*;
 RT_ENUM! { enum ExtendedExecutionForegroundReason: i32 {
-    Unspecified (ExtendedExecutionForegroundReason_Unspecified) = 0, SavingData (ExtendedExecutionForegroundReason_SavingData) = 1, BackgroundAudio (ExtendedExecutionForegroundReason_BackgroundAudio) = 2, Unconstrained (ExtendedExecutionForegroundReason_Unconstrained) = 3,
+    Unspecified = 0, SavingData = 1, BackgroundAudio = 2, Unconstrained = 3,
 }}
 RT_ENUM! { enum ExtendedExecutionForegroundResult: i32 {
-    Allowed (ExtendedExecutionForegroundResult_Allowed) = 0, Denied (ExtendedExecutionForegroundResult_Denied) = 1,
+    Allowed = 0, Denied = 1,
 }}
 DEFINE_IID!(IID_IExtendedExecutionForegroundRevokedEventArgs, 2960972096, 38231, 44708, 44, 153, 189, 213, 109, 155, 228, 97);
 RT_INTERFACE!{interface IExtendedExecutionForegroundRevokedEventArgs(IExtendedExecutionForegroundRevokedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IExtendedExecutionForegroundRevokedEventArgs] {
@@ -20276,7 +20276,7 @@ impl IExtendedExecutionForegroundRevokedEventArgs {
 }
 RT_CLASS!{class ExtendedExecutionForegroundRevokedEventArgs: IExtendedExecutionForegroundRevokedEventArgs}
 RT_ENUM! { enum ExtendedExecutionForegroundRevokedReason: i32 {
-    Resumed (ExtendedExecutionForegroundRevokedReason_Resumed) = 0, SystemPolicy (ExtendedExecutionForegroundRevokedReason_SystemPolicy) = 1,
+    Resumed = 0, SystemPolicy = 1,
 }}
 DEFINE_IID!(IID_IExtendedExecutionForegroundSession, 4227088609, 40208, 16897, 176, 30, 200, 50, 117, 41, 111, 46);
 RT_INTERFACE!{interface IExtendedExecutionForegroundSession(IExtendedExecutionForegroundSessionVtbl): IInspectable(IInspectableVtbl) [IID_IExtendedExecutionForegroundSession] {
@@ -20678,7 +20678,7 @@ impl IPaymentCanMakePaymentResultFactory {
     }}
 }
 RT_ENUM! { enum PaymentCanMakePaymentResultStatus: i32 {
-    Unknown (PaymentCanMakePaymentResultStatus_Unknown) = 0, Yes (PaymentCanMakePaymentResultStatus_Yes) = 1, No (PaymentCanMakePaymentResultStatus_No) = 2, NotAllowed (PaymentCanMakePaymentResultStatus_NotAllowed) = 3, UserNotSignedIn (PaymentCanMakePaymentResultStatus_UserNotSignedIn) = 4, SpecifiedPaymentMethodIdsNotSupported (PaymentCanMakePaymentResultStatus_SpecifiedPaymentMethodIdsNotSupported) = 5, NoQualifyingCardOnFile (PaymentCanMakePaymentResultStatus_NoQualifyingCardOnFile) = 6,
+    Unknown = 0, Yes = 1, No = 2, NotAllowed = 3, UserNotSignedIn = 4, SpecifiedPaymentMethodIdsNotSupported = 5, NoQualifyingCardOnFile = 6,
 }}
 DEFINE_IID!(IID_IPaymentCurrencyAmount, 3819170272, 46111, 18823, 189, 203, 7, 19, 49, 242, 218, 164);
 RT_INTERFACE!{interface IPaymentCurrencyAmount(IPaymentCurrencyAmountVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentCurrencyAmount] {
@@ -21067,7 +21067,7 @@ impl IPaymentMethodDataFactory {
     }}
 }
 RT_ENUM! { enum PaymentOptionPresence: i32 {
-    None (PaymentOptionPresence_None) = 0, Optional (PaymentOptionPresence_Optional) = 1, Required (PaymentOptionPresence_Required) = 2,
+    None = 0, Optional = 1, Required = 2,
 }}
 DEFINE_IID!(IID_IPaymentOptions, 2862811220, 7979, 17253, 130, 81, 1, 181, 137, 21, 165, 188);
 RT_INTERFACE!{interface IPaymentOptions(IPaymentOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentOptions] {
@@ -21296,10 +21296,10 @@ impl IPaymentRequestChangedResultFactory {
     }}
 }
 RT_ENUM! { enum PaymentRequestChangeKind: i32 {
-    ShippingOption (PaymentRequestChangeKind_ShippingOption) = 0, ShippingAddress (PaymentRequestChangeKind_ShippingAddress) = 1,
+    ShippingOption = 0, ShippingAddress = 1,
 }}
 RT_ENUM! { enum PaymentRequestCompletionStatus: i32 {
-    Succeeded (PaymentRequestCompletionStatus_Succeeded) = 0, Failed (PaymentRequestCompletionStatus_Failed) = 1, Unknown (PaymentRequestCompletionStatus_Unknown) = 2,
+    Succeeded = 0, Failed = 1, Unknown = 2,
 }}
 DEFINE_IID!(IID_IPaymentRequestFactory, 1049262556, 27508, 17107, 177, 3, 240, 222, 53, 251, 24, 72);
 RT_INTERFACE!{static interface IPaymentRequestFactory(IPaymentRequestFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentRequestFactory] {
@@ -21336,7 +21336,7 @@ impl IPaymentRequestFactory2 {
     }}
 }
 RT_ENUM! { enum PaymentRequestStatus: i32 {
-    Succeeded (PaymentRequestStatus_Succeeded) = 0, Failed (PaymentRequestStatus_Failed) = 1, Canceled (PaymentRequestStatus_Canceled) = 2,
+    Succeeded = 0, Failed = 1, Canceled = 2,
 }}
 DEFINE_IID!(IID_IPaymentRequestSubmitResult, 2073835794, 12530, 20112, 178, 73, 140, 231, 215, 143, 254, 86);
 RT_INTERFACE!{interface IPaymentRequestSubmitResult(IPaymentRequestSubmitResultVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentRequestSubmitResult] {
@@ -21491,7 +21491,7 @@ impl IPaymentShippingOptionFactory {
     }}
 }
 RT_ENUM! { enum PaymentShippingType: i32 {
-    Shipping (PaymentShippingType_Shipping) = 0, Delivery (PaymentShippingType_Delivery) = 1, Pickup (PaymentShippingType_Pickup) = 2,
+    Shipping = 0, Delivery = 1, Pickup = 2,
 }}
 DEFINE_IID!(IID_IPaymentToken, 3150626835, 52432, 16882, 178, 161, 10, 46, 75, 93, 206, 37);
 RT_INTERFACE!{interface IPaymentToken(IPaymentTokenVtbl): IInspectable(IInspectableVtbl) [IID_IPaymentToken] {
@@ -22432,7 +22432,7 @@ RT_CLASS!{class ResourceQualifier: IResourceQualifier}
 RT_CLASS!{class ResourceQualifierMapView: foundation::collections::IMapView<HString, HString>}
 RT_CLASS!{class ResourceQualifierObservableMap: foundation::collections::IObservableMap<HString, HString>}
 RT_ENUM! { enum ResourceQualifierPersistence: i32 {
-    None (ResourceQualifierPersistence_None) = 0, LocalMachine (ResourceQualifierPersistence_LocalMachine) = 1,
+    None = 0, LocalMachine = 1,
 }}
 RT_CLASS!{class ResourceQualifierVectorView: foundation::collections::IVectorView<ResourceQualifier>}
 } // Windows.ApplicationModel.Resources.Core
@@ -22499,7 +22499,7 @@ impl IIndexedResourceQualifier {
 }
 RT_CLASS!{class IndexedResourceQualifier: IIndexedResourceQualifier}
 RT_ENUM! { enum IndexedResourceType: i32 {
-    String (IndexedResourceType_String) = 0, Path (IndexedResourceType_Path) = 1, EmbeddedData (IndexedResourceType_EmbeddedData) = 2,
+    String = 0, Path = 1, EmbeddedData = 2,
 }}
 DEFINE_IID!(IID_IResourceIndexer, 760019365, 58159, 19122, 135, 72, 150, 53, 10, 1, 109, 163);
 RT_INTERFACE!{interface IResourceIndexer(IResourceIndexerVtbl): IInspectable(IInspectableVtbl) [IID_IResourceIndexer] {
@@ -23084,7 +23084,7 @@ impl ISearchSuggestion {
 }
 RT_CLASS!{class SearchSuggestion: ISearchSuggestion}
 RT_ENUM! { enum SearchSuggestionKind: i32 {
-    Query (SearchSuggestionKind_Query) = 0, Result (SearchSuggestionKind_Result) = 1, Separator (SearchSuggestionKind_Separator) = 2,
+    Query = 0, Result = 1, Separator = 2,
 }}
 DEFINE_IID!(IID_ISearchSuggestionManager, 1057771681, 52125, 18811, 181, 0, 60, 4, 172, 149, 154, 210);
 RT_INTERFACE!{interface ISearchSuggestionManager(ISearchSuggestionManagerVtbl): IInspectable(IInspectableVtbl) [IID_ISearchSuggestionManager] {
@@ -23438,10 +23438,10 @@ RT_CLASS!{class SocialFeedItem: ISocialFeedItem}
 impl RtActivatable<IActivationFactory> for SocialFeedItem {}
 DEFINE_CLSID!(SocialFeedItem(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,111,99,105,97,108,73,110,102,111,46,83,111,99,105,97,108,70,101,101,100,73,116,101,109,0]) [CLSID_SocialFeedItem]);
 RT_ENUM! { enum SocialFeedItemStyle: i32 {
-    Default (SocialFeedItemStyle_Default) = 0, Photo (SocialFeedItemStyle_Photo) = 1,
+    Default = 0, Photo = 1,
 }}
 RT_ENUM! { enum SocialFeedKind: i32 {
-    HomeFeed (SocialFeedKind_HomeFeed) = 0, ContactFeed (SocialFeedKind_ContactFeed) = 1, Dashboard (SocialFeedKind_Dashboard) = 2,
+    HomeFeed = 0, ContactFeed = 1, Dashboard = 2,
 }}
 DEFINE_IID!(IID_ISocialFeedSharedItem, 2080087616, 42666, 17831, 159, 246, 84, 196, 33, 5, 221, 31);
 RT_INTERFACE!{interface ISocialFeedSharedItem(ISocialFeedSharedItemVtbl): IInspectable(IInspectableVtbl) [IID_ISocialFeedSharedItem] {
@@ -23502,10 +23502,10 @@ RT_CLASS!{class SocialFeedSharedItem: ISocialFeedSharedItem}
 impl RtActivatable<IActivationFactory> for SocialFeedSharedItem {}
 DEFINE_CLSID!(SocialFeedSharedItem(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,83,111,99,105,97,108,73,110,102,111,46,83,111,99,105,97,108,70,101,101,100,83,104,97,114,101,100,73,116,101,109,0]) [CLSID_SocialFeedSharedItem]);
 RT_ENUM! { enum SocialFeedUpdateMode: i32 {
-    Append (SocialFeedUpdateMode_Append) = 0, Replace (SocialFeedUpdateMode_Replace) = 1,
+    Append = 0, Replace = 1,
 }}
 RT_ENUM! { enum SocialItemBadgeStyle: i32 {
-    Hidden (SocialItemBadgeStyle_Hidden) = 0, Visible (SocialItemBadgeStyle_Visible) = 1, VisibleWithCount (SocialItemBadgeStyle_VisibleWithCount) = 2,
+    Hidden = 0, Visible = 1, VisibleWithCount = 2,
 }}
 DEFINE_IID!(IID_ISocialItemThumbnail, 1556054810, 16136, 18815, 145, 127, 87, 224, 157, 132, 177, 65);
 RT_INTERFACE!{interface ISocialItemThumbnail(ISocialItemThumbnailVtbl): IInspectable(IInspectableVtbl) [IID_ISocialItemThumbnail] {
@@ -24129,7 +24129,7 @@ impl ICurrentAppWithConsumables {
     }}
 }
 RT_ENUM! { enum FulfillmentResult: i32 {
-    Succeeded (FulfillmentResult_Succeeded) = 0, NothingToFulfill (FulfillmentResult_NothingToFulfill) = 1, PurchasePending (FulfillmentResult_PurchasePending) = 2, PurchaseReverted (FulfillmentResult_PurchaseReverted) = 3, ServerError (FulfillmentResult_ServerError) = 4,
+    Succeeded = 0, NothingToFulfill = 1, PurchasePending = 2, PurchaseReverted = 3, ServerError = 4,
 }}
 DEFINE_IID!(IID_LicenseChangedEventHandler, 3567583829, 4969, 19510, 131, 47, 111, 45, 136, 227, 101, 155);
 RT_DELEGATE!{delegate LicenseChangedEventHandler(LicenseChangedEventHandlerVtbl, LicenseChangedEventHandlerImpl) [IID_LicenseChangedEventHandler] {
@@ -24446,10 +24446,10 @@ impl IProductPurchaseDisplayPropertiesFactory {
     }}
 }
 RT_ENUM! { enum ProductPurchaseStatus: i32 {
-    Succeeded (ProductPurchaseStatus_Succeeded) = 0, AlreadyPurchased (ProductPurchaseStatus_AlreadyPurchased) = 1, NotFulfilled (ProductPurchaseStatus_NotFulfilled) = 2, NotPurchased (ProductPurchaseStatus_NotPurchased) = 3,
+    Succeeded = 0, AlreadyPurchased = 1, NotFulfilled = 2, NotPurchased = 3,
 }}
 RT_ENUM! { enum ProductType: i32 {
-    Unknown (ProductType_Unknown) = 0, Durable (ProductType_Durable) = 1, Consumable (ProductType_Consumable) = 2,
+    Unknown = 0, Durable = 1, Consumable = 2,
 }}
 DEFINE_IID!(IID_IPurchaseResults, 3981489022, 34390, 20325, 184, 200, 172, 126, 12, 177, 161, 194);
 RT_INTERFACE!{interface IPurchaseResults(IPurchaseResultsVtbl): IInspectable(IInspectableVtbl) [IID_IPurchaseResults] {
@@ -24552,7 +24552,7 @@ impl ILicenseManagerStatics2 {
     }}
 }
 RT_ENUM! { enum LicenseRefreshOption: i32 {
-    RunningLicenses (LicenseRefreshOption_RunningLicenses) = 0, AllLicenses (LicenseRefreshOption_AllLicenses) = 1,
+    RunningLicenses = 0, AllLicenses = 1,
 }}
 DEFINE_IID!(IID_ILicenseSatisfactionInfo, 1019981967, 56113, 18645, 131, 132, 250, 23, 200, 20, 116, 226);
 RT_INTERFACE!{interface ILicenseSatisfactionInfo(ILicenseSatisfactionInfoVtbl): IInspectable(IInspectableVtbl) [IID_ILicenseSatisfactionInfo] {
@@ -24624,10 +24624,10 @@ RT_CLASS!{class LicenseSatisfactionResult: ILicenseSatisfactionResult}
 pub mod preview { // Windows.ApplicationModel.Store.Preview
 use ::prelude::*;
 RT_ENUM! { enum DeliveryOptimizationDownloadMode: i32 {
-    Simple (DeliveryOptimizationDownloadMode_Simple) = 0, HttpOnly (DeliveryOptimizationDownloadMode_HttpOnly) = 1, Lan (DeliveryOptimizationDownloadMode_Lan) = 2, Group (DeliveryOptimizationDownloadMode_Group) = 3, Internet (DeliveryOptimizationDownloadMode_Internet) = 4, Bypass (DeliveryOptimizationDownloadMode_Bypass) = 5,
+    Simple = 0, HttpOnly = 1, Lan = 2, Group = 3, Internet = 4, Bypass = 5,
 }}
 RT_ENUM! { enum DeliveryOptimizationDownloadModeSource: i32 {
-    Default (DeliveryOptimizationDownloadModeSource_Default) = 0, Policy (DeliveryOptimizationDownloadModeSource_Policy) = 1,
+    Default = 0, Policy = 1,
 }}
 DEFINE_IID!(IID_IDeliveryOptimizationSettings, 403766688, 59475, 22110, 184, 116, 122, 138, 123, 154, 14, 15);
 RT_INTERFACE!{interface IDeliveryOptimizationSettings(IDeliveryOptimizationSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IDeliveryOptimizationSettings] {
@@ -24973,7 +24973,7 @@ impl IStoreHardwareManufacturerInfo {
 }
 RT_CLASS!{class StoreHardwareManufacturerInfo: IStoreHardwareManufacturerInfo}
 RT_ENUM! { enum StoreLogOptions: u32 {
-    None (StoreLogOptions_None) = 0, TryElevate (StoreLogOptions_TryElevate) = 1,
+    None = 0, TryElevate = 1,
 }}
 DEFINE_IID!(IID_IStorePreview, 2316661313, 33806, 18857, 188, 1, 93, 91, 1, 251, 200, 233);
 RT_INTERFACE!{static interface IStorePreview(IStorePreviewVtbl): IInspectable(IInspectableVtbl) [IID_IStorePreview] {
@@ -25040,7 +25040,7 @@ impl IStorePreviewProductInfo {
 }
 RT_CLASS!{class StorePreviewProductInfo: IStorePreviewProductInfo}
 RT_ENUM! { enum StorePreviewProductPurchaseStatus: i32 {
-    Succeeded (StorePreviewProductPurchaseStatus_Succeeded) = 0, AlreadyPurchased (StorePreviewProductPurchaseStatus_AlreadyPurchased) = 1, NotFulfilled (StorePreviewProductPurchaseStatus_NotFulfilled) = 2, NotPurchased (StorePreviewProductPurchaseStatus_NotPurchased) = 3,
+    Succeeded = 0, AlreadyPurchased = 1, NotFulfilled = 2, NotPurchased = 3,
 }}
 DEFINE_IID!(IID_IStorePreviewPurchaseResults, 2967121617, 54981, 20051, 160, 67, 251, 160, 216, 230, 18, 49);
 RT_INTERFACE!{interface IStorePreviewPurchaseResults(IStorePreviewPurchaseResultsVtbl): IInspectable(IInspectableVtbl) [IID_IStorePreviewPurchaseResults] {
@@ -25115,7 +25115,7 @@ impl IStorePreviewSkuInfo {
 }
 RT_CLASS!{class StorePreviewSkuInfo: IStorePreviewSkuInfo}
 RT_ENUM! { enum StoreSystemFeature: i32 {
-    ArchitectureX86 (StoreSystemFeature_ArchitectureX86) = 0, ArchitectureX64 (StoreSystemFeature_ArchitectureX64) = 1, ArchitectureArm (StoreSystemFeature_ArchitectureArm) = 2, DirectX9 (StoreSystemFeature_DirectX9) = 3, DirectX10 (StoreSystemFeature_DirectX10) = 4, DirectX11 (StoreSystemFeature_DirectX11) = 5, D3D12HardwareFL11 (StoreSystemFeature_D3D12HardwareFL11) = 6, D3D12HardwareFL12 (StoreSystemFeature_D3D12HardwareFL12) = 7, Memory300MB (StoreSystemFeature_Memory300MB) = 8, Memory750MB (StoreSystemFeature_Memory750MB) = 9, Memory1GB (StoreSystemFeature_Memory1GB) = 10, Memory2GB (StoreSystemFeature_Memory2GB) = 11, CameraFront (StoreSystemFeature_CameraFront) = 12, CameraRear (StoreSystemFeature_CameraRear) = 13, Gyroscope (StoreSystemFeature_Gyroscope) = 14, Hover (StoreSystemFeature_Hover) = 15, Magnetometer (StoreSystemFeature_Magnetometer) = 16, Nfc (StoreSystemFeature_Nfc) = 17, Resolution720P (StoreSystemFeature_Resolution720P) = 18, ResolutionWvga (StoreSystemFeature_ResolutionWvga) = 19, ResolutionWvgaOr720P (StoreSystemFeature_ResolutionWvgaOr720P) = 20, ResolutionWxga (StoreSystemFeature_ResolutionWxga) = 21, ResolutionWvgaOrWxga (StoreSystemFeature_ResolutionWvgaOrWxga) = 22, ResolutionWxgaOr720P (StoreSystemFeature_ResolutionWxgaOr720P) = 23, Memory4GB (StoreSystemFeature_Memory4GB) = 24, Memory6GB (StoreSystemFeature_Memory6GB) = 25, Memory8GB (StoreSystemFeature_Memory8GB) = 26, Memory12GB (StoreSystemFeature_Memory12GB) = 27, Memory16GB (StoreSystemFeature_Memory16GB) = 28, Memory20GB (StoreSystemFeature_Memory20GB) = 29, VideoMemory2GB (StoreSystemFeature_VideoMemory2GB) = 30, VideoMemory4GB (StoreSystemFeature_VideoMemory4GB) = 31, VideoMemory6GB (StoreSystemFeature_VideoMemory6GB) = 32, VideoMemory1GB (StoreSystemFeature_VideoMemory1GB) = 33, ArchitectureArm64 (StoreSystemFeature_ArchitectureArm64) = 34,
+    ArchitectureX86 = 0, ArchitectureX64 = 1, ArchitectureArm = 2, DirectX9 = 3, DirectX10 = 4, DirectX11 = 5, D3D12HardwareFL11 = 6, D3D12HardwareFL12 = 7, Memory300MB = 8, Memory750MB = 9, Memory1GB = 10, Memory2GB = 11, CameraFront = 12, CameraRear = 13, Gyroscope = 14, Hover = 15, Magnetometer = 16, Nfc = 17, Resolution720P = 18, ResolutionWvga = 19, ResolutionWvgaOr720P = 20, ResolutionWxga = 21, ResolutionWvgaOrWxga = 22, ResolutionWxgaOr720P = 23, Memory4GB = 24, Memory6GB = 25, Memory8GB = 26, Memory12GB = 27, Memory16GB = 28, Memory20GB = 29, VideoMemory2GB = 30, VideoMemory4GB = 31, VideoMemory6GB = 32, VideoMemory1GB = 33, ArchitectureArm64 = 34,
 }}
 DEFINE_IID!(IID_IWebAuthenticationCoreManagerHelper, 111478053, 59157, 16675, 146, 118, 157, 111, 134, 91, 165, 95);
 RT_INTERFACE!{static interface IWebAuthenticationCoreManagerHelper(IWebAuthenticationCoreManagerHelperVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerHelper] {
@@ -25148,7 +25148,7 @@ DEFINE_CLSID!(WebAuthenticationCoreManagerHelper(&[87,105,110,100,111,119,115,46
 pub mod installcontrol { // Windows.ApplicationModel.Store.Preview.InstallControl
 use ::prelude::*;
 RT_ENUM! { enum AppInstallationToastNotificationMode: i32 {
-    Default (AppInstallationToastNotificationMode_Default) = 0, Toast (AppInstallationToastNotificationMode_Toast) = 1, ToastWithoutPopup (AppInstallationToastNotificationMode_ToastWithoutPopup) = 2, NoToast (AppInstallationToastNotificationMode_NoToast) = 3,
+    Default = 0, Toast = 1, ToastWithoutPopup = 2, NoToast = 3,
 }}
 DEFINE_IID!(IID_IAppInstallItem, 1238622123, 5770, 19647, 169, 58, 158, 68, 140, 130, 115, 125);
 RT_INTERFACE!{interface IAppInstallItem(IAppInstallItemVtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallItem] {
@@ -25852,7 +25852,7 @@ impl IAppInstallOptions2 {
     }}
 }
 RT_ENUM! { enum AppInstallState: i32 {
-    Pending (AppInstallState_Pending) = 0, Starting (AppInstallState_Starting) = 1, AcquiringLicense (AppInstallState_AcquiringLicense) = 2, Downloading (AppInstallState_Downloading) = 3, RestoringData (AppInstallState_RestoringData) = 4, Installing (AppInstallState_Installing) = 5, Completed (AppInstallState_Completed) = 6, Canceled (AppInstallState_Canceled) = 7, Paused (AppInstallState_Paused) = 8, Error (AppInstallState_Error) = 9, PausedLowBattery (AppInstallState_PausedLowBattery) = 10, PausedWiFiRecommended (AppInstallState_PausedWiFiRecommended) = 11, PausedWiFiRequired (AppInstallState_PausedWiFiRequired) = 12, ReadyToDownload (AppInstallState_ReadyToDownload) = 13,
+    Pending = 0, Starting = 1, AcquiringLicense = 2, Downloading = 3, RestoringData = 4, Installing = 5, Completed = 6, Canceled = 7, Paused = 8, Error = 9, PausedLowBattery = 10, PausedWiFiRecommended = 11, PausedWiFiRequired = 12, ReadyToDownload = 13,
 }}
 DEFINE_IID!(IID_IAppInstallStatus, 2473446650, 9296, 16678, 136, 177, 97, 39, 166, 68, 221, 92);
 RT_INTERFACE!{interface IAppInstallStatus(IAppInstallStatusVtbl): IInspectable(IInspectableVtbl) [IID_IAppInstallStatus] {
@@ -25920,7 +25920,7 @@ impl IAppInstallStatus3 {
     }}
 }
 RT_ENUM! { enum AppInstallType: i32 {
-    Install (AppInstallType_Install) = 0, Update (AppInstallType_Update) = 1, Repair (AppInstallType_Repair) = 2,
+    Install = 0, Update = 1, Repair = 2,
 }}
 DEFINE_IID!(IID_IAppUpdateOptions, 653307951, 49907, 19178, 175, 140, 99, 8, 221, 157, 184, 95);
 RT_INTERFACE!{interface IAppUpdateOptions(IAppUpdateOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IAppUpdateOptions] {
@@ -25969,7 +25969,7 @@ impl IAppUpdateOptions2 {
     }}
 }
 RT_ENUM! { enum AutoUpdateSetting: i32 {
-    Disabled (AutoUpdateSetting_Disabled) = 0, Enabled (AutoUpdateSetting_Enabled) = 1, DisabledByPolicy (AutoUpdateSetting_DisabledByPolicy) = 2, EnabledByPolicy (AutoUpdateSetting_EnabledByPolicy) = 3,
+    Disabled = 0, Enabled = 1, DisabledByPolicy = 2, EnabledByPolicy = 3,
 }}
 DEFINE_IID!(IID_IGetEntitlementResult, 1962705983, 6814, 17929, 142, 77, 129, 144, 134, 208, 138, 61);
 RT_INTERFACE!{interface IGetEntitlementResult(IGetEntitlementResultVtbl): IInspectable(IInspectableVtbl) [IID_IGetEntitlementResult] {
@@ -25984,7 +25984,7 @@ impl IGetEntitlementResult {
 }
 RT_CLASS!{class GetEntitlementResult: IGetEntitlementResult}
 RT_ENUM! { enum GetEntitlementStatus: i32 {
-    Succeeded (GetEntitlementStatus_Succeeded) = 0, NoStoreAccount (GetEntitlementStatus_NoStoreAccount) = 1, NetworkError (GetEntitlementStatus_NetworkError) = 2, ServerError (GetEntitlementStatus_ServerError) = 3,
+    Succeeded = 0, NoStoreAccount = 1, NetworkError = 2, ServerError = 3,
 }}
 } // Windows.ApplicationModel.Store.Preview.InstallControl
 } // Windows.ApplicationModel.Store.Preview
@@ -26408,7 +26408,7 @@ impl IUserActivitySessionHistoryItem {
 }
 RT_CLASS!{class UserActivitySessionHistoryItem: IUserActivitySessionHistoryItem}
 RT_ENUM! { enum UserActivityState: i32 {
-    New (UserActivityState_New) = 0, Published (UserActivityState_Published) = 1,
+    New = 0, Published = 1,
 }}
 DEFINE_IID!(IID_IUserActivityStatics, 2358235955, 3593, 18422, 154, 199, 149, 207, 92, 57, 54, 123);
 RT_INTERFACE!{static interface IUserActivityStatics(IUserActivityStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserActivityStatics] {
@@ -26723,7 +26723,7 @@ impl IUserDataAccount4 {
     }}
 }
 RT_ENUM! { enum UserDataAccountContentKinds: u32 {
-    Email (UserDataAccountContentKinds_Email) = 1, Contact (UserDataAccountContentKinds_Contact) = 2, Appointment (UserDataAccountContentKinds_Appointment) = 4,
+    Email = 1, Contact = 2, Appointment = 4,
 }}
 RT_CLASS!{static class UserDataAccountManager}
 impl RtActivatable<IUserDataAccountManagerStatics> for UserDataAccountManager {}
@@ -26805,7 +26805,7 @@ impl IUserDataAccountManagerStatics2 {
     }}
 }
 RT_ENUM! { enum UserDataAccountOtherAppReadAccess: i32 {
-    SystemOnly (UserDataAccountOtherAppReadAccess_SystemOnly) = 0, Full (UserDataAccountOtherAppReadAccess_Full) = 1, None (UserDataAccountOtherAppReadAccess_None) = 2,
+    SystemOnly = 0, Full = 1, None = 2,
 }}
 DEFINE_IID!(IID_IUserDataAccountStore, 544452781, 32010, 20086, 191, 69, 35, 104, 249, 120, 165, 154);
 RT_INTERFACE!{interface IUserDataAccountStore(IUserDataAccountStoreVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccountStore] {
@@ -26865,7 +26865,7 @@ impl IUserDataAccountStore3 {
     }}
 }
 RT_ENUM! { enum UserDataAccountStoreAccessType: i32 {
-    AllAccountsReadOnly (UserDataAccountStoreAccessType_AllAccountsReadOnly) = 0, AppAccountsReadWrite (UserDataAccountStoreAccessType_AppAccountsReadWrite) = 1,
+    AllAccountsReadOnly = 0, AppAccountsReadWrite = 1,
 }}
 DEFINE_IID!(IID_IUserDataAccountStoreChangedEventArgs, 2229527269, 34848, 17682, 177, 246, 46, 3, 91, 225, 7, 44);
 RT_INTERFACE!{interface IUserDataAccountStoreChangedEventArgs(IUserDataAccountStoreChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccountStoreChangedEventArgs] {
@@ -26940,10 +26940,10 @@ impl IUserDataAccountProviderOperation {
     }}
 }
 RT_ENUM! { enum UserDataAccountProviderOperationKind: i32 {
-    AddAccount (UserDataAccountProviderOperationKind_AddAccount) = 0, Settings (UserDataAccountProviderOperationKind_Settings) = 1, ResolveErrors (UserDataAccountProviderOperationKind_ResolveErrors) = 2,
+    AddAccount = 0, Settings = 1, ResolveErrors = 2,
 }}
 RT_ENUM! { enum UserDataAccountProviderPartnerAccountKind: i32 {
-    Exchange (UserDataAccountProviderPartnerAccountKind_Exchange) = 0, PopOrImap (UserDataAccountProviderPartnerAccountKind_PopOrImap) = 1,
+    Exchange = 0, PopOrImap = 1,
 }}
 DEFINE_IID!(IID_IUserDataAccountProviderResolveErrorsOperation, 1647696917, 49099, 16865, 153, 87, 151, 89, 162, 136, 70, 204);
 RT_INTERFACE!{interface IUserDataAccountProviderResolveErrorsOperation(IUserDataAccountProviderResolveErrorsOperationVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataAccountProviderResolveErrorsOperation] {
@@ -26983,7 +26983,7 @@ RT_CLASS!{class UserDataAccountProviderSettingsOperation: IUserDataAccountProvid
 pub mod systemaccess { // Windows.ApplicationModel.UserDataAccounts.SystemAccess
 use ::prelude::*;
 RT_ENUM! { enum DeviceAccountAuthenticationType: i32 {
-    Basic (DeviceAccountAuthenticationType_Basic) = 0, OAuth (DeviceAccountAuthenticationType_OAuth) = 1, SingleSignOn (DeviceAccountAuthenticationType_SingleSignOn) = 2,
+    Basic = 0, OAuth = 1, SingleSignOn = 2,
 }}
 DEFINE_IID!(IID_IDeviceAccountConfiguration, 2902533027, 64476, 19739, 190, 67, 90, 39, 234, 74, 27, 99);
 RT_INTERFACE!{interface IDeviceAccountConfiguration(IDeviceAccountConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IDeviceAccountConfiguration] {
@@ -27488,16 +27488,16 @@ impl IDeviceAccountConfiguration2 {
     }}
 }
 RT_ENUM! { enum DeviceAccountIconId: i32 {
-    Exchange (DeviceAccountIconId_Exchange) = 0, Msa (DeviceAccountIconId_Msa) = 1, Outlook (DeviceAccountIconId_Outlook) = 2, Generic (DeviceAccountIconId_Generic) = 3,
+    Exchange = 0, Msa = 1, Outlook = 2, Generic = 3,
 }}
 RT_ENUM! { enum DeviceAccountMailAgeFilter: i32 {
-    All (DeviceAccountMailAgeFilter_All) = 0, Last1Day (DeviceAccountMailAgeFilter_Last1Day) = 1, Last3Days (DeviceAccountMailAgeFilter_Last3Days) = 2, Last7Days (DeviceAccountMailAgeFilter_Last7Days) = 3, Last14Days (DeviceAccountMailAgeFilter_Last14Days) = 4, Last30Days (DeviceAccountMailAgeFilter_Last30Days) = 5, Last90Days (DeviceAccountMailAgeFilter_Last90Days) = 6,
+    All = 0, Last1Day = 1, Last3Days = 2, Last7Days = 3, Last14Days = 4, Last30Days = 5, Last90Days = 6,
 }}
 RT_ENUM! { enum DeviceAccountServerType: i32 {
-    Exchange (DeviceAccountServerType_Exchange) = 0, Pop (DeviceAccountServerType_Pop) = 1, Imap (DeviceAccountServerType_Imap) = 2,
+    Exchange = 0, Pop = 1, Imap = 2,
 }}
 RT_ENUM! { enum DeviceAccountSyncScheduleKind: i32 {
-    Manual (DeviceAccountSyncScheduleKind_Manual) = 0, Every15Minutes (DeviceAccountSyncScheduleKind_Every15Minutes) = 1, Every30Minutes (DeviceAccountSyncScheduleKind_Every30Minutes) = 2, Every60Minutes (DeviceAccountSyncScheduleKind_Every60Minutes) = 3, Every2Hours (DeviceAccountSyncScheduleKind_Every2Hours) = 4, Daily (DeviceAccountSyncScheduleKind_Daily) = 5, AsItemsArrive (DeviceAccountSyncScheduleKind_AsItemsArrive) = 6,
+    Manual = 0, Every15Minutes = 1, Every30Minutes = 2, Every60Minutes = 3, Every2Hours = 4, Daily = 5, AsItemsArrive = 6,
 }}
 RT_CLASS!{static class UserDataAccountSystemAccessManager}
 impl RtActivatable<IUserDataAccountSystemAccessManagerStatics> for UserDataAccountSystemAccessManager {}
@@ -27735,13 +27735,13 @@ impl IUserDataTaskBatch {
 }
 RT_CLASS!{class UserDataTaskBatch: IUserDataTaskBatch}
 RT_ENUM! { enum UserDataTaskDaysOfWeek: u32 {
-    None (UserDataTaskDaysOfWeek_None) = 0, Sunday (UserDataTaskDaysOfWeek_Sunday) = 1, Monday (UserDataTaskDaysOfWeek_Monday) = 2, Tuesday (UserDataTaskDaysOfWeek_Tuesday) = 4, Wednesday (UserDataTaskDaysOfWeek_Wednesday) = 8, Thursday (UserDataTaskDaysOfWeek_Thursday) = 16, Friday (UserDataTaskDaysOfWeek_Friday) = 32, Saturday (UserDataTaskDaysOfWeek_Saturday) = 64,
+    None = 0, Sunday = 1, Monday = 2, Tuesday = 4, Wednesday = 8, Thursday = 16, Friday = 32, Saturday = 64,
 }}
 RT_ENUM! { enum UserDataTaskDetailsKind: i32 {
-    PlainText (UserDataTaskDetailsKind_PlainText) = 0, Html (UserDataTaskDetailsKind_Html) = 1,
+    PlainText = 0, Html = 1,
 }}
 RT_ENUM! { enum UserDataTaskKind: i32 {
-    Single (UserDataTaskKind_Single) = 0, Recurring (UserDataTaskKind_Recurring) = 1, Regenerating (UserDataTaskKind_Regenerating) = 2,
+    Single = 0, Recurring = 1, Regenerating = 2,
 }}
 DEFINE_IID!(IID_IUserDataTaskList, 1229008441, 31773, 19953, 190, 211, 49, 75, 124, 191, 94, 78);
 RT_INTERFACE!{interface IUserDataTaskList(IUserDataTaskListVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskList] {
@@ -27891,10 +27891,10 @@ impl IUserDataTaskListLimitedWriteOperations {
 }
 RT_CLASS!{class UserDataTaskListLimitedWriteOperations: IUserDataTaskListLimitedWriteOperations}
 RT_ENUM! { enum UserDataTaskListOtherAppReadAccess: i32 {
-    Full (UserDataTaskListOtherAppReadAccess_Full) = 0, SystemOnly (UserDataTaskListOtherAppReadAccess_SystemOnly) = 1, None (UserDataTaskListOtherAppReadAccess_None) = 2,
+    Full = 0, SystemOnly = 1, None = 2,
 }}
 RT_ENUM! { enum UserDataTaskListOtherAppWriteAccess: i32 {
-    Limited (UserDataTaskListOtherAppWriteAccess_Limited) = 0, None (UserDataTaskListOtherAppWriteAccess_None) = 1,
+    Limited = 0, None = 1,
 }}
 DEFINE_IID!(IID_IUserDataTaskListSyncManager, 2388204181, 7631, 18079, 147, 236, 186, 72, 187, 85, 60, 107);
 RT_INTERFACE!{interface IUserDataTaskListSyncManager(IUserDataTaskListSyncManagerVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskListSyncManager] {
@@ -27953,7 +27953,7 @@ impl IUserDataTaskListSyncManager {
 }
 RT_CLASS!{class UserDataTaskListSyncManager: IUserDataTaskListSyncManager}
 RT_ENUM! { enum UserDataTaskListSyncStatus: i32 {
-    Idle (UserDataTaskListSyncStatus_Idle) = 0, Syncing (UserDataTaskListSyncStatus_Syncing) = 1, UpToDate (UserDataTaskListSyncStatus_UpToDate) = 2, AuthenticationError (UserDataTaskListSyncStatus_AuthenticationError) = 3, PolicyError (UserDataTaskListSyncStatus_PolicyError) = 4, UnknownError (UserDataTaskListSyncStatus_UnknownError) = 5,
+    Idle = 0, Syncing = 1, UpToDate = 2, AuthenticationError = 3, PolicyError = 4, UnknownError = 5,
 }}
 DEFINE_IID!(IID_IUserDataTaskManager, 2219952404, 58891, 18601, 146, 17, 127, 184, 165, 108, 184, 76);
 RT_INTERFACE!{interface IUserDataTaskManager(IUserDataTaskManagerVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskManager] {
@@ -28001,10 +28001,10 @@ impl IUserDataTaskManagerStatics {
     }}
 }
 RT_ENUM! { enum UserDataTaskPriority: i32 {
-    Normal (UserDataTaskPriority_Normal) = 0, Low (UserDataTaskPriority_Low) = -1, High (UserDataTaskPriority_High) = 1,
+    Normal = 0, Low = -1, High = 1,
 }}
 RT_ENUM! { enum UserDataTaskQueryKind: i32 {
-    All (UserDataTaskQueryKind_All) = 0, Incomplete (UserDataTaskQueryKind_Incomplete) = 1, Complete (UserDataTaskQueryKind_Complete) = 2,
+    All = 0, Incomplete = 1, Complete = 2,
 }}
 DEFINE_IID!(IID_IUserDataTaskQueryOptions, 2510235629, 37018, 19760, 140, 27, 51, 29, 143, 230, 103, 226);
 RT_INTERFACE!{interface IUserDataTaskQueryOptions(IUserDataTaskQueryOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskQueryOptions] {
@@ -28037,7 +28037,7 @@ RT_CLASS!{class UserDataTaskQueryOptions: IUserDataTaskQueryOptions}
 impl RtActivatable<IActivationFactory> for UserDataTaskQueryOptions {}
 DEFINE_CLSID!(UserDataTaskQueryOptions(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,84,97,115,107,115,46,85,115,101,114,68,97,116,97,84,97,115,107,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_UserDataTaskQueryOptions]);
 RT_ENUM! { enum UserDataTaskQuerySortProperty: i32 {
-    DueDate (UserDataTaskQuerySortProperty_DueDate) = 0,
+    DueDate = 0,
 }}
 DEFINE_IID!(IID_IUserDataTaskReader, 65439921, 19663, 17664, 136, 59, 231, 98, 144, 207, 237, 99);
 RT_INTERFACE!{interface IUserDataTaskReader(IUserDataTaskReaderVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskReader] {
@@ -28148,7 +28148,7 @@ RT_CLASS!{class UserDataTaskRecurrenceProperties: IUserDataTaskRecurrencePropert
 impl RtActivatable<IActivationFactory> for UserDataTaskRecurrenceProperties {}
 DEFINE_CLSID!(UserDataTaskRecurrenceProperties(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,84,97,115,107,115,46,85,115,101,114,68,97,116,97,84,97,115,107,82,101,99,117,114,114,101,110,99,101,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_UserDataTaskRecurrenceProperties]);
 RT_ENUM! { enum UserDataTaskRecurrenceUnit: i32 {
-    Daily (UserDataTaskRecurrenceUnit_Daily) = 0, Weekly (UserDataTaskRecurrenceUnit_Weekly) = 1, Monthly (UserDataTaskRecurrenceUnit_Monthly) = 2, MonthlyOnDay (UserDataTaskRecurrenceUnit_MonthlyOnDay) = 3, Yearly (UserDataTaskRecurrenceUnit_Yearly) = 4, YearlyOnDay (UserDataTaskRecurrenceUnit_YearlyOnDay) = 5,
+    Daily = 0, Weekly = 1, Monthly = 2, MonthlyOnDay = 3, Yearly = 4, YearlyOnDay = 5,
 }}
 DEFINE_IID!(IID_IUserDataTaskRegenerationProperties, 2460680199, 2318, 18180, 187, 92, 132, 252, 11, 13, 156, 49);
 RT_INTERFACE!{interface IUserDataTaskRegenerationProperties(IUserDataTaskRegenerationPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskRegenerationProperties] {
@@ -28203,10 +28203,10 @@ RT_CLASS!{class UserDataTaskRegenerationProperties: IUserDataTaskRegenerationPro
 impl RtActivatable<IActivationFactory> for UserDataTaskRegenerationProperties {}
 DEFINE_CLSID!(UserDataTaskRegenerationProperties(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,85,115,101,114,68,97,116,97,84,97,115,107,115,46,85,115,101,114,68,97,116,97,84,97,115,107,82,101,103,101,110,101,114,97,116,105,111,110,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_UserDataTaskRegenerationProperties]);
 RT_ENUM! { enum UserDataTaskRegenerationUnit: i32 {
-    Daily (UserDataTaskRegenerationUnit_Daily) = 0, Weekly (UserDataTaskRegenerationUnit_Weekly) = 1, Monthly (UserDataTaskRegenerationUnit_Monthly) = 2, Yearly (UserDataTaskRegenerationUnit_Yearly) = 4,
+    Daily = 0, Weekly = 1, Monthly = 2, Yearly = 4,
 }}
 RT_ENUM! { enum UserDataTaskSensitivity: i32 {
-    Public (UserDataTaskSensitivity_Public) = 0, Private (UserDataTaskSensitivity_Private) = 1,
+    Public = 0, Private = 1,
 }}
 DEFINE_IID!(IID_IUserDataTaskStore, 4033518768, 61915, 17850, 138, 98, 8, 96, 4, 192, 33, 61);
 RT_INTERFACE!{interface IUserDataTaskStore(IUserDataTaskStoreVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataTaskStore] {
@@ -28239,10 +28239,10 @@ impl IUserDataTaskStore {
 }
 RT_CLASS!{class UserDataTaskStore: IUserDataTaskStore}
 RT_ENUM! { enum UserDataTaskStoreAccessType: i32 {
-    AppTasksReadWrite (UserDataTaskStoreAccessType_AppTasksReadWrite) = 0, AllTasksLimitedReadWrite (UserDataTaskStoreAccessType_AllTasksLimitedReadWrite) = 1,
+    AppTasksReadWrite = 0, AllTasksLimitedReadWrite = 1,
 }}
 RT_ENUM! { enum UserDataTaskWeekOfMonth: i32 {
-    First (UserDataTaskWeekOfMonth_First) = 0, Second (UserDataTaskWeekOfMonth_Second) = 1, Third (UserDataTaskWeekOfMonth_Third) = 2, Fourth (UserDataTaskWeekOfMonth_Fourth) = 3, Last (UserDataTaskWeekOfMonth_Last) = 4,
+    First = 0, Second = 1, Third = 2, Fourth = 3, Last = 4,
 }}
 pub mod dataprovider { // Windows.ApplicationModel.UserDataTasks.DataProvider
 use ::prelude::*;
@@ -28599,7 +28599,7 @@ impl IVoiceCommandCompletedEventArgs {
 }
 RT_CLASS!{class VoiceCommandCompletedEventArgs: IVoiceCommandCompletedEventArgs}
 RT_ENUM! { enum VoiceCommandCompletionReason: i32 {
-    Unknown (VoiceCommandCompletionReason_Unknown) = 0, CommunicationFailed (VoiceCommandCompletionReason_CommunicationFailed) = 1, ResourceLimitsExceeded (VoiceCommandCompletionReason_ResourceLimitsExceeded) = 2, Canceled (VoiceCommandCompletionReason_Canceled) = 3, TimeoutExceeded (VoiceCommandCompletionReason_TimeoutExceeded) = 4, AppLaunched (VoiceCommandCompletionReason_AppLaunched) = 5, Completed (VoiceCommandCompletionReason_Completed) = 6,
+    Unknown = 0, CommunicationFailed = 1, ResourceLimitsExceeded = 2, Canceled = 3, TimeoutExceeded = 4, AppLaunched = 5, Completed = 6,
 }}
 DEFINE_IID!(IID_IVoiceCommandConfirmationResult, 2686605630, 33313, 17702, 176, 131, 132, 9, 114, 38, 34, 71);
 RT_INTERFACE!{interface IVoiceCommandConfirmationResult(IVoiceCommandConfirmationResultVtbl): IInspectable(IInspectableVtbl) [IID_IVoiceCommandConfirmationResult] {
@@ -28712,7 +28712,7 @@ RT_CLASS!{class VoiceCommandContentTile: IVoiceCommandContentTile}
 impl RtActivatable<IActivationFactory> for VoiceCommandContentTile {}
 DEFINE_CLSID!(VoiceCommandContentTile(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,86,111,105,99,101,67,111,109,109,97,110,100,115,46,86,111,105,99,101,67,111,109,109,97,110,100,67,111,110,116,101,110,116,84,105,108,101,0]) [CLSID_VoiceCommandContentTile]);
 RT_ENUM! { enum VoiceCommandContentTileType: i32 {
-    TitleOnly (VoiceCommandContentTileType_TitleOnly) = 0, TitleWithText (VoiceCommandContentTileType_TitleWithText) = 1, TitleWith68x68Icon (VoiceCommandContentTileType_TitleWith68x68Icon) = 2, TitleWith68x68IconAndText (VoiceCommandContentTileType_TitleWith68x68IconAndText) = 3, TitleWith68x92Icon (VoiceCommandContentTileType_TitleWith68x92Icon) = 4, TitleWith68x92IconAndText (VoiceCommandContentTileType_TitleWith68x92IconAndText) = 5, TitleWith280x140Icon (VoiceCommandContentTileType_TitleWith280x140Icon) = 6, TitleWith280x140IconAndText (VoiceCommandContentTileType_TitleWith280x140IconAndText) = 7,
+    TitleOnly = 0, TitleWithText = 1, TitleWith68x68Icon = 2, TitleWith68x68IconAndText = 3, TitleWith68x92Icon = 4, TitleWith68x92IconAndText = 5, TitleWith280x140Icon = 6, TitleWith280x140IconAndText = 7,
 }}
 DEFINE_IID!(IID_IVoiceCommandDefinition, 2037557968, 2420, 18809, 152, 75, 203, 137, 89, 205, 97, 174);
 RT_INTERFACE!{interface IVoiceCommandDefinition(IVoiceCommandDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IVoiceCommandDefinition] {
@@ -28996,7 +28996,7 @@ DEFINE_CLSID!(VoiceCommandUserMessage(&[87,105,110,100,111,119,115,46,65,112,112
 pub mod wallet { // Windows.ApplicationModel.Wallet
 use ::prelude::*;
 RT_ENUM! { enum WalletActionKind: i32 {
-    OpenItem (WalletActionKind_OpenItem) = 0, Transaction (WalletActionKind_Transaction) = 1, MoreTransactions (WalletActionKind_MoreTransactions) = 2, Message (WalletActionKind_Message) = 3, Verb (WalletActionKind_Verb) = 4,
+    OpenItem = 0, Transaction = 1, MoreTransactions = 2, Message = 3, Verb = 4,
 }}
 DEFINE_IID!(IID_IWalletBarcode, 1334147881, 56960, 20132, 161, 205, 129, 205, 8, 77, 172, 39);
 RT_INTERFACE!{interface IWalletBarcode(IWalletBarcodeVtbl): IInspectable(IInspectableVtbl) [IID_IWalletBarcode] {
@@ -29050,10 +29050,10 @@ impl IWalletBarcodeFactory {
     }}
 }
 RT_ENUM! { enum WalletBarcodeSymbology: i32 {
-    Invalid (WalletBarcodeSymbology_Invalid) = 0, Upca (WalletBarcodeSymbology_Upca) = 1, Upce (WalletBarcodeSymbology_Upce) = 2, Ean13 (WalletBarcodeSymbology_Ean13) = 3, Ean8 (WalletBarcodeSymbology_Ean8) = 4, Itf (WalletBarcodeSymbology_Itf) = 5, Code39 (WalletBarcodeSymbology_Code39) = 6, Code128 (WalletBarcodeSymbology_Code128) = 7, Qr (WalletBarcodeSymbology_Qr) = 8, Pdf417 (WalletBarcodeSymbology_Pdf417) = 9, Aztec (WalletBarcodeSymbology_Aztec) = 10, Custom (WalletBarcodeSymbology_Custom) = 100000,
+    Invalid = 0, Upca = 1, Upce = 2, Ean13 = 3, Ean8 = 4, Itf = 5, Code39 = 6, Code128 = 7, Qr = 8, Pdf417 = 9, Aztec = 10, Custom = 100000,
 }}
 RT_ENUM! { enum WalletDetailViewPosition: i32 {
-    Hidden (WalletDetailViewPosition_Hidden) = 0, HeaderField1 (WalletDetailViewPosition_HeaderField1) = 1, HeaderField2 (WalletDetailViewPosition_HeaderField2) = 2, PrimaryField1 (WalletDetailViewPosition_PrimaryField1) = 3, PrimaryField2 (WalletDetailViewPosition_PrimaryField2) = 4, SecondaryField1 (WalletDetailViewPosition_SecondaryField1) = 5, SecondaryField2 (WalletDetailViewPosition_SecondaryField2) = 6, SecondaryField3 (WalletDetailViewPosition_SecondaryField3) = 7, SecondaryField4 (WalletDetailViewPosition_SecondaryField4) = 8, SecondaryField5 (WalletDetailViewPosition_SecondaryField5) = 9, CenterField1 (WalletDetailViewPosition_CenterField1) = 10, FooterField1 (WalletDetailViewPosition_FooterField1) = 11, FooterField2 (WalletDetailViewPosition_FooterField2) = 12, FooterField3 (WalletDetailViewPosition_FooterField3) = 13, FooterField4 (WalletDetailViewPosition_FooterField4) = 14,
+    Hidden = 0, HeaderField1 = 1, HeaderField2 = 2, PrimaryField1 = 3, PrimaryField2 = 4, SecondaryField1 = 5, SecondaryField2 = 6, SecondaryField3 = 7, SecondaryField4 = 8, SecondaryField5 = 9, CenterField1 = 10, FooterField1 = 11, FooterField2 = 12, FooterField3 = 13, FooterField4 = 14,
 }}
 DEFINE_IID!(IID_IWalletItem, 548752360, 4493, 20164, 153, 108, 185, 99, 231, 189, 62, 116);
 RT_INTERFACE!{interface IWalletItem(IWalletItemVtbl): IInspectable(IInspectableVtbl) [IID_IWalletItem] {
@@ -29470,7 +29470,7 @@ impl IWalletItemFactory {
     }}
 }
 RT_ENUM! { enum WalletItemKind: i32 {
-    Invalid (WalletItemKind_Invalid) = 0, Deal (WalletItemKind_Deal) = 1, General (WalletItemKind_General) = 2, PaymentInstrument (WalletItemKind_PaymentInstrument) = 3, Ticket (WalletItemKind_Ticket) = 4, BoardingPass (WalletItemKind_BoardingPass) = 5, MembershipCard (WalletItemKind_MembershipCard) = 6,
+    Invalid = 0, Deal = 1, General = 2, PaymentInstrument = 3, Ticket = 4, BoardingPass = 5, MembershipCard = 6,
 }}
 DEFINE_IID!(IID_IWalletItemStore, 1902135371, 27977, 18680, 145, 169, 64, 161, 208, 241, 62, 244);
 RT_INTERFACE!{interface IWalletItemStore(IWalletItemStoreVtbl): IInspectable(IInspectableVtbl) [IID_IWalletItemStore] {
@@ -29607,7 +29607,7 @@ RT_CLASS!{class WalletRelevantLocation: IWalletRelevantLocation}
 impl RtActivatable<IActivationFactory> for WalletRelevantLocation {}
 DEFINE_CLSID!(WalletRelevantLocation(&[87,105,110,100,111,119,115,46,65,112,112,108,105,99,97,116,105,111,110,77,111,100,101,108,46,87,97,108,108,101,116,46,87,97,108,108,101,116,82,101,108,101,118,97,110,116,76,111,99,97,116,105,111,110,0]) [CLSID_WalletRelevantLocation]);
 RT_ENUM! { enum WalletSummaryViewPosition: i32 {
-    Hidden (WalletSummaryViewPosition_Hidden) = 0, Field1 (WalletSummaryViewPosition_Field1) = 1, Field2 (WalletSummaryViewPosition_Field2) = 2,
+    Hidden = 0, Field1 = 1, Field2 = 2,
 }}
 DEFINE_IID!(IID_IWalletTransaction, 1088547136, 9734, 17689, 129, 203, 191, 241, 198, 13, 31, 121);
 RT_INTERFACE!{interface IWalletTransaction(IWalletTransactionVtbl): IInspectable(IInspectableVtbl) [IID_IWalletTransaction] {
@@ -29721,7 +29721,7 @@ impl IWalletVerbFactory {
 pub mod system { // Windows.ApplicationModel.Wallet.System
 use ::prelude::*;
 RT_ENUM! { enum WalletItemAppAssociation: i32 {
-    None (WalletItemAppAssociation_None) = 0, AppInstalled (WalletItemAppAssociation_AppInstalled) = 1, AppNotInstalled (WalletItemAppAssociation_AppNotInstalled) = 2,
+    None = 0, AppInstalled = 1, AppNotInstalled = 2,
 }}
 DEFINE_IID!(IID_IWalletItemSystemStore, 1378757631, 38562, 18967, 141, 25, 254, 29, 159, 131, 117, 97);
 RT_INTERFACE!{interface IWalletItemSystemStore(IWalletItemSystemStoreVtbl): IInspectable(IInspectableVtbl) [IID_IWalletItemSystemStore] {

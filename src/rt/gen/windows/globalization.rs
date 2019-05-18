@@ -2335,7 +2335,7 @@ impl ICurrencyIdentifiersStatics3 {
     }}
 }
 RT_ENUM! { enum DayOfWeek: i32 {
-    Sunday (DayOfWeek_Sunday) = 0, Monday (DayOfWeek_Monday) = 1, Tuesday (DayOfWeek_Tuesday) = 2, Wednesday (DayOfWeek_Wednesday) = 3, Thursday (DayOfWeek_Thursday) = 4, Friday (DayOfWeek_Friday) = 5, Saturday (DayOfWeek_Saturday) = 6,
+    Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6,
 }}
 DEFINE_IID!(IID_IGeographicRegion, 32089633, 19044, 20185, 149, 79, 158, 222, 176, 123, 217, 3);
 RT_INTERFACE!{interface IGeographicRegion(IGeographicRegionVtbl): IInspectable(IInspectableVtbl) [IID_IGeographicRegion] {
@@ -2553,7 +2553,7 @@ impl ILanguageFactory {
     }}
 }
 RT_ENUM! { enum LanguageLayoutDirection: i32 {
-    Ltr (LanguageLayoutDirection_Ltr) = 0, Rtl (LanguageLayoutDirection_Rtl) = 1, TtbLtr (LanguageLayoutDirection_TtbLtr) = 2, TtbRtl (LanguageLayoutDirection_TtbRtl) = 3,
+    Ltr = 0, Rtl = 1, TtbLtr = 2, TtbRtl = 3,
 }}
 DEFINE_IID!(IID_ILanguageStatics, 2990331223, 2149, 18132, 137, 184, 213, 155, 232, 153, 15, 13);
 RT_INTERFACE!{static interface ILanguageStatics(ILanguageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics] {
@@ -3352,25 +3352,25 @@ impl IDateTimeFormatterStatics {
     }}
 }
 RT_ENUM! { enum DayFormat: i32 {
-    None (DayFormat_None) = 0, Default (DayFormat_Default) = 1,
+    None = 0, Default = 1,
 }}
 RT_ENUM! { enum DayOfWeekFormat: i32 {
-    None (DayOfWeekFormat_None) = 0, Default (DayOfWeekFormat_Default) = 1, Abbreviated (DayOfWeekFormat_Abbreviated) = 2, Full (DayOfWeekFormat_Full) = 3,
+    None = 0, Default = 1, Abbreviated = 2, Full = 3,
 }}
 RT_ENUM! { enum HourFormat: i32 {
-    None (HourFormat_None) = 0, Default (HourFormat_Default) = 1,
+    None = 0, Default = 1,
 }}
 RT_ENUM! { enum MinuteFormat: i32 {
-    None (MinuteFormat_None) = 0, Default (MinuteFormat_Default) = 1,
+    None = 0, Default = 1,
 }}
 RT_ENUM! { enum MonthFormat: i32 {
-    None (MonthFormat_None) = 0, Default (MonthFormat_Default) = 1, Abbreviated (MonthFormat_Abbreviated) = 2, Full (MonthFormat_Full) = 3, Numeric (MonthFormat_Numeric) = 4,
+    None = 0, Default = 1, Abbreviated = 2, Full = 3, Numeric = 4,
 }}
 RT_ENUM! { enum SecondFormat: i32 {
-    None (SecondFormat_None) = 0, Default (SecondFormat_Default) = 1,
+    None = 0, Default = 1,
 }}
 RT_ENUM! { enum YearFormat: i32 {
-    None (YearFormat_None) = 0, Default (YearFormat_Default) = 1, Abbreviated (YearFormat_Abbreviated) = 2, Full (YearFormat_Full) = 3,
+    None = 0, Default = 1, Abbreviated = 2, Full = 3,
 }}
 } // Windows.Globalization.DateTimeFormatting
 pub mod fonts { // Windows.Globalization.Fonts
@@ -3573,7 +3573,7 @@ impl ICurrencyFormatterFactory {
     }}
 }
 RT_ENUM! { enum CurrencyFormatterMode: i32 {
-    UseSymbol (CurrencyFormatterMode_UseSymbol) = 0, UseCurrencyCode (CurrencyFormatterMode_UseCurrencyCode) = 1,
+    UseSymbol = 0, UseCurrencyCode = 1,
 }}
 RT_CLASS!{class DecimalFormatter: INumberFormatter}
 impl RtActivatable<IDecimalFormatterFactory> for DecimalFormatter {}
@@ -3930,7 +3930,7 @@ impl IPermilleFormatterFactory {
     }}
 }
 RT_ENUM! { enum RoundingAlgorithm: i32 {
-    None (RoundingAlgorithm_None) = 0, RoundDown (RoundingAlgorithm_RoundDown) = 1, RoundUp (RoundingAlgorithm_RoundUp) = 2, RoundTowardsZero (RoundingAlgorithm_RoundTowardsZero) = 3, RoundAwayFromZero (RoundingAlgorithm_RoundAwayFromZero) = 4, RoundHalfDown (RoundingAlgorithm_RoundHalfDown) = 5, RoundHalfUp (RoundingAlgorithm_RoundHalfUp) = 6, RoundHalfTowardsZero (RoundingAlgorithm_RoundHalfTowardsZero) = 7, RoundHalfAwayFromZero (RoundingAlgorithm_RoundHalfAwayFromZero) = 8, RoundHalfToEven (RoundingAlgorithm_RoundHalfToEven) = 9, RoundHalfToOdd (RoundingAlgorithm_RoundHalfToOdd) = 10,
+    None = 0, RoundDown = 1, RoundUp = 2, RoundTowardsZero = 3, RoundAwayFromZero = 4, RoundHalfDown = 5, RoundHalfUp = 6, RoundHalfTowardsZero = 7, RoundHalfAwayFromZero = 8, RoundHalfToEven = 9, RoundHalfToOdd = 10,
 }}
 DEFINE_IID!(IID_ISignedZeroOption, 4246527281, 2620, 18884, 166, 66, 150, 161, 86, 79, 79, 48);
 RT_INTERFACE!{interface ISignedZeroOption(ISignedZeroOptionVtbl): IInspectable(IInspectableVtbl) [IID_ISignedZeroOption] {
@@ -3998,7 +3998,7 @@ impl ISignificantDigitsOption {
 pub mod phonenumberformatting { // Windows.Globalization.PhoneNumberFormatting
 use ::prelude::*;
 RT_ENUM! { enum PhoneNumberFormat: i32 {
-    E164 (PhoneNumberFormat_E164) = 0, International (PhoneNumberFormat_International) = 1, National (PhoneNumberFormat_National) = 2, Rfc3966 (PhoneNumberFormat_Rfc3966) = 3,
+    E164 = 0, International = 1, National = 2, Rfc3966 = 3,
 }}
 DEFINE_IID!(IID_IPhoneNumberFormatter, 358003870, 47828, 19274, 144, 13, 68, 7, 173, 183, 201, 129);
 RT_INTERFACE!{interface IPhoneNumberFormatter(IPhoneNumberFormatterVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatter] {
@@ -4179,12 +4179,12 @@ impl IPhoneNumberInfoStatics {
     }}
 }
 RT_ENUM! { enum PhoneNumberMatchResult: i32 {
-    NoMatch (PhoneNumberMatchResult_NoMatch) = 0, ShortNationalSignificantNumberMatch (PhoneNumberMatchResult_ShortNationalSignificantNumberMatch) = 1, NationalSignificantNumberMatch (PhoneNumberMatchResult_NationalSignificantNumberMatch) = 2, ExactMatch (PhoneNumberMatchResult_ExactMatch) = 3,
+    NoMatch = 0, ShortNationalSignificantNumberMatch = 1, NationalSignificantNumberMatch = 2, ExactMatch = 3,
 }}
 RT_ENUM! { enum PhoneNumberParseResult: i32 {
-    Valid (PhoneNumberParseResult_Valid) = 0, NotANumber (PhoneNumberParseResult_NotANumber) = 1, InvalidCountryCode (PhoneNumberParseResult_InvalidCountryCode) = 2, TooShort (PhoneNumberParseResult_TooShort) = 3, TooLong (PhoneNumberParseResult_TooLong) = 4,
+    Valid = 0, NotANumber = 1, InvalidCountryCode = 2, TooShort = 3, TooLong = 4,
 }}
 RT_ENUM! { enum PredictedPhoneNumberKind: i32 {
-    FixedLine (PredictedPhoneNumberKind_FixedLine) = 0, Mobile (PredictedPhoneNumberKind_Mobile) = 1, FixedLineOrMobile (PredictedPhoneNumberKind_FixedLineOrMobile) = 2, TollFree (PredictedPhoneNumberKind_TollFree) = 3, PremiumRate (PredictedPhoneNumberKind_PremiumRate) = 4, SharedCost (PredictedPhoneNumberKind_SharedCost) = 5, Voip (PredictedPhoneNumberKind_Voip) = 6, PersonalNumber (PredictedPhoneNumberKind_PersonalNumber) = 7, Pager (PredictedPhoneNumberKind_Pager) = 8, UniversalAccountNumber (PredictedPhoneNumberKind_UniversalAccountNumber) = 9, Voicemail (PredictedPhoneNumberKind_Voicemail) = 10, Unknown (PredictedPhoneNumberKind_Unknown) = 11,
+    FixedLine = 0, Mobile = 1, FixedLineOrMobile = 2, TollFree = 3, PremiumRate = 4, SharedCost = 5, Voip = 6, PersonalNumber = 7, Pager = 8, UniversalAccountNumber = 9, Voicemail = 10, Unknown = 11,
 }}
 } // Windows.Globalization.PhoneNumberFormatting

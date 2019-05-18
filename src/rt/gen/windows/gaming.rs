@@ -42,7 +42,7 @@ impl ArcadeStick {
 }
 DEFINE_CLSID!(ArcadeStick(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,65,114,99,97,100,101,83,116,105,99,107,0]) [CLSID_ArcadeStick]);
 RT_ENUM! { enum ArcadeStickButtons: u32 {
-    None (ArcadeStickButtons_None) = 0, StickUp (ArcadeStickButtons_StickUp) = 1, StickDown (ArcadeStickButtons_StickDown) = 2, StickLeft (ArcadeStickButtons_StickLeft) = 4, StickRight (ArcadeStickButtons_StickRight) = 8, Action1 (ArcadeStickButtons_Action1) = 16, Action2 (ArcadeStickButtons_Action2) = 32, Action3 (ArcadeStickButtons_Action3) = 64, Action4 (ArcadeStickButtons_Action4) = 128, Action5 (ArcadeStickButtons_Action5) = 256, Action6 (ArcadeStickButtons_Action6) = 512, Special1 (ArcadeStickButtons_Special1) = 1024, Special2 (ArcadeStickButtons_Special2) = 2048,
+    None = 0, StickUp = 1, StickDown = 2, StickLeft = 4, StickRight = 8, Action1 = 16, Action2 = 32, Action3 = 64, Action4 = 128, Action5 = 256, Action6 = 512, Special1 = 1024, Special2 = 2048,
 }}
 RT_STRUCT! { struct ArcadeStickReading {
     Timestamp: u64, Buttons: ArcadeStickButtons,
@@ -138,7 +138,7 @@ impl FlightStick {
 }
 DEFINE_CLSID!(FlightStick(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,108,105,103,104,116,83,116,105,99,107,0]) [CLSID_FlightStick]);
 RT_ENUM! { enum FlightStickButtons: u32 {
-    None (FlightStickButtons_None) = 0, FirePrimary (FlightStickButtons_FirePrimary) = 1, FireSecondary (FlightStickButtons_FireSecondary) = 2,
+    None = 0, FirePrimary = 1, FireSecondary = 2,
 }}
 RT_STRUCT! { struct FlightStickReading {
     Timestamp: u64, Buttons: FlightStickButtons, HatSwitch: GameControllerSwitchPosition, Roll: f64, Pitch: f64, Yaw: f64, Throttle: f64,
@@ -250,13 +250,13 @@ impl IGameControllerBatteryInfo {
     }}
 }
 RT_ENUM! { enum GameControllerButtonLabel: i32 {
-    None (GameControllerButtonLabel_None) = 0, XboxBack (GameControllerButtonLabel_XboxBack) = 1, XboxStart (GameControllerButtonLabel_XboxStart) = 2, XboxMenu (GameControllerButtonLabel_XboxMenu) = 3, XboxView (GameControllerButtonLabel_XboxView) = 4, XboxUp (GameControllerButtonLabel_XboxUp) = 5, XboxDown (GameControllerButtonLabel_XboxDown) = 6, XboxLeft (GameControllerButtonLabel_XboxLeft) = 7, XboxRight (GameControllerButtonLabel_XboxRight) = 8, XboxA (GameControllerButtonLabel_XboxA) = 9, XboxB (GameControllerButtonLabel_XboxB) = 10, XboxX (GameControllerButtonLabel_XboxX) = 11, XboxY (GameControllerButtonLabel_XboxY) = 12, XboxLeftBumper (GameControllerButtonLabel_XboxLeftBumper) = 13, XboxLeftTrigger (GameControllerButtonLabel_XboxLeftTrigger) = 14, XboxLeftStickButton (GameControllerButtonLabel_XboxLeftStickButton) = 15, XboxRightBumper (GameControllerButtonLabel_XboxRightBumper) = 16, XboxRightTrigger (GameControllerButtonLabel_XboxRightTrigger) = 17, XboxRightStickButton (GameControllerButtonLabel_XboxRightStickButton) = 18, XboxPaddle1 (GameControllerButtonLabel_XboxPaddle1) = 19, XboxPaddle2 (GameControllerButtonLabel_XboxPaddle2) = 20, XboxPaddle3 (GameControllerButtonLabel_XboxPaddle3) = 21, XboxPaddle4 (GameControllerButtonLabel_XboxPaddle4) = 22, Mode (GameControllerButtonLabel_Mode) = 23, Select (GameControllerButtonLabel_Select) = 24, Menu (GameControllerButtonLabel_Menu) = 25, View (GameControllerButtonLabel_View) = 26, Back (GameControllerButtonLabel_Back) = 27, Start (GameControllerButtonLabel_Start) = 28, Options (GameControllerButtonLabel_Options) = 29, Share (GameControllerButtonLabel_Share) = 30, Up (GameControllerButtonLabel_Up) = 31, Down (GameControllerButtonLabel_Down) = 32, Left (GameControllerButtonLabel_Left) = 33, Right (GameControllerButtonLabel_Right) = 34, LetterA (GameControllerButtonLabel_LetterA) = 35, LetterB (GameControllerButtonLabel_LetterB) = 36, LetterC (GameControllerButtonLabel_LetterC) = 37, LetterL (GameControllerButtonLabel_LetterL) = 38, LetterR (GameControllerButtonLabel_LetterR) = 39, LetterX (GameControllerButtonLabel_LetterX) = 40, LetterY (GameControllerButtonLabel_LetterY) = 41, LetterZ (GameControllerButtonLabel_LetterZ) = 42, Cross (GameControllerButtonLabel_Cross) = 43, Circle (GameControllerButtonLabel_Circle) = 44, Square (GameControllerButtonLabel_Square) = 45, Triangle (GameControllerButtonLabel_Triangle) = 46, LeftBumper (GameControllerButtonLabel_LeftBumper) = 47, LeftTrigger (GameControllerButtonLabel_LeftTrigger) = 48, LeftStickButton (GameControllerButtonLabel_LeftStickButton) = 49, Left1 (GameControllerButtonLabel_Left1) = 50, Left2 (GameControllerButtonLabel_Left2) = 51, Left3 (GameControllerButtonLabel_Left3) = 52, RightBumper (GameControllerButtonLabel_RightBumper) = 53, RightTrigger (GameControllerButtonLabel_RightTrigger) = 54, RightStickButton (GameControllerButtonLabel_RightStickButton) = 55, Right1 (GameControllerButtonLabel_Right1) = 56, Right2 (GameControllerButtonLabel_Right2) = 57, Right3 (GameControllerButtonLabel_Right3) = 58, Paddle1 (GameControllerButtonLabel_Paddle1) = 59, Paddle2 (GameControllerButtonLabel_Paddle2) = 60, Paddle3 (GameControllerButtonLabel_Paddle3) = 61, Paddle4 (GameControllerButtonLabel_Paddle4) = 62, Plus (GameControllerButtonLabel_Plus) = 63, Minus (GameControllerButtonLabel_Minus) = 64, DownLeftArrow (GameControllerButtonLabel_DownLeftArrow) = 65, DialLeft (GameControllerButtonLabel_DialLeft) = 66, DialRight (GameControllerButtonLabel_DialRight) = 67, Suspension (GameControllerButtonLabel_Suspension) = 68,
+    None = 0, XboxBack = 1, XboxStart = 2, XboxMenu = 3, XboxView = 4, XboxUp = 5, XboxDown = 6, XboxLeft = 7, XboxRight = 8, XboxA = 9, XboxB = 10, XboxX = 11, XboxY = 12, XboxLeftBumper = 13, XboxLeftTrigger = 14, XboxLeftStickButton = 15, XboxRightBumper = 16, XboxRightTrigger = 17, XboxRightStickButton = 18, XboxPaddle1 = 19, XboxPaddle2 = 20, XboxPaddle3 = 21, XboxPaddle4 = 22, Mode = 23, Select = 24, Menu = 25, View = 26, Back = 27, Start = 28, Options = 29, Share = 30, Up = 31, Down = 32, Left = 33, Right = 34, LetterA = 35, LetterB = 36, LetterC = 37, LetterL = 38, LetterR = 39, LetterX = 40, LetterY = 41, LetterZ = 42, Cross = 43, Circle = 44, Square = 45, Triangle = 46, LeftBumper = 47, LeftTrigger = 48, LeftStickButton = 49, Left1 = 50, Left2 = 51, Left3 = 52, RightBumper = 53, RightTrigger = 54, RightStickButton = 55, Right1 = 56, Right2 = 57, Right3 = 58, Paddle1 = 59, Paddle2 = 60, Paddle3 = 61, Paddle4 = 62, Plus = 63, Minus = 64, DownLeftArrow = 65, DialLeft = 66, DialRight = 67, Suspension = 68,
 }}
 RT_ENUM! { enum GameControllerSwitchKind: i32 {
-    TwoWay (GameControllerSwitchKind_TwoWay) = 0, FourWay (GameControllerSwitchKind_FourWay) = 1, EightWay (GameControllerSwitchKind_EightWay) = 2,
+    TwoWay = 0, FourWay = 1, EightWay = 2,
 }}
 RT_ENUM! { enum GameControllerSwitchPosition: i32 {
-    Center (GameControllerSwitchPosition_Center) = 0, Up (GameControllerSwitchPosition_Up) = 1, UpRight (GameControllerSwitchPosition_UpRight) = 2, Right (GameControllerSwitchPosition_Right) = 3, DownRight (GameControllerSwitchPosition_DownRight) = 4, Down (GameControllerSwitchPosition_Down) = 5, DownLeft (GameControllerSwitchPosition_DownLeft) = 6, Left (GameControllerSwitchPosition_Left) = 7, UpLeft (GameControllerSwitchPosition_UpLeft) = 8,
+    Center = 0, Up = 1, UpRight = 2, Right = 3, DownRight = 4, Down = 5, DownLeft = 6, Left = 7, UpLeft = 8,
 }}
 DEFINE_IID!(IID_IGamepad, 3162223676, 2665, 14595, 158, 157, 165, 15, 134, 164, 93, 229);
 RT_INTERFACE!{interface IGamepad(IGamepadVtbl): IInspectable(IInspectableVtbl) [IID_IGamepad] {
@@ -316,7 +316,7 @@ impl IGamepad2 {
     }}
 }
 RT_ENUM! { enum GamepadButtons: u32 {
-    None (GamepadButtons_None) = 0, Menu (GamepadButtons_Menu) = 1, View (GamepadButtons_View) = 2, A (GamepadButtons_A) = 4, B (GamepadButtons_B) = 8, X (GamepadButtons_X) = 16, Y (GamepadButtons_Y) = 32, DPadUp (GamepadButtons_DPadUp) = 64, DPadDown (GamepadButtons_DPadDown) = 128, DPadLeft (GamepadButtons_DPadLeft) = 256, DPadRight (GamepadButtons_DPadRight) = 512, LeftShoulder (GamepadButtons_LeftShoulder) = 1024, RightShoulder (GamepadButtons_RightShoulder) = 2048, LeftThumbstick (GamepadButtons_LeftThumbstick) = 4096, RightThumbstick (GamepadButtons_RightThumbstick) = 8192, Paddle1 (GamepadButtons_Paddle1) = 16384, Paddle2 (GamepadButtons_Paddle2) = 32768, Paddle3 (GamepadButtons_Paddle3) = 65536, Paddle4 (GamepadButtons_Paddle4) = 131072,
+    None = 0, Menu = 1, View = 2, A = 4, B = 8, X = 16, Y = 32, DPadUp = 64, DPadDown = 128, DPadLeft = 256, DPadRight = 512, LeftShoulder = 1024, RightShoulder = 2048, LeftThumbstick = 4096, RightThumbstick = 8192, Paddle1 = 16384, Paddle2 = 32768, Paddle3 = 65536, Paddle4 = 131072,
 }}
 RT_STRUCT! { struct GamepadReading {
     Timestamp: u64, Buttons: GamepadButtons, LeftTrigger: f64, RightTrigger: f64, LeftThumbstickX: f64, LeftThumbstickY: f64, RightThumbstickX: f64, RightThumbstickY: f64,
@@ -387,7 +387,7 @@ impl IHeadset {
 }
 RT_CLASS!{class Headset: IHeadset}
 RT_ENUM! { enum OptionalUINavigationButtons: u32 {
-    None (OptionalUINavigationButtons_None) = 0, Context1 (OptionalUINavigationButtons_Context1) = 1, Context2 (OptionalUINavigationButtons_Context2) = 2, Context3 (OptionalUINavigationButtons_Context3) = 4, Context4 (OptionalUINavigationButtons_Context4) = 8, PageUp (OptionalUINavigationButtons_PageUp) = 16, PageDown (OptionalUINavigationButtons_PageDown) = 32, PageLeft (OptionalUINavigationButtons_PageLeft) = 64, PageRight (OptionalUINavigationButtons_PageRight) = 128, ScrollUp (OptionalUINavigationButtons_ScrollUp) = 256, ScrollDown (OptionalUINavigationButtons_ScrollDown) = 512, ScrollLeft (OptionalUINavigationButtons_ScrollLeft) = 1024, ScrollRight (OptionalUINavigationButtons_ScrollRight) = 2048,
+    None = 0, Context1 = 1, Context2 = 2, Context3 = 4, Context4 = 8, PageUp = 16, PageDown = 32, PageLeft = 64, PageRight = 128, ScrollUp = 256, ScrollDown = 512, ScrollLeft = 1024, ScrollRight = 2048,
 }}
 DEFINE_IID!(IID_IRacingWheel, 4115031407, 57606, 19586, 169, 15, 85, 64, 18, 144, 75, 133);
 RT_INTERFACE!{interface IRacingWheel(IRacingWheelVtbl): IInspectable(IInspectableVtbl) [IID_IRacingWheel] {
@@ -467,7 +467,7 @@ impl RacingWheel {
 }
 DEFINE_CLSID!(RacingWheel(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,82,97,99,105,110,103,87,104,101,101,108,0]) [CLSID_RacingWheel]);
 RT_ENUM! { enum RacingWheelButtons: u32 {
-    None (RacingWheelButtons_None) = 0, PreviousGear (RacingWheelButtons_PreviousGear) = 1, NextGear (RacingWheelButtons_NextGear) = 2, DPadUp (RacingWheelButtons_DPadUp) = 4, DPadDown (RacingWheelButtons_DPadDown) = 8, DPadLeft (RacingWheelButtons_DPadLeft) = 16, DPadRight (RacingWheelButtons_DPadRight) = 32, Button1 (RacingWheelButtons_Button1) = 64, Button2 (RacingWheelButtons_Button2) = 128, Button3 (RacingWheelButtons_Button3) = 256, Button4 (RacingWheelButtons_Button4) = 512, Button5 (RacingWheelButtons_Button5) = 1024, Button6 (RacingWheelButtons_Button6) = 2048, Button7 (RacingWheelButtons_Button7) = 4096, Button8 (RacingWheelButtons_Button8) = 8192, Button9 (RacingWheelButtons_Button9) = 16384, Button10 (RacingWheelButtons_Button10) = 32768, Button11 (RacingWheelButtons_Button11) = 65536, Button12 (RacingWheelButtons_Button12) = 131072, Button13 (RacingWheelButtons_Button13) = 262144, Button14 (RacingWheelButtons_Button14) = 524288, Button15 (RacingWheelButtons_Button15) = 1048576, Button16 (RacingWheelButtons_Button16) = 2097152,
+    None = 0, PreviousGear = 1, NextGear = 2, DPadUp = 4, DPadDown = 8, DPadLeft = 16, DPadRight = 32, Button1 = 64, Button2 = 128, Button3 = 256, Button4 = 512, Button5 = 1024, Button6 = 2048, Button7 = 4096, Button8 = 8192, Button9 = 16384, Button10 = 32768, Button11 = 65536, Button12 = 131072, Button13 = 262144, Button14 = 524288, Button15 = 1048576, Button16 = 2097152,
 }}
 RT_STRUCT! { struct RacingWheelReading {
     Timestamp: u64, Buttons: RacingWheelButtons, PatternShifterGear: i32, Wheel: f64, Throttle: f64, Brake: f64, Clutch: f64, Handbrake: f64,
@@ -662,7 +662,7 @@ impl IRawGameControllerStatics {
     }}
 }
 RT_ENUM! { enum RequiredUINavigationButtons: u32 {
-    None (RequiredUINavigationButtons_None) = 0, Menu (RequiredUINavigationButtons_Menu) = 1, View (RequiredUINavigationButtons_View) = 2, Accept (RequiredUINavigationButtons_Accept) = 4, Cancel (RequiredUINavigationButtons_Cancel) = 8, Up (RequiredUINavigationButtons_Up) = 16, Down (RequiredUINavigationButtons_Down) = 32, Left (RequiredUINavigationButtons_Left) = 64, Right (RequiredUINavigationButtons_Right) = 128,
+    None = 0, Menu = 1, View = 2, Accept = 4, Cancel = 8, Up = 16, Down = 32, Left = 64, Right = 128,
 }}
 DEFINE_IID!(IID_IUINavigationController, 3853447133, 62734, 19029, 140, 220, 211, 50, 41, 84, 129, 117);
 RT_INTERFACE!{interface IUINavigationController(IUINavigationControllerVtbl): IInspectable(IInspectableVtbl) [IID_IUINavigationController] {
@@ -911,7 +911,7 @@ impl IGipFirmwareUpdateResult {
 }
 RT_CLASS!{class GipFirmwareUpdateResult: IGipFirmwareUpdateResult}
 RT_ENUM! { enum GipFirmwareUpdateStatus: i32 {
-    Completed (GipFirmwareUpdateStatus_Completed) = 0, UpToDate (GipFirmwareUpdateStatus_UpToDate) = 1, Failed (GipFirmwareUpdateStatus_Failed) = 2,
+    Completed = 0, UpToDate = 1, Failed = 2,
 }}
 DEFINE_IID!(IID_IGipGameControllerInputSink, 2718993087, 2545, 17340, 161, 64, 128, 248, 153, 236, 54, 251);
 RT_INTERFACE!{interface IGipGameControllerInputSink(IGipGameControllerInputSinkVtbl): IInspectable(IInspectableVtbl) [IID_IGipGameControllerInputSink] {
@@ -951,7 +951,7 @@ impl IGipGameControllerProvider {
 }
 RT_CLASS!{class GipGameControllerProvider: IGipGameControllerProvider}
 RT_ENUM! { enum GipMessageClass: i32 {
-    Command (GipMessageClass_Command) = 0, LowLatency (GipMessageClass_LowLatency) = 1, StandardLatency (GipMessageClass_StandardLatency) = 2,
+    Command = 0, LowLatency = 1, StandardLatency = 2,
 }}
 DEFINE_IID!(IID_IHidGameControllerInputSink, 4149527330, 6189, 16612, 161, 38, 252, 238, 79, 250, 30, 49);
 RT_INTERFACE!{interface IHidGameControllerInputSink(IHidGameControllerInputSinkVtbl): IInspectable(IInspectableVtbl) [IID_IHidGameControllerInputSink] {
@@ -997,10 +997,10 @@ impl IHidGameControllerProvider {
 }
 RT_CLASS!{class HidGameControllerProvider: IHidGameControllerProvider}
 RT_ENUM! { enum XusbDeviceSubtype: i32 {
-    Unknown (XusbDeviceSubtype_Unknown) = 0, Gamepad (XusbDeviceSubtype_Gamepad) = 1, ArcadePad (XusbDeviceSubtype_ArcadePad) = 2, ArcadeStick (XusbDeviceSubtype_ArcadeStick) = 3, FlightStick (XusbDeviceSubtype_FlightStick) = 4, Wheel (XusbDeviceSubtype_Wheel) = 5, Guitar (XusbDeviceSubtype_Guitar) = 6, GuitarAlternate (XusbDeviceSubtype_GuitarAlternate) = 7, GuitarBass (XusbDeviceSubtype_GuitarBass) = 8, DrumKit (XusbDeviceSubtype_DrumKit) = 9, DancePad (XusbDeviceSubtype_DancePad) = 10,
+    Unknown = 0, Gamepad = 1, ArcadePad = 2, ArcadeStick = 3, FlightStick = 4, Wheel = 5, Guitar = 6, GuitarAlternate = 7, GuitarBass = 8, DrumKit = 9, DancePad = 10,
 }}
 RT_ENUM! { enum XusbDeviceType: i32 {
-    Unknown (XusbDeviceType_Unknown) = 0, Gamepad (XusbDeviceType_Gamepad) = 1,
+    Unknown = 0, Gamepad = 1,
 }}
 DEFINE_IID!(IID_IXusbGameControllerInputSink, 2997624213, 28363, 17075, 138, 171, 2, 84, 1, 202, 71, 18);
 RT_INTERFACE!{interface IXusbGameControllerInputSink(IXusbGameControllerInputSinkVtbl): IInspectable(IInspectableVtbl) [IID_IXusbGameControllerInputSink] {
@@ -1062,7 +1062,7 @@ impl IConditionForceEffectFactory {
     }}
 }
 RT_ENUM! { enum ConditionForceEffectKind: i32 {
-    Spring (ConditionForceEffectKind_Spring) = 0, Damper (ConditionForceEffectKind_Damper) = 1, Inertia (ConditionForceEffectKind_Inertia) = 2, Friction (ConditionForceEffectKind_Friction) = 3,
+    Spring = 0, Damper = 1, Inertia = 2, Friction = 3,
 }}
 DEFINE_IID!(IID_IConstantForceEffect, 2616852800, 62407, 16732, 176, 104, 15, 6, 135, 52, 188, 224);
 RT_INTERFACE!{interface IConstantForceEffect(IConstantForceEffectVtbl): IInspectable(IInspectableVtbl) [IID_IConstantForceEffect] {
@@ -1115,13 +1115,13 @@ impl IForceFeedbackEffect {
     }}
 }
 RT_ENUM! { enum ForceFeedbackEffectAxes: u32 {
-    None (ForceFeedbackEffectAxes_None) = 0, X (ForceFeedbackEffectAxes_X) = 1, Y (ForceFeedbackEffectAxes_Y) = 2, Z (ForceFeedbackEffectAxes_Z) = 4,
+    None = 0, X = 1, Y = 2, Z = 4,
 }}
 RT_ENUM! { enum ForceFeedbackEffectState: i32 {
-    Stopped (ForceFeedbackEffectState_Stopped) = 0, Running (ForceFeedbackEffectState_Running) = 1, Paused (ForceFeedbackEffectState_Paused) = 2, Faulted (ForceFeedbackEffectState_Faulted) = 3,
+    Stopped = 0, Running = 1, Paused = 2, Faulted = 3,
 }}
 RT_ENUM! { enum ForceFeedbackLoadEffectResult: i32 {
-    Succeeded (ForceFeedbackLoadEffectResult_Succeeded) = 0, EffectStorageFull (ForceFeedbackLoadEffectResult_EffectStorageFull) = 1, EffectNotSupported (ForceFeedbackLoadEffectResult_EffectNotSupported) = 2,
+    Succeeded = 0, EffectStorageFull = 1, EffectNotSupported = 2,
 }}
 DEFINE_IID!(IID_IForceFeedbackMotor, 2369601916, 42474, 17686, 128, 38, 43, 0, 247, 78, 246, 229);
 RT_INTERFACE!{interface IForceFeedbackMotor(IForceFeedbackMotorVtbl): IInspectable(IInspectableVtbl) [IID_IForceFeedbackMotor] {
@@ -1244,7 +1244,7 @@ impl IPeriodicForceEffectFactory {
     }}
 }
 RT_ENUM! { enum PeriodicForceEffectKind: i32 {
-    SquareWave (PeriodicForceEffectKind_SquareWave) = 0, SineWave (PeriodicForceEffectKind_SineWave) = 1, TriangleWave (PeriodicForceEffectKind_TriangleWave) = 2, SawtoothWaveUp (PeriodicForceEffectKind_SawtoothWaveUp) = 3, SawtoothWaveDown (PeriodicForceEffectKind_SawtoothWaveDown) = 4,
+    SquareWave = 0, SineWave = 1, TriangleWave = 2, SawtoothWaveUp = 3, SawtoothWaveDown = 4,
 }}
 DEFINE_IID!(IID_IRampForceEffect, 4059566681, 7334, 16512, 181, 109, 180, 63, 51, 84, 208, 82);
 RT_INTERFACE!{interface IRampForceEffect(IRampForceEffectVtbl): IInspectable(IInspectableVtbl) [IID_IRampForceEffect] {
@@ -1337,7 +1337,7 @@ impl GameList {
 }
 DEFINE_CLSID!(GameList(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,80,114,101,118,105,101,119,46,71,97,109,101,115,69,110,117,109,101,114,97,116,105,111,110,46,71,97,109,101,76,105,115,116,0]) [CLSID_GameList]);
 RT_ENUM! { enum GameListCategory: i32 {
-    Candidate (GameListCategory_Candidate) = 0, ConfirmedBySystem (GameListCategory_ConfirmedBySystem) = 1, ConfirmedByUser (GameListCategory_ConfirmedByUser) = 2,
+    Candidate = 0, ConfirmedBySystem = 1, ConfirmedByUser = 2,
 }}
 DEFINE_IID!(IID_GameListChangedEventHandler, 636920865, 55541, 19857, 180, 14, 83, 213, 232, 111, 222, 100);
 RT_DELEGATE!{delegate GameListChangedEventHandler(GameListChangedEventHandlerVtbl, GameListChangedEventHandlerImpl) [IID_GameListChangedEventHandler] {
@@ -1443,7 +1443,7 @@ impl IGameListEntry2 {
     }}
 }
 RT_ENUM! { enum GameListEntryLaunchableState: i32 {
-    NotLaunchable (GameListEntryLaunchableState_NotLaunchable) = 0, ByLastRunningFullPath (GameListEntryLaunchableState_ByLastRunningFullPath) = 1, ByUserProvidedPath (GameListEntryLaunchableState_ByUserProvidedPath) = 2, ByTile (GameListEntryLaunchableState_ByTile) = 3,
+    NotLaunchable = 0, ByLastRunningFullPath = 1, ByUserProvidedPath = 2, ByTile = 3,
 }}
 DEFINE_IID!(IID_GameListRemovedEventHandler, 281371791, 27791, 18194, 155, 56, 71, 75, 194, 46, 118, 216);
 RT_DELEGATE!{delegate GameListRemovedEventHandler(GameListRemovedEventHandlerVtbl, GameListRemovedEventHandlerImpl) [IID_GameListRemovedEventHandler] {
@@ -1731,7 +1731,7 @@ impl IGameBarStatics {
     }}
 }
 RT_ENUM! { enum GameChatMessageOrigin: i32 {
-    Voice (GameChatMessageOrigin_Voice) = 0, Text (GameChatMessageOrigin_Text) = 1,
+    Voice = 0, Text = 1,
 }}
 DEFINE_IID!(IID_IGameChatMessageReceivedEventArgs, 2726429169, 16313, 20034, 164, 3, 122, 252, 226, 2, 59, 30);
 RT_INTERFACE!{interface IGameChatMessageReceivedEventArgs(IGameChatMessageReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatMessageReceivedEventArgs] {
@@ -1823,7 +1823,7 @@ RT_CLASS!{class GameChatOverlayMessageSource: IGameChatOverlayMessageSource}
 impl RtActivatable<IActivationFactory> for GameChatOverlayMessageSource {}
 DEFINE_CLSID!(GameChatOverlayMessageSource(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,67,104,97,116,79,118,101,114,108,97,121,77,101,115,115,97,103,101,83,111,117,114,99,101,0]) [CLSID_GameChatOverlayMessageSource]);
 RT_ENUM! { enum GameChatOverlayPosition: i32 {
-    BottomCenter (GameChatOverlayPosition_BottomCenter) = 0, BottomLeft (GameChatOverlayPosition_BottomLeft) = 1, BottomRight (GameChatOverlayPosition_BottomRight) = 2, MiddleRight (GameChatOverlayPosition_MiddleRight) = 3, MiddleLeft (GameChatOverlayPosition_MiddleLeft) = 4, TopCenter (GameChatOverlayPosition_TopCenter) = 5, TopLeft (GameChatOverlayPosition_TopLeft) = 6, TopRight (GameChatOverlayPosition_TopRight) = 7,
+    BottomCenter = 0, BottomLeft = 1, BottomRight = 2, MiddleRight = 3, MiddleLeft = 4, TopCenter = 5, TopLeft = 6, TopRight = 7,
 }}
 DEFINE_IID!(IID_IGameChatOverlayStatics, 2309813780, 30823, 18935, 150, 135, 37, 217, 219, 244, 68, 209);
 RT_INTERFACE!{static interface IGameChatOverlayStatics(IGameChatOverlayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatOverlayStatics] {
@@ -2064,7 +2064,7 @@ impl IGameSaveContainerInfoQuery {
 }
 RT_CLASS!{class GameSaveContainerInfoQuery: IGameSaveContainerInfoQuery}
 RT_ENUM! { enum GameSaveErrorStatus: i32 {
-    Ok (GameSaveErrorStatus_Ok) = 0, Abort (GameSaveErrorStatus_Abort) = -2147467260, InvalidContainerName (GameSaveErrorStatus_InvalidContainerName) = -2138898431, NoAccess (GameSaveErrorStatus_NoAccess) = -2138898430, OutOfLocalStorage (GameSaveErrorStatus_OutOfLocalStorage) = -2138898429, UserCanceled (GameSaveErrorStatus_UserCanceled) = -2138898428, UpdateTooBig (GameSaveErrorStatus_UpdateTooBig) = -2138898427, QuotaExceeded (GameSaveErrorStatus_QuotaExceeded) = -2138898426, ProvidedBufferTooSmall (GameSaveErrorStatus_ProvidedBufferTooSmall) = -2138898425, BlobNotFound (GameSaveErrorStatus_BlobNotFound) = -2138898424, NoXboxLiveInfo (GameSaveErrorStatus_NoXboxLiveInfo) = -2138898423, ContainerNotInSync (GameSaveErrorStatus_ContainerNotInSync) = -2138898422, ContainerSyncFailed (GameSaveErrorStatus_ContainerSyncFailed) = -2138898421, UserHasNoXboxLiveInfo (GameSaveErrorStatus_UserHasNoXboxLiveInfo) = -2138898420, ObjectExpired (GameSaveErrorStatus_ObjectExpired) = -2138898419,
+    Ok = 0, Abort = -2147467260, InvalidContainerName = -2138898431, NoAccess = -2138898430, OutOfLocalStorage = -2138898429, UserCanceled = -2138898428, UpdateTooBig = -2138898427, QuotaExceeded = -2138898426, ProvidedBufferTooSmall = -2138898425, BlobNotFound = -2138898424, NoXboxLiveInfo = -2138898423, ContainerNotInSync = -2138898422, ContainerSyncFailed = -2138898421, UserHasNoXboxLiveInfo = -2138898420, ObjectExpired = -2138898419,
 }}
 DEFINE_IID!(IID_IGameSaveOperationResult, 3473873413, 9376, 17794, 154, 85, 177, 187, 187, 147, 136, 216);
 RT_INTERFACE!{interface IGameSaveOperationResult(IGameSaveOperationResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveOperationResult] {

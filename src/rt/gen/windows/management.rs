@@ -80,10 +80,10 @@ RT_CLASS!{class MdmAlert: IMdmAlert}
 impl RtActivatable<IActivationFactory> for MdmAlert {}
 DEFINE_CLSID!(MdmAlert(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,77,100,109,65,108,101,114,116,0]) [CLSID_MdmAlert]);
 RT_ENUM! { enum MdmAlertDataType: i32 {
-    String (MdmAlertDataType_String) = 0, Base64 (MdmAlertDataType_Base64) = 1, Boolean (MdmAlertDataType_Boolean) = 2, Integer (MdmAlertDataType_Integer) = 3,
+    String = 0, Base64 = 1, Boolean = 2, Integer = 3,
 }}
 RT_ENUM! { enum MdmAlertMark: i32 {
-    None (MdmAlertMark_None) = 0, Fatal (MdmAlertMark_Fatal) = 1, Critical (MdmAlertMark_Critical) = 2, Warning (MdmAlertMark_Warning) = 3, Informational (MdmAlertMark_Informational) = 4,
+    None = 0, Fatal = 1, Critical = 2, Warning = 3, Informational = 4,
 }}
 DEFINE_IID!(IID_IMdmSession, 4270403916, 36708, 18327, 169, 215, 157, 136, 248, 106, 225, 102);
 RT_INTERFACE!{interface IMdmSession(IMdmSessionVtbl): IInspectable(IInspectableVtbl) [IID_IMdmSession] {
@@ -184,7 +184,7 @@ impl IMdmSessionManagerStatics {
     }}
 }
 RT_ENUM! { enum MdmSessionState: i32 {
-    NotStarted (MdmSessionState_NotStarted) = 0, Starting (MdmSessionState_Starting) = 1, Connecting (MdmSessionState_Connecting) = 2, Communicating (MdmSessionState_Communicating) = 3, AlertStatusAvailable (MdmSessionState_AlertStatusAvailable) = 4, Retrying (MdmSessionState_Retrying) = 5, Completed (MdmSessionState_Completed) = 6,
+    NotStarted = 0, Starting = 1, Connecting = 2, Communicating = 3, AlertStatusAvailable = 4, Retrying = 5, Completed = 6,
 }}
 pub mod core { // Windows.Management.Core
 use ::prelude::*;
@@ -215,16 +215,16 @@ impl IApplicationDataManagerStatics {
 pub mod deployment { // Windows.Management.Deployment
 use ::prelude::*;
 RT_ENUM! { enum AddPackageByAppInstallerOptions: u32 {
-    None (AddPackageByAppInstallerOptions_None) = 0, InstallAllResources (AddPackageByAppInstallerOptions_InstallAllResources) = 32, ForceTargetAppShutdown (AddPackageByAppInstallerOptions_ForceTargetAppShutdown) = 64, RequiredContentGroupOnly (AddPackageByAppInstallerOptions_RequiredContentGroupOnly) = 256,
+    None = 0, InstallAllResources = 32, ForceTargetAppShutdown = 64, RequiredContentGroupOnly = 256,
 }}
 RT_ENUM! { enum DeploymentOptions: u32 {
-    None (DeploymentOptions_None) = 0, ForceApplicationShutdown (DeploymentOptions_ForceApplicationShutdown) = 1, DevelopmentMode (DeploymentOptions_DevelopmentMode) = 2, InstallAllResources (DeploymentOptions_InstallAllResources) = 32, ForceTargetApplicationShutdown (DeploymentOptions_ForceTargetApplicationShutdown) = 64, RequiredContentGroupOnly (DeploymentOptions_RequiredContentGroupOnly) = 256, ForceUpdateFromAnyVersion (DeploymentOptions_ForceUpdateFromAnyVersion) = 262144,
+    None = 0, ForceApplicationShutdown = 1, DevelopmentMode = 2, InstallAllResources = 32, ForceTargetApplicationShutdown = 64, RequiredContentGroupOnly = 256, ForceUpdateFromAnyVersion = 262144,
 }}
 RT_STRUCT! { struct DeploymentProgress {
     state: DeploymentProgressState, percentage: u32,
 }}
 RT_ENUM! { enum DeploymentProgressState: i32 {
-    Queued (DeploymentProgressState_Queued) = 0, Processing (DeploymentProgressState_Processing) = 1,
+    Queued = 0, Processing = 1,
 }}
 DEFINE_IID!(IID_IDeploymentResult, 627292590, 46973, 19487, 138, 123, 32, 230, 173, 81, 94, 243);
 RT_INTERFACE!{interface IDeploymentResult(IDeploymentResultVtbl): IInspectable(IInspectableVtbl) [IID_IDeploymentResult] {
@@ -262,7 +262,7 @@ impl IDeploymentResult2 {
     }}
 }
 RT_ENUM! { enum PackageInstallState: i32 {
-    NotInstalled (PackageInstallState_NotInstalled) = 0, Staged (PackageInstallState_Staged) = 1, Installed (PackageInstallState_Installed) = 2, Paused (PackageInstallState_Paused) = 6,
+    NotInstalled = 0, Staged = 1, Installed = 2, Paused = 6,
 }}
 DEFINE_IID!(IID_IPackageManager, 2591902565, 24207, 20423, 162, 229, 127, 105, 37, 203, 139, 83);
 RT_INTERFACE!{interface IPackageManager(IPackageManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager] {
@@ -652,13 +652,13 @@ impl IPackageManagerDebugSettings {
 }
 RT_CLASS!{class PackageManagerDebugSettings: IPackageManagerDebugSettings}
 RT_ENUM! { enum PackageState: i32 {
-    Normal (PackageState_Normal) = 0, LicenseInvalid (PackageState_LicenseInvalid) = 1, Modified (PackageState_Modified) = 2, Tampered (PackageState_Tampered) = 3,
+    Normal = 0, LicenseInvalid = 1, Modified = 2, Tampered = 3,
 }}
 RT_ENUM! { enum PackageStatus: u32 {
-    OK (PackageStatus_OK) = 0, LicenseIssue (PackageStatus_LicenseIssue) = 1, Modified (PackageStatus_Modified) = 2, Tampered (PackageStatus_Tampered) = 4, Disabled (PackageStatus_Disabled) = 8,
+    OK = 0, LicenseIssue = 1, Modified = 2, Tampered = 4, Disabled = 8,
 }}
 RT_ENUM! { enum PackageTypes: u32 {
-    None (PackageTypes_None) = 0, Main (PackageTypes_Main) = 1, Framework (PackageTypes_Framework) = 2, Resource (PackageTypes_Resource) = 4, Bundle (PackageTypes_Bundle) = 8, Xap (PackageTypes_Xap) = 16, Optional (PackageTypes_Optional) = 32,
+    None = 0, Main = 1, Framework = 2, Resource = 4, Bundle = 8, Xap = 16, Optional = 32,
 }}
 DEFINE_IID!(IID_IPackageUserInformation, 4130878499, 64009, 19644, 144, 85, 21, 202, 39, 94, 46, 126);
 RT_INTERFACE!{interface IPackageUserInformation(IPackageUserInformationVtbl): IInspectable(IInspectableVtbl) [IID_IPackageUserInformation] {
@@ -828,7 +828,7 @@ impl IPackageVolume2 {
     }}
 }
 RT_ENUM! { enum RemovalOptions: u32 {
-    None (RemovalOptions_None) = 0, PreserveApplicationData (RemovalOptions_PreserveApplicationData) = 4096, RemoveForAllUsers (RemovalOptions_RemoveForAllUsers) = 524288,
+    None = 0, PreserveApplicationData = 4096, RemoveForAllUsers = 524288,
 }}
 pub mod preview { // Windows.Management.Deployment.Preview
 use ::prelude::*;
@@ -970,7 +970,7 @@ impl INamedPolicyData {
 }
 RT_CLASS!{class NamedPolicyData: INamedPolicyData}
 RT_ENUM! { enum NamedPolicyKind: i32 {
-    Invalid (NamedPolicyKind_Invalid) = 0, Binary (NamedPolicyKind_Binary) = 1, Boolean (NamedPolicyKind_Boolean) = 2, Int32 (NamedPolicyKind_Int32) = 3, Int64 (NamedPolicyKind_Int64) = 4, String (NamedPolicyKind_String) = 5,
+    Invalid = 0, Binary = 1, Boolean = 2, Int32 = 3, Int64 = 4, String = 5,
 }}
 DEFINE_IID!(IID_INamedPolicyStatics, 2138651623, 30404, 16472, 140, 173, 103, 102, 44, 208, 95, 13);
 RT_INTERFACE!{static interface INamedPolicyStatics(INamedPolicyStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INamedPolicyStatics] {
@@ -1125,7 +1125,7 @@ impl IMdmPolicyStatics2 {
     }}
 }
 RT_ENUM! { enum MessagingSyncPolicy: i32 {
-    Disallowed (MessagingSyncPolicy_Disallowed) = 0, Allowed (MessagingSyncPolicy_Allowed) = 1, Required (MessagingSyncPolicy_Required) = 2,
+    Disallowed = 0, Allowed = 1, Required = 2,
 }}
 RT_CLASS!{static class WorkplaceSettings}
 impl RtActivatable<IWorkplaceSettingsStatics> for WorkplaceSettings {}

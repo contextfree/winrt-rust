@@ -201,7 +201,7 @@ impl<TResult: RtType, TProgress: RtType> AsyncOperationWithProgressCompletedHand
     }}
 }
 RT_ENUM! { enum AsyncStatus: i32 {
-    Canceled (AsyncStatus_Canceled) = 2, Completed (AsyncStatus_Completed) = 1, Error (AsyncStatus_Error) = 3, Started (AsyncStatus_Started) = 0,
+    Canceled = 2, Completed = 1, Error = 3, Started = 0,
 }}
 DEFINE_IID!(IID_IClosable, 819308585, 32676, 16422, 131, 187, 215, 91, 174, 78, 169, 158);
 RT_INTERFACE!{interface IClosable(IClosableVtbl): IInspectable(IInspectableVtbl) [IID_IClosable] {
@@ -375,7 +375,7 @@ RT_STRUCT! { struct Point {
     X: f32, Y: f32,
 }}
 RT_ENUM! { enum PropertyType: i32 {
-    Empty (PropertyType_Empty) = 0, UInt8 (PropertyType_UInt8) = 1, Int16 (PropertyType_Int16) = 2, UInt16 (PropertyType_UInt16) = 3, Int32 (PropertyType_Int32) = 4, UInt32 (PropertyType_UInt32) = 5, Int64 (PropertyType_Int64) = 6, UInt64 (PropertyType_UInt64) = 7, Single (PropertyType_Single) = 8, Double (PropertyType_Double) = 9, Char16 (PropertyType_Char16) = 10, Boolean (PropertyType_Boolean) = 11, String (PropertyType_String) = 12, Inspectable (PropertyType_Inspectable) = 13, DateTime (PropertyType_DateTime) = 14, TimeSpan (PropertyType_TimeSpan) = 15, Guid (PropertyType_Guid) = 16, Point (PropertyType_Point) = 17, Size (PropertyType_Size) = 18, Rect (PropertyType_Rect) = 19, OtherType (PropertyType_OtherType) = 20, UInt8Array (PropertyType_UInt8Array) = 1025, Int16Array (PropertyType_Int16Array) = 1026, UInt16Array (PropertyType_UInt16Array) = 1027, Int32Array (PropertyType_Int32Array) = 1028, UInt32Array (PropertyType_UInt32Array) = 1029, Int64Array (PropertyType_Int64Array) = 1030, UInt64Array (PropertyType_UInt64Array) = 1031, SingleArray (PropertyType_SingleArray) = 1032, DoubleArray (PropertyType_DoubleArray) = 1033, Char16Array (PropertyType_Char16Array) = 1034, BooleanArray (PropertyType_BooleanArray) = 1035, StringArray (PropertyType_StringArray) = 1036, InspectableArray (PropertyType_InspectableArray) = 1037, DateTimeArray (PropertyType_DateTimeArray) = 1038, TimeSpanArray (PropertyType_TimeSpanArray) = 1039, GuidArray (PropertyType_GuidArray) = 1040, PointArray (PropertyType_PointArray) = 1041, SizeArray (PropertyType_SizeArray) = 1042, RectArray (PropertyType_RectArray) = 1043, OtherTypeArray (PropertyType_OtherTypeArray) = 1044,
+    Empty = 0, UInt8 = 1, Int16 = 2, UInt16 = 3, Int32 = 4, UInt32 = 5, Int64 = 6, UInt64 = 7, Single = 8, Double = 9, Char16 = 10, Boolean = 11, String = 12, Inspectable = 13, DateTime = 14, TimeSpan = 15, Guid = 16, Point = 17, Size = 18, Rect = 19, OtherType = 20, UInt8Array = 1025, Int16Array = 1026, UInt16Array = 1027, Int32Array = 1028, UInt32Array = 1029, Int64Array = 1030, UInt64Array = 1031, SingleArray = 1032, DoubleArray = 1033, Char16Array = 1034, BooleanArray = 1035, StringArray = 1036, InspectableArray = 1037, DateTimeArray = 1038, TimeSpanArray = 1039, GuidArray = 1040, PointArray = 1041, SizeArray = 1042, RectArray = 1043, OtherTypeArray = 1044,
 }}
 DEFINE_IID!(IID_IPropertyValue, 1272349405, 30036, 16617, 154, 155, 130, 101, 78, 222, 126, 98);
 RT_INTERFACE!{interface IPropertyValue(IPropertyValueVtbl): IInspectable(IInspectableVtbl) [IID_IPropertyValue] {
@@ -3409,7 +3409,7 @@ RT_PINTERFACE!{ for TypedEventHandler<IMemoryBufferReference, IInspectable> => [
 pub mod collections { // Windows.Foundation.Collections
 use ::prelude::*;
 RT_ENUM! { enum CollectionChange: i32 {
-    Reset (CollectionChange_Reset) = 0, ItemInserted (CollectionChange_ItemInserted) = 1, ItemRemoved (CollectionChange_ItemRemoved) = 2, ItemChanged (CollectionChange_ItemChanged) = 3,
+    Reset = 0, ItemInserted = 1, ItemRemoved = 2, ItemChanged = 3,
 }}
 DEFINE_IID!(IID_IIterable, 4205151722, 25108, 16919, 175, 218, 127, 70, 222, 88, 105, 179);
 RT_INTERFACE!{interface IIterable<T>(IIterableVtbl): IInspectable(IInspectableVtbl) [IID_IIterable] {
@@ -5746,16 +5746,16 @@ impl IAsyncCausalityTracerStatics {
     }}
 }
 RT_ENUM! { enum CausalityRelation: i32 {
-    AssignDelegate (CausalityRelation_AssignDelegate) = 0, Join (CausalityRelation_Join) = 1, Choice (CausalityRelation_Choice) = 2, Cancel (CausalityRelation_Cancel) = 3, Error (CausalityRelation_Error) = 4,
+    AssignDelegate = 0, Join = 1, Choice = 2, Cancel = 3, Error = 4,
 }}
 RT_ENUM! { enum CausalitySource: i32 {
-    Application (CausalitySource_Application) = 0, Library (CausalitySource_Library) = 1, System (CausalitySource_System) = 2,
+    Application = 0, Library = 1, System = 2,
 }}
 RT_ENUM! { enum CausalitySynchronousWork: i32 {
-    CompletionNotification (CausalitySynchronousWork_CompletionNotification) = 0, ProgressNotification (CausalitySynchronousWork_ProgressNotification) = 1, Execution (CausalitySynchronousWork_Execution) = 2,
+    CompletionNotification = 0, ProgressNotification = 1, Execution = 2,
 }}
 RT_ENUM! { enum CausalityTraceLevel: i32 {
-    Required (CausalityTraceLevel_Required) = 0, Important (CausalityTraceLevel_Important) = 1, Verbose (CausalityTraceLevel_Verbose) = 2,
+    Required = 0, Important = 1, Verbose = 2,
 }}
 DEFINE_IID!(IID_IErrorDetails, 931969793, 11465, 17039, 140, 85, 44, 153, 13, 70, 62, 143);
 RT_INTERFACE!{interface IErrorDetails(IErrorDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorDetails] {
@@ -5800,7 +5800,7 @@ impl IErrorDetailsStatics {
     }}
 }
 RT_ENUM! { enum ErrorOptions: u32 {
-    None (ErrorOptions_None) = 0, SuppressExceptions (ErrorOptions_SuppressExceptions) = 1, ForceExceptions (ErrorOptions_ForceExceptions) = 2, UseSetErrorInfo (ErrorOptions_UseSetErrorInfo) = 4, SuppressSetErrorInfo (ErrorOptions_SuppressSetErrorInfo) = 8,
+    None = 0, SuppressExceptions = 1, ForceExceptions = 2, UseSetErrorInfo = 4, SuppressSetErrorInfo = 8,
 }}
 DEFINE_IID!(IID_IErrorReportingSettings, 372676498, 45118, 19361, 139, 184, 210, 143, 74, 180, 210, 192);
 RT_INTERFACE!{interface IErrorReportingSettings(IErrorReportingSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorReportingSettings] {
@@ -6109,7 +6109,7 @@ impl ILoggingChannelOptionsFactory {
     }}
 }
 RT_ENUM! { enum LoggingFieldFormat: i32 {
-    Default (LoggingFieldFormat_Default) = 0, Hidden (LoggingFieldFormat_Hidden) = 1, String (LoggingFieldFormat_String) = 2, Boolean (LoggingFieldFormat_Boolean) = 3, Hexadecimal (LoggingFieldFormat_Hexadecimal) = 4, ProcessId (LoggingFieldFormat_ProcessId) = 5, ThreadId (LoggingFieldFormat_ThreadId) = 6, Port (LoggingFieldFormat_Port) = 7, Ipv4Address (LoggingFieldFormat_Ipv4Address) = 8, Ipv6Address (LoggingFieldFormat_Ipv6Address) = 9, SocketAddress (LoggingFieldFormat_SocketAddress) = 10, Xml (LoggingFieldFormat_Xml) = 11, Json (LoggingFieldFormat_Json) = 12, Win32Error (LoggingFieldFormat_Win32Error) = 13, NTStatus (LoggingFieldFormat_NTStatus) = 14, HResult (LoggingFieldFormat_HResult) = 15, FileTime (LoggingFieldFormat_FileTime) = 16, Signed (LoggingFieldFormat_Signed) = 17, Unsigned (LoggingFieldFormat_Unsigned) = 18,
+    Default = 0, Hidden = 1, String = 2, Boolean = 3, Hexadecimal = 4, ProcessId = 5, ThreadId = 6, Port = 7, Ipv4Address = 8, Ipv6Address = 9, SocketAddress = 10, Xml = 11, Json = 12, Win32Error = 13, NTStatus = 14, HResult = 15, FileTime = 16, Signed = 17, Unsigned = 18,
 }}
 DEFINE_IID!(IID_ILoggingFields, 3623270319, 30253, 17785, 131, 189, 82, 194, 59, 195, 51, 188);
 RT_INTERFACE!{interface ILoggingFields(ILoggingFieldsVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingFields] {
@@ -6695,10 +6695,10 @@ RT_CLASS!{class LoggingFields: ILoggingFields}
 impl RtActivatable<IActivationFactory> for LoggingFields {}
 DEFINE_CLSID!(LoggingFields(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,70,105,101,108,100,115,0]) [CLSID_LoggingFields]);
 RT_ENUM! { enum LoggingLevel: i32 {
-    Verbose (LoggingLevel_Verbose) = 0, Information (LoggingLevel_Information) = 1, Warning (LoggingLevel_Warning) = 2, Error (LoggingLevel_Error) = 3, Critical (LoggingLevel_Critical) = 4,
+    Verbose = 0, Information = 1, Warning = 2, Error = 3, Critical = 4,
 }}
 RT_ENUM! { enum LoggingOpcode: i32 {
-    Info (LoggingOpcode_Info) = 0, Start (LoggingOpcode_Start) = 1, Stop (LoggingOpcode_Stop) = 2, Reply (LoggingOpcode_Reply) = 6, Resume (LoggingOpcode_Resume) = 7, Suspend (LoggingOpcode_Suspend) = 8, Send (LoggingOpcode_Send) = 9,
+    Info = 0, Start = 1, Stop = 2, Reply = 6, Resume = 7, Suspend = 8, Send = 9,
 }}
 DEFINE_IID!(IID_ILoggingOptions, 2428270672, 402, 20317, 172, 38, 0, 106, 218, 202, 18, 216);
 RT_INTERFACE!{interface ILoggingOptions(ILoggingOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingOptions] {
@@ -7035,28 +7035,28 @@ impl IApiInformationStatics {
     }}
 }
 RT_ENUM! { enum AttributeTargets: u32 {
-    All (AttributeTargets_All) = 4294967295, Delegate (AttributeTargets_Delegate) = 1, Enum (AttributeTargets_Enum) = 2, Event (AttributeTargets_Event) = 4, Field (AttributeTargets_Field) = 8, Interface (AttributeTargets_Interface) = 16, Method (AttributeTargets_Method) = 64, Parameter (AttributeTargets_Parameter) = 128, Property (AttributeTargets_Property) = 256, RuntimeClass (AttributeTargets_RuntimeClass) = 512, Struct (AttributeTargets_Struct) = 1024, InterfaceImpl (AttributeTargets_InterfaceImpl) = 2048, ApiContract (AttributeTargets_ApiContract) = 8192,
+    All = 4294967295, Delegate = 1, Enum = 2, Event = 4, Field = 8, Interface = 16, Method = 64, Parameter = 128, Property = 256, RuntimeClass = 512, Struct = 1024, InterfaceImpl = 2048, ApiContract = 8192,
 }}
 RT_ENUM! { enum CompositionType: i32 {
-    Protected (CompositionType_Protected) = 1, Public (CompositionType_Public) = 2,
+    Protected = 1, Public = 2,
 }}
 RT_ENUM! { enum DeprecationType: i32 {
-    Deprecate (DeprecationType_Deprecate) = 0, Remove (DeprecationType_Remove) = 1,
+    Deprecate = 0, Remove = 1,
 }}
 RT_ENUM! { enum FeatureStage: i32 {
-    AlwaysDisabled (FeatureStage_AlwaysDisabled) = 0, DisabledByDefault (FeatureStage_DisabledByDefault) = 1, EnabledByDefault (FeatureStage_EnabledByDefault) = 2, AlwaysEnabled (FeatureStage_AlwaysEnabled) = 3,
+    AlwaysDisabled = 0, DisabledByDefault = 1, EnabledByDefault = 2, AlwaysEnabled = 3,
 }}
 RT_ENUM! { enum GCPressureAmount: i32 {
-    Low (GCPressureAmount_Low) = 0, Medium (GCPressureAmount_Medium) = 1, High (GCPressureAmount_High) = 2,
+    Low = 0, Medium = 1, High = 2,
 }}
 RT_ENUM! { enum MarshalingType: i32 {
-    None (MarshalingType_None) = 1, Agile (MarshalingType_Agile) = 2, Standard (MarshalingType_Standard) = 3, InvalidMarshaling (MarshalingType_InvalidMarshaling) = 0,
+    None = 1, Agile = 2, Standard = 3, InvalidMarshaling = 0,
 }}
 RT_ENUM! { enum Platform: i32 {
-    Windows (Platform_Windows) = 0, WindowsPhone (Platform_WindowsPhone) = 1,
+    Windows = 0, WindowsPhone = 1,
 }}
 RT_ENUM! { enum ThreadingModel: i32 {
-    STA (ThreadingModel_STA) = 1, MTA (ThreadingModel_MTA) = 2, Both (ThreadingModel_Both) = 3, InvalidThreading (ThreadingModel_InvalidThreading) = 0,
+    STA = 1, MTA = 2, Both = 3, InvalidThreading = 0,
 }}
 } // Windows.Foundation.Metadata
 pub mod numerics { // Windows.Foundation.Numerics

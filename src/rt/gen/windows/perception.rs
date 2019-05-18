@@ -213,7 +213,7 @@ impl ISpatialAnchorExporterStatics {
     }}
 }
 RT_ENUM! { enum SpatialAnchorExportPurpose: i32 {
-    Relocalization (SpatialAnchorExportPurpose_Relocalization) = 0, Sharing (SpatialAnchorExportPurpose_Sharing) = 1,
+    Relocalization = 0, Sharing = 1,
 }}
 DEFINE_IID!(IID_ISpatialAnchorExportSufficiency, 2009226027, 13321, 16520, 185, 27, 253, 253, 5, 209, 100, 143);
 RT_INTERFACE!{interface ISpatialAnchorExportSufficiency(ISpatialAnchorExportSufficiencyVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorExportSufficiency] {
@@ -639,10 +639,10 @@ impl ISpatialEntityWatcher {
 }
 RT_CLASS!{class SpatialEntityWatcher: ISpatialEntityWatcher}
 RT_ENUM! { enum SpatialEntityWatcherStatus: i32 {
-    Created (SpatialEntityWatcherStatus_Created) = 0, Started (SpatialEntityWatcherStatus_Started) = 1, EnumerationCompleted (SpatialEntityWatcherStatus_EnumerationCompleted) = 2, Stopping (SpatialEntityWatcherStatus_Stopping) = 3, Stopped (SpatialEntityWatcherStatus_Stopped) = 4, Aborted (SpatialEntityWatcherStatus_Aborted) = 5,
+    Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 RT_ENUM! { enum SpatialLocatability: i32 {
-    Unavailable (SpatialLocatability_Unavailable) = 0, OrientationOnly (SpatialLocatability_OrientationOnly) = 1, PositionalTrackingActivating (SpatialLocatability_PositionalTrackingActivating) = 2, PositionalTrackingActive (SpatialLocatability_PositionalTrackingActive) = 3, PositionalTrackingInhibited (SpatialLocatability_PositionalTrackingInhibited) = 4,
+    Unavailable = 0, OrientationOnly = 1, PositionalTrackingActivating = 2, PositionalTrackingActive = 3, PositionalTrackingInhibited = 4,
 }}
 DEFINE_IID!(IID_ISpatialLocation, 495047325, 9377, 14293, 143, 161, 57, 180, 249, 173, 103, 226);
 RT_INTERFACE!{interface ISpatialLocation(ISpatialLocationVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialLocation] {
@@ -872,13 +872,13 @@ impl ISpatialLocatorStatics {
     }}
 }
 RT_ENUM! { enum SpatialLookDirectionRange: i32 {
-    ForwardOnly (SpatialLookDirectionRange_ForwardOnly) = 0, Omnidirectional (SpatialLookDirectionRange_Omnidirectional) = 1,
+    ForwardOnly = 0, Omnidirectional = 1,
 }}
 RT_ENUM! { enum SpatialMovementRange: i32 {
-    NoMovement (SpatialMovementRange_NoMovement) = 0, Bounded (SpatialMovementRange_Bounded) = 1,
+    NoMovement = 0, Bounded = 1,
 }}
 RT_ENUM! { enum SpatialPerceptionAccessStatus: i32 {
-    Unspecified (SpatialPerceptionAccessStatus_Unspecified) = 0, Allowed (SpatialPerceptionAccessStatus_Allowed) = 1, DeniedByUser (SpatialPerceptionAccessStatus_DeniedByUser) = 2, DeniedBySystem (SpatialPerceptionAccessStatus_DeniedBySystem) = 3,
+    Unspecified = 0, Allowed = 1, DeniedByUser = 2, DeniedBySystem = 3,
 }}
 DEFINE_IID!(IID_ISpatialStageFrameOfReference, 2055877732, 44301, 17808, 171, 134, 51, 6, 43, 103, 73, 38);
 RT_INTERFACE!{interface ISpatialStageFrameOfReference(ISpatialStageFrameOfReferenceVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialStageFrameOfReference] {

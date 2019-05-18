@@ -1622,7 +1622,7 @@ impl ISettingsCommandStatics {
     }}
 }
 RT_ENUM! { enum SettingsEdgeLocation: i32 {
-    Right (SettingsEdgeLocation_Right) = 0, Left (SettingsEdgeLocation_Left) = 1,
+    Right = 0, Left = 1,
 }}
 DEFINE_IID!(IID_ISettingsPane, 2983004466, 17776, 19561, 141, 56, 137, 68, 101, 97, 172, 224);
 RT_INTERFACE!{interface ISettingsPane(ISettingsPaneVtbl): IInspectable(IInspectableVtbl) [IID_ISettingsPane] {
@@ -1701,10 +1701,10 @@ impl ISettingsPaneStatics {
     }}
 }
 RT_ENUM! { enum SupportedWebAccountActions: u32 {
-    None (SupportedWebAccountActions_None) = 0, Reconnect (SupportedWebAccountActions_Reconnect) = 1, Remove (SupportedWebAccountActions_Remove) = 2, ViewDetails (SupportedWebAccountActions_ViewDetails) = 4, Manage (SupportedWebAccountActions_Manage) = 8, More (SupportedWebAccountActions_More) = 16,
+    None = 0, Reconnect = 1, Remove = 2, ViewDetails = 4, Manage = 8, More = 16,
 }}
 RT_ENUM! { enum WebAccountAction: i32 {
-    Reconnect (WebAccountAction_Reconnect) = 0, Remove (WebAccountAction_Remove) = 1, ViewDetails (WebAccountAction_ViewDetails) = 2, Manage (WebAccountAction_Manage) = 3, More (WebAccountAction_More) = 4,
+    Reconnect = 0, Remove = 1, ViewDetails = 2, Manage = 3, More = 4,
 }}
 DEFINE_IID!(IID_IWebAccountCommand, 3399717784, 40186, 16966, 176, 196, 169, 19, 163, 137, 101, 65);
 RT_INTERFACE!{interface IWebAccountCommand(IWebAccountCommandVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountCommand] {
@@ -1914,7 +1914,7 @@ impl AnimationController {
 }
 DEFINE_CLSID!(AnimationController(&[87,105,110,100,111,119,115,46,85,73,46,67,111,109,112,111,115,105,116,105,111,110,46,65,110,105,109,97,116,105,111,110,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_AnimationController]);
 RT_ENUM! { enum AnimationControllerProgressBehavior: i32 {
-    Default (AnimationControllerProgressBehavior_Default) = 0, IncludesDelayTime (AnimationControllerProgressBehavior_IncludesDelayTime) = 1,
+    Default = 0, IncludesDelayTime = 1,
 }}
 DEFINE_IID!(IID_IAnimationControllerStatics, 3876676831, 25883, 18432, 185, 229, 106, 59, 207, 237, 51, 101);
 RT_INTERFACE!{static interface IAnimationControllerStatics(IAnimationControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAnimationControllerStatics] {
@@ -1934,13 +1934,13 @@ impl IAnimationControllerStatics {
     }}
 }
 RT_ENUM! { enum AnimationDelayBehavior: i32 {
-    SetInitialValueAfterDelay (AnimationDelayBehavior_SetInitialValueAfterDelay) = 0, SetInitialValueBeforeDelay (AnimationDelayBehavior_SetInitialValueBeforeDelay) = 1,
+    SetInitialValueAfterDelay = 0, SetInitialValueBeforeDelay = 1,
 }}
 RT_ENUM! { enum AnimationDirection: i32 {
-    Normal (AnimationDirection_Normal) = 0, Reverse (AnimationDirection_Reverse) = 1, Alternate (AnimationDirection_Alternate) = 2, AlternateReverse (AnimationDirection_AlternateReverse) = 3,
+    Normal = 0, Reverse = 1, Alternate = 2, AlternateReverse = 3,
 }}
 RT_ENUM! { enum AnimationIterationBehavior: i32 {
-    Count (AnimationIterationBehavior_Count) = 0, Forever (AnimationIterationBehavior_Forever) = 1,
+    Count = 0, Forever = 1,
 }}
 DEFINE_IID!(IID_IAnimationObject, 3876855306, 1208, 20421, 164, 220, 25, 83, 146, 229, 120, 7);
 RT_INTERFACE!{interface IAnimationObject(IAnimationObjectVtbl): IInspectable(IInspectableVtbl) [IID_IAnimationObject] {
@@ -1953,7 +1953,7 @@ impl IAnimationObject {
     }}
 }
 RT_ENUM! { enum AnimationPropertyAccessMode: i32 {
-    None (AnimationPropertyAccessMode_None) = 0, ReadOnly (AnimationPropertyAccessMode_ReadOnly) = 1, WriteOnly (AnimationPropertyAccessMode_WriteOnly) = 2, ReadWrite (AnimationPropertyAccessMode_ReadWrite) = 3,
+    None = 0, ReadOnly = 1, WriteOnly = 2, ReadWrite = 3,
 }}
 DEFINE_IID!(IID_IAnimationPropertyInfo, 4101074693, 60791, 20028, 179, 40, 92, 57, 133, 179, 115, 143);
 RT_INTERFACE!{interface IAnimationPropertyInfo(IAnimationPropertyInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAnimationPropertyInfo] {
@@ -1973,7 +1973,7 @@ impl IAnimationPropertyInfo {
 }
 RT_CLASS!{class AnimationPropertyInfo: IAnimationPropertyInfo}
 RT_ENUM! { enum AnimationStopBehavior: i32 {
-    LeaveCurrentValue (AnimationStopBehavior_LeaveCurrentValue) = 0, SetToInitialValue (AnimationStopBehavior_SetToInitialValue) = 1, SetToFinalValue (AnimationStopBehavior_SetToFinalValue) = 2,
+    LeaveCurrentValue = 0, SetToInitialValue = 1, SetToFinalValue = 2,
 }}
 DEFINE_IID!(IID_IBooleanKeyFrameAnimation, 2514631176, 53748, 18802, 151, 112, 62, 254, 104, 216, 46, 20);
 RT_INTERFACE!{interface IBooleanKeyFrameAnimation(IBooleanKeyFrameAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IBooleanKeyFrameAnimation] {
@@ -2241,7 +2241,7 @@ RT_INTERFACE!{interface ICompositionBackdropBrush(ICompositionBackdropBrushVtbl)
 }}
 RT_CLASS!{class CompositionBackdropBrush: ICompositionBackdropBrush}
 RT_ENUM! { enum CompositionBackfaceVisibility: i32 {
-    Inherit (CompositionBackfaceVisibility_Inherit) = 0, Visible (CompositionBackfaceVisibility_Visible) = 1, Hidden (CompositionBackfaceVisibility_Hidden) = 2,
+    Inherit = 0, Visible = 1, Hidden = 2,
 }}
 DEFINE_IID!(IID_ICompositionBatchCompletedEventArgs, 218159824, 37988, 17674, 165, 98, 46, 38, 152, 176, 168, 18);
 RT_INTERFACE!{interface ICompositionBatchCompletedEventArgs(ICompositionBatchCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionBatchCompletedEventArgs] {
@@ -2249,13 +2249,13 @@ RT_INTERFACE!{interface ICompositionBatchCompletedEventArgs(ICompositionBatchCom
 }}
 RT_CLASS!{class CompositionBatchCompletedEventArgs: ICompositionBatchCompletedEventArgs}
 RT_ENUM! { enum CompositionBatchTypes: u32 {
-    None (CompositionBatchTypes_None) = 0, Animation (CompositionBatchTypes_Animation) = 1, Effect (CompositionBatchTypes_Effect) = 2, InfiniteAnimation (CompositionBatchTypes_InfiniteAnimation) = 4, AllAnimations (CompositionBatchTypes_AllAnimations) = 5,
+    None = 0, Animation = 1, Effect = 2, InfiniteAnimation = 4, AllAnimations = 5,
 }}
 RT_ENUM! { enum CompositionBitmapInterpolationMode: i32 {
-    NearestNeighbor (CompositionBitmapInterpolationMode_NearestNeighbor) = 0, Linear (CompositionBitmapInterpolationMode_Linear) = 1,
+    NearestNeighbor = 0, Linear = 1,
 }}
 RT_ENUM! { enum CompositionBorderMode: i32 {
-    Inherit (CompositionBorderMode_Inherit) = 0, Soft (CompositionBorderMode_Soft) = 1, Hard (CompositionBorderMode_Hard) = 2,
+    Inherit = 0, Soft = 1, Hard = 2,
 }}
 DEFINE_IID!(IID_ICompositionBrush, 2869786120, 12480, 16617, 181, 104, 182, 10, 107, 209, 251, 70);
 RT_INTERFACE!{interface ICompositionBrush(ICompositionBrushVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionBrush] {
@@ -2455,7 +2455,7 @@ RT_INTERFACE!{interface ICompositionColorGradientStopCollection(ICompositionColo
 }}
 RT_CLASS!{class CompositionColorGradientStopCollection: ICompositionColorGradientStopCollection}
 RT_ENUM! { enum CompositionColorSpace: i32 {
-    Auto (CompositionColorSpace_Auto) = 0, Hsl (CompositionColorSpace_Hsl) = 1, Rgb (CompositionColorSpace_Rgb) = 2, HslLinear (CompositionColorSpace_HslLinear) = 3, RgbLinear (CompositionColorSpace_RgbLinear) = 4,
+    Auto = 0, Hsl = 1, Rgb = 2, HslLinear = 3, RgbLinear = 4,
 }}
 DEFINE_IID!(IID_ICompositionCommitBatch, 218159824, 51719, 17408, 140, 142, 203, 93, 176, 133, 89, 204);
 RT_INTERFACE!{interface ICompositionCommitBatch(ICompositionCommitBatchVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionCommitBatch] {
@@ -2487,7 +2487,7 @@ impl ICompositionCommitBatch {
 }
 RT_CLASS!{class CompositionCommitBatch: ICompositionCommitBatch}
 RT_ENUM! { enum CompositionCompositeMode: i32 {
-    Inherit (CompositionCompositeMode_Inherit) = 0, SourceOver (CompositionCompositeMode_SourceOver) = 1, DestinationInvert (CompositionCompositeMode_DestinationInvert) = 2, MinBlend (CompositionCompositeMode_MinBlend) = 3,
+    Inherit = 0, SourceOver = 1, DestinationInvert = 2, MinBlend = 3,
 }}
 DEFINE_IID!(IID_ICompositionContainerShape, 1331594651, 11867, 17576, 152, 44, 170, 15, 105, 193, 96, 89);
 RT_INTERFACE!{interface ICompositionContainerShape(ICompositionContainerShapeVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionContainerShape] {
@@ -2568,7 +2568,7 @@ RT_INTERFACE!{interface ICompositionDrawingSurfaceFactory(ICompositionDrawingSur
     
 }}
 RT_ENUM! { enum CompositionDropShadowSourcePolicy: i32 {
-    Default (CompositionDropShadowSourcePolicy_Default) = 0, InheritFromVisualContent (CompositionDropShadowSourcePolicy_InheritFromVisualContent) = 1,
+    Default = 0, InheritFromVisualContent = 1,
 }}
 DEFINE_IID!(IID_ICompositionEasingFunction, 1363534678, 49017, 20136, 140, 194, 107, 91, 71, 46, 108, 154);
 RT_INTERFACE!{interface ICompositionEasingFunction(ICompositionEasingFunctionVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionEasingFunction] {
@@ -2621,7 +2621,7 @@ impl ICompositionEffectFactory {
 }
 RT_CLASS!{class CompositionEffectFactory: ICompositionEffectFactory}
 RT_ENUM! { enum CompositionEffectFactoryLoadStatus: i32 {
-    Success (CompositionEffectFactoryLoadStatus_Success) = 0, EffectTooComplex (CompositionEffectFactoryLoadStatus_EffectTooComplex) = 1, Pending (CompositionEffectFactoryLoadStatus_Pending) = 2, Other (CompositionEffectFactoryLoadStatus_Other) = -1,
+    Success = 0, EffectTooComplex = 1, Pending = 2, Other = -1,
 }}
 DEFINE_IID!(IID_ICompositionEffectSourceParameter, 2240459066, 12946, 20046, 179, 187, 43, 108, 101, 68, 166, 238);
 RT_INTERFACE!{interface ICompositionEffectSourceParameter(ICompositionEffectSourceParameterVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionEffectSourceParameter] {
@@ -2753,7 +2753,7 @@ RT_INTERFACE!{interface ICompositionGeometryFactory(ICompositionGeometryFactoryV
     
 }}
 RT_ENUM! { enum CompositionGetValueStatus: i32 {
-    Succeeded (CompositionGetValueStatus_Succeeded) = 0, TypeMismatch (CompositionGetValueStatus_TypeMismatch) = 1, NotFound (CompositionGetValueStatus_NotFound) = 2,
+    Succeeded = 0, TypeMismatch = 1, NotFound = 2,
 }}
 DEFINE_IID!(IID_ICompositionGradientBrush, 496437728, 65478, 19470, 169, 171, 52, 20, 77, 76, 144, 152);
 RT_INTERFACE!{interface ICompositionGradientBrush(ICompositionGradientBrushVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionGradientBrush] {
@@ -2887,7 +2887,7 @@ RT_INTERFACE!{interface ICompositionGradientBrushFactory(ICompositionGradientBru
     
 }}
 RT_ENUM! { enum CompositionGradientExtendMode: i32 {
-    Clamp (CompositionGradientExtendMode_Clamp) = 0, Wrap (CompositionGradientExtendMode_Wrap) = 1, Mirror (CompositionGradientExtendMode_Mirror) = 2,
+    Clamp = 0, Wrap = 1, Mirror = 2,
 }}
 DEFINE_IID!(IID_ICompositionGraphicsDevice, 4213360353, 32930, 18023, 153, 54, 219, 234, 246, 238, 254, 149);
 RT_INTERFACE!{interface ICompositionGraphicsDevice(ICompositionGraphicsDeviceVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionGraphicsDevice] {
@@ -3030,7 +3030,7 @@ impl ICompositionLineGeometry {
 }
 RT_CLASS!{class CompositionLineGeometry: ICompositionLineGeometry}
 RT_ENUM! { enum CompositionMappingMode: i32 {
-    Absolute (CompositionMappingMode_Absolute) = 0, Relative (CompositionMappingMode_Relative) = 1,
+    Absolute = 0, Relative = 1,
 }}
 DEFINE_IID!(IID_ICompositionMaskBrush, 1378676894, 48747, 20289, 190, 73, 249, 34, 109, 71, 27, 74);
 RT_INTERFACE!{interface ICompositionMaskBrush(ICompositionMaskBrushVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionMaskBrush] {
@@ -3799,14 +3799,14 @@ impl ICompositionSpriteShape {
 }
 RT_CLASS!{class CompositionSpriteShape: ICompositionSpriteShape}
 RT_ENUM! { enum CompositionStretch: i32 {
-    None (CompositionStretch_None) = 0, Fill (CompositionStretch_Fill) = 1, Uniform (CompositionStretch_Uniform) = 2, UniformToFill (CompositionStretch_UniformToFill) = 3,
+    None = 0, Fill = 1, Uniform = 2, UniformToFill = 3,
 }}
 RT_ENUM! { enum CompositionStrokeCap: i32 {
-    Flat (CompositionStrokeCap_Flat) = 0, Square (CompositionStrokeCap_Square) = 1, Round (CompositionStrokeCap_Round) = 2, Triangle (CompositionStrokeCap_Triangle) = 3,
+    Flat = 0, Square = 1, Round = 2, Triangle = 3,
 }}
 RT_CLASS!{class CompositionStrokeDashArray: foundation::collections::IVector<f32>}
 RT_ENUM! { enum CompositionStrokeLineJoin: i32 {
-    Miter (CompositionStrokeLineJoin_Miter) = 0, Bevel (CompositionStrokeLineJoin_Bevel) = 1, Round (CompositionStrokeLineJoin_Round) = 2, MiterOrBevel (CompositionStrokeLineJoin_MiterOrBevel) = 3,
+    Miter = 0, Bevel = 1, Round = 2, MiterOrBevel = 3,
 }}
 DEFINE_IID!(IID_ICompositionSurface, 354898957, 17095, 18342, 164, 8, 102, 143, 121, 169, 13, 251);
 RT_INTERFACE!{interface ICompositionSurface(ICompositionSurfaceVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionSurface] {
@@ -6102,7 +6102,7 @@ impl ICompositionDebugHeatMaps {
 }
 RT_CLASS!{class CompositionDebugHeatMaps: ICompositionDebugHeatMaps}
 RT_ENUM! { enum CompositionDebugOverdrawContentKinds: u32 {
-    None (CompositionDebugOverdrawContentKinds_None) = 0, OffscreenRendered (CompositionDebugOverdrawContentKinds_OffscreenRendered) = 1, Colors (CompositionDebugOverdrawContentKinds_Colors) = 2, Effects (CompositionDebugOverdrawContentKinds_Effects) = 4, Shadows (CompositionDebugOverdrawContentKinds_Shadows) = 8, Lights (CompositionDebugOverdrawContentKinds_Lights) = 16, Surfaces (CompositionDebugOverdrawContentKinds_Surfaces) = 32, SwapChains (CompositionDebugOverdrawContentKinds_SwapChains) = 64, All (CompositionDebugOverdrawContentKinds_All) = 4294967295,
+    None = 0, OffscreenRendered = 1, Colors = 2, Effects = 4, Shadows = 8, Lights = 16, Surfaces = 32, SwapChains = 64, All = 4294967295,
 }}
 DEFINE_IID!(IID_ICompositionDebugSettings, 674338942, 7554, 19768, 183, 183, 239, 209, 28, 123, 195, 209);
 RT_INTERFACE!{interface ICompositionDebugSettings(ICompositionDebugSettingsVtbl): IInspectable(IInspectableVtbl) [IID_ICompositionDebugSettings] {
@@ -6219,7 +6219,7 @@ impl ISceneLightingEffect2 {
     }}
 }
 RT_ENUM! { enum SceneLightingEffectReflectanceModel: i32 {
-    BlinnPhong (SceneLightingEffectReflectanceModel_BlinnPhong) = 0, PhysicallyBasedBlinnPhong (SceneLightingEffectReflectanceModel_PhysicallyBasedBlinnPhong) = 1,
+    BlinnPhong = 0, PhysicallyBasedBlinnPhong = 1,
 }}
 } // Windows.UI.Composition.Effects
 pub mod interactions { // Windows.UI.Composition.Interactions
@@ -6302,7 +6302,7 @@ impl ICompositionInteractionSourceCollection {
 }
 RT_CLASS!{class CompositionInteractionSourceCollection: ICompositionInteractionSourceCollection}
 RT_ENUM! { enum InteractionChainingMode: i32 {
-    Auto (InteractionChainingMode_Auto) = 0, Always (InteractionChainingMode_Always) = 1, Never (InteractionChainingMode_Never) = 2,
+    Auto = 0, Always = 1, Never = 2,
 }}
 DEFINE_IID!(IID_IInteractionSourceConfiguration, 2810398693, 43473, 19714, 152, 94, 185, 48, 205, 11, 157, 164);
 RT_INTERFACE!{interface IInteractionSourceConfiguration(IInteractionSourceConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionSourceConfiguration] {
@@ -6344,10 +6344,10 @@ impl IInteractionSourceConfiguration {
 }
 RT_CLASS!{class InteractionSourceConfiguration: IInteractionSourceConfiguration}
 RT_ENUM! { enum InteractionSourceMode: i32 {
-    Disabled (InteractionSourceMode_Disabled) = 0, EnabledWithInertia (InteractionSourceMode_EnabledWithInertia) = 1, EnabledWithoutInertia (InteractionSourceMode_EnabledWithoutInertia) = 2,
+    Disabled = 0, EnabledWithInertia = 1, EnabledWithoutInertia = 2,
 }}
 RT_ENUM! { enum InteractionSourceRedirectionMode: i32 {
-    Disabled (InteractionSourceRedirectionMode_Disabled) = 0, Enabled (InteractionSourceRedirectionMode_Enabled) = 1,
+    Disabled = 0, Enabled = 1,
 }}
 DEFINE_IID!(IID_IInteractionTracker, 713985201, 4096, 17430, 131, 99, 204, 39, 251, 135, 115, 8);
 RT_INTERFACE!{interface IInteractionTracker(IInteractionTrackerVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTracker] {
@@ -6601,7 +6601,7 @@ impl IInteractionTracker4 {
     }}
 }
 RT_ENUM! { enum InteractionTrackerClampingOption: i32 {
-    Auto (InteractionTrackerClampingOption_Auto) = 0, Disabled (InteractionTrackerClampingOption_Disabled) = 1,
+    Auto = 0, Disabled = 1,
 }}
 DEFINE_IID!(IID_IInteractionTrackerCustomAnimationStateEnteredArgs, 2367458545, 55216, 17228, 165, 210, 45, 118, 17, 134, 72, 52);
 RT_INTERFACE!{interface IInteractionTrackerCustomAnimationStateEnteredArgs(IInteractionTrackerCustomAnimationStateEnteredArgsVtbl): IInspectable(IInspectableVtbl) [IID_IInteractionTrackerCustomAnimationStateEnteredArgs] {
@@ -7193,7 +7193,7 @@ RT_INTERFACE!{interface IVisualInteractionSourceObjectFactory(IVisualInteraction
     
 }}
 RT_ENUM! { enum VisualInteractionSourceRedirectionMode: i32 {
-    Off (VisualInteractionSourceRedirectionMode_Off) = 0, CapableTouchpadOnly (VisualInteractionSourceRedirectionMode_CapableTouchpadOnly) = 1, PointerWheelOnly (VisualInteractionSourceRedirectionMode_PointerWheelOnly) = 2, CapableTouchpadAndPointerWheel (VisualInteractionSourceRedirectionMode_CapableTouchpadAndPointerWheel) = 3,
+    Off = 0, CapableTouchpadOnly = 1, PointerWheelOnly = 2, CapableTouchpadAndPointerWheel = 3,
 }}
 DEFINE_IID!(IID_IVisualInteractionSourceStatics, 916022753, 34373, 20341, 186, 0, 100, 121, 205, 16, 200, 230);
 RT_INTERFACE!{static interface IVisualInteractionSourceStatics(IVisualInteractionSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVisualInteractionSourceStatics] {
@@ -7247,7 +7247,7 @@ impl IAcceleratorKeyEventArgs2 {
     }}
 }
 RT_ENUM! { enum AppViewBackButtonVisibility: i32 {
-    Visible (AppViewBackButtonVisibility_Visible) = 0, Collapsed (AppViewBackButtonVisibility_Collapsed) = 1, Disabled (AppViewBackButtonVisibility_Disabled) = 2,
+    Visible = 0, Collapsed = 1, Disabled = 2,
 }}
 DEFINE_IID!(IID_IAutomationProviderRequestedEventArgs, 2518676056, 8639, 19266, 162, 152, 250, 71, 157, 76, 82, 226);
 RT_INTERFACE!{interface IAutomationProviderRequestedEventArgs(IAutomationProviderRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAutomationProviderRequestedEventArgs] {
@@ -7331,7 +7331,7 @@ impl IClosestInteractiveBoundsRequestedEventArgs {
 }
 RT_CLASS!{class ClosestInteractiveBoundsRequestedEventArgs: IClosestInteractiveBoundsRequestedEventArgs}
 RT_ENUM! { enum CoreAcceleratorKeyEventType: i32 {
-    Character (CoreAcceleratorKeyEventType_Character) = 2, DeadCharacter (CoreAcceleratorKeyEventType_DeadCharacter) = 3, KeyDown (CoreAcceleratorKeyEventType_KeyDown) = 0, KeyUp (CoreAcceleratorKeyEventType_KeyUp) = 1, SystemCharacter (CoreAcceleratorKeyEventType_SystemCharacter) = 6, SystemDeadCharacter (CoreAcceleratorKeyEventType_SystemDeadCharacter) = 7, SystemKeyDown (CoreAcceleratorKeyEventType_SystemKeyDown) = 4, SystemKeyUp (CoreAcceleratorKeyEventType_SystemKeyUp) = 5, UnicodeCharacter (CoreAcceleratorKeyEventType_UnicodeCharacter) = 8,
+    Character = 2, DeadCharacter = 3, KeyDown = 0, KeyUp = 1, SystemCharacter = 6, SystemDeadCharacter = 7, SystemKeyDown = 4, SystemKeyUp = 5, UnicodeCharacter = 8,
 }}
 DEFINE_IID!(IID_ICoreAcceleratorKeys, 2684221429, 47305, 20208, 183, 210, 29, 230, 38, 86, 31, 200);
 RT_INTERFACE!{interface ICoreAcceleratorKeys(ICoreAcceleratorKeysVtbl): IInspectable(IInspectableVtbl) [IID_ICoreAcceleratorKeys] {
@@ -7437,7 +7437,7 @@ impl ICoreCursorFactory {
     }}
 }
 RT_ENUM! { enum CoreCursorType: i32 {
-    Arrow (CoreCursorType_Arrow) = 0, Cross (CoreCursorType_Cross) = 1, Custom (CoreCursorType_Custom) = 2, Hand (CoreCursorType_Hand) = 3, Help (CoreCursorType_Help) = 4, IBeam (CoreCursorType_IBeam) = 5, SizeAll (CoreCursorType_SizeAll) = 6, SizeNortheastSouthwest (CoreCursorType_SizeNortheastSouthwest) = 7, SizeNorthSouth (CoreCursorType_SizeNorthSouth) = 8, SizeNorthwestSoutheast (CoreCursorType_SizeNorthwestSoutheast) = 9, SizeWestEast (CoreCursorType_SizeWestEast) = 10, UniversalNo (CoreCursorType_UniversalNo) = 11, UpArrow (CoreCursorType_UpArrow) = 12, Wait (CoreCursorType_Wait) = 13, Pin (CoreCursorType_Pin) = 14, Person (CoreCursorType_Person) = 15,
+    Arrow = 0, Cross = 1, Custom = 2, Hand = 3, Help = 4, IBeam = 5, SizeAll = 6, SizeNortheastSouthwest = 7, SizeNorthSouth = 8, SizeNorthwestSoutheast = 9, SizeWestEast = 10, UniversalNo = 11, UpArrow = 12, Wait = 13, Pin = 14, Person = 15,
 }}
 DEFINE_IID!(IID_ICoreDispatcher, 1624977320, 46853, 20446, 167, 214, 235, 187, 24, 145, 211, 158);
 RT_INTERFACE!{interface ICoreDispatcher(ICoreDispatcherVtbl): IInspectable(IInspectableVtbl) [IID_ICoreDispatcher] {
@@ -7486,7 +7486,7 @@ impl ICoreDispatcher2 {
     }}
 }
 RT_ENUM! { enum CoreDispatcherPriority: i32 {
-    Idle (CoreDispatcherPriority_Idle) = -2, Low (CoreDispatcherPriority_Low) = -1, Normal (CoreDispatcherPriority_Normal) = 0, High (CoreDispatcherPriority_High) = 1,
+    Idle = -2, Low = -1, Normal = 0, High = 1,
 }}
 DEFINE_IID!(IID_ICoreDispatcherWithTaskPriority, 3137006765, 18509, 16830, 186, 128, 29, 88, 198, 82, 99, 234);
 RT_INTERFACE!{interface ICoreDispatcherWithTaskPriority(ICoreDispatcherWithTaskPriorityVtbl): IInspectable(IInspectableVtbl) [IID_ICoreDispatcherWithTaskPriority] {
@@ -7523,7 +7523,7 @@ impl ICoreDispatcherWithTaskPriority {
 }
 RT_CLASS!{class CoreIndependentInputSource: ICoreInputSourceBase}
 RT_ENUM! { enum CoreInputDeviceTypes: u32 {
-    None (CoreInputDeviceTypes_None) = 0, Touch (CoreInputDeviceTypes_Touch) = 1, Pen (CoreInputDeviceTypes_Pen) = 2, Mouse (CoreInputDeviceTypes_Mouse) = 4,
+    None = 0, Touch = 1, Pen = 2, Mouse = 4,
 }}
 DEFINE_IID!(IID_ICoreInputSourceBase, 2672330759, 17792, 19432, 190, 104, 146, 169, 49, 23, 19, 187);
 RT_INTERFACE!{interface ICoreInputSourceBase(ICoreInputSourceBaseVtbl): IInspectable(IInspectableVtbl) [IID_ICoreInputSourceBase] {
@@ -7782,13 +7782,13 @@ impl ICorePointerRedirector {
     }}
 }
 RT_ENUM! { enum CoreProcessEventsOption: i32 {
-    ProcessOneAndAllPending (CoreProcessEventsOption_ProcessOneAndAllPending) = 0, ProcessOneIfPresent (CoreProcessEventsOption_ProcessOneIfPresent) = 1, ProcessUntilQuit (CoreProcessEventsOption_ProcessUntilQuit) = 2, ProcessAllIfPresent (CoreProcessEventsOption_ProcessAllIfPresent) = 3,
+    ProcessOneAndAllPending = 0, ProcessOneIfPresent = 1, ProcessUntilQuit = 2, ProcessAllIfPresent = 3,
 }}
 RT_STRUCT! { struct CoreProximityEvaluation {
     Score: i32, AdjustedPoint: foundation::Point,
 }}
 RT_ENUM! { enum CoreProximityEvaluationScore: i32 {
-    Closest (CoreProximityEvaluationScore_Closest) = 0, Farthest (CoreProximityEvaluationScore_Farthest) = 2147483647,
+    Closest = 0, Farthest = 2147483647,
 }}
 DEFINE_IID!(IID_ICoreTouchHitTesting, 2983764617, 15055, 16676, 159, 163, 234, 138, 186, 53, 60, 33);
 RT_INTERFACE!{interface ICoreTouchHitTesting(ICoreTouchHitTestingVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTouchHitTesting] {
@@ -7807,7 +7807,7 @@ impl ICoreTouchHitTesting {
     }}
 }
 RT_ENUM! { enum CoreVirtualKeyStates: u32 {
-    None (CoreVirtualKeyStates_None) = 0, Down (CoreVirtualKeyStates_Down) = 1, Locked (CoreVirtualKeyStates_Locked) = 2,
+    None = 0, Down = 1, Locked = 2,
 }}
 DEFINE_IID!(IID_ICoreWindow, 2042222066, 34718, 19337, 183, 152, 121, 228, 117, 152, 3, 12);
 RT_INTERFACE!{interface ICoreWindow(ICoreWindowVtbl): IInspectable(IInspectableVtbl) [IID_ICoreWindow] {
@@ -8190,10 +8190,10 @@ impl ICoreWindow5 {
     }}
 }
 RT_ENUM! { enum CoreWindowActivationMode: i32 {
-    None (CoreWindowActivationMode_None) = 0, Deactivated (CoreWindowActivationMode_Deactivated) = 1, ActivatedNotForeground (CoreWindowActivationMode_ActivatedNotForeground) = 2, ActivatedInForeground (CoreWindowActivationMode_ActivatedInForeground) = 3,
+    None = 0, Deactivated = 1, ActivatedNotForeground = 2, ActivatedInForeground = 3,
 }}
 RT_ENUM! { enum CoreWindowActivationState: i32 {
-    CodeActivated (CoreWindowActivationState_CodeActivated) = 0, Deactivated (CoreWindowActivationState_Deactivated) = 1, PointerActivated (CoreWindowActivationState_PointerActivated) = 2,
+    CodeActivated = 0, Deactivated = 1, PointerActivated = 2,
 }}
 DEFINE_IID!(IID_ICoreWindowDialog, 3879283936, 51085, 17022, 139, 44, 1, 255, 66, 12, 105, 213);
 RT_INTERFACE!{interface ICoreWindowDialog(ICoreWindowDialogVtbl): IInspectable(IInspectableVtbl) [IID_ICoreWindowDialog] {
@@ -8328,7 +8328,7 @@ impl ICoreWindowEventArgs {
 }
 RT_CLASS!{class CoreWindowEventArgs: ICoreWindowEventArgs}
 RT_ENUM! { enum CoreWindowFlowDirection: i32 {
-    LeftToRight (CoreWindowFlowDirection_LeftToRight) = 0, RightToLeft (CoreWindowFlowDirection_RightToLeft) = 1,
+    LeftToRight = 0, RightToLeft = 1,
 }}
 DEFINE_IID!(IID_ICoreWindowFlyout, 3902637389, 8272, 16571, 179, 68, 246, 243, 85, 238, 179, 20);
 RT_INTERFACE!{interface ICoreWindowFlyout(ICoreWindowFlyoutVtbl): IInspectable(IInspectableVtbl) [IID_ICoreWindowFlyout] {
@@ -8803,10 +8803,10 @@ impl IAnimationDescriptionFactory {
     }}
 }
 RT_ENUM! { enum AnimationEffect: i32 {
-    Expand (AnimationEffect_Expand) = 0, Collapse (AnimationEffect_Collapse) = 1, Reposition (AnimationEffect_Reposition) = 2, FadeIn (AnimationEffect_FadeIn) = 3, FadeOut (AnimationEffect_FadeOut) = 4, AddToList (AnimationEffect_AddToList) = 5, DeleteFromList (AnimationEffect_DeleteFromList) = 6, AddToGrid (AnimationEffect_AddToGrid) = 7, DeleteFromGrid (AnimationEffect_DeleteFromGrid) = 8, AddToSearchGrid (AnimationEffect_AddToSearchGrid) = 9, DeleteFromSearchGrid (AnimationEffect_DeleteFromSearchGrid) = 10, AddToSearchList (AnimationEffect_AddToSearchList) = 11, DeleteFromSearchList (AnimationEffect_DeleteFromSearchList) = 12, ShowEdgeUI (AnimationEffect_ShowEdgeUI) = 13, ShowPanel (AnimationEffect_ShowPanel) = 14, HideEdgeUI (AnimationEffect_HideEdgeUI) = 15, HidePanel (AnimationEffect_HidePanel) = 16, ShowPopup (AnimationEffect_ShowPopup) = 17, HidePopup (AnimationEffect_HidePopup) = 18, PointerDown (AnimationEffect_PointerDown) = 19, PointerUp (AnimationEffect_PointerUp) = 20, DragSourceStart (AnimationEffect_DragSourceStart) = 21, DragSourceEnd (AnimationEffect_DragSourceEnd) = 22, TransitionContent (AnimationEffect_TransitionContent) = 23, Reveal (AnimationEffect_Reveal) = 24, Hide (AnimationEffect_Hide) = 25, DragBetweenEnter (AnimationEffect_DragBetweenEnter) = 26, DragBetweenLeave (AnimationEffect_DragBetweenLeave) = 27, SwipeSelect (AnimationEffect_SwipeSelect) = 28, SwipeDeselect (AnimationEffect_SwipeDeselect) = 29, SwipeReveal (AnimationEffect_SwipeReveal) = 30, EnterPage (AnimationEffect_EnterPage) = 31, TransitionPage (AnimationEffect_TransitionPage) = 32, CrossFade (AnimationEffect_CrossFade) = 33, Peek (AnimationEffect_Peek) = 34, UpdateBadge (AnimationEffect_UpdateBadge) = 35,
+    Expand = 0, Collapse = 1, Reposition = 2, FadeIn = 3, FadeOut = 4, AddToList = 5, DeleteFromList = 6, AddToGrid = 7, DeleteFromGrid = 8, AddToSearchGrid = 9, DeleteFromSearchGrid = 10, AddToSearchList = 11, DeleteFromSearchList = 12, ShowEdgeUI = 13, ShowPanel = 14, HideEdgeUI = 15, HidePanel = 16, ShowPopup = 17, HidePopup = 18, PointerDown = 19, PointerUp = 20, DragSourceStart = 21, DragSourceEnd = 22, TransitionContent = 23, Reveal = 24, Hide = 25, DragBetweenEnter = 26, DragBetweenLeave = 27, SwipeSelect = 28, SwipeDeselect = 29, SwipeReveal = 30, EnterPage = 31, TransitionPage = 32, CrossFade = 33, Peek = 34, UpdateBadge = 35,
 }}
 RT_ENUM! { enum AnimationEffectTarget: i32 {
-    Primary (AnimationEffectTarget_Primary) = 0, Added (AnimationEffectTarget_Added) = 1, Affected (AnimationEffectTarget_Affected) = 2, Background (AnimationEffectTarget_Background) = 3, Content (AnimationEffectTarget_Content) = 4, Deleted (AnimationEffectTarget_Deleted) = 5, Deselected (AnimationEffectTarget_Deselected) = 6, DragSource (AnimationEffectTarget_DragSource) = 7, Hidden (AnimationEffectTarget_Hidden) = 8, Incoming (AnimationEffectTarget_Incoming) = 9, Outgoing (AnimationEffectTarget_Outgoing) = 10, Outline (AnimationEffectTarget_Outline) = 11, Remaining (AnimationEffectTarget_Remaining) = 12, Revealed (AnimationEffectTarget_Revealed) = 13, RowIn (AnimationEffectTarget_RowIn) = 14, RowOut (AnimationEffectTarget_RowOut) = 15, Selected (AnimationEffectTarget_Selected) = 16, Selection (AnimationEffectTarget_Selection) = 17, Shown (AnimationEffectTarget_Shown) = 18, Tapped (AnimationEffectTarget_Tapped) = 19,
+    Primary = 0, Added = 1, Affected = 2, Background = 3, Content = 4, Deleted = 5, Deselected = 6, DragSource = 7, Hidden = 8, Incoming = 9, Outgoing = 10, Outline = 11, Remaining = 12, Revealed = 13, RowIn = 14, RowOut = 15, Selected = 16, Selection = 17, Shown = 18, Tapped = 19,
 }}
 DEFINE_IID!(IID_IOpacityAnimation, 2151328741, 61054, 17759, 132, 233, 37, 6, 175, 184, 210, 180);
 RT_INTERFACE!{interface IOpacityAnimation(IOpacityAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IOpacityAnimation] {
@@ -8863,7 +8863,7 @@ impl IPropertyAnimation {
 }
 RT_CLASS!{class PropertyAnimation: IPropertyAnimation}
 RT_ENUM! { enum PropertyAnimationType: i32 {
-    Scale (PropertyAnimationType_Scale) = 0, Translation (PropertyAnimationType_Translation) = 1, Opacity (PropertyAnimationType_Opacity) = 2,
+    Scale = 0, Translation = 1, Opacity = 2,
 }}
 DEFINE_IID!(IID_IScaleAnimation, 37049031, 29099, 17036, 156, 159, 211, 23, 128, 150, 73, 149);
 RT_INTERFACE!{interface IScaleAnimation(IScaleAnimationVtbl): IInspectable(IInspectableVtbl) [IID_IScaleAnimation] {
@@ -8996,7 +8996,7 @@ impl ICrossSlidingEventArgs {
 }
 RT_CLASS!{class CrossSlidingEventArgs: ICrossSlidingEventArgs}
 RT_ENUM! { enum CrossSlidingState: i32 {
-    Started (CrossSlidingState_Started) = 0, Dragging (CrossSlidingState_Dragging) = 1, Selecting (CrossSlidingState_Selecting) = 2, SelectSpeedBumping (CrossSlidingState_SelectSpeedBumping) = 3, SpeedBumping (CrossSlidingState_SpeedBumping) = 4, Rearranging (CrossSlidingState_Rearranging) = 5, Completed (CrossSlidingState_Completed) = 6,
+    Started = 0, Dragging = 1, Selecting = 2, SelectSpeedBumping = 3, SpeedBumping = 4, Rearranging = 5, Completed = 6,
 }}
 DEFINE_IID!(IID_IDraggingEventArgs, 479220612, 2108, 19411, 181, 89, 23, 156, 221, 235, 51, 236);
 RT_INTERFACE!{interface IDraggingEventArgs(IDraggingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDraggingEventArgs] {
@@ -9024,7 +9024,7 @@ impl IDraggingEventArgs {
 }
 RT_CLASS!{class DraggingEventArgs: IDraggingEventArgs}
 RT_ENUM! { enum DraggingState: i32 {
-    Started (DraggingState_Started) = 0, Continuing (DraggingState_Continuing) = 1, Completed (DraggingState_Completed) = 2,
+    Started = 0, Continuing = 1, Completed = 2,
 }}
 DEFINE_IID!(IID_IEdgeGesture, 1477268114, 10929, 18858, 167, 240, 51, 189, 63, 141, 249, 241);
 RT_INTERFACE!{interface IEdgeGesture(IEdgeGestureVtbl): IInspectable(IInspectableVtbl) [IID_IEdgeGesture] {
@@ -9085,7 +9085,7 @@ impl IEdgeGestureEventArgs {
 }
 RT_CLASS!{class EdgeGestureEventArgs: IEdgeGestureEventArgs}
 RT_ENUM! { enum EdgeGestureKind: i32 {
-    Touch (EdgeGestureKind_Touch) = 0, Keyboard (EdgeGestureKind_Keyboard) = 1, Mouse (EdgeGestureKind_Mouse) = 2,
+    Touch = 0, Keyboard = 1, Mouse = 2,
 }}
 DEFINE_IID!(IID_IEdgeGestureStatics, 3161097497, 6382, 16451, 152, 57, 79, 197, 132, 214, 10, 20);
 RT_INTERFACE!{static interface IEdgeGestureStatics(IEdgeGestureStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IEdgeGestureStatics] {
@@ -9425,7 +9425,7 @@ RT_CLASS!{class GestureRecognizer: IGestureRecognizer}
 impl RtActivatable<IActivationFactory> for GestureRecognizer {}
 DEFINE_CLSID!(GestureRecognizer(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,71,101,115,116,117,114,101,82,101,99,111,103,110,105,122,101,114,0]) [CLSID_GestureRecognizer]);
 RT_ENUM! { enum GestureSettings: u32 {
-    None (GestureSettings_None) = 0, Tap (GestureSettings_Tap) = 1, DoubleTap (GestureSettings_DoubleTap) = 2, Hold (GestureSettings_Hold) = 4, HoldWithMouse (GestureSettings_HoldWithMouse) = 8, RightTap (GestureSettings_RightTap) = 16, Drag (GestureSettings_Drag) = 32, ManipulationTranslateX (GestureSettings_ManipulationTranslateX) = 64, ManipulationTranslateY (GestureSettings_ManipulationTranslateY) = 128, ManipulationTranslateRailsX (GestureSettings_ManipulationTranslateRailsX) = 256, ManipulationTranslateRailsY (GestureSettings_ManipulationTranslateRailsY) = 512, ManipulationRotate (GestureSettings_ManipulationRotate) = 1024, ManipulationScale (GestureSettings_ManipulationScale) = 2048, ManipulationTranslateInertia (GestureSettings_ManipulationTranslateInertia) = 4096, ManipulationRotateInertia (GestureSettings_ManipulationRotateInertia) = 8192, ManipulationScaleInertia (GestureSettings_ManipulationScaleInertia) = 16384, CrossSlide (GestureSettings_CrossSlide) = 32768, ManipulationMultipleFingerPanning (GestureSettings_ManipulationMultipleFingerPanning) = 65536,
+    None = 0, Tap = 1, DoubleTap = 2, Hold = 4, HoldWithMouse = 8, RightTap = 16, Drag = 32, ManipulationTranslateX = 64, ManipulationTranslateY = 128, ManipulationTranslateRailsX = 256, ManipulationTranslateRailsY = 512, ManipulationRotate = 1024, ManipulationScale = 2048, ManipulationTranslateInertia = 4096, ManipulationRotateInertia = 8192, ManipulationScaleInertia = 16384, CrossSlide = 32768, ManipulationMultipleFingerPanning = 65536,
 }}
 DEFINE_IID!(IID_IHoldingEventArgs, 737629637, 59289, 16820, 187, 64, 36, 47, 64, 149, 155, 113);
 RT_INTERFACE!{interface IHoldingEventArgs(IHoldingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHoldingEventArgs] {
@@ -9453,7 +9453,7 @@ impl IHoldingEventArgs {
 }
 RT_CLASS!{class HoldingEventArgs: IHoldingEventArgs}
 RT_ENUM! { enum HoldingState: i32 {
-    Started (HoldingState_Started) = 0, Completed (HoldingState_Completed) = 1, Canceled (HoldingState_Canceled) = 2,
+    Started = 0, Completed = 1, Canceled = 2,
 }}
 DEFINE_IID!(IID_IKeyboardDeliveryInterceptor, 3032150120, 36681, 17516, 141, 181, 140, 15, 254, 133, 204, 158);
 RT_INTERFACE!{interface IKeyboardDeliveryInterceptor(IKeyboardDeliveryInterceptorVtbl): IInspectable(IInspectableVtbl) [IID_IKeyboardDeliveryInterceptor] {
@@ -9983,7 +9983,7 @@ impl IPointerPointTransform {
     }}
 }
 RT_ENUM! { enum PointerUpdateKind: i32 {
-    Other (PointerUpdateKind_Other) = 0, LeftButtonPressed (PointerUpdateKind_LeftButtonPressed) = 1, LeftButtonReleased (PointerUpdateKind_LeftButtonReleased) = 2, RightButtonPressed (PointerUpdateKind_RightButtonPressed) = 3, RightButtonReleased (PointerUpdateKind_RightButtonReleased) = 4, MiddleButtonPressed (PointerUpdateKind_MiddleButtonPressed) = 5, MiddleButtonReleased (PointerUpdateKind_MiddleButtonReleased) = 6, XButton1Pressed (PointerUpdateKind_XButton1Pressed) = 7, XButton1Released (PointerUpdateKind_XButton1Released) = 8, XButton2Pressed (PointerUpdateKind_XButton2Pressed) = 9, XButton2Released (PointerUpdateKind_XButton2Released) = 10,
+    Other = 0, LeftButtonPressed = 1, LeftButtonReleased = 2, RightButtonPressed = 3, RightButtonReleased = 4, MiddleButtonPressed = 5, MiddleButtonReleased = 6, XButton1Pressed = 7, XButton1Released = 8, XButton2Pressed = 9, XButton2Released = 10,
 }}
 DEFINE_IID!(IID_IPointerVisualizationSettings, 1293837409, 34039, 18845, 189, 145, 42, 54, 226, 183, 170, 162);
 RT_INTERFACE!{interface IPointerVisualizationSettings(IPointerVisualizationSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IPointerVisualizationSettings] {
@@ -10530,7 +10530,7 @@ impl IRadialControllerMenuItemStatics2 {
     }}
 }
 RT_ENUM! { enum RadialControllerMenuKnownIcon: i32 {
-    Scroll (RadialControllerMenuKnownIcon_Scroll) = 0, Zoom (RadialControllerMenuKnownIcon_Zoom) = 1, UndoRedo (RadialControllerMenuKnownIcon_UndoRedo) = 2, Volume (RadialControllerMenuKnownIcon_Volume) = 3, NextPreviousTrack (RadialControllerMenuKnownIcon_NextPreviousTrack) = 4, Ruler (RadialControllerMenuKnownIcon_Ruler) = 5, InkColor (RadialControllerMenuKnownIcon_InkColor) = 6, InkThickness (RadialControllerMenuKnownIcon_InkThickness) = 7, PenType (RadialControllerMenuKnownIcon_PenType) = 8,
+    Scroll = 0, Zoom = 1, UndoRedo = 2, Volume = 3, NextPreviousTrack = 4, Ruler = 5, InkColor = 6, InkThickness = 7, PenType = 8,
 }}
 DEFINE_IID!(IID_IRadialControllerRotationChangedEventArgs, 543859765, 58961, 4581, 191, 98, 44, 39, 215, 64, 78, 133);
 RT_INTERFACE!{interface IRadialControllerRotationChangedEventArgs(IRadialControllerRotationChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRadialControllerRotationChangedEventArgs] {
@@ -10679,7 +10679,7 @@ impl IRadialControllerStatics {
     }}
 }
 RT_ENUM! { enum RadialControllerSystemMenuItemKind: i32 {
-    Scroll (RadialControllerSystemMenuItemKind_Scroll) = 0, Zoom (RadialControllerSystemMenuItemKind_Zoom) = 1, UndoRedo (RadialControllerSystemMenuItemKind_UndoRedo) = 2, Volume (RadialControllerSystemMenuItemKind_Volume) = 3, NextPreviousTrack (RadialControllerSystemMenuItemKind_NextPreviousTrack) = 4,
+    Scroll = 0, Zoom = 1, UndoRedo = 2, Volume = 3, NextPreviousTrack = 4,
 }}
 DEFINE_IID!(IID_IRightTappedEventArgs, 1287602365, 44922, 18998, 148, 118, 177, 220, 225, 65, 112, 154);
 RT_INTERFACE!{interface IRightTappedEventArgs(IRightTappedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRightTappedEventArgs] {
@@ -10778,7 +10778,7 @@ impl IRadialControllerIndependentInputSourceStatics {
 pub mod inking { // Windows.UI.Input.Inking
 use ::prelude::*;
 RT_ENUM! { enum HandwritingLineHeight: i32 {
-    Small (HandwritingLineHeight_Small) = 0, Medium (HandwritingLineHeight_Medium) = 1, Large (HandwritingLineHeight_Large) = 2,
+    Small = 0, Medium = 1, Large = 2,
 }}
 DEFINE_IID!(IID_IInkDrawingAttributes, 2543982444, 26484, 18605, 132, 240, 72, 245, 169, 190, 116, 249);
 RT_INTERFACE!{interface IInkDrawingAttributes(IInkDrawingAttributesVtbl): IInspectable(IInspectableVtbl) [IID_IInkDrawingAttributes] {
@@ -10921,7 +10921,7 @@ impl IInkDrawingAttributes5 {
     }}
 }
 RT_ENUM! { enum InkDrawingAttributesKind: i32 {
-    Default (InkDrawingAttributesKind_Default) = 0, Pencil (InkDrawingAttributesKind_Pencil) = 1,
+    Default = 0, Pencil = 1,
 }}
 DEFINE_IID!(IID_IInkDrawingAttributesPencilProperties, 1327838411, 11654, 16827, 176, 232, 228, 194, 160, 37, 60, 82);
 RT_INTERFACE!{interface IInkDrawingAttributesPencilProperties(IInkDrawingAttributesPencilPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IInkDrawingAttributesPencilProperties] {
@@ -10952,7 +10952,7 @@ impl IInkDrawingAttributesStatics {
     }}
 }
 RT_ENUM! { enum InkHighContrastAdjustment: i32 {
-    UseSystemColorsWhenNecessary (InkHighContrastAdjustment_UseSystemColorsWhenNecessary) = 0, UseSystemColors (InkHighContrastAdjustment_UseSystemColors) = 1, UseOriginalColors (InkHighContrastAdjustment_UseOriginalColors) = 2,
+    UseSystemColorsWhenNecessary = 0, UseSystemColors = 1, UseOriginalColors = 2,
 }}
 DEFINE_IID!(IID_IInkInputConfiguration, 2477166020, 2939, 18903, 179, 79, 153, 1, 229, 36, 220, 242);
 RT_INTERFACE!{interface IInkInputConfiguration(IInkInputConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IInkInputConfiguration] {
@@ -11011,10 +11011,10 @@ impl IInkInputProcessingConfiguration {
 }
 RT_CLASS!{class InkInputProcessingConfiguration: IInkInputProcessingConfiguration}
 RT_ENUM! { enum InkInputProcessingMode: i32 {
-    None (InkInputProcessingMode_None) = 0, Inking (InkInputProcessingMode_Inking) = 1, Erasing (InkInputProcessingMode_Erasing) = 2,
+    None = 0, Inking = 1, Erasing = 2,
 }}
 RT_ENUM! { enum InkInputRightDragAction: i32 {
-    LeaveUnprocessed (InkInputRightDragAction_LeaveUnprocessed) = 0, AllowProcessing (InkInputRightDragAction_AllowProcessing) = 1,
+    LeaveUnprocessed = 0, AllowProcessing = 1,
 }}
 DEFINE_IID!(IID_IInkManager, 1195668349, 26395, 16739, 156, 149, 78, 141, 122, 3, 95, 225);
 RT_INTERFACE!{interface IInkManager(IInkManagerVtbl): IInspectable(IInspectableVtbl) [IID_IInkManager] {
@@ -11064,7 +11064,7 @@ RT_CLASS!{class InkManager: IInkManager}
 impl RtActivatable<IActivationFactory> for InkManager {}
 DEFINE_CLSID!(InkManager(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,73,110,107,77,97,110,97,103,101,114,0]) [CLSID_InkManager]);
 RT_ENUM! { enum InkManipulationMode: i32 {
-    Inking (InkManipulationMode_Inking) = 0, Erasing (InkManipulationMode_Erasing) = 1, Selecting (InkManipulationMode_Selecting) = 2,
+    Inking = 0, Erasing = 1, Selecting = 2,
 }}
 DEFINE_IID!(IID_IInkModelerAttributes, 3134398247, 3289, 19453, 182, 243, 158, 3, 186, 141, 116, 84);
 RT_INTERFACE!{interface IInkModelerAttributes(IInkModelerAttributesVtbl): IInspectable(IInspectableVtbl) [IID_IInkModelerAttributes] {
@@ -11095,7 +11095,7 @@ impl IInkModelerAttributes {
 }
 RT_CLASS!{class InkModelerAttributes: IInkModelerAttributes}
 RT_ENUM! { enum InkPersistenceFormat: i32 {
-    GifWithEmbeddedIsf (InkPersistenceFormat_GifWithEmbeddedIsf) = 0, Isf (InkPersistenceFormat_Isf) = 1,
+    GifWithEmbeddedIsf = 0, Isf = 1,
 }}
 DEFINE_IID!(IID_IInkPoint, 2676434731, 34188, 18085, 155, 65, 209, 149, 151, 4, 89, 253);
 RT_INTERFACE!{interface IInkPoint(IInkPointVtbl): IInspectable(IInspectableVtbl) [IID_IInkPoint] {
@@ -11300,7 +11300,7 @@ impl IInkPresenter3 {
     }}
 }
 RT_ENUM! { enum InkPresenterPredefinedConfiguration: i32 {
-    SimpleSinglePointer (InkPresenterPredefinedConfiguration_SimpleSinglePointer) = 0, SimpleMultiplePointer (InkPresenterPredefinedConfiguration_SimpleMultiplePointer) = 1,
+    SimpleSinglePointer = 0, SimpleMultiplePointer = 1,
 }}
 DEFINE_IID!(IID_IInkPresenterProtractor, 2112090794, 61292, 20113, 167, 59, 91, 112, 213, 111, 189, 23);
 RT_INTERFACE!{interface IInkPresenterProtractor(IInkPresenterProtractorVtbl): IInspectable(IInspectableVtbl) [IID_IInkPresenterProtractor] {
@@ -11532,7 +11532,7 @@ impl IInkPresenterStencil {
     }}
 }
 RT_ENUM! { enum InkPresenterStencilKind: i32 {
-    Other (InkPresenterStencilKind_Other) = 0, Ruler (InkPresenterStencilKind_Ruler) = 1, Protractor (InkPresenterStencilKind_Protractor) = 2,
+    Other = 0, Ruler = 1, Protractor = 2,
 }}
 DEFINE_IID!(IID_IInkRecognitionResult, 910563988, 20584, 16623, 138, 5, 44, 47, 182, 9, 8, 162);
 RT_INTERFACE!{interface IInkRecognitionResult(IInkRecognitionResultVtbl): IInspectable(IInspectableVtbl) [IID_IInkRecognitionResult] {
@@ -11559,7 +11559,7 @@ impl IInkRecognitionResult {
 }
 RT_CLASS!{class InkRecognitionResult: IInkRecognitionResult}
 RT_ENUM! { enum InkRecognitionTarget: i32 {
-    All (InkRecognitionTarget_All) = 0, Selected (InkRecognitionTarget_Selected) = 1, Recent (InkRecognitionTarget_Recent) = 2,
+    All = 0, Selected = 1, Recent = 2,
 }}
 DEFINE_IID!(IID_IInkRecognizer, 125619875, 36941, 17450, 177, 81, 170, 202, 54, 49, 196, 59);
 RT_INTERFACE!{interface IInkRecognizer(IInkRecognizerVtbl): IInspectable(IInspectableVtbl) [IID_IInkRecognizer] {
@@ -12182,15 +12182,15 @@ impl IPenAndInkSettingsStatics {
     }}
 }
 RT_ENUM! { enum PenHandedness: i32 {
-    Right (PenHandedness_Right) = 0, Left (PenHandedness_Left) = 1,
+    Right = 0, Left = 1,
 }}
 RT_ENUM! { enum PenTipShape: i32 {
-    Circle (PenTipShape_Circle) = 0, Rectangle (PenTipShape_Rectangle) = 1,
+    Circle = 0, Rectangle = 1,
 }}
 pub mod analysis { // Windows.UI.Input.Inking.Analysis
 use ::prelude::*;
 RT_ENUM! { enum InkAnalysisDrawingKind: i32 {
-    Drawing (InkAnalysisDrawingKind_Drawing) = 0, Circle (InkAnalysisDrawingKind_Circle) = 1, Ellipse (InkAnalysisDrawingKind_Ellipse) = 2, Triangle (InkAnalysisDrawingKind_Triangle) = 3, IsoscelesTriangle (InkAnalysisDrawingKind_IsoscelesTriangle) = 4, EquilateralTriangle (InkAnalysisDrawingKind_EquilateralTriangle) = 5, RightTriangle (InkAnalysisDrawingKind_RightTriangle) = 6, Quadrilateral (InkAnalysisDrawingKind_Quadrilateral) = 7, Rectangle (InkAnalysisDrawingKind_Rectangle) = 8, Square (InkAnalysisDrawingKind_Square) = 9, Diamond (InkAnalysisDrawingKind_Diamond) = 10, Trapezoid (InkAnalysisDrawingKind_Trapezoid) = 11, Parallelogram (InkAnalysisDrawingKind_Parallelogram) = 12, Pentagon (InkAnalysisDrawingKind_Pentagon) = 13, Hexagon (InkAnalysisDrawingKind_Hexagon) = 14,
+    Drawing = 0, Circle = 1, Ellipse = 2, Triangle = 3, IsoscelesTriangle = 4, EquilateralTriangle = 5, RightTriangle = 6, Quadrilateral = 7, Rectangle = 8, Square = 9, Diamond = 10, Trapezoid = 11, Parallelogram = 12, Pentagon = 13, Hexagon = 14,
 }}
 DEFINE_IID!(IID_IInkAnalysisInkBullet, 3993277288, 24848, 16694, 149, 249, 238, 128, 159, 194, 0, 48);
 RT_INTERFACE!{interface IInkAnalysisInkBullet(IInkAnalysisInkBulletVtbl): IInspectable(IInspectableVtbl) [IID_IInkAnalysisInkBullet] {
@@ -12325,7 +12325,7 @@ impl IInkAnalysisNode {
 }
 RT_CLASS!{class InkAnalysisNode: IInkAnalysisNode}
 RT_ENUM! { enum InkAnalysisNodeKind: i32 {
-    UnclassifiedInk (InkAnalysisNodeKind_UnclassifiedInk) = 0, Root (InkAnalysisNodeKind_Root) = 1, WritingRegion (InkAnalysisNodeKind_WritingRegion) = 2, Paragraph (InkAnalysisNodeKind_Paragraph) = 3, Line (InkAnalysisNodeKind_Line) = 4, InkWord (InkAnalysisNodeKind_InkWord) = 5, InkBullet (InkAnalysisNodeKind_InkBullet) = 6, InkDrawing (InkAnalysisNodeKind_InkDrawing) = 7, ListItem (InkAnalysisNodeKind_ListItem) = 8,
+    UnclassifiedInk = 0, Root = 1, WritingRegion = 2, Paragraph = 3, Line = 4, InkWord = 5, InkBullet = 6, InkDrawing = 7, ListItem = 8,
 }}
 DEFINE_IID!(IID_IInkAnalysisParagraph, 3651994716, 3281, 19924, 166, 139, 235, 31, 18, 179, 215, 39);
 RT_INTERFACE!{interface IInkAnalysisParagraph(IInkAnalysisParagraphVtbl): IInspectable(IInspectableVtbl) [IID_IInkAnalysisParagraph] {
@@ -12370,10 +12370,10 @@ impl IInkAnalysisRoot {
 }
 RT_CLASS!{class InkAnalysisRoot: IInkAnalysisRoot}
 RT_ENUM! { enum InkAnalysisStatus: i32 {
-    Updated (InkAnalysisStatus_Updated) = 0, Unchanged (InkAnalysisStatus_Unchanged) = 1,
+    Updated = 0, Unchanged = 1,
 }}
 RT_ENUM! { enum InkAnalysisStrokeKind: i32 {
-    Auto (InkAnalysisStrokeKind_Auto) = 0, Writing (InkAnalysisStrokeKind_Writing) = 1, Drawing (InkAnalysisStrokeKind_Drawing) = 2,
+    Auto = 0, Writing = 1, Drawing = 2,
 }}
 DEFINE_IID!(IID_IInkAnalysisWritingRegion, 3714933297, 48406, 18019, 181, 174, 148, 29, 48, 67, 239, 91);
 RT_INTERFACE!{interface IInkAnalysisWritingRegion(IInkAnalysisWritingRegionVtbl): IInspectable(IInspectableVtbl) [IID_IInkAnalysisWritingRegion] {
@@ -12649,7 +12649,7 @@ RT_CLASS!{class CoreInkPresenterHost: ICoreInkPresenterHost}
 impl RtActivatable<IActivationFactory> for CoreInkPresenterHost {}
 DEFINE_CLSID!(CoreInkPresenterHost(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,73,110,107,105,110,103,46,67,111,114,101,46,67,111,114,101,73,110,107,80,114,101,115,101,110,116,101,114,72,111,115,116,0]) [CLSID_CoreInkPresenterHost]);
 RT_ENUM! { enum CoreWetStrokeDisposition: i32 {
-    Inking (CoreWetStrokeDisposition_Inking) = 0, Completed (CoreWetStrokeDisposition_Completed) = 1, Canceled (CoreWetStrokeDisposition_Canceled) = 2,
+    Inking = 0, Completed = 1, Canceled = 2,
 }}
 DEFINE_IID!(IID_ICoreWetStrokeUpdateEventArgs, 4211593548, 13184, 17786, 169, 135, 153, 19, 87, 137, 108, 27);
 RT_INTERFACE!{interface ICoreWetStrokeUpdateEventArgs(ICoreWetStrokeUpdateEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreWetStrokeUpdateEventArgs] {
@@ -12806,7 +12806,7 @@ pub mod preview { // Windows.UI.Input.Preview
 pub mod injection { // Windows.UI.Input.Preview.Injection
 use ::prelude::*;
 RT_ENUM! { enum InjectedInputButtonChangeKind: i32 {
-    None (InjectedInputButtonChangeKind_None) = 0, FirstButtonDown (InjectedInputButtonChangeKind_FirstButtonDown) = 1, FirstButtonUp (InjectedInputButtonChangeKind_FirstButtonUp) = 2, SecondButtonDown (InjectedInputButtonChangeKind_SecondButtonDown) = 3, SecondButtonUp (InjectedInputButtonChangeKind_SecondButtonUp) = 4, ThirdButtonDown (InjectedInputButtonChangeKind_ThirdButtonDown) = 5, ThirdButtonUp (InjectedInputButtonChangeKind_ThirdButtonUp) = 6, FourthButtonDown (InjectedInputButtonChangeKind_FourthButtonDown) = 7, FourthButtonUp (InjectedInputButtonChangeKind_FourthButtonUp) = 8, FifthButtonDown (InjectedInputButtonChangeKind_FifthButtonDown) = 9, FifthButtonUp (InjectedInputButtonChangeKind_FifthButtonUp) = 10,
+    None = 0, FirstButtonDown = 1, FirstButtonUp = 2, SecondButtonDown = 3, SecondButtonUp = 4, ThirdButtonDown = 5, ThirdButtonUp = 6, FourthButtonDown = 7, FourthButtonUp = 8, FifthButtonDown = 9, FifthButtonUp = 10,
 }}
 DEFINE_IID!(IID_IInjectedInputGamepadInfo, 548313663, 57105, 17778, 169, 171, 215, 91, 138, 94, 72, 173);
 RT_INTERFACE!{interface IInjectedInputGamepadInfo(IInjectedInputGamepadInfoVtbl): IInspectable(IInspectableVtbl) [IID_IInjectedInputGamepadInfo] {
@@ -12954,7 +12954,7 @@ RT_CLASS!{class InjectedInputKeyboardInfo: IInjectedInputKeyboardInfo}
 impl RtActivatable<IActivationFactory> for InjectedInputKeyboardInfo {}
 DEFINE_CLSID!(InjectedInputKeyboardInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,75,101,121,98,111,97,114,100,73,110,102,111,0]) [CLSID_InjectedInputKeyboardInfo]);
 RT_ENUM! { enum InjectedInputKeyOptions: u32 {
-    None (InjectedInputKeyOptions_None) = 0, ExtendedKey (InjectedInputKeyOptions_ExtendedKey) = 1, KeyUp (InjectedInputKeyOptions_KeyUp) = 2, ScanCode (InjectedInputKeyOptions_ScanCode) = 8, Unicode (InjectedInputKeyOptions_Unicode) = 4,
+    None = 0, ExtendedKey = 1, KeyUp = 2, ScanCode = 8, Unicode = 4,
 }}
 DEFINE_IID!(IID_IInjectedInputMouseInfo, 2532666987, 58490, 23796, 65, 141, 138, 95, 185, 103, 12, 125);
 RT_INTERFACE!{interface IInjectedInputMouseInfo(IInjectedInputMouseInfoVtbl): IInspectable(IInspectableVtbl) [IID_IInjectedInputMouseInfo] {
@@ -13020,10 +13020,10 @@ RT_CLASS!{class InjectedInputMouseInfo: IInjectedInputMouseInfo}
 impl RtActivatable<IActivationFactory> for InjectedInputMouseInfo {}
 DEFINE_CLSID!(InjectedInputMouseInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,77,111,117,115,101,73,110,102,111,0]) [CLSID_InjectedInputMouseInfo]);
 RT_ENUM! { enum InjectedInputMouseOptions: u32 {
-    None (InjectedInputMouseOptions_None) = 0, Move (InjectedInputMouseOptions_Move) = 1, LeftDown (InjectedInputMouseOptions_LeftDown) = 2, LeftUp (InjectedInputMouseOptions_LeftUp) = 4, RightDown (InjectedInputMouseOptions_RightDown) = 8, RightUp (InjectedInputMouseOptions_RightUp) = 16, MiddleDown (InjectedInputMouseOptions_MiddleDown) = 32, MiddleUp (InjectedInputMouseOptions_MiddleUp) = 64, XDown (InjectedInputMouseOptions_XDown) = 128, XUp (InjectedInputMouseOptions_XUp) = 256, Wheel (InjectedInputMouseOptions_Wheel) = 2048, HWheel (InjectedInputMouseOptions_HWheel) = 4096, MoveNoCoalesce (InjectedInputMouseOptions_MoveNoCoalesce) = 8192, VirtualDesk (InjectedInputMouseOptions_VirtualDesk) = 16384, Absolute (InjectedInputMouseOptions_Absolute) = 32768,
+    None = 0, Move = 1, LeftDown = 2, LeftUp = 4, RightDown = 8, RightUp = 16, MiddleDown = 32, MiddleUp = 64, XDown = 128, XUp = 256, Wheel = 2048, HWheel = 4096, MoveNoCoalesce = 8192, VirtualDesk = 16384, Absolute = 32768,
 }}
 RT_ENUM! { enum InjectedInputPenButtons: u32 {
-    None (InjectedInputPenButtons_None) = 0, Barrel (InjectedInputPenButtons_Barrel) = 1, Inverted (InjectedInputPenButtons_Inverted) = 2, Eraser (InjectedInputPenButtons_Eraser) = 4,
+    None = 0, Barrel = 1, Inverted = 2, Eraser = 4,
 }}
 DEFINE_IID!(IID_IInjectedInputPenInfo, 1799400707, 51742, 21799, 126, 2, 40, 40, 84, 11, 177, 212);
 RT_INTERFACE!{interface IInjectedInputPenInfo(IInjectedInputPenInfoVtbl): IInspectable(IInspectableVtbl) [IID_IInjectedInputPenInfo] {
@@ -13111,7 +13111,7 @@ RT_CLASS!{class InjectedInputPenInfo: IInjectedInputPenInfo}
 impl RtActivatable<IActivationFactory> for InjectedInputPenInfo {}
 DEFINE_CLSID!(InjectedInputPenInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,80,101,110,73,110,102,111,0]) [CLSID_InjectedInputPenInfo]);
 RT_ENUM! { enum InjectedInputPenParameters: u32 {
-    None (InjectedInputPenParameters_None) = 0, Pressure (InjectedInputPenParameters_Pressure) = 1, Rotation (InjectedInputPenParameters_Rotation) = 2, TiltX (InjectedInputPenParameters_TiltX) = 4, TiltY (InjectedInputPenParameters_TiltY) = 8,
+    None = 0, Pressure = 1, Rotation = 2, TiltX = 4, TiltY = 8,
 }}
 RT_STRUCT! { struct InjectedInputPoint {
     PositionX: i32, PositionY: i32,
@@ -13120,13 +13120,13 @@ RT_STRUCT! { struct InjectedInputPointerInfo {
     PointerId: u32, PointerOptions: InjectedInputPointerOptions, PixelLocation: InjectedInputPoint, TimeOffsetInMilliseconds: u32, PerformanceCount: u64,
 }}
 RT_ENUM! { enum InjectedInputPointerOptions: u32 {
-    None (InjectedInputPointerOptions_None) = 0, New (InjectedInputPointerOptions_New) = 1, InRange (InjectedInputPointerOptions_InRange) = 2, InContact (InjectedInputPointerOptions_InContact) = 4, FirstButton (InjectedInputPointerOptions_FirstButton) = 16, SecondButton (InjectedInputPointerOptions_SecondButton) = 32, Primary (InjectedInputPointerOptions_Primary) = 8192, Confidence (InjectedInputPointerOptions_Confidence) = 16384, Canceled (InjectedInputPointerOptions_Canceled) = 32768, PointerDown (InjectedInputPointerOptions_PointerDown) = 65536, Update (InjectedInputPointerOptions_Update) = 131072, PointerUp (InjectedInputPointerOptions_PointerUp) = 262144, CaptureChanged (InjectedInputPointerOptions_CaptureChanged) = 2097152,
+    None = 0, New = 1, InRange = 2, InContact = 4, FirstButton = 16, SecondButton = 32, Primary = 8192, Confidence = 16384, Canceled = 32768, PointerDown = 65536, Update = 131072, PointerUp = 262144, CaptureChanged = 2097152,
 }}
 RT_STRUCT! { struct InjectedInputRectangle {
     Left: i32, Top: i32, Bottom: i32, Right: i32,
 }}
 RT_ENUM! { enum InjectedInputShortcut: i32 {
-    Back (InjectedInputShortcut_Back) = 0, Start (InjectedInputShortcut_Start) = 1, Search (InjectedInputShortcut_Search) = 2,
+    Back = 0, Start = 1, Search = 2,
 }}
 DEFINE_IID!(IID_IInjectedInputTouchInfo, 575656415, 17384, 24309, 81, 10, 105, 202, 140, 155, 76, 40);
 RT_INTERFACE!{interface IInjectedInputTouchInfo(IInjectedInputTouchInfoVtbl): IInspectable(IInspectableVtbl) [IID_IInjectedInputTouchInfo] {
@@ -13192,10 +13192,10 @@ RT_CLASS!{class InjectedInputTouchInfo: IInjectedInputTouchInfo}
 impl RtActivatable<IActivationFactory> for InjectedInputTouchInfo {}
 DEFINE_CLSID!(InjectedInputTouchInfo(&[87,105,110,100,111,119,115,46,85,73,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,73,110,106,101,99,116,105,111,110,46,73,110,106,101,99,116,101,100,73,110,112,117,116,84,111,117,99,104,73,110,102,111,0]) [CLSID_InjectedInputTouchInfo]);
 RT_ENUM! { enum InjectedInputTouchParameters: u32 {
-    None (InjectedInputTouchParameters_None) = 0, Contact (InjectedInputTouchParameters_Contact) = 1, Orientation (InjectedInputTouchParameters_Orientation) = 2, Pressure (InjectedInputTouchParameters_Pressure) = 4,
+    None = 0, Contact = 1, Orientation = 2, Pressure = 4,
 }}
 RT_ENUM! { enum InjectedInputVisualizationMode: i32 {
-    None (InjectedInputVisualizationMode_None) = 0, Default (InjectedInputVisualizationMode_Default) = 1, Indirect (InjectedInputVisualizationMode_Indirect) = 2,
+    None = 0, Default = 1, Indirect = 2,
 }}
 DEFINE_IID!(IID_IInputInjector, 2395107204, 2818, 19410, 173, 122, 61, 70, 88, 190, 62, 24);
 RT_INTERFACE!{interface IInputInjector(IInputInjectorVtbl): IInspectable(IInspectableVtbl) [IID_IInputInjector] {
@@ -13506,7 +13506,7 @@ impl ISpatialGestureRecognizerFactory {
     }}
 }
 RT_ENUM! { enum SpatialGestureSettings: u32 {
-    None (SpatialGestureSettings_None) = 0, Tap (SpatialGestureSettings_Tap) = 1, DoubleTap (SpatialGestureSettings_DoubleTap) = 2, Hold (SpatialGestureSettings_Hold) = 4, ManipulationTranslate (SpatialGestureSettings_ManipulationTranslate) = 8, NavigationX (SpatialGestureSettings_NavigationX) = 16, NavigationY (SpatialGestureSettings_NavigationY) = 32, NavigationZ (SpatialGestureSettings_NavigationZ) = 64, NavigationRailsX (SpatialGestureSettings_NavigationRailsX) = 128, NavigationRailsY (SpatialGestureSettings_NavigationRailsY) = 256, NavigationRailsZ (SpatialGestureSettings_NavigationRailsZ) = 512,
+    None = 0, Tap = 1, DoubleTap = 2, Hold = 4, ManipulationTranslate = 8, NavigationX = 16, NavigationY = 32, NavigationZ = 64, NavigationRailsX = 128, NavigationRailsY = 256, NavigationRailsZ = 512,
 }}
 DEFINE_IID!(IID_ISpatialHoldCanceledEventArgs, 1576842855, 19626, 16531, 140, 53, 182, 1, 168, 57, 243, 27);
 RT_INTERFACE!{interface ISpatialHoldCanceledEventArgs(ISpatialHoldCanceledEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialHoldCanceledEventArgs] {
@@ -13808,7 +13808,7 @@ impl ISpatialInteractionManagerStatics {
     }}
 }
 RT_ENUM! { enum SpatialInteractionPressKind: i32 {
-    None (SpatialInteractionPressKind_None) = 0, Select (SpatialInteractionPressKind_Select) = 1, Menu (SpatialInteractionPressKind_Menu) = 2, Grasp (SpatialInteractionPressKind_Grasp) = 3, Touchpad (SpatialInteractionPressKind_Touchpad) = 4, Thumbstick (SpatialInteractionPressKind_Thumbstick) = 5,
+    None = 0, Select = 1, Menu = 2, Grasp = 3, Touchpad = 4, Thumbstick = 5,
 }}
 DEFINE_IID!(IID_ISpatialInteractionSource, 4216599482, 45235, 12616, 159, 59, 233, 245, 222, 86, 143, 93);
 RT_INTERFACE!{interface ISpatialInteractionSource(ISpatialInteractionSourceVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionSource] {
@@ -13898,10 +13898,10 @@ impl ISpatialInteractionSourceEventArgs2 {
     }}
 }
 RT_ENUM! { enum SpatialInteractionSourceHandedness: i32 {
-    Unspecified (SpatialInteractionSourceHandedness_Unspecified) = 0, Left (SpatialInteractionSourceHandedness_Left) = 1, Right (SpatialInteractionSourceHandedness_Right) = 2,
+    Unspecified = 0, Left = 1, Right = 2,
 }}
 RT_ENUM! { enum SpatialInteractionSourceKind: i32 {
-    Other (SpatialInteractionSourceKind_Other) = 0, Hand (SpatialInteractionSourceKind_Hand) = 1, Voice (SpatialInteractionSourceKind_Voice) = 2, Controller (SpatialInteractionSourceKind_Controller) = 3,
+    Other = 0, Hand = 1, Voice = 2, Controller = 3,
 }}
 DEFINE_IID!(IID_ISpatialInteractionSourceLocation, 3930494660, 32395, 12490, 188, 197, 199, 113, 137, 206, 163, 10);
 RT_INTERFACE!{interface ISpatialInteractionSourceLocation(ISpatialInteractionSourceLocationVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionSourceLocation] {
@@ -13956,7 +13956,7 @@ impl ISpatialInteractionSourceLocation3 {
     }}
 }
 RT_ENUM! { enum SpatialInteractionSourcePositionAccuracy: i32 {
-    High (SpatialInteractionSourcePositionAccuracy_High) = 0, Approximate (SpatialInteractionSourcePositionAccuracy_Approximate) = 1,
+    High = 0, Approximate = 1,
 }}
 DEFINE_IID!(IID_ISpatialInteractionSourceProperties, 90195266, 16119, 12834, 159, 83, 99, 201, 203, 126, 59, 199);
 RT_INTERFACE!{interface ISpatialInteractionSourceProperties(ISpatialInteractionSourcePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialInteractionSourceProperties] {
@@ -14388,7 +14388,7 @@ impl IAdaptiveNotificationContent {
     }}
 }
 RT_ENUM! { enum AdaptiveNotificationContentKind: i32 {
-    Text (AdaptiveNotificationContentKind_Text) = 0,
+    Text = 0,
 }}
 DEFINE_IID!(IID_IAdaptiveNotificationText, 1188340670, 24730, 17190, 164, 11, 191, 222, 135, 32, 52, 163);
 RT_INTERFACE!{interface IAdaptiveNotificationText(IAdaptiveNotificationTextVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveNotificationText] {
@@ -14463,7 +14463,7 @@ impl IBadgeNotificationFactory {
     }}
 }
 RT_ENUM! { enum BadgeTemplateType: i32 {
-    BadgeGlyph (BadgeTemplateType_BadgeGlyph) = 0, BadgeNumber (BadgeTemplateType_BadgeNumber) = 1,
+    BadgeGlyph = 0, BadgeNumber = 1,
 }}
 RT_CLASS!{static class BadgeUpdateManager}
 impl RtActivatable<IBadgeUpdateManagerStatics> for BadgeUpdateManager {}
@@ -14973,16 +14973,16 @@ impl INotificationDataFactory {
     }}
 }
 RT_ENUM! { enum NotificationKinds: u32 {
-    Unknown (NotificationKinds_Unknown) = 0, Toast (NotificationKinds_Toast) = 1,
+    Unknown = 0, Toast = 1,
 }}
 RT_ENUM! { enum NotificationMirroring: i32 {
-    Allowed (NotificationMirroring_Allowed) = 0, Disabled (NotificationMirroring_Disabled) = 1,
+    Allowed = 0, Disabled = 1,
 }}
 RT_ENUM! { enum NotificationSetting: i32 {
-    Enabled (NotificationSetting_Enabled) = 0, DisabledForApplication (NotificationSetting_DisabledForApplication) = 1, DisabledForUser (NotificationSetting_DisabledForUser) = 2, DisabledByGroupPolicy (NotificationSetting_DisabledByGroupPolicy) = 3, DisabledByManifest (NotificationSetting_DisabledByManifest) = 4,
+    Enabled = 0, DisabledForApplication = 1, DisabledForUser = 2, DisabledByGroupPolicy = 3, DisabledByManifest = 4,
 }}
 RT_ENUM! { enum NotificationUpdateResult: i32 {
-    Succeeded (NotificationUpdateResult_Succeeded) = 0, Failed (NotificationUpdateResult_Failed) = 1, NotificationNotFound (NotificationUpdateResult_NotificationNotFound) = 2,
+    Succeeded = 0, Failed = 1, NotificationNotFound = 2,
 }}
 DEFINE_IID!(IID_INotificationVisual, 1753439118, 43606, 19985, 134, 211, 95, 154, 105, 87, 188, 91);
 RT_INTERFACE!{interface INotificationVisual(INotificationVisualVtbl): IInspectable(IInspectableVtbl) [IID_INotificationVisual] {
@@ -15014,7 +15014,7 @@ impl INotificationVisual {
 }
 RT_CLASS!{class NotificationVisual: INotificationVisual}
 RT_ENUM! { enum PeriodicUpdateRecurrence: i32 {
-    HalfHour (PeriodicUpdateRecurrence_HalfHour) = 0, Hour (PeriodicUpdateRecurrence_Hour) = 1, SixHours (PeriodicUpdateRecurrence_SixHours) = 2, TwelveHours (PeriodicUpdateRecurrence_TwelveHours) = 3, Daily (PeriodicUpdateRecurrence_Daily) = 4,
+    HalfHour = 0, Hour = 1, SixHours = 2, TwelveHours = 3, Daily = 4,
 }}
 DEFINE_IID!(IID_IScheduledTileNotification, 180135637, 39388, 19576, 161, 28, 201, 231, 248, 109, 126, 247);
 RT_INTERFACE!{interface IScheduledTileNotification(IScheduledTileNotificationVtbl): IInspectable(IInspectableVtbl) [IID_IScheduledTileNotification] {
@@ -15320,7 +15320,7 @@ impl ITileFlyoutNotificationFactory {
     }}
 }
 RT_ENUM! { enum TileFlyoutTemplateType: i32 {
-    TileFlyoutTemplate01 (TileFlyoutTemplateType_TileFlyoutTemplate01) = 0,
+    TileFlyoutTemplate01 = 0,
 }}
 RT_CLASS!{static class TileFlyoutUpdateManager}
 impl RtActivatable<ITileFlyoutUpdateManagerStatics> for TileFlyoutUpdateManager {}
@@ -15459,7 +15459,7 @@ impl ITileNotificationFactory {
     }}
 }
 RT_ENUM! { enum TileTemplateType: i32 {
-    TileSquareImage (TileTemplateType_TileSquareImage) = 0, TileSquareBlock (TileTemplateType_TileSquareBlock) = 1, TileSquareText01 (TileTemplateType_TileSquareText01) = 2, TileSquareText02 (TileTemplateType_TileSquareText02) = 3, TileSquareText03 (TileTemplateType_TileSquareText03) = 4, TileSquareText04 (TileTemplateType_TileSquareText04) = 5, TileSquarePeekImageAndText01 (TileTemplateType_TileSquarePeekImageAndText01) = 6, TileSquarePeekImageAndText02 (TileTemplateType_TileSquarePeekImageAndText02) = 7, TileSquarePeekImageAndText03 (TileTemplateType_TileSquarePeekImageAndText03) = 8, TileSquarePeekImageAndText04 (TileTemplateType_TileSquarePeekImageAndText04) = 9, TileWideImage (TileTemplateType_TileWideImage) = 10, TileWideImageCollection (TileTemplateType_TileWideImageCollection) = 11, TileWideImageAndText01 (TileTemplateType_TileWideImageAndText01) = 12, TileWideImageAndText02 (TileTemplateType_TileWideImageAndText02) = 13, TileWideBlockAndText01 (TileTemplateType_TileWideBlockAndText01) = 14, TileWideBlockAndText02 (TileTemplateType_TileWideBlockAndText02) = 15, TileWidePeekImageCollection01 (TileTemplateType_TileWidePeekImageCollection01) = 16, TileWidePeekImageCollection02 (TileTemplateType_TileWidePeekImageCollection02) = 17, TileWidePeekImageCollection03 (TileTemplateType_TileWidePeekImageCollection03) = 18, TileWidePeekImageCollection04 (TileTemplateType_TileWidePeekImageCollection04) = 19, TileWidePeekImageCollection05 (TileTemplateType_TileWidePeekImageCollection05) = 20, TileWidePeekImageCollection06 (TileTemplateType_TileWidePeekImageCollection06) = 21, TileWidePeekImageAndText01 (TileTemplateType_TileWidePeekImageAndText01) = 22, TileWidePeekImageAndText02 (TileTemplateType_TileWidePeekImageAndText02) = 23, TileWidePeekImage01 (TileTemplateType_TileWidePeekImage01) = 24, TileWidePeekImage02 (TileTemplateType_TileWidePeekImage02) = 25, TileWidePeekImage03 (TileTemplateType_TileWidePeekImage03) = 26, TileWidePeekImage04 (TileTemplateType_TileWidePeekImage04) = 27, TileWidePeekImage05 (TileTemplateType_TileWidePeekImage05) = 28, TileWidePeekImage06 (TileTemplateType_TileWidePeekImage06) = 29, TileWideSmallImageAndText01 (TileTemplateType_TileWideSmallImageAndText01) = 30, TileWideSmallImageAndText02 (TileTemplateType_TileWideSmallImageAndText02) = 31, TileWideSmallImageAndText03 (TileTemplateType_TileWideSmallImageAndText03) = 32, TileWideSmallImageAndText04 (TileTemplateType_TileWideSmallImageAndText04) = 33, TileWideSmallImageAndText05 (TileTemplateType_TileWideSmallImageAndText05) = 34, TileWideText01 (TileTemplateType_TileWideText01) = 35, TileWideText02 (TileTemplateType_TileWideText02) = 36, TileWideText03 (TileTemplateType_TileWideText03) = 37, TileWideText04 (TileTemplateType_TileWideText04) = 38, TileWideText05 (TileTemplateType_TileWideText05) = 39, TileWideText06 (TileTemplateType_TileWideText06) = 40, TileWideText07 (TileTemplateType_TileWideText07) = 41, TileWideText08 (TileTemplateType_TileWideText08) = 42, TileWideText09 (TileTemplateType_TileWideText09) = 43, TileWideText10 (TileTemplateType_TileWideText10) = 44, TileWideText11 (TileTemplateType_TileWideText11) = 45, TileSquare150x150Image (TileTemplateType_TileSquare150x150Image) = 0, TileSquare150x150Block (TileTemplateType_TileSquare150x150Block) = 1, TileSquare150x150Text01 (TileTemplateType_TileSquare150x150Text01) = 2, TileSquare150x150Text02 (TileTemplateType_TileSquare150x150Text02) = 3, TileSquare150x150Text03 (TileTemplateType_TileSquare150x150Text03) = 4, TileSquare150x150Text04 (TileTemplateType_TileSquare150x150Text04) = 5, TileSquare150x150PeekImageAndText01 (TileTemplateType_TileSquare150x150PeekImageAndText01) = 6, TileSquare150x150PeekImageAndText02 (TileTemplateType_TileSquare150x150PeekImageAndText02) = 7, TileSquare150x150PeekImageAndText03 (TileTemplateType_TileSquare150x150PeekImageAndText03) = 8, TileSquare150x150PeekImageAndText04 (TileTemplateType_TileSquare150x150PeekImageAndText04) = 9, TileWide310x150Image (TileTemplateType_TileWide310x150Image) = 10, TileWide310x150ImageCollection (TileTemplateType_TileWide310x150ImageCollection) = 11, TileWide310x150ImageAndText01 (TileTemplateType_TileWide310x150ImageAndText01) = 12, TileWide310x150ImageAndText02 (TileTemplateType_TileWide310x150ImageAndText02) = 13, TileWide310x150BlockAndText01 (TileTemplateType_TileWide310x150BlockAndText01) = 14, TileWide310x150BlockAndText02 (TileTemplateType_TileWide310x150BlockAndText02) = 15, TileWide310x150PeekImageCollection01 (TileTemplateType_TileWide310x150PeekImageCollection01) = 16, TileWide310x150PeekImageCollection02 (TileTemplateType_TileWide310x150PeekImageCollection02) = 17, TileWide310x150PeekImageCollection03 (TileTemplateType_TileWide310x150PeekImageCollection03) = 18, TileWide310x150PeekImageCollection04 (TileTemplateType_TileWide310x150PeekImageCollection04) = 19, TileWide310x150PeekImageCollection05 (TileTemplateType_TileWide310x150PeekImageCollection05) = 20, TileWide310x150PeekImageCollection06 (TileTemplateType_TileWide310x150PeekImageCollection06) = 21, TileWide310x150PeekImageAndText01 (TileTemplateType_TileWide310x150PeekImageAndText01) = 22, TileWide310x150PeekImageAndText02 (TileTemplateType_TileWide310x150PeekImageAndText02) = 23, TileWide310x150PeekImage01 (TileTemplateType_TileWide310x150PeekImage01) = 24, TileWide310x150PeekImage02 (TileTemplateType_TileWide310x150PeekImage02) = 25, TileWide310x150PeekImage03 (TileTemplateType_TileWide310x150PeekImage03) = 26, TileWide310x150PeekImage04 (TileTemplateType_TileWide310x150PeekImage04) = 27, TileWide310x150PeekImage05 (TileTemplateType_TileWide310x150PeekImage05) = 28, TileWide310x150PeekImage06 (TileTemplateType_TileWide310x150PeekImage06) = 29, TileWide310x150SmallImageAndText01 (TileTemplateType_TileWide310x150SmallImageAndText01) = 30, TileWide310x150SmallImageAndText02 (TileTemplateType_TileWide310x150SmallImageAndText02) = 31, TileWide310x150SmallImageAndText03 (TileTemplateType_TileWide310x150SmallImageAndText03) = 32, TileWide310x150SmallImageAndText04 (TileTemplateType_TileWide310x150SmallImageAndText04) = 33, TileWide310x150SmallImageAndText05 (TileTemplateType_TileWide310x150SmallImageAndText05) = 34, TileWide310x150Text01 (TileTemplateType_TileWide310x150Text01) = 35, TileWide310x150Text02 (TileTemplateType_TileWide310x150Text02) = 36, TileWide310x150Text03 (TileTemplateType_TileWide310x150Text03) = 37, TileWide310x150Text04 (TileTemplateType_TileWide310x150Text04) = 38, TileWide310x150Text05 (TileTemplateType_TileWide310x150Text05) = 39, TileWide310x150Text06 (TileTemplateType_TileWide310x150Text06) = 40, TileWide310x150Text07 (TileTemplateType_TileWide310x150Text07) = 41, TileWide310x150Text08 (TileTemplateType_TileWide310x150Text08) = 42, TileWide310x150Text09 (TileTemplateType_TileWide310x150Text09) = 43, TileWide310x150Text10 (TileTemplateType_TileWide310x150Text10) = 44, TileWide310x150Text11 (TileTemplateType_TileWide310x150Text11) = 45, TileSquare310x310BlockAndText01 (TileTemplateType_TileSquare310x310BlockAndText01) = 46, TileSquare310x310BlockAndText02 (TileTemplateType_TileSquare310x310BlockAndText02) = 47, TileSquare310x310Image (TileTemplateType_TileSquare310x310Image) = 48, TileSquare310x310ImageAndText01 (TileTemplateType_TileSquare310x310ImageAndText01) = 49, TileSquare310x310ImageAndText02 (TileTemplateType_TileSquare310x310ImageAndText02) = 50, TileSquare310x310ImageAndTextOverlay01 (TileTemplateType_TileSquare310x310ImageAndTextOverlay01) = 51, TileSquare310x310ImageAndTextOverlay02 (TileTemplateType_TileSquare310x310ImageAndTextOverlay02) = 52, TileSquare310x310ImageAndTextOverlay03 (TileTemplateType_TileSquare310x310ImageAndTextOverlay03) = 53, TileSquare310x310ImageCollectionAndText01 (TileTemplateType_TileSquare310x310ImageCollectionAndText01) = 54, TileSquare310x310ImageCollectionAndText02 (TileTemplateType_TileSquare310x310ImageCollectionAndText02) = 55, TileSquare310x310ImageCollection (TileTemplateType_TileSquare310x310ImageCollection) = 56, TileSquare310x310SmallImagesAndTextList01 (TileTemplateType_TileSquare310x310SmallImagesAndTextList01) = 57, TileSquare310x310SmallImagesAndTextList02 (TileTemplateType_TileSquare310x310SmallImagesAndTextList02) = 58, TileSquare310x310SmallImagesAndTextList03 (TileTemplateType_TileSquare310x310SmallImagesAndTextList03) = 59, TileSquare310x310SmallImagesAndTextList04 (TileTemplateType_TileSquare310x310SmallImagesAndTextList04) = 60, TileSquare310x310Text01 (TileTemplateType_TileSquare310x310Text01) = 61, TileSquare310x310Text02 (TileTemplateType_TileSquare310x310Text02) = 62, TileSquare310x310Text03 (TileTemplateType_TileSquare310x310Text03) = 63, TileSquare310x310Text04 (TileTemplateType_TileSquare310x310Text04) = 64, TileSquare310x310Text05 (TileTemplateType_TileSquare310x310Text05) = 65, TileSquare310x310Text06 (TileTemplateType_TileSquare310x310Text06) = 66, TileSquare310x310Text07 (TileTemplateType_TileSquare310x310Text07) = 67, TileSquare310x310Text08 (TileTemplateType_TileSquare310x310Text08) = 68, TileSquare310x310TextList01 (TileTemplateType_TileSquare310x310TextList01) = 69, TileSquare310x310TextList02 (TileTemplateType_TileSquare310x310TextList02) = 70, TileSquare310x310TextList03 (TileTemplateType_TileSquare310x310TextList03) = 71, TileSquare310x310SmallImageAndText01 (TileTemplateType_TileSquare310x310SmallImageAndText01) = 72, TileSquare310x310SmallImagesAndTextList05 (TileTemplateType_TileSquare310x310SmallImagesAndTextList05) = 73, TileSquare310x310Text09 (TileTemplateType_TileSquare310x310Text09) = 74, TileSquare71x71IconWithBadge (TileTemplateType_TileSquare71x71IconWithBadge) = 75, TileSquare150x150IconWithBadge (TileTemplateType_TileSquare150x150IconWithBadge) = 76, TileWide310x150IconWithBadgeAndText (TileTemplateType_TileWide310x150IconWithBadgeAndText) = 77, TileSquare71x71Image (TileTemplateType_TileSquare71x71Image) = 78, TileTall150x310Image (TileTemplateType_TileTall150x310Image) = 79,
+    TileSquareImage = 0, TileSquareBlock = 1, TileSquareText01 = 2, TileSquareText02 = 3, TileSquareText03 = 4, TileSquareText04 = 5, TileSquarePeekImageAndText01 = 6, TileSquarePeekImageAndText02 = 7, TileSquarePeekImageAndText03 = 8, TileSquarePeekImageAndText04 = 9, TileWideImage = 10, TileWideImageCollection = 11, TileWideImageAndText01 = 12, TileWideImageAndText02 = 13, TileWideBlockAndText01 = 14, TileWideBlockAndText02 = 15, TileWidePeekImageCollection01 = 16, TileWidePeekImageCollection02 = 17, TileWidePeekImageCollection03 = 18, TileWidePeekImageCollection04 = 19, TileWidePeekImageCollection05 = 20, TileWidePeekImageCollection06 = 21, TileWidePeekImageAndText01 = 22, TileWidePeekImageAndText02 = 23, TileWidePeekImage01 = 24, TileWidePeekImage02 = 25, TileWidePeekImage03 = 26, TileWidePeekImage04 = 27, TileWidePeekImage05 = 28, TileWidePeekImage06 = 29, TileWideSmallImageAndText01 = 30, TileWideSmallImageAndText02 = 31, TileWideSmallImageAndText03 = 32, TileWideSmallImageAndText04 = 33, TileWideSmallImageAndText05 = 34, TileWideText01 = 35, TileWideText02 = 36, TileWideText03 = 37, TileWideText04 = 38, TileWideText05 = 39, TileWideText06 = 40, TileWideText07 = 41, TileWideText08 = 42, TileWideText09 = 43, TileWideText10 = 44, TileWideText11 = 45, TileSquare150x150Image = 0, TileSquare150x150Block = 1, TileSquare150x150Text01 = 2, TileSquare150x150Text02 = 3, TileSquare150x150Text03 = 4, TileSquare150x150Text04 = 5, TileSquare150x150PeekImageAndText01 = 6, TileSquare150x150PeekImageAndText02 = 7, TileSquare150x150PeekImageAndText03 = 8, TileSquare150x150PeekImageAndText04 = 9, TileWide310x150Image = 10, TileWide310x150ImageCollection = 11, TileWide310x150ImageAndText01 = 12, TileWide310x150ImageAndText02 = 13, TileWide310x150BlockAndText01 = 14, TileWide310x150BlockAndText02 = 15, TileWide310x150PeekImageCollection01 = 16, TileWide310x150PeekImageCollection02 = 17, TileWide310x150PeekImageCollection03 = 18, TileWide310x150PeekImageCollection04 = 19, TileWide310x150PeekImageCollection05 = 20, TileWide310x150PeekImageCollection06 = 21, TileWide310x150PeekImageAndText01 = 22, TileWide310x150PeekImageAndText02 = 23, TileWide310x150PeekImage01 = 24, TileWide310x150PeekImage02 = 25, TileWide310x150PeekImage03 = 26, TileWide310x150PeekImage04 = 27, TileWide310x150PeekImage05 = 28, TileWide310x150PeekImage06 = 29, TileWide310x150SmallImageAndText01 = 30, TileWide310x150SmallImageAndText02 = 31, TileWide310x150SmallImageAndText03 = 32, TileWide310x150SmallImageAndText04 = 33, TileWide310x150SmallImageAndText05 = 34, TileWide310x150Text01 = 35, TileWide310x150Text02 = 36, TileWide310x150Text03 = 37, TileWide310x150Text04 = 38, TileWide310x150Text05 = 39, TileWide310x150Text06 = 40, TileWide310x150Text07 = 41, TileWide310x150Text08 = 42, TileWide310x150Text09 = 43, TileWide310x150Text10 = 44, TileWide310x150Text11 = 45, TileSquare310x310BlockAndText01 = 46, TileSquare310x310BlockAndText02 = 47, TileSquare310x310Image = 48, TileSquare310x310ImageAndText01 = 49, TileSquare310x310ImageAndText02 = 50, TileSquare310x310ImageAndTextOverlay01 = 51, TileSquare310x310ImageAndTextOverlay02 = 52, TileSquare310x310ImageAndTextOverlay03 = 53, TileSquare310x310ImageCollectionAndText01 = 54, TileSquare310x310ImageCollectionAndText02 = 55, TileSquare310x310ImageCollection = 56, TileSquare310x310SmallImagesAndTextList01 = 57, TileSquare310x310SmallImagesAndTextList02 = 58, TileSquare310x310SmallImagesAndTextList03 = 59, TileSquare310x310SmallImagesAndTextList04 = 60, TileSquare310x310Text01 = 61, TileSquare310x310Text02 = 62, TileSquare310x310Text03 = 63, TileSquare310x310Text04 = 64, TileSquare310x310Text05 = 65, TileSquare310x310Text06 = 66, TileSquare310x310Text07 = 67, TileSquare310x310Text08 = 68, TileSquare310x310TextList01 = 69, TileSquare310x310TextList02 = 70, TileSquare310x310TextList03 = 71, TileSquare310x310SmallImageAndText01 = 72, TileSquare310x310SmallImagesAndTextList05 = 73, TileSquare310x310Text09 = 74, TileSquare71x71IconWithBadge = 75, TileSquare150x150IconWithBadge = 76, TileWide310x150IconWithBadgeAndText = 77, TileSquare71x71Image = 78, TileTall150x310Image = 79,
 }}
 RT_CLASS!{static class TileUpdateManager}
 impl RtActivatable<ITileUpdateManagerStatics> for TileUpdateManager {}
@@ -15765,7 +15765,7 @@ impl IToastCollectionManager {
 }
 RT_CLASS!{class ToastCollectionManager: IToastCollectionManager}
 RT_ENUM! { enum ToastDismissalReason: i32 {
-    UserCanceled (ToastDismissalReason_UserCanceled) = 0, ApplicationHidden (ToastDismissalReason_ApplicationHidden) = 1, TimedOut (ToastDismissalReason_TimedOut) = 2,
+    UserCanceled = 0, ApplicationHidden = 1, TimedOut = 2,
 }}
 DEFINE_IID!(IID_IToastDismissedEventArgs, 1065998645, 55755, 17720, 160, 240, 255, 231, 101, 153, 56, 248);
 RT_INTERFACE!{interface IToastDismissedEventArgs(IToastDismissedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IToastDismissedEventArgs] {
@@ -15792,7 +15792,7 @@ impl IToastFailedEventArgs {
 }
 RT_CLASS!{class ToastFailedEventArgs: IToastFailedEventArgs}
 RT_ENUM! { enum ToastHistoryChangedType: i32 {
-    Cleared (ToastHistoryChangedType_Cleared) = 0, Removed (ToastHistoryChangedType_Removed) = 1, Expired (ToastHistoryChangedType_Expired) = 2, Added (ToastHistoryChangedType_Added) = 3,
+    Cleared = 0, Removed = 1, Expired = 2, Added = 3,
 }}
 DEFINE_IID!(IID_IToastNotification, 2575181429, 1438, 20064, 139, 6, 23, 96, 145, 124, 139, 128);
 RT_INTERFACE!{interface IToastNotification(IToastNotificationVtbl): IInspectable(IInspectableVtbl) [IID_IToastNotification] {
@@ -16211,7 +16211,7 @@ impl IToastNotificationManagerStatics5 {
     }}
 }
 RT_ENUM! { enum ToastNotificationPriority: i32 {
-    Default (ToastNotificationPriority_Default) = 0, High (ToastNotificationPriority_High) = 1,
+    Default = 0, High = 1,
 }}
 DEFINE_IID!(IID_IToastNotifier, 1972534163, 1011, 16876, 145, 211, 110, 91, 172, 27, 56, 231);
 RT_INTERFACE!{interface IToastNotifier(IToastNotifierVtbl): IInspectable(IInspectableVtbl) [IID_IToastNotifier] {
@@ -16285,7 +16285,7 @@ impl IToastNotifier3 {
     }}
 }
 RT_ENUM! { enum ToastTemplateType: i32 {
-    ToastImageAndText01 (ToastTemplateType_ToastImageAndText01) = 0, ToastImageAndText02 (ToastTemplateType_ToastImageAndText02) = 1, ToastImageAndText03 (ToastTemplateType_ToastImageAndText03) = 2, ToastImageAndText04 (ToastTemplateType_ToastImageAndText04) = 3, ToastText01 (ToastTemplateType_ToastText01) = 4, ToastText02 (ToastTemplateType_ToastText02) = 5, ToastText03 (ToastTemplateType_ToastText03) = 6, ToastText04 (ToastTemplateType_ToastText04) = 7,
+    ToastImageAndText01 = 0, ToastImageAndText02 = 1, ToastImageAndText03 = 2, ToastImageAndText04 = 3, ToastText01 = 4, ToastText02 = 5, ToastText03 = 6, ToastText04 = 7,
 }}
 DEFINE_IID!(IID_IUserNotification, 2918704431, 20051, 17109, 156, 51, 235, 94, 165, 21, 178, 62);
 RT_INTERFACE!{interface IUserNotification(IUserNotificationVtbl): IInspectable(IInspectableVtbl) [IID_IUserNotification] {
@@ -16337,7 +16337,7 @@ impl IUserNotificationChangedEventArgs {
 }
 RT_CLASS!{class UserNotificationChangedEventArgs: IUserNotificationChangedEventArgs}
 RT_ENUM! { enum UserNotificationChangedKind: i32 {
-    Added (UserNotificationChangedKind_Added) = 0, Removed (UserNotificationChangedKind_Removed) = 1,
+    Added = 0, Removed = 1,
 }}
 pub mod management { // Windows.UI.Notifications.Management
 use ::prelude::*;
@@ -16400,7 +16400,7 @@ impl UserNotificationListener {
 }
 DEFINE_CLSID!(UserNotificationListener(&[87,105,110,100,111,119,115,46,85,73,46,78,111,116,105,102,105,99,97,116,105,111,110,115,46,77,97,110,97,103,101,109,101,110,116,46,85,115,101,114,78,111,116,105,102,105,99,97,116,105,111,110,76,105,115,116,101,110,101,114,0]) [CLSID_UserNotificationListener]);
 RT_ENUM! { enum UserNotificationListenerAccessStatus: i32 {
-    Unspecified (UserNotificationListenerAccessStatus_Unspecified) = 0, Allowed (UserNotificationListenerAccessStatus_Allowed) = 1, Denied (UserNotificationListenerAccessStatus_Denied) = 2,
+    Unspecified = 0, Allowed = 1, Denied = 2,
 }}
 DEFINE_IID!(IID_IUserNotificationListenerStatics, 4284556239, 17286, 19107, 183, 61, 184, 4, 229, 182, 59, 35);
 RT_INTERFACE!{static interface IUserNotificationListenerStatics(IUserNotificationListenerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserNotificationListenerStatics] {
@@ -16518,10 +16518,10 @@ impl IMessageDialogFactory {
     }}
 }
 RT_ENUM! { enum MessageDialogOptions: u32 {
-    None (MessageDialogOptions_None) = 0, AcceptUserInputAfterDelay (MessageDialogOptions_AcceptUserInputAfterDelay) = 1,
+    None = 0, AcceptUserInputAfterDelay = 1,
 }}
 RT_ENUM! { enum Placement: i32 {
-    Default (Placement_Default) = 0, Above (Placement_Above) = 1, Below (Placement_Below) = 2, Left (Placement_Left) = 3, Right (Placement_Right) = 4,
+    Default = 0, Above = 1, Below = 2, Left = 3, Right = 4,
 }}
 DEFINE_IID!(IID_IPopupMenu, 1318831836, 34829, 18428, 160, 161, 114, 182, 57, 230, 37, 89);
 RT_INTERFACE!{interface IPopupMenu(IPopupMenuVtbl): IInspectable(IInspectableVtbl) [IID_IPopupMenu] {
@@ -16678,7 +16678,7 @@ impl IAdaptiveCardBuilderStatics {
     }}
 }
 RT_ENUM! { enum SecurityAppKind: i32 {
-    WebProtection (SecurityAppKind_WebProtection) = 0,
+    WebProtection = 0,
 }}
 DEFINE_IID!(IID_ISecurityAppManager, 2527875084, 44756, 22045, 189, 232, 149, 53, 32, 52, 58, 45);
 RT_INTERFACE!{interface ISecurityAppManager(ISecurityAppManagerVtbl): IInspectable(IInspectableVtbl) [IID_ISecurityAppManager] {
@@ -16705,10 +16705,10 @@ RT_CLASS!{class SecurityAppManager: ISecurityAppManager}
 impl RtActivatable<IActivationFactory> for SecurityAppManager {}
 DEFINE_CLSID!(SecurityAppManager(&[87,105,110,100,111,119,115,46,85,73,46,83,104,101,108,108,46,83,101,99,117,114,105,116,121,65,112,112,77,97,110,97,103,101,114,0]) [CLSID_SecurityAppManager]);
 RT_ENUM! { enum SecurityAppState: i32 {
-    Disabled (SecurityAppState_Disabled) = 0, Enabled (SecurityAppState_Enabled) = 1,
+    Disabled = 0, Enabled = 1,
 }}
 RT_ENUM! { enum SecurityAppSubstatus: i32 {
-    Undetermined (SecurityAppSubstatus_Undetermined) = 0, NoActionNeeded (SecurityAppSubstatus_NoActionNeeded) = 1, ActionRecommended (SecurityAppSubstatus_ActionRecommended) = 2, ActionNeeded (SecurityAppSubstatus_ActionNeeded) = 3,
+    Undetermined = 0, NoActionNeeded = 1, ActionRecommended = 2, ActionNeeded = 3,
 }}
 DEFINE_IID!(IID_ITaskbarManager, 2269710873, 6873, 18932, 178, 232, 134, 115, 141, 197, 172, 64);
 RT_INTERFACE!{interface ITaskbarManager(ITaskbarManagerVtbl): IInspectable(IInspectableVtbl) [IID_ITaskbarManager] {
@@ -16797,7 +16797,7 @@ impl ITaskbarManagerStatics {
 pub mod startscreen { // Windows.UI.StartScreen
 use ::prelude::*;
 RT_ENUM! { enum ForegroundText: i32 {
-    Dark (ForegroundText_Dark) = 0, Light (ForegroundText_Light) = 1,
+    Dark = 0, Light = 1,
 }}
 DEFINE_IID!(IID_IJumpList, 2955103294, 52591, 19638, 166, 17, 97, 253, 80, 95, 62, 209);
 RT_INTERFACE!{interface IJumpList(IJumpListVtbl): IInspectable(IInspectableVtbl) [IID_IJumpList] {
@@ -16917,7 +16917,7 @@ impl JumpListItem {
 }
 DEFINE_CLSID!(JumpListItem(&[87,105,110,100,111,119,115,46,85,73,46,83,116,97,114,116,83,99,114,101,101,110,46,74,117,109,112,76,105,115,116,73,116,101,109,0]) [CLSID_JumpListItem]);
 RT_ENUM! { enum JumpListItemKind: i32 {
-    Arguments (JumpListItemKind_Arguments) = 0, Separator (JumpListItemKind_Separator) = 1,
+    Arguments = 0, Separator = 1,
 }}
 DEFINE_IID!(IID_IJumpListItemStatics, 4055876840, 51114, 18891, 141, 222, 236, 252, 205, 122, 215, 228);
 RT_INTERFACE!{static interface IJumpListItemStatics(IJumpListItemStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJumpListItemStatics] {
@@ -16954,7 +16954,7 @@ impl IJumpListStatics {
     }}
 }
 RT_ENUM! { enum JumpListSystemGroupKind: i32 {
-    None (JumpListSystemGroupKind_None) = 0, Frequent (JumpListSystemGroupKind_Frequent) = 1, Recent (JumpListSystemGroupKind_Recent) = 2,
+    None = 0, Frequent = 1, Recent = 2,
 }}
 DEFINE_IID!(IID_ISecondaryTile, 2661175776, 11189, 19392, 187, 141, 66, 178, 58, 188, 200, 141);
 RT_INTERFACE!{interface ISecondaryTile(ISecondaryTileVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryTile] {
@@ -17565,13 +17565,13 @@ impl ITileMixedRealityModel2 {
     }}
 }
 RT_ENUM! { enum TileMixedRealityModelActivationBehavior: i32 {
-    Default (TileMixedRealityModelActivationBehavior_Default) = 0, None (TileMixedRealityModelActivationBehavior_None) = 1,
+    Default = 0, None = 1,
 }}
 RT_ENUM! { enum TileOptions: u32 {
-    None (TileOptions_None) = 0, ShowNameOnLogo (TileOptions_ShowNameOnLogo) = 1, ShowNameOnWideLogo (TileOptions_ShowNameOnWideLogo) = 2, CopyOnDeployment (TileOptions_CopyOnDeployment) = 4,
+    None = 0, ShowNameOnLogo = 1, ShowNameOnWideLogo = 2, CopyOnDeployment = 4,
 }}
 RT_ENUM! { enum TileSize: i32 {
-    Default (TileSize_Default) = 0, Square30x30 (TileSize_Square30x30) = 1, Square70x70 (TileSize_Square70x70) = 2, Square150x150 (TileSize_Square150x150) = 3, Wide310x150 (TileSize_Wide310x150) = 4, Square310x310 (TileSize_Square310x310) = 5, Square71x71 (TileSize_Square71x71) = 6, Square44x44 (TileSize_Square44x44) = 7,
+    Default = 0, Square30x30 = 1, Square70x70 = 2, Square150x150 = 3, Wide310x150 = 4, Square310x310 = 5, Square71x71 = 6, Square44x44 = 7,
 }}
 DEFINE_IID!(IID_IVisualElementsRequest, 3241685818, 37640, 16498, 136, 204, 208, 104, 219, 52, 124, 104);
 RT_INTERFACE!{interface IVisualElementsRequest(IVisualElementsRequestVtbl): IInspectable(IInspectableVtbl) [IID_IVisualElementsRequest] {
@@ -17630,7 +17630,7 @@ RT_CLASS!{class VisualElementsRequestedEventArgs: IVisualElementsRequestedEventA
 pub mod text { // Windows.UI.Text
 use ::prelude::*;
 RT_ENUM! { enum CaretType: i32 {
-    Normal (CaretType_Normal) = 0, Null (CaretType_Null) = 1,
+    Normal = 0, Null = 1,
 }}
 DEFINE_IID!(IID_IContentLinkInfo, 517285157, 7263, 18635, 179, 53, 120, 181, 10, 46, 230, 66);
 RT_INTERFACE!{interface IContentLinkInfo(IContentLinkInfoVtbl): IInspectable(IInspectableVtbl) [IID_IContentLinkInfo] {
@@ -17696,13 +17696,13 @@ RT_CLASS!{class ContentLinkInfo: IContentLinkInfo}
 impl RtActivatable<IActivationFactory> for ContentLinkInfo {}
 DEFINE_CLSID!(ContentLinkInfo(&[87,105,110,100,111,119,115,46,85,73,46,84,101,120,116,46,67,111,110,116,101,110,116,76,105,110,107,73,110,102,111,0]) [CLSID_ContentLinkInfo]);
 RT_ENUM! { enum FindOptions: u32 {
-    None (FindOptions_None) = 0, Word (FindOptions_Word) = 2, Case (FindOptions_Case) = 4,
+    None = 0, Word = 2, Case = 4,
 }}
 RT_ENUM! { enum FontStretch: i32 {
-    Undefined (FontStretch_Undefined) = 0, UltraCondensed (FontStretch_UltraCondensed) = 1, ExtraCondensed (FontStretch_ExtraCondensed) = 2, Condensed (FontStretch_Condensed) = 3, SemiCondensed (FontStretch_SemiCondensed) = 4, Normal (FontStretch_Normal) = 5, SemiExpanded (FontStretch_SemiExpanded) = 6, Expanded (FontStretch_Expanded) = 7, ExtraExpanded (FontStretch_ExtraExpanded) = 8, UltraExpanded (FontStretch_UltraExpanded) = 9,
+    Undefined = 0, UltraCondensed = 1, ExtraCondensed = 2, Condensed = 3, SemiCondensed = 4, Normal = 5, SemiExpanded = 6, Expanded = 7, ExtraExpanded = 8, UltraExpanded = 9,
 }}
 RT_ENUM! { enum FontStyle: i32 {
-    Normal (FontStyle_Normal) = 0, Oblique (FontStyle_Oblique) = 1, Italic (FontStyle_Italic) = 2,
+    Normal = 0, Oblique = 1, Italic = 2,
 }}
 RT_STRUCT! { struct FontWeight {
     Weight: u16,
@@ -17821,40 +17821,40 @@ impl IFontWeightsStatics {
     }}
 }
 RT_ENUM! { enum FormatEffect: i32 {
-    Off (FormatEffect_Off) = 0, On (FormatEffect_On) = 1, Toggle (FormatEffect_Toggle) = 2, Undefined (FormatEffect_Undefined) = 3,
+    Off = 0, On = 1, Toggle = 2, Undefined = 3,
 }}
 RT_ENUM! { enum HorizontalCharacterAlignment: i32 {
-    Left (HorizontalCharacterAlignment_Left) = 0, Right (HorizontalCharacterAlignment_Right) = 1, Center (HorizontalCharacterAlignment_Center) = 2,
+    Left = 0, Right = 1, Center = 2,
 }}
 RT_ENUM! { enum LetterCase: i32 {
-    Lower (LetterCase_Lower) = 0, Upper (LetterCase_Upper) = 1,
+    Lower = 0, Upper = 1,
 }}
 RT_ENUM! { enum LineSpacingRule: i32 {
-    Undefined (LineSpacingRule_Undefined) = 0, Single (LineSpacingRule_Single) = 1, OneAndHalf (LineSpacingRule_OneAndHalf) = 2, Double (LineSpacingRule_Double) = 3, AtLeast (LineSpacingRule_AtLeast) = 4, Exactly (LineSpacingRule_Exactly) = 5, Multiple (LineSpacingRule_Multiple) = 6, Percent (LineSpacingRule_Percent) = 7,
+    Undefined = 0, Single = 1, OneAndHalf = 2, Double = 3, AtLeast = 4, Exactly = 5, Multiple = 6, Percent = 7,
 }}
 RT_ENUM! { enum LinkType: i32 {
-    Undefined (LinkType_Undefined) = 0, NotALink (LinkType_NotALink) = 1, ClientLink (LinkType_ClientLink) = 2, FriendlyLinkName (LinkType_FriendlyLinkName) = 3, FriendlyLinkAddress (LinkType_FriendlyLinkAddress) = 4, AutoLink (LinkType_AutoLink) = 5, AutoLinkEmail (LinkType_AutoLinkEmail) = 6, AutoLinkPhone (LinkType_AutoLinkPhone) = 7, AutoLinkPath (LinkType_AutoLinkPath) = 8,
+    Undefined = 0, NotALink = 1, ClientLink = 2, FriendlyLinkName = 3, FriendlyLinkAddress = 4, AutoLink = 5, AutoLinkEmail = 6, AutoLinkPhone = 7, AutoLinkPath = 8,
 }}
 RT_ENUM! { enum MarkerAlignment: i32 {
-    Undefined (MarkerAlignment_Undefined) = 0, Left (MarkerAlignment_Left) = 1, Center (MarkerAlignment_Center) = 2, Right (MarkerAlignment_Right) = 3,
+    Undefined = 0, Left = 1, Center = 2, Right = 3,
 }}
 RT_ENUM! { enum MarkerStyle: i32 {
-    Undefined (MarkerStyle_Undefined) = 0, Parenthesis (MarkerStyle_Parenthesis) = 1, Parentheses (MarkerStyle_Parentheses) = 2, Period (MarkerStyle_Period) = 3, Plain (MarkerStyle_Plain) = 4, Minus (MarkerStyle_Minus) = 5, NoNumber (MarkerStyle_NoNumber) = 6,
+    Undefined = 0, Parenthesis = 1, Parentheses = 2, Period = 3, Plain = 4, Minus = 5, NoNumber = 6,
 }}
 RT_ENUM! { enum MarkerType: i32 {
-    Undefined (MarkerType_Undefined) = 0, None (MarkerType_None) = 1, Bullet (MarkerType_Bullet) = 2, Arabic (MarkerType_Arabic) = 3, LowercaseEnglishLetter (MarkerType_LowercaseEnglishLetter) = 4, UppercaseEnglishLetter (MarkerType_UppercaseEnglishLetter) = 5, LowercaseRoman (MarkerType_LowercaseRoman) = 6, UppercaseRoman (MarkerType_UppercaseRoman) = 7, UnicodeSequence (MarkerType_UnicodeSequence) = 8, CircledNumber (MarkerType_CircledNumber) = 9, BlackCircleWingding (MarkerType_BlackCircleWingding) = 10, WhiteCircleWingding (MarkerType_WhiteCircleWingding) = 11, ArabicWide (MarkerType_ArabicWide) = 12, SimplifiedChinese (MarkerType_SimplifiedChinese) = 13, TraditionalChinese (MarkerType_TraditionalChinese) = 14, JapanSimplifiedChinese (MarkerType_JapanSimplifiedChinese) = 15, JapanKorea (MarkerType_JapanKorea) = 16, ArabicDictionary (MarkerType_ArabicDictionary) = 17, ArabicAbjad (MarkerType_ArabicAbjad) = 18, Hebrew (MarkerType_Hebrew) = 19, ThaiAlphabetic (MarkerType_ThaiAlphabetic) = 20, ThaiNumeric (MarkerType_ThaiNumeric) = 21, DevanagariVowel (MarkerType_DevanagariVowel) = 22, DevanagariConsonant (MarkerType_DevanagariConsonant) = 23, DevanagariNumeric (MarkerType_DevanagariNumeric) = 24,
+    Undefined = 0, None = 1, Bullet = 2, Arabic = 3, LowercaseEnglishLetter = 4, UppercaseEnglishLetter = 5, LowercaseRoman = 6, UppercaseRoman = 7, UnicodeSequence = 8, CircledNumber = 9, BlackCircleWingding = 10, WhiteCircleWingding = 11, ArabicWide = 12, SimplifiedChinese = 13, TraditionalChinese = 14, JapanSimplifiedChinese = 15, JapanKorea = 16, ArabicDictionary = 17, ArabicAbjad = 18, Hebrew = 19, ThaiAlphabetic = 20, ThaiNumeric = 21, DevanagariVowel = 22, DevanagariConsonant = 23, DevanagariNumeric = 24,
 }}
 RT_ENUM! { enum ParagraphAlignment: i32 {
-    Undefined (ParagraphAlignment_Undefined) = 0, Left (ParagraphAlignment_Left) = 1, Center (ParagraphAlignment_Center) = 2, Right (ParagraphAlignment_Right) = 3, Justify (ParagraphAlignment_Justify) = 4,
+    Undefined = 0, Left = 1, Center = 2, Right = 3, Justify = 4,
 }}
 RT_ENUM! { enum ParagraphStyle: i32 {
-    Undefined (ParagraphStyle_Undefined) = 0, None (ParagraphStyle_None) = 1, Normal (ParagraphStyle_Normal) = 2, Heading1 (ParagraphStyle_Heading1) = 3, Heading2 (ParagraphStyle_Heading2) = 4, Heading3 (ParagraphStyle_Heading3) = 5, Heading4 (ParagraphStyle_Heading4) = 6, Heading5 (ParagraphStyle_Heading5) = 7, Heading6 (ParagraphStyle_Heading6) = 8, Heading7 (ParagraphStyle_Heading7) = 9, Heading8 (ParagraphStyle_Heading8) = 10, Heading9 (ParagraphStyle_Heading9) = 11,
+    Undefined = 0, None = 1, Normal = 2, Heading1 = 3, Heading2 = 4, Heading3 = 5, Heading4 = 6, Heading5 = 7, Heading6 = 8, Heading7 = 9, Heading8 = 10, Heading9 = 11,
 }}
 RT_ENUM! { enum PointOptions: u32 {
-    None (PointOptions_None) = 0, IncludeInset (PointOptions_IncludeInset) = 1, Start (PointOptions_Start) = 32, ClientCoordinates (PointOptions_ClientCoordinates) = 256, AllowOffClient (PointOptions_AllowOffClient) = 512, Transform (PointOptions_Transform) = 1024, NoHorizontalScroll (PointOptions_NoHorizontalScroll) = 65536, NoVerticalScroll (PointOptions_NoVerticalScroll) = 262144,
+    None = 0, IncludeInset = 1, Start = 32, ClientCoordinates = 256, AllowOffClient = 512, Transform = 1024, NoHorizontalScroll = 65536, NoVerticalScroll = 262144,
 }}
 RT_ENUM! { enum RangeGravity: i32 {
-    UIBehavior (RangeGravity_UIBehavior) = 0, Backward (RangeGravity_Backward) = 1, Forward (RangeGravity_Forward) = 2, Inward (RangeGravity_Inward) = 3, Outward (RangeGravity_Outward) = 4,
+    UIBehavior = 0, Backward = 1, Forward = 2, Inward = 3, Outward = 4,
 }}
 RT_CLASS!{class RichEditTextDocument: ITextDocument}
 DEFINE_IID!(IID_IRichEditTextRange, 927872277, 47754, 19054, 140, 89, 13, 222, 61, 12, 245, 205);
@@ -17875,16 +17875,16 @@ impl IRichEditTextRange {
 }
 RT_CLASS!{class RichEditTextRange: ITextRange}
 RT_ENUM! { enum SelectionOptions: u32 {
-    StartActive (SelectionOptions_StartActive) = 1, AtEndOfLine (SelectionOptions_AtEndOfLine) = 2, Overtype (SelectionOptions_Overtype) = 4, Active (SelectionOptions_Active) = 8, Replace (SelectionOptions_Replace) = 16,
+    StartActive = 1, AtEndOfLine = 2, Overtype = 4, Active = 8, Replace = 16,
 }}
 RT_ENUM! { enum SelectionType: i32 {
-    None (SelectionType_None) = 0, InsertionPoint (SelectionType_InsertionPoint) = 1, Normal (SelectionType_Normal) = 2, InlineShape (SelectionType_InlineShape) = 7, Shape (SelectionType_Shape) = 8,
+    None = 0, InsertionPoint = 1, Normal = 2, InlineShape = 7, Shape = 8,
 }}
 RT_ENUM! { enum TabAlignment: i32 {
-    Left (TabAlignment_Left) = 0, Center (TabAlignment_Center) = 1, Right (TabAlignment_Right) = 2, Decimal (TabAlignment_Decimal) = 3, Bar (TabAlignment_Bar) = 4,
+    Left = 0, Center = 1, Right = 2, Decimal = 3, Bar = 4,
 }}
 RT_ENUM! { enum TabLeader: i32 {
-    Spaces (TabLeader_Spaces) = 0, Dots (TabLeader_Dots) = 1, Dashes (TabLeader_Dashes) = 2, Lines (TabLeader_Lines) = 3, ThickLines (TabLeader_ThickLines) = 4, Equals (TabLeader_Equals) = 5,
+    Spaces = 0, Dots = 1, Dashes = 2, Lines = 3, ThickLines = 4, Equals = 5,
 }}
 DEFINE_IID!(IID_ITextCharacterFormat, 1524560859, 1531, 17453, 128, 101, 100, 42, 254, 160, 44, 237);
 RT_INTERFACE!{interface ITextCharacterFormat(ITextCharacterFormatVtbl): IInspectable(IInspectableVtbl) [IID_ITextCharacterFormat] {
@@ -18250,7 +18250,7 @@ impl ITextConstantsStatics {
     }}
 }
 RT_ENUM! { enum TextDecorations: u32 {
-    None (TextDecorations_None) = 0, Underline (TextDecorations_Underline) = 1, Strikethrough (TextDecorations_Strikethrough) = 2,
+    None = 0, Underline = 1, Strikethrough = 2,
 }}
 DEFINE_IID!(IID_ITextDocument, 3203288539, 37042, 16524, 162, 246, 10, 10, 195, 30, 51, 228);
 RT_INTERFACE!{interface ITextDocument(ITextDocumentVtbl): IInspectable(IInspectableVtbl) [IID_ITextDocument] {
@@ -18447,7 +18447,7 @@ impl ITextDocument3 {
     }}
 }
 RT_ENUM! { enum TextGetOptions: u32 {
-    None (TextGetOptions_None) = 0, AdjustCrlf (TextGetOptions_AdjustCrlf) = 1, UseCrlf (TextGetOptions_UseCrlf) = 2, UseObjectText (TextGetOptions_UseObjectText) = 4, AllowFinalEop (TextGetOptions_AllowFinalEop) = 8, NoHidden (TextGetOptions_NoHidden) = 32, IncludeNumbering (TextGetOptions_IncludeNumbering) = 64, FormatRtf (TextGetOptions_FormatRtf) = 8192, UseLf (TextGetOptions_UseLf) = 16777216,
+    None = 0, AdjustCrlf = 1, UseCrlf = 2, UseObjectText = 4, AllowFinalEop = 8, NoHidden = 32, IncludeNumbering = 64, FormatRtf = 8192, UseLf = 16777216,
 }}
 DEFINE_IID!(IID_ITextParagraphFormat, 754503590, 18038, 18826, 147, 245, 187, 219, 252, 11, 216, 131);
 RT_INTERFACE!{interface ITextParagraphFormat(ITextParagraphFormatVtbl): IInspectable(IInspectableVtbl) [IID_ITextParagraphFormat] {
@@ -19017,10 +19017,10 @@ impl ITextRange {
     }}
 }
 RT_ENUM! { enum TextRangeUnit: i32 {
-    Character (TextRangeUnit_Character) = 0, Word (TextRangeUnit_Word) = 1, Sentence (TextRangeUnit_Sentence) = 2, Paragraph (TextRangeUnit_Paragraph) = 3, Line (TextRangeUnit_Line) = 4, Story (TextRangeUnit_Story) = 5, Screen (TextRangeUnit_Screen) = 6, Section (TextRangeUnit_Section) = 7, Window (TextRangeUnit_Window) = 8, CharacterFormat (TextRangeUnit_CharacterFormat) = 9, ParagraphFormat (TextRangeUnit_ParagraphFormat) = 10, Object (TextRangeUnit_Object) = 11, HardParagraph (TextRangeUnit_HardParagraph) = 12, Cluster (TextRangeUnit_Cluster) = 13, Bold (TextRangeUnit_Bold) = 14, Italic (TextRangeUnit_Italic) = 15, Underline (TextRangeUnit_Underline) = 16, Strikethrough (TextRangeUnit_Strikethrough) = 17, ProtectedText (TextRangeUnit_ProtectedText) = 18, Link (TextRangeUnit_Link) = 19, SmallCaps (TextRangeUnit_SmallCaps) = 20, AllCaps (TextRangeUnit_AllCaps) = 21, Hidden (TextRangeUnit_Hidden) = 22, Outline (TextRangeUnit_Outline) = 23, Shadow (TextRangeUnit_Shadow) = 24, Imprint (TextRangeUnit_Imprint) = 25, Disabled (TextRangeUnit_Disabled) = 26, Revised (TextRangeUnit_Revised) = 27, Subscript (TextRangeUnit_Subscript) = 28, Superscript (TextRangeUnit_Superscript) = 29, FontBound (TextRangeUnit_FontBound) = 30, LinkProtected (TextRangeUnit_LinkProtected) = 31, ContentLink (TextRangeUnit_ContentLink) = 32,
+    Character = 0, Word = 1, Sentence = 2, Paragraph = 3, Line = 4, Story = 5, Screen = 6, Section = 7, Window = 8, CharacterFormat = 9, ParagraphFormat = 10, Object = 11, HardParagraph = 12, Cluster = 13, Bold = 14, Italic = 15, Underline = 16, Strikethrough = 17, ProtectedText = 18, Link = 19, SmallCaps = 20, AllCaps = 21, Hidden = 22, Outline = 23, Shadow = 24, Imprint = 25, Disabled = 26, Revised = 27, Subscript = 28, Superscript = 29, FontBound = 30, LinkProtected = 31, ContentLink = 32,
 }}
 RT_ENUM! { enum TextScript: i32 {
-    Undefined (TextScript_Undefined) = 0, Ansi (TextScript_Ansi) = 1, EastEurope (TextScript_EastEurope) = 2, Cyrillic (TextScript_Cyrillic) = 3, Greek (TextScript_Greek) = 4, Turkish (TextScript_Turkish) = 5, Hebrew (TextScript_Hebrew) = 6, Arabic (TextScript_Arabic) = 7, Baltic (TextScript_Baltic) = 8, Vietnamese (TextScript_Vietnamese) = 9, Default (TextScript_Default) = 10, Symbol (TextScript_Symbol) = 11, Thai (TextScript_Thai) = 12, ShiftJis (TextScript_ShiftJis) = 13, GB2312 (TextScript_GB2312) = 14, Hangul (TextScript_Hangul) = 15, Big5 (TextScript_Big5) = 16, PC437 (TextScript_PC437) = 17, Oem (TextScript_Oem) = 18, Mac (TextScript_Mac) = 19, Armenian (TextScript_Armenian) = 20, Syriac (TextScript_Syriac) = 21, Thaana (TextScript_Thaana) = 22, Devanagari (TextScript_Devanagari) = 23, Bengali (TextScript_Bengali) = 24, Gurmukhi (TextScript_Gurmukhi) = 25, Gujarati (TextScript_Gujarati) = 26, Oriya (TextScript_Oriya) = 27, Tamil (TextScript_Tamil) = 28, Telugu (TextScript_Telugu) = 29, Kannada (TextScript_Kannada) = 30, Malayalam (TextScript_Malayalam) = 31, Sinhala (TextScript_Sinhala) = 32, Lao (TextScript_Lao) = 33, Tibetan (TextScript_Tibetan) = 34, Myanmar (TextScript_Myanmar) = 35, Georgian (TextScript_Georgian) = 36, Jamo (TextScript_Jamo) = 37, Ethiopic (TextScript_Ethiopic) = 38, Cherokee (TextScript_Cherokee) = 39, Aboriginal (TextScript_Aboriginal) = 40, Ogham (TextScript_Ogham) = 41, Runic (TextScript_Runic) = 42, Khmer (TextScript_Khmer) = 43, Mongolian (TextScript_Mongolian) = 44, Braille (TextScript_Braille) = 45, Yi (TextScript_Yi) = 46, Limbu (TextScript_Limbu) = 47, TaiLe (TextScript_TaiLe) = 48, NewTaiLue (TextScript_NewTaiLue) = 49, SylotiNagri (TextScript_SylotiNagri) = 50, Kharoshthi (TextScript_Kharoshthi) = 51, Kayahli (TextScript_Kayahli) = 52, UnicodeSymbol (TextScript_UnicodeSymbol) = 53, Emoji (TextScript_Emoji) = 54, Glagolitic (TextScript_Glagolitic) = 55, Lisu (TextScript_Lisu) = 56, Vai (TextScript_Vai) = 57, NKo (TextScript_NKo) = 58, Osmanya (TextScript_Osmanya) = 59, PhagsPa (TextScript_PhagsPa) = 60, Gothic (TextScript_Gothic) = 61, Deseret (TextScript_Deseret) = 62, Tifinagh (TextScript_Tifinagh) = 63,
+    Undefined = 0, Ansi = 1, EastEurope = 2, Cyrillic = 3, Greek = 4, Turkish = 5, Hebrew = 6, Arabic = 7, Baltic = 8, Vietnamese = 9, Default = 10, Symbol = 11, Thai = 12, ShiftJis = 13, GB2312 = 14, Hangul = 15, Big5 = 16, PC437 = 17, Oem = 18, Mac = 19, Armenian = 20, Syriac = 21, Thaana = 22, Devanagari = 23, Bengali = 24, Gurmukhi = 25, Gujarati = 26, Oriya = 27, Tamil = 28, Telugu = 29, Kannada = 30, Malayalam = 31, Sinhala = 32, Lao = 33, Tibetan = 34, Myanmar = 35, Georgian = 36, Jamo = 37, Ethiopic = 38, Cherokee = 39, Aboriginal = 40, Ogham = 41, Runic = 42, Khmer = 43, Mongolian = 44, Braille = 45, Yi = 46, Limbu = 47, TaiLe = 48, NewTaiLue = 49, SylotiNagri = 50, Kharoshthi = 51, Kayahli = 52, UnicodeSymbol = 53, Emoji = 54, Glagolitic = 55, Lisu = 56, Vai = 57, NKo = 58, Osmanya = 59, PhagsPa = 60, Gothic = 61, Deseret = 62, Tifinagh = 63,
 }}
 DEFINE_IID!(IID_ITextSelection, 2798872356, 62095, 17162, 178, 207, 195, 67, 103, 30, 192, 233);
 RT_INTERFACE!{interface ITextSelection(ITextSelectionVtbl): IInspectable(IInspectableVtbl) [IID_ITextSelection] {
@@ -19086,13 +19086,13 @@ impl ITextSelection {
     }}
 }
 RT_ENUM! { enum TextSetOptions: u32 {
-    None (TextSetOptions_None) = 0, UnicodeBidi (TextSetOptions_UnicodeBidi) = 1, Unlink (TextSetOptions_Unlink) = 8, Unhide (TextSetOptions_Unhide) = 16, CheckTextLimit (TextSetOptions_CheckTextLimit) = 32, FormatRtf (TextSetOptions_FormatRtf) = 8192, ApplyRtfDocumentDefaults (TextSetOptions_ApplyRtfDocumentDefaults) = 16384,
+    None = 0, UnicodeBidi = 1, Unlink = 8, Unhide = 16, CheckTextLimit = 32, FormatRtf = 8192, ApplyRtfDocumentDefaults = 16384,
 }}
 RT_ENUM! { enum UnderlineType: i32 {
-    Undefined (UnderlineType_Undefined) = 0, None (UnderlineType_None) = 1, Single (UnderlineType_Single) = 2, Words (UnderlineType_Words) = 3, Double (UnderlineType_Double) = 4, Dotted (UnderlineType_Dotted) = 5, Dash (UnderlineType_Dash) = 6, DashDot (UnderlineType_DashDot) = 7, DashDotDot (UnderlineType_DashDotDot) = 8, Wave (UnderlineType_Wave) = 9, Thick (UnderlineType_Thick) = 10, Thin (UnderlineType_Thin) = 11, DoubleWave (UnderlineType_DoubleWave) = 12, HeavyWave (UnderlineType_HeavyWave) = 13, LongDash (UnderlineType_LongDash) = 14, ThickDash (UnderlineType_ThickDash) = 15, ThickDashDot (UnderlineType_ThickDashDot) = 16, ThickDashDotDot (UnderlineType_ThickDashDotDot) = 17, ThickDotted (UnderlineType_ThickDotted) = 18, ThickLongDash (UnderlineType_ThickLongDash) = 19,
+    Undefined = 0, None = 1, Single = 2, Words = 3, Double = 4, Dotted = 5, Dash = 6, DashDot = 7, DashDotDot = 8, Wave = 9, Thick = 10, Thin = 11, DoubleWave = 12, HeavyWave = 13, LongDash = 14, ThickDash = 15, ThickDashDot = 16, ThickDashDotDot = 17, ThickDotted = 18, ThickLongDash = 19,
 }}
 RT_ENUM! { enum VerticalCharacterAlignment: i32 {
-    Top (VerticalCharacterAlignment_Top) = 0, Baseline (VerticalCharacterAlignment_Baseline) = 1, Bottom (VerticalCharacterAlignment_Bottom) = 2,
+    Top = 0, Baseline = 1, Bottom = 2,
 }}
 pub mod core { // Windows.UI.Text.Core
 use ::prelude::*;
@@ -19412,16 +19412,16 @@ impl ICoreTextFormatUpdatingEventArgs {
 }
 RT_CLASS!{class CoreTextFormatUpdatingEventArgs: ICoreTextFormatUpdatingEventArgs}
 RT_ENUM! { enum CoreTextFormatUpdatingReason: i32 {
-    None (CoreTextFormatUpdatingReason_None) = 0, CompositionUnconverted (CoreTextFormatUpdatingReason_CompositionUnconverted) = 1, CompositionConverted (CoreTextFormatUpdatingReason_CompositionConverted) = 2, CompositionTargetUnconverted (CoreTextFormatUpdatingReason_CompositionTargetUnconverted) = 3, CompositionTargetConverted (CoreTextFormatUpdatingReason_CompositionTargetConverted) = 4,
+    None = 0, CompositionUnconverted = 1, CompositionConverted = 2, CompositionTargetUnconverted = 3, CompositionTargetConverted = 4,
 }}
 RT_ENUM! { enum CoreTextFormatUpdatingResult: i32 {
-    Succeeded (CoreTextFormatUpdatingResult_Succeeded) = 0, Failed (CoreTextFormatUpdatingResult_Failed) = 1,
+    Succeeded = 0, Failed = 1,
 }}
 RT_ENUM! { enum CoreTextInputPaneDisplayPolicy: i32 {
-    Automatic (CoreTextInputPaneDisplayPolicy_Automatic) = 0, Manual (CoreTextInputPaneDisplayPolicy_Manual) = 1,
+    Automatic = 0, Manual = 1,
 }}
 RT_ENUM! { enum CoreTextInputScope: i32 {
-    Default (CoreTextInputScope_Default) = 0, Url (CoreTextInputScope_Url) = 1, FilePath (CoreTextInputScope_FilePath) = 2, FileName (CoreTextInputScope_FileName) = 3, EmailUserName (CoreTextInputScope_EmailUserName) = 4, EmailAddress (CoreTextInputScope_EmailAddress) = 5, UserName (CoreTextInputScope_UserName) = 6, PersonalFullName (CoreTextInputScope_PersonalFullName) = 7, PersonalNamePrefix (CoreTextInputScope_PersonalNamePrefix) = 8, PersonalGivenName (CoreTextInputScope_PersonalGivenName) = 9, PersonalMiddleName (CoreTextInputScope_PersonalMiddleName) = 10, PersonalSurname (CoreTextInputScope_PersonalSurname) = 11, PersonalNameSuffix (CoreTextInputScope_PersonalNameSuffix) = 12, Address (CoreTextInputScope_Address) = 13, AddressPostalCode (CoreTextInputScope_AddressPostalCode) = 14, AddressStreet (CoreTextInputScope_AddressStreet) = 15, AddressStateOrProvince (CoreTextInputScope_AddressStateOrProvince) = 16, AddressCity (CoreTextInputScope_AddressCity) = 17, AddressCountryName (CoreTextInputScope_AddressCountryName) = 18, AddressCountryShortName (CoreTextInputScope_AddressCountryShortName) = 19, CurrencyAmountAndSymbol (CoreTextInputScope_CurrencyAmountAndSymbol) = 20, CurrencyAmount (CoreTextInputScope_CurrencyAmount) = 21, Date (CoreTextInputScope_Date) = 22, DateMonth (CoreTextInputScope_DateMonth) = 23, DateDay (CoreTextInputScope_DateDay) = 24, DateYear (CoreTextInputScope_DateYear) = 25, DateMonthName (CoreTextInputScope_DateMonthName) = 26, DateDayName (CoreTextInputScope_DateDayName) = 27, Number (CoreTextInputScope_Number) = 29, SingleCharacter (CoreTextInputScope_SingleCharacter) = 30, Password (CoreTextInputScope_Password) = 31, TelephoneNumber (CoreTextInputScope_TelephoneNumber) = 32, TelephoneCountryCode (CoreTextInputScope_TelephoneCountryCode) = 33, TelephoneAreaCode (CoreTextInputScope_TelephoneAreaCode) = 34, TelephoneLocalNumber (CoreTextInputScope_TelephoneLocalNumber) = 35, Time (CoreTextInputScope_Time) = 36, TimeHour (CoreTextInputScope_TimeHour) = 37, TimeMinuteOrSecond (CoreTextInputScope_TimeMinuteOrSecond) = 38, NumberFullWidth (CoreTextInputScope_NumberFullWidth) = 39, AlphanumericHalfWidth (CoreTextInputScope_AlphanumericHalfWidth) = 40, AlphanumericFullWidth (CoreTextInputScope_AlphanumericFullWidth) = 41, CurrencyChinese (CoreTextInputScope_CurrencyChinese) = 42, Bopomofo (CoreTextInputScope_Bopomofo) = 43, Hiragana (CoreTextInputScope_Hiragana) = 44, KatakanaHalfWidth (CoreTextInputScope_KatakanaHalfWidth) = 45, KatakanaFullWidth (CoreTextInputScope_KatakanaFullWidth) = 46, Hanja (CoreTextInputScope_Hanja) = 47, HangulHalfWidth (CoreTextInputScope_HangulHalfWidth) = 48, HangulFullWidth (CoreTextInputScope_HangulFullWidth) = 49, Search (CoreTextInputScope_Search) = 50, Formula (CoreTextInputScope_Formula) = 51, SearchIncremental (CoreTextInputScope_SearchIncremental) = 52, ChineseHalfWidth (CoreTextInputScope_ChineseHalfWidth) = 53, ChineseFullWidth (CoreTextInputScope_ChineseFullWidth) = 54, NativeScript (CoreTextInputScope_NativeScript) = 55, Text (CoreTextInputScope_Text) = 57, Chat (CoreTextInputScope_Chat) = 58, NameOrPhoneNumber (CoreTextInputScope_NameOrPhoneNumber) = 59, EmailUserNameOrAddress (CoreTextInputScope_EmailUserNameOrAddress) = 60, Private (CoreTextInputScope_Private) = 61, Maps (CoreTextInputScope_Maps) = 62, PasswordNumeric (CoreTextInputScope_PasswordNumeric) = 63, FormulaNumber (CoreTextInputScope_FormulaNumber) = 67, ChatWithoutEmoji (CoreTextInputScope_ChatWithoutEmoji) = 68, Digits (CoreTextInputScope_Digits) = 28, PinNumeric (CoreTextInputScope_PinNumeric) = 64, PinAlphanumeric (CoreTextInputScope_PinAlphanumeric) = 65,
+    Default = 0, Url = 1, FilePath = 2, FileName = 3, EmailUserName = 4, EmailAddress = 5, UserName = 6, PersonalFullName = 7, PersonalNamePrefix = 8, PersonalGivenName = 9, PersonalMiddleName = 10, PersonalSurname = 11, PersonalNameSuffix = 12, Address = 13, AddressPostalCode = 14, AddressStreet = 15, AddressStateOrProvince = 16, AddressCity = 17, AddressCountryName = 18, AddressCountryShortName = 19, CurrencyAmountAndSymbol = 20, CurrencyAmount = 21, Date = 22, DateMonth = 23, DateDay = 24, DateYear = 25, DateMonthName = 26, DateDayName = 27, Number = 29, SingleCharacter = 30, Password = 31, TelephoneNumber = 32, TelephoneCountryCode = 33, TelephoneAreaCode = 34, TelephoneLocalNumber = 35, Time = 36, TimeHour = 37, TimeMinuteOrSecond = 38, NumberFullWidth = 39, AlphanumericHalfWidth = 40, AlphanumericFullWidth = 41, CurrencyChinese = 42, Bopomofo = 43, Hiragana = 44, KatakanaHalfWidth = 45, KatakanaFullWidth = 46, Hanja = 47, HangulHalfWidth = 48, HangulFullWidth = 49, Search = 50, Formula = 51, SearchIncremental = 52, ChineseHalfWidth = 53, ChineseFullWidth = 54, NativeScript = 55, Text = 57, Chat = 58, NameOrPhoneNumber = 59, EmailUserNameOrAddress = 60, Private = 61, Maps = 62, PasswordNumeric = 63, FormulaNumber = 67, ChatWithoutEmoji = 68, Digits = 28, PinNumeric = 64, PinAlphanumeric = 65,
 }}
 DEFINE_IID!(IID_ICoreTextLayoutBounds, 3916614004, 17462, 18711, 128, 208, 165, 37, 228, 202, 103, 128);
 RT_INTERFACE!{interface ICoreTextLayoutBounds(ICoreTextLayoutBoundsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreTextLayoutBounds] {
@@ -19584,7 +19584,7 @@ impl ICoreTextSelectionUpdatingEventArgs {
 }
 RT_CLASS!{class CoreTextSelectionUpdatingEventArgs: ICoreTextSelectionUpdatingEventArgs}
 RT_ENUM! { enum CoreTextSelectionUpdatingResult: i32 {
-    Succeeded (CoreTextSelectionUpdatingResult_Succeeded) = 0, Failed (CoreTextSelectionUpdatingResult_Failed) = 1,
+    Succeeded = 0, Failed = 1,
 }}
 RT_CLASS!{static class CoreTextServicesConstants}
 impl RtActivatable<ICoreTextServicesStatics> for CoreTextServicesConstants {}
@@ -19755,7 +19755,7 @@ impl ICoreTextTextUpdatingEventArgs {
 }
 RT_CLASS!{class CoreTextTextUpdatingEventArgs: ICoreTextTextUpdatingEventArgs}
 RT_ENUM! { enum CoreTextTextUpdatingResult: i32 {
-    Succeeded (CoreTextTextUpdatingResult_Succeeded) = 0, Failed (CoreTextTextUpdatingResult_Failed) = 1,
+    Succeeded = 0, Failed = 1,
 }}
 } // Windows.UI.Text.Core
 } // Windows.UI.Text
@@ -20068,7 +20068,7 @@ impl IApplicationView4 {
     }}
 }
 RT_ENUM! { enum ApplicationViewBoundsMode: i32 {
-    UseVisible (ApplicationViewBoundsMode_UseVisible) = 0, UseCoreWindow (ApplicationViewBoundsMode_UseCoreWindow) = 1,
+    UseVisible = 0, UseCoreWindow = 1,
 }}
 DEFINE_IID!(IID_IApplicationViewConsolidatedEventArgs, 1363429868, 32418, 19943, 166, 166, 125, 251, 170, 235, 182, 251);
 RT_INTERFACE!{interface IApplicationViewConsolidatedEventArgs(IApplicationViewConsolidatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationViewConsolidatedEventArgs] {
@@ -20116,10 +20116,10 @@ impl IApplicationViewInteropStatics {
     }}
 }
 RT_ENUM! { enum ApplicationViewMode: i32 {
-    Default (ApplicationViewMode_Default) = 0, CompactOverlay (ApplicationViewMode_CompactOverlay) = 1,
+    Default = 0, CompactOverlay = 1,
 }}
 RT_ENUM! { enum ApplicationViewOrientation: i32 {
-    Landscape (ApplicationViewOrientation_Landscape) = 0, Portrait (ApplicationViewOrientation_Portrait) = 1,
+    Landscape = 0, Portrait = 1,
 }}
 DEFINE_IID!(IID_IApplicationViewScaling, 487447587, 9203, 19245, 132, 254, 116, 191, 55, 180, 139, 102);
 RT_INTERFACE!{interface IApplicationViewScaling(IApplicationViewScalingVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationViewScaling] {
@@ -20154,7 +20154,7 @@ impl IApplicationViewScalingStatics {
     }}
 }
 RT_ENUM! { enum ApplicationViewState: i32 {
-    FullScreenLandscape (ApplicationViewState_FullScreenLandscape) = 0, Filled (ApplicationViewState_Filled) = 1, Snapped (ApplicationViewState_Snapped) = 2, FullScreenPortrait (ApplicationViewState_FullScreenPortrait) = 3,
+    FullScreenLandscape = 0, Filled = 1, Snapped = 2, FullScreenPortrait = 3,
 }}
 DEFINE_IID!(IID_IApplicationViewStatics, 17457926, 50227, 17637, 169, 242, 189, 132, 212, 3, 10, 149);
 RT_INTERFACE!{static interface IApplicationViewStatics(IApplicationViewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationViewStatics] {
@@ -20342,7 +20342,7 @@ impl IApplicationViewSwitcherStatics3 {
     }}
 }
 RT_ENUM! { enum ApplicationViewSwitchingOptions: u32 {
-    Default (ApplicationViewSwitchingOptions_Default) = 0, SkipAnimation (ApplicationViewSwitchingOptions_SkipAnimation) = 1, ConsolidateViews (ApplicationViewSwitchingOptions_ConsolidateViews) = 2,
+    Default = 0, SkipAnimation = 1, ConsolidateViews = 2,
 }}
 DEFINE_IID!(IID_IApplicationViewTitleBar, 9587392, 37675, 19051, 156, 75, 220, 56, 200, 36, 120, 206);
 RT_INTERFACE!{interface IApplicationViewTitleBar(IApplicationViewTitleBarVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationViewTitleBar] {
@@ -20519,13 +20519,13 @@ impl IApplicationViewTransferContextStatics {
     }}
 }
 RT_ENUM! { enum ApplicationViewWindowingMode: i32 {
-    Auto (ApplicationViewWindowingMode_Auto) = 0, PreferredLaunchViewSize (ApplicationViewWindowingMode_PreferredLaunchViewSize) = 1, FullScreen (ApplicationViewWindowingMode_FullScreen) = 2, CompactOverlay (ApplicationViewWindowingMode_CompactOverlay) = 3, Maximized (ApplicationViewWindowingMode_Maximized) = 4,
+    Auto = 0, PreferredLaunchViewSize = 1, FullScreen = 2, CompactOverlay = 3, Maximized = 4,
 }}
 RT_ENUM! { enum FullScreenSystemOverlayMode: i32 {
-    Standard (FullScreenSystemOverlayMode_Standard) = 0, Minimal (FullScreenSystemOverlayMode_Minimal) = 1,
+    Standard = 0, Minimal = 1,
 }}
 RT_ENUM! { enum HandPreference: i32 {
-    LeftHanded (HandPreference_LeftHanded) = 0, RightHanded (HandPreference_RightHanded) = 1,
+    LeftHanded = 0, RightHanded = 1,
 }}
 DEFINE_IID!(IID_IInputPane, 1678432880, 1779, 19591, 166, 120, 152, 41, 201, 18, 124, 40);
 RT_INTERFACE!{interface IInputPane(IInputPaneVtbl): IInspectable(IInspectableVtbl) [IID_IInputPane] {
@@ -20742,10 +20742,10 @@ impl IProjectionManagerStatics2 {
     }}
 }
 RT_ENUM! { enum UIColorType: i32 {
-    Background (UIColorType_Background) = 0, Foreground (UIColorType_Foreground) = 1, AccentDark3 (UIColorType_AccentDark3) = 2, AccentDark2 (UIColorType_AccentDark2) = 3, AccentDark1 (UIColorType_AccentDark1) = 4, Accent (UIColorType_Accent) = 5, AccentLight1 (UIColorType_AccentLight1) = 6, AccentLight2 (UIColorType_AccentLight2) = 7, AccentLight3 (UIColorType_AccentLight3) = 8, Complement (UIColorType_Complement) = 9,
+    Background = 0, Foreground = 1, AccentDark3 = 2, AccentDark2 = 3, AccentDark1 = 4, Accent = 5, AccentLight1 = 6, AccentLight2 = 7, AccentLight3 = 8, Complement = 9,
 }}
 RT_ENUM! { enum UIElementType: i32 {
-    ActiveCaption (UIElementType_ActiveCaption) = 0, Background (UIElementType_Background) = 1, ButtonFace (UIElementType_ButtonFace) = 2, ButtonText (UIElementType_ButtonText) = 3, CaptionText (UIElementType_CaptionText) = 4, GrayText (UIElementType_GrayText) = 5, Highlight (UIElementType_Highlight) = 6, HighlightText (UIElementType_HighlightText) = 7, Hotlight (UIElementType_Hotlight) = 8, InactiveCaption (UIElementType_InactiveCaption) = 9, InactiveCaptionText (UIElementType_InactiveCaptionText) = 10, Window (UIElementType_Window) = 11, WindowText (UIElementType_WindowText) = 12, AccentColor (UIElementType_AccentColor) = 1000, TextHigh (UIElementType_TextHigh) = 1001, TextMedium (UIElementType_TextMedium) = 1002, TextLow (UIElementType_TextLow) = 1003, TextContrastWithHigh (UIElementType_TextContrastWithHigh) = 1004, NonTextHigh (UIElementType_NonTextHigh) = 1005, NonTextMediumHigh (UIElementType_NonTextMediumHigh) = 1006, NonTextMedium (UIElementType_NonTextMedium) = 1007, NonTextMediumLow (UIElementType_NonTextMediumLow) = 1008, NonTextLow (UIElementType_NonTextLow) = 1009, PageBackground (UIElementType_PageBackground) = 1010, PopupBackground (UIElementType_PopupBackground) = 1011, OverlayOutsidePopup (UIElementType_OverlayOutsidePopup) = 1012,
+    ActiveCaption = 0, Background = 1, ButtonFace = 2, ButtonText = 3, CaptionText = 4, GrayText = 5, Highlight = 6, HighlightText = 7, Hotlight = 8, InactiveCaption = 9, InactiveCaptionText = 10, Window = 11, WindowText = 12, AccentColor = 1000, TextHigh = 1001, TextMedium = 1002, TextLow = 1003, TextContrastWithHigh = 1004, NonTextHigh = 1005, NonTextMediumHigh = 1006, NonTextMedium = 1007, NonTextMediumLow = 1008, NonTextLow = 1009, PageBackground = 1010, PopupBackground = 1011, OverlayOutsidePopup = 1012,
 }}
 DEFINE_IID!(IID_IUISettings, 2234914304, 7267, 17959, 188, 177, 58, 137, 224, 188, 156, 85);
 RT_INTERFACE!{interface IUISettings(IUISettingsVtbl): IInspectable(IInspectableVtbl) [IID_IUISettings] {
@@ -20930,7 +20930,7 @@ impl IUIViewSettingsStatics {
     }}
 }
 RT_ENUM! { enum UserInteractionMode: i32 {
-    Mouse (UserInteractionMode_Mouse) = 0, Touch (UserInteractionMode_Touch) = 1,
+    Mouse = 0, Touch = 1,
 }}
 DEFINE_IID!(IID_IViewModePreferences, 2274348346, 2969, 17097, 132, 208, 211, 241, 212, 3, 85, 75);
 RT_INTERFACE!{interface IViewModePreferences(IViewModePreferencesVtbl): IInspectable(IInspectableVtbl) [IID_IViewModePreferences] {
@@ -20979,7 +20979,7 @@ impl IViewModePreferencesStatics {
     }}
 }
 RT_ENUM! { enum ViewSizePreference: i32 {
-    Default (ViewSizePreference_Default) = 0, UseLess (ViewSizePreference_UseLess) = 1, UseHalf (ViewSizePreference_UseHalf) = 2, UseMore (ViewSizePreference_UseMore) = 3, UseMinimum (ViewSizePreference_UseMinimum) = 4, UseNone (ViewSizePreference_UseNone) = 5, Custom (ViewSizePreference_Custom) = 6,
+    Default = 0, UseLess = 1, UseHalf = 2, UseMore = 3, UseMinimum = 4, UseNone = 5, Custom = 6,
 }}
 pub mod core { // Windows.UI.ViewManagement.Core
 use ::prelude::*;
@@ -21082,7 +21082,7 @@ impl ICoreInputView3 {
     }}
 }
 RT_ENUM! { enum CoreInputViewKind: i32 {
-    Default (CoreInputViewKind_Default) = 0, Keyboard (CoreInputViewKind_Keyboard) = 1, Handwriting (CoreInputViewKind_Handwriting) = 2, Emoji (CoreInputViewKind_Emoji) = 3,
+    Default = 0, Keyboard = 1, Handwriting = 2, Emoji = 3,
 }}
 DEFINE_IID!(IID_ICoreInputViewOcclusion, 3426143750, 14437, 16759, 181, 245, 139, 101, 224, 185, 206, 132);
 RT_INTERFACE!{interface ICoreInputViewOcclusion(ICoreInputViewOcclusionVtbl): IInspectable(IInspectableVtbl) [IID_ICoreInputViewOcclusion] {
@@ -21103,7 +21103,7 @@ impl ICoreInputViewOcclusion {
 }
 RT_CLASS!{class CoreInputViewOcclusion: ICoreInputViewOcclusion}
 RT_ENUM! { enum CoreInputViewOcclusionKind: i32 {
-    Docked (CoreInputViewOcclusionKind_Docked) = 0, Floating (CoreInputViewOcclusionKind_Floating) = 1, Overlay (CoreInputViewOcclusionKind_Overlay) = 2,
+    Docked = 0, Floating = 1, Overlay = 2,
 }}
 DEFINE_IID!(IID_ICoreInputViewOcclusionsChangedEventArgs, 3188729832, 46062, 19959, 149, 84, 137, 205, 198, 96, 130, 194);
 RT_INTERFACE!{interface ICoreInputViewOcclusionsChangedEventArgs(ICoreInputViewOcclusionsChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICoreInputViewOcclusionsChangedEventArgs] {
@@ -21180,7 +21180,7 @@ impl ICoreInputViewTransferringXYFocusEventArgs {
 }
 RT_CLASS!{class CoreInputViewTransferringXYFocusEventArgs: ICoreInputViewTransferringXYFocusEventArgs}
 RT_ENUM! { enum CoreInputViewXYFocusTransferDirection: i32 {
-    Up (CoreInputViewXYFocusTransferDirection_Up) = 0, Right (CoreInputViewXYFocusTransferDirection_Right) = 1, Down (CoreInputViewXYFocusTransferDirection_Down) = 2, Left (CoreInputViewXYFocusTransferDirection_Left) = 3,
+    Up = 0, Right = 1, Down = 2, Left = 3,
 }}
 } // Windows.UI.ViewManagement.Core
 } // Windows.UI.ViewManagement
@@ -21414,7 +21414,7 @@ impl INewWebUIViewCreatedEventArgs {
 }
 RT_CLASS!{class NewWebUIViewCreatedEventArgs: INewWebUIViewCreatedEventArgs}
 RT_ENUM! { enum PrintContent: i32 {
-    AllPages (PrintContent_AllPages) = 0, CurrentPage (PrintContent_CurrentPage) = 1, CustomPageRange (PrintContent_CustomPageRange) = 2, CurrentSelection (PrintContent_CurrentSelection) = 3,
+    AllPages = 0, CurrentPage = 1, CustomPageRange = 2, CurrentSelection = 3,
 }}
 DEFINE_IID!(IID_ResumingEventHandler, 643406761, 41517, 18438, 167, 40, 172, 173, 193, 208, 117, 250);
 RT_DELEGATE!{delegate ResumingEventHandler(ResumingEventHandlerVtbl, ResumingEventHandlerImpl) [IID_ResumingEventHandler] {

@@ -260,10 +260,10 @@ impl IApplicationDataContainer {
 RT_CLASS!{class ApplicationDataContainer: IApplicationDataContainer}
 RT_CLASS!{class ApplicationDataContainerSettings: foundation::collections::IPropertySet}
 RT_ENUM! { enum ApplicationDataCreateDisposition: i32 {
-    Always (ApplicationDataCreateDisposition_Always) = 0, Existing (ApplicationDataCreateDisposition_Existing) = 1,
+    Always = 0, Existing = 1,
 }}
 RT_ENUM! { enum ApplicationDataLocality: i32 {
-    Local (ApplicationDataLocality_Local) = 0, Roaming (ApplicationDataLocality_Roaming) = 1, Temporary (ApplicationDataLocality_Temporary) = 2, LocalCache (ApplicationDataLocality_LocalCache) = 3,
+    Local = 0, Roaming = 1, Temporary = 2, LocalCache = 3,
 }}
 DEFINE_IID!(IID_ApplicationDataSetVersionHandler, 2690093542, 52383, 18055, 172, 171, 163, 100, 253, 120, 84, 99);
 RT_DELEGATE!{delegate ApplicationDataSetVersionHandler(ApplicationDataSetVersionHandlerVtbl, ApplicationDataSetVersionHandlerImpl) [IID_ApplicationDataSetVersionHandler] {
@@ -325,7 +325,7 @@ impl ICachedFileManagerStatics {
     }}
 }
 RT_ENUM! { enum CreationCollisionOption: i32 {
-    GenerateUniqueName (CreationCollisionOption_GenerateUniqueName) = 0, ReplaceExisting (CreationCollisionOption_ReplaceExisting) = 1, FailIfExists (CreationCollisionOption_FailIfExists) = 2, OpenIfExists (CreationCollisionOption_OpenIfExists) = 3,
+    GenerateUniqueName = 0, ReplaceExisting = 1, FailIfExists = 2, OpenIfExists = 3,
 }}
 RT_CLASS!{static class DownloadsFolder}
 impl RtActivatable<IDownloadsFolderStatics> for DownloadsFolder {}
@@ -416,10 +416,10 @@ impl IDownloadsFolderStatics2 {
     }}
 }
 RT_ENUM! { enum FileAccessMode: i32 {
-    Read (FileAccessMode_Read) = 0, ReadWrite (FileAccessMode_ReadWrite) = 1,
+    Read = 0, ReadWrite = 1,
 }}
 RT_ENUM! { enum FileAttributes: u32 {
-    Normal (FileAttributes_Normal) = 0, ReadOnly (FileAttributes_ReadOnly) = 1, Directory (FileAttributes_Directory) = 16, Archive (FileAttributes_Archive) = 32, Temporary (FileAttributes_Temporary) = 256, LocallyIncomplete (FileAttributes_LocallyIncomplete) = 512,
+    Normal = 0, ReadOnly = 1, Directory = 16, Archive = 32, Temporary = 256, LocallyIncomplete = 512,
 }}
 RT_CLASS!{static class FileIO}
 impl RtActivatable<IFileIOStatics> for FileIO {}
@@ -567,7 +567,7 @@ impl IFileIOStatics {
     }}
 }
 RT_ENUM! { enum KnownFolderId: i32 {
-    AppCaptures (KnownFolderId_AppCaptures) = 0, CameraRoll (KnownFolderId_CameraRoll) = 1, DocumentsLibrary (KnownFolderId_DocumentsLibrary) = 2, HomeGroup (KnownFolderId_HomeGroup) = 3, MediaServerDevices (KnownFolderId_MediaServerDevices) = 4, MusicLibrary (KnownFolderId_MusicLibrary) = 5, Objects3D (KnownFolderId_Objects3D) = 6, PicturesLibrary (KnownFolderId_PicturesLibrary) = 7, Playlists (KnownFolderId_Playlists) = 8, RecordedCalls (KnownFolderId_RecordedCalls) = 9, RemovableDevices (KnownFolderId_RemovableDevices) = 10, SavedPictures (KnownFolderId_SavedPictures) = 11, Screenshots (KnownFolderId_Screenshots) = 12, VideosLibrary (KnownFolderId_VideosLibrary) = 13, AllAppMods (KnownFolderId_AllAppMods) = 14, CurrentAppMods (KnownFolderId_CurrentAppMods) = 15,
+    AppCaptures = 0, CameraRoll = 1, DocumentsLibrary = 2, HomeGroup = 3, MediaServerDevices = 4, MusicLibrary = 5, Objects3D = 6, PicturesLibrary = 7, Playlists = 8, RecordedCalls = 9, RemovableDevices = 10, SavedPictures = 11, Screenshots = 12, VideosLibrary = 13, AllAppMods = 14, CurrentAppMods = 15,
 }}
 RT_CLASS!{static class KnownFolders}
 impl RtActivatable<IKnownFoldersCameraRollStatics> for KnownFolders {}
@@ -736,10 +736,10 @@ impl IKnownFoldersStatics3 {
     }}
 }
 RT_ENUM! { enum KnownLibraryId: i32 {
-    Music (KnownLibraryId_Music) = 0, Pictures (KnownLibraryId_Pictures) = 1, Videos (KnownLibraryId_Videos) = 2, Documents (KnownLibraryId_Documents) = 3,
+    Music = 0, Pictures = 1, Videos = 2, Documents = 3,
 }}
 RT_ENUM! { enum NameCollisionOption: i32 {
-    GenerateUniqueName (NameCollisionOption_GenerateUniqueName) = 0, ReplaceExisting (NameCollisionOption_ReplaceExisting) = 1, FailIfExists (NameCollisionOption_FailIfExists) = 2,
+    GenerateUniqueName = 0, ReplaceExisting = 1, FailIfExists = 2,
 }}
 RT_CLASS!{static class PathIO}
 impl RtActivatable<IPathIOStatics> for PathIO {}
@@ -922,7 +922,7 @@ impl ISetVersionRequest {
 }
 RT_CLASS!{class SetVersionRequest: ISetVersionRequest}
 RT_ENUM! { enum StorageDeleteOption: i32 {
-    Default (StorageDeleteOption_Default) = 0, PermanentDelete (StorageDeleteOption_PermanentDelete) = 1,
+    Default = 0, PermanentDelete = 1,
 }}
 DEFINE_IID!(IID_IStorageFile, 4198457734, 16916, 17036, 166, 76, 20, 201, 172, 115, 21, 234);
 RT_INTERFACE!{interface IStorageFile(IStorageFileVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFile] {
@@ -1363,7 +1363,7 @@ impl IStorageItemPropertiesWithProvider {
     }}
 }
 RT_ENUM! { enum StorageItemTypes: u32 {
-    None (StorageItemTypes_None) = 0, File (StorageItemTypes_File) = 1, Folder (StorageItemTypes_Folder) = 2,
+    None = 0, File = 1, Folder = 2,
 }}
 DEFINE_IID!(IID_IStorageLibrary, 517828867, 3678, 19820, 181, 232, 147, 24, 152, 61, 106, 3);
 RT_INTERFACE!{interface IStorageLibrary(IStorageLibraryVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibrary] {
@@ -1516,7 +1516,7 @@ impl IStorageLibraryChangeTracker {
 }
 RT_CLASS!{class StorageLibraryChangeTracker: IStorageLibraryChangeTracker}
 RT_ENUM! { enum StorageLibraryChangeType: i32 {
-    Created (StorageLibraryChangeType_Created) = 0, Deleted (StorageLibraryChangeType_Deleted) = 1, MovedOrRenamed (StorageLibraryChangeType_MovedOrRenamed) = 2, ContentsChanged (StorageLibraryChangeType_ContentsChanged) = 3, MovedOutOfLibrary (StorageLibraryChangeType_MovedOutOfLibrary) = 4, MovedIntoLibrary (StorageLibraryChangeType_MovedIntoLibrary) = 5, ContentsReplaced (StorageLibraryChangeType_ContentsReplaced) = 6, IndexingStatusChanged (StorageLibraryChangeType_IndexingStatusChanged) = 7, EncryptionChanged (StorageLibraryChangeType_EncryptionChanged) = 8, ChangeTrackingLost (StorageLibraryChangeType_ChangeTrackingLost) = 9,
+    Created = 0, Deleted = 1, MovedOrRenamed = 2, ContentsChanged = 3, MovedOutOfLibrary = 4, MovedIntoLibrary = 5, ContentsReplaced = 6, IndexingStatusChanged = 7, EncryptionChanged = 8, ChangeTrackingLost = 9,
 }}
 DEFINE_IID!(IID_IStorageLibraryStatics, 1107863259, 26698, 18886, 158, 89, 144, 18, 30, 224, 80, 214);
 RT_INTERFACE!{static interface IStorageLibraryStatics(IStorageLibraryStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryStatics] {
@@ -1541,7 +1541,7 @@ impl IStorageLibraryStatics2 {
     }}
 }
 RT_ENUM! { enum StorageOpenOptions: u32 {
-    None (StorageOpenOptions_None) = 0, AllowOnlyReaders (StorageOpenOptions_AllowOnlyReaders) = 1, AllowReadersAndWriters (StorageOpenOptions_AllowReadersAndWriters) = 2,
+    None = 0, AllowOnlyReaders = 1, AllowReadersAndWriters = 2,
 }}
 DEFINE_IID!(IID_IStorageProvider, 3875925716, 54392, 18390, 186, 70, 26, 142, 190, 17, 74, 32);
 RT_INTERFACE!{interface IStorageProvider(IStorageProviderVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProvider] {
@@ -1612,7 +1612,7 @@ impl StreamedFileDataRequestedHandler {
     }}
 }
 RT_ENUM! { enum StreamedFileFailureMode: i32 {
-    Failed (StreamedFileFailureMode_Failed) = 0, CurrentlyUnavailable (StreamedFileFailureMode_CurrentlyUnavailable) = 1, Incomplete (StreamedFileFailureMode_Incomplete) = 2,
+    Failed = 0, CurrentlyUnavailable = 1, Incomplete = 2,
 }}
 DEFINE_IID!(IID_ISystemAudioProperties, 1066350775, 12428, 18401, 146, 77, 134, 69, 52, 142, 93, 183);
 RT_INTERFACE!{interface ISystemAudioProperties(ISystemAudioPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemAudioProperties] {
@@ -2228,7 +2228,7 @@ impl IUserDataPathsStatics {
 pub mod accesscache { // Windows.Storage.AccessCache
 use ::prelude::*;
 RT_ENUM! { enum AccessCacheOptions: u32 {
-    None (AccessCacheOptions_None) = 0, DisallowUserInput (AccessCacheOptions_DisallowUserInput) = 1, FastLocationsOnly (AccessCacheOptions_FastLocationsOnly) = 2, UseReadOnlyCachedCopy (AccessCacheOptions_UseReadOnlyCachedCopy) = 4, SuppressAccessTimeUpdate (AccessCacheOptions_SuppressAccessTimeUpdate) = 8,
+    None = 0, DisallowUserInput = 1, FastLocationsOnly = 2, UseReadOnlyCachedCopy = 4, SuppressAccessTimeUpdate = 8,
 }}
 RT_STRUCT! { struct AccessListEntry {
     Token: HSTRING, Metadata: HSTRING,
@@ -2247,7 +2247,7 @@ impl IItemRemovedEventArgs {
 }
 RT_CLASS!{class ItemRemovedEventArgs: IItemRemovedEventArgs}
 RT_ENUM! { enum RecentStorageItemVisibility: i32 {
-    AppOnly (RecentStorageItemVisibility_AppOnly) = 0, AppAndSystem (RecentStorageItemVisibility_AppAndSystem) = 1,
+    AppOnly = 0, AppAndSystem = 1,
 }}
 RT_CLASS!{static class StorageApplicationPermissions}
 impl RtActivatable<IStorageApplicationPermissionsStatics> for StorageApplicationPermissions {}
@@ -2585,7 +2585,7 @@ impl IStorageItemInformation {
 pub mod compression { // Windows.Storage.Compression
 use ::prelude::*;
 RT_ENUM! { enum CompressAlgorithm: i32 {
-    InvalidAlgorithm (CompressAlgorithm_InvalidAlgorithm) = 0, NullAlgorithm (CompressAlgorithm_NullAlgorithm) = 1, Mszip (CompressAlgorithm_Mszip) = 2, Xpress (CompressAlgorithm_Xpress) = 3, XpressHuff (CompressAlgorithm_XpressHuff) = 4, Lzms (CompressAlgorithm_Lzms) = 5,
+    InvalidAlgorithm = 0, NullAlgorithm = 1, Mszip = 2, Xpress = 3, XpressHuff = 4, Lzms = 5,
 }}
 DEFINE_IID!(IID_ICompressor, 180577370, 22444, 20193, 183, 2, 132, 211, 157, 84, 36, 224);
 RT_INTERFACE!{interface ICompressor(ICompressorVtbl): IInspectable(IInspectableVtbl) [IID_ICompressor] {
@@ -3017,10 +3017,10 @@ impl IMusicProperties {
 }
 RT_CLASS!{class MusicProperties: IMusicProperties}
 RT_ENUM! { enum PhotoOrientation: i32 {
-    Unspecified (PhotoOrientation_Unspecified) = 0, Normal (PhotoOrientation_Normal) = 1, FlipHorizontal (PhotoOrientation_FlipHorizontal) = 2, Rotate180 (PhotoOrientation_Rotate180) = 3, FlipVertical (PhotoOrientation_FlipVertical) = 4, Transpose (PhotoOrientation_Transpose) = 5, Rotate270 (PhotoOrientation_Rotate270) = 6, Transverse (PhotoOrientation_Transverse) = 7, Rotate90 (PhotoOrientation_Rotate90) = 8,
+    Unspecified = 0, Normal = 1, FlipHorizontal = 2, Rotate180 = 3, FlipVertical = 4, Transpose = 5, Rotate270 = 6, Transverse = 7, Rotate90 = 8,
 }}
 RT_ENUM! { enum PropertyPrefetchOptions: u32 {
-    None (PropertyPrefetchOptions_None) = 0, MusicProperties (PropertyPrefetchOptions_MusicProperties) = 1, VideoProperties (PropertyPrefetchOptions_VideoProperties) = 2, ImageProperties (PropertyPrefetchOptions_ImageProperties) = 4, DocumentProperties (PropertyPrefetchOptions_DocumentProperties) = 8, BasicProperties (PropertyPrefetchOptions_BasicProperties) = 16,
+    None = 0, MusicProperties = 1, VideoProperties = 2, ImageProperties = 4, DocumentProperties = 8, BasicProperties = 16,
 }}
 DEFINE_IID!(IID_IStorageItemContentProperties, 86592429, 48184, 18623, 133, 215, 119, 14, 14, 42, 224, 186);
 RT_INTERFACE!{interface IStorageItemContentProperties(IStorageItemContentPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemContentProperties] {
@@ -3077,10 +3077,10 @@ impl IStorageItemExtraProperties {
 }
 RT_CLASS!{class StorageItemThumbnail: super::streams::IRandomAccessStreamWithContentType}
 RT_ENUM! { enum ThumbnailMode: i32 {
-    PicturesView (ThumbnailMode_PicturesView) = 0, VideosView (ThumbnailMode_VideosView) = 1, MusicView (ThumbnailMode_MusicView) = 2, DocumentsView (ThumbnailMode_DocumentsView) = 3, ListView (ThumbnailMode_ListView) = 4, SingleItem (ThumbnailMode_SingleItem) = 5,
+    PicturesView = 0, VideosView = 1, MusicView = 2, DocumentsView = 3, ListView = 4, SingleItem = 5,
 }}
 RT_ENUM! { enum ThumbnailOptions: u32 {
-    None (ThumbnailOptions_None) = 0, ReturnOnlyIfCached (ThumbnailOptions_ReturnOnlyIfCached) = 1, ResizeThumbnail (ThumbnailOptions_ResizeThumbnail) = 2, UseCurrentScale (ThumbnailOptions_UseCurrentScale) = 4,
+    None = 0, ReturnOnlyIfCached = 1, ResizeThumbnail = 2, UseCurrentScale = 4,
 }}
 DEFINE_IID!(IID_IThumbnailProperties, 1765659695, 56295, 18869, 179, 179, 40, 147, 172, 93, 52, 35);
 RT_INTERFACE!{interface IThumbnailProperties(IThumbnailPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IThumbnailProperties] {
@@ -3112,10 +3112,10 @@ impl IThumbnailProperties {
     }}
 }
 RT_ENUM! { enum ThumbnailType: i32 {
-    Image (ThumbnailType_Image) = 0, Icon (ThumbnailType_Icon) = 1,
+    Image = 0, Icon = 1,
 }}
 RT_ENUM! { enum VideoOrientation: i32 {
-    Normal (VideoOrientation_Normal) = 0, Rotate90 (VideoOrientation_Rotate90) = 90, Rotate180 (VideoOrientation_Rotate180) = 180, Rotate270 (VideoOrientation_Rotate270) = 270,
+    Normal = 0, Rotate90 = 90, Rotate180 = 180, Rotate270 = 270,
 }}
 DEFINE_IID!(IID_IVideoProperties, 1905976583, 26846, 19896, 151, 222, 73, 153, 140, 5, 159, 47);
 RT_INTERFACE!{interface IVideoProperties(IVideoPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IVideoProperties] {
@@ -3568,15 +3568,15 @@ impl IFolderPicker2 {
     }}
 }
 RT_ENUM! { enum PickerLocationId: i32 {
-    DocumentsLibrary (PickerLocationId_DocumentsLibrary) = 0, ComputerFolder (PickerLocationId_ComputerFolder) = 1, Desktop (PickerLocationId_Desktop) = 2, Downloads (PickerLocationId_Downloads) = 3, HomeGroup (PickerLocationId_HomeGroup) = 4, MusicLibrary (PickerLocationId_MusicLibrary) = 5, PicturesLibrary (PickerLocationId_PicturesLibrary) = 6, VideosLibrary (PickerLocationId_VideosLibrary) = 7, Objects3D (PickerLocationId_Objects3D) = 8, Unspecified (PickerLocationId_Unspecified) = 9,
+    DocumentsLibrary = 0, ComputerFolder = 1, Desktop = 2, Downloads = 3, HomeGroup = 4, MusicLibrary = 5, PicturesLibrary = 6, VideosLibrary = 7, Objects3D = 8, Unspecified = 9,
 }}
 RT_ENUM! { enum PickerViewMode: i32 {
-    List (PickerViewMode_List) = 0, Thumbnail (PickerViewMode_Thumbnail) = 1,
+    List = 0, Thumbnail = 1,
 }}
 pub mod provider { // Windows.Storage.Pickers.Provider
 use ::prelude::*;
 RT_ENUM! { enum AddFileResult: i32 {
-    Added (AddFileResult_Added) = 0, AlreadyAdded (AddFileResult_AlreadyAdded) = 1, NotAllowed (AddFileResult_NotAllowed) = 2, Unavailable (AddFileResult_Unavailable) = 3,
+    Added = 0, AlreadyAdded = 1, NotAllowed = 2, Unavailable = 3,
 }}
 DEFINE_IID!(IID_IFileOpenPickerUI, 3718535696, 63956, 16580, 138, 245, 197, 182, 181, 166, 29, 29);
 RT_INTERFACE!{interface IFileOpenPickerUI(IFileOpenPickerUIVtbl): IInspectable(IInspectableVtbl) [IID_IFileOpenPickerUI] {
@@ -3734,7 +3734,7 @@ impl IFileSavePickerUI {
 }
 RT_CLASS!{class FileSavePickerUI: IFileSavePickerUI}
 RT_ENUM! { enum FileSelectionMode: i32 {
-    Single (FileSelectionMode_Single) = 0, Multiple (FileSelectionMode_Multiple) = 1,
+    Single = 0, Multiple = 1,
 }}
 DEFINE_IID!(IID_IPickerClosingDeferral, 2063071006, 6759, 18993, 174, 128, 233, 7, 112, 138, 97, 155);
 RT_INTERFACE!{interface IPickerClosingDeferral(IPickerClosingDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IPickerClosingDeferral] {
@@ -3784,7 +3784,7 @@ impl IPickerClosingOperation {
 }
 RT_CLASS!{class PickerClosingOperation: IPickerClosingOperation}
 RT_ENUM! { enum SetFileNameResult: i32 {
-    Succeeded (SetFileNameResult_Succeeded) = 0, NotAllowed (SetFileNameResult_NotAllowed) = 1, Unavailable (SetFileNameResult_Unavailable) = 2,
+    Succeeded = 0, NotAllowed = 1, Unavailable = 2,
 }}
 DEFINE_IID!(IID_ITargetFileRequest, 1119695701, 32648, 18315, 142, 129, 105, 11, 32, 52, 6, 120);
 RT_INTERFACE!{interface ITargetFileRequest(ITargetFileRequestVtbl): IInspectable(IInspectableVtbl) [IID_ITargetFileRequest] {
@@ -3837,10 +3837,10 @@ RT_CLASS!{class TargetFileRequestedEventArgs: ITargetFileRequestedEventArgs}
 pub mod provider { // Windows.Storage.Provider
 use ::prelude::*;
 RT_ENUM! { enum CachedFileOptions: u32 {
-    None (CachedFileOptions_None) = 0, RequireUpdateOnAccess (CachedFileOptions_RequireUpdateOnAccess) = 1, UseCachedFileWhenOffline (CachedFileOptions_UseCachedFileWhenOffline) = 2, DenyAccessWhenOffline (CachedFileOptions_DenyAccessWhenOffline) = 4,
+    None = 0, RequireUpdateOnAccess = 1, UseCachedFileWhenOffline = 2, DenyAccessWhenOffline = 4,
 }}
 RT_ENUM! { enum CachedFileTarget: i32 {
-    Local (CachedFileTarget_Local) = 0, Remote (CachedFileTarget_Remote) = 1,
+    Local = 0, Remote = 1,
 }}
 RT_CLASS!{static class CachedFileUpdater}
 impl RtActivatable<ICachedFileUpdaterStatics> for CachedFileUpdater {}
@@ -4008,10 +4008,10 @@ impl IFileUpdateRequestedEventArgs {
 }
 RT_CLASS!{class FileUpdateRequestedEventArgs: IFileUpdateRequestedEventArgs}
 RT_ENUM! { enum FileUpdateStatus: i32 {
-    Incomplete (FileUpdateStatus_Incomplete) = 0, Complete (FileUpdateStatus_Complete) = 1, UserInputNeeded (FileUpdateStatus_UserInputNeeded) = 2, CurrentlyUnavailable (FileUpdateStatus_CurrentlyUnavailable) = 3, Failed (FileUpdateStatus_Failed) = 4, CompleteAndRenamed (FileUpdateStatus_CompleteAndRenamed) = 5,
+    Incomplete = 0, Complete = 1, UserInputNeeded = 2, CurrentlyUnavailable = 3, Failed = 4, CompleteAndRenamed = 5,
 }}
 RT_ENUM! { enum ReadActivationMode: i32 {
-    NotNeeded (ReadActivationMode_NotNeeded) = 0, BeforeAccess (ReadActivationMode_BeforeAccess) = 1,
+    NotNeeded = 0, BeforeAccess = 1,
 }}
 DEFINE_IID!(IID_IStorageProviderGetContentInfoForPathResult, 627339549, 43657, 19730, 130, 227, 247, 42, 146, 227, 57, 102);
 RT_INTERFACE!{interface IStorageProviderGetContentInfoForPathResult(IStorageProviderGetContentInfoForPathResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderGetContentInfoForPathResult] {
@@ -4085,16 +4085,16 @@ RT_CLASS!{class StorageProviderGetPathForContentUriResult: IStorageProviderGetPa
 impl RtActivatable<IActivationFactory> for StorageProviderGetPathForContentUriResult {}
 DEFINE_CLSID!(StorageProviderGetPathForContentUriResult(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,71,101,116,80,97,116,104,70,111,114,67,111,110,116,101,110,116,85,114,105,82,101,115,117,108,116,0]) [CLSID_StorageProviderGetPathForContentUriResult]);
 RT_ENUM! { enum StorageProviderHardlinkPolicy: u32 {
-    None (StorageProviderHardlinkPolicy_None) = 0, Allowed (StorageProviderHardlinkPolicy_Allowed) = 1,
+    None = 0, Allowed = 1,
 }}
 RT_ENUM! { enum StorageProviderHydrationPolicy: i32 {
-    Partial (StorageProviderHydrationPolicy_Partial) = 0, Progressive (StorageProviderHydrationPolicy_Progressive) = 1, Full (StorageProviderHydrationPolicy_Full) = 2, AlwaysFull (StorageProviderHydrationPolicy_AlwaysFull) = 3,
+    Partial = 0, Progressive = 1, Full = 2, AlwaysFull = 3,
 }}
 RT_ENUM! { enum StorageProviderHydrationPolicyModifier: u32 {
-    None (StorageProviderHydrationPolicyModifier_None) = 0, ValidationRequired (StorageProviderHydrationPolicyModifier_ValidationRequired) = 1, StreamingAllowed (StorageProviderHydrationPolicyModifier_StreamingAllowed) = 2, AutoDehydrationAllowed (StorageProviderHydrationPolicyModifier_AutoDehydrationAllowed) = 4,
+    None = 0, ValidationRequired = 1, StreamingAllowed = 2, AutoDehydrationAllowed = 4,
 }}
 RT_ENUM! { enum StorageProviderInSyncPolicy: u32 {
-    Default (StorageProviderInSyncPolicy_Default) = 0, FileCreationTime (StorageProviderInSyncPolicy_FileCreationTime) = 1, FileReadOnlyAttribute (StorageProviderInSyncPolicy_FileReadOnlyAttribute) = 2, FileHiddenAttribute (StorageProviderInSyncPolicy_FileHiddenAttribute) = 4, FileSystemAttribute (StorageProviderInSyncPolicy_FileSystemAttribute) = 8, DirectoryCreationTime (StorageProviderInSyncPolicy_DirectoryCreationTime) = 16, DirectoryReadOnlyAttribute (StorageProviderInSyncPolicy_DirectoryReadOnlyAttribute) = 32, DirectoryHiddenAttribute (StorageProviderInSyncPolicy_DirectoryHiddenAttribute) = 64, DirectorySystemAttribute (StorageProviderInSyncPolicy_DirectorySystemAttribute) = 128, FileLastWriteTime (StorageProviderInSyncPolicy_FileLastWriteTime) = 256, DirectoryLastWriteTime (StorageProviderInSyncPolicy_DirectoryLastWriteTime) = 512, PreserveInsyncForSyncEngine (StorageProviderInSyncPolicy_PreserveInsyncForSyncEngine) = 2147483648,
+    Default = 0, FileCreationTime = 1, FileReadOnlyAttribute = 2, FileHiddenAttribute = 4, FileSystemAttribute = 8, DirectoryCreationTime = 16, DirectoryReadOnlyAttribute = 32, DirectoryHiddenAttribute = 64, DirectorySystemAttribute = 128, FileLastWriteTime = 256, DirectoryLastWriteTime = 512, PreserveInsyncForSyncEngine = 2147483648,
 }}
 RT_CLASS!{static class StorageProviderItemProperties}
 impl RtActivatable<IStorageProviderItemPropertiesStatics> for StorageProviderItemProperties {}
@@ -4198,7 +4198,7 @@ impl IStorageProviderItemPropertySource {
     }}
 }
 RT_ENUM! { enum StorageProviderPopulationPolicy: i32 {
-    Full (StorageProviderPopulationPolicy_Full) = 1, AlwaysFull (StorageProviderPopulationPolicy_AlwaysFull) = 2,
+    Full = 1, AlwaysFull = 2,
 }}
 DEFINE_IID!(IID_IStorageProviderPropertyCapabilities, 1703751438, 25527, 17767, 172, 249, 81, 171, 227, 1, 221, 165);
 RT_INTERFACE!{interface IStorageProviderPropertyCapabilities(IStorageProviderPropertyCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderPropertyCapabilities] {
@@ -4212,7 +4212,7 @@ impl IStorageProviderPropertyCapabilities {
     }}
 }
 RT_ENUM! { enum StorageProviderProtectionMode: i32 {
-    Unknown (StorageProviderProtectionMode_Unknown) = 0, Personal (StorageProviderProtectionMode_Personal) = 1,
+    Unknown = 0, Personal = 1,
 }}
 DEFINE_IID!(IID_IStorageProviderSyncRootInfo, 2081621444, 39417, 16812, 137, 4, 171, 5, 93, 101, 73, 38);
 RT_INTERFACE!{interface IStorageProviderSyncRootInfo(IStorageProviderSyncRootInfoVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderSyncRootInfo] {
@@ -4478,22 +4478,22 @@ impl IStorageProviderUriSource {
     }}
 }
 RT_ENUM! { enum StorageProviderUriSourceStatus: i32 {
-    Success (StorageProviderUriSourceStatus_Success) = 0, NoSyncRoot (StorageProviderUriSourceStatus_NoSyncRoot) = 1, FileNotFound (StorageProviderUriSourceStatus_FileNotFound) = 2,
+    Success = 0, NoSyncRoot = 1, FileNotFound = 2,
 }}
 RT_ENUM! { enum UIStatus: i32 {
-    Unavailable (UIStatus_Unavailable) = 0, Hidden (UIStatus_Hidden) = 1, Visible (UIStatus_Visible) = 2, Complete (UIStatus_Complete) = 3,
+    Unavailable = 0, Hidden = 1, Visible = 2, Complete = 3,
 }}
 RT_ENUM! { enum WriteActivationMode: i32 {
-    ReadOnly (WriteActivationMode_ReadOnly) = 0, NotNeeded (WriteActivationMode_NotNeeded) = 1, AfterWrite (WriteActivationMode_AfterWrite) = 2,
+    ReadOnly = 0, NotNeeded = 1, AfterWrite = 2,
 }}
 } // Windows.Storage.Provider
 pub mod search { // Windows.Storage.Search
 use ::prelude::*;
 RT_ENUM! { enum CommonFileQuery: i32 {
-    DefaultQuery (CommonFileQuery_DefaultQuery) = 0, OrderByName (CommonFileQuery_OrderByName) = 1, OrderByTitle (CommonFileQuery_OrderByTitle) = 2, OrderByMusicProperties (CommonFileQuery_OrderByMusicProperties) = 3, OrderBySearchRank (CommonFileQuery_OrderBySearchRank) = 4, OrderByDate (CommonFileQuery_OrderByDate) = 5,
+    DefaultQuery = 0, OrderByName = 1, OrderByTitle = 2, OrderByMusicProperties = 3, OrderBySearchRank = 4, OrderByDate = 5,
 }}
 RT_ENUM! { enum CommonFolderQuery: i32 {
-    DefaultQuery (CommonFolderQuery_DefaultQuery) = 0, GroupByYear (CommonFolderQuery_GroupByYear) = 100, GroupByMonth (CommonFolderQuery_GroupByMonth) = 101, GroupByArtist (CommonFolderQuery_GroupByArtist) = 102, GroupByAlbum (CommonFolderQuery_GroupByAlbum) = 103, GroupByAlbumArtist (CommonFolderQuery_GroupByAlbumArtist) = 104, GroupByComposer (CommonFolderQuery_GroupByComposer) = 105, GroupByGenre (CommonFolderQuery_GroupByGenre) = 106, GroupByPublishedYear (CommonFolderQuery_GroupByPublishedYear) = 107, GroupByRating (CommonFolderQuery_GroupByRating) = 108, GroupByTag (CommonFolderQuery_GroupByTag) = 109, GroupByAuthor (CommonFolderQuery_GroupByAuthor) = 110, GroupByType (CommonFolderQuery_GroupByType) = 111,
+    DefaultQuery = 0, GroupByYear = 100, GroupByMonth = 101, GroupByArtist = 102, GroupByAlbum = 103, GroupByAlbumArtist = 104, GroupByComposer = 105, GroupByGenre = 106, GroupByPublishedYear = 107, GroupByRating = 108, GroupByTag = 109, GroupByAuthor = 110, GroupByType = 111,
 }}
 DEFINE_IID!(IID_IContentIndexer, 2977333133, 63128, 18818, 176, 95, 58, 110, 140, 171, 1, 162);
 RT_INTERFACE!{interface IContentIndexer(IContentIndexerVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexer] {
@@ -4636,10 +4636,10 @@ impl IContentIndexerStatics {
     }}
 }
 RT_ENUM! { enum DateStackOption: i32 {
-    None (DateStackOption_None) = 0, Year (DateStackOption_Year) = 1, Month (DateStackOption_Month) = 2,
+    None = 0, Year = 1, Month = 2,
 }}
 RT_ENUM! { enum FolderDepth: i32 {
-    Shallow (FolderDepth_Shallow) = 0, Deep (FolderDepth_Deep) = 1,
+    Shallow = 0, Deep = 1,
 }}
 DEFINE_IID!(IID_IIndexableContent, 3438387295, 54453, 18490, 176, 110, 224, 219, 30, 196, 32, 228);
 RT_INTERFACE!{interface IIndexableContent(IIndexableContentVtbl): IInspectable(IInspectableVtbl) [IID_IIndexableContent] {
@@ -4689,10 +4689,10 @@ RT_CLASS!{class IndexableContent: IIndexableContent}
 impl RtActivatable<IActivationFactory> for IndexableContent {}
 DEFINE_CLSID!(IndexableContent(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,73,110,100,101,120,97,98,108,101,67,111,110,116,101,110,116,0]) [CLSID_IndexableContent]);
 RT_ENUM! { enum IndexedState: i32 {
-    Unknown (IndexedState_Unknown) = 0, NotIndexed (IndexedState_NotIndexed) = 1, PartiallyIndexed (IndexedState_PartiallyIndexed) = 2, FullyIndexed (IndexedState_FullyIndexed) = 3,
+    Unknown = 0, NotIndexed = 1, PartiallyIndexed = 2, FullyIndexed = 3,
 }}
 RT_ENUM! { enum IndexerOption: i32 {
-    UseIndexerWhenAvailable (IndexerOption_UseIndexerWhenAvailable) = 0, OnlyUseIndexer (IndexerOption_OnlyUseIndexer) = 1, DoNotUseIndexer (IndexerOption_DoNotUseIndexer) = 2, OnlyUseIndexerAndOptimizeForIndexedProperties (IndexerOption_OnlyUseIndexerAndOptimizeForIndexedProperties) = 3,
+    UseIndexerWhenAvailable = 0, OnlyUseIndexer = 1, DoNotUseIndexer = 2, OnlyUseIndexerAndOptimizeForIndexedProperties = 3,
 }}
 DEFINE_IID!(IID_IQueryOptions, 509495022, 3909, 18488, 168, 233, 208, 71, 157, 68, 108, 48);
 RT_INTERFACE!{interface IQueryOptions(IQueryOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IQueryOptions] {
@@ -5206,7 +5206,7 @@ impl IBufferStatics {
     }}
 }
 RT_ENUM! { enum ByteOrder: i32 {
-    LittleEndian (ByteOrder_LittleEndian) = 0, BigEndian (ByteOrder_BigEndian) = 1,
+    LittleEndian = 0, BigEndian = 1,
 }}
 DEFINE_IID!(IID_IContentTypeProvider, 2547030181, 15257, 19945, 136, 165, 225, 29, 47, 80, 199, 149);
 RT_INTERFACE!{interface IContentTypeProvider(IContentTypeProviderVtbl): IInspectable(IInspectableVtbl) [IID_IContentTypeProvider] {
@@ -5583,7 +5583,7 @@ impl IDataWriterFactory {
 RT_CLASS!{class DataWriterStoreOperation: foundation::IAsyncOperation<u32>}
 RT_CLASS!{class FileInputStream: IInputStream}
 RT_ENUM! { enum FileOpenDisposition: i32 {
-    OpenExisting (FileOpenDisposition_OpenExisting) = 0, OpenAlways (FileOpenDisposition_OpenAlways) = 1, CreateNew (FileOpenDisposition_CreateNew) = 2, CreateAlways (FileOpenDisposition_CreateAlways) = 3, TruncateExisting (FileOpenDisposition_TruncateExisting) = 4,
+    OpenExisting = 0, OpenAlways = 1, CreateNew = 2, CreateAlways = 3, TruncateExisting = 4,
 }}
 RT_CLASS!{class FileOutputStream: IOutputStream}
 RT_CLASS!{class FileRandomAccessStream: IRandomAccessStream}
@@ -5683,7 +5683,7 @@ impl IInputStream {
     }}
 }
 RT_ENUM! { enum InputStreamOptions: u32 {
-    None (InputStreamOptions_None) = 0, Partial (InputStreamOptions_Partial) = 1, ReadAhead (InputStreamOptions_ReadAhead) = 2,
+    None = 0, Partial = 1, ReadAhead = 2,
 }}
 RT_CLASS!{class InputStreamOverStream: IInputStream}
 DEFINE_IID!(IID_IInputStreamReference, 1133681944, 24265, 19290, 145, 156, 66, 5, 176, 200, 4, 182);
@@ -5863,6 +5863,6 @@ RT_INTERFACE!{interface IRandomAccessStreamWithContentType(IRandomAccessStreamWi
     
 }}
 RT_ENUM! { enum UnicodeEncoding: i32 {
-    Utf8 (UnicodeEncoding_Utf8) = 0, Utf16LE (UnicodeEncoding_Utf16LE) = 1, Utf16BE (UnicodeEncoding_Utf16BE) = 2,
+    Utf8 = 0, Utf16LE = 1, Utf16BE = 2,
 }}
 } // Windows.Storage.Streams

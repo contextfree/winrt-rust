@@ -1,6 +1,6 @@
 use ::prelude::*;
 RT_ENUM! { enum DomainNameType: i32 {
-    Suffix (DomainNameType_Suffix) = 0, FullyQualified (DomainNameType_FullyQualified) = 1,
+    Suffix = 0, FullyQualified = 1,
 }}
 DEFINE_IID!(IID_IEndpointPair, 866167350, 63738, 19248, 184, 86, 118, 81, 124, 59, 208, 109);
 RT_INTERFACE!{interface IEndpointPair(IEndpointPairVtbl): IInspectable(IInspectableVtbl) [IID_IEndpointPair] {
@@ -135,7 +135,7 @@ impl IHostNameFactory {
     }}
 }
 RT_ENUM! { enum HostNameSortOptions: u32 {
-    None (HostNameSortOptions_None) = 0, OptimizeForLongConnections (HostNameSortOptions_OptimizeForLongConnections) = 2,
+    None = 0, OptimizeForLongConnections = 2,
 }}
 DEFINE_IID!(IID_IHostNameStatics, 4136424639, 41864, 20107, 145, 234, 84, 221, 109, 217, 1, 192);
 RT_INTERFACE!{static interface IHostNameStatics(IHostNameStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHostNameStatics] {
@@ -149,7 +149,7 @@ impl IHostNameStatics {
     }}
 }
 RT_ENUM! { enum HostNameType: i32 {
-    DomainName (HostNameType_DomainName) = 0, Ipv4 (HostNameType_Ipv4) = 1, Ipv6 (HostNameType_Ipv6) = 2, Bluetooth (HostNameType_Bluetooth) = 3,
+    DomainName = 0, Ipv4 = 1, Ipv6 = 2, Bluetooth = 3,
 }}
 pub mod backgroundtransfer { // Windows.Networking.BackgroundTransfer
 use ::prelude::*;
@@ -394,7 +394,7 @@ impl IBackgroundTransferBase {
     }}
 }
 RT_ENUM! { enum BackgroundTransferBehavior: i32 {
-    Parallel (BackgroundTransferBehavior_Parallel) = 0, Serialized (BackgroundTransferBehavior_Serialized) = 1,
+    Parallel = 0, Serialized = 1,
 }}
 DEFINE_IID!(IID_IBackgroundTransferCompletionGroup, 764609061, 39019, 22349, 121, 80, 10, 221, 71, 245, 215, 6);
 RT_INTERFACE!{interface IBackgroundTransferCompletionGroup(IBackgroundTransferCompletionGroupVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferCompletionGroup] {
@@ -490,7 +490,7 @@ impl IBackgroundTransferContentPartFactory {
     }}
 }
 RT_ENUM! { enum BackgroundTransferCostPolicy: i32 {
-    Default (BackgroundTransferCostPolicy_Default) = 0, UnrestrictedOnly (BackgroundTransferCostPolicy_UnrestrictedOnly) = 1, Always (BackgroundTransferCostPolicy_Always) = 2,
+    Default = 0, UnrestrictedOnly = 1, Always = 2,
 }}
 RT_CLASS!{static class BackgroundTransferError}
 impl RtActivatable<IBackgroundTransferErrorStaticMethods> for BackgroundTransferError {}
@@ -625,7 +625,7 @@ impl IBackgroundTransferOperationPriority {
     }}
 }
 RT_ENUM! { enum BackgroundTransferPriority: i32 {
-    Default (BackgroundTransferPriority_Default) = 0, High (BackgroundTransferPriority_High) = 1, Low (BackgroundTransferPriority_Low) = 2,
+    Default = 0, High = 1, Low = 2,
 }}
 DEFINE_IID!(IID_IBackgroundTransferRangesDownloadedEventArgs, 1052537939, 48968, 19080, 146, 72, 176, 193, 101, 24, 79, 92);
 RT_INTERFACE!{interface IBackgroundTransferRangesDownloadedEventArgs(IBackgroundTransferRangesDownloadedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferRangesDownloadedEventArgs] {
@@ -652,7 +652,7 @@ impl IBackgroundTransferRangesDownloadedEventArgs {
 }
 RT_CLASS!{class BackgroundTransferRangesDownloadedEventArgs: IBackgroundTransferRangesDownloadedEventArgs}
 RT_ENUM! { enum BackgroundTransferStatus: i32 {
-    Idle (BackgroundTransferStatus_Idle) = 0, Running (BackgroundTransferStatus_Running) = 1, PausedByApplication (BackgroundTransferStatus_PausedByApplication) = 2, PausedCostedNetwork (BackgroundTransferStatus_PausedCostedNetwork) = 3, PausedNoNetwork (BackgroundTransferStatus_PausedNoNetwork) = 4, Completed (BackgroundTransferStatus_Completed) = 5, Canceled (BackgroundTransferStatus_Canceled) = 6, Error (BackgroundTransferStatus_Error) = 7, PausedRecoverableWebErrorStatus (BackgroundTransferStatus_PausedRecoverableWebErrorStatus) = 8, PausedSystemPolicy (BackgroundTransferStatus_PausedSystemPolicy) = 32,
+    Idle = 0, Running = 1, PausedByApplication = 2, PausedCostedNetwork = 3, PausedNoNetwork = 4, Completed = 5, Canceled = 6, Error = 7, PausedRecoverableWebErrorStatus = 8, PausedSystemPolicy = 32,
 }}
 DEFINE_IID!(IID_IBackgroundUploader, 3314928046, 52909, 18011, 136, 1, 197, 90, 201, 10, 1, 206);
 RT_INTERFACE!{interface IBackgroundUploader(IBackgroundUploaderVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader] {
@@ -1143,7 +1143,7 @@ impl IAttributedNetworkUsage {
 }
 RT_CLASS!{class AttributedNetworkUsage: IAttributedNetworkUsage}
 RT_ENUM! { enum CellularApnAuthenticationType: i32 {
-    None (CellularApnAuthenticationType_None) = 0, Pap (CellularApnAuthenticationType_Pap) = 1, Chap (CellularApnAuthenticationType_Chap) = 2, Mschapv2 (CellularApnAuthenticationType_Mschapv2) = 3,
+    None = 0, Pap = 1, Chap = 2, Mschapv2 = 3,
 }}
 DEFINE_IID!(IID_ICellularApnContext, 1873095156, 61437, 17730, 154, 178, 112, 91, 191, 148, 148, 58);
 RT_INTERFACE!{interface ICellularApnContext(ICellularApnContextVtbl): IInspectable(IInspectableVtbl) [IID_ICellularApnContext] {
@@ -1435,7 +1435,7 @@ impl IConnectionProfile5 {
     }}
 }
 RT_ENUM! { enum ConnectionProfileDeleteStatus: i32 {
-    Success (ConnectionProfileDeleteStatus_Success) = 0, DeniedByUser (ConnectionProfileDeleteStatus_DeniedByUser) = 1, DeniedBySystem (ConnectionProfileDeleteStatus_DeniedBySystem) = 2, UnknownError (ConnectionProfileDeleteStatus_UnknownError) = 3,
+    Success = 0, DeniedByUser = 1, DeniedBySystem = 2, UnknownError = 3,
 }}
 DEFINE_IID!(IID_IConnectionProfileFilter, 541883592, 48429, 20109, 164, 179, 69, 94, 195, 55, 56, 138);
 RT_INTERFACE!{interface IConnectionProfileFilter(IConnectionProfileFilterVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfileFilter] {
@@ -1704,10 +1704,10 @@ impl IDataUsage {
 }
 RT_CLASS!{class DataUsage: IDataUsage}
 RT_ENUM! { enum DataUsageGranularity: i32 {
-    PerMinute (DataUsageGranularity_PerMinute) = 0, PerHour (DataUsageGranularity_PerHour) = 1, PerDay (DataUsageGranularity_PerDay) = 2, Total (DataUsageGranularity_Total) = 3,
+    PerMinute = 0, PerHour = 1, PerDay = 2, Total = 3,
 }}
 RT_ENUM! { enum DomainConnectivityLevel: i32 {
-    None (DomainConnectivityLevel_None) = 0, Unauthenticated (DomainConnectivityLevel_Unauthenticated) = 1, Authenticated (DomainConnectivityLevel_Authenticated) = 2,
+    None = 0, Unauthenticated = 1, Authenticated = 2,
 }}
 DEFINE_IID!(IID_IIPInformation, 3629204960, 5007, 18391, 155, 58, 54, 187, 72, 140, 239, 51);
 RT_INTERFACE!{interface IIPInformation(IIPInformationVtbl): IInspectable(IInspectableVtbl) [IID_IIPInformation] {
@@ -1811,16 +1811,16 @@ impl INetworkAdapter {
 }
 RT_CLASS!{class NetworkAdapter: INetworkAdapter}
 RT_ENUM! { enum NetworkAuthenticationType: i32 {
-    None (NetworkAuthenticationType_None) = 0, Unknown (NetworkAuthenticationType_Unknown) = 1, Open80211 (NetworkAuthenticationType_Open80211) = 2, SharedKey80211 (NetworkAuthenticationType_SharedKey80211) = 3, Wpa (NetworkAuthenticationType_Wpa) = 4, WpaPsk (NetworkAuthenticationType_WpaPsk) = 5, WpaNone (NetworkAuthenticationType_WpaNone) = 6, Rsna (NetworkAuthenticationType_Rsna) = 7, RsnaPsk (NetworkAuthenticationType_RsnaPsk) = 8, Ihv (NetworkAuthenticationType_Ihv) = 9,
+    None = 0, Unknown = 1, Open80211 = 2, SharedKey80211 = 3, Wpa = 4, WpaPsk = 5, WpaNone = 6, Rsna = 7, RsnaPsk = 8, Ihv = 9,
 }}
 RT_ENUM! { enum NetworkConnectivityLevel: i32 {
-    None (NetworkConnectivityLevel_None) = 0, LocalAccess (NetworkConnectivityLevel_LocalAccess) = 1, ConstrainedInternetAccess (NetworkConnectivityLevel_ConstrainedInternetAccess) = 2, InternetAccess (NetworkConnectivityLevel_InternetAccess) = 3,
+    None = 0, LocalAccess = 1, ConstrainedInternetAccess = 2, InternetAccess = 3,
 }}
 RT_ENUM! { enum NetworkCostType: i32 {
-    Unknown (NetworkCostType_Unknown) = 0, Unrestricted (NetworkCostType_Unrestricted) = 1, Fixed (NetworkCostType_Fixed) = 2, Variable (NetworkCostType_Variable) = 3,
+    Unknown = 0, Unrestricted = 1, Fixed = 2, Variable = 3,
 }}
 RT_ENUM! { enum NetworkEncryptionType: i32 {
-    None (NetworkEncryptionType_None) = 0, Unknown (NetworkEncryptionType_Unknown) = 1, Wep (NetworkEncryptionType_Wep) = 2, Wep40 (NetworkEncryptionType_Wep40) = 3, Wep104 (NetworkEncryptionType_Wep104) = 4, Tkip (NetworkEncryptionType_Tkip) = 5, Ccmp (NetworkEncryptionType_Ccmp) = 6, WpaUseGroup (NetworkEncryptionType_WpaUseGroup) = 7, RsnUseGroup (NetworkEncryptionType_RsnUseGroup) = 8, Ihv (NetworkEncryptionType_Ihv) = 9,
+    None = 0, Unknown = 1, Wep = 2, Wep40 = 3, Wep104 = 4, Tkip = 5, Ccmp = 6, WpaUseGroup = 7, RsnUseGroup = 8, Ihv = 9,
 }}
 RT_CLASS!{static class NetworkInformation}
 impl RtActivatable<INetworkInformationStatics> for NetworkInformation {}
@@ -2024,7 +2024,7 @@ impl NetworkStatusChangedEventHandler {
     }}
 }
 RT_ENUM! { enum NetworkTypes: u32 {
-    None (NetworkTypes_None) = 0, Internet (NetworkTypes_Internet) = 1, PrivateNetwork (NetworkTypes_PrivateNetwork) = 2,
+    None = 0, Internet = 1, PrivateNetwork = 2,
 }}
 DEFINE_IID!(IID_INetworkUsage, 1239060430, 39301, 18727, 191, 91, 7, 43, 92, 101, 248, 217);
 RT_INTERFACE!{interface INetworkUsage(INetworkUsageVtbl): IInspectable(IInspectableVtbl) [IID_INetworkUsage] {
@@ -2097,7 +2097,7 @@ impl IProxyConfiguration {
 }
 RT_CLASS!{class ProxyConfiguration: IProxyConfiguration}
 RT_ENUM! { enum RoamingStates: u32 {
-    None (RoamingStates_None) = 0, NotRoaming (RoamingStates_NotRoaming) = 1, Roaming (RoamingStates_Roaming) = 2,
+    None = 0, NotRoaming = 1, Roaming = 2,
 }}
 DEFINE_IID!(IID_IRoutePolicy, 296469676, 4039, 17124, 135, 66, 86, 153, 35, 177, 202, 17);
 RT_INTERFACE!{interface IRoutePolicy(IRoutePolicyVtbl): IInspectable(IInspectableVtbl) [IID_IRoutePolicy] {
@@ -2142,7 +2142,7 @@ impl IRoutePolicyFactory {
     }}
 }
 RT_ENUM! { enum TriStates: i32 {
-    DoNotCare (TriStates_DoNotCare) = 0, No (TriStates_No) = 1, Yes (TriStates_Yes) = 2,
+    DoNotCare = 0, No = 1, Yes = 2,
 }}
 DEFINE_IID!(IID_IWlanConnectionProfileDetails, 1444976843, 45914, 19441, 168, 132, 183, 85, 126, 136, 255, 134);
 RT_INTERFACE!{interface IWlanConnectionProfileDetails(IWlanConnectionProfileDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IWlanConnectionProfileDetails] {
@@ -2204,19 +2204,19 @@ impl IWwanConnectionProfileDetails2 {
     }}
 }
 RT_ENUM! { enum WwanDataClass: u32 {
-    None (WwanDataClass_None) = 0, Gprs (WwanDataClass_Gprs) = 1, Edge (WwanDataClass_Edge) = 2, Umts (WwanDataClass_Umts) = 4, Hsdpa (WwanDataClass_Hsdpa) = 8, Hsupa (WwanDataClass_Hsupa) = 16, LteAdvanced (WwanDataClass_LteAdvanced) = 32, Cdma1xRtt (WwanDataClass_Cdma1xRtt) = 65536, Cdma1xEvdo (WwanDataClass_Cdma1xEvdo) = 131072, Cdma1xEvdoRevA (WwanDataClass_Cdma1xEvdoRevA) = 262144, Cdma1xEvdv (WwanDataClass_Cdma1xEvdv) = 524288, Cdma3xRtt (WwanDataClass_Cdma3xRtt) = 1048576, Cdma1xEvdoRevB (WwanDataClass_Cdma1xEvdoRevB) = 2097152, CdmaUmb (WwanDataClass_CdmaUmb) = 4194304, Custom (WwanDataClass_Custom) = 2147483648,
+    None = 0, Gprs = 1, Edge = 2, Umts = 4, Hsdpa = 8, Hsupa = 16, LteAdvanced = 32, Cdma1xRtt = 65536, Cdma1xEvdo = 131072, Cdma1xEvdoRevA = 262144, Cdma1xEvdv = 524288, Cdma3xRtt = 1048576, Cdma1xEvdoRevB = 2097152, CdmaUmb = 4194304, Custom = 2147483648,
 }}
 RT_ENUM! { enum WwanNetworkIPKind: i32 {
-    None (WwanNetworkIPKind_None) = 0, Ipv4 (WwanNetworkIPKind_Ipv4) = 1, Ipv6 (WwanNetworkIPKind_Ipv6) = 2, Ipv4v6 (WwanNetworkIPKind_Ipv4v6) = 3, Ipv4v6v4Xlat (WwanNetworkIPKind_Ipv4v6v4Xlat) = 4,
+    None = 0, Ipv4 = 1, Ipv6 = 2, Ipv4v6 = 3, Ipv4v6v4Xlat = 4,
 }}
 RT_ENUM! { enum WwanNetworkRegistrationState: i32 {
-    None (WwanNetworkRegistrationState_None) = 0, Deregistered (WwanNetworkRegistrationState_Deregistered) = 1, Searching (WwanNetworkRegistrationState_Searching) = 2, Home (WwanNetworkRegistrationState_Home) = 3, Roaming (WwanNetworkRegistrationState_Roaming) = 4, Partner (WwanNetworkRegistrationState_Partner) = 5, Denied (WwanNetworkRegistrationState_Denied) = 6,
+    None = 0, Deregistered = 1, Searching = 2, Home = 3, Roaming = 4, Partner = 5, Denied = 6,
 }}
 } // Windows.Networking.Connectivity
 pub mod networkoperators { // Windows.Networking.NetworkOperators
 use ::prelude::*;
 RT_ENUM! { enum DataClasses: u32 {
-    None (DataClasses_None) = 0, Gprs (DataClasses_Gprs) = 1, Edge (DataClasses_Edge) = 2, Umts (DataClasses_Umts) = 4, Hsdpa (DataClasses_Hsdpa) = 8, Hsupa (DataClasses_Hsupa) = 16, LteAdvanced (DataClasses_LteAdvanced) = 32, Cdma1xRtt (DataClasses_Cdma1xRtt) = 65536, Cdma1xEvdo (DataClasses_Cdma1xEvdo) = 131072, Cdma1xEvdoRevA (DataClasses_Cdma1xEvdoRevA) = 262144, Cdma1xEvdv (DataClasses_Cdma1xEvdv) = 524288, Cdma3xRtt (DataClasses_Cdma3xRtt) = 1048576, Cdma1xEvdoRevB (DataClasses_Cdma1xEvdoRevB) = 2097152, CdmaUmb (DataClasses_CdmaUmb) = 4194304, Custom (DataClasses_Custom) = 2147483648,
+    None = 0, Gprs = 1, Edge = 2, Umts = 4, Hsdpa = 8, Hsupa = 16, LteAdvanced = 32, Cdma1xRtt = 65536, Cdma1xEvdo = 131072, Cdma1xEvdoRevA = 262144, Cdma1xEvdv = 524288, Cdma3xRtt = 1048576, Cdma1xEvdoRevB = 2097152, CdmaUmb = 4194304, Custom = 2147483648,
 }}
 DEFINE_IID!(IID_IESim, 1869508134, 61731, 17277, 140, 237, 220, 29, 43, 192, 195, 169);
 RT_INTERFACE!{interface IESim(IESimVtbl): IInspectable(IInspectableVtbl) [IID_IESim] {
@@ -2308,7 +2308,7 @@ impl IESimAddedEventArgs {
 }
 RT_CLASS!{class ESimAddedEventArgs: IESimAddedEventArgs}
 RT_ENUM! { enum ESimAuthenticationPreference: i32 {
-    OnEntry (ESimAuthenticationPreference_OnEntry) = 0, OnAction (ESimAuthenticationPreference_OnAction) = 1, Never (ESimAuthenticationPreference_Never) = 2,
+    OnEntry = 0, OnAction = 1, Never = 2,
 }}
 DEFINE_IID!(IID_IESimDownloadProfileMetadataResult, 3290647966, 23254, 17005, 141, 0, 68, 52, 244, 73, 175, 236);
 RT_INTERFACE!{interface IESimDownloadProfileMetadataResult(IESimDownloadProfileMetadataResultVtbl): IInspectable(IInspectableVtbl) [IID_IESimDownloadProfileMetadataResult] {
@@ -2386,7 +2386,7 @@ impl IESimOperationResult {
 }
 RT_CLASS!{class ESimOperationResult: IESimOperationResult}
 RT_ENUM! { enum ESimOperationStatus: i32 {
-    Success (ESimOperationStatus_Success) = 0, NotAuthorized (ESimOperationStatus_NotAuthorized) = 1, NotFound (ESimOperationStatus_NotFound) = 2, PolicyViolation (ESimOperationStatus_PolicyViolation) = 3, InsufficientSpaceOnCard (ESimOperationStatus_InsufficientSpaceOnCard) = 4, ServerFailure (ESimOperationStatus_ServerFailure) = 5, ServerNotReachable (ESimOperationStatus_ServerNotReachable) = 6, TimeoutWaitingForUserConsent (ESimOperationStatus_TimeoutWaitingForUserConsent) = 7, IncorrectConfirmationCode (ESimOperationStatus_IncorrectConfirmationCode) = 8, ConfirmationCodeMaxRetriesExceeded (ESimOperationStatus_ConfirmationCodeMaxRetriesExceeded) = 9, CardRemoved (ESimOperationStatus_CardRemoved) = 10, CardBusy (ESimOperationStatus_CardBusy) = 11, Other (ESimOperationStatus_Other) = 12, CardGeneralFailure (ESimOperationStatus_CardGeneralFailure) = 13, ConfirmationCodeMissing (ESimOperationStatus_ConfirmationCodeMissing) = 14, InvalidMatchingId (ESimOperationStatus_InvalidMatchingId) = 15, NoEligibleProfileForThisDevice (ESimOperationStatus_NoEligibleProfileForThisDevice) = 16, OperationAborted (ESimOperationStatus_OperationAborted) = 17, EidMismatch (ESimOperationStatus_EidMismatch) = 18, ProfileNotAvailableForNewBinding (ESimOperationStatus_ProfileNotAvailableForNewBinding) = 19, ProfileNotReleasedByOperator (ESimOperationStatus_ProfileNotReleasedByOperator) = 20, OperationProhibitedByProfileClass (ESimOperationStatus_OperationProhibitedByProfileClass) = 21, ProfileNotPresent (ESimOperationStatus_ProfileNotPresent) = 22, NoCorrespondingRequest (ESimOperationStatus_NoCorrespondingRequest) = 23,
+    Success = 0, NotAuthorized = 1, NotFound = 2, PolicyViolation = 3, InsufficientSpaceOnCard = 4, ServerFailure = 5, ServerNotReachable = 6, TimeoutWaitingForUserConsent = 7, IncorrectConfirmationCode = 8, ConfirmationCodeMaxRetriesExceeded = 9, CardRemoved = 10, CardBusy = 11, Other = 12, CardGeneralFailure = 13, ConfirmationCodeMissing = 14, InvalidMatchingId = 15, NoEligibleProfileForThisDevice = 16, OperationAborted = 17, EidMismatch = 18, ProfileNotAvailableForNewBinding = 19, ProfileNotReleasedByOperator = 20, OperationProhibitedByProfileClass = 21, ProfileNotPresent = 22, NoCorrespondingRequest = 23,
 }}
 DEFINE_IID!(IID_IESimPolicy, 1105312157, 53118, 17173, 136, 43, 111, 30, 116, 176, 211, 143);
 RT_INTERFACE!{interface IESimPolicy(IESimPolicyVtbl): IInspectable(IInspectableVtbl) [IID_IESimPolicy] {
@@ -2474,7 +2474,7 @@ impl IESimProfile {
 }
 RT_CLASS!{class ESimProfile: IESimProfile}
 RT_ENUM! { enum ESimProfileClass: i32 {
-    Operational (ESimProfileClass_Operational) = 0, Test (ESimProfileClass_Test) = 1, Provisioning (ESimProfileClass_Provisioning) = 2,
+    Operational = 0, Test = 1, Provisioning = 2,
 }}
 RT_STRUCT! { struct ESimProfileInstallProgress {
     TotalSizeInBytes: i32, InstalledSizeInBytes: i32,
@@ -2564,7 +2564,7 @@ impl IESimProfileMetadata {
 }
 RT_CLASS!{class ESimProfileMetadata: IESimProfileMetadata}
 RT_ENUM! { enum ESimProfileMetadataState: i32 {
-    Unknown (ESimProfileMetadataState_Unknown) = 0, WaitingForInstall (ESimProfileMetadataState_WaitingForInstall) = 1, Downloading (ESimProfileMetadataState_Downloading) = 2, Installing (ESimProfileMetadataState_Installing) = 3, Expired (ESimProfileMetadataState_Expired) = 4, RejectingDownload (ESimProfileMetadataState_RejectingDownload) = 5, NoLongerAvailable (ESimProfileMetadataState_NoLongerAvailable) = 6, DeniedByPolicy (ESimProfileMetadataState_DeniedByPolicy) = 7,
+    Unknown = 0, WaitingForInstall = 1, Downloading = 2, Installing = 3, Expired = 4, RejectingDownload = 5, NoLongerAvailable = 6, DeniedByPolicy = 7,
 }}
 DEFINE_IID!(IID_IESimProfilePolicy, 3873247005, 40028, 18117, 162, 137, 169, 72, 153, 155, 240, 98);
 RT_INTERFACE!{interface IESimProfilePolicy(IESimProfilePolicyVtbl): IInspectable(IInspectableVtbl) [IID_IESimProfilePolicy] {
@@ -2591,7 +2591,7 @@ impl IESimProfilePolicy {
 }
 RT_CLASS!{class ESimProfilePolicy: IESimProfilePolicy}
 RT_ENUM! { enum ESimProfileState: i32 {
-    Unknown (ESimProfileState_Unknown) = 0, Disabled (ESimProfileState_Disabled) = 1, Enabled (ESimProfileState_Enabled) = 2, Deleted (ESimProfileState_Deleted) = 3,
+    Unknown = 0, Disabled = 1, Enabled = 2, Deleted = 3,
 }}
 DEFINE_IID!(IID_IESimRemovedEventArgs, 3737462651, 12249, 20185, 131, 118, 217, 181, 228, 18, 120, 163);
 RT_INTERFACE!{interface IESimRemovedEventArgs(IESimRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IESimRemovedEventArgs] {
@@ -2624,7 +2624,7 @@ impl IESimServiceInfo {
 }
 RT_CLASS!{class ESimServiceInfo: IESimServiceInfo}
 RT_ENUM! { enum ESimState: i32 {
-    Unknown (ESimState_Unknown) = 0, Idle (ESimState_Idle) = 1, Removed (ESimState_Removed) = 2, Busy (ESimState_Busy) = 3,
+    Unknown = 0, Idle = 1, Removed = 2, Busy = 3,
 }}
 DEFINE_IID!(IID_IESimUpdatedEventArgs, 1276271852, 20621, 19336, 131, 203, 104, 190, 248, 22, 141, 18);
 RT_INTERFACE!{interface IESimUpdatedEventArgs(IESimUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IESimUpdatedEventArgs] {
@@ -2716,7 +2716,7 @@ impl IESimWatcher {
 }
 RT_CLASS!{class ESimWatcher: IESimWatcher}
 RT_ENUM! { enum ESimWatcherStatus: i32 {
-    Created (ESimWatcherStatus_Created) = 0, Started (ESimWatcherStatus_Started) = 1, EnumerationCompleted (ESimWatcherStatus_EnumerationCompleted) = 2, Stopping (ESimWatcherStatus_Stopping) = 3, Stopped (ESimWatcherStatus_Stopped) = 4,
+    Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4,
 }}
 DEFINE_IID!(IID_IHotspotAuthenticationContext, 3881224081, 4099, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
 RT_INTERFACE!{interface IHotspotAuthenticationContext(IHotspotAuthenticationContextVtbl): IInspectable(IInspectableVtbl) [IID_IHotspotAuthenticationContext] {
@@ -2817,7 +2817,7 @@ impl IHotspotAuthenticationEventDetails {
 }
 RT_CLASS!{class HotspotAuthenticationEventDetails: IHotspotAuthenticationEventDetails}
 RT_ENUM! { enum HotspotAuthenticationResponseCode: i32 {
-    NoError (HotspotAuthenticationResponseCode_NoError) = 0, LoginSucceeded (HotspotAuthenticationResponseCode_LoginSucceeded) = 50, LoginFailed (HotspotAuthenticationResponseCode_LoginFailed) = 100, RadiusServerError (HotspotAuthenticationResponseCode_RadiusServerError) = 102, NetworkAdministratorError (HotspotAuthenticationResponseCode_NetworkAdministratorError) = 105, LoginAborted (HotspotAuthenticationResponseCode_LoginAborted) = 151, AccessGatewayInternalError (HotspotAuthenticationResponseCode_AccessGatewayInternalError) = 255,
+    NoError = 0, LoginSucceeded = 50, LoginFailed = 100, RadiusServerError = 102, NetworkAdministratorError = 105, LoginAborted = 151, AccessGatewayInternalError = 255,
 }}
 DEFINE_IID!(IID_IHotspotCredentialsAuthenticationResult, 3881224081, 4101, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
 RT_INTERFACE!{interface IHotspotCredentialsAuthenticationResult(IHotspotCredentialsAuthenticationResultVtbl): IInspectable(IInspectableVtbl) [IID_IHotspotCredentialsAuthenticationResult] {
@@ -3225,7 +3225,7 @@ RT_CLASS!{class MobileBroadbandAccountWatcher: IMobileBroadbandAccountWatcher}
 impl RtActivatable<IActivationFactory> for MobileBroadbandAccountWatcher {}
 DEFINE_CLSID!(MobileBroadbandAccountWatcher(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,65,99,99,111,117,110,116,87,97,116,99,104,101,114,0]) [CLSID_MobileBroadbandAccountWatcher]);
 RT_ENUM! { enum MobileBroadbandAccountWatcherStatus: i32 {
-    Created (MobileBroadbandAccountWatcherStatus_Created) = 0, Started (MobileBroadbandAccountWatcherStatus_Started) = 1, EnumerationCompleted (MobileBroadbandAccountWatcherStatus_EnumerationCompleted) = 2, Stopped (MobileBroadbandAccountWatcherStatus_Stopped) = 3, Aborted (MobileBroadbandAccountWatcherStatus_Aborted) = 4,
+    Created = 0, Started = 1, EnumerationCompleted = 2, Stopped = 3, Aborted = 4,
 }}
 DEFINE_IID!(IID_IMobileBroadbandAntennaSar, 3115273086, 52217, 16649, 144, 190, 92, 6, 191, 213, 19, 182);
 RT_INTERFACE!{interface IMobileBroadbandAntennaSar(IMobileBroadbandAntennaSarVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAntennaSar] {
@@ -3893,7 +3893,7 @@ impl IMobileBroadbandDeviceServiceTriggerDetails {
 }
 RT_CLASS!{class MobileBroadbandDeviceServiceTriggerDetails: IMobileBroadbandDeviceServiceTriggerDetails}
 RT_ENUM! { enum MobileBroadbandDeviceType: i32 {
-    Unknown (MobileBroadbandDeviceType_Unknown) = 0, Embedded (MobileBroadbandDeviceType_Embedded) = 1, Removable (MobileBroadbandDeviceType_Removable) = 2, Remote (MobileBroadbandDeviceType_Remote) = 3,
+    Unknown = 0, Embedded = 1, Removable = 2, Remote = 3,
 }}
 DEFINE_IID!(IID_IMobileBroadbandModem, 3493161234, 59897, 20327, 160, 61, 67, 24, 154, 49, 107, 241);
 RT_INTERFACE!{interface IMobileBroadbandModem(IMobileBroadbandModemVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModem] {
@@ -4124,7 +4124,7 @@ impl IMobileBroadbandModemStatics {
     }}
 }
 RT_ENUM! { enum MobileBroadbandModemStatus: i32 {
-    Success (MobileBroadbandModemStatus_Success) = 0, OtherFailure (MobileBroadbandModemStatus_OtherFailure) = 1, Busy (MobileBroadbandModemStatus_Busy) = 2, NoDeviceSupport (MobileBroadbandModemStatus_NoDeviceSupport) = 3,
+    Success = 0, OtherFailure = 1, Busy = 2, NoDeviceSupport = 3,
 }}
 DEFINE_IID!(IID_IMobileBroadbandNetwork, 3412300428, 777, 19638, 168, 193, 106, 90, 60, 142, 31, 246);
 RT_INTERFACE!{interface IMobileBroadbandNetwork(IMobileBroadbandNetworkVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandNetwork] {
@@ -4365,10 +4365,10 @@ impl IMobileBroadbandPin {
 }
 RT_CLASS!{class MobileBroadbandPin: IMobileBroadbandPin}
 RT_ENUM! { enum MobileBroadbandPinFormat: i32 {
-    Unknown (MobileBroadbandPinFormat_Unknown) = 0, Numeric (MobileBroadbandPinFormat_Numeric) = 1, Alphanumeric (MobileBroadbandPinFormat_Alphanumeric) = 2,
+    Unknown = 0, Numeric = 1, Alphanumeric = 2,
 }}
 RT_ENUM! { enum MobileBroadbandPinLockState: i32 {
-    Unknown (MobileBroadbandPinLockState_Unknown) = 0, Unlocked (MobileBroadbandPinLockState_Unlocked) = 1, PinRequired (MobileBroadbandPinLockState_PinRequired) = 2, PinUnblockKeyRequired (MobileBroadbandPinLockState_PinUnblockKeyRequired) = 3,
+    Unknown = 0, Unlocked = 1, PinRequired = 2, PinUnblockKeyRequired = 3,
 }}
 DEFINE_IID!(IID_IMobileBroadbandPinLockStateChange, 3189139262, 7940, 20373, 139, 144, 231, 245, 89, 221, 231, 229);
 RT_INTERFACE!{interface IMobileBroadbandPinLockStateChange(IMobileBroadbandPinLockStateChangeVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPinLockStateChange] {
@@ -4443,10 +4443,10 @@ impl IMobileBroadbandPinOperationResult {
 }
 RT_CLASS!{class MobileBroadbandPinOperationResult: IMobileBroadbandPinOperationResult}
 RT_ENUM! { enum MobileBroadbandPinType: i32 {
-    None (MobileBroadbandPinType_None) = 0, Custom (MobileBroadbandPinType_Custom) = 1, Pin1 (MobileBroadbandPinType_Pin1) = 2, Pin2 (MobileBroadbandPinType_Pin2) = 3, SimPin (MobileBroadbandPinType_SimPin) = 4, FirstSimPin (MobileBroadbandPinType_FirstSimPin) = 5, NetworkPin (MobileBroadbandPinType_NetworkPin) = 6, NetworkSubsetPin (MobileBroadbandPinType_NetworkSubsetPin) = 7, ServiceProviderPin (MobileBroadbandPinType_ServiceProviderPin) = 8, CorporatePin (MobileBroadbandPinType_CorporatePin) = 9, SubsidyLock (MobileBroadbandPinType_SubsidyLock) = 10,
+    None = 0, Custom = 1, Pin1 = 2, Pin2 = 3, SimPin = 4, FirstSimPin = 5, NetworkPin = 6, NetworkSubsetPin = 7, ServiceProviderPin = 8, CorporatePin = 9, SubsidyLock = 10,
 }}
 RT_ENUM! { enum MobileBroadbandRadioState: i32 {
-    Off (MobileBroadbandRadioState_Off) = 0, On (MobileBroadbandRadioState_On) = 1,
+    Off = 0, On = 1,
 }}
 DEFINE_IID!(IID_IMobileBroadbandRadioStateChange, 2958337377, 38963, 19181, 151, 23, 67, 72, 178, 26, 36, 179);
 RT_INTERFACE!{interface IMobileBroadbandRadioStateChange(IMobileBroadbandRadioStateChangeVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandRadioStateChange] {
@@ -4633,7 +4633,7 @@ impl IMobileBroadbandUiccApp {
 }
 RT_CLASS!{class MobileBroadbandUiccApp: IMobileBroadbandUiccApp}
 RT_ENUM! { enum MobileBroadbandUiccAppOperationStatus: i32 {
-    Success (MobileBroadbandUiccAppOperationStatus_Success) = 0, InvalidUiccFilePath (MobileBroadbandUiccAppOperationStatus_InvalidUiccFilePath) = 1, AccessConditionNotHeld (MobileBroadbandUiccAppOperationStatus_AccessConditionNotHeld) = 2, UiccBusy (MobileBroadbandUiccAppOperationStatus_UiccBusy) = 3,
+    Success = 0, InvalidUiccFilePath = 1, AccessConditionNotHeld = 2, UiccBusy = 3,
 }}
 DEFINE_IID!(IID_IMobileBroadbandUiccAppReadRecordResult, 1690915461, 13710, 18373, 130, 73, 105, 95, 56, 59, 43, 219);
 RT_INTERFACE!{interface IMobileBroadbandUiccAppReadRecordResult(IMobileBroadbandUiccAppReadRecordResultVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandUiccAppReadRecordResult] {
@@ -4714,10 +4714,10 @@ impl IMobileBroadbandUiccAppsResult {
 }
 RT_CLASS!{class MobileBroadbandUiccAppsResult: IMobileBroadbandUiccAppsResult}
 RT_ENUM! { enum NetworkDeviceStatus: i32 {
-    DeviceNotReady (NetworkDeviceStatus_DeviceNotReady) = 0, DeviceReady (NetworkDeviceStatus_DeviceReady) = 1, SimNotInserted (NetworkDeviceStatus_SimNotInserted) = 2, BadSim (NetworkDeviceStatus_BadSim) = 3, DeviceHardwareFailure (NetworkDeviceStatus_DeviceHardwareFailure) = 4, AccountNotActivated (NetworkDeviceStatus_AccountNotActivated) = 5, DeviceLocked (NetworkDeviceStatus_DeviceLocked) = 6, DeviceBlocked (NetworkDeviceStatus_DeviceBlocked) = 7,
+    DeviceNotReady = 0, DeviceReady = 1, SimNotInserted = 2, BadSim = 3, DeviceHardwareFailure = 4, AccountNotActivated = 5, DeviceLocked = 6, DeviceBlocked = 7,
 }}
 RT_ENUM! { enum NetworkOperatorDataUsageNotificationKind: i32 {
-    DataUsageProgress (NetworkOperatorDataUsageNotificationKind_DataUsageProgress) = 0,
+    DataUsageProgress = 0,
 }}
 DEFINE_IID!(IID_INetworkOperatorDataUsageTriggerDetails, 1357058669, 42085, 20203, 147, 23, 40, 161, 103, 99, 12, 234);
 RT_INTERFACE!{interface INetworkOperatorDataUsageTriggerDetails(INetworkOperatorDataUsageTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorDataUsageTriggerDetails] {
@@ -4732,7 +4732,7 @@ impl INetworkOperatorDataUsageTriggerDetails {
 }
 RT_CLASS!{class NetworkOperatorDataUsageTriggerDetails: INetworkOperatorDataUsageTriggerDetails}
 RT_ENUM! { enum NetworkOperatorEventMessageType: i32 {
-    Gsm (NetworkOperatorEventMessageType_Gsm) = 0, Cdma (NetworkOperatorEventMessageType_Cdma) = 1, Ussd (NetworkOperatorEventMessageType_Ussd) = 2, DataPlanThresholdReached (NetworkOperatorEventMessageType_DataPlanThresholdReached) = 3, DataPlanReset (NetworkOperatorEventMessageType_DataPlanReset) = 4, DataPlanDeleted (NetworkOperatorEventMessageType_DataPlanDeleted) = 5, ProfileConnected (NetworkOperatorEventMessageType_ProfileConnected) = 6, ProfileDisconnected (NetworkOperatorEventMessageType_ProfileDisconnected) = 7, RegisteredRoaming (NetworkOperatorEventMessageType_RegisteredRoaming) = 8, RegisteredHome (NetworkOperatorEventMessageType_RegisteredHome) = 9, TetheringEntitlementCheck (NetworkOperatorEventMessageType_TetheringEntitlementCheck) = 10, TetheringOperationalStateChanged (NetworkOperatorEventMessageType_TetheringOperationalStateChanged) = 11, TetheringNumberOfClientsChanged (NetworkOperatorEventMessageType_TetheringNumberOfClientsChanged) = 12,
+    Gsm = 0, Cdma = 1, Ussd = 2, DataPlanThresholdReached = 3, DataPlanReset = 4, DataPlanDeleted = 5, ProfileConnected = 6, ProfileDisconnected = 7, RegisteredRoaming = 8, RegisteredHome = 9, TetheringEntitlementCheck = 10, TetheringOperationalStateChanged = 11, TetheringNumberOfClientsChanged = 12,
 }}
 DEFINE_IID!(IID_INetworkOperatorNotificationEventDetails, 3160975825, 33505, 17544, 159, 44, 18, 118, 194, 70, 143, 172);
 RT_INTERFACE!{interface INetworkOperatorNotificationEventDetails(INetworkOperatorNotificationEventDetailsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorNotificationEventDetails] {
@@ -4978,10 +4978,10 @@ impl INetworkOperatorTetheringOperationResult {
 }
 RT_CLASS!{class NetworkOperatorTetheringOperationResult: INetworkOperatorTetheringOperationResult}
 RT_ENUM! { enum NetworkRegistrationState: i32 {
-    None (NetworkRegistrationState_None) = 0, Deregistered (NetworkRegistrationState_Deregistered) = 1, Searching (NetworkRegistrationState_Searching) = 2, Home (NetworkRegistrationState_Home) = 3, Roaming (NetworkRegistrationState_Roaming) = 4, Partner (NetworkRegistrationState_Partner) = 5, Denied (NetworkRegistrationState_Denied) = 6,
+    None = 0, Deregistered = 1, Searching = 2, Home = 3, Roaming = 4, Partner = 5, Denied = 6,
 }}
 RT_ENUM! { enum ProfileMediaType: i32 {
-    Wlan (ProfileMediaType_Wlan) = 0, Wwan (ProfileMediaType_Wwan) = 1,
+    Wlan = 0, Wwan = 1,
 }}
 RT_STRUCT! { struct ProfileUsage {
     UsageInMegabytes: u32, LastSyncTime: foundation::DateTime,
@@ -5058,7 +5058,7 @@ impl IProvisioningAgentStaticMethods {
     }}
 }
 RT_ENUM! { enum TetheringCapability: i32 {
-    Enabled (TetheringCapability_Enabled) = 0, DisabledByGroupPolicy (TetheringCapability_DisabledByGroupPolicy) = 1, DisabledByHardwareLimitation (TetheringCapability_DisabledByHardwareLimitation) = 2, DisabledByOperator (TetheringCapability_DisabledByOperator) = 3, DisabledBySku (TetheringCapability_DisabledBySku) = 4, DisabledByRequiredAppNotInstalled (TetheringCapability_DisabledByRequiredAppNotInstalled) = 5, DisabledDueToUnknownCause (TetheringCapability_DisabledDueToUnknownCause) = 6, DisabledBySystemCapability (TetheringCapability_DisabledBySystemCapability) = 7,
+    Enabled = 0, DisabledByGroupPolicy = 1, DisabledByHardwareLimitation = 2, DisabledByOperator = 3, DisabledBySku = 4, DisabledByRequiredAppNotInstalled = 5, DisabledDueToUnknownCause = 6, DisabledBySystemCapability = 7,
 }}
 DEFINE_IID!(IID_ITetheringEntitlementCheckTriggerDetails, 63331997, 22822, 16883, 169, 78, 181, 9, 38, 252, 66, 27);
 RT_INTERFACE!{interface ITetheringEntitlementCheckTriggerDetails(ITetheringEntitlementCheckTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ITetheringEntitlementCheckTriggerDetails] {
@@ -5083,19 +5083,19 @@ impl ITetheringEntitlementCheckTriggerDetails {
 }
 RT_CLASS!{class TetheringEntitlementCheckTriggerDetails: ITetheringEntitlementCheckTriggerDetails}
 RT_ENUM! { enum TetheringOperationalState: i32 {
-    Unknown (TetheringOperationalState_Unknown) = 0, On (TetheringOperationalState_On) = 1, Off (TetheringOperationalState_Off) = 2, InTransition (TetheringOperationalState_InTransition) = 3,
+    Unknown = 0, On = 1, Off = 2, InTransition = 3,
 }}
 RT_ENUM! { enum TetheringOperationStatus: i32 {
-    Success (TetheringOperationStatus_Success) = 0, Unknown (TetheringOperationStatus_Unknown) = 1, MobileBroadbandDeviceOff (TetheringOperationStatus_MobileBroadbandDeviceOff) = 2, WiFiDeviceOff (TetheringOperationStatus_WiFiDeviceOff) = 3, EntitlementCheckTimeout (TetheringOperationStatus_EntitlementCheckTimeout) = 4, EntitlementCheckFailure (TetheringOperationStatus_EntitlementCheckFailure) = 5, OperationInProgress (TetheringOperationStatus_OperationInProgress) = 6, BluetoothDeviceOff (TetheringOperationStatus_BluetoothDeviceOff) = 7, NetworkLimitedConnectivity (TetheringOperationStatus_NetworkLimitedConnectivity) = 8,
+    Success = 0, Unknown = 1, MobileBroadbandDeviceOff = 2, WiFiDeviceOff = 3, EntitlementCheckTimeout = 4, EntitlementCheckFailure = 5, OperationInProgress = 6, BluetoothDeviceOff = 7, NetworkLimitedConnectivity = 8,
 }}
 RT_ENUM! { enum UiccAccessCondition: i32 {
-    AlwaysAllowed (UiccAccessCondition_AlwaysAllowed) = 0, Pin1 (UiccAccessCondition_Pin1) = 1, Pin2 (UiccAccessCondition_Pin2) = 2, Pin3 (UiccAccessCondition_Pin3) = 3, Pin4 (UiccAccessCondition_Pin4) = 4, Administrative5 (UiccAccessCondition_Administrative5) = 5, Administrative6 (UiccAccessCondition_Administrative6) = 6, NeverAllowed (UiccAccessCondition_NeverAllowed) = 7,
+    AlwaysAllowed = 0, Pin1 = 1, Pin2 = 2, Pin3 = 3, Pin4 = 4, Administrative5 = 5, Administrative6 = 6, NeverAllowed = 7,
 }}
 RT_ENUM! { enum UiccAppKind: i32 {
-    Unknown (UiccAppKind_Unknown) = 0, MF (UiccAppKind_MF) = 1, MFSim (UiccAppKind_MFSim) = 2, MFRuim (UiccAppKind_MFRuim) = 3, USim (UiccAppKind_USim) = 4, CSim (UiccAppKind_CSim) = 5, ISim (UiccAppKind_ISim) = 6,
+    Unknown = 0, MF = 1, MFSim = 2, MFRuim = 3, USim = 4, CSim = 5, ISim = 6,
 }}
 RT_ENUM! { enum UiccAppRecordKind: i32 {
-    Unknown (UiccAppRecordKind_Unknown) = 0, Transparent (UiccAppRecordKind_Transparent) = 1, RecordOriented (UiccAppRecordKind_RecordOriented) = 2,
+    Unknown = 0, Transparent = 1, RecordOriented = 2,
 }}
 DEFINE_IID!(IID_IUssdMessage, 798674818, 8196, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
 RT_INTERFACE!{interface IUssdMessage(IUssdMessageVtbl): IInspectable(IInspectableVtbl) [IID_IUssdMessage] {
@@ -5173,7 +5173,7 @@ impl IUssdReply {
 }
 RT_CLASS!{class UssdReply: IUssdReply}
 RT_ENUM! { enum UssdResultCode: i32 {
-    NoActionRequired (UssdResultCode_NoActionRequired) = 0, ActionRequired (UssdResultCode_ActionRequired) = 1, Terminated (UssdResultCode_Terminated) = 2, OtherLocalClient (UssdResultCode_OtherLocalClient) = 3, OperationNotSupported (UssdResultCode_OperationNotSupported) = 4, NetworkTimeout (UssdResultCode_NetworkTimeout) = 5,
+    NoActionRequired = 0, ActionRequired = 1, Terminated = 2, OtherLocalClient = 3, OperationNotSupported = 4, NetworkTimeout = 5,
 }}
 DEFINE_IID!(IID_IUssdSession, 798674818, 8194, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
 RT_INTERFACE!{interface IUssdSession(IUssdSessionVtbl): IInspectable(IInspectableVtbl) [IID_IUssdSession] {
@@ -5275,7 +5275,7 @@ impl MessageTransmittedHandler {
     }}
 }
 RT_ENUM! { enum PeerDiscoveryTypes: u32 {
-    None (PeerDiscoveryTypes_None) = 0, Browse (PeerDiscoveryTypes_Browse) = 1, Triggered (PeerDiscoveryTypes_Triggered) = 2,
+    None = 0, Browse = 1, Triggered = 2,
 }}
 RT_CLASS!{static class PeerFinder}
 impl RtActivatable<IPeerFinderStatics> for PeerFinder {}
@@ -5547,7 +5547,7 @@ impl IPeerInformationWithHostAndService {
     }}
 }
 RT_ENUM! { enum PeerRole: i32 {
-    Peer (PeerRole_Peer) = 0, Host (PeerRole_Host) = 1, Client (PeerRole_Client) = 2,
+    Peer = 0, Host = 1, Client = 2,
 }}
 DEFINE_IID!(IID_IPeerWatcher, 1022239224, 12198, 18041, 150, 145, 3, 201, 74, 66, 15, 52);
 RT_INTERFACE!{interface IPeerWatcher(IPeerWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IPeerWatcher] {
@@ -5627,7 +5627,7 @@ impl IPeerWatcher {
 }
 RT_CLASS!{class PeerWatcher: IPeerWatcher}
 RT_ENUM! { enum PeerWatcherStatus: i32 {
-    Created (PeerWatcherStatus_Created) = 0, Started (PeerWatcherStatus_Started) = 1, EnumerationCompleted (PeerWatcherStatus_EnumerationCompleted) = 2, Stopping (PeerWatcherStatus_Stopping) = 3, Stopped (PeerWatcherStatus_Stopped) = 4, Aborted (PeerWatcherStatus_Aborted) = 5,
+    Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 DEFINE_IID!(IID_IProximityDevice, 4020806994, 63201, 17193, 160, 252, 171, 107, 15, 210, 130, 98);
 RT_INTERFACE!{interface IProximityDevice(IProximityDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IProximityDevice] {
@@ -5821,7 +5821,7 @@ impl ITriggeredConnectionStateChangedEventArgs {
 }
 RT_CLASS!{class TriggeredConnectionStateChangedEventArgs: ITriggeredConnectionStateChangedEventArgs}
 RT_ENUM! { enum TriggeredConnectState: i32 {
-    PeerFound (TriggeredConnectState_PeerFound) = 0, Listening (TriggeredConnectState_Listening) = 1, Connecting (TriggeredConnectState_Connecting) = 2, Completed (TriggeredConnectState_Completed) = 3, Canceled (TriggeredConnectState_Canceled) = 4, Failed (TriggeredConnectState_Failed) = 5,
+    PeerFound = 0, Listening = 1, Connecting = 2, Completed = 3, Canceled = 4, Failed = 5,
 }}
 } // Windows.Networking.Proximity
 pub mod pushnotifications { // Windows.Networking.PushNotifications
@@ -6025,7 +6025,7 @@ impl IPushNotificationReceivedEventArgs {
 }
 RT_CLASS!{class PushNotificationReceivedEventArgs: IPushNotificationReceivedEventArgs}
 RT_ENUM! { enum PushNotificationType: i32 {
-    Toast (PushNotificationType_Toast) = 0, Tile (PushNotificationType_Tile) = 1, Badge (PushNotificationType_Badge) = 2, Raw (PushNotificationType_Raw) = 3, TileFlyout (PushNotificationType_TileFlyout) = 4,
+    Toast = 0, Tile = 1, Badge = 2, Raw = 3, TileFlyout = 4,
 }}
 DEFINE_IID!(IID_IRawNotification, 438465153, 15225, 17068, 153, 99, 34, 171, 0, 212, 240, 183);
 RT_INTERFACE!{interface IRawNotification(IRawNotificationVtbl): IInspectable(IInspectableVtbl) [IID_IRawNotification] {
@@ -6087,7 +6087,7 @@ RT_CLASS!{class DnssdRegistrationResult: IDnssdRegistrationResult}
 impl RtActivatable<IActivationFactory> for DnssdRegistrationResult {}
 DEFINE_CLSID!(DnssdRegistrationResult(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,101,114,118,105,99,101,68,105,115,99,111,118,101,114,121,46,68,110,115,115,100,46,68,110,115,115,100,82,101,103,105,115,116,114,97,116,105,111,110,82,101,115,117,108,116,0]) [CLSID_DnssdRegistrationResult]);
 RT_ENUM! { enum DnssdRegistrationStatus: i32 {
-    Success (DnssdRegistrationStatus_Success) = 0, InvalidServiceName (DnssdRegistrationStatus_InvalidServiceName) = 1, ServerError (DnssdRegistrationStatus_ServerError) = 2, SecurityError (DnssdRegistrationStatus_SecurityError) = 3,
+    Success = 0, InvalidServiceName = 1, ServerError = 2, SecurityError = 3,
 }}
 DEFINE_IID!(IID_IDnssdServiceInstance, 3796294526, 39077, 19617, 185, 228, 194, 83, 211, 60, 53, 255);
 RT_INTERFACE!{interface IDnssdServiceInstance(IDnssdServiceInstanceVtbl): IInspectable(IInspectableVtbl) [IID_IDnssdServiceInstance] {
@@ -6255,7 +6255,7 @@ impl IDnssdServiceWatcher {
 }
 RT_CLASS!{class DnssdServiceWatcher: IDnssdServiceWatcher}
 RT_ENUM! { enum DnssdServiceWatcherStatus: i32 {
-    Created (DnssdServiceWatcherStatus_Created) = 0, Started (DnssdServiceWatcherStatus_Started) = 1, EnumerationCompleted (DnssdServiceWatcherStatus_EnumerationCompleted) = 2, Stopping (DnssdServiceWatcherStatus_Stopping) = 3, Stopped (DnssdServiceWatcherStatus_Stopped) = 4, Aborted (DnssdServiceWatcherStatus_Aborted) = 5,
+    Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 } // Windows.Networking.ServiceDiscovery.Dnssd
 } // Windows.Networking.ServiceDiscovery
@@ -6407,13 +6407,13 @@ impl IControlChannelTriggerResetEventDetails {
     }}
 }
 RT_ENUM! { enum ControlChannelTriggerResetReason: i32 {
-    FastUserSwitched (ControlChannelTriggerResetReason_FastUserSwitched) = 0, LowPowerExit (ControlChannelTriggerResetReason_LowPowerExit) = 1, QuietHoursExit (ControlChannelTriggerResetReason_QuietHoursExit) = 2, ApplicationRestart (ControlChannelTriggerResetReason_ApplicationRestart) = 3,
+    FastUserSwitched = 0, LowPowerExit = 1, QuietHoursExit = 2, ApplicationRestart = 3,
 }}
 RT_ENUM! { enum ControlChannelTriggerResourceType: i32 {
-    RequestSoftwareSlot (ControlChannelTriggerResourceType_RequestSoftwareSlot) = 0, RequestHardwareSlot (ControlChannelTriggerResourceType_RequestHardwareSlot) = 1,
+    RequestSoftwareSlot = 0, RequestHardwareSlot = 1,
 }}
 RT_ENUM! { enum ControlChannelTriggerStatus: i32 {
-    HardwareSlotRequested (ControlChannelTriggerStatus_HardwareSlotRequested) = 0, SoftwareSlotAllocated (ControlChannelTriggerStatus_SoftwareSlotAllocated) = 1, HardwareSlotAllocated (ControlChannelTriggerStatus_HardwareSlotAllocated) = 2, PolicyError (ControlChannelTriggerStatus_PolicyError) = 3, SystemError (ControlChannelTriggerStatus_SystemError) = 4, TransportDisconnected (ControlChannelTriggerStatus_TransportDisconnected) = 5, ServiceUnavailable (ControlChannelTriggerStatus_ServiceUnavailable) = 6,
+    HardwareSlotRequested = 0, SoftwareSlotAllocated = 1, HardwareSlotAllocated = 2, PolicyError = 3, SystemError = 4, TransportDisconnected = 5, ServiceUnavailable = 6,
 }}
 DEFINE_IID!(IID_IDatagramSocket, 2145541051, 50108, 18039, 132, 70, 202, 40, 164, 101, 163, 175);
 RT_INTERFACE!{interface IDatagramSocket(IDatagramSocketVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocket] {
@@ -6879,7 +6879,7 @@ impl IMessageWebSocketMessageReceivedEventArgs2 {
     }}
 }
 RT_ENUM! { enum MessageWebSocketReceiveMode: i32 {
-    FullMessage (MessageWebSocketReceiveMode_FullMessage) = 0, PartialMessage (MessageWebSocketReceiveMode_PartialMessage) = 1,
+    FullMessage = 0, PartialMessage = 1,
 }}
 RT_STRUCT! { struct RoundTripTimeStatistics {
     Variance: u32, Max: u32, Min: u32, Sum: u32,
@@ -7044,7 +7044,7 @@ impl IServerStreamWebSocketInformation {
 }
 RT_CLASS!{class ServerStreamWebSocketInformation: IServerStreamWebSocketInformation}
 RT_ENUM! { enum SocketActivityConnectedStandbyAction: i32 {
-    DoNotWake (SocketActivityConnectedStandbyAction_DoNotWake) = 0, Wake (SocketActivityConnectedStandbyAction_Wake) = 1,
+    DoNotWake = 0, Wake = 1,
 }}
 DEFINE_IID!(IID_ISocketActivityContext, 1135627620, 19589, 17302, 166, 55, 29, 151, 63, 110, 189, 73);
 RT_INTERFACE!{interface ISocketActivityContext(ISocketActivityContextVtbl): IInspectable(IInspectableVtbl) [IID_ISocketActivityContext] {
@@ -7143,7 +7143,7 @@ impl ISocketActivityInformationStatics {
     }}
 }
 RT_ENUM! { enum SocketActivityKind: i32 {
-    None (SocketActivityKind_None) = 0, StreamSocketListener (SocketActivityKind_StreamSocketListener) = 1, DatagramSocket (SocketActivityKind_DatagramSocket) = 2, StreamSocket (SocketActivityKind_StreamSocket) = 3,
+    None = 0, StreamSocketListener = 1, DatagramSocket = 2, StreamSocket = 3,
 }}
 DEFINE_IID!(IID_ISocketActivityTriggerDetails, 1173620391, 64671, 20353, 172, 173, 53, 95, 239, 81, 230, 123);
 RT_INTERFACE!{interface ISocketActivityTriggerDetails(ISocketActivityTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ISocketActivityTriggerDetails] {
@@ -7164,7 +7164,7 @@ impl ISocketActivityTriggerDetails {
 }
 RT_CLASS!{class SocketActivityTriggerDetails: ISocketActivityTriggerDetails}
 RT_ENUM! { enum SocketActivityTriggerReason: i32 {
-    None (SocketActivityTriggerReason_None) = 0, SocketActivity (SocketActivityTriggerReason_SocketActivity) = 1, ConnectionAccepted (SocketActivityTriggerReason_ConnectionAccepted) = 2, KeepAliveTimerExpired (SocketActivityTriggerReason_KeepAliveTimerExpired) = 3, SocketClosed (SocketActivityTriggerReason_SocketClosed) = 4,
+    None = 0, SocketActivity = 1, ConnectionAccepted = 2, KeepAliveTimerExpired = 3, SocketClosed = 4,
 }}
 RT_CLASS!{static class SocketError}
 impl RtActivatable<ISocketErrorStatics> for SocketError {}
@@ -7186,19 +7186,19 @@ impl ISocketErrorStatics {
     }}
 }
 RT_ENUM! { enum SocketErrorStatus: i32 {
-    Unknown (SocketErrorStatus_Unknown) = 0, OperationAborted (SocketErrorStatus_OperationAborted) = 1, HttpInvalidServerResponse (SocketErrorStatus_HttpInvalidServerResponse) = 2, ConnectionTimedOut (SocketErrorStatus_ConnectionTimedOut) = 3, AddressFamilyNotSupported (SocketErrorStatus_AddressFamilyNotSupported) = 4, SocketTypeNotSupported (SocketErrorStatus_SocketTypeNotSupported) = 5, HostNotFound (SocketErrorStatus_HostNotFound) = 6, NoDataRecordOfRequestedType (SocketErrorStatus_NoDataRecordOfRequestedType) = 7, NonAuthoritativeHostNotFound (SocketErrorStatus_NonAuthoritativeHostNotFound) = 8, ClassTypeNotFound (SocketErrorStatus_ClassTypeNotFound) = 9, AddressAlreadyInUse (SocketErrorStatus_AddressAlreadyInUse) = 10, CannotAssignRequestedAddress (SocketErrorStatus_CannotAssignRequestedAddress) = 11, ConnectionRefused (SocketErrorStatus_ConnectionRefused) = 12, NetworkIsUnreachable (SocketErrorStatus_NetworkIsUnreachable) = 13, UnreachableHost (SocketErrorStatus_UnreachableHost) = 14, NetworkIsDown (SocketErrorStatus_NetworkIsDown) = 15, NetworkDroppedConnectionOnReset (SocketErrorStatus_NetworkDroppedConnectionOnReset) = 16, SoftwareCausedConnectionAbort (SocketErrorStatus_SoftwareCausedConnectionAbort) = 17, ConnectionResetByPeer (SocketErrorStatus_ConnectionResetByPeer) = 18, HostIsDown (SocketErrorStatus_HostIsDown) = 19, NoAddressesFound (SocketErrorStatus_NoAddressesFound) = 20, TooManyOpenFiles (SocketErrorStatus_TooManyOpenFiles) = 21, MessageTooLong (SocketErrorStatus_MessageTooLong) = 22, CertificateExpired (SocketErrorStatus_CertificateExpired) = 23, CertificateUntrustedRoot (SocketErrorStatus_CertificateUntrustedRoot) = 24, CertificateCommonNameIsIncorrect (SocketErrorStatus_CertificateCommonNameIsIncorrect) = 25, CertificateWrongUsage (SocketErrorStatus_CertificateWrongUsage) = 26, CertificateRevoked (SocketErrorStatus_CertificateRevoked) = 27, CertificateNoRevocationCheck (SocketErrorStatus_CertificateNoRevocationCheck) = 28, CertificateRevocationServerOffline (SocketErrorStatus_CertificateRevocationServerOffline) = 29, CertificateIsInvalid (SocketErrorStatus_CertificateIsInvalid) = 30,
+    Unknown = 0, OperationAborted = 1, HttpInvalidServerResponse = 2, ConnectionTimedOut = 3, AddressFamilyNotSupported = 4, SocketTypeNotSupported = 5, HostNotFound = 6, NoDataRecordOfRequestedType = 7, NonAuthoritativeHostNotFound = 8, ClassTypeNotFound = 9, AddressAlreadyInUse = 10, CannotAssignRequestedAddress = 11, ConnectionRefused = 12, NetworkIsUnreachable = 13, UnreachableHost = 14, NetworkIsDown = 15, NetworkDroppedConnectionOnReset = 16, SoftwareCausedConnectionAbort = 17, ConnectionResetByPeer = 18, HostIsDown = 19, NoAddressesFound = 20, TooManyOpenFiles = 21, MessageTooLong = 22, CertificateExpired = 23, CertificateUntrustedRoot = 24, CertificateCommonNameIsIncorrect = 25, CertificateWrongUsage = 26, CertificateRevoked = 27, CertificateNoRevocationCheck = 28, CertificateRevocationServerOffline = 29, CertificateIsInvalid = 30,
 }}
 RT_ENUM! { enum SocketMessageType: i32 {
-    Binary (SocketMessageType_Binary) = 0, Utf8 (SocketMessageType_Utf8) = 1,
+    Binary = 0, Utf8 = 1,
 }}
 RT_ENUM! { enum SocketProtectionLevel: i32 {
-    PlainSocket (SocketProtectionLevel_PlainSocket) = 0, Ssl (SocketProtectionLevel_Ssl) = 1, SslAllowNullEncryption (SocketProtectionLevel_SslAllowNullEncryption) = 2, BluetoothEncryptionAllowNullAuthentication (SocketProtectionLevel_BluetoothEncryptionAllowNullAuthentication) = 3, BluetoothEncryptionWithAuthentication (SocketProtectionLevel_BluetoothEncryptionWithAuthentication) = 4, Ssl3AllowWeakEncryption (SocketProtectionLevel_Ssl3AllowWeakEncryption) = 5, Tls10 (SocketProtectionLevel_Tls10) = 6, Tls11 (SocketProtectionLevel_Tls11) = 7, Tls12 (SocketProtectionLevel_Tls12) = 8, Unspecified (SocketProtectionLevel_Unspecified) = 9,
+    PlainSocket = 0, Ssl = 1, SslAllowNullEncryption = 2, BluetoothEncryptionAllowNullAuthentication = 3, BluetoothEncryptionWithAuthentication = 4, Ssl3AllowWeakEncryption = 5, Tls10 = 6, Tls11 = 7, Tls12 = 8, Unspecified = 9,
 }}
 RT_ENUM! { enum SocketQualityOfService: i32 {
-    Normal (SocketQualityOfService_Normal) = 0, LowLatency (SocketQualityOfService_LowLatency) = 1,
+    Normal = 0, LowLatency = 1,
 }}
 RT_ENUM! { enum SocketSslErrorSeverity: i32 {
-    None (SocketSslErrorSeverity_None) = 0, Ignorable (SocketSslErrorSeverity_Ignorable) = 1, Fatal (SocketSslErrorSeverity_Fatal) = 2,
+    None = 0, Ignorable = 1, Fatal = 2,
 }}
 DEFINE_IID!(IID_IStreamSocket, 1772236019, 64635, 18519, 175, 56, 246, 231, 222, 106, 91, 73);
 RT_INTERFACE!{interface IStreamSocket(IStreamSocketVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocket] {
@@ -8106,10 +8106,10 @@ impl IVpnAppIdFactory {
     }}
 }
 RT_ENUM! { enum VpnAppIdType: i32 {
-    PackageFamilyName (VpnAppIdType_PackageFamilyName) = 0, FullyQualifiedBinaryName (VpnAppIdType_FullyQualifiedBinaryName) = 1, FilePath (VpnAppIdType_FilePath) = 2,
+    PackageFamilyName = 0, FullyQualifiedBinaryName = 1, FilePath = 2,
 }}
 RT_ENUM! { enum VpnAuthenticationMethod: i32 {
-    Mschapv2 (VpnAuthenticationMethod_Mschapv2) = 0, Eap (VpnAuthenticationMethod_Eap) = 1, Certificate (VpnAuthenticationMethod_Certificate) = 2, PresharedKey (VpnAuthenticationMethod_PresharedKey) = 3,
+    Mschapv2 = 0, Eap = 1, Certificate = 2, PresharedKey = 3,
 }}
 DEFINE_IID!(IID_IVpnChannel, 1254591751, 53672, 17155, 160, 145, 200, 210, 224, 145, 91, 195);
 RT_INTERFACE!{interface IVpnChannel(IVpnChannelVtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannel] {
@@ -8335,7 +8335,7 @@ impl IVpnChannelActivityEventArgs {
 }
 RT_CLASS!{class VpnChannelActivityEventArgs: IVpnChannelActivityEventArgs}
 RT_ENUM! { enum VpnChannelActivityEventType: i32 {
-    Idle (VpnChannelActivityEventType_Idle) = 0, Active (VpnChannelActivityEventType_Active) = 1,
+    Idle = 0, Active = 1,
 }}
 DEFINE_IID!(IID_IVpnChannelActivityStateChangedArgs, 1031079269, 64960, 19390, 162, 59, 69, 255, 252, 109, 151, 161);
 RT_INTERFACE!{interface IVpnChannelActivityStateChangedArgs(IVpnChannelActivityStateChangedArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannelActivityStateChangedArgs] {
@@ -8385,7 +8385,7 @@ impl IVpnChannelConfiguration2 {
     }}
 }
 RT_ENUM! { enum VpnChannelRequestCredentialsOptions: u32 {
-    None (VpnChannelRequestCredentialsOptions_None) = 0, Retrying (VpnChannelRequestCredentialsOptions_Retrying) = 1, UseForSingleSignIn (VpnChannelRequestCredentialsOptions_UseForSingleSignIn) = 2,
+    None = 0, Retrying = 1, UseForSingleSignIn = 2,
 }}
 DEFINE_IID!(IID_IVpnChannelStatics, 2297103917, 59416, 20477, 152, 166, 54, 62, 55, 54, 201, 93);
 RT_INTERFACE!{static interface IVpnChannelStatics(IVpnChannelStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannelStatics] {
@@ -8428,7 +8428,7 @@ impl IVpnCredential {
 }
 RT_CLASS!{class VpnCredential: IVpnCredential}
 RT_ENUM! { enum VpnCredentialType: i32 {
-    UsernamePassword (VpnCredentialType_UsernamePassword) = 0, UsernameOtpPin (VpnCredentialType_UsernameOtpPin) = 1, UsernamePasswordAndPin (VpnCredentialType_UsernamePasswordAndPin) = 2, UsernamePasswordChange (VpnCredentialType_UsernamePasswordChange) = 3, SmartCard (VpnCredentialType_SmartCard) = 4, ProtectedCertificate (VpnCredentialType_ProtectedCertificate) = 5, UnProtectedCertificate (VpnCredentialType_UnProtectedCertificate) = 6,
+    UsernamePassword = 0, UsernameOtpPin = 1, UsernamePasswordAndPin = 2, UsernamePasswordChange = 3, SmartCard = 4, ProtectedCertificate = 5, UnProtectedCertificate = 6,
 }}
 DEFINE_IID!(IID_IVpnCustomCheckBox, 1132955475, 965, 20065, 147, 215, 169, 87, 113, 76, 66, 130);
 RT_INTERFACE!{interface IVpnCustomCheckBox(IVpnCustomCheckBoxVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomCheckBox] {
@@ -8719,7 +8719,7 @@ RT_CLASS!{class VpnCustomTextBox: IVpnCustomTextBox}
 impl RtActivatable<IActivationFactory> for VpnCustomTextBox {}
 DEFINE_CLSID!(VpnCustomTextBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,84,101,120,116,66,111,120,0]) [CLSID_VpnCustomTextBox]);
 RT_ENUM! { enum VpnDataPathType: i32 {
-    Send (VpnDataPathType_Send) = 0, Receive (VpnDataPathType_Receive) = 1,
+    Send = 0, Receive = 1,
 }}
 DEFINE_IID!(IID_IVpnDomainNameAssignment, 1094037825, 52443, 18869, 148, 1, 3, 154, 138, 231, 103, 233);
 RT_INTERFACE!{interface IVpnDomainNameAssignment(IVpnDomainNameAssignmentVtbl): IInspectable(IInspectableVtbl) [IID_IVpnDomainNameAssignment] {
@@ -8816,7 +8816,7 @@ impl IVpnDomainNameInfoFactory {
     }}
 }
 RT_ENUM! { enum VpnDomainNameType: i32 {
-    Suffix (VpnDomainNameType_Suffix) = 0, FullyQualified (VpnDomainNameType_FullyQualified) = 1, Reserved (VpnDomainNameType_Reserved) = 65535,
+    Suffix = 0, FullyQualified = 1, Reserved = 65535,
 }}
 DEFINE_IID!(IID_IVpnInterfaceId, 2653805730, 5906, 19684, 177, 121, 140, 101, 44, 109, 16, 17);
 RT_INTERFACE!{interface IVpnInterfaceId(IVpnInterfaceIdVtbl): IInspectable(IInspectableVtbl) [IID_IVpnInterfaceId] {
@@ -8849,7 +8849,7 @@ impl IVpnInterfaceIdFactory {
     }}
 }
 RT_ENUM! { enum VpnIPProtocol: i32 {
-    None (VpnIPProtocol_None) = 0, Tcp (VpnIPProtocol_Tcp) = 6, Udp (VpnIPProtocol_Udp) = 17, Icmp (VpnIPProtocol_Icmp) = 1, Ipv6Icmp (VpnIPProtocol_Ipv6Icmp) = 58, Igmp (VpnIPProtocol_Igmp) = 2, Pgm (VpnIPProtocol_Pgm) = 113,
+    None = 0, Tcp = 6, Udp = 17, Icmp = 1, Ipv6Icmp = 58, Igmp = 2, Pgm = 113,
 }}
 DEFINE_IID!(IID_IVpnManagementAgent, 423007949, 42436, 19134, 133, 43, 120, 91, 228, 203, 62, 52);
 RT_INTERFACE!{interface IVpnManagementAgent(IVpnManagementAgentVtbl): IInspectable(IInspectableVtbl) [IID_IVpnManagementAgent] {
@@ -8915,10 +8915,10 @@ RT_CLASS!{class VpnManagementAgent: IVpnManagementAgent}
 impl RtActivatable<IActivationFactory> for VpnManagementAgent {}
 DEFINE_CLSID!(VpnManagementAgent(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,77,97,110,97,103,101,109,101,110,116,65,103,101,110,116,0]) [CLSID_VpnManagementAgent]);
 RT_ENUM! { enum VpnManagementConnectionStatus: i32 {
-    Disconnected (VpnManagementConnectionStatus_Disconnected) = 0, Disconnecting (VpnManagementConnectionStatus_Disconnecting) = 1, Connected (VpnManagementConnectionStatus_Connected) = 2, Connecting (VpnManagementConnectionStatus_Connecting) = 3,
+    Disconnected = 0, Disconnecting = 1, Connected = 2, Connecting = 3,
 }}
 RT_ENUM! { enum VpnManagementErrorStatus: i32 {
-    Ok (VpnManagementErrorStatus_Ok) = 0, Other (VpnManagementErrorStatus_Other) = 1, InvalidXmlSyntax (VpnManagementErrorStatus_InvalidXmlSyntax) = 2, ProfileNameTooLong (VpnManagementErrorStatus_ProfileNameTooLong) = 3, ProfileInvalidAppId (VpnManagementErrorStatus_ProfileInvalidAppId) = 4, AccessDenied (VpnManagementErrorStatus_AccessDenied) = 5, CannotFindProfile (VpnManagementErrorStatus_CannotFindProfile) = 6, AlreadyDisconnecting (VpnManagementErrorStatus_AlreadyDisconnecting) = 7, AlreadyConnected (VpnManagementErrorStatus_AlreadyConnected) = 8, GeneralAuthenticationFailure (VpnManagementErrorStatus_GeneralAuthenticationFailure) = 9, EapFailure (VpnManagementErrorStatus_EapFailure) = 10, SmartCardFailure (VpnManagementErrorStatus_SmartCardFailure) = 11, CertificateFailure (VpnManagementErrorStatus_CertificateFailure) = 12, ServerConfiguration (VpnManagementErrorStatus_ServerConfiguration) = 13, NoConnection (VpnManagementErrorStatus_NoConnection) = 14, ServerConnection (VpnManagementErrorStatus_ServerConnection) = 15, UserNamePassword (VpnManagementErrorStatus_UserNamePassword) = 16, DnsNotResolvable (VpnManagementErrorStatus_DnsNotResolvable) = 17, InvalidIP (VpnManagementErrorStatus_InvalidIP) = 18,
+    Ok = 0, Other = 1, InvalidXmlSyntax = 2, ProfileNameTooLong = 3, ProfileInvalidAppId = 4, AccessDenied = 5, CannotFindProfile = 6, AlreadyDisconnecting = 7, AlreadyConnected = 8, GeneralAuthenticationFailure = 9, EapFailure = 10, SmartCardFailure = 11, CertificateFailure = 12, ServerConfiguration = 13, NoConnection = 14, ServerConnection = 15, UserNamePassword = 16, DnsNotResolvable = 17, InvalidIP = 18,
 }}
 DEFINE_IID!(IID_IVpnNamespaceAssignment, 3623344920, 12413, 19470, 189, 98, 143, 162, 112, 187, 173, 214);
 RT_INTERFACE!{interface IVpnNamespaceAssignment(IVpnNamespaceAssignmentVtbl): IInspectable(IInspectableVtbl) [IID_IVpnNamespaceAssignment] {
@@ -9099,7 +9099,7 @@ impl IVpnNativeProfile2 {
     }}
 }
 RT_ENUM! { enum VpnNativeProtocolType: i32 {
-    Pptp (VpnNativeProtocolType_Pptp) = 0, L2tp (VpnNativeProtocolType_L2tp) = 1, IpsecIkev2 (VpnNativeProtocolType_IpsecIkev2) = 2,
+    Pptp = 0, L2tp = 1, IpsecIkev2 = 2,
 }}
 DEFINE_IID!(IID_IVpnPacketBuffer, 3271070204, 19804, 19043, 183, 13, 78, 48, 126, 172, 206, 85);
 RT_INTERFACE!{interface IVpnPacketBuffer(IVpnPacketBufferVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBuffer] {
@@ -9259,7 +9259,7 @@ impl IVpnPacketBufferList2 {
     }}
 }
 RT_ENUM! { enum VpnPacketBufferStatus: i32 {
-    Ok (VpnPacketBufferStatus_Ok) = 0, InvalidBufferSize (VpnPacketBufferStatus_InvalidBufferSize) = 1,
+    Ok = 0, InvalidBufferSize = 1,
 }}
 DEFINE_IID!(IID_IVpnPickedCredential, 2591636167, 34900, 20050, 173, 151, 36, 221, 154, 132, 43, 206);
 RT_INTERFACE!{interface IVpnPickedCredential(IVpnPickedCredentialVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPickedCredential] {
@@ -9546,7 +9546,7 @@ impl IVpnRouteFactory {
     }}
 }
 RT_ENUM! { enum VpnRoutingPolicyType: i32 {
-    SplitRouting (VpnRoutingPolicyType_SplitRouting) = 0, ForceAllTrafficOverVpn (VpnRoutingPolicyType_ForceAllTrafficOverVpn) = 1,
+    SplitRouting = 0, ForceAllTrafficOverVpn = 1,
 }}
 DEFINE_IID!(IID_IVpnSystemHealth, 2577987759, 49390, 20085, 129, 122, 242, 49, 174, 229, 18, 61);
 RT_INTERFACE!{interface IVpnSystemHealth(IVpnSystemHealthVtbl): IInspectable(IInspectableVtbl) [IID_IVpnSystemHealth] {
@@ -9887,7 +9887,7 @@ impl XboxLiveEndpointPair {
 }
 DEFINE_CLSID!(XboxLiveEndpointPair(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,88,98,111,120,76,105,118,101,46,88,98,111,120,76,105,118,101,69,110,100,112,111,105,110,116,80,97,105,114,0]) [CLSID_XboxLiveEndpointPair]);
 RT_ENUM! { enum XboxLiveEndpointPairCreationBehaviors: u32 {
-    None (XboxLiveEndpointPairCreationBehaviors_None) = 0, ReevaluatePath (XboxLiveEndpointPairCreationBehaviors_ReevaluatePath) = 1,
+    None = 0, ReevaluatePath = 1,
 }}
 DEFINE_IID!(IID_IXboxLiveEndpointPairCreationResult, 3651713941, 10923, 19742, 151, 148, 51, 236, 192, 220, 240, 254);
 RT_INTERFACE!{interface IXboxLiveEndpointPairCreationResult(IXboxLiveEndpointPairCreationResultVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPairCreationResult] {
@@ -9920,10 +9920,10 @@ impl IXboxLiveEndpointPairCreationResult {
 }
 RT_CLASS!{class XboxLiveEndpointPairCreationResult: IXboxLiveEndpointPairCreationResult}
 RT_ENUM! { enum XboxLiveEndpointPairCreationStatus: i32 {
-    Succeeded (XboxLiveEndpointPairCreationStatus_Succeeded) = 0, NoLocalNetworks (XboxLiveEndpointPairCreationStatus_NoLocalNetworks) = 1, NoCompatibleNetworkPaths (XboxLiveEndpointPairCreationStatus_NoCompatibleNetworkPaths) = 2, LocalSystemNotAuthorized (XboxLiveEndpointPairCreationStatus_LocalSystemNotAuthorized) = 3, Canceled (XboxLiveEndpointPairCreationStatus_Canceled) = 4, TimedOut (XboxLiveEndpointPairCreationStatus_TimedOut) = 5, RemoteSystemNotAuthorized (XboxLiveEndpointPairCreationStatus_RemoteSystemNotAuthorized) = 6, RefusedDueToConfiguration (XboxLiveEndpointPairCreationStatus_RefusedDueToConfiguration) = 7, UnexpectedInternalError (XboxLiveEndpointPairCreationStatus_UnexpectedInternalError) = 8,
+    Succeeded = 0, NoLocalNetworks = 1, NoCompatibleNetworkPaths = 2, LocalSystemNotAuthorized = 3, Canceled = 4, TimedOut = 5, RemoteSystemNotAuthorized = 6, RefusedDueToConfiguration = 7, UnexpectedInternalError = 8,
 }}
 RT_ENUM! { enum XboxLiveEndpointPairState: i32 {
-    Invalid (XboxLiveEndpointPairState_Invalid) = 0, CreatingOutbound (XboxLiveEndpointPairState_CreatingOutbound) = 1, CreatingInbound (XboxLiveEndpointPairState_CreatingInbound) = 2, Ready (XboxLiveEndpointPairState_Ready) = 3, DeletingLocally (XboxLiveEndpointPairState_DeletingLocally) = 4, RemoteEndpointTerminating (XboxLiveEndpointPairState_RemoteEndpointTerminating) = 5, Deleted (XboxLiveEndpointPairState_Deleted) = 6,
+    Invalid = 0, CreatingOutbound = 1, CreatingInbound = 2, Ready = 3, DeletingLocally = 4, RemoteEndpointTerminating = 5, Deleted = 6,
 }}
 DEFINE_IID!(IID_IXboxLiveEndpointPairStateChangedEventArgs, 1496202069, 56840, 17639, 172, 59, 185, 185, 161, 105, 88, 58);
 RT_INTERFACE!{interface IXboxLiveEndpointPairStateChangedEventArgs(IXboxLiveEndpointPairStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPairStateChangedEventArgs] {
@@ -10083,7 +10083,7 @@ impl IXboxLiveInboundEndpointPairCreatedEventArgs {
 }
 RT_CLASS!{class XboxLiveInboundEndpointPairCreatedEventArgs: IXboxLiveInboundEndpointPairCreatedEventArgs}
 RT_ENUM! { enum XboxLiveNetworkAccessKind: i32 {
-    Open (XboxLiveNetworkAccessKind_Open) = 0, Moderate (XboxLiveNetworkAccessKind_Moderate) = 1, Strict (XboxLiveNetworkAccessKind_Strict) = 2,
+    Open = 0, Moderate = 1, Strict = 2,
 }}
 DEFINE_IID!(IID_IXboxLiveQualityOfServiceMeasurement, 1298672590, 42454, 18406, 162, 54, 207, 222, 95, 189, 242, 237);
 RT_INTERFACE!{interface IXboxLiveQualityOfServiceMeasurement(IXboxLiveQualityOfServiceMeasurementVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveQualityOfServiceMeasurement] {
@@ -10290,10 +10290,10 @@ impl IXboxLiveQualityOfServiceMeasurementStatics {
     }}
 }
 RT_ENUM! { enum XboxLiveQualityOfServiceMeasurementStatus: i32 {
-    NotStarted (XboxLiveQualityOfServiceMeasurementStatus_NotStarted) = 0, InProgress (XboxLiveQualityOfServiceMeasurementStatus_InProgress) = 1, InProgressWithProvisionalResults (XboxLiveQualityOfServiceMeasurementStatus_InProgressWithProvisionalResults) = 2, Succeeded (XboxLiveQualityOfServiceMeasurementStatus_Succeeded) = 3, NoLocalNetworks (XboxLiveQualityOfServiceMeasurementStatus_NoLocalNetworks) = 4, NoCompatibleNetworkPaths (XboxLiveQualityOfServiceMeasurementStatus_NoCompatibleNetworkPaths) = 5, LocalSystemNotAuthorized (XboxLiveQualityOfServiceMeasurementStatus_LocalSystemNotAuthorized) = 6, Canceled (XboxLiveQualityOfServiceMeasurementStatus_Canceled) = 7, TimedOut (XboxLiveQualityOfServiceMeasurementStatus_TimedOut) = 8, RemoteSystemNotAuthorized (XboxLiveQualityOfServiceMeasurementStatus_RemoteSystemNotAuthorized) = 9, RefusedDueToConfiguration (XboxLiveQualityOfServiceMeasurementStatus_RefusedDueToConfiguration) = 10, UnexpectedInternalError (XboxLiveQualityOfServiceMeasurementStatus_UnexpectedInternalError) = 11,
+    NotStarted = 0, InProgress = 1, InProgressWithProvisionalResults = 2, Succeeded = 3, NoLocalNetworks = 4, NoCompatibleNetworkPaths = 5, LocalSystemNotAuthorized = 6, Canceled = 7, TimedOut = 8, RemoteSystemNotAuthorized = 9, RefusedDueToConfiguration = 10, UnexpectedInternalError = 11,
 }}
 RT_ENUM! { enum XboxLiveQualityOfServiceMetric: i32 {
-    AverageLatencyInMilliseconds (XboxLiveQualityOfServiceMetric_AverageLatencyInMilliseconds) = 0, MinLatencyInMilliseconds (XboxLiveQualityOfServiceMetric_MinLatencyInMilliseconds) = 1, MaxLatencyInMilliseconds (XboxLiveQualityOfServiceMetric_MaxLatencyInMilliseconds) = 2, AverageOutboundBitsPerSecond (XboxLiveQualityOfServiceMetric_AverageOutboundBitsPerSecond) = 3, MinOutboundBitsPerSecond (XboxLiveQualityOfServiceMetric_MinOutboundBitsPerSecond) = 4, MaxOutboundBitsPerSecond (XboxLiveQualityOfServiceMetric_MaxOutboundBitsPerSecond) = 5, AverageInboundBitsPerSecond (XboxLiveQualityOfServiceMetric_AverageInboundBitsPerSecond) = 6, MinInboundBitsPerSecond (XboxLiveQualityOfServiceMetric_MinInboundBitsPerSecond) = 7, MaxInboundBitsPerSecond (XboxLiveQualityOfServiceMetric_MaxInboundBitsPerSecond) = 8,
+    AverageLatencyInMilliseconds = 0, MinLatencyInMilliseconds = 1, MaxLatencyInMilliseconds = 2, AverageOutboundBitsPerSecond = 3, MinOutboundBitsPerSecond = 4, MaxOutboundBitsPerSecond = 5, AverageInboundBitsPerSecond = 6, MinInboundBitsPerSecond = 7, MaxInboundBitsPerSecond = 8,
 }}
 DEFINE_IID!(IID_IXboxLiveQualityOfServiceMetricResult, 2934723537, 13665, 18306, 176, 207, 211, 174, 41, 217, 250, 135);
 RT_INTERFACE!{interface IXboxLiveQualityOfServiceMetricResult(IXboxLiveQualityOfServiceMetricResultVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveQualityOfServiceMetricResult] {
@@ -10350,6 +10350,6 @@ impl IXboxLiveQualityOfServicePrivatePayloadResult {
 }
 RT_CLASS!{class XboxLiveQualityOfServicePrivatePayloadResult: IXboxLiveQualityOfServicePrivatePayloadResult}
 RT_ENUM! { enum XboxLiveSocketKind: i32 {
-    None (XboxLiveSocketKind_None) = 0, Datagram (XboxLiveSocketKind_Datagram) = 1, Stream (XboxLiveSocketKind_Stream) = 2,
+    None = 0, Datagram = 1, Stream = 2,
 }}
 } // Windows.Networking.XboxLive

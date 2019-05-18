@@ -33,7 +33,7 @@ namespace Generator.Types
         {
             Module.Append($@"
 RT_ENUM! {{ enum { DefinitionName }: { UnderlyingTypeName } {{
-    { String.Join(", ", Type.Fields.Where(f => f.Name != "value__").Select(f => $"{ NameHelpers.PreventKeywords(f.Name) } ({ Type.Name }_{ f.Name }) = { f.Constant }")) },
+    { String.Join(", ", Type.Fields.Where(f => f.Name != "value__").Select(f => $"{ NameHelpers.PreventKeywords(f.Name) } = { f.Constant }")) },
 }}}}");
         }
     }
