@@ -1,4 +1,3 @@
-use std::marker::PhantomData;
 use std::ptr;
 
 use super::{ComInterface, HString, HStringReference, HStringArg, ComPtr, ComArray, ComIid, Guid};
@@ -9,7 +8,8 @@ use w::shared::winerror::{S_OK, S_FALSE, CO_E_NOTINITIALIZED, REGDB_E_CLASSNOTRE
 use w::shared::guiddef::IID;
 use w::um::unknwnbase::IUnknownVtbl;
 use w::winrt::hstring::HSTRING;
-use w::winrt::roapi::{RO_INIT_MULTITHREADED, RoInitialize, RoUninitialize, RoGetActivationFactory};
+use w::winrt::roapi::{RO_INIT_MULTITHREADED, RO_INIT_SINGLETHREADED, RoInitialize, RoUninitialize, RoGetActivationFactory};
+use w::um::combaseapi::CoIncrementMTAUsage;
 
 use self::gen::windows::foundation::collections::{
     IIterable,
@@ -116,11 +116,14 @@ pub trait RtActivatable<Interface> : RtNamedClass {
     fn get_activation_factory() -> ComPtr<Interface> where Interface: RtInterface + ComIid {
         let mut res = ptr::null_mut();
         let class_id = unsafe { HStringReference::from_utf16_unchecked(Self::name()) };
-        let hr = unsafe { RoGetActivationFactory(class_id.get(), <Interface as ComIid>::iid().as_ref(), &mut res as *mut *mut _ as *mut *mut VOID) };
+        let mut hr = unsafe { RoGetActivationFactory(class_id.get(), <Interface as ComIid>::iid().as_ref(), &mut res as *mut *mut _ as *mut *mut VOID) };
+        if hr == CO_E_NOTINITIALIZED {
+            let mut cookie = ptr::null_mut();
+            unsafe { CoIncrementMTAUsage(&mut cookie); }
+            hr = unsafe { RoGetActivationFactory(class_id.get(), <Interface as ComIid>::iid().as_ref(), &mut res as *mut *mut _ as *mut *mut VOID) };
+        }
         if hr == S_OK {
             unsafe { ComPtr::wrap(res) }
-        } else if hr == CO_E_NOTINITIALIZED {
-            panic!("WinRT is not initialized")
         } else if hr == REGDB_E_CLASSNOTREG {
             let name = Self::name();
             panic!("WinRT class \"{}\" not registered", String::from_utf16_lossy(&name[0..name.len()-1]))
@@ -779,35 +782,31 @@ impl IMemoryBufferByteAccess {
     }
 }
 
-
-/// Manages initialization and uninitialization of the Windows Runtime.
-pub struct RuntimeContext {
-    token: PhantomData<*mut ()> // only allow construction from inside this module, and make it !Send/!Sync.
+/// Determines the concurrency model used for incoming calls to the objects created by a thread
+/// that was initialized with a given apartment type (see also `init_apartment`).
+#[derive(Copy, Clone, PartialEq, Eq, Debug)]
+#[repr(u32)]
+pub enum ApartmentType {
+    /// Initializes the thread in the multi-threaded apartment (MTA).
+    MTA = RO_INIT_MULTITHREADED,
+    
+    /// Initializes the thread as a single-threaded apartment (STA).
+    STA = RO_INIT_SINGLETHREADED
 }
 
-impl RuntimeContext {
-    /// Initializes the Windows Runtime. This must be called before any other operations can use
-    /// the Windows Runtime. The Windows Runtime will be unitilized when the returned `RuntimeContext`
-    /// is dropped or `uninit` is called explicitly. You have to make sure that this does not happen
-    /// as long as any Windows Runtime object is still alive.
-    #[inline]
-    pub fn init() -> RuntimeContext {
-        let hr = unsafe { RoInitialize(RO_INIT_MULTITHREADED) };
-        assert!(hr == S_OK || hr == S_FALSE, "failed to call RoInitialize: error {}", hr);
-        RuntimeContext { token: PhantomData }
-    }
-
-    /// Unitializes the Windows Runtime. This must not be called as long as any Windows Runtime
-    /// object is still alive.
-    #[inline]
-    pub fn uninit(self) {
-        drop(self);
-    }
+/// Initializes the current thread for use with the Windows Runtime. This is usually not needed,
+/// because winrt-rust ensures that threads are implicitly assigned to the multi-threaded apartment (MTA).
+/// However, if you need your thread to be initialized as a single-threaded apartment (STA), you can
+/// call `init_apartment(ApartmentType::STA)`. Only call this when you own the thread!
+pub fn init_apartment(apartment_type: ApartmentType) {
+    let hr = unsafe { RoInitialize(apartment_type as u32) };
+    assert!(hr == S_OK || hr == S_FALSE, "failed to call RoInitialize: error {}", hr);
 }
 
-impl Drop for RuntimeContext {
-    #[inline]
-    fn drop(&mut self) {
-        unsafe { RoUninitialize() };
-    }
+/// Uninitializes the Windows Runtime in the current thread. This is usually not
+/// needed, because uninitialization happens automatically on process termination.
+/// Make sure that you never call this from a thread that still has references to
+/// Windows Runtime objects.
+pub fn uninit_apartment() {
+    unsafe { RoUninitialize() };
 }

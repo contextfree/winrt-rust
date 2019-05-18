@@ -35,7 +35,6 @@ use winrt::*; // import various helper types
 use winrt::windows::system::diagnostics::*; // import namespace Windows.System.Diagnostics
 
 fn main() {
-    let rt = RuntimeContext::init(); // initialize the Windows Runtime
     let infos = ProcessDiagnosticInfo::get_for_processes().unwrap().unwrap();
     println!("Currently executed processes ({}):", infos.get_size().unwrap());
     for p in &infos {

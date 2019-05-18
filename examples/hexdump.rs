@@ -10,16 +10,10 @@ use winrt::*;
 use winrt::windows::foundation::*;
 use winrt::windows::storage::*;
 
-fn main() {
-    let rt = RuntimeContext::init();
-    run();
-    rt.uninit();
-}
-
 const BYTES_PER_ROW: usize = 24;
 const CHUNK_SIZE: usize = 4096;
 
-fn run() {
+fn main() {
     // Use the current executable as source file (because we know that will exist).
     let exe_path = ::std::env::current_exe().expect("current_exe failed");
     let exe_path_str = exe_path.to_str().expect("invalid unicode path");
