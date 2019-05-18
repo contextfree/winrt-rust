@@ -1,3 +1,6 @@
+use futures::future::Future;
+use std::pin::Pin;
+use std::task::{Context, Poll};
 use std::sync::{Arc, Mutex, Condvar};
 
 use crate::{
@@ -92,6 +95,34 @@ impl<T: RtType + 'static> RtAsyncAction for IAsyncOperation<T>
     impl_blocking_wait!{ AsyncOperationCompletedHandler }
 }
 
+impl<'a, T: RtType + 'static> Future for &'a IAsyncOperation<T>
+    where AsyncOperationCompletedHandler<T>: ComIid
+{
+    type Output = Result<<T as RtType>::Out>;
+
+    fn poll(self: Pin<&mut Self>, cx: &mut Context) -> Poll<Self::Output> {
+        let info = crate::comptr::query_interface::<_, IAsyncInfo>(*self).expect("query_interface failed");
+        let status = info.get_status().expect("get_status failed");
+        match status {
+            crate::langcompat::ASYNC_STATUS_COMPLETED => {
+                Poll::Ready(self.get_results())
+            },
+            crate::langcompat::ASYNC_STATUS_STARTED => {
+                let waker = cx.waker().clone();
+
+                let handler = AsyncOperationCompletedHandler::new(move |_op, _status| {
+                    waker.wake_by_ref();
+                    Ok(())
+                });
+
+                self.set_completed(&handler).expect("set_completed failed");
+                Poll::Pending
+            }
+            _ => unimplemented!()
+        }
+    }
+}
+
 impl<T: RtType + 'static> RtAsyncOperation for IAsyncOperation<T>
     where AsyncOperationCompletedHandler<T>: ComIid
 {
@@ -119,3 +150,21 @@ impl<T: RtType + 'static, P: RtType + 'static> RtAsyncOperation for IAsyncOperat
         self.get_results()
     }
 }
+
+// Make await syntax work with `ComPtr` directly
+/*impl<'a, T: RtType + 'static> Future for &'a crate::ComPtr<T>
+    where &'a T: Future,
+          //&'a crate::rt::gen::windows::foundation::IAsyncOperation<T> : futures::Future,
+          //&'a crate::ComPtr<T>: Unpin
+{
+    type Output = <&'a T as Future>::Output;
+    #[inline] fn poll(mut self: Pin<&mut Self>, cx: &mut Context) -> Poll<Self::Output> {
+        use std::ops::DerefMut;
+        //unsafe { self.map_unchecked(|ptr| ptr.deref().deref()) }.poll(self, cx)
+        let s: Pin<&mut &_>/*: Pin<&mut &IAsyncOperation<_>>*/ = unsafe { self.map_unchecked_mut(|mut ptr| &mut&**ptr) };
+        //let s: Pin<&mut &'a IAsyncOperation<T>> = Pin::new(&mut **self.get_mut().deref_mut().deref_mut());
+        //let p: crate::ComPtr<T>
+        s.poll(cx)
+        //unimplemented!()
+    }
+}*/
