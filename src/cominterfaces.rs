@@ -37,7 +37,8 @@ DEFINE_IID!(IID_IAgileObject, 0x94EA2B94, 0xE9CC, 0x49E0, 0xC0, 0xFF, 0xEE, 0x64
 
 /// Interface that marks an object as agile.
 /// It inherits from `IUnknown` and does not have additional members.
-#[repr(C)] #[derive(Debug)]
+#[repr(transparent)]
+#[derive(Debug)]
 pub struct IAgileObject {
     lpVtbl: *const IUnknownVtbl // IAgileObject has no methods besides what IUnknown has
 }

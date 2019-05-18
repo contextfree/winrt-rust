@@ -8,7 +8,7 @@ This library is still subject to breaking changes, but it is already possible to
 Creating custom WinRT classes using inheritance is not yet supported, so it is currently not possible to create user interfaces using *XAML*. 
 
 ## Prerequisites
-Using this crate requires at least Rust 1.25.
+Using this crate requires at least Rust 1.28.
 Additional nightly features (e.g. using specialization) can be enabled with the `nightly` Cargo feature.
 
 ## Design

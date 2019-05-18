@@ -47,6 +47,7 @@ fn zero_header() -> HSTRING_HEADER {
 
 /// A reference to either an `HString`, a `FastHString`, or a raw null-terminated UTF-16 buffer.
 #[derive(Copy, Clone)]
+#[repr(transparent)]
 pub struct HStringReference<'a>(HSTRING_HEADER, PhantomData<&'a ()>);
 
 impl<'a> HStringReference<'a> {
@@ -164,6 +165,7 @@ impl<'a> Deref for HStringReference<'a> {
 /// functions. Creating a new `FastHString` is faster than creating an instance of `HString`
 /// because it eliminates an additional allocation. Furthermore, obtaining a `HStringArg` from
 /// a `FastHString` is basically free, which is not the case for `HString`.
+#[repr(transparent)]
 pub struct FastHString(HSTRING_HEADER);
 
 impl FastHString {
@@ -341,6 +343,7 @@ impl<'a> Deref for FastHString {
 /// References of this type are passed to WinRT functions. You can not create a value of
 /// this type, only references can exist and are obtained via (automatic) dereferencing of
 /// `FastHString` or `HStringReference`.
+#[repr(transparent)]
 pub struct HStringArg(HSTRING_HEADER);
 
 impl HStringArg {
@@ -358,6 +361,7 @@ impl HStringArg {
 /// the containing `HSTRING` might be null (empty string), and null references
 /// are not allowed. In order to obtain an `&HStringArg` from an `HString`,
 /// first create an `HStringReference` using `make_reference()`.
+#[repr(transparent)]
 pub struct HString(HSTRING);
 
 impl HString {

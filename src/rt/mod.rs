@@ -20,7 +20,8 @@ use self::gen::windows::foundation::collections::{
 };
 
 /// Represents a single UTF-16 character. This is the standard character type in WinRT. 
-#[derive(Clone, Copy)] #[repr(C)]
+#[derive(Clone, Copy)]
+#[repr(transparent)]
 pub struct Char(pub ::w::ctypes::wchar_t); // TODO: deref to u16
 
 /// Marker trait for all Windows Runtime interfaces. They must inherit from `IInspectable`.
@@ -276,11 +277,11 @@ macro_rules! RT_INTERFACE {
     ($(#[$attr:meta])* basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {}
     ) => {
-        #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
+        #[repr(transparent)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl {
             pub parent: $pvtbl
         }
-        $(#[$attr])* #[repr(C)] #[allow(missing_copy_implementations)]
+        $(#[$attr])* #[repr(transparent)] #[allow(missing_copy_implementations)]
         pub struct $interface {
             lpVtbl: *const $vtbl
         }
@@ -329,7 +330,7 @@ macro_rules! RT_INTERFACE {
                 $(,$p: $t)*
             ) -> $rtr)+
         }
-        $(#[$attr])* #[repr(C)] #[allow(missing_copy_implementations)]
+        $(#[$attr])* #[repr(transparent)] #[allow(missing_copy_implementations)]
         pub struct $interface {
             lpVtbl: *const $vtbl
         }
@@ -378,7 +379,7 @@ macro_rules! RT_INTERFACE {
                 $(,$p: $t)*
             ) -> $rtr)+
         }
-        $(#[$attr])* #[repr(C)] #[allow(missing_copy_implementations)]
+        $(#[$attr])* #[repr(transparent)] #[allow(missing_copy_implementations)]
         pub struct $interface<$t1> where $t1: RtType {
             lpVtbl: *const $vtbl<$t1>,
         }
@@ -423,7 +424,7 @@ macro_rules! RT_INTERFACE {
                 $(,$p: $t)*
             ) -> $rtr)+
         }
-        $(#[$attr])* #[repr(C)] #[allow(missing_copy_implementations)]
+        $(#[$attr])* #[repr(transparent)] #[allow(missing_copy_implementations)]
         pub struct $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             lpVtbl: *const $vtbl<$t1, $t2>,
         }
@@ -649,7 +650,8 @@ macro_rules! DEFINE_CLSID {
 
 macro_rules! RT_ENUM {
     {enum $name:ident : $t:ty { $($variant:ident = $value:expr,)+ }} => {
-        #[repr(C)] #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+        #[repr(transparent)]
+        #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
         #[allow(non_upper_case_globals)]
         pub struct $name(pub $t);
 
