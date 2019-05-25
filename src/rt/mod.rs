@@ -172,13 +172,13 @@ impl<'a, T> Iterator for IteratorAdaptor<'a, T> where T: RtType
     fn next(&mut self) -> Option<Self::Item> {
         if !self.called_next {
             self.called_next = true;
-            match self.iter.deref().get_has_current().expect("IIterator::get_has_current failed") {
-                true => Some(self.iter.deref().get_current().expect("IIterator::get_current failed")),
+            match self.iter.get_has_current().expect("IIterator::get_has_current failed") {
+                true => Some(self.iter.get_current().expect("IIterator::get_current failed")),
                 false => None
             }
         } else {
-            match self.iter.deref().move_next() {
-                Ok(true) => Some(self.iter.deref().get_current().expect("IIterator::get_current failed")),
+            match self.iter.move_next() {
+                Ok(true) => Some(self.iter.get_current().expect("IIterator::get_current failed")),
                 Ok(false) => None,
                 Err(crate::Error::ChangedState) => panic!("the iterator was invalidated by an operation that changed the state of the container"),
                 Err(e) => panic!("IIterator::move_next failed: {:?}", e),
@@ -191,7 +191,7 @@ impl<'a, T> Iterator for IteratorAdaptor<'a, T> where T: RtType
 //       prevent multiple ComPtr's pointing at the same object), but making the
 //       mutating collection methods take `&mut self` already helps prevent many bugs.
 
-impl<'a, T> IntoIterator for &'a IIterable<T> where T: RtType
+impl<'a, T> IntoIterator for &'a ComPtr<IIterable<T>> where T: RtType
 {
     type Item = <T as RtType>::Out;
     type IntoIter = IteratorAdaptor<'a, T>;
@@ -200,44 +200,34 @@ impl<'a, T> IntoIterator for &'a IIterable<T> where T: RtType
     }
 }
 
-impl<'a, T> IntoIterator for &'a IVector<T> where T: RtType, IIterable<T>: ComIid
+impl<'a, T> IntoIterator for &'a ComPtr<IVector<T>> where T: RtType, IIterable<T>: ComIid
 {
     type Item = <T as RtType>::Out;
     type IntoIter = IteratorAdaptor<'a, T>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self).unwrap().deref().first().unwrap().unwrap())
+        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self.deref()).unwrap().first().unwrap().unwrap())
     }
 }
 
-impl<'a, T> IntoIterator for &'a IVectorView<T> where T: RtType, IIterable<T>: ComIid
+impl<'a, T> IntoIterator for &'a ComPtr<IVectorView<T>> where T: RtType, IIterable<T>: ComIid
 {
     type Item = <T as RtType>::Out;
     type IntoIter = IteratorAdaptor<'a, T>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self).unwrap().deref().first().unwrap().unwrap())
+        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self.deref()).unwrap().first().unwrap().unwrap())
     }
 }
 
-impl<'a, T> IntoIterator for &'a IObservableVector<T> where T: RtType, IIterable<T>: ComIid
+impl<'a, T> IntoIterator for &'a ComPtr<IObservableVector<T>> where T: RtType, IIterable<T>: ComIid
 {
     type Item = <T as RtType>::Out;
     type IntoIter = IteratorAdaptor<'a, T>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self).unwrap().deref().first().unwrap().unwrap())
+        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self.deref()).unwrap().first().unwrap().unwrap())
     }
 }
 
 // TODO: Implement IntoIterator also for Map types
-
-// Make the for loop desugaring work with references to `ComPtr`s directly
-impl<'a, T: ComInterface> IntoIterator for &'a ComPtr<T> where &'a T: IntoIterator
-{
-    type Item = <&'a T as IntoIterator>::Item;
-    type IntoIter = <&'a T as IntoIterator>::IntoIter;
-    #[inline] fn into_iter(self) -> Self::IntoIter {
-        self.deref().into_iter()
-    }
-}
 
 // TODO: also implement IndexMove for IVectorView etc once that exists (Index or IndexMut won't work since we can't return a reference)
 
@@ -316,6 +306,19 @@ macro_rules! RT_INTERFACE {
                 unsafe { std::mem::transmute(self) }
             }
         }
+        impl std::ops::Deref for ComPtr<$interface> {
+            type Target = ComPtr<$crate::$pinterface>;
+            #[inline]
+            fn deref(&self) -> &ComPtr<$crate::$pinterface> {
+                unsafe { std::mem::transmute(self) }
+            }
+        }
+        impl std::ops::DerefMut for ComPtr<$interface> {
+            #[inline]
+            fn deref_mut(&mut self) -> &mut ComPtr<$crate::$pinterface> {
+                unsafe { std::mem::transmute(self) }
+            }
+        }
     };
 
     // version with methods, but without generic parameters
@@ -365,6 +368,19 @@ macro_rules! RT_INTERFACE {
                 unsafe { std::mem::transmute(self) }
             }
         }
+        impl std::ops::Deref for ComPtr<$interface> {
+            type Target = ComPtr<$crate::$pinterface>;
+            #[inline]
+            fn deref(&self) -> &ComPtr<$crate::$pinterface> {
+                unsafe { std::mem::transmute(self) }
+            }
+        }
+        impl std::ops::DerefMut for ComPtr<$interface> {
+            #[inline]
+            fn deref_mut(&mut self) -> &mut ComPtr<$crate::$pinterface> {
+                unsafe { std::mem::transmute(self) }
+            }
+        }
     };
     // The $iid is actually not necessary, because it refers to the uninstantiated version of the interface,
     // which is irrelevant at runtime (it is used to generate the IIDs of the parameterized interfaces).
@@ -411,6 +427,19 @@ macro_rules! RT_INTERFACE {
                 unsafe { std::mem::transmute(self) }
             }
         }
+        impl<$t1> std::ops::Deref for ComPtr<$interface<$t1>> where $t1: RtType {
+            type Target = ComPtr<$crate::$pinterface>;
+            #[inline]
+            fn deref(&self) -> &ComPtr<$crate::$pinterface> {
+                unsafe { std::mem::transmute(self) }
+            }
+        }
+        impl<$t1> std::ops::DerefMut for ComPtr<$interface<$t1>> where $t1: RtType {
+            #[inline]
+            fn deref_mut(&mut self) -> &mut ComPtr<$crate::$pinterface> {
+                unsafe { std::mem::transmute(self) }
+            }
+        }
     };
 
     ($(#[$attr:meta])* basic $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
@@ -453,6 +482,19 @@ macro_rules! RT_INTERFACE {
         impl<$t1, $t2> std::ops::DerefMut for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             #[inline]
             fn deref_mut(&mut self) -> &mut $pinterface {
+                unsafe { std::mem::transmute(self) }
+            }
+        }
+        impl<$t1, $t2> std::ops::Deref for ComPtr<$interface<$t1, $t2>> where $t1: RtType, $t2: RtType {
+            type Target = ComPtr<$crate::$pinterface>;
+            #[inline]
+            fn deref(&self) -> &ComPtr<$crate::$pinterface> {
+                unsafe { std::mem::transmute(self) }
+            }
+        }
+        impl<$t1, $t2> std::ops::DerefMut for ComPtr<$interface<$t1, $t2>> where $t1: RtType, $t2: RtType {
+            #[inline]
+            fn deref_mut(&mut self) -> &mut ComPtr<$crate::$pinterface> {
                 unsafe { std::mem::transmute(self) }
             }
         }
@@ -644,6 +686,12 @@ macro_rules! RT_CLASS {
                 unsafe { &*(self as *const _ as *const ComPtr<$interface>) }
             }
         }
+        impl std::ops::DerefMut for ComPtr<$cls> {
+            #[inline]
+            fn deref_mut(&mut self) -> &mut ComPtr<$interface> {
+                unsafe { &mut *(self as *mut _ as *mut ComPtr<$interface>) }
+            }
+        }
     };
 }
 
@@ -706,13 +754,13 @@ interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectab
     fn GetRuntimeClassName(&self, className: *mut HSTRING) -> HRESULT,
     fn GetTrustLevel(&self, trustLevel: *mut crate::TrustLevel) -> HRESULT
 }}
-impl IInspectable {
+impl ComPtr<IInspectable> {
     /// Returns the interfaces that are implemented by the current Windows Runtime object.
     #[inline]
     pub fn get_iids(&self) -> ComArray<Guid> {
         let mut result = std::ptr::null_mut();
         let mut count = 0;
-        let hr = unsafe { ((*self.lpVtbl).GetIids)(self as *const _ as *mut _, &mut count, &mut result) };
+        let hr = unsafe { ((*self.deref().lpVtbl).GetIids)(self.deref() as *const _ as *mut _, &mut count, &mut result) };
         assert_eq!(hr, S_OK);
         let result = result as *mut Guid; // convert from w::GUID to (binary compatible) Guid
         unsafe { ComArray::from_raw(count, result) }
@@ -722,7 +770,7 @@ impl IInspectable {
     #[inline]
     pub fn get_trust_level(&self) -> crate::TrustLevel {
         let mut result = unsafe { std::mem::zeroed() };
-        let hr = unsafe { ((*self.lpVtbl).GetTrustLevel)(self as *const _ as *mut _, &mut result) };
+        let hr = unsafe { ((*self.deref().lpVtbl).GetTrustLevel)(self.deref() as *const _ as *mut _, &mut result) };
         assert_eq!(hr, S_OK);
         result
     }

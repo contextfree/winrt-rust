@@ -11,50 +11,50 @@ RT_INTERFACE!{interface IAppDataPaths(IAppDataPathsVtbl): IInspectable(IInspecta
     fn get_ProgramData(&self, out: *mut HSTRING) -> HRESULT,
     fn get_RoamingAppData(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl IAppDataPaths {
+impl ComPtr<IAppDataPaths> {
     #[inline] pub fn get_cookies(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Cookies)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Cookies)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_desktop(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Desktop)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Desktop)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_documents(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Documents)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Documents)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_favorites(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Favorites)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Favorites)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_history(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_History)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_History)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_internet_cache(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_InternetCache)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_InternetCache)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_local_app_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LocalAppData)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_LocalAppData)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_program_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProgramData)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ProgramData)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_roaming_app_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RoamingAppData)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_RoamingAppData)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -62,10 +62,10 @@ RT_CLASS!{class AppDataPaths: IAppDataPaths}
 impl RtActivatable<IAppDataPathsStatics> for AppDataPaths {}
 impl AppDataPaths {
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &ComPtr<super::system::User>) -> Result<Option<ComPtr<AppDataPaths>>> {
-        <Self as RtActivatable<IAppDataPathsStatics>>::get_activation_factory().deref().get_for_user(user)
+        <Self as RtActivatable<IAppDataPathsStatics>>::get_activation_factory().get_for_user(user)
     }
     #[inline] pub fn get_default() -> Result<Option<ComPtr<AppDataPaths>>> {
-        <Self as RtActivatable<IAppDataPathsStatics>>::get_activation_factory().deref().get_default()
+        <Self as RtActivatable<IAppDataPathsStatics>>::get_activation_factory().get_default()
     }
 }
 DEFINE_CLSID!(AppDataPaths(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,112,112,68,97,116,97,80,97,116,104,115,0]) [CLSID_AppDataPaths]);
@@ -75,15 +75,15 @@ RT_INTERFACE!{static interface IAppDataPathsStatics(IAppDataPathsStaticsVtbl): I
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut super::system::User, out: *mut *mut AppDataPaths) -> HRESULT,
     fn GetDefault(&self, out: *mut *mut AppDataPaths) -> HRESULT
 }}
-impl IAppDataPathsStatics {
+impl ComPtr<IAppDataPathsStatics> {
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &ComPtr<super::system::User>) -> Result<Option<ComPtr<AppDataPaths>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetForUser)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<AppDataPaths>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetDefault)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -103,68 +103,68 @@ RT_INTERFACE!{interface IApplicationData(IApplicationDataVtbl): IInspectable(IIn
     fn SignalDataChanged(&self) -> HRESULT,
     fn get_RoamingStorageQuota(&self, out: *mut u64) -> HRESULT
 }}
-impl IApplicationData {
+impl ComPtr<IApplicationData> {
     #[inline] pub fn get_version(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Version)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Version)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_version_async(&self, desiredVersion: u32, handler: &ComPtr<ApplicationDataSetVersionHandler>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetVersionAsync)(self as *const _ as *mut _, desiredVersion, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).SetVersionAsync)(self.deref() as *const _ as *mut _, desiredVersion, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn clear_all_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ClearAllAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ClearAllAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn clear_async(&self, locality: ApplicationDataLocality) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ClearAsync)(self as *const _ as *mut _, locality, &mut out);
+        let hr = ((*self.deref().lpVtbl).ClearAsync)(self.deref() as *const _ as *mut _, locality, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_local_settings(&self) -> Result<Option<ComPtr<ApplicationDataContainer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LocalSettings)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_LocalSettings)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_roaming_settings(&self) -> Result<Option<ComPtr<ApplicationDataContainer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RoamingSettings)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_RoamingSettings)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_local_folder(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LocalFolder)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_LocalFolder)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_roaming_folder(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RoamingFolder)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_RoamingFolder)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_temporary_folder(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TemporaryFolder)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_TemporaryFolder)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_data_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<ApplicationData, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DataChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_DataChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_data_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_DataChanged)(self as *const _ as *mut _, token);
+        let hr = ((*self.deref().lpVtbl).remove_DataChanged)(self.deref() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn signal_data_changed(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SignalDataChanged)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).SignalDataChanged)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_roaming_storage_quota(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_RoamingStorageQuota)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_RoamingStorageQuota)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -173,10 +173,10 @@ impl RtActivatable<IApplicationDataStatics> for ApplicationData {}
 impl RtActivatable<IApplicationDataStatics2> for ApplicationData {}
 impl ApplicationData {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<ApplicationData>>> {
-        <Self as RtActivatable<IApplicationDataStatics>>::get_activation_factory().deref().get_current()
+        <Self as RtActivatable<IApplicationDataStatics>>::get_activation_factory().get_current()
     }
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &ComPtr<super::system::User>) -> Result<ComPtr<foundation::IAsyncOperation<ApplicationData>>> {
-        <Self as RtActivatable<IApplicationDataStatics2>>::get_activation_factory().deref().get_for_user_async(user)
+        <Self as RtActivatable<IApplicationDataStatics2>>::get_activation_factory().get_for_user_async(user)
     }
 }
 DEFINE_CLSID!(ApplicationData(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,112,112,108,105,99,97,116,105,111,110,68,97,116,97,0]) [CLSID_ApplicationData]);
@@ -184,10 +184,10 @@ DEFINE_IID!(IID_IApplicationData2, 2657471849, 2979, 20018, 190, 41, 176, 45, 23
 RT_INTERFACE!{interface IApplicationData2(IApplicationData2Vtbl): IInspectable(IInspectableVtbl) [IID_IApplicationData2] {
     fn get_LocalCacheFolder(&self, out: *mut *mut StorageFolder) -> HRESULT
 }}
-impl IApplicationData2 {
+impl ComPtr<IApplicationData2> {
     #[inline] pub fn get_local_cache_folder(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LocalCacheFolder)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_LocalCacheFolder)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -197,20 +197,20 @@ RT_INTERFACE!{interface IApplicationData3(IApplicationData3Vtbl): IInspectable(I
     fn ClearPublisherCacheFolderAsync(&self, folderName: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn get_SharedLocalFolder(&self, out: *mut *mut StorageFolder) -> HRESULT
 }}
-impl IApplicationData3 {
+impl ComPtr<IApplicationData3> {
     #[inline] pub fn get_publisher_cache_folder(&self, folderName: &HStringArg) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPublisherCacheFolder)(self as *const _ as *mut _, folderName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetPublisherCacheFolder)(self.deref() as *const _ as *mut _, folderName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn clear_publisher_cache_folder_async(&self, folderName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ClearPublisherCacheFolderAsync)(self as *const _ as *mut _, folderName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).ClearPublisherCacheFolderAsync)(self.deref() as *const _ as *mut _, folderName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_shared_local_folder(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SharedLocalFolder)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SharedLocalFolder)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -226,34 +226,34 @@ RT_INTERFACE!{interface IApplicationDataContainer(IApplicationDataContainerVtbl)
     fn CreateContainer(&self, name: HSTRING, disposition: ApplicationDataCreateDisposition, out: *mut *mut ApplicationDataContainer) -> HRESULT,
     fn DeleteContainer(&self, name: HSTRING) -> HRESULT
 }}
-impl IApplicationDataContainer {
+impl ComPtr<IApplicationDataContainer> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_locality(&self) -> Result<ApplicationDataLocality> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Locality)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Locality)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_values(&self) -> Result<Option<ComPtr<foundation::collections::IPropertySet>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Values)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Values)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_containers(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, ApplicationDataContainer>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Containers)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Containers)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_container(&self, name: &HStringArg, disposition: ApplicationDataCreateDisposition) -> Result<Option<ComPtr<ApplicationDataContainer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateContainer)(self as *const _ as *mut _, name.get(), disposition, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateContainer)(self.deref() as *const _ as *mut _, name.get(), disposition, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_container(&self, name: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).DeleteContainer)(self as *const _ as *mut _, name.get());
+        let hr = ((*self.deref().lpVtbl).DeleteContainer)(self.deref() as *const _ as *mut _, name.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -269,9 +269,9 @@ DEFINE_IID!(IID_ApplicationDataSetVersionHandler, 2690093542, 52383, 18055, 172,
 RT_DELEGATE!{delegate ApplicationDataSetVersionHandler(ApplicationDataSetVersionHandlerVtbl, ApplicationDataSetVersionHandlerImpl) [IID_ApplicationDataSetVersionHandler] {
     fn Invoke(&self, setVersionRequest: *mut SetVersionRequest) -> HRESULT
 }}
-impl ApplicationDataSetVersionHandler {
+impl ComPtr<ApplicationDataSetVersionHandler> {
     #[inline] pub fn invoke(&self, setVersionRequest: &ComPtr<SetVersionRequest>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, setVersionRequest.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, setVersionRequest.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -279,10 +279,10 @@ DEFINE_IID!(IID_IApplicationDataStatics, 1444025467, 59459, 17891, 148, 216, 6, 
 RT_INTERFACE!{static interface IApplicationDataStatics(IApplicationDataStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationDataStatics] {
     fn get_Current(&self, out: *mut *mut ApplicationData) -> HRESULT
 }}
-impl IApplicationDataStatics {
+impl ComPtr<IApplicationDataStatics> {
     #[inline] pub fn get_current(&self) -> Result<Option<ComPtr<ApplicationData>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Current)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -290,10 +290,10 @@ DEFINE_IID!(IID_IApplicationDataStatics2, 3445645841, 53065, 16548, 164, 124, 19
 RT_INTERFACE!{static interface IApplicationDataStatics2(IApplicationDataStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IApplicationDataStatics2] {
     #[cfg(feature="windows-system")] fn GetForUserAsync(&self, user: *mut super::system::User, out: *mut *mut foundation::IAsyncOperation<ApplicationData>) -> HRESULT
 }}
-impl IApplicationDataStatics2 {
+impl ComPtr<IApplicationDataStatics2> {
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(&self, user: &ComPtr<super::system::User>) -> Result<ComPtr<foundation::IAsyncOperation<ApplicationData>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetForUserAsync)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -301,10 +301,10 @@ RT_CLASS!{static class CachedFileManager}
 impl RtActivatable<ICachedFileManagerStatics> for CachedFileManager {}
 impl CachedFileManager {
     #[inline] pub fn defer_updates(file: &ComPtr<IStorageFile>) -> Result<()> {
-        <Self as RtActivatable<ICachedFileManagerStatics>>::get_activation_factory().deref().defer_updates(file)
+        <Self as RtActivatable<ICachedFileManagerStatics>>::get_activation_factory().defer_updates(file)
     }
     #[inline] pub fn complete_updates_async(file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<provider::FileUpdateStatus>>> {
-        <Self as RtActivatable<ICachedFileManagerStatics>>::get_activation_factory().deref().complete_updates_async(file)
+        <Self as RtActivatable<ICachedFileManagerStatics>>::get_activation_factory().complete_updates_async(file)
     }
 }
 DEFINE_CLSID!(CachedFileManager(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,67,97,99,104,101,100,70,105,108,101,77,97,110,97,103,101,114,0]) [CLSID_CachedFileManager]);
@@ -313,14 +313,14 @@ RT_INTERFACE!{static interface ICachedFileManagerStatics(ICachedFileManagerStati
     fn DeferUpdates(&self, file: *mut IStorageFile) -> HRESULT,
     fn CompleteUpdatesAsync(&self, file: *mut IStorageFile, out: *mut *mut foundation::IAsyncOperation<provider::FileUpdateStatus>) -> HRESULT
 }}
-impl ICachedFileManagerStatics {
+impl ComPtr<ICachedFileManagerStatics> {
     #[inline] pub fn defer_updates(&self, file: &ComPtr<IStorageFile>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).DeferUpdates)(self as *const _ as *mut _, file.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).DeferUpdates)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn complete_updates_async(&self, file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<provider::FileUpdateStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CompleteUpdatesAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CompleteUpdatesAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -332,28 +332,28 @@ impl RtActivatable<IDownloadsFolderStatics> for DownloadsFolder {}
 impl RtActivatable<IDownloadsFolderStatics2> for DownloadsFolder {}
 impl DownloadsFolder {
     #[inline] pub fn create_file_async(desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().deref().create_file_async(desiredName)
+        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().create_file_async(desiredName)
     }
     #[inline] pub fn create_folder_async(desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().deref().create_folder_async(desiredName)
+        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().create_folder_async(desiredName)
     }
     #[inline] pub fn create_file_with_collision_option_async(desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().deref().create_file_with_collision_option_async(desiredName, option)
+        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().create_file_with_collision_option_async(desiredName, option)
     }
     #[inline] pub fn create_folder_with_collision_option_async(desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().deref().create_folder_with_collision_option_async(desiredName, option)
+        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().create_folder_with_collision_option_async(desiredName, option)
     }
     #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_async(user: &ComPtr<super::system::User>, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().deref().create_file_for_user_async(user, desiredName)
+        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_file_for_user_async(user, desiredName)
     }
     #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_async(user: &ComPtr<super::system::User>, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().deref().create_folder_for_user_async(user, desiredName)
+        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_folder_for_user_async(user, desiredName)
     }
     #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_with_collision_option_async(user: &ComPtr<super::system::User>, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().deref().create_file_for_user_with_collision_option_async(user, desiredName, option)
+        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_file_for_user_with_collision_option_async(user, desiredName, option)
     }
     #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_with_collision_option_async(user: &ComPtr<super::system::User>, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().deref().create_folder_for_user_with_collision_option_async(user, desiredName, option)
+        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_folder_for_user_with_collision_option_async(user, desiredName, option)
     }
 }
 DEFINE_CLSID!(DownloadsFolder(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,68,111,119,110,108,111,97,100,115,70,111,108,100,101,114,0]) [CLSID_DownloadsFolder]);
@@ -364,25 +364,25 @@ RT_INTERFACE!{static interface IDownloadsFolderStatics(IDownloadsFolderStaticsVt
     fn CreateFileWithCollisionOptionAsync(&self, desiredName: HSTRING, option: CreationCollisionOption, out: *mut *mut foundation::IAsyncOperation<StorageFile>) -> HRESULT,
     fn CreateFolderWithCollisionOptionAsync(&self, desiredName: HSTRING, option: CreationCollisionOption, out: *mut *mut foundation::IAsyncOperation<StorageFolder>) -> HRESULT
 }}
-impl IDownloadsFolderStatics {
+impl ComPtr<IDownloadsFolderStatics> {
     #[inline] pub fn create_file_async(&self, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileAsync)(self as *const _ as *mut _, desiredName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFileAsync)(self.deref() as *const _ as *mut _, desiredName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_folder_async(&self, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderAsync)(self as *const _ as *mut _, desiredName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFolderAsync)(self.deref() as *const _ as *mut _, desiredName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_file_with_collision_option_async(&self, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileWithCollisionOptionAsync)(self as *const _ as *mut _, desiredName.get(), option, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFileWithCollisionOptionAsync)(self.deref() as *const _ as *mut _, desiredName.get(), option, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_folder_with_collision_option_async(&self, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderWithCollisionOptionAsync)(self as *const _ as *mut _, desiredName.get(), option, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFolderWithCollisionOptionAsync)(self.deref() as *const _ as *mut _, desiredName.get(), option, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -393,25 +393,25 @@ RT_INTERFACE!{static interface IDownloadsFolderStatics2(IDownloadsFolderStatics2
     #[cfg(feature="windows-system")] fn CreateFileForUserWithCollisionOptionAsync(&self, user: *mut super::system::User, desiredName: HSTRING, option: CreationCollisionOption, out: *mut *mut foundation::IAsyncOperation<StorageFile>) -> HRESULT,
     #[cfg(feature="windows-system")] fn CreateFolderForUserWithCollisionOptionAsync(&self, user: *mut super::system::User, desiredName: HSTRING, option: CreationCollisionOption, out: *mut *mut foundation::IAsyncOperation<StorageFolder>) -> HRESULT
 }}
-impl IDownloadsFolderStatics2 {
+impl ComPtr<IDownloadsFolderStatics2> {
     #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_async(&self, user: &ComPtr<super::system::User>, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, desiredName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFileForUserAsync)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, desiredName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_async(&self, user: &ComPtr<super::system::User>, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, desiredName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFolderForUserAsync)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, desiredName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_with_collision_option_async(&self, user: &ComPtr<super::system::User>, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileForUserWithCollisionOptionAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, desiredName.get(), option, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFileForUserWithCollisionOptionAsync)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, desiredName.get(), option, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_with_collision_option_async(&self, user: &ComPtr<super::system::User>, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderForUserWithCollisionOptionAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, desiredName.get(), option, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFolderForUserWithCollisionOptionAsync)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, desiredName.get(), option, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -425,49 +425,49 @@ RT_CLASS!{static class FileIO}
 impl RtActivatable<IFileIOStatics> for FileIO {}
 impl FileIO {
     #[inline] pub fn read_text_async(file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().read_text_async(file)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().read_text_async(file)
     }
     #[inline] pub fn read_text_with_encoding_async(file: &ComPtr<IStorageFile>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().read_text_with_encoding_async(file, encoding)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().read_text_with_encoding_async(file, encoding)
     }
     #[inline] pub fn write_text_async(file: &ComPtr<IStorageFile>, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().write_text_async(file, contents)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().write_text_async(file, contents)
     }
     #[inline] pub fn write_text_with_encoding_async(file: &ComPtr<IStorageFile>, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().write_text_with_encoding_async(file, contents, encoding)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().write_text_with_encoding_async(file, contents, encoding)
     }
     #[inline] pub fn append_text_async(file: &ComPtr<IStorageFile>, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().append_text_async(file, contents)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().append_text_async(file, contents)
     }
     #[inline] pub fn append_text_with_encoding_async(file: &ComPtr<IStorageFile>, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().append_text_with_encoding_async(file, contents, encoding)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().append_text_with_encoding_async(file, contents, encoding)
     }
     #[inline] pub fn read_lines_async(file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().read_lines_async(file)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().read_lines_async(file)
     }
     #[inline] pub fn read_lines_with_encoding_async(file: &ComPtr<IStorageFile>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().read_lines_with_encoding_async(file, encoding)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().read_lines_with_encoding_async(file, encoding)
     }
     #[inline] pub fn write_lines_async(file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().write_lines_async(file, lines)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().write_lines_async(file, lines)
     }
     #[inline] pub fn write_lines_with_encoding_async(file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().write_lines_with_encoding_async(file, lines, encoding)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().write_lines_with_encoding_async(file, lines, encoding)
     }
     #[inline] pub fn append_lines_async(file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().append_lines_async(file, lines)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().append_lines_async(file, lines)
     }
     #[inline] pub fn append_lines_with_encoding_async(file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().append_lines_with_encoding_async(file, lines, encoding)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().append_lines_with_encoding_async(file, lines, encoding)
     }
     #[inline] pub fn read_buffer_async(file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<streams::IBuffer>>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().read_buffer_async(file)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().read_buffer_async(file)
     }
     #[inline] pub fn write_buffer_async(file: &ComPtr<IStorageFile>, buffer: &ComPtr<streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().write_buffer_async(file, buffer)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().write_buffer_async(file, buffer)
     }
     #[inline] pub fn write_bytes_async(file: &ComPtr<IStorageFile>, buffer: &[u8]) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().write_bytes_async(file, buffer)
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().write_bytes_async(file, buffer)
     }
 }
 DEFINE_CLSID!(FileIO(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,70,105,108,101,73,79,0]) [CLSID_FileIO]);
@@ -489,80 +489,80 @@ RT_INTERFACE!{static interface IFileIOStatics(IFileIOStaticsVtbl): IInspectable(
     fn WriteBufferAsync(&self, file: *mut IStorageFile, buffer: *mut streams::IBuffer, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn WriteBytesAsync(&self, file: *mut IStorageFile, bufferSize: u32, buffer: *mut u8, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
-impl IFileIOStatics {
+impl ComPtr<IFileIOStatics> {
     #[inline] pub fn read_text_async(&self, file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadTextAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadTextAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn read_text_with_encoding_async(&self, file: &ComPtr<IStorageFile>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadTextWithEncodingAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, encoding, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadTextWithEncodingAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn write_text_async(&self, file: &ComPtr<IStorageFile>, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteTextAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, contents.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteTextAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, contents.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn write_text_with_encoding_async(&self, file: &ComPtr<IStorageFile>, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteTextWithEncodingAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, contents.get(), encoding, &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteTextWithEncodingAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, contents.get(), encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn append_text_async(&self, file: &ComPtr<IStorageFile>, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendTextAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, contents.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).AppendTextAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, contents.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn append_text_with_encoding_async(&self, file: &ComPtr<IStorageFile>, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendTextWithEncodingAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, contents.get(), encoding, &mut out);
+        let hr = ((*self.deref().lpVtbl).AppendTextWithEncodingAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, contents.get(), encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn read_lines_async(&self, file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadLinesAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadLinesAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn read_lines_with_encoding_async(&self, file: &ComPtr<IStorageFile>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadLinesWithEncodingAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, encoding, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadLinesWithEncodingAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn write_lines_async(&self, file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteLinesAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, lines.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteLinesAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, lines.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn write_lines_with_encoding_async(&self, file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteLinesWithEncodingAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, lines.deref() as *const _ as *mut _, encoding, &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteLinesWithEncodingAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, lines.deref() as *const _ as *mut _, encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn append_lines_async(&self, file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendLinesAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, lines.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).AppendLinesAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, lines.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn append_lines_with_encoding_async(&self, file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendLinesWithEncodingAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, lines.deref() as *const _ as *mut _, encoding, &mut out);
+        let hr = ((*self.deref().lpVtbl).AppendLinesWithEncodingAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, lines.deref() as *const _ as *mut _, encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn read_buffer_async(&self, file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadBufferAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadBufferAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn write_buffer_async(&self, file: &ComPtr<IStorageFile>, buffer: &ComPtr<streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteBufferAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, buffer.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteBufferAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, buffer.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn write_bytes_async(&self, file: &ComPtr<IStorageFile>, buffer: &[u8]) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteBytesAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, buffer.len() as u32, buffer.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteBytesAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, buffer.len() as u32, buffer.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -578,46 +578,46 @@ impl RtActivatable<IKnownFoldersStatics2> for KnownFolders {}
 impl RtActivatable<IKnownFoldersStatics3> for KnownFolders {}
 impl KnownFolders {
     #[inline] pub fn get_camera_roll() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersCameraRollStatics>>::get_activation_factory().deref().get_camera_roll()
+        <Self as RtActivatable<IKnownFoldersCameraRollStatics>>::get_activation_factory().get_camera_roll()
     }
     #[inline] pub fn get_playlists() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersPlaylistsStatics>>::get_activation_factory().deref().get_playlists()
+        <Self as RtActivatable<IKnownFoldersPlaylistsStatics>>::get_activation_factory().get_playlists()
     }
     #[inline] pub fn get_saved_pictures() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersSavedPicturesStatics>>::get_activation_factory().deref().get_saved_pictures()
+        <Self as RtActivatable<IKnownFoldersSavedPicturesStatics>>::get_activation_factory().get_saved_pictures()
     }
     #[inline] pub fn get_music_library() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_music_library()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_music_library()
     }
     #[inline] pub fn get_pictures_library() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_pictures_library()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_pictures_library()
     }
     #[inline] pub fn get_videos_library() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_videos_library()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_videos_library()
     }
     #[inline] pub fn get_documents_library() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_documents_library()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_documents_library()
     }
     #[inline] pub fn get_home_group() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_home_group()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_home_group()
     }
     #[inline] pub fn get_removable_devices() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_removable_devices()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_removable_devices()
     }
     #[inline] pub fn get_media_server_devices() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_media_server_devices()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_media_server_devices()
     }
     #[inline] pub fn get_objects_3d() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().deref().get_objects_3d()
+        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().get_objects_3d()
     }
     #[inline] pub fn get_app_captures() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().deref().get_app_captures()
+        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().get_app_captures()
     }
     #[inline] pub fn get_recorded_calls() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().deref().get_recorded_calls()
+        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().get_recorded_calls()
     }
     #[cfg(feature="windows-system")] #[inline] pub fn get_folder_for_user_async(user: &ComPtr<super::system::User>, folderId: KnownFolderId) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics3>>::get_activation_factory().deref().get_folder_for_user_async(user, folderId)
+        <Self as RtActivatable<IKnownFoldersStatics3>>::get_activation_factory().get_folder_for_user_async(user, folderId)
     }
 }
 DEFINE_CLSID!(KnownFolders(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,75,110,111,119,110,70,111,108,100,101,114,115,0]) [CLSID_KnownFolders]);
@@ -625,10 +625,10 @@ DEFINE_IID!(IID_IKnownFoldersCameraRollStatics, 1561419366, 10216, 18735, 184, 2
 RT_INTERFACE!{static interface IKnownFoldersCameraRollStatics(IKnownFoldersCameraRollStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownFoldersCameraRollStatics] {
     fn get_CameraRoll(&self, out: *mut *mut StorageFolder) -> HRESULT
 }}
-impl IKnownFoldersCameraRollStatics {
+impl ComPtr<IKnownFoldersCameraRollStatics> {
     #[inline] pub fn get_camera_roll(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CameraRoll)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CameraRoll)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -636,10 +636,10 @@ DEFINE_IID!(IID_IKnownFoldersPlaylistsStatics, 3671452886, 12399, 19818, 180, 15
 RT_INTERFACE!{static interface IKnownFoldersPlaylistsStatics(IKnownFoldersPlaylistsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownFoldersPlaylistsStatics] {
     fn get_Playlists(&self, out: *mut *mut StorageFolder) -> HRESULT
 }}
-impl IKnownFoldersPlaylistsStatics {
+impl ComPtr<IKnownFoldersPlaylistsStatics> {
     #[inline] pub fn get_playlists(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Playlists)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Playlists)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -647,10 +647,10 @@ DEFINE_IID!(IID_IKnownFoldersSavedPicturesStatics, 89953258, 9533, 18044, 182, 2
 RT_INTERFACE!{static interface IKnownFoldersSavedPicturesStatics(IKnownFoldersSavedPicturesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownFoldersSavedPicturesStatics] {
     fn get_SavedPictures(&self, out: *mut *mut StorageFolder) -> HRESULT
 }}
-impl IKnownFoldersSavedPicturesStatics {
+impl ComPtr<IKnownFoldersSavedPicturesStatics> {
     #[inline] pub fn get_saved_pictures(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SavedPictures)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SavedPictures)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -664,40 +664,40 @@ RT_INTERFACE!{static interface IKnownFoldersStatics(IKnownFoldersStaticsVtbl): I
     fn get_RemovableDevices(&self, out: *mut *mut StorageFolder) -> HRESULT,
     fn get_MediaServerDevices(&self, out: *mut *mut StorageFolder) -> HRESULT
 }}
-impl IKnownFoldersStatics {
+impl ComPtr<IKnownFoldersStatics> {
     #[inline] pub fn get_music_library(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_MusicLibrary)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_MusicLibrary)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pictures_library(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PicturesLibrary)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_PicturesLibrary)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_videos_library(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_VideosLibrary)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_VideosLibrary)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_documents_library(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DocumentsLibrary)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DocumentsLibrary)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_home_group(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_HomeGroup)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_HomeGroup)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_removable_devices(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RemovableDevices)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_RemovableDevices)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_media_server_devices(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_MediaServerDevices)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_MediaServerDevices)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -707,20 +707,20 @@ RT_INTERFACE!{static interface IKnownFoldersStatics2(IKnownFoldersStatics2Vtbl):
     fn get_AppCaptures(&self, out: *mut *mut StorageFolder) -> HRESULT,
     fn get_RecordedCalls(&self, out: *mut *mut StorageFolder) -> HRESULT
 }}
-impl IKnownFoldersStatics2 {
+impl ComPtr<IKnownFoldersStatics2> {
     #[inline] pub fn get_objects_3d(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Objects3D)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Objects3D)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_app_captures(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AppCaptures)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_AppCaptures)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_recorded_calls(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RecordedCalls)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_RecordedCalls)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -728,10 +728,10 @@ DEFINE_IID!(IID_IKnownFoldersStatics3, 3306767169, 38722, 20181, 130, 61, 252, 2
 RT_INTERFACE!{static interface IKnownFoldersStatics3(IKnownFoldersStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IKnownFoldersStatics3] {
     #[cfg(feature="windows-system")] fn GetFolderForUserAsync(&self, user: *mut super::system::User, folderId: KnownFolderId, out: *mut *mut foundation::IAsyncOperation<StorageFolder>) -> HRESULT
 }}
-impl IKnownFoldersStatics3 {
+impl ComPtr<IKnownFoldersStatics3> {
     #[cfg(feature="windows-system")] #[inline] pub fn get_folder_for_user_async(&self, user: &ComPtr<super::system::User>, folderId: KnownFolderId) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFolderForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, folderId, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFolderForUserAsync)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, folderId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -745,49 +745,49 @@ RT_CLASS!{static class PathIO}
 impl RtActivatable<IPathIOStatics> for PathIO {}
 impl PathIO {
     #[inline] pub fn read_text_async(absolutePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().read_text_async(absolutePath)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().read_text_async(absolutePath)
     }
     #[inline] pub fn read_text_with_encoding_async(absolutePath: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().read_text_with_encoding_async(absolutePath, encoding)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().read_text_with_encoding_async(absolutePath, encoding)
     }
     #[inline] pub fn write_text_async(absolutePath: &HStringArg, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().write_text_async(absolutePath, contents)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().write_text_async(absolutePath, contents)
     }
     #[inline] pub fn write_text_with_encoding_async(absolutePath: &HStringArg, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().write_text_with_encoding_async(absolutePath, contents, encoding)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().write_text_with_encoding_async(absolutePath, contents, encoding)
     }
     #[inline] pub fn append_text_async(absolutePath: &HStringArg, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().append_text_async(absolutePath, contents)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().append_text_async(absolutePath, contents)
     }
     #[inline] pub fn append_text_with_encoding_async(absolutePath: &HStringArg, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().append_text_with_encoding_async(absolutePath, contents, encoding)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().append_text_with_encoding_async(absolutePath, contents, encoding)
     }
     #[inline] pub fn read_lines_async(absolutePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().read_lines_async(absolutePath)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().read_lines_async(absolutePath)
     }
     #[inline] pub fn read_lines_with_encoding_async(absolutePath: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().read_lines_with_encoding_async(absolutePath, encoding)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().read_lines_with_encoding_async(absolutePath, encoding)
     }
     #[inline] pub fn write_lines_async(absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().write_lines_async(absolutePath, lines)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().write_lines_async(absolutePath, lines)
     }
     #[inline] pub fn write_lines_with_encoding_async(absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().write_lines_with_encoding_async(absolutePath, lines, encoding)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().write_lines_with_encoding_async(absolutePath, lines, encoding)
     }
     #[inline] pub fn append_lines_async(absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().append_lines_async(absolutePath, lines)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().append_lines_async(absolutePath, lines)
     }
     #[inline] pub fn append_lines_with_encoding_async(absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().append_lines_with_encoding_async(absolutePath, lines, encoding)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().append_lines_with_encoding_async(absolutePath, lines, encoding)
     }
     #[inline] pub fn read_buffer_async(absolutePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<streams::IBuffer>>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().read_buffer_async(absolutePath)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().read_buffer_async(absolutePath)
     }
     #[inline] pub fn write_buffer_async(absolutePath: &HStringArg, buffer: &ComPtr<streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().write_buffer_async(absolutePath, buffer)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().write_buffer_async(absolutePath, buffer)
     }
     #[inline] pub fn write_bytes_async(absolutePath: &HStringArg, buffer: &[u8]) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().write_bytes_async(absolutePath, buffer)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().write_bytes_async(absolutePath, buffer)
     }
 }
 DEFINE_CLSID!(PathIO(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,97,116,104,73,79,0]) [CLSID_PathIO]);
@@ -809,80 +809,80 @@ RT_INTERFACE!{static interface IPathIOStatics(IPathIOStaticsVtbl): IInspectable(
     fn WriteBufferAsync(&self, absolutePath: HSTRING, buffer: *mut streams::IBuffer, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn WriteBytesAsync(&self, absolutePath: HSTRING, bufferSize: u32, buffer: *mut u8, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
-impl IPathIOStatics {
+impl ComPtr<IPathIOStatics> {
     #[inline] pub fn read_text_async(&self, absolutePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadTextAsync)(self as *const _ as *mut _, absolutePath.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadTextAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn read_text_with_encoding_async(&self, absolutePath: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadTextWithEncodingAsync)(self as *const _ as *mut _, absolutePath.get(), encoding, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadTextWithEncodingAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn write_text_async(&self, absolutePath: &HStringArg, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteTextAsync)(self as *const _ as *mut _, absolutePath.get(), contents.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteTextAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), contents.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn write_text_with_encoding_async(&self, absolutePath: &HStringArg, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteTextWithEncodingAsync)(self as *const _ as *mut _, absolutePath.get(), contents.get(), encoding, &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteTextWithEncodingAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), contents.get(), encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn append_text_async(&self, absolutePath: &HStringArg, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendTextAsync)(self as *const _ as *mut _, absolutePath.get(), contents.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).AppendTextAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), contents.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn append_text_with_encoding_async(&self, absolutePath: &HStringArg, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendTextWithEncodingAsync)(self as *const _ as *mut _, absolutePath.get(), contents.get(), encoding, &mut out);
+        let hr = ((*self.deref().lpVtbl).AppendTextWithEncodingAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), contents.get(), encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn read_lines_async(&self, absolutePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadLinesAsync)(self as *const _ as *mut _, absolutePath.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadLinesAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn read_lines_with_encoding_async(&self, absolutePath: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadLinesWithEncodingAsync)(self as *const _ as *mut _, absolutePath.get(), encoding, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadLinesWithEncodingAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn write_lines_async(&self, absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteLinesAsync)(self as *const _ as *mut _, absolutePath.get(), lines.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteLinesAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), lines.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn write_lines_with_encoding_async(&self, absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteLinesWithEncodingAsync)(self as *const _ as *mut _, absolutePath.get(), lines.deref() as *const _ as *mut _, encoding, &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteLinesWithEncodingAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), lines.deref() as *const _ as *mut _, encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn append_lines_async(&self, absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendLinesAsync)(self as *const _ as *mut _, absolutePath.get(), lines.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).AppendLinesAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), lines.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn append_lines_with_encoding_async(&self, absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendLinesWithEncodingAsync)(self as *const _ as *mut _, absolutePath.get(), lines.deref() as *const _ as *mut _, encoding, &mut out);
+        let hr = ((*self.deref().lpVtbl).AppendLinesWithEncodingAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), lines.deref() as *const _ as *mut _, encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn read_buffer_async(&self, absolutePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadBufferAsync)(self as *const _ as *mut _, absolutePath.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadBufferAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn write_buffer_async(&self, absolutePath: &HStringArg, buffer: &ComPtr<streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteBufferAsync)(self as *const _ as *mut _, absolutePath.get(), buffer.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteBufferAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), buffer.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn write_bytes_async(&self, absolutePath: &HStringArg, buffer: &[u8]) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteBytesAsync)(self as *const _ as *mut _, absolutePath.get(), buffer.len() as u32, buffer.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteBytesAsync)(self.deref() as *const _ as *mut _, absolutePath.get(), buffer.len() as u32, buffer.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -890,9 +890,9 @@ DEFINE_IID!(IID_ISetVersionDeferral, 53807266, 30746, 17274, 176, 120, 63, 50, 1
 RT_INTERFACE!{interface ISetVersionDeferral(ISetVersionDeferralVtbl): IInspectable(IInspectableVtbl) [IID_ISetVersionDeferral] {
     fn Complete(&self) -> HRESULT
 }}
-impl ISetVersionDeferral {
+impl ComPtr<ISetVersionDeferral> {
     #[inline] pub fn complete(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Complete)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Complete)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -903,20 +903,20 @@ RT_INTERFACE!{interface ISetVersionRequest(ISetVersionRequestVtbl): IInspectable
     fn get_DesiredVersion(&self, out: *mut u32) -> HRESULT,
     fn GetDeferral(&self, out: *mut *mut SetVersionDeferral) -> HRESULT
 }}
-impl ISetVersionRequest {
+impl ComPtr<ISetVersionRequest> {
     #[inline] pub fn get_current_version(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CurrentVersion)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CurrentVersion)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_desired_version(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_DesiredVersion)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DesiredVersion)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<SetVersionDeferral>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetDeferral)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -939,65 +939,65 @@ RT_INTERFACE!{interface IStorageFile(IStorageFileVtbl): IInspectable(IInspectabl
     fn MoveOverload(&self, destinationFolder: *mut IStorageFolder, desiredNewName: HSTRING, option: NameCollisionOption, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn MoveAndReplaceAsync(&self, fileToReplace: *mut IStorageFile, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
-impl IStorageFile {
+impl ComPtr<IStorageFile> {
     #[inline] pub fn get_file_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FileType)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_FileType)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_content_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ContentType)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ContentType)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn open_async(&self, accessMode: FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<streams::IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenAsync)(self as *const _ as *mut _, accessMode, &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenAsync)(self.deref() as *const _ as *mut _, accessMode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn open_transacted_write_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<StorageStreamTransaction>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenTransactedWriteAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenTransactedWriteAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn copy_overload_default_name_and_options(&self, destinationFolder: &ComPtr<IStorageFolder>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyOverloadDefaultNameAndOptions)(self as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CopyOverloadDefaultNameAndOptions)(self.deref() as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn copy_overload_default_options(&self, destinationFolder: &ComPtr<IStorageFolder>, desiredNewName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyOverloadDefaultOptions)(self as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, desiredNewName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).CopyOverloadDefaultOptions)(self.deref() as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, desiredNewName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn copy_overload(&self, destinationFolder: &ComPtr<IStorageFolder>, desiredNewName: &HStringArg, option: NameCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyOverload)(self as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, desiredNewName.get(), option, &mut out);
+        let hr = ((*self.deref().lpVtbl).CopyOverload)(self.deref() as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, desiredNewName.get(), option, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn copy_and_replace_async(&self, fileToReplace: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyAndReplaceAsync)(self as *const _ as *mut _, fileToReplace.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CopyAndReplaceAsync)(self.deref() as *const _ as *mut _, fileToReplace.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn move_overload_default_name_and_options(&self, destinationFolder: &ComPtr<IStorageFolder>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).MoveOverloadDefaultNameAndOptions)(self as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).MoveOverloadDefaultNameAndOptions)(self.deref() as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn move_overload_default_options(&self, destinationFolder: &ComPtr<IStorageFolder>, desiredNewName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).MoveOverloadDefaultOptions)(self as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, desiredNewName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).MoveOverloadDefaultOptions)(self.deref() as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, desiredNewName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn move_overload(&self, destinationFolder: &ComPtr<IStorageFolder>, desiredNewName: &HStringArg, option: NameCollisionOption) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).MoveOverload)(self as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, desiredNewName.get(), option, &mut out);
+        let hr = ((*self.deref().lpVtbl).MoveOverload)(self.deref() as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, desiredNewName.get(), option, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn move_and_replace_async(&self, fileToReplace: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).MoveAndReplaceAsync)(self as *const _ as *mut _, fileToReplace.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).MoveAndReplaceAsync)(self.deref() as *const _ as *mut _, fileToReplace.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1005,22 +1005,22 @@ RT_CLASS!{class StorageFile: IStorageFile}
 impl RtActivatable<IStorageFileStatics> for StorageFile {}
 impl StorageFile {
     #[inline] pub fn get_file_from_path_async(path: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().deref().get_file_from_path_async(path)
+        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().get_file_from_path_async(path)
     }
     #[inline] pub fn get_file_from_application_uri_async(uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().deref().get_file_from_application_uri_async(uri)
+        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().get_file_from_application_uri_async(uri)
     }
     #[inline] pub fn create_streamed_file_async(displayNameWithExtension: &HStringArg, dataRequested: &ComPtr<StreamedFileDataRequestedHandler>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().deref().create_streamed_file_async(displayNameWithExtension, dataRequested, thumbnail)
+        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().create_streamed_file_async(displayNameWithExtension, dataRequested, thumbnail)
     }
     #[inline] pub fn replace_with_streamed_file_async(fileToReplace: &ComPtr<IStorageFile>, dataRequested: &ComPtr<StreamedFileDataRequestedHandler>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().deref().replace_with_streamed_file_async(fileToReplace, dataRequested, thumbnail)
+        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().replace_with_streamed_file_async(fileToReplace, dataRequested, thumbnail)
     }
     #[inline] pub fn create_streamed_file_from_uri_async(displayNameWithExtension: &HStringArg, uri: &ComPtr<foundation::Uri>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().deref().create_streamed_file_from_uri_async(displayNameWithExtension, uri, thumbnail)
+        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().create_streamed_file_from_uri_async(displayNameWithExtension, uri, thumbnail)
     }
     #[inline] pub fn replace_with_streamed_file_from_uri_async(fileToReplace: &ComPtr<IStorageFile>, uri: &ComPtr<foundation::Uri>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().deref().replace_with_streamed_file_from_uri_async(fileToReplace, uri, thumbnail)
+        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().replace_with_streamed_file_from_uri_async(fileToReplace, uri, thumbnail)
     }
 }
 DEFINE_CLSID!(StorageFile(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,70,105,108,101,0]) [CLSID_StorageFile]);
@@ -1029,15 +1029,15 @@ RT_INTERFACE!{interface IStorageFile2(IStorageFile2Vtbl): IInspectable(IInspecta
     fn OpenWithOptionsAsync(&self, accessMode: FileAccessMode, options: StorageOpenOptions, out: *mut *mut foundation::IAsyncOperation<streams::IRandomAccessStream>) -> HRESULT,
     fn OpenTransactedWriteWithOptionsAsync(&self, options: StorageOpenOptions, out: *mut *mut foundation::IAsyncOperation<StorageStreamTransaction>) -> HRESULT
 }}
-impl IStorageFile2 {
+impl ComPtr<IStorageFile2> {
     #[inline] pub fn open_with_options_async(&self, accessMode: FileAccessMode, options: StorageOpenOptions) -> Result<ComPtr<foundation::IAsyncOperation<streams::IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenWithOptionsAsync)(self as *const _ as *mut _, accessMode, options, &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenWithOptionsAsync)(self.deref() as *const _ as *mut _, accessMode, options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn open_transacted_write_with_options_async(&self, options: StorageOpenOptions) -> Result<ComPtr<foundation::IAsyncOperation<StorageStreamTransaction>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenTransactedWriteWithOptionsAsync)(self as *const _ as *mut _, options, &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenTransactedWriteWithOptionsAsync)(self.deref() as *const _ as *mut _, options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1045,10 +1045,10 @@ DEFINE_IID!(IID_IStorageFilePropertiesWithAvailability, 2949365403, 22571, 16691
 RT_INTERFACE!{interface IStorageFilePropertiesWithAvailability(IStorageFilePropertiesWithAvailabilityVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFilePropertiesWithAvailability] {
     fn get_IsAvailable(&self, out: *mut bool) -> HRESULT
 }}
-impl IStorageFilePropertiesWithAvailability {
+impl ComPtr<IStorageFilePropertiesWithAvailability> {
     #[inline] pub fn get_is_available(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsAvailable)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_IsAvailable)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1061,35 +1061,35 @@ RT_INTERFACE!{static interface IStorageFileStatics(IStorageFileStaticsVtbl): IIn
     fn CreateStreamedFileFromUriAsync(&self, displayNameWithExtension: HSTRING, uri: *mut foundation::Uri, thumbnail: *mut streams::IRandomAccessStreamReference, out: *mut *mut foundation::IAsyncOperation<StorageFile>) -> HRESULT,
     fn ReplaceWithStreamedFileFromUriAsync(&self, fileToReplace: *mut IStorageFile, uri: *mut foundation::Uri, thumbnail: *mut streams::IRandomAccessStreamReference, out: *mut *mut foundation::IAsyncOperation<StorageFile>) -> HRESULT
 }}
-impl IStorageFileStatics {
+impl ComPtr<IStorageFileStatics> {
     #[inline] pub fn get_file_from_path_async(&self, path: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFileFromPathAsync)(self as *const _ as *mut _, path.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFileFromPathAsync)(self.deref() as *const _ as *mut _, path.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_file_from_application_uri_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFileFromApplicationUriAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFileFromApplicationUriAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_streamed_file_async(&self, displayNameWithExtension: &HStringArg, dataRequested: &ComPtr<StreamedFileDataRequestedHandler>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateStreamedFileAsync)(self as *const _ as *mut _, displayNameWithExtension.get(), dataRequested.deref() as *const _ as *mut _, thumbnail.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateStreamedFileAsync)(self.deref() as *const _ as *mut _, displayNameWithExtension.get(), dataRequested.deref() as *const _ as *mut _, thumbnail.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn replace_with_streamed_file_async(&self, fileToReplace: &ComPtr<IStorageFile>, dataRequested: &ComPtr<StreamedFileDataRequestedHandler>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReplaceWithStreamedFileAsync)(self as *const _ as *mut _, fileToReplace.deref() as *const _ as *mut _, dataRequested.deref() as *const _ as *mut _, thumbnail.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReplaceWithStreamedFileAsync)(self.deref() as *const _ as *mut _, fileToReplace.deref() as *const _ as *mut _, dataRequested.deref() as *const _ as *mut _, thumbnail.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_streamed_file_from_uri_async(&self, displayNameWithExtension: &HStringArg, uri: &ComPtr<foundation::Uri>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateStreamedFileFromUriAsync)(self as *const _ as *mut _, displayNameWithExtension.get(), uri.deref() as *const _ as *mut _, thumbnail.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateStreamedFileFromUriAsync)(self.deref() as *const _ as *mut _, displayNameWithExtension.get(), uri.deref() as *const _ as *mut _, thumbnail.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn replace_with_streamed_file_from_uri_async(&self, fileToReplace: &ComPtr<IStorageFile>, uri: &ComPtr<foundation::Uri>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReplaceWithStreamedFileFromUriAsync)(self as *const _ as *mut _, fileToReplace.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, thumbnail.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReplaceWithStreamedFileFromUriAsync)(self.deref() as *const _ as *mut _, fileToReplace.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, thumbnail.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1106,55 +1106,55 @@ RT_INTERFACE!{interface IStorageFolder(IStorageFolderVtbl): IInspectable(IInspec
     fn GetFoldersAsyncOverloadDefaultOptionsStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<StorageFolder>>) -> HRESULT,
     fn GetItemsAsyncOverloadDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItem>>) -> HRESULT
 }}
-impl IStorageFolder {
+impl ComPtr<IStorageFolder> {
     #[inline] pub fn create_file_async_overload_default_options(&self, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileAsyncOverloadDefaultOptions)(self as *const _ as *mut _, desiredName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFileAsyncOverloadDefaultOptions)(self.deref() as *const _ as *mut _, desiredName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_file_async(&self, desiredName: &HStringArg, options: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileAsync)(self as *const _ as *mut _, desiredName.get(), options, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFileAsync)(self.deref() as *const _ as *mut _, desiredName.get(), options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_folder_async_overload_default_options(&self, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderAsyncOverloadDefaultOptions)(self as *const _ as *mut _, desiredName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFolderAsyncOverloadDefaultOptions)(self.deref() as *const _ as *mut _, desiredName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_folder_async(&self, desiredName: &HStringArg, options: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderAsync)(self as *const _ as *mut _, desiredName.get(), options, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFolderAsync)(self.deref() as *const _ as *mut _, desiredName.get(), options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_file_async(&self, name: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFileAsync)(self as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFileAsync)(self.deref() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folder_async(&self, name: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFolderAsync)(self as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFolderAsync)(self.deref() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_item_async(&self, name: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<IStorageItem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemAsync)(self as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetItemAsync)(self.deref() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_files_async_overload_default_options_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<StorageFile>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFilesAsyncOverloadDefaultOptionsStartAndCount)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFilesAsyncOverloadDefaultOptionsStartAndCount)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folders_async_overload_default_options_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<StorageFolder>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFoldersAsyncOverloadDefaultOptionsStartAndCount)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFoldersAsyncOverloadDefaultOptionsStartAndCount)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_items_async_overload_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItem>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemsAsyncOverloadDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetItemsAsyncOverloadDefaultStartAndCount)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1162,7 +1162,7 @@ RT_CLASS!{class StorageFolder: IStorageFolder}
 impl RtActivatable<IStorageFolderStatics> for StorageFolder {}
 impl StorageFolder {
     #[inline] pub fn get_folder_from_path_async(path: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
-        <Self as RtActivatable<IStorageFolderStatics>>::get_activation_factory().deref().get_folder_from_path_async(path)
+        <Self as RtActivatable<IStorageFolderStatics>>::get_activation_factory().get_folder_from_path_async(path)
     }
 }
 DEFINE_CLSID!(StorageFolder(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,70,111,108,100,101,114,0]) [CLSID_StorageFolder]);
@@ -1170,10 +1170,10 @@ DEFINE_IID!(IID_IStorageFolder2, 3894929593, 2265, 19086, 160, 172, 254, 94, 211
 RT_INTERFACE!{interface IStorageFolder2(IStorageFolder2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolder2] {
     fn TryGetItemAsync(&self, name: HSTRING, out: *mut *mut foundation::IAsyncOperation<IStorageItem>) -> HRESULT
 }}
-impl IStorageFolder2 {
+impl ComPtr<IStorageFolder2> {
     #[inline] pub fn try_get_item_async(&self, name: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<IStorageItem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryGetItemAsync)(self as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).TryGetItemAsync)(self.deref() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1181,10 +1181,10 @@ DEFINE_IID!(IID_IStorageFolder3, 2673965209, 48609, 16676, 174, 179, 176, 106, 2
 RT_INTERFACE!{interface IStorageFolder3(IStorageFolder3Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolder3] {
     fn TryGetChangeTracker(&self, out: *mut *mut StorageLibraryChangeTracker) -> HRESULT
 }}
-impl IStorageFolder3 {
+impl ComPtr<IStorageFolder3> {
     #[inline] pub fn try_get_change_tracker(&self) -> Result<Option<ComPtr<StorageLibraryChangeTracker>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryGetChangeTracker)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).TryGetChangeTracker)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1192,10 +1192,10 @@ DEFINE_IID!(IID_IStorageFolderStatics, 150153215, 34261, 18617, 174, 233, 40, 81
 RT_INTERFACE!{static interface IStorageFolderStatics(IStorageFolderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolderStatics] {
     fn GetFolderFromPathAsync(&self, path: HSTRING, out: *mut *mut foundation::IAsyncOperation<StorageFolder>) -> HRESULT
 }}
-impl IStorageFolderStatics {
+impl ComPtr<IStorageFolderStatics> {
     #[inline] pub fn get_folder_from_path_async(&self, path: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFolderFromPathAsync)(self as *const _ as *mut _, path.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFolderFromPathAsync)(self.deref() as *const _ as *mut _, path.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1212,55 +1212,55 @@ RT_INTERFACE!{interface IStorageItem(IStorageItemVtbl): IInspectable(IInspectabl
     fn get_DateCreated(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn IsOfType(&self, type_: StorageItemTypes, out: *mut bool) -> HRESULT
 }}
-impl IStorageItem {
+impl ComPtr<IStorageItem> {
     #[inline] pub fn rename_async_overload_default_options(&self, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RenameAsyncOverloadDefaultOptions)(self as *const _ as *mut _, desiredName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).RenameAsyncOverloadDefaultOptions)(self.deref() as *const _ as *mut _, desiredName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn rename_async(&self, desiredName: &HStringArg, option: NameCollisionOption) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RenameAsync)(self as *const _ as *mut _, desiredName.get(), option, &mut out);
+        let hr = ((*self.deref().lpVtbl).RenameAsync)(self.deref() as *const _ as *mut _, desiredName.get(), option, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_async_overload_default_options(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteAsyncOverloadDefaultOptions)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).DeleteAsyncOverloadDefaultOptions)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_async(&self, option: StorageDeleteOption) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteAsync)(self as *const _ as *mut _, option, &mut out);
+        let hr = ((*self.deref().lpVtbl).DeleteAsync)(self.deref() as *const _ as *mut _, option, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_basic_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<fileproperties::BasicProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetBasicPropertiesAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetBasicPropertiesAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_path(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Path)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Path)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_attributes(&self) -> Result<FileAttributes> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Attributes)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Attributes)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_date_created(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_DateCreated)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DateCreated)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_of_type(&self, type_: StorageItemTypes) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsOfType)(self as *const _ as *mut _, type_, &mut out);
+        let hr = ((*self.deref().lpVtbl).IsOfType)(self.deref() as *const _ as *mut _, type_, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1269,15 +1269,15 @@ RT_INTERFACE!{interface IStorageItem2(IStorageItem2Vtbl): IInspectable(IInspecta
     fn GetParentAsync(&self, out: *mut *mut foundation::IAsyncOperation<StorageFolder>) -> HRESULT,
     fn IsEqual(&self, item: *mut IStorageItem, out: *mut bool) -> HRESULT
 }}
-impl IStorageItem2 {
+impl ComPtr<IStorageItem2> {
     #[inline] pub fn get_parent_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetParentAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetParentAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn is_equal(&self, item: &ComPtr<IStorageItem>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsEqual)(self as *const _ as *mut _, item.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).IsEqual)(self.deref() as *const _ as *mut _, item.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1291,40 +1291,40 @@ RT_INTERFACE!{interface IStorageItemProperties(IStorageItemPropertiesVtbl): IIns
     fn get_FolderRelativeId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Properties(&self, out: *mut *mut fileproperties::StorageItemContentProperties) -> HRESULT
 }}
-impl IStorageItemProperties {
+impl ComPtr<IStorageItemProperties> {
     #[inline] pub fn get_thumbnail_async_overload_default_size_default_options(&self, mode: fileproperties::ThumbnailMode) -> Result<ComPtr<foundation::IAsyncOperation<fileproperties::StorageItemThumbnail>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetThumbnailAsyncOverloadDefaultSizeDefaultOptions)(self as *const _ as *mut _, mode, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetThumbnailAsyncOverloadDefaultSizeDefaultOptions)(self.deref() as *const _ as *mut _, mode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_thumbnail_async_overload_default_options(&self, mode: fileproperties::ThumbnailMode, requestedSize: u32) -> Result<ComPtr<foundation::IAsyncOperation<fileproperties::StorageItemThumbnail>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetThumbnailAsyncOverloadDefaultOptions)(self as *const _ as *mut _, mode, requestedSize, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetThumbnailAsyncOverloadDefaultOptions)(self.deref() as *const _ as *mut _, mode, requestedSize, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_thumbnail_async(&self, mode: fileproperties::ThumbnailMode, requestedSize: u32, options: fileproperties::ThumbnailOptions) -> Result<ComPtr<foundation::IAsyncOperation<fileproperties::StorageItemThumbnail>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetThumbnailAsync)(self as *const _ as *mut _, mode, requestedSize, options, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetThumbnailAsync)(self.deref() as *const _ as *mut _, mode, requestedSize, options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DisplayName)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayType)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DisplayType)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folder_relative_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FolderRelativeId)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_FolderRelativeId)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<fileproperties::StorageItemContentProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Properties)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1334,20 +1334,20 @@ RT_INTERFACE!{interface IStorageItemProperties2(IStorageItemProperties2Vtbl): II
     fn GetScaledImageAsThumbnailAsyncOverloadDefaultOptions(&self, mode: fileproperties::ThumbnailMode, requestedSize: u32, out: *mut *mut foundation::IAsyncOperation<fileproperties::StorageItemThumbnail>) -> HRESULT,
     fn GetScaledImageAsThumbnailAsync(&self, mode: fileproperties::ThumbnailMode, requestedSize: u32, options: fileproperties::ThumbnailOptions, out: *mut *mut foundation::IAsyncOperation<fileproperties::StorageItemThumbnail>) -> HRESULT
 }}
-impl IStorageItemProperties2 {
+impl ComPtr<IStorageItemProperties2> {
     #[inline] pub fn get_scaled_image_as_thumbnail_async_overload_default_size_default_options(&self, mode: fileproperties::ThumbnailMode) -> Result<ComPtr<foundation::IAsyncOperation<fileproperties::StorageItemThumbnail>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetScaledImageAsThumbnailAsyncOverloadDefaultSizeDefaultOptions)(self as *const _ as *mut _, mode, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetScaledImageAsThumbnailAsyncOverloadDefaultSizeDefaultOptions)(self.deref() as *const _ as *mut _, mode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_scaled_image_as_thumbnail_async_overload_default_options(&self, mode: fileproperties::ThumbnailMode, requestedSize: u32) -> Result<ComPtr<foundation::IAsyncOperation<fileproperties::StorageItemThumbnail>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetScaledImageAsThumbnailAsyncOverloadDefaultOptions)(self as *const _ as *mut _, mode, requestedSize, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetScaledImageAsThumbnailAsyncOverloadDefaultOptions)(self.deref() as *const _ as *mut _, mode, requestedSize, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_scaled_image_as_thumbnail_async(&self, mode: fileproperties::ThumbnailMode, requestedSize: u32, options: fileproperties::ThumbnailOptions) -> Result<ComPtr<foundation::IAsyncOperation<fileproperties::StorageItemThumbnail>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetScaledImageAsThumbnailAsync)(self as *const _ as *mut _, mode, requestedSize, options, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetScaledImageAsThumbnailAsync)(self.deref() as *const _ as *mut _, mode, requestedSize, options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1355,10 +1355,10 @@ DEFINE_IID!(IID_IStorageItemPropertiesWithProvider, 2249978779, 25448, 19950, 18
 RT_INTERFACE!{interface IStorageItemPropertiesWithProvider(IStorageItemPropertiesWithProviderVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemPropertiesWithProvider] {
     fn get_Provider(&self, out: *mut *mut StorageProvider) -> HRESULT
 }}
-impl IStorageItemPropertiesWithProvider {
+impl ComPtr<IStorageItemPropertiesWithProvider> {
     #[inline] pub fn get_provider(&self) -> Result<Option<ComPtr<StorageProvider>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Provider)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Provider)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1374,34 +1374,34 @@ RT_INTERFACE!{interface IStorageLibrary(IStorageLibraryVtbl): IInspectable(IInsp
     fn add_DefinitionChanged(&self, handler: *mut foundation::TypedEventHandler<StorageLibrary, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_DefinitionChanged(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
-impl IStorageLibrary {
+impl ComPtr<IStorageLibrary> {
     #[inline] pub fn request_add_folder_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAddFolderAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).RequestAddFolderAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_remove_folder_async(&self, folder: &ComPtr<StorageFolder>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestRemoveFolderAsync)(self as *const _ as *mut _, folder.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).RequestRemoveFolderAsync)(self.deref() as *const _ as *mut _, folder.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folders(&self) -> Result<Option<ComPtr<foundation::collections::IObservableVector<StorageFolder>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Folders)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Folders)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_save_folder(&self) -> Result<Option<ComPtr<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SaveFolder)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SaveFolder)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_definition_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<StorageLibrary, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DefinitionChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_DefinitionChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_definition_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_DefinitionChanged)(self as *const _ as *mut _, eventCookie);
+        let hr = ((*self.deref().lpVtbl).remove_DefinitionChanged)(self.deref() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1410,10 +1410,10 @@ impl RtActivatable<IStorageLibraryStatics> for StorageLibrary {}
 impl RtActivatable<IStorageLibraryStatics2> for StorageLibrary {}
 impl StorageLibrary {
     #[inline] pub fn get_library_async(libraryId: KnownLibraryId) -> Result<ComPtr<foundation::IAsyncOperation<StorageLibrary>>> {
-        <Self as RtActivatable<IStorageLibraryStatics>>::get_activation_factory().deref().get_library_async(libraryId)
+        <Self as RtActivatable<IStorageLibraryStatics>>::get_activation_factory().get_library_async(libraryId)
     }
     #[cfg(feature="windows-system")] #[inline] pub fn get_library_for_user_async(user: &ComPtr<super::system::User>, libraryId: KnownLibraryId) -> Result<ComPtr<foundation::IAsyncOperation<StorageLibrary>>> {
-        <Self as RtActivatable<IStorageLibraryStatics2>>::get_activation_factory().deref().get_library_for_user_async(user, libraryId)
+        <Self as RtActivatable<IStorageLibraryStatics2>>::get_activation_factory().get_library_for_user_async(user, libraryId)
     }
 }
 DEFINE_CLSID!(StorageLibrary(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,76,105,98,114,97,114,121,0]) [CLSID_StorageLibrary]);
@@ -1421,10 +1421,10 @@ DEFINE_IID!(IID_IStorageLibrary2, 1527571272, 64691, 16433, 175, 176, 166, 141, 
 RT_INTERFACE!{interface IStorageLibrary2(IStorageLibrary2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibrary2] {
     fn get_ChangeTracker(&self, out: *mut *mut StorageLibraryChangeTracker) -> HRESULT
 }}
-impl IStorageLibrary2 {
+impl ComPtr<IStorageLibrary2> {
     #[inline] pub fn get_change_tracker(&self) -> Result<Option<ComPtr<StorageLibraryChangeTracker>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ChangeTracker)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ChangeTracker)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1432,10 +1432,10 @@ DEFINE_IID!(IID_IStorageLibrary3, 2317882001, 8532, 16897, 129, 19, 210, 192, 92
 RT_INTERFACE!{interface IStorageLibrary3(IStorageLibrary3Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibrary3] {
     fn AreFolderSuggestionsAvailableAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
-impl IStorageLibrary3 {
+impl ComPtr<IStorageLibrary3> {
     #[inline] pub fn are_folder_suggestions_available_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AreFolderSuggestionsAvailableAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).AreFolderSuggestionsAvailableAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1447,30 +1447,30 @@ RT_INTERFACE!{interface IStorageLibraryChange(IStorageLibraryChangeVtbl): IInspe
     fn IsOfType(&self, type_: StorageItemTypes, out: *mut bool) -> HRESULT,
     fn GetStorageItemAsync(&self, out: *mut *mut foundation::IAsyncOperation<IStorageItem>) -> HRESULT
 }}
-impl IStorageLibraryChange {
+impl ComPtr<IStorageLibraryChange> {
     #[inline] pub fn get_change_type(&self) -> Result<StorageLibraryChangeType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ChangeType)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ChangeType)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_path(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Path)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Path)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_previous_path(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PreviousPath)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_PreviousPath)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn is_of_type(&self, type_: StorageItemTypes) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsOfType)(self as *const _ as *mut _, type_, &mut out);
+        let hr = ((*self.deref().lpVtbl).IsOfType)(self.deref() as *const _ as *mut _, type_, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_storage_item_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<IStorageItem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetStorageItemAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetStorageItemAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1480,15 +1480,15 @@ RT_INTERFACE!{interface IStorageLibraryChangeReader(IStorageLibraryChangeReaderV
     fn ReadBatchAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<StorageLibraryChange>>) -> HRESULT,
     fn AcceptChangesAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
-impl IStorageLibraryChangeReader {
+impl ComPtr<IStorageLibraryChangeReader> {
     #[inline] pub fn read_batch_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<StorageLibraryChange>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadBatchAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadBatchAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn accept_changes_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AcceptChangesAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).AcceptChangesAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1499,18 +1499,18 @@ RT_INTERFACE!{interface IStorageLibraryChangeTracker(IStorageLibraryChangeTracke
     fn Enable(&self) -> HRESULT,
     fn Reset(&self) -> HRESULT
 }}
-impl IStorageLibraryChangeTracker {
+impl ComPtr<IStorageLibraryChangeTracker> {
     #[inline] pub fn get_change_reader(&self) -> Result<Option<ComPtr<StorageLibraryChangeReader>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetChangeReader)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetChangeReader)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn enable(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Enable)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Enable)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn reset(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Reset)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Reset)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1522,10 +1522,10 @@ DEFINE_IID!(IID_IStorageLibraryStatics, 1107863259, 26698, 18886, 158, 89, 144, 
 RT_INTERFACE!{static interface IStorageLibraryStatics(IStorageLibraryStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryStatics] {
     fn GetLibraryAsync(&self, libraryId: KnownLibraryId, out: *mut *mut foundation::IAsyncOperation<StorageLibrary>) -> HRESULT
 }}
-impl IStorageLibraryStatics {
+impl ComPtr<IStorageLibraryStatics> {
     #[inline] pub fn get_library_async(&self, libraryId: KnownLibraryId) -> Result<ComPtr<foundation::IAsyncOperation<StorageLibrary>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetLibraryAsync)(self as *const _ as *mut _, libraryId, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetLibraryAsync)(self.deref() as *const _ as *mut _, libraryId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1533,10 +1533,10 @@ DEFINE_IID!(IID_IStorageLibraryStatics2, 4289760732, 64117, 18069, 185, 209, 127
 RT_INTERFACE!{static interface IStorageLibraryStatics2(IStorageLibraryStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryStatics2] {
     #[cfg(feature="windows-system")] fn GetLibraryForUserAsync(&self, user: *mut super::system::User, libraryId: KnownLibraryId, out: *mut *mut foundation::IAsyncOperation<StorageLibrary>) -> HRESULT
 }}
-impl IStorageLibraryStatics2 {
+impl ComPtr<IStorageLibraryStatics2> {
     #[cfg(feature="windows-system")] #[inline] pub fn get_library_for_user_async(&self, user: &ComPtr<super::system::User>, libraryId: KnownLibraryId) -> Result<ComPtr<foundation::IAsyncOperation<StorageLibrary>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetLibraryForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, libraryId, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetLibraryForUserAsync)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, libraryId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1548,15 +1548,15 @@ RT_INTERFACE!{interface IStorageProvider(IStorageProviderVtbl): IInspectable(IIn
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl IStorageProvider {
+impl ComPtr<IStorageProvider> {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayName)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DisplayName)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1565,10 +1565,10 @@ DEFINE_IID!(IID_IStorageProvider2, 17635607, 13316, 16715, 159, 215, 205, 68, 71
 RT_INTERFACE!{interface IStorageProvider2(IStorageProvider2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageProvider2] {
     fn IsPropertySupportedForPartialFileAsync(&self, propertyCanonicalName: HSTRING, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
-impl IStorageProvider2 {
+impl ComPtr<IStorageProvider2> {
     #[inline] pub fn is_property_supported_for_partial_file_async(&self, propertyCanonicalName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).IsPropertySupportedForPartialFileAsync)(self as *const _ as *mut _, propertyCanonicalName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).IsPropertySupportedForPartialFileAsync)(self.deref() as *const _ as *mut _, propertyCanonicalName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1577,15 +1577,15 @@ RT_INTERFACE!{interface IStorageStreamTransaction(IStorageStreamTransactionVtbl)
     fn get_Stream(&self, out: *mut *mut streams::IRandomAccessStream) -> HRESULT,
     fn CommitAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
-impl IStorageStreamTransaction {
+impl ComPtr<IStorageStreamTransaction> {
     #[inline] pub fn get_stream(&self) -> Result<Option<ComPtr<streams::IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Stream)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Stream)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn commit_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CommitAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CommitAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1594,9 +1594,9 @@ DEFINE_IID!(IID_IStreamedFileDataRequest, 376700110, 55997, 19792, 190, 238, 24,
 RT_INTERFACE!{interface IStreamedFileDataRequest(IStreamedFileDataRequestVtbl): IInspectable(IInspectableVtbl) [IID_IStreamedFileDataRequest] {
     fn FailAndClose(&self, failureMode: StreamedFileFailureMode) -> HRESULT
 }}
-impl IStreamedFileDataRequest {
+impl ComPtr<IStreamedFileDataRequest> {
     #[inline] pub fn fail_and_close(&self, failureMode: StreamedFileFailureMode) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).FailAndClose)(self as *const _ as *mut _, failureMode);
+        let hr = ((*self.deref().lpVtbl).FailAndClose)(self.deref() as *const _ as *mut _, failureMode);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1605,9 +1605,9 @@ DEFINE_IID!(IID_StreamedFileDataRequestedHandler, 4277577764, 12257, 19719, 163,
 RT_DELEGATE!{delegate StreamedFileDataRequestedHandler(StreamedFileDataRequestedHandlerVtbl, StreamedFileDataRequestedHandlerImpl) [IID_StreamedFileDataRequestedHandler] {
     fn Invoke(&self, stream: *mut StreamedFileDataRequest) -> HRESULT
 }}
-impl StreamedFileDataRequestedHandler {
+impl ComPtr<StreamedFileDataRequestedHandler> {
     #[inline] pub fn invoke(&self, stream: &ComPtr<StreamedFileDataRequest>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, stream.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1618,10 +1618,10 @@ DEFINE_IID!(IID_ISystemAudioProperties, 1066350775, 12428, 18401, 146, 77, 134, 
 RT_INTERFACE!{interface ISystemAudioProperties(ISystemAudioPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemAudioProperties] {
     fn get_EncodingBitrate(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ISystemAudioProperties {
+impl ComPtr<ISystemAudioProperties> {
     #[inline] pub fn get_encoding_bitrate(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_EncodingBitrate)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_EncodingBitrate)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1645,85 +1645,85 @@ RT_INTERFACE!{interface ISystemDataPaths(ISystemDataPathsVtbl): IInspectable(IIn
     fn get_UserProfiles(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Windows(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ISystemDataPaths {
+impl ComPtr<ISystemDataPaths> {
     #[inline] pub fn get_fonts(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Fonts)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Fonts)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_program_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ProgramData)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ProgramData)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_public(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Public)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Public)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_public_desktop(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PublicDesktop)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_PublicDesktop)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_public_documents(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PublicDocuments)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_PublicDocuments)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_public_downloads(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PublicDownloads)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_PublicDownloads)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_public_music(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PublicMusic)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_PublicMusic)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_public_pictures(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PublicPictures)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_PublicPictures)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_public_videos(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PublicVideos)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_PublicVideos)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_System)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_System)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_host(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SystemHost)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SystemHost)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_x86(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SystemX86)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SystemX86)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_x64(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SystemX64)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SystemX64)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_arm(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SystemArm)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SystemArm)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_user_profiles(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UserProfiles)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_UserProfiles)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_windows(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Windows)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Windows)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1731,7 +1731,7 @@ RT_CLASS!{class SystemDataPaths: ISystemDataPaths}
 impl RtActivatable<ISystemDataPathsStatics> for SystemDataPaths {}
 impl SystemDataPaths {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<SystemDataPaths>>> {
-        <Self as RtActivatable<ISystemDataPathsStatics>>::get_activation_factory().deref().get_default()
+        <Self as RtActivatable<ISystemDataPathsStatics>>::get_activation_factory().get_default()
     }
 }
 DEFINE_CLSID!(SystemDataPaths(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,121,115,116,101,109,68,97,116,97,80,97,116,104,115,0]) [CLSID_SystemDataPaths]);
@@ -1739,10 +1739,10 @@ DEFINE_IID!(IID_ISystemDataPathsStatics, 3774443472, 39200, 19402, 179, 121, 249
 RT_INTERFACE!{static interface ISystemDataPathsStatics(ISystemDataPathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemDataPathsStatics] {
     fn GetDefault(&self, out: *mut *mut SystemDataPaths) -> HRESULT
 }}
-impl ISystemDataPathsStatics {
+impl ComPtr<ISystemDataPathsStatics> {
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<SystemDataPaths>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetDefault)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1751,15 +1751,15 @@ RT_INTERFACE!{interface ISystemGPSProperties(ISystemGPSPropertiesVtbl): IInspect
     fn get_LatitudeDecimal(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LongitudeDecimal(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ISystemGPSProperties {
+impl ComPtr<ISystemGPSProperties> {
     #[inline] pub fn get_latitude_decimal(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LatitudeDecimal)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_LatitudeDecimal)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_longitude_decimal(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LongitudeDecimal)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_LongitudeDecimal)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1769,15 +1769,15 @@ RT_INTERFACE!{interface ISystemImageProperties(ISystemImagePropertiesVtbl): IIns
     fn get_HorizontalSize(&self, out: *mut HSTRING) -> HRESULT,
     fn get_VerticalSize(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ISystemImageProperties {
+impl ComPtr<ISystemImageProperties> {
     #[inline] pub fn get_horizontal_size(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_HorizontalSize)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_HorizontalSize)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_vertical_size(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_VerticalSize)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_VerticalSize)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1791,35 +1791,35 @@ RT_INTERFACE!{interface ISystemMediaProperties(ISystemMediaPropertiesVtbl): IIns
     fn get_Writer(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Year(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ISystemMediaProperties {
+impl ComPtr<ISystemMediaProperties> {
     #[inline] pub fn get_duration(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Duration)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_producer(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Producer)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Producer)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_publisher(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Publisher)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Publisher)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sub_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SubTitle)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SubTitle)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_writer(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Writer)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Writer)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_year(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Year)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Year)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1835,45 +1835,45 @@ RT_INTERFACE!{interface ISystemMusicProperties(ISystemMusicPropertiesVtbl): IIns
     fn get_Genre(&self, out: *mut HSTRING) -> HRESULT,
     fn get_TrackNumber(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ISystemMusicProperties {
+impl ComPtr<ISystemMusicProperties> {
     #[inline] pub fn get_album_artist(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AlbumArtist)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_AlbumArtist)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_album_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AlbumTitle)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_AlbumTitle)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_artist(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Artist)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Artist)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_composer(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Composer)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Composer)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_conductor(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Conductor)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Conductor)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_artist(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayArtist)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DisplayArtist)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_genre(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Genre)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Genre)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_track_number(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TrackNumber)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_TrackNumber)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1886,30 +1886,30 @@ RT_INTERFACE!{interface ISystemPhotoProperties(ISystemPhotoPropertiesVtbl): IIns
     fn get_Orientation(&self, out: *mut HSTRING) -> HRESULT,
     fn get_PeopleNames(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ISystemPhotoProperties {
+impl ComPtr<ISystemPhotoProperties> {
     #[inline] pub fn get_camera_manufacturer(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CameraManufacturer)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CameraManufacturer)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_camera_model(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CameraModel)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CameraModel)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_date_taken(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DateTaken)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DateTaken)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_orientation(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Orientation)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Orientation)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_people_names(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PeopleNames)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_PeopleNames)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1930,70 +1930,70 @@ RT_INTERFACE!{static interface ISystemProperties(ISystemPropertiesVtbl): IInspec
     fn get_Video(&self, out: *mut *mut SystemVideoProperties) -> HRESULT,
     fn get_Image(&self, out: *mut *mut SystemImageProperties) -> HRESULT
 }}
-impl ISystemProperties {
+impl ComPtr<ISystemProperties> {
     #[inline] pub fn get_author(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Author)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Author)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_comment(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Comment)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Comment)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_item_name_display(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ItemNameDisplay)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ItemNameDisplay)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_keywords(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Keywords)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Keywords)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rating(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Rating)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Rating)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_audio(&self) -> Result<Option<ComPtr<SystemAudioProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Audio)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Audio)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gps(&self) -> Result<Option<ComPtr<SystemGPSProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_GPS)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_GPS)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_media(&self) -> Result<Option<ComPtr<SystemMediaProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Media)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Media)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_music(&self) -> Result<Option<ComPtr<SystemMusicProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Music)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Music)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_photo(&self) -> Result<Option<ComPtr<SystemPhotoProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Photo)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Photo)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_video(&self) -> Result<Option<ComPtr<SystemVideoProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Video)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Video)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_image(&self) -> Result<Option<ComPtr<SystemImageProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Image)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Image)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2001,43 +2001,43 @@ RT_CLASS!{static class SystemProperties}
 impl RtActivatable<ISystemProperties> for SystemProperties {}
 impl SystemProperties {
     #[inline] pub fn get_author() -> Result<HString> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_author()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_author()
     }
     #[inline] pub fn get_comment() -> Result<HString> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_comment()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_comment()
     }
     #[inline] pub fn get_item_name_display() -> Result<HString> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_item_name_display()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_item_name_display()
     }
     #[inline] pub fn get_keywords() -> Result<HString> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_keywords()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_keywords()
     }
     #[inline] pub fn get_rating() -> Result<HString> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_rating()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_rating()
     }
     #[inline] pub fn get_title() -> Result<HString> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_title()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_title()
     }
     #[inline] pub fn get_audio() -> Result<Option<ComPtr<SystemAudioProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_audio()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_audio()
     }
     #[inline] pub fn get_gps() -> Result<Option<ComPtr<SystemGPSProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_gps()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_gps()
     }
     #[inline] pub fn get_media() -> Result<Option<ComPtr<SystemMediaProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_media()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_media()
     }
     #[inline] pub fn get_music() -> Result<Option<ComPtr<SystemMusicProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_music()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_music()
     }
     #[inline] pub fn get_photo() -> Result<Option<ComPtr<SystemPhotoProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_photo()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_photo()
     }
     #[inline] pub fn get_video() -> Result<Option<ComPtr<SystemVideoProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_video()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_video()
     }
     #[inline] pub fn get_image() -> Result<Option<ComPtr<SystemImageProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_image()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_image()
     }
 }
 DEFINE_CLSID!(SystemProperties(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,121,115,116,101,109,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_SystemProperties]);
@@ -2049,30 +2049,30 @@ RT_INTERFACE!{interface ISystemVideoProperties(ISystemVideoPropertiesVtbl): IIns
     fn get_Orientation(&self, out: *mut HSTRING) -> HRESULT,
     fn get_TotalBitrate(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ISystemVideoProperties {
+impl ComPtr<ISystemVideoProperties> {
     #[inline] pub fn get_director(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Director)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Director)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_frame_height(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FrameHeight)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_FrameHeight)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_frame_width(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FrameWidth)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_FrameWidth)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_orientation(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Orientation)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Orientation)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_total_bitrate(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TotalBitrate)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_TotalBitrate)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2099,100 +2099,100 @@ RT_INTERFACE!{interface IUserDataPaths(IUserDataPathsVtbl): IInspectable(IInspec
     fn get_Templates(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Videos(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl IUserDataPaths {
+impl ComPtr<IUserDataPaths> {
     #[inline] pub fn get_camera_roll(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CameraRoll)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CameraRoll)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cookies(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Cookies)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Cookies)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_desktop(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Desktop)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Desktop)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_documents(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Documents)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Documents)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_downloads(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Downloads)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Downloads)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_favorites(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Favorites)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Favorites)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_history(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_History)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_History)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_internet_cache(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_InternetCache)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_InternetCache)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_local_app_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LocalAppData)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_LocalAppData)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_local_app_data_low(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LocalAppDataLow)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_LocalAppDataLow)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_music(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Music)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Music)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pictures(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Pictures)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Pictures)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_profile(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Profile)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Profile)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_recent(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Recent)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Recent)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_roaming_app_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RoamingAppData)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_RoamingAppData)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_saved_pictures(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SavedPictures)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SavedPictures)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_screenshots(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Screenshots)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Screenshots)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_templates(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Templates)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Templates)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_videos(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Videos)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Videos)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2200,10 +2200,10 @@ RT_CLASS!{class UserDataPaths: IUserDataPaths}
 impl RtActivatable<IUserDataPathsStatics> for UserDataPaths {}
 impl UserDataPaths {
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &ComPtr<super::system::User>) -> Result<Option<ComPtr<UserDataPaths>>> {
-        <Self as RtActivatable<IUserDataPathsStatics>>::get_activation_factory().deref().get_for_user(user)
+        <Self as RtActivatable<IUserDataPathsStatics>>::get_activation_factory().get_for_user(user)
     }
     #[inline] pub fn get_default() -> Result<Option<ComPtr<UserDataPaths>>> {
-        <Self as RtActivatable<IUserDataPathsStatics>>::get_activation_factory().deref().get_default()
+        <Self as RtActivatable<IUserDataPathsStatics>>::get_activation_factory().get_default()
     }
 }
 DEFINE_CLSID!(UserDataPaths(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,85,115,101,114,68,97,116,97,80,97,116,104,115,0]) [CLSID_UserDataPaths]);
@@ -2213,15 +2213,15 @@ RT_INTERFACE!{static interface IUserDataPathsStatics(IUserDataPathsStaticsVtbl):
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut super::system::User, out: *mut *mut UserDataPaths) -> HRESULT,
     fn GetDefault(&self, out: *mut *mut UserDataPaths) -> HRESULT
 }}
-impl IUserDataPathsStatics {
+impl ComPtr<IUserDataPathsStatics> {
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &ComPtr<super::system::User>) -> Result<Option<ComPtr<UserDataPaths>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetForUser)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<UserDataPaths>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetDefault)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2238,10 +2238,10 @@ DEFINE_IID!(IID_IItemRemovedEventArgs, 1499954780, 21950, 19558, 186, 102, 94, 1
 RT_INTERFACE!{interface IItemRemovedEventArgs(IItemRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IItemRemovedEventArgs] {
     fn get_RemovedEntry(&self, out: *mut AccessListEntry) -> HRESULT
 }}
-impl IItemRemovedEventArgs {
+impl ComPtr<IItemRemovedEventArgs> {
     #[inline] pub fn get_removed_entry(&self) -> Result<AccessListEntry> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_RemovedEntry)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_RemovedEntry)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2253,10 +2253,10 @@ RT_CLASS!{static class StorageApplicationPermissions}
 impl RtActivatable<IStorageApplicationPermissionsStatics> for StorageApplicationPermissions {}
 impl StorageApplicationPermissions {
     #[inline] pub fn get_future_access_list() -> Result<Option<ComPtr<StorageItemAccessList>>> {
-        <Self as RtActivatable<IStorageApplicationPermissionsStatics>>::get_activation_factory().deref().get_future_access_list()
+        <Self as RtActivatable<IStorageApplicationPermissionsStatics>>::get_activation_factory().get_future_access_list()
     }
     #[inline] pub fn get_most_recently_used_list() -> Result<Option<ComPtr<StorageItemMostRecentlyUsedList>>> {
-        <Self as RtActivatable<IStorageApplicationPermissionsStatics>>::get_activation_factory().deref().get_most_recently_used_list()
+        <Self as RtActivatable<IStorageApplicationPermissionsStatics>>::get_activation_factory().get_most_recently_used_list()
     }
 }
 DEFINE_CLSID!(StorageApplicationPermissions(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,99,99,101,115,115,67,97,99,104,101,46,83,116,111,114,97,103,101,65,112,112,108,105,99,97,116,105,111,110,80,101,114,109,105,115,115,105,111,110,115,0]) [CLSID_StorageApplicationPermissions]);
@@ -2265,15 +2265,15 @@ RT_INTERFACE!{static interface IStorageApplicationPermissionsStatics(IStorageApp
     fn get_FutureAccessList(&self, out: *mut *mut StorageItemAccessList) -> HRESULT,
     fn get_MostRecentlyUsedList(&self, out: *mut *mut StorageItemMostRecentlyUsedList) -> HRESULT
 }}
-impl IStorageApplicationPermissionsStatics {
+impl ComPtr<IStorageApplicationPermissionsStatics> {
     #[inline] pub fn get_future_access_list(&self) -> Result<Option<ComPtr<StorageItemAccessList>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FutureAccessList)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_FutureAccessList)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_most_recently_used_list(&self) -> Result<Option<ComPtr<StorageItemMostRecentlyUsedList>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_MostRecentlyUsedList)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_MostRecentlyUsedList)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2296,81 +2296,81 @@ RT_INTERFACE!{interface IStorageItemAccessList(IStorageItemAccessListVtbl): IIns
     fn get_Entries(&self, out: *mut *mut AccessListEntryView) -> HRESULT,
     fn get_MaximumItemsAllowed(&self, out: *mut u32) -> HRESULT
 }}
-impl IStorageItemAccessList {
+impl ComPtr<IStorageItemAccessList> {
     #[inline] pub fn add_overload_default_metadata(&self, file: &ComPtr<super::IStorageItem>) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddOverloadDefaultMetadata)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).AddOverloadDefaultMetadata)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add(&self, file: &ComPtr<super::IStorageItem>, metadata: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Add)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, metadata.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).Add)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, metadata.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_or_replace_overload_default_metadata(&self, token: &HStringArg, file: &ComPtr<super::IStorageItem>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddOrReplaceOverloadDefaultMetadata)(self as *const _ as *mut _, token.get(), file.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddOrReplaceOverloadDefaultMetadata)(self.deref() as *const _ as *mut _, token.get(), file.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_or_replace(&self, token: &HStringArg, file: &ComPtr<super::IStorageItem>, metadata: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddOrReplace)(self as *const _ as *mut _, token.get(), file.deref() as *const _ as *mut _, metadata.get());
+        let hr = ((*self.deref().lpVtbl).AddOrReplace)(self.deref() as *const _ as *mut _, token.get(), file.deref() as *const _ as *mut _, metadata.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_item_async(&self, token: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::IStorageItem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemAsync)(self as *const _ as *mut _, token.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetItemAsync)(self.deref() as *const _ as *mut _, token.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_file_async(&self, token: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFileAsync)(self as *const _ as *mut _, token.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFileAsync)(self.deref() as *const _ as *mut _, token.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folder_async(&self, token: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFolderAsync)(self as *const _ as *mut _, token.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFolderAsync)(self.deref() as *const _ as *mut _, token.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_item_with_options_async(&self, token: &HStringArg, options: AccessCacheOptions) -> Result<ComPtr<foundation::IAsyncOperation<super::IStorageItem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemWithOptionsAsync)(self as *const _ as *mut _, token.get(), options, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetItemWithOptionsAsync)(self.deref() as *const _ as *mut _, token.get(), options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_file_with_options_async(&self, token: &HStringArg, options: AccessCacheOptions) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFileWithOptionsAsync)(self as *const _ as *mut _, token.get(), options, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFileWithOptionsAsync)(self.deref() as *const _ as *mut _, token.get(), options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folder_with_options_async(&self, token: &HStringArg, options: AccessCacheOptions) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFolderWithOptionsAsync)(self as *const _ as *mut _, token.get(), options, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFolderWithOptionsAsync)(self.deref() as *const _ as *mut _, token.get(), options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove(&self, token: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Remove)(self as *const _ as *mut _, token.get());
+        let hr = ((*self.deref().lpVtbl).Remove)(self.deref() as *const _ as *mut _, token.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn contains_item(&self, token: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ContainsItem)(self as *const _ as *mut _, token.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).ContainsItem)(self.deref() as *const _ as *mut _, token.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn clear(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Clear)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Clear)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn check_access(&self, file: &ComPtr<super::IStorageItem>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).CheckAccess)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CheckAccess)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_entries(&self) -> Result<Option<ComPtr<AccessListEntryView>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Entries)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Entries)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_maximum_items_allowed(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_MaximumItemsAllowed)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_MaximumItemsAllowed)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2380,14 +2380,14 @@ RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList(IStorageItemMostRecentl
     fn add_ItemRemoved(&self, handler: *mut foundation::TypedEventHandler<StorageItemMostRecentlyUsedList, ItemRemovedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ItemRemoved(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
-impl IStorageItemMostRecentlyUsedList {
+impl ComPtr<IStorageItemMostRecentlyUsedList> {
     #[inline] pub fn add_item_removed(&self, handler: &ComPtr<foundation::TypedEventHandler<StorageItemMostRecentlyUsedList, ItemRemovedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ItemRemoved)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_ItemRemoved)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_item_removed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_ItemRemoved)(self as *const _ as *mut _, eventCookie);
+        let hr = ((*self.deref().lpVtbl).remove_ItemRemoved)(self.deref() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2397,14 +2397,14 @@ RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList2(IStorageItemMostRecent
     fn AddWithMetadataAndVisibility(&self, file: *mut super::IStorageItem, metadata: HSTRING, visibility: RecentStorageItemVisibility, out: *mut HSTRING) -> HRESULT,
     fn AddOrReplaceWithMetadataAndVisibility(&self, token: HSTRING, file: *mut super::IStorageItem, metadata: HSTRING, visibility: RecentStorageItemVisibility) -> HRESULT
 }}
-impl IStorageItemMostRecentlyUsedList2 {
+impl ComPtr<IStorageItemMostRecentlyUsedList2> {
     #[inline] pub fn add_with_metadata_and_visibility(&self, file: &ComPtr<super::IStorageItem>, metadata: &HStringArg, visibility: RecentStorageItemVisibility) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWithMetadataAndVisibility)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, metadata.get(), visibility, &mut out);
+        let hr = ((*self.deref().lpVtbl).AddWithMetadataAndVisibility)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, metadata.get(), visibility, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_or_replace_with_metadata_and_visibility(&self, token: &HStringArg, file: &ComPtr<super::IStorageItem>, metadata: &HStringArg, visibility: RecentStorageItemVisibility) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddOrReplaceWithMetadataAndVisibility)(self as *const _ as *mut _, token.get(), file.deref() as *const _ as *mut _, metadata.get(), visibility);
+        let hr = ((*self.deref().lpVtbl).AddOrReplaceWithMetadataAndVisibility)(self.deref() as *const _ as *mut _, token.get(), file.deref() as *const _ as *mut _, metadata.get(), visibility);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2424,50 +2424,50 @@ RT_INTERFACE!{interface IFileInformationFactory(IFileInformationFactoryVtbl): II
     fn GetVirtualizedFilesVector(&self, out: *mut *mut IInspectable) -> HRESULT,
     fn GetVirtualizedFoldersVector(&self, out: *mut *mut IInspectable) -> HRESULT
 }}
-impl IFileInformationFactory {
+impl ComPtr<IFileInformationFactory> {
     #[inline] pub fn get_items_async(&self, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItemInformation>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemsAsync)(self as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetItemsAsync)(self.deref() as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_items_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItemInformation>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemsAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetItemsAsyncDefaultStartAndCount)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_files_async(&self, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<FileInformation>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFilesAsync)(self as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFilesAsync)(self.deref() as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_files_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<FileInformation>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFilesAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFilesAsyncDefaultStartAndCount)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folders_async(&self, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<FolderInformation>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFoldersAsync)(self as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFoldersAsync)(self.deref() as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folders_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<FolderInformation>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFoldersAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFoldersAsyncDefaultStartAndCount)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_virtualized_items_vector(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetVirtualizedItemsVector)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetVirtualizedItemsVector)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_virtualized_files_vector(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetVirtualizedFilesVector)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetVirtualizedFilesVector)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_virtualized_folders_vector(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetVirtualizedFoldersVector)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetVirtualizedFoldersVector)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2475,16 +2475,16 @@ RT_CLASS!{class FileInformationFactory: IFileInformationFactory}
 impl RtActivatable<IFileInformationFactoryFactory> for FileInformationFactory {}
 impl FileInformationFactory {
     #[inline] pub fn create_with_mode(queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode) -> Result<ComPtr<FileInformationFactory>> {
-        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().deref().create_with_mode(queryResult, mode)
+        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode(queryResult, mode)
     }
     #[inline] pub fn create_with_mode_and_size(queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32) -> Result<ComPtr<FileInformationFactory>> {
-        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().deref().create_with_mode_and_size(queryResult, mode, requestedThumbnailSize)
+        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode_and_size(queryResult, mode, requestedThumbnailSize)
     }
     #[inline] pub fn create_with_mode_and_size_and_options(queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions) -> Result<ComPtr<FileInformationFactory>> {
-        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().deref().create_with_mode_and_size_and_options(queryResult, mode, requestedThumbnailSize, thumbnailOptions)
+        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode_and_size_and_options(queryResult, mode, requestedThumbnailSize, thumbnailOptions)
     }
     #[inline] pub fn create_with_mode_and_size_and_options_and_flags(queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool) -> Result<ComPtr<FileInformationFactory>> {
-        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().deref().create_with_mode_and_size_and_options_and_flags(queryResult, mode, requestedThumbnailSize, thumbnailOptions, delayLoad)
+        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode_and_size_and_options_and_flags(queryResult, mode, requestedThumbnailSize, thumbnailOptions, delayLoad)
     }
 }
 DEFINE_CLSID!(FileInformationFactory(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,66,117,108,107,65,99,99,101,115,115,46,70,105,108,101,73,110,102,111,114,109,97,116,105,111,110,70,97,99,116,111,114,121,0]) [CLSID_FileInformationFactory]);
@@ -2495,25 +2495,25 @@ RT_INTERFACE!{static interface IFileInformationFactoryFactory(IFileInformationFa
     fn CreateWithModeAndSizeAndOptions(&self, queryResult: *mut super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, out: *mut *mut FileInformationFactory) -> HRESULT,
     fn CreateWithModeAndSizeAndOptionsAndFlags(&self, queryResult: *mut super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool, out: *mut *mut FileInformationFactory) -> HRESULT
 }}
-impl IFileInformationFactoryFactory {
+impl ComPtr<IFileInformationFactoryFactory> {
     #[inline] pub fn create_with_mode(&self, queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithMode)(self as *const _ as *mut _, queryResult.deref() as *const _ as *mut _, mode, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateWithMode)(self.deref() as *const _ as *mut _, queryResult.deref() as *const _ as *mut _, mode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_mode_and_size(&self, queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithModeAndSize)(self as *const _ as *mut _, queryResult.deref() as *const _ as *mut _, mode, requestedThumbnailSize, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateWithModeAndSize)(self.deref() as *const _ as *mut _, queryResult.deref() as *const _ as *mut _, mode, requestedThumbnailSize, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_mode_and_size_and_options(&self, queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithModeAndSizeAndOptions)(self as *const _ as *mut _, queryResult.deref() as *const _ as *mut _, mode, requestedThumbnailSize, thumbnailOptions, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateWithModeAndSizeAndOptions)(self.deref() as *const _ as *mut _, queryResult.deref() as *const _ as *mut _, mode, requestedThumbnailSize, thumbnailOptions, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_mode_and_size_and_options_and_flags(&self, queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithModeAndSizeAndOptionsAndFlags)(self as *const _ as *mut _, queryResult.deref() as *const _ as *mut _, mode, requestedThumbnailSize, thumbnailOptions, delayLoad, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateWithModeAndSizeAndOptionsAndFlags)(self.deref() as *const _ as *mut _, queryResult.deref() as *const _ as *mut _, mode, requestedThumbnailSize, thumbnailOptions, delayLoad, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2531,53 +2531,53 @@ RT_INTERFACE!{interface IStorageItemInformation(IStorageItemInformationVtbl): II
     fn add_PropertiesUpdated(&self, changedHandler: *mut foundation::TypedEventHandler<IStorageItemInformation, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_PropertiesUpdated(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
-impl IStorageItemInformation {
+impl ComPtr<IStorageItemInformation> {
     #[inline] pub fn get_music_properties(&self) -> Result<Option<ComPtr<super::fileproperties::MusicProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_MusicProperties)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_MusicProperties)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_video_properties(&self) -> Result<Option<ComPtr<super::fileproperties::VideoProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_VideoProperties)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_VideoProperties)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_image_properties(&self) -> Result<Option<ComPtr<super::fileproperties::ImageProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ImageProperties)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ImageProperties)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_properties(&self) -> Result<Option<ComPtr<super::fileproperties::DocumentProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DocumentProperties)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DocumentProperties)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_basic_properties(&self) -> Result<Option<ComPtr<super::fileproperties::BasicProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_BasicProperties)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_BasicProperties)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_thumbnail(&self) -> Result<Option<ComPtr<super::fileproperties::StorageItemThumbnail>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Thumbnail)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_thumbnail_updated(&self, changedHandler: &ComPtr<foundation::TypedEventHandler<IStorageItemInformation, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ThumbnailUpdated)(self as *const _ as *mut _, changedHandler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_ThumbnailUpdated)(self.deref() as *const _ as *mut _, changedHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_thumbnail_updated(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_ThumbnailUpdated)(self as *const _ as *mut _, eventCookie);
+        let hr = ((*self.deref().lpVtbl).remove_ThumbnailUpdated)(self.deref() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_properties_updated(&self, changedHandler: &ComPtr<foundation::TypedEventHandler<IStorageItemInformation, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PropertiesUpdated)(self as *const _ as *mut _, changedHandler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_PropertiesUpdated)(self.deref() as *const _ as *mut _, changedHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_properties_updated(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_PropertiesUpdated)(self as *const _ as *mut _, eventCookie);
+        let hr = ((*self.deref().lpVtbl).remove_PropertiesUpdated)(self.deref() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2592,15 +2592,15 @@ RT_INTERFACE!{interface ICompressor(ICompressorVtbl): IInspectable(IInspectableV
     fn FinishAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
     fn DetachStream(&self, out: *mut *mut super::streams::IOutputStream) -> HRESULT
 }}
-impl ICompressor {
+impl ComPtr<ICompressor> {
     #[inline] pub fn finish_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FinishAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).FinishAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn detach_stream(&self) -> Result<Option<ComPtr<super::streams::IOutputStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DetachStream)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).DetachStream)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2608,10 +2608,10 @@ RT_CLASS!{class Compressor: ICompressor}
 impl RtActivatable<ICompressorFactory> for Compressor {}
 impl Compressor {
     #[inline] pub fn create_compressor(underlyingStream: &ComPtr<super::streams::IOutputStream>) -> Result<ComPtr<Compressor>> {
-        <Self as RtActivatable<ICompressorFactory>>::get_activation_factory().deref().create_compressor(underlyingStream)
+        <Self as RtActivatable<ICompressorFactory>>::get_activation_factory().create_compressor(underlyingStream)
     }
     #[inline] pub fn create_compressor_ex(underlyingStream: &ComPtr<super::streams::IOutputStream>, algorithm: CompressAlgorithm, blockSize: u32) -> Result<ComPtr<Compressor>> {
-        <Self as RtActivatable<ICompressorFactory>>::get_activation_factory().deref().create_compressor_ex(underlyingStream, algorithm, blockSize)
+        <Self as RtActivatable<ICompressorFactory>>::get_activation_factory().create_compressor_ex(underlyingStream, algorithm, blockSize)
     }
 }
 DEFINE_CLSID!(Compressor(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,67,111,109,112,114,101,115,115,105,111,110,46,67,111,109,112,114,101,115,115,111,114,0]) [CLSID_Compressor]);
@@ -2620,15 +2620,15 @@ RT_INTERFACE!{static interface ICompressorFactory(ICompressorFactoryVtbl): IInsp
     fn CreateCompressor(&self, underlyingStream: *mut super::streams::IOutputStream, out: *mut *mut Compressor) -> HRESULT,
     fn CreateCompressorEx(&self, underlyingStream: *mut super::streams::IOutputStream, algorithm: CompressAlgorithm, blockSize: u32, out: *mut *mut Compressor) -> HRESULT
 }}
-impl ICompressorFactory {
+impl ComPtr<ICompressorFactory> {
     #[inline] pub fn create_compressor(&self, underlyingStream: &ComPtr<super::streams::IOutputStream>) -> Result<ComPtr<Compressor>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCompressor)(self as *const _ as *mut _, underlyingStream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateCompressor)(self.deref() as *const _ as *mut _, underlyingStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_compressor_ex(&self, underlyingStream: &ComPtr<super::streams::IOutputStream>, algorithm: CompressAlgorithm, blockSize: u32) -> Result<ComPtr<Compressor>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCompressorEx)(self as *const _ as *mut _, underlyingStream.deref() as *const _ as *mut _, algorithm, blockSize, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateCompressorEx)(self.deref() as *const _ as *mut _, underlyingStream.deref() as *const _ as *mut _, algorithm, blockSize, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2636,10 +2636,10 @@ DEFINE_IID!(IID_IDecompressor, 3095658054, 54922, 19595, 173, 160, 78, 232, 19, 
 RT_INTERFACE!{interface IDecompressor(IDecompressorVtbl): IInspectable(IInspectableVtbl) [IID_IDecompressor] {
     fn DetachStream(&self, out: *mut *mut super::streams::IInputStream) -> HRESULT
 }}
-impl IDecompressor {
+impl ComPtr<IDecompressor> {
     #[inline] pub fn detach_stream(&self) -> Result<Option<ComPtr<super::streams::IInputStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DetachStream)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).DetachStream)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2647,7 +2647,7 @@ RT_CLASS!{class Decompressor: IDecompressor}
 impl RtActivatable<IDecompressorFactory> for Decompressor {}
 impl Decompressor {
     #[inline] pub fn create_decompressor(underlyingStream: &ComPtr<super::streams::IInputStream>) -> Result<ComPtr<Decompressor>> {
-        <Self as RtActivatable<IDecompressorFactory>>::get_activation_factory().deref().create_decompressor(underlyingStream)
+        <Self as RtActivatable<IDecompressorFactory>>::get_activation_factory().create_decompressor(underlyingStream)
     }
 }
 DEFINE_CLSID!(Decompressor(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,67,111,109,112,114,101,115,115,105,111,110,46,68,101,99,111,109,112,114,101,115,115,111,114,0]) [CLSID_Decompressor]);
@@ -2655,10 +2655,10 @@ DEFINE_IID!(IID_IDecompressorFactory, 1396171346, 7586, 17121, 136, 52, 3, 121, 
 RT_INTERFACE!{static interface IDecompressorFactory(IDecompressorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDecompressorFactory] {
     fn CreateDecompressor(&self, underlyingStream: *mut super::streams::IInputStream, out: *mut *mut Decompressor) -> HRESULT
 }}
-impl IDecompressorFactory {
+impl ComPtr<IDecompressorFactory> {
     #[inline] pub fn create_decompressor(&self, underlyingStream: &ComPtr<super::streams::IInputStream>) -> Result<ComPtr<Decompressor>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDecompressor)(self as *const _ as *mut _, underlyingStream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateDecompressor)(self.deref() as *const _ as *mut _, underlyingStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2671,20 +2671,20 @@ RT_INTERFACE!{interface IBasicProperties(IBasicPropertiesVtbl): IInspectable(IIn
     fn get_DateModified(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_ItemDate(&self, out: *mut foundation::DateTime) -> HRESULT
 }}
-impl IBasicProperties {
+impl ComPtr<IBasicProperties> {
     #[inline] pub fn get_size(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Size)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_date_modified(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_DateModified)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DateModified)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_item_date(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ItemDate)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ItemDate)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2698,33 +2698,33 @@ RT_INTERFACE!{interface IDocumentProperties(IDocumentPropertiesVtbl): IInspectab
     fn get_Comment(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Comment(&self, value: HSTRING) -> HRESULT
 }}
-impl IDocumentProperties {
+impl ComPtr<IDocumentProperties> {
     #[inline] pub fn get_author(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Author)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Author)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Title)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_keywords(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Keywords)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Keywords)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_comment(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Comment)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Comment)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_comment(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Comment)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Comment)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2733,13 +2733,13 @@ RT_CLASS!{static class GeotagHelper}
 impl RtActivatable<IGeotagHelperStatics> for GeotagHelper {}
 impl GeotagHelper {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_geotag_async(file: &ComPtr<super::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint>>> {
-        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().deref().get_geotag_async(file)
+        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().get_geotag_async(file)
     }
     #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_from_geolocator_async(file: &ComPtr<super::IStorageFile>, geolocator: &ComPtr<super::super::devices::geolocation::Geolocator>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().deref().set_geotag_from_geolocator_async(file, geolocator)
+        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().set_geotag_from_geolocator_async(file, geolocator)
     }
     #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_async(file: &ComPtr<super::IStorageFile>, geopoint: &ComPtr<super::super::devices::geolocation::Geopoint>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().deref().set_geotag_async(file, geopoint)
+        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().set_geotag_async(file, geopoint)
     }
 }
 DEFINE_CLSID!(GeotagHelper(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,70,105,108,101,80,114,111,112,101,114,116,105,101,115,46,71,101,111,116,97,103,72,101,108,112,101,114,0]) [CLSID_GeotagHelper]);
@@ -2749,20 +2749,20 @@ RT_INTERFACE!{static interface IGeotagHelperStatics(IGeotagHelperStaticsVtbl): I
     #[cfg(feature="windows-devices")] fn SetGeotagFromGeolocatorAsync(&self, file: *mut super::IStorageFile, geolocator: *mut super::super::devices::geolocation::Geolocator, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     #[cfg(feature="windows-devices")] fn SetGeotagAsync(&self, file: *mut super::IStorageFile, geopoint: *mut super::super::devices::geolocation::Geopoint, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
-impl IGeotagHelperStatics {
+impl ComPtr<IGeotagHelperStatics> {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_geotag_async(&self, file: &ComPtr<super::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetGeotagAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetGeotagAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_from_geolocator_async(&self, file: &ComPtr<super::IStorageFile>, geolocator: &ComPtr<super::super::devices::geolocation::Geolocator>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetGeotagFromGeolocatorAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, geolocator.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).SetGeotagFromGeolocatorAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, geolocator.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_async(&self, file: &ComPtr<super::IStorageFile>, geopoint: &ComPtr<super::super::devices::geolocation::Geopoint>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetGeotagAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, geopoint.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).SetGeotagAsync)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, geopoint.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2786,85 +2786,85 @@ RT_INTERFACE!{interface IImageProperties(IImagePropertiesVtbl): IInspectable(IIn
     fn get_Orientation(&self, out: *mut PhotoOrientation) -> HRESULT,
     fn get_PeopleNames(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
 }}
-impl IImageProperties {
+impl ComPtr<IImageProperties> {
     #[inline] pub fn get_rating(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Rating)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Rating)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_rating(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Rating)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Rating)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_keywords(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Keywords)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Keywords)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_date_taken(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_DateTaken)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DateTaken)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_date_taken(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DateTaken)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_DateTaken)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_width(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Width)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Width)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_height(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Height)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Height)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Title)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_latitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Latitude)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Latitude)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_longitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Longitude)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Longitude)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_camera_manufacturer(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CameraManufacturer)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CameraManufacturer)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_camera_manufacturer(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CameraManufacturer)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_CameraManufacturer)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_camera_model(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CameraModel)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CameraModel)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_camera_model(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CameraModel)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_CameraModel)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_orientation(&self) -> Result<PhotoOrientation> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Orientation)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Orientation)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_people_names(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_PeopleNames)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_PeopleNames)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2897,121 +2897,121 @@ RT_INTERFACE!{interface IMusicProperties(IMusicPropertiesVtbl): IInspectable(IIn
     fn get_Year(&self, out: *mut u32) -> HRESULT,
     fn put_Year(&self, value: u32) -> HRESULT
 }}
-impl IMusicProperties {
+impl ComPtr<IMusicProperties> {
     #[inline] pub fn get_album(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Album)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Album)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_album(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Album)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Album)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_artist(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Artist)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Artist)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_artist(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Artist)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Artist)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_genre(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Genre)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Genre)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_track_number(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TrackNumber)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_TrackNumber)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_track_number(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TrackNumber)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_TrackNumber)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Title)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_rating(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Rating)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Rating)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_rating(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Rating)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Rating)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Duration)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_bitrate(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Bitrate)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Bitrate)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_album_artist(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AlbumArtist)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_AlbumArtist)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_album_artist(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AlbumArtist)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_AlbumArtist)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_composers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Composers)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Composers)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_conductors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Conductors)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Conductors)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_subtitle(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Subtitle)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Subtitle)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_subtitle(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Subtitle)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Subtitle)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_producers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Producers)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Producers)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_publisher(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Publisher)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Publisher)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_publisher(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Publisher)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Publisher)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_writers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Writers)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Writers)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_year(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Year)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Year)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_year(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Year)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Year)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3029,25 +3029,25 @@ RT_INTERFACE!{interface IStorageItemContentProperties(IStorageItemContentPropert
     fn GetImagePropertiesAsync(&self, out: *mut *mut foundation::IAsyncOperation<ImageProperties>) -> HRESULT,
     fn GetDocumentPropertiesAsync(&self, out: *mut *mut foundation::IAsyncOperation<DocumentProperties>) -> HRESULT
 }}
-impl IStorageItemContentProperties {
+impl ComPtr<IStorageItemContentProperties> {
     #[inline] pub fn get_music_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<MusicProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetMusicPropertiesAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetMusicPropertiesAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_video_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<VideoProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetVideoPropertiesAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetVideoPropertiesAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_image_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ImageProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetImagePropertiesAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetImagePropertiesAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<DocumentProperties>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDocumentPropertiesAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetDocumentPropertiesAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3058,20 +3058,20 @@ RT_INTERFACE!{interface IStorageItemExtraProperties(IStorageItemExtraPropertiesV
     fn SavePropertiesAsync(&self, propertiesToSave: *mut foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, IInspectable>>, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn SavePropertiesAsyncOverloadDefault(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
-impl IStorageItemExtraProperties {
+impl ComPtr<IStorageItemExtraProperties> {
     #[inline] pub fn retrieve_properties_async(&self, propertiesToRetrieve: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMap<HString, IInspectable>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RetrievePropertiesAsync)(self as *const _ as *mut _, propertiesToRetrieve.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).RetrievePropertiesAsync)(self.deref() as *const _ as *mut _, propertiesToRetrieve.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn save_properties_async(&self, propertiesToSave: &ComPtr<foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, IInspectable>>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SavePropertiesAsync)(self as *const _ as *mut _, propertiesToSave.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).SavePropertiesAsync)(self.deref() as *const _ as *mut _, propertiesToSave.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn save_properties_async_overload_default(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SavePropertiesAsyncOverloadDefault)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).SavePropertiesAsyncOverloadDefault)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3089,25 +3089,25 @@ RT_INTERFACE!{interface IThumbnailProperties(IThumbnailPropertiesVtbl): IInspect
     fn get_ReturnedSmallerCachedSize(&self, out: *mut bool) -> HRESULT,
     fn get_Type(&self, out: *mut ThumbnailType) -> HRESULT
 }}
-impl IThumbnailProperties {
+impl ComPtr<IThumbnailProperties> {
     #[inline] pub fn get_original_width(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OriginalWidth)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_OriginalWidth)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_original_height(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_OriginalHeight)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_OriginalHeight)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_returned_smaller_cached_size(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ReturnedSmallerCachedSize)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ReturnedSmallerCachedSize)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_type(&self) -> Result<ThumbnailType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Type)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Type)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3141,105 +3141,105 @@ RT_INTERFACE!{interface IVideoProperties(IVideoPropertiesVtbl): IInspectable(IIn
     fn get_Directors(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
     fn get_Orientation(&self, out: *mut VideoOrientation) -> HRESULT
 }}
-impl IVideoProperties {
+impl ComPtr<IVideoProperties> {
     #[inline] pub fn get_rating(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Rating)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Rating)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_rating(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Rating)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Rating)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_keywords(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Keywords)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Keywords)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_width(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Width)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Width)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_height(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Height)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Height)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Duration)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_latitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Latitude)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Latitude)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_longitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Longitude)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Longitude)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Title)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_subtitle(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Subtitle)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Subtitle)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_subtitle(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Subtitle)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Subtitle)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_producers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Producers)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Producers)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_publisher(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Publisher)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Publisher)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_publisher(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Publisher)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Publisher)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_writers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Writers)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Writers)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_year(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Year)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Year)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_year(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Year)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Year)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_bitrate(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Bitrate)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Bitrate)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_directors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Directors)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Directors)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_orientation(&self) -> Result<VideoOrientation> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Orientation)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Orientation)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3262,56 +3262,56 @@ RT_INTERFACE!{interface IFileOpenPicker(IFileOpenPickerVtbl): IInspectable(IInsp
     fn PickSingleFileAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::StorageFile>) -> HRESULT,
     fn PickMultipleFilesAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>) -> HRESULT
 }}
-impl IFileOpenPicker {
+impl ComPtr<IFileOpenPicker> {
     #[inline] pub fn get_view_mode(&self) -> Result<PickerViewMode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ViewMode)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ViewMode)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_view_mode(&self, value: PickerViewMode) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ViewMode)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_ViewMode)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_settings_identifier(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SettingsIdentifier)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SettingsIdentifier)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_settings_identifier(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SettingsIdentifier)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_SettingsIdentifier)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_suggested_start_location(&self) -> Result<PickerLocationId> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_SuggestedStartLocation)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SuggestedStartLocation)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_suggested_start_location(&self, value: PickerLocationId) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SuggestedStartLocation)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_SuggestedStartLocation)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_commit_button_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CommitButtonText)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CommitButtonText)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_commit_button_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CommitButtonText)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_CommitButtonText)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_file_type_filter(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FileTypeFilter)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_FileTypeFilter)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn pick_single_file_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PickSingleFileAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).PickSingleFileAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn pick_multiple_files_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PickMultipleFilesAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).PickMultipleFilesAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3320,7 +3320,7 @@ impl RtActivatable<IFileOpenPickerStatics> for FileOpenPicker {}
 impl RtActivatable<IActivationFactory> for FileOpenPicker {}
 impl FileOpenPicker {
     #[inline] pub fn resume_pick_single_file_async() -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFile>>> {
-        <Self as RtActivatable<IFileOpenPickerStatics>>::get_activation_factory().deref().resume_pick_single_file_async()
+        <Self as RtActivatable<IFileOpenPickerStatics>>::get_activation_factory().resume_pick_single_file_async()
     }
 }
 DEFINE_CLSID!(FileOpenPicker(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,105,99,107,101,114,115,46,70,105,108,101,79,112,101,110,80,105,99,107,101,114,0]) [CLSID_FileOpenPicker]);
@@ -3330,18 +3330,18 @@ RT_INTERFACE!{interface IFileOpenPicker2(IFileOpenPicker2Vtbl): IInspectable(IIn
     fn PickSingleFileAndContinue(&self) -> HRESULT,
     fn PickMultipleFilesAndContinue(&self) -> HRESULT
 }}
-impl IFileOpenPicker2 {
+impl ComPtr<IFileOpenPicker2> {
     #[inline] pub fn get_continuation_data(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ContinuationData)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ContinuationData)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn pick_single_file_and_continue(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).PickSingleFileAndContinue)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).PickSingleFileAndContinue)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn pick_multiple_files_and_continue(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).PickMultipleFilesAndContinue)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).PickMultipleFilesAndContinue)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3349,10 +3349,10 @@ DEFINE_IID!(IID_IFileOpenPickerStatics, 1747015483, 12034, 18483, 150, 212, 171,
 RT_INTERFACE!{static interface IFileOpenPickerStatics(IFileOpenPickerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFileOpenPickerStatics] {
     fn ResumePickSingleFileAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::StorageFile>) -> HRESULT
 }}
-impl IFileOpenPickerStatics {
+impl ComPtr<IFileOpenPickerStatics> {
     #[inline] pub fn resume_pick_single_file_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ResumePickSingleFileAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ResumePickSingleFileAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3360,10 +3360,10 @@ DEFINE_IID!(IID_IFileOpenPickerWithOperationId, 1062712681, 9506, 19621, 170, 11
 RT_INTERFACE!{interface IFileOpenPickerWithOperationId(IFileOpenPickerWithOperationIdVtbl): IInspectable(IInspectableVtbl) [IID_IFileOpenPickerWithOperationId] {
     fn PickSingleFileAsync(&self, pickerOperationId: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::StorageFile>) -> HRESULT
 }}
-impl IFileOpenPickerWithOperationId {
+impl ComPtr<IFileOpenPickerWithOperationId> {
     #[inline] pub fn pick_single_file_async(&self, pickerOperationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PickSingleFileAsync)(self as *const _ as *mut _, pickerOperationId.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).PickSingleFileAsync)(self.deref() as *const _ as *mut _, pickerOperationId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3386,69 +3386,69 @@ RT_INTERFACE!{interface IFileSavePicker(IFileSavePickerVtbl): IInspectable(IInsp
     fn put_SuggestedFileName(&self, value: HSTRING) -> HRESULT,
     fn PickSaveFileAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::StorageFile>) -> HRESULT
 }}
-impl IFileSavePicker {
+impl ComPtr<IFileSavePicker> {
     #[inline] pub fn get_settings_identifier(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SettingsIdentifier)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SettingsIdentifier)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_settings_identifier(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SettingsIdentifier)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_SettingsIdentifier)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_suggested_start_location(&self) -> Result<PickerLocationId> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_SuggestedStartLocation)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SuggestedStartLocation)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_suggested_start_location(&self, value: PickerLocationId) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SuggestedStartLocation)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_SuggestedStartLocation)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_commit_button_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CommitButtonText)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CommitButtonText)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_commit_button_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CommitButtonText)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_CommitButtonText)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_file_type_choices(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, foundation::collections::IVector<HString>>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FileTypeChoices)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_FileTypeChoices)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_default_file_extension(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DefaultFileExtension)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DefaultFileExtension)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_default_file_extension(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DefaultFileExtension)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_DefaultFileExtension)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_suggested_save_file(&self) -> Result<Option<ComPtr<super::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SuggestedSaveFile)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SuggestedSaveFile)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_suggested_save_file(&self, value: &ComPtr<super::StorageFile>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SuggestedSaveFile)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).put_SuggestedSaveFile)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_suggested_file_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SuggestedFileName)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SuggestedFileName)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_suggested_file_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SuggestedFileName)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_SuggestedFileName)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn pick_save_file_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PickSaveFileAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).PickSaveFileAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3460,14 +3460,14 @@ RT_INTERFACE!{interface IFileSavePicker2(IFileSavePicker2Vtbl): IInspectable(IIn
     fn get_ContinuationData(&self, out: *mut *mut foundation::collections::ValueSet) -> HRESULT,
     fn PickSaveFileAndContinue(&self) -> HRESULT
 }}
-impl IFileSavePicker2 {
+impl ComPtr<IFileSavePicker2> {
     #[inline] pub fn get_continuation_data(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ContinuationData)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ContinuationData)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn pick_save_file_and_continue(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).PickSaveFileAndContinue)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).PickSaveFileAndContinue)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3476,14 +3476,14 @@ RT_INTERFACE!{interface IFileSavePicker3(IFileSavePicker3Vtbl): IInspectable(IIn
     fn get_EnterpriseId(&self, out: *mut HSTRING) -> HRESULT,
     fn put_EnterpriseId(&self, value: HSTRING) -> HRESULT
 }}
-impl IFileSavePicker3 {
+impl ComPtr<IFileSavePicker3> {
     #[inline] pub fn get_enterprise_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_EnterpriseId)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_EnterpriseId)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_enterprise_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_EnterpriseId)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_EnterpriseId)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3500,51 +3500,51 @@ RT_INTERFACE!{interface IFolderPicker(IFolderPickerVtbl): IInspectable(IInspecta
     fn get_FileTypeFilter(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
     fn PickSingleFolderAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::StorageFolder>) -> HRESULT
 }}
-impl IFolderPicker {
+impl ComPtr<IFolderPicker> {
     #[inline] pub fn get_view_mode(&self) -> Result<PickerViewMode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ViewMode)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ViewMode)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_view_mode(&self, value: PickerViewMode) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ViewMode)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_ViewMode)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_settings_identifier(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SettingsIdentifier)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SettingsIdentifier)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_settings_identifier(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SettingsIdentifier)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_SettingsIdentifier)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_suggested_start_location(&self) -> Result<PickerLocationId> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_SuggestedStartLocation)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SuggestedStartLocation)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_suggested_start_location(&self, value: PickerLocationId) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SuggestedStartLocation)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_SuggestedStartLocation)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_commit_button_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_CommitButtonText)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CommitButtonText)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_commit_button_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CommitButtonText)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_CommitButtonText)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_file_type_filter(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FileTypeFilter)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_FileTypeFilter)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn pick_single_folder_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PickSingleFolderAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).PickSingleFolderAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3556,14 +3556,14 @@ RT_INTERFACE!{interface IFolderPicker2(IFolderPicker2Vtbl): IInspectable(IInspec
     fn get_ContinuationData(&self, out: *mut *mut foundation::collections::ValueSet) -> HRESULT,
     fn PickFolderAndContinue(&self) -> HRESULT
 }}
-impl IFolderPicker2 {
+impl ComPtr<IFolderPicker2> {
     #[inline] pub fn get_continuation_data(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ContinuationData)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ContinuationData)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn pick_folder_and_continue(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).PickFolderAndContinue)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).PickFolderAndContinue)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3594,66 +3594,66 @@ RT_INTERFACE!{interface IFileOpenPickerUI(IFileOpenPickerUIVtbl): IInspectable(I
     fn add_Closing(&self, handler: *mut foundation::TypedEventHandler<FileOpenPickerUI, PickerClosingEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Closing(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
-impl IFileOpenPickerUI {
+impl ComPtr<IFileOpenPickerUI> {
     #[inline] pub fn add_file(&self, id: &HStringArg, file: &ComPtr<super::super::IStorageFile>) -> Result<AddFileResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).AddFile)(self as *const _ as *mut _, id.get(), file.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).AddFile)(self.deref() as *const _ as *mut _, id.get(), file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_file(&self, id: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveFile)(self as *const _ as *mut _, id.get());
+        let hr = ((*self.deref().lpVtbl).RemoveFile)(self.deref() as *const _ as *mut _, id.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn contains_file(&self, id: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ContainsFile)(self as *const _ as *mut _, id.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).ContainsFile)(self.deref() as *const _ as *mut _, id.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn can_add_file(&self, file: &ComPtr<super::super::IStorageFile>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).CanAddFile)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CanAddFile)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_allowed_file_types(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AllowedFileTypes)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_AllowedFileTypes)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_selection_mode(&self) -> Result<FileSelectionMode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_SelectionMode)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SelectionMode)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_settings_identifier(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SettingsIdentifier)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SettingsIdentifier)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Title)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_file_removed(&self, handler: &ComPtr<foundation::TypedEventHandler<FileOpenPickerUI, FileRemovedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FileRemoved)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_FileRemoved)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_file_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_FileRemoved)(self as *const _ as *mut _, token);
+        let hr = ((*self.deref().lpVtbl).remove_FileRemoved)(self.deref() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_closing(&self, handler: &ComPtr<foundation::TypedEventHandler<FileOpenPickerUI, PickerClosingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Closing)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_Closing)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_closing(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_Closing)(self as *const _ as *mut _, token);
+        let hr = ((*self.deref().lpVtbl).remove_Closing)(self.deref() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3662,10 +3662,10 @@ DEFINE_IID!(IID_IFileRemovedEventArgs, 319045031, 32714, 19499, 158, 202, 104, 1
 RT_INTERFACE!{interface IFileRemovedEventArgs(IFileRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IFileRemovedEventArgs] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl IFileRemovedEventArgs {
+impl ComPtr<IFileRemovedEventArgs> {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3683,52 +3683,52 @@ RT_INTERFACE!{interface IFileSavePickerUI(IFileSavePickerUIVtbl): IInspectable(I
     fn add_TargetFileRequested(&self, handler: *mut foundation::TypedEventHandler<FileSavePickerUI, TargetFileRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_TargetFileRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
-impl IFileSavePickerUI {
+impl ComPtr<IFileSavePickerUI> {
     #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Title)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_allowed_file_types(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AllowedFileTypes)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_AllowedFileTypes)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_settings_identifier(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SettingsIdentifier)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SettingsIdentifier)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_file_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FileName)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_FileName)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_set_file_name(&self, value: &HStringArg) -> Result<SetFileNameResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).TrySetFileName)(self as *const _ as *mut _, value.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).TrySetFileName)(self.deref() as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_file_name_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<FileSavePickerUI, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FileNameChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_FileNameChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_file_name_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_FileNameChanged)(self as *const _ as *mut _, token);
+        let hr = ((*self.deref().lpVtbl).remove_FileNameChanged)(self.deref() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_target_file_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<FileSavePickerUI, TargetFileRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_TargetFileRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_TargetFileRequested)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_target_file_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_TargetFileRequested)(self as *const _ as *mut _, token);
+        let hr = ((*self.deref().lpVtbl).remove_TargetFileRequested)(self.deref() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3740,9 +3740,9 @@ DEFINE_IID!(IID_IPickerClosingDeferral, 2063071006, 6759, 18993, 174, 128, 233, 
 RT_INTERFACE!{interface IPickerClosingDeferral(IPickerClosingDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IPickerClosingDeferral] {
     fn Complete(&self) -> HRESULT
 }}
-impl IPickerClosingDeferral {
+impl ComPtr<IPickerClosingDeferral> {
     #[inline] pub fn complete(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Complete)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Complete)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3752,15 +3752,15 @@ RT_INTERFACE!{interface IPickerClosingEventArgs(IPickerClosingEventArgsVtbl): II
     fn get_ClosingOperation(&self, out: *mut *mut PickerClosingOperation) -> HRESULT,
     fn get_IsCanceled(&self, out: *mut bool) -> HRESULT
 }}
-impl IPickerClosingEventArgs {
+impl ComPtr<IPickerClosingEventArgs> {
     #[inline] pub fn get_closing_operation(&self) -> Result<Option<ComPtr<PickerClosingOperation>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ClosingOperation)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ClosingOperation)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_canceled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsCanceled)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_IsCanceled)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3770,15 +3770,15 @@ RT_INTERFACE!{interface IPickerClosingOperation(IPickerClosingOperationVtbl): II
     fn GetDeferral(&self, out: *mut *mut PickerClosingDeferral) -> HRESULT,
     fn get_Deadline(&self, out: *mut foundation::DateTime) -> HRESULT
 }}
-impl IPickerClosingOperation {
+impl ComPtr<IPickerClosingOperation> {
     #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<PickerClosingDeferral>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetDeferral)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_deadline(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Deadline)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Deadline)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3792,19 +3792,19 @@ RT_INTERFACE!{interface ITargetFileRequest(ITargetFileRequestVtbl): IInspectable
     fn put_TargetFile(&self, value: *mut super::super::IStorageFile) -> HRESULT,
     fn GetDeferral(&self, out: *mut *mut TargetFileRequestDeferral) -> HRESULT
 }}
-impl ITargetFileRequest {
+impl ComPtr<ITargetFileRequest> {
     #[inline] pub fn get_target_file(&self) -> Result<Option<ComPtr<super::super::IStorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_TargetFile)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_TargetFile)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_target_file(&self, value: &ComPtr<super::super::IStorageFile>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TargetFile)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).put_TargetFile)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<TargetFileRequestDeferral>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetDeferral)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3813,9 +3813,9 @@ DEFINE_IID!(IID_ITargetFileRequestDeferral, 1257151889, 48917, 19881, 149, 246, 
 RT_INTERFACE!{interface ITargetFileRequestDeferral(ITargetFileRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_ITargetFileRequestDeferral] {
     fn Complete(&self) -> HRESULT
 }}
-impl ITargetFileRequestDeferral {
+impl ComPtr<ITargetFileRequestDeferral> {
     #[inline] pub fn complete(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Complete)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Complete)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3824,10 +3824,10 @@ DEFINE_IID!(IID_ITargetFileRequestedEventArgs, 2976111553, 6993, 19593, 165, 145
 RT_INTERFACE!{interface ITargetFileRequestedEventArgs(ITargetFileRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITargetFileRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut TargetFileRequest) -> HRESULT
 }}
-impl ITargetFileRequestedEventArgs {
+impl ComPtr<ITargetFileRequestedEventArgs> {
     #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<TargetFileRequest>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Request)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3846,7 +3846,7 @@ RT_CLASS!{static class CachedFileUpdater}
 impl RtActivatable<ICachedFileUpdaterStatics> for CachedFileUpdater {}
 impl CachedFileUpdater {
     #[inline] pub fn set_update_information(file: &ComPtr<super::IStorageFile>, contentId: &HStringArg, readMode: ReadActivationMode, writeMode: WriteActivationMode, options: CachedFileOptions) -> Result<()> {
-        <Self as RtActivatable<ICachedFileUpdaterStatics>>::get_activation_factory().deref().set_update_information(file, contentId, readMode, writeMode, options)
+        <Self as RtActivatable<ICachedFileUpdaterStatics>>::get_activation_factory().set_update_information(file, contentId, readMode, writeMode, options)
     }
 }
 DEFINE_CLSID!(CachedFileUpdater(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,67,97,99,104,101,100,70,105,108,101,85,112,100,97,116,101,114,0]) [CLSID_CachedFileUpdater]);
@@ -3854,9 +3854,9 @@ DEFINE_IID!(IID_ICachedFileUpdaterStatics, 2680752416, 31695, 18568, 168, 30, 16
 RT_INTERFACE!{static interface ICachedFileUpdaterStatics(ICachedFileUpdaterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterStatics] {
     fn SetUpdateInformation(&self, file: *mut super::IStorageFile, contentId: HSTRING, readMode: ReadActivationMode, writeMode: WriteActivationMode, options: CachedFileOptions) -> HRESULT
 }}
-impl ICachedFileUpdaterStatics {
+impl ComPtr<ICachedFileUpdaterStatics> {
     #[inline] pub fn set_update_information(&self, file: &ComPtr<super::IStorageFile>, contentId: &HStringArg, readMode: ReadActivationMode, writeMode: WriteActivationMode, options: CachedFileOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetUpdateInformation)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, contentId.get(), readMode, writeMode, options);
+        let hr = ((*self.deref().lpVtbl).SetUpdateInformation)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, contentId.get(), readMode, writeMode, options);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3871,42 +3871,42 @@ RT_INTERFACE!{interface ICachedFileUpdaterUI(ICachedFileUpdaterUIVtbl): IInspect
     fn remove_UIRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn get_UIStatus(&self, out: *mut UIStatus) -> HRESULT
 }}
-impl ICachedFileUpdaterUI {
+impl ComPtr<ICachedFileUpdaterUI> {
     #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Title)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Title)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_update_target(&self) -> Result<CachedFileTarget> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UpdateTarget)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_UpdateTarget)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_file_update_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<CachedFileUpdaterUI, FileUpdateRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FileUpdateRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_FileUpdateRequested)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_file_update_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_FileUpdateRequested)(self as *const _ as *mut _, token);
+        let hr = ((*self.deref().lpVtbl).remove_FileUpdateRequested)(self.deref() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_ui_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<CachedFileUpdaterUI, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_UIRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_UIRequested)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_ui_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_UIRequested)(self as *const _ as *mut _, token);
+        let hr = ((*self.deref().lpVtbl).remove_UIRequested)(self.deref() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_ui_status(&self) -> Result<UIStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UIStatus)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_UIStatus)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3916,15 +3916,15 @@ RT_INTERFACE!{interface ICachedFileUpdaterUI2(ICachedFileUpdaterUI2Vtbl): IInspe
     fn get_UpdateRequest(&self, out: *mut *mut FileUpdateRequest) -> HRESULT,
     fn GetDeferral(&self, out: *mut *mut FileUpdateRequestDeferral) -> HRESULT
 }}
-impl ICachedFileUpdaterUI2 {
+impl ComPtr<ICachedFileUpdaterUI2> {
     #[inline] pub fn get_update_request(&self) -> Result<Option<ComPtr<FileUpdateRequest>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UpdateRequest)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_UpdateRequest)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<FileUpdateRequestDeferral>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetDeferral)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3937,33 +3937,33 @@ RT_INTERFACE!{interface IFileUpdateRequest(IFileUpdateRequestVtbl): IInspectable
     fn GetDeferral(&self, out: *mut *mut FileUpdateRequestDeferral) -> HRESULT,
     fn UpdateLocalFile(&self, value: *mut super::IStorageFile) -> HRESULT
 }}
-impl IFileUpdateRequest {
+impl ComPtr<IFileUpdateRequest> {
     #[inline] pub fn get_content_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ContentId)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ContentId)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_file(&self) -> Result<Option<ComPtr<super::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_File)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_File)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<FileUpdateStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_status(&self, value: FileUpdateStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Status)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Status)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<FileUpdateRequestDeferral>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetDeferral)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn update_local_file(&self, value: &ComPtr<super::IStorageFile>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).UpdateLocalFile)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).UpdateLocalFile)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3973,14 +3973,14 @@ RT_INTERFACE!{interface IFileUpdateRequest2(IFileUpdateRequest2Vtbl): IInspectab
     fn get_UserInputNeededMessage(&self, out: *mut HSTRING) -> HRESULT,
     fn put_UserInputNeededMessage(&self, value: HSTRING) -> HRESULT
 }}
-impl IFileUpdateRequest2 {
+impl ComPtr<IFileUpdateRequest2> {
     #[inline] pub fn get_user_input_needed_message(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UserInputNeededMessage)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_UserInputNeededMessage)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_user_input_needed_message(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_UserInputNeededMessage)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_UserInputNeededMessage)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3988,9 +3988,9 @@ DEFINE_IID!(IID_IFileUpdateRequestDeferral, 4291746603, 35550, 17573, 187, 0, 22
 RT_INTERFACE!{interface IFileUpdateRequestDeferral(IFileUpdateRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IFileUpdateRequestDeferral] {
     fn Complete(&self) -> HRESULT
 }}
-impl IFileUpdateRequestDeferral {
+impl ComPtr<IFileUpdateRequestDeferral> {
     #[inline] pub fn complete(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Complete)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Complete)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3999,10 +3999,10 @@ DEFINE_IID!(IID_IFileUpdateRequestedEventArgs, 2064290626, 14597, 17293, 170, 23
 RT_INTERFACE!{interface IFileUpdateRequestedEventArgs(IFileUpdateRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IFileUpdateRequestedEventArgs] {
     fn get_Request(&self, out: *mut *mut FileUpdateRequest) -> HRESULT
 }}
-impl IFileUpdateRequestedEventArgs {
+impl ComPtr<IFileUpdateRequestedEventArgs> {
     #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<FileUpdateRequest>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Request)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Request)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4022,32 +4022,32 @@ RT_INTERFACE!{interface IStorageProviderGetContentInfoForPathResult(IStorageProv
     fn get_ContentId(&self, out: *mut HSTRING) -> HRESULT,
     fn put_ContentId(&self, value: HSTRING) -> HRESULT
 }}
-impl IStorageProviderGetContentInfoForPathResult {
+impl ComPtr<IStorageProviderGetContentInfoForPathResult> {
     #[inline] pub fn get_status(&self) -> Result<StorageProviderUriSourceStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_status(&self, value: StorageProviderUriSourceStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Status)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Status)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_content_uri(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ContentUri)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ContentUri)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_content_uri(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ContentUri)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_ContentUri)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_content_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ContentId)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ContentId)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_content_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ContentId)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_ContentId)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4061,23 +4061,23 @@ RT_INTERFACE!{interface IStorageProviderGetPathForContentUriResult(IStorageProvi
     fn get_Path(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Path(&self, value: HSTRING) -> HRESULT
 }}
-impl IStorageProviderGetPathForContentUriResult {
+impl ComPtr<IStorageProviderGetPathForContentUriResult> {
     #[inline] pub fn get_status(&self) -> Result<StorageProviderUriSourceStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_status(&self, value: StorageProviderUriSourceStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Status)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Status)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_path(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Path)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Path)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_path(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Path)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Path)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4100,7 +4100,7 @@ RT_CLASS!{static class StorageProviderItemProperties}
 impl RtActivatable<IStorageProviderItemPropertiesStatics> for StorageProviderItemProperties {}
 impl StorageProviderItemProperties {
     #[inline] pub fn set_async(item: &ComPtr<super::IStorageItem>, itemProperties: &ComPtr<foundation::collections::IIterable<StorageProviderItemProperty>>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IStorageProviderItemPropertiesStatics>>::get_activation_factory().deref().set_async(item, itemProperties)
+        <Self as RtActivatable<IStorageProviderItemPropertiesStatics>>::get_activation_factory().set_async(item, itemProperties)
     }
 }
 DEFINE_CLSID!(StorageProviderItemProperties(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,73,116,101,109,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_StorageProviderItemProperties]);
@@ -4108,10 +4108,10 @@ DEFINE_IID!(IID_IStorageProviderItemPropertiesStatics, 757865623, 9988, 18217, 1
 RT_INTERFACE!{static interface IStorageProviderItemPropertiesStatics(IStorageProviderItemPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderItemPropertiesStatics] {
     fn SetAsync(&self, item: *mut super::IStorageItem, itemProperties: *mut foundation::collections::IIterable<StorageProviderItemProperty>, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
-impl IStorageProviderItemPropertiesStatics {
+impl ComPtr<IStorageProviderItemPropertiesStatics> {
     #[inline] pub fn set_async(&self, item: &ComPtr<super::IStorageItem>, itemProperties: &ComPtr<foundation::collections::IIterable<StorageProviderItemProperty>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetAsync)(self as *const _ as *mut _, item.deref() as *const _ as *mut _, itemProperties.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).SetAsync)(self.deref() as *const _ as *mut _, item.deref() as *const _ as *mut _, itemProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4124,32 +4124,32 @@ RT_INTERFACE!{interface IStorageProviderItemProperty(IStorageProviderItemPropert
     fn put_IconResource(&self, value: HSTRING) -> HRESULT,
     fn get_IconResource(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl IStorageProviderItemProperty {
+impl ComPtr<IStorageProviderItemProperty> {
     #[inline] pub fn set_id(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Id)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Id)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_id(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_value(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Value)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_icon_resource(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IconResource)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_IconResource)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_icon_resource(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_IconResource)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_IconResource)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4163,23 +4163,23 @@ RT_INTERFACE!{interface IStorageProviderItemPropertyDefinition(IStorageProviderI
     fn get_DisplayNameResource(&self, out: *mut HSTRING) -> HRESULT,
     fn put_DisplayNameResource(&self, value: HSTRING) -> HRESULT
 }}
-impl IStorageProviderItemPropertyDefinition {
+impl ComPtr<IStorageProviderItemPropertyDefinition> {
     #[inline] pub fn get_id(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_id(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Id)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Id)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name_resource(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayNameResource)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DisplayNameResource)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_display_name_resource(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DisplayNameResource)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_DisplayNameResource)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4190,10 +4190,10 @@ DEFINE_IID!(IID_IStorageProviderItemPropertySource, 2406456382, 63026, 19099, 14
 RT_INTERFACE!{interface IStorageProviderItemPropertySource(IStorageProviderItemPropertySourceVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderItemPropertySource] {
     fn GetItemProperties(&self, itemPath: HSTRING, out: *mut *mut foundation::collections::IIterable<StorageProviderItemProperty>) -> HRESULT
 }}
-impl IStorageProviderItemPropertySource {
+impl ComPtr<IStorageProviderItemPropertySource> {
     #[inline] pub fn get_item_properties(&self, itemPath: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IIterable<StorageProviderItemProperty>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemProperties)(self as *const _ as *mut _, itemPath.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetItemProperties)(self.deref() as *const _ as *mut _, itemPath.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4204,10 +4204,10 @@ DEFINE_IID!(IID_IStorageProviderPropertyCapabilities, 1703751438, 25527, 17767, 
 RT_INTERFACE!{interface IStorageProviderPropertyCapabilities(IStorageProviderPropertyCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderPropertyCapabilities] {
     fn IsPropertySupported(&self, propertyCanonicalName: HSTRING, out: *mut bool) -> HRESULT
 }}
-impl IStorageProviderPropertyCapabilities {
+impl ComPtr<IStorageProviderPropertyCapabilities> {
     #[inline] pub fn is_property_supported(&self, propertyCanonicalName: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsPropertySupported)(self as *const _ as *mut _, propertyCanonicalName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).IsPropertySupported)(self.deref() as *const _ as *mut _, propertyCanonicalName.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4248,145 +4248,145 @@ RT_INTERFACE!{interface IStorageProviderSyncRootInfo(IStorageProviderSyncRootInf
     fn get_RecycleBinUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
     fn put_RecycleBinUri(&self, value: *mut foundation::Uri) -> HRESULT
 }}
-impl IStorageProviderSyncRootInfo {
+impl ComPtr<IStorageProviderSyncRootInfo> {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Id)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Id)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_context(&self) -> Result<Option<ComPtr<super::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Context)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Context)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_context(&self, value: &ComPtr<super::streams::IBuffer>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Context)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).put_Context)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_path(&self) -> Result<Option<ComPtr<super::IStorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Path)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Path)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_path(&self, value: &ComPtr<super::IStorageFolder>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Path)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).put_Path)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name_resource(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayNameResource)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DisplayNameResource)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_display_name_resource(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DisplayNameResource)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_DisplayNameResource)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_icon_resource(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_IconResource)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_IconResource)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_icon_resource(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IconResource)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_IconResource)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_hydration_policy(&self) -> Result<StorageProviderHydrationPolicy> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_HydrationPolicy)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_HydrationPolicy)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_hydration_policy(&self, value: StorageProviderHydrationPolicy) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_HydrationPolicy)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_HydrationPolicy)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_hydration_policy_modifier(&self) -> Result<StorageProviderHydrationPolicyModifier> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_HydrationPolicyModifier)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_HydrationPolicyModifier)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_hydration_policy_modifier(&self, value: StorageProviderHydrationPolicyModifier) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_HydrationPolicyModifier)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_HydrationPolicyModifier)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_population_policy(&self) -> Result<StorageProviderPopulationPolicy> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_PopulationPolicy)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_PopulationPolicy)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_population_policy(&self, value: StorageProviderPopulationPolicy) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PopulationPolicy)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_PopulationPolicy)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_in_sync_policy(&self) -> Result<StorageProviderInSyncPolicy> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_InSyncPolicy)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_InSyncPolicy)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_in_sync_policy(&self, value: StorageProviderInSyncPolicy) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_InSyncPolicy)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_InSyncPolicy)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_hardlink_policy(&self) -> Result<StorageProviderHardlinkPolicy> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_HardlinkPolicy)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_HardlinkPolicy)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_hardlink_policy(&self, value: StorageProviderHardlinkPolicy) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_HardlinkPolicy)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_HardlinkPolicy)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_show_siblings_as_group(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ShowSiblingsAsGroup)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ShowSiblingsAsGroup)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_show_siblings_as_group(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ShowSiblingsAsGroup)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_ShowSiblingsAsGroup)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_version(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Version)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Version)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_version(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Version)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Version)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_protection_mode(&self) -> Result<StorageProviderProtectionMode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ProtectionMode)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ProtectionMode)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_protection_mode(&self, value: StorageProviderProtectionMode) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ProtectionMode)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_ProtectionMode)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_allow_pinning(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_AllowPinning)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_AllowPinning)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_allow_pinning(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AllowPinning)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_AllowPinning)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_storage_provider_item_property_definitions(&self) -> Result<Option<ComPtr<foundation::collections::IVector<StorageProviderItemPropertyDefinition>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_StorageProviderItemPropertyDefinitions)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_StorageProviderItemPropertyDefinitions)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_recycle_bin_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RecycleBinUri)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_RecycleBinUri)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_recycle_bin_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_RecycleBinUri)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).put_RecycleBinUri)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4398,14 +4398,14 @@ RT_INTERFACE!{interface IStorageProviderSyncRootInfo2(IStorageProviderSyncRootIn
     fn get_ProviderId(&self, out: *mut Guid) -> HRESULT,
     fn put_ProviderId(&self, value: Guid) -> HRESULT
 }}
-impl IStorageProviderSyncRootInfo2 {
+impl ComPtr<IStorageProviderSyncRootInfo2> {
     #[inline] pub fn get_provider_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ProviderId)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ProviderId)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_provider_id(&self, value: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ProviderId)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_ProviderId)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4413,19 +4413,19 @@ RT_CLASS!{static class StorageProviderSyncRootManager}
 impl RtActivatable<IStorageProviderSyncRootManagerStatics> for StorageProviderSyncRootManager {}
 impl StorageProviderSyncRootManager {
     #[inline] pub fn register(syncRootInformation: &ComPtr<StorageProviderSyncRootInfo>) -> Result<()> {
-        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().deref().register(syncRootInformation)
+        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().register(syncRootInformation)
     }
     #[inline] pub fn unregister(id: &HStringArg) -> Result<()> {
-        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().deref().unregister(id)
+        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().unregister(id)
     }
     #[inline] pub fn get_sync_root_information_for_folder(folder: &ComPtr<super::IStorageFolder>) -> Result<Option<ComPtr<StorageProviderSyncRootInfo>>> {
-        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().deref().get_sync_root_information_for_folder(folder)
+        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().get_sync_root_information_for_folder(folder)
     }
     #[inline] pub fn get_sync_root_information_for_id(id: &HStringArg) -> Result<Option<ComPtr<StorageProviderSyncRootInfo>>> {
-        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().deref().get_sync_root_information_for_id(id)
+        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().get_sync_root_information_for_id(id)
     }
     #[inline] pub fn get_current_sync_roots() -> Result<Option<ComPtr<foundation::collections::IVectorView<StorageProviderSyncRootInfo>>>> {
-        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().deref().get_current_sync_roots()
+        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().get_current_sync_roots()
     }
 }
 DEFINE_CLSID!(StorageProviderSyncRootManager(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,83,121,110,99,82,111,111,116,77,97,110,97,103,101,114,0]) [CLSID_StorageProviderSyncRootManager]);
@@ -4437,28 +4437,28 @@ RT_INTERFACE!{static interface IStorageProviderSyncRootManagerStatics(IStoragePr
     fn GetSyncRootInformationForId(&self, id: HSTRING, out: *mut *mut StorageProviderSyncRootInfo) -> HRESULT,
     fn GetCurrentSyncRoots(&self, out: *mut *mut foundation::collections::IVectorView<StorageProviderSyncRootInfo>) -> HRESULT
 }}
-impl IStorageProviderSyncRootManagerStatics {
+impl ComPtr<IStorageProviderSyncRootManagerStatics> {
     #[inline] pub fn register(&self, syncRootInformation: &ComPtr<StorageProviderSyncRootInfo>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Register)(self as *const _ as *mut _, syncRootInformation.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Register)(self.deref() as *const _ as *mut _, syncRootInformation.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn unregister(&self, id: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Unregister)(self as *const _ as *mut _, id.get());
+        let hr = ((*self.deref().lpVtbl).Unregister)(self.deref() as *const _ as *mut _, id.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_sync_root_information_for_folder(&self, folder: &ComPtr<super::IStorageFolder>) -> Result<Option<ComPtr<StorageProviderSyncRootInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSyncRootInformationForFolder)(self as *const _ as *mut _, folder.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetSyncRootInformationForFolder)(self.deref() as *const _ as *mut _, folder.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sync_root_information_for_id(&self, id: &HStringArg) -> Result<Option<ComPtr<StorageProviderSyncRootInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSyncRootInformationForId)(self as *const _ as *mut _, id.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetSyncRootInformationForId)(self.deref() as *const _ as *mut _, id.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_sync_roots(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<StorageProviderSyncRootInfo>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCurrentSyncRoots)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetCurrentSyncRoots)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4467,13 +4467,13 @@ RT_INTERFACE!{interface IStorageProviderUriSource(IStorageProviderUriSourceVtbl)
     fn GetPathForContentUri(&self, contentUri: HSTRING, result: *mut StorageProviderGetPathForContentUriResult) -> HRESULT,
     fn GetContentInfoForPath(&self, path: HSTRING, result: *mut StorageProviderGetContentInfoForPathResult) -> HRESULT
 }}
-impl IStorageProviderUriSource {
+impl ComPtr<IStorageProviderUriSource> {
     #[inline] pub fn get_path_for_content_uri(&self, contentUri: &HStringArg, result: &ComPtr<StorageProviderGetPathForContentUriResult>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).GetPathForContentUri)(self as *const _ as *mut _, contentUri.get(), result.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).GetPathForContentUri)(self.deref() as *const _ as *mut _, contentUri.get(), result.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_content_info_for_path(&self, path: &HStringArg, result: &ComPtr<StorageProviderGetContentInfoForPathResult>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).GetContentInfoForPath)(self as *const _ as *mut _, path.get(), result.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).GetContentInfoForPath)(self.deref() as *const _ as *mut _, path.get(), result.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4505,40 +4505,40 @@ RT_INTERFACE!{interface IContentIndexer(IContentIndexerVtbl): IInspectable(IInsp
     fn RetrievePropertiesAsync(&self, contentId: HSTRING, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IMapView<HString, IInspectable>>) -> HRESULT,
     fn get_Revision(&self, out: *mut u64) -> HRESULT
 }}
-impl IContentIndexer {
+impl ComPtr<IContentIndexer> {
     #[inline] pub fn add_async(&self, indexableContent: &ComPtr<IIndexableContent>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddAsync)(self as *const _ as *mut _, indexableContent.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).AddAsync)(self.deref() as *const _ as *mut _, indexableContent.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn update_async(&self, indexableContent: &ComPtr<IIndexableContent>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UpdateAsync)(self as *const _ as *mut _, indexableContent.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).UpdateAsync)(self.deref() as *const _ as *mut _, indexableContent.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_async(&self, contentId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteAsync)(self as *const _ as *mut _, contentId.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).DeleteAsync)(self.deref() as *const _ as *mut _, contentId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_multiple_async(&self, contentIds: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteMultipleAsync)(self as *const _ as *mut _, contentIds.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).DeleteMultipleAsync)(self.deref() as *const _ as *mut _, contentIds.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_all_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteAllAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).DeleteAllAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn retrieve_properties_async(&self, contentId: &HStringArg, propertiesToRetrieve: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<HString, IInspectable>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RetrievePropertiesAsync)(self as *const _ as *mut _, contentId.get(), propertiesToRetrieve.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).RetrievePropertiesAsync)(self.deref() as *const _ as *mut _, contentId.get(), propertiesToRetrieve.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_revision(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Revision)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Revision)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4546,10 +4546,10 @@ RT_CLASS!{class ContentIndexer: IContentIndexer}
 impl RtActivatable<IContentIndexerStatics> for ContentIndexer {}
 impl ContentIndexer {
     #[inline] pub fn get_indexer_with_name(indexName: &HStringArg) -> Result<Option<ComPtr<ContentIndexer>>> {
-        <Self as RtActivatable<IContentIndexerStatics>>::get_activation_factory().deref().get_indexer_with_name(indexName)
+        <Self as RtActivatable<IContentIndexerStatics>>::get_activation_factory().get_indexer_with_name(indexName)
     }
     #[inline] pub fn get_indexer() -> Result<Option<ComPtr<ContentIndexer>>> {
-        <Self as RtActivatable<IContentIndexerStatics>>::get_activation_factory().deref().get_indexer()
+        <Self as RtActivatable<IContentIndexerStatics>>::get_activation_factory().get_indexer()
     }
 }
 DEFINE_CLSID!(ContentIndexer(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,67,111,110,116,101,110,116,73,110,100,101,120,101,114,0]) [CLSID_ContentIndexer]);
@@ -4562,35 +4562,35 @@ RT_INTERFACE!{interface IContentIndexerQuery(IContentIndexerQueryVtbl): IInspect
     fn GetRangeAsync(&self, startIndex: u32, maxItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<IIndexableContent>>) -> HRESULT,
     fn get_QueryFolder(&self, out: *mut *mut super::StorageFolder) -> HRESULT
 }}
-impl IContentIndexerQuery {
+impl ComPtr<IContentIndexerQuery> {
     #[inline] pub fn get_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCountAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetCountAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_properties_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<foundation::collections::IMapView<HString, IInspectable>>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPropertiesAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetPropertiesAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_properties_range_async(&self, startIndex: u32, maxItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<foundation::collections::IMapView<HString, IInspectable>>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPropertiesRangeAsync)(self as *const _ as *mut _, startIndex, maxItems, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetPropertiesRangeAsync)(self.deref() as *const _ as *mut _, startIndex, maxItems, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IIndexableContent>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_range_async(&self, startIndex: u32, maxItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IIndexableContent>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetRangeAsync)(self as *const _ as *mut _, startIndex, maxItems, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetRangeAsync)(self.deref() as *const _ as *mut _, startIndex, maxItems, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_query_folder(&self) -> Result<Option<ComPtr<super::StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_QueryFolder)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_QueryFolder)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4601,20 +4601,20 @@ RT_INTERFACE!{interface IContentIndexerQueryOperations(IContentIndexerQueryOpera
     fn CreateQueryWithSortOrder(&self, searchFilter: HSTRING, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, sortOrder: *mut foundation::collections::IIterable<SortEntry>, out: *mut *mut ContentIndexerQuery) -> HRESULT,
     fn CreateQuery(&self, searchFilter: HSTRING, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, out: *mut *mut ContentIndexerQuery) -> HRESULT
 }}
-impl IContentIndexerQueryOperations {
+impl ComPtr<IContentIndexerQueryOperations> {
     #[inline] pub fn create_query_with_sort_order_and_language(&self, searchFilter: &HStringArg, propertiesToRetrieve: &ComPtr<foundation::collections::IIterable<HString>>, sortOrder: &ComPtr<foundation::collections::IIterable<SortEntry>>, searchFilterLanguage: &HStringArg) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateQueryWithSortOrderAndLanguage)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve.deref() as *const _ as *mut _, sortOrder.deref() as *const _ as *mut _, searchFilterLanguage.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateQueryWithSortOrderAndLanguage)(self.deref() as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve.deref() as *const _ as *mut _, sortOrder.deref() as *const _ as *mut _, searchFilterLanguage.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_query_with_sort_order(&self, searchFilter: &HStringArg, propertiesToRetrieve: &ComPtr<foundation::collections::IIterable<HString>>, sortOrder: &ComPtr<foundation::collections::IIterable<SortEntry>>) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateQueryWithSortOrder)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve.deref() as *const _ as *mut _, sortOrder.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateQueryWithSortOrder)(self.deref() as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve.deref() as *const _ as *mut _, sortOrder.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_query(&self, searchFilter: &HStringArg, propertiesToRetrieve: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateQuery)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateQuery)(self.deref() as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4623,15 +4623,15 @@ RT_INTERFACE!{static interface IContentIndexerStatics(IContentIndexerStaticsVtbl
     fn GetIndexerWithName(&self, indexName: HSTRING, out: *mut *mut ContentIndexer) -> HRESULT,
     fn GetIndexer(&self, out: *mut *mut ContentIndexer) -> HRESULT
 }}
-impl IContentIndexerStatics {
+impl ComPtr<IContentIndexerStatics> {
     #[inline] pub fn get_indexer_with_name(&self, indexName: &HStringArg) -> Result<Option<ComPtr<ContentIndexer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetIndexerWithName)(self as *const _ as *mut _, indexName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetIndexerWithName)(self.deref() as *const _ as *mut _, indexName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_indexer(&self) -> Result<Option<ComPtr<ContentIndexer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetIndexer)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetIndexer)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4651,37 +4651,37 @@ RT_INTERFACE!{interface IIndexableContent(IIndexableContentVtbl): IInspectable(I
     fn get_StreamContentType(&self, out: *mut HSTRING) -> HRESULT,
     fn put_StreamContentType(&self, value: HSTRING) -> HRESULT
 }}
-impl IIndexableContent {
+impl ComPtr<IIndexableContent> {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Id)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Id)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, IInspectable>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Properties)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Properties)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_stream(&self) -> Result<Option<ComPtr<super::streams::IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Stream)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Stream)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_stream(&self, value: &ComPtr<super::streams::IRandomAccessStream>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Stream)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).put_Stream)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_stream_content_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_StreamContentType)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_StreamContentType)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_stream_content_type(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_StreamContentType)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_StreamContentType)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4715,87 +4715,87 @@ RT_INTERFACE!{interface IQueryOptions(IQueryOptionsVtbl): IInspectable(IInspecta
     fn SetThumbnailPrefetch(&self, mode: super::fileproperties::ThumbnailMode, requestedSize: u32, options: super::fileproperties::ThumbnailOptions) -> HRESULT,
     fn SetPropertyPrefetch(&self, options: super::fileproperties::PropertyPrefetchOptions, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>) -> HRESULT
 }}
-impl IQueryOptions {
+impl ComPtr<IQueryOptions> {
     #[inline] pub fn get_file_type_filter(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_FileTypeFilter)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_FileTypeFilter)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folder_depth(&self) -> Result<FolderDepth> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_FolderDepth)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_FolderDepth)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_folder_depth(&self, value: FolderDepth) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_FolderDepth)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_FolderDepth)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_application_search_filter(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ApplicationSearchFilter)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ApplicationSearchFilter)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_application_search_filter(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ApplicationSearchFilter)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_ApplicationSearchFilter)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_user_search_filter(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UserSearchFilter)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_UserSearchFilter)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_user_search_filter(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_UserSearchFilter)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_UserSearchFilter)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Language)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Language)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_language(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Language)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Language)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_indexer_option(&self) -> Result<IndexerOption> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IndexerOption)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_IndexerOption)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_indexer_option(&self, value: IndexerOption) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_IndexerOption)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_IndexerOption)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_sort_order(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SortEntry>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SortOrder)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SortOrder)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_group_property_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_GroupPropertyName)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_GroupPropertyName)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_date_stack_option(&self) -> Result<DateStackOption> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_DateStackOption)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DateStackOption)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn save_to_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveToString)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).SaveToString)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn load_from_string(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LoadFromString)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).LoadFromString)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_thumbnail_prefetch(&self, mode: super::fileproperties::ThumbnailMode, requestedSize: u32, options: super::fileproperties::ThumbnailOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetThumbnailPrefetch)(self as *const _ as *mut _, mode, requestedSize, options);
+        let hr = ((*self.deref().lpVtbl).SetThumbnailPrefetch)(self.deref() as *const _ as *mut _, mode, requestedSize, options);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_property_prefetch(&self, options: super::fileproperties::PropertyPrefetchOptions, propertiesToRetrieve: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetPropertyPrefetch)(self as *const _ as *mut _, options, propertiesToRetrieve.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).SetPropertyPrefetch)(self.deref() as *const _ as *mut _, options, propertiesToRetrieve.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4804,10 +4804,10 @@ impl RtActivatable<IQueryOptionsFactory> for QueryOptions {}
 impl RtActivatable<IActivationFactory> for QueryOptions {}
 impl QueryOptions {
     #[inline] pub fn create_common_file_query(query: CommonFileQuery, fileTypeFilter: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<QueryOptions>> {
-        <Self as RtActivatable<IQueryOptionsFactory>>::get_activation_factory().deref().create_common_file_query(query, fileTypeFilter)
+        <Self as RtActivatable<IQueryOptionsFactory>>::get_activation_factory().create_common_file_query(query, fileTypeFilter)
     }
     #[inline] pub fn create_common_folder_query(query: CommonFolderQuery) -> Result<ComPtr<QueryOptions>> {
-        <Self as RtActivatable<IQueryOptionsFactory>>::get_activation_factory().deref().create_common_folder_query(query)
+        <Self as RtActivatable<IQueryOptionsFactory>>::get_activation_factory().create_common_folder_query(query)
     }
 }
 DEFINE_CLSID!(QueryOptions(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_QueryOptions]);
@@ -4816,15 +4816,15 @@ RT_INTERFACE!{static interface IQueryOptionsFactory(IQueryOptionsFactoryVtbl): I
     fn CreateCommonFileQuery(&self, query: CommonFileQuery, fileTypeFilter: *mut foundation::collections::IIterable<HString>, out: *mut *mut QueryOptions) -> HRESULT,
     fn CreateCommonFolderQuery(&self, query: CommonFolderQuery, out: *mut *mut QueryOptions) -> HRESULT
 }}
-impl IQueryOptionsFactory {
+impl ComPtr<IQueryOptionsFactory> {
     #[inline] pub fn create_common_file_query(&self, query: CommonFileQuery, fileTypeFilter: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<QueryOptions>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCommonFileQuery)(self as *const _ as *mut _, query, fileTypeFilter.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateCommonFileQuery)(self.deref() as *const _ as *mut _, query, fileTypeFilter.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_common_folder_query(&self, query: CommonFolderQuery) -> Result<ComPtr<QueryOptions>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCommonFolderQuery)(self as *const _ as *mut _, query, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateCommonFolderQuery)(self.deref() as *const _ as *mut _, query, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4832,10 +4832,10 @@ DEFINE_IID!(IID_IQueryOptionsWithProviderFilter, 1537019942, 5572, 17629, 184, 1
 RT_INTERFACE!{interface IQueryOptionsWithProviderFilter(IQueryOptionsWithProviderFilterVtbl): IInspectable(IInspectableVtbl) [IID_IQueryOptionsWithProviderFilter] {
     fn get_StorageProviderIdFilter(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT
 }}
-impl IQueryOptionsWithProviderFilter {
+impl ComPtr<IQueryOptionsWithProviderFilter> {
     #[inline] pub fn get_storage_provider_id_filter(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_StorageProviderIdFilter)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_StorageProviderIdFilter)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4848,15 +4848,15 @@ RT_INTERFACE!{interface IStorageFileQueryResult(IStorageFileQueryResultVtbl): II
     fn GetFilesAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>) -> HRESULT,
     fn GetFilesAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>) -> HRESULT
 }}
-impl IStorageFileQueryResult {
+impl ComPtr<IStorageFileQueryResult> {
     #[inline] pub fn get_files_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFilesAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFilesAsync)(self.deref() as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_files_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFilesAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFilesAsyncDefaultStartAndCount)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4865,10 +4865,10 @@ DEFINE_IID!(IID_IStorageFileQueryResult2, 1314765277, 28993, 18116, 139, 227, 23
 RT_INTERFACE!{interface IStorageFileQueryResult2(IStorageFileQueryResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageFileQueryResult2] {
     #[cfg(feature="windows-data")] fn GetMatchingPropertiesWithRanges(&self, file: *mut super::StorageFile, out: *mut *mut foundation::collections::IMap<HString, foundation::collections::IVectorView<super::super::data::text::TextSegment>>) -> HRESULT
 }}
-impl IStorageFileQueryResult2 {
+impl ComPtr<IStorageFileQueryResult2> {
     #[cfg(feature="windows-data")] #[inline] pub fn get_matching_properties_with_ranges(&self, file: &ComPtr<super::StorageFile>) -> Result<Option<ComPtr<foundation::collections::IMap<HString, foundation::collections::IVectorView<super::super::data::text::TextSegment>>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetMatchingPropertiesWithRanges)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetMatchingPropertiesWithRanges)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4892,90 +4892,90 @@ RT_INTERFACE!{interface IStorageFolderQueryOperations(IStorageFolderQueryOperati
     fn IsCommonFolderQuerySupported(&self, query: CommonFolderQuery, out: *mut bool) -> HRESULT,
     fn IsCommonFileQuerySupported(&self, query: CommonFileQuery, out: *mut bool) -> HRESULT
 }}
-impl IStorageFolderQueryOperations {
+impl ComPtr<IStorageFolderQueryOperations> {
     #[inline] pub fn get_indexed_state_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<IndexedState>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetIndexedStateAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetIndexedStateAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_file_query_overload_default(&self) -> Result<Option<ComPtr<StorageFileQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileQueryOverloadDefault)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFileQueryOverloadDefault)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_file_query(&self, query: CommonFileQuery) -> Result<Option<ComPtr<StorageFileQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileQuery)(self as *const _ as *mut _, query, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFileQuery)(self.deref() as *const _ as *mut _, query, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_file_query_with_options(&self, queryOptions: &ComPtr<QueryOptions>) -> Result<Option<ComPtr<StorageFileQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileQueryWithOptions)(self as *const _ as *mut _, queryOptions.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFileQueryWithOptions)(self.deref() as *const _ as *mut _, queryOptions.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_folder_query_overload_default(&self) -> Result<Option<ComPtr<StorageFolderQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderQueryOverloadDefault)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFolderQueryOverloadDefault)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_folder_query(&self, query: CommonFolderQuery) -> Result<Option<ComPtr<StorageFolderQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderQuery)(self as *const _ as *mut _, query, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFolderQuery)(self.deref() as *const _ as *mut _, query, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_folder_query_with_options(&self, queryOptions: &ComPtr<QueryOptions>) -> Result<Option<ComPtr<StorageFolderQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderQueryWithOptions)(self as *const _ as *mut _, queryOptions.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFolderQueryWithOptions)(self.deref() as *const _ as *mut _, queryOptions.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_item_query(&self) -> Result<Option<ComPtr<StorageItemQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateItemQuery)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateItemQuery)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_item_query_with_options(&self, queryOptions: &ComPtr<QueryOptions>) -> Result<Option<ComPtr<StorageItemQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateItemQueryWithOptions)(self as *const _ as *mut _, queryOptions.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateItemQueryWithOptions)(self.deref() as *const _ as *mut _, queryOptions.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_files_async(&self, query: CommonFileQuery, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFilesAsync)(self as *const _ as *mut _, query, startIndex, maxItemsToRetrieve, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFilesAsync)(self.deref() as *const _ as *mut _, query, startIndex, maxItemsToRetrieve, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_files_async_overload_default_start_and_count(&self, query: CommonFileQuery) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFilesAsyncOverloadDefaultStartAndCount)(self as *const _ as *mut _, query, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFilesAsyncOverloadDefaultStartAndCount)(self.deref() as *const _ as *mut _, query, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folders_async(&self, query: CommonFolderQuery, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFoldersAsync)(self as *const _ as *mut _, query, startIndex, maxItemsToRetrieve, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFoldersAsync)(self.deref() as *const _ as *mut _, query, startIndex, maxItemsToRetrieve, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folders_async_overload_default_start_and_count(&self, query: CommonFolderQuery) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFoldersAsyncOverloadDefaultStartAndCount)(self as *const _ as *mut _, query, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFoldersAsyncOverloadDefaultStartAndCount)(self.deref() as *const _ as *mut _, query, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_items_async(&self, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemsAsync)(self as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetItemsAsync)(self.deref() as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn are_query_options_supported(&self, queryOptions: &ComPtr<QueryOptions>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).AreQueryOptionsSupported)(self as *const _ as *mut _, queryOptions.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).AreQueryOptionsSupported)(self.deref() as *const _ as *mut _, queryOptions.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_common_folder_query_supported(&self, query: CommonFolderQuery) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsCommonFolderQuerySupported)(self as *const _ as *mut _, query, &mut out);
+        let hr = ((*self.deref().lpVtbl).IsCommonFolderQuerySupported)(self.deref() as *const _ as *mut _, query, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_common_file_query_supported(&self, query: CommonFileQuery) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsCommonFileQuerySupported)(self as *const _ as *mut _, query, &mut out);
+        let hr = ((*self.deref().lpVtbl).IsCommonFileQuerySupported)(self.deref() as *const _ as *mut _, query, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4984,15 +4984,15 @@ RT_INTERFACE!{interface IStorageFolderQueryResult(IStorageFolderQueryResultVtbl)
     fn GetFoldersAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>) -> HRESULT,
     fn GetFoldersAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>) -> HRESULT
 }}
-impl IStorageFolderQueryResult {
+impl ComPtr<IStorageFolderQueryResult> {
     #[inline] pub fn get_folders_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFoldersAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFoldersAsync)(self.deref() as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folders_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFoldersAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFoldersAsyncDefaultStartAndCount)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5002,15 +5002,15 @@ RT_INTERFACE!{interface IStorageItemQueryResult(IStorageItemQueryResultVtbl): II
     fn GetItemsAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>) -> HRESULT,
     fn GetItemsAsyncDefaultStartAndCount(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>) -> HRESULT
 }}
-impl IStorageItemQueryResult {
+impl ComPtr<IStorageItemQueryResult> {
     #[inline] pub fn get_items_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemsAsync)(self as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetItemsAsync)(self.deref() as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_items_async_default_start_and_count(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemsAsyncDefaultStartAndCount)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetItemsAsyncDefaultStartAndCount)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5020,15 +5020,15 @@ RT_INTERFACE!{interface IStorageLibraryChangeTrackerTriggerDetails(IStorageLibra
     fn get_Folder(&self, out: *mut *mut super::StorageFolder) -> HRESULT,
     fn get_ChangeTracker(&self, out: *mut *mut super::StorageLibraryChangeTracker) -> HRESULT
 }}
-impl IStorageLibraryChangeTrackerTriggerDetails {
+impl ComPtr<IStorageLibraryChangeTrackerTriggerDetails> {
     #[inline] pub fn get_folder(&self) -> Result<Option<ComPtr<super::StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Folder)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Folder)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_change_tracker(&self) -> Result<Option<ComPtr<super::StorageLibraryChangeTracker>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ChangeTracker)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ChangeTracker)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5038,15 +5038,15 @@ RT_INTERFACE!{interface IStorageLibraryContentChangedTriggerDetails(IStorageLibr
     fn get_Folder(&self, out: *mut *mut super::StorageFolder) -> HRESULT,
     fn CreateModifiedSinceQuery(&self, lastQueryTime: foundation::DateTime, out: *mut *mut StorageItemQueryResult) -> HRESULT
 }}
-impl IStorageLibraryContentChangedTriggerDetails {
+impl ComPtr<IStorageLibraryContentChangedTriggerDetails> {
     #[inline] pub fn get_folder(&self) -> Result<Option<ComPtr<super::StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Folder)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Folder)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_modified_since_query(&self, lastQueryTime: foundation::DateTime) -> Result<Option<ComPtr<StorageItemQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateModifiedSinceQuery)(self as *const _ as *mut _, lastQueryTime, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateModifiedSinceQuery)(self.deref() as *const _ as *mut _, lastQueryTime, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5063,47 +5063,47 @@ RT_INTERFACE!{interface IStorageQueryResultBase(IStorageQueryResultBaseVtbl): II
     fn GetCurrentQueryOptions(&self, out: *mut *mut QueryOptions) -> HRESULT,
     fn ApplyNewQueryOptions(&self, newQueryOptions: *mut QueryOptions) -> HRESULT
 }}
-impl IStorageQueryResultBase {
+impl ComPtr<IStorageQueryResultBase> {
     #[inline] pub fn get_item_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetItemCountAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetItemCountAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folder(&self) -> Result<Option<ComPtr<super::StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Folder)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Folder)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_contents_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ContentsChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_ContentsChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_contents_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_ContentsChanged)(self as *const _ as *mut _, eventCookie);
+        let hr = ((*self.deref().lpVtbl).remove_ContentsChanged)(self.deref() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_options_changed(&self, changedHandler: &ComPtr<foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_OptionsChanged)(self as *const _ as *mut _, changedHandler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_OptionsChanged)(self.deref() as *const _ as *mut _, changedHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_options_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_OptionsChanged)(self as *const _ as *mut _, eventCookie);
+        let hr = ((*self.deref().lpVtbl).remove_OptionsChanged)(self.deref() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn find_start_index_async(&self, value: &ComPtr<IInspectable>) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindStartIndexAsync)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).FindStartIndexAsync)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_query_options(&self) -> Result<Option<ComPtr<QueryOptions>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCurrentQueryOptions)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetCurrentQueryOptions)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn apply_new_query_options(&self, newQueryOptions: &ComPtr<QueryOptions>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ApplyNewQueryOptions)(self as *const _ as *mut _, newQueryOptions.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).ApplyNewQueryOptions)(self.deref() as *const _ as *mut _, newQueryOptions.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5114,23 +5114,23 @@ RT_INTERFACE!{interface IValueAndLanguage(IValueAndLanguageVtbl): IInspectable(I
     fn get_Value(&self, out: *mut *mut IInspectable) -> HRESULT,
     fn put_Value(&self, value: *mut IInspectable) -> HRESULT
 }}
-impl IValueAndLanguage {
+impl ComPtr<IValueAndLanguage> {
     #[inline] pub fn get_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Language)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Language)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_language(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Language)(self as *const _ as *mut _, value.get());
+        let hr = ((*self.deref().lpVtbl).put_Language)(self.deref() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_value(&self, value: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).put_Value)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5146,19 +5146,19 @@ RT_INTERFACE!{interface IBuffer(IBufferVtbl): IInspectable(IInspectableVtbl) [II
     fn get_Length(&self, out: *mut u32) -> HRESULT,
     fn put_Length(&self, value: u32) -> HRESULT
 }}
-impl IBuffer {
+impl ComPtr<IBuffer> {
     #[inline] pub fn get_capacity(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Capacity)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Capacity)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_length(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Length)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Length)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_length(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Length)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Length)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5167,13 +5167,13 @@ impl RtActivatable<IBufferFactory> for Buffer {}
 impl RtActivatable<IBufferStatics> for Buffer {}
 impl Buffer {
     #[inline] pub fn create(capacity: u32) -> Result<ComPtr<Buffer>> {
-        <Self as RtActivatable<IBufferFactory>>::get_activation_factory().deref().create(capacity)
+        <Self as RtActivatable<IBufferFactory>>::get_activation_factory().create(capacity)
     }
     #[inline] pub fn create_copy_from_memory_buffer(input: &ComPtr<foundation::IMemoryBuffer>) -> Result<Option<ComPtr<Buffer>>> {
-        <Self as RtActivatable<IBufferStatics>>::get_activation_factory().deref().create_copy_from_memory_buffer(input)
+        <Self as RtActivatable<IBufferStatics>>::get_activation_factory().create_copy_from_memory_buffer(input)
     }
     #[inline] pub fn create_memory_buffer_over_ibuffer(input: &ComPtr<IBuffer>) -> Result<Option<ComPtr<foundation::MemoryBuffer>>> {
-        <Self as RtActivatable<IBufferStatics>>::get_activation_factory().deref().create_memory_buffer_over_ibuffer(input)
+        <Self as RtActivatable<IBufferStatics>>::get_activation_factory().create_memory_buffer_over_ibuffer(input)
     }
 }
 DEFINE_CLSID!(Buffer(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,66,117,102,102,101,114,0]) [CLSID_Buffer]);
@@ -5181,10 +5181,10 @@ DEFINE_IID!(IID_IBufferFactory, 1907331405, 49423, 18507, 188, 80, 20, 188, 98, 
 RT_INTERFACE!{static interface IBufferFactory(IBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBufferFactory] {
     fn Create(&self, capacity: u32, out: *mut *mut Buffer) -> HRESULT
 }}
-impl IBufferFactory {
+impl ComPtr<IBufferFactory> {
     #[inline] pub fn create(&self, capacity: u32) -> Result<ComPtr<Buffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, capacity, &mut out);
+        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, capacity, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5193,15 +5193,15 @@ RT_INTERFACE!{static interface IBufferStatics(IBufferStaticsVtbl): IInspectable(
     fn CreateCopyFromMemoryBuffer(&self, input: *mut foundation::IMemoryBuffer, out: *mut *mut Buffer) -> HRESULT,
     fn CreateMemoryBufferOverIBuffer(&self, input: *mut IBuffer, out: *mut *mut foundation::MemoryBuffer) -> HRESULT
 }}
-impl IBufferStatics {
+impl ComPtr<IBufferStatics> {
     #[inline] pub fn create_copy_from_memory_buffer(&self, input: &ComPtr<foundation::IMemoryBuffer>) -> Result<Option<ComPtr<Buffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCopyFromMemoryBuffer)(self as *const _ as *mut _, input.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateCopyFromMemoryBuffer)(self.deref() as *const _ as *mut _, input.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_memory_buffer_over_ibuffer(&self, input: &ComPtr<IBuffer>) -> Result<Option<ComPtr<foundation::MemoryBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateMemoryBufferOverIBuffer)(self as *const _ as *mut _, input.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateMemoryBufferOverIBuffer)(self.deref() as *const _ as *mut _, input.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5212,10 +5212,10 @@ DEFINE_IID!(IID_IContentTypeProvider, 2547030181, 15257, 19945, 136, 165, 225, 2
 RT_INTERFACE!{interface IContentTypeProvider(IContentTypeProviderVtbl): IInspectable(IInspectableVtbl) [IID_IContentTypeProvider] {
     fn get_ContentType(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl IContentTypeProvider {
+impl ComPtr<IContentTypeProvider> {
     #[inline] pub fn get_content_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_ContentType)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ContentType)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5248,131 +5248,131 @@ RT_INTERFACE!{interface IDataReader(IDataReaderVtbl): IInspectable(IInspectableV
     fn DetachBuffer(&self, out: *mut *mut IBuffer) -> HRESULT,
     fn DetachStream(&self, out: *mut *mut IInputStream) -> HRESULT
 }}
-impl IDataReader {
+impl ComPtr<IDataReader> {
     #[inline] pub fn get_unconsumed_buffer_length(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UnconsumedBufferLength)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_UnconsumedBufferLength)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_unicode_encoding(&self) -> Result<UnicodeEncoding> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UnicodeEncoding)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_UnicodeEncoding)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_unicode_encoding(&self, value: UnicodeEncoding) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_UnicodeEncoding)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_UnicodeEncoding)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_byte_order(&self) -> Result<ByteOrder> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ByteOrder)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ByteOrder)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_byte_order(&self, value: ByteOrder) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ByteOrder)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_ByteOrder)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_input_stream_options(&self) -> Result<InputStreamOptions> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_InputStreamOptions)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_InputStreamOptions)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_input_stream_options(&self, value: InputStreamOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_InputStreamOptions)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_InputStreamOptions)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn read_byte(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadByte)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadByte)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn read_bytes(&self, value: &mut [u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReadBytes)(self as *const _ as *mut _, value.len() as u32, value.as_mut_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).ReadBytes)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn read_buffer(&self, length: u32) -> Result<Option<ComPtr<IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadBuffer)(self as *const _ as *mut _, length, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadBuffer)(self.deref() as *const _ as *mut _, length, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn read_boolean(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadBoolean)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadBoolean)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn read_guid(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadGuid)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadGuid)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn read_int16(&self) -> Result<i16> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadInt16)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadInt16)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn read_int32(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadInt32)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadInt32)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn read_int64(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadInt64)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadInt64)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn read_uint16(&self) -> Result<u16> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadUInt16)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadUInt16)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn read_uint32(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadUInt32)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadUInt32)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn read_uint64(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadUInt64)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadUInt64)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn read_single(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadSingle)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadSingle)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn read_double(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadDouble)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadDouble)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn read_string(&self, codeUnitCount: u32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadString)(self as *const _ as *mut _, codeUnitCount, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadString)(self.deref() as *const _ as *mut _, codeUnitCount, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn read_date_time(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadDateTime)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadDateTime)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn read_time_span(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ReadTimeSpan)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadTimeSpan)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn load_async(&self, count: u32) -> Result<ComPtr<DataReaderLoadOperation>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadAsync)(self as *const _ as *mut _, count, &mut out);
+        let hr = ((*self.deref().lpVtbl).LoadAsync)(self.deref() as *const _ as *mut _, count, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn detach_buffer(&self) -> Result<Option<ComPtr<IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DetachBuffer)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).DetachBuffer)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn detach_stream(&self) -> Result<Option<ComPtr<IInputStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DetachStream)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).DetachStream)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5381,10 +5381,10 @@ impl RtActivatable<IDataReaderFactory> for DataReader {}
 impl RtActivatable<IDataReaderStatics> for DataReader {}
 impl DataReader {
     #[inline] pub fn create_data_reader(inputStream: &ComPtr<IInputStream>) -> Result<ComPtr<DataReader>> {
-        <Self as RtActivatable<IDataReaderFactory>>::get_activation_factory().deref().create_data_reader(inputStream)
+        <Self as RtActivatable<IDataReaderFactory>>::get_activation_factory().create_data_reader(inputStream)
     }
     #[inline] pub fn from_buffer(buffer: &ComPtr<IBuffer>) -> Result<Option<ComPtr<DataReader>>> {
-        <Self as RtActivatable<IDataReaderStatics>>::get_activation_factory().deref().from_buffer(buffer)
+        <Self as RtActivatable<IDataReaderStatics>>::get_activation_factory().from_buffer(buffer)
     }
 }
 DEFINE_CLSID!(DataReader(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,82,101,97,100,101,114,0]) [CLSID_DataReader]);
@@ -5392,10 +5392,10 @@ DEFINE_IID!(IID_IDataReaderFactory, 3612506183, 22490, 19989, 145, 76, 6, 128, 1
 RT_INTERFACE!{static interface IDataReaderFactory(IDataReaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderFactory] {
     fn CreateDataReader(&self, inputStream: *mut IInputStream, out: *mut *mut DataReader) -> HRESULT
 }}
-impl IDataReaderFactory {
+impl ComPtr<IDataReaderFactory> {
     #[inline] pub fn create_data_reader(&self, inputStream: &ComPtr<IInputStream>) -> Result<ComPtr<DataReader>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDataReader)(self as *const _ as *mut _, inputStream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateDataReader)(self.deref() as *const _ as *mut _, inputStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5404,10 +5404,10 @@ DEFINE_IID!(IID_IDataReaderStatics, 301776840, 63802, 18203, 177, 33, 243, 121, 
 RT_INTERFACE!{static interface IDataReaderStatics(IDataReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderStatics] {
     fn FromBuffer(&self, buffer: *mut IBuffer, out: *mut *mut DataReader) -> HRESULT
 }}
-impl IDataReaderStatics {
+impl ComPtr<IDataReaderStatics> {
     #[inline] pub fn from_buffer(&self, buffer: &ComPtr<IBuffer>) -> Result<Option<ComPtr<DataReader>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FromBuffer)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).FromBuffer)(self.deref() as *const _ as *mut _, buffer.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5441,122 +5441,122 @@ RT_INTERFACE!{interface IDataWriter(IDataWriterVtbl): IInspectable(IInspectableV
     fn DetachBuffer(&self, out: *mut *mut IBuffer) -> HRESULT,
     fn DetachStream(&self, out: *mut *mut IOutputStream) -> HRESULT
 }}
-impl IDataWriter {
+impl ComPtr<IDataWriter> {
     #[inline] pub fn get_unstored_buffer_length(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UnstoredBufferLength)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_UnstoredBufferLength)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_unicode_encoding(&self) -> Result<UnicodeEncoding> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_UnicodeEncoding)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_UnicodeEncoding)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_unicode_encoding(&self, value: UnicodeEncoding) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_UnicodeEncoding)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_UnicodeEncoding)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_byte_order(&self) -> Result<ByteOrder> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ByteOrder)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ByteOrder)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_byte_order(&self, value: ByteOrder) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ByteOrder)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_ByteOrder)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_byte(&self, value: u8) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteByte)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).WriteByte)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_bytes(&self, value: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteBytes)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).WriteBytes)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_buffer(&self, buffer: &ComPtr<IBuffer>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteBuffer)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).WriteBuffer)(self.deref() as *const _ as *mut _, buffer.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_buffer_range(&self, buffer: &ComPtr<IBuffer>, start: u32, count: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteBufferRange)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _, start, count);
+        let hr = ((*self.deref().lpVtbl).WriteBufferRange)(self.deref() as *const _ as *mut _, buffer.deref() as *const _ as *mut _, start, count);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_boolean(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteBoolean)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).WriteBoolean)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_guid(&self, value: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteGuid)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).WriteGuid)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_int16(&self, value: i16) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteInt16)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).WriteInt16)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_int32(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteInt32)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).WriteInt32)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_int64(&self, value: i64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteInt64)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).WriteInt64)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_uint16(&self, value: u16) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteUInt16)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).WriteUInt16)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_uint32(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteUInt32)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).WriteUInt32)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_uint64(&self, value: u64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteUInt64)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).WriteUInt64)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_single(&self, value: f32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteSingle)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).WriteSingle)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_double(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteDouble)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).WriteDouble)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_date_time(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteDateTime)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).WriteDateTime)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_time_span(&self, value: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteTimeSpan)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).WriteTimeSpan)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_string(&self, value: &HStringArg) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).WriteString)(self as *const _ as *mut _, value.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteString)(self.deref() as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn measure_string(&self, value: &HStringArg) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).MeasureString)(self as *const _ as *mut _, value.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).MeasureString)(self.deref() as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn store_async(&self) -> Result<ComPtr<DataWriterStoreOperation>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StoreAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).StoreAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn flush_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FlushAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).FlushAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn detach_buffer(&self) -> Result<Option<ComPtr<IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DetachBuffer)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).DetachBuffer)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn detach_stream(&self) -> Result<Option<ComPtr<IOutputStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DetachStream)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).DetachStream)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5565,7 +5565,7 @@ impl RtActivatable<IDataWriterFactory> for DataWriter {}
 impl RtActivatable<IActivationFactory> for DataWriter {}
 impl DataWriter {
     #[inline] pub fn create_data_writer(outputStream: &ComPtr<IOutputStream>) -> Result<ComPtr<DataWriter>> {
-        <Self as RtActivatable<IDataWriterFactory>>::get_activation_factory().deref().create_data_writer(outputStream)
+        <Self as RtActivatable<IDataWriterFactory>>::get_activation_factory().create_data_writer(outputStream)
     }
 }
 DEFINE_CLSID!(DataWriter(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,87,114,105,116,101,114,0]) [CLSID_DataWriter]);
@@ -5573,10 +5573,10 @@ DEFINE_IID!(IID_IDataWriterFactory, 864839618, 35716, 19499, 156, 80, 123, 135, 
 RT_INTERFACE!{static interface IDataWriterFactory(IDataWriterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataWriterFactory] {
     fn CreateDataWriter(&self, outputStream: *mut IOutputStream, out: *mut *mut DataWriter) -> HRESULT
 }}
-impl IDataWriterFactory {
+impl ComPtr<IDataWriterFactory> {
     #[inline] pub fn create_data_writer(&self, outputStream: &ComPtr<IOutputStream>) -> Result<ComPtr<DataWriter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDataWriter)(self as *const _ as *mut _, outputStream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateDataWriter)(self.deref() as *const _ as *mut _, outputStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5590,28 +5590,28 @@ RT_CLASS!{class FileRandomAccessStream: IRandomAccessStream}
 impl RtActivatable<IFileRandomAccessStreamStatics> for FileRandomAccessStream {}
 impl FileRandomAccessStream {
     #[inline] pub fn open_async(filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_async(filePath, accessMode)
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_async(filePath, accessMode)
     }
     #[inline] pub fn open_with_options_async(filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_with_options_async(filePath, accessMode, sharingOptions, openDisposition)
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_with_options_async(filePath, accessMode, sharingOptions, openDisposition)
     }
     #[inline] pub fn open_transacted_write_async(filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_transacted_write_async(filePath)
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_async(filePath)
     }
     #[inline] pub fn open_transacted_write_with_options_async(filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_transacted_write_with_options_async(filePath, openOptions, openDisposition)
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_with_options_async(filePath, openOptions, openDisposition)
     }
     #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_async(user: &ComPtr<super::super::system::User>, filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_for_user_async(user, filePath, accessMode)
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_for_user_async(user, filePath, accessMode)
     }
     #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_with_options_async(user: &ComPtr<super::super::system::User>, filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_for_user_with_options_async(user, filePath, accessMode, sharingOptions, openDisposition)
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_for_user_with_options_async(user, filePath, accessMode, sharingOptions, openDisposition)
     }
     #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_async(user: &ComPtr<super::super::system::User>, filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_transacted_write_for_user_async(user, filePath)
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_for_user_async(user, filePath)
     }
     #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_with_options_async(user: &ComPtr<super::super::system::User>, filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_transacted_write_for_user_with_options_async(user, filePath, openOptions, openDisposition)
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_for_user_with_options_async(user, filePath, openOptions, openDisposition)
     }
 }
 DEFINE_CLSID!(FileRandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,70,105,108,101,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_FileRandomAccessStream]);
@@ -5626,45 +5626,45 @@ RT_INTERFACE!{static interface IFileRandomAccessStreamStatics(IFileRandomAccessS
     #[cfg(feature="windows-system")] fn OpenTransactedWriteForUserAsync(&self, user: *mut super::super::system::User, filePath: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::StorageStreamTransaction>) -> HRESULT,
     #[cfg(feature="windows-system")] fn OpenTransactedWriteForUserWithOptionsAsync(&self, user: *mut super::super::system::User, filePath: HSTRING, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition, out: *mut *mut foundation::IAsyncOperation<super::StorageStreamTransaction>) -> HRESULT
 }}
-impl IFileRandomAccessStreamStatics {
+impl ComPtr<IFileRandomAccessStreamStatics> {
     #[inline] pub fn open_async(&self, filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenAsync)(self as *const _ as *mut _, filePath.get(), accessMode, &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenAsync)(self.deref() as *const _ as *mut _, filePath.get(), accessMode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn open_with_options_async(&self, filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenWithOptionsAsync)(self as *const _ as *mut _, filePath.get(), accessMode, sharingOptions, openDisposition, &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenWithOptionsAsync)(self.deref() as *const _ as *mut _, filePath.get(), accessMode, sharingOptions, openDisposition, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn open_transacted_write_async(&self, filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenTransactedWriteAsync)(self as *const _ as *mut _, filePath.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenTransactedWriteAsync)(self.deref() as *const _ as *mut _, filePath.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn open_transacted_write_with_options_async(&self, filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenTransactedWriteWithOptionsAsync)(self as *const _ as *mut _, filePath.get(), openOptions, openDisposition, &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenTransactedWriteWithOptionsAsync)(self.deref() as *const _ as *mut _, filePath.get(), openOptions, openDisposition, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_async(&self, user: &ComPtr<super::super::system::User>, filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, filePath.get(), accessMode, &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenForUserAsync)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, filePath.get(), accessMode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_with_options_async(&self, user: &ComPtr<super::super::system::User>, filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenForUserWithOptionsAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, filePath.get(), accessMode, sharingOptions, openDisposition, &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenForUserWithOptionsAsync)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, filePath.get(), accessMode, sharingOptions, openDisposition, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_async(&self, user: &ComPtr<super::super::system::User>, filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenTransactedWriteForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, filePath.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenTransactedWriteForUserAsync)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, filePath.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_with_options_async(&self, user: &ComPtr<super::super::system::User>, filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenTransactedWriteForUserWithOptionsAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, filePath.get(), openOptions, openDisposition, &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenTransactedWriteForUserWithOptionsAsync)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, filePath.get(), openOptions, openDisposition, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5675,10 +5675,10 @@ DEFINE_IID!(IID_IInputStream, 2421821410, 48211, 4575, 140, 73, 0, 30, 79, 198, 
 RT_INTERFACE!{interface IInputStream(IInputStreamVtbl): IInspectable(IInspectableVtbl) [IID_IInputStream] {
     fn ReadAsync(&self, buffer: *mut IBuffer, count: u32, options: InputStreamOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<IBuffer, u32>) -> HRESULT
 }}
-impl IInputStream {
+impl ComPtr<IInputStream> {
     #[inline] pub fn read_async(&self, buffer: &ComPtr<IBuffer>, count: u32, options: InputStreamOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<IBuffer, u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadAsync)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _, count, options, &mut out);
+        let hr = ((*self.deref().lpVtbl).ReadAsync)(self.deref() as *const _ as *mut _, buffer.deref() as *const _ as *mut _, count, options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5690,10 +5690,10 @@ DEFINE_IID!(IID_IInputStreamReference, 1133681944, 24265, 19290, 145, 156, 66, 5
 RT_INTERFACE!{interface IInputStreamReference(IInputStreamReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IInputStreamReference] {
     fn OpenSequentialReadAsync(&self, out: *mut *mut foundation::IAsyncOperation<IInputStream>) -> HRESULT
 }}
-impl IInputStreamReference {
+impl ComPtr<IInputStreamReference> {
     #[inline] pub fn open_sequential_read_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<IInputStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenSequentialReadAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenSequentialReadAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5702,15 +5702,15 @@ RT_INTERFACE!{interface IOutputStream(IOutputStreamVtbl): IInspectable(IInspecta
     fn WriteAsync(&self, buffer: *mut IBuffer, out: *mut *mut foundation::IAsyncOperationWithProgress<u32, u32>) -> HRESULT,
     fn FlushAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
-impl IOutputStream {
+impl ComPtr<IOutputStream> {
     #[inline] pub fn write_async(&self, buffer: &ComPtr<IBuffer>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u32, u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteAsync)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).WriteAsync)(self.deref() as *const _ as *mut _, buffer.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn flush_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FlushAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).FlushAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5727,48 +5727,48 @@ RT_INTERFACE!{interface IRandomAccessStream(IRandomAccessStreamVtbl): IInspectab
     fn get_CanRead(&self, out: *mut bool) -> HRESULT,
     fn get_CanWrite(&self, out: *mut bool) -> HRESULT
 }}
-impl IRandomAccessStream {
+impl ComPtr<IRandomAccessStream> {
     #[inline] pub fn get_size(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Size)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_size(&self, value: u64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Size)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Size)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_input_stream_at(&self, position: u64) -> Result<Option<ComPtr<IInputStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetInputStreamAt)(self as *const _ as *mut _, position, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetInputStreamAt)(self.deref() as *const _ as *mut _, position, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_output_stream_at(&self, position: u64) -> Result<Option<ComPtr<IOutputStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetOutputStreamAt)(self as *const _ as *mut _, position, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetOutputStreamAt)(self.deref() as *const _ as *mut _, position, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_position(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Position)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Position)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn seek(&self, position: u64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Seek)(self as *const _ as *mut _, position);
+        let hr = ((*self.deref().lpVtbl).Seek)(self.deref() as *const _ as *mut _, position);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn clone_stream(&self) -> Result<Option<ComPtr<IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CloneStream)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CloneStream)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_can_read(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CanRead)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CanRead)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_can_write(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CanWrite)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CanWrite)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5776,13 +5776,13 @@ RT_CLASS!{static class RandomAccessStream}
 impl RtActivatable<IRandomAccessStreamStatics> for RandomAccessStream {}
 impl RandomAccessStream {
     #[inline] pub fn copy_async(source: &ComPtr<IInputStream>, destination: &ComPtr<IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
-        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().deref().copy_async(source, destination)
+        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().copy_async(source, destination)
     }
     #[inline] pub fn copy_size_async(source: &ComPtr<IInputStream>, destination: &ComPtr<IOutputStream>, bytesToCopy: u64) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
-        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().deref().copy_size_async(source, destination, bytesToCopy)
+        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().copy_size_async(source, destination, bytesToCopy)
     }
     #[inline] pub fn copy_and_close_async(source: &ComPtr<IInputStream>, destination: &ComPtr<IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
-        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().deref().copy_and_close_async(source, destination)
+        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().copy_and_close_async(source, destination)
     }
 }
 DEFINE_CLSID!(RandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_RandomAccessStream]);
@@ -5791,10 +5791,10 @@ DEFINE_IID!(IID_IRandomAccessStreamReference, 871248180, 7638, 20026, 128, 103, 
 RT_INTERFACE!{interface IRandomAccessStreamReference(IRandomAccessStreamReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamReference] {
     fn OpenReadAsync(&self, out: *mut *mut foundation::IAsyncOperation<IRandomAccessStreamWithContentType>) -> HRESULT
 }}
-impl IRandomAccessStreamReference {
+impl ComPtr<IRandomAccessStreamReference> {
     #[inline] pub fn open_read_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStreamWithContentType>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenReadAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).OpenReadAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5802,13 +5802,13 @@ RT_CLASS!{class RandomAccessStreamReference: IRandomAccessStreamReference}
 impl RtActivatable<IRandomAccessStreamReferenceStatics> for RandomAccessStreamReference {}
 impl RandomAccessStreamReference {
     #[inline] pub fn create_from_file(file: &ComPtr<super::IStorageFile>) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
-        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().deref().create_from_file(file)
+        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().create_from_file(file)
     }
     #[inline] pub fn create_from_uri(uri: &ComPtr<foundation::Uri>) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
-        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().deref().create_from_uri(uri)
+        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().create_from_uri(uri)
     }
     #[inline] pub fn create_from_stream(stream: &ComPtr<IRandomAccessStream>) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
-        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().deref().create_from_stream(stream)
+        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().create_from_stream(stream)
     }
 }
 DEFINE_CLSID!(RandomAccessStreamReference(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,82,101,102,101,114,101,110,99,101,0]) [CLSID_RandomAccessStreamReference]);
@@ -5818,20 +5818,20 @@ RT_INTERFACE!{static interface IRandomAccessStreamReferenceStatics(IRandomAccess
     fn CreateFromUri(&self, uri: *mut foundation::Uri, out: *mut *mut RandomAccessStreamReference) -> HRESULT,
     fn CreateFromStream(&self, stream: *mut IRandomAccessStream, out: *mut *mut RandomAccessStreamReference) -> HRESULT
 }}
-impl IRandomAccessStreamReferenceStatics {
+impl ComPtr<IRandomAccessStreamReferenceStatics> {
     #[inline] pub fn create_from_file(&self, file: &ComPtr<super::IStorageFile>) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromFile)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFromFile)(self.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_uri(&self, uri: &ComPtr<foundation::Uri>) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromUri)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFromUri)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_stream(&self, stream: &ComPtr<IRandomAccessStream>) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStream)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFromStream)(self.deref() as *const _ as *mut _, stream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5841,20 +5841,20 @@ RT_INTERFACE!{static interface IRandomAccessStreamStatics(IRandomAccessStreamSta
     fn CopySizeAsync(&self, source: *mut IInputStream, destination: *mut IOutputStream, bytesToCopy: u64, out: *mut *mut foundation::IAsyncOperationWithProgress<u64, u64>) -> HRESULT,
     fn CopyAndCloseAsync(&self, source: *mut IInputStream, destination: *mut IOutputStream, out: *mut *mut foundation::IAsyncOperationWithProgress<u64, u64>) -> HRESULT
 }}
-impl IRandomAccessStreamStatics {
+impl ComPtr<IRandomAccessStreamStatics> {
     #[inline] pub fn copy_async(&self, source: &ComPtr<IInputStream>, destination: &ComPtr<IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyAsync)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, destination.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CopyAsync)(self.deref() as *const _ as *mut _, source.deref() as *const _ as *mut _, destination.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn copy_size_async(&self, source: &ComPtr<IInputStream>, destination: &ComPtr<IOutputStream>, bytesToCopy: u64) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopySizeAsync)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, destination.deref() as *const _ as *mut _, bytesToCopy, &mut out);
+        let hr = ((*self.deref().lpVtbl).CopySizeAsync)(self.deref() as *const _ as *mut _, source.deref() as *const _ as *mut _, destination.deref() as *const _ as *mut _, bytesToCopy, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn copy_and_close_async(&self, source: &ComPtr<IInputStream>, destination: &ComPtr<IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyAndCloseAsync)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, destination.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CopyAndCloseAsync)(self.deref() as *const _ as *mut _, source.deref() as *const _ as *mut _, destination.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }

@@ -5,18 +5,18 @@ RT_INTERFACE!{interface IAsyncAction(IAsyncActionVtbl): IInspectable(IInspectabl
     fn get_Completed(&self, out: *mut *mut AsyncActionCompletedHandler) -> HRESULT,
     fn GetResults(&self) -> HRESULT
 }}
-impl IAsyncAction {
+impl ComPtr<IAsyncAction> {
     #[inline] pub fn set_completed(&self, handler: &ComPtr<AsyncActionCompletedHandler>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).put_Completed)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_completed(&self) -> Result<Option<ComPtr<AsyncActionCompletedHandler>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Completed)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Completed)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_results(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).GetResults)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).GetResults)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -24,9 +24,9 @@ DEFINE_IID!(IID_AsyncActionCompletedHandler, 2767019137, 30409, 16573, 139, 230,
 RT_DELEGATE!{delegate AsyncActionCompletedHandler(AsyncActionCompletedHandlerVtbl, AsyncActionCompletedHandlerImpl) [IID_AsyncActionCompletedHandler] {
     fn Invoke(&self, asyncInfo: *mut IAsyncAction, asyncStatus: AsyncStatus) -> HRESULT
 }}
-impl AsyncActionCompletedHandler {
+impl ComPtr<AsyncActionCompletedHandler> {
     #[inline] pub fn invoke(&self, asyncInfo: &ComPtr<IAsyncAction>, asyncStatus: AsyncStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, asyncStatus);
+        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, asyncStatus);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -34,9 +34,9 @@ DEFINE_IID!(IID_AsyncActionProgressHandler, 1837385816, 3327, 17808, 174, 137, 1
 RT_DELEGATE!{delegate AsyncActionProgressHandler<TProgress>(AsyncActionProgressHandlerVtbl, AsyncActionProgressHandlerImpl) [IID_AsyncActionProgressHandler] {
     fn Invoke(&self, asyncInfo: *mut IAsyncActionWithProgress<TProgress>, progressInfo: TProgress::Abi) -> HRESULT
 }}
-impl<TProgress: RtType> AsyncActionProgressHandler<TProgress> {
+impl<TProgress: RtType> ComPtr<AsyncActionProgressHandler<TProgress>> {
     #[inline] pub fn invoke(&self, asyncInfo: &ComPtr<IAsyncActionWithProgress<TProgress>>, progressInfo: &TProgress::In) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, TProgress::unwrap(progressInfo));
+        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, TProgress::unwrap(progressInfo));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -48,27 +48,27 @@ RT_INTERFACE!{interface IAsyncActionWithProgress<TProgress>(IAsyncActionWithProg
     fn get_Completed(&self, out: *mut *mut AsyncActionWithProgressCompletedHandler<TProgress>) -> HRESULT,
     fn GetResults(&self) -> HRESULT
 }}
-impl<TProgress: RtType> IAsyncActionWithProgress<TProgress> {
+impl<TProgress: RtType> ComPtr<IAsyncActionWithProgress<TProgress>> {
     #[inline] pub fn set_progress(&self, handler: &ComPtr<AsyncActionProgressHandler<TProgress>>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Progress)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).put_Progress)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_progress(&self) -> Result<Option<ComPtr<AsyncActionProgressHandler<TProgress>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Progress)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_completed(&self, handler: &ComPtr<AsyncActionWithProgressCompletedHandler<TProgress>>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).put_Completed)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_completed(&self) -> Result<Option<ComPtr<AsyncActionWithProgressCompletedHandler<TProgress>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Completed)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Completed)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_results(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).GetResults)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).GetResults)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -76,9 +76,9 @@ DEFINE_IID!(IID_AsyncActionWithProgressCompletedHandler, 2617417617, 52356, 1766
 RT_DELEGATE!{delegate AsyncActionWithProgressCompletedHandler<TProgress>(AsyncActionWithProgressCompletedHandlerVtbl, AsyncActionWithProgressCompletedHandlerImpl) [IID_AsyncActionWithProgressCompletedHandler] {
     fn Invoke(&self, asyncInfo: *mut IAsyncActionWithProgress<TProgress>, asyncStatus: AsyncStatus) -> HRESULT
 }}
-impl<TProgress: RtType> AsyncActionWithProgressCompletedHandler<TProgress> {
+impl<TProgress: RtType> ComPtr<AsyncActionWithProgressCompletedHandler<TProgress>> {
     #[inline] pub fn invoke(&self, asyncInfo: &ComPtr<IAsyncActionWithProgress<TProgress>>, asyncStatus: AsyncStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, asyncStatus);
+        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, asyncStatus);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -90,28 +90,28 @@ RT_INTERFACE!{interface IAsyncInfo(IAsyncInfoVtbl): IInspectable(IInspectableVtb
     fn Cancel(&self) -> HRESULT,
     fn Close(&self) -> HRESULT
 }}
-impl IAsyncInfo {
+impl ComPtr<IAsyncInfo> {
     #[inline] pub fn get_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<AsyncStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_error_code(&self) -> Result<HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ErrorCode)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ErrorCode)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn cancel(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Cancel)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Cancel)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn close(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Close)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Close)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -121,19 +121,19 @@ RT_INTERFACE!{interface IAsyncOperation<TResult>(IAsyncOperationVtbl): IInspecta
     fn get_Completed(&self, out: *mut *mut AsyncOperationCompletedHandler<TResult>) -> HRESULT,
     fn GetResults(&self, out: *mut TResult::Abi) -> HRESULT
 }}
-impl<TResult: RtType> IAsyncOperation<TResult> {
+impl<TResult: RtType> ComPtr<IAsyncOperation<TResult>> {
     #[inline] pub fn set_completed(&self, handler: &ComPtr<AsyncOperationCompletedHandler<TResult>>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).put_Completed)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_completed(&self) -> Result<Option<ComPtr<AsyncOperationCompletedHandler<TResult>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Completed)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Completed)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_results(&self) -> Result<TResult::Out> { unsafe { 
         let mut out = TResult::uninitialized();
-        let hr = ((*self.lpVtbl).GetResults)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetResults)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(TResult::wrap(out)) } else { err(hr) }
     }}
 }
@@ -141,9 +141,9 @@ DEFINE_IID!(IID_AsyncOperationCompletedHandler, 4242337836, 58840, 17528, 145, 9
 RT_DELEGATE!{delegate AsyncOperationCompletedHandler<TResult>(AsyncOperationCompletedHandlerVtbl, AsyncOperationCompletedHandlerImpl) [IID_AsyncOperationCompletedHandler] {
     fn Invoke(&self, asyncInfo: *mut IAsyncOperation<TResult>, asyncStatus: AsyncStatus) -> HRESULT
 }}
-impl<TResult: RtType> AsyncOperationCompletedHandler<TResult> {
+impl<TResult: RtType> ComPtr<AsyncOperationCompletedHandler<TResult>> {
     #[inline] pub fn invoke(&self, asyncInfo: &ComPtr<IAsyncOperation<TResult>>, asyncStatus: AsyncStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, asyncStatus);
+        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, asyncStatus);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -151,9 +151,9 @@ DEFINE_IID!(IID_AsyncOperationProgressHandler, 1432946946, 2731, 16922, 135, 120
 RT_DELEGATE!{delegate AsyncOperationProgressHandler<TResult, TProgress>(AsyncOperationProgressHandlerVtbl, AsyncOperationProgressHandlerImpl) [IID_AsyncOperationProgressHandler] {
     fn Invoke(&self, asyncInfo: *mut IAsyncOperationWithProgress<TResult, TProgress>, progressInfo: TProgress::Abi) -> HRESULT
 }}
-impl<TResult: RtType, TProgress: RtType> AsyncOperationProgressHandler<TResult, TProgress> {
+impl<TResult: RtType, TProgress: RtType> ComPtr<AsyncOperationProgressHandler<TResult, TProgress>> {
     #[inline] pub fn invoke(&self, asyncInfo: &ComPtr<IAsyncOperationWithProgress<TResult, TProgress>>, progressInfo: &TProgress::In) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, TProgress::unwrap(progressInfo));
+        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, TProgress::unwrap(progressInfo));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -165,28 +165,28 @@ RT_INTERFACE!{interface IAsyncOperationWithProgress<TResult, TProgress>(IAsyncOp
     fn get_Completed(&self, out: *mut *mut AsyncOperationWithProgressCompletedHandler<TResult, TProgress>) -> HRESULT,
     fn GetResults(&self, out: *mut TResult::Abi) -> HRESULT
 }}
-impl<TResult: RtType, TProgress: RtType> IAsyncOperationWithProgress<TResult, TProgress> {
+impl<TResult: RtType, TProgress: RtType> ComPtr<IAsyncOperationWithProgress<TResult, TProgress>> {
     #[inline] pub fn set_progress(&self, handler: &ComPtr<AsyncOperationProgressHandler<TResult, TProgress>>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Progress)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).put_Progress)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_progress(&self) -> Result<Option<ComPtr<AsyncOperationProgressHandler<TResult, TProgress>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Progress)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_completed(&self, handler: &ComPtr<AsyncOperationWithProgressCompletedHandler<TResult, TProgress>>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).put_Completed)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_completed(&self) -> Result<Option<ComPtr<AsyncOperationWithProgressCompletedHandler<TResult, TProgress>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Completed)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Completed)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_results(&self) -> Result<TResult::Out> { unsafe { 
         let mut out = TResult::uninitialized();
-        let hr = ((*self.lpVtbl).GetResults)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetResults)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(TResult::wrap(out)) } else { err(hr) }
     }}
 }
@@ -194,9 +194,9 @@ DEFINE_IID!(IID_AsyncOperationWithProgressCompletedHandler, 3898471453, 27303, 1
 RT_DELEGATE!{delegate AsyncOperationWithProgressCompletedHandler<TResult, TProgress>(AsyncOperationWithProgressCompletedHandlerVtbl, AsyncOperationWithProgressCompletedHandlerImpl) [IID_AsyncOperationWithProgressCompletedHandler] {
     fn Invoke(&self, asyncInfo: *mut IAsyncOperationWithProgress<TResult, TProgress>, asyncStatus: AsyncStatus) -> HRESULT
 }}
-impl<TResult: RtType, TProgress: RtType> AsyncOperationWithProgressCompletedHandler<TResult, TProgress> {
+impl<TResult: RtType, TProgress: RtType> ComPtr<AsyncOperationWithProgressCompletedHandler<TResult, TProgress>> {
     #[inline] pub fn invoke(&self, asyncInfo: &ComPtr<IAsyncOperationWithProgress<TResult, TProgress>>, asyncStatus: AsyncStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, asyncStatus);
+        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, asyncStatus);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -207,9 +207,9 @@ DEFINE_IID!(IID_IClosable, 819308585, 32676, 16422, 131, 187, 215, 91, 174, 78, 
 RT_INTERFACE!{interface IClosable(IClosableVtbl): IInspectable(IInspectableVtbl) [IID_IClosable] {
     fn Close(&self) -> HRESULT
 }}
-impl IClosable {
+impl ComPtr<IClosable> {
     #[inline] pub fn close(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Close)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Close)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -220,9 +220,9 @@ DEFINE_IID!(IID_IDeferral, 3592853298, 15231, 18087, 180, 11, 79, 220, 162, 162,
 RT_INTERFACE!{interface IDeferral(IDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IDeferral] {
     fn Complete(&self) -> HRESULT
 }}
-impl IDeferral {
+impl ComPtr<IDeferral> {
     #[inline] pub fn complete(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Complete)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Complete)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -230,7 +230,7 @@ RT_CLASS!{class Deferral: IDeferral}
 impl RtActivatable<IDeferralFactory> for Deferral {}
 impl Deferral {
     #[inline] pub fn create(handler: &ComPtr<DeferralCompletedHandler>) -> Result<ComPtr<Deferral>> {
-        <Self as RtActivatable<IDeferralFactory>>::get_activation_factory().deref().create(handler)
+        <Self as RtActivatable<IDeferralFactory>>::get_activation_factory().create(handler)
     }
 }
 DEFINE_CLSID!(Deferral(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,101,102,101,114,114,97,108,0]) [CLSID_Deferral]);
@@ -238,9 +238,9 @@ DEFINE_IID!(IID_DeferralCompletedHandler, 3979518834, 62408, 20394, 156, 251, 71
 RT_DELEGATE!{delegate DeferralCompletedHandler(DeferralCompletedHandlerVtbl, DeferralCompletedHandlerImpl) [IID_DeferralCompletedHandler] {
     fn Invoke(&self) -> HRESULT
 }}
-impl DeferralCompletedHandler {
+impl ComPtr<DeferralCompletedHandler> {
     #[inline] pub fn invoke(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -248,10 +248,10 @@ DEFINE_IID!(IID_IDeferralFactory, 1705110725, 16309, 18482, 140, 169, 240, 97, 1
 RT_INTERFACE!{static interface IDeferralFactory(IDeferralFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDeferralFactory] {
     fn Create(&self, handler: *mut DeferralCompletedHandler, out: *mut *mut Deferral) -> HRESULT
 }}
-impl IDeferralFactory {
+impl ComPtr<IDeferralFactory> {
     #[inline] pub fn create(&self, handler: &ComPtr<DeferralCompletedHandler>) -> Result<ComPtr<Deferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -259,9 +259,9 @@ DEFINE_IID!(IID_EventHandler, 2648818997, 27361, 4576, 132, 225, 24, 169, 5, 188
 RT_DELEGATE!{delegate EventHandler<T>(EventHandlerVtbl, EventHandlerImpl) [IID_EventHandler] {
     fn Invoke(&self, sender: *mut IInspectable, args: T::Abi) -> HRESULT
 }}
-impl<T: RtType> EventHandler<T> {
+impl<T: RtType> ComPtr<EventHandler<T>> {
     #[inline] pub fn invoke(&self, sender: &ComPtr<IInspectable>, args: &T::In) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _, T::unwrap(args));
+        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, sender.deref() as *const _ as *mut _, T::unwrap(args));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -272,10 +272,10 @@ DEFINE_IID!(IID_IGetActivationFactory, 1323011810, 38621, 18855, 148, 247, 70, 7
 RT_INTERFACE!{interface IGetActivationFactory(IGetActivationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGetActivationFactory] {
     fn GetActivationFactory(&self, activatableClassId: HSTRING, out: *mut *mut IInspectable) -> HRESULT
 }}
-impl IGetActivationFactory {
+impl ComPtr<IGetActivationFactory> {
     #[inline] pub fn get_activation_factory(&self, activatableClassId: &HStringArg) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetActivationFactory)(self as *const _ as *mut _, activatableClassId.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetActivationFactory)(self.deref() as *const _ as *mut _, activatableClassId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -283,13 +283,13 @@ RT_CLASS!{static class GuidHelper}
 impl RtActivatable<IGuidHelperStatics> for GuidHelper {}
 impl GuidHelper {
     #[inline] pub fn create_new_guid() -> Result<Guid> {
-        <Self as RtActivatable<IGuidHelperStatics>>::get_activation_factory().deref().create_new_guid()
+        <Self as RtActivatable<IGuidHelperStatics>>::get_activation_factory().create_new_guid()
     }
     #[inline] pub fn get_empty() -> Result<Guid> {
-        <Self as RtActivatable<IGuidHelperStatics>>::get_activation_factory().deref().get_empty()
+        <Self as RtActivatable<IGuidHelperStatics>>::get_activation_factory().get_empty()
     }
     #[inline] pub fn equals(target: &Guid, value: &Guid) -> Result<bool> {
-        <Self as RtActivatable<IGuidHelperStatics>>::get_activation_factory().deref().equals(target, value)
+        <Self as RtActivatable<IGuidHelperStatics>>::get_activation_factory().equals(target, value)
     }
 }
 DEFINE_CLSID!(GuidHelper(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,71,117,105,100,72,101,108,112,101,114,0]) [CLSID_GuidHelper]);
@@ -299,20 +299,20 @@ RT_INTERFACE!{static interface IGuidHelperStatics(IGuidHelperStaticsVtbl): IInsp
     fn get_Empty(&self, out: *mut Guid) -> HRESULT,
     fn Equals(&self, target: *const Guid, value: *const Guid, out: *mut bool) -> HRESULT
 }}
-impl IGuidHelperStatics {
+impl ComPtr<IGuidHelperStatics> {
     #[inline] pub fn create_new_guid(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).CreateNewGuid)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateNewGuid)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_empty(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Empty)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Empty)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn equals(&self, target: &Guid, value: &Guid) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).Equals)(self as *const _ as *mut _, target as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).Equals)(self.deref() as *const _ as *mut _, target as *const _ as *mut _, value as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -323,10 +323,10 @@ DEFINE_IID!(IID_IMemoryBuffer, 4223982890, 9307, 4580, 175, 152, 104, 148, 35, 3
 RT_INTERFACE!{interface IMemoryBuffer(IMemoryBufferVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBuffer] {
     fn CreateReference(&self, out: *mut *mut IMemoryBufferReference) -> HRESULT
 }}
-impl IMemoryBuffer {
+impl ComPtr<IMemoryBuffer> {
     #[inline] pub fn create_reference(&self) -> Result<Option<ComPtr<IMemoryBufferReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateReference)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateReference)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -334,7 +334,7 @@ RT_CLASS!{class MemoryBuffer: IMemoryBuffer}
 impl RtActivatable<IMemoryBufferFactory> for MemoryBuffer {}
 impl MemoryBuffer {
     #[inline] pub fn create(capacity: u32) -> Result<ComPtr<MemoryBuffer>> {
-        <Self as RtActivatable<IMemoryBufferFactory>>::get_activation_factory().deref().create(capacity)
+        <Self as RtActivatable<IMemoryBufferFactory>>::get_activation_factory().create(capacity)
     }
 }
 DEFINE_CLSID!(MemoryBuffer(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,77,101,109,111,114,121,66,117,102,102,101,114,0]) [CLSID_MemoryBuffer]);
@@ -342,10 +342,10 @@ DEFINE_IID!(IID_IMemoryBufferFactory, 4223982891, 9307, 4580, 175, 152, 104, 148
 RT_INTERFACE!{static interface IMemoryBufferFactory(IMemoryBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBufferFactory] {
     fn Create(&self, capacity: u32, out: *mut *mut MemoryBuffer) -> HRESULT
 }}
-impl IMemoryBufferFactory {
+impl ComPtr<IMemoryBufferFactory> {
     #[inline] pub fn create(&self, capacity: u32) -> Result<ComPtr<MemoryBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, capacity, &mut out);
+        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, capacity, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -355,19 +355,19 @@ RT_INTERFACE!{interface IMemoryBufferReference(IMemoryBufferReferenceVtbl): IIns
     fn add_Closed(&self, handler: *mut TypedEventHandler<IMemoryBufferReference, IInspectable>, out: *mut EventRegistrationToken) -> HRESULT,
     fn remove_Closed(&self, cookie: EventRegistrationToken) -> HRESULT
 }}
-impl IMemoryBufferReference {
+impl ComPtr<IMemoryBufferReference> {
     #[inline] pub fn get_capacity(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Capacity)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Capacity)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_closed(&self, handler: &ComPtr<TypedEventHandler<IMemoryBufferReference, IInspectable>>) -> Result<EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_Closed)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_closed(&self, cookie: EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_Closed)(self as *const _ as *mut _, cookie);
+        let hr = ((*self.deref().lpVtbl).remove_Closed)(self.deref() as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -419,200 +419,200 @@ RT_INTERFACE!{interface IPropertyValue(IPropertyValueVtbl): IInspectable(IInspec
     fn GetSizeArray(&self, valueSize: *mut u32, value: *mut *mut Size) -> HRESULT,
     fn GetRectArray(&self, valueSize: *mut u32, value: *mut *mut Rect) -> HRESULT
 }}
-impl IPropertyValue {
+impl ComPtr<IPropertyValue> {
     #[inline] pub fn get_type(&self) -> Result<PropertyType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Type)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Type)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_numeric_scalar(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_IsNumericScalar)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_IsNumericScalar)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_uint8(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetUInt8)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetUInt8)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_int16(&self) -> Result<i16> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetInt16)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetInt16)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_uint16(&self) -> Result<u16> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetUInt16)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetUInt16)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_int32(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetInt32)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetInt32)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_uint32(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetUInt32)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetUInt32)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_int64(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetInt64)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetInt64)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_uint64(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetUInt64)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetUInt64)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_single(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetSingle)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetSingle)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_double(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetDouble)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetDouble)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_char16(&self) -> Result<Char> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetChar16)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetChar16)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_boolean(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetBoolean)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetBoolean)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetString)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetString)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_guid(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetGuid)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetGuid)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_date_time(&self) -> Result<DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetDateTime)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetDateTime)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_time_span(&self) -> Result<TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetTimeSpan)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetTimeSpan)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_point(&self) -> Result<Point> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetPoint)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetPoint)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_size(&self) -> Result<Size> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetSize)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetSize)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_rect(&self) -> Result<Rect> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetRect)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetRect)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_uint8_array(&self) -> Result<ComArray<u8>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetUInt8Array)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetUInt8Array)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_int16_array(&self) -> Result<ComArray<i16>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetInt16Array)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetInt16Array)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_uint16_array(&self) -> Result<ComArray<u16>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetUInt16Array)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetUInt16Array)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_int32_array(&self) -> Result<ComArray<i32>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetInt32Array)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetInt32Array)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_uint32_array(&self) -> Result<ComArray<u32>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetUInt32Array)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetUInt32Array)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_int64_array(&self) -> Result<ComArray<i64>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetInt64Array)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetInt64Array)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_uint64_array(&self) -> Result<ComArray<u64>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetUInt64Array)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetUInt64Array)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_single_array(&self) -> Result<ComArray<f32>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetSingleArray)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetSingleArray)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_double_array(&self) -> Result<ComArray<f64>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetDoubleArray)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetDoubleArray)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_char16_array(&self) -> Result<ComArray<Char>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetChar16Array)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetChar16Array)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_boolean_array(&self) -> Result<ComArray<bool>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetBooleanArray)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetBooleanArray)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_string_array(&self) -> Result<ComArray<HString>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetStringArray)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetStringArray)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_inspectable_array(&self) -> Result<ComArray<IInspectable>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetInspectableArray)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetInspectableArray)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_guid_array(&self) -> Result<ComArray<Guid>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetGuidArray)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetGuidArray)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_date_time_array(&self) -> Result<ComArray<DateTime>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetDateTimeArray)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetDateTimeArray)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_time_span_array(&self) -> Result<ComArray<TimeSpan>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetTimeSpanArray)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetTimeSpanArray)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_point_array(&self) -> Result<ComArray<Point>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetPointArray)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetPointArray)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_size_array(&self) -> Result<ComArray<Size>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetSizeArray)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetSizeArray)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[inline] pub fn get_rect_array(&self) -> Result<ComArray<Rect>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).GetRectArray)(self as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.deref().lpVtbl).GetRectArray)(self.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
 }
@@ -620,121 +620,121 @@ RT_CLASS!{static class PropertyValue}
 impl RtActivatable<IPropertyValueStatics> for PropertyValue {}
 impl PropertyValue {
     #[inline] pub fn create_empty() -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_empty()
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_empty()
     }
     #[inline] pub fn create_uint8(value: u8) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint8(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint8(value)
     }
     #[inline] pub fn create_int16(value: i16) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_int16(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int16(value)
     }
     #[inline] pub fn create_uint16(value: u16) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint16(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint16(value)
     }
     #[inline] pub fn create_int32(value: i32) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_int32(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int32(value)
     }
     #[inline] pub fn create_uint32(value: u32) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint32(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint32(value)
     }
     #[inline] pub fn create_int64(value: i64) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_int64(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int64(value)
     }
     #[inline] pub fn create_uint64(value: u64) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint64(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint64(value)
     }
     #[inline] pub fn create_single(value: f32) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_single(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_single(value)
     }
     #[inline] pub fn create_double(value: f64) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_double(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_double(value)
     }
     #[inline] pub fn create_char16(value: Char) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_char16(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_char16(value)
     }
     #[inline] pub fn create_boolean(value: bool) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_boolean(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_boolean(value)
     }
     #[inline] pub fn create_string(value: &HStringArg) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_string(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_string(value)
     }
     #[inline] pub fn create_inspectable(value: &ComPtr<IInspectable>) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_inspectable(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_inspectable(value)
     }
     #[inline] pub fn create_guid(value: Guid) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_guid(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_guid(value)
     }
     #[inline] pub fn create_date_time(value: DateTime) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_date_time(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_date_time(value)
     }
     #[inline] pub fn create_time_span(value: TimeSpan) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_time_span(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_time_span(value)
     }
     #[inline] pub fn create_point(value: Point) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_point(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_point(value)
     }
     #[inline] pub fn create_size(value: Size) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_size(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_size(value)
     }
     #[inline] pub fn create_rect(value: Rect) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_rect(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_rect(value)
     }
     #[inline] pub fn create_uint8_array(value: &[u8]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint8_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint8_array(value)
     }
     #[inline] pub fn create_int16_array(value: &[i16]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_int16_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int16_array(value)
     }
     #[inline] pub fn create_uint16_array(value: &[u16]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint16_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint16_array(value)
     }
     #[inline] pub fn create_int32_array(value: &[i32]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_int32_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int32_array(value)
     }
     #[inline] pub fn create_uint32_array(value: &[u32]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint32_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint32_array(value)
     }
     #[inline] pub fn create_int64_array(value: &[i64]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_int64_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int64_array(value)
     }
     #[inline] pub fn create_uint64_array(value: &[u64]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint64_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint64_array(value)
     }
     #[inline] pub fn create_single_array(value: &[f32]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_single_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_single_array(value)
     }
     #[inline] pub fn create_double_array(value: &[f64]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_double_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_double_array(value)
     }
     #[inline] pub fn create_char16_array(value: &[Char]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_char16_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_char16_array(value)
     }
     #[inline] pub fn create_boolean_array(value: &[bool]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_boolean_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_boolean_array(value)
     }
     #[inline] pub fn create_string_array(value: &[&HStringArg]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_string_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_string_array(value)
     }
     #[inline] pub fn create_inspectable_array(value: &[&ComPtr<IInspectable>]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_inspectable_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_inspectable_array(value)
     }
     #[inline] pub fn create_guid_array(value: &[Guid]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_guid_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_guid_array(value)
     }
     #[inline] pub fn create_date_time_array(value: &[DateTime]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_date_time_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_date_time_array(value)
     }
     #[inline] pub fn create_time_span_array(value: &[TimeSpan]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_time_span_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_time_span_array(value)
     }
     #[inline] pub fn create_point_array(value: &[Point]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_point_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_point_array(value)
     }
     #[inline] pub fn create_size_array(value: &[Size]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_size_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_size_array(value)
     }
     #[inline] pub fn create_rect_array(value: &[Rect]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_rect_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_rect_array(value)
     }
 }
 DEFINE_CLSID!(PropertyValue(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,80,114,111,112,101,114,116,121,86,97,108,117,101,0]) [CLSID_PropertyValue]);
@@ -780,200 +780,200 @@ RT_INTERFACE!{static interface IPropertyValueStatics(IPropertyValueStaticsVtbl):
     fn CreateSizeArray(&self, valueSize: u32, value: *mut Size, out: *mut *mut IInspectable) -> HRESULT,
     fn CreateRectArray(&self, valueSize: u32, value: *mut Rect, out: *mut *mut IInspectable) -> HRESULT
 }}
-impl IPropertyValueStatics {
+impl ComPtr<IPropertyValueStatics> {
     #[inline] pub fn create_empty(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateEmpty)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateEmpty)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_uint8(&self, value: u8) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUInt8)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateUInt8)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_int16(&self, value: i16) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInt16)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateInt16)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_uint16(&self, value: u16) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUInt16)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateUInt16)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_int32(&self, value: i32) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInt32)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateInt32)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_uint32(&self, value: u32) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUInt32)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateUInt32)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_int64(&self, value: i64) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInt64)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateInt64)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_uint64(&self, value: u64) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUInt64)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateUInt64)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_single(&self, value: f32) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateSingle)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateSingle)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_double(&self, value: f64) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDouble)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateDouble)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_char16(&self, value: Char) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateChar16)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateChar16)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_boolean(&self, value: bool) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateBoolean)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateBoolean)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_string(&self, value: &HStringArg) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateString)(self as *const _ as *mut _, value.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateString)(self.deref() as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_inspectable(&self, value: &ComPtr<IInspectable>) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInspectable)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateInspectable)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_guid(&self, value: Guid) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateGuid)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateGuid)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_date_time(&self, value: DateTime) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDateTime)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateDateTime)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_time_span(&self, value: TimeSpan) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateTimeSpan)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateTimeSpan)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_point(&self, value: Point) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreatePoint)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreatePoint)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_size(&self, value: Size) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateSize)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateSize)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_rect(&self, value: Rect) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateRect)(self as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateRect)(self.deref() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_uint8_array(&self, value: &[u8]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUInt8Array)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateUInt8Array)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_int16_array(&self, value: &[i16]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInt16Array)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateInt16Array)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_uint16_array(&self, value: &[u16]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUInt16Array)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateUInt16Array)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_int32_array(&self, value: &[i32]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInt32Array)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateInt32Array)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_uint32_array(&self, value: &[u32]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUInt32Array)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateUInt32Array)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_int64_array(&self, value: &[i64]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInt64Array)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateInt64Array)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_uint64_array(&self, value: &[u64]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUInt64Array)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateUInt64Array)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_single_array(&self, value: &[f32]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateSingleArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateSingleArray)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_double_array(&self, value: &[f64]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDoubleArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateDoubleArray)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_char16_array(&self, value: &[Char]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateChar16Array)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateChar16Array)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_boolean_array(&self, value: &[bool]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateBooleanArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateBooleanArray)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_string_array(&self, value: &[&HStringArg]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateStringArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateStringArray)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_inspectable_array(&self, value: &[&ComPtr<IInspectable>]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInspectableArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateInspectableArray)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_guid_array(&self, value: &[Guid]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateGuidArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateGuidArray)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_date_time_array(&self, value: &[DateTime]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDateTimeArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateDateTimeArray)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_time_span_array(&self, value: &[TimeSpan]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateTimeSpanArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateTimeSpanArray)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_point_array(&self, value: &[Point]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreatePointArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreatePointArray)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_size_array(&self, value: &[Size]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateSizeArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateSizeArray)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_rect_array(&self, value: &[Rect]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateRectArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateRectArray)(self.deref() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -984,10 +984,10 @@ DEFINE_IID!(IID_IReference, 1640068870, 11621, 4576, 154, 232, 212, 133, 100, 1,
 RT_INTERFACE!{interface IReference<T>(IReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IReference] {
     fn get_Value(&self, out: *mut T::Abi) -> HRESULT
 }}
-impl<T: RtType> IReference<T> {
+impl<T: RtType> ComPtr<IReference<T>> {
     #[inline] pub fn get_value(&self) -> Result<T::Out> { unsafe { 
         let mut out = T::uninitialized();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(T::wrap(out)) } else { err(hr) }
     }}
 }
@@ -995,10 +995,10 @@ DEFINE_IID!(IID_IReferenceArray, 1640068871, 11621, 4576, 154, 232, 212, 133, 10
 RT_INTERFACE!{interface IReferenceArray<T>(IReferenceArrayVtbl): IInspectable(IInspectableVtbl) [IID_IReferenceArray] {
     fn get_Value(&self, outSize: *mut u32, out: *mut *mut T::Abi) -> HRESULT
 }}
-impl<T: RtType> IReferenceArray<T> {
+impl<T: RtType> ComPtr<IReferenceArray<T>> {
     #[inline] pub fn get_value(&self) -> Result<ComArray<T>> { unsafe { 
         let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut outSize, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
@@ -1009,10 +1009,10 @@ DEFINE_IID!(IID_IStringable, 2520162132, 36534, 18672, 171, 206, 193, 178, 17, 2
 RT_INTERFACE!{interface IStringable(IStringableVtbl): IInspectable(IInspectableVtbl) [IID_IStringable] {
     fn ToString(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl IStringable {
+impl ComPtr<IStringable> {
     #[inline] pub fn to_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ToString)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).ToString)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1023,9 +1023,9 @@ DEFINE_IID!(IID_TypedEventHandler, 2648818996, 27361, 4576, 132, 225, 24, 169, 5
 RT_DELEGATE!{delegate TypedEventHandler<TSender, TResult>(TypedEventHandlerVtbl, TypedEventHandlerImpl) [IID_TypedEventHandler] {
     fn Invoke(&self, sender: TSender::Abi, args: TResult::Abi) -> HRESULT
 }}
-impl<TSender: RtType, TResult: RtType> TypedEventHandler<TSender, TResult> {
+impl<TSender: RtType, TResult: RtType> ComPtr<TypedEventHandler<TSender, TResult>> {
     #[inline] pub fn invoke(&self, sender: &TSender::In, args: &TResult::In) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, TSender::unwrap(sender), TResult::unwrap(args));
+        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, TSender::unwrap(sender), TResult::unwrap(args));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1034,16 +1034,16 @@ impl RtActivatable<IUriRuntimeClassFactory> for Uri {}
 impl RtActivatable<IUriEscapeStatics> for Uri {}
 impl Uri {
     #[inline] pub fn create_uri(uri: &HStringArg) -> Result<ComPtr<Uri>> {
-        <Self as RtActivatable<IUriRuntimeClassFactory>>::get_activation_factory().deref().create_uri(uri)
+        <Self as RtActivatable<IUriRuntimeClassFactory>>::get_activation_factory().create_uri(uri)
     }
     #[inline] pub fn create_with_relative_uri(baseUri: &HStringArg, relativeUri: &HStringArg) -> Result<ComPtr<Uri>> {
-        <Self as RtActivatable<IUriRuntimeClassFactory>>::get_activation_factory().deref().create_with_relative_uri(baseUri, relativeUri)
+        <Self as RtActivatable<IUriRuntimeClassFactory>>::get_activation_factory().create_with_relative_uri(baseUri, relativeUri)
     }
     #[inline] pub fn unescape_component(toUnescape: &HStringArg) -> Result<HString> {
-        <Self as RtActivatable<IUriEscapeStatics>>::get_activation_factory().deref().unescape_component(toUnescape)
+        <Self as RtActivatable<IUriEscapeStatics>>::get_activation_factory().unescape_component(toUnescape)
     }
     #[inline] pub fn escape_component(toEscape: &HStringArg) -> Result<HString> {
-        <Self as RtActivatable<IUriEscapeStatics>>::get_activation_factory().deref().escape_component(toEscape)
+        <Self as RtActivatable<IUriEscapeStatics>>::get_activation_factory().escape_component(toEscape)
     }
 }
 DEFINE_CLSID!(Uri(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,85,114,105,0]) [CLSID_Uri]);
@@ -1052,15 +1052,15 @@ RT_INTERFACE!{static interface IUriEscapeStatics(IUriEscapeStaticsVtbl): IInspec
     fn UnescapeComponent(&self, toUnescape: HSTRING, out: *mut HSTRING) -> HRESULT,
     fn EscapeComponent(&self, toEscape: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
-impl IUriEscapeStatics {
+impl ComPtr<IUriEscapeStatics> {
     #[inline] pub fn unescape_component(&self, toUnescape: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnescapeComponent)(self as *const _ as *mut _, toUnescape.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).UnescapeComponent)(self.deref() as *const _ as *mut _, toUnescape.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn escape_component(&self, toEscape: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).EscapeComponent)(self as *const _ as *mut _, toEscape.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).EscapeComponent)(self.deref() as *const _ as *mut _, toEscape.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1084,90 +1084,90 @@ RT_INTERFACE!{interface IUriRuntimeClass(IUriRuntimeClassVtbl): IInspectable(IIn
     fn Equals(&self, pUri: *mut Uri, out: *mut bool) -> HRESULT,
     fn CombineUri(&self, relativeUri: HSTRING, out: *mut *mut Uri) -> HRESULT
 }}
-impl IUriRuntimeClass {
+impl ComPtr<IUriRuntimeClass> {
     #[inline] pub fn get_absolute_uri(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AbsoluteUri)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_AbsoluteUri)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_uri(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayUri)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DisplayUri)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_domain(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Domain)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Domain)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_extension(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Extension)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Extension)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_fragment(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Fragment)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Fragment)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_host(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Host)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Host)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_password(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Password)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Password)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_path(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Path)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Path)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_query(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Query)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Query)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_query_parsed(&self) -> Result<Option<ComPtr<WwwFormUrlDecoder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_QueryParsed)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_QueryParsed)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_raw_uri(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_RawUri)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_RawUri)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_scheme_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_SchemeName)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_SchemeName)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_user_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_UserName)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_UserName)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_port(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Port)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Port)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_suspicious(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Suspicious)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Suspicious)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn equals(&self, pUri: &ComPtr<Uri>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).Equals)(self as *const _ as *mut _, pUri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).Equals)(self.deref() as *const _ as *mut _, pUri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn combine_uri(&self, relativeUri: &HStringArg) -> Result<Option<ComPtr<Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CombineUri)(self as *const _ as *mut _, relativeUri.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).CombineUri)(self.deref() as *const _ as *mut _, relativeUri.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1176,15 +1176,15 @@ RT_INTERFACE!{static interface IUriRuntimeClassFactory(IUriRuntimeClassFactoryVt
     fn CreateUri(&self, uri: HSTRING, out: *mut *mut Uri) -> HRESULT,
     fn CreateWithRelativeUri(&self, baseUri: HSTRING, relativeUri: HSTRING, out: *mut *mut Uri) -> HRESULT
 }}
-impl IUriRuntimeClassFactory {
+impl ComPtr<IUriRuntimeClassFactory> {
     #[inline] pub fn create_uri(&self, uri: &HStringArg) -> Result<ComPtr<Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateUri)(self as *const _ as *mut _, uri.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateUri)(self.deref() as *const _ as *mut _, uri.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_relative_uri(&self, baseUri: &HStringArg, relativeUri: &HStringArg) -> Result<ComPtr<Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithRelativeUri)(self as *const _ as *mut _, baseUri.get(), relativeUri.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateWithRelativeUri)(self.deref() as *const _ as *mut _, baseUri.get(), relativeUri.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1193,15 +1193,15 @@ RT_INTERFACE!{interface IUriRuntimeClassWithAbsoluteCanonicalUri(IUriRuntimeClas
     fn get_AbsoluteCanonicalUri(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayIri(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl IUriRuntimeClassWithAbsoluteCanonicalUri {
+impl ComPtr<IUriRuntimeClassWithAbsoluteCanonicalUri> {
     #[inline] pub fn get_absolute_canonical_uri(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_AbsoluteCanonicalUri)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_AbsoluteCanonicalUri)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_iri(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_DisplayIri)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_DisplayIri)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1209,7 +1209,7 @@ RT_CLASS!{class WwwFormUrlDecoder: IWwwFormUrlDecoderRuntimeClass}
 impl RtActivatable<IWwwFormUrlDecoderRuntimeClassFactory> for WwwFormUrlDecoder {}
 impl WwwFormUrlDecoder {
     #[inline] pub fn create_www_form_url_decoder(query: &HStringArg) -> Result<ComPtr<WwwFormUrlDecoder>> {
-        <Self as RtActivatable<IWwwFormUrlDecoderRuntimeClassFactory>>::get_activation_factory().deref().create_www_form_url_decoder(query)
+        <Self as RtActivatable<IWwwFormUrlDecoderRuntimeClassFactory>>::get_activation_factory().create_www_form_url_decoder(query)
     }
 }
 DEFINE_CLSID!(WwwFormUrlDecoder(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,87,119,119,70,111,114,109,85,114,108,68,101,99,111,100,101,114,0]) [CLSID_WwwFormUrlDecoder]);
@@ -1218,15 +1218,15 @@ RT_INTERFACE!{interface IWwwFormUrlDecoderEntry(IWwwFormUrlDecoderEntryVtbl): II
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Value(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl IWwwFormUrlDecoderEntry {
+impl ComPtr<IWwwFormUrlDecoderEntry> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1235,10 +1235,10 @@ DEFINE_IID!(IID_IWwwFormUrlDecoderRuntimeClass, 3562669137, 61989, 17730, 146, 1
 RT_INTERFACE!{interface IWwwFormUrlDecoderRuntimeClass(IWwwFormUrlDecoderRuntimeClassVtbl): IInspectable(IInspectableVtbl) [IID_IWwwFormUrlDecoderRuntimeClass] {
     fn GetFirstValueByName(&self, name: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
-impl IWwwFormUrlDecoderRuntimeClass {
+impl ComPtr<IWwwFormUrlDecoderRuntimeClass> {
     #[inline] pub fn get_first_value_by_name(&self, name: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFirstValueByName)(self as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).GetFirstValueByName)(self.deref() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1246,10 +1246,10 @@ DEFINE_IID!(IID_IWwwFormUrlDecoderRuntimeClassFactory, 1535929149, 9390, 16821, 
 RT_INTERFACE!{static interface IWwwFormUrlDecoderRuntimeClassFactory(IWwwFormUrlDecoderRuntimeClassFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWwwFormUrlDecoderRuntimeClassFactory] {
     fn CreateWwwFormUrlDecoder(&self, query: HSTRING, out: *mut *mut WwwFormUrlDecoder) -> HRESULT
 }}
-impl IWwwFormUrlDecoderRuntimeClassFactory {
+impl ComPtr<IWwwFormUrlDecoderRuntimeClassFactory> {
     #[inline] pub fn create_www_form_url_decoder(&self, query: &HStringArg) -> Result<ComPtr<WwwFormUrlDecoder>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWwwFormUrlDecoder)(self as *const _ as *mut _, query.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateWwwFormUrlDecoder)(self.deref() as *const _ as *mut _, query.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3415,10 +3415,10 @@ DEFINE_IID!(IID_IIterable, 4205151722, 25108, 16919, 175, 218, 127, 70, 222, 88,
 RT_INTERFACE!{interface IIterable<T>(IIterableVtbl): IInspectable(IInspectableVtbl) [IID_IIterable] {
     fn First(&self, out: *mut *mut IIterator<T>) -> HRESULT
 }}
-impl<T: RtType> IIterable<T> {
+impl<T: RtType> ComPtr<IIterable<T>> {
     #[inline] pub fn first(&self) -> Result<Option<ComPtr<IIterator<T>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).First)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).First)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3429,26 +3429,26 @@ RT_INTERFACE!{interface IIterator<T>(IIteratorVtbl): IInspectable(IInspectableVt
     fn MoveNext(&self, out: *mut bool) -> HRESULT,
     fn GetMany(&self, itemsSize: u32, items: *mut T::Abi, out: *mut u32) -> HRESULT
 }}
-impl<T: RtType> IIterator<T> {
+impl<T: RtType> ComPtr<IIterator<T>> {
     #[inline] pub fn get_current(&self) -> Result<T::Out> { unsafe { 
         let mut out = T::uninitialized();
-        let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Current)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(T::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_has_current(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_HasCurrent)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_HasCurrent)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn move_next(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).MoveNext)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).MoveNext)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_many(&self, items: &mut Vec<T::OutNonNull>) -> Result<()> { unsafe { 
         debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetMany)(self as *const _ as *mut _, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetMany)(self.deref() as *const _ as *mut _, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
         if hr == S_OK { items.set_len(out as usize); Ok(()) } else { err(hr) }
     }}
 }
@@ -3457,15 +3457,15 @@ RT_INTERFACE!{interface IKeyValuePair<K, V>(IKeyValuePairVtbl): IInspectable(IIn
     fn get_Key(&self, out: *mut K::Abi) -> HRESULT,
     fn get_Value(&self, out: *mut V::Abi) -> HRESULT
 }}
-impl<K: RtType, V: RtType> IKeyValuePair<K, V> {
+impl<K: RtType, V: RtType> ComPtr<IKeyValuePair<K, V>> {
     #[inline] pub fn get_key(&self) -> Result<K::Out> { unsafe { 
         let mut out = K::uninitialized();
-        let hr = ((*self.lpVtbl).get_Key)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Key)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(K::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<V::Out> { unsafe { 
         let mut out = V::uninitialized();
-        let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(V::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3479,38 +3479,38 @@ RT_INTERFACE!{interface IMap<K, V>(IMapVtbl): IInspectable(IInspectableVtbl) [II
     fn Remove(&self, key: K::Abi) -> HRESULT,
     fn Clear(&self) -> HRESULT
 }}
-impl<K: RtType, V: RtType> IMap<K, V> {
+impl<K: RtType, V: RtType> ComPtr<IMap<K, V>> {
     #[inline] pub fn lookup(&self, key: &K::In) -> Result<V::Out> { unsafe { 
         let mut out = V::uninitialized();
-        let hr = ((*self.lpVtbl).Lookup)(self as *const _ as *mut _, K::unwrap(key), &mut out);
+        let hr = ((*self.deref().lpVtbl).Lookup)(self.deref() as *const _ as *mut _, K::unwrap(key), &mut out);
         if hr == S_OK { Ok(V::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_size(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Size)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn has_key(&self, key: &K::In) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).HasKey)(self as *const _ as *mut _, K::unwrap(key), &mut out);
+        let hr = ((*self.deref().lpVtbl).HasKey)(self.deref() as *const _ as *mut _, K::unwrap(key), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_view(&self) -> Result<Option<ComPtr<IMapView<K, V>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetView)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetView)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn insert(&mut self, key: &K::In, value: &V::In) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).Insert)(self as *const _ as *mut _, K::unwrap(key), V::unwrap(value), &mut out);
+        let hr = ((*self.deref().lpVtbl).Insert)(self.deref() as *const _ as *mut _, K::unwrap(key), V::unwrap(value), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove(&mut self, key: &K::In) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Remove)(self as *const _ as *mut _, K::unwrap(key));
+        let hr = ((*self.deref().lpVtbl).Remove)(self.deref() as *const _ as *mut _, K::unwrap(key));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn clear(&mut self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Clear)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Clear)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3519,15 +3519,15 @@ RT_INTERFACE!{interface IMapChangedEventArgs<K>(IMapChangedEventArgsVtbl): IInsp
     fn get_CollectionChange(&self, out: *mut CollectionChange) -> HRESULT,
     fn get_Key(&self, out: *mut K::Abi) -> HRESULT
 }}
-impl<K: RtType> IMapChangedEventArgs<K> {
+impl<K: RtType> ComPtr<IMapChangedEventArgs<K>> {
     #[inline] pub fn get_collection_change(&self) -> Result<CollectionChange> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CollectionChange)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CollectionChange)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_key(&self) -> Result<K::Out> { unsafe { 
         let mut out = K::uninitialized();
-        let hr = ((*self.lpVtbl).get_Key)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Key)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(K::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3535,9 +3535,9 @@ DEFINE_IID!(IID_MapChangedEventHandler, 395646963, 38126, 16888, 189, 220, 118, 
 RT_DELEGATE!{delegate MapChangedEventHandler<K, V>(MapChangedEventHandlerVtbl, MapChangedEventHandlerImpl) [IID_MapChangedEventHandler] {
     fn Invoke(&self, sender: *mut IObservableMap<K, V>, event: *mut IMapChangedEventArgs<K>) -> HRESULT
 }}
-impl<K: RtType, V: RtType> MapChangedEventHandler<K, V> {
+impl<K: RtType, V: RtType> ComPtr<MapChangedEventHandler<K, V>> {
     #[inline] pub fn invoke(&self, sender: &ComPtr<IObservableMap<K, V>>, event: &ComPtr<IMapChangedEventArgs<K>>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _, event.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, sender.deref() as *const _ as *mut _, event.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3548,25 +3548,25 @@ RT_INTERFACE!{interface IMapView<K, V>(IMapViewVtbl): IInspectable(IInspectableV
     fn HasKey(&self, key: K::Abi, out: *mut bool) -> HRESULT,
     fn Split(&self, first: *mut *mut IMapView<K, V>, second: *mut *mut IMapView<K, V>) -> HRESULT
 }}
-impl<K: RtType, V: RtType> IMapView<K, V> {
+impl<K: RtType, V: RtType> ComPtr<IMapView<K, V>> {
     #[inline] pub fn lookup(&self, key: &K::In) -> Result<V::Out> { unsafe { 
         let mut out = V::uninitialized();
-        let hr = ((*self.lpVtbl).Lookup)(self as *const _ as *mut _, K::unwrap(key), &mut out);
+        let hr = ((*self.deref().lpVtbl).Lookup)(self.deref() as *const _ as *mut _, K::unwrap(key), &mut out);
         if hr == S_OK { Ok(V::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_size(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Size)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn has_key(&self, key: &K::In) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).HasKey)(self as *const _ as *mut _, K::unwrap(key), &mut out);
+        let hr = ((*self.deref().lpVtbl).HasKey)(self.deref() as *const _ as *mut _, K::unwrap(key), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn split(&self) -> Result<(Option<ComPtr<IMapView<K, V>>>, Option<ComPtr<IMapView<K, V>>>)> { unsafe { 
         let mut first = null_mut(); let mut second = null_mut();
-        let hr = ((*self.lpVtbl).Split)(self as *const _ as *mut _, &mut first, &mut second);
+        let hr = ((*self.deref().lpVtbl).Split)(self.deref() as *const _ as *mut _, &mut first, &mut second);
         if hr == S_OK { Ok((ComPtr::wrap_optional(first), ComPtr::wrap_optional(second))) } else { err(hr) }
     }}
 }
@@ -3575,14 +3575,14 @@ RT_INTERFACE!{interface IObservableMap<K, V>(IObservableMapVtbl): IInspectable(I
     fn add_MapChanged(&self, vhnd: *mut MapChangedEventHandler<K, V>, out: *mut super::EventRegistrationToken) -> HRESULT,
     fn remove_MapChanged(&self, token: super::EventRegistrationToken) -> HRESULT
 }}
-impl<K: RtType, V: RtType> IObservableMap<K, V> {
+impl<K: RtType, V: RtType> ComPtr<IObservableMap<K, V>> {
     #[inline] pub fn add_map_changed(&self, vhnd: &ComPtr<MapChangedEventHandler<K, V>>) -> Result<super::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MapChanged)(self as *const _ as *mut _, vhnd.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_MapChanged)(self.deref() as *const _ as *mut _, vhnd.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_map_changed(&self, token: super::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_MapChanged)(self as *const _ as *mut _, token);
+        let hr = ((*self.deref().lpVtbl).remove_MapChanged)(self.deref() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3591,14 +3591,14 @@ RT_INTERFACE!{interface IObservableVector<T>(IObservableVectorVtbl): IInspectabl
     fn add_VectorChanged(&self, vhnd: *mut VectorChangedEventHandler<T>, out: *mut super::EventRegistrationToken) -> HRESULT,
     fn remove_VectorChanged(&self, token: super::EventRegistrationToken) -> HRESULT
 }}
-impl<T: RtType> IObservableVector<T> {
+impl<T: RtType> ComPtr<IObservableVector<T>> {
     #[inline] pub fn add_vector_changed(&self, vhnd: &ComPtr<VectorChangedEventHandler<T>>) -> Result<super::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_VectorChanged)(self as *const _ as *mut _, vhnd.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_VectorChanged)(self.deref() as *const _ as *mut _, vhnd.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_vector_changed(&self, token: super::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_VectorChanged)(self as *const _ as *mut _, token);
+        let hr = ((*self.deref().lpVtbl).remove_VectorChanged)(self.deref() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3630,60 +3630,59 @@ RT_INTERFACE!{interface IVector<T>(IVectorVtbl): IInspectable(IInspectableVtbl) 
     fn GetMany(&self, startIndex: u32, itemsSize: u32, items: *mut T::Abi, out: *mut u32) -> HRESULT,
     fn ReplaceAll(&self, itemsSize: u32, items: *mut T::Abi) -> HRESULT
 }}
-impl<T: RtType> IVector<T> {
+impl<T: RtType> ComPtr<IVector<T>> {
     #[inline] pub fn get_at(&self, index: u32) -> Result<T::Out> { unsafe { 
         let mut out = T::uninitialized();
-        let hr = ((*self.lpVtbl).GetAt)(self as *const _ as *mut _, index, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetAt)(self.deref() as *const _ as *mut _, index, &mut out);
         if hr == S_OK { Ok(T::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_size(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Size)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_view(&self) -> Result<Option<ComPtr<IVectorView<T>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetView)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetView)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn index_of(&self, value: &T::In) -> Result<(u32, bool)> { unsafe { 
-        println!("Calling IVector::index_of");
         let mut index = zeroed(); let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IndexOf)(self as *const _ as *mut _, T::unwrap(value), &mut index, &mut out);
+        let hr = ((*self.deref().lpVtbl).IndexOf)(self.deref() as *const _ as *mut _, T::unwrap(value), &mut index, &mut out);
         if hr == S_OK { Ok((index, out)) } else { err(hr) }
     }}
     #[inline] pub fn set_at(&mut self, index: u32, value: &T::In) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetAt)(self as *const _ as *mut _, index, T::unwrap(value));
+        let hr = ((*self.deref().lpVtbl).SetAt)(self.deref() as *const _ as *mut _, index, T::unwrap(value));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn insert_at(&mut self, index: u32, value: &T::In) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).InsertAt)(self as *const _ as *mut _, index, T::unwrap(value));
+        let hr = ((*self.deref().lpVtbl).InsertAt)(self.deref() as *const _ as *mut _, index, T::unwrap(value));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn remove_at(&mut self, index: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveAt)(self as *const _ as *mut _, index);
+        let hr = ((*self.deref().lpVtbl).RemoveAt)(self.deref() as *const _ as *mut _, index);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn append(&mut self, value: &T::In) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Append)(self as *const _ as *mut _, T::unwrap(value));
+        let hr = ((*self.deref().lpVtbl).Append)(self.deref() as *const _ as *mut _, T::unwrap(value));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn remove_at_end(&mut self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveAtEnd)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).RemoveAtEnd)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn clear(&mut self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Clear)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Clear)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_many(&self, startIndex: u32, items: &mut Vec<T::OutNonNull>) -> Result<()> { unsafe { 
         debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetMany)(self as *const _ as *mut _, startIndex, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetMany)(self.deref() as *const _ as *mut _, startIndex, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
         if hr == S_OK { items.set_len(out as usize); Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn replace_all(&mut self, items: &[&T::In]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReplaceAll)(self as *const _ as *mut _, items.len() as u32, items.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).ReplaceAll)(self.deref() as *const _ as *mut _, items.len() as u32, items.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3692,15 +3691,15 @@ RT_INTERFACE!{interface IVectorChangedEventArgs(IVectorChangedEventArgsVtbl): II
     fn get_CollectionChange(&self, out: *mut CollectionChange) -> HRESULT,
     fn get_Index(&self, out: *mut u32) -> HRESULT
 }}
-impl IVectorChangedEventArgs {
+impl ComPtr<IVectorChangedEventArgs> {
     #[inline] pub fn get_collection_change(&self) -> Result<CollectionChange> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_CollectionChange)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_CollectionChange)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_index(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Index)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Index)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3708,9 +3707,9 @@ DEFINE_IID!(IID_VectorChangedEventHandler, 201660242, 40895, 19568, 170, 12, 14,
 RT_DELEGATE!{delegate VectorChangedEventHandler<T>(VectorChangedEventHandlerVtbl, VectorChangedEventHandlerImpl) [IID_VectorChangedEventHandler] {
     fn Invoke(&self, sender: *mut IObservableVector<T>, event: *mut IVectorChangedEventArgs) -> HRESULT
 }}
-impl<T: RtType> VectorChangedEventHandler<T> {
+impl<T: RtType> ComPtr<VectorChangedEventHandler<T>> {
     #[inline] pub fn invoke(&self, sender: &ComPtr<IObservableVector<T>>, event: &ComPtr<IVectorChangedEventArgs>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _, event.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, sender.deref() as *const _ as *mut _, event.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3721,27 +3720,26 @@ RT_INTERFACE!{interface IVectorView<T>(IVectorViewVtbl): IInspectable(IInspectab
     fn IndexOf(&self, value: T::Abi, index: *mut u32, out: *mut bool) -> HRESULT,
     fn GetMany(&self, startIndex: u32, itemsSize: u32, items: *mut T::Abi, out: *mut u32) -> HRESULT
 }}
-impl<T: RtType> IVectorView<T> {
+impl<T: RtType> ComPtr<IVectorView<T>> {
     #[inline] pub fn get_at(&self, index: u32) -> Result<T::Out> { unsafe { 
         let mut out = T::uninitialized();
-        let hr = ((*self.lpVtbl).GetAt)(self as *const _ as *mut _, index, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetAt)(self.deref() as *const _ as *mut _, index, &mut out);
         if hr == S_OK { Ok(T::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_size(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Size)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn index_of(&self, value: &T::In) -> Result<(u32, bool)> { unsafe { 
-        println!("Calling IVectorView::index_of");
         let mut index = zeroed(); let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IndexOf)(self as *const _ as *mut _, T::unwrap(value), &mut index, &mut out);
+        let hr = ((*self.deref().lpVtbl).IndexOf)(self.deref() as *const _ as *mut _, T::unwrap(value), &mut index, &mut out);
         if hr == S_OK { Ok((index, out)) } else { err(hr) }
     }}
     #[inline] pub fn get_many(&self, startIndex: u32, items: &mut Vec<T::OutNonNull>) -> Result<()> { unsafe { 
         debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetMany)(self as *const _ as *mut _, startIndex, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetMany)(self.deref() as *const _ as *mut _, startIndex, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
         if hr == S_OK { items.set_len(out as usize); Ok(()) } else { err(hr) }
     }}
 }
@@ -5684,25 +5682,25 @@ RT_CLASS!{static class AsyncCausalityTracer}
 impl RtActivatable<IAsyncCausalityTracerStatics> for AsyncCausalityTracer {}
 impl AsyncCausalityTracer {
     #[inline] pub fn trace_operation_creation(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, operationName: &HStringArg, relatedContext: u64) -> Result<()> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().trace_operation_creation(traceLevel, source, platformId, operationId, operationName, relatedContext)
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_operation_creation(traceLevel, source, platformId, operationId, operationName, relatedContext)
     }
     #[inline] pub fn trace_operation_completion(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, status: super::AsyncStatus) -> Result<()> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().trace_operation_completion(traceLevel, source, platformId, operationId, status)
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_operation_completion(traceLevel, source, platformId, operationId, status)
     }
     #[inline] pub fn trace_operation_relation(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, relation: CausalityRelation) -> Result<()> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().trace_operation_relation(traceLevel, source, platformId, operationId, relation)
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_operation_relation(traceLevel, source, platformId, operationId, relation)
     }
     #[inline] pub fn trace_synchronous_work_start(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, work: CausalitySynchronousWork) -> Result<()> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().trace_synchronous_work_start(traceLevel, source, platformId, operationId, work)
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_synchronous_work_start(traceLevel, source, platformId, operationId, work)
     }
     #[inline] pub fn trace_synchronous_work_completion(traceLevel: CausalityTraceLevel, source: CausalitySource, work: CausalitySynchronousWork) -> Result<()> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().trace_synchronous_work_completion(traceLevel, source, work)
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_synchronous_work_completion(traceLevel, source, work)
     }
     #[inline] pub fn add_tracing_status_changed(handler: &ComPtr<super::EventHandler<TracingStatusChangedEventArgs>>) -> Result<super::EventRegistrationToken> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().add_tracing_status_changed(handler)
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().add_tracing_status_changed(handler)
     }
     #[inline] pub fn remove_tracing_status_changed(cookie: super::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().remove_tracing_status_changed(cookie)
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().remove_tracing_status_changed(cookie)
     }
 }
 DEFINE_CLSID!(AsyncCausalityTracer(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,65,115,121,110,99,67,97,117,115,97,108,105,116,121,84,114,97,99,101,114,0]) [CLSID_AsyncCausalityTracer]);
@@ -5716,34 +5714,34 @@ RT_INTERFACE!{static interface IAsyncCausalityTracerStatics(IAsyncCausalityTrace
     fn add_TracingStatusChanged(&self, handler: *mut super::EventHandler<TracingStatusChangedEventArgs>, out: *mut super::EventRegistrationToken) -> HRESULT,
     fn remove_TracingStatusChanged(&self, cookie: super::EventRegistrationToken) -> HRESULT
 }}
-impl IAsyncCausalityTracerStatics {
+impl ComPtr<IAsyncCausalityTracerStatics> {
     #[inline] pub fn trace_operation_creation(&self, traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, operationName: &HStringArg, relatedContext: u64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).TraceOperationCreation)(self as *const _ as *mut _, traceLevel, source, platformId, operationId, operationName.get(), relatedContext);
+        let hr = ((*self.deref().lpVtbl).TraceOperationCreation)(self.deref() as *const _ as *mut _, traceLevel, source, platformId, operationId, operationName.get(), relatedContext);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn trace_operation_completion(&self, traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, status: super::AsyncStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).TraceOperationCompletion)(self as *const _ as *mut _, traceLevel, source, platformId, operationId, status);
+        let hr = ((*self.deref().lpVtbl).TraceOperationCompletion)(self.deref() as *const _ as *mut _, traceLevel, source, platformId, operationId, status);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn trace_operation_relation(&self, traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, relation: CausalityRelation) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).TraceOperationRelation)(self as *const _ as *mut _, traceLevel, source, platformId, operationId, relation);
+        let hr = ((*self.deref().lpVtbl).TraceOperationRelation)(self.deref() as *const _ as *mut _, traceLevel, source, platformId, operationId, relation);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn trace_synchronous_work_start(&self, traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, work: CausalitySynchronousWork) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).TraceSynchronousWorkStart)(self as *const _ as *mut _, traceLevel, source, platformId, operationId, work);
+        let hr = ((*self.deref().lpVtbl).TraceSynchronousWorkStart)(self.deref() as *const _ as *mut _, traceLevel, source, platformId, operationId, work);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn trace_synchronous_work_completion(&self, traceLevel: CausalityTraceLevel, source: CausalitySource, work: CausalitySynchronousWork) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).TraceSynchronousWorkCompletion)(self as *const _ as *mut _, traceLevel, source, work);
+        let hr = ((*self.deref().lpVtbl).TraceSynchronousWorkCompletion)(self.deref() as *const _ as *mut _, traceLevel, source, work);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_tracing_status_changed(&self, handler: &ComPtr<super::EventHandler<TracingStatusChangedEventArgs>>) -> Result<super::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_TracingStatusChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_TracingStatusChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_tracing_status_changed(&self, cookie: super::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_TracingStatusChanged)(self as *const _ as *mut _, cookie);
+        let hr = ((*self.deref().lpVtbl).remove_TracingStatusChanged)(self.deref() as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5765,20 +5763,20 @@ RT_INTERFACE!{interface IErrorDetails(IErrorDetailsVtbl): IInspectable(IInspecta
     fn get_LongDescription(&self, out: *mut HSTRING) -> HRESULT,
     fn get_HelpUri(&self, out: *mut *mut super::Uri) -> HRESULT
 }}
-impl IErrorDetails {
+impl ComPtr<IErrorDetails> {
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Description)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Description)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_long_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_LongDescription)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_LongDescription)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_help_uri(&self) -> Result<Option<ComPtr<super::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_HelpUri)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_HelpUri)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5786,7 +5784,7 @@ RT_CLASS!{class ErrorDetails: IErrorDetails}
 impl RtActivatable<IErrorDetailsStatics> for ErrorDetails {}
 impl ErrorDetails {
     #[inline] pub fn create_from_hresult_async(errorCode: i32) -> Result<ComPtr<super::IAsyncOperation<ErrorDetails>>> {
-        <Self as RtActivatable<IErrorDetailsStatics>>::get_activation_factory().deref().create_from_hresult_async(errorCode)
+        <Self as RtActivatable<IErrorDetailsStatics>>::get_activation_factory().create_from_hresult_async(errorCode)
     }
 }
 DEFINE_CLSID!(ErrorDetails(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,69,114,114,111,114,68,101,116,97,105,108,115,0]) [CLSID_ErrorDetails]);
@@ -5794,10 +5792,10 @@ DEFINE_IID!(IID_IErrorDetailsStatics, 3077584720, 2845, 18120, 170, 14, 75, 129,
 RT_INTERFACE!{static interface IErrorDetailsStatics(IErrorDetailsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorDetailsStatics] {
     fn CreateFromHResultAsync(&self, errorCode: i32, out: *mut *mut super::IAsyncOperation<ErrorDetails>) -> HRESULT
 }}
-impl IErrorDetailsStatics {
+impl ComPtr<IErrorDetailsStatics> {
     #[inline] pub fn create_from_hresult_async(&self, errorCode: i32) -> Result<ComPtr<super::IAsyncOperation<ErrorDetails>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromHResultAsync)(self as *const _ as *mut _, errorCode, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateFromHResultAsync)(self.deref() as *const _ as *mut _, errorCode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5809,14 +5807,14 @@ RT_INTERFACE!{interface IErrorReportingSettings(IErrorReportingSettingsVtbl): II
     fn SetErrorOptions(&self, value: ErrorOptions) -> HRESULT,
     fn GetErrorOptions(&self, out: *mut ErrorOptions) -> HRESULT
 }}
-impl IErrorReportingSettings {
+impl ComPtr<IErrorReportingSettings> {
     #[inline] pub fn set_error_options(&self, value: ErrorOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetErrorOptions)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).SetErrorOptions)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_error_options(&self) -> Result<ErrorOptions> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetErrorOptions)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).GetErrorOptions)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5831,36 +5829,36 @@ RT_INTERFACE!{interface IFileLoggingSession(IFileLoggingSessionVtbl): IInspectab
     fn add_LogFileGenerated(&self, handler: *mut super::TypedEventHandler<IFileLoggingSession, LogFileGeneratedEventArgs>, out: *mut super::EventRegistrationToken) -> HRESULT,
     fn remove_LogFileGenerated(&self, token: super::EventRegistrationToken) -> HRESULT
 }}
-impl IFileLoggingSession {
+impl ComPtr<IFileLoggingSession> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_logging_channel(&self, loggingChannel: &ComPtr<ILoggingChannel>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddLoggingChannel)(self as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddLoggingChannel)(self.deref() as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_logging_channel_with_level(&self, loggingChannel: &ComPtr<ILoggingChannel>, maxLevel: LoggingLevel) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddLoggingChannelWithLevel)(self as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _, maxLevel);
+        let hr = ((*self.deref().lpVtbl).AddLoggingChannelWithLevel)(self.deref() as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _, maxLevel);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn remove_logging_channel(&self, loggingChannel: &ComPtr<ILoggingChannel>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveLoggingChannel)(self as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).RemoveLoggingChannel)(self.deref() as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn close_and_save_to_file_async(&self) -> Result<ComPtr<super::IAsyncOperation<super::super::storage::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CloseAndSaveToFileAsync)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CloseAndSaveToFileAsync)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_log_file_generated(&self, handler: &ComPtr<super::TypedEventHandler<IFileLoggingSession, LogFileGeneratedEventArgs>>) -> Result<super::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_LogFileGenerated)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_LogFileGenerated)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_log_file_generated(&self, token: super::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_LogFileGenerated)(self as *const _ as *mut _, token);
+        let hr = ((*self.deref().lpVtbl).remove_LogFileGenerated)(self.deref() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5868,7 +5866,7 @@ RT_CLASS!{class FileLoggingSession: IFileLoggingSession}
 impl RtActivatable<IFileLoggingSessionFactory> for FileLoggingSession {}
 impl FileLoggingSession {
     #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<FileLoggingSession>> {
-        <Self as RtActivatable<IFileLoggingSessionFactory>>::get_activation_factory().deref().create(name)
+        <Self as RtActivatable<IFileLoggingSessionFactory>>::get_activation_factory().create(name)
     }
 }
 DEFINE_CLSID!(FileLoggingSession(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,70,105,108,101,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]) [CLSID_FileLoggingSession]);
@@ -5876,10 +5874,10 @@ DEFINE_IID!(IID_IFileLoggingSessionFactory, 4003499470, 33863, 19882, 145, 51, 1
 RT_INTERFACE!{static interface IFileLoggingSessionFactory(IFileLoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileLoggingSessionFactory] {
     fn Create(&self, name: HSTRING, out: *mut *mut FileLoggingSession) -> HRESULT
 }}
-impl IFileLoggingSessionFactory {
+impl ComPtr<IFileLoggingSessionFactory> {
     #[inline] pub fn create(&self, name: &HStringArg) -> Result<ComPtr<FileLoggingSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5887,10 +5885,10 @@ DEFINE_IID!(IID_ILogFileGeneratedEventArgs, 647927663, 3384, 19482, 181, 63, 179
 RT_INTERFACE!{interface ILogFileGeneratedEventArgs(ILogFileGeneratedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ILogFileGeneratedEventArgs] {
     #[cfg(feature="windows-storage")] fn get_File(&self, out: *mut *mut super::super::storage::StorageFile) -> HRESULT
 }}
-impl ILogFileGeneratedEventArgs {
+impl ComPtr<ILogFileGeneratedEventArgs> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_file(&self) -> Result<Option<ComPtr<super::super::storage::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_File)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_File)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5900,15 +5898,15 @@ RT_INTERFACE!{interface ILoggingActivity(ILoggingActivityVtbl): IInspectable(IIn
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Id(&self, out: *mut Guid) -> HRESULT
 }}
-impl ILoggingActivity {
+impl ComPtr<ILoggingActivity> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5916,10 +5914,10 @@ RT_CLASS!{class LoggingActivity: ILoggingActivity}
 impl RtActivatable<ILoggingActivityFactory> for LoggingActivity {}
 impl LoggingActivity {
     #[inline] pub fn create_logging_activity(activityName: &HStringArg, loggingChannel: &ComPtr<ILoggingChannel>) -> Result<ComPtr<LoggingActivity>> {
-        <Self as RtActivatable<ILoggingActivityFactory>>::get_activation_factory().deref().create_logging_activity(activityName, loggingChannel)
+        <Self as RtActivatable<ILoggingActivityFactory>>::get_activation_factory().create_logging_activity(activityName, loggingChannel)
     }
     #[inline] pub fn create_logging_activity_with_level(activityName: &HStringArg, loggingChannel: &ComPtr<ILoggingChannel>, level: LoggingLevel) -> Result<ComPtr<LoggingActivity>> {
-        <Self as RtActivatable<ILoggingActivityFactory>>::get_activation_factory().deref().create_logging_activity_with_level(activityName, loggingChannel, level)
+        <Self as RtActivatable<ILoggingActivityFactory>>::get_activation_factory().create_logging_activity_with_level(activityName, loggingChannel, level)
     }
 }
 DEFINE_CLSID!(LoggingActivity(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,65,99,116,105,118,105,116,121,0]) [CLSID_LoggingActivity]);
@@ -5930,22 +5928,22 @@ RT_INTERFACE!{interface ILoggingActivity2(ILoggingActivity2Vtbl): IInspectable(I
     fn StopActivityWithFields(&self, stopEventName: HSTRING, fields: *mut LoggingFields) -> HRESULT,
     fn StopActivityWithFieldsAndOptions(&self, stopEventName: HSTRING, fields: *mut LoggingFields, options: *mut LoggingOptions) -> HRESULT
 }}
-impl ILoggingActivity2 {
+impl ComPtr<ILoggingActivity2> {
     #[inline] pub fn get_channel(&self) -> Result<Option<ComPtr<LoggingChannel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Channel)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Channel)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn stop_activity(&self, stopEventName: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).StopActivity)(self as *const _ as *mut _, stopEventName.get());
+        let hr = ((*self.deref().lpVtbl).StopActivity)(self.deref() as *const _ as *mut _, stopEventName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop_activity_with_fields(&self, stopEventName: &HStringArg, fields: &ComPtr<LoggingFields>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).StopActivityWithFields)(self as *const _ as *mut _, stopEventName.get(), fields.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).StopActivityWithFields)(self.deref() as *const _ as *mut _, stopEventName.get(), fields.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop_activity_with_fields_and_options(&self, stopEventName: &HStringArg, fields: &ComPtr<LoggingFields>, options: &ComPtr<LoggingOptions>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).StopActivityWithFieldsAndOptions)(self as *const _ as *mut _, stopEventName.get(), fields.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).StopActivityWithFieldsAndOptions)(self.deref() as *const _ as *mut _, stopEventName.get(), fields.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5954,15 +5952,15 @@ RT_INTERFACE!{static interface ILoggingActivityFactory(ILoggingActivityFactoryVt
     fn CreateLoggingActivity(&self, activityName: HSTRING, loggingChannel: *mut ILoggingChannel, out: *mut *mut LoggingActivity) -> HRESULT,
     fn CreateLoggingActivityWithLevel(&self, activityName: HSTRING, loggingChannel: *mut ILoggingChannel, level: LoggingLevel, out: *mut *mut LoggingActivity) -> HRESULT
 }}
-impl ILoggingActivityFactory {
+impl ComPtr<ILoggingActivityFactory> {
     #[inline] pub fn create_logging_activity(&self, activityName: &HStringArg, loggingChannel: &ComPtr<ILoggingChannel>) -> Result<ComPtr<LoggingActivity>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateLoggingActivity)(self as *const _ as *mut _, activityName.get(), loggingChannel.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateLoggingActivity)(self.deref() as *const _ as *mut _, activityName.get(), loggingChannel.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_logging_activity_with_level(&self, activityName: &HStringArg, loggingChannel: &ComPtr<ILoggingChannel>, level: LoggingLevel) -> Result<ComPtr<LoggingActivity>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateLoggingActivityWithLevel)(self as *const _ as *mut _, activityName.get(), loggingChannel.deref() as *const _ as *mut _, level, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateLoggingActivityWithLevel)(self.deref() as *const _ as *mut _, activityName.get(), loggingChannel.deref() as *const _ as *mut _, level, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5978,45 +5976,45 @@ RT_INTERFACE!{interface ILoggingChannel(ILoggingChannelVtbl): IInspectable(IInsp
     fn add_LoggingEnabled(&self, handler: *mut super::TypedEventHandler<ILoggingChannel, IInspectable>, out: *mut super::EventRegistrationToken) -> HRESULT,
     fn remove_LoggingEnabled(&self, token: super::EventRegistrationToken) -> HRESULT
 }}
-impl ILoggingChannel {
+impl ComPtr<ILoggingChannel> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Enabled)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Enabled)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_level(&self) -> Result<LoggingLevel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Level)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Level)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn log_message(&self, eventString: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LogMessage)(self as *const _ as *mut _, eventString.get());
+        let hr = ((*self.deref().lpVtbl).LogMessage)(self.deref() as *const _ as *mut _, eventString.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn log_message_with_level(&self, eventString: &HStringArg, level: LoggingLevel) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LogMessageWithLevel)(self as *const _ as *mut _, eventString.get(), level);
+        let hr = ((*self.deref().lpVtbl).LogMessageWithLevel)(self.deref() as *const _ as *mut _, eventString.get(), level);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn log_value_pair(&self, value1: &HStringArg, value2: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LogValuePair)(self as *const _ as *mut _, value1.get(), value2);
+        let hr = ((*self.deref().lpVtbl).LogValuePair)(self.deref() as *const _ as *mut _, value1.get(), value2);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn log_value_pair_with_level(&self, value1: &HStringArg, value2: i32, level: LoggingLevel) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LogValuePairWithLevel)(self as *const _ as *mut _, value1.get(), value2, level);
+        let hr = ((*self.deref().lpVtbl).LogValuePairWithLevel)(self.deref() as *const _ as *mut _, value1.get(), value2, level);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_logging_enabled(&self, handler: &ComPtr<super::TypedEventHandler<ILoggingChannel, IInspectable>>) -> Result<super::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_LoggingEnabled)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).add_LoggingEnabled)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_logging_enabled(&self, token: super::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).remove_LoggingEnabled)(self as *const _ as *mut _, token);
+        let hr = ((*self.deref().lpVtbl).remove_LoggingEnabled)(self.deref() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6025,13 +6023,13 @@ impl RtActivatable<ILoggingChannelFactory> for LoggingChannel {}
 impl RtActivatable<ILoggingChannelFactory2> for LoggingChannel {}
 impl LoggingChannel {
     #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<LoggingChannel>> {
-        <Self as RtActivatable<ILoggingChannelFactory>>::get_activation_factory().deref().create(name)
+        <Self as RtActivatable<ILoggingChannelFactory>>::get_activation_factory().create(name)
     }
     #[inline] pub fn create_with_options(name: &HStringArg, options: &ComPtr<LoggingChannelOptions>) -> Result<ComPtr<LoggingChannel>> {
-        <Self as RtActivatable<ILoggingChannelFactory2>>::get_activation_factory().deref().create_with_options(name, options)
+        <Self as RtActivatable<ILoggingChannelFactory2>>::get_activation_factory().create_with_options(name, options)
     }
     #[inline] pub fn create_with_options_and_id(name: &HStringArg, options: &ComPtr<LoggingChannelOptions>, id: Guid) -> Result<ComPtr<LoggingChannel>> {
-        <Self as RtActivatable<ILoggingChannelFactory2>>::get_activation_factory().deref().create_with_options_and_id(name, options, id)
+        <Self as RtActivatable<ILoggingChannelFactory2>>::get_activation_factory().create_with_options_and_id(name, options, id)
     }
 }
 DEFINE_CLSID!(LoggingChannel(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,0]) [CLSID_LoggingChannel]);
@@ -6039,10 +6037,10 @@ DEFINE_IID!(IID_ILoggingChannel2, 2672573683, 2988, 17829, 158, 51, 186, 243, 24
 RT_INTERFACE!{interface ILoggingChannel2(ILoggingChannel2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannel2] {
     fn get_Id(&self, out: *mut Guid) -> HRESULT
 }}
-impl ILoggingChannel2 {
+impl ComPtr<ILoggingChannel2> {
     #[inline] pub fn get_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -6050,10 +6048,10 @@ DEFINE_IID!(IID_ILoggingChannelFactory, 1323064220, 44928, 19099, 176, 220, 57, 
 RT_INTERFACE!{static interface ILoggingChannelFactory(ILoggingChannelFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory] {
     fn Create(&self, name: HSTRING, out: *mut *mut LoggingChannel) -> HRESULT
 }}
-impl ILoggingChannelFactory {
+impl ComPtr<ILoggingChannelFactory> {
     #[inline] pub fn create(&self, name: &HStringArg) -> Result<ComPtr<LoggingChannel>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6062,15 +6060,15 @@ RT_INTERFACE!{static interface ILoggingChannelFactory2(ILoggingChannelFactory2Vt
     fn CreateWithOptions(&self, name: HSTRING, options: *mut LoggingChannelOptions, out: *mut *mut LoggingChannel) -> HRESULT,
     fn CreateWithOptionsAndId(&self, name: HSTRING, options: *mut LoggingChannelOptions, id: Guid, out: *mut *mut LoggingChannel) -> HRESULT
 }}
-impl ILoggingChannelFactory2 {
+impl ComPtr<ILoggingChannelFactory2> {
     #[inline] pub fn create_with_options(&self, name: &HStringArg, options: &ComPtr<LoggingChannelOptions>) -> Result<ComPtr<LoggingChannel>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithOptions)(self as *const _ as *mut _, name.get(), options.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateWithOptions)(self.deref() as *const _ as *mut _, name.get(), options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_options_and_id(&self, name: &HStringArg, options: &ComPtr<LoggingChannelOptions>, id: Guid) -> Result<ComPtr<LoggingChannel>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithOptionsAndId)(self as *const _ as *mut _, name.get(), options.deref() as *const _ as *mut _, id, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateWithOptionsAndId)(self.deref() as *const _ as *mut _, name.get(), options.deref() as *const _ as *mut _, id, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6079,14 +6077,14 @@ RT_INTERFACE!{interface ILoggingChannelOptions(ILoggingChannelOptionsVtbl): IIns
     fn get_Group(&self, out: *mut Guid) -> HRESULT,
     fn put_Group(&self, value: Guid) -> HRESULT
 }}
-impl ILoggingChannelOptions {
+impl ComPtr<ILoggingChannelOptions> {
     #[inline] pub fn get_group(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Group)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Group)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_group(&self, value: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Group)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Group)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6095,7 +6093,7 @@ impl RtActivatable<ILoggingChannelOptionsFactory> for LoggingChannelOptions {}
 impl RtActivatable<IActivationFactory> for LoggingChannelOptions {}
 impl LoggingChannelOptions {
     #[inline] pub fn create(group: Guid) -> Result<ComPtr<LoggingChannelOptions>> {
-        <Self as RtActivatable<ILoggingChannelOptionsFactory>>::get_activation_factory().deref().create(group)
+        <Self as RtActivatable<ILoggingChannelOptionsFactory>>::get_activation_factory().create(group)
     }
 }
 DEFINE_CLSID!(LoggingChannelOptions(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,79,112,116,105,111,110,115,0]) [CLSID_LoggingChannelOptions]);
@@ -6103,10 +6101,10 @@ DEFINE_IID!(IID_ILoggingChannelOptionsFactory, 2838581722, 32687, 16785, 135, 85
 RT_INTERFACE!{static interface ILoggingChannelOptionsFactory(ILoggingChannelOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelOptionsFactory] {
     fn Create(&self, group: Guid, out: *mut *mut LoggingChannelOptions) -> HRESULT
 }}
-impl ILoggingChannelOptionsFactory {
+impl ComPtr<ILoggingChannelOptionsFactory> {
     #[inline] pub fn create(&self, group: Guid) -> Result<ComPtr<LoggingChannelOptions>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, group, &mut out);
+        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, group, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6231,465 +6229,465 @@ RT_INTERFACE!{interface ILoggingFields(ILoggingFieldsVtbl): IInspectable(IInspec
     fn AddRectArrayWithFormat(&self, name: HSTRING, valueSize: u32, value: *mut super::Rect, format: LoggingFieldFormat) -> HRESULT,
     fn AddRectArrayWithFormatAndTags(&self, name: HSTRING, valueSize: u32, value: *mut super::Rect, format: LoggingFieldFormat, tags: i32) -> HRESULT
 }}
-impl ILoggingFields {
+impl ComPtr<ILoggingFields> {
     #[inline] pub fn clear(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Clear)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).Clear)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn begin_struct(&self, name: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).BeginStruct)(self as *const _ as *mut _, name.get());
+        let hr = ((*self.deref().lpVtbl).BeginStruct)(self.deref() as *const _ as *mut _, name.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn begin_struct_with_tags(&self, name: &HStringArg, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).BeginStructWithTags)(self as *const _ as *mut _, name.get(), tags);
+        let hr = ((*self.deref().lpVtbl).BeginStructWithTags)(self.deref() as *const _ as *mut _, name.get(), tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn end_struct(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).EndStruct)(self as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).EndStruct)(self.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_empty(&self, name: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddEmpty)(self as *const _ as *mut _, name.get());
+        let hr = ((*self.deref().lpVtbl).AddEmpty)(self.deref() as *const _ as *mut _, name.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_empty_with_format(&self, name: &HStringArg, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddEmptyWithFormat)(self as *const _ as *mut _, name.get(), format);
+        let hr = ((*self.deref().lpVtbl).AddEmptyWithFormat)(self.deref() as *const _ as *mut _, name.get(), format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_empty_with_format_and_tags(&self, name: &HStringArg, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddEmptyWithFormatAndTags)(self as *const _ as *mut _, name.get(), format, tags);
+        let hr = ((*self.deref().lpVtbl).AddEmptyWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint8(&self, name: &HStringArg, value: u8) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt8)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddUInt8)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint8_with_format(&self, name: &HStringArg, value: u8, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt8WithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddUInt8WithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint8_with_format_and_tags(&self, name: &HStringArg, value: u8, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt8WithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddUInt8WithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint8_array(&self, name: &HStringArg, value: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt8Array)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddUInt8Array)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint8_array_with_format(&self, name: &HStringArg, value: &[u8], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt8ArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddUInt8ArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint8_array_with_format_and_tags(&self, name: &HStringArg, value: &[u8], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt8ArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddUInt8ArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int16(&self, name: &HStringArg, value: i16) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt16)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddInt16)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int16_with_format(&self, name: &HStringArg, value: i16, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt16WithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddInt16WithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int16_with_format_and_tags(&self, name: &HStringArg, value: i16, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt16WithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddInt16WithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int16_array(&self, name: &HStringArg, value: &[i16]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt16Array)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddInt16Array)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int16_array_with_format(&self, name: &HStringArg, value: &[i16], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt16ArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddInt16ArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int16_array_with_format_and_tags(&self, name: &HStringArg, value: &[i16], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt16ArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddInt16ArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint16(&self, name: &HStringArg, value: u16) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt16)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddUInt16)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint16_with_format(&self, name: &HStringArg, value: u16, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt16WithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddUInt16WithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint16_with_format_and_tags(&self, name: &HStringArg, value: u16, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt16WithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddUInt16WithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint16_array(&self, name: &HStringArg, value: &[u16]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt16Array)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddUInt16Array)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint16_array_with_format(&self, name: &HStringArg, value: &[u16], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt16ArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddUInt16ArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint16_array_with_format_and_tags(&self, name: &HStringArg, value: &[u16], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt16ArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddUInt16ArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int32(&self, name: &HStringArg, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt32)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddInt32)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int32_with_format(&self, name: &HStringArg, value: i32, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt32WithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddInt32WithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int32_with_format_and_tags(&self, name: &HStringArg, value: i32, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt32WithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddInt32WithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int32_array(&self, name: &HStringArg, value: &[i32]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt32Array)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddInt32Array)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int32_array_with_format(&self, name: &HStringArg, value: &[i32], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt32ArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddInt32ArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int32_array_with_format_and_tags(&self, name: &HStringArg, value: &[i32], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt32ArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddInt32ArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint32(&self, name: &HStringArg, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt32)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddUInt32)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint32_with_format(&self, name: &HStringArg, value: u32, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt32WithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddUInt32WithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint32_with_format_and_tags(&self, name: &HStringArg, value: u32, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt32WithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddUInt32WithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint32_array(&self, name: &HStringArg, value: &[u32]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt32Array)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddUInt32Array)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint32_array_with_format(&self, name: &HStringArg, value: &[u32], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt32ArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddUInt32ArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint32_array_with_format_and_tags(&self, name: &HStringArg, value: &[u32], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt32ArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddUInt32ArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int64(&self, name: &HStringArg, value: i64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt64)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddInt64)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int64_with_format(&self, name: &HStringArg, value: i64, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt64WithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddInt64WithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int64_with_format_and_tags(&self, name: &HStringArg, value: i64, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt64WithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddInt64WithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int64_array(&self, name: &HStringArg, value: &[i64]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt64Array)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddInt64Array)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int64_array_with_format(&self, name: &HStringArg, value: &[i64], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt64ArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddInt64ArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_int64_array_with_format_and_tags(&self, name: &HStringArg, value: &[i64], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddInt64ArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddInt64ArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint64(&self, name: &HStringArg, value: u64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt64)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddUInt64)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint64_with_format(&self, name: &HStringArg, value: u64, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt64WithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddUInt64WithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint64_with_format_and_tags(&self, name: &HStringArg, value: u64, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt64WithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddUInt64WithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint64_array(&self, name: &HStringArg, value: &[u64]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt64Array)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddUInt64Array)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint64_array_with_format(&self, name: &HStringArg, value: &[u64], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt64ArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddUInt64ArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_uint64_array_with_format_and_tags(&self, name: &HStringArg, value: &[u64], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddUInt64ArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddUInt64ArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_single(&self, name: &HStringArg, value: f32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddSingle)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddSingle)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_single_with_format(&self, name: &HStringArg, value: f32, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddSingleWithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddSingleWithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_single_with_format_and_tags(&self, name: &HStringArg, value: f32, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddSingleWithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddSingleWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_single_array(&self, name: &HStringArg, value: &[f32]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddSingleArray)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddSingleArray)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_single_array_with_format(&self, name: &HStringArg, value: &[f32], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddSingleArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddSingleArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_single_array_with_format_and_tags(&self, name: &HStringArg, value: &[f32], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddSingleArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddSingleArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_double(&self, name: &HStringArg, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddDouble)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddDouble)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_double_with_format(&self, name: &HStringArg, value: f64, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddDoubleWithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddDoubleWithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_double_with_format_and_tags(&self, name: &HStringArg, value: f64, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddDoubleWithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddDoubleWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_double_array(&self, name: &HStringArg, value: &[f64]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddDoubleArray)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddDoubleArray)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_double_array_with_format(&self, name: &HStringArg, value: &[f64], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddDoubleArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddDoubleArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_double_array_with_format_and_tags(&self, name: &HStringArg, value: &[f64], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddDoubleArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddDoubleArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_char16(&self, name: &HStringArg, value: Char) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddChar16)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddChar16)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_char16_with_format(&self, name: &HStringArg, value: Char, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddChar16WithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddChar16WithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_char16_with_format_and_tags(&self, name: &HStringArg, value: Char, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddChar16WithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddChar16WithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_char16_array(&self, name: &HStringArg, value: &[Char]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddChar16Array)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddChar16Array)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_char16_array_with_format(&self, name: &HStringArg, value: &[Char], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddChar16ArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddChar16ArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_char16_array_with_format_and_tags(&self, name: &HStringArg, value: &[Char], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddChar16ArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddChar16ArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_boolean(&self, name: &HStringArg, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddBoolean)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddBoolean)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_boolean_with_format(&self, name: &HStringArg, value: bool, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddBooleanWithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddBooleanWithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_boolean_with_format_and_tags(&self, name: &HStringArg, value: bool, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddBooleanWithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddBooleanWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_boolean_array(&self, name: &HStringArg, value: &[bool]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddBooleanArray)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddBooleanArray)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_boolean_array_with_format(&self, name: &HStringArg, value: &[bool], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddBooleanArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddBooleanArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_boolean_array_with_format_and_tags(&self, name: &HStringArg, value: &[bool], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddBooleanArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddBooleanArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_string(&self, name: &HStringArg, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddString)(self as *const _ as *mut _, name.get(), value.get());
+        let hr = ((*self.deref().lpVtbl).AddString)(self.deref() as *const _ as *mut _, name.get(), value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_string_with_format(&self, name: &HStringArg, value: &HStringArg, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddStringWithFormat)(self as *const _ as *mut _, name.get(), value.get(), format);
+        let hr = ((*self.deref().lpVtbl).AddStringWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.get(), format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_string_with_format_and_tags(&self, name: &HStringArg, value: &HStringArg, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddStringWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.get(), format, tags);
+        let hr = ((*self.deref().lpVtbl).AddStringWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.get(), format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_string_array(&self, name: &HStringArg, value: &[&HStringArg]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddStringArray)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddStringArray)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_string_array_with_format(&self, name: &HStringArg, value: &[&HStringArg], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddStringArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddStringArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_string_array_with_format_and_tags(&self, name: &HStringArg, value: &[&HStringArg], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddStringArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddStringArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_guid(&self, name: &HStringArg, value: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddGuid)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddGuid)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_guid_with_format(&self, name: &HStringArg, value: Guid, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddGuidWithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddGuidWithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_guid_with_format_and_tags(&self, name: &HStringArg, value: Guid, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddGuidWithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddGuidWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_guid_array(&self, name: &HStringArg, value: &[Guid]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddGuidArray)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddGuidArray)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_guid_array_with_format(&self, name: &HStringArg, value: &[Guid], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddGuidArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddGuidArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_guid_array_with_format_and_tags(&self, name: &HStringArg, value: &[Guid], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddGuidArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddGuidArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_date_time(&self, name: &HStringArg, value: super::DateTime) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddDateTime)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddDateTime)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_date_time_with_format(&self, name: &HStringArg, value: super::DateTime, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddDateTimeWithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddDateTimeWithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_date_time_with_format_and_tags(&self, name: &HStringArg, value: super::DateTime, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddDateTimeWithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddDateTimeWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_date_time_array(&self, name: &HStringArg, value: &[super::DateTime]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddDateTimeArray)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddDateTimeArray)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_date_time_array_with_format(&self, name: &HStringArg, value: &[super::DateTime], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddDateTimeArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddDateTimeArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_date_time_array_with_format_and_tags(&self, name: &HStringArg, value: &[super::DateTime], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddDateTimeArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddDateTimeArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_time_span(&self, name: &HStringArg, value: super::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddTimeSpan)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddTimeSpan)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_time_span_with_format(&self, name: &HStringArg, value: super::TimeSpan, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddTimeSpanWithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddTimeSpanWithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_time_span_with_format_and_tags(&self, name: &HStringArg, value: super::TimeSpan, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddTimeSpanWithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddTimeSpanWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_time_span_array(&self, name: &HStringArg, value: &[super::TimeSpan]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddTimeSpanArray)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddTimeSpanArray)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_time_span_array_with_format(&self, name: &HStringArg, value: &[super::TimeSpan], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddTimeSpanArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddTimeSpanArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_time_span_array_with_format_and_tags(&self, name: &HStringArg, value: &[super::TimeSpan], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddTimeSpanArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddTimeSpanArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_point(&self, name: &HStringArg, value: super::Point) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddPoint)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddPoint)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_point_with_format(&self, name: &HStringArg, value: super::Point, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddPointWithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddPointWithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_point_with_format_and_tags(&self, name: &HStringArg, value: super::Point, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddPointWithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddPointWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_point_array(&self, name: &HStringArg, value: &[super::Point]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddPointArray)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddPointArray)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_point_array_with_format(&self, name: &HStringArg, value: &[super::Point], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddPointArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddPointArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_point_array_with_format_and_tags(&self, name: &HStringArg, value: &[super::Point], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddPointArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddPointArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_size(&self, name: &HStringArg, value: super::Size) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddSize)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddSize)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_size_with_format(&self, name: &HStringArg, value: super::Size, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddSizeWithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddSizeWithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_size_with_format_and_tags(&self, name: &HStringArg, value: super::Size, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddSizeWithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddSizeWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_size_array(&self, name: &HStringArg, value: &[super::Size]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddSizeArray)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddSizeArray)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_size_array_with_format(&self, name: &HStringArg, value: &[super::Size], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddSizeArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddSizeArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_size_array_with_format_and_tags(&self, name: &HStringArg, value: &[super::Size], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddSizeArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddSizeArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_rect(&self, name: &HStringArg, value: super::Rect) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddRect)(self as *const _ as *mut _, name.get(), value);
+        let hr = ((*self.deref().lpVtbl).AddRect)(self.deref() as *const _ as *mut _, name.get(), value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_rect_with_format(&self, name: &HStringArg, value: super::Rect, format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddRectWithFormat)(self as *const _ as *mut _, name.get(), value, format);
+        let hr = ((*self.deref().lpVtbl).AddRectWithFormat)(self.deref() as *const _ as *mut _, name.get(), value, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_rect_with_format_and_tags(&self, name: &HStringArg, value: super::Rect, format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddRectWithFormatAndTags)(self as *const _ as *mut _, name.get(), value, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddRectWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_rect_array(&self, name: &HStringArg, value: &[super::Rect]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddRectArray)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddRectArray)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_rect_array_with_format(&self, name: &HStringArg, value: &[super::Rect], format: LoggingFieldFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddRectArrayWithFormat)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
+        let hr = ((*self.deref().lpVtbl).AddRectArrayWithFormat)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_rect_array_with_format_and_tags(&self, name: &HStringArg, value: &[super::Rect], format: LoggingFieldFormat, tags: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddRectArrayWithFormatAndTags)(self as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
+        let hr = ((*self.deref().lpVtbl).AddRectArrayWithFormatAndTags)(self.deref() as *const _ as *mut _, name.get(), value.len() as u32, value.as_ptr() as *mut _, format, tags);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6717,59 +6715,59 @@ RT_INTERFACE!{interface ILoggingOptions(ILoggingOptionsVtbl): IInspectable(IInsp
     fn get_RelatedActivityId(&self, out: *mut Guid) -> HRESULT,
     fn put_RelatedActivityId(&self, value: Guid) -> HRESULT
 }}
-impl ILoggingOptions {
+impl ComPtr<ILoggingOptions> {
     #[inline] pub fn get_keywords(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Keywords)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Keywords)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_keywords(&self, value: i64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Keywords)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Keywords)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_tags(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Tags)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Tags)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_tags(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Tags)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Tags)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_task(&self) -> Result<i16> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Task)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Task)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_task(&self, value: i16) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Task)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Task)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_opcode(&self) -> Result<LoggingOpcode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Opcode)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Opcode)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_opcode(&self, value: LoggingOpcode) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Opcode)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_Opcode)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_activity_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_ActivityId)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_ActivityId)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_activity_id(&self, value: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ActivityId)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_ActivityId)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_related_activity_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_RelatedActivityId)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_RelatedActivityId)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_related_activity_id(&self, value: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_RelatedActivityId)(self as *const _ as *mut _, value);
+        let hr = ((*self.deref().lpVtbl).put_RelatedActivityId)(self.deref() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6778,7 +6776,7 @@ impl RtActivatable<ILoggingOptionsFactory> for LoggingOptions {}
 impl RtActivatable<IActivationFactory> for LoggingOptions {}
 impl LoggingOptions {
     #[inline] pub fn create_with_keywords(keywords: i64) -> Result<ComPtr<LoggingOptions>> {
-        <Self as RtActivatable<ILoggingOptionsFactory>>::get_activation_factory().deref().create_with_keywords(keywords)
+        <Self as RtActivatable<ILoggingOptionsFactory>>::get_activation_factory().create_with_keywords(keywords)
     }
 }
 DEFINE_CLSID!(LoggingOptions(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,79,112,116,105,111,110,115,0]) [CLSID_LoggingOptions]);
@@ -6786,10 +6784,10 @@ DEFINE_IID!(IID_ILoggingOptionsFactory, 3608397515, 39083, 17995, 159, 34, 163, 
 RT_INTERFACE!{static interface ILoggingOptionsFactory(ILoggingOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingOptionsFactory] {
     fn CreateWithKeywords(&self, keywords: i64, out: *mut *mut LoggingOptions) -> HRESULT
 }}
-impl ILoggingOptionsFactory {
+impl ComPtr<ILoggingOptionsFactory> {
     #[inline] pub fn create_with_keywords(&self, keywords: i64) -> Result<ComPtr<LoggingOptions>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithKeywords)(self as *const _ as *mut _, keywords, &mut out);
+        let hr = ((*self.deref().lpVtbl).CreateWithKeywords)(self.deref() as *const _ as *mut _, keywords, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6802,27 +6800,27 @@ RT_INTERFACE!{interface ILoggingSession(ILoggingSessionVtbl): IInspectable(IInsp
     fn AddLoggingChannelWithLevel(&self, loggingChannel: *mut ILoggingChannel, maxLevel: LoggingLevel) -> HRESULT,
     fn RemoveLoggingChannel(&self, loggingChannel: *mut ILoggingChannel) -> HRESULT
 }}
-impl ILoggingSession {
+impl ComPtr<ILoggingSession> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn save_to_file_async(&self, folder: &ComPtr<super::super::storage::IStorageFolder>, fileName: &HStringArg) -> Result<ComPtr<super::IAsyncOperation<super::super::storage::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveToFileAsync)(self as *const _ as *mut _, folder.deref() as *const _ as *mut _, fileName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).SaveToFileAsync)(self.deref() as *const _ as *mut _, folder.deref() as *const _ as *mut _, fileName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_logging_channel(&self, loggingChannel: &ComPtr<ILoggingChannel>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddLoggingChannel)(self as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).AddLoggingChannel)(self.deref() as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_logging_channel_with_level(&self, loggingChannel: &ComPtr<ILoggingChannel>, maxLevel: LoggingLevel) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddLoggingChannelWithLevel)(self as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _, maxLevel);
+        let hr = ((*self.deref().lpVtbl).AddLoggingChannelWithLevel)(self.deref() as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _, maxLevel);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn remove_logging_channel(&self, loggingChannel: &ComPtr<ILoggingChannel>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveLoggingChannel)(self as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).RemoveLoggingChannel)(self.deref() as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6830,7 +6828,7 @@ RT_CLASS!{class LoggingSession: ILoggingSession}
 impl RtActivatable<ILoggingSessionFactory> for LoggingSession {}
 impl LoggingSession {
     #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<LoggingSession>> {
-        <Self as RtActivatable<ILoggingSessionFactory>>::get_activation_factory().deref().create(name)
+        <Self as RtActivatable<ILoggingSessionFactory>>::get_activation_factory().create(name)
     }
 }
 DEFINE_CLSID!(LoggingSession(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]) [CLSID_LoggingSession]);
@@ -6838,10 +6836,10 @@ DEFINE_IID!(IID_ILoggingSessionFactory, 1318289125, 22781, 17888, 140, 47, 161, 
 RT_INTERFACE!{static interface ILoggingSessionFactory(ILoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingSessionFactory] {
     fn Create(&self, name: HSTRING, out: *mut *mut LoggingSession) -> HRESULT
 }}
-impl ILoggingSessionFactory {
+impl ComPtr<ILoggingSessionFactory> {
     #[inline] pub fn create(&self, name: &HStringArg) -> Result<ComPtr<LoggingSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6859,56 +6857,56 @@ RT_INTERFACE!{interface ILoggingTarget(ILoggingTargetVtbl): IInspectable(IInspec
     fn StartActivityWithFieldsAndLevel(&self, startEventName: HSTRING, fields: *mut LoggingFields, level: LoggingLevel, out: *mut *mut LoggingActivity) -> HRESULT,
     fn StartActivityWithFieldsAndOptions(&self, startEventName: HSTRING, fields: *mut LoggingFields, level: LoggingLevel, options: *mut LoggingOptions, out: *mut *mut LoggingActivity) -> HRESULT
 }}
-impl ILoggingTarget {
+impl ComPtr<ILoggingTarget> {
     #[inline] pub fn is_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsEnabled)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).IsEnabled)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_enabled_with_level(&self, level: LoggingLevel) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsEnabledWithLevel)(self as *const _ as *mut _, level, &mut out);
+        let hr = ((*self.deref().lpVtbl).IsEnabledWithLevel)(self.deref() as *const _ as *mut _, level, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_enabled_with_level_and_keywords(&self, level: LoggingLevel, keywords: i64) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsEnabledWithLevelAndKeywords)(self as *const _ as *mut _, level, keywords, &mut out);
+        let hr = ((*self.deref().lpVtbl).IsEnabledWithLevelAndKeywords)(self.deref() as *const _ as *mut _, level, keywords, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn log_event(&self, eventName: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LogEvent)(self as *const _ as *mut _, eventName.get());
+        let hr = ((*self.deref().lpVtbl).LogEvent)(self.deref() as *const _ as *mut _, eventName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn log_event_with_fields(&self, eventName: &HStringArg, fields: &ComPtr<LoggingFields>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LogEventWithFields)(self as *const _ as *mut _, eventName.get(), fields.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).LogEventWithFields)(self.deref() as *const _ as *mut _, eventName.get(), fields.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn log_event_with_fields_and_level(&self, eventName: &HStringArg, fields: &ComPtr<LoggingFields>, level: LoggingLevel) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LogEventWithFieldsAndLevel)(self as *const _ as *mut _, eventName.get(), fields.deref() as *const _ as *mut _, level);
+        let hr = ((*self.deref().lpVtbl).LogEventWithFieldsAndLevel)(self.deref() as *const _ as *mut _, eventName.get(), fields.deref() as *const _ as *mut _, level);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn log_event_with_fields_and_options(&self, eventName: &HStringArg, fields: &ComPtr<LoggingFields>, level: LoggingLevel, options: &ComPtr<LoggingOptions>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LogEventWithFieldsAndOptions)(self as *const _ as *mut _, eventName.get(), fields.deref() as *const _ as *mut _, level, options.deref() as *const _ as *mut _);
+        let hr = ((*self.deref().lpVtbl).LogEventWithFieldsAndOptions)(self.deref() as *const _ as *mut _, eventName.get(), fields.deref() as *const _ as *mut _, level, options.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn start_activity(&self, startEventName: &HStringArg) -> Result<Option<ComPtr<LoggingActivity>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartActivity)(self as *const _ as *mut _, startEventName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).StartActivity)(self.deref() as *const _ as *mut _, startEventName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn start_activity_with_fields(&self, startEventName: &HStringArg, fields: &ComPtr<LoggingFields>) -> Result<Option<ComPtr<LoggingActivity>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartActivityWithFields)(self as *const _ as *mut _, startEventName.get(), fields.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).StartActivityWithFields)(self.deref() as *const _ as *mut _, startEventName.get(), fields.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn start_activity_with_fields_and_level(&self, startEventName: &HStringArg, fields: &ComPtr<LoggingFields>, level: LoggingLevel) -> Result<Option<ComPtr<LoggingActivity>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartActivityWithFieldsAndLevel)(self as *const _ as *mut _, startEventName.get(), fields.deref() as *const _ as *mut _, level, &mut out);
+        let hr = ((*self.deref().lpVtbl).StartActivityWithFieldsAndLevel)(self.deref() as *const _ as *mut _, startEventName.get(), fields.deref() as *const _ as *mut _, level, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn start_activity_with_fields_and_options(&self, startEventName: &HStringArg, fields: &ComPtr<LoggingFields>, level: LoggingLevel, options: &ComPtr<LoggingOptions>) -> Result<Option<ComPtr<LoggingActivity>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartActivityWithFieldsAndOptions)(self as *const _ as *mut _, startEventName.get(), fields.deref() as *const _ as *mut _, level, options.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).StartActivityWithFieldsAndOptions)(self.deref() as *const _ as *mut _, startEventName.get(), fields.deref() as *const _ as *mut _, level, options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -6920,15 +6918,15 @@ RT_INTERFACE!{interface ITracingStatusChangedEventArgs(ITracingStatusChangedEven
     fn get_Enabled(&self, out: *mut bool) -> HRESULT,
     fn get_TraceLevel(&self, out: *mut CausalityTraceLevel) -> HRESULT
 }}
-impl ITracingStatusChangedEventArgs {
+impl ComPtr<ITracingStatusChangedEventArgs> {
     #[inline] pub fn get_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_Enabled)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_Enabled)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_trace_level(&self) -> Result<CausalityTraceLevel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).get_TraceLevel)(self as *const _ as *mut _, &mut out);
+        let hr = ((*self.deref().lpVtbl).get_TraceLevel)(self.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -6940,34 +6938,34 @@ RT_CLASS!{static class ApiInformation}
 impl RtActivatable<IApiInformationStatics> for ApiInformation {}
 impl ApiInformation {
     #[inline] pub fn is_type_present(typeName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_type_present(typeName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_type_present(typeName)
     }
     #[inline] pub fn is_method_present(typeName: &HStringArg, methodName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_method_present(typeName, methodName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_method_present(typeName, methodName)
     }
     #[inline] pub fn is_method_present_with_arity(typeName: &HStringArg, methodName: &HStringArg, inputParameterCount: u32) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_method_present_with_arity(typeName, methodName, inputParameterCount)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_method_present_with_arity(typeName, methodName, inputParameterCount)
     }
     #[inline] pub fn is_event_present(typeName: &HStringArg, eventName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_event_present(typeName, eventName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_event_present(typeName, eventName)
     }
     #[inline] pub fn is_property_present(typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_property_present(typeName, propertyName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_property_present(typeName, propertyName)
     }
     #[inline] pub fn is_read_only_property_present(typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_read_only_property_present(typeName, propertyName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_read_only_property_present(typeName, propertyName)
     }
     #[inline] pub fn is_writeable_property_present(typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_writeable_property_present(typeName, propertyName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_writeable_property_present(typeName, propertyName)
     }
     #[inline] pub fn is_enum_named_value_present(enumTypeName: &HStringArg, valueName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_enum_named_value_present(enumTypeName, valueName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_enum_named_value_present(enumTypeName, valueName)
     }
     #[inline] pub fn is_api_contract_present_by_major(contractName: &HStringArg, majorVersion: u16) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_api_contract_present_by_major(contractName, majorVersion)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_api_contract_present_by_major(contractName, majorVersion)
     }
     #[inline] pub fn is_api_contract_present_by_major_and_minor(contractName: &HStringArg, majorVersion: u16, minorVersion: u16) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_api_contract_present_by_major_and_minor(contractName, majorVersion, minorVersion)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_api_contract_present_by_major_and_minor(contractName, majorVersion, minorVersion)
     }
 }
 DEFINE_CLSID!(ApiInformation(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,77,101,116,97,100,97,116,97,46,65,112,105,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_ApiInformation]);
@@ -6984,55 +6982,55 @@ RT_INTERFACE!{static interface IApiInformationStatics(IApiInformationStaticsVtbl
     fn IsApiContractPresentByMajor(&self, contractName: HSTRING, majorVersion: u16, out: *mut bool) -> HRESULT,
     fn IsApiContractPresentByMajorAndMinor(&self, contractName: HSTRING, majorVersion: u16, minorVersion: u16, out: *mut bool) -> HRESULT
 }}
-impl IApiInformationStatics {
+impl ComPtr<IApiInformationStatics> {
     #[inline] pub fn is_type_present(&self, typeName: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsTypePresent)(self as *const _ as *mut _, typeName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).IsTypePresent)(self.deref() as *const _ as *mut _, typeName.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_method_present(&self, typeName: &HStringArg, methodName: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsMethodPresent)(self as *const _ as *mut _, typeName.get(), methodName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).IsMethodPresent)(self.deref() as *const _ as *mut _, typeName.get(), methodName.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_method_present_with_arity(&self, typeName: &HStringArg, methodName: &HStringArg, inputParameterCount: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsMethodPresentWithArity)(self as *const _ as *mut _, typeName.get(), methodName.get(), inputParameterCount, &mut out);
+        let hr = ((*self.deref().lpVtbl).IsMethodPresentWithArity)(self.deref() as *const _ as *mut _, typeName.get(), methodName.get(), inputParameterCount, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_event_present(&self, typeName: &HStringArg, eventName: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsEventPresent)(self as *const _ as *mut _, typeName.get(), eventName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).IsEventPresent)(self.deref() as *const _ as *mut _, typeName.get(), eventName.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_property_present(&self, typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsPropertyPresent)(self as *const _ as *mut _, typeName.get(), propertyName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).IsPropertyPresent)(self.deref() as *const _ as *mut _, typeName.get(), propertyName.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_read_only_property_present(&self, typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsReadOnlyPropertyPresent)(self as *const _ as *mut _, typeName.get(), propertyName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).IsReadOnlyPropertyPresent)(self.deref() as *const _ as *mut _, typeName.get(), propertyName.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_writeable_property_present(&self, typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsWriteablePropertyPresent)(self as *const _ as *mut _, typeName.get(), propertyName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).IsWriteablePropertyPresent)(self.deref() as *const _ as *mut _, typeName.get(), propertyName.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_enum_named_value_present(&self, enumTypeName: &HStringArg, valueName: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsEnumNamedValuePresent)(self as *const _ as *mut _, enumTypeName.get(), valueName.get(), &mut out);
+        let hr = ((*self.deref().lpVtbl).IsEnumNamedValuePresent)(self.deref() as *const _ as *mut _, enumTypeName.get(), valueName.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_api_contract_present_by_major(&self, contractName: &HStringArg, majorVersion: u16) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsApiContractPresentByMajor)(self as *const _ as *mut _, contractName.get(), majorVersion, &mut out);
+        let hr = ((*self.deref().lpVtbl).IsApiContractPresentByMajor)(self.deref() as *const _ as *mut _, contractName.get(), majorVersion, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_api_contract_present_by_major_and_minor(&self, contractName: &HStringArg, majorVersion: u16, minorVersion: u16) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsApiContractPresentByMajorAndMinor)(self as *const _ as *mut _, contractName.get(), majorVersion, minorVersion, &mut out);
+        let hr = ((*self.deref().lpVtbl).IsApiContractPresentByMajorAndMinor)(self.deref() as *const _ as *mut _, contractName.get(), majorVersion, minorVersion, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }

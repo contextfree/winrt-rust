@@ -124,7 +124,7 @@ RT_DELEGATE!{{delegate { name }{ generic }({ name }Vtbl, { name }Impl) [IID_{ na
             if (wrapperMethodDeclarations.Any())
             {
                 Module.Append($@"
-impl{ genericWithBounds } { name }{ generic } {{
+impl{ genericWithBounds } ComPtr<{ name }{ generic }> {{
     { String.Join("\r\n    ", wrapperMethodDeclarations.Zip(definitionFeatureConditions, (wrapper, feature) => feature.GetAttribute() + wrapper)) }
 }}");
             }
