@@ -259,7 +259,7 @@ namespace Generator.Types
             }
             else if (t.FullName == "System.Object")
             {
-                return $"{ name }.deref() as *const _ as *mut _";
+                return $"{ name }.as_abi() as *const _ as *mut _";
             }
             else if (t.FullName == "System.Guid")
             {
@@ -308,7 +308,7 @@ namespace Generator.Types
             }
             else // reference type
             {
-                return $"{ name }.deref() as *const _ as *mut _";
+                return $"{ name }.as_abi() as *const _ as *mut _";
             }
         }
 

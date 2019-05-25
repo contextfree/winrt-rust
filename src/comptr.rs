@@ -108,16 +108,18 @@ impl<T: ComInterface> ComPtr<T> {
     /// If the requested interface is not supported, `None` is returned.
     #[inline]
     pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComIid + ComInterface {
-        query_interface::<_, Target>(&*self.deref())
+        query_interface::<_, Target>(&*self.as_abi())
     }
 
+    // TODO: should be pub(crate)
     #[inline]
-    pub fn deref(&self) -> &T {
+    pub fn as_abi(&self) -> &T {
         unsafe { self.0.as_ref() }
     }
 
+    // TODO: should be pub(crate)
     #[inline]
-    pub fn deref_mut(&mut self) -> &mut T {
+    pub fn as_abi_mut(&mut self) -> &mut T {
         unsafe { self.0.as_mut() }
     }
 }

@@ -143,7 +143,7 @@ impl<T> RtDefaultConstructible for T where T: RtActivatable<IActivationFactory> 
     #[inline]
     fn new() -> ComPtr<Self> where Self: Sized + RtActivatable<IActivationFactory> + ComInterface {
         let factory: ComPtr<IActivationFactory> = Self::get_activation_factory();
-        unsafe { factory.deref().activate_instance().into_unchecked() }
+        unsafe { factory.as_abi().activate_instance().into_unchecked() }
     }
 }
 
@@ -205,7 +205,7 @@ impl<'a, T> IntoIterator for &'a ComPtr<IVector<T>> where T: RtType, IIterable<T
     type Item = <T as RtType>::Out;
     type IntoIter = IteratorAdaptor<'a, T>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self.deref()).unwrap().first().unwrap().unwrap())
+        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self.as_abi()).unwrap().first().unwrap().unwrap())
     }
 }
 
@@ -214,7 +214,7 @@ impl<'a, T> IntoIterator for &'a ComPtr<IVectorView<T>> where T: RtType, IIterab
     type Item = <T as RtType>::Out;
     type IntoIter = IteratorAdaptor<'a, T>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self.deref()).unwrap().first().unwrap().unwrap())
+        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self.as_abi()).unwrap().first().unwrap().unwrap())
     }
 }
 
@@ -223,7 +223,7 @@ impl<'a, T> IntoIterator for &'a ComPtr<IObservableVector<T>> where T: RtType, I
     type Item = <T as RtType>::Out;
     type IntoIter = IteratorAdaptor<'a, T>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self.deref()).unwrap().first().unwrap().unwrap())
+        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self.as_abi()).unwrap().first().unwrap().unwrap())
     }
 }
 
@@ -289,7 +289,7 @@ macro_rules! RT_INTERFACE {
             type Out = Option<Self::OutNonNull>;
             type OutNonNull = ComPtr<$interface>;
 
-            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.deref() as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.as_abi() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
             #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
@@ -351,7 +351,7 @@ macro_rules! RT_INTERFACE {
             type Out = Option<Self::OutNonNull>;
             type OutNonNull = ComPtr<$interface>;
 
-            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.deref() as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.as_abi() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
             #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
@@ -410,7 +410,7 @@ macro_rules! RT_INTERFACE {
             type Out = Option<Self::OutNonNull>;
             type OutNonNull = ComPtr<$interface<$t1>>;
 
-            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.deref() as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.as_abi() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
             #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
@@ -468,7 +468,7 @@ macro_rules! RT_INTERFACE {
             type Out = Option<Self::OutNonNull>;
             type OutNonNull = ComPtr<$interface<$t1, $t2>>;
 
-            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.deref() as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.as_abi() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
             #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
@@ -662,7 +662,7 @@ macro_rules! RT_CLASS {
             type Out = Option<Self::OutNonNull>;
             type OutNonNull = ComPtr<$cls>;
             
-            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.deref() as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.as_abi() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
             #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
@@ -760,7 +760,7 @@ impl ComPtr<IInspectable> {
     pub fn get_iids(&self) -> ComArray<Guid> {
         let mut result = std::ptr::null_mut();
         let mut count = 0;
-        let hr = unsafe { ((*self.deref().lpVtbl).GetIids)(self.deref() as *const _ as *mut _, &mut count, &mut result) };
+        let hr = unsafe { ((*self.as_abi().lpVtbl).GetIids)(self.as_abi() as *const _ as *mut _, &mut count, &mut result) };
         assert_eq!(hr, S_OK);
         let result = result as *mut Guid; // convert from w::GUID to (binary compatible) Guid
         unsafe { ComArray::from_raw(count, result) }
@@ -770,7 +770,7 @@ impl ComPtr<IInspectable> {
     #[inline]
     pub fn get_trust_level(&self) -> crate::TrustLevel {
         let mut result = unsafe { std::mem::zeroed() };
-        let hr = unsafe { ((*self.deref().lpVtbl).GetTrustLevel)(self.deref() as *const _ as *mut _, &mut result) };
+        let hr = unsafe { ((*self.as_abi().lpVtbl).GetTrustLevel)(self.as_abi() as *const _ as *mut _, &mut result) };
         assert_eq!(hr, S_OK);
         result
     }

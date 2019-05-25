@@ -6,7 +6,7 @@ RT_INTERFACE!{interface IUriToStreamResolver(IUriToStreamResolverVtbl): IInspect
 impl ComPtr<IUriToStreamResolver> {
     #[cfg(feature="windows-storage")] #[inline] pub fn uri_to_stream_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<super::storage::streams::IInputStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).UriToStreamAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).UriToStreamAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -25,7 +25,7 @@ RT_INTERFACE!{static interface IWebErrorStatics(IWebErrorStaticsVtbl): IInspecta
 impl ComPtr<IWebErrorStatics> {
     #[inline] pub fn get_status(&self, hresult: i32) -> Result<WebErrorStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetStatus)(self.deref() as *const _ as *mut _, hresult, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetStatus)(self.as_abi() as *const _ as *mut _, hresult, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -54,56 +54,56 @@ RT_INTERFACE!{interface IAtomPubClient(IAtomPubClientVtbl): IInspectable(IInspec
 impl ComPtr<IAtomPubClient> {
     #[inline] pub fn retrieve_service_document_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<ServiceDocument, super::syndication::RetrievalProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RetrieveServiceDocumentAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RetrieveServiceDocumentAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn retrieve_media_resource_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, super::syndication::RetrievalProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RetrieveMediaResourceAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RetrieveMediaResourceAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn retrieve_resource_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::RetrievalProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RetrieveResourceAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RetrieveResourceAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_resource_async(&self, uri: &ComPtr<foundation::Uri>, description: &HStringArg, item: &ComPtr<super::syndication::SyndicationItem>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::TransferProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateResourceAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, description.get(), item.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateResourceAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, description.get(), item.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_media_resource_async(&self, uri: &ComPtr<foundation::Uri>, mediaType: &HStringArg, description: &HStringArg, mediaStream: &ComPtr<super::super::storage::streams::IInputStream>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::syndication::SyndicationItem, super::syndication::TransferProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateMediaResourceAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, mediaType.get(), description.get(), mediaStream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateMediaResourceAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, mediaType.get(), description.get(), mediaStream.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn update_media_resource_async(&self, uri: &ComPtr<foundation::Uri>, mediaType: &HStringArg, mediaStream: &ComPtr<super::super::storage::streams::IInputStream>) -> Result<ComPtr<foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).UpdateMediaResourceAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, mediaType.get(), mediaStream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).UpdateMediaResourceAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, mediaType.get(), mediaStream.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn update_resource_async(&self, uri: &ComPtr<foundation::Uri>, item: &ComPtr<super::syndication::SyndicationItem>) -> Result<ComPtr<foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).UpdateResourceAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, item.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).UpdateResourceAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, item.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn update_resource_item_async(&self, item: &ComPtr<super::syndication::SyndicationItem>) -> Result<ComPtr<foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).UpdateResourceItemAsync)(self.deref() as *const _ as *mut _, item.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).UpdateResourceItemAsync)(self.as_abi() as *const _ as *mut _, item.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_resource_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).DeleteResourceAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).DeleteResourceAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_resource_item_async(&self, item: &ComPtr<super::syndication::SyndicationItem>) -> Result<ComPtr<foundation::IAsyncActionWithProgress<super::syndication::TransferProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).DeleteResourceItemAsync)(self.deref() as *const _ as *mut _, item.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).DeleteResourceItemAsync)(self.as_abi() as *const _ as *mut _, item.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn cancel_async_operations(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).CancelAsyncOperations)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).CancelAsyncOperations)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -123,7 +123,7 @@ RT_INTERFACE!{static interface IAtomPubClientFactory(IAtomPubClientFactoryVtbl):
 impl ComPtr<IAtomPubClientFactory> {
     #[cfg(feature="windows-security")] #[inline] pub fn create_atom_pub_client_with_credentials(&self, serverCredential: &ComPtr<super::super::security::credentials::PasswordCredential>) -> Result<ComPtr<AtomPubClient>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateAtomPubClientWithCredentials)(self.deref() as *const _ as *mut _, serverCredential.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateAtomPubClientWithCredentials)(self.as_abi() as *const _ as *mut _, serverCredential.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -137,22 +137,22 @@ RT_INTERFACE!{interface IResourceCollection(IResourceCollectionVtbl): IInspectab
 impl ComPtr<IResourceCollection> {
     #[inline] pub fn get_title(&self) -> Result<Option<ComPtr<super::syndication::ISyndicationText>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Title)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_categories(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::syndication::SyndicationCategory>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Categories)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Categories)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_accepts(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Accepts)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Accepts)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -164,7 +164,7 @@ RT_INTERFACE!{interface IServiceDocument(IServiceDocumentVtbl): IInspectable(IIn
 impl ComPtr<IServiceDocument> {
     #[inline] pub fn get_workspaces(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<Workspace>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Workspaces)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Workspaces)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -177,12 +177,12 @@ RT_INTERFACE!{interface IWorkspace(IWorkspaceVtbl): IInspectable(IInspectableVtb
 impl ComPtr<IWorkspace> {
     #[inline] pub fn get_title(&self) -> Result<Option<ComPtr<super::syndication::ISyndicationText>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Title)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_collections(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<ResourceCollection>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Collections)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Collections)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -209,12 +209,12 @@ RT_INTERFACE!{static interface IHttpBufferContentFactory(IHttpBufferContentFacto
 impl ComPtr<IHttpBufferContentFactory> {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_buffer(&self, content: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<HttpBufferContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromBuffer)(self.deref() as *const _ as *mut _, content.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromBuffer)(self.as_abi() as *const _ as *mut _, content.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_buffer_with_offset(&self, content: &ComPtr<super::super::storage::streams::IBuffer>, offset: u32, count: u32) -> Result<ComPtr<HttpBufferContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromBufferWithOffset)(self.deref() as *const _ as *mut _, content.deref() as *const _ as *mut _, offset, count, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromBufferWithOffset)(self.as_abi() as *const _ as *mut _, content.as_abi() as *const _ as *mut _, offset, count, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -237,57 +237,57 @@ RT_INTERFACE!{interface IHttpClient(IHttpClientVtbl): IInspectable(IInspectableV
 impl ComPtr<IHttpClient> {
     #[inline] pub fn delete_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).DeleteAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).DeleteAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_with_option_async(&self, uri: &ComPtr<foundation::Uri>, completionOption: HttpCompletionOption) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetWithOptionAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, completionOption, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetWithOptionAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, completionOption, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_buffer_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::super::storage::streams::IBuffer, HttpProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetBufferAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetBufferAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_input_stream_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, HttpProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetInputStreamAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetInputStreamAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_string_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HString, HttpProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetStringAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetStringAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn post_async(&self, uri: &ComPtr<foundation::Uri>, content: &ComPtr<IHttpContent>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).PostAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, content.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).PostAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, content.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn put_async(&self, uri: &ComPtr<foundation::Uri>, content: &ComPtr<IHttpContent>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).PutAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, content.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).PutAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, content.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn send_request_async(&self, request: &ComPtr<HttpRequestMessage>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SendRequestAsync)(self.deref() as *const _ as *mut _, request.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SendRequestAsync)(self.as_abi() as *const _ as *mut _, request.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn send_request_with_option_async(&self, request: &ComPtr<HttpRequestMessage>, completionOption: HttpCompletionOption) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SendRequestWithOptionAsync)(self.deref() as *const _ as *mut _, request.deref() as *const _ as *mut _, completionOption, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SendRequestWithOptionAsync)(self.as_abi() as *const _ as *mut _, request.as_abi() as *const _ as *mut _, completionOption, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_default_request_headers(&self) -> Result<Option<ComPtr<headers::HttpRequestHeaderCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DefaultRequestHeaders)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DefaultRequestHeaders)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -307,7 +307,7 @@ RT_INTERFACE!{static interface IHttpClientFactory(IHttpClientFactoryVtbl): IInsp
 impl ComPtr<IHttpClientFactory> {
     #[inline] pub fn create(&self, filter: &ComPtr<filters::IHttpFilter>) -> Result<ComPtr<HttpClient>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, filter.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, filter.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -327,37 +327,37 @@ RT_INTERFACE!{interface IHttpContent(IHttpContentVtbl): IInspectable(IInspectabl
 impl ComPtr<IHttpContent> {
     #[inline] pub fn get_headers(&self) -> Result<Option<ComPtr<headers::HttpContentHeaderCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Headers)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Headers)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn buffer_all_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).BufferAllAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).BufferAllAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn read_as_buffer_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::super::storage::streams::IBuffer, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ReadAsBufferAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ReadAsBufferAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn read_as_input_stream_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ReadAsInputStreamAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ReadAsInputStreamAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn read_as_string_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<HString, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ReadAsStringAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ReadAsStringAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_compute_length(&self) -> Result<(u64, bool)> { unsafe { 
         let mut length = zeroed(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryComputeLength)(self.deref() as *const _ as *mut _, &mut length, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryComputeLength)(self.as_abi() as *const _ as *mut _, &mut length, &mut out);
         if hr == S_OK { Ok((length, out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn write_to_stream_async(&self, outputStream: &ComPtr<super::super::storage::streams::IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).WriteToStreamAsync)(self.deref() as *const _ as *mut _, outputStream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).WriteToStreamAsync)(self.as_abi() as *const _ as *mut _, outputStream.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -378,53 +378,53 @@ RT_INTERFACE!{interface IHttpCookie(IHttpCookieVtbl): IInspectable(IInspectableV
 impl ComPtr<IHttpCookie> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_domain(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Domain)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Domain)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_path(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Path)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Path)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_expires(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Expires)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Expires)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_expires(&self, value: &ComPtr<foundation::IReference<foundation::DateTime>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Expires)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Expires)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_http_only(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HttpOnly)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HttpOnly)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_http_only(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_HttpOnly)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_HttpOnly)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_secure(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Secure)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Secure)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_secure(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Secure)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Secure)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_value(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Value)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Value)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -444,7 +444,7 @@ RT_INTERFACE!{static interface IHttpCookieFactory(IHttpCookieFactoryVtbl): IInsp
 impl ComPtr<IHttpCookieFactory> {
     #[inline] pub fn create(&self, name: &HStringArg, domain: &HStringArg, path: &HStringArg) -> Result<ComPtr<HttpCookie>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, name.get(), domain.get(), path.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, name.get(), domain.get(), path.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -458,21 +458,21 @@ RT_INTERFACE!{interface IHttpCookieManager(IHttpCookieManagerVtbl): IInspectable
 impl ComPtr<IHttpCookieManager> {
     #[inline] pub fn set_cookie(&self, cookie: &ComPtr<HttpCookie>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).SetCookie)(self.deref() as *const _ as *mut _, cookie.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SetCookie)(self.as_abi() as *const _ as *mut _, cookie.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_cookie_with_third_party(&self, cookie: &ComPtr<HttpCookie>, thirdParty: bool) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).SetCookieWithThirdParty)(self.deref() as *const _ as *mut _, cookie.deref() as *const _ as *mut _, thirdParty, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SetCookieWithThirdParty)(self.as_abi() as *const _ as *mut _, cookie.as_abi() as *const _ as *mut _, thirdParty, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn delete_cookie(&self, cookie: &ComPtr<HttpCookie>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).DeleteCookie)(self.deref() as *const _ as *mut _, cookie.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).DeleteCookie)(self.as_abi() as *const _ as *mut _, cookie.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_cookies(&self, uri: &ComPtr<foundation::Uri>) -> Result<Option<ComPtr<HttpCookieCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetCookies)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetCookies)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -492,7 +492,7 @@ RT_INTERFACE!{static interface IHttpFormUrlEncodedContentFactory(IHttpFormUrlEnc
 impl ComPtr<IHttpFormUrlEncodedContentFactory> {
     #[inline] pub fn create(&self, content: &ComPtr<foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, HString>>>) -> Result<ComPtr<HttpFormUrlEncodedContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, content.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, content.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -503,7 +503,7 @@ RT_INTERFACE!{interface IHttpMethod(IHttpMethodVtbl): IInspectable(IInspectableV
 impl ComPtr<IHttpMethod> {
     #[inline] pub fn get_method(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Method)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Method)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -544,7 +544,7 @@ RT_INTERFACE!{static interface IHttpMethodFactory(IHttpMethodFactoryVtbl): IInsp
 impl ComPtr<IHttpMethodFactory> {
     #[inline] pub fn create(&self, method: &HStringArg) -> Result<ComPtr<HttpMethod>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, method.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, method.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -561,37 +561,37 @@ RT_INTERFACE!{static interface IHttpMethodStatics(IHttpMethodStaticsVtbl): IInsp
 impl ComPtr<IHttpMethodStatics> {
     #[inline] pub fn get_delete(&self) -> Result<Option<ComPtr<HttpMethod>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Delete)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Delete)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_get(&self) -> Result<Option<ComPtr<HttpMethod>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Get)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Get)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_head(&self) -> Result<Option<ComPtr<HttpMethod>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Head)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Head)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_options(&self) -> Result<Option<ComPtr<HttpMethod>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Options)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Options)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_patch(&self) -> Result<Option<ComPtr<HttpMethod>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Patch)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Patch)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_post(&self) -> Result<Option<ComPtr<HttpMethod>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Post)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Post)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_put(&self) -> Result<Option<ComPtr<HttpMethod>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Put)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Put)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -601,7 +601,7 @@ RT_INTERFACE!{interface IHttpMultipartContent(IHttpMultipartContentVtbl): IInspe
 }}
 impl ComPtr<IHttpMultipartContent> {
     #[inline] pub fn add(&self, content: &ComPtr<IHttpContent>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Add)(self.deref() as *const _ as *mut _, content.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Add)(self.as_abi() as *const _ as *mut _, content.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -625,12 +625,12 @@ RT_INTERFACE!{static interface IHttpMultipartContentFactory(IHttpMultipartConten
 impl ComPtr<IHttpMultipartContentFactory> {
     #[inline] pub fn create_with_subtype(&self, subtype: &HStringArg) -> Result<ComPtr<HttpMultipartContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateWithSubtype)(self.deref() as *const _ as *mut _, subtype.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateWithSubtype)(self.as_abi() as *const _ as *mut _, subtype.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_subtype_and_boundary(&self, subtype: &HStringArg, boundary: &HStringArg) -> Result<ComPtr<HttpMultipartContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateWithSubtypeAndBoundary)(self.deref() as *const _ as *mut _, subtype.get(), boundary.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateWithSubtypeAndBoundary)(self.as_abi() as *const _ as *mut _, subtype.get(), boundary.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -642,15 +642,15 @@ RT_INTERFACE!{interface IHttpMultipartFormDataContent(IHttpMultipartFormDataCont
 }}
 impl ComPtr<IHttpMultipartFormDataContent> {
     #[inline] pub fn add(&self, content: &ComPtr<IHttpContent>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Add)(self.deref() as *const _ as *mut _, content.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Add)(self.as_abi() as *const _ as *mut _, content.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_with_name(&self, content: &ComPtr<IHttpContent>, name: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).AddWithName)(self.deref() as *const _ as *mut _, content.deref() as *const _ as *mut _, name.get());
+        let hr = ((*self.as_abi().lpVtbl).AddWithName)(self.as_abi() as *const _ as *mut _, content.as_abi() as *const _ as *mut _, name.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_with_name_and_file_name(&self, content: &ComPtr<IHttpContent>, name: &HStringArg, fileName: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).AddWithNameAndFileName)(self.deref() as *const _ as *mut _, content.deref() as *const _ as *mut _, name.get(), fileName.get());
+        let hr = ((*self.as_abi().lpVtbl).AddWithNameAndFileName)(self.as_abi() as *const _ as *mut _, content.as_abi() as *const _ as *mut _, name.get(), fileName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -670,7 +670,7 @@ RT_INTERFACE!{static interface IHttpMultipartFormDataContentFactory(IHttpMultipa
 impl ComPtr<IHttpMultipartFormDataContentFactory> {
     #[inline] pub fn create_with_boundary(&self, boundary: &HStringArg) -> Result<ComPtr<HttpMultipartFormDataContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateWithBoundary)(self.deref() as *const _ as *mut _, boundary.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateWithBoundary)(self.as_abi() as *const _ as *mut _, boundary.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -695,44 +695,44 @@ RT_INTERFACE!{interface IHttpRequestMessage(IHttpRequestMessageVtbl): IInspectab
 impl ComPtr<IHttpRequestMessage> {
     #[inline] pub fn get_content(&self) -> Result<Option<ComPtr<IHttpContent>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Content)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Content)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_content(&self, value: &ComPtr<IHttpContent>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Content)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Content)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_headers(&self) -> Result<Option<ComPtr<headers::HttpRequestHeaderCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Headers)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Headers)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_method(&self) -> Result<Option<ComPtr<HttpMethod>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Method)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Method)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_method(&self, value: &ComPtr<HttpMethod>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Method)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Method)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, IInspectable>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Properties)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Properties)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_request_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RequestUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RequestUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_request_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_RequestUri)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_RequestUri)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_transport_information(&self) -> Result<Option<ComPtr<HttpTransportInformation>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_TransportInformation)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TransportInformation)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -752,7 +752,7 @@ RT_INTERFACE!{static interface IHttpRequestMessageFactory(IHttpRequestMessageFac
 impl ComPtr<IHttpRequestMessageFactory> {
     #[inline] pub fn create(&self, method: &ComPtr<HttpMethod>, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<HttpRequestMessage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, method.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, method.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -777,71 +777,71 @@ RT_INTERFACE!{interface IHttpResponseMessage(IHttpResponseMessageVtbl): IInspect
 impl ComPtr<IHttpResponseMessage> {
     #[inline] pub fn get_content(&self) -> Result<Option<ComPtr<IHttpContent>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Content)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Content)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_content(&self, value: &ComPtr<IHttpContent>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Content)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Content)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_headers(&self) -> Result<Option<ComPtr<headers::HttpResponseHeaderCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Headers)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Headers)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_success_status_code(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsSuccessStatusCode)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsSuccessStatusCode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_reason_phrase(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ReasonPhrase)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ReasonPhrase)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_reason_phrase(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ReasonPhrase)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_ReasonPhrase)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_request_message(&self) -> Result<Option<ComPtr<HttpRequestMessage>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RequestMessage)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RequestMessage)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_request_message(&self, value: &ComPtr<HttpRequestMessage>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_RequestMessage)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_RequestMessage)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_source(&self) -> Result<HttpResponseMessageSource> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Source)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Source)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_source(&self, value: HttpResponseMessageSource) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Source)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Source)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_status_code(&self) -> Result<HttpStatusCode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_StatusCode)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StatusCode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_status_code(&self, value: HttpStatusCode) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_StatusCode)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_StatusCode)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_version(&self) -> Result<HttpVersion> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Version)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Version)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_version(&self, value: HttpVersion) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Version)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Version)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn ensure_success_status_code(&self) -> Result<Option<ComPtr<HttpResponseMessage>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).EnsureSuccessStatusCode)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).EnsureSuccessStatusCode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -861,7 +861,7 @@ RT_INTERFACE!{static interface IHttpResponseMessageFactory(IHttpResponseMessageF
 impl ComPtr<IHttpResponseMessageFactory> {
     #[inline] pub fn create(&self, statusCode: HttpStatusCode) -> Result<ComPtr<HttpResponseMessage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, statusCode, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, statusCode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -886,7 +886,7 @@ RT_INTERFACE!{static interface IHttpStreamContentFactory(IHttpStreamContentFacto
 impl ComPtr<IHttpStreamContentFactory> {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_input_stream(&self, content: &ComPtr<super::super::storage::streams::IInputStream>) -> Result<ComPtr<HttpStreamContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromInputStream)(self.deref() as *const _ as *mut _, content.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromInputStream)(self.as_abi() as *const _ as *mut _, content.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -913,17 +913,17 @@ RT_INTERFACE!{static interface IHttpStringContentFactory(IHttpStringContentFacto
 impl ComPtr<IHttpStringContentFactory> {
     #[inline] pub fn create_from_string(&self, content: &HStringArg) -> Result<ComPtr<HttpStringContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromString)(self.deref() as *const _ as *mut _, content.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromString)(self.as_abi() as *const _ as *mut _, content.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_string_with_encoding(&self, content: &HStringArg, encoding: super::super::storage::streams::UnicodeEncoding) -> Result<ComPtr<HttpStringContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromStringWithEncoding)(self.deref() as *const _ as *mut _, content.get(), encoding, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromStringWithEncoding)(self.as_abi() as *const _ as *mut _, content.get(), encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_string_with_encoding_and_media_type(&self, content: &HStringArg, encoding: super::super::storage::streams::UnicodeEncoding, mediaType: &HStringArg) -> Result<ComPtr<HttpStringContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromStringWithEncodingAndMediaType)(self.deref() as *const _ as *mut _, content.get(), encoding, mediaType.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromStringWithEncodingAndMediaType)(self.as_abi() as *const _ as *mut _, content.get(), encoding, mediaType.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -938,22 +938,22 @@ RT_INTERFACE!{interface IHttpTransportInformation(IHttpTransportInformationVtbl)
 impl ComPtr<IHttpTransportInformation> {
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate(&self) -> Result<Option<ComPtr<super::super::security::cryptography::certificates::Certificate>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ServerCertificate)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ServerCertificate)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-networking")] #[inline] pub fn get_server_certificate_error_severity(&self) -> Result<super::super::networking::sockets::SocketSslErrorSeverity> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ServerCertificateErrorSeverity)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ServerCertificateErrorSeverity)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::security::cryptography::certificates::ChainValidationResult>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ServerCertificateErrors)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ServerCertificateErrors)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_intermediate_certificates(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::security::cryptography::certificates::Certificate>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ServerIntermediateCertificates)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ServerIntermediateCertificates)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -976,38 +976,38 @@ RT_INTERFACE!{interface IHttpDiagnosticProvider(IHttpDiagnosticProviderVtbl): II
 }}
 impl ComPtr<IHttpDiagnosticProvider> {
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Start)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Start)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Stop)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Stop)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_request_sent(&self, handler: &ComPtr<foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderRequestSentEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_RequestSent)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_RequestSent)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_request_sent(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_RequestSent)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_RequestSent)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_response_received(&self, handler: &ComPtr<foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderResponseReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_ResponseReceived)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_ResponseReceived)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_response_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_ResponseReceived)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_ResponseReceived)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_request_response_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderRequestResponseCompletedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_RequestResponseCompleted)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_RequestResponseCompleted)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_request_response_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_RequestResponseCompleted)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_RequestResponseCompleted)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1032,37 +1032,37 @@ RT_INTERFACE!{interface IHttpDiagnosticProviderRequestResponseCompletedEventArgs
 impl ComPtr<IHttpDiagnosticProviderRequestResponseCompletedEventArgs> {
     #[inline] pub fn get_activity_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ActivityId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ActivityId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_timestamps(&self) -> Result<Option<ComPtr<HttpDiagnosticProviderRequestResponseTimestamps>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Timestamps)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Timestamps)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_requested_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RequestedUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RequestedUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_process_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ProcessId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ProcessId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_thread_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ThreadId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ThreadId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_initiator(&self) -> Result<HttpDiagnosticRequestInitiator> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Initiator)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Initiator)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_source_locations(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HttpDiagnosticSourceLocation>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SourceLocations)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SourceLocations)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1082,47 +1082,47 @@ RT_INTERFACE!{interface IHttpDiagnosticProviderRequestResponseTimestamps(IHttpDi
 impl ComPtr<IHttpDiagnosticProviderRequestResponseTimestamps> {
     #[inline] pub fn get_cache_checked_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CacheCheckedTimestamp)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CacheCheckedTimestamp)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_connection_initiated_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ConnectionInitiatedTimestamp)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ConnectionInitiatedTimestamp)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_name_resolved_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_NameResolvedTimestamp)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_NameResolvedTimestamp)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ssl_negotiated_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SslNegotiatedTimestamp)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SslNegotiatedTimestamp)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_connection_completed_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ConnectionCompletedTimestamp)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ConnectionCompletedTimestamp)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_request_sent_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RequestSentTimestamp)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RequestSentTimestamp)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_request_completed_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RequestCompletedTimestamp)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RequestCompletedTimestamp)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_response_received_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ResponseReceivedTimestamp)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ResponseReceivedTimestamp)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_response_completed_timestamp(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ResponseCompletedTimestamp)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ResponseCompletedTimestamp)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1140,37 +1140,37 @@ RT_INTERFACE!{interface IHttpDiagnosticProviderRequestSentEventArgs(IHttpDiagnos
 impl ComPtr<IHttpDiagnosticProviderRequestSentEventArgs> {
     #[inline] pub fn get_timestamp(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Timestamp)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Timestamp)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_activity_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ActivityId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ActivityId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_message(&self) -> Result<Option<ComPtr<super::HttpRequestMessage>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Message)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Message)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_process_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ProcessId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ProcessId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_thread_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ThreadId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ThreadId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_initiator(&self) -> Result<HttpDiagnosticRequestInitiator> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Initiator)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Initiator)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_source_locations(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HttpDiagnosticSourceLocation>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SourceLocations)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SourceLocations)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1184,17 +1184,17 @@ RT_INTERFACE!{interface IHttpDiagnosticProviderResponseReceivedEventArgs(IHttpDi
 impl ComPtr<IHttpDiagnosticProviderResponseReceivedEventArgs> {
     #[inline] pub fn get_timestamp(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Timestamp)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Timestamp)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_activity_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ActivityId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ActivityId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_message(&self) -> Result<Option<ComPtr<super::HttpResponseMessage>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Message)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Message)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1206,7 +1206,7 @@ RT_INTERFACE!{static interface IHttpDiagnosticProviderStatics(IHttpDiagnosticPro
 impl ComPtr<IHttpDiagnosticProviderStatics> {
     #[cfg(feature="windows-system")] #[inline] pub fn create_from_process_diagnostic_info(&self, processDiagnosticInfo: &ComPtr<crate::windows::system::diagnostics::ProcessDiagnosticInfo>) -> Result<Option<ComPtr<HttpDiagnosticProvider>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromProcessDiagnosticInfo)(self.deref() as *const _ as *mut _, processDiagnosticInfo.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromProcessDiagnosticInfo)(self.as_abi() as *const _ as *mut _, processDiagnosticInfo.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1222,17 +1222,17 @@ RT_INTERFACE!{interface IHttpDiagnosticSourceLocation(IHttpDiagnosticSourceLocat
 impl ComPtr<IHttpDiagnosticSourceLocation> {
     #[inline] pub fn get_source_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SourceUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SourceUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_line_number(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_LineNumber)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LineNumber)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_column_number(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ColumnNumber)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ColumnNumber)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1272,89 +1272,89 @@ RT_INTERFACE!{interface IHttpBaseProtocolFilter(IHttpBaseProtocolFilterVtbl): II
 impl ComPtr<IHttpBaseProtocolFilter> {
     #[inline] pub fn get_allow_auto_redirect(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AllowAutoRedirect)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AllowAutoRedirect)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_allow_auto_redirect(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_AllowAutoRedirect)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_AllowAutoRedirect)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_allow_ui(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AllowUI)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AllowUI)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_allow_ui(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_AllowUI)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_AllowUI)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_automatic_decompression(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AutomaticDecompression)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AutomaticDecompression)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_automatic_decompression(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_AutomaticDecompression)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_AutomaticDecompression)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_cache_control(&self) -> Result<Option<ComPtr<HttpCacheControl>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CacheControl)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CacheControl)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cookie_manager(&self) -> Result<Option<ComPtr<super::HttpCookieManager>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CookieManager)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CookieManager)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn get_client_certificate(&self) -> Result<Option<ComPtr<crate::windows::security::cryptography::certificates::Certificate>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ClientCertificate)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ClientCertificate)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn set_client_certificate(&self, value: &ComPtr<crate::windows::security::cryptography::certificates::Certificate>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ClientCertificate)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ClientCertificate)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn get_ignorable_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<crate::windows::security::cryptography::certificates::ChainValidationResult>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_IgnorableServerCertificateErrors)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IgnorableServerCertificateErrors)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_max_connections_per_server(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_MaxConnectionsPerServer)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MaxConnectionsPerServer)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_max_connections_per_server(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MaxConnectionsPerServer)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_MaxConnectionsPerServer)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn get_proxy_credential(&self) -> Result<Option<ComPtr<crate::windows::security::credentials::PasswordCredential>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ProxyCredential)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ProxyCredential)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn set_proxy_credential(&self, value: &ComPtr<crate::windows::security::credentials::PasswordCredential>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ProxyCredential)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ProxyCredential)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_credential(&self) -> Result<Option<ComPtr<crate::windows::security::credentials::PasswordCredential>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ServerCredential)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ServerCredential)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn set_server_credential(&self, value: &ComPtr<crate::windows::security::credentials::PasswordCredential>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ServerCredential)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ServerCredential)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_use_proxy(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_UseProxy)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_UseProxy)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_use_proxy(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_UseProxy)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_UseProxy)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1369,11 +1369,11 @@ RT_INTERFACE!{interface IHttpBaseProtocolFilter2(IHttpBaseProtocolFilter2Vtbl): 
 impl ComPtr<IHttpBaseProtocolFilter2> {
     #[inline] pub fn get_max_version(&self) -> Result<super::HttpVersion> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_MaxVersion)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MaxVersion)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_max_version(&self, value: super::HttpVersion) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MaxVersion)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_MaxVersion)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1385,11 +1385,11 @@ RT_INTERFACE!{interface IHttpBaseProtocolFilter3(IHttpBaseProtocolFilter3Vtbl): 
 impl ComPtr<IHttpBaseProtocolFilter3> {
     #[inline] pub fn get_cookie_usage_behavior(&self) -> Result<HttpCookieUsageBehavior> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_CookieUsageBehavior)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CookieUsageBehavior)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_cookie_usage_behavior(&self, value: HttpCookieUsageBehavior) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_CookieUsageBehavior)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_CookieUsageBehavior)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1402,15 +1402,15 @@ RT_INTERFACE!{interface IHttpBaseProtocolFilter4(IHttpBaseProtocolFilter4Vtbl): 
 impl ComPtr<IHttpBaseProtocolFilter4> {
     #[inline] pub fn add_server_custom_validation_requested(&self, eventHandler: &ComPtr<foundation::TypedEventHandler<HttpBaseProtocolFilter, HttpServerCustomValidationRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_ServerCustomValidationRequested)(self.deref() as *const _ as *mut _, eventHandler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_ServerCustomValidationRequested)(self.as_abi() as *const _ as *mut _, eventHandler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_server_custom_validation_requested(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_ServerCustomValidationRequested)(self.deref() as *const _ as *mut _, eventCookie);
+        let hr = ((*self.as_abi().lpVtbl).remove_ServerCustomValidationRequested)(self.as_abi() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn clear_authentication_cache(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ClearAuthenticationCache)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).ClearAuthenticationCache)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1424,20 +1424,20 @@ RT_INTERFACE!{interface IHttpCacheControl(IHttpCacheControlVtbl): IInspectable(I
 impl ComPtr<IHttpCacheControl> {
     #[inline] pub fn get_read_behavior(&self) -> Result<HttpCacheReadBehavior> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ReadBehavior)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ReadBehavior)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_read_behavior(&self, value: HttpCacheReadBehavior) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ReadBehavior)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_ReadBehavior)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_write_behavior(&self) -> Result<HttpCacheWriteBehavior> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_WriteBehavior)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_WriteBehavior)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_write_behavior(&self, value: HttpCacheWriteBehavior) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_WriteBehavior)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_WriteBehavior)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1458,7 +1458,7 @@ RT_INTERFACE!{interface IHttpFilter(IHttpFilterVtbl): IInspectable(IInspectableV
 impl ComPtr<IHttpFilter> {
     #[inline] pub fn send_request_async(&self, request: &ComPtr<super::HttpRequestMessage>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::HttpResponseMessage, super::HttpProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SendRequestAsync)(self.deref() as *const _ as *mut _, request.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SendRequestAsync)(self.as_abi() as *const _ as *mut _, request.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1479,36 +1479,36 @@ RT_INTERFACE!{interface IHttpServerCustomValidationRequestedEventArgs(IHttpServe
 impl ComPtr<IHttpServerCustomValidationRequestedEventArgs> {
     #[inline] pub fn get_request_message(&self) -> Result<Option<ComPtr<super::HttpRequestMessage>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RequestMessage)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RequestMessage)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate(&self) -> Result<Option<ComPtr<crate::windows::security::cryptography::certificates::Certificate>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ServerCertificate)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ServerCertificate)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-networking")] #[inline] pub fn get_server_certificate_error_severity(&self) -> Result<crate::windows::networking::sockets::SocketSslErrorSeverity> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ServerCertificateErrorSeverity)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ServerCertificateErrorSeverity)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::security::cryptography::certificates::ChainValidationResult>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ServerCertificateErrors)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ServerCertificateErrors)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_intermediate_certificates(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::security::cryptography::certificates::Certificate>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ServerIntermediateCertificates)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ServerIntermediateCertificates)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn reject(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Reject)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Reject)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDeferral)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1532,47 +1532,47 @@ RT_INTERFACE!{interface IHttpCacheDirectiveHeaderValueCollection(IHttpCacheDirec
 impl ComPtr<IHttpCacheDirectiveHeaderValueCollection> {
     #[inline] pub fn get_max_age(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_MaxAge)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MaxAge)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_max_age(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MaxAge)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_MaxAge)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_max_stale(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_MaxStale)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MaxStale)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_max_stale(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MaxStale)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_MaxStale)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_min_fresh(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_MinFresh)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MinFresh)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_min_fresh(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MinFresh)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_MinFresh)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_shared_max_age(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SharedMaxAge)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SharedMaxAge)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_shared_max_age(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_SharedMaxAge)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_SharedMaxAge)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn parse_add(&self, input: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ParseAdd)(self.deref() as *const _ as *mut _, input.get());
+        let hr = ((*self.as_abi().lpVtbl).ParseAdd)(self.as_abi() as *const _ as *mut _, input.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_add(&self, input: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParseAdd)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParseAdd)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1586,17 +1586,17 @@ RT_INTERFACE!{interface IHttpChallengeHeaderValue(IHttpChallengeHeaderValueVtbl)
 impl ComPtr<IHttpChallengeHeaderValue> {
     #[inline] pub fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Parameters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Parameters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_scheme(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Scheme)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Scheme)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_token(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Token)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Token)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1625,12 +1625,12 @@ RT_INTERFACE!{interface IHttpChallengeHeaderValueCollection(IHttpChallengeHeader
 }}
 impl ComPtr<IHttpChallengeHeaderValueCollection> {
     #[inline] pub fn parse_add(&self, input: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ParseAdd)(self.deref() as *const _ as *mut _, input.get());
+        let hr = ((*self.as_abi().lpVtbl).ParseAdd)(self.as_abi() as *const _ as *mut _, input.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_add(&self, input: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParseAdd)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParseAdd)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1643,12 +1643,12 @@ RT_INTERFACE!{static interface IHttpChallengeHeaderValueFactory(IHttpChallengeHe
 impl ComPtr<IHttpChallengeHeaderValueFactory> {
     #[inline] pub fn create_from_scheme(&self, scheme: &HStringArg) -> Result<ComPtr<HttpChallengeHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromScheme)(self.deref() as *const _ as *mut _, scheme.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromScheme)(self.as_abi() as *const _ as *mut _, scheme.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_scheme_with_token(&self, scheme: &HStringArg, token: &HStringArg) -> Result<ComPtr<HttpChallengeHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromSchemeWithToken)(self.deref() as *const _ as *mut _, scheme.get(), token.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromSchemeWithToken)(self.as_abi() as *const _ as *mut _, scheme.get(), token.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1660,12 +1660,12 @@ RT_INTERFACE!{static interface IHttpChallengeHeaderValueStatics(IHttpChallengeHe
 impl ComPtr<IHttpChallengeHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpChallengeHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpChallengeHeaderValue>>, bool)> { unsafe { 
         let mut challengeHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut challengeHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut challengeHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(challengeHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -1676,7 +1676,7 @@ RT_INTERFACE!{interface IHttpConnectionOptionHeaderValue(IHttpConnectionOptionHe
 impl ComPtr<IHttpConnectionOptionHeaderValue> {
     #[inline] pub fn get_token(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Token)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Token)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1702,12 +1702,12 @@ RT_INTERFACE!{interface IHttpConnectionOptionHeaderValueCollection(IHttpConnecti
 }}
 impl ComPtr<IHttpConnectionOptionHeaderValueCollection> {
     #[inline] pub fn parse_add(&self, input: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ParseAdd)(self.deref() as *const _ as *mut _, input.get());
+        let hr = ((*self.as_abi().lpVtbl).ParseAdd)(self.as_abi() as *const _ as *mut _, input.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_add(&self, input: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParseAdd)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParseAdd)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1719,7 +1719,7 @@ RT_INTERFACE!{static interface IHttpConnectionOptionHeaderValueFactory(IHttpConn
 impl ComPtr<IHttpConnectionOptionHeaderValueFactory> {
     #[inline] pub fn create(&self, token: &HStringArg) -> Result<ComPtr<HttpConnectionOptionHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, token.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, token.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1731,12 +1731,12 @@ RT_INTERFACE!{static interface IHttpConnectionOptionHeaderValueStatics(IHttpConn
 impl ComPtr<IHttpConnectionOptionHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpConnectionOptionHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpConnectionOptionHeaderValue>>, bool)> { unsafe { 
         let mut connectionOptionHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut connectionOptionHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut connectionOptionHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(connectionOptionHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -1747,7 +1747,7 @@ RT_INTERFACE!{interface IHttpContentCodingHeaderValue(IHttpContentCodingHeaderVa
 impl ComPtr<IHttpContentCodingHeaderValue> {
     #[inline] pub fn get_content_coding(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ContentCoding)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ContentCoding)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1773,12 +1773,12 @@ RT_INTERFACE!{interface IHttpContentCodingHeaderValueCollection(IHttpContentCodi
 }}
 impl ComPtr<IHttpContentCodingHeaderValueCollection> {
     #[inline] pub fn parse_add(&self, input: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ParseAdd)(self.deref() as *const _ as *mut _, input.get());
+        let hr = ((*self.as_abi().lpVtbl).ParseAdd)(self.as_abi() as *const _ as *mut _, input.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_add(&self, input: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParseAdd)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParseAdd)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1790,7 +1790,7 @@ RT_INTERFACE!{static interface IHttpContentCodingHeaderValueFactory(IHttpContent
 impl ComPtr<IHttpContentCodingHeaderValueFactory> {
     #[inline] pub fn create(&self, contentCoding: &HStringArg) -> Result<ComPtr<HttpContentCodingHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, contentCoding.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, contentCoding.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1802,12 +1802,12 @@ RT_INTERFACE!{static interface IHttpContentCodingHeaderValueStatics(IHttpContent
 impl ComPtr<IHttpContentCodingHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpContentCodingHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpContentCodingHeaderValue>>, bool)> { unsafe { 
         let mut contentCodingHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut contentCodingHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut contentCodingHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(contentCodingHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -1819,12 +1819,12 @@ RT_INTERFACE!{interface IHttpContentCodingWithQualityHeaderValue(IHttpContentCod
 impl ComPtr<IHttpContentCodingWithQualityHeaderValue> {
     #[inline] pub fn get_content_coding(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ContentCoding)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ContentCoding)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_quality(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Quality)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Quality)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1853,12 +1853,12 @@ RT_INTERFACE!{interface IHttpContentCodingWithQualityHeaderValueCollection(IHttp
 }}
 impl ComPtr<IHttpContentCodingWithQualityHeaderValueCollection> {
     #[inline] pub fn parse_add(&self, input: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ParseAdd)(self.deref() as *const _ as *mut _, input.get());
+        let hr = ((*self.as_abi().lpVtbl).ParseAdd)(self.as_abi() as *const _ as *mut _, input.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_add(&self, input: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParseAdd)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParseAdd)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1871,12 +1871,12 @@ RT_INTERFACE!{static interface IHttpContentCodingWithQualityHeaderValueFactory(I
 impl ComPtr<IHttpContentCodingWithQualityHeaderValueFactory> {
     #[inline] pub fn create_from_value(&self, contentCoding: &HStringArg) -> Result<ComPtr<HttpContentCodingWithQualityHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromValue)(self.deref() as *const _ as *mut _, contentCoding.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromValue)(self.as_abi() as *const _ as *mut _, contentCoding.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_value_with_quality(&self, contentCoding: &HStringArg, quality: f64) -> Result<ComPtr<HttpContentCodingWithQualityHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromValueWithQuality)(self.deref() as *const _ as *mut _, contentCoding.get(), quality, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromValueWithQuality)(self.as_abi() as *const _ as *mut _, contentCoding.get(), quality, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1888,12 +1888,12 @@ RT_INTERFACE!{static interface IHttpContentCodingWithQualityHeaderValueStatics(I
 impl ComPtr<IHttpContentCodingWithQualityHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpContentCodingWithQualityHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpContentCodingWithQualityHeaderValue>>, bool)> { unsafe { 
         let mut contentCodingWithQualityHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut contentCodingWithQualityHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut contentCodingWithQualityHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(contentCodingWithQualityHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -1914,52 +1914,52 @@ RT_INTERFACE!{interface IHttpContentDispositionHeaderValue(IHttpContentDispositi
 impl ComPtr<IHttpContentDispositionHeaderValue> {
     #[inline] pub fn get_disposition_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DispositionType)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DispositionType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_disposition_type(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_DispositionType)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_DispositionType)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_file_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_FileName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_FileName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_file_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_FileName)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_FileName)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_file_name_star(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_FileNameStar)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_FileNameStar)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_file_name_star(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_FileNameStar)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_FileNameStar)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Name)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Name)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Parameters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Parameters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_size(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Size)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Size)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_size(&self, value: &ComPtr<foundation::IReference<u64>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Size)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Size)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1985,7 +1985,7 @@ RT_INTERFACE!{static interface IHttpContentDispositionHeaderValueFactory(IHttpCo
 impl ComPtr<IHttpContentDispositionHeaderValueFactory> {
     #[inline] pub fn create(&self, dispositionType: &HStringArg) -> Result<ComPtr<HttpContentDispositionHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, dispositionType.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, dispositionType.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1997,12 +1997,12 @@ RT_INTERFACE!{static interface IHttpContentDispositionHeaderValueStatics(IHttpCo
 impl ComPtr<IHttpContentDispositionHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpContentDispositionHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpContentDispositionHeaderValue>>, bool)> { unsafe { 
         let mut contentDispositionHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut contentDispositionHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut contentDispositionHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(contentDispositionHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -2034,93 +2034,93 @@ RT_INTERFACE!{interface IHttpContentHeaderCollection(IHttpContentHeaderCollectio
 impl ComPtr<IHttpContentHeaderCollection> {
     #[inline] pub fn get_content_disposition(&self) -> Result<Option<ComPtr<HttpContentDispositionHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ContentDisposition)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ContentDisposition)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_content_disposition(&self, value: &ComPtr<HttpContentDispositionHeaderValue>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ContentDisposition)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ContentDisposition)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_content_encoding(&self) -> Result<Option<ComPtr<HttpContentCodingHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ContentEncoding)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ContentEncoding)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_content_language(&self) -> Result<Option<ComPtr<HttpLanguageHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ContentLanguage)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ContentLanguage)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_content_length(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ContentLength)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ContentLength)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_content_length(&self, value: &ComPtr<foundation::IReference<u64>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ContentLength)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ContentLength)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_content_location(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ContentLocation)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ContentLocation)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_content_location(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ContentLocation)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ContentLocation)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_content_md5(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ContentMD5)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ContentMD5)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_content_md5(&self, value: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ContentMD5)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ContentMD5)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_content_range(&self) -> Result<Option<ComPtr<HttpContentRangeHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ContentRange)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ContentRange)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_content_range(&self, value: &ComPtr<HttpContentRangeHeaderValue>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ContentRange)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ContentRange)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_content_type(&self) -> Result<Option<ComPtr<HttpMediaTypeHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ContentType)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ContentType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_content_type(&self, value: &ComPtr<HttpMediaTypeHeaderValue>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ContentType)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ContentType)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_expires(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Expires)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Expires)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_expires(&self, value: &ComPtr<foundation::IReference<foundation::DateTime>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Expires)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Expires)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_last_modified(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_LastModified)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LastModified)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_last_modified(&self, value: &ComPtr<foundation::IReference<foundation::DateTime>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_LastModified)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_LastModified)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn append(&self, name: &HStringArg, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Append)(self.deref() as *const _ as *mut _, name.get(), value.get());
+        let hr = ((*self.as_abi().lpVtbl).Append)(self.as_abi() as *const _ as *mut _, name.get(), value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_append_without_validation(&self, name: &HStringArg, value: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryAppendWithoutValidation)(self.deref() as *const _ as *mut _, name.get(), value.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryAppendWithoutValidation)(self.as_abi() as *const _ as *mut _, name.get(), value.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2138,26 +2138,26 @@ RT_INTERFACE!{interface IHttpContentRangeHeaderValue(IHttpContentRangeHeaderValu
 impl ComPtr<IHttpContentRangeHeaderValue> {
     #[inline] pub fn get_first_byte_position(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_FirstBytePosition)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_FirstBytePosition)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_last_byte_position(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_LastBytePosition)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LastBytePosition)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_length(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Length)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Length)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_unit(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Unit)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Unit)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_unit(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Unit)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Unit)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2191,17 +2191,17 @@ RT_INTERFACE!{static interface IHttpContentRangeHeaderValueFactory(IHttpContentR
 impl ComPtr<IHttpContentRangeHeaderValueFactory> {
     #[inline] pub fn create_from_length(&self, length: u64) -> Result<ComPtr<HttpContentRangeHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromLength)(self.deref() as *const _ as *mut _, length, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromLength)(self.as_abi() as *const _ as *mut _, length, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_range(&self, from: u64, to: u64) -> Result<ComPtr<HttpContentRangeHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromRange)(self.deref() as *const _ as *mut _, from, to, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromRange)(self.as_abi() as *const _ as *mut _, from, to, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_range_with_length(&self, from: u64, to: u64, length: u64) -> Result<ComPtr<HttpContentRangeHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromRangeWithLength)(self.deref() as *const _ as *mut _, from, to, length, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromRangeWithLength)(self.as_abi() as *const _ as *mut _, from, to, length, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2213,12 +2213,12 @@ RT_INTERFACE!{static interface IHttpContentRangeHeaderValueStatics(IHttpContentR
 impl ComPtr<IHttpContentRangeHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpContentRangeHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpContentRangeHeaderValue>>, bool)> { unsafe { 
         let mut contentRangeHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut contentRangeHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut contentRangeHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(contentRangeHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -2231,16 +2231,16 @@ RT_INTERFACE!{interface IHttpCookiePairHeaderValue(IHttpCookiePairHeaderValueVtb
 impl ComPtr<IHttpCookiePairHeaderValue> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_value(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Value)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Value)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2269,12 +2269,12 @@ RT_INTERFACE!{interface IHttpCookiePairHeaderValueCollection(IHttpCookiePairHead
 }}
 impl ComPtr<IHttpCookiePairHeaderValueCollection> {
     #[inline] pub fn parse_add(&self, input: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ParseAdd)(self.deref() as *const _ as *mut _, input.get());
+        let hr = ((*self.as_abi().lpVtbl).ParseAdd)(self.as_abi() as *const _ as *mut _, input.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_add(&self, input: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParseAdd)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParseAdd)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2287,12 +2287,12 @@ RT_INTERFACE!{static interface IHttpCookiePairHeaderValueFactory(IHttpCookiePair
 impl ComPtr<IHttpCookiePairHeaderValueFactory> {
     #[inline] pub fn create_from_name(&self, name: &HStringArg) -> Result<ComPtr<HttpCookiePairHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromName)(self.deref() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromName)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_name_with_value(&self, name: &HStringArg, value: &HStringArg) -> Result<ComPtr<HttpCookiePairHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromNameWithValue)(self.deref() as *const _ as *mut _, name.get(), value.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromNameWithValue)(self.as_abi() as *const _ as *mut _, name.get(), value.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2304,12 +2304,12 @@ RT_INTERFACE!{static interface IHttpCookiePairHeaderValueStatics(IHttpCookiePair
 impl ComPtr<IHttpCookiePairHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpCookiePairHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpCookiePairHeaderValue>>, bool)> { unsafe { 
         let mut cookiePairHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut cookiePairHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut cookiePairHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(cookiePairHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -2322,17 +2322,17 @@ RT_INTERFACE!{interface IHttpCredentialsHeaderValue(IHttpCredentialsHeaderValueV
 impl ComPtr<IHttpCredentialsHeaderValue> {
     #[inline] pub fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Parameters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Parameters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_scheme(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Scheme)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Scheme)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_token(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Token)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Token)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2362,12 +2362,12 @@ RT_INTERFACE!{static interface IHttpCredentialsHeaderValueFactory(IHttpCredentia
 impl ComPtr<IHttpCredentialsHeaderValueFactory> {
     #[inline] pub fn create_from_scheme(&self, scheme: &HStringArg) -> Result<ComPtr<HttpCredentialsHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromScheme)(self.deref() as *const _ as *mut _, scheme.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromScheme)(self.as_abi() as *const _ as *mut _, scheme.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_scheme_with_token(&self, scheme: &HStringArg, token: &HStringArg) -> Result<ComPtr<HttpCredentialsHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromSchemeWithToken)(self.deref() as *const _ as *mut _, scheme.get(), token.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromSchemeWithToken)(self.as_abi() as *const _ as *mut _, scheme.get(), token.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2379,12 +2379,12 @@ RT_INTERFACE!{static interface IHttpCredentialsHeaderValueStatics(IHttpCredentia
 impl ComPtr<IHttpCredentialsHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpCredentialsHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpCredentialsHeaderValue>>, bool)> { unsafe { 
         let mut credentialsHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut credentialsHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut credentialsHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(credentialsHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -2396,12 +2396,12 @@ RT_INTERFACE!{interface IHttpDateOrDeltaHeaderValue(IHttpDateOrDeltaHeaderValueV
 impl ComPtr<IHttpDateOrDeltaHeaderValue> {
     #[inline] pub fn get_date(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Date)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Date)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_delta(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Delta)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Delta)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2424,12 +2424,12 @@ RT_INTERFACE!{static interface IHttpDateOrDeltaHeaderValueStatics(IHttpDateOrDel
 impl ComPtr<IHttpDateOrDeltaHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpDateOrDeltaHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpDateOrDeltaHeaderValue>>, bool)> { unsafe { 
         let mut dateOrDeltaHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut dateOrDeltaHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut dateOrDeltaHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(dateOrDeltaHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -2443,21 +2443,21 @@ RT_INTERFACE!{interface IHttpExpectationHeaderValue(IHttpExpectationHeaderValueV
 impl ComPtr<IHttpExpectationHeaderValue> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_value(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Value)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Value)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Parameters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Parameters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2486,12 +2486,12 @@ RT_INTERFACE!{interface IHttpExpectationHeaderValueCollection(IHttpExpectationHe
 }}
 impl ComPtr<IHttpExpectationHeaderValueCollection> {
     #[inline] pub fn parse_add(&self, input: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ParseAdd)(self.deref() as *const _ as *mut _, input.get());
+        let hr = ((*self.as_abi().lpVtbl).ParseAdd)(self.as_abi() as *const _ as *mut _, input.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_add(&self, input: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParseAdd)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParseAdd)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2504,12 +2504,12 @@ RT_INTERFACE!{static interface IHttpExpectationHeaderValueFactory(IHttpExpectati
 impl ComPtr<IHttpExpectationHeaderValueFactory> {
     #[inline] pub fn create_from_name(&self, name: &HStringArg) -> Result<ComPtr<HttpExpectationHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromName)(self.deref() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromName)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_name_with_value(&self, name: &HStringArg, value: &HStringArg) -> Result<ComPtr<HttpExpectationHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromNameWithValue)(self.deref() as *const _ as *mut _, name.get(), value.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromNameWithValue)(self.as_abi() as *const _ as *mut _, name.get(), value.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2521,12 +2521,12 @@ RT_INTERFACE!{static interface IHttpExpectationHeaderValueStatics(IHttpExpectati
 impl ComPtr<IHttpExpectationHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpExpectationHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpExpectationHeaderValue>>, bool)> { unsafe { 
         let mut expectationHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut expectationHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut expectationHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(expectationHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -2537,12 +2537,12 @@ RT_INTERFACE!{interface IHttpLanguageHeaderValueCollection(IHttpLanguageHeaderVa
 }}
 impl ComPtr<IHttpLanguageHeaderValueCollection> {
     #[inline] pub fn parse_add(&self, input: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ParseAdd)(self.deref() as *const _ as *mut _, input.get());
+        let hr = ((*self.as_abi().lpVtbl).ParseAdd)(self.as_abi() as *const _ as *mut _, input.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_add(&self, input: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParseAdd)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParseAdd)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2555,12 +2555,12 @@ RT_INTERFACE!{interface IHttpLanguageRangeWithQualityHeaderValue(IHttpLanguageRa
 impl ComPtr<IHttpLanguageRangeWithQualityHeaderValue> {
     #[inline] pub fn get_language_range(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_LanguageRange)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LanguageRange)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_quality(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Quality)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Quality)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2589,12 +2589,12 @@ RT_INTERFACE!{interface IHttpLanguageRangeWithQualityHeaderValueCollection(IHttp
 }}
 impl ComPtr<IHttpLanguageRangeWithQualityHeaderValueCollection> {
     #[inline] pub fn parse_add(&self, input: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ParseAdd)(self.deref() as *const _ as *mut _, input.get());
+        let hr = ((*self.as_abi().lpVtbl).ParseAdd)(self.as_abi() as *const _ as *mut _, input.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_add(&self, input: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParseAdd)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParseAdd)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2607,12 +2607,12 @@ RT_INTERFACE!{static interface IHttpLanguageRangeWithQualityHeaderValueFactory(I
 impl ComPtr<IHttpLanguageRangeWithQualityHeaderValueFactory> {
     #[inline] pub fn create_from_language_range(&self, languageRange: &HStringArg) -> Result<ComPtr<HttpLanguageRangeWithQualityHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromLanguageRange)(self.deref() as *const _ as *mut _, languageRange.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromLanguageRange)(self.as_abi() as *const _ as *mut _, languageRange.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_language_range_with_quality(&self, languageRange: &HStringArg, quality: f64) -> Result<ComPtr<HttpLanguageRangeWithQualityHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromLanguageRangeWithQuality)(self.deref() as *const _ as *mut _, languageRange.get(), quality, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromLanguageRangeWithQuality)(self.as_abi() as *const _ as *mut _, languageRange.get(), quality, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2624,12 +2624,12 @@ RT_INTERFACE!{static interface IHttpLanguageRangeWithQualityHeaderValueStatics(I
 impl ComPtr<IHttpLanguageRangeWithQualityHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpLanguageRangeWithQualityHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpLanguageRangeWithQualityHeaderValue>>, bool)> { unsafe { 
         let mut languageRangeWithQualityHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut languageRangeWithQualityHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut languageRangeWithQualityHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(languageRangeWithQualityHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -2644,25 +2644,25 @@ RT_INTERFACE!{interface IHttpMediaTypeHeaderValue(IHttpMediaTypeHeaderValueVtbl)
 impl ComPtr<IHttpMediaTypeHeaderValue> {
     #[inline] pub fn get_char_set(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CharSet)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CharSet)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_char_set(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_CharSet)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_CharSet)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_media_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_MediaType)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MediaType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_media_type(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MediaType)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_MediaType)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Parameters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Parameters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2688,7 +2688,7 @@ RT_INTERFACE!{static interface IHttpMediaTypeHeaderValueFactory(IHttpMediaTypeHe
 impl ComPtr<IHttpMediaTypeHeaderValueFactory> {
     #[inline] pub fn create(&self, mediaType: &HStringArg) -> Result<ComPtr<HttpMediaTypeHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, mediaType.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, mediaType.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2700,12 +2700,12 @@ RT_INTERFACE!{static interface IHttpMediaTypeHeaderValueStatics(IHttpMediaTypeHe
 impl ComPtr<IHttpMediaTypeHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpMediaTypeHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpMediaTypeHeaderValue>>, bool)> { unsafe { 
         let mut mediaTypeHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut mediaTypeHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut mediaTypeHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(mediaTypeHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -2722,34 +2722,34 @@ RT_INTERFACE!{interface IHttpMediaTypeWithQualityHeaderValue(IHttpMediaTypeWithQ
 impl ComPtr<IHttpMediaTypeWithQualityHeaderValue> {
     #[inline] pub fn get_char_set(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CharSet)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CharSet)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_char_set(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_CharSet)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_CharSet)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_media_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_MediaType)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MediaType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_media_type(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MediaType)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_MediaType)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Parameters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Parameters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_quality(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Quality)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Quality)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_quality(&self, value: &ComPtr<foundation::IReference<f64>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Quality)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Quality)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2778,12 +2778,12 @@ RT_INTERFACE!{interface IHttpMediaTypeWithQualityHeaderValueCollection(IHttpMedi
 }}
 impl ComPtr<IHttpMediaTypeWithQualityHeaderValueCollection> {
     #[inline] pub fn parse_add(&self, input: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ParseAdd)(self.deref() as *const _ as *mut _, input.get());
+        let hr = ((*self.as_abi().lpVtbl).ParseAdd)(self.as_abi() as *const _ as *mut _, input.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_add(&self, input: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParseAdd)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParseAdd)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2796,12 +2796,12 @@ RT_INTERFACE!{static interface IHttpMediaTypeWithQualityHeaderValueFactory(IHttp
 impl ComPtr<IHttpMediaTypeWithQualityHeaderValueFactory> {
     #[inline] pub fn create_from_media_type(&self, mediaType: &HStringArg) -> Result<ComPtr<HttpMediaTypeWithQualityHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromMediaType)(self.deref() as *const _ as *mut _, mediaType.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromMediaType)(self.as_abi() as *const _ as *mut _, mediaType.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_media_type_with_quality(&self, mediaType: &HStringArg, quality: f64) -> Result<ComPtr<HttpMediaTypeWithQualityHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromMediaTypeWithQuality)(self.deref() as *const _ as *mut _, mediaType.get(), quality, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromMediaTypeWithQuality)(self.as_abi() as *const _ as *mut _, mediaType.get(), quality, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2813,12 +2813,12 @@ RT_INTERFACE!{static interface IHttpMediaTypeWithQualityHeaderValueStatics(IHttp
 impl ComPtr<IHttpMediaTypeWithQualityHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpMediaTypeWithQualityHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpMediaTypeWithQualityHeaderValue>>, bool)> { unsafe { 
         let mut mediaTypeWithQualityHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut mediaTypeWithQualityHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut mediaTypeWithQualityHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(mediaTypeWithQualityHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -2829,12 +2829,12 @@ RT_INTERFACE!{interface IHttpMethodHeaderValueCollection(IHttpMethodHeaderValueC
 }}
 impl ComPtr<IHttpMethodHeaderValueCollection> {
     #[inline] pub fn parse_add(&self, input: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ParseAdd)(self.deref() as *const _ as *mut _, input.get());
+        let hr = ((*self.as_abi().lpVtbl).ParseAdd)(self.as_abi() as *const _ as *mut _, input.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_add(&self, input: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParseAdd)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParseAdd)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2848,16 +2848,16 @@ RT_INTERFACE!{interface IHttpNameValueHeaderValue(IHttpNameValueHeaderValueVtbl)
 impl ComPtr<IHttpNameValueHeaderValue> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_value(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Value)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Value)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2887,12 +2887,12 @@ RT_INTERFACE!{static interface IHttpNameValueHeaderValueFactory(IHttpNameValueHe
 impl ComPtr<IHttpNameValueHeaderValueFactory> {
     #[inline] pub fn create_from_name(&self, name: &HStringArg) -> Result<ComPtr<HttpNameValueHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromName)(self.deref() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromName)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_name_with_value(&self, name: &HStringArg, value: &HStringArg) -> Result<ComPtr<HttpNameValueHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromNameWithValue)(self.deref() as *const _ as *mut _, name.get(), value.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromNameWithValue)(self.as_abi() as *const _ as *mut _, name.get(), value.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2904,12 +2904,12 @@ RT_INTERFACE!{static interface IHttpNameValueHeaderValueStatics(IHttpNameValueHe
 impl ComPtr<IHttpNameValueHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpNameValueHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpNameValueHeaderValue>>, bool)> { unsafe { 
         let mut nameValueHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut nameValueHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut nameValueHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(nameValueHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -2921,12 +2921,12 @@ RT_INTERFACE!{interface IHttpProductHeaderValue(IHttpProductHeaderValueVtbl): II
 impl ComPtr<IHttpProductHeaderValue> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_version(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Version)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Version)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2956,12 +2956,12 @@ RT_INTERFACE!{static interface IHttpProductHeaderValueFactory(IHttpProductHeader
 impl ComPtr<IHttpProductHeaderValueFactory> {
     #[inline] pub fn create_from_name(&self, productName: &HStringArg) -> Result<ComPtr<HttpProductHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromName)(self.deref() as *const _ as *mut _, productName.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromName)(self.as_abi() as *const _ as *mut _, productName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_name_with_version(&self, productName: &HStringArg, productVersion: &HStringArg) -> Result<ComPtr<HttpProductHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromNameWithVersion)(self.deref() as *const _ as *mut _, productName.get(), productVersion.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromNameWithVersion)(self.as_abi() as *const _ as *mut _, productName.get(), productVersion.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2973,12 +2973,12 @@ RT_INTERFACE!{static interface IHttpProductHeaderValueStatics(IHttpProductHeader
 impl ComPtr<IHttpProductHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpProductHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpProductHeaderValue>>, bool)> { unsafe { 
         let mut productHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut productHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut productHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(productHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -2990,12 +2990,12 @@ RT_INTERFACE!{interface IHttpProductInfoHeaderValue(IHttpProductInfoHeaderValueV
 impl ComPtr<IHttpProductInfoHeaderValue> {
     #[inline] pub fn get_product(&self) -> Result<Option<ComPtr<HttpProductHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Product)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Product)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_comment(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Comment)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Comment)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3024,12 +3024,12 @@ RT_INTERFACE!{interface IHttpProductInfoHeaderValueCollection(IHttpProductInfoHe
 }}
 impl ComPtr<IHttpProductInfoHeaderValueCollection> {
     #[inline] pub fn parse_add(&self, input: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ParseAdd)(self.deref() as *const _ as *mut _, input.get());
+        let hr = ((*self.as_abi().lpVtbl).ParseAdd)(self.as_abi() as *const _ as *mut _, input.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_add(&self, input: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParseAdd)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParseAdd)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3042,12 +3042,12 @@ RT_INTERFACE!{static interface IHttpProductInfoHeaderValueFactory(IHttpProductIn
 impl ComPtr<IHttpProductInfoHeaderValueFactory> {
     #[inline] pub fn create_from_comment(&self, productComment: &HStringArg) -> Result<ComPtr<HttpProductInfoHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromComment)(self.deref() as *const _ as *mut _, productComment.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromComment)(self.as_abi() as *const _ as *mut _, productComment.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_name_with_version(&self, productName: &HStringArg, productVersion: &HStringArg) -> Result<ComPtr<HttpProductInfoHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromNameWithVersion)(self.deref() as *const _ as *mut _, productName.get(), productVersion.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromNameWithVersion)(self.as_abi() as *const _ as *mut _, productName.get(), productVersion.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3059,12 +3059,12 @@ RT_INTERFACE!{static interface IHttpProductInfoHeaderValueStatics(IHttpProductIn
 impl ComPtr<IHttpProductInfoHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpProductInfoHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpProductInfoHeaderValue>>, bool)> { unsafe { 
         let mut productInfoHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut productInfoHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut productInfoHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(productInfoHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -3105,137 +3105,137 @@ RT_INTERFACE!{interface IHttpRequestHeaderCollection(IHttpRequestHeaderCollectio
 impl ComPtr<IHttpRequestHeaderCollection> {
     #[inline] pub fn get_accept(&self) -> Result<Option<ComPtr<HttpMediaTypeWithQualityHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Accept)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Accept)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_accept_encoding(&self) -> Result<Option<ComPtr<HttpContentCodingWithQualityHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_AcceptEncoding)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AcceptEncoding)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_accept_language(&self) -> Result<Option<ComPtr<HttpLanguageRangeWithQualityHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_AcceptLanguage)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AcceptLanguage)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_authorization(&self) -> Result<Option<ComPtr<HttpCredentialsHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Authorization)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Authorization)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_authorization(&self, value: &ComPtr<HttpCredentialsHeaderValue>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Authorization)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Authorization)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_cache_control(&self) -> Result<Option<ComPtr<HttpCacheDirectiveHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CacheControl)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CacheControl)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_connection(&self) -> Result<Option<ComPtr<HttpConnectionOptionHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Connection)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Connection)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cookie(&self) -> Result<Option<ComPtr<HttpCookiePairHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Cookie)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Cookie)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_date(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Date)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Date)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_date(&self, value: &ComPtr<foundation::IReference<foundation::DateTime>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Date)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Date)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_expect(&self) -> Result<Option<ComPtr<HttpExpectationHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Expect)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Expect)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_from(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_From)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_From)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_from(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_From)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_From)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-networking")] #[inline] pub fn get_host(&self) -> Result<Option<ComPtr<crate::windows::networking::HostName>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Host)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Host)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-networking")] #[inline] pub fn set_host(&self, value: &ComPtr<crate::windows::networking::HostName>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Host)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Host)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_if_modified_since(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_IfModifiedSince)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IfModifiedSince)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_if_modified_since(&self, value: &ComPtr<foundation::IReference<foundation::DateTime>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_IfModifiedSince)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_IfModifiedSince)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_if_unmodified_since(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_IfUnmodifiedSince)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IfUnmodifiedSince)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_if_unmodified_since(&self, value: &ComPtr<foundation::IReference<foundation::DateTime>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_IfUnmodifiedSince)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_IfUnmodifiedSince)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_max_forwards(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_MaxForwards)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MaxForwards)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_max_forwards(&self, value: &ComPtr<foundation::IReference<u32>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MaxForwards)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_MaxForwards)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_proxy_authorization(&self) -> Result<Option<ComPtr<HttpCredentialsHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ProxyAuthorization)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ProxyAuthorization)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_proxy_authorization(&self, value: &ComPtr<HttpCredentialsHeaderValue>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ProxyAuthorization)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ProxyAuthorization)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_referer(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Referer)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Referer)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_referer(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Referer)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Referer)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_transfer_encoding(&self) -> Result<Option<ComPtr<HttpTransferCodingHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_TransferEncoding)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TransferEncoding)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_user_agent(&self) -> Result<Option<ComPtr<HttpProductInfoHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_UserAgent)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_UserAgent)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn append(&self, name: &HStringArg, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Append)(self.deref() as *const _ as *mut _, name.get(), value.get());
+        let hr = ((*self.as_abi().lpVtbl).Append)(self.as_abi() as *const _ as *mut _, name.get(), value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_append_without_validation(&self, name: &HStringArg, value: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryAppendWithoutValidation)(self.deref() as *const _ as *mut _, name.get(), value.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryAppendWithoutValidation)(self.as_abi() as *const _ as *mut _, name.get(), value.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3262,77 +3262,77 @@ RT_INTERFACE!{interface IHttpResponseHeaderCollection(IHttpResponseHeaderCollect
 impl ComPtr<IHttpResponseHeaderCollection> {
     #[inline] pub fn get_age(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Age)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Age)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_age(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Age)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Age)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_allow(&self) -> Result<Option<ComPtr<HttpMethodHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Allow)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Allow)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cache_control(&self) -> Result<Option<ComPtr<HttpCacheDirectiveHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CacheControl)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CacheControl)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_connection(&self) -> Result<Option<ComPtr<HttpConnectionOptionHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Connection)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Connection)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_date(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Date)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Date)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_date(&self, value: &ComPtr<foundation::IReference<foundation::DateTime>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Date)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Date)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_location(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Location)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Location)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_location(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Location)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Location)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_proxy_authenticate(&self) -> Result<Option<ComPtr<HttpChallengeHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ProxyAuthenticate)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ProxyAuthenticate)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_retry_after(&self) -> Result<Option<ComPtr<HttpDateOrDeltaHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RetryAfter)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RetryAfter)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_retry_after(&self, value: &ComPtr<HttpDateOrDeltaHeaderValue>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_RetryAfter)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_RetryAfter)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_transfer_encoding(&self) -> Result<Option<ComPtr<HttpTransferCodingHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_TransferEncoding)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TransferEncoding)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_www_authenticate(&self) -> Result<Option<ComPtr<HttpChallengeHeaderValueCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_WwwAuthenticate)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_WwwAuthenticate)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn append(&self, name: &HStringArg, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Append)(self.deref() as *const _ as *mut _, name.get(), value.get());
+        let hr = ((*self.as_abi().lpVtbl).Append)(self.as_abi() as *const _ as *mut _, name.get(), value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_append_without_validation(&self, name: &HStringArg, value: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryAppendWithoutValidation)(self.deref() as *const _ as *mut _, name.get(), value.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryAppendWithoutValidation)(self.as_abi() as *const _ as *mut _, name.get(), value.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3345,12 +3345,12 @@ RT_INTERFACE!{interface IHttpTransferCodingHeaderValue(IHttpTransferCodingHeader
 impl ComPtr<IHttpTransferCodingHeaderValue> {
     #[inline] pub fn get_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HttpNameValueHeaderValue>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Parameters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Parameters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3376,12 +3376,12 @@ RT_INTERFACE!{interface IHttpTransferCodingHeaderValueCollection(IHttpTransferCo
 }}
 impl ComPtr<IHttpTransferCodingHeaderValueCollection> {
     #[inline] pub fn parse_add(&self, input: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ParseAdd)(self.deref() as *const _ as *mut _, input.get());
+        let hr = ((*self.as_abi().lpVtbl).ParseAdd)(self.as_abi() as *const _ as *mut _, input.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_add(&self, input: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParseAdd)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParseAdd)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3393,7 +3393,7 @@ RT_INTERFACE!{static interface IHttpTransferCodingHeaderValueFactory(IHttpTransf
 impl ComPtr<IHttpTransferCodingHeaderValueFactory> {
     #[inline] pub fn create(&self, input: &HStringArg) -> Result<ComPtr<HttpTransferCodingHeaderValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3405,12 +3405,12 @@ RT_INTERFACE!{static interface IHttpTransferCodingHeaderValueStatics(IHttpTransf
 impl ComPtr<IHttpTransferCodingHeaderValueStatics> {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<HttpTransferCodingHeaderValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Parse)(self.deref() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<HttpTransferCodingHeaderValue>>, bool)> { unsafe { 
         let mut transferCodingHeaderValue = null_mut(); let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TryParse)(self.deref() as *const _ as *mut _, input.get(), &mut transferCodingHeaderValue, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut transferCodingHeaderValue, &mut out);
         if hr == S_OK { Ok((ComPtr::wrap_optional(transferCodingHeaderValue), out)) } else { err(hr) }
     }}
 }
@@ -3433,29 +3433,29 @@ RT_INTERFACE!{interface ISyndicationAttribute(ISyndicationAttributeVtbl): IInspe
 impl ComPtr<ISyndicationAttribute> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Name)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Name)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_namespace(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Namespace)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Namespace)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_namespace(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Namespace)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Namespace)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_value(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Value)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Value)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3475,7 +3475,7 @@ RT_INTERFACE!{static interface ISyndicationAttributeFactory(ISyndicationAttribut
 impl ComPtr<ISyndicationAttributeFactory> {
     #[inline] pub fn create_syndication_attribute(&self, attributeName: &HStringArg, attributeNamespace: &HStringArg, attributeValue: &HStringArg) -> Result<ComPtr<SyndicationAttribute>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationAttribute)(self.deref() as *const _ as *mut _, attributeName.get(), attributeNamespace.get(), attributeValue.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationAttribute)(self.as_abi() as *const _ as *mut _, attributeName.get(), attributeNamespace.get(), attributeValue.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3491,29 +3491,29 @@ RT_INTERFACE!{interface ISyndicationCategory(ISyndicationCategoryVtbl): IInspect
 impl ComPtr<ISyndicationCategory> {
     #[inline] pub fn get_label(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Label)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Label)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_label(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Label)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Label)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_scheme(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Scheme)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Scheme)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_scheme(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Scheme)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Scheme)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_term(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Term)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Term)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_term(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Term)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Term)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3537,12 +3537,12 @@ RT_INTERFACE!{static interface ISyndicationCategoryFactory(ISyndicationCategoryF
 impl ComPtr<ISyndicationCategoryFactory> {
     #[inline] pub fn create_syndication_category(&self, term: &HStringArg) -> Result<ComPtr<SyndicationCategory>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationCategory)(self.deref() as *const _ as *mut _, term.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationCategory)(self.as_abi() as *const _ as *mut _, term.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_syndication_category_ex(&self, term: &HStringArg, scheme: &HStringArg, label: &HStringArg) -> Result<ComPtr<SyndicationCategory>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationCategoryEx)(self.deref() as *const _ as *mut _, term.get(), scheme.get(), label.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationCategoryEx)(self.as_abi() as *const _ as *mut _, term.get(), scheme.get(), label.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3568,56 +3568,56 @@ RT_INTERFACE!{interface ISyndicationClient(ISyndicationClientVtbl): IInspectable
 impl ComPtr<ISyndicationClient> {
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ServerCredential)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ServerCredential)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn set_server_credential(&self, value: &ComPtr<super::super::security::credentials::PasswordCredential>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ServerCredential)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ServerCredential)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn get_proxy_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ProxyCredential)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ProxyCredential)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn set_proxy_credential(&self, value: &ComPtr<super::super::security::credentials::PasswordCredential>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ProxyCredential)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ProxyCredential)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_max_response_buffer_size(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_MaxResponseBufferSize)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MaxResponseBufferSize)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_max_response_buffer_size(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MaxResponseBufferSize)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_MaxResponseBufferSize)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_timeout(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Timeout)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Timeout)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_timeout(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Timeout)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Timeout)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_bypass_cache_on_retrieve(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_BypassCacheOnRetrieve)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BypassCacheOnRetrieve)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_bypass_cache_on_retrieve(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_BypassCacheOnRetrieve)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_BypassCacheOnRetrieve)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_request_header(&self, name: &HStringArg, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetRequestHeader)(self.deref() as *const _ as *mut _, name.get(), value.get());
+        let hr = ((*self.as_abi().lpVtbl).SetRequestHeader)(self.as_abi() as *const _ as *mut _, name.get(), value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn retrieve_feed_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<SyndicationFeed, RetrievalProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RetrieveFeedAsync)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RetrieveFeedAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3637,7 +3637,7 @@ RT_INTERFACE!{static interface ISyndicationClientFactory(ISyndicationClientFacto
 impl ComPtr<ISyndicationClientFactory> {
     #[cfg(feature="windows-security")] #[inline] pub fn create_syndication_client(&self, serverCredential: &ComPtr<super::super::security::credentials::PasswordCredential>) -> Result<ComPtr<SyndicationClient>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationClient)(self.deref() as *const _ as *mut _, serverCredential.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationClient)(self.as_abi() as *const _ as *mut _, serverCredential.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3649,11 +3649,11 @@ RT_INTERFACE!{interface ISyndicationContent(ISyndicationContentVtbl): IInspectab
 impl ComPtr<ISyndicationContent> {
     #[inline] pub fn get_source_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SourceUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SourceUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_source_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_SourceUri)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_SourceUri)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3677,12 +3677,12 @@ RT_INTERFACE!{static interface ISyndicationContentFactory(ISyndicationContentFac
 impl ComPtr<ISyndicationContentFactory> {
     #[inline] pub fn create_syndication_content(&self, text: &HStringArg, type_: SyndicationTextType) -> Result<ComPtr<SyndicationContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationContent)(self.deref() as *const _ as *mut _, text.get(), type_, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationContent)(self.as_abi() as *const _ as *mut _, text.get(), type_, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_syndication_content_with_source_uri(&self, sourceUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<SyndicationContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationContentWithSourceUri)(self.deref() as *const _ as *mut _, sourceUri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationContentWithSourceUri)(self.as_abi() as *const _ as *mut _, sourceUri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3701,7 +3701,7 @@ RT_INTERFACE!{static interface ISyndicationErrorStatics(ISyndicationErrorStatics
 impl ComPtr<ISyndicationErrorStatics> {
     #[inline] pub fn get_status(&self, hresult: i32) -> Result<SyndicationErrorStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetStatus)(self.deref() as *const _ as *mut _, hresult, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetStatus)(self.as_abi() as *const _ as *mut _, hresult, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3742,132 +3742,132 @@ RT_INTERFACE!{interface ISyndicationFeed(ISyndicationFeedVtbl): IInspectable(IIn
 impl ComPtr<ISyndicationFeed> {
     #[inline] pub fn get_authors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationPerson>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Authors)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Authors)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_categories(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationCategory>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Categories)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Categories)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_contributors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationPerson>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Contributors)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Contributors)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_generator(&self) -> Result<Option<ComPtr<SyndicationGenerator>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Generator)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Generator)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_generator(&self, value: &ComPtr<SyndicationGenerator>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Generator)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Generator)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_icon_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_IconUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IconUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_icon_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_IconUri)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_IconUri)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Id)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Id)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Id)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_items(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationItem>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Items)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Items)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_last_updated_time(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_LastUpdatedTime)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LastUpdatedTime)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_last_updated_time(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_LastUpdatedTime)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_LastUpdatedTime)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_links(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationLink>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Links)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Links)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_image_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ImageUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ImageUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_image_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ImageUri)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ImageUri)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_rights(&self) -> Result<Option<ComPtr<ISyndicationText>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Rights)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Rights)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_rights(&self, value: &ComPtr<ISyndicationText>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Rights)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Rights)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_subtitle(&self) -> Result<Option<ComPtr<ISyndicationText>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Subtitle)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Subtitle)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_subtitle(&self, value: &ComPtr<ISyndicationText>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Subtitle)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Subtitle)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_title(&self) -> Result<Option<ComPtr<ISyndicationText>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Title)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_title(&self, value: &ComPtr<ISyndicationText>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Title)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Title)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_first_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_FirstUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_FirstUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_last_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_LastUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LastUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_next_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_NextUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_NextUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_previous_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_PreviousUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PreviousUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_source_format(&self) -> Result<SyndicationFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_SourceFormat)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SourceFormat)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn load(&self, feed: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Load)(self.deref() as *const _ as *mut _, feed.get());
+        let hr = ((*self.as_abi().lpVtbl).Load)(self.as_abi() as *const _ as *mut _, feed.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn load_from_xml(&self, feedDocument: &ComPtr<super::super::data::xml::dom::XmlDocument>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).LoadFromXml)(self.deref() as *const _ as *mut _, feedDocument.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).LoadFromXml)(self.as_abi() as *const _ as *mut _, feedDocument.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3887,7 +3887,7 @@ RT_INTERFACE!{static interface ISyndicationFeedFactory(ISyndicationFeedFactoryVt
 impl ComPtr<ISyndicationFeedFactory> {
     #[inline] pub fn create_syndication_feed(&self, title: &HStringArg, subtitle: &HStringArg, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<SyndicationFeed>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationFeed)(self.deref() as *const _ as *mut _, title.get(), subtitle.get(), uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationFeed)(self.as_abi() as *const _ as *mut _, title.get(), subtitle.get(), uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3906,29 +3906,29 @@ RT_INTERFACE!{interface ISyndicationGenerator(ISyndicationGeneratorVtbl): IInspe
 impl ComPtr<ISyndicationGenerator> {
     #[inline] pub fn get_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Text)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Text)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Text)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Text)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Uri)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Uri)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_version(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Version)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Version)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_version(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Version)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Version)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3948,7 +3948,7 @@ RT_INTERFACE!{static interface ISyndicationGeneratorFactory(ISyndicationGenerato
 impl ComPtr<ISyndicationGeneratorFactory> {
     #[inline] pub fn create_syndication_generator(&self, text: &HStringArg) -> Result<ComPtr<SyndicationGenerator>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationGenerator)(self.deref() as *const _ as *mut _, text.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationGenerator)(self.as_abi() as *const _ as *mut _, text.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3986,131 +3986,131 @@ RT_INTERFACE!{interface ISyndicationItem(ISyndicationItemVtbl): IInspectable(IIn
 impl ComPtr<ISyndicationItem> {
     #[inline] pub fn get_authors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationPerson>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Authors)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Authors)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_categories(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationCategory>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Categories)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Categories)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_contributors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationPerson>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Contributors)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Contributors)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_content(&self) -> Result<Option<ComPtr<SyndicationContent>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Content)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Content)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_content(&self, value: &ComPtr<SyndicationContent>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Content)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Content)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Id)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Id)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Id)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_last_updated_time(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_LastUpdatedTime)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LastUpdatedTime)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_last_updated_time(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_LastUpdatedTime)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_LastUpdatedTime)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_links(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationLink>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Links)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Links)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_published_date(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_PublishedDate)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PublishedDate)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_published_date(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_PublishedDate)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_PublishedDate)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_rights(&self) -> Result<Option<ComPtr<ISyndicationText>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Rights)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Rights)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_rights(&self, value: &ComPtr<ISyndicationText>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Rights)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Rights)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_source(&self) -> Result<Option<ComPtr<SyndicationFeed>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Source)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Source)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_source(&self, value: &ComPtr<SyndicationFeed>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Source)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Source)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_summary(&self) -> Result<Option<ComPtr<ISyndicationText>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Summary)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Summary)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_summary(&self, value: &ComPtr<ISyndicationText>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Summary)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Summary)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_title(&self) -> Result<Option<ComPtr<ISyndicationText>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Title)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_title(&self, value: &ComPtr<ISyndicationText>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Title)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Title)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_comments_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CommentsUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CommentsUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_comments_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_CommentsUri)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_CommentsUri)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_edit_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_EditUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EditUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_edit_media_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_EditMediaUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EditMediaUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_etag(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ETag)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ETag)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_item_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ItemUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ItemUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn load(&self, item: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Load)(self.deref() as *const _ as *mut _, item.get());
+        let hr = ((*self.as_abi().lpVtbl).Load)(self.as_abi() as *const _ as *mut _, item.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn load_from_xml(&self, itemDocument: &ComPtr<super::super::data::xml::dom::XmlDocument>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).LoadFromXml)(self.deref() as *const _ as *mut _, itemDocument.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).LoadFromXml)(self.as_abi() as *const _ as *mut _, itemDocument.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4130,7 +4130,7 @@ RT_INTERFACE!{static interface ISyndicationItemFactory(ISyndicationItemFactoryVt
 impl ComPtr<ISyndicationItemFactory> {
     #[inline] pub fn create_syndication_item(&self, title: &HStringArg, content: &ComPtr<SyndicationContent>, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<SyndicationItem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationItem)(self.deref() as *const _ as *mut _, title.get(), content.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationItem)(self.as_abi() as *const _ as *mut _, title.get(), content.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4152,56 +4152,56 @@ RT_INTERFACE!{interface ISyndicationLink(ISyndicationLinkVtbl): IInspectable(IIn
 impl ComPtr<ISyndicationLink> {
     #[inline] pub fn get_length(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Length)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Length)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_length(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Length)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Length)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_media_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_MediaType)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MediaType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_media_type(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MediaType)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_MediaType)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_relationship(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Relationship)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Relationship)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_relationship(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Relationship)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Relationship)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Title)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_title(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Title)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Title)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Uri)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Uri)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_resource_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ResourceLanguage)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ResourceLanguage)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_resource_language(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ResourceLanguage)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_ResourceLanguage)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4225,12 +4225,12 @@ RT_INTERFACE!{static interface ISyndicationLinkFactory(ISyndicationLinkFactoryVt
 impl ComPtr<ISyndicationLinkFactory> {
     #[inline] pub fn create_syndication_link(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<SyndicationLink>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationLink)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationLink)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_syndication_link_ex(&self, uri: &ComPtr<foundation::Uri>, relationship: &HStringArg, title: &HStringArg, mediaType: &HStringArg, length: u32) -> Result<ComPtr<SyndicationLink>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationLinkEx)(self.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, relationship.get(), title.get(), mediaType.get(), length, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationLinkEx)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, relationship.get(), title.get(), mediaType.get(), length, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4253,62 +4253,62 @@ RT_INTERFACE!{interface ISyndicationNode(ISyndicationNodeVtbl): IInspectable(IIn
 impl ComPtr<ISyndicationNode> {
     #[inline] pub fn get_node_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_NodeName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_NodeName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_node_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_NodeName)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_NodeName)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_node_namespace(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_NodeNamespace)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_NodeNamespace)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_node_namespace(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_NodeNamespace)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_NodeNamespace)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_node_value(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_NodeValue)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_NodeValue)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_node_value(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_NodeValue)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_NodeValue)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Language)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Language)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_language(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Language)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Language)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_base_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_BaseUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BaseUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_base_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_BaseUri)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_BaseUri)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_attribute_extensions(&self) -> Result<Option<ComPtr<foundation::collections::IVector<SyndicationAttribute>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_AttributeExtensions)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AttributeExtensions)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_element_extensions(&self) -> Result<Option<ComPtr<foundation::collections::IVector<ISyndicationNode>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ElementExtensions)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ElementExtensions)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml_document(&self, format: SyndicationFormat) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetXmlDocument)(self.deref() as *const _ as *mut _, format, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetXmlDocument)(self.as_abi() as *const _ as *mut _, format, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4328,7 +4328,7 @@ RT_INTERFACE!{static interface ISyndicationNodeFactory(ISyndicationNodeFactoryVt
 impl ComPtr<ISyndicationNodeFactory> {
     #[inline] pub fn create_syndication_node(&self, nodeName: &HStringArg, nodeNamespace: &HStringArg, nodeValue: &HStringArg) -> Result<ComPtr<SyndicationNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationNode)(self.deref() as *const _ as *mut _, nodeName.get(), nodeNamespace.get(), nodeValue.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationNode)(self.as_abi() as *const _ as *mut _, nodeName.get(), nodeNamespace.get(), nodeValue.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4344,29 +4344,29 @@ RT_INTERFACE!{interface ISyndicationPerson(ISyndicationPersonVtbl): IInspectable
 impl ComPtr<ISyndicationPerson> {
     #[inline] pub fn get_email(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Email)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Email)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_email(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Email)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Email)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Name)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Name)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Uri)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Uri)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4390,12 +4390,12 @@ RT_INTERFACE!{static interface ISyndicationPersonFactory(ISyndicationPersonFacto
 impl ComPtr<ISyndicationPersonFactory> {
     #[inline] pub fn create_syndication_person(&self, name: &HStringArg) -> Result<ComPtr<SyndicationPerson>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationPerson)(self.deref() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationPerson)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_syndication_person_ex(&self, name: &HStringArg, email: &HStringArg, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<SyndicationPerson>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationPersonEx)(self.deref() as *const _ as *mut _, name.get(), email.get(), uri.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationPersonEx)(self.as_abi() as *const _ as *mut _, name.get(), email.get(), uri.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4411,29 +4411,29 @@ RT_INTERFACE!{interface ISyndicationText(ISyndicationTextVtbl): IInspectable(IIn
 impl ComPtr<ISyndicationText> {
     #[inline] pub fn get_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Text)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Text)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Text)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Text)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Type)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Type)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_type(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Type)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Type)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml(&self) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Xml)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Xml)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn set_xml(&self, value: &ComPtr<super::super::data::xml::dom::XmlDocument>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Xml)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Xml)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4457,12 +4457,12 @@ RT_INTERFACE!{static interface ISyndicationTextFactory(ISyndicationTextFactoryVt
 impl ComPtr<ISyndicationTextFactory> {
     #[inline] pub fn create_syndication_text(&self, text: &HStringArg) -> Result<ComPtr<SyndicationText>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationText)(self.deref() as *const _ as *mut _, text.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationText)(self.as_abi() as *const _ as *mut _, text.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_syndication_text_ex(&self, text: &HStringArg, type_: SyndicationTextType) -> Result<ComPtr<SyndicationText>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateSyndicationTextEx)(self.deref() as *const _ as *mut _, text.get(), type_, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateSyndicationTextEx)(self.as_abi() as *const _ as *mut _, text.get(), type_, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4542,260 +4542,260 @@ RT_INTERFACE!{interface IWebViewControl(IWebViewControlVtbl): IInspectable(IInsp
 impl ComPtr<IWebViewControl> {
     #[inline] pub fn get_source(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Source)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Source)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_source(&self, source: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Source)(self.deref() as *const _ as *mut _, source.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Source)(self.as_abi() as *const _ as *mut _, source.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_document_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DocumentTitle)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DocumentTitle)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_can_go_back(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_CanGoBack)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CanGoBack)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_can_go_forward(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_CanGoForward)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CanGoForward)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn set_default_background_color(&self, value: super::super::ui::Color) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_DefaultBackgroundColor)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_DefaultBackgroundColor)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn get_default_background_color(&self) -> Result<super::super::ui::Color> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_DefaultBackgroundColor)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DefaultBackgroundColor)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_contains_full_screen_element(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ContainsFullScreenElement)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ContainsFullScreenElement)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_settings(&self) -> Result<Option<ComPtr<WebViewControlSettings>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Settings)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Settings)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_deferred_permission_requests(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<WebViewControlDeferredPermissionRequest>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DeferredPermissionRequests)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DeferredPermissionRequests)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn go_forward(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).GoForward)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).GoForward)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn go_back(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).GoBack)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).GoBack)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn refresh(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Refresh)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Refresh)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Stop)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Stop)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn navigate(&self, source: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Navigate)(self.deref() as *const _ as *mut _, source.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Navigate)(self.as_abi() as *const _ as *mut _, source.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn navigate_to_string(&self, text: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).NavigateToString)(self.deref() as *const _ as *mut _, text.get());
+        let hr = ((*self.as_abi().lpVtbl).NavigateToString)(self.as_abi() as *const _ as *mut _, text.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn navigate_to_local_stream_uri(&self, source: &ComPtr<foundation::Uri>, streamResolver: &ComPtr<super::IUriToStreamResolver>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).NavigateToLocalStreamUri)(self.deref() as *const _ as *mut _, source.deref() as *const _ as *mut _, streamResolver.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).NavigateToLocalStreamUri)(self.as_abi() as *const _ as *mut _, source.as_abi() as *const _ as *mut _, streamResolver.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn navigate_with_http_request_message(&self, requestMessage: &ComPtr<super::http::HttpRequestMessage>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).NavigateWithHttpRequestMessage)(self.deref() as *const _ as *mut _, requestMessage.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).NavigateWithHttpRequestMessage)(self.as_abi() as *const _ as *mut _, requestMessage.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn invoke_script_async(&self, scriptName: &HStringArg, arguments: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).InvokeScriptAsync)(self.deref() as *const _ as *mut _, scriptName.get(), arguments.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).InvokeScriptAsync)(self.as_abi() as *const _ as *mut _, scriptName.get(), arguments.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn capture_preview_to_stream_async(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CapturePreviewToStreamAsync)(self.deref() as *const _ as *mut _, stream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CapturePreviewToStreamAsync)(self.as_abi() as *const _ as *mut _, stream.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn capture_selected_content_to_data_package_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::super::applicationmodel::datatransfer::DataPackage>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CaptureSelectedContentToDataPackageAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CaptureSelectedContentToDataPackageAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn build_local_stream_uri(&self, contentIdentifier: &HStringArg, relativePath: &HStringArg) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).BuildLocalStreamUri)(self.deref() as *const _ as *mut _, contentIdentifier.get(), relativePath.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).BuildLocalStreamUri)(self.as_abi() as *const _ as *mut _, contentIdentifier.get(), relativePath.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_deferred_permission_request_by_id(&self, id: u32) -> Result<Option<ComPtr<WebViewControlDeferredPermissionRequest>>> { unsafe { 
         let mut result = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDeferredPermissionRequestById)(self.deref() as *const _ as *mut _, id, &mut result);
+        let hr = ((*self.as_abi().lpVtbl).GetDeferredPermissionRequestById)(self.as_abi() as *const _ as *mut _, id, &mut result);
         if hr == S_OK { Ok(ComPtr::wrap_optional(result)) } else { err(hr) }
     }}
     #[inline] pub fn add_navigation_starting(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlNavigationStartingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_NavigationStarting)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_NavigationStarting)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_navigation_starting(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_NavigationStarting)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_NavigationStarting)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_content_loading(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlContentLoadingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_ContentLoading)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_ContentLoading)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_content_loading(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_ContentLoading)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_ContentLoading)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_dom_content_loaded(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlDOMContentLoadedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_DOMContentLoaded)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_DOMContentLoaded)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_dom_content_loaded(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_DOMContentLoaded)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_DOMContentLoaded)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_navigation_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlNavigationCompletedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_NavigationCompleted)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_NavigationCompleted)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_navigation_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_NavigationCompleted)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_NavigationCompleted)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_frame_navigation_starting(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlNavigationStartingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_FrameNavigationStarting)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_FrameNavigationStarting)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_frame_navigation_starting(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_FrameNavigationStarting)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_FrameNavigationStarting)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_frame_content_loading(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlContentLoadingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_FrameContentLoading)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_FrameContentLoading)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_frame_content_loading(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_FrameContentLoading)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_FrameContentLoading)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_frame_dom_content_loaded(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlDOMContentLoadedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_FrameDOMContentLoaded)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_FrameDOMContentLoaded)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_frame_dom_content_loaded(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_FrameDOMContentLoaded)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_FrameDOMContentLoaded)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_frame_navigation_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlNavigationCompletedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_FrameNavigationCompleted)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_FrameNavigationCompleted)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_frame_navigation_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_FrameNavigationCompleted)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_FrameNavigationCompleted)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_script_notify(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlScriptNotifyEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_ScriptNotify)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_ScriptNotify)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_script_notify(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_ScriptNotify)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_ScriptNotify)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_long_running_script_detected(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlLongRunningScriptDetectedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_LongRunningScriptDetected)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_LongRunningScriptDetected)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_long_running_script_detected(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_LongRunningScriptDetected)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_LongRunningScriptDetected)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_unsafe_content_warning_displaying(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_UnsafeContentWarningDisplaying)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_UnsafeContentWarningDisplaying)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_unsafe_content_warning_displaying(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_UnsafeContentWarningDisplaying)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_UnsafeContentWarningDisplaying)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_unviewable_content_identified(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlUnviewableContentIdentifiedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_UnviewableContentIdentified)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_UnviewableContentIdentified)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_unviewable_content_identified(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_UnviewableContentIdentified)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_UnviewableContentIdentified)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_permission_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlPermissionRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_PermissionRequested)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_PermissionRequested)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_permission_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_PermissionRequested)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_PermissionRequested)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_unsupported_uri_scheme_identified(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlUnsupportedUriSchemeIdentifiedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_UnsupportedUriSchemeIdentified)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_UnsupportedUriSchemeIdentified)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_unsupported_uri_scheme_identified(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_UnsupportedUriSchemeIdentified)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_UnsupportedUriSchemeIdentified)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_new_window_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlNewWindowRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_NewWindowRequested)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_NewWindowRequested)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_new_window_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_NewWindowRequested)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_NewWindowRequested)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_contains_full_screen_element_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_ContainsFullScreenElementChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_ContainsFullScreenElementChanged)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_contains_full_screen_element_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_ContainsFullScreenElementChanged)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_ContainsFullScreenElementChanged)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_web_resource_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<IWebViewControl, WebViewControlWebResourceRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_WebResourceRequested)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_WebResourceRequested)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_web_resource_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_WebResourceRequested)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_WebResourceRequested)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4805,7 +4805,7 @@ RT_INTERFACE!{interface IWebViewControl2(IWebViewControl2Vtbl): IInspectable(IIn
 }}
 impl ComPtr<IWebViewControl2> {
     #[inline] pub fn add_initialize_script(&self, script: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).AddInitializeScript)(self.deref() as *const _ as *mut _, script.get());
+        let hr = ((*self.as_abi().lpVtbl).AddInitializeScript)(self.as_abi() as *const _ as *mut _, script.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4816,7 +4816,7 @@ RT_INTERFACE!{interface IWebViewControlContentLoadingEventArgs(IWebViewControlCo
 impl ComPtr<IWebViewControlContentLoadingEventArgs> {
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4832,25 +4832,25 @@ RT_INTERFACE!{interface IWebViewControlDeferredPermissionRequest(IWebViewControl
 impl ComPtr<IWebViewControlDeferredPermissionRequest> {
     #[inline] pub fn get_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Id)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_permission_type(&self) -> Result<WebViewControlPermissionType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_PermissionType)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PermissionType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn allow(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Allow)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Allow)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn deny(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Deny)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Deny)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4862,7 +4862,7 @@ RT_INTERFACE!{interface IWebViewControlDOMContentLoadedEventArgs(IWebViewControl
 impl ComPtr<IWebViewControlDOMContentLoadedEventArgs> {
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4876,16 +4876,16 @@ RT_INTERFACE!{interface IWebViewControlLongRunningScriptDetectedEventArgs(IWebVi
 impl ComPtr<IWebViewControlLongRunningScriptDetectedEventArgs> {
     #[inline] pub fn get_execution_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExecutionTime)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExecutionTime)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_stop_page_script_execution(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_StopPageScriptExecution)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StopPageScriptExecution)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_stop_page_script_execution(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_StopPageScriptExecution)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_StopPageScriptExecution)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4899,17 +4899,17 @@ RT_INTERFACE!{interface IWebViewControlNavigationCompletedEventArgs(IWebViewCont
 impl ComPtr<IWebViewControlNavigationCompletedEventArgs> {
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_success(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsSuccess)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsSuccess)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_web_error_status(&self) -> Result<super::WebErrorStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_WebErrorStatus)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_WebErrorStatus)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4923,16 +4923,16 @@ RT_INTERFACE!{interface IWebViewControlNavigationStartingEventArgs(IWebViewContr
 impl ComPtr<IWebViewControlNavigationStartingEventArgs> {
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cancel(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Cancel)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Cancel)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_cancel(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Cancel)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Cancel)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4947,21 +4947,21 @@ RT_INTERFACE!{interface IWebViewControlNewWindowRequestedEventArgs(IWebViewContr
 impl ComPtr<IWebViewControlNewWindowRequestedEventArgs> {
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_referrer(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Referrer)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Referrer)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_handled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Handled)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Handled)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_handled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Handled)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Handled)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4975,16 +4975,16 @@ RT_INTERFACE!{interface IWebViewControlNewWindowRequestedEventArgs2(IWebViewCont
 impl ComPtr<IWebViewControlNewWindowRequestedEventArgs2> {
     #[inline] pub fn get_new_window(&self) -> Result<Option<ComPtr<IWebViewControl>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_NewWindow)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_NewWindow)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_new_window(&self, value: &ComPtr<IWebViewControl>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_NewWindow)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_NewWindow)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDeferral)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5001,34 +5001,34 @@ RT_INTERFACE!{interface IWebViewControlPermissionRequest(IWebViewControlPermissi
 impl ComPtr<IWebViewControlPermissionRequest> {
     #[inline] pub fn get_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Id)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_permission_type(&self) -> Result<WebViewControlPermissionType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_PermissionType)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PermissionType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_state(&self) -> Result<WebViewControlPermissionState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_State)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_State)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn defer(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Defer)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Defer)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn allow(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Allow)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Allow)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn deny(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Deny)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Deny)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5040,7 +5040,7 @@ RT_INTERFACE!{interface IWebViewControlPermissionRequestedEventArgs(IWebViewCont
 impl ComPtr<IWebViewControlPermissionRequestedEventArgs> {
     #[inline] pub fn get_permission_request(&self) -> Result<Option<ComPtr<WebViewControlPermissionRequest>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_PermissionRequest)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PermissionRequest)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5059,12 +5059,12 @@ RT_INTERFACE!{interface IWebViewControlScriptNotifyEventArgs(IWebViewControlScri
 impl ComPtr<IWebViewControlScriptNotifyEventArgs> {
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5080,30 +5080,30 @@ RT_INTERFACE!{interface IWebViewControlSettings(IWebViewControlSettingsVtbl): II
 }}
 impl ComPtr<IWebViewControlSettings> {
     #[inline] pub fn set_is_javascript_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_IsJavaScriptEnabled)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_IsJavaScriptEnabled)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_javascript_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsJavaScriptEnabled)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsJavaScriptEnabled)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_indexeddb_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_IsIndexedDBEnabled)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_IsIndexedDBEnabled)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_indexeddb_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsIndexedDBEnabled)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsIndexedDBEnabled)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_script_notify_allowed(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_IsScriptNotifyAllowed)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_IsScriptNotifyAllowed)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_script_notify_allowed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsScriptNotifyAllowed)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsScriptNotifyAllowed)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5117,16 +5117,16 @@ RT_INTERFACE!{interface IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs(I
 impl ComPtr<IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs> {
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_handled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Handled)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Handled)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_handled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Handled)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Handled)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5140,17 +5140,17 @@ RT_INTERFACE!{interface IWebViewControlUnviewableContentIdentifiedEventArgs(IWeb
 impl ComPtr<IWebViewControlUnviewableContentIdentifiedEventArgs> {
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_referrer(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Referrer)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Referrer)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_media_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_MediaType)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MediaType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5165,21 +5165,21 @@ RT_INTERFACE!{interface IWebViewControlWebResourceRequestedEventArgs(IWebViewCon
 impl ComPtr<IWebViewControlWebResourceRequestedEventArgs> {
     #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDeferral)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<super::http::HttpRequestMessage>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Request)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Request)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_response(&self, value: &ComPtr<super::http::HttpResponseMessage>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Response)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_Response)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_response(&self) -> Result<Option<ComPtr<super::http::HttpResponseMessage>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Response)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Response)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5202,31 +5202,31 @@ RT_INTERFACE!{interface IWebViewControlAcceleratorKeyPressedEventArgs(IWebViewCo
 impl ComPtr<IWebViewControlAcceleratorKeyPressedEventArgs> {
     #[cfg(feature="windows-ui")] #[inline] pub fn get_event_type(&self) -> Result<crate::windows::ui::core::CoreAcceleratorKeyEventType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_EventType)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EventType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn get_virtual_key(&self) -> Result<crate::windows::system::VirtualKey> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_VirtualKey)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_VirtualKey)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn get_key_status(&self) -> Result<crate::windows::ui::core::CorePhysicalKeyStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_KeyStatus)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_KeyStatus)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_routing_stage(&self) -> Result<WebViewControlAcceleratorKeyRoutingStage> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_RoutingStage)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RoutingStage)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_handled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Handled)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Handled)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_handled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Handled)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Handled)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5244,7 +5244,7 @@ RT_INTERFACE!{interface IWebViewControlMoveFocusRequestedEventArgs(IWebViewContr
 impl ComPtr<IWebViewControlMoveFocusRequestedEventArgs> {
     #[inline] pub fn get_reason(&self) -> Result<WebViewControlMoveFocusReason> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Reason)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Reason)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5263,40 +5263,40 @@ RT_INTERFACE!{interface IWebViewControlProcess(IWebViewControlProcessVtbl): IIns
 impl ComPtr<IWebViewControlProcess> {
     #[inline] pub fn get_process_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ProcessId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ProcessId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_enterprise_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_EnterpriseId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EnterpriseId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_private_network_client_server_capability_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsPrivateNetworkClientServerCapabilityEnabled)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsPrivateNetworkClientServerCapabilityEnabled)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn create_web_view_control_async(&self, hostWindowHandle: i64, bounds: foundation::Rect) -> Result<ComPtr<foundation::IAsyncOperation<WebViewControl>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateWebViewControlAsync)(self.deref() as *const _ as *mut _, hostWindowHandle, bounds, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateWebViewControlAsync)(self.as_abi() as *const _ as *mut _, hostWindowHandle, bounds, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_web_view_controls(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<WebViewControl>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetWebViewControls)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetWebViewControls)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn terminate(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Terminate)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Terminate)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_process_exited(&self, handler: &ComPtr<foundation::TypedEventHandler<WebViewControlProcess, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_ProcessExited)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_ProcessExited)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_process_exited(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_ProcessExited)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_ProcessExited)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5319,7 +5319,7 @@ RT_INTERFACE!{static interface IWebViewControlProcessFactory(IWebViewControlProc
 impl ComPtr<IWebViewControlProcessFactory> {
     #[inline] pub fn create_with_options(&self, processOptions: &ComPtr<WebViewControlProcessOptions>) -> Result<ComPtr<WebViewControlProcess>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateWithOptions)(self.deref() as *const _ as *mut _, processOptions.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateWithOptions)(self.as_abi() as *const _ as *mut _, processOptions.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5332,21 +5332,21 @@ RT_INTERFACE!{interface IWebViewControlProcessOptions(IWebViewControlProcessOpti
 }}
 impl ComPtr<IWebViewControlProcessOptions> {
     #[inline] pub fn set_enterprise_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_EnterpriseId)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_EnterpriseId)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_enterprise_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_EnterpriseId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EnterpriseId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_private_network_client_server_capability(&self, value: WebViewControlProcessCapabilityState) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_PrivateNetworkClientServerCapability)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_PrivateNetworkClientServerCapability)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_private_network_client_server_capability(&self) -> Result<WebViewControlProcessCapabilityState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_PrivateNetworkClientServerCapability)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PrivateNetworkClientServerCapability)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5372,60 +5372,60 @@ RT_INTERFACE!{interface IWebViewControlSite(IWebViewControlSiteVtbl): IInspectab
 impl ComPtr<IWebViewControlSite> {
     #[inline] pub fn get_process(&self) -> Result<Option<ComPtr<WebViewControlProcess>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Process)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Process)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_scale(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Scale)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Scale)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_scale(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Scale)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Scale)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_bounds(&self, value: foundation::Rect) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Bounds)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Bounds)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_bounds(&self) -> Result<foundation::Rect> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Bounds)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Bounds)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_visible(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_IsVisible)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_IsVisible)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_visible(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsVisible)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsVisible)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn close(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Close)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Close)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn move_focus(&self, reason: WebViewControlMoveFocusReason) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).MoveFocus)(self.deref() as *const _ as *mut _, reason);
+        let hr = ((*self.as_abi().lpVtbl).MoveFocus)(self.as_abi() as *const _ as *mut _, reason);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_move_focus_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<WebViewControl, WebViewControlMoveFocusRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_MoveFocusRequested)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_MoveFocusRequested)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_move_focus_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_MoveFocusRequested)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_MoveFocusRequested)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_accelerator_key_pressed(&self, handler: &ComPtr<foundation::TypedEventHandler<WebViewControl, WebViewControlAcceleratorKeyPressedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_AcceleratorKeyPressed)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_AcceleratorKeyPressed)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_accelerator_key_pressed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_AcceleratorKeyPressed)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_AcceleratorKeyPressed)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5439,20 +5439,20 @@ RT_INTERFACE!{interface IWebViewControlSite2(IWebViewControlSite2Vtbl): IInspect
 impl ComPtr<IWebViewControlSite2> {
     #[inline] pub fn add_got_focus(&self, handler: &ComPtr<foundation::TypedEventHandler<WebViewControl, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_GotFocus)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_GotFocus)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_got_focus(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_GotFocus)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_GotFocus)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_lost_focus(&self, handler: &ComPtr<foundation::TypedEventHandler<WebViewControl, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_LostFocus)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_LostFocus)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_lost_focus(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_LostFocus)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_LostFocus)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }

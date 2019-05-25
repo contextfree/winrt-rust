@@ -8,12 +8,12 @@ RT_INTERFACE!{interface IArcadeStick(IArcadeStickVtbl): IInspectable(IInspectabl
 impl ComPtr<IArcadeStick> {
     #[inline] pub fn get_button_label(&self, button: ArcadeStickButtons) -> Result<GameControllerButtonLabel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetButtonLabel)(self.deref() as *const _ as *mut _, button, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetButtonLabel)(self.as_abi() as *const _ as *mut _, button, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_current_reading(&self) -> Result<ArcadeStickReading> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetCurrentReading)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetCurrentReading)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -58,25 +58,25 @@ RT_INTERFACE!{static interface IArcadeStickStatics(IArcadeStickStaticsVtbl): IIn
 impl ComPtr<IArcadeStickStatics> {
     #[inline] pub fn add_arcade_stick_added(&self, value: &ComPtr<foundation::EventHandler<ArcadeStick>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_ArcadeStickAdded)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_ArcadeStickAdded)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_arcade_stick_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_ArcadeStickAdded)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_ArcadeStickAdded)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_arcade_stick_removed(&self, value: &ComPtr<foundation::EventHandler<ArcadeStick>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_ArcadeStickRemoved)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_ArcadeStickRemoved)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_arcade_stick_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_ArcadeStickRemoved)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_ArcadeStickRemoved)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_arcade_sticks(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<ArcadeStick>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ArcadeSticks)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ArcadeSticks)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -87,7 +87,7 @@ RT_INTERFACE!{static interface IArcadeStickStatics2(IArcadeStickStatics2Vtbl): I
 impl ComPtr<IArcadeStickStatics2> {
     #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<ArcadeStick>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FromGameController)(self.deref() as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FromGameController)(self.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -100,17 +100,17 @@ RT_INTERFACE!{interface IFlightStick(IFlightStickVtbl): IInspectable(IInspectabl
 impl ComPtr<IFlightStick> {
     #[inline] pub fn get_hat_switch_kind(&self) -> Result<GameControllerSwitchKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HatSwitchKind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HatSwitchKind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_button_label(&self, button: FlightStickButtons) -> Result<GameControllerButtonLabel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetButtonLabel)(self.deref() as *const _ as *mut _, button, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetButtonLabel)(self.as_abi() as *const _ as *mut _, button, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_current_reading(&self) -> Result<FlightStickReading> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetCurrentReading)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetCurrentReading)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -155,30 +155,30 @@ RT_INTERFACE!{static interface IFlightStickStatics(IFlightStickStaticsVtbl): IIn
 impl ComPtr<IFlightStickStatics> {
     #[inline] pub fn add_flight_stick_added(&self, value: &ComPtr<foundation::EventHandler<FlightStick>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_FlightStickAdded)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_FlightStickAdded)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_flight_stick_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_FlightStickAdded)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_FlightStickAdded)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_flight_stick_removed(&self, value: &ComPtr<foundation::EventHandler<FlightStick>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_FlightStickRemoved)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_FlightStickRemoved)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_flight_stick_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_FlightStickRemoved)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_FlightStickRemoved)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_flight_sticks(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<FlightStick>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_FlightSticks)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_FlightSticks)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<FlightStick>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FromGameController)(self.deref() as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FromGameController)(self.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -197,44 +197,44 @@ RT_INTERFACE!{interface IGameController(IGameControllerVtbl): IInspectable(IInsp
 impl ComPtr<IGameController> {
     #[inline] pub fn add_headset_connected(&self, value: &ComPtr<foundation::TypedEventHandler<IGameController, Headset>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_HeadsetConnected)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_HeadsetConnected)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_headset_connected(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_HeadsetConnected)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_HeadsetConnected)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_headset_disconnected(&self, value: &ComPtr<foundation::TypedEventHandler<IGameController, Headset>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_HeadsetDisconnected)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_HeadsetDisconnected)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_headset_disconnected(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_HeadsetDisconnected)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_HeadsetDisconnected)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn add_user_changed(&self, value: &ComPtr<foundation::TypedEventHandler<IGameController, super::super::system::UserChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_UserChanged)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_UserChanged)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_user_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_UserChanged)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_UserChanged)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_headset(&self) -> Result<Option<ComPtr<Headset>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Headset)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Headset)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_wireless(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsWireless)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsWireless)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_User)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_User)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -245,7 +245,7 @@ RT_INTERFACE!{interface IGameControllerBatteryInfo(IGameControllerBatteryInfoVtb
 impl ComPtr<IGameControllerBatteryInfo> {
     #[cfg(feature="windows-devices")] #[inline] pub fn try_get_battery_report(&self) -> Result<Option<ComPtr<super::super::devices::power::BatteryReport>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryGetBatteryReport)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryGetBatteryReport)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -267,16 +267,16 @@ RT_INTERFACE!{interface IGamepad(IGamepadVtbl): IInspectable(IInspectableVtbl) [
 impl ComPtr<IGamepad> {
     #[inline] pub fn get_vibration(&self) -> Result<GamepadVibration> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Vibration)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Vibration)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_vibration(&self, value: GamepadVibration) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Vibration)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Vibration)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_current_reading(&self) -> Result<GamepadReading> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetCurrentReading)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetCurrentReading)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -311,7 +311,7 @@ RT_INTERFACE!{interface IGamepad2(IGamepad2Vtbl): IInspectable(IInspectableVtbl)
 impl ComPtr<IGamepad2> {
     #[inline] pub fn get_button_label(&self, button: GamepadButtons) -> Result<GameControllerButtonLabel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetButtonLabel)(self.deref() as *const _ as *mut _, button, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetButtonLabel)(self.as_abi() as *const _ as *mut _, button, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -332,25 +332,25 @@ RT_INTERFACE!{static interface IGamepadStatics(IGamepadStaticsVtbl): IInspectabl
 impl ComPtr<IGamepadStatics> {
     #[inline] pub fn add_gamepad_added(&self, value: &ComPtr<foundation::EventHandler<Gamepad>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_GamepadAdded)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_GamepadAdded)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_gamepad_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_GamepadAdded)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_GamepadAdded)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_gamepad_removed(&self, value: &ComPtr<foundation::EventHandler<Gamepad>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_GamepadRemoved)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_GamepadRemoved)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_gamepad_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_GamepadRemoved)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_GamepadRemoved)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_gamepads(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<Gamepad>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Gamepads)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Gamepads)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -361,7 +361,7 @@ RT_INTERFACE!{static interface IGamepadStatics2(IGamepadStatics2Vtbl): IInspecta
 impl ComPtr<IGamepadStatics2> {
     #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<Gamepad>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FromGameController)(self.deref() as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FromGameController)(self.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -376,12 +376,12 @@ RT_INTERFACE!{interface IHeadset(IHeadsetVtbl): IInspectable(IInspectableVtbl) [
 impl ComPtr<IHeadset> {
     #[inline] pub fn get_capture_device_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CaptureDeviceId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CaptureDeviceId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_render_device_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RenderDeviceId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RenderDeviceId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -403,42 +403,42 @@ RT_INTERFACE!{interface IRacingWheel(IRacingWheelVtbl): IInspectable(IInspectabl
 impl ComPtr<IRacingWheel> {
     #[inline] pub fn get_has_clutch(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HasClutch)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HasClutch)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_has_handbrake(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HasHandbrake)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HasHandbrake)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_has_pattern_shifter(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HasPatternShifter)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HasPatternShifter)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_max_pattern_shifter_gear(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_MaxPatternShifterGear)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MaxPatternShifterGear)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_max_wheel_angle(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_MaxWheelAngle)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MaxWheelAngle)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_wheel_motor(&self) -> Result<Option<ComPtr<forcefeedback::ForceFeedbackMotor>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_WheelMotor)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_WheelMotor)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_button_label(&self, button: RacingWheelButtons) -> Result<GameControllerButtonLabel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetButtonLabel)(self.deref() as *const _ as *mut _, button, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetButtonLabel)(self.as_abi() as *const _ as *mut _, button, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_current_reading(&self) -> Result<RacingWheelReading> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetCurrentReading)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetCurrentReading)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -483,25 +483,25 @@ RT_INTERFACE!{static interface IRacingWheelStatics(IRacingWheelStaticsVtbl): IIn
 impl ComPtr<IRacingWheelStatics> {
     #[inline] pub fn add_racing_wheel_added(&self, value: &ComPtr<foundation::EventHandler<RacingWheel>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_RacingWheelAdded)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_RacingWheelAdded)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_racing_wheel_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_RacingWheelAdded)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_RacingWheelAdded)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_racing_wheel_removed(&self, value: &ComPtr<foundation::EventHandler<RacingWheel>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_RacingWheelRemoved)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_RacingWheelRemoved)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_racing_wheel_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_RacingWheelRemoved)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_RacingWheelRemoved)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_racing_wheels(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<RacingWheel>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RacingWheels)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RacingWheels)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -512,7 +512,7 @@ RT_INTERFACE!{static interface IRacingWheelStatics2(IRacingWheelStatics2Vtbl): I
 impl ComPtr<IRacingWheelStatics2> {
     #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<RacingWheel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FromGameController)(self.deref() as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FromGameController)(self.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -531,47 +531,47 @@ RT_INTERFACE!{interface IRawGameController(IRawGameControllerVtbl): IInspectable
 impl ComPtr<IRawGameController> {
     #[inline] pub fn get_axis_count(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AxisCount)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AxisCount)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_button_count(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ButtonCount)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ButtonCount)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_force_feedback_motors(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<forcefeedback::ForceFeedbackMotor>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ForceFeedbackMotors)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ForceFeedbackMotors)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hardware_product_id(&self) -> Result<u16> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HardwareProductId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HardwareProductId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_hardware_vendor_id(&self) -> Result<u16> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HardwareVendorId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HardwareVendorId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_switch_count(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_SwitchCount)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SwitchCount)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_button_label(&self, buttonIndex: i32) -> Result<GameControllerButtonLabel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetButtonLabel)(self.deref() as *const _ as *mut _, buttonIndex, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetButtonLabel)(self.as_abi() as *const _ as *mut _, buttonIndex, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_current_reading(&self, buttonArray: &mut [bool], switchArray: &mut [GameControllerSwitchPosition], axisArray: &mut [f64]) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetCurrentReading)(self.deref() as *const _ as *mut _, buttonArray.len() as u32, buttonArray.as_mut_ptr() as *mut _, switchArray.len() as u32, switchArray.as_mut_ptr() as *mut _, axisArray.len() as u32, axisArray.as_mut_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetCurrentReading)(self.as_abi() as *const _ as *mut _, buttonArray.len() as u32, buttonArray.as_mut_ptr() as *mut _, switchArray.len() as u32, switchArray.as_mut_ptr() as *mut _, axisArray.len() as u32, axisArray.as_mut_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_switch_kind(&self, switchIndex: i32) -> Result<GameControllerSwitchKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetSwitchKind)(self.deref() as *const _ as *mut _, switchIndex, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetSwitchKind)(self.as_abi() as *const _ as *mut _, switchIndex, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -608,17 +608,17 @@ RT_INTERFACE!{interface IRawGameController2(IRawGameController2Vtbl): IInspectab
 impl ComPtr<IRawGameController2> {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_simple_haptics_controllers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::devices::haptics::SimpleHapticsController>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SimpleHapticsControllers)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SimpleHapticsControllers)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_non_roamable_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_NonRoamableId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_NonRoamableId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DisplayName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DisplayName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -634,30 +634,30 @@ RT_INTERFACE!{static interface IRawGameControllerStatics(IRawGameControllerStati
 impl ComPtr<IRawGameControllerStatics> {
     #[inline] pub fn add_raw_game_controller_added(&self, value: &ComPtr<foundation::EventHandler<RawGameController>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_RawGameControllerAdded)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_RawGameControllerAdded)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_raw_game_controller_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_RawGameControllerAdded)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_RawGameControllerAdded)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_raw_game_controller_removed(&self, value: &ComPtr<foundation::EventHandler<RawGameController>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_RawGameControllerRemoved)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_RawGameControllerRemoved)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_raw_game_controller_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_RawGameControllerRemoved)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_RawGameControllerRemoved)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_raw_game_controllers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<RawGameController>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RawGameControllers)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RawGameControllers)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<RawGameController>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FromGameController)(self.deref() as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FromGameController)(self.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -673,17 +673,17 @@ RT_INTERFACE!{interface IUINavigationController(IUINavigationControllerVtbl): II
 impl ComPtr<IUINavigationController> {
     #[inline] pub fn get_current_reading(&self) -> Result<UINavigationReading> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetCurrentReading)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetCurrentReading)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_optional_button_label(&self, button: OptionalUINavigationButtons) -> Result<GameControllerButtonLabel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetOptionalButtonLabel)(self.deref() as *const _ as *mut _, button, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetOptionalButtonLabel)(self.as_abi() as *const _ as *mut _, button, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_required_button_label(&self, button: RequiredUINavigationButtons) -> Result<GameControllerButtonLabel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).GetRequiredButtonLabel)(self.deref() as *const _ as *mut _, button, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetRequiredButtonLabel)(self.as_abi() as *const _ as *mut _, button, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -722,25 +722,25 @@ RT_INTERFACE!{static interface IUINavigationControllerStatics(IUINavigationContr
 impl ComPtr<IUINavigationControllerStatics> {
     #[inline] pub fn add_ui_navigation_controller_added(&self, value: &ComPtr<foundation::EventHandler<UINavigationController>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_UINavigationControllerAdded)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_UINavigationControllerAdded)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_ui_navigation_controller_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_UINavigationControllerAdded)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_UINavigationControllerAdded)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_ui_navigation_controller_removed(&self, value: &ComPtr<foundation::EventHandler<UINavigationController>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_UINavigationControllerRemoved)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_UINavigationControllerRemoved)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_ui_navigation_controller_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_UINavigationControllerRemoved)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_UINavigationControllerRemoved)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_ui_navigation_controllers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<UINavigationController>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_UINavigationControllers)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_UINavigationControllers)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -751,7 +751,7 @@ RT_INTERFACE!{static interface IUINavigationControllerStatics2(IUINavigationCont
 impl ComPtr<IUINavigationControllerStatics2> {
     #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<UINavigationController>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FromGameController)(self.deref() as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FromGameController)(self.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -769,15 +769,15 @@ RT_INTERFACE!{interface ICustomGameControllerFactory(ICustomGameControllerFactor
 impl ComPtr<ICustomGameControllerFactory> {
     #[inline] pub fn create_game_controller(&self, provider: &ComPtr<IGameControllerProvider>) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateGameController)(self.deref() as *const _ as *mut _, provider.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateGameController)(self.as_abi() as *const _ as *mut _, provider.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn on_game_controller_added(&self, value: &ComPtr<super::IGameController>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).OnGameControllerAdded)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).OnGameControllerAdded)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn on_game_controller_removed(&self, value: &ComPtr<super::IGameController>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).OnGameControllerRemoved)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).OnGameControllerRemoved)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -807,15 +807,15 @@ RT_INTERFACE!{static interface IGameControllerFactoryManagerStatics(IGameControl
 }}
 impl ComPtr<IGameControllerFactoryManagerStatics> {
     #[inline] pub fn register_custom_factory_for_gip_interface(&self, factory: &ComPtr<ICustomGameControllerFactory>, interfaceId: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).RegisterCustomFactoryForGipInterface)(self.deref() as *const _ as *mut _, factory.deref() as *const _ as *mut _, interfaceId);
+        let hr = ((*self.as_abi().lpVtbl).RegisterCustomFactoryForGipInterface)(self.as_abi() as *const _ as *mut _, factory.as_abi() as *const _ as *mut _, interfaceId);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn register_custom_factory_for_hardware_id(&self, factory: &ComPtr<ICustomGameControllerFactory>, hardwareVendorId: u16, hardwareProductId: u16) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).RegisterCustomFactoryForHardwareId)(self.deref() as *const _ as *mut _, factory.deref() as *const _ as *mut _, hardwareVendorId, hardwareProductId);
+        let hr = ((*self.as_abi().lpVtbl).RegisterCustomFactoryForHardwareId)(self.as_abi() as *const _ as *mut _, factory.as_abi() as *const _ as *mut _, hardwareVendorId, hardwareProductId);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn register_custom_factory_for_xusb_type(&self, factory: &ComPtr<ICustomGameControllerFactory>, xusbType: XusbDeviceType, xusbSubtype: XusbDeviceSubtype) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).RegisterCustomFactoryForXusbType)(self.deref() as *const _ as *mut _, factory.deref() as *const _ as *mut _, xusbType, xusbSubtype);
+        let hr = ((*self.as_abi().lpVtbl).RegisterCustomFactoryForXusbType)(self.as_abi() as *const _ as *mut _, factory.as_abi() as *const _ as *mut _, xusbType, xusbSubtype);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -826,7 +826,7 @@ RT_INTERFACE!{static interface IGameControllerFactoryManagerStatics2(IGameContro
 impl ComPtr<IGameControllerFactoryManagerStatics2> {
     #[inline] pub fn try_get_factory_controller_from_game_controller(&self, factory: &ComPtr<ICustomGameControllerFactory>, gameController: &ComPtr<super::IGameController>) -> Result<Option<ComPtr<super::IGameController>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryGetFactoryControllerFromGameController)(self.deref() as *const _ as *mut _, factory.deref() as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryGetFactoryControllerFromGameController)(self.as_abi() as *const _ as *mut _, factory.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -837,11 +837,11 @@ RT_INTERFACE!{interface IGameControllerInputSink(IGameControllerInputSinkVtbl): 
 }}
 impl ComPtr<IGameControllerInputSink> {
     #[inline] pub fn on_input_resumed(&self, timestamp: u64) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).OnInputResumed)(self.deref() as *const _ as *mut _, timestamp);
+        let hr = ((*self.as_abi().lpVtbl).OnInputResumed)(self.as_abi() as *const _ as *mut _, timestamp);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn on_input_suspended(&self, timestamp: u64) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).OnInputSuspended)(self.deref() as *const _ as *mut _, timestamp);
+        let hr = ((*self.as_abi().lpVtbl).OnInputSuspended)(self.as_abi() as *const _ as *mut _, timestamp);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -856,27 +856,27 @@ RT_INTERFACE!{interface IGameControllerProvider(IGameControllerProviderVtbl): II
 impl ComPtr<IGameControllerProvider> {
     #[inline] pub fn get_firmware_version_info(&self) -> Result<GameControllerVersionInfo> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_FirmwareVersionInfo)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_FirmwareVersionInfo)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_hardware_product_id(&self) -> Result<u16> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HardwareProductId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HardwareProductId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_hardware_vendor_id(&self) -> Result<u16> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HardwareVendorId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HardwareVendorId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_hardware_version_info(&self) -> Result<GameControllerVersionInfo> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HardwareVersionInfo)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HardwareVersionInfo)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_connected(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsConnected)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsConnected)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -895,17 +895,17 @@ RT_INTERFACE!{interface IGipFirmwareUpdateResult(IGipFirmwareUpdateResultVtbl): 
 impl ComPtr<IGipFirmwareUpdateResult> {
     #[inline] pub fn get_extended_error_code(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedErrorCode)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedErrorCode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_final_component_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_FinalComponentId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_FinalComponentId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<GipFirmwareUpdateStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -920,11 +920,11 @@ RT_INTERFACE!{interface IGipGameControllerInputSink(IGipGameControllerInputSinkV
 }}
 impl ComPtr<IGipGameControllerInputSink> {
     #[inline] pub fn on_key_received(&self, timestamp: u64, keyCode: u8, isPressed: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).OnKeyReceived)(self.deref() as *const _ as *mut _, timestamp, keyCode, isPressed);
+        let hr = ((*self.as_abi().lpVtbl).OnKeyReceived)(self.as_abi() as *const _ as *mut _, timestamp, keyCode, isPressed);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn on_message_received(&self, timestamp: u64, messageClass: GipMessageClass, messageId: u8, sequenceId: u8, messageBuffer: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).OnMessageReceived)(self.deref() as *const _ as *mut _, timestamp, messageClass, messageId, sequenceId, messageBuffer.len() as u32, messageBuffer.as_ptr() as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).OnMessageReceived)(self.as_abi() as *const _ as *mut _, timestamp, messageClass, messageId, sequenceId, messageBuffer.len() as u32, messageBuffer.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -936,16 +936,16 @@ RT_INTERFACE!{interface IGipGameControllerProvider(IGipGameControllerProviderVtb
 }}
 impl ComPtr<IGipGameControllerProvider> {
     #[inline] pub fn send_message(&self, messageClass: GipMessageClass, messageId: u8, messageBuffer: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SendMessage)(self.deref() as *const _ as *mut _, messageClass, messageId, messageBuffer.len() as u32, messageBuffer.as_ptr() as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).SendMessage)(self.as_abi() as *const _ as *mut _, messageClass, messageId, messageBuffer.len() as u32, messageBuffer.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn send_receive_message(&self, messageClass: GipMessageClass, messageId: u8, requestMessageBuffer: &[u8], responseMessageBuffer: &mut [u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SendReceiveMessage)(self.deref() as *const _ as *mut _, messageClass, messageId, requestMessageBuffer.len() as u32, requestMessageBuffer.as_ptr() as *mut _, responseMessageBuffer.len() as u32, responseMessageBuffer.as_mut_ptr() as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).SendReceiveMessage)(self.as_abi() as *const _ as *mut _, messageClass, messageId, requestMessageBuffer.len() as u32, requestMessageBuffer.as_ptr() as *mut _, responseMessageBuffer.len() as u32, responseMessageBuffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn update_firmware_async(&self, firmwareImage: &ComPtr<crate::windows::storage::streams::IInputStream>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<GipFirmwareUpdateResult, GipFirmwareUpdateProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).UpdateFirmwareAsync)(self.deref() as *const _ as *mut _, firmwareImage.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).UpdateFirmwareAsync)(self.as_abi() as *const _ as *mut _, firmwareImage.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -959,7 +959,7 @@ RT_INTERFACE!{interface IHidGameControllerInputSink(IHidGameControllerInputSinkV
 }}
 impl ComPtr<IHidGameControllerInputSink> {
     #[inline] pub fn on_input_report_received(&self, timestamp: u64, reportId: u8, reportBuffer: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).OnInputReportReceived)(self.deref() as *const _ as *mut _, timestamp, reportId, reportBuffer.len() as u32, reportBuffer.as_ptr() as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).OnInputReportReceived)(self.as_abi() as *const _ as *mut _, timestamp, reportId, reportBuffer.len() as u32, reportBuffer.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -974,24 +974,24 @@ RT_INTERFACE!{interface IHidGameControllerProvider(IHidGameControllerProviderVtb
 impl ComPtr<IHidGameControllerProvider> {
     #[inline] pub fn get_usage_id(&self) -> Result<u16> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_UsageId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_UsageId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_usage_page(&self) -> Result<u16> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_UsagePage)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_UsagePage)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_feature_report(&self, reportId: u8, reportBuffer: &mut [u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).GetFeatureReport)(self.deref() as *const _ as *mut _, reportId, reportBuffer.len() as u32, reportBuffer.as_mut_ptr() as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).GetFeatureReport)(self.as_abi() as *const _ as *mut _, reportId, reportBuffer.len() as u32, reportBuffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn send_feature_report(&self, reportId: u8, reportBuffer: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SendFeatureReport)(self.deref() as *const _ as *mut _, reportId, reportBuffer.len() as u32, reportBuffer.as_ptr() as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).SendFeatureReport)(self.as_abi() as *const _ as *mut _, reportId, reportBuffer.len() as u32, reportBuffer.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn send_output_report(&self, reportId: u8, reportBuffer: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SendOutputReport)(self.deref() as *const _ as *mut _, reportId, reportBuffer.len() as u32, reportBuffer.as_ptr() as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).SendOutputReport)(self.as_abi() as *const _ as *mut _, reportId, reportBuffer.len() as u32, reportBuffer.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1008,7 +1008,7 @@ RT_INTERFACE!{interface IXusbGameControllerInputSink(IXusbGameControllerInputSin
 }}
 impl ComPtr<IXusbGameControllerInputSink> {
     #[inline] pub fn on_input_received(&self, timestamp: u64, reportId: u8, inputBuffer: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).OnInputReceived)(self.deref() as *const _ as *mut _, timestamp, reportId, inputBuffer.len() as u32, inputBuffer.as_ptr() as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).OnInputReceived)(self.as_abi() as *const _ as *mut _, timestamp, reportId, inputBuffer.len() as u32, inputBuffer.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1018,7 +1018,7 @@ RT_INTERFACE!{interface IXusbGameControllerProvider(IXusbGameControllerProviderV
 }}
 impl ComPtr<IXusbGameControllerProvider> {
     #[inline] pub fn set_vibration(&self, lowFrequencyMotorSpeed: f64, highFrequencyMotorSpeed: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetVibration)(self.deref() as *const _ as *mut _, lowFrequencyMotorSpeed, highFrequencyMotorSpeed);
+        let hr = ((*self.as_abi().lpVtbl).SetVibration)(self.as_abi() as *const _ as *mut _, lowFrequencyMotorSpeed, highFrequencyMotorSpeed);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1034,11 +1034,11 @@ RT_INTERFACE!{interface IConditionForceEffect(IConditionForceEffectVtbl): IInspe
 impl ComPtr<IConditionForceEffect> {
     #[inline] pub fn get_kind(&self) -> Result<ConditionForceEffectKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Kind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Kind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_parameters(&self, direction: foundation::numerics::Vector3, positiveCoefficient: f32, negativeCoefficient: f32, maxPositiveMagnitude: f32, maxNegativeMagnitude: f32, deadZone: f32, bias: f32) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetParameters)(self.deref() as *const _ as *mut _, direction, positiveCoefficient, negativeCoefficient, maxPositiveMagnitude, maxNegativeMagnitude, deadZone, bias);
+        let hr = ((*self.as_abi().lpVtbl).SetParameters)(self.as_abi() as *const _ as *mut _, direction, positiveCoefficient, negativeCoefficient, maxPositiveMagnitude, maxNegativeMagnitude, deadZone, bias);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1057,7 +1057,7 @@ RT_INTERFACE!{static interface IConditionForceEffectFactory(IConditionForceEffec
 impl ComPtr<IConditionForceEffectFactory> {
     #[inline] pub fn create_instance(&self, effectKind: ConditionForceEffectKind) -> Result<ComPtr<ConditionForceEffect>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateInstance)(self.deref() as *const _ as *mut _, effectKind, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateInstance)(self.as_abi() as *const _ as *mut _, effectKind, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1071,11 +1071,11 @@ RT_INTERFACE!{interface IConstantForceEffect(IConstantForceEffectVtbl): IInspect
 }}
 impl ComPtr<IConstantForceEffect> {
     #[inline] pub fn set_parameters(&self, vector: foundation::numerics::Vector3, duration: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetParameters)(self.deref() as *const _ as *mut _, vector, duration);
+        let hr = ((*self.as_abi().lpVtbl).SetParameters)(self.as_abi() as *const _ as *mut _, vector, duration);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_parameters_with_envelope(&self, vector: foundation::numerics::Vector3, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: foundation::TimeSpan, attackDuration: foundation::TimeSpan, sustainDuration: foundation::TimeSpan, releaseDuration: foundation::TimeSpan, repeatCount: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetParametersWithEnvelope)(self.deref() as *const _ as *mut _, vector, attackGain, sustainGain, releaseGain, startDelay, attackDuration, sustainDuration, releaseDuration, repeatCount);
+        let hr = ((*self.as_abi().lpVtbl).SetParametersWithEnvelope)(self.as_abi() as *const _ as *mut _, vector, attackGain, sustainGain, releaseGain, startDelay, attackDuration, sustainDuration, releaseDuration, repeatCount);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1093,24 +1093,24 @@ RT_INTERFACE!{interface IForceFeedbackEffect(IForceFeedbackEffectVtbl): IInspect
 impl ComPtr<IForceFeedbackEffect> {
     #[inline] pub fn get_gain(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Gain)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Gain)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_gain(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Gain)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Gain)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_state(&self) -> Result<ForceFeedbackEffectState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_State)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_State)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Start)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Start)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Stop)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Stop)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1142,63 +1142,63 @@ RT_INTERFACE!{interface IForceFeedbackMotor(IForceFeedbackMotorVtbl): IInspectab
 impl ComPtr<IForceFeedbackMotor> {
     #[inline] pub fn get_are_effects_paused(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AreEffectsPaused)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AreEffectsPaused)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_master_gain(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_MasterGain)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MasterGain)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_master_gain(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MasterGain)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_MasterGain)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsEnabled)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsEnabled)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_supported_axes(&self) -> Result<ForceFeedbackEffectAxes> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_SupportedAxes)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SupportedAxes)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn load_effect_async(&self, effect: &ComPtr<IForceFeedbackEffect>) -> Result<ComPtr<foundation::IAsyncOperation<ForceFeedbackLoadEffectResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).LoadEffectAsync)(self.deref() as *const _ as *mut _, effect.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).LoadEffectAsync)(self.as_abi() as *const _ as *mut _, effect.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn pause_all_effects(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).PauseAllEffects)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).PauseAllEffects)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn resume_all_effects(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ResumeAllEffects)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).ResumeAllEffects)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop_all_effects(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).StopAllEffects)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).StopAllEffects)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_disable_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryDisableAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryDisableAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_enable_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryEnableAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryEnableAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_reset_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryResetAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryResetAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_unload_effect_async(&self, effect: &ComPtr<IForceFeedbackEffect>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryUnloadEffectAsync)(self.deref() as *const _ as *mut _, effect.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryUnloadEffectAsync)(self.as_abi() as *const _ as *mut _, effect.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1212,15 +1212,15 @@ RT_INTERFACE!{interface IPeriodicForceEffect(IPeriodicForceEffectVtbl): IInspect
 impl ComPtr<IPeriodicForceEffect> {
     #[inline] pub fn get_kind(&self) -> Result<PeriodicForceEffectKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Kind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Kind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_parameters(&self, vector: foundation::numerics::Vector3, frequency: f32, phase: f32, bias: f32, duration: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetParameters)(self.deref() as *const _ as *mut _, vector, frequency, phase, bias, duration);
+        let hr = ((*self.as_abi().lpVtbl).SetParameters)(self.as_abi() as *const _ as *mut _, vector, frequency, phase, bias, duration);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_parameters_with_envelope(&self, vector: foundation::numerics::Vector3, frequency: f32, phase: f32, bias: f32, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: foundation::TimeSpan, attackDuration: foundation::TimeSpan, sustainDuration: foundation::TimeSpan, releaseDuration: foundation::TimeSpan, repeatCount: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetParametersWithEnvelope)(self.deref() as *const _ as *mut _, vector, frequency, phase, bias, attackGain, sustainGain, releaseGain, startDelay, attackDuration, sustainDuration, releaseDuration, repeatCount);
+        let hr = ((*self.as_abi().lpVtbl).SetParametersWithEnvelope)(self.as_abi() as *const _ as *mut _, vector, frequency, phase, bias, attackGain, sustainGain, releaseGain, startDelay, attackDuration, sustainDuration, releaseDuration, repeatCount);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1239,7 +1239,7 @@ RT_INTERFACE!{static interface IPeriodicForceEffectFactory(IPeriodicForceEffectF
 impl ComPtr<IPeriodicForceEffectFactory> {
     #[inline] pub fn create_instance(&self, effectKind: PeriodicForceEffectKind) -> Result<ComPtr<PeriodicForceEffect>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateInstance)(self.deref() as *const _ as *mut _, effectKind, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateInstance)(self.as_abi() as *const _ as *mut _, effectKind, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1253,11 +1253,11 @@ RT_INTERFACE!{interface IRampForceEffect(IRampForceEffectVtbl): IInspectable(IIn
 }}
 impl ComPtr<IRampForceEffect> {
     #[inline] pub fn set_parameters(&self, startVector: foundation::numerics::Vector3, endVector: foundation::numerics::Vector3, duration: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetParameters)(self.deref() as *const _ as *mut _, startVector, endVector, duration);
+        let hr = ((*self.as_abi().lpVtbl).SetParameters)(self.as_abi() as *const _ as *mut _, startVector, endVector, duration);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_parameters_with_envelope(&self, startVector: foundation::numerics::Vector3, endVector: foundation::numerics::Vector3, attackGain: f32, sustainGain: f32, releaseGain: f32, startDelay: foundation::TimeSpan, attackDuration: foundation::TimeSpan, sustainDuration: foundation::TimeSpan, releaseDuration: foundation::TimeSpan, repeatCount: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetParametersWithEnvelope)(self.deref() as *const _ as *mut _, startVector, endVector, attackGain, sustainGain, releaseGain, startDelay, attackDuration, sustainDuration, releaseDuration, repeatCount);
+        let hr = ((*self.as_abi().lpVtbl).SetParametersWithEnvelope)(self.as_abi() as *const _ as *mut _, startVector, endVector, attackGain, sustainGain, releaseGain, startDelay, attackDuration, sustainDuration, releaseDuration, repeatCount);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1286,12 +1286,12 @@ RT_INTERFACE!{static interface IGameControllerProviderInfoStatics(IGameControlle
 impl ComPtr<IGameControllerProviderInfoStatics> {
     #[inline] pub fn get_parent_provider_id(&self, provider: &ComPtr<super::custom::IGameControllerProvider>) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetParentProviderId)(self.deref() as *const _ as *mut _, provider.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetParentProviderId)(self.as_abi() as *const _ as *mut _, provider.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_provider_id(&self, provider: &ComPtr<super::custom::IGameControllerProvider>) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetProviderId)(self.deref() as *const _ as *mut _, provider.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetProviderId)(self.as_abi() as *const _ as *mut _, provider.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1345,7 +1345,7 @@ RT_DELEGATE!{delegate GameListChangedEventHandler(GameListChangedEventHandlerVtb
 }}
 impl ComPtr<GameListChangedEventHandler> {
     #[inline] pub fn invoke(&self, game: &ComPtr<GameListEntry>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, game.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Invoke)(self.as_abi() as *const _ as *mut _, game.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1361,27 +1361,27 @@ RT_INTERFACE!{interface IGameListEntry(IGameListEntryVtbl): IInspectable(IInspec
 impl ComPtr<IGameListEntry> {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_display_info(&self) -> Result<Option<ComPtr<crate::windows::applicationmodel::AppDisplayInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DisplayInfo)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DisplayInfo)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).LaunchAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).LaunchAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_category(&self) -> Result<GameListCategory> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Category)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Category)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, IInspectable>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Properties)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Properties)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_category_async(&self, value: GameListCategory) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SetCategoryAsync)(self.deref() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SetCategoryAsync)(self.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1403,42 +1403,42 @@ RT_INTERFACE!{interface IGameListEntry2(IGameListEntry2Vtbl): IInspectable(IInsp
 impl ComPtr<IGameListEntry2> {
     #[inline] pub fn get_launchable_state(&self) -> Result<GameListEntryLaunchableState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_LaunchableState)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LaunchableState)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_launcher_executable(&self) -> Result<Option<ComPtr<crate::windows::storage::IStorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_LauncherExecutable)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LauncherExecutable)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_launch_parameters(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_LaunchParameters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LaunchParameters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_launcher_executable_file_async(&self, executableFile: &ComPtr<crate::windows::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SetLauncherExecutableFileAsync)(self.deref() as *const _ as *mut _, executableFile.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SetLauncherExecutableFileAsync)(self.as_abi() as *const _ as *mut _, executableFile.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_launcher_executable_file_with_params_async(&self, executableFile: &ComPtr<crate::windows::storage::IStorageFile>, launchParams: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SetLauncherExecutableFileWithParamsAsync)(self.deref() as *const _ as *mut _, executableFile.deref() as *const _ as *mut _, launchParams.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SetLauncherExecutableFileWithParamsAsync)(self.as_abi() as *const _ as *mut _, executableFile.as_abi() as *const _ as *mut _, launchParams.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_title_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_TitleId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TitleId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_title_id_async(&self, id: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SetTitleIdAsync)(self.deref() as *const _ as *mut _, id.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SetTitleIdAsync)(self.as_abi() as *const _ as *mut _, id.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_game_mode_configuration(&self) -> Result<Option<ComPtr<GameModeConfiguration>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_GameModeConfiguration)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_GameModeConfiguration)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1451,7 +1451,7 @@ RT_DELEGATE!{delegate GameListRemovedEventHandler(GameListRemovedEventHandlerVtb
 }}
 impl ComPtr<GameListRemovedEventHandler> {
     #[inline] pub fn invoke(&self, identifier: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Invoke)(self.deref() as *const _ as *mut _, identifier.get());
+        let hr = ((*self.as_abi().lpVtbl).Invoke)(self.as_abi() as *const _ as *mut _, identifier.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1469,39 +1469,39 @@ RT_INTERFACE!{static interface IGameListStatics(IGameListStaticsVtbl): IInspecta
 impl ComPtr<IGameListStatics> {
     #[inline] pub fn find_all_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FindAllAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FindAllAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_all_async_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FindAllAsyncPackageFamilyName)(self.deref() as *const _ as *mut _, packageFamilyName.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FindAllAsyncPackageFamilyName)(self.as_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_game_added(&self, handler: &ComPtr<GameListChangedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_GameAdded)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_GameAdded)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_game_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_GameAdded)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_GameAdded)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_game_removed(&self, handler: &ComPtr<GameListRemovedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_GameRemoved)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_GameRemoved)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_game_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_GameRemoved)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_GameRemoved)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_game_updated(&self, handler: &ComPtr<GameListChangedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_GameUpdated)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_GameUpdated)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_game_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_GameUpdated)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_GameUpdated)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1513,12 +1513,12 @@ RT_INTERFACE!{static interface IGameListStatics2(IGameListStatics2Vtbl): IInspec
 impl ComPtr<IGameListStatics2> {
     #[inline] pub fn merge_entries_async(&self, left: &ComPtr<GameListEntry>, right: &ComPtr<GameListEntry>) -> Result<ComPtr<foundation::IAsyncOperation<GameListEntry>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).MergeEntriesAsync)(self.deref() as *const _ as *mut _, left.deref() as *const _ as *mut _, right.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).MergeEntriesAsync)(self.as_abi() as *const _ as *mut _, left.as_abi() as *const _ as *mut _, right.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn unmerge_entry_async(&self, mergedEntry: &ComPtr<GameListEntry>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).UnmergeEntryAsync)(self.deref() as *const _ as *mut _, mergedEntry.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).UnmergeEntryAsync)(self.as_abi() as *const _ as *mut _, mergedEntry.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1546,84 +1546,84 @@ RT_INTERFACE!{interface IGameModeConfiguration(IGameModeConfigurationVtbl): IIns
 impl ComPtr<IGameModeConfiguration> {
     #[inline] pub fn get_is_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsEnabled)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsEnabled)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_IsEnabled)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_IsEnabled)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_related_process_names(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RelatedProcessNames)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RelatedProcessNames)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_percent_gpu_time_allocated_to_game(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_PercentGpuTimeAllocatedToGame)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PercentGpuTimeAllocatedToGame)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_percent_gpu_time_allocated_to_game(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_PercentGpuTimeAllocatedToGame)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_PercentGpuTimeAllocatedToGame)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_percent_gpu_memory_allocated_to_game(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_PercentGpuMemoryAllocatedToGame)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PercentGpuMemoryAllocatedToGame)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_percent_gpu_memory_allocated_to_game(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_PercentGpuMemoryAllocatedToGame)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_PercentGpuMemoryAllocatedToGame)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_percent_gpu_memory_allocated_to_system_compositor(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_PercentGpuMemoryAllocatedToSystemCompositor)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PercentGpuMemoryAllocatedToSystemCompositor)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_percent_gpu_memory_allocated_to_system_compositor(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_PercentGpuMemoryAllocatedToSystemCompositor)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_PercentGpuMemoryAllocatedToSystemCompositor)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_max_cpu_count(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_MaxCpuCount)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MaxCpuCount)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_max_cpu_count(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MaxCpuCount)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_MaxCpuCount)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_cpu_exclusivity_mask_low(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CpuExclusivityMaskLow)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CpuExclusivityMaskLow)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_cpu_exclusivity_mask_low(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_CpuExclusivityMaskLow)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_CpuExclusivityMaskLow)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_cpu_exclusivity_mask_high(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CpuExclusivityMaskHigh)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CpuExclusivityMaskHigh)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_cpu_exclusivity_mask_high(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_CpuExclusivityMaskHigh)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_CpuExclusivityMaskHigh)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_affinitize_to_exclusive_cpus(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AffinitizeToExclusiveCpus)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AffinitizeToExclusiveCpus)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_affinitize_to_exclusive_cpus(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_AffinitizeToExclusiveCpus)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_AffinitizeToExclusiveCpus)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn save_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SaveAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SaveAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1636,12 +1636,12 @@ RT_INTERFACE!{interface IGameModeUserConfiguration(IGameModeUserConfigurationVtb
 impl ComPtr<IGameModeUserConfiguration> {
     #[inline] pub fn get_gaming_related_process_names(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_GamingRelatedProcessNames)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_GamingRelatedProcessNames)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn save_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SaveAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SaveAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1660,7 +1660,7 @@ RT_INTERFACE!{static interface IGameModeUserConfigurationStatics(IGameModeUserCo
 impl ComPtr<IGameModeUserConfigurationStatics> {
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<GameModeUserConfiguration>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDefault)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1703,30 +1703,30 @@ RT_INTERFACE!{static interface IGameBarStatics(IGameBarStaticsVtbl): IInspectabl
 impl ComPtr<IGameBarStatics> {
     #[inline] pub fn add_visibility_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_VisibilityChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_VisibilityChanged)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_visibility_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_VisibilityChanged)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_VisibilityChanged)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_is_input_redirected_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_IsInputRedirectedChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_IsInputRedirectedChanged)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_is_input_redirected_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_IsInputRedirectedChanged)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_IsInputRedirectedChanged)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_visible(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Visible)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Visible)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_input_redirected(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsInputRedirected)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsInputRedirected)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1744,27 +1744,27 @@ RT_INTERFACE!{interface IGameChatMessageReceivedEventArgs(IGameChatMessageReceiv
 impl ComPtr<IGameChatMessageReceivedEventArgs> {
     #[inline] pub fn get_app_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_AppId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AppId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_app_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_AppDisplayName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AppDisplayName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sender_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SenderName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SenderName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_message(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Message)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Message)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_origin(&self) -> Result<GameChatMessageOrigin> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Origin)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Origin)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1778,15 +1778,15 @@ RT_INTERFACE!{interface IGameChatOverlay(IGameChatOverlayVtbl): IInspectable(IIn
 impl ComPtr<IGameChatOverlay> {
     #[inline] pub fn get_desired_position(&self) -> Result<GameChatOverlayPosition> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_DesiredPosition)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DesiredPosition)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_desired_position(&self, value: GameChatOverlayPosition) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_DesiredPosition)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_DesiredPosition)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_message(&self, sender: &HStringArg, message: &HStringArg, origin: GameChatMessageOrigin) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).AddMessage)(self.deref() as *const _ as *mut _, sender.get(), message.get(), origin);
+        let hr = ((*self.as_abi().lpVtbl).AddMessage)(self.as_abi() as *const _ as *mut _, sender.get(), message.get(), origin);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1807,15 +1807,15 @@ RT_INTERFACE!{interface IGameChatOverlayMessageSource(IGameChatOverlayMessageSou
 impl ComPtr<IGameChatOverlayMessageSource> {
     #[inline] pub fn add_message_received(&self, handler: &ComPtr<foundation::TypedEventHandler<GameChatOverlayMessageSource, GameChatMessageReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_MessageReceived)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_MessageReceived)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_message_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_MessageReceived)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_MessageReceived)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_delay_before_closing_after_message_received(&self, value: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetDelayBeforeClosingAfterMessageReceived)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).SetDelayBeforeClosingAfterMessageReceived)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1832,7 +1832,7 @@ RT_INTERFACE!{static interface IGameChatOverlayStatics(IGameChatOverlayStaticsVt
 impl ComPtr<IGameChatOverlayStatics> {
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<GameChatOverlay>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDefault)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1844,11 +1844,11 @@ RT_INTERFACE!{interface IGameUIProviderActivatedEventArgs(IGameUIProviderActivat
 impl ComPtr<IGameUIProviderActivatedEventArgs> {
     #[inline] pub fn get_game_ui_args(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_GameUIArgs)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_GameUIArgs)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn report_completed(&self, results: &ComPtr<foundation::collections::ValueSet>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ReportCompleted)(self.deref() as *const _ as *mut _, results.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).ReportCompleted)(self.as_abi() as *const _ as *mut _, results.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1865,12 +1865,12 @@ RT_INTERFACE!{interface IGameSaveBlobGetResult(IGameSaveBlobGetResultVtbl): IIns
 impl ComPtr<IGameSaveBlobGetResult> {
     #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1883,12 +1883,12 @@ RT_INTERFACE!{interface IGameSaveBlobInfo(IGameSaveBlobInfoVtbl): IInspectable(I
 impl ComPtr<IGameSaveBlobInfo> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_size(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Size)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Size)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1901,12 +1901,12 @@ RT_INTERFACE!{interface IGameSaveBlobInfoGetResult(IGameSaveBlobInfoGetResultVtb
 impl ComPtr<IGameSaveBlobInfoGetResult> {
     #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<GameSaveBlobInfo>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1920,17 +1920,17 @@ RT_INTERFACE!{interface IGameSaveBlobInfoQuery(IGameSaveBlobInfoQueryVtbl): IIns
 impl ComPtr<IGameSaveBlobInfoQuery> {
     #[inline] pub fn get_blob_info_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobInfoGetResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetBlobInfoAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetBlobInfoAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_blob_info_with_index_and_max_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobInfoGetResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetBlobInfoWithIndexAndMaxAsync)(self.deref() as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetBlobInfoWithIndexAndMaxAsync)(self.as_abi() as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_item_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetItemCountAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetItemCountAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1950,37 +1950,37 @@ RT_INTERFACE!{interface IGameSaveContainer(IGameSaveContainerVtbl): IInspectable
 impl ComPtr<IGameSaveContainer> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_provider(&self) -> Result<Option<ComPtr<GameSaveProvider>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Provider)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Provider)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn submit_updates_async(&self, blobsToWrite: &ComPtr<foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>>, blobsToDelete: &ComPtr<foundation::collections::IIterable<HString>>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SubmitUpdatesAsync)(self.deref() as *const _ as *mut _, blobsToWrite.deref() as *const _ as *mut _, blobsToDelete.deref() as *const _ as *mut _, displayName.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SubmitUpdatesAsync)(self.as_abi() as *const _ as *mut _, blobsToWrite.as_abi() as *const _ as *mut _, blobsToDelete.as_abi() as *const _ as *mut _, displayName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn read_async(&self, blobsToRead: &ComPtr<foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ReadAsync)(self.deref() as *const _ as *mut _, blobsToRead.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ReadAsync)(self.as_abi() as *const _ as *mut _, blobsToRead.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_async(&self, blobsToRead: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobGetResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsync)(self.deref() as *const _ as *mut _, blobsToRead.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsync)(self.as_abi() as *const _ as *mut _, blobsToRead.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn submit_property_set_updates_async(&self, blobsToWrite: &ComPtr<foundation::collections::IPropertySet>, blobsToDelete: &ComPtr<foundation::collections::IIterable<HString>>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SubmitPropertySetUpdatesAsync)(self.deref() as *const _ as *mut _, blobsToWrite.deref() as *const _ as *mut _, blobsToDelete.deref() as *const _ as *mut _, displayName.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SubmitPropertySetUpdatesAsync)(self.as_abi() as *const _ as *mut _, blobsToWrite.as_abi() as *const _ as *mut _, blobsToDelete.as_abi() as *const _ as *mut _, displayName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_blob_info_query(&self, blobNamePrefix: &HStringArg) -> Result<Option<ComPtr<GameSaveBlobInfoQuery>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateBlobInfoQuery)(self.deref() as *const _ as *mut _, blobNamePrefix.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateBlobInfoQuery)(self.as_abi() as *const _ as *mut _, blobNamePrefix.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1996,27 +1996,27 @@ RT_INTERFACE!{interface IGameSaveContainerInfo(IGameSaveContainerInfoVtbl): IIns
 impl ComPtr<IGameSaveContainerInfo> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_total_size(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TotalSize)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TotalSize)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DisplayName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DisplayName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_last_modified_time(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_LastModifiedTime)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LastModifiedTime)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_needs_sync(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_NeedsSync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_NeedsSync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2029,12 +2029,12 @@ RT_INTERFACE!{interface IGameSaveContainerInfoGetResult(IGameSaveContainerInfoGe
 impl ComPtr<IGameSaveContainerInfoGetResult> {
     #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<GameSaveContainerInfo>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2048,17 +2048,17 @@ RT_INTERFACE!{interface IGameSaveContainerInfoQuery(IGameSaveContainerInfoQueryV
 impl ComPtr<IGameSaveContainerInfoQuery> {
     #[inline] pub fn get_container_info_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveContainerInfoGetResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetContainerInfoAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetContainerInfoAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_container_info_with_index_and_max_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveContainerInfoGetResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetContainerInfoWithIndexAndMaxAsync)(self.deref() as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetContainerInfoWithIndexAndMaxAsync)(self.as_abi() as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_item_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetItemCountAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetItemCountAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2073,7 +2073,7 @@ RT_INTERFACE!{interface IGameSaveOperationResult(IGameSaveOperationResultVtbl): 
 impl ComPtr<IGameSaveOperationResult> {
     #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2092,37 +2092,37 @@ RT_INTERFACE!{interface IGameSaveProvider(IGameSaveProviderVtbl): IInspectable(I
 impl ComPtr<IGameSaveProvider> {
     #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<crate::windows::system::User>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_User)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_User)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_container(&self, name: &HStringArg) -> Result<Option<ComPtr<GameSaveContainer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateContainer)(self.deref() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateContainer)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_container_async(&self, name: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).DeleteContainerAsync)(self.deref() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).DeleteContainerAsync)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_container_info_query(&self) -> Result<Option<ComPtr<GameSaveContainerInfoQuery>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateContainerInfoQuery)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateContainerInfoQuery)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_container_info_query_with_name(&self, containerNamePrefix: &HStringArg) -> Result<Option<ComPtr<GameSaveContainerInfoQuery>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateContainerInfoQueryWithName)(self.deref() as *const _ as *mut _, containerNamePrefix.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateContainerInfoQueryWithName)(self.as_abi() as *const _ as *mut _, containerNamePrefix.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_remaining_bytes_in_quota_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<i64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetRemainingBytesInQuotaAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetRemainingBytesInQuotaAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_containers_changed_since_last_sync(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ContainersChangedSinceLastSync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ContainersChangedSinceLastSync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2145,12 +2145,12 @@ RT_INTERFACE!{interface IGameSaveProviderGetResult(IGameSaveProviderGetResultVtb
 impl ComPtr<IGameSaveProviderGetResult> {
     #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<GameSaveProvider>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2163,12 +2163,12 @@ RT_INTERFACE!{static interface IGameSaveProviderStatics(IGameSaveProviderStatics
 impl ComPtr<IGameSaveProviderStatics> {
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(&self, user: &ComPtr<crate::windows::system::User>, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetForUserAsync)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, serviceConfigId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetForUserAsync)(self.as_abi() as *const _ as *mut _, user.as_abi() as *const _ as *mut _, serviceConfigId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(&self, user: &ComPtr<crate::windows::system::User>, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetSyncOnDemandForUserAsync)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, serviceConfigId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetSyncOnDemandForUserAsync)(self.as_abi() as *const _ as *mut _, user.as_abi() as *const _ as *mut _, serviceConfigId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }

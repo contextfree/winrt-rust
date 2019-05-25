@@ -48,7 +48,7 @@ fn main() {
                 let mut error = 0;
                 let mut restricted_description = ptr::null_mut();
                 let mut capability_sid = ptr::null_mut();
-                assert_eq!(error_info.deref().GetErrorDetails(&mut description, &mut error, &mut restricted_description, &mut capability_sid), S_OK);
+                assert_eq!(error_info.as_abi().GetErrorDetails(&mut description, &mut error, &mut restricted_description, &mut capability_sid), S_OK);
                 (BStr::wrap(description), error, BStr::wrap(restricted_description), BStr::wrap(capability_sid))
             };
             println!("Got Error Info: {} ({})", description, restricted_description);
