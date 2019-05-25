@@ -238,7 +238,7 @@ namespace Generator.Types
             }
         }
 
-        public static string UnwrapInputParameter(string name, TypeReference t)
+        public static string UnwrapInputParameter(string name, TypeReference t, bool hasConstModifier = false)
         {
             if (t.IsGenericParameter)
             {
@@ -246,7 +246,8 @@ namespace Generator.Types
             }
             if (t.IsByReference)
             {
-                throw new NotSupportedException();
+                // value types passed by reference
+                return $"{ name } as *const _ as *mut _";
             }
             else if (t.IsArray)
             {
@@ -287,6 +288,23 @@ namespace Generator.Types
             else if (t.IsValueType)
             {
                 return name;
+            }
+            else if (t.IsOptionalModifier)
+            {
+                var ty = (OptionalModifierType)t;
+                if (ty.ModifierType.FullName == "System.Runtime.CompilerServices.IsConst")
+                {
+                    return UnwrapInputParameter(name, ty.ElementType, true);
+                }
+                else
+                {
+                    // according to ECMA Partition II documentation, we can usually just ignore optional modifiers
+                    return UnwrapInputParameter(name, ty.ElementType, hasConstModifier);
+                }
+            }
+            else if (t.IsRequiredModifier)
+            {
+                throw new NotImplementedException($"Unexpected reqmod { ((RequiredModifierType)t).ModifierType.FullName } is not implemented");
             }
             else // reference type
             {
