@@ -230,7 +230,7 @@ impl<'a, T> IntoIterator for &'a IObservableVector<T> where T: RtType, IIterable
 // TODO: Implement IntoIterator also for Map types
 
 // Make the for loop desugaring work with references to `ComPtr`s directly
-impl<'a, T> IntoIterator for &'a ComPtr<T> where &'a T: IntoIterator
+impl<'a, T: ComInterface> IntoIterator for &'a ComPtr<T> where &'a T: IntoIterator
 {
     type Item = <&'a T as IntoIterator>::Item;
     type IntoIter = <&'a T as IntoIterator>::IntoIter;

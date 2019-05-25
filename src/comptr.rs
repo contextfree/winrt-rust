@@ -13,9 +13,9 @@ use w::um::combaseapi::CoTaskMemFree;
 /// reference count of the underlying COM object.
 #[repr(transparent)]
 #[derive(Debug)]
-pub struct ComPtr<T>(ptr::NonNull<T>);
+pub struct ComPtr<T: ComInterface>(ptr::NonNull<T>);
 
-impl<T> fmt::Pointer for ComPtr<T> {
+impl<T: ComInterface> fmt::Pointer for ComPtr<T> {
     #[inline]
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         fmt::Pointer::fmt(&self.0, f)
@@ -24,7 +24,7 @@ impl<T> fmt::Pointer for ComPtr<T> {
 
 // This is a helper method that is not exposed publically by the library
 #[inline]
-pub fn query_interface<T, Target>(interface: &T) -> Option<ComPtr<Target>> where Target: ComIid, T: ComInterface {
+pub fn query_interface<T, Target>(interface: &T) -> Option<ComPtr<Target>> where Target: ComIid + ComInterface, T: ComInterface {
     let iid: &'static Guid = Target::iid();
     let as_unknown = unsafe { &mut *(interface  as *const T as *mut T as *mut IUnknown) };
     let mut res = ptr::null_mut();
@@ -41,22 +41,22 @@ pub trait HiddenGetRuntimeClassName {
     fn get_runtime_class_name(&self) -> crate::HString;
 }
 
-impl<T> ComPtr<T> {
+impl<T: ComInterface> ComPtr<T> {
     /// Creates a `ComPtr` to wrap a raw pointer.
     /// It takes ownership over the pointer which means it does __not__ call `AddRef`.
-    /// `T` __must__ be a COM interface that inherits from `IUnknown`.
     /// The wrapped pointer must not be null.
     #[inline]
-    pub unsafe fn wrap(ptr: *mut T) -> ComPtr<T> { // TODO: Add T: ComInterface bound
+    pub unsafe fn wrap(ptr: *mut T) -> ComPtr<T>
+    {
         debug_assert!(!ptr.is_null());
         ComPtr(ptr::NonNull::new_unchecked(ptr))
     }
 
     /// Creates an optional `ComPtr` to wrap a raw pointer that may be null.
     /// It takes ownership over the pointer which means it does __not__ call `AddRef`.
-    /// `T` __must__ be a COM interface that inherits from `IUnknown`.
     #[inline]
-    pub unsafe fn wrap_optional(ptr: *mut T) -> Option<ComPtr<T>> { // TODO: Add T: ComInterface bound
+    pub unsafe fn wrap_optional(ptr: *mut T) -> Option<ComPtr<T>>
+    {
         if ptr.is_null() {
             None
         } else {
@@ -107,11 +107,11 @@ impl<T> ComPtr<T> {
     /// Retrieves a `ComPtr` to the specified interface, if it is supported by the underlying object.
     /// If the requested interface is not supported, `None` is returned.
     #[inline]
-    pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComIid, T: ComInterface {
+    pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComIid + ComInterface {
         query_interface::<_, Target>(&**self)
     }
 }
-impl<T> Deref for ComPtr<T> {
+impl<T: ComInterface> Deref for ComPtr<T> {
     type Target = T;
 
     #[inline]
@@ -119,13 +119,13 @@ impl<T> Deref for ComPtr<T> {
         unsafe { self.0.as_ref() }
     }
 }
-impl<T> DerefMut for ComPtr<T> {
+impl<T: ComInterface> DerefMut for ComPtr<T> {
     #[inline]
     fn deref_mut(&mut self) -> &mut T {
         unsafe { self.0.as_mut() }
     }
 }
-impl<T> Clone for ComPtr<T> {
+impl<T: ComInterface> Clone for ComPtr<T> {
     #[inline]
     fn clone(&self) -> Self {
         unsafe { 
@@ -134,13 +134,13 @@ impl<T> Clone for ComPtr<T> {
         }
     }
 }
-impl<T> Drop for ComPtr<T> {
+impl<T: ComInterface> Drop for ComPtr<T> {
     #[inline]
     fn drop(&mut self) {
         unsafe { self.as_unknown().Release() };
     }
 }
-impl<T> PartialEq<ComPtr<T>> for ComPtr<T> {
+impl<T: ComInterface> PartialEq<ComPtr<T>> for ComPtr<T> {
     #[inline]
     fn eq(&self, other: &ComPtr<T>) -> bool {
         self.0 == other.0
