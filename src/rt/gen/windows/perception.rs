@@ -7,12 +7,12 @@ RT_INTERFACE!{interface IPerceptionTimestamp(IPerceptionTimestampVtbl): IInspect
 impl ComPtr<IPerceptionTimestamp> {
     #[inline] pub fn get_target_time(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TargetTime)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TargetTime)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_prediction_amount(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_PredictionAmount)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PredictionAmount)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -24,7 +24,7 @@ RT_INTERFACE!{interface IPerceptionTimestamp2(IPerceptionTimestamp2Vtbl): IInspe
 impl ComPtr<IPerceptionTimestamp2> {
     #[inline] pub fn get_system_relative_target_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_SystemRelativeTargetTime)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SystemRelativeTargetTime)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -47,7 +47,7 @@ RT_INTERFACE!{static interface IPerceptionTimestampHelperStatics(IPerceptionTime
 impl ComPtr<IPerceptionTimestampHelperStatics> {
     #[inline] pub fn from_historical_target_time(&self, targetTime: foundation::DateTime) -> Result<Option<ComPtr<PerceptionTimestamp>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FromHistoricalTargetTime)(self.deref() as *const _ as *mut _, targetTime, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FromHistoricalTargetTime)(self.as_abi() as *const _ as *mut _, targetTime, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -58,7 +58,7 @@ RT_INTERFACE!{static interface IPerceptionTimestampHelperStatics2(IPerceptionTim
 impl ComPtr<IPerceptionTimestampHelperStatics2> {
     #[inline] pub fn from_system_relative_target_time(&self, targetTime: foundation::TimeSpan) -> Result<Option<ComPtr<PerceptionTimestamp>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FromSystemRelativeTargetTime)(self.deref() as *const _ as *mut _, targetTime, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FromSystemRelativeTargetTime)(self.as_abi() as *const _ as *mut _, targetTime, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -79,7 +79,7 @@ RT_INTERFACE!{static interface ICorePerceptionAutomationStatics(ICorePerceptionA
 }}
 impl ComPtr<ICorePerceptionAutomationStatics> {
     #[inline] pub fn set_activation_factory_provider(&self, provider: &ComPtr<foundation::IGetActivationFactory>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetActivationFactoryProvider)(self.deref() as *const _ as *mut _, provider.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).SetActivationFactoryProvider)(self.as_abi() as *const _ as *mut _, provider.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -96,17 +96,17 @@ RT_INTERFACE!{interface IHeadPose(IHeadPoseVtbl): IInspectable(IInspectableVtbl)
 impl ComPtr<IHeadPose> {
     #[inline] pub fn get_position(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Position)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Position)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_forward_direction(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ForwardDirection)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ForwardDirection)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_up_direction(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_UpDirection)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_UpDirection)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -124,21 +124,21 @@ RT_INTERFACE!{interface ISpatialAnchor(ISpatialAnchorVtbl): IInspectable(IInspec
 impl ComPtr<ISpatialAnchor> {
     #[inline] pub fn get_coordinate_system(&self) -> Result<Option<ComPtr<SpatialCoordinateSystem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CoordinateSystem)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CoordinateSystem)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_raw_coordinate_system(&self) -> Result<Option<ComPtr<SpatialCoordinateSystem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RawCoordinateSystem)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RawCoordinateSystem)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_raw_coordinate_system_adjusted(&self, handler: &ComPtr<foundation::TypedEventHandler<SpatialAnchor, SpatialAnchorRawCoordinateSystemAdjustedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_RawCoordinateSystemAdjusted)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_RawCoordinateSystemAdjusted)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_raw_coordinate_system_adjusted(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_RawCoordinateSystemAdjusted)(self.deref() as *const _ as *mut _, cookie);
+        let hr = ((*self.as_abi().lpVtbl).remove_RawCoordinateSystemAdjusted)(self.as_abi() as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -163,7 +163,7 @@ RT_INTERFACE!{interface ISpatialAnchor2(ISpatialAnchor2Vtbl): IInspectable(IInsp
 impl ComPtr<ISpatialAnchor2> {
     #[inline] pub fn get_removed_by_user(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_RemovedByUser)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RemovedByUser)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -175,12 +175,12 @@ RT_INTERFACE!{interface ISpatialAnchorExporter(ISpatialAnchorExporterVtbl): IIns
 impl ComPtr<ISpatialAnchorExporter> {
     #[inline] pub fn get_anchor_export_sufficiency_async(&self, anchor: &ComPtr<SpatialAnchor>, purpose: SpatialAnchorExportPurpose) -> Result<ComPtr<foundation::IAsyncOperation<SpatialAnchorExportSufficiency>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAnchorExportSufficiencyAsync)(self.deref() as *const _ as *mut _, anchor.deref() as *const _ as *mut _, purpose, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAnchorExportSufficiencyAsync)(self.as_abi() as *const _ as *mut _, anchor.as_abi() as *const _ as *mut _, purpose, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn try_export_anchor_async(&self, anchor: &ComPtr<SpatialAnchor>, purpose: SpatialAnchorExportPurpose, stream: &ComPtr<super::super::storage::streams::IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryExportAnchorAsync)(self.deref() as *const _ as *mut _, anchor.deref() as *const _ as *mut _, purpose, stream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryExportAnchorAsync)(self.as_abi() as *const _ as *mut _, anchor.as_abi() as *const _ as *mut _, purpose, stream.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -203,12 +203,12 @@ RT_INTERFACE!{static interface ISpatialAnchorExporterStatics(ISpatialAnchorExpor
 impl ComPtr<ISpatialAnchorExporterStatics> {
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<SpatialAnchorExporter>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDefault)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_access_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SpatialPerceptionAccessStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestAccessAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestAccessAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -224,17 +224,17 @@ RT_INTERFACE!{interface ISpatialAnchorExportSufficiency(ISpatialAnchorExportSuff
 impl ComPtr<ISpatialAnchorExportSufficiency> {
     #[inline] pub fn get_is_minimally_sufficient(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsMinimallySufficient)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsMinimallySufficient)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_sufficiency_level(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_SufficiencyLevel)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SufficiencyLevel)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_recommended_sufficiency_level(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_RecommendedSufficiencyLevel)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RecommendedSufficiencyLevel)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -254,7 +254,7 @@ RT_INTERFACE!{static interface ISpatialAnchorManagerStatics(ISpatialAnchorManage
 impl ComPtr<ISpatialAnchorManagerStatics> {
     #[inline] pub fn request_store_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SpatialAnchorStore>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestStoreAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestStoreAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -265,7 +265,7 @@ RT_INTERFACE!{interface ISpatialAnchorRawCoordinateSystemAdjustedEventArgs(ISpat
 impl ComPtr<ISpatialAnchorRawCoordinateSystemAdjustedEventArgs> {
     #[inline] pub fn get_old_raw_coordinate_system_to_new_raw_coordinate_system_transform(&self) -> Result<foundation::numerics::Matrix4x4> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_OldRawCoordinateSystemToNewRawCoordinateSystemTransform)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_OldRawCoordinateSystemToNewRawCoordinateSystemTransform)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -279,17 +279,17 @@ RT_INTERFACE!{static interface ISpatialAnchorStatics(ISpatialAnchorStaticsVtbl):
 impl ComPtr<ISpatialAnchorStatics> {
     #[inline] pub fn try_create_relative_to(&self, coordinateSystem: &ComPtr<SpatialCoordinateSystem>) -> Result<Option<ComPtr<SpatialAnchor>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryCreateRelativeTo)(self.deref() as *const _ as *mut _, coordinateSystem.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryCreateRelativeTo)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_create_with_position_relative_to(&self, coordinateSystem: &ComPtr<SpatialCoordinateSystem>, position: foundation::numerics::Vector3) -> Result<Option<ComPtr<SpatialAnchor>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryCreateWithPositionRelativeTo)(self.deref() as *const _ as *mut _, coordinateSystem.deref() as *const _ as *mut _, position, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryCreateWithPositionRelativeTo)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, position, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_create_with_position_and_orientation_relative_to(&self, coordinateSystem: &ComPtr<SpatialCoordinateSystem>, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> Result<Option<ComPtr<SpatialAnchor>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryCreateWithPositionAndOrientationRelativeTo)(self.deref() as *const _ as *mut _, coordinateSystem.deref() as *const _ as *mut _, position, orientation, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryCreateWithPositionAndOrientationRelativeTo)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, position, orientation, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -303,20 +303,20 @@ RT_INTERFACE!{interface ISpatialAnchorStore(ISpatialAnchorStoreVtbl): IInspectab
 impl ComPtr<ISpatialAnchorStore> {
     #[inline] pub fn get_all_saved_anchors(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, SpatialAnchor>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAllSavedAnchors)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAllSavedAnchors)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_save(&self, id: &HStringArg, anchor: &ComPtr<SpatialAnchor>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).TrySave)(self.deref() as *const _ as *mut _, id.get(), anchor.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TrySave)(self.as_abi() as *const _ as *mut _, id.get(), anchor.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove(&self, id: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Remove)(self.deref() as *const _ as *mut _, id.get());
+        let hr = ((*self.as_abi().lpVtbl).Remove)(self.as_abi() as *const _ as *mut _, id.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn clear(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Clear)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Clear)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -346,17 +346,17 @@ RT_INTERFACE!{static interface ISpatialAnchorTransferManagerStatics(ISpatialAnch
 impl ComPtr<ISpatialAnchorTransferManagerStatics> {
     #[cfg(feature="windows-storage")] #[inline] pub fn try_import_anchors_async(&self, stream: &ComPtr<super::super::storage::streams::IInputStream>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<HString, SpatialAnchor>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryImportAnchorsAsync)(self.deref() as *const _ as *mut _, stream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryImportAnchorsAsync)(self.as_abi() as *const _ as *mut _, stream.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn try_export_anchors_async(&self, anchors: &ComPtr<foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, SpatialAnchor>>>, stream: &ComPtr<super::super::storage::streams::IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryExportAnchorsAsync)(self.deref() as *const _ as *mut _, anchors.deref() as *const _ as *mut _, stream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryExportAnchorsAsync)(self.as_abi() as *const _ as *mut _, anchors.as_abi() as *const _ as *mut _, stream.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_access_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SpatialPerceptionAccessStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestAccessAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestAccessAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -403,22 +403,22 @@ RT_INTERFACE!{static interface ISpatialBoundingVolumeStatics(ISpatialBoundingVol
 impl ComPtr<ISpatialBoundingVolumeStatics> {
     #[inline] pub fn from_box(&self, coordinateSystem: &ComPtr<SpatialCoordinateSystem>, box_: SpatialBoundingBox) -> Result<Option<ComPtr<SpatialBoundingVolume>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FromBox)(self.deref() as *const _ as *mut _, coordinateSystem.deref() as *const _ as *mut _, box_, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FromBox)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, box_, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn from_oriented_box(&self, coordinateSystem: &ComPtr<SpatialCoordinateSystem>, box_: SpatialBoundingOrientedBox) -> Result<Option<ComPtr<SpatialBoundingVolume>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FromOrientedBox)(self.deref() as *const _ as *mut _, coordinateSystem.deref() as *const _ as *mut _, box_, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FromOrientedBox)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, box_, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn from_sphere(&self, coordinateSystem: &ComPtr<SpatialCoordinateSystem>, sphere: SpatialBoundingSphere) -> Result<Option<ComPtr<SpatialBoundingVolume>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FromSphere)(self.deref() as *const _ as *mut _, coordinateSystem.deref() as *const _ as *mut _, sphere, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FromSphere)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, sphere, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn from_frustum(&self, coordinateSystem: &ComPtr<SpatialCoordinateSystem>, frustum: SpatialBoundingFrustum) -> Result<Option<ComPtr<SpatialBoundingVolume>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FromFrustum)(self.deref() as *const _ as *mut _, coordinateSystem.deref() as *const _ as *mut _, frustum, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FromFrustum)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, frustum, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -429,7 +429,7 @@ RT_INTERFACE!{interface ISpatialCoordinateSystem(ISpatialCoordinateSystemVtbl): 
 impl ComPtr<ISpatialCoordinateSystem> {
     #[inline] pub fn try_get_transform_to(&self, target: &ComPtr<SpatialCoordinateSystem>) -> Result<Option<ComPtr<foundation::IReference<foundation::numerics::Matrix4x4>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryGetTransformTo)(self.deref() as *const _ as *mut _, target.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryGetTransformTo)(self.as_abi() as *const _ as *mut _, target.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -443,17 +443,17 @@ RT_INTERFACE!{interface ISpatialEntity(ISpatialEntityVtbl): IInspectable(IInspec
 impl ComPtr<ISpatialEntity> {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Id)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_anchor(&self) -> Result<Option<ComPtr<SpatialAnchor>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Anchor)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Anchor)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Properties)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Properties)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -475,7 +475,7 @@ RT_INTERFACE!{interface ISpatialEntityAddedEventArgs(ISpatialEntityAddedEventArg
 impl ComPtr<ISpatialEntityAddedEventArgs> {
     #[inline] pub fn get_entity(&self) -> Result<Option<ComPtr<SpatialEntity>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Entity)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Entity)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -488,12 +488,12 @@ RT_INTERFACE!{static interface ISpatialEntityFactory(ISpatialEntityFactoryVtbl):
 impl ComPtr<ISpatialEntityFactory> {
     #[inline] pub fn create_with_spatial_anchor(&self, spatialAnchor: &ComPtr<SpatialAnchor>) -> Result<ComPtr<SpatialEntity>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateWithSpatialAnchor)(self.deref() as *const _ as *mut _, spatialAnchor.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateWithSpatialAnchor)(self.as_abi() as *const _ as *mut _, spatialAnchor.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_spatial_anchor_and_properties(&self, spatialAnchor: &ComPtr<SpatialAnchor>, propertySet: &ComPtr<foundation::collections::ValueSet>) -> Result<ComPtr<SpatialEntity>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateWithSpatialAnchorAndProperties)(self.deref() as *const _ as *mut _, spatialAnchor.deref() as *const _ as *mut _, propertySet.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateWithSpatialAnchorAndProperties)(self.as_abi() as *const _ as *mut _, spatialAnchor.as_abi() as *const _ as *mut _, propertySet.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -504,7 +504,7 @@ RT_INTERFACE!{interface ISpatialEntityRemovedEventArgs(ISpatialEntityRemovedEven
 impl ComPtr<ISpatialEntityRemovedEventArgs> {
     #[inline] pub fn get_entity(&self) -> Result<Option<ComPtr<SpatialEntity>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Entity)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Entity)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -518,17 +518,17 @@ RT_INTERFACE!{interface ISpatialEntityStore(ISpatialEntityStoreVtbl): IInspectab
 impl ComPtr<ISpatialEntityStore> {
     #[inline] pub fn save_async(&self, entity: &ComPtr<SpatialEntity>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SaveAsync)(self.deref() as *const _ as *mut _, entity.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SaveAsync)(self.as_abi() as *const _ as *mut _, entity.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove_async(&self, entity: &ComPtr<SpatialEntity>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RemoveAsync)(self.deref() as *const _ as *mut _, entity.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RemoveAsync)(self.as_abi() as *const _ as *mut _, entity.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_entity_watcher(&self) -> Result<Option<ComPtr<SpatialEntityWatcher>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateEntityWatcher)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateEntityWatcher)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -551,12 +551,12 @@ RT_INTERFACE!{static interface ISpatialEntityStoreStatics(ISpatialEntityStoreSta
 impl ComPtr<ISpatialEntityStoreStatics> {
     #[inline] pub fn get_is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsSupported)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsSupported)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn try_get_for_remote_system_session(&self, session: &ComPtr<super::super::system::remotesystems::RemoteSystemSession>) -> Result<Option<ComPtr<SpatialEntityStore>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryGetForRemoteSystemSession)(self.deref() as *const _ as *mut _, session.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryGetForRemoteSystemSession)(self.as_abi() as *const _ as *mut _, session.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -567,7 +567,7 @@ RT_INTERFACE!{interface ISpatialEntityUpdatedEventArgs(ISpatialEntityUpdatedEven
 impl ComPtr<ISpatialEntityUpdatedEventArgs> {
     #[inline] pub fn get_entity(&self) -> Result<Option<ComPtr<SpatialEntity>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Entity)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Entity)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -589,51 +589,51 @@ RT_INTERFACE!{interface ISpatialEntityWatcher(ISpatialEntityWatcherVtbl): IInspe
 impl ComPtr<ISpatialEntityWatcher> {
     #[inline] pub fn get_status(&self) -> Result<SpatialEntityWatcherStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_added(&self, handler: &ComPtr<foundation::TypedEventHandler<SpatialEntityWatcher, SpatialEntityAddedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_Added)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_Added)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_Added)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_Added)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_updated(&self, handler: &ComPtr<foundation::TypedEventHandler<SpatialEntityWatcher, SpatialEntityUpdatedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_Updated)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_Updated)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_Updated)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_Updated)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_removed(&self, handler: &ComPtr<foundation::TypedEventHandler<SpatialEntityWatcher, SpatialEntityRemovedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_Removed)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_Removed)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_Removed)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_Removed)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_enumeration_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<SpatialEntityWatcher, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_EnumerationCompleted)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_EnumerationCompleted)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_EnumerationCompleted)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_EnumerationCompleted)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Start)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Start)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Stop)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Stop)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -656,32 +656,32 @@ RT_INTERFACE!{interface ISpatialLocation(ISpatialLocationVtbl): IInspectable(IIn
 impl ComPtr<ISpatialLocation> {
     #[inline] pub fn get_position(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Position)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Position)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_orientation(&self) -> Result<foundation::numerics::Quaternion> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Orientation)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Orientation)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_absolute_linear_velocity(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AbsoluteLinearVelocity)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AbsoluteLinearVelocity)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_absolute_linear_acceleration(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AbsoluteLinearAcceleration)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AbsoluteLinearAcceleration)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_absolute_angular_velocity(&self) -> Result<foundation::numerics::Quaternion> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AbsoluteAngularVelocity)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AbsoluteAngularVelocity)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_absolute_angular_acceleration(&self) -> Result<foundation::numerics::Quaternion> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AbsoluteAngularAcceleration)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AbsoluteAngularAcceleration)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -694,12 +694,12 @@ RT_INTERFACE!{interface ISpatialLocation2(ISpatialLocation2Vtbl): IInspectable(I
 impl ComPtr<ISpatialLocation2> {
     #[inline] pub fn get_absolute_angular_velocity_axis_angle(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AbsoluteAngularVelocityAxisAngle)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AbsoluteAngularVelocityAxisAngle)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_absolute_angular_acceleration_axis_angle(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AbsoluteAngularAccelerationAxisAngle)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AbsoluteAngularAccelerationAxisAngle)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -723,70 +723,70 @@ RT_INTERFACE!{interface ISpatialLocator(ISpatialLocatorVtbl): IInspectable(IInsp
 impl ComPtr<ISpatialLocator> {
     #[inline] pub fn get_locatability(&self) -> Result<SpatialLocatability> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Locatability)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Locatability)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_locatability_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<SpatialLocator, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_LocatabilityChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_LocatabilityChanged)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_locatability_changed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_LocatabilityChanged)(self.deref() as *const _ as *mut _, cookie);
+        let hr = ((*self.as_abi().lpVtbl).remove_LocatabilityChanged)(self.as_abi() as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_positional_tracking_deactivating(&self, handler: &ComPtr<foundation::TypedEventHandler<SpatialLocator, SpatialLocatorPositionalTrackingDeactivatingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_PositionalTrackingDeactivating)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_PositionalTrackingDeactivating)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_positional_tracking_deactivating(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_PositionalTrackingDeactivating)(self.deref() as *const _ as *mut _, cookie);
+        let hr = ((*self.as_abi().lpVtbl).remove_PositionalTrackingDeactivating)(self.as_abi() as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_locate_at_timestamp(&self, timestamp: &ComPtr<super::PerceptionTimestamp>, coordinateSystem: &ComPtr<SpatialCoordinateSystem>) -> Result<Option<ComPtr<SpatialLocation>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryLocateAtTimestamp)(self.deref() as *const _ as *mut _, timestamp.deref() as *const _ as *mut _, coordinateSystem.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryLocateAtTimestamp)(self.as_abi() as *const _ as *mut _, timestamp.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_attached_frame_of_reference_at_current_heading(&self) -> Result<Option<ComPtr<SpatialLocatorAttachedFrameOfReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateAttachedFrameOfReferenceAtCurrentHeading)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateAttachedFrameOfReferenceAtCurrentHeading)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_attached_frame_of_reference_at_current_heading_with_position(&self, relativePosition: foundation::numerics::Vector3) -> Result<Option<ComPtr<SpatialLocatorAttachedFrameOfReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateAttachedFrameOfReferenceAtCurrentHeadingWithPosition)(self.deref() as *const _ as *mut _, relativePosition, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateAttachedFrameOfReferenceAtCurrentHeadingWithPosition)(self.as_abi() as *const _ as *mut _, relativePosition, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_attached_frame_of_reference_at_current_heading_with_position_and_orientation(&self, relativePosition: foundation::numerics::Vector3, relativeOrientation: foundation::numerics::Quaternion) -> Result<Option<ComPtr<SpatialLocatorAttachedFrameOfReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateAttachedFrameOfReferenceAtCurrentHeadingWithPositionAndOrientation)(self.deref() as *const _ as *mut _, relativePosition, relativeOrientation, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateAttachedFrameOfReferenceAtCurrentHeadingWithPositionAndOrientation)(self.as_abi() as *const _ as *mut _, relativePosition, relativeOrientation, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_attached_frame_of_reference_at_current_heading_with_position_and_orientation_and_relative_heading(&self, relativePosition: foundation::numerics::Vector3, relativeOrientation: foundation::numerics::Quaternion, relativeHeadingInRadians: f64) -> Result<Option<ComPtr<SpatialLocatorAttachedFrameOfReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateAttachedFrameOfReferenceAtCurrentHeadingWithPositionAndOrientationAndRelativeHeading)(self.deref() as *const _ as *mut _, relativePosition, relativeOrientation, relativeHeadingInRadians, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateAttachedFrameOfReferenceAtCurrentHeadingWithPositionAndOrientationAndRelativeHeading)(self.as_abi() as *const _ as *mut _, relativePosition, relativeOrientation, relativeHeadingInRadians, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_stationary_frame_of_reference_at_current_location(&self) -> Result<Option<ComPtr<SpatialStationaryFrameOfReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateStationaryFrameOfReferenceAtCurrentLocation)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateStationaryFrameOfReferenceAtCurrentLocation)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_stationary_frame_of_reference_at_current_location_with_position(&self, relativePosition: foundation::numerics::Vector3) -> Result<Option<ComPtr<SpatialStationaryFrameOfReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateStationaryFrameOfReferenceAtCurrentLocationWithPosition)(self.deref() as *const _ as *mut _, relativePosition, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateStationaryFrameOfReferenceAtCurrentLocationWithPosition)(self.as_abi() as *const _ as *mut _, relativePosition, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_stationary_frame_of_reference_at_current_location_with_position_and_orientation(&self, relativePosition: foundation::numerics::Vector3, relativeOrientation: foundation::numerics::Quaternion) -> Result<Option<ComPtr<SpatialStationaryFrameOfReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateStationaryFrameOfReferenceAtCurrentLocationWithPositionAndOrientation)(self.deref() as *const _ as *mut _, relativePosition, relativeOrientation, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateStationaryFrameOfReferenceAtCurrentLocationWithPositionAndOrientation)(self.as_abi() as *const _ as *mut _, relativePosition, relativeOrientation, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_stationary_frame_of_reference_at_current_location_with_position_and_orientation_and_relative_heading(&self, relativePosition: foundation::numerics::Vector3, relativeOrientation: foundation::numerics::Quaternion, relativeHeadingInRadians: f64) -> Result<Option<ComPtr<SpatialStationaryFrameOfReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateStationaryFrameOfReferenceAtCurrentLocationWithPositionAndOrientationAndRelativeHeading)(self.deref() as *const _ as *mut _, relativePosition, relativeOrientation, relativeHeadingInRadians, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateStationaryFrameOfReferenceAtCurrentLocationWithPositionAndOrientationAndRelativeHeading)(self.as_abi() as *const _ as *mut _, relativePosition, relativeOrientation, relativeHeadingInRadians, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -811,34 +811,34 @@ RT_INTERFACE!{interface ISpatialLocatorAttachedFrameOfReference(ISpatialLocatorA
 impl ComPtr<ISpatialLocatorAttachedFrameOfReference> {
     #[inline] pub fn get_relative_position(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_RelativePosition)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RelativePosition)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_relative_position(&self, value: foundation::numerics::Vector3) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_RelativePosition)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_RelativePosition)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_relative_orientation(&self) -> Result<foundation::numerics::Quaternion> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_RelativeOrientation)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RelativeOrientation)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_relative_orientation(&self, value: foundation::numerics::Quaternion) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_RelativeOrientation)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_RelativeOrientation)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn adjust_heading(&self, headingOffsetInRadians: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).AdjustHeading)(self.deref() as *const _ as *mut _, headingOffsetInRadians);
+        let hr = ((*self.as_abi().lpVtbl).AdjustHeading)(self.as_abi() as *const _ as *mut _, headingOffsetInRadians);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_stationary_coordinate_system_at_timestamp(&self, timestamp: &ComPtr<super::PerceptionTimestamp>) -> Result<Option<ComPtr<SpatialCoordinateSystem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetStationaryCoordinateSystemAtTimestamp)(self.deref() as *const _ as *mut _, timestamp.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetStationaryCoordinateSystemAtTimestamp)(self.as_abi() as *const _ as *mut _, timestamp.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_get_relative_heading_at_timestamp(&self, timestamp: &ComPtr<super::PerceptionTimestamp>) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryGetRelativeHeadingAtTimestamp)(self.deref() as *const _ as *mut _, timestamp.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryGetRelativeHeadingAtTimestamp)(self.as_abi() as *const _ as *mut _, timestamp.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -851,11 +851,11 @@ RT_INTERFACE!{interface ISpatialLocatorPositionalTrackingDeactivatingEventArgs(I
 impl ComPtr<ISpatialLocatorPositionalTrackingDeactivatingEventArgs> {
     #[inline] pub fn get_canceled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Canceled)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Canceled)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_canceled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Canceled)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Canceled)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -867,7 +867,7 @@ RT_INTERFACE!{static interface ISpatialLocatorStatics(ISpatialLocatorStaticsVtbl
 impl ComPtr<ISpatialLocatorStatics> {
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<SpatialLocator>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDefault)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -891,27 +891,27 @@ RT_INTERFACE!{interface ISpatialStageFrameOfReference(ISpatialStageFrameOfRefere
 impl ComPtr<ISpatialStageFrameOfReference> {
     #[inline] pub fn get_coordinate_system(&self) -> Result<Option<ComPtr<SpatialCoordinateSystem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CoordinateSystem)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CoordinateSystem)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_movement_range(&self) -> Result<SpatialMovementRange> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_MovementRange)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MovementRange)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_look_direction_range(&self) -> Result<SpatialLookDirectionRange> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_LookDirectionRange)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LookDirectionRange)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_coordinate_system_at_current_location(&self, locator: &ComPtr<SpatialLocator>) -> Result<Option<ComPtr<SpatialCoordinateSystem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetCoordinateSystemAtCurrentLocation)(self.deref() as *const _ as *mut _, locator.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetCoordinateSystemAtCurrentLocation)(self.as_abi() as *const _ as *mut _, locator.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_get_movement_bounds(&self, coordinateSystem: &ComPtr<SpatialCoordinateSystem>) -> Result<ComArray<foundation::numerics::Vector3>> { unsafe { 
         let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryGetMovementBounds)(self.deref() as *const _ as *mut _, coordinateSystem.deref() as *const _ as *mut _, &mut outSize, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryGetMovementBounds)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
@@ -942,21 +942,21 @@ RT_INTERFACE!{static interface ISpatialStageFrameOfReferenceStatics(ISpatialStag
 impl ComPtr<ISpatialStageFrameOfReferenceStatics> {
     #[inline] pub fn get_current(&self) -> Result<Option<ComPtr<SpatialStageFrameOfReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Current)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Current)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_current_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_CurrentChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_CurrentChanged)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_current_changed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_CurrentChanged)(self.deref() as *const _ as *mut _, cookie);
+        let hr = ((*self.as_abi().lpVtbl).remove_CurrentChanged)(self.as_abi() as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn request_new_stage_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SpatialStageFrameOfReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestNewStageAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestNewStageAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -967,7 +967,7 @@ RT_INTERFACE!{interface ISpatialStationaryFrameOfReference(ISpatialStationaryFra
 impl ComPtr<ISpatialStationaryFrameOfReference> {
     #[inline] pub fn get_coordinate_system(&self) -> Result<Option<ComPtr<SpatialCoordinateSystem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CoordinateSystem)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CoordinateSystem)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1001,22 +1001,22 @@ RT_INTERFACE!{static interface ISpatialGraphInteropPreviewStatics(ISpatialGraphI
 impl ComPtr<ISpatialGraphInteropPreviewStatics> {
     #[inline] pub fn create_coordinate_system_for_node(&self, nodeId: Guid) -> Result<Option<ComPtr<super::SpatialCoordinateSystem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateCoordinateSystemForNode)(self.deref() as *const _ as *mut _, nodeId, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateCoordinateSystemForNode)(self.as_abi() as *const _ as *mut _, nodeId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_coordinate_system_for_node_with_position(&self, nodeId: Guid, relativePosition: foundation::numerics::Vector3) -> Result<Option<ComPtr<super::SpatialCoordinateSystem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateCoordinateSystemForNodeWithPosition)(self.deref() as *const _ as *mut _, nodeId, relativePosition, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateCoordinateSystemForNodeWithPosition)(self.as_abi() as *const _ as *mut _, nodeId, relativePosition, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_coordinate_system_for_node_with_position_and_orientation(&self, nodeId: Guid, relativePosition: foundation::numerics::Vector3, relativeOrientation: foundation::numerics::Quaternion) -> Result<Option<ComPtr<super::SpatialCoordinateSystem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateCoordinateSystemForNodeWithPositionAndOrientation)(self.deref() as *const _ as *mut _, nodeId, relativePosition, relativeOrientation, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateCoordinateSystemForNodeWithPositionAndOrientation)(self.as_abi() as *const _ as *mut _, nodeId, relativePosition, relativeOrientation, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_locator_for_node(&self, nodeId: Guid) -> Result<Option<ComPtr<super::SpatialLocator>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateLocatorForNode)(self.deref() as *const _ as *mut _, nodeId, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateLocatorForNode)(self.as_abi() as *const _ as *mut _, nodeId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1034,27 +1034,27 @@ RT_INTERFACE!{interface ISpatialSurfaceInfo(ISpatialSurfaceInfoVtbl): IInspectab
 impl ComPtr<ISpatialSurfaceInfo> {
     #[inline] pub fn get_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Id)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_update_time(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_UpdateTime)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_UpdateTime)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn try_get_bounds(&self, coordinateSystem: &ComPtr<super::SpatialCoordinateSystem>) -> Result<Option<ComPtr<foundation::IReference<super::SpatialBoundingOrientedBox>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryGetBounds)(self.deref() as *const _ as *mut _, coordinateSystem.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryGetBounds)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_compute_latest_mesh_async(&self, maxTrianglesPerCubicMeter: f64) -> Result<ComPtr<foundation::IAsyncOperation<SpatialSurfaceMesh>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryComputeLatestMeshAsync)(self.deref() as *const _ as *mut _, maxTrianglesPerCubicMeter, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryComputeLatestMeshAsync)(self.as_abi() as *const _ as *mut _, maxTrianglesPerCubicMeter, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_compute_latest_mesh_with_options_async(&self, maxTrianglesPerCubicMeter: f64, options: &ComPtr<SpatialSurfaceMeshOptions>) -> Result<ComPtr<foundation::IAsyncOperation<SpatialSurfaceMesh>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryComputeLatestMeshWithOptionsAsync)(self.deref() as *const _ as *mut _, maxTrianglesPerCubicMeter, options.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryComputeLatestMeshWithOptionsAsync)(self.as_abi() as *const _ as *mut _, maxTrianglesPerCubicMeter, options.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1071,32 +1071,32 @@ RT_INTERFACE!{interface ISpatialSurfaceMesh(ISpatialSurfaceMeshVtbl): IInspectab
 impl ComPtr<ISpatialSurfaceMesh> {
     #[inline] pub fn get_surface_info(&self) -> Result<Option<ComPtr<SpatialSurfaceInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SurfaceInfo)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SurfaceInfo)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_coordinate_system(&self) -> Result<Option<ComPtr<super::SpatialCoordinateSystem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CoordinateSystem)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CoordinateSystem)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_triangle_indices(&self) -> Result<Option<ComPtr<SpatialSurfaceMeshBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_TriangleIndices)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TriangleIndices)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_vertex_positions(&self) -> Result<Option<ComPtr<SpatialSurfaceMeshBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_VertexPositions)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_VertexPositions)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_vertex_position_scale(&self) -> Result<foundation::numerics::Vector3> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_VertexPositionScale)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_VertexPositionScale)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_vertex_normals(&self) -> Result<Option<ComPtr<SpatialSurfaceMeshBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_VertexNormals)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_VertexNormals)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1112,22 +1112,22 @@ RT_INTERFACE!{interface ISpatialSurfaceMeshBuffer(ISpatialSurfaceMeshBufferVtbl)
 impl ComPtr<ISpatialSurfaceMeshBuffer> {
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_format(&self) -> Result<crate::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Format)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Format)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_stride(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Stride)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Stride)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_element_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ElementCount)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ElementCount)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Data)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Data)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1152,38 +1152,38 @@ RT_INTERFACE!{interface ISpatialSurfaceMeshOptions(ISpatialSurfaceMeshOptionsVtb
 impl ComPtr<ISpatialSurfaceMeshOptions> {
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_vertex_position_format(&self) -> Result<crate::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_VertexPositionFormat)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_VertexPositionFormat)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn set_vertex_position_format(&self, value: crate::windows::graphics::directx::DirectXPixelFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_VertexPositionFormat)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_VertexPositionFormat)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_triangle_index_format(&self) -> Result<crate::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TriangleIndexFormat)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TriangleIndexFormat)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn set_triangle_index_format(&self, value: crate::windows::graphics::directx::DirectXPixelFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_TriangleIndexFormat)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_TriangleIndexFormat)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_vertex_normal_format(&self) -> Result<crate::windows::graphics::directx::DirectXPixelFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_VertexNormalFormat)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_VertexNormalFormat)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn set_vertex_normal_format(&self, value: crate::windows::graphics::directx::DirectXPixelFormat) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_VertexNormalFormat)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_VertexNormalFormat)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_include_vertex_normals(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IncludeVertexNormals)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IncludeVertexNormals)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_include_vertex_normals(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_IncludeVertexNormals)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_IncludeVertexNormals)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1211,17 +1211,17 @@ RT_INTERFACE!{static interface ISpatialSurfaceMeshOptionsStatics(ISpatialSurface
 impl ComPtr<ISpatialSurfaceMeshOptionsStatics> {
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_position_formats(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SupportedVertexPositionFormats)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SupportedVertexPositionFormats)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_triangle_index_formats(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SupportedTriangleIndexFormats)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SupportedTriangleIndexFormats)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_vertex_normal_formats(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SupportedVertexNormalFormats)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SupportedVertexNormalFormats)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1236,24 +1236,24 @@ RT_INTERFACE!{interface ISpatialSurfaceObserver(ISpatialSurfaceObserverVtbl): II
 impl ComPtr<ISpatialSurfaceObserver> {
     #[inline] pub fn get_observed_surfaces(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<Guid, SpatialSurfaceInfo>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetObservedSurfaces)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetObservedSurfaces)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_bounding_volume(&self, bounds: &ComPtr<super::SpatialBoundingVolume>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetBoundingVolume)(self.deref() as *const _ as *mut _, bounds.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).SetBoundingVolume)(self.as_abi() as *const _ as *mut _, bounds.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_bounding_volumes(&self, bounds: &ComPtr<foundation::collections::IIterable<super::SpatialBoundingVolume>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetBoundingVolumes)(self.deref() as *const _ as *mut _, bounds.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).SetBoundingVolumes)(self.as_abi() as *const _ as *mut _, bounds.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_observed_surfaces_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<SpatialSurfaceObserver, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_ObservedSurfacesChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_ObservedSurfacesChanged)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_observed_surfaces_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_ObservedSurfacesChanged)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_ObservedSurfacesChanged)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1277,7 +1277,7 @@ RT_INTERFACE!{static interface ISpatialSurfaceObserverStatics(ISpatialSurfaceObs
 impl ComPtr<ISpatialSurfaceObserverStatics> {
     #[inline] pub fn request_access_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::SpatialPerceptionAccessStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestAccessAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestAccessAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1288,7 +1288,7 @@ RT_INTERFACE!{static interface ISpatialSurfaceObserverStatics2(ISpatialSurfaceOb
 impl ComPtr<ISpatialSurfaceObserverStatics2> {
     #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).IsSupported)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).IsSupported)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }

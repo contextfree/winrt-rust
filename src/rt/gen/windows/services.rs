@@ -17,42 +17,42 @@ RT_INTERFACE!{interface ICortanaActionableInsights(ICortanaActionableInsightsVtb
 impl ComPtr<ICortanaActionableInsights> {
     #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_User)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_User)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn is_available_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).IsAvailableAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).IsAvailableAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn show_insights_for_image_async(&self, imageStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ShowInsightsForImageAsync)(self.deref() as *const _ as *mut _, imageStream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ShowInsightsForImageAsync)(self.as_abi() as *const _ as *mut _, imageStream.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn show_insights_for_image_with_options_async(&self, imageStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>, options: &ComPtr<CortanaActionableInsightsOptions>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ShowInsightsForImageWithOptionsAsync)(self.deref() as *const _ as *mut _, imageStream.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ShowInsightsForImageWithOptionsAsync)(self.as_abi() as *const _ as *mut _, imageStream.as_abi() as *const _ as *mut _, options.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn show_insights_for_text_async(&self, text: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ShowInsightsForTextAsync)(self.deref() as *const _ as *mut _, text.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ShowInsightsForTextAsync)(self.as_abi() as *const _ as *mut _, text.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn show_insights_for_text_with_options_async(&self, text: &HStringArg, options: &ComPtr<CortanaActionableInsightsOptions>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ShowInsightsForTextWithOptionsAsync)(self.deref() as *const _ as *mut _, text.get(), options.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ShowInsightsForTextWithOptionsAsync)(self.as_abi() as *const _ as *mut _, text.get(), options.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn show_insights_async(&self, datapackage: &ComPtr<super::super::applicationmodel::datatransfer::DataPackage>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ShowInsightsAsync)(self.deref() as *const _ as *mut _, datapackage.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ShowInsightsAsync)(self.as_abi() as *const _ as *mut _, datapackage.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn show_insights_with_options_async(&self, datapackage: &ComPtr<super::super::applicationmodel::datatransfer::DataPackage>, options: &ComPtr<CortanaActionableInsightsOptions>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ShowInsightsWithOptionsAsync)(self.deref() as *const _ as *mut _, datapackage.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ShowInsightsWithOptionsAsync)(self.as_abi() as *const _ as *mut _, datapackage.as_abi() as *const _ as *mut _, options.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -77,20 +77,20 @@ RT_INTERFACE!{interface ICortanaActionableInsightsOptions(ICortanaActionableInsi
 impl ComPtr<ICortanaActionableInsightsOptions> {
     #[inline] pub fn get_content_source_web_link(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ContentSourceWebLink)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ContentSourceWebLink)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_content_source_web_link(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ContentSourceWebLink)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_ContentSourceWebLink)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_surrounding_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SurroundingText)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SurroundingText)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_surrounding_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_SurroundingText)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_SurroundingText)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -105,12 +105,12 @@ RT_INTERFACE!{static interface ICortanaActionableInsightsStatics(ICortanaActiona
 impl ComPtr<ICortanaActionableInsightsStatics> {
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<CortanaActionableInsights>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDefault)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &ComPtr<super::super::system::User>) -> Result<Option<ComPtr<CortanaActionableInsights>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetForUser)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetForUser)(self.as_abi() as *const _ as *mut _, user.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -130,22 +130,22 @@ RT_INTERFACE!{interface ICortanaPermissionsManager(ICortanaPermissionsManagerVtb
 impl ComPtr<ICortanaPermissionsManager> {
     #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).IsSupported)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).IsSupported)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn are_permissions_granted_async(&self, permissions: &ComPtr<foundation::collections::IIterable<CortanaPermission>>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ArePermissionsGrantedAsync)(self.deref() as *const _ as *mut _, permissions.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ArePermissionsGrantedAsync)(self.as_abi() as *const _ as *mut _, permissions.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn grant_permissions_async(&self, permissions: &ComPtr<foundation::collections::IIterable<CortanaPermission>>) -> Result<ComPtr<foundation::IAsyncOperation<CortanaPermissionsChangeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GrantPermissionsAsync)(self.deref() as *const _ as *mut _, permissions.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GrantPermissionsAsync)(self.as_abi() as *const _ as *mut _, permissions.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn revoke_permissions_async(&self, permissions: &ComPtr<foundation::collections::IIterable<CortanaPermission>>) -> Result<ComPtr<foundation::IAsyncOperation<CortanaPermissionsChangeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RevokePermissionsAsync)(self.deref() as *const _ as *mut _, permissions.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RevokePermissionsAsync)(self.as_abi() as *const _ as *mut _, permissions.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -164,7 +164,7 @@ RT_INTERFACE!{static interface ICortanaPermissionsManagerStatics(ICortanaPermiss
 impl ComPtr<ICortanaPermissionsManagerStatics> {
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<CortanaPermissionsManager>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDefault)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -177,16 +177,16 @@ RT_INTERFACE!{interface ICortanaSettings(ICortanaSettingsVtbl): IInspectable(IIn
 impl ComPtr<ICortanaSettings> {
     #[inline] pub fn get_has_user_consent_to_voice_activation(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HasUserConsentToVoiceActivation)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HasUserConsentToVoiceActivation)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_voice_activation_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsVoiceActivationEnabled)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsVoiceActivationEnabled)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_voice_activation_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_IsVoiceActivationEnabled)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_IsVoiceActivationEnabled)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -209,12 +209,12 @@ RT_INTERFACE!{static interface ICortanaSettingsStatics(ICortanaSettingsStaticsVt
 impl ComPtr<ICortanaSettingsStatics> {
     #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).IsSupported)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).IsSupported)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<CortanaSettings>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDefault)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -230,12 +230,12 @@ RT_INTERFACE!{interface IEnhancedWaypoint(IEnhancedWaypointVtbl): IInspectable(I
 impl ComPtr<IEnhancedWaypoint> {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_point(&self) -> Result<Option<ComPtr<super::super::devices::geolocation::Geopoint>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Point)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Point)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kind(&self) -> Result<WaypointKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Kind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Kind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -254,7 +254,7 @@ RT_INTERFACE!{static interface IEnhancedWaypointFactory(IEnhancedWaypointFactory
 impl ComPtr<IEnhancedWaypointFactory> {
     #[cfg(feature="windows-devices")] #[inline] pub fn create(&self, point: &ComPtr<super::super::devices::geolocation::Geopoint>, kind: WaypointKind) -> Result<ComPtr<EnhancedWaypoint>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, point.deref() as *const _ as *mut _, kind, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, point.as_abi() as *const _ as *mut _, kind, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -266,12 +266,12 @@ RT_INTERFACE!{interface IManeuverWarning(IManeuverWarningVtbl): IInspectable(IIn
 impl ComPtr<IManeuverWarning> {
     #[inline] pub fn get_kind(&self) -> Result<ManeuverWarningKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Kind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Kind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_severity(&self) -> Result<ManeuverWarningSeverity> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Severity)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Severity)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -303,77 +303,77 @@ RT_INTERFACE!{interface IMapAddress(IMapAddressVtbl): IInspectable(IInspectableV
 impl ComPtr<IMapAddress> {
     #[inline] pub fn get_building_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_BuildingName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BuildingName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_building_floor(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_BuildingFloor)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BuildingFloor)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_building_room(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_BuildingRoom)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BuildingRoom)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_building_wing(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_BuildingWing)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BuildingWing)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_street_number(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_StreetNumber)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StreetNumber)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_street(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Street)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Street)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_neighborhood(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Neighborhood)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Neighborhood)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_district(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_District)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_District)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_town(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Town)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Town)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_region(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Region)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Region)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_region_code(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RegionCode)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RegionCode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_country(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Country)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Country)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_country_code(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CountryCode)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CountryCode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_post_code(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_PostCode)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PostCode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_continent(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Continent)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Continent)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -385,7 +385,7 @@ RT_INTERFACE!{interface IMapAddress2(IMapAddress2Vtbl): IInspectable(IInspectabl
 impl ComPtr<IMapAddress2> {
     #[inline] pub fn get_formatted_address(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_FormattedAddress)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_FormattedAddress)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -400,22 +400,22 @@ RT_INTERFACE!{interface IMapLocation(IMapLocationVtbl): IInspectable(IInspectabl
 impl ComPtr<IMapLocation> {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_point(&self) -> Result<Option<ComPtr<super::super::devices::geolocation::Geopoint>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Point)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Point)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DisplayName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DisplayName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Description)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Description)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_address(&self) -> Result<Option<ComPtr<MapAddress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Address)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Address)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -449,12 +449,12 @@ RT_INTERFACE!{interface IMapLocationFinderResult(IMapLocationFinderResultVtbl): 
 impl ComPtr<IMapLocationFinderResult> {
     #[inline] pub fn get_locations(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MapLocation>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Locations)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Locations)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<MapLocationFinderStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -468,17 +468,17 @@ RT_INTERFACE!{static interface IMapLocationFinderStatics(IMapLocationFinderStati
 impl ComPtr<IMapLocationFinderStatics> {
     #[cfg(feature="windows-devices")] #[inline] pub fn find_locations_at_async(&self, queryPoint: &ComPtr<super::super::devices::geolocation::Geopoint>) -> Result<ComPtr<foundation::IAsyncOperation<MapLocationFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FindLocationsAtAsync)(self.deref() as *const _ as *mut _, queryPoint.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FindLocationsAtAsync)(self.as_abi() as *const _ as *mut _, queryPoint.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn find_locations_async(&self, searchText: &HStringArg, referencePoint: &ComPtr<super::super::devices::geolocation::Geopoint>) -> Result<ComPtr<foundation::IAsyncOperation<MapLocationFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FindLocationsAsync)(self.deref() as *const _ as *mut _, searchText.get(), referencePoint.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FindLocationsAsync)(self.as_abi() as *const _ as *mut _, searchText.get(), referencePoint.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn find_locations_with_max_count_async(&self, searchText: &HStringArg, referencePoint: &ComPtr<super::super::devices::geolocation::Geopoint>, maxCount: u32) -> Result<ComPtr<foundation::IAsyncOperation<MapLocationFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FindLocationsWithMaxCountAsync)(self.deref() as *const _ as *mut _, searchText.get(), referencePoint.deref() as *const _ as *mut _, maxCount, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FindLocationsWithMaxCountAsync)(self.as_abi() as *const _ as *mut _, searchText.get(), referencePoint.as_abi() as *const _ as *mut _, maxCount, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -489,7 +489,7 @@ RT_INTERFACE!{static interface IMapLocationFinderStatics2(IMapLocationFinderStat
 impl ComPtr<IMapLocationFinderStatics2> {
     #[cfg(feature="windows-devices")] #[inline] pub fn find_locations_at_with_accuracy_async(&self, queryPoint: &ComPtr<super::super::devices::geolocation::Geopoint>, accuracy: MapLocationDesiredAccuracy) -> Result<ComPtr<foundation::IAsyncOperation<MapLocationFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FindLocationsAtWithAccuracyAsync)(self.deref() as *const _ as *mut _, queryPoint.deref() as *const _ as *mut _, accuracy, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FindLocationsAtWithAccuracyAsync)(self.as_abi() as *const _ as *mut _, queryPoint.as_abi() as *const _ as *mut _, accuracy, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -514,11 +514,11 @@ RT_INTERFACE!{static interface IMapManagerStatics(IMapManagerStaticsVtbl): IInsp
 }}
 impl ComPtr<IMapManagerStatics> {
     #[inline] pub fn show_downloaded_maps_ui(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ShowDownloadedMapsUI)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).ShowDownloadedMapsUI)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn show_maps_update_ui(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ShowMapsUpdateUI)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).ShowMapsUpdateUI)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -539,32 +539,32 @@ RT_INTERFACE!{interface IMapRoute(IMapRouteVtbl): IInspectable(IInspectableVtbl)
 impl ComPtr<IMapRoute> {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_bounding_box(&self) -> Result<Option<ComPtr<super::super::devices::geolocation::GeoboundingBox>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_BoundingBox)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BoundingBox)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_length_in_meters(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_LengthInMeters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LengthInMeters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_estimated_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_EstimatedDuration)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EstimatedDuration)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_path(&self) -> Result<Option<ComPtr<super::super::devices::geolocation::Geopath>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Path)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Path)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_legs(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MapRouteLeg>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Legs)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Legs)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_traffic_based(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsTrafficBased)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsTrafficBased)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -577,12 +577,12 @@ RT_INTERFACE!{interface IMapRoute2(IMapRoute2Vtbl): IInspectable(IInspectableVtb
 impl ComPtr<IMapRoute2> {
     #[inline] pub fn get_violated_restrictions(&self) -> Result<MapRouteRestrictions> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ViolatedRestrictions)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ViolatedRestrictions)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_has_blocked_roads(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HasBlockedRoads)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HasBlockedRoads)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -594,12 +594,12 @@ RT_INTERFACE!{interface IMapRoute3(IMapRoute3Vtbl): IInspectable(IInspectableVtb
 impl ComPtr<IMapRoute3> {
     #[inline] pub fn get_duration_without_traffic(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_DurationWithoutTraffic)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DurationWithoutTraffic)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_traffic_congestion(&self) -> Result<TrafficCongestion> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TrafficCongestion)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TrafficCongestion)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -610,7 +610,7 @@ RT_INTERFACE!{interface IMapRoute4(IMapRoute4Vtbl): IInspectable(IInspectableVtb
 impl ComPtr<IMapRoute4> {
     #[inline] pub fn get_is_scenic(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsScenic)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsScenic)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -628,38 +628,38 @@ RT_INTERFACE!{interface IMapRouteDrivingOptions(IMapRouteDrivingOptionsVtbl): II
 impl ComPtr<IMapRouteDrivingOptions> {
     #[inline] pub fn get_max_alternate_route_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_MaxAlternateRouteCount)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MaxAlternateRouteCount)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_max_alternate_route_count(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MaxAlternateRouteCount)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_MaxAlternateRouteCount)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_initial_heading(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_InitialHeading)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_InitialHeading)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_initial_heading(&self, value: &ComPtr<foundation::IReference<f64>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_InitialHeading)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_InitialHeading)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_route_optimization(&self) -> Result<MapRouteOptimization> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_RouteOptimization)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RouteOptimization)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_route_optimization(&self, value: MapRouteOptimization) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_RouteOptimization)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_RouteOptimization)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_route_restrictions(&self) -> Result<MapRouteRestrictions> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_RouteRestrictions)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RouteRestrictions)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_route_restrictions(&self, value: MapRouteRestrictions) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_RouteRestrictions)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_RouteRestrictions)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -674,11 +674,11 @@ RT_INTERFACE!{interface IMapRouteDrivingOptions2(IMapRouteDrivingOptions2Vtbl): 
 impl ComPtr<IMapRouteDrivingOptions2> {
     #[inline] pub fn get_departure_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DepartureTime)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DepartureTime)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_departure_time(&self, value: &ComPtr<foundation::IReference<foundation::DateTime>>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_DepartureTime)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_DepartureTime)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -736,12 +736,12 @@ RT_INTERFACE!{interface IMapRouteFinderResult(IMapRouteFinderResultVtbl): IInspe
 impl ComPtr<IMapRouteFinderResult> {
     #[inline] pub fn get_route(&self) -> Result<Option<ComPtr<MapRoute>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Route)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Route)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<MapRouteFinderStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -753,7 +753,7 @@ RT_INTERFACE!{interface IMapRouteFinderResult2(IMapRouteFinderResult2Vtbl): IIns
 impl ComPtr<IMapRouteFinderResult2> {
     #[inline] pub fn get_alternate_routes(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MapRoute>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_AlternateRoutes)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AlternateRoutes)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -773,52 +773,52 @@ RT_INTERFACE!{static interface IMapRouteFinderStatics(IMapRouteFinderStaticsVtbl
 impl ComPtr<IMapRouteFinderStatics> {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_driving_route_async(&self, startPoint: &ComPtr<super::super::devices::geolocation::Geopoint>, endPoint: &ComPtr<super::super::devices::geolocation::Geopoint>) -> Result<ComPtr<foundation::IAsyncOperation<MapRouteFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDrivingRouteAsync)(self.deref() as *const _ as *mut _, startPoint.deref() as *const _ as *mut _, endPoint.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDrivingRouteAsync)(self.as_abi() as *const _ as *mut _, startPoint.as_abi() as *const _ as *mut _, endPoint.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_driving_route_with_optimization_async(&self, startPoint: &ComPtr<super::super::devices::geolocation::Geopoint>, endPoint: &ComPtr<super::super::devices::geolocation::Geopoint>, optimization: MapRouteOptimization) -> Result<ComPtr<foundation::IAsyncOperation<MapRouteFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDrivingRouteWithOptimizationAsync)(self.deref() as *const _ as *mut _, startPoint.deref() as *const _ as *mut _, endPoint.deref() as *const _ as *mut _, optimization, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDrivingRouteWithOptimizationAsync)(self.as_abi() as *const _ as *mut _, startPoint.as_abi() as *const _ as *mut _, endPoint.as_abi() as *const _ as *mut _, optimization, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_driving_route_with_optimization_and_restrictions_async(&self, startPoint: &ComPtr<super::super::devices::geolocation::Geopoint>, endPoint: &ComPtr<super::super::devices::geolocation::Geopoint>, optimization: MapRouteOptimization, restrictions: MapRouteRestrictions) -> Result<ComPtr<foundation::IAsyncOperation<MapRouteFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDrivingRouteWithOptimizationAndRestrictionsAsync)(self.deref() as *const _ as *mut _, startPoint.deref() as *const _ as *mut _, endPoint.deref() as *const _ as *mut _, optimization, restrictions, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDrivingRouteWithOptimizationAndRestrictionsAsync)(self.as_abi() as *const _ as *mut _, startPoint.as_abi() as *const _ as *mut _, endPoint.as_abi() as *const _ as *mut _, optimization, restrictions, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_driving_route_with_optimization_restrictions_and_heading_async(&self, startPoint: &ComPtr<super::super::devices::geolocation::Geopoint>, endPoint: &ComPtr<super::super::devices::geolocation::Geopoint>, optimization: MapRouteOptimization, restrictions: MapRouteRestrictions, headingInDegrees: f64) -> Result<ComPtr<foundation::IAsyncOperation<MapRouteFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDrivingRouteWithOptimizationRestrictionsAndHeadingAsync)(self.deref() as *const _ as *mut _, startPoint.deref() as *const _ as *mut _, endPoint.deref() as *const _ as *mut _, optimization, restrictions, headingInDegrees, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDrivingRouteWithOptimizationRestrictionsAndHeadingAsync)(self.as_abi() as *const _ as *mut _, startPoint.as_abi() as *const _ as *mut _, endPoint.as_abi() as *const _ as *mut _, optimization, restrictions, headingInDegrees, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_driving_route_from_waypoints_async(&self, wayPoints: &ComPtr<foundation::collections::IIterable<super::super::devices::geolocation::Geopoint>>) -> Result<ComPtr<foundation::IAsyncOperation<MapRouteFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDrivingRouteFromWaypointsAsync)(self.deref() as *const _ as *mut _, wayPoints.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDrivingRouteFromWaypointsAsync)(self.as_abi() as *const _ as *mut _, wayPoints.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_driving_route_from_waypoints_and_optimization_async(&self, wayPoints: &ComPtr<foundation::collections::IIterable<super::super::devices::geolocation::Geopoint>>, optimization: MapRouteOptimization) -> Result<ComPtr<foundation::IAsyncOperation<MapRouteFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDrivingRouteFromWaypointsAndOptimizationAsync)(self.deref() as *const _ as *mut _, wayPoints.deref() as *const _ as *mut _, optimization, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDrivingRouteFromWaypointsAndOptimizationAsync)(self.as_abi() as *const _ as *mut _, wayPoints.as_abi() as *const _ as *mut _, optimization, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_driving_route_from_waypoints_optimization_and_restrictions_async(&self, wayPoints: &ComPtr<foundation::collections::IIterable<super::super::devices::geolocation::Geopoint>>, optimization: MapRouteOptimization, restrictions: MapRouteRestrictions) -> Result<ComPtr<foundation::IAsyncOperation<MapRouteFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDrivingRouteFromWaypointsOptimizationAndRestrictionsAsync)(self.deref() as *const _ as *mut _, wayPoints.deref() as *const _ as *mut _, optimization, restrictions, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDrivingRouteFromWaypointsOptimizationAndRestrictionsAsync)(self.as_abi() as *const _ as *mut _, wayPoints.as_abi() as *const _ as *mut _, optimization, restrictions, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_driving_route_from_waypoints_optimization_restrictions_and_heading_async(&self, wayPoints: &ComPtr<foundation::collections::IIterable<super::super::devices::geolocation::Geopoint>>, optimization: MapRouteOptimization, restrictions: MapRouteRestrictions, headingInDegrees: f64) -> Result<ComPtr<foundation::IAsyncOperation<MapRouteFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDrivingRouteFromWaypointsOptimizationRestrictionsAndHeadingAsync)(self.deref() as *const _ as *mut _, wayPoints.deref() as *const _ as *mut _, optimization, restrictions, headingInDegrees, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDrivingRouteFromWaypointsOptimizationRestrictionsAndHeadingAsync)(self.as_abi() as *const _ as *mut _, wayPoints.as_abi() as *const _ as *mut _, optimization, restrictions, headingInDegrees, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_walking_route_async(&self, startPoint: &ComPtr<super::super::devices::geolocation::Geopoint>, endPoint: &ComPtr<super::super::devices::geolocation::Geopoint>) -> Result<ComPtr<foundation::IAsyncOperation<MapRouteFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetWalkingRouteAsync)(self.deref() as *const _ as *mut _, startPoint.deref() as *const _ as *mut _, endPoint.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetWalkingRouteAsync)(self.as_abi() as *const _ as *mut _, startPoint.as_abi() as *const _ as *mut _, endPoint.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_walking_route_from_waypoints_async(&self, wayPoints: &ComPtr<foundation::collections::IIterable<super::super::devices::geolocation::Geopoint>>) -> Result<ComPtr<foundation::IAsyncOperation<MapRouteFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetWalkingRouteFromWaypointsAsync)(self.deref() as *const _ as *mut _, wayPoints.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetWalkingRouteFromWaypointsAsync)(self.as_abi() as *const _ as *mut _, wayPoints.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -829,7 +829,7 @@ RT_INTERFACE!{static interface IMapRouteFinderStatics2(IMapRouteFinderStatics2Vt
 impl ComPtr<IMapRouteFinderStatics2> {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_driving_route_with_options_async(&self, startPoint: &ComPtr<super::super::devices::geolocation::Geopoint>, endPoint: &ComPtr<super::super::devices::geolocation::Geopoint>, options: &ComPtr<MapRouteDrivingOptions>) -> Result<ComPtr<foundation::IAsyncOperation<MapRouteFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDrivingRouteWithOptionsAsync)(self.deref() as *const _ as *mut _, startPoint.deref() as *const _ as *mut _, endPoint.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDrivingRouteWithOptionsAsync)(self.as_abi() as *const _ as *mut _, startPoint.as_abi() as *const _ as *mut _, endPoint.as_abi() as *const _ as *mut _, options.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -841,12 +841,12 @@ RT_INTERFACE!{static interface IMapRouteFinderStatics3(IMapRouteFinderStatics3Vt
 impl ComPtr<IMapRouteFinderStatics3> {
     #[inline] pub fn get_driving_route_from_enhanced_waypoints_async(&self, waypoints: &ComPtr<foundation::collections::IIterable<EnhancedWaypoint>>) -> Result<ComPtr<foundation::IAsyncOperation<MapRouteFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDrivingRouteFromEnhancedWaypointsAsync)(self.deref() as *const _ as *mut _, waypoints.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDrivingRouteFromEnhancedWaypointsAsync)(self.as_abi() as *const _ as *mut _, waypoints.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_driving_route_from_enhanced_waypoints_with_options_async(&self, waypoints: &ComPtr<foundation::collections::IIterable<EnhancedWaypoint>>, options: &ComPtr<MapRouteDrivingOptions>) -> Result<ComPtr<foundation::IAsyncOperation<MapRouteFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDrivingRouteFromEnhancedWaypointsWithOptionsAsync)(self.deref() as *const _ as *mut _, waypoints.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDrivingRouteFromEnhancedWaypointsWithOptionsAsync)(self.as_abi() as *const _ as *mut _, waypoints.as_abi() as *const _ as *mut _, options.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -866,27 +866,27 @@ RT_INTERFACE!{interface IMapRouteLeg(IMapRouteLegVtbl): IInspectable(IInspectabl
 impl ComPtr<IMapRouteLeg> {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_bounding_box(&self) -> Result<Option<ComPtr<super::super::devices::geolocation::GeoboundingBox>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_BoundingBox)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BoundingBox)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_path(&self) -> Result<Option<ComPtr<super::super::devices::geolocation::Geopath>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Path)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Path)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_length_in_meters(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_LengthInMeters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LengthInMeters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_estimated_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_EstimatedDuration)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EstimatedDuration)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_maneuvers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MapRouteManeuver>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Maneuvers)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Maneuvers)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -899,12 +899,12 @@ RT_INTERFACE!{interface IMapRouteLeg2(IMapRouteLeg2Vtbl): IInspectable(IInspecta
 impl ComPtr<IMapRouteLeg2> {
     #[inline] pub fn get_duration_without_traffic(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_DurationWithoutTraffic)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DurationWithoutTraffic)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_traffic_congestion(&self) -> Result<TrafficCongestion> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TrafficCongestion)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TrafficCongestion)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -921,32 +921,32 @@ RT_INTERFACE!{interface IMapRouteManeuver(IMapRouteManeuverVtbl): IInspectable(I
 impl ComPtr<IMapRouteManeuver> {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_starting_point(&self) -> Result<Option<ComPtr<super::super::devices::geolocation::Geopoint>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_StartingPoint)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StartingPoint)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_length_in_meters(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_LengthInMeters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LengthInMeters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_instruction_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_InstructionText)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_InstructionText)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kind(&self) -> Result<MapRouteManeuverKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Kind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Kind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_exit_number(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ExitNumber)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExitNumber)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_maneuver_notices(&self) -> Result<MapManeuverNotices> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ManeuverNotices)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ManeuverNotices)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -960,17 +960,17 @@ RT_INTERFACE!{interface IMapRouteManeuver2(IMapRouteManeuver2Vtbl): IInspectable
 impl ComPtr<IMapRouteManeuver2> {
     #[inline] pub fn get_start_heading(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_StartHeading)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StartHeading)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_end_heading(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_EndHeading)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EndHeading)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_street_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_StreetName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StreetName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -981,7 +981,7 @@ RT_INTERFACE!{interface IMapRouteManeuver3(IMapRouteManeuver3Vtbl): IInspectable
 impl ComPtr<IMapRouteManeuver3> {
     #[inline] pub fn get_warnings(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<ManeuverWarning>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Warnings)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Warnings)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1030,12 +1030,12 @@ RT_INTERFACE!{static interface IMapServiceStatics(IMapServiceStaticsVtbl): IInsp
 }}
 impl ComPtr<IMapServiceStatics> {
     #[inline] pub fn set_service_token(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ServiceToken)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_ServiceToken)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_service_token(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ServiceToken)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ServiceToken)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1046,7 +1046,7 @@ RT_INTERFACE!{static interface IMapServiceStatics2(IMapServiceStatics2Vtbl): IIn
 impl ComPtr<IMapServiceStatics2> {
     #[inline] pub fn get_world_view_region_code(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_WorldViewRegionCode)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_WorldViewRegionCode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1057,7 +1057,7 @@ RT_INTERFACE!{static interface IMapServiceStatics3(IMapServiceStatics3Vtbl): IIn
 impl ComPtr<IMapServiceStatics3> {
     #[inline] pub fn get_data_attributions(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DataAttributions)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DataAttributions)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1068,12 +1068,12 @@ RT_INTERFACE!{static interface IMapServiceStatics4(IMapServiceStatics4Vtbl): IIn
 }}
 impl ComPtr<IMapServiceStatics4> {
     #[inline] pub fn set_data_usage_preference(&self, value: MapServiceDataUsagePreference) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_DataUsagePreference)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_DataUsagePreference)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_data_usage_preference(&self) -> Result<MapServiceDataUsagePreference> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_DataUsagePreference)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DataUsagePreference)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1089,31 +1089,31 @@ RT_INTERFACE!{interface IPlaceInfo(IPlaceInfoVtbl): IInspectable(IInspectableVtb
 }}
 impl ComPtr<IPlaceInfo> {
     #[inline] pub fn show(&self, selection: foundation::Rect) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Show)(self.deref() as *const _ as *mut _, selection);
+        let hr = ((*self.as_abi().lpVtbl).Show)(self.as_abi() as *const _ as *mut _, selection);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn show_with_preferred_placement(&self, selection: foundation::Rect, preferredPlacement: super::super::ui::popups::Placement) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ShowWithPreferredPlacement)(self.deref() as *const _ as *mut _, selection, preferredPlacement);
+        let hr = ((*self.as_abi().lpVtbl).ShowWithPreferredPlacement)(self.as_abi() as *const _ as *mut _, selection, preferredPlacement);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_identifier(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Identifier)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Identifier)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DisplayName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DisplayName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_address(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DisplayAddress)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DisplayAddress)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_geoshape(&self) -> Result<Option<ComPtr<super::super::devices::geolocation::IGeoshape>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Geoshape)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Geoshape)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1156,21 +1156,21 @@ RT_INTERFACE!{interface IPlaceInfoCreateOptions(IPlaceInfoCreateOptionsVtbl): II
 }}
 impl ComPtr<IPlaceInfoCreateOptions> {
     #[inline] pub fn set_display_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_DisplayName)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_DisplayName)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DisplayName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DisplayName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_display_address(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_DisplayAddress)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_DisplayAddress)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_display_address(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DisplayAddress)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DisplayAddress)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1192,32 +1192,32 @@ RT_INTERFACE!{static interface IPlaceInfoStatics(IPlaceInfoStaticsVtbl): IInspec
 impl ComPtr<IPlaceInfoStatics> {
     #[cfg(feature="windows-devices")] #[inline] pub fn create(&self, referencePoint: &ComPtr<super::super::devices::geolocation::Geopoint>) -> Result<Option<ComPtr<PlaceInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, referencePoint.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, referencePoint.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn create_with_geopoint_and_options(&self, referencePoint: &ComPtr<super::super::devices::geolocation::Geopoint>, options: &ComPtr<PlaceInfoCreateOptions>) -> Result<Option<ComPtr<PlaceInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateWithGeopointAndOptions)(self.deref() as *const _ as *mut _, referencePoint.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateWithGeopointAndOptions)(self.as_abi() as *const _ as *mut _, referencePoint.as_abi() as *const _ as *mut _, options.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_identifier(&self, identifier: &HStringArg) -> Result<Option<ComPtr<PlaceInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIdentifier)(self.deref() as *const _ as *mut _, identifier.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIdentifier)(self.as_abi() as *const _ as *mut _, identifier.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn create_from_identifier_with_options(&self, identifier: &HStringArg, defaultPoint: &ComPtr<super::super::devices::geolocation::Geopoint>, options: &ComPtr<PlaceInfoCreateOptions>) -> Result<Option<ComPtr<PlaceInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIdentifierWithOptions)(self.deref() as *const _ as *mut _, identifier.get(), defaultPoint.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIdentifierWithOptions)(self.as_abi() as *const _ as *mut _, identifier.get(), defaultPoint.as_abi() as *const _ as *mut _, options.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_map_location(&self, location: &ComPtr<MapLocation>) -> Result<Option<ComPtr<PlaceInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromMapLocation)(self.deref() as *const _ as *mut _, location.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromMapLocation)(self.as_abi() as *const _ as *mut _, location.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_show_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsShowSupported)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsShowSupported)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1229,12 +1229,12 @@ RT_INTERFACE!{static interface IPlaceInfoStatics2(IPlaceInfoStatics2Vtbl): IInsp
 impl ComPtr<IPlaceInfoStatics2> {
     #[inline] pub fn create_from_address(&self, displayAddress: &HStringArg) -> Result<Option<ComPtr<PlaceInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromAddress)(self.deref() as *const _ as *mut _, displayAddress.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromAddress)(self.as_abi() as *const _ as *mut _, displayAddress.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_address_with_name(&self, displayAddress: &HStringArg, displayName: &HStringArg) -> Result<Option<ComPtr<PlaceInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromAddressWithName)(self.deref() as *const _ as *mut _, displayAddress.get(), displayName.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromAddressWithName)(self.as_abi() as *const _ as *mut _, displayAddress.get(), displayName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1261,17 +1261,17 @@ RT_INTERFACE!{interface IGuidanceAudioNotificationRequestedEventArgs(IGuidanceAu
 impl ComPtr<IGuidanceAudioNotificationRequestedEventArgs> {
     #[inline] pub fn get_audio_notification(&self) -> Result<GuidanceAudioNotificationKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AudioNotification)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AudioNotification)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_audio_file_paths(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_AudioFilePaths)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AudioFilePaths)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_audio_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_AudioText)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AudioText)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1287,12 +1287,12 @@ RT_INTERFACE!{interface IGuidanceLaneInfo(IGuidanceLaneInfoVtbl): IInspectable(I
 impl ComPtr<IGuidanceLaneInfo> {
     #[inline] pub fn get_lane_markers(&self) -> Result<GuidanceLaneMarkers> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_LaneMarkers)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LaneMarkers)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_on_route(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsOnRoute)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsOnRoute)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1319,62 +1319,62 @@ RT_INTERFACE!{interface IGuidanceManeuver(IGuidanceManeuverVtbl): IInspectable(I
 impl ComPtr<IGuidanceManeuver> {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_start_location(&self) -> Result<Option<ComPtr<crate::windows::devices::geolocation::Geopoint>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_StartLocation)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StartLocation)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_distance_from_route_start(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_DistanceFromRouteStart)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DistanceFromRouteStart)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_distance_from_previous_maneuver(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_DistanceFromPreviousManeuver)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DistanceFromPreviousManeuver)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_departure_road_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DepartureRoadName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DepartureRoadName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_next_road_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_NextRoadName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_NextRoadName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_departure_short_road_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DepartureShortRoadName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DepartureShortRoadName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_next_short_road_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_NextShortRoadName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_NextShortRoadName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kind(&self) -> Result<GuidanceManeuverKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Kind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Kind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_start_angle(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_StartAngle)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StartAngle)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_end_angle(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_EndAngle)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EndAngle)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_road_signpost(&self) -> Result<Option<ComPtr<GuidanceRoadSignpost>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RoadSignpost)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RoadSignpost)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_instruction_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_InstructionText)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_InstructionText)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1394,27 +1394,27 @@ RT_INTERFACE!{interface IGuidanceMapMatchedCoordinate(IGuidanceMapMatchedCoordin
 impl ComPtr<IGuidanceMapMatchedCoordinate> {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_location(&self) -> Result<Option<ComPtr<crate::windows::devices::geolocation::Geopoint>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Location)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Location)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_heading(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_CurrentHeading)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CurrentHeading)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_current_speed(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_CurrentSpeed)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CurrentSpeed)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_on_street(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsOnStreet)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsOnStreet)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_road(&self) -> Result<Option<ComPtr<GuidanceRoadSegment>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Road)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Road)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1455,124 +1455,124 @@ RT_INTERFACE!{interface IGuidanceNavigator(IGuidanceNavigatorVtbl): IInspectable
 }}
 impl ComPtr<IGuidanceNavigator> {
     #[inline] pub fn start_navigating(&self, route: &ComPtr<GuidanceRoute>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).StartNavigating)(self.deref() as *const _ as *mut _, route.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).StartNavigating)(self.as_abi() as *const _ as *mut _, route.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn start_simulating(&self, route: &ComPtr<GuidanceRoute>, speedInMetersPerSecond: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).StartSimulating)(self.deref() as *const _ as *mut _, route.deref() as *const _ as *mut _, speedInMetersPerSecond);
+        let hr = ((*self.as_abi().lpVtbl).StartSimulating)(self.as_abi() as *const _ as *mut _, route.as_abi() as *const _ as *mut _, speedInMetersPerSecond);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn start_tracking(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).StartTracking)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).StartTracking)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn pause(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Pause)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Pause)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn resume(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Resume)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Resume)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Stop)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Stop)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn repeat_last_audio_notification(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).RepeatLastAudioNotification)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).RepeatLastAudioNotification)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_audio_measurement_system(&self) -> Result<GuidanceAudioMeasurementSystem> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AudioMeasurementSystem)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AudioMeasurementSystem)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_audio_measurement_system(&self, value: GuidanceAudioMeasurementSystem) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_AudioMeasurementSystem)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_AudioMeasurementSystem)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_audio_notifications(&self) -> Result<GuidanceAudioNotifications> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AudioNotifications)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AudioNotifications)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_audio_notifications(&self, value: GuidanceAudioNotifications) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_AudioNotifications)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_AudioNotifications)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_guidance_updated(&self, handler: &ComPtr<foundation::TypedEventHandler<GuidanceNavigator, GuidanceUpdatedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_GuidanceUpdated)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_GuidanceUpdated)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_guidance_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_GuidanceUpdated)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_GuidanceUpdated)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_destination_reached(&self, handler: &ComPtr<foundation::TypedEventHandler<GuidanceNavigator, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_DestinationReached)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_DestinationReached)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_destination_reached(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_DestinationReached)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_DestinationReached)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_rerouting(&self, handler: &ComPtr<foundation::TypedEventHandler<GuidanceNavigator, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_Rerouting)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_Rerouting)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_rerouting(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_Rerouting)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_Rerouting)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_rerouted(&self, handler: &ComPtr<foundation::TypedEventHandler<GuidanceNavigator, GuidanceReroutedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_Rerouted)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_Rerouted)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_rerouted(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_Rerouted)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_Rerouted)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_reroute_failed(&self, handler: &ComPtr<foundation::TypedEventHandler<GuidanceNavigator, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_RerouteFailed)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_RerouteFailed)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_reroute_failed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_RerouteFailed)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_RerouteFailed)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_user_location_lost(&self, handler: &ComPtr<foundation::TypedEventHandler<GuidanceNavigator, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_UserLocationLost)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_UserLocationLost)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_user_location_lost(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_UserLocationLost)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_UserLocationLost)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_user_location_restored(&self, handler: &ComPtr<foundation::TypedEventHandler<GuidanceNavigator, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_UserLocationRestored)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_UserLocationRestored)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_user_location_restored(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_UserLocationRestored)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_UserLocationRestored)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_guidance_voice(&self, voiceId: i32, voiceFolder: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).SetGuidanceVoice)(self.deref() as *const _ as *mut _, voiceId, voiceFolder.get());
+        let hr = ((*self.as_abi().lpVtbl).SetGuidanceVoice)(self.as_abi() as *const _ as *mut _, voiceId, voiceFolder.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn update_user_location(&self, userLocation: &ComPtr<crate::windows::devices::geolocation::Geocoordinate>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).UpdateUserLocation)(self.deref() as *const _ as *mut _, userLocation.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).UpdateUserLocation)(self.as_abi() as *const _ as *mut _, userLocation.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn update_user_location_with_position_override(&self, userLocation: &ComPtr<crate::windows::devices::geolocation::Geocoordinate>, positionOverride: crate::windows::devices::geolocation::BasicGeoposition) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).UpdateUserLocationWithPositionOverride)(self.deref() as *const _ as *mut _, userLocation.deref() as *const _ as *mut _, positionOverride);
+        let hr = ((*self.as_abi().lpVtbl).UpdateUserLocationWithPositionOverride)(self.as_abi() as *const _ as *mut _, userLocation.as_abi() as *const _ as *mut _, positionOverride);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1598,20 +1598,20 @@ RT_INTERFACE!{interface IGuidanceNavigator2(IGuidanceNavigator2Vtbl): IInspectab
 impl ComPtr<IGuidanceNavigator2> {
     #[inline] pub fn add_audio_notification_requested(&self, value: &ComPtr<foundation::TypedEventHandler<GuidanceNavigator, GuidanceAudioNotificationRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_AudioNotificationRequested)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_AudioNotificationRequested)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_audio_notification_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_AudioNotificationRequested)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_AudioNotificationRequested)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_guidance_audio_muted(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsGuidanceAudioMuted)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsGuidanceAudioMuted)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_guidance_audio_muted(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_IsGuidanceAudioMuted)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_IsGuidanceAudioMuted)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1622,7 +1622,7 @@ RT_INTERFACE!{static interface IGuidanceNavigatorStatics(IGuidanceNavigatorStati
 impl ComPtr<IGuidanceNavigatorStatics> {
     #[inline] pub fn get_current(&self) -> Result<Option<ComPtr<GuidanceNavigator>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetCurrent)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetCurrent)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1633,7 +1633,7 @@ RT_INTERFACE!{static interface IGuidanceNavigatorStatics2(IGuidanceNavigatorStat
 impl ComPtr<IGuidanceNavigatorStatics2> {
     #[inline] pub fn get_use_app_provided_voice(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_UseAppProvidedVoice)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_UseAppProvidedVoice)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1644,7 +1644,7 @@ RT_INTERFACE!{interface IGuidanceReroutedEventArgs(IGuidanceReroutedEventArgsVtb
 impl ComPtr<IGuidanceReroutedEventArgs> {
     #[inline] pub fn get_route(&self) -> Result<Option<ComPtr<GuidanceRoute>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Route)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Route)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1665,47 +1665,47 @@ RT_INTERFACE!{interface IGuidanceRoadSegment(IGuidanceRoadSegmentVtbl): IInspect
 impl ComPtr<IGuidanceRoadSegment> {
     #[inline] pub fn get_road_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RoadName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RoadName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_short_road_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ShortRoadName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ShortRoadName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_speed_limit(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_SpeedLimit)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SpeedLimit)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_travel_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TravelTime)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TravelTime)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_path(&self) -> Result<Option<ComPtr<crate::windows::devices::geolocation::Geopath>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Path)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Path)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Id)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_highway(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsHighway)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsHighway)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_tunnel(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsTunnel)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsTunnel)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_toll_road(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsTollRoad)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsTollRoad)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1717,7 +1717,7 @@ RT_INTERFACE!{interface IGuidanceRoadSegment2(IGuidanceRoadSegment2Vtbl): IInspe
 impl ComPtr<IGuidanceRoadSegment2> {
     #[inline] pub fn get_is_scenic(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsScenic)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsScenic)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1734,27 +1734,27 @@ RT_INTERFACE!{interface IGuidanceRoadSignpost(IGuidanceRoadSignpostVtbl): IInspe
 impl ComPtr<IGuidanceRoadSignpost> {
     #[inline] pub fn get_exit_number(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ExitNumber)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExitNumber)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_exit(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Exit)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Exit)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn get_background_color(&self) -> Result<crate::windows::ui::Color> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_BackgroundColor)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BackgroundColor)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn get_foreground_color(&self) -> Result<crate::windows::ui::Color> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ForegroundColor)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ForegroundColor)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_exit_directions(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ExitDirections)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExitDirections)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1774,37 +1774,37 @@ RT_INTERFACE!{interface IGuidanceRoute(IGuidanceRouteVtbl): IInspectable(IInspec
 impl ComPtr<IGuidanceRoute> {
     #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Duration)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Duration)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_distance(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Distance)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Distance)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_maneuvers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<GuidanceManeuver>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Maneuvers)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Maneuvers)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_bounding_box(&self) -> Result<Option<ComPtr<crate::windows::devices::geolocation::GeoboundingBox>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_BoundingBox)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BoundingBox)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_path(&self) -> Result<Option<ComPtr<crate::windows::devices::geolocation::Geopath>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Path)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Path)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_road_segments(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<GuidanceRoadSegment>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RoadSegments)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RoadSegments)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn convert_to_map_route(&self) -> Result<Option<ComPtr<super::MapRoute>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ConvertToMapRoute)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ConvertToMapRoute)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1827,12 +1827,12 @@ RT_INTERFACE!{static interface IGuidanceRouteStatics(IGuidanceRouteStaticsVtbl):
 impl ComPtr<IGuidanceRouteStatics> {
     #[inline] pub fn can_create_from_map_route(&self, mapRoute: &ComPtr<super::MapRoute>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).CanCreateFromMapRoute)(self.deref() as *const _ as *mut _, mapRoute.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CanCreateFromMapRoute)(self.as_abi() as *const _ as *mut _, mapRoute.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn try_create_from_map_route(&self, mapRoute: &ComPtr<super::MapRoute>) -> Result<Option<ComPtr<GuidanceRoute>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TryCreateFromMapRoute)(self.deref() as *const _ as *mut _, mapRoute.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TryCreateFromMapRoute)(self.as_abi() as *const _ as *mut _, mapRoute.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1849,33 +1849,33 @@ RT_INTERFACE!{interface IGuidanceTelemetryCollector(IGuidanceTelemetryCollectorV
 impl ComPtr<IGuidanceTelemetryCollector> {
     #[inline] pub fn get_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Enabled)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Enabled)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Enabled)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_Enabled)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn clear_local_data(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ClearLocalData)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).ClearLocalData)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_speed_trigger(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_SpeedTrigger)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SpeedTrigger)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_speed_trigger(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_SpeedTrigger)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_SpeedTrigger)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_upload_frequency(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_UploadFrequency)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_UploadFrequency)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_upload_frequency(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_UploadFrequency)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_UploadFrequency)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1894,7 +1894,7 @@ RT_INTERFACE!{static interface IGuidanceTelemetryCollectorStatics(IGuidanceTelem
 impl ComPtr<IGuidanceTelemetryCollectorStatics> {
     #[inline] pub fn get_current(&self) -> Result<Option<ComPtr<GuidanceTelemetryCollector>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetCurrent)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetCurrent)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1918,72 +1918,72 @@ RT_INTERFACE!{interface IGuidanceUpdatedEventArgs(IGuidanceUpdatedEventArgsVtbl)
 impl ComPtr<IGuidanceUpdatedEventArgs> {
     #[inline] pub fn get_mode(&self) -> Result<GuidanceMode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Mode)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Mode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_next_maneuver(&self) -> Result<Option<ComPtr<GuidanceManeuver>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_NextManeuver)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_NextManeuver)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_next_maneuver_distance(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_NextManeuverDistance)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_NextManeuverDistance)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_after_next_maneuver(&self) -> Result<Option<ComPtr<GuidanceManeuver>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_AfterNextManeuver)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AfterNextManeuver)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_after_next_maneuver_distance(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AfterNextManeuverDistance)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AfterNextManeuverDistance)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_distance_to_destination(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_DistanceToDestination)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DistanceToDestination)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_elapsed_distance(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ElapsedDistance)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ElapsedDistance)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_elapsed_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ElapsedTime)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ElapsedTime)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_time_to_destination(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TimeToDestination)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TimeToDestination)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_road_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RoadName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RoadName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_route(&self) -> Result<Option<ComPtr<GuidanceRoute>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Route)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Route)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_location(&self) -> Result<Option<ComPtr<GuidanceMapMatchedCoordinate>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CurrentLocation)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CurrentLocation)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_new_maneuver(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsNewManeuver)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsNewManeuver)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_lane_info(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<GuidanceLaneInfo>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_LaneInfo)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LaneInfo)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2034,42 +2034,42 @@ RT_INTERFACE!{static interface ILocalCategoriesStatics(ILocalCategoriesStaticsVt
 impl ComPtr<ILocalCategoriesStatics> {
     #[inline] pub fn get_bank_and_credit_unions(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_BankAndCreditUnions)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BankAndCreditUnions)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_eat_drink(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_EatDrink)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EatDrink)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hospitals(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Hospitals)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Hospitals)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hotels_and_motels(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_HotelsAndMotels)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HotelsAndMotels)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_all(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_All)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_All)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_parking(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Parking)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Parking)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_see_do(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SeeDo)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SeeDo)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_shop(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Shop)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Shop)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2087,37 +2087,37 @@ RT_INTERFACE!{interface ILocalLocation(ILocalLocationVtbl): IInspectable(IInspec
 impl ComPtr<ILocalLocation> {
     #[inline] pub fn get_address(&self) -> Result<Option<ComPtr<super::MapAddress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Address)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Address)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_identifier(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Identifier)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Identifier)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Description)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Description)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DisplayName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DisplayName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_point(&self) -> Result<Option<ComPtr<crate::windows::devices::geolocation::Geopoint>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Point)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Point)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_phone_number(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_PhoneNumber)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PhoneNumber)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_data_attribution(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DataAttribution)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DataAttribution)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2131,17 +2131,17 @@ RT_INTERFACE!{interface ILocalLocation2(ILocalLocation2Vtbl): IInspectable(IInsp
 impl ComPtr<ILocalLocation2> {
     #[inline] pub fn get_category(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Category)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Category)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rating_info(&self) -> Result<Option<ComPtr<LocalLocationRatingInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RatingInfo)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RatingInfo)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hours_of_operation(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<LocalLocationHoursOfOperationItem>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_HoursOfOperation)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HoursOfOperation)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2161,12 +2161,12 @@ RT_INTERFACE!{interface ILocalLocationFinderResult(ILocalLocationFinderResultVtb
 impl ComPtr<ILocalLocationFinderResult> {
     #[inline] pub fn get_local_locations(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<LocalLocation>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_LocalLocations)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LocalLocations)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<LocalLocationFinderStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2178,7 +2178,7 @@ RT_INTERFACE!{static interface ILocalLocationFinderStatics(ILocalLocationFinderS
 impl ComPtr<ILocalLocationFinderStatics> {
     #[cfg(feature="windows-devices")] #[inline] pub fn find_local_locations_async(&self, searchTerm: &HStringArg, searchArea: &ComPtr<crate::windows::devices::geolocation::Geocircle>, localCategory: &HStringArg, maxResults: u32) -> Result<ComPtr<foundation::IAsyncOperation<LocalLocationFinderResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FindLocalLocationsAsync)(self.deref() as *const _ as *mut _, searchTerm.get(), searchArea.deref() as *const _ as *mut _, localCategory.get(), maxResults, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FindLocalLocationsAsync)(self.as_abi() as *const _ as *mut _, searchTerm.get(), searchArea.as_abi() as *const _ as *mut _, localCategory.get(), maxResults, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2195,17 +2195,17 @@ RT_INTERFACE!{interface ILocalLocationHoursOfOperationItem(ILocalLocationHoursOf
 impl ComPtr<ILocalLocationHoursOfOperationItem> {
     #[cfg(feature="windows-globalization")] #[inline] pub fn get_day(&self) -> Result<crate::windows::globalization::DayOfWeek> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Day)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Day)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_start(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Start)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Start)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_span(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Span)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Span)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2219,17 +2219,17 @@ RT_INTERFACE!{interface ILocalLocationRatingInfo(ILocalLocationRatingInfoVtbl): 
 impl ComPtr<ILocalLocationRatingInfo> {
     #[inline] pub fn get_aggregate_rating(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_AggregateRating)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AggregateRating)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rating_count(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_RatingCount)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_RatingCount)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_provider_identifier(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ProviderIdentifier)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ProviderIdentifier)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2249,7 +2249,7 @@ RT_INTERFACE!{static interface IPlaceInfoHelperStatics(IPlaceInfoHelperStaticsVt
 impl ComPtr<IPlaceInfoHelperStatics> {
     #[inline] pub fn create_from_local_location(&self, location: &ComPtr<LocalLocation>) -> Result<Option<ComPtr<super::PlaceInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromLocalLocation)(self.deref() as *const _ as *mut _, location.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromLocalLocation)(self.as_abi() as *const _ as *mut _, location.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2269,36 +2269,36 @@ RT_INTERFACE!{interface IOfflineMapPackage(IOfflineMapPackageVtbl): IInspectable
 impl ComPtr<IOfflineMapPackage> {
     #[inline] pub fn get_status(&self) -> Result<OfflineMapPackageStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DisplayName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DisplayName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_enclosing_region_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_EnclosingRegionName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EnclosingRegionName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_estimated_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_EstimatedSizeInBytes)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EstimatedSizeInBytes)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_StatusChanged)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_StatusChanged)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_status_changed(&self, value: &ComPtr<foundation::TypedEventHandler<OfflineMapPackage, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_StatusChanged)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_StatusChanged)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn request_start_download_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageStartDownloadResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestStartDownloadAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestStartDownloadAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2324,12 +2324,12 @@ RT_INTERFACE!{interface IOfflineMapPackageQueryResult(IOfflineMapPackageQueryRes
 impl ComPtr<IOfflineMapPackageQueryResult> {
     #[inline] pub fn get_status(&self) -> Result<OfflineMapPackageQueryStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_packages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<OfflineMapPackage>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Packages)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Packages)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2344,7 +2344,7 @@ RT_INTERFACE!{interface IOfflineMapPackageStartDownloadResult(IOfflineMapPackage
 impl ComPtr<IOfflineMapPackageStartDownloadResult> {
     #[inline] pub fn get_status(&self) -> Result<OfflineMapPackageStartDownloadStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2361,17 +2361,17 @@ RT_INTERFACE!{static interface IOfflineMapPackageStatics(IOfflineMapPackageStati
 impl ComPtr<IOfflineMapPackageStatics> {
     #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_async(&self, queryPoint: &ComPtr<crate::windows::devices::geolocation::Geopoint>) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FindPackagesAsync)(self.deref() as *const _ as *mut _, queryPoint.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FindPackagesAsync)(self.as_abi() as *const _ as *mut _, queryPoint.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_bounding_box_async(&self, queryBoundingBox: &ComPtr<crate::windows::devices::geolocation::GeoboundingBox>) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FindPackagesInBoundingBoxAsync)(self.deref() as *const _ as *mut _, queryBoundingBox.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FindPackagesInBoundingBoxAsync)(self.as_abi() as *const _ as *mut _, queryBoundingBox.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn find_packages_in_geocircle_async(&self, queryCircle: &ComPtr<crate::windows::devices::geolocation::Geocircle>) -> Result<ComPtr<foundation::IAsyncOperation<OfflineMapPackageQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FindPackagesInGeocircleAsync)(self.deref() as *const _ as *mut _, queryCircle.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FindPackagesInGeocircleAsync)(self.as_abi() as *const _ as *mut _, queryCircle.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2390,12 +2390,12 @@ RT_INTERFACE!{interface IStoreAcquireLicenseResult(IStoreAcquireLicenseResultVtb
 impl ComPtr<IStoreAcquireLicenseResult> {
     #[inline] pub fn get_store_package_license(&self) -> Result<Option<ComPtr<StorePackageLicense>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_StorePackageLicense)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StorePackageLicense)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedError)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedError)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2415,47 +2415,47 @@ RT_INTERFACE!{interface IStoreAppLicense(IStoreAppLicenseVtbl): IInspectable(IIn
 impl ComPtr<IStoreAppLicense> {
     #[inline] pub fn get_sku_store_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SkuStoreId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SkuStoreId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_active(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsActive)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsActive)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_trial(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsTrial)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsTrial)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_expiration_date(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExpirationDate)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExpirationDate)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_json_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedJsonData)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedJsonData)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_add_on_licenses(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, StoreLicense>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_AddOnLicenses)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AddOnLicenses)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_trial_time_remaining(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TrialTimeRemaining)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TrialTimeRemaining)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_trial_owned_by_this_user(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsTrialOwnedByThisUser)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsTrialOwnedByThisUser)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_trial_unique_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_TrialUniqueId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TrialUniqueId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2467,7 +2467,7 @@ RT_INTERFACE!{interface IStoreAppLicense2(IStoreAppLicense2Vtbl): IInspectable(I
 impl ComPtr<IStoreAppLicense2> {
     #[inline] pub fn get_is_disc_license(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsDiscLicense)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsDiscLicense)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2483,32 +2483,32 @@ RT_INTERFACE!{interface IStoreAvailability(IStoreAvailabilityVtbl): IInspectable
 impl ComPtr<IStoreAvailability> {
     #[inline] pub fn get_store_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_StoreId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StoreId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_end_date(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_EndDate)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EndDate)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_price(&self) -> Result<Option<ComPtr<StorePrice>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Price)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Price)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_json_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedJsonData)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedJsonData)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_purchase_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<StorePurchaseResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestPurchaseAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestPurchaseAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_purchase_with_purchase_properties_async(&self, storePurchaseProperties: &ComPtr<StorePurchaseProperties>) -> Result<ComPtr<foundation::IAsyncOperation<StorePurchaseResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestPurchaseWithPurchasePropertiesAsync)(self.deref() as *const _ as *mut _, storePurchaseProperties.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestPurchaseWithPurchasePropertiesAsync)(self.as_abi() as *const _ as *mut _, storePurchaseProperties.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2522,17 +2522,17 @@ RT_INTERFACE!{interface IStoreCanAcquireLicenseResult(IStoreCanAcquireLicenseRes
 impl ComPtr<IStoreCanAcquireLicenseResult> {
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedError)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedError)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_licensable_sku(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_LicensableSku)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LicensableSku)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<StoreCanLicenseStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2554,42 +2554,42 @@ RT_INTERFACE!{interface IStoreCollectionData(IStoreCollectionDataVtbl): IInspect
 impl ComPtr<IStoreCollectionData> {
     #[inline] pub fn get_is_trial(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsTrial)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsTrial)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_campaign_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CampaignId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CampaignId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_developer_offer_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_DeveloperOfferId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DeveloperOfferId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_acquired_date(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AcquiredDate)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AcquiredDate)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_start_date(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_StartDate)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StartDate)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_end_date(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_EndDate)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EndDate)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_trial_time_remaining(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TrialTimeRemaining)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TrialTimeRemaining)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_json_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedJsonData)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedJsonData)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2604,22 +2604,22 @@ RT_INTERFACE!{interface IStoreConsumableResult(IStoreConsumableResultVtbl): IIns
 impl ComPtr<IStoreConsumableResult> {
     #[inline] pub fn get_status(&self) -> Result<StoreConsumableStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_tracking_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TrackingId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TrackingId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_balance_remaining(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_BalanceRemaining)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BalanceRemaining)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedError)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedError)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2656,106 +2656,106 @@ RT_INTERFACE!{interface IStoreContext(IStoreContextVtbl): IInspectable(IInspecta
 impl ComPtr<IStoreContext> {
     #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_User)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_User)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_offline_licenses_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<StoreContext, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_OfflineLicensesChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_OfflineLicensesChanged)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_offline_licenses_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_OfflineLicensesChanged)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_OfflineLicensesChanged)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_customer_purchase_id_async(&self, serviceTicket: &HStringArg, publisherUserId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetCustomerPurchaseIdAsync)(self.deref() as *const _ as *mut _, serviceTicket.get(), publisherUserId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetCustomerPurchaseIdAsync)(self.as_abi() as *const _ as *mut _, serviceTicket.get(), publisherUserId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_customer_collections_id_async(&self, serviceTicket: &HStringArg, publisherUserId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetCustomerCollectionsIdAsync)(self.deref() as *const _ as *mut _, serviceTicket.get(), publisherUserId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetCustomerCollectionsIdAsync)(self.as_abi() as *const _ as *mut _, serviceTicket.get(), publisherUserId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_app_license_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<StoreAppLicense>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAppLicenseAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAppLicenseAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_store_product_for_current_app_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<StoreProductResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetStoreProductForCurrentAppAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetStoreProductForCurrentAppAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_store_products_async(&self, productKinds: &ComPtr<foundation::collections::IIterable<HString>>, storeIds: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<StoreProductQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetStoreProductsAsync)(self.deref() as *const _ as *mut _, productKinds.deref() as *const _ as *mut _, storeIds.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetStoreProductsAsync)(self.as_abi() as *const _ as *mut _, productKinds.as_abi() as *const _ as *mut _, storeIds.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_associated_store_products_async(&self, productKinds: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<StoreProductQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAssociatedStoreProductsAsync)(self.deref() as *const _ as *mut _, productKinds.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAssociatedStoreProductsAsync)(self.as_abi() as *const _ as *mut _, productKinds.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_associated_store_products_with_paging_async(&self, productKinds: &ComPtr<foundation::collections::IIterable<HString>>, maxItemsToRetrievePerPage: u32) -> Result<ComPtr<foundation::IAsyncOperation<StoreProductPagedQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAssociatedStoreProductsWithPagingAsync)(self.deref() as *const _ as *mut _, productKinds.deref() as *const _ as *mut _, maxItemsToRetrievePerPage, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAssociatedStoreProductsWithPagingAsync)(self.as_abi() as *const _ as *mut _, productKinds.as_abi() as *const _ as *mut _, maxItemsToRetrievePerPage, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_user_collection_async(&self, productKinds: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<StoreProductQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetUserCollectionAsync)(self.deref() as *const _ as *mut _, productKinds.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetUserCollectionAsync)(self.as_abi() as *const _ as *mut _, productKinds.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_user_collection_with_paging_async(&self, productKinds: &ComPtr<foundation::collections::IIterable<HString>>, maxItemsToRetrievePerPage: u32) -> Result<ComPtr<foundation::IAsyncOperation<StoreProductPagedQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetUserCollectionWithPagingAsync)(self.deref() as *const _ as *mut _, productKinds.deref() as *const _ as *mut _, maxItemsToRetrievePerPage, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetUserCollectionWithPagingAsync)(self.as_abi() as *const _ as *mut _, productKinds.as_abi() as *const _ as *mut _, maxItemsToRetrievePerPage, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn report_consumable_fulfillment_async(&self, productStoreId: &HStringArg, quantity: u32, trackingId: Guid) -> Result<ComPtr<foundation::IAsyncOperation<StoreConsumableResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ReportConsumableFulfillmentAsync)(self.deref() as *const _ as *mut _, productStoreId.get(), quantity, trackingId, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ReportConsumableFulfillmentAsync)(self.as_abi() as *const _ as *mut _, productStoreId.get(), quantity, trackingId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_consumable_balance_remaining_async(&self, productStoreId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StoreConsumableResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetConsumableBalanceRemainingAsync)(self.deref() as *const _ as *mut _, productStoreId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetConsumableBalanceRemainingAsync)(self.as_abi() as *const _ as *mut _, productStoreId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn acquire_store_license_for_optional_package_async(&self, optionalPackage: &ComPtr<super::super::applicationmodel::Package>) -> Result<ComPtr<foundation::IAsyncOperation<StoreAcquireLicenseResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).AcquireStoreLicenseForOptionalPackageAsync)(self.deref() as *const _ as *mut _, optionalPackage.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).AcquireStoreLicenseForOptionalPackageAsync)(self.as_abi() as *const _ as *mut _, optionalPackage.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_purchase_async(&self, storeId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorePurchaseResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestPurchaseAsync)(self.deref() as *const _ as *mut _, storeId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestPurchaseAsync)(self.as_abi() as *const _ as *mut _, storeId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_purchase_with_purchase_properties_async(&self, storeId: &HStringArg, storePurchaseProperties: &ComPtr<StorePurchaseProperties>) -> Result<ComPtr<foundation::IAsyncOperation<StorePurchaseResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestPurchaseWithPurchasePropertiesAsync)(self.deref() as *const _ as *mut _, storeId.get(), storePurchaseProperties.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestPurchaseWithPurchasePropertiesAsync)(self.as_abi() as *const _ as *mut _, storeId.get(), storePurchaseProperties.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_app_and_optional_store_package_updates_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<StorePackageUpdate>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAppAndOptionalStorePackageUpdatesAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAppAndOptionalStorePackageUpdatesAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_download_store_package_updates_async(&self, storePackageUpdates: &ComPtr<foundation::collections::IIterable<StorePackageUpdate>>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestDownloadStorePackageUpdatesAsync)(self.deref() as *const _ as *mut _, storePackageUpdates.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestDownloadStorePackageUpdatesAsync)(self.as_abi() as *const _ as *mut _, storePackageUpdates.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_download_and_install_store_package_updates_async(&self, storePackageUpdates: &ComPtr<foundation::collections::IIterable<StorePackageUpdate>>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestDownloadAndInstallStorePackageUpdatesAsync)(self.deref() as *const _ as *mut _, storePackageUpdates.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestDownloadAndInstallStorePackageUpdatesAsync)(self.as_abi() as *const _ as *mut _, storePackageUpdates.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_download_and_install_store_packages_async(&self, storeIds: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestDownloadAndInstallStorePackagesAsync)(self.deref() as *const _ as *mut _, storeIds.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestDownloadAndInstallStorePackagesAsync)(self.as_abi() as *const _ as *mut _, storeIds.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2777,7 +2777,7 @@ RT_INTERFACE!{interface IStoreContext2(IStoreContext2Vtbl): IInspectable(IInspec
 impl ComPtr<IStoreContext2> {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_store_product_for_package_async(&self, productKinds: &ComPtr<foundation::collections::IIterable<HString>>, package: &ComPtr<super::super::applicationmodel::Package>) -> Result<ComPtr<foundation::IAsyncOperation<StoreProductResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).FindStoreProductForPackageAsync)(self.deref() as *const _ as *mut _, productKinds.deref() as *const _ as *mut _, package.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).FindStoreProductForPackageAsync)(self.as_abi() as *const _ as *mut _, productKinds.as_abi() as *const _ as *mut _, package.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2804,72 +2804,72 @@ RT_INTERFACE!{interface IStoreContext3(IStoreContext3Vtbl): IInspectable(IInspec
 impl ComPtr<IStoreContext3> {
     #[inline] pub fn get_can_silently_download_store_package_updates(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_CanSilentlyDownloadStorePackageUpdates)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CanSilentlyDownloadStorePackageUpdates)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn try_silent_download_store_package_updates_async(&self, storePackageUpdates: &ComPtr<foundation::collections::IIterable<StorePackageUpdate>>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TrySilentDownloadStorePackageUpdatesAsync)(self.deref() as *const _ as *mut _, storePackageUpdates.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TrySilentDownloadStorePackageUpdatesAsync)(self.as_abi() as *const _ as *mut _, storePackageUpdates.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_silent_download_and_install_store_package_updates_async(&self, storePackageUpdates: &ComPtr<foundation::collections::IIterable<StorePackageUpdate>>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).TrySilentDownloadAndInstallStorePackageUpdatesAsync)(self.deref() as *const _ as *mut _, storePackageUpdates.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).TrySilentDownloadAndInstallStorePackageUpdatesAsync)(self.as_abi() as *const _ as *mut _, storePackageUpdates.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn can_acquire_store_license_for_optional_package_async(&self, optionalPackage: &ComPtr<super::super::applicationmodel::Package>) -> Result<ComPtr<foundation::IAsyncOperation<StoreCanAcquireLicenseResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CanAcquireStoreLicenseForOptionalPackageAsync)(self.deref() as *const _ as *mut _, optionalPackage.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CanAcquireStoreLicenseForOptionalPackageAsync)(self.as_abi() as *const _ as *mut _, optionalPackage.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn can_acquire_store_license_async(&self, productStoreId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StoreCanAcquireLicenseResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CanAcquireStoreLicenseAsync)(self.deref() as *const _ as *mut _, productStoreId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CanAcquireStoreLicenseAsync)(self.as_abi() as *const _ as *mut _, productStoreId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_store_products_with_options_async(&self, productKinds: &ComPtr<foundation::collections::IIterable<HString>>, storeIds: &ComPtr<foundation::collections::IIterable<HString>>, storeProductOptions: &ComPtr<StoreProductOptions>) -> Result<ComPtr<foundation::IAsyncOperation<StoreProductQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetStoreProductsWithOptionsAsync)(self.deref() as *const _ as *mut _, productKinds.deref() as *const _ as *mut _, storeIds.deref() as *const _ as *mut _, storeProductOptions.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetStoreProductsWithOptionsAsync)(self.as_abi() as *const _ as *mut _, productKinds.as_abi() as *const _ as *mut _, storeIds.as_abi() as *const _ as *mut _, storeProductOptions.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_associated_store_queue_items_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<StoreQueueItem>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAssociatedStoreQueueItemsAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAssociatedStoreQueueItemsAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_store_queue_items_async(&self, storeIds: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<StoreQueueItem>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetStoreQueueItemsAsync)(self.deref() as *const _ as *mut _, storeIds.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetStoreQueueItemsAsync)(self.as_abi() as *const _ as *mut _, storeIds.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_download_and_install_store_packages_with_install_options_async(&self, storeIds: &ComPtr<foundation::collections::IIterable<HString>>, storePackageInstallOptions: &ComPtr<StorePackageInstallOptions>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestDownloadAndInstallStorePackagesWithInstallOptionsAsync)(self.deref() as *const _ as *mut _, storeIds.deref() as *const _ as *mut _, storePackageInstallOptions.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestDownloadAndInstallStorePackagesWithInstallOptionsAsync)(self.as_abi() as *const _ as *mut _, storeIds.as_abi() as *const _ as *mut _, storePackageInstallOptions.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn download_and_install_store_packages_async(&self, storeIds: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).DownloadAndInstallStorePackagesAsync)(self.deref() as *const _ as *mut _, storeIds.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).DownloadAndInstallStorePackagesAsync)(self.as_abi() as *const _ as *mut _, storeIds.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn request_uninstall_store_package_async(&self, package: &ComPtr<super::super::applicationmodel::Package>) -> Result<ComPtr<foundation::IAsyncOperation<StoreUninstallStorePackageResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestUninstallStorePackageAsync)(self.deref() as *const _ as *mut _, package.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestUninstallStorePackageAsync)(self.as_abi() as *const _ as *mut _, package.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_uninstall_store_package_by_store_id_async(&self, storeId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StoreUninstallStorePackageResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestUninstallStorePackageByStoreIdAsync)(self.deref() as *const _ as *mut _, storeId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestUninstallStorePackageByStoreIdAsync)(self.as_abi() as *const _ as *mut _, storeId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn uninstall_store_package_async(&self, package: &ComPtr<super::super::applicationmodel::Package>) -> Result<ComPtr<foundation::IAsyncOperation<StoreUninstallStorePackageResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).UninstallStorePackageAsync)(self.deref() as *const _ as *mut _, package.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).UninstallStorePackageAsync)(self.as_abi() as *const _ as *mut _, package.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn uninstall_store_package_by_store_id_async(&self, storeId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StoreUninstallStorePackageResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).UninstallStorePackageByStoreIdAsync)(self.deref() as *const _ as *mut _, storeId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).UninstallStorePackageByStoreIdAsync)(self.as_abi() as *const _ as *mut _, storeId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2881,12 +2881,12 @@ RT_INTERFACE!{interface IStoreContext4(IStoreContext4Vtbl): IInspectable(IInspec
 impl ComPtr<IStoreContext4> {
     #[inline] pub fn request_rate_and_review_app_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<StoreRateAndReviewResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestRateAndReviewAppAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestRateAndReviewAppAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_install_order_for_associated_store_queue_items_async(&self, items: &ComPtr<foundation::collections::IIterable<StoreQueueItem>>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<StoreQueueItem>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SetInstallOrderForAssociatedStoreQueueItemsAsync)(self.deref() as *const _ as *mut _, items.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SetInstallOrderForAssociatedStoreQueueItemsAsync)(self.as_abi() as *const _ as *mut _, items.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2898,12 +2898,12 @@ RT_INTERFACE!{static interface IStoreContextStatics(IStoreContextStaticsVtbl): I
 impl ComPtr<IStoreContextStatics> {
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<StoreContext>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDefault)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &ComPtr<super::super::system::User>) -> Result<Option<ComPtr<StoreContext>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetForUser)(self.deref() as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetForUser)(self.as_abi() as *const _ as *mut _, user.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2921,27 +2921,27 @@ RT_INTERFACE!{interface IStoreImage(IStoreImageVtbl): IInspectable(IInspectableV
 impl ComPtr<IStoreImage> {
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_image_purpose_tag(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ImagePurposeTag)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ImagePurposeTag)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_width(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Width)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Width)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_height(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Height)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Height)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_caption(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Caption)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Caption)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2957,27 +2957,27 @@ RT_INTERFACE!{interface IStoreLicense(IStoreLicenseVtbl): IInspectable(IInspecta
 impl ComPtr<IStoreLicense> {
     #[inline] pub fn get_sku_store_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SkuStoreId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SkuStoreId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_active(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsActive)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsActive)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_expiration_date(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExpirationDate)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExpirationDate)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_json_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedJsonData)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedJsonData)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_in_app_offer_token(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_InAppOfferToken)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_InAppOfferToken)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2990,11 +2990,11 @@ RT_INTERFACE!{interface IStorePackageInstallOptions(IStorePackageInstallOptionsV
 impl ComPtr<IStorePackageInstallOptions> {
     #[inline] pub fn get_allow_forced_app_restart(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AllowForcedAppRestart)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AllowForcedAppRestart)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_allow_forced_app_restart(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_AllowForcedAppRestart)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_AllowForcedAppRestart)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3013,25 +3013,25 @@ RT_INTERFACE!{interface IStorePackageLicense(IStorePackageLicenseVtbl): IInspect
 impl ComPtr<IStorePackageLicense> {
     #[inline] pub fn add_license_lost(&self, handler: &ComPtr<foundation::TypedEventHandler<StorePackageLicense, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_LicenseLost)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_LicenseLost)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_license_lost(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_LicenseLost)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_LicenseLost)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_package(&self) -> Result<Option<ComPtr<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Package)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Package)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_valid(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsValid)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsValid)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn release_license(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ReleaseLicense)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).ReleaseLicense)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3045,12 +3045,12 @@ RT_INTERFACE!{interface IStorePackageUpdate(IStorePackageUpdateVtbl): IInspectab
 impl ComPtr<IStorePackageUpdate> {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_package(&self) -> Result<Option<ComPtr<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Package)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Package)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mandatory(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Mandatory)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Mandatory)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3063,12 +3063,12 @@ RT_INTERFACE!{interface IStorePackageUpdateResult(IStorePackageUpdateResultVtbl)
 impl ComPtr<IStorePackageUpdateResult> {
     #[inline] pub fn get_overall_state(&self) -> Result<StorePackageUpdateState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_OverallState)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_OverallState)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_store_package_update_statuses(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<StorePackageUpdateStatus>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_StorePackageUpdateStatuses)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StorePackageUpdateStatuses)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3080,7 +3080,7 @@ RT_INTERFACE!{interface IStorePackageUpdateResult2(IStorePackageUpdateResult2Vtb
 impl ComPtr<IStorePackageUpdateResult2> {
     #[inline] pub fn get_store_queue_items(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<StoreQueueItem>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_StoreQueueItems)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StoreQueueItems)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3102,32 +3102,32 @@ RT_INTERFACE!{interface IStorePrice(IStorePriceVtbl): IInspectable(IInspectableV
 impl ComPtr<IStorePrice> {
     #[inline] pub fn get_formatted_base_price(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_FormattedBasePrice)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_FormattedBasePrice)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_formatted_price(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_FormattedPrice)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_FormattedPrice)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_on_sale(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsOnSale)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsOnSale)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_sale_end_date(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_SaleEndDate)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SaleEndDate)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_currency_code(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CurrencyCode)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CurrencyCode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_formatted_recurrence_price(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_FormattedRecurrencePrice)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_FormattedRecurrencePrice)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3156,92 +3156,92 @@ RT_INTERFACE!{interface IStoreProduct(IStoreProductVtbl): IInspectable(IInspecta
 impl ComPtr<IStoreProduct> {
     #[inline] pub fn get_store_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_StoreId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StoreId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Language)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Language)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Title)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Description)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Description)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_product_kind(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ProductKind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ProductKind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_has_digital_download(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HasDigitalDownload)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HasDigitalDownload)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_keywords(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Keywords)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Keywords)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_images(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<StoreImage>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Images)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Images)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_videos(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<StoreVideo>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Videos)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Videos)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_skus(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<StoreSku>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Skus)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Skus)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_in_user_collection(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsInUserCollection)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsInUserCollection)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_price(&self) -> Result<Option<ComPtr<StorePrice>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Price)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Price)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_json_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedJsonData)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedJsonData)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_link_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_LinkUri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LinkUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_any_sku_installed_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetIsAnySkuInstalledAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetIsAnySkuInstalledAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_purchase_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<StorePurchaseResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestPurchaseAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestPurchaseAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_purchase_with_purchase_properties_async(&self, storePurchaseProperties: &ComPtr<StorePurchaseProperties>) -> Result<ComPtr<foundation::IAsyncOperation<StorePurchaseResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestPurchaseWithPurchasePropertiesAsync)(self.deref() as *const _ as *mut _, storePurchaseProperties.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestPurchaseWithPurchasePropertiesAsync)(self.as_abi() as *const _ as *mut _, storePurchaseProperties.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_in_app_offer_token(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_InAppOfferToken)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_InAppOfferToken)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3253,7 +3253,7 @@ RT_INTERFACE!{interface IStoreProductOptions(IStoreProductOptionsVtbl): IInspect
 impl ComPtr<IStoreProductOptions> {
     #[inline] pub fn get_action_filters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ActionFilters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ActionFilters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3270,22 +3270,22 @@ RT_INTERFACE!{interface IStoreProductPagedQueryResult(IStoreProductPagedQueryRes
 impl ComPtr<IStoreProductPagedQueryResult> {
     #[inline] pub fn get_products(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, StoreProduct>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Products)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Products)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_has_more_results(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HasMoreResults)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HasMoreResults)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedError)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedError)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_next_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<StoreProductPagedQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetNextAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetNextAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3298,12 +3298,12 @@ RT_INTERFACE!{interface IStoreProductQueryResult(IStoreProductQueryResultVtbl): 
 impl ComPtr<IStoreProductQueryResult> {
     #[inline] pub fn get_products(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, StoreProduct>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Products)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Products)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedError)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedError)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3316,12 +3316,12 @@ RT_INTERFACE!{interface IStoreProductResult(IStoreProductResultVtbl): IInspectab
 impl ComPtr<IStoreProductResult> {
     #[inline] pub fn get_product(&self) -> Result<Option<ComPtr<StoreProduct>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Product)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Product)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedError)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedError)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3336,20 +3336,20 @@ RT_INTERFACE!{interface IStorePurchaseProperties(IStorePurchasePropertiesVtbl): 
 impl ComPtr<IStorePurchaseProperties> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_Name)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_Name)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_json_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedJsonData)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedJsonData)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_extended_json_data(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ExtendedJsonData)(self.deref() as *const _ as *mut _, value.get());
+        let hr = ((*self.as_abi().lpVtbl).put_ExtendedJsonData)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3369,7 +3369,7 @@ RT_INTERFACE!{static interface IStorePurchasePropertiesFactory(IStorePurchasePro
 impl ComPtr<IStorePurchasePropertiesFactory> {
     #[inline] pub fn create(&self, name: &HStringArg) -> Result<ComPtr<StorePurchaseProperties>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3381,12 +3381,12 @@ RT_INTERFACE!{interface IStorePurchaseResult(IStorePurchaseResultVtbl): IInspect
 impl ComPtr<IStorePurchaseResult> {
     #[inline] pub fn get_status(&self) -> Result<StorePurchaseStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedError)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedError)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3408,40 +3408,40 @@ RT_INTERFACE!{interface IStoreQueueItem(IStoreQueueItemVtbl): IInspectable(IInsp
 impl ComPtr<IStoreQueueItem> {
     #[inline] pub fn get_product_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ProductId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ProductId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_package_family_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_PackageFamilyName)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PackageFamilyName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_install_kind(&self) -> Result<StoreQueueItemKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_InstallKind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_InstallKind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_current_status(&self) -> Result<Option<ComPtr<StoreQueueItemStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetCurrentStatus)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetCurrentStatus)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<StoreQueueItem, StoreQueueItemCompletedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_Completed)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_Completed)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_Completed)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_Completed)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_status_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<StoreQueueItem, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_StatusChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_StatusChanged)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_StatusChanged)(self.deref() as *const _ as *mut _, token);
+        let hr = ((*self.as_abi().lpVtbl).remove_StatusChanged)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3455,17 +3455,17 @@ RT_INTERFACE!{interface IStoreQueueItem2(IStoreQueueItem2Vtbl): IInspectable(IIn
 impl ComPtr<IStoreQueueItem2> {
     #[inline] pub fn cancel_install_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CancelInstallAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CancelInstallAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn pause_install_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).PauseInstallAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).PauseInstallAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn resume_install_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).ResumeInstallAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).ResumeInstallAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3476,7 +3476,7 @@ RT_INTERFACE!{interface IStoreQueueItemCompletedEventArgs(IStoreQueueItemComplet
 impl ComPtr<IStoreQueueItemCompletedEventArgs> {
     #[inline] pub fn get_status(&self) -> Result<Option<ComPtr<StoreQueueItemStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3500,22 +3500,22 @@ RT_INTERFACE!{interface IStoreQueueItemStatus(IStoreQueueItemStatusVtbl): IInspe
 impl ComPtr<IStoreQueueItemStatus> {
     #[inline] pub fn get_package_install_state(&self) -> Result<StoreQueueItemState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_PackageInstallState)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PackageInstallState)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_package_install_extended_state(&self) -> Result<StoreQueueItemExtendedState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_PackageInstallExtendedState)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PackageInstallExtendedState)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_update_status(&self) -> Result<StorePackageUpdateStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_UpdateStatus)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_UpdateStatus)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedError)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedError)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3530,22 +3530,22 @@ RT_INTERFACE!{interface IStoreRateAndReviewResult(IStoreRateAndReviewResultVtbl)
 impl ComPtr<IStoreRateAndReviewResult> {
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedError)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedError)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_json_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedJsonData)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedJsonData)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_was_updated(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_WasUpdated)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_WasUpdated)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<StoreRateAndReviewStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3568,7 +3568,7 @@ RT_INTERFACE!{static interface IStoreRequestHelperStatics(IStoreRequestHelperSta
 impl ComPtr<IStoreRequestHelperStatics> {
     #[inline] pub fn send_request_async(&self, context: &ComPtr<StoreContext>, requestKind: u32, parametersAsJson: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StoreSendRequestResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SendRequestAsync)(self.deref() as *const _ as *mut _, context.deref() as *const _ as *mut _, requestKind, parametersAsJson.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SendRequestAsync)(self.as_abi() as *const _ as *mut _, context.as_abi() as *const _ as *mut _, requestKind, parametersAsJson.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3580,12 +3580,12 @@ RT_INTERFACE!{interface IStoreSendRequestResult(IStoreSendRequestResultVtbl): II
 impl ComPtr<IStoreSendRequestResult> {
     #[inline] pub fn get_response(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Response)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Response)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedError)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedError)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3597,7 +3597,7 @@ RT_INTERFACE!{interface IStoreSendRequestResult2(IStoreSendRequestResult2Vtbl): 
 impl ComPtr<IStoreSendRequestResult2> {
     #[cfg(feature="windows-web")] #[inline] pub fn get_http_status_code(&self) -> Result<super::super::web::http::HttpStatusCode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HttpStatusCode)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HttpStatusCode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3626,97 +3626,97 @@ RT_INTERFACE!{interface IStoreSku(IStoreSkuVtbl): IInspectable(IInspectableVtbl)
 impl ComPtr<IStoreSku> {
     #[inline] pub fn get_store_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_StoreId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_StoreId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Language)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Language)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Title)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Title)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Description)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Description)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_trial(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsTrial)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsTrial)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_custom_developer_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CustomDeveloperData)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CustomDeveloperData)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_images(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<StoreImage>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Images)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Images)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_videos(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<StoreVideo>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Videos)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Videos)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_availabilities(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<StoreAvailability>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Availabilities)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Availabilities)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_price(&self) -> Result<Option<ComPtr<StorePrice>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Price)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Price)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_json_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedJsonData)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedJsonData)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_in_user_collection(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsInUserCollection)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsInUserCollection)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_bundled_skus(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_BundledSkus)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BundledSkus)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_collection_data(&self) -> Result<Option<ComPtr<StoreCollectionData>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CollectionData)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CollectionData)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_installed_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetIsInstalledAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetIsInstalledAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_purchase_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<StorePurchaseResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestPurchaseAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestPurchaseAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_purchase_with_purchase_properties_async(&self, storePurchaseProperties: &ComPtr<StorePurchaseProperties>) -> Result<ComPtr<foundation::IAsyncOperation<StorePurchaseResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).RequestPurchaseWithPurchasePropertiesAsync)(self.deref() as *const _ as *mut _, storePurchaseProperties.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).RequestPurchaseWithPurchasePropertiesAsync)(self.as_abi() as *const _ as *mut _, storePurchaseProperties.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_subscription(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsSubscription)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsSubscription)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_subscription_info(&self) -> Result<Option<ComPtr<StoreSubscriptionInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SubscriptionInfo)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SubscriptionInfo)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3732,27 +3732,27 @@ RT_INTERFACE!{interface IStoreSubscriptionInfo(IStoreSubscriptionInfoVtbl): IIns
 impl ComPtr<IStoreSubscriptionInfo> {
     #[inline] pub fn get_billing_period(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_BillingPeriod)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BillingPeriod)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_billing_period_unit(&self) -> Result<StoreDurationUnit> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_BillingPeriodUnit)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BillingPeriodUnit)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_has_trial_period(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HasTrialPeriod)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HasTrialPeriod)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_trial_period(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TrialPeriod)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TrialPeriod)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_trial_period_unit(&self) -> Result<StoreDurationUnit> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TrialPeriodUnit)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TrialPeriodUnit)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3765,12 +3765,12 @@ RT_INTERFACE!{interface IStoreUninstallStorePackageResult(IStoreUninstallStorePa
 impl ComPtr<IStoreUninstallStorePackageResult> {
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ExtendedError)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ExtendedError)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<StoreUninstallStorePackageStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Status)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3790,32 +3790,32 @@ RT_INTERFACE!{interface IStoreVideo(IStoreVideoVtbl): IInspectable(IInspectableV
 impl ComPtr<IStoreVideo> {
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_video_purpose_tag(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_VideoPurposeTag)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_VideoPurposeTag)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_width(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Width)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Width)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_height(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Height)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Height)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_caption(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Caption)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Caption)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_preview_image(&self) -> Result<Option<ComPtr<StoreImage>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_PreviewImage)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PreviewImage)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3830,7 +3830,7 @@ RT_INTERFACE!{interface ITargetedContentAction(ITargetedContentActionVtbl): IIns
 impl ComPtr<ITargetedContentAction> {
     #[inline] pub fn invoke_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).InvokeAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).InvokeAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3848,7 +3848,7 @@ RT_INTERFACE!{interface ITargetedContentAvailabilityChangedEventArgs(ITargetedCo
 impl ComPtr<ITargetedContentAvailabilityChangedEventArgs> {
     #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDeferral)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3861,12 +3861,12 @@ RT_INTERFACE!{interface ITargetedContentChangedEventArgs(ITargetedContentChanged
 impl ComPtr<ITargetedContentChangedEventArgs> {
     #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDeferral)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_has_previous_content_expired(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_HasPreviousContentExpired)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_HasPreviousContentExpired)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3884,35 +3884,35 @@ RT_INTERFACE!{interface ITargetedContentCollection(ITargetedContentCollectionVtb
 impl ComPtr<ITargetedContentCollection> {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Id)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn report_interaction(&self, interaction: TargetedContentInteraction) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ReportInteraction)(self.deref() as *const _ as *mut _, interaction);
+        let hr = ((*self.as_abi().lpVtbl).ReportInteraction)(self.as_abi() as *const _ as *mut _, interaction);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn report_custom_interaction(&self, customInteractionName: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ReportCustomInteraction)(self.deref() as *const _ as *mut _, customInteractionName.get());
+        let hr = ((*self.as_abi().lpVtbl).ReportCustomInteraction)(self.as_abi() as *const _ as *mut _, customInteractionName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_path(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Path)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Path)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, TargetedContentValue>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Properties)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Properties)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_collections(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<TargetedContentCollection>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Collections)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Collections)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_items(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<TargetedContentItem>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Items)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Items)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3928,27 +3928,27 @@ RT_INTERFACE!{interface ITargetedContentContainer(ITargetedContentContainerVtbl)
 impl ComPtr<ITargetedContentContainer> {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Id)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_timestamp(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Timestamp)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Timestamp)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_availability(&self) -> Result<TargetedContentAvailability> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Availability)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Availability)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_content(&self) -> Result<Option<ComPtr<TargetedContentCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Content)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Content)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn select_single_object(&self, path: &HStringArg) -> Result<Option<ComPtr<TargetedContentObject>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).SelectSingleObject)(self.deref() as *const _ as *mut _, path.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).SelectSingleObject)(self.as_abi() as *const _ as *mut _, path.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3967,7 +3967,7 @@ RT_INTERFACE!{static interface ITargetedContentContainerStatics(ITargetedContent
 impl ComPtr<ITargetedContentContainerStatics> {
     #[inline] pub fn get_async(&self, contentId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<TargetedContentContainer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsync)(self.deref() as *const _ as *mut _, contentId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsync)(self.as_abi() as *const _ as *mut _, contentId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3981,12 +3981,12 @@ RT_INTERFACE!{interface ITargetedContentImage(ITargetedContentImageVtbl): IInspe
 impl ComPtr<ITargetedContentImage> {
     #[inline] pub fn get_height(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Height)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Height)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_width(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Width)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Width)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4006,30 +4006,30 @@ RT_INTERFACE!{interface ITargetedContentItem(ITargetedContentItemVtbl): IInspect
 impl ComPtr<ITargetedContentItem> {
     #[inline] pub fn get_path(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Path)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Path)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn report_interaction(&self, interaction: TargetedContentInteraction) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ReportInteraction)(self.deref() as *const _ as *mut _, interaction);
+        let hr = ((*self.as_abi().lpVtbl).ReportInteraction)(self.as_abi() as *const _ as *mut _, interaction);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn report_custom_interaction(&self, customInteractionName: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).ReportCustomInteraction)(self.deref() as *const _ as *mut _, customInteractionName.get());
+        let hr = ((*self.as_abi().lpVtbl).ReportCustomInteraction)(self.as_abi() as *const _ as *mut _, customInteractionName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_state(&self) -> Result<Option<ComPtr<TargetedContentItemState>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_State)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_State)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, TargetedContentValue>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Properties)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Properties)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_collections(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<TargetedContentCollection>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Collections)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Collections)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4042,12 +4042,12 @@ RT_INTERFACE!{interface ITargetedContentItemState(ITargetedContentItemStateVtbl)
 impl ComPtr<ITargetedContentItemState> {
     #[inline] pub fn get_should_display(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ShouldDisplay)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ShouldDisplay)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_app_installation_state(&self) -> Result<TargetedContentAppInstallationState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AppInstallationState)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AppInstallationState)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4062,22 +4062,22 @@ RT_INTERFACE!{interface ITargetedContentObject(ITargetedContentObjectVtbl): IIns
 impl ComPtr<ITargetedContentObject> {
     #[inline] pub fn get_object_kind(&self) -> Result<TargetedContentObjectKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ObjectKind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ObjectKind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_collection(&self) -> Result<Option<ComPtr<TargetedContentCollection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Collection)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Collection)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_item(&self) -> Result<Option<ComPtr<TargetedContentItem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Item)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Item)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<TargetedContentValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Value)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4092,7 +4092,7 @@ RT_INTERFACE!{interface ITargetedContentStateChangedEventArgs(ITargetedContentSt
 impl ComPtr<ITargetedContentStateChangedEventArgs> {
     #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetDeferral)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4111,39 +4111,39 @@ RT_INTERFACE!{interface ITargetedContentSubscription(ITargetedContentSubscriptio
 impl ComPtr<ITargetedContentSubscription> {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Id)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Id)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_content_container_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<TargetedContentContainer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetContentContainerAsync)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetContentContainerAsync)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_content_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<TargetedContentSubscription, TargetedContentChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_ContentChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_ContentChanged)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_content_changed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_ContentChanged)(self.deref() as *const _ as *mut _, cookie);
+        let hr = ((*self.as_abi().lpVtbl).remove_ContentChanged)(self.as_abi() as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_availability_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<TargetedContentSubscription, TargetedContentAvailabilityChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_AvailabilityChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_AvailabilityChanged)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_availability_changed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_AvailabilityChanged)(self.deref() as *const _ as *mut _, cookie);
+        let hr = ((*self.as_abi().lpVtbl).remove_AvailabilityChanged)(self.as_abi() as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_state_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<TargetedContentSubscription, TargetedContentStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).add_StateChanged)(self.deref() as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).add_StateChanged)(self.as_abi() as *const _ as *mut _, handler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_state_changed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).remove_StateChanged)(self.deref() as *const _ as *mut _, cookie);
+        let hr = ((*self.as_abi().lpVtbl).remove_StateChanged)(self.as_abi() as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4170,30 +4170,30 @@ RT_INTERFACE!{interface ITargetedContentSubscriptionOptions(ITargetedContentSubs
 impl ComPtr<ITargetedContentSubscriptionOptions> {
     #[inline] pub fn get_subscription_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_SubscriptionId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_SubscriptionId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_allow_partial_content_availability(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AllowPartialContentAvailability)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AllowPartialContentAvailability)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_allow_partial_content_availability(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_AllowPartialContentAvailability)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_AllowPartialContentAvailability)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_cloud_query_parameters(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CloudQueryParameters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CloudQueryParameters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_local_filters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_LocalFilters)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_LocalFilters)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn update(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Update)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Update)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4206,12 +4206,12 @@ RT_INTERFACE!{static interface ITargetedContentSubscriptionStatics(ITargetedCont
 impl ComPtr<ITargetedContentSubscriptionStatics> {
     #[inline] pub fn get_async(&self, subscriptionId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<TargetedContentSubscription>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsync)(self.deref() as *const _ as *mut _, subscriptionId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsync)(self.as_abi() as *const _ as *mut _, subscriptionId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_options(&self, subscriptionId: &HStringArg) -> Result<Option<ComPtr<TargetedContentSubscriptionOptions>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetOptions)(self.deref() as *const _ as *mut _, subscriptionId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetOptions)(self.as_abi() as *const _ as *mut _, subscriptionId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4237,82 +4237,82 @@ RT_INTERFACE!{interface ITargetedContentValue(ITargetedContentValueVtbl): IInspe
 impl ComPtr<ITargetedContentValue> {
     #[inline] pub fn get_value_kind(&self) -> Result<TargetedContentValueKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ValueKind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ValueKind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_path(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Path)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Path)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_String)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_String)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uri)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_number(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Number)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Number)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_boolean(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Boolean)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Boolean)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_file(&self) -> Result<Option<ComPtr<TargetedContentFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_File)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_File)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_image_file(&self) -> Result<Option<ComPtr<TargetedContentImage>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ImageFile)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ImageFile)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_action(&self) -> Result<Option<ComPtr<TargetedContentAction>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Action)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Action)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_strings(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Strings)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Strings)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_uris(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<foundation::Uri>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Uris)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Uris)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_numbers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<f64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Numbers)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Numbers)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_booleans(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<bool>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Booleans)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Booleans)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_files(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<TargetedContentFile>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Files)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Files)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_image_files(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<TargetedContentImage>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ImageFiles)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ImageFiles)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_actions(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<TargetedContentAction>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Actions)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Actions)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }

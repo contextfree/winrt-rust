@@ -12,22 +12,22 @@ RT_INTERFACE!{interface IImageFeatureDescriptor(IImageFeatureDescriptorVtbl): II
 impl ComPtr<IImageFeatureDescriptor> {
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_bitmap_pixel_format(&self) -> Result<super::super::graphics::imaging::BitmapPixelFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_BitmapPixelFormat)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BitmapPixelFormat)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_bitmap_alpha_mode(&self) -> Result<super::super::graphics::imaging::BitmapAlphaMode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_BitmapAlphaMode)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BitmapAlphaMode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_width(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Width)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Width)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_height(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Height)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Height)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -39,7 +39,7 @@ RT_INTERFACE!{interface IImageFeatureValue(IImageFeatureValueVtbl): IInspectable
 impl ComPtr<IImageFeatureValue> {
     #[cfg(feature="windows-media")] #[inline] pub fn get_video_frame(&self) -> Result<Option<ComPtr<super::super::media::VideoFrame>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_VideoFrame)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_VideoFrame)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -58,7 +58,7 @@ RT_INTERFACE!{static interface IImageFeatureValueStatics(IImageFeatureValueStati
 impl ComPtr<IImageFeatureValueStatics> {
     #[cfg(feature="windows-media")] #[inline] pub fn create_from_video_frame(&self, image: &ComPtr<super::super::media::VideoFrame>) -> Result<Option<ComPtr<ImageFeatureValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromVideoFrame)(self.deref() as *const _ as *mut _, image.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromVideoFrame)(self.as_abi() as *const _ as *mut _, image.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -76,42 +76,42 @@ RT_INTERFACE!{interface ILearningModel(ILearningModelVtbl): IInspectable(IInspec
 impl ComPtr<ILearningModel> {
     #[inline] pub fn get_author(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Author)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Author)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_domain(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Domain)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Domain)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Description)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Description)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_version(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Version)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Version)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_metadata(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Metadata)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Metadata)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_input_features(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<ILearningModelFeatureDescriptor>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_InputFeatures)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_InputFeatures)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_output_features(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<ILearningModelFeatureDescriptor>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_OutputFeatures)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_OutputFeatures)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -152,15 +152,15 @@ RT_INTERFACE!{interface ILearningModelBinding(ILearningModelBindingVtbl): IInspe
 }}
 impl ComPtr<ILearningModelBinding> {
     #[inline] pub fn bind(&self, name: &HStringArg, value: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Bind)(self.deref() as *const _ as *mut _, name.get(), value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Bind)(self.as_abi() as *const _ as *mut _, name.get(), value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn bind_with_properties(&self, name: &HStringArg, value: &ComPtr<IInspectable>, props: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).BindWithProperties)(self.deref() as *const _ as *mut _, name.get(), value.deref() as *const _ as *mut _, props.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).BindWithProperties)(self.as_abi() as *const _ as *mut _, name.get(), value.as_abi() as *const _ as *mut _, props.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn clear(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Clear)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Clear)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -179,7 +179,7 @@ RT_INTERFACE!{static interface ILearningModelBindingFactory(ILearningModelBindin
 impl ComPtr<ILearningModelBindingFactory> {
     #[inline] pub fn create_from_session(&self, session: &ComPtr<LearningModelSession>) -> Result<ComPtr<LearningModelBinding>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromSession)(self.deref() as *const _ as *mut _, session.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromSession)(self.as_abi() as *const _ as *mut _, session.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -191,12 +191,12 @@ RT_INTERFACE!{interface ILearningModelDevice(ILearningModelDeviceVtbl): IInspect
 impl ComPtr<ILearningModelDevice> {
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_adapter_id(&self) -> Result<super::super::graphics::DisplayAdapterId> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_AdapterId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_AdapterId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3d11_device(&self) -> Result<Option<ComPtr<super::super::graphics::directx::direct3d11::IDirect3DDevice>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Direct3D11Device)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Direct3D11Device)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -219,7 +219,7 @@ RT_INTERFACE!{static interface ILearningModelDeviceFactory(ILearningModelDeviceF
 impl ComPtr<ILearningModelDeviceFactory> {
     #[inline] pub fn create(&self, deviceKind: LearningModelDeviceKind) -> Result<ComPtr<LearningModelDevice>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, deviceKind, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, deviceKind, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -233,7 +233,7 @@ RT_INTERFACE!{static interface ILearningModelDeviceStatics(ILearningModelDeviceS
 impl ComPtr<ILearningModelDeviceStatics> {
     #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d11_device(&self, device: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DDevice>) -> Result<Option<ComPtr<LearningModelDevice>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromDirect3D11Device)(self.deref() as *const _ as *mut _, device.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromDirect3D11Device)(self.as_abi() as *const _ as *mut _, device.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -247,22 +247,22 @@ RT_INTERFACE!{interface ILearningModelEvaluationResult(ILearningModelEvaluationR
 impl ComPtr<ILearningModelEvaluationResult> {
     #[inline] pub fn get_correlation_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CorrelationId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CorrelationId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_error_status(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ErrorStatus)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ErrorStatus)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_succeeded(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Succeeded)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Succeeded)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_outputs(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, IInspectable>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Outputs)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Outputs)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -277,22 +277,22 @@ RT_INTERFACE!{interface ILearningModelFeatureDescriptor(ILearningModelFeatureDes
 impl ComPtr<ILearningModelFeatureDescriptor> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Description)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Description)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kind(&self) -> Result<LearningModelFeatureKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Kind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Kind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_required(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsRequired)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsRequired)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -306,7 +306,7 @@ RT_INTERFACE!{interface ILearningModelFeatureValue(ILearningModelFeatureValueVtb
 impl ComPtr<ILearningModelFeatureValue> {
     #[inline] pub fn get_kind(&self) -> Result<LearningModelFeatureKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Kind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Kind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -327,37 +327,37 @@ RT_INTERFACE!{interface ILearningModelSession(ILearningModelSessionVtbl): IInspe
 impl ComPtr<ILearningModelSession> {
     #[inline] pub fn get_model(&self) -> Result<Option<ComPtr<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Model)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Model)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_device(&self) -> Result<Option<ComPtr<LearningModelDevice>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Device)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Device)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_evaluation_properties(&self) -> Result<Option<ComPtr<foundation::collections::IPropertySet>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_EvaluationProperties)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_EvaluationProperties)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn evaluate_async(&self, bindings: &ComPtr<LearningModelBinding>, correlationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).EvaluateAsync)(self.deref() as *const _ as *mut _, bindings.deref() as *const _ as *mut _, correlationId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).EvaluateAsync)(self.as_abi() as *const _ as *mut _, bindings.as_abi() as *const _ as *mut _, correlationId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn evaluate_features_async(&self, features: &ComPtr<foundation::collections::IMap<HString, IInspectable>>, correlationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).EvaluateFeaturesAsync)(self.deref() as *const _ as *mut _, features.deref() as *const _ as *mut _, correlationId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).EvaluateFeaturesAsync)(self.as_abi() as *const _ as *mut _, features.as_abi() as *const _ as *mut _, correlationId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn evaluate(&self, bindings: &ComPtr<LearningModelBinding>, correlationId: &HStringArg) -> Result<Option<ComPtr<LearningModelEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Evaluate)(self.deref() as *const _ as *mut _, bindings.deref() as *const _ as *mut _, correlationId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Evaluate)(self.as_abi() as *const _ as *mut _, bindings.as_abi() as *const _ as *mut _, correlationId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn evaluate_features(&self, features: &ComPtr<foundation::collections::IMap<HString, IInspectable>>, correlationId: &HStringArg) -> Result<Option<ComPtr<LearningModelEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).EvaluateFeatures)(self.deref() as *const _ as *mut _, features.deref() as *const _ as *mut _, correlationId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).EvaluateFeatures)(self.as_abi() as *const _ as *mut _, features.as_abi() as *const _ as *mut _, correlationId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -380,12 +380,12 @@ RT_INTERFACE!{static interface ILearningModelSessionFactory(ILearningModelSessio
 impl ComPtr<ILearningModelSessionFactory> {
     #[inline] pub fn create_from_model(&self, model: &ComPtr<LearningModel>) -> Result<ComPtr<LearningModelSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromModel)(self.deref() as *const _ as *mut _, model.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromModel)(self.as_abi() as *const _ as *mut _, model.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_model_on_device(&self, model: &ComPtr<LearningModel>, deviceToRunOn: &ComPtr<LearningModelDevice>) -> Result<ComPtr<LearningModelSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromModelOnDevice)(self.deref() as *const _ as *mut _, model.deref() as *const _ as *mut _, deviceToRunOn.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromModelOnDevice)(self.as_abi() as *const _ as *mut _, model.as_abi() as *const _ as *mut _, deviceToRunOn.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -403,42 +403,42 @@ RT_INTERFACE!{static interface ILearningModelStatics(ILearningModelStaticsVtbl):
 impl ComPtr<ILearningModelStatics> {
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_storage_file_async(&self, modelFile: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).LoadFromStorageFileAsync)(self.deref() as *const _ as *mut _, modelFile.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).LoadFromStorageFileAsync)(self.as_abi() as *const _ as *mut _, modelFile.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(&self, modelStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).LoadFromStreamAsync)(self.deref() as *const _ as *mut _, modelStream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).LoadFromStreamAsync)(self.as_abi() as *const _ as *mut _, modelStream.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn load_from_file_path(&self, filePath: &HStringArg) -> Result<Option<ComPtr<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).LoadFromFilePath)(self.deref() as *const _ as *mut _, filePath.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).LoadFromFilePath)(self.as_abi() as *const _ as *mut _, filePath.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream(&self, modelStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>) -> Result<Option<ComPtr<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).LoadFromStream)(self.deref() as *const _ as *mut _, modelStream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).LoadFromStream)(self.as_abi() as *const _ as *mut _, modelStream.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_storage_file_with_operator_provider_async(&self, modelFile: &ComPtr<super::super::storage::IStorageFile>, operatorProvider: &ComPtr<ILearningModelOperatorProvider>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).LoadFromStorageFileWithOperatorProviderAsync)(self.deref() as *const _ as *mut _, modelFile.deref() as *const _ as *mut _, operatorProvider.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).LoadFromStorageFileWithOperatorProviderAsync)(self.as_abi() as *const _ as *mut _, modelFile.as_abi() as *const _ as *mut _, operatorProvider.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_operator_provider_async(&self, modelStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>, operatorProvider: &ComPtr<ILearningModelOperatorProvider>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).LoadFromStreamWithOperatorProviderAsync)(self.deref() as *const _ as *mut _, modelStream.deref() as *const _ as *mut _, operatorProvider.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).LoadFromStreamWithOperatorProviderAsync)(self.as_abi() as *const _ as *mut _, modelStream.as_abi() as *const _ as *mut _, operatorProvider.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn load_from_file_path_with_operator_provider(&self, filePath: &HStringArg, operatorProvider: &ComPtr<ILearningModelOperatorProvider>) -> Result<Option<ComPtr<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).LoadFromFilePathWithOperatorProvider)(self.deref() as *const _ as *mut _, filePath.get(), operatorProvider.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).LoadFromFilePathWithOperatorProvider)(self.as_abi() as *const _ as *mut _, filePath.get(), operatorProvider.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_operator_provider(&self, modelStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>, operatorProvider: &ComPtr<ILearningModelOperatorProvider>) -> Result<Option<ComPtr<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).LoadFromStreamWithOperatorProvider)(self.deref() as *const _ as *mut _, modelStream.deref() as *const _ as *mut _, operatorProvider.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).LoadFromStreamWithOperatorProvider)(self.as_abi() as *const _ as *mut _, modelStream.as_abi() as *const _ as *mut _, operatorProvider.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -450,12 +450,12 @@ RT_INTERFACE!{interface IMapFeatureDescriptor(IMapFeatureDescriptorVtbl): IInspe
 impl ComPtr<IMapFeatureDescriptor> {
     #[inline] pub fn get_key_kind(&self) -> Result<TensorKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_KeyKind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_KeyKind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_value_descriptor(&self) -> Result<Option<ComPtr<ILearningModelFeatureDescriptor>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ValueDescriptor)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ValueDescriptor)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -467,7 +467,7 @@ RT_INTERFACE!{interface ISequenceFeatureDescriptor(ISequenceFeatureDescriptorVtb
 impl ComPtr<ISequenceFeatureDescriptor> {
     #[inline] pub fn get_element_descriptor(&self) -> Result<Option<ComPtr<ILearningModelFeatureDescriptor>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ElementDescriptor)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ElementDescriptor)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -480,12 +480,12 @@ RT_INTERFACE!{interface ITensor(ITensorVtbl): IInspectable(IInspectableVtbl) [II
 impl ComPtr<ITensor> {
     #[inline] pub fn get_tensor_kind(&self) -> Result<TensorKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TensorKind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TensorKind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_shape(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<i64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Shape)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Shape)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -496,7 +496,7 @@ RT_INTERFACE!{interface ITensorBoolean(ITensorBooleanVtbl): IInspectable(IInspec
 impl ComPtr<ITensorBoolean> {
     #[inline] pub fn get_as_vector_view(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<bool>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsVectorView)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsVectorView)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -527,22 +527,22 @@ RT_INTERFACE!{static interface ITensorBooleanStatics(ITensorBooleanStaticsVtbl):
 impl ComPtr<ITensorBooleanStatics> {
     #[inline] pub fn create(&self) -> Result<Option<ComPtr<TensorBoolean>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorBoolean>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create2)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create2)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[bool]) -> Result<Option<ComPtr<TensorBoolean>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromArray)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromArray)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<bool>>) -> Result<Option<ComPtr<TensorBoolean>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIterable)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIterable)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -553,7 +553,7 @@ RT_INTERFACE!{interface ITensorDouble(ITensorDoubleVtbl): IInspectable(IInspecta
 impl ComPtr<ITensorDouble> {
     #[inline] pub fn get_as_vector_view(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<f64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsVectorView)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsVectorView)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -584,22 +584,22 @@ RT_INTERFACE!{static interface ITensorDoubleStatics(ITensorDoubleStaticsVtbl): I
 impl ComPtr<ITensorDoubleStatics> {
     #[inline] pub fn create(&self) -> Result<Option<ComPtr<TensorDouble>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorDouble>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create2)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create2)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[f64]) -> Result<Option<ComPtr<TensorDouble>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromArray)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromArray)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<f64>>) -> Result<Option<ComPtr<TensorDouble>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIterable)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIterable)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -611,12 +611,12 @@ RT_INTERFACE!{interface ITensorFeatureDescriptor(ITensorFeatureDescriptorVtbl): 
 impl ComPtr<ITensorFeatureDescriptor> {
     #[inline] pub fn get_tensor_kind(&self) -> Result<TensorKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_TensorKind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_TensorKind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_shape(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<i64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Shape)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Shape)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -628,7 +628,7 @@ RT_INTERFACE!{interface ITensorFloat(ITensorFloatVtbl): IInspectable(IInspectabl
 impl ComPtr<ITensorFloat> {
     #[inline] pub fn get_as_vector_view(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<f32>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsVectorView)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsVectorView)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -656,7 +656,7 @@ RT_INTERFACE!{interface ITensorFloat16Bit(ITensorFloat16BitVtbl): IInspectable(I
 impl ComPtr<ITensorFloat16Bit> {
     #[inline] pub fn get_as_vector_view(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<f32>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsVectorView)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsVectorView)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -687,22 +687,22 @@ RT_INTERFACE!{static interface ITensorFloat16BitStatics(ITensorFloat16BitStatics
 impl ComPtr<ITensorFloat16BitStatics> {
     #[inline] pub fn create(&self) -> Result<Option<ComPtr<TensorFloat16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorFloat16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create2)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create2)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[f32]) -> Result<Option<ComPtr<TensorFloat16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromArray)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromArray)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<f32>>) -> Result<Option<ComPtr<TensorFloat16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIterable)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIterable)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -716,22 +716,22 @@ RT_INTERFACE!{static interface ITensorFloatStatics(ITensorFloatStaticsVtbl): IIn
 impl ComPtr<ITensorFloatStatics> {
     #[inline] pub fn create(&self) -> Result<Option<ComPtr<TensorFloat>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorFloat>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create2)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create2)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[f32]) -> Result<Option<ComPtr<TensorFloat>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromArray)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromArray)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<f32>>) -> Result<Option<ComPtr<TensorFloat>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIterable)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIterable)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -742,7 +742,7 @@ RT_INTERFACE!{interface ITensorInt16Bit(ITensorInt16BitVtbl): IInspectable(IInsp
 impl ComPtr<ITensorInt16Bit> {
     #[inline] pub fn get_as_vector_view(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<i16>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsVectorView)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsVectorView)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -773,22 +773,22 @@ RT_INTERFACE!{static interface ITensorInt16BitStatics(ITensorInt16BitStaticsVtbl
 impl ComPtr<ITensorInt16BitStatics> {
     #[inline] pub fn create(&self) -> Result<Option<ComPtr<TensorInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create2)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create2)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[i16]) -> Result<Option<ComPtr<TensorInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromArray)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromArray)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<i16>>) -> Result<Option<ComPtr<TensorInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIterable)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIterable)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -799,7 +799,7 @@ RT_INTERFACE!{interface ITensorInt32Bit(ITensorInt32BitVtbl): IInspectable(IInsp
 impl ComPtr<ITensorInt32Bit> {
     #[inline] pub fn get_as_vector_view(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<i32>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsVectorView)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsVectorView)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -830,22 +830,22 @@ RT_INTERFACE!{static interface ITensorInt32BitStatics(ITensorInt32BitStaticsVtbl
 impl ComPtr<ITensorInt32BitStatics> {
     #[inline] pub fn create(&self) -> Result<Option<ComPtr<TensorInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create2)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create2)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[i32]) -> Result<Option<ComPtr<TensorInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromArray)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromArray)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<i32>>) -> Result<Option<ComPtr<TensorInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIterable)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIterable)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -856,7 +856,7 @@ RT_INTERFACE!{interface ITensorInt64Bit(ITensorInt64BitVtbl): IInspectable(IInsp
 impl ComPtr<ITensorInt64Bit> {
     #[inline] pub fn get_as_vector_view(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<i64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsVectorView)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsVectorView)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -887,22 +887,22 @@ RT_INTERFACE!{static interface ITensorInt64BitStatics(ITensorInt64BitStaticsVtbl
 impl ComPtr<ITensorInt64BitStatics> {
     #[inline] pub fn create(&self) -> Result<Option<ComPtr<TensorInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create2)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create2)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[i64]) -> Result<Option<ComPtr<TensorInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromArray)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromArray)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIterable)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIterable)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -913,7 +913,7 @@ RT_INTERFACE!{interface ITensorInt8Bit(ITensorInt8BitVtbl): IInspectable(IInspec
 impl ComPtr<ITensorInt8Bit> {
     #[inline] pub fn get_as_vector_view(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u8>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsVectorView)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsVectorView)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -944,22 +944,22 @@ RT_INTERFACE!{static interface ITensorInt8BitStatics(ITensorInt8BitStaticsVtbl):
 impl ComPtr<ITensorInt8BitStatics> {
     #[inline] pub fn create(&self) -> Result<Option<ComPtr<TensorInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create2)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create2)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u8]) -> Result<Option<ComPtr<TensorInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromArray)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromArray)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u8>>) -> Result<Option<ComPtr<TensorInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIterable)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIterable)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -973,7 +973,7 @@ RT_INTERFACE!{interface ITensorString(ITensorStringVtbl): IInspectable(IInspecta
 impl ComPtr<ITensorString> {
     #[inline] pub fn get_as_vector_view(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsVectorView)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsVectorView)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1004,22 +1004,22 @@ RT_INTERFACE!{static interface ITensorStringStatics(ITensorStringStaticsVtbl): I
 impl ComPtr<ITensorStringStatics> {
     #[inline] pub fn create(&self) -> Result<Option<ComPtr<TensorString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create2)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create2)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[&HStringArg]) -> Result<Option<ComPtr<TensorString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromArray)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromArray)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<Option<ComPtr<TensorString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIterable)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIterable)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1030,7 +1030,7 @@ RT_INTERFACE!{interface ITensorUInt16Bit(ITensorUInt16BitVtbl): IInspectable(IIn
 impl ComPtr<ITensorUInt16Bit> {
     #[inline] pub fn get_as_vector_view(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u16>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsVectorView)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsVectorView)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1061,22 +1061,22 @@ RT_INTERFACE!{static interface ITensorUInt16BitStatics(ITensorUInt16BitStaticsVt
 impl ComPtr<ITensorUInt16BitStatics> {
     #[inline] pub fn create(&self) -> Result<Option<ComPtr<TensorUInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorUInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create2)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create2)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u16]) -> Result<Option<ComPtr<TensorUInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromArray)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromArray)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u16>>) -> Result<Option<ComPtr<TensorUInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIterable)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIterable)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1087,7 +1087,7 @@ RT_INTERFACE!{interface ITensorUInt32Bit(ITensorUInt32BitVtbl): IInspectable(IIn
 impl ComPtr<ITensorUInt32Bit> {
     #[inline] pub fn get_as_vector_view(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsVectorView)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsVectorView)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1118,22 +1118,22 @@ RT_INTERFACE!{static interface ITensorUInt32BitStatics(ITensorUInt32BitStaticsVt
 impl ComPtr<ITensorUInt32BitStatics> {
     #[inline] pub fn create(&self) -> Result<Option<ComPtr<TensorUInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorUInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create2)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create2)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u32]) -> Result<Option<ComPtr<TensorUInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromArray)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromArray)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u32>>) -> Result<Option<ComPtr<TensorUInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIterable)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIterable)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1144,7 +1144,7 @@ RT_INTERFACE!{interface ITensorUInt64Bit(ITensorUInt64BitVtbl): IInspectable(IIn
 impl ComPtr<ITensorUInt64Bit> {
     #[inline] pub fn get_as_vector_view(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsVectorView)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsVectorView)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1175,22 +1175,22 @@ RT_INTERFACE!{static interface ITensorUInt64BitStatics(ITensorUInt64BitStaticsVt
 impl ComPtr<ITensorUInt64BitStatics> {
     #[inline] pub fn create(&self) -> Result<Option<ComPtr<TensorUInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorUInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create2)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create2)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u64]) -> Result<Option<ComPtr<TensorUInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromArray)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromArray)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u64>>) -> Result<Option<ComPtr<TensorUInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIterable)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIterable)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1201,7 +1201,7 @@ RT_INTERFACE!{interface ITensorUInt8Bit(ITensorUInt8BitVtbl): IInspectable(IInsp
 impl ComPtr<ITensorUInt8Bit> {
     #[inline] pub fn get_as_vector_view(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u8>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).GetAsVectorView)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).GetAsVectorView)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1232,22 +1232,22 @@ RT_INTERFACE!{static interface ITensorUInt8BitStatics(ITensorUInt8BitStaticsVtbl
 impl ComPtr<ITensorUInt8BitStatics> {
     #[inline] pub fn create(&self) -> Result<Option<ComPtr<TensorUInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorUInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).Create2)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).Create2)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u8]) -> Result<Option<ComPtr<TensorUInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromArray)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromArray)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u8>>) -> Result<Option<ComPtr<TensorUInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromIterable)(self.deref() as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromIterable)(self.as_abi() as *const _ as *mut _, shape.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1266,17 +1266,17 @@ RT_INTERFACE!{interface IImageVariableDescriptorPreview(IImageVariableDescriptor
 impl ComPtr<IImageVariableDescriptorPreview> {
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_bitmap_pixel_format(&self) -> Result<crate::windows::graphics::imaging::BitmapPixelFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_BitmapPixelFormat)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_BitmapPixelFormat)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_width(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Width)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Width)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_height(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Height)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Height)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1297,47 +1297,47 @@ RT_INTERFACE!{interface IInferencingOptionsPreview(IInferencingOptionsPreviewVtb
 impl ComPtr<IInferencingOptionsPreview> {
     #[inline] pub fn get_preferred_device_kind(&self) -> Result<LearningModelDeviceKindPreview> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_PreferredDeviceKind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_PreferredDeviceKind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_preferred_device_kind(&self, value: LearningModelDeviceKindPreview) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_PreferredDeviceKind)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_PreferredDeviceKind)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_tracing_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsTracingEnabled)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsTracingEnabled)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_tracing_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_IsTracingEnabled)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_IsTracingEnabled)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_max_batch_size(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_MaxBatchSize)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MaxBatchSize)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_max_batch_size(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MaxBatchSize)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_MaxBatchSize)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_minimize_memory_allocation(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_MinimizeMemoryAllocation)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_MinimizeMemoryAllocation)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_minimize_memory_allocation(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_MinimizeMemoryAllocation)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_MinimizeMemoryAllocation)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_reclaim_memory_after_evaluation(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ReclaimMemoryAfterEvaluation)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ReclaimMemoryAfterEvaluation)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_reclaim_memory_after_evaluation(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_ReclaimMemoryAfterEvaluation)(self.deref() as *const _ as *mut _, value);
+        let hr = ((*self.as_abi().lpVtbl).put_ReclaimMemoryAfterEvaluation)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1350,15 +1350,15 @@ RT_INTERFACE!{interface ILearningModelBindingPreview(ILearningModelBindingPrevie
 }}
 impl ComPtr<ILearningModelBindingPreview> {
     #[inline] pub fn bind(&self, name: &HStringArg, value: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Bind)(self.deref() as *const _ as *mut _, name.get(), value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Bind)(self.as_abi() as *const _ as *mut _, name.get(), value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn bind_with_properties(&self, name: &HStringArg, value: &ComPtr<IInspectable>, metadata: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).BindWithProperties)(self.deref() as *const _ as *mut _, name.get(), value.deref() as *const _ as *mut _, metadata.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).BindWithProperties)(self.as_abi() as *const _ as *mut _, name.get(), value.as_abi() as *const _ as *mut _, metadata.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn clear(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).Clear)(self.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).Clear)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1377,7 +1377,7 @@ RT_INTERFACE!{static interface ILearningModelBindingPreviewFactory(ILearningMode
 impl ComPtr<ILearningModelBindingPreviewFactory> {
     #[inline] pub fn create_from_model(&self, model: &ComPtr<LearningModelPreview>) -> Result<ComPtr<LearningModelBindingPreview>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).CreateFromModel)(self.deref() as *const _ as *mut _, model.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).CreateFromModel)(self.as_abi() as *const _ as *mut _, model.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1395,42 +1395,42 @@ RT_INTERFACE!{interface ILearningModelDescriptionPreview(ILearningModelDescripti
 impl ComPtr<ILearningModelDescriptionPreview> {
     #[inline] pub fn get_author(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Author)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Author)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_domain(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Domain)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Domain)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Description)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Description)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_version(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_Version)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Version)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_metadata(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Metadata)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Metadata)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_input_features(&self) -> Result<Option<ComPtr<foundation::collections::IIterable<ILearningModelVariableDescriptorPreview>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_InputFeatures)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_InputFeatures)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_output_features(&self) -> Result<Option<ComPtr<foundation::collections::IIterable<ILearningModelVariableDescriptorPreview>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_OutputFeatures)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_OutputFeatures)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1446,12 +1446,12 @@ RT_INTERFACE!{interface ILearningModelEvaluationResultPreview(ILearningModelEval
 impl ComPtr<ILearningModelEvaluationResultPreview> {
     #[inline] pub fn get_correlation_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_CorrelationId)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_CorrelationId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_outputs(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, IInspectable>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Outputs)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Outputs)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1470,26 +1470,26 @@ RT_INTERFACE!{interface ILearningModelPreview(ILearningModelPreviewVtbl): IInspe
 impl ComPtr<ILearningModelPreview> {
     #[inline] pub fn evaluate_async(&self, binding: &ComPtr<LearningModelBindingPreview>, correlationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelEvaluationResultPreview>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).EvaluateAsync)(self.deref() as *const _ as *mut _, binding.deref() as *const _ as *mut _, correlationId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).EvaluateAsync)(self.as_abi() as *const _ as *mut _, binding.as_abi() as *const _ as *mut _, correlationId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn evaluate_features_async(&self, features: &ComPtr<foundation::collections::IMap<HString, IInspectable>>, correlationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelEvaluationResultPreview>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).EvaluateFeaturesAsync)(self.deref() as *const _ as *mut _, features.deref() as *const _ as *mut _, correlationId.get(), &mut out);
+        let hr = ((*self.as_abi().lpVtbl).EvaluateFeaturesAsync)(self.as_abi() as *const _ as *mut _, features.as_abi() as *const _ as *mut _, correlationId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<Option<ComPtr<LearningModelDescriptionPreview>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Description)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Description)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_inferencing_options(&self) -> Result<Option<ComPtr<InferencingOptionsPreview>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_InferencingOptions)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_InferencingOptions)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_inferencing_options(&self, value: &ComPtr<InferencingOptionsPreview>) -> Result<()> { unsafe { 
-        let hr = ((*self.deref().lpVtbl).put_InferencingOptions)(self.deref() as *const _ as *mut _, value.deref() as *const _ as *mut _);
+        let hr = ((*self.as_abi().lpVtbl).put_InferencingOptions)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1512,12 +1512,12 @@ RT_INTERFACE!{static interface ILearningModelPreviewStatics(ILearningModelPrevie
 impl ComPtr<ILearningModelPreviewStatics> {
     #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_storage_file_async(&self, modelFile: &ComPtr<crate::windows::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).LoadModelFromStorageFileAsync)(self.deref() as *const _ as *mut _, modelFile.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).LoadModelFromStorageFileAsync)(self.as_abi() as *const _ as *mut _, modelFile.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_stream_async(&self, modelStream: &ComPtr<crate::windows::storage::streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).LoadModelFromStreamAsync)(self.deref() as *const _ as *mut _, modelStream.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).LoadModelFromStreamAsync)(self.as_abi() as *const _ as *mut _, modelStream.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1531,22 +1531,22 @@ RT_INTERFACE!{interface ILearningModelVariableDescriptorPreview(ILearningModelVa
 impl ComPtr<ILearningModelVariableDescriptorPreview> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Name)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Description)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Description)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_model_feature_kind(&self) -> Result<LearningModelFeatureKindPreview> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_ModelFeatureKind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ModelFeatureKind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_required(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_IsRequired)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_IsRequired)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1561,22 +1561,22 @@ RT_INTERFACE!{interface IMapVariableDescriptorPreview(IMapVariableDescriptorPrev
 impl ComPtr<IMapVariableDescriptorPreview> {
     #[inline] pub fn get_key_kind(&self) -> Result<FeatureElementKindPreview> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_KeyKind)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_KeyKind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_valid_string_keys(&self) -> Result<Option<ComPtr<foundation::collections::IIterable<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ValidStringKeys)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ValidStringKeys)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_valid_integer_keys(&self) -> Result<Option<ComPtr<foundation::collections::IIterable<i64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ValidIntegerKeys)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ValidIntegerKeys)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_fields(&self) -> Result<Option<ComPtr<ILearningModelVariableDescriptorPreview>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Fields)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Fields)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1588,7 +1588,7 @@ RT_INTERFACE!{interface ISequenceVariableDescriptorPreview(ISequenceVariableDesc
 impl ComPtr<ISequenceVariableDescriptorPreview> {
     #[inline] pub fn get_element_type(&self) -> Result<Option<ComPtr<ILearningModelVariableDescriptorPreview>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_ElementType)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_ElementType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1601,12 +1601,12 @@ RT_INTERFACE!{interface ITensorVariableDescriptorPreview(ITensorVariableDescript
 impl ComPtr<ITensorVariableDescriptorPreview> {
     #[inline] pub fn get_data_type(&self) -> Result<FeatureElementKindPreview> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.deref().lpVtbl).get_DataType)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_DataType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_shape(&self) -> Result<Option<ComPtr<foundation::collections::IIterable<i64>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.deref().lpVtbl).get_Shape)(self.deref() as *const _ as *mut _, &mut out);
+        let hr = ((*self.as_abi().lpVtbl).get_Shape)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
