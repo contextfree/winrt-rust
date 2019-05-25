@@ -108,23 +108,20 @@ impl<T: ComInterface> ComPtr<T> {
     /// If the requested interface is not supported, `None` is returned.
     #[inline]
     pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComIid + ComInterface {
-        query_interface::<_, Target>(&**self)
+        query_interface::<_, Target>(&*self.deref())
     }
-}
-impl<T: ComInterface> Deref for ComPtr<T> {
-    type Target = T;
 
     #[inline]
-    fn deref(&self) -> &T {
+    pub fn deref(&self) -> &T {
         unsafe { self.0.as_ref() }
     }
-}
-impl<T: ComInterface> DerefMut for ComPtr<T> {
+
     #[inline]
-    fn deref_mut(&mut self) -> &mut T {
+    pub fn deref_mut(&mut self) -> &mut T {
         unsafe { self.0.as_mut() }
     }
 }
+
 impl<T: ComInterface> Clone for ComPtr<T> {
     #[inline]
     fn clone(&self) -> Self {

@@ -61,11 +61,11 @@ impl IAppDataPaths {
 RT_CLASS!{class AppDataPaths: IAppDataPaths}
 impl RtActivatable<IAppDataPathsStatics> for AppDataPaths {}
 impl AppDataPaths {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::system::User) -> Result<Option<ComPtr<AppDataPaths>>> {
-        <Self as RtActivatable<IAppDataPathsStatics>>::get_activation_factory().get_for_user(user)
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &ComPtr<super::system::User>) -> Result<Option<ComPtr<AppDataPaths>>> {
+        <Self as RtActivatable<IAppDataPathsStatics>>::get_activation_factory().deref().get_for_user(user)
     }
     #[inline] pub fn get_default() -> Result<Option<ComPtr<AppDataPaths>>> {
-        <Self as RtActivatable<IAppDataPathsStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IAppDataPathsStatics>>::get_activation_factory().deref().get_default()
     }
 }
 DEFINE_CLSID!(AppDataPaths(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,112,112,68,97,116,97,80,97,116,104,115,0]) [CLSID_AppDataPaths]);
@@ -76,9 +76,9 @@ RT_INTERFACE!{static interface IAppDataPathsStatics(IAppDataPathsStaticsVtbl): I
     fn GetDefault(&self, out: *mut *mut AppDataPaths) -> HRESULT
 }}
 impl IAppDataPathsStatics {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &super::system::User) -> Result<Option<ComPtr<AppDataPaths>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &ComPtr<super::system::User>) -> Result<Option<ComPtr<AppDataPaths>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<AppDataPaths>>> { unsafe { 
@@ -109,9 +109,9 @@ impl IApplicationData {
         let hr = ((*self.lpVtbl).get_Version)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_version_async(&self, desiredVersion: u32, handler: &ApplicationDataSetVersionHandler) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn set_version_async(&self, desiredVersion: u32, handler: &ComPtr<ApplicationDataSetVersionHandler>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetVersionAsync)(self as *const _ as *mut _, desiredVersion, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetVersionAsync)(self as *const _ as *mut _, desiredVersion, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn clear_all_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -149,9 +149,9 @@ impl IApplicationData {
         let hr = ((*self.lpVtbl).get_TemporaryFolder)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_data_changed(&self, handler: &foundation::TypedEventHandler<ApplicationData, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_data_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<ApplicationData, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DataChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DataChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_data_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -173,10 +173,10 @@ impl RtActivatable<IApplicationDataStatics> for ApplicationData {}
 impl RtActivatable<IApplicationDataStatics2> for ApplicationData {}
 impl ApplicationData {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<ApplicationData>>> {
-        <Self as RtActivatable<IApplicationDataStatics>>::get_activation_factory().get_current()
+        <Self as RtActivatable<IApplicationDataStatics>>::get_activation_factory().deref().get_current()
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &super::system::User) -> Result<ComPtr<foundation::IAsyncOperation<ApplicationData>>> {
-        <Self as RtActivatable<IApplicationDataStatics2>>::get_activation_factory().get_for_user_async(user)
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &ComPtr<super::system::User>) -> Result<ComPtr<foundation::IAsyncOperation<ApplicationData>>> {
+        <Self as RtActivatable<IApplicationDataStatics2>>::get_activation_factory().deref().get_for_user_async(user)
     }
 }
 DEFINE_CLSID!(ApplicationData(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,112,112,108,105,99,97,116,105,111,110,68,97,116,97,0]) [CLSID_ApplicationData]);
@@ -270,8 +270,8 @@ RT_DELEGATE!{delegate ApplicationDataSetVersionHandler(ApplicationDataSetVersion
     fn Invoke(&self, setVersionRequest: *mut SetVersionRequest) -> HRESULT
 }}
 impl ApplicationDataSetVersionHandler {
-    #[inline] pub fn invoke(&self, setVersionRequest: &SetVersionRequest) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, setVersionRequest as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, setVersionRequest: &ComPtr<SetVersionRequest>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, setVersionRequest.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -291,20 +291,20 @@ RT_INTERFACE!{static interface IApplicationDataStatics2(IApplicationDataStatics2
     #[cfg(feature="windows-system")] fn GetForUserAsync(&self, user: *mut super::system::User, out: *mut *mut foundation::IAsyncOperation<ApplicationData>) -> HRESULT
 }}
 impl IApplicationDataStatics2 {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(&self, user: &super::system::User) -> Result<ComPtr<foundation::IAsyncOperation<ApplicationData>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(&self, user: &ComPtr<super::system::User>) -> Result<ComPtr<foundation::IAsyncOperation<ApplicationData>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{static class CachedFileManager}
 impl RtActivatable<ICachedFileManagerStatics> for CachedFileManager {}
 impl CachedFileManager {
-    #[inline] pub fn defer_updates(file: &IStorageFile) -> Result<()> {
-        <Self as RtActivatable<ICachedFileManagerStatics>>::get_activation_factory().defer_updates(file)
+    #[inline] pub fn defer_updates(file: &ComPtr<IStorageFile>) -> Result<()> {
+        <Self as RtActivatable<ICachedFileManagerStatics>>::get_activation_factory().deref().defer_updates(file)
     }
-    #[inline] pub fn complete_updates_async(file: &IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<provider::FileUpdateStatus>>> {
-        <Self as RtActivatable<ICachedFileManagerStatics>>::get_activation_factory().complete_updates_async(file)
+    #[inline] pub fn complete_updates_async(file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<provider::FileUpdateStatus>>> {
+        <Self as RtActivatable<ICachedFileManagerStatics>>::get_activation_factory().deref().complete_updates_async(file)
     }
 }
 DEFINE_CLSID!(CachedFileManager(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,67,97,99,104,101,100,70,105,108,101,77,97,110,97,103,101,114,0]) [CLSID_CachedFileManager]);
@@ -314,13 +314,13 @@ RT_INTERFACE!{static interface ICachedFileManagerStatics(ICachedFileManagerStati
     fn CompleteUpdatesAsync(&self, file: *mut IStorageFile, out: *mut *mut foundation::IAsyncOperation<provider::FileUpdateStatus>) -> HRESULT
 }}
 impl ICachedFileManagerStatics {
-    #[inline] pub fn defer_updates(&self, file: &IStorageFile) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).DeferUpdates)(self as *const _ as *mut _, file as *const _ as *mut _);
+    #[inline] pub fn defer_updates(&self, file: &ComPtr<IStorageFile>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).DeferUpdates)(self as *const _ as *mut _, file.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn complete_updates_async(&self, file: &IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<provider::FileUpdateStatus>>> { unsafe { 
+    #[inline] pub fn complete_updates_async(&self, file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<provider::FileUpdateStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CompleteUpdatesAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CompleteUpdatesAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -332,28 +332,28 @@ impl RtActivatable<IDownloadsFolderStatics> for DownloadsFolder {}
 impl RtActivatable<IDownloadsFolderStatics2> for DownloadsFolder {}
 impl DownloadsFolder {
     #[inline] pub fn create_file_async(desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().create_file_async(desiredName)
+        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().deref().create_file_async(desiredName)
     }
     #[inline] pub fn create_folder_async(desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().create_folder_async(desiredName)
+        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().deref().create_folder_async(desiredName)
     }
     #[inline] pub fn create_file_with_collision_option_async(desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().create_file_with_collision_option_async(desiredName, option)
+        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().deref().create_file_with_collision_option_async(desiredName, option)
     }
     #[inline] pub fn create_folder_with_collision_option_async(desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().create_folder_with_collision_option_async(desiredName, option)
+        <Self as RtActivatable<IDownloadsFolderStatics>>::get_activation_factory().deref().create_folder_with_collision_option_async(desiredName, option)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_async(user: &super::system::User, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_file_for_user_async(user, desiredName)
+    #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_async(user: &ComPtr<super::system::User>, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
+        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().deref().create_file_for_user_async(user, desiredName)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_async(user: &super::system::User, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_folder_for_user_async(user, desiredName)
+    #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_async(user: &ComPtr<super::system::User>, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
+        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().deref().create_folder_for_user_async(user, desiredName)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_with_collision_option_async(user: &super::system::User, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_file_for_user_with_collision_option_async(user, desiredName, option)
+    #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_with_collision_option_async(user: &ComPtr<super::system::User>, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
+        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().deref().create_file_for_user_with_collision_option_async(user, desiredName, option)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_with_collision_option_async(user: &super::system::User, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
-        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().create_folder_for_user_with_collision_option_async(user, desiredName, option)
+    #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_with_collision_option_async(user: &ComPtr<super::system::User>, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
+        <Self as RtActivatable<IDownloadsFolderStatics2>>::get_activation_factory().deref().create_folder_for_user_with_collision_option_async(user, desiredName, option)
     }
 }
 DEFINE_CLSID!(DownloadsFolder(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,68,111,119,110,108,111,97,100,115,70,111,108,100,101,114,0]) [CLSID_DownloadsFolder]);
@@ -394,24 +394,24 @@ RT_INTERFACE!{static interface IDownloadsFolderStatics2(IDownloadsFolderStatics2
     #[cfg(feature="windows-system")] fn CreateFolderForUserWithCollisionOptionAsync(&self, user: *mut super::system::User, desiredName: HSTRING, option: CreationCollisionOption, out: *mut *mut foundation::IAsyncOperation<StorageFolder>) -> HRESULT
 }}
 impl IDownloadsFolderStatics2 {
-    #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_async(&self, user: &super::system::User, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_async(&self, user: &ComPtr<super::system::User>, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, desiredName.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateFileForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, desiredName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_async(&self, user: &super::system::User, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_async(&self, user: &ComPtr<super::system::User>, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, desiredName.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateFolderForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, desiredName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_with_collision_option_async(&self, user: &super::system::User, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn create_file_for_user_with_collision_option_async(&self, user: &ComPtr<super::system::User>, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileForUserWithCollisionOptionAsync)(self as *const _ as *mut _, user as *const _ as *mut _, desiredName.get(), option, &mut out);
+        let hr = ((*self.lpVtbl).CreateFileForUserWithCollisionOptionAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, desiredName.get(), option, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_with_collision_option_async(&self, user: &super::system::User, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn create_folder_for_user_with_collision_option_async(&self, user: &ComPtr<super::system::User>, desiredName: &HStringArg, option: CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderForUserWithCollisionOptionAsync)(self as *const _ as *mut _, user as *const _ as *mut _, desiredName.get(), option, &mut out);
+        let hr = ((*self.lpVtbl).CreateFolderForUserWithCollisionOptionAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, desiredName.get(), option, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -424,50 +424,50 @@ RT_ENUM! { enum FileAttributes: u32 {
 RT_CLASS!{static class FileIO}
 impl RtActivatable<IFileIOStatics> for FileIO {}
 impl FileIO {
-    #[inline] pub fn read_text_async(file: &IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().read_text_async(file)
+    #[inline] pub fn read_text_async(file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().read_text_async(file)
     }
-    #[inline] pub fn read_text_with_encoding_async(file: &IStorageFile, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().read_text_with_encoding_async(file, encoding)
+    #[inline] pub fn read_text_with_encoding_async(file: &ComPtr<IStorageFile>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().read_text_with_encoding_async(file, encoding)
     }
-    #[inline] pub fn write_text_async(file: &IStorageFile, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().write_text_async(file, contents)
+    #[inline] pub fn write_text_async(file: &ComPtr<IStorageFile>, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().write_text_async(file, contents)
     }
-    #[inline] pub fn write_text_with_encoding_async(file: &IStorageFile, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().write_text_with_encoding_async(file, contents, encoding)
+    #[inline] pub fn write_text_with_encoding_async(file: &ComPtr<IStorageFile>, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().write_text_with_encoding_async(file, contents, encoding)
     }
-    #[inline] pub fn append_text_async(file: &IStorageFile, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().append_text_async(file, contents)
+    #[inline] pub fn append_text_async(file: &ComPtr<IStorageFile>, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().append_text_async(file, contents)
     }
-    #[inline] pub fn append_text_with_encoding_async(file: &IStorageFile, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().append_text_with_encoding_async(file, contents, encoding)
+    #[inline] pub fn append_text_with_encoding_async(file: &ComPtr<IStorageFile>, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().append_text_with_encoding_async(file, contents, encoding)
     }
-    #[inline] pub fn read_lines_async(file: &IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().read_lines_async(file)
+    #[inline] pub fn read_lines_async(file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().read_lines_async(file)
     }
-    #[inline] pub fn read_lines_with_encoding_async(file: &IStorageFile, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().read_lines_with_encoding_async(file, encoding)
+    #[inline] pub fn read_lines_with_encoding_async(file: &ComPtr<IStorageFile>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().read_lines_with_encoding_async(file, encoding)
     }
-    #[inline] pub fn write_lines_async(file: &IStorageFile, lines: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().write_lines_async(file, lines)
+    #[inline] pub fn write_lines_async(file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().write_lines_async(file, lines)
     }
-    #[inline] pub fn write_lines_with_encoding_async(file: &IStorageFile, lines: &foundation::collections::IIterable<HString>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().write_lines_with_encoding_async(file, lines, encoding)
+    #[inline] pub fn write_lines_with_encoding_async(file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().write_lines_with_encoding_async(file, lines, encoding)
     }
-    #[inline] pub fn append_lines_async(file: &IStorageFile, lines: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().append_lines_async(file, lines)
+    #[inline] pub fn append_lines_async(file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().append_lines_async(file, lines)
     }
-    #[inline] pub fn append_lines_with_encoding_async(file: &IStorageFile, lines: &foundation::collections::IIterable<HString>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().append_lines_with_encoding_async(file, lines, encoding)
+    #[inline] pub fn append_lines_with_encoding_async(file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().append_lines_with_encoding_async(file, lines, encoding)
     }
-    #[inline] pub fn read_buffer_async(file: &IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<streams::IBuffer>>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().read_buffer_async(file)
+    #[inline] pub fn read_buffer_async(file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<streams::IBuffer>>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().read_buffer_async(file)
     }
-    #[inline] pub fn write_buffer_async(file: &IStorageFile, buffer: &streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().write_buffer_async(file, buffer)
+    #[inline] pub fn write_buffer_async(file: &ComPtr<IStorageFile>, buffer: &ComPtr<streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().write_buffer_async(file, buffer)
     }
-    #[inline] pub fn write_bytes_async(file: &IStorageFile, buffer: &[u8]) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().write_bytes_async(file, buffer)
+    #[inline] pub fn write_bytes_async(file: &ComPtr<IStorageFile>, buffer: &[u8]) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IFileIOStatics>>::get_activation_factory().deref().write_bytes_async(file, buffer)
     }
 }
 DEFINE_CLSID!(FileIO(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,70,105,108,101,73,79,0]) [CLSID_FileIO]);
@@ -490,79 +490,79 @@ RT_INTERFACE!{static interface IFileIOStatics(IFileIOStaticsVtbl): IInspectable(
     fn WriteBytesAsync(&self, file: *mut IStorageFile, bufferSize: u32, buffer: *mut u8, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IFileIOStatics {
-    #[inline] pub fn read_text_async(&self, file: &IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
+    #[inline] pub fn read_text_async(&self, file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadTextAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ReadTextAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn read_text_with_encoding_async(&self, file: &IStorageFile, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
+    #[inline] pub fn read_text_with_encoding_async(&self, file: &ComPtr<IStorageFile>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadTextWithEncodingAsync)(self as *const _ as *mut _, file as *const _ as *mut _, encoding, &mut out);
+        let hr = ((*self.lpVtbl).ReadTextWithEncodingAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn write_text_async(&self, file: &IStorageFile, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn write_text_async(&self, file: &ComPtr<IStorageFile>, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteTextAsync)(self as *const _ as *mut _, file as *const _ as *mut _, contents.get(), &mut out);
+        let hr = ((*self.lpVtbl).WriteTextAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, contents.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn write_text_with_encoding_async(&self, file: &IStorageFile, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn write_text_with_encoding_async(&self, file: &ComPtr<IStorageFile>, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteTextWithEncodingAsync)(self as *const _ as *mut _, file as *const _ as *mut _, contents.get(), encoding, &mut out);
+        let hr = ((*self.lpVtbl).WriteTextWithEncodingAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, contents.get(), encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn append_text_async(&self, file: &IStorageFile, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn append_text_async(&self, file: &ComPtr<IStorageFile>, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendTextAsync)(self as *const _ as *mut _, file as *const _ as *mut _, contents.get(), &mut out);
+        let hr = ((*self.lpVtbl).AppendTextAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, contents.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn append_text_with_encoding_async(&self, file: &IStorageFile, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn append_text_with_encoding_async(&self, file: &ComPtr<IStorageFile>, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendTextWithEncodingAsync)(self as *const _ as *mut _, file as *const _ as *mut _, contents.get(), encoding, &mut out);
+        let hr = ((*self.lpVtbl).AppendTextWithEncodingAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, contents.get(), encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn read_lines_async(&self, file: &IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> { unsafe { 
+    #[inline] pub fn read_lines_async(&self, file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadLinesAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ReadLinesAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn read_lines_with_encoding_async(&self, file: &IStorageFile, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> { unsafe { 
+    #[inline] pub fn read_lines_with_encoding_async(&self, file: &ComPtr<IStorageFile>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadLinesWithEncodingAsync)(self as *const _ as *mut _, file as *const _ as *mut _, encoding, &mut out);
+        let hr = ((*self.lpVtbl).ReadLinesWithEncodingAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn write_lines_async(&self, file: &IStorageFile, lines: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn write_lines_async(&self, file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteLinesAsync)(self as *const _ as *mut _, file as *const _ as *mut _, lines as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).WriteLinesAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, lines.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn write_lines_with_encoding_async(&self, file: &IStorageFile, lines: &foundation::collections::IIterable<HString>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn write_lines_with_encoding_async(&self, file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteLinesWithEncodingAsync)(self as *const _ as *mut _, file as *const _ as *mut _, lines as *const _ as *mut _, encoding, &mut out);
+        let hr = ((*self.lpVtbl).WriteLinesWithEncodingAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, lines.deref() as *const _ as *mut _, encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn append_lines_async(&self, file: &IStorageFile, lines: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn append_lines_async(&self, file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendLinesAsync)(self as *const _ as *mut _, file as *const _ as *mut _, lines as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AppendLinesAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, lines.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn append_lines_with_encoding_async(&self, file: &IStorageFile, lines: &foundation::collections::IIterable<HString>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn append_lines_with_encoding_async(&self, file: &ComPtr<IStorageFile>, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendLinesWithEncodingAsync)(self as *const _ as *mut _, file as *const _ as *mut _, lines as *const _ as *mut _, encoding, &mut out);
+        let hr = ((*self.lpVtbl).AppendLinesWithEncodingAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, lines.deref() as *const _ as *mut _, encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn read_buffer_async(&self, file: &IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<streams::IBuffer>>> { unsafe { 
+    #[inline] pub fn read_buffer_async(&self, file: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadBufferAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ReadBufferAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn write_buffer_async(&self, file: &IStorageFile, buffer: &streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn write_buffer_async(&self, file: &ComPtr<IStorageFile>, buffer: &ComPtr<streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteBufferAsync)(self as *const _ as *mut _, file as *const _ as *mut _, buffer as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).WriteBufferAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, buffer.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn write_bytes_async(&self, file: &IStorageFile, buffer: &[u8]) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn write_bytes_async(&self, file: &ComPtr<IStorageFile>, buffer: &[u8]) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteBytesAsync)(self as *const _ as *mut _, file as *const _ as *mut _, buffer.len() as u32, buffer.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).WriteBytesAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, buffer.len() as u32, buffer.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -578,46 +578,46 @@ impl RtActivatable<IKnownFoldersStatics2> for KnownFolders {}
 impl RtActivatable<IKnownFoldersStatics3> for KnownFolders {}
 impl KnownFolders {
     #[inline] pub fn get_camera_roll() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersCameraRollStatics>>::get_activation_factory().get_camera_roll()
+        <Self as RtActivatable<IKnownFoldersCameraRollStatics>>::get_activation_factory().deref().get_camera_roll()
     }
     #[inline] pub fn get_playlists() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersPlaylistsStatics>>::get_activation_factory().get_playlists()
+        <Self as RtActivatable<IKnownFoldersPlaylistsStatics>>::get_activation_factory().deref().get_playlists()
     }
     #[inline] pub fn get_saved_pictures() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersSavedPicturesStatics>>::get_activation_factory().get_saved_pictures()
+        <Self as RtActivatable<IKnownFoldersSavedPicturesStatics>>::get_activation_factory().deref().get_saved_pictures()
     }
     #[inline] pub fn get_music_library() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_music_library()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_music_library()
     }
     #[inline] pub fn get_pictures_library() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_pictures_library()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_pictures_library()
     }
     #[inline] pub fn get_videos_library() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_videos_library()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_videos_library()
     }
     #[inline] pub fn get_documents_library() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_documents_library()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_documents_library()
     }
     #[inline] pub fn get_home_group() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_home_group()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_home_group()
     }
     #[inline] pub fn get_removable_devices() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_removable_devices()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_removable_devices()
     }
     #[inline] pub fn get_media_server_devices() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().get_media_server_devices()
+        <Self as RtActivatable<IKnownFoldersStatics>>::get_activation_factory().deref().get_media_server_devices()
     }
     #[inline] pub fn get_objects_3d() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().get_objects_3d()
+        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().deref().get_objects_3d()
     }
     #[inline] pub fn get_app_captures() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().get_app_captures()
+        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().deref().get_app_captures()
     }
     #[inline] pub fn get_recorded_calls() -> Result<Option<ComPtr<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().get_recorded_calls()
+        <Self as RtActivatable<IKnownFoldersStatics2>>::get_activation_factory().deref().get_recorded_calls()
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_folder_for_user_async(user: &super::system::User, folderId: KnownFolderId) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
-        <Self as RtActivatable<IKnownFoldersStatics3>>::get_activation_factory().get_folder_for_user_async(user, folderId)
+    #[cfg(feature="windows-system")] #[inline] pub fn get_folder_for_user_async(user: &ComPtr<super::system::User>, folderId: KnownFolderId) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
+        <Self as RtActivatable<IKnownFoldersStatics3>>::get_activation_factory().deref().get_folder_for_user_async(user, folderId)
     }
 }
 DEFINE_CLSID!(KnownFolders(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,75,110,111,119,110,70,111,108,100,101,114,115,0]) [CLSID_KnownFolders]);
@@ -729,9 +729,9 @@ RT_INTERFACE!{static interface IKnownFoldersStatics3(IKnownFoldersStatics3Vtbl):
     #[cfg(feature="windows-system")] fn GetFolderForUserAsync(&self, user: *mut super::system::User, folderId: KnownFolderId, out: *mut *mut foundation::IAsyncOperation<StorageFolder>) -> HRESULT
 }}
 impl IKnownFoldersStatics3 {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_folder_for_user_async(&self, user: &super::system::User, folderId: KnownFolderId) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_folder_for_user_async(&self, user: &ComPtr<super::system::User>, folderId: KnownFolderId) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFolderForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, folderId, &mut out);
+        let hr = ((*self.lpVtbl).GetFolderForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, folderId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -745,49 +745,49 @@ RT_CLASS!{static class PathIO}
 impl RtActivatable<IPathIOStatics> for PathIO {}
 impl PathIO {
     #[inline] pub fn read_text_async(absolutePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().read_text_async(absolutePath)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().read_text_async(absolutePath)
     }
     #[inline] pub fn read_text_with_encoding_async(absolutePath: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().read_text_with_encoding_async(absolutePath, encoding)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().read_text_with_encoding_async(absolutePath, encoding)
     }
     #[inline] pub fn write_text_async(absolutePath: &HStringArg, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().write_text_async(absolutePath, contents)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().write_text_async(absolutePath, contents)
     }
     #[inline] pub fn write_text_with_encoding_async(absolutePath: &HStringArg, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().write_text_with_encoding_async(absolutePath, contents, encoding)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().write_text_with_encoding_async(absolutePath, contents, encoding)
     }
     #[inline] pub fn append_text_async(absolutePath: &HStringArg, contents: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().append_text_async(absolutePath, contents)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().append_text_async(absolutePath, contents)
     }
     #[inline] pub fn append_text_with_encoding_async(absolutePath: &HStringArg, contents: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().append_text_with_encoding_async(absolutePath, contents, encoding)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().append_text_with_encoding_async(absolutePath, contents, encoding)
     }
     #[inline] pub fn read_lines_async(absolutePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().read_lines_async(absolutePath)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().read_lines_async(absolutePath)
     }
     #[inline] pub fn read_lines_with_encoding_async(absolutePath: &HStringArg, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<HString>>>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().read_lines_with_encoding_async(absolutePath, encoding)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().read_lines_with_encoding_async(absolutePath, encoding)
     }
-    #[inline] pub fn write_lines_async(absolutePath: &HStringArg, lines: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().write_lines_async(absolutePath, lines)
+    #[inline] pub fn write_lines_async(absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().write_lines_async(absolutePath, lines)
     }
-    #[inline] pub fn write_lines_with_encoding_async(absolutePath: &HStringArg, lines: &foundation::collections::IIterable<HString>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().write_lines_with_encoding_async(absolutePath, lines, encoding)
+    #[inline] pub fn write_lines_with_encoding_async(absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().write_lines_with_encoding_async(absolutePath, lines, encoding)
     }
-    #[inline] pub fn append_lines_async(absolutePath: &HStringArg, lines: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().append_lines_async(absolutePath, lines)
+    #[inline] pub fn append_lines_async(absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().append_lines_async(absolutePath, lines)
     }
-    #[inline] pub fn append_lines_with_encoding_async(absolutePath: &HStringArg, lines: &foundation::collections::IIterable<HString>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().append_lines_with_encoding_async(absolutePath, lines, encoding)
+    #[inline] pub fn append_lines_with_encoding_async(absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().append_lines_with_encoding_async(absolutePath, lines, encoding)
     }
     #[inline] pub fn read_buffer_async(absolutePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<streams::IBuffer>>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().read_buffer_async(absolutePath)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().read_buffer_async(absolutePath)
     }
-    #[inline] pub fn write_buffer_async(absolutePath: &HStringArg, buffer: &streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().write_buffer_async(absolutePath, buffer)
+    #[inline] pub fn write_buffer_async(absolutePath: &HStringArg, buffer: &ComPtr<streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().write_buffer_async(absolutePath, buffer)
     }
     #[inline] pub fn write_bytes_async(absolutePath: &HStringArg, buffer: &[u8]) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().write_bytes_async(absolutePath, buffer)
+        <Self as RtActivatable<IPathIOStatics>>::get_activation_factory().deref().write_bytes_async(absolutePath, buffer)
     }
 }
 DEFINE_CLSID!(PathIO(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,97,116,104,73,79,0]) [CLSID_PathIO]);
@@ -850,24 +850,24 @@ impl IPathIOStatics {
         let hr = ((*self.lpVtbl).ReadLinesWithEncodingAsync)(self as *const _ as *mut _, absolutePath.get(), encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn write_lines_async(&self, absolutePath: &HStringArg, lines: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn write_lines_async(&self, absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteLinesAsync)(self as *const _ as *mut _, absolutePath.get(), lines as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).WriteLinesAsync)(self as *const _ as *mut _, absolutePath.get(), lines.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn write_lines_with_encoding_async(&self, absolutePath: &HStringArg, lines: &foundation::collections::IIterable<HString>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn write_lines_with_encoding_async(&self, absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteLinesWithEncodingAsync)(self as *const _ as *mut _, absolutePath.get(), lines as *const _ as *mut _, encoding, &mut out);
+        let hr = ((*self.lpVtbl).WriteLinesWithEncodingAsync)(self as *const _ as *mut _, absolutePath.get(), lines.deref() as *const _ as *mut _, encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn append_lines_async(&self, absolutePath: &HStringArg, lines: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn append_lines_async(&self, absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendLinesAsync)(self as *const _ as *mut _, absolutePath.get(), lines as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AppendLinesAsync)(self as *const _ as *mut _, absolutePath.get(), lines.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn append_lines_with_encoding_async(&self, absolutePath: &HStringArg, lines: &foundation::collections::IIterable<HString>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn append_lines_with_encoding_async(&self, absolutePath: &HStringArg, lines: &ComPtr<foundation::collections::IIterable<HString>>, encoding: streams::UnicodeEncoding) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendLinesWithEncodingAsync)(self as *const _ as *mut _, absolutePath.get(), lines as *const _ as *mut _, encoding, &mut out);
+        let hr = ((*self.lpVtbl).AppendLinesWithEncodingAsync)(self as *const _ as *mut _, absolutePath.get(), lines.deref() as *const _ as *mut _, encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn read_buffer_async(&self, absolutePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<streams::IBuffer>>> { unsafe { 
@@ -875,9 +875,9 @@ impl IPathIOStatics {
         let hr = ((*self.lpVtbl).ReadBufferAsync)(self as *const _ as *mut _, absolutePath.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn write_buffer_async(&self, absolutePath: &HStringArg, buffer: &streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn write_buffer_async(&self, absolutePath: &HStringArg, buffer: &ComPtr<streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteBufferAsync)(self as *const _ as *mut _, absolutePath.get(), buffer as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).WriteBufferAsync)(self as *const _ as *mut _, absolutePath.get(), buffer.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn write_bytes_async(&self, absolutePath: &HStringArg, buffer: &[u8]) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -960,44 +960,44 @@ impl IStorageFile {
         let hr = ((*self.lpVtbl).OpenTransactedWriteAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn copy_overload_default_name_and_options(&self, destinationFolder: &IStorageFolder) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
+    #[inline] pub fn copy_overload_default_name_and_options(&self, destinationFolder: &ComPtr<IStorageFolder>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyOverloadDefaultNameAndOptions)(self as *const _ as *mut _, destinationFolder as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CopyOverloadDefaultNameAndOptions)(self as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn copy_overload_default_options(&self, destinationFolder: &IStorageFolder, desiredNewName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
+    #[inline] pub fn copy_overload_default_options(&self, destinationFolder: &ComPtr<IStorageFolder>, desiredNewName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyOverloadDefaultOptions)(self as *const _ as *mut _, destinationFolder as *const _ as *mut _, desiredNewName.get(), &mut out);
+        let hr = ((*self.lpVtbl).CopyOverloadDefaultOptions)(self as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, desiredNewName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn copy_overload(&self, destinationFolder: &IStorageFolder, desiredNewName: &HStringArg, option: NameCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
+    #[inline] pub fn copy_overload(&self, destinationFolder: &ComPtr<IStorageFolder>, desiredNewName: &HStringArg, option: NameCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyOverload)(self as *const _ as *mut _, destinationFolder as *const _ as *mut _, desiredNewName.get(), option, &mut out);
+        let hr = ((*self.lpVtbl).CopyOverload)(self as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, desiredNewName.get(), option, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn copy_and_replace_async(&self, fileToReplace: &IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn copy_and_replace_async(&self, fileToReplace: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyAndReplaceAsync)(self as *const _ as *mut _, fileToReplace as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CopyAndReplaceAsync)(self as *const _ as *mut _, fileToReplace.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn move_overload_default_name_and_options(&self, destinationFolder: &IStorageFolder) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn move_overload_default_name_and_options(&self, destinationFolder: &ComPtr<IStorageFolder>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).MoveOverloadDefaultNameAndOptions)(self as *const _ as *mut _, destinationFolder as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).MoveOverloadDefaultNameAndOptions)(self as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn move_overload_default_options(&self, destinationFolder: &IStorageFolder, desiredNewName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn move_overload_default_options(&self, destinationFolder: &ComPtr<IStorageFolder>, desiredNewName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).MoveOverloadDefaultOptions)(self as *const _ as *mut _, destinationFolder as *const _ as *mut _, desiredNewName.get(), &mut out);
+        let hr = ((*self.lpVtbl).MoveOverloadDefaultOptions)(self as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, desiredNewName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn move_overload(&self, destinationFolder: &IStorageFolder, desiredNewName: &HStringArg, option: NameCollisionOption) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn move_overload(&self, destinationFolder: &ComPtr<IStorageFolder>, desiredNewName: &HStringArg, option: NameCollisionOption) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).MoveOverload)(self as *const _ as *mut _, destinationFolder as *const _ as *mut _, desiredNewName.get(), option, &mut out);
+        let hr = ((*self.lpVtbl).MoveOverload)(self as *const _ as *mut _, destinationFolder.deref() as *const _ as *mut _, desiredNewName.get(), option, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn move_and_replace_async(&self, fileToReplace: &IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn move_and_replace_async(&self, fileToReplace: &ComPtr<IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).MoveAndReplaceAsync)(self as *const _ as *mut _, fileToReplace as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).MoveAndReplaceAsync)(self as *const _ as *mut _, fileToReplace.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1005,22 +1005,22 @@ RT_CLASS!{class StorageFile: IStorageFile}
 impl RtActivatable<IStorageFileStatics> for StorageFile {}
 impl StorageFile {
     #[inline] pub fn get_file_from_path_async(path: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().get_file_from_path_async(path)
+        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().deref().get_file_from_path_async(path)
     }
-    #[inline] pub fn get_file_from_application_uri_async(uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().get_file_from_application_uri_async(uri)
+    #[inline] pub fn get_file_from_application_uri_async(uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
+        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().deref().get_file_from_application_uri_async(uri)
     }
-    #[inline] pub fn create_streamed_file_async(displayNameWithExtension: &HStringArg, dataRequested: &StreamedFileDataRequestedHandler, thumbnail: &streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().create_streamed_file_async(displayNameWithExtension, dataRequested, thumbnail)
+    #[inline] pub fn create_streamed_file_async(displayNameWithExtension: &HStringArg, dataRequested: &ComPtr<StreamedFileDataRequestedHandler>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
+        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().deref().create_streamed_file_async(displayNameWithExtension, dataRequested, thumbnail)
     }
-    #[inline] pub fn replace_with_streamed_file_async(fileToReplace: &IStorageFile, dataRequested: &StreamedFileDataRequestedHandler, thumbnail: &streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().replace_with_streamed_file_async(fileToReplace, dataRequested, thumbnail)
+    #[inline] pub fn replace_with_streamed_file_async(fileToReplace: &ComPtr<IStorageFile>, dataRequested: &ComPtr<StreamedFileDataRequestedHandler>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
+        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().deref().replace_with_streamed_file_async(fileToReplace, dataRequested, thumbnail)
     }
-    #[inline] pub fn create_streamed_file_from_uri_async(displayNameWithExtension: &HStringArg, uri: &foundation::Uri, thumbnail: &streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().create_streamed_file_from_uri_async(displayNameWithExtension, uri, thumbnail)
+    #[inline] pub fn create_streamed_file_from_uri_async(displayNameWithExtension: &HStringArg, uri: &ComPtr<foundation::Uri>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
+        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().deref().create_streamed_file_from_uri_async(displayNameWithExtension, uri, thumbnail)
     }
-    #[inline] pub fn replace_with_streamed_file_from_uri_async(fileToReplace: &IStorageFile, uri: &foundation::Uri, thumbnail: &streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
-        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().replace_with_streamed_file_from_uri_async(fileToReplace, uri, thumbnail)
+    #[inline] pub fn replace_with_streamed_file_from_uri_async(fileToReplace: &ComPtr<IStorageFile>, uri: &ComPtr<foundation::Uri>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> {
+        <Self as RtActivatable<IStorageFileStatics>>::get_activation_factory().deref().replace_with_streamed_file_from_uri_async(fileToReplace, uri, thumbnail)
     }
 }
 DEFINE_CLSID!(StorageFile(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,70,105,108,101,0]) [CLSID_StorageFile]);
@@ -1067,29 +1067,29 @@ impl IStorageFileStatics {
         let hr = ((*self.lpVtbl).GetFileFromPathAsync)(self as *const _ as *mut _, path.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_file_from_application_uri_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
+    #[inline] pub fn get_file_from_application_uri_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFileFromApplicationUriAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetFileFromApplicationUriAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_streamed_file_async(&self, displayNameWithExtension: &HStringArg, dataRequested: &StreamedFileDataRequestedHandler, thumbnail: &streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
+    #[inline] pub fn create_streamed_file_async(&self, displayNameWithExtension: &HStringArg, dataRequested: &ComPtr<StreamedFileDataRequestedHandler>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateStreamedFileAsync)(self as *const _ as *mut _, displayNameWithExtension.get(), dataRequested as *const _ as *mut _, thumbnail as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateStreamedFileAsync)(self as *const _ as *mut _, displayNameWithExtension.get(), dataRequested.deref() as *const _ as *mut _, thumbnail.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn replace_with_streamed_file_async(&self, fileToReplace: &IStorageFile, dataRequested: &StreamedFileDataRequestedHandler, thumbnail: &streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
+    #[inline] pub fn replace_with_streamed_file_async(&self, fileToReplace: &ComPtr<IStorageFile>, dataRequested: &ComPtr<StreamedFileDataRequestedHandler>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReplaceWithStreamedFileAsync)(self as *const _ as *mut _, fileToReplace as *const _ as *mut _, dataRequested as *const _ as *mut _, thumbnail as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ReplaceWithStreamedFileAsync)(self as *const _ as *mut _, fileToReplace.deref() as *const _ as *mut _, dataRequested.deref() as *const _ as *mut _, thumbnail.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_streamed_file_from_uri_async(&self, displayNameWithExtension: &HStringArg, uri: &foundation::Uri, thumbnail: &streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
+    #[inline] pub fn create_streamed_file_from_uri_async(&self, displayNameWithExtension: &HStringArg, uri: &ComPtr<foundation::Uri>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateStreamedFileFromUriAsync)(self as *const _ as *mut _, displayNameWithExtension.get(), uri as *const _ as *mut _, thumbnail as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateStreamedFileFromUriAsync)(self as *const _ as *mut _, displayNameWithExtension.get(), uri.deref() as *const _ as *mut _, thumbnail.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn replace_with_streamed_file_from_uri_async(&self, fileToReplace: &IStorageFile, uri: &foundation::Uri, thumbnail: &streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
+    #[inline] pub fn replace_with_streamed_file_from_uri_async(&self, fileToReplace: &ComPtr<IStorageFile>, uri: &ComPtr<foundation::Uri>, thumbnail: &ComPtr<streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReplaceWithStreamedFileFromUriAsync)(self as *const _ as *mut _, fileToReplace as *const _ as *mut _, uri as *const _ as *mut _, thumbnail as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ReplaceWithStreamedFileFromUriAsync)(self as *const _ as *mut _, fileToReplace.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, thumbnail.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1162,7 +1162,7 @@ RT_CLASS!{class StorageFolder: IStorageFolder}
 impl RtActivatable<IStorageFolderStatics> for StorageFolder {}
 impl StorageFolder {
     #[inline] pub fn get_folder_from_path_async(path: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<StorageFolder>>> {
-        <Self as RtActivatable<IStorageFolderStatics>>::get_activation_factory().get_folder_from_path_async(path)
+        <Self as RtActivatable<IStorageFolderStatics>>::get_activation_factory().deref().get_folder_from_path_async(path)
     }
 }
 DEFINE_CLSID!(StorageFolder(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,70,111,108,100,101,114,0]) [CLSID_StorageFolder]);
@@ -1275,9 +1275,9 @@ impl IStorageItem2 {
         let hr = ((*self.lpVtbl).GetParentAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn is_equal(&self, item: &IStorageItem) -> Result<bool> { unsafe { 
+    #[inline] pub fn is_equal(&self, item: &ComPtr<IStorageItem>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsEqual)(self as *const _ as *mut _, item as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).IsEqual)(self as *const _ as *mut _, item.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1380,9 +1380,9 @@ impl IStorageLibrary {
         let hr = ((*self.lpVtbl).RequestAddFolderAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn request_remove_folder_async(&self, folder: &StorageFolder) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn request_remove_folder_async(&self, folder: &ComPtr<StorageFolder>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestRemoveFolderAsync)(self as *const _ as *mut _, folder as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestRemoveFolderAsync)(self as *const _ as *mut _, folder.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_folders(&self) -> Result<Option<ComPtr<foundation::collections::IObservableVector<StorageFolder>>>> { unsafe { 
@@ -1395,9 +1395,9 @@ impl IStorageLibrary {
         let hr = ((*self.lpVtbl).get_SaveFolder)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_definition_changed(&self, handler: &foundation::TypedEventHandler<StorageLibrary, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_definition_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<StorageLibrary, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DefinitionChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DefinitionChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_definition_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -1410,10 +1410,10 @@ impl RtActivatable<IStorageLibraryStatics> for StorageLibrary {}
 impl RtActivatable<IStorageLibraryStatics2> for StorageLibrary {}
 impl StorageLibrary {
     #[inline] pub fn get_library_async(libraryId: KnownLibraryId) -> Result<ComPtr<foundation::IAsyncOperation<StorageLibrary>>> {
-        <Self as RtActivatable<IStorageLibraryStatics>>::get_activation_factory().get_library_async(libraryId)
+        <Self as RtActivatable<IStorageLibraryStatics>>::get_activation_factory().deref().get_library_async(libraryId)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_library_for_user_async(user: &super::system::User, libraryId: KnownLibraryId) -> Result<ComPtr<foundation::IAsyncOperation<StorageLibrary>>> {
-        <Self as RtActivatable<IStorageLibraryStatics2>>::get_activation_factory().get_library_for_user_async(user, libraryId)
+    #[cfg(feature="windows-system")] #[inline] pub fn get_library_for_user_async(user: &ComPtr<super::system::User>, libraryId: KnownLibraryId) -> Result<ComPtr<foundation::IAsyncOperation<StorageLibrary>>> {
+        <Self as RtActivatable<IStorageLibraryStatics2>>::get_activation_factory().deref().get_library_for_user_async(user, libraryId)
     }
 }
 DEFINE_CLSID!(StorageLibrary(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,76,105,98,114,97,114,121,0]) [CLSID_StorageLibrary]);
@@ -1534,9 +1534,9 @@ RT_INTERFACE!{static interface IStorageLibraryStatics2(IStorageLibraryStatics2Vt
     #[cfg(feature="windows-system")] fn GetLibraryForUserAsync(&self, user: *mut super::system::User, libraryId: KnownLibraryId, out: *mut *mut foundation::IAsyncOperation<StorageLibrary>) -> HRESULT
 }}
 impl IStorageLibraryStatics2 {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_library_for_user_async(&self, user: &super::system::User, libraryId: KnownLibraryId) -> Result<ComPtr<foundation::IAsyncOperation<StorageLibrary>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_library_for_user_async(&self, user: &ComPtr<super::system::User>, libraryId: KnownLibraryId) -> Result<ComPtr<foundation::IAsyncOperation<StorageLibrary>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetLibraryForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, libraryId, &mut out);
+        let hr = ((*self.lpVtbl).GetLibraryForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, libraryId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1606,8 +1606,8 @@ RT_DELEGATE!{delegate StreamedFileDataRequestedHandler(StreamedFileDataRequested
     fn Invoke(&self, stream: *mut StreamedFileDataRequest) -> HRESULT
 }}
 impl StreamedFileDataRequestedHandler {
-    #[inline] pub fn invoke(&self, stream: &StreamedFileDataRequest) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, stream as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, stream: &ComPtr<StreamedFileDataRequest>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1731,7 +1731,7 @@ RT_CLASS!{class SystemDataPaths: ISystemDataPaths}
 impl RtActivatable<ISystemDataPathsStatics> for SystemDataPaths {}
 impl SystemDataPaths {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<SystemDataPaths>>> {
-        <Self as RtActivatable<ISystemDataPathsStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<ISystemDataPathsStatics>>::get_activation_factory().deref().get_default()
     }
 }
 DEFINE_CLSID!(SystemDataPaths(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,121,115,116,101,109,68,97,116,97,80,97,116,104,115,0]) [CLSID_SystemDataPaths]);
@@ -2001,43 +2001,43 @@ RT_CLASS!{static class SystemProperties}
 impl RtActivatable<ISystemProperties> for SystemProperties {}
 impl SystemProperties {
     #[inline] pub fn get_author() -> Result<HString> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_author()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_author()
     }
     #[inline] pub fn get_comment() -> Result<HString> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_comment()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_comment()
     }
     #[inline] pub fn get_item_name_display() -> Result<HString> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_item_name_display()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_item_name_display()
     }
     #[inline] pub fn get_keywords() -> Result<HString> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_keywords()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_keywords()
     }
     #[inline] pub fn get_rating() -> Result<HString> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_rating()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_rating()
     }
     #[inline] pub fn get_title() -> Result<HString> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_title()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_title()
     }
     #[inline] pub fn get_audio() -> Result<Option<ComPtr<SystemAudioProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_audio()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_audio()
     }
     #[inline] pub fn get_gps() -> Result<Option<ComPtr<SystemGPSProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_gps()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_gps()
     }
     #[inline] pub fn get_media() -> Result<Option<ComPtr<SystemMediaProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_media()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_media()
     }
     #[inline] pub fn get_music() -> Result<Option<ComPtr<SystemMusicProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_music()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_music()
     }
     #[inline] pub fn get_photo() -> Result<Option<ComPtr<SystemPhotoProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_photo()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_photo()
     }
     #[inline] pub fn get_video() -> Result<Option<ComPtr<SystemVideoProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_video()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_video()
     }
     #[inline] pub fn get_image() -> Result<Option<ComPtr<SystemImageProperties>>> {
-        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().get_image()
+        <Self as RtActivatable<ISystemProperties>>::get_activation_factory().deref().get_image()
     }
 }
 DEFINE_CLSID!(SystemProperties(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,121,115,116,101,109,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_SystemProperties]);
@@ -2199,11 +2199,11 @@ impl IUserDataPaths {
 RT_CLASS!{class UserDataPaths: IUserDataPaths}
 impl RtActivatable<IUserDataPathsStatics> for UserDataPaths {}
 impl UserDataPaths {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::system::User) -> Result<Option<ComPtr<UserDataPaths>>> {
-        <Self as RtActivatable<IUserDataPathsStatics>>::get_activation_factory().get_for_user(user)
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &ComPtr<super::system::User>) -> Result<Option<ComPtr<UserDataPaths>>> {
+        <Self as RtActivatable<IUserDataPathsStatics>>::get_activation_factory().deref().get_for_user(user)
     }
     #[inline] pub fn get_default() -> Result<Option<ComPtr<UserDataPaths>>> {
-        <Self as RtActivatable<IUserDataPathsStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IUserDataPathsStatics>>::get_activation_factory().deref().get_default()
     }
 }
 DEFINE_CLSID!(UserDataPaths(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,85,115,101,114,68,97,116,97,80,97,116,104,115,0]) [CLSID_UserDataPaths]);
@@ -2214,9 +2214,9 @@ RT_INTERFACE!{static interface IUserDataPathsStatics(IUserDataPathsStaticsVtbl):
     fn GetDefault(&self, out: *mut *mut UserDataPaths) -> HRESULT
 }}
 impl IUserDataPathsStatics {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &super::system::User) -> Result<Option<ComPtr<UserDataPaths>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &ComPtr<super::system::User>) -> Result<Option<ComPtr<UserDataPaths>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<UserDataPaths>>> { unsafe { 
@@ -2253,10 +2253,10 @@ RT_CLASS!{static class StorageApplicationPermissions}
 impl RtActivatable<IStorageApplicationPermissionsStatics> for StorageApplicationPermissions {}
 impl StorageApplicationPermissions {
     #[inline] pub fn get_future_access_list() -> Result<Option<ComPtr<StorageItemAccessList>>> {
-        <Self as RtActivatable<IStorageApplicationPermissionsStatics>>::get_activation_factory().get_future_access_list()
+        <Self as RtActivatable<IStorageApplicationPermissionsStatics>>::get_activation_factory().deref().get_future_access_list()
     }
     #[inline] pub fn get_most_recently_used_list() -> Result<Option<ComPtr<StorageItemMostRecentlyUsedList>>> {
-        <Self as RtActivatable<IStorageApplicationPermissionsStatics>>::get_activation_factory().get_most_recently_used_list()
+        <Self as RtActivatable<IStorageApplicationPermissionsStatics>>::get_activation_factory().deref().get_most_recently_used_list()
     }
 }
 DEFINE_CLSID!(StorageApplicationPermissions(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,99,99,101,115,115,67,97,99,104,101,46,83,116,111,114,97,103,101,65,112,112,108,105,99,97,116,105,111,110,80,101,114,109,105,115,115,105,111,110,115,0]) [CLSID_StorageApplicationPermissions]);
@@ -2297,22 +2297,22 @@ RT_INTERFACE!{interface IStorageItemAccessList(IStorageItemAccessListVtbl): IIns
     fn get_MaximumItemsAllowed(&self, out: *mut u32) -> HRESULT
 }}
 impl IStorageItemAccessList {
-    #[inline] pub fn add_overload_default_metadata(&self, file: &super::IStorageItem) -> Result<HString> { unsafe { 
+    #[inline] pub fn add_overload_default_metadata(&self, file: &ComPtr<super::IStorageItem>) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddOverloadDefaultMetadata)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AddOverloadDefaultMetadata)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add(&self, file: &super::IStorageItem, metadata: &HStringArg) -> Result<HString> { unsafe { 
+    #[inline] pub fn add(&self, file: &ComPtr<super::IStorageItem>, metadata: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Add)(self as *const _ as *mut _, file as *const _ as *mut _, metadata.get(), &mut out);
+        let hr = ((*self.lpVtbl).Add)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, metadata.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_or_replace_overload_default_metadata(&self, token: &HStringArg, file: &super::IStorageItem) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddOrReplaceOverloadDefaultMetadata)(self as *const _ as *mut _, token.get(), file as *const _ as *mut _);
+    #[inline] pub fn add_or_replace_overload_default_metadata(&self, token: &HStringArg, file: &ComPtr<super::IStorageItem>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddOrReplaceOverloadDefaultMetadata)(self as *const _ as *mut _, token.get(), file.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_or_replace(&self, token: &HStringArg, file: &super::IStorageItem, metadata: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddOrReplace)(self as *const _ as *mut _, token.get(), file as *const _ as *mut _, metadata.get());
+    #[inline] pub fn add_or_replace(&self, token: &HStringArg, file: &ComPtr<super::IStorageItem>, metadata: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddOrReplace)(self as *const _ as *mut _, token.get(), file.deref() as *const _ as *mut _, metadata.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_item_async(&self, token: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::IStorageItem>>> { unsafe { 
@@ -2358,9 +2358,9 @@ impl IStorageItemAccessList {
         let hr = ((*self.lpVtbl).Clear)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn check_access(&self, file: &super::IStorageItem) -> Result<bool> { unsafe { 
+    #[inline] pub fn check_access(&self, file: &ComPtr<super::IStorageItem>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).CheckAccess)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CheckAccess)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_entries(&self) -> Result<Option<ComPtr<AccessListEntryView>>> { unsafe { 
@@ -2381,9 +2381,9 @@ RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList(IStorageItemMostRecentl
     fn remove_ItemRemoved(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IStorageItemMostRecentlyUsedList {
-    #[inline] pub fn add_item_removed(&self, handler: &foundation::TypedEventHandler<StorageItemMostRecentlyUsedList, ItemRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_item_removed(&self, handler: &ComPtr<foundation::TypedEventHandler<StorageItemMostRecentlyUsedList, ItemRemovedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ItemRemoved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ItemRemoved)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_item_removed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -2398,13 +2398,13 @@ RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList2(IStorageItemMostRecent
     fn AddOrReplaceWithMetadataAndVisibility(&self, token: HSTRING, file: *mut super::IStorageItem, metadata: HSTRING, visibility: RecentStorageItemVisibility) -> HRESULT
 }}
 impl IStorageItemMostRecentlyUsedList2 {
-    #[inline] pub fn add_with_metadata_and_visibility(&self, file: &super::IStorageItem, metadata: &HStringArg, visibility: RecentStorageItemVisibility) -> Result<HString> { unsafe { 
+    #[inline] pub fn add_with_metadata_and_visibility(&self, file: &ComPtr<super::IStorageItem>, metadata: &HStringArg, visibility: RecentStorageItemVisibility) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWithMetadataAndVisibility)(self as *const _ as *mut _, file as *const _ as *mut _, metadata.get(), visibility, &mut out);
+        let hr = ((*self.lpVtbl).AddWithMetadataAndVisibility)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, metadata.get(), visibility, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_or_replace_with_metadata_and_visibility(&self, token: &HStringArg, file: &super::IStorageItem, metadata: &HStringArg, visibility: RecentStorageItemVisibility) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddOrReplaceWithMetadataAndVisibility)(self as *const _ as *mut _, token.get(), file as *const _ as *mut _, metadata.get(), visibility);
+    #[inline] pub fn add_or_replace_with_metadata_and_visibility(&self, token: &HStringArg, file: &ComPtr<super::IStorageItem>, metadata: &HStringArg, visibility: RecentStorageItemVisibility) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddOrReplaceWithMetadataAndVisibility)(self as *const _ as *mut _, token.get(), file.deref() as *const _ as *mut _, metadata.get(), visibility);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2474,17 +2474,17 @@ impl IFileInformationFactory {
 RT_CLASS!{class FileInformationFactory: IFileInformationFactory}
 impl RtActivatable<IFileInformationFactoryFactory> for FileInformationFactory {}
 impl FileInformationFactory {
-    #[inline] pub fn create_with_mode(queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode) -> Result<ComPtr<FileInformationFactory>> {
-        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode(queryResult, mode)
+    #[inline] pub fn create_with_mode(queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode) -> Result<ComPtr<FileInformationFactory>> {
+        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().deref().create_with_mode(queryResult, mode)
     }
-    #[inline] pub fn create_with_mode_and_size(queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32) -> Result<ComPtr<FileInformationFactory>> {
-        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode_and_size(queryResult, mode, requestedThumbnailSize)
+    #[inline] pub fn create_with_mode_and_size(queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32) -> Result<ComPtr<FileInformationFactory>> {
+        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().deref().create_with_mode_and_size(queryResult, mode, requestedThumbnailSize)
     }
-    #[inline] pub fn create_with_mode_and_size_and_options(queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions) -> Result<ComPtr<FileInformationFactory>> {
-        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode_and_size_and_options(queryResult, mode, requestedThumbnailSize, thumbnailOptions)
+    #[inline] pub fn create_with_mode_and_size_and_options(queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions) -> Result<ComPtr<FileInformationFactory>> {
+        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().deref().create_with_mode_and_size_and_options(queryResult, mode, requestedThumbnailSize, thumbnailOptions)
     }
-    #[inline] pub fn create_with_mode_and_size_and_options_and_flags(queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool) -> Result<ComPtr<FileInformationFactory>> {
-        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().create_with_mode_and_size_and_options_and_flags(queryResult, mode, requestedThumbnailSize, thumbnailOptions, delayLoad)
+    #[inline] pub fn create_with_mode_and_size_and_options_and_flags(queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool) -> Result<ComPtr<FileInformationFactory>> {
+        <Self as RtActivatable<IFileInformationFactoryFactory>>::get_activation_factory().deref().create_with_mode_and_size_and_options_and_flags(queryResult, mode, requestedThumbnailSize, thumbnailOptions, delayLoad)
     }
 }
 DEFINE_CLSID!(FileInformationFactory(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,66,117,108,107,65,99,99,101,115,115,46,70,105,108,101,73,110,102,111,114,109,97,116,105,111,110,70,97,99,116,111,114,121,0]) [CLSID_FileInformationFactory]);
@@ -2496,24 +2496,24 @@ RT_INTERFACE!{static interface IFileInformationFactoryFactory(IFileInformationFa
     fn CreateWithModeAndSizeAndOptionsAndFlags(&self, queryResult: *mut super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool, out: *mut *mut FileInformationFactory) -> HRESULT
 }}
 impl IFileInformationFactoryFactory {
-    #[inline] pub fn create_with_mode(&self, queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
+    #[inline] pub fn create_with_mode(&self, queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithMode)(self as *const _ as *mut _, queryResult as *const _ as *mut _, mode, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithMode)(self as *const _ as *mut _, queryResult.deref() as *const _ as *mut _, mode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_mode_and_size(&self, queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
+    #[inline] pub fn create_with_mode_and_size(&self, queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithModeAndSize)(self as *const _ as *mut _, queryResult as *const _ as *mut _, mode, requestedThumbnailSize, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithModeAndSize)(self as *const _ as *mut _, queryResult.deref() as *const _ as *mut _, mode, requestedThumbnailSize, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_mode_and_size_and_options(&self, queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
+    #[inline] pub fn create_with_mode_and_size_and_options(&self, queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithModeAndSizeAndOptions)(self as *const _ as *mut _, queryResult as *const _ as *mut _, mode, requestedThumbnailSize, thumbnailOptions, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithModeAndSizeAndOptions)(self as *const _ as *mut _, queryResult.deref() as *const _ as *mut _, mode, requestedThumbnailSize, thumbnailOptions, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_mode_and_size_and_options_and_flags(&self, queryResult: &super::search::IStorageQueryResultBase, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
+    #[inline] pub fn create_with_mode_and_size_and_options_and_flags(&self, queryResult: &ComPtr<super::search::IStorageQueryResultBase>, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, delayLoad: bool) -> Result<ComPtr<FileInformationFactory>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithModeAndSizeAndOptionsAndFlags)(self as *const _ as *mut _, queryResult as *const _ as *mut _, mode, requestedThumbnailSize, thumbnailOptions, delayLoad, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithModeAndSizeAndOptionsAndFlags)(self as *const _ as *mut _, queryResult.deref() as *const _ as *mut _, mode, requestedThumbnailSize, thumbnailOptions, delayLoad, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2562,18 +2562,18 @@ impl IStorageItemInformation {
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_thumbnail_updated(&self, changedHandler: &foundation::TypedEventHandler<IStorageItemInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_thumbnail_updated(&self, changedHandler: &ComPtr<foundation::TypedEventHandler<IStorageItemInformation, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ThumbnailUpdated)(self as *const _ as *mut _, changedHandler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ThumbnailUpdated)(self as *const _ as *mut _, changedHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_thumbnail_updated(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ThumbnailUpdated)(self as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_properties_updated(&self, changedHandler: &foundation::TypedEventHandler<IStorageItemInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_properties_updated(&self, changedHandler: &ComPtr<foundation::TypedEventHandler<IStorageItemInformation, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PropertiesUpdated)(self as *const _ as *mut _, changedHandler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PropertiesUpdated)(self as *const _ as *mut _, changedHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_properties_updated(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -2607,11 +2607,11 @@ impl ICompressor {
 RT_CLASS!{class Compressor: ICompressor}
 impl RtActivatable<ICompressorFactory> for Compressor {}
 impl Compressor {
-    #[inline] pub fn create_compressor(underlyingStream: &super::streams::IOutputStream) -> Result<ComPtr<Compressor>> {
-        <Self as RtActivatable<ICompressorFactory>>::get_activation_factory().create_compressor(underlyingStream)
+    #[inline] pub fn create_compressor(underlyingStream: &ComPtr<super::streams::IOutputStream>) -> Result<ComPtr<Compressor>> {
+        <Self as RtActivatable<ICompressorFactory>>::get_activation_factory().deref().create_compressor(underlyingStream)
     }
-    #[inline] pub fn create_compressor_ex(underlyingStream: &super::streams::IOutputStream, algorithm: CompressAlgorithm, blockSize: u32) -> Result<ComPtr<Compressor>> {
-        <Self as RtActivatable<ICompressorFactory>>::get_activation_factory().create_compressor_ex(underlyingStream, algorithm, blockSize)
+    #[inline] pub fn create_compressor_ex(underlyingStream: &ComPtr<super::streams::IOutputStream>, algorithm: CompressAlgorithm, blockSize: u32) -> Result<ComPtr<Compressor>> {
+        <Self as RtActivatable<ICompressorFactory>>::get_activation_factory().deref().create_compressor_ex(underlyingStream, algorithm, blockSize)
     }
 }
 DEFINE_CLSID!(Compressor(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,67,111,109,112,114,101,115,115,105,111,110,46,67,111,109,112,114,101,115,115,111,114,0]) [CLSID_Compressor]);
@@ -2621,14 +2621,14 @@ RT_INTERFACE!{static interface ICompressorFactory(ICompressorFactoryVtbl): IInsp
     fn CreateCompressorEx(&self, underlyingStream: *mut super::streams::IOutputStream, algorithm: CompressAlgorithm, blockSize: u32, out: *mut *mut Compressor) -> HRESULT
 }}
 impl ICompressorFactory {
-    #[inline] pub fn create_compressor(&self, underlyingStream: &super::streams::IOutputStream) -> Result<ComPtr<Compressor>> { unsafe { 
+    #[inline] pub fn create_compressor(&self, underlyingStream: &ComPtr<super::streams::IOutputStream>) -> Result<ComPtr<Compressor>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCompressor)(self as *const _ as *mut _, underlyingStream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateCompressor)(self as *const _ as *mut _, underlyingStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_compressor_ex(&self, underlyingStream: &super::streams::IOutputStream, algorithm: CompressAlgorithm, blockSize: u32) -> Result<ComPtr<Compressor>> { unsafe { 
+    #[inline] pub fn create_compressor_ex(&self, underlyingStream: &ComPtr<super::streams::IOutputStream>, algorithm: CompressAlgorithm, blockSize: u32) -> Result<ComPtr<Compressor>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCompressorEx)(self as *const _ as *mut _, underlyingStream as *const _ as *mut _, algorithm, blockSize, &mut out);
+        let hr = ((*self.lpVtbl).CreateCompressorEx)(self as *const _ as *mut _, underlyingStream.deref() as *const _ as *mut _, algorithm, blockSize, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2646,8 +2646,8 @@ impl IDecompressor {
 RT_CLASS!{class Decompressor: IDecompressor}
 impl RtActivatable<IDecompressorFactory> for Decompressor {}
 impl Decompressor {
-    #[inline] pub fn create_decompressor(underlyingStream: &super::streams::IInputStream) -> Result<ComPtr<Decompressor>> {
-        <Self as RtActivatable<IDecompressorFactory>>::get_activation_factory().create_decompressor(underlyingStream)
+    #[inline] pub fn create_decompressor(underlyingStream: &ComPtr<super::streams::IInputStream>) -> Result<ComPtr<Decompressor>> {
+        <Self as RtActivatable<IDecompressorFactory>>::get_activation_factory().deref().create_decompressor(underlyingStream)
     }
 }
 DEFINE_CLSID!(Decompressor(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,67,111,109,112,114,101,115,115,105,111,110,46,68,101,99,111,109,112,114,101,115,115,111,114,0]) [CLSID_Decompressor]);
@@ -2656,9 +2656,9 @@ RT_INTERFACE!{static interface IDecompressorFactory(IDecompressorFactoryVtbl): I
     fn CreateDecompressor(&self, underlyingStream: *mut super::streams::IInputStream, out: *mut *mut Decompressor) -> HRESULT
 }}
 impl IDecompressorFactory {
-    #[inline] pub fn create_decompressor(&self, underlyingStream: &super::streams::IInputStream) -> Result<ComPtr<Decompressor>> { unsafe { 
+    #[inline] pub fn create_decompressor(&self, underlyingStream: &ComPtr<super::streams::IInputStream>) -> Result<ComPtr<Decompressor>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDecompressor)(self as *const _ as *mut _, underlyingStream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateDecompressor)(self as *const _ as *mut _, underlyingStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2732,14 +2732,14 @@ RT_CLASS!{class DocumentProperties: IDocumentProperties}
 RT_CLASS!{static class GeotagHelper}
 impl RtActivatable<IGeotagHelperStatics> for GeotagHelper {}
 impl GeotagHelper {
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_geotag_async(file: &super::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint>>> {
-        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().get_geotag_async(file)
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_geotag_async(file: &ComPtr<super::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint>>> {
+        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().deref().get_geotag_async(file)
     }
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_from_geolocator_async(file: &super::IStorageFile, geolocator: &super::super::devices::geolocation::Geolocator) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().set_geotag_from_geolocator_async(file, geolocator)
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_from_geolocator_async(file: &ComPtr<super::IStorageFile>, geolocator: &ComPtr<super::super::devices::geolocation::Geolocator>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().deref().set_geotag_from_geolocator_async(file, geolocator)
     }
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_async(file: &super::IStorageFile, geopoint: &super::super::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().set_geotag_async(file, geopoint)
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_async(file: &ComPtr<super::IStorageFile>, geopoint: &ComPtr<super::super::devices::geolocation::Geopoint>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IGeotagHelperStatics>>::get_activation_factory().deref().set_geotag_async(file, geopoint)
     }
 }
 DEFINE_CLSID!(GeotagHelper(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,70,105,108,101,80,114,111,112,101,114,116,105,101,115,46,71,101,111,116,97,103,72,101,108,112,101,114,0]) [CLSID_GeotagHelper]);
@@ -2750,19 +2750,19 @@ RT_INTERFACE!{static interface IGeotagHelperStatics(IGeotagHelperStaticsVtbl): I
     #[cfg(feature="windows-devices")] fn SetGeotagAsync(&self, file: *mut super::IStorageFile, geopoint: *mut super::super::devices::geolocation::Geopoint, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IGeotagHelperStatics {
-    #[cfg(feature="windows-devices")] #[inline] pub fn get_geotag_async(&self, file: &super::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn get_geotag_async(&self, file: &ComPtr<super::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetGeotagAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetGeotagAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_from_geolocator_async(&self, file: &super::IStorageFile, geolocator: &super::super::devices::geolocation::Geolocator) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_from_geolocator_async(&self, file: &ComPtr<super::IStorageFile>, geolocator: &ComPtr<super::super::devices::geolocation::Geolocator>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetGeotagFromGeolocatorAsync)(self as *const _ as *mut _, file as *const _ as *mut _, geolocator as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetGeotagFromGeolocatorAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, geolocator.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_async(&self, file: &super::IStorageFile, geopoint: &super::super::devices::geolocation::Geopoint) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_geotag_async(&self, file: &ComPtr<super::IStorageFile>, geopoint: &ComPtr<super::super::devices::geolocation::Geopoint>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetGeotagAsync)(self as *const _ as *mut _, file as *const _ as *mut _, geopoint as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetGeotagAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, geopoint.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3059,14 +3059,14 @@ RT_INTERFACE!{interface IStorageItemExtraProperties(IStorageItemExtraPropertiesV
     fn SavePropertiesAsyncOverloadDefault(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IStorageItemExtraProperties {
-    #[inline] pub fn retrieve_properties_async(&self, propertiesToRetrieve: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMap<HString, IInspectable>>>> { unsafe { 
+    #[inline] pub fn retrieve_properties_async(&self, propertiesToRetrieve: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMap<HString, IInspectable>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RetrievePropertiesAsync)(self as *const _ as *mut _, propertiesToRetrieve as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RetrievePropertiesAsync)(self as *const _ as *mut _, propertiesToRetrieve.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn save_properties_async(&self, propertiesToSave: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, IInspectable>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn save_properties_async(&self, propertiesToSave: &ComPtr<foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, IInspectable>>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SavePropertiesAsync)(self as *const _ as *mut _, propertiesToSave as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SavePropertiesAsync)(self as *const _ as *mut _, propertiesToSave.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn save_properties_async_overload_default(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -3320,7 +3320,7 @@ impl RtActivatable<IFileOpenPickerStatics> for FileOpenPicker {}
 impl RtActivatable<IActivationFactory> for FileOpenPicker {}
 impl FileOpenPicker {
     #[inline] pub fn resume_pick_single_file_async() -> Result<ComPtr<foundation::IAsyncOperation<super::StorageFile>>> {
-        <Self as RtActivatable<IFileOpenPickerStatics>>::get_activation_factory().resume_pick_single_file_async()
+        <Self as RtActivatable<IFileOpenPickerStatics>>::get_activation_factory().deref().resume_pick_single_file_async()
     }
 }
 DEFINE_CLSID!(FileOpenPicker(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,105,99,107,101,114,115,46,70,105,108,101,79,112,101,110,80,105,99,107,101,114,0]) [CLSID_FileOpenPicker]);
@@ -3433,8 +3433,8 @@ impl IFileSavePicker {
         let hr = ((*self.lpVtbl).get_SuggestedSaveFile)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_suggested_save_file(&self, value: &super::StorageFile) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SuggestedSaveFile)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_suggested_save_file(&self, value: &ComPtr<super::StorageFile>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SuggestedSaveFile)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_suggested_file_name(&self) -> Result<HString> { unsafe { 
@@ -3595,9 +3595,9 @@ RT_INTERFACE!{interface IFileOpenPickerUI(IFileOpenPickerUIVtbl): IInspectable(I
     fn remove_Closing(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IFileOpenPickerUI {
-    #[inline] pub fn add_file(&self, id: &HStringArg, file: &super::super::IStorageFile) -> Result<AddFileResult> { unsafe { 
+    #[inline] pub fn add_file(&self, id: &HStringArg, file: &ComPtr<super::super::IStorageFile>) -> Result<AddFileResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).AddFile)(self as *const _ as *mut _, id.get(), file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AddFile)(self as *const _ as *mut _, id.get(), file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_file(&self, id: &HStringArg) -> Result<()> { unsafe { 
@@ -3609,9 +3609,9 @@ impl IFileOpenPickerUI {
         let hr = ((*self.lpVtbl).ContainsFile)(self as *const _ as *mut _, id.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn can_add_file(&self, file: &super::super::IStorageFile) -> Result<bool> { unsafe { 
+    #[inline] pub fn can_add_file(&self, file: &ComPtr<super::super::IStorageFile>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).CanAddFile)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CanAddFile)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_allowed_file_types(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
@@ -3638,18 +3638,18 @@ impl IFileOpenPickerUI {
         let hr = ((*self.lpVtbl).put_Title)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_file_removed(&self, handler: &foundation::TypedEventHandler<FileOpenPickerUI, FileRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_file_removed(&self, handler: &ComPtr<foundation::TypedEventHandler<FileOpenPickerUI, FileRemovedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FileRemoved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FileRemoved)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_file_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_FileRemoved)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_closing(&self, handler: &foundation::TypedEventHandler<FileOpenPickerUI, PickerClosingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_closing(&self, handler: &ComPtr<foundation::TypedEventHandler<FileOpenPickerUI, PickerClosingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Closing)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Closing)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_closing(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3713,18 +3713,18 @@ impl IFileSavePickerUI {
         let hr = ((*self.lpVtbl).TrySetFileName)(self as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_file_name_changed(&self, handler: &foundation::TypedEventHandler<FileSavePickerUI, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_file_name_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<FileSavePickerUI, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FileNameChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FileNameChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_file_name_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_FileNameChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_target_file_requested(&self, handler: &foundation::TypedEventHandler<FileSavePickerUI, TargetFileRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_target_file_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<FileSavePickerUI, TargetFileRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_TargetFileRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_TargetFileRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_target_file_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3798,8 +3798,8 @@ impl ITargetFileRequest {
         let hr = ((*self.lpVtbl).get_TargetFile)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_target_file(&self, value: &super::super::IStorageFile) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TargetFile)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_target_file(&self, value: &ComPtr<super::super::IStorageFile>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TargetFile)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<TargetFileRequestDeferral>>> { unsafe { 
@@ -3845,8 +3845,8 @@ RT_ENUM! { enum CachedFileTarget: i32 {
 RT_CLASS!{static class CachedFileUpdater}
 impl RtActivatable<ICachedFileUpdaterStatics> for CachedFileUpdater {}
 impl CachedFileUpdater {
-    #[inline] pub fn set_update_information(file: &super::IStorageFile, contentId: &HStringArg, readMode: ReadActivationMode, writeMode: WriteActivationMode, options: CachedFileOptions) -> Result<()> {
-        <Self as RtActivatable<ICachedFileUpdaterStatics>>::get_activation_factory().set_update_information(file, contentId, readMode, writeMode, options)
+    #[inline] pub fn set_update_information(file: &ComPtr<super::IStorageFile>, contentId: &HStringArg, readMode: ReadActivationMode, writeMode: WriteActivationMode, options: CachedFileOptions) -> Result<()> {
+        <Self as RtActivatable<ICachedFileUpdaterStatics>>::get_activation_factory().deref().set_update_information(file, contentId, readMode, writeMode, options)
     }
 }
 DEFINE_CLSID!(CachedFileUpdater(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,67,97,99,104,101,100,70,105,108,101,85,112,100,97,116,101,114,0]) [CLSID_CachedFileUpdater]);
@@ -3855,8 +3855,8 @@ RT_INTERFACE!{static interface ICachedFileUpdaterStatics(ICachedFileUpdaterStati
     fn SetUpdateInformation(&self, file: *mut super::IStorageFile, contentId: HSTRING, readMode: ReadActivationMode, writeMode: WriteActivationMode, options: CachedFileOptions) -> HRESULT
 }}
 impl ICachedFileUpdaterStatics {
-    #[inline] pub fn set_update_information(&self, file: &super::IStorageFile, contentId: &HStringArg, readMode: ReadActivationMode, writeMode: WriteActivationMode, options: CachedFileOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetUpdateInformation)(self as *const _ as *mut _, file as *const _ as *mut _, contentId.get(), readMode, writeMode, options);
+    #[inline] pub fn set_update_information(&self, file: &ComPtr<super::IStorageFile>, contentId: &HStringArg, readMode: ReadActivationMode, writeMode: WriteActivationMode, options: CachedFileOptions) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetUpdateInformation)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, contentId.get(), readMode, writeMode, options);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3886,18 +3886,18 @@ impl ICachedFileUpdaterUI {
         let hr = ((*self.lpVtbl).get_UpdateTarget)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_file_update_requested(&self, handler: &foundation::TypedEventHandler<CachedFileUpdaterUI, FileUpdateRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_file_update_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<CachedFileUpdaterUI, FileUpdateRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FileUpdateRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FileUpdateRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_file_update_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_FileUpdateRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_ui_requested(&self, handler: &foundation::TypedEventHandler<CachedFileUpdaterUI, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_ui_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<CachedFileUpdaterUI, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_UIRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_UIRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_ui_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3962,8 +3962,8 @@ impl IFileUpdateRequest {
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn update_local_file(&self, value: &super::IStorageFile) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).UpdateLocalFile)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn update_local_file(&self, value: &ComPtr<super::IStorageFile>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).UpdateLocalFile)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4099,8 +4099,8 @@ RT_ENUM! { enum StorageProviderInSyncPolicy: u32 {
 RT_CLASS!{static class StorageProviderItemProperties}
 impl RtActivatable<IStorageProviderItemPropertiesStatics> for StorageProviderItemProperties {}
 impl StorageProviderItemProperties {
-    #[inline] pub fn set_async(item: &super::IStorageItem, itemProperties: &foundation::collections::IIterable<StorageProviderItemProperty>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IStorageProviderItemPropertiesStatics>>::get_activation_factory().set_async(item, itemProperties)
+    #[inline] pub fn set_async(item: &ComPtr<super::IStorageItem>, itemProperties: &ComPtr<foundation::collections::IIterable<StorageProviderItemProperty>>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IStorageProviderItemPropertiesStatics>>::get_activation_factory().deref().set_async(item, itemProperties)
     }
 }
 DEFINE_CLSID!(StorageProviderItemProperties(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,73,116,101,109,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_StorageProviderItemProperties]);
@@ -4109,9 +4109,9 @@ RT_INTERFACE!{static interface IStorageProviderItemPropertiesStatics(IStoragePro
     fn SetAsync(&self, item: *mut super::IStorageItem, itemProperties: *mut foundation::collections::IIterable<StorageProviderItemProperty>, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IStorageProviderItemPropertiesStatics {
-    #[inline] pub fn set_async(&self, item: &super::IStorageItem, itemProperties: &foundation::collections::IIterable<StorageProviderItemProperty>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn set_async(&self, item: &ComPtr<super::IStorageItem>, itemProperties: &ComPtr<foundation::collections::IIterable<StorageProviderItemProperty>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetAsync)(self as *const _ as *mut _, item as *const _ as *mut _, itemProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetAsync)(self as *const _ as *mut _, item.deref() as *const _ as *mut _, itemProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4263,8 +4263,8 @@ impl IStorageProviderSyncRootInfo {
         let hr = ((*self.lpVtbl).get_Context)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_context(&self, value: &super::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Context)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_context(&self, value: &ComPtr<super::streams::IBuffer>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Context)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_path(&self) -> Result<Option<ComPtr<super::IStorageFolder>>> { unsafe { 
@@ -4272,8 +4272,8 @@ impl IStorageProviderSyncRootInfo {
         let hr = ((*self.lpVtbl).get_Path)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_path(&self, value: &super::IStorageFolder) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Path)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_path(&self, value: &ComPtr<super::IStorageFolder>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Path)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name_resource(&self) -> Result<HString> { unsafe { 
@@ -4385,8 +4385,8 @@ impl IStorageProviderSyncRootInfo {
         let hr = ((*self.lpVtbl).get_RecycleBinUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_recycle_bin_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_RecycleBinUri)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_recycle_bin_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_RecycleBinUri)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4412,20 +4412,20 @@ impl IStorageProviderSyncRootInfo2 {
 RT_CLASS!{static class StorageProviderSyncRootManager}
 impl RtActivatable<IStorageProviderSyncRootManagerStatics> for StorageProviderSyncRootManager {}
 impl StorageProviderSyncRootManager {
-    #[inline] pub fn register(syncRootInformation: &StorageProviderSyncRootInfo) -> Result<()> {
-        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().register(syncRootInformation)
+    #[inline] pub fn register(syncRootInformation: &ComPtr<StorageProviderSyncRootInfo>) -> Result<()> {
+        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().deref().register(syncRootInformation)
     }
     #[inline] pub fn unregister(id: &HStringArg) -> Result<()> {
-        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().unregister(id)
+        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().deref().unregister(id)
     }
-    #[inline] pub fn get_sync_root_information_for_folder(folder: &super::IStorageFolder) -> Result<Option<ComPtr<StorageProviderSyncRootInfo>>> {
-        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().get_sync_root_information_for_folder(folder)
+    #[inline] pub fn get_sync_root_information_for_folder(folder: &ComPtr<super::IStorageFolder>) -> Result<Option<ComPtr<StorageProviderSyncRootInfo>>> {
+        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().deref().get_sync_root_information_for_folder(folder)
     }
     #[inline] pub fn get_sync_root_information_for_id(id: &HStringArg) -> Result<Option<ComPtr<StorageProviderSyncRootInfo>>> {
-        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().get_sync_root_information_for_id(id)
+        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().deref().get_sync_root_information_for_id(id)
     }
     #[inline] pub fn get_current_sync_roots() -> Result<Option<ComPtr<foundation::collections::IVectorView<StorageProviderSyncRootInfo>>>> {
-        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().get_current_sync_roots()
+        <Self as RtActivatable<IStorageProviderSyncRootManagerStatics>>::get_activation_factory().deref().get_current_sync_roots()
     }
 }
 DEFINE_CLSID!(StorageProviderSyncRootManager(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,83,121,110,99,82,111,111,116,77,97,110,97,103,101,114,0]) [CLSID_StorageProviderSyncRootManager]);
@@ -4438,17 +4438,17 @@ RT_INTERFACE!{static interface IStorageProviderSyncRootManagerStatics(IStoragePr
     fn GetCurrentSyncRoots(&self, out: *mut *mut foundation::collections::IVectorView<StorageProviderSyncRootInfo>) -> HRESULT
 }}
 impl IStorageProviderSyncRootManagerStatics {
-    #[inline] pub fn register(&self, syncRootInformation: &StorageProviderSyncRootInfo) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Register)(self as *const _ as *mut _, syncRootInformation as *const _ as *mut _);
+    #[inline] pub fn register(&self, syncRootInformation: &ComPtr<StorageProviderSyncRootInfo>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Register)(self as *const _ as *mut _, syncRootInformation.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn unregister(&self, id: &HStringArg) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).Unregister)(self as *const _ as *mut _, id.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_sync_root_information_for_folder(&self, folder: &super::IStorageFolder) -> Result<Option<ComPtr<StorageProviderSyncRootInfo>>> { unsafe { 
+    #[inline] pub fn get_sync_root_information_for_folder(&self, folder: &ComPtr<super::IStorageFolder>) -> Result<Option<ComPtr<StorageProviderSyncRootInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSyncRootInformationForFolder)(self as *const _ as *mut _, folder as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetSyncRootInformationForFolder)(self as *const _ as *mut _, folder.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sync_root_information_for_id(&self, id: &HStringArg) -> Result<Option<ComPtr<StorageProviderSyncRootInfo>>> { unsafe { 
@@ -4468,12 +4468,12 @@ RT_INTERFACE!{interface IStorageProviderUriSource(IStorageProviderUriSourceVtbl)
     fn GetContentInfoForPath(&self, path: HSTRING, result: *mut StorageProviderGetContentInfoForPathResult) -> HRESULT
 }}
 impl IStorageProviderUriSource {
-    #[inline] pub fn get_path_for_content_uri(&self, contentUri: &HStringArg, result: &StorageProviderGetPathForContentUriResult) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).GetPathForContentUri)(self as *const _ as *mut _, contentUri.get(), result as *const _ as *mut _);
+    #[inline] pub fn get_path_for_content_uri(&self, contentUri: &HStringArg, result: &ComPtr<StorageProviderGetPathForContentUriResult>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).GetPathForContentUri)(self as *const _ as *mut _, contentUri.get(), result.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_content_info_for_path(&self, path: &HStringArg, result: &StorageProviderGetContentInfoForPathResult) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).GetContentInfoForPath)(self as *const _ as *mut _, path.get(), result as *const _ as *mut _);
+    #[inline] pub fn get_content_info_for_path(&self, path: &HStringArg, result: &ComPtr<StorageProviderGetContentInfoForPathResult>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).GetContentInfoForPath)(self as *const _ as *mut _, path.get(), result.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4506,14 +4506,14 @@ RT_INTERFACE!{interface IContentIndexer(IContentIndexerVtbl): IInspectable(IInsp
     fn get_Revision(&self, out: *mut u64) -> HRESULT
 }}
 impl IContentIndexer {
-    #[inline] pub fn add_async(&self, indexableContent: &IIndexableContent) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn add_async(&self, indexableContent: &ComPtr<IIndexableContent>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddAsync)(self as *const _ as *mut _, indexableContent as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AddAsync)(self as *const _ as *mut _, indexableContent.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn update_async(&self, indexableContent: &IIndexableContent) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn update_async(&self, indexableContent: &ComPtr<IIndexableContent>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UpdateAsync)(self as *const _ as *mut _, indexableContent as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).UpdateAsync)(self as *const _ as *mut _, indexableContent.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_async(&self, contentId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -4521,9 +4521,9 @@ impl IContentIndexer {
         let hr = ((*self.lpVtbl).DeleteAsync)(self as *const _ as *mut _, contentId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn delete_multiple_async(&self, contentIds: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn delete_multiple_async(&self, contentIds: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteMultipleAsync)(self as *const _ as *mut _, contentIds as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).DeleteMultipleAsync)(self as *const _ as *mut _, contentIds.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_all_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -4531,9 +4531,9 @@ impl IContentIndexer {
         let hr = ((*self.lpVtbl).DeleteAllAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn retrieve_properties_async(&self, contentId: &HStringArg, propertiesToRetrieve: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<HString, IInspectable>>>> { unsafe { 
+    #[inline] pub fn retrieve_properties_async(&self, contentId: &HStringArg, propertiesToRetrieve: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<HString, IInspectable>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RetrievePropertiesAsync)(self as *const _ as *mut _, contentId.get(), propertiesToRetrieve as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RetrievePropertiesAsync)(self as *const _ as *mut _, contentId.get(), propertiesToRetrieve.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_revision(&self) -> Result<u64> { unsafe { 
@@ -4546,10 +4546,10 @@ RT_CLASS!{class ContentIndexer: IContentIndexer}
 impl RtActivatable<IContentIndexerStatics> for ContentIndexer {}
 impl ContentIndexer {
     #[inline] pub fn get_indexer_with_name(indexName: &HStringArg) -> Result<Option<ComPtr<ContentIndexer>>> {
-        <Self as RtActivatable<IContentIndexerStatics>>::get_activation_factory().get_indexer_with_name(indexName)
+        <Self as RtActivatable<IContentIndexerStatics>>::get_activation_factory().deref().get_indexer_with_name(indexName)
     }
     #[inline] pub fn get_indexer() -> Result<Option<ComPtr<ContentIndexer>>> {
-        <Self as RtActivatable<IContentIndexerStatics>>::get_activation_factory().get_indexer()
+        <Self as RtActivatable<IContentIndexerStatics>>::get_activation_factory().deref().get_indexer()
     }
 }
 DEFINE_CLSID!(ContentIndexer(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,67,111,110,116,101,110,116,73,110,100,101,120,101,114,0]) [CLSID_ContentIndexer]);
@@ -4602,19 +4602,19 @@ RT_INTERFACE!{interface IContentIndexerQueryOperations(IContentIndexerQueryOpera
     fn CreateQuery(&self, searchFilter: HSTRING, propertiesToRetrieve: *mut foundation::collections::IIterable<HString>, out: *mut *mut ContentIndexerQuery) -> HRESULT
 }}
 impl IContentIndexerQueryOperations {
-    #[inline] pub fn create_query_with_sort_order_and_language(&self, searchFilter: &HStringArg, propertiesToRetrieve: &foundation::collections::IIterable<HString>, sortOrder: &foundation::collections::IIterable<SortEntry>, searchFilterLanguage: &HStringArg) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
+    #[inline] pub fn create_query_with_sort_order_and_language(&self, searchFilter: &HStringArg, propertiesToRetrieve: &ComPtr<foundation::collections::IIterable<HString>>, sortOrder: &ComPtr<foundation::collections::IIterable<SortEntry>>, searchFilterLanguage: &HStringArg) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateQueryWithSortOrderAndLanguage)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve as *const _ as *mut _, sortOrder as *const _ as *mut _, searchFilterLanguage.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateQueryWithSortOrderAndLanguage)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve.deref() as *const _ as *mut _, sortOrder.deref() as *const _ as *mut _, searchFilterLanguage.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_query_with_sort_order(&self, searchFilter: &HStringArg, propertiesToRetrieve: &foundation::collections::IIterable<HString>, sortOrder: &foundation::collections::IIterable<SortEntry>) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
+    #[inline] pub fn create_query_with_sort_order(&self, searchFilter: &HStringArg, propertiesToRetrieve: &ComPtr<foundation::collections::IIterable<HString>>, sortOrder: &ComPtr<foundation::collections::IIterable<SortEntry>>) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateQueryWithSortOrder)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve as *const _ as *mut _, sortOrder as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateQueryWithSortOrder)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve.deref() as *const _ as *mut _, sortOrder.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_query(&self, searchFilter: &HStringArg, propertiesToRetrieve: &foundation::collections::IIterable<HString>) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
+    #[inline] pub fn create_query(&self, searchFilter: &HStringArg, propertiesToRetrieve: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<Option<ComPtr<ContentIndexerQuery>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateQuery)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateQuery)(self as *const _ as *mut _, searchFilter.get(), propertiesToRetrieve.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4671,8 +4671,8 @@ impl IIndexableContent {
         let hr = ((*self.lpVtbl).get_Stream)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_stream(&self, value: &super::streams::IRandomAccessStream) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Stream)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_stream(&self, value: &ComPtr<super::streams::IRandomAccessStream>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Stream)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_stream_content_type(&self) -> Result<HString> { unsafe { 
@@ -4794,8 +4794,8 @@ impl IQueryOptions {
         let hr = ((*self.lpVtbl).SetThumbnailPrefetch)(self as *const _ as *mut _, mode, requestedSize, options);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn set_property_prefetch(&self, options: super::fileproperties::PropertyPrefetchOptions, propertiesToRetrieve: &foundation::collections::IIterable<HString>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetPropertyPrefetch)(self as *const _ as *mut _, options, propertiesToRetrieve as *const _ as *mut _);
+    #[inline] pub fn set_property_prefetch(&self, options: super::fileproperties::PropertyPrefetchOptions, propertiesToRetrieve: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetPropertyPrefetch)(self as *const _ as *mut _, options, propertiesToRetrieve.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4803,11 +4803,11 @@ RT_CLASS!{class QueryOptions: IQueryOptions}
 impl RtActivatable<IQueryOptionsFactory> for QueryOptions {}
 impl RtActivatable<IActivationFactory> for QueryOptions {}
 impl QueryOptions {
-    #[inline] pub fn create_common_file_query(query: CommonFileQuery, fileTypeFilter: &foundation::collections::IIterable<HString>) -> Result<ComPtr<QueryOptions>> {
-        <Self as RtActivatable<IQueryOptionsFactory>>::get_activation_factory().create_common_file_query(query, fileTypeFilter)
+    #[inline] pub fn create_common_file_query(query: CommonFileQuery, fileTypeFilter: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<QueryOptions>> {
+        <Self as RtActivatable<IQueryOptionsFactory>>::get_activation_factory().deref().create_common_file_query(query, fileTypeFilter)
     }
     #[inline] pub fn create_common_folder_query(query: CommonFolderQuery) -> Result<ComPtr<QueryOptions>> {
-        <Self as RtActivatable<IQueryOptionsFactory>>::get_activation_factory().create_common_folder_query(query)
+        <Self as RtActivatable<IQueryOptionsFactory>>::get_activation_factory().deref().create_common_folder_query(query)
     }
 }
 DEFINE_CLSID!(QueryOptions(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_QueryOptions]);
@@ -4817,9 +4817,9 @@ RT_INTERFACE!{static interface IQueryOptionsFactory(IQueryOptionsFactoryVtbl): I
     fn CreateCommonFolderQuery(&self, query: CommonFolderQuery, out: *mut *mut QueryOptions) -> HRESULT
 }}
 impl IQueryOptionsFactory {
-    #[inline] pub fn create_common_file_query(&self, query: CommonFileQuery, fileTypeFilter: &foundation::collections::IIterable<HString>) -> Result<ComPtr<QueryOptions>> { unsafe { 
+    #[inline] pub fn create_common_file_query(&self, query: CommonFileQuery, fileTypeFilter: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<QueryOptions>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCommonFileQuery)(self as *const _ as *mut _, query, fileTypeFilter as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateCommonFileQuery)(self as *const _ as *mut _, query, fileTypeFilter.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_common_folder_query(&self, query: CommonFolderQuery) -> Result<ComPtr<QueryOptions>> { unsafe { 
@@ -4866,9 +4866,9 @@ RT_INTERFACE!{interface IStorageFileQueryResult2(IStorageFileQueryResult2Vtbl): 
     #[cfg(feature="windows-data")] fn GetMatchingPropertiesWithRanges(&self, file: *mut super::StorageFile, out: *mut *mut foundation::collections::IMap<HString, foundation::collections::IVectorView<super::super::data::text::TextSegment>>) -> HRESULT
 }}
 impl IStorageFileQueryResult2 {
-    #[cfg(feature="windows-data")] #[inline] pub fn get_matching_properties_with_ranges(&self, file: &super::StorageFile) -> Result<Option<ComPtr<foundation::collections::IMap<HString, foundation::collections::IVectorView<super::super::data::text::TextSegment>>>>> { unsafe { 
+    #[cfg(feature="windows-data")] #[inline] pub fn get_matching_properties_with_ranges(&self, file: &ComPtr<super::StorageFile>) -> Result<Option<ComPtr<foundation::collections::IMap<HString, foundation::collections::IVectorView<super::super::data::text::TextSegment>>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetMatchingPropertiesWithRanges)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetMatchingPropertiesWithRanges)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4908,9 +4908,9 @@ impl IStorageFolderQueryOperations {
         let hr = ((*self.lpVtbl).CreateFileQuery)(self as *const _ as *mut _, query, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_file_query_with_options(&self, queryOptions: &QueryOptions) -> Result<Option<ComPtr<StorageFileQueryResult>>> { unsafe { 
+    #[inline] pub fn create_file_query_with_options(&self, queryOptions: &ComPtr<QueryOptions>) -> Result<Option<ComPtr<StorageFileQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileQueryWithOptions)(self as *const _ as *mut _, queryOptions as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFileQueryWithOptions)(self as *const _ as *mut _, queryOptions.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_folder_query_overload_default(&self) -> Result<Option<ComPtr<StorageFolderQueryResult>>> { unsafe { 
@@ -4923,9 +4923,9 @@ impl IStorageFolderQueryOperations {
         let hr = ((*self.lpVtbl).CreateFolderQuery)(self as *const _ as *mut _, query, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_folder_query_with_options(&self, queryOptions: &QueryOptions) -> Result<Option<ComPtr<StorageFolderQueryResult>>> { unsafe { 
+    #[inline] pub fn create_folder_query_with_options(&self, queryOptions: &ComPtr<QueryOptions>) -> Result<Option<ComPtr<StorageFolderQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFolderQueryWithOptions)(self as *const _ as *mut _, queryOptions as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFolderQueryWithOptions)(self as *const _ as *mut _, queryOptions.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_item_query(&self) -> Result<Option<ComPtr<StorageItemQueryResult>>> { unsafe { 
@@ -4933,9 +4933,9 @@ impl IStorageFolderQueryOperations {
         let hr = ((*self.lpVtbl).CreateItemQuery)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_item_query_with_options(&self, queryOptions: &QueryOptions) -> Result<Option<ComPtr<StorageItemQueryResult>>> { unsafe { 
+    #[inline] pub fn create_item_query_with_options(&self, queryOptions: &ComPtr<QueryOptions>) -> Result<Option<ComPtr<StorageItemQueryResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateItemQueryWithOptions)(self as *const _ as *mut _, queryOptions as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateItemQueryWithOptions)(self as *const _ as *mut _, queryOptions.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_files_async(&self, query: CommonFileQuery, startIndex: u32, maxItemsToRetrieve: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>>>> { unsafe { 
@@ -4963,9 +4963,9 @@ impl IStorageFolderQueryOperations {
         let hr = ((*self.lpVtbl).GetItemsAsync)(self as *const _ as *mut _, startIndex, maxItemsToRetrieve, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn are_query_options_supported(&self, queryOptions: &QueryOptions) -> Result<bool> { unsafe { 
+    #[inline] pub fn are_query_options_supported(&self, queryOptions: &ComPtr<QueryOptions>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).AreQueryOptionsSupported)(self as *const _ as *mut _, queryOptions as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AreQueryOptionsSupported)(self as *const _ as *mut _, queryOptions.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_common_folder_query_supported(&self, query: CommonFolderQuery) -> Result<bool> { unsafe { 
@@ -5074,27 +5074,27 @@ impl IStorageQueryResultBase {
         let hr = ((*self.lpVtbl).get_Folder)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_contents_changed(&self, handler: &foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_contents_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ContentsChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ContentsChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_contents_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ContentsChanged)(self as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_options_changed(&self, changedHandler: &foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_options_changed(&self, changedHandler: &ComPtr<foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_OptionsChanged)(self as *const _ as *mut _, changedHandler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_OptionsChanged)(self as *const _ as *mut _, changedHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_options_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_OptionsChanged)(self as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn find_start_index_async(&self, value: &IInspectable) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
+    #[inline] pub fn find_start_index_async(&self, value: &ComPtr<IInspectable>) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindStartIndexAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FindStartIndexAsync)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_query_options(&self) -> Result<Option<ComPtr<QueryOptions>>> { unsafe { 
@@ -5102,8 +5102,8 @@ impl IStorageQueryResultBase {
         let hr = ((*self.lpVtbl).GetCurrentQueryOptions)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn apply_new_query_options(&self, newQueryOptions: &QueryOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ApplyNewQueryOptions)(self as *const _ as *mut _, newQueryOptions as *const _ as *mut _);
+    #[inline] pub fn apply_new_query_options(&self, newQueryOptions: &ComPtr<QueryOptions>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ApplyNewQueryOptions)(self as *const _ as *mut _, newQueryOptions.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5129,8 +5129,8 @@ impl IValueAndLanguage {
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_value(&self, value: &IInspectable) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_value(&self, value: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5167,13 +5167,13 @@ impl RtActivatable<IBufferFactory> for Buffer {}
 impl RtActivatable<IBufferStatics> for Buffer {}
 impl Buffer {
     #[inline] pub fn create(capacity: u32) -> Result<ComPtr<Buffer>> {
-        <Self as RtActivatable<IBufferFactory>>::get_activation_factory().create(capacity)
+        <Self as RtActivatable<IBufferFactory>>::get_activation_factory().deref().create(capacity)
     }
-    #[inline] pub fn create_copy_from_memory_buffer(input: &foundation::IMemoryBuffer) -> Result<Option<ComPtr<Buffer>>> {
-        <Self as RtActivatable<IBufferStatics>>::get_activation_factory().create_copy_from_memory_buffer(input)
+    #[inline] pub fn create_copy_from_memory_buffer(input: &ComPtr<foundation::IMemoryBuffer>) -> Result<Option<ComPtr<Buffer>>> {
+        <Self as RtActivatable<IBufferStatics>>::get_activation_factory().deref().create_copy_from_memory_buffer(input)
     }
-    #[inline] pub fn create_memory_buffer_over_ibuffer(input: &IBuffer) -> Result<Option<ComPtr<foundation::MemoryBuffer>>> {
-        <Self as RtActivatable<IBufferStatics>>::get_activation_factory().create_memory_buffer_over_ibuffer(input)
+    #[inline] pub fn create_memory_buffer_over_ibuffer(input: &ComPtr<IBuffer>) -> Result<Option<ComPtr<foundation::MemoryBuffer>>> {
+        <Self as RtActivatable<IBufferStatics>>::get_activation_factory().deref().create_memory_buffer_over_ibuffer(input)
     }
 }
 DEFINE_CLSID!(Buffer(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,66,117,102,102,101,114,0]) [CLSID_Buffer]);
@@ -5194,14 +5194,14 @@ RT_INTERFACE!{static interface IBufferStatics(IBufferStaticsVtbl): IInspectable(
     fn CreateMemoryBufferOverIBuffer(&self, input: *mut IBuffer, out: *mut *mut foundation::MemoryBuffer) -> HRESULT
 }}
 impl IBufferStatics {
-    #[inline] pub fn create_copy_from_memory_buffer(&self, input: &foundation::IMemoryBuffer) -> Result<Option<ComPtr<Buffer>>> { unsafe { 
+    #[inline] pub fn create_copy_from_memory_buffer(&self, input: &ComPtr<foundation::IMemoryBuffer>) -> Result<Option<ComPtr<Buffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCopyFromMemoryBuffer)(self as *const _ as *mut _, input as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateCopyFromMemoryBuffer)(self as *const _ as *mut _, input.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_memory_buffer_over_ibuffer(&self, input: &IBuffer) -> Result<Option<ComPtr<foundation::MemoryBuffer>>> { unsafe { 
+    #[inline] pub fn create_memory_buffer_over_ibuffer(&self, input: &ComPtr<IBuffer>) -> Result<Option<ComPtr<foundation::MemoryBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateMemoryBufferOverIBuffer)(self as *const _ as *mut _, input as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateMemoryBufferOverIBuffer)(self as *const _ as *mut _, input.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5380,11 +5380,11 @@ RT_CLASS!{class DataReader: IDataReader}
 impl RtActivatable<IDataReaderFactory> for DataReader {}
 impl RtActivatable<IDataReaderStatics> for DataReader {}
 impl DataReader {
-    #[inline] pub fn create_data_reader(inputStream: &IInputStream) -> Result<ComPtr<DataReader>> {
-        <Self as RtActivatable<IDataReaderFactory>>::get_activation_factory().create_data_reader(inputStream)
+    #[inline] pub fn create_data_reader(inputStream: &ComPtr<IInputStream>) -> Result<ComPtr<DataReader>> {
+        <Self as RtActivatable<IDataReaderFactory>>::get_activation_factory().deref().create_data_reader(inputStream)
     }
-    #[inline] pub fn from_buffer(buffer: &IBuffer) -> Result<Option<ComPtr<DataReader>>> {
-        <Self as RtActivatable<IDataReaderStatics>>::get_activation_factory().from_buffer(buffer)
+    #[inline] pub fn from_buffer(buffer: &ComPtr<IBuffer>) -> Result<Option<ComPtr<DataReader>>> {
+        <Self as RtActivatable<IDataReaderStatics>>::get_activation_factory().deref().from_buffer(buffer)
     }
 }
 DEFINE_CLSID!(DataReader(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,82,101,97,100,101,114,0]) [CLSID_DataReader]);
@@ -5393,9 +5393,9 @@ RT_INTERFACE!{static interface IDataReaderFactory(IDataReaderFactoryVtbl): IInsp
     fn CreateDataReader(&self, inputStream: *mut IInputStream, out: *mut *mut DataReader) -> HRESULT
 }}
 impl IDataReaderFactory {
-    #[inline] pub fn create_data_reader(&self, inputStream: &IInputStream) -> Result<ComPtr<DataReader>> { unsafe { 
+    #[inline] pub fn create_data_reader(&self, inputStream: &ComPtr<IInputStream>) -> Result<ComPtr<DataReader>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDataReader)(self as *const _ as *mut _, inputStream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateDataReader)(self as *const _ as *mut _, inputStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5405,9 +5405,9 @@ RT_INTERFACE!{static interface IDataReaderStatics(IDataReaderStaticsVtbl): IInsp
     fn FromBuffer(&self, buffer: *mut IBuffer, out: *mut *mut DataReader) -> HRESULT
 }}
 impl IDataReaderStatics {
-    #[inline] pub fn from_buffer(&self, buffer: &IBuffer) -> Result<Option<ComPtr<DataReader>>> { unsafe { 
+    #[inline] pub fn from_buffer(&self, buffer: &ComPtr<IBuffer>) -> Result<Option<ComPtr<DataReader>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FromBuffer)(self as *const _ as *mut _, buffer as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FromBuffer)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5473,12 +5473,12 @@ impl IDataWriter {
         let hr = ((*self.lpVtbl).WriteBytes)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn write_buffer(&self, buffer: &IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteBuffer)(self as *const _ as *mut _, buffer as *const _ as *mut _);
+    #[inline] pub fn write_buffer(&self, buffer: &ComPtr<IBuffer>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteBuffer)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn write_buffer_range(&self, buffer: &IBuffer, start: u32, count: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).WriteBufferRange)(self as *const _ as *mut _, buffer as *const _ as *mut _, start, count);
+    #[inline] pub fn write_buffer_range(&self, buffer: &ComPtr<IBuffer>, start: u32, count: u32) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).WriteBufferRange)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _, start, count);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn write_boolean(&self, value: bool) -> Result<()> { unsafe { 
@@ -5564,8 +5564,8 @@ RT_CLASS!{class DataWriter: IDataWriter}
 impl RtActivatable<IDataWriterFactory> for DataWriter {}
 impl RtActivatable<IActivationFactory> for DataWriter {}
 impl DataWriter {
-    #[inline] pub fn create_data_writer(outputStream: &IOutputStream) -> Result<ComPtr<DataWriter>> {
-        <Self as RtActivatable<IDataWriterFactory>>::get_activation_factory().create_data_writer(outputStream)
+    #[inline] pub fn create_data_writer(outputStream: &ComPtr<IOutputStream>) -> Result<ComPtr<DataWriter>> {
+        <Self as RtActivatable<IDataWriterFactory>>::get_activation_factory().deref().create_data_writer(outputStream)
     }
 }
 DEFINE_CLSID!(DataWriter(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,87,114,105,116,101,114,0]) [CLSID_DataWriter]);
@@ -5574,9 +5574,9 @@ RT_INTERFACE!{static interface IDataWriterFactory(IDataWriterFactoryVtbl): IInsp
     fn CreateDataWriter(&self, outputStream: *mut IOutputStream, out: *mut *mut DataWriter) -> HRESULT
 }}
 impl IDataWriterFactory {
-    #[inline] pub fn create_data_writer(&self, outputStream: &IOutputStream) -> Result<ComPtr<DataWriter>> { unsafe { 
+    #[inline] pub fn create_data_writer(&self, outputStream: &ComPtr<IOutputStream>) -> Result<ComPtr<DataWriter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDataWriter)(self as *const _ as *mut _, outputStream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateDataWriter)(self as *const _ as *mut _, outputStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5590,28 +5590,28 @@ RT_CLASS!{class FileRandomAccessStream: IRandomAccessStream}
 impl RtActivatable<IFileRandomAccessStreamStatics> for FileRandomAccessStream {}
 impl FileRandomAccessStream {
     #[inline] pub fn open_async(filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_async(filePath, accessMode)
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_async(filePath, accessMode)
     }
     #[inline] pub fn open_with_options_async(filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_with_options_async(filePath, accessMode, sharingOptions, openDisposition)
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_with_options_async(filePath, accessMode, sharingOptions, openDisposition)
     }
     #[inline] pub fn open_transacted_write_async(filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_async(filePath)
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_transacted_write_async(filePath)
     }
     #[inline] pub fn open_transacted_write_with_options_async(filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_with_options_async(filePath, openOptions, openDisposition)
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_transacted_write_with_options_async(filePath, openOptions, openDisposition)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_async(user: &super::super::system::User, filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_for_user_async(user, filePath, accessMode)
+    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_async(user: &ComPtr<super::super::system::User>, filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_for_user_async(user, filePath, accessMode)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_with_options_async(user: &super::super::system::User, filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_for_user_with_options_async(user, filePath, accessMode, sharingOptions, openDisposition)
+    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_with_options_async(user: &ComPtr<super::super::system::User>, filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> {
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_for_user_with_options_async(user, filePath, accessMode, sharingOptions, openDisposition)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_async(user: &super::super::system::User, filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_for_user_async(user, filePath)
+    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_async(user: &ComPtr<super::super::system::User>, filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_transacted_write_for_user_async(user, filePath)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_with_options_async(user: &super::super::system::User, filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
-        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().open_transacted_write_for_user_with_options_async(user, filePath, openOptions, openDisposition)
+    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_with_options_async(user: &ComPtr<super::super::system::User>, filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> {
+        <Self as RtActivatable<IFileRandomAccessStreamStatics>>::get_activation_factory().deref().open_transacted_write_for_user_with_options_async(user, filePath, openOptions, openDisposition)
     }
 }
 DEFINE_CLSID!(FileRandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,70,105,108,101,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_FileRandomAccessStream]);
@@ -5647,24 +5647,24 @@ impl IFileRandomAccessStreamStatics {
         let hr = ((*self.lpVtbl).OpenTransactedWriteWithOptionsAsync)(self as *const _ as *mut _, filePath.get(), openOptions, openDisposition, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_async(&self, user: &super::super::system::User, filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_async(&self, user: &ComPtr<super::super::system::User>, filePath: &HStringArg, accessMode: super::FileAccessMode) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, filePath.get(), accessMode, &mut out);
+        let hr = ((*self.lpVtbl).OpenForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, filePath.get(), accessMode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_with_options_async(&self, user: &super::super::system::User, filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn open_for_user_with_options_async(&self, user: &ComPtr<super::super::system::User>, filePath: &HStringArg, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenForUserWithOptionsAsync)(self as *const _ as *mut _, user as *const _ as *mut _, filePath.get(), accessMode, sharingOptions, openDisposition, &mut out);
+        let hr = ((*self.lpVtbl).OpenForUserWithOptionsAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, filePath.get(), accessMode, sharingOptions, openDisposition, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_async(&self, user: &super::super::system::User, filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_async(&self, user: &ComPtr<super::super::system::User>, filePath: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenTransactedWriteForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, filePath.get(), &mut out);
+        let hr = ((*self.lpVtbl).OpenTransactedWriteForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, filePath.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_with_options_async(&self, user: &super::super::system::User, filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn open_transacted_write_for_user_with_options_async(&self, user: &ComPtr<super::super::system::User>, filePath: &HStringArg, openOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition) -> Result<ComPtr<foundation::IAsyncOperation<super::StorageStreamTransaction>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenTransactedWriteForUserWithOptionsAsync)(self as *const _ as *mut _, user as *const _ as *mut _, filePath.get(), openOptions, openDisposition, &mut out);
+        let hr = ((*self.lpVtbl).OpenTransactedWriteForUserWithOptionsAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, filePath.get(), openOptions, openDisposition, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5676,9 +5676,9 @@ RT_INTERFACE!{interface IInputStream(IInputStreamVtbl): IInspectable(IInspectabl
     fn ReadAsync(&self, buffer: *mut IBuffer, count: u32, options: InputStreamOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<IBuffer, u32>) -> HRESULT
 }}
 impl IInputStream {
-    #[inline] pub fn read_async(&self, buffer: &IBuffer, count: u32, options: InputStreamOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<IBuffer, u32>>> { unsafe { 
+    #[inline] pub fn read_async(&self, buffer: &ComPtr<IBuffer>, count: u32, options: InputStreamOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<IBuffer, u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadAsync)(self as *const _ as *mut _, buffer as *const _ as *mut _, count, options, &mut out);
+        let hr = ((*self.lpVtbl).ReadAsync)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _, count, options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5703,9 +5703,9 @@ RT_INTERFACE!{interface IOutputStream(IOutputStreamVtbl): IInspectable(IInspecta
     fn FlushAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
 impl IOutputStream {
-    #[inline] pub fn write_async(&self, buffer: &IBuffer) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u32, u32>>> { unsafe { 
+    #[inline] pub fn write_async(&self, buffer: &ComPtr<IBuffer>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u32, u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).WriteAsync)(self as *const _ as *mut _, buffer as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).WriteAsync)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn flush_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
@@ -5775,14 +5775,14 @@ impl IRandomAccessStream {
 RT_CLASS!{static class RandomAccessStream}
 impl RtActivatable<IRandomAccessStreamStatics> for RandomAccessStream {}
 impl RandomAccessStream {
-    #[inline] pub fn copy_async(source: &IInputStream, destination: &IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
-        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().copy_async(source, destination)
+    #[inline] pub fn copy_async(source: &ComPtr<IInputStream>, destination: &ComPtr<IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
+        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().deref().copy_async(source, destination)
     }
-    #[inline] pub fn copy_size_async(source: &IInputStream, destination: &IOutputStream, bytesToCopy: u64) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
-        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().copy_size_async(source, destination, bytesToCopy)
+    #[inline] pub fn copy_size_async(source: &ComPtr<IInputStream>, destination: &ComPtr<IOutputStream>, bytesToCopy: u64) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
+        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().deref().copy_size_async(source, destination, bytesToCopy)
     }
-    #[inline] pub fn copy_and_close_async(source: &IInputStream, destination: &IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
-        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().copy_and_close_async(source, destination)
+    #[inline] pub fn copy_and_close_async(source: &ComPtr<IInputStream>, destination: &ComPtr<IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> {
+        <Self as RtActivatable<IRandomAccessStreamStatics>>::get_activation_factory().deref().copy_and_close_async(source, destination)
     }
 }
 DEFINE_CLSID!(RandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_RandomAccessStream]);
@@ -5801,14 +5801,14 @@ impl IRandomAccessStreamReference {
 RT_CLASS!{class RandomAccessStreamReference: IRandomAccessStreamReference}
 impl RtActivatable<IRandomAccessStreamReferenceStatics> for RandomAccessStreamReference {}
 impl RandomAccessStreamReference {
-    #[inline] pub fn create_from_file(file: &super::IStorageFile) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
-        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().create_from_file(file)
+    #[inline] pub fn create_from_file(file: &ComPtr<super::IStorageFile>) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
+        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().deref().create_from_file(file)
     }
-    #[inline] pub fn create_from_uri(uri: &foundation::Uri) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
-        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().create_from_uri(uri)
+    #[inline] pub fn create_from_uri(uri: &ComPtr<foundation::Uri>) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
+        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().deref().create_from_uri(uri)
     }
-    #[inline] pub fn create_from_stream(stream: &IRandomAccessStream) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
-        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().create_from_stream(stream)
+    #[inline] pub fn create_from_stream(stream: &ComPtr<IRandomAccessStream>) -> Result<Option<ComPtr<RandomAccessStreamReference>>> {
+        <Self as RtActivatable<IRandomAccessStreamReferenceStatics>>::get_activation_factory().deref().create_from_stream(stream)
     }
 }
 DEFINE_CLSID!(RandomAccessStreamReference(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,82,101,102,101,114,101,110,99,101,0]) [CLSID_RandomAccessStreamReference]);
@@ -5819,19 +5819,19 @@ RT_INTERFACE!{static interface IRandomAccessStreamReferenceStatics(IRandomAccess
     fn CreateFromStream(&self, stream: *mut IRandomAccessStream, out: *mut *mut RandomAccessStreamReference) -> HRESULT
 }}
 impl IRandomAccessStreamReferenceStatics {
-    #[inline] pub fn create_from_file(&self, file: &super::IStorageFile) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
+    #[inline] pub fn create_from_file(&self, file: &ComPtr<super::IStorageFile>) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromFile)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromFile)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_uri(&self, uri: &foundation::Uri) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
+    #[inline] pub fn create_from_uri(&self, uri: &ComPtr<foundation::Uri>) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromUri)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromUri)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_stream(&self, stream: &IRandomAccessStream) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
+    #[inline] pub fn create_from_stream(&self, stream: &ComPtr<IRandomAccessStream>) -> Result<Option<ComPtr<RandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStream)(self as *const _ as *mut _, stream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromStream)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5842,19 +5842,19 @@ RT_INTERFACE!{static interface IRandomAccessStreamStatics(IRandomAccessStreamSta
     fn CopyAndCloseAsync(&self, source: *mut IInputStream, destination: *mut IOutputStream, out: *mut *mut foundation::IAsyncOperationWithProgress<u64, u64>) -> HRESULT
 }}
 impl IRandomAccessStreamStatics {
-    #[inline] pub fn copy_async(&self, source: &IInputStream, destination: &IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
+    #[inline] pub fn copy_async(&self, source: &ComPtr<IInputStream>, destination: &ComPtr<IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyAsync)(self as *const _ as *mut _, source as *const _ as *mut _, destination as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CopyAsync)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, destination.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn copy_size_async(&self, source: &IInputStream, destination: &IOutputStream, bytesToCopy: u64) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
+    #[inline] pub fn copy_size_async(&self, source: &ComPtr<IInputStream>, destination: &ComPtr<IOutputStream>, bytesToCopy: u64) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopySizeAsync)(self as *const _ as *mut _, source as *const _ as *mut _, destination as *const _ as *mut _, bytesToCopy, &mut out);
+        let hr = ((*self.lpVtbl).CopySizeAsync)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, destination.deref() as *const _ as *mut _, bytesToCopy, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn copy_and_close_async(&self, source: &IInputStream, destination: &IOutputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
+    #[inline] pub fn copy_and_close_async(&self, source: &ComPtr<IInputStream>, destination: &ComPtr<IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u64, u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyAndCloseAsync)(self as *const _ as *mut _, source as *const _ as *mut _, destination as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CopyAndCloseAsync)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, destination.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }

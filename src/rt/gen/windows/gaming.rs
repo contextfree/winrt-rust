@@ -21,23 +21,23 @@ RT_CLASS!{class ArcadeStick: IArcadeStick}
 impl RtActivatable<IArcadeStickStatics> for ArcadeStick {}
 impl RtActivatable<IArcadeStickStatics2> for ArcadeStick {}
 impl ArcadeStick {
-    #[inline] pub fn add_arcade_stick_added(value: &foundation::EventHandler<ArcadeStick>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().add_arcade_stick_added(value)
+    #[inline] pub fn add_arcade_stick_added(value: &ComPtr<foundation::EventHandler<ArcadeStick>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().deref().add_arcade_stick_added(value)
     }
     #[inline] pub fn remove_arcade_stick_added(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().remove_arcade_stick_added(token)
+        <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().deref().remove_arcade_stick_added(token)
     }
-    #[inline] pub fn add_arcade_stick_removed(value: &foundation::EventHandler<ArcadeStick>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().add_arcade_stick_removed(value)
+    #[inline] pub fn add_arcade_stick_removed(value: &ComPtr<foundation::EventHandler<ArcadeStick>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().deref().add_arcade_stick_removed(value)
     }
     #[inline] pub fn remove_arcade_stick_removed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().remove_arcade_stick_removed(token)
+        <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().deref().remove_arcade_stick_removed(token)
     }
     #[inline] pub fn get_arcade_sticks() -> Result<Option<ComPtr<foundation::collections::IVectorView<ArcadeStick>>>> {
-        <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().get_arcade_sticks()
+        <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().deref().get_arcade_sticks()
     }
-    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<Option<ComPtr<ArcadeStick>>> {
-        <Self as RtActivatable<IArcadeStickStatics2>>::get_activation_factory().from_game_controller(gameController)
+    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<ArcadeStick>>> {
+        <Self as RtActivatable<IArcadeStickStatics2>>::get_activation_factory().deref().from_game_controller(gameController)
     }
 }
 DEFINE_CLSID!(ArcadeStick(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,65,114,99,97,100,101,83,116,105,99,107,0]) [CLSID_ArcadeStick]);
@@ -56,18 +56,18 @@ RT_INTERFACE!{static interface IArcadeStickStatics(IArcadeStickStaticsVtbl): IIn
     fn get_ArcadeSticks(&self, out: *mut *mut foundation::collections::IVectorView<ArcadeStick>) -> HRESULT
 }}
 impl IArcadeStickStatics {
-    #[inline] pub fn add_arcade_stick_added(&self, value: &foundation::EventHandler<ArcadeStick>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_arcade_stick_added(&self, value: &ComPtr<foundation::EventHandler<ArcadeStick>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ArcadeStickAdded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ArcadeStickAdded)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_arcade_stick_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ArcadeStickAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_arcade_stick_removed(&self, value: &foundation::EventHandler<ArcadeStick>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_arcade_stick_removed(&self, value: &ComPtr<foundation::EventHandler<ArcadeStick>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ArcadeStickRemoved)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ArcadeStickRemoved)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_arcade_stick_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -85,9 +85,9 @@ RT_INTERFACE!{static interface IArcadeStickStatics2(IArcadeStickStatics2Vtbl): I
     fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut ArcadeStick) -> HRESULT
 }}
 impl IArcadeStickStatics2 {
-    #[inline] pub fn from_game_controller(&self, gameController: &IGameController) -> Result<Option<ComPtr<ArcadeStick>>> { unsafe { 
+    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<ArcadeStick>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FromGameController)(self as *const _ as *mut _, gameController as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FromGameController)(self as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -117,23 +117,23 @@ impl IFlightStick {
 RT_CLASS!{class FlightStick: IFlightStick}
 impl RtActivatable<IFlightStickStatics> for FlightStick {}
 impl FlightStick {
-    #[inline] pub fn add_flight_stick_added(value: &foundation::EventHandler<FlightStick>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().add_flight_stick_added(value)
+    #[inline] pub fn add_flight_stick_added(value: &ComPtr<foundation::EventHandler<FlightStick>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().deref().add_flight_stick_added(value)
     }
     #[inline] pub fn remove_flight_stick_added(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().remove_flight_stick_added(token)
+        <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().deref().remove_flight_stick_added(token)
     }
-    #[inline] pub fn add_flight_stick_removed(value: &foundation::EventHandler<FlightStick>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().add_flight_stick_removed(value)
+    #[inline] pub fn add_flight_stick_removed(value: &ComPtr<foundation::EventHandler<FlightStick>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().deref().add_flight_stick_removed(value)
     }
     #[inline] pub fn remove_flight_stick_removed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().remove_flight_stick_removed(token)
+        <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().deref().remove_flight_stick_removed(token)
     }
     #[inline] pub fn get_flight_sticks() -> Result<Option<ComPtr<foundation::collections::IVectorView<FlightStick>>>> {
-        <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().get_flight_sticks()
+        <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().deref().get_flight_sticks()
     }
-    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<Option<ComPtr<FlightStick>>> {
-        <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().from_game_controller(gameController)
+    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<FlightStick>>> {
+        <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().deref().from_game_controller(gameController)
     }
 }
 DEFINE_CLSID!(FlightStick(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,108,105,103,104,116,83,116,105,99,107,0]) [CLSID_FlightStick]);
@@ -153,18 +153,18 @@ RT_INTERFACE!{static interface IFlightStickStatics(IFlightStickStaticsVtbl): IIn
     fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut FlightStick) -> HRESULT
 }}
 impl IFlightStickStatics {
-    #[inline] pub fn add_flight_stick_added(&self, value: &foundation::EventHandler<FlightStick>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_flight_stick_added(&self, value: &ComPtr<foundation::EventHandler<FlightStick>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FlightStickAdded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FlightStickAdded)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_flight_stick_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_FlightStickAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_flight_stick_removed(&self, value: &foundation::EventHandler<FlightStick>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_flight_stick_removed(&self, value: &ComPtr<foundation::EventHandler<FlightStick>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FlightStickRemoved)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FlightStickRemoved)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_flight_stick_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -176,9 +176,9 @@ impl IFlightStickStatics {
         let hr = ((*self.lpVtbl).get_FlightSticks)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn from_game_controller(&self, gameController: &IGameController) -> Result<Option<ComPtr<FlightStick>>> { unsafe { 
+    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<FlightStick>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FromGameController)(self as *const _ as *mut _, gameController as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FromGameController)(self as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -195,27 +195,27 @@ RT_INTERFACE!{interface IGameController(IGameControllerVtbl): IInspectable(IInsp
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
 }}
 impl IGameController {
-    #[inline] pub fn add_headset_connected(&self, value: &foundation::TypedEventHandler<IGameController, Headset>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_headset_connected(&self, value: &ComPtr<foundation::TypedEventHandler<IGameController, Headset>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_HeadsetConnected)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_HeadsetConnected)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_headset_connected(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_HeadsetConnected)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_headset_disconnected(&self, value: &foundation::TypedEventHandler<IGameController, Headset>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_headset_disconnected(&self, value: &ComPtr<foundation::TypedEventHandler<IGameController, Headset>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_HeadsetDisconnected)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_HeadsetDisconnected)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_headset_disconnected(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_HeadsetDisconnected)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn add_user_changed(&self, value: &foundation::TypedEventHandler<IGameController, super::super::system::UserChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn add_user_changed(&self, value: &ComPtr<foundation::TypedEventHandler<IGameController, super::super::system::UserChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_UserChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_UserChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_user_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -284,23 +284,23 @@ RT_CLASS!{class Gamepad: IGamepad}
 impl RtActivatable<IGamepadStatics> for Gamepad {}
 impl RtActivatable<IGamepadStatics2> for Gamepad {}
 impl Gamepad {
-    #[inline] pub fn add_gamepad_added(value: &foundation::EventHandler<Gamepad>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().add_gamepad_added(value)
+    #[inline] pub fn add_gamepad_added(value: &ComPtr<foundation::EventHandler<Gamepad>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().deref().add_gamepad_added(value)
     }
     #[inline] pub fn remove_gamepad_added(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().remove_gamepad_added(token)
+        <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().deref().remove_gamepad_added(token)
     }
-    #[inline] pub fn add_gamepad_removed(value: &foundation::EventHandler<Gamepad>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().add_gamepad_removed(value)
+    #[inline] pub fn add_gamepad_removed(value: &ComPtr<foundation::EventHandler<Gamepad>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().deref().add_gamepad_removed(value)
     }
     #[inline] pub fn remove_gamepad_removed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().remove_gamepad_removed(token)
+        <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().deref().remove_gamepad_removed(token)
     }
     #[inline] pub fn get_gamepads() -> Result<Option<ComPtr<foundation::collections::IVectorView<Gamepad>>>> {
-        <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().get_gamepads()
+        <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().deref().get_gamepads()
     }
-    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<Option<ComPtr<Gamepad>>> {
-        <Self as RtActivatable<IGamepadStatics2>>::get_activation_factory().from_game_controller(gameController)
+    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<Gamepad>>> {
+        <Self as RtActivatable<IGamepadStatics2>>::get_activation_factory().deref().from_game_controller(gameController)
     }
 }
 DEFINE_CLSID!(Gamepad(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,71,97,109,101,112,97,100,0]) [CLSID_Gamepad]);
@@ -330,18 +330,18 @@ RT_INTERFACE!{static interface IGamepadStatics(IGamepadStaticsVtbl): IInspectabl
     fn get_Gamepads(&self, out: *mut *mut foundation::collections::IVectorView<Gamepad>) -> HRESULT
 }}
 impl IGamepadStatics {
-    #[inline] pub fn add_gamepad_added(&self, value: &foundation::EventHandler<Gamepad>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_gamepad_added(&self, value: &ComPtr<foundation::EventHandler<Gamepad>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_GamepadAdded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_GamepadAdded)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_gamepad_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_GamepadAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_gamepad_removed(&self, value: &foundation::EventHandler<Gamepad>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_gamepad_removed(&self, value: &ComPtr<foundation::EventHandler<Gamepad>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_GamepadRemoved)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_GamepadRemoved)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_gamepad_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -359,9 +359,9 @@ RT_INTERFACE!{static interface IGamepadStatics2(IGamepadStatics2Vtbl): IInspecta
     fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut Gamepad) -> HRESULT
 }}
 impl IGamepadStatics2 {
-    #[inline] pub fn from_game_controller(&self, gameController: &IGameController) -> Result<Option<ComPtr<Gamepad>>> { unsafe { 
+    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<Gamepad>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FromGameController)(self as *const _ as *mut _, gameController as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FromGameController)(self as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -446,23 +446,23 @@ RT_CLASS!{class RacingWheel: IRacingWheel}
 impl RtActivatable<IRacingWheelStatics> for RacingWheel {}
 impl RtActivatable<IRacingWheelStatics2> for RacingWheel {}
 impl RacingWheel {
-    #[inline] pub fn add_racing_wheel_added(value: &foundation::EventHandler<RacingWheel>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().add_racing_wheel_added(value)
+    #[inline] pub fn add_racing_wheel_added(value: &ComPtr<foundation::EventHandler<RacingWheel>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().deref().add_racing_wheel_added(value)
     }
     #[inline] pub fn remove_racing_wheel_added(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().remove_racing_wheel_added(token)
+        <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().deref().remove_racing_wheel_added(token)
     }
-    #[inline] pub fn add_racing_wheel_removed(value: &foundation::EventHandler<RacingWheel>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().add_racing_wheel_removed(value)
+    #[inline] pub fn add_racing_wheel_removed(value: &ComPtr<foundation::EventHandler<RacingWheel>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().deref().add_racing_wheel_removed(value)
     }
     #[inline] pub fn remove_racing_wheel_removed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().remove_racing_wheel_removed(token)
+        <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().deref().remove_racing_wheel_removed(token)
     }
     #[inline] pub fn get_racing_wheels() -> Result<Option<ComPtr<foundation::collections::IVectorView<RacingWheel>>>> {
-        <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().get_racing_wheels()
+        <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().deref().get_racing_wheels()
     }
-    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<Option<ComPtr<RacingWheel>>> {
-        <Self as RtActivatable<IRacingWheelStatics2>>::get_activation_factory().from_game_controller(gameController)
+    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<RacingWheel>>> {
+        <Self as RtActivatable<IRacingWheelStatics2>>::get_activation_factory().deref().from_game_controller(gameController)
     }
 }
 DEFINE_CLSID!(RacingWheel(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,82,97,99,105,110,103,87,104,101,101,108,0]) [CLSID_RacingWheel]);
@@ -481,18 +481,18 @@ RT_INTERFACE!{static interface IRacingWheelStatics(IRacingWheelStaticsVtbl): IIn
     fn get_RacingWheels(&self, out: *mut *mut foundation::collections::IVectorView<RacingWheel>) -> HRESULT
 }}
 impl IRacingWheelStatics {
-    #[inline] pub fn add_racing_wheel_added(&self, value: &foundation::EventHandler<RacingWheel>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_racing_wheel_added(&self, value: &ComPtr<foundation::EventHandler<RacingWheel>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RacingWheelAdded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RacingWheelAdded)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_racing_wheel_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_RacingWheelAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_racing_wheel_removed(&self, value: &foundation::EventHandler<RacingWheel>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_racing_wheel_removed(&self, value: &ComPtr<foundation::EventHandler<RacingWheel>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RacingWheelRemoved)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RacingWheelRemoved)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_racing_wheel_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -510,9 +510,9 @@ RT_INTERFACE!{static interface IRacingWheelStatics2(IRacingWheelStatics2Vtbl): I
     fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut RacingWheel) -> HRESULT
 }}
 impl IRacingWheelStatics2 {
-    #[inline] pub fn from_game_controller(&self, gameController: &IGameController) -> Result<Option<ComPtr<RacingWheel>>> { unsafe { 
+    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<RacingWheel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FromGameController)(self as *const _ as *mut _, gameController as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FromGameController)(self as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -578,23 +578,23 @@ impl IRawGameController {
 RT_CLASS!{class RawGameController: IRawGameController}
 impl RtActivatable<IRawGameControllerStatics> for RawGameController {}
 impl RawGameController {
-    #[inline] pub fn add_raw_game_controller_added(value: &foundation::EventHandler<RawGameController>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().add_raw_game_controller_added(value)
+    #[inline] pub fn add_raw_game_controller_added(value: &ComPtr<foundation::EventHandler<RawGameController>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().deref().add_raw_game_controller_added(value)
     }
     #[inline] pub fn remove_raw_game_controller_added(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().remove_raw_game_controller_added(token)
+        <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().deref().remove_raw_game_controller_added(token)
     }
-    #[inline] pub fn add_raw_game_controller_removed(value: &foundation::EventHandler<RawGameController>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().add_raw_game_controller_removed(value)
+    #[inline] pub fn add_raw_game_controller_removed(value: &ComPtr<foundation::EventHandler<RawGameController>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().deref().add_raw_game_controller_removed(value)
     }
     #[inline] pub fn remove_raw_game_controller_removed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().remove_raw_game_controller_removed(token)
+        <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().deref().remove_raw_game_controller_removed(token)
     }
     #[inline] pub fn get_raw_game_controllers() -> Result<Option<ComPtr<foundation::collections::IVectorView<RawGameController>>>> {
-        <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().get_raw_game_controllers()
+        <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().deref().get_raw_game_controllers()
     }
-    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<Option<ComPtr<RawGameController>>> {
-        <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().from_game_controller(gameController)
+    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<RawGameController>>> {
+        <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().deref().from_game_controller(gameController)
     }
 }
 DEFINE_CLSID!(RawGameController(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,82,97,119,71,97,109,101,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_RawGameController]);
@@ -632,18 +632,18 @@ RT_INTERFACE!{static interface IRawGameControllerStatics(IRawGameControllerStati
     fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut RawGameController) -> HRESULT
 }}
 impl IRawGameControllerStatics {
-    #[inline] pub fn add_raw_game_controller_added(&self, value: &foundation::EventHandler<RawGameController>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_raw_game_controller_added(&self, value: &ComPtr<foundation::EventHandler<RawGameController>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RawGameControllerAdded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RawGameControllerAdded)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_raw_game_controller_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_RawGameControllerAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_raw_game_controller_removed(&self, value: &foundation::EventHandler<RawGameController>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_raw_game_controller_removed(&self, value: &ComPtr<foundation::EventHandler<RawGameController>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RawGameControllerRemoved)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RawGameControllerRemoved)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_raw_game_controller_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -655,9 +655,9 @@ impl IRawGameControllerStatics {
         let hr = ((*self.lpVtbl).get_RawGameControllers)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn from_game_controller(&self, gameController: &IGameController) -> Result<Option<ComPtr<RawGameController>>> { unsafe { 
+    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<RawGameController>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FromGameController)(self as *const _ as *mut _, gameController as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FromGameController)(self as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -691,23 +691,23 @@ RT_CLASS!{class UINavigationController: IUINavigationController}
 impl RtActivatable<IUINavigationControllerStatics> for UINavigationController {}
 impl RtActivatable<IUINavigationControllerStatics2> for UINavigationController {}
 impl UINavigationController {
-    #[inline] pub fn add_ui_navigation_controller_added(value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().add_ui_navigation_controller_added(value)
+    #[inline] pub fn add_ui_navigation_controller_added(value: &ComPtr<foundation::EventHandler<UINavigationController>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().deref().add_ui_navigation_controller_added(value)
     }
     #[inline] pub fn remove_ui_navigation_controller_added(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().remove_ui_navigation_controller_added(token)
+        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().deref().remove_ui_navigation_controller_added(token)
     }
-    #[inline] pub fn add_ui_navigation_controller_removed(value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().add_ui_navigation_controller_removed(value)
+    #[inline] pub fn add_ui_navigation_controller_removed(value: &ComPtr<foundation::EventHandler<UINavigationController>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().deref().add_ui_navigation_controller_removed(value)
     }
     #[inline] pub fn remove_ui_navigation_controller_removed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().remove_ui_navigation_controller_removed(token)
+        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().deref().remove_ui_navigation_controller_removed(token)
     }
     #[inline] pub fn get_ui_navigation_controllers() -> Result<Option<ComPtr<foundation::collections::IVectorView<UINavigationController>>>> {
-        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().get_ui_navigation_controllers()
+        <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().deref().get_ui_navigation_controllers()
     }
-    #[inline] pub fn from_game_controller(gameController: &IGameController) -> Result<Option<ComPtr<UINavigationController>>> {
-        <Self as RtActivatable<IUINavigationControllerStatics2>>::get_activation_factory().from_game_controller(gameController)
+    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<UINavigationController>>> {
+        <Self as RtActivatable<IUINavigationControllerStatics2>>::get_activation_factory().deref().from_game_controller(gameController)
     }
 }
 DEFINE_CLSID!(UINavigationController(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,85,73,78,97,118,105,103,97,116,105,111,110,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_UINavigationController]);
@@ -720,18 +720,18 @@ RT_INTERFACE!{static interface IUINavigationControllerStatics(IUINavigationContr
     fn get_UINavigationControllers(&self, out: *mut *mut foundation::collections::IVectorView<UINavigationController>) -> HRESULT
 }}
 impl IUINavigationControllerStatics {
-    #[inline] pub fn add_ui_navigation_controller_added(&self, value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_ui_navigation_controller_added(&self, value: &ComPtr<foundation::EventHandler<UINavigationController>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_UINavigationControllerAdded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_UINavigationControllerAdded)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_ui_navigation_controller_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_UINavigationControllerAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_ui_navigation_controller_removed(&self, value: &foundation::EventHandler<UINavigationController>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_ui_navigation_controller_removed(&self, value: &ComPtr<foundation::EventHandler<UINavigationController>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_UINavigationControllerRemoved)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_UINavigationControllerRemoved)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_ui_navigation_controller_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -749,9 +749,9 @@ RT_INTERFACE!{static interface IUINavigationControllerStatics2(IUINavigationCont
     fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut UINavigationController) -> HRESULT
 }}
 impl IUINavigationControllerStatics2 {
-    #[inline] pub fn from_game_controller(&self, gameController: &IGameController) -> Result<Option<ComPtr<UINavigationController>>> { unsafe { 
+    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<UINavigationController>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FromGameController)(self as *const _ as *mut _, gameController as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FromGameController)(self as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -767,17 +767,17 @@ RT_INTERFACE!{interface ICustomGameControllerFactory(ICustomGameControllerFactor
     fn OnGameControllerRemoved(&self, value: *mut super::IGameController) -> HRESULT
 }}
 impl ICustomGameControllerFactory {
-    #[inline] pub fn create_game_controller(&self, provider: &IGameControllerProvider) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
+    #[inline] pub fn create_game_controller(&self, provider: &ComPtr<IGameControllerProvider>) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateGameController)(self as *const _ as *mut _, provider as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateGameController)(self as *const _ as *mut _, provider.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn on_game_controller_added(&self, value: &super::IGameController) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).OnGameControllerAdded)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn on_game_controller_added(&self, value: &ComPtr<super::IGameController>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).OnGameControllerAdded)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn on_game_controller_removed(&self, value: &super::IGameController) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).OnGameControllerRemoved)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn on_game_controller_removed(&self, value: &ComPtr<super::IGameController>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).OnGameControllerRemoved)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -785,17 +785,17 @@ RT_CLASS!{static class GameControllerFactoryManager}
 impl RtActivatable<IGameControllerFactoryManagerStatics> for GameControllerFactoryManager {}
 impl RtActivatable<IGameControllerFactoryManagerStatics2> for GameControllerFactoryManager {}
 impl GameControllerFactoryManager {
-    #[inline] pub fn register_custom_factory_for_gip_interface(factory: &ICustomGameControllerFactory, interfaceId: Guid) -> Result<()> {
-        <Self as RtActivatable<IGameControllerFactoryManagerStatics>>::get_activation_factory().register_custom_factory_for_gip_interface(factory, interfaceId)
+    #[inline] pub fn register_custom_factory_for_gip_interface(factory: &ComPtr<ICustomGameControllerFactory>, interfaceId: Guid) -> Result<()> {
+        <Self as RtActivatable<IGameControllerFactoryManagerStatics>>::get_activation_factory().deref().register_custom_factory_for_gip_interface(factory, interfaceId)
     }
-    #[inline] pub fn register_custom_factory_for_hardware_id(factory: &ICustomGameControllerFactory, hardwareVendorId: u16, hardwareProductId: u16) -> Result<()> {
-        <Self as RtActivatable<IGameControllerFactoryManagerStatics>>::get_activation_factory().register_custom_factory_for_hardware_id(factory, hardwareVendorId, hardwareProductId)
+    #[inline] pub fn register_custom_factory_for_hardware_id(factory: &ComPtr<ICustomGameControllerFactory>, hardwareVendorId: u16, hardwareProductId: u16) -> Result<()> {
+        <Self as RtActivatable<IGameControllerFactoryManagerStatics>>::get_activation_factory().deref().register_custom_factory_for_hardware_id(factory, hardwareVendorId, hardwareProductId)
     }
-    #[inline] pub fn register_custom_factory_for_xusb_type(factory: &ICustomGameControllerFactory, xusbType: XusbDeviceType, xusbSubtype: XusbDeviceSubtype) -> Result<()> {
-        <Self as RtActivatable<IGameControllerFactoryManagerStatics>>::get_activation_factory().register_custom_factory_for_xusb_type(factory, xusbType, xusbSubtype)
+    #[inline] pub fn register_custom_factory_for_xusb_type(factory: &ComPtr<ICustomGameControllerFactory>, xusbType: XusbDeviceType, xusbSubtype: XusbDeviceSubtype) -> Result<()> {
+        <Self as RtActivatable<IGameControllerFactoryManagerStatics>>::get_activation_factory().deref().register_custom_factory_for_xusb_type(factory, xusbType, xusbSubtype)
     }
-    #[inline] pub fn try_get_factory_controller_from_game_controller(factory: &ICustomGameControllerFactory, gameController: &super::IGameController) -> Result<Option<ComPtr<super::IGameController>>> {
-        <Self as RtActivatable<IGameControllerFactoryManagerStatics2>>::get_activation_factory().try_get_factory_controller_from_game_controller(factory, gameController)
+    #[inline] pub fn try_get_factory_controller_from_game_controller(factory: &ComPtr<ICustomGameControllerFactory>, gameController: &ComPtr<super::IGameController>) -> Result<Option<ComPtr<super::IGameController>>> {
+        <Self as RtActivatable<IGameControllerFactoryManagerStatics2>>::get_activation_factory().deref().try_get_factory_controller_from_game_controller(factory, gameController)
     }
 }
 DEFINE_CLSID!(GameControllerFactoryManager(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,67,117,115,116,111,109,46,71,97,109,101,67,111,110,116,114,111,108,108,101,114,70,97,99,116,111,114,121,77,97,110,97,103,101,114,0]) [CLSID_GameControllerFactoryManager]);
@@ -806,16 +806,16 @@ RT_INTERFACE!{static interface IGameControllerFactoryManagerStatics(IGameControl
     fn RegisterCustomFactoryForXusbType(&self, factory: *mut ICustomGameControllerFactory, xusbType: XusbDeviceType, xusbSubtype: XusbDeviceSubtype) -> HRESULT
 }}
 impl IGameControllerFactoryManagerStatics {
-    #[inline] pub fn register_custom_factory_for_gip_interface(&self, factory: &ICustomGameControllerFactory, interfaceId: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RegisterCustomFactoryForGipInterface)(self as *const _ as *mut _, factory as *const _ as *mut _, interfaceId);
+    #[inline] pub fn register_custom_factory_for_gip_interface(&self, factory: &ComPtr<ICustomGameControllerFactory>, interfaceId: Guid) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RegisterCustomFactoryForGipInterface)(self as *const _ as *mut _, factory.deref() as *const _ as *mut _, interfaceId);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn register_custom_factory_for_hardware_id(&self, factory: &ICustomGameControllerFactory, hardwareVendorId: u16, hardwareProductId: u16) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RegisterCustomFactoryForHardwareId)(self as *const _ as *mut _, factory as *const _ as *mut _, hardwareVendorId, hardwareProductId);
+    #[inline] pub fn register_custom_factory_for_hardware_id(&self, factory: &ComPtr<ICustomGameControllerFactory>, hardwareVendorId: u16, hardwareProductId: u16) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RegisterCustomFactoryForHardwareId)(self as *const _ as *mut _, factory.deref() as *const _ as *mut _, hardwareVendorId, hardwareProductId);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn register_custom_factory_for_xusb_type(&self, factory: &ICustomGameControllerFactory, xusbType: XusbDeviceType, xusbSubtype: XusbDeviceSubtype) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RegisterCustomFactoryForXusbType)(self as *const _ as *mut _, factory as *const _ as *mut _, xusbType, xusbSubtype);
+    #[inline] pub fn register_custom_factory_for_xusb_type(&self, factory: &ComPtr<ICustomGameControllerFactory>, xusbType: XusbDeviceType, xusbSubtype: XusbDeviceSubtype) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RegisterCustomFactoryForXusbType)(self as *const _ as *mut _, factory.deref() as *const _ as *mut _, xusbType, xusbSubtype);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -824,9 +824,9 @@ RT_INTERFACE!{static interface IGameControllerFactoryManagerStatics2(IGameContro
     fn TryGetFactoryControllerFromGameController(&self, factory: *mut ICustomGameControllerFactory, gameController: *mut super::IGameController, out: *mut *mut super::IGameController) -> HRESULT
 }}
 impl IGameControllerFactoryManagerStatics2 {
-    #[inline] pub fn try_get_factory_controller_from_game_controller(&self, factory: &ICustomGameControllerFactory, gameController: &super::IGameController) -> Result<Option<ComPtr<super::IGameController>>> { unsafe { 
+    #[inline] pub fn try_get_factory_controller_from_game_controller(&self, factory: &ComPtr<ICustomGameControllerFactory>, gameController: &ComPtr<super::IGameController>) -> Result<Option<ComPtr<super::IGameController>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryGetFactoryControllerFromGameController)(self as *const _ as *mut _, factory as *const _ as *mut _, gameController as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TryGetFactoryControllerFromGameController)(self as *const _ as *mut _, factory.deref() as *const _ as *mut _, gameController.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -943,9 +943,9 @@ impl IGipGameControllerProvider {
         let hr = ((*self.lpVtbl).SendReceiveMessage)(self as *const _ as *mut _, messageClass, messageId, requestMessageBuffer.len() as u32, requestMessageBuffer.as_ptr() as *mut _, responseMessageBuffer.len() as u32, responseMessageBuffer.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn update_firmware_async(&self, firmwareImage: &crate::windows::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<GipFirmwareUpdateResult, GipFirmwareUpdateProgress>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn update_firmware_async(&self, firmwareImage: &ComPtr<crate::windows::storage::streams::IInputStream>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<GipFirmwareUpdateResult, GipFirmwareUpdateProgress>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UpdateFirmwareAsync)(self as *const _ as *mut _, firmwareImage as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).UpdateFirmwareAsync)(self as *const _ as *mut _, firmwareImage.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1046,7 +1046,7 @@ RT_CLASS!{class ConditionForceEffect: IForceFeedbackEffect}
 impl RtActivatable<IConditionForceEffectFactory> for ConditionForceEffect {}
 impl ConditionForceEffect {
     #[inline] pub fn create_instance(effectKind: ConditionForceEffectKind) -> Result<ComPtr<ConditionForceEffect>> {
-        <Self as RtActivatable<IConditionForceEffectFactory>>::get_activation_factory().create_instance(effectKind)
+        <Self as RtActivatable<IConditionForceEffectFactory>>::get_activation_factory().deref().create_instance(effectKind)
     }
 }
 DEFINE_CLSID!(ConditionForceEffect(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,111,114,99,101,70,101,101,100,98,97,99,107,46,67,111,110,100,105,116,105,111,110,70,111,114,99,101,69,102,102,101,99,116,0]) [CLSID_ConditionForceEffect]);
@@ -1164,9 +1164,9 @@ impl IForceFeedbackMotor {
         let hr = ((*self.lpVtbl).get_SupportedAxes)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn load_effect_async(&self, effect: &IForceFeedbackEffect) -> Result<ComPtr<foundation::IAsyncOperation<ForceFeedbackLoadEffectResult>>> { unsafe { 
+    #[inline] pub fn load_effect_async(&self, effect: &ComPtr<IForceFeedbackEffect>) -> Result<ComPtr<foundation::IAsyncOperation<ForceFeedbackLoadEffectResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadEffectAsync)(self as *const _ as *mut _, effect as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadEffectAsync)(self as *const _ as *mut _, effect.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn pause_all_effects(&self) -> Result<()> { unsafe { 
@@ -1196,9 +1196,9 @@ impl IForceFeedbackMotor {
         let hr = ((*self.lpVtbl).TryResetAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn try_unload_effect_async(&self, effect: &IForceFeedbackEffect) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn try_unload_effect_async(&self, effect: &ComPtr<IForceFeedbackEffect>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryUnloadEffectAsync)(self as *const _ as *mut _, effect as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TryUnloadEffectAsync)(self as *const _ as *mut _, effect.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1228,7 +1228,7 @@ RT_CLASS!{class PeriodicForceEffect: IForceFeedbackEffect}
 impl RtActivatable<IPeriodicForceEffectFactory> for PeriodicForceEffect {}
 impl PeriodicForceEffect {
     #[inline] pub fn create_instance(effectKind: PeriodicForceEffectKind) -> Result<ComPtr<PeriodicForceEffect>> {
-        <Self as RtActivatable<IPeriodicForceEffectFactory>>::get_activation_factory().create_instance(effectKind)
+        <Self as RtActivatable<IPeriodicForceEffectFactory>>::get_activation_factory().deref().create_instance(effectKind)
     }
 }
 DEFINE_CLSID!(PeriodicForceEffect(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,111,114,99,101,70,101,101,100,98,97,99,107,46,80,101,114,105,111,100,105,99,70,111,114,99,101,69,102,102,101,99,116,0]) [CLSID_PeriodicForceEffect]);
@@ -1270,11 +1270,11 @@ use crate::prelude::*;
 RT_CLASS!{static class GameControllerProviderInfo}
 impl RtActivatable<IGameControllerProviderInfoStatics> for GameControllerProviderInfo {}
 impl GameControllerProviderInfo {
-    #[inline] pub fn get_parent_provider_id(provider: &super::custom::IGameControllerProvider) -> Result<HString> {
-        <Self as RtActivatable<IGameControllerProviderInfoStatics>>::get_activation_factory().get_parent_provider_id(provider)
+    #[inline] pub fn get_parent_provider_id(provider: &ComPtr<super::custom::IGameControllerProvider>) -> Result<HString> {
+        <Self as RtActivatable<IGameControllerProviderInfoStatics>>::get_activation_factory().deref().get_parent_provider_id(provider)
     }
-    #[inline] pub fn get_provider_id(provider: &super::custom::IGameControllerProvider) -> Result<HString> {
-        <Self as RtActivatable<IGameControllerProviderInfoStatics>>::get_activation_factory().get_provider_id(provider)
+    #[inline] pub fn get_provider_id(provider: &ComPtr<super::custom::IGameControllerProvider>) -> Result<HString> {
+        <Self as RtActivatable<IGameControllerProviderInfoStatics>>::get_activation_factory().deref().get_provider_id(provider)
     }
 }
 DEFINE_CLSID!(GameControllerProviderInfo(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,80,114,101,118,105,101,119,46,71,97,109,101,67,111,110,116,114,111,108,108,101,114,80,114,111,118,105,100,101,114,73,110,102,111,0]) [CLSID_GameControllerProviderInfo]);
@@ -1284,14 +1284,14 @@ RT_INTERFACE!{static interface IGameControllerProviderInfoStatics(IGameControlle
     fn GetProviderId(&self, provider: *mut super::custom::IGameControllerProvider, out: *mut HSTRING) -> HRESULT
 }}
 impl IGameControllerProviderInfoStatics {
-    #[inline] pub fn get_parent_provider_id(&self, provider: &super::custom::IGameControllerProvider) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_parent_provider_id(&self, provider: &ComPtr<super::custom::IGameControllerProvider>) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetParentProviderId)(self as *const _ as *mut _, provider as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetParentProviderId)(self as *const _ as *mut _, provider.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_provider_id(&self, provider: &super::custom::IGameControllerProvider) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_provider_id(&self, provider: &ComPtr<super::custom::IGameControllerProvider>) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetProviderId)(self as *const _ as *mut _, provider as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetProviderId)(self as *const _ as *mut _, provider.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1305,34 +1305,34 @@ impl RtActivatable<IGameListStatics> for GameList {}
 impl RtActivatable<IGameListStatics2> for GameList {}
 impl GameList {
     #[inline] pub fn find_all_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> {
-        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().find_all_async()
+        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().deref().find_all_async()
     }
     #[inline] pub fn find_all_async_package_family_name(packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> {
-        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().find_all_async_package_family_name(packageFamilyName)
+        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().deref().find_all_async_package_family_name(packageFamilyName)
     }
-    #[inline] pub fn add_game_added(handler: &GameListChangedEventHandler) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().add_game_added(handler)
+    #[inline] pub fn add_game_added(handler: &ComPtr<GameListChangedEventHandler>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().deref().add_game_added(handler)
     }
     #[inline] pub fn remove_game_added(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().remove_game_added(token)
+        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().deref().remove_game_added(token)
     }
-    #[inline] pub fn add_game_removed(handler: &GameListRemovedEventHandler) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().add_game_removed(handler)
+    #[inline] pub fn add_game_removed(handler: &ComPtr<GameListRemovedEventHandler>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().deref().add_game_removed(handler)
     }
     #[inline] pub fn remove_game_removed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().remove_game_removed(token)
+        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().deref().remove_game_removed(token)
     }
-    #[inline] pub fn add_game_updated(handler: &GameListChangedEventHandler) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().add_game_updated(handler)
+    #[inline] pub fn add_game_updated(handler: &ComPtr<GameListChangedEventHandler>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().deref().add_game_updated(handler)
     }
     #[inline] pub fn remove_game_updated(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().remove_game_updated(token)
+        <Self as RtActivatable<IGameListStatics>>::get_activation_factory().deref().remove_game_updated(token)
     }
-    #[inline] pub fn merge_entries_async(left: &GameListEntry, right: &GameListEntry) -> Result<ComPtr<foundation::IAsyncOperation<GameListEntry>>> {
-        <Self as RtActivatable<IGameListStatics2>>::get_activation_factory().merge_entries_async(left, right)
+    #[inline] pub fn merge_entries_async(left: &ComPtr<GameListEntry>, right: &ComPtr<GameListEntry>) -> Result<ComPtr<foundation::IAsyncOperation<GameListEntry>>> {
+        <Self as RtActivatable<IGameListStatics2>>::get_activation_factory().deref().merge_entries_async(left, right)
     }
-    #[inline] pub fn unmerge_entry_async(mergedEntry: &GameListEntry) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> {
-        <Self as RtActivatable<IGameListStatics2>>::get_activation_factory().unmerge_entry_async(mergedEntry)
+    #[inline] pub fn unmerge_entry_async(mergedEntry: &ComPtr<GameListEntry>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> {
+        <Self as RtActivatable<IGameListStatics2>>::get_activation_factory().deref().unmerge_entry_async(mergedEntry)
     }
 }
 DEFINE_CLSID!(GameList(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,80,114,101,118,105,101,119,46,71,97,109,101,115,69,110,117,109,101,114,97,116,105,111,110,46,71,97,109,101,76,105,115,116,0]) [CLSID_GameList]);
@@ -1344,8 +1344,8 @@ RT_DELEGATE!{delegate GameListChangedEventHandler(GameListChangedEventHandlerVtb
     fn Invoke(&self, game: *mut GameListEntry) -> HRESULT
 }}
 impl GameListChangedEventHandler {
-    #[inline] pub fn invoke(&self, game: &GameListEntry) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, game as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, game: &ComPtr<GameListEntry>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, game.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1416,14 +1416,14 @@ impl IGameListEntry2 {
         let hr = ((*self.lpVtbl).get_LaunchParameters)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_launcher_executable_file_async(&self, executableFile: &crate::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_launcher_executable_file_async(&self, executableFile: &ComPtr<crate::windows::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetLauncherExecutableFileAsync)(self as *const _ as *mut _, executableFile as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetLauncherExecutableFileAsync)(self as *const _ as *mut _, executableFile.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_launcher_executable_file_with_params_async(&self, executableFile: &crate::windows::storage::IStorageFile, launchParams: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_launcher_executable_file_with_params_async(&self, executableFile: &ComPtr<crate::windows::storage::IStorageFile>, launchParams: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetLauncherExecutableFileWithParamsAsync)(self as *const _ as *mut _, executableFile as *const _ as *mut _, launchParams.get(), &mut out);
+        let hr = ((*self.lpVtbl).SetLauncherExecutableFileWithParamsAsync)(self as *const _ as *mut _, executableFile.deref() as *const _ as *mut _, launchParams.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_title_id(&self) -> Result<HString> { unsafe { 
@@ -1477,27 +1477,27 @@ impl IGameListStatics {
         let hr = ((*self.lpVtbl).FindAllAsyncPackageFamilyName)(self as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_game_added(&self, handler: &GameListChangedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_game_added(&self, handler: &ComPtr<GameListChangedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_GameAdded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_GameAdded)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_game_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_GameAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_game_removed(&self, handler: &GameListRemovedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_game_removed(&self, handler: &ComPtr<GameListRemovedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_GameRemoved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_GameRemoved)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_game_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_GameRemoved)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_game_updated(&self, handler: &GameListChangedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_game_updated(&self, handler: &ComPtr<GameListChangedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_GameUpdated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_GameUpdated)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_game_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -1511,14 +1511,14 @@ RT_INTERFACE!{static interface IGameListStatics2(IGameListStatics2Vtbl): IInspec
     fn UnmergeEntryAsync(&self, mergedEntry: *mut GameListEntry, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>) -> HRESULT
 }}
 impl IGameListStatics2 {
-    #[inline] pub fn merge_entries_async(&self, left: &GameListEntry, right: &GameListEntry) -> Result<ComPtr<foundation::IAsyncOperation<GameListEntry>>> { unsafe { 
+    #[inline] pub fn merge_entries_async(&self, left: &ComPtr<GameListEntry>, right: &ComPtr<GameListEntry>) -> Result<ComPtr<foundation::IAsyncOperation<GameListEntry>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).MergeEntriesAsync)(self as *const _ as *mut _, left as *const _ as *mut _, right as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).MergeEntriesAsync)(self as *const _ as *mut _, left.deref() as *const _ as *mut _, right.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn unmerge_entry_async(&self, mergedEntry: &GameListEntry) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> { unsafe { 
+    #[inline] pub fn unmerge_entry_async(&self, mergedEntry: &ComPtr<GameListEntry>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnmergeEntryAsync)(self as *const _ as *mut _, mergedEntry as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).UnmergeEntryAsync)(self as *const _ as *mut _, mergedEntry.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1563,8 +1563,8 @@ impl IGameModeConfiguration {
         let hr = ((*self.lpVtbl).get_PercentGpuTimeAllocatedToGame)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_percent_gpu_time_allocated_to_game(&self, value: &foundation::IReference<i32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PercentGpuTimeAllocatedToGame)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_percent_gpu_time_allocated_to_game(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PercentGpuTimeAllocatedToGame)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_percent_gpu_memory_allocated_to_game(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
@@ -1572,8 +1572,8 @@ impl IGameModeConfiguration {
         let hr = ((*self.lpVtbl).get_PercentGpuMemoryAllocatedToGame)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_percent_gpu_memory_allocated_to_game(&self, value: &foundation::IReference<i32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PercentGpuMemoryAllocatedToGame)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_percent_gpu_memory_allocated_to_game(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PercentGpuMemoryAllocatedToGame)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_percent_gpu_memory_allocated_to_system_compositor(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
@@ -1581,8 +1581,8 @@ impl IGameModeConfiguration {
         let hr = ((*self.lpVtbl).get_PercentGpuMemoryAllocatedToSystemCompositor)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_percent_gpu_memory_allocated_to_system_compositor(&self, value: &foundation::IReference<i32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PercentGpuMemoryAllocatedToSystemCompositor)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_percent_gpu_memory_allocated_to_system_compositor(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PercentGpuMemoryAllocatedToSystemCompositor)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_max_cpu_count(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
@@ -1590,8 +1590,8 @@ impl IGameModeConfiguration {
         let hr = ((*self.lpVtbl).get_MaxCpuCount)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_max_cpu_count(&self, value: &foundation::IReference<i32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MaxCpuCount)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_max_cpu_count(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaxCpuCount)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_cpu_exclusivity_mask_low(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
@@ -1599,8 +1599,8 @@ impl IGameModeConfiguration {
         let hr = ((*self.lpVtbl).get_CpuExclusivityMaskLow)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_cpu_exclusivity_mask_low(&self, value: &foundation::IReference<i32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CpuExclusivityMaskLow)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_cpu_exclusivity_mask_low(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CpuExclusivityMaskLow)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_cpu_exclusivity_mask_high(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
@@ -1608,8 +1608,8 @@ impl IGameModeConfiguration {
         let hr = ((*self.lpVtbl).get_CpuExclusivityMaskHigh)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_cpu_exclusivity_mask_high(&self, value: &foundation::IReference<i32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CpuExclusivityMaskHigh)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_cpu_exclusivity_mask_high(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CpuExclusivityMaskHigh)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_affinitize_to_exclusive_cpus(&self) -> Result<bool> { unsafe { 
@@ -1649,7 +1649,7 @@ RT_CLASS!{class GameModeUserConfiguration: IGameModeUserConfiguration}
 impl RtActivatable<IGameModeUserConfigurationStatics> for GameModeUserConfiguration {}
 impl GameModeUserConfiguration {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<GameModeUserConfiguration>>> {
-        <Self as RtActivatable<IGameModeUserConfigurationStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IGameModeUserConfigurationStatics>>::get_activation_factory().deref().get_default()
     }
 }
 DEFINE_CLSID!(GameModeUserConfiguration(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,80,114,101,118,105,101,119,46,71,97,109,101,115,69,110,117,109,101,114,97,116,105,111,110,46,71,97,109,101,77,111,100,101,85,115,101,114,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_GameModeUserConfiguration]);
@@ -1671,23 +1671,23 @@ use crate::prelude::*;
 RT_CLASS!{static class GameBar}
 impl RtActivatable<IGameBarStatics> for GameBar {}
 impl GameBar {
-    #[inline] pub fn add_visibility_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().add_visibility_changed(handler)
+    #[inline] pub fn add_visibility_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().deref().add_visibility_changed(handler)
     }
     #[inline] pub fn remove_visibility_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().remove_visibility_changed(token)
+        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().deref().remove_visibility_changed(token)
     }
-    #[inline] pub fn add_is_input_redirected_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().add_is_input_redirected_changed(handler)
+    #[inline] pub fn add_is_input_redirected_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().deref().add_is_input_redirected_changed(handler)
     }
     #[inline] pub fn remove_is_input_redirected_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().remove_is_input_redirected_changed(token)
+        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().deref().remove_is_input_redirected_changed(token)
     }
     #[inline] pub fn get_visible() -> Result<bool> {
-        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().get_visible()
+        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().deref().get_visible()
     }
     #[inline] pub fn get_is_input_redirected() -> Result<bool> {
-        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().get_is_input_redirected()
+        <Self as RtActivatable<IGameBarStatics>>::get_activation_factory().deref().get_is_input_redirected()
     }
 }
 DEFINE_CLSID!(GameBar(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,66,97,114,0]) [CLSID_GameBar]);
@@ -1701,18 +1701,18 @@ RT_INTERFACE!{static interface IGameBarStatics(IGameBarStaticsVtbl): IInspectabl
     fn get_IsInputRedirected(&self, out: *mut bool) -> HRESULT
 }}
 impl IGameBarStatics {
-    #[inline] pub fn add_visibility_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_visibility_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_VisibilityChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_VisibilityChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_visibility_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_VisibilityChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_is_input_redirected_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_is_input_redirected_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_IsInputRedirectedChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_IsInputRedirectedChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_is_input_redirected_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -1794,7 +1794,7 @@ RT_CLASS!{class GameChatOverlay: IGameChatOverlay}
 impl RtActivatable<IGameChatOverlayStatics> for GameChatOverlay {}
 impl GameChatOverlay {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<GameChatOverlay>>> {
-        <Self as RtActivatable<IGameChatOverlayStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IGameChatOverlayStatics>>::get_activation_factory().deref().get_default()
     }
 }
 DEFINE_CLSID!(GameChatOverlay(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,85,73,46,71,97,109,101,67,104,97,116,79,118,101,114,108,97,121,0]) [CLSID_GameChatOverlay]);
@@ -1805,9 +1805,9 @@ RT_INTERFACE!{interface IGameChatOverlayMessageSource(IGameChatOverlayMessageSou
     fn SetDelayBeforeClosingAfterMessageReceived(&self, value: foundation::TimeSpan) -> HRESULT
 }}
 impl IGameChatOverlayMessageSource {
-    #[inline] pub fn add_message_received(&self, handler: &foundation::TypedEventHandler<GameChatOverlayMessageSource, GameChatMessageReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_message_received(&self, handler: &ComPtr<foundation::TypedEventHandler<GameChatOverlayMessageSource, GameChatMessageReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MessageReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MessageReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_message_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -1847,8 +1847,8 @@ impl IGameUIProviderActivatedEventArgs {
         let hr = ((*self.lpVtbl).get_GameUIArgs)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn report_completed(&self, results: &foundation::collections::ValueSet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _, results as *const _ as *mut _);
+    #[inline] pub fn report_completed(&self, results: &ComPtr<foundation::collections::ValueSet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _, results.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1958,24 +1958,24 @@ impl IGameSaveContainer {
         let hr = ((*self.lpVtbl).get_Provider)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn submit_updates_async(&self, blobsToWrite: &foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>, blobsToDelete: &foundation::collections::IIterable<HString>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn submit_updates_async(&self, blobsToWrite: &ComPtr<foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>>, blobsToDelete: &ComPtr<foundation::collections::IIterable<HString>>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SubmitUpdatesAsync)(self as *const _ as *mut _, blobsToWrite as *const _ as *mut _, blobsToDelete as *const _ as *mut _, displayName.get(), &mut out);
+        let hr = ((*self.lpVtbl).SubmitUpdatesAsync)(self as *const _ as *mut _, blobsToWrite.deref() as *const _ as *mut _, blobsToDelete.deref() as *const _ as *mut _, displayName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn read_async(&self, blobsToRead: &foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn read_async(&self, blobsToRead: &ComPtr<foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReadAsync)(self as *const _ as *mut _, blobsToRead as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ReadAsync)(self as *const _ as *mut _, blobsToRead.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_async(&self, blobsToRead: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobGetResult>>> { unsafe { 
+    #[inline] pub fn get_async(&self, blobsToRead: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobGetResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAsync)(self as *const _ as *mut _, blobsToRead as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetAsync)(self as *const _ as *mut _, blobsToRead.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn submit_property_set_updates_async(&self, blobsToWrite: &foundation::collections::IPropertySet, blobsToDelete: &foundation::collections::IIterable<HString>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
+    #[inline] pub fn submit_property_set_updates_async(&self, blobsToWrite: &ComPtr<foundation::collections::IPropertySet>, blobsToDelete: &ComPtr<foundation::collections::IIterable<HString>>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SubmitPropertySetUpdatesAsync)(self as *const _ as *mut _, blobsToWrite as *const _ as *mut _, blobsToDelete as *const _ as *mut _, displayName.get(), &mut out);
+        let hr = ((*self.lpVtbl).SubmitPropertySetUpdatesAsync)(self as *const _ as *mut _, blobsToWrite.deref() as *const _ as *mut _, blobsToDelete.deref() as *const _ as *mut _, displayName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_blob_info_query(&self, blobNamePrefix: &HStringArg) -> Result<Option<ComPtr<GameSaveBlobInfoQuery>>> { unsafe { 
@@ -2129,11 +2129,11 @@ impl IGameSaveProvider {
 RT_CLASS!{class GameSaveProvider: IGameSaveProvider}
 impl RtActivatable<IGameSaveProviderStatics> for GameSaveProvider {}
 impl GameSaveProvider {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &crate::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
-        <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().get_for_user_async(user, serviceConfigId)
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &ComPtr<crate::windows::system::User>, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
+        <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().deref().get_for_user_async(user, serviceConfigId)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(user: &crate::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
-        <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().get_sync_on_demand_for_user_async(user, serviceConfigId)
+    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(user: &ComPtr<crate::windows::system::User>, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
+        <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().deref().get_sync_on_demand_for_user_async(user, serviceConfigId)
     }
 }
 DEFINE_CLSID!(GameSaveProvider(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,88,98,111,120,76,105,118,101,46,83,116,111,114,97,103,101,46,71,97,109,101,83,97,118,101,80,114,111,118,105,100,101,114,0]) [CLSID_GameSaveProvider]);
@@ -2161,14 +2161,14 @@ RT_INTERFACE!{static interface IGameSaveProviderStatics(IGameSaveProviderStatics
     #[cfg(feature="windows-system")] fn GetSyncOnDemandForUserAsync(&self, user: *mut crate::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT
 }}
 impl IGameSaveProviderStatics {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(&self, user: &crate::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(&self, user: &ComPtr<crate::windows::system::User>, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, serviceConfigId.get(), &mut out);
+        let hr = ((*self.lpVtbl).GetForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, serviceConfigId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(&self, user: &crate::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(&self, user: &ComPtr<crate::windows::system::User>, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSyncOnDemandForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, serviceConfigId.get(), &mut out);
+        let hr = ((*self.lpVtbl).GetSyncOnDemandForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, serviceConfigId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }

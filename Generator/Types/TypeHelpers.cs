@@ -131,7 +131,7 @@ namespace Generator.Types
                 {
                     case TypeUsage.Raw: return "*mut IInspectable";
                     case TypeUsage.GenericArg: return "IInspectable";
-                    case TypeUsage.In: return "&IInspectable";
+                    case TypeUsage.In: return "&ComPtr<IInspectable>";
                     case TypeUsage.Out: return "Option<ComPtr<IInspectable>>";
                     default: throw new InvalidOperationException();
                 }
@@ -199,7 +199,7 @@ namespace Generator.Types
                 {
                     if (usage == TypeUsage.In)
                     {
-                        name = $"&{ name }";
+                        name = $"&ComPtr<{ name }>";
                     }
                     else if (usage == TypeUsage.GenericArg)
                     {
@@ -259,7 +259,7 @@ namespace Generator.Types
             }
             else if (t.FullName == "System.Object")
             {
-                return $"{ name } as *const _ as *mut _";
+                return $"{ name }.deref() as *const _ as *mut _";
             }
             else if (t.FullName == "System.Guid")
             {
@@ -308,7 +308,7 @@ namespace Generator.Types
             }
             else // reference type
             {
-                return $"{ name } as *const _ as *mut _";
+                return $"{ name }.deref() as *const _ as *mut _";
             }
         }
 

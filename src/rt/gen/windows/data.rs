@@ -15,7 +15,7 @@ RT_CLASS!{static class HtmlUtilities}
 impl RtActivatable<IHtmlUtilities> for HtmlUtilities {}
 impl HtmlUtilities {
     #[inline] pub fn convert_to_text(html: &HStringArg) -> Result<HString> {
-        <Self as RtActivatable<IHtmlUtilities>>::get_activation_factory().convert_to_text(html)
+        <Self as RtActivatable<IHtmlUtilities>>::get_activation_factory().deref().convert_to_text(html)
     }
 }
 DEFINE_CLSID!(HtmlUtilities(&[87,105,110,100,111,119,115,46,68,97,116,97,46,72,116,109,108,46,72,116,109,108,85,116,105,108,105,116,105,101,115,0]) [CLSID_HtmlUtilities]);
@@ -62,10 +62,10 @@ impl RtActivatable<IJsonArrayStatics> for JsonArray {}
 impl RtActivatable<IActivationFactory> for JsonArray {}
 impl JsonArray {
     #[inline] pub fn parse(input: &HStringArg) -> Result<Option<ComPtr<JsonArray>>> {
-        <Self as RtActivatable<IJsonArrayStatics>>::get_activation_factory().parse(input)
+        <Self as RtActivatable<IJsonArrayStatics>>::get_activation_factory().deref().parse(input)
     }
     #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<ComPtr<JsonArray>>, bool)> {
-        <Self as RtActivatable<IJsonArrayStatics>>::get_activation_factory().try_parse(input)
+        <Self as RtActivatable<IJsonArrayStatics>>::get_activation_factory().deref().try_parse(input)
     }
 }
 DEFINE_CLSID!(JsonArray(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,65,114,114,97,121,0]) [CLSID_JsonArray]);
@@ -90,7 +90,7 @@ RT_CLASS!{static class JsonError}
 impl RtActivatable<IJsonErrorStatics2> for JsonError {}
 impl JsonError {
     #[inline] pub fn get_json_status(hresult: i32) -> Result<JsonErrorStatus> {
-        <Self as RtActivatable<IJsonErrorStatics2>>::get_activation_factory().get_json_status(hresult)
+        <Self as RtActivatable<IJsonErrorStatics2>>::get_activation_factory().deref().get_json_status(hresult)
     }
 }
 DEFINE_CLSID!(JsonError(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,69,114,114,111,114,0]) [CLSID_JsonError]);
@@ -124,8 +124,8 @@ impl IJsonObject {
         let hr = ((*self.lpVtbl).GetNamedValue)(self as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_named_value(&self, name: &HStringArg, value: &IJsonValue) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetNamedValue)(self as *const _ as *mut _, name.get(), value as *const _ as *mut _);
+    #[inline] pub fn set_named_value(&self, name: &HStringArg, value: &ComPtr<IJsonValue>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetNamedValue)(self as *const _ as *mut _, name.get(), value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_named_object(&self, name: &HStringArg) -> Result<Option<ComPtr<JsonObject>>> { unsafe { 
@@ -159,10 +159,10 @@ impl RtActivatable<IJsonObjectStatics> for JsonObject {}
 impl RtActivatable<IActivationFactory> for JsonObject {}
 impl JsonObject {
     #[inline] pub fn parse(input: &HStringArg) -> Result<Option<ComPtr<JsonObject>>> {
-        <Self as RtActivatable<IJsonObjectStatics>>::get_activation_factory().parse(input)
+        <Self as RtActivatable<IJsonObjectStatics>>::get_activation_factory().deref().parse(input)
     }
     #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<ComPtr<JsonObject>>, bool)> {
-        <Self as RtActivatable<IJsonObjectStatics>>::get_activation_factory().try_parse(input)
+        <Self as RtActivatable<IJsonObjectStatics>>::get_activation_factory().deref().try_parse(input)
     }
 }
 DEFINE_CLSID!(JsonObject(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,79,98,106,101,99,116,0]) [CLSID_JsonObject]);
@@ -193,14 +193,14 @@ RT_INTERFACE!{interface IJsonObjectWithDefaultValues(IJsonObjectWithDefaultValue
     fn GetNamedBooleanOrDefault(&self, name: HSTRING, defaultValue: bool, out: *mut bool) -> HRESULT
 }}
 impl IJsonObjectWithDefaultValues {
-    #[inline] pub fn get_named_value_or_default(&self, name: &HStringArg, defaultValue: &JsonValue) -> Result<Option<ComPtr<JsonValue>>> { unsafe { 
+    #[inline] pub fn get_named_value_or_default(&self, name: &HStringArg, defaultValue: &ComPtr<JsonValue>) -> Result<Option<ComPtr<JsonValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetNamedValueOrDefault)(self as *const _ as *mut _, name.get(), defaultValue as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetNamedValueOrDefault)(self as *const _ as *mut _, name.get(), defaultValue.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_named_object_or_default(&self, name: &HStringArg, defaultValue: &JsonObject) -> Result<Option<ComPtr<JsonObject>>> { unsafe { 
+    #[inline] pub fn get_named_object_or_default(&self, name: &HStringArg, defaultValue: &ComPtr<JsonObject>) -> Result<Option<ComPtr<JsonObject>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetNamedObjectOrDefault)(self as *const _ as *mut _, name.get(), defaultValue as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetNamedObjectOrDefault)(self as *const _ as *mut _, name.get(), defaultValue.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_string_or_default(&self, name: &HStringArg, defaultValue: &HStringArg) -> Result<HString> { unsafe { 
@@ -208,9 +208,9 @@ impl IJsonObjectWithDefaultValues {
         let hr = ((*self.lpVtbl).GetNamedStringOrDefault)(self as *const _ as *mut _, name.get(), defaultValue.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_named_array_or_default(&self, name: &HStringArg, defaultValue: &JsonArray) -> Result<Option<ComPtr<JsonArray>>> { unsafe { 
+    #[inline] pub fn get_named_array_or_default(&self, name: &HStringArg, defaultValue: &ComPtr<JsonArray>) -> Result<Option<ComPtr<JsonArray>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetNamedArrayOrDefault)(self as *const _ as *mut _, name.get(), defaultValue as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetNamedArrayOrDefault)(self as *const _ as *mut _, name.get(), defaultValue.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_number_or_default(&self, name: &HStringArg, defaultValue: f64) -> Result<f64> { unsafe { 
@@ -276,22 +276,22 @@ impl RtActivatable<IJsonValueStatics> for JsonValue {}
 impl RtActivatable<IJsonValueStatics2> for JsonValue {}
 impl JsonValue {
     #[inline] pub fn parse(input: &HStringArg) -> Result<Option<ComPtr<JsonValue>>> {
-        <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().parse(input)
+        <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().deref().parse(input)
     }
     #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<ComPtr<JsonValue>>, bool)> {
-        <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().try_parse(input)
+        <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().deref().try_parse(input)
     }
     #[inline] pub fn create_boolean_value(input: bool) -> Result<Option<ComPtr<JsonValue>>> {
-        <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().create_boolean_value(input)
+        <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().deref().create_boolean_value(input)
     }
     #[inline] pub fn create_number_value(input: f64) -> Result<Option<ComPtr<JsonValue>>> {
-        <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().create_number_value(input)
+        <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().deref().create_number_value(input)
     }
     #[inline] pub fn create_string_value(input: &HStringArg) -> Result<Option<ComPtr<JsonValue>>> {
-        <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().create_string_value(input)
+        <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().deref().create_string_value(input)
     }
     #[inline] pub fn create_null_value() -> Result<Option<ComPtr<JsonValue>>> {
-        <Self as RtActivatable<IJsonValueStatics2>>::get_activation_factory().create_null_value()
+        <Self as RtActivatable<IJsonValueStatics2>>::get_activation_factory().deref().create_null_value()
     }
 }
 DEFINE_CLSID!(JsonValue(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,86,97,108,117,101,0]) [CLSID_JsonValue]);
@@ -373,17 +373,17 @@ impl IPdfDocument {
 RT_CLASS!{class PdfDocument: IPdfDocument}
 impl RtActivatable<IPdfDocumentStatics> for PdfDocument {}
 impl PdfDocument {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
-        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_file_async(file)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
+        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().deref().load_from_file_async(file)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_password_async(file: &super::super::storage::IStorageFile, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
-        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_file_with_password_async(file, password)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_password_async(file: &ComPtr<super::super::storage::IStorageFile>, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
+        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().deref().load_from_file_with_password_async(file, password)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(inputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
-        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_stream_async(inputStream)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(inputStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
+        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().deref().load_from_stream_async(inputStream)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_password_async(inputStream: &super::super::storage::streams::IRandomAccessStream, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
-        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().load_from_stream_with_password_async(inputStream, password)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_password_async(inputStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> {
+        <Self as RtActivatable<IPdfDocumentStatics>>::get_activation_factory().deref().load_from_stream_with_password_async(inputStream, password)
     }
 }
 DEFINE_CLSID!(PdfDocument(&[87,105,110,100,111,119,115,46,68,97,116,97,46,80,100,102,46,80,100,102,68,111,99,117,109,101,110,116,0]) [CLSID_PdfDocument]);
@@ -395,24 +395,24 @@ RT_INTERFACE!{static interface IPdfDocumentStatics(IPdfDocumentStaticsVtbl): IIn
     #[cfg(feature="windows-storage")] fn LoadFromStreamWithPasswordAsync(&self, inputStream: *mut super::super::storage::streams::IRandomAccessStream, password: HSTRING, out: *mut *mut foundation::IAsyncOperation<PdfDocument>) -> HRESULT
 }}
 impl IPdfDocumentStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(&self, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFromFileAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_password_async(&self, file: &super::super::storage::IStorageFile, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_password_async(&self, file: &ComPtr<super::super::storage::IStorageFile>, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromFileWithPasswordAsync)(self as *const _ as *mut _, file as *const _ as *mut _, password.get(), &mut out);
+        let hr = ((*self.lpVtbl).LoadFromFileWithPasswordAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, password.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(&self, inputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(&self, inputStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromStreamAsync)(self as *const _ as *mut _, inputStream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFromStreamAsync)(self as *const _ as *mut _, inputStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_password_async(&self, inputStream: &super::super::storage::streams::IRandomAccessStream, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_password_async(&self, inputStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromStreamWithPasswordAsync)(self as *const _ as *mut _, inputStream as *const _ as *mut _, password.get(), &mut out);
+        let hr = ((*self.lpVtbl).LoadFromStreamWithPasswordAsync)(self as *const _ as *mut _, inputStream.deref() as *const _ as *mut _, password.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -430,14 +430,14 @@ RT_INTERFACE!{interface IPdfPage(IPdfPageVtbl): IInspectable(IInspectableVtbl) [
     fn get_PreferredZoom(&self, out: *mut f32) -> HRESULT
 }}
 impl IPdfPage {
-    #[cfg(feature="windows-storage")] #[inline] pub fn render_to_stream_async(&self, outputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn render_to_stream_async(&self, outputStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RenderToStreamAsync)(self as *const _ as *mut _, outputStream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RenderToStreamAsync)(self as *const _ as *mut _, outputStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn render_with_options_to_stream_async(&self, outputStream: &super::super::storage::streams::IRandomAccessStream, options: &PdfPageRenderOptions) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn render_with_options_to_stream_async(&self, outputStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, options: &ComPtr<PdfPageRenderOptions>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RenderWithOptionsToStreamAsync)(self as *const _ as *mut _, outputStream as *const _ as *mut _, options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RenderWithOptionsToStreamAsync)(self as *const _ as *mut _, outputStream.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn prepare_page_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -640,8 +640,8 @@ RT_DELEGATE!{delegate SelectableWordSegmentsTokenizingHandler(SelectableWordSegm
     fn Invoke(&self, precedingWords: *mut foundation::collections::IIterable<SelectableWordSegment>, words: *mut foundation::collections::IIterable<SelectableWordSegment>) -> HRESULT
 }}
 impl SelectableWordSegmentsTokenizingHandler {
-    #[inline] pub fn invoke(&self, precedingWords: &foundation::collections::IIterable<SelectableWordSegment>, words: &foundation::collections::IIterable<SelectableWordSegment>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, precedingWords as *const _ as *mut _, words as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, precedingWords: &ComPtr<foundation::collections::IIterable<SelectableWordSegment>>, words: &ComPtr<foundation::collections::IIterable<SelectableWordSegment>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, precedingWords.deref() as *const _ as *mut _, words.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -668,8 +668,8 @@ impl ISelectableWordsSegmenter {
         let hr = ((*self.lpVtbl).GetTokens)(self as *const _ as *mut _, text.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn tokenize(&self, text: &HStringArg, startIndex: u32, handler: &SelectableWordSegmentsTokenizingHandler) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Tokenize)(self as *const _ as *mut _, text.get(), startIndex, handler as *const _ as *mut _);
+    #[inline] pub fn tokenize(&self, text: &HStringArg, startIndex: u32, handler: &ComPtr<SelectableWordSegmentsTokenizingHandler>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Tokenize)(self as *const _ as *mut _, text.get(), startIndex, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -677,7 +677,7 @@ RT_CLASS!{class SelectableWordsSegmenter: ISelectableWordsSegmenter}
 impl RtActivatable<ISelectableWordsSegmenterFactory> for SelectableWordsSegmenter {}
 impl SelectableWordsSegmenter {
     #[inline] pub fn create_with_language(language: &HStringArg) -> Result<ComPtr<SelectableWordsSegmenter>> {
-        <Self as RtActivatable<ISelectableWordsSegmenterFactory>>::get_activation_factory().create_with_language(language)
+        <Self as RtActivatable<ISelectableWordsSegmenterFactory>>::get_activation_factory().deref().create_with_language(language)
     }
 }
 DEFINE_CLSID!(SelectableWordsSegmenter(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,83,101,108,101,99,116,97,98,108,101,87,111,114,100,115,83,101,103,109,101,110,116,101,114,0]) [CLSID_SelectableWordsSegmenter]);
@@ -713,10 +713,10 @@ RT_CLASS!{class SemanticTextQuery: ISemanticTextQuery}
 impl RtActivatable<ISemanticTextQueryFactory> for SemanticTextQuery {}
 impl SemanticTextQuery {
     #[inline] pub fn create(aqsFilter: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> {
-        <Self as RtActivatable<ISemanticTextQueryFactory>>::get_activation_factory().create(aqsFilter)
+        <Self as RtActivatable<ISemanticTextQueryFactory>>::get_activation_factory().deref().create(aqsFilter)
     }
     #[inline] pub fn create_with_language(aqsFilter: &HStringArg, filterLanguage: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> {
-        <Self as RtActivatable<ISemanticTextQueryFactory>>::get_activation_factory().create_with_language(aqsFilter, filterLanguage)
+        <Self as RtActivatable<ISemanticTextQueryFactory>>::get_activation_factory().deref().create_with_language(aqsFilter, filterLanguage)
     }
 }
 DEFINE_CLSID!(SemanticTextQuery(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,83,101,109,97,110,116,105,99,84,101,120,116,81,117,101,114,121,0]) [CLSID_SemanticTextQuery]);
@@ -770,7 +770,7 @@ RT_CLASS!{class TextConversionGenerator: ITextConversionGenerator}
 impl RtActivatable<ITextConversionGeneratorFactory> for TextConversionGenerator {}
 impl TextConversionGenerator {
     #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextConversionGenerator>> {
-        <Self as RtActivatable<ITextConversionGeneratorFactory>>::get_activation_factory().create(languageTag)
+        <Self as RtActivatable<ITextConversionGeneratorFactory>>::get_activation_factory().deref().create(languageTag)
     }
 }
 DEFINE_CLSID!(TextConversionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,67,111,110,118,101,114,115,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextConversionGenerator]);
@@ -836,7 +836,7 @@ RT_CLASS!{class TextPredictionGenerator: ITextPredictionGenerator}
 impl RtActivatable<ITextPredictionGeneratorFactory> for TextPredictionGenerator {}
 impl TextPredictionGenerator {
     #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextPredictionGenerator>> {
-        <Self as RtActivatable<ITextPredictionGeneratorFactory>>::get_activation_factory().create(languageTag)
+        <Self as RtActivatable<ITextPredictionGeneratorFactory>>::get_activation_factory().deref().create(languageTag)
     }
 }
 DEFINE_CLSID!(TextPredictionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,80,114,101,100,105,99,116,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextPredictionGenerator]);
@@ -848,14 +848,14 @@ RT_INTERFACE!{interface ITextPredictionGenerator2(ITextPredictionGenerator2Vtbl)
     #[cfg(feature="windows-ui")] fn put_InputScope(&self, value: super::super::ui::text::core::CoreTextInputScope) -> HRESULT
 }}
 impl ITextPredictionGenerator2 {
-    #[inline] pub fn get_candidates_with_parameters_async(&self, input: &HStringArg, maxCandidates: u32, predictionOptions: TextPredictionOptions, previousStrings: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
+    #[inline] pub fn get_candidates_with_parameters_async(&self, input: &HStringArg, maxCandidates: u32, predictionOptions: TextPredictionOptions, previousStrings: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetCandidatesWithParametersAsync)(self as *const _ as *mut _, input.get(), maxCandidates, predictionOptions, previousStrings as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetCandidatesWithParametersAsync)(self as *const _ as *mut _, input.get(), maxCandidates, predictionOptions, previousStrings.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_next_word_candidates_async(&self, maxCandidates: u32, previousStrings: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
+    #[inline] pub fn get_next_word_candidates_async(&self, maxCandidates: u32, previousStrings: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetNextWordCandidatesAsync)(self as *const _ as *mut _, maxCandidates, previousStrings as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetNextWordCandidatesAsync)(self as *const _ as *mut _, maxCandidates, previousStrings.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn get_input_scope(&self) -> Result<super::super::ui::text::core::CoreTextInputScope> { unsafe { 
@@ -909,7 +909,7 @@ RT_CLASS!{class TextReverseConversionGenerator: ITextReverseConversionGenerator}
 impl RtActivatable<ITextReverseConversionGeneratorFactory> for TextReverseConversionGenerator {}
 impl TextReverseConversionGenerator {
     #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextReverseConversionGenerator>> {
-        <Self as RtActivatable<ITextReverseConversionGeneratorFactory>>::get_activation_factory().create(languageTag)
+        <Self as RtActivatable<ITextReverseConversionGeneratorFactory>>::get_activation_factory().deref().create(languageTag)
     }
 }
 DEFINE_CLSID!(TextReverseConversionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,82,101,118,101,114,115,101,67,111,110,118,101,114,115,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextReverseConversionGenerator]);
@@ -942,55 +942,55 @@ RT_CLASS!{static class UnicodeCharacters}
 impl RtActivatable<IUnicodeCharactersStatics> for UnicodeCharacters {}
 impl UnicodeCharacters {
     #[inline] pub fn get_codepoint_from_surrogate_pair(highSurrogate: u32, lowSurrogate: u32) -> Result<u32> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().get_codepoint_from_surrogate_pair(highSurrogate, lowSurrogate)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().get_codepoint_from_surrogate_pair(highSurrogate, lowSurrogate)
     }
     #[inline] pub fn get_surrogate_pair_from_codepoint(codepoint: u32) -> Result<(Char, Char)> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().get_surrogate_pair_from_codepoint(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().get_surrogate_pair_from_codepoint(codepoint)
     }
     #[inline] pub fn is_high_surrogate(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_high_surrogate(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().is_high_surrogate(codepoint)
     }
     #[inline] pub fn is_low_surrogate(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_low_surrogate(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().is_low_surrogate(codepoint)
     }
     #[inline] pub fn is_supplementary(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_supplementary(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().is_supplementary(codepoint)
     }
     #[inline] pub fn is_noncharacter(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_noncharacter(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().is_noncharacter(codepoint)
     }
     #[inline] pub fn is_whitespace(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_whitespace(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().is_whitespace(codepoint)
     }
     #[inline] pub fn is_alphabetic(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_alphabetic(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().is_alphabetic(codepoint)
     }
     #[inline] pub fn is_cased(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_cased(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().is_cased(codepoint)
     }
     #[inline] pub fn is_uppercase(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_uppercase(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().is_uppercase(codepoint)
     }
     #[inline] pub fn is_lowercase(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_lowercase(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().is_lowercase(codepoint)
     }
     #[inline] pub fn is_id_start(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_id_start(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().is_id_start(codepoint)
     }
     #[inline] pub fn is_id_continue(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_id_continue(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().is_id_continue(codepoint)
     }
     #[inline] pub fn is_grapheme_base(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_grapheme_base(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().is_grapheme_base(codepoint)
     }
     #[inline] pub fn is_grapheme_extend(codepoint: u32) -> Result<bool> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().is_grapheme_extend(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().is_grapheme_extend(codepoint)
     }
     #[inline] pub fn get_numeric_type(codepoint: u32) -> Result<UnicodeNumericType> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().get_numeric_type(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().get_numeric_type(codepoint)
     }
     #[inline] pub fn get_general_category(codepoint: u32) -> Result<UnicodeGeneralCategory> {
-        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().get_general_category(codepoint)
+        <Self as RtActivatable<IUnicodeCharactersStatics>>::get_activation_factory().deref().get_general_category(codepoint)
     }
 }
 DEFINE_CLSID!(UnicodeCharacters(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,85,110,105,99,111,100,101,67,104,97,114,97,99,116,101,114,115,0]) [CLSID_UnicodeCharacters]);
@@ -1136,8 +1136,8 @@ RT_DELEGATE!{delegate WordSegmentsTokenizingHandler(WordSegmentsTokenizingHandle
     fn Invoke(&self, precedingWords: *mut foundation::collections::IIterable<WordSegment>, words: *mut foundation::collections::IIterable<WordSegment>) -> HRESULT
 }}
 impl WordSegmentsTokenizingHandler {
-    #[inline] pub fn invoke(&self, precedingWords: &foundation::collections::IIterable<WordSegment>, words: &foundation::collections::IIterable<WordSegment>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, precedingWords as *const _ as *mut _, words as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, precedingWords: &ComPtr<foundation::collections::IIterable<WordSegment>>, words: &ComPtr<foundation::collections::IIterable<WordSegment>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, precedingWords.deref() as *const _ as *mut _, words.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1164,8 +1164,8 @@ impl IWordsSegmenter {
         let hr = ((*self.lpVtbl).GetTokens)(self as *const _ as *mut _, text.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn tokenize(&self, text: &HStringArg, startIndex: u32, handler: &WordSegmentsTokenizingHandler) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Tokenize)(self as *const _ as *mut _, text.get(), startIndex, handler as *const _ as *mut _);
+    #[inline] pub fn tokenize(&self, text: &HStringArg, startIndex: u32, handler: &ComPtr<WordSegmentsTokenizingHandler>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Tokenize)(self as *const _ as *mut _, text.get(), startIndex, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1173,7 +1173,7 @@ RT_CLASS!{class WordsSegmenter: IWordsSegmenter}
 impl RtActivatable<IWordsSegmenterFactory> for WordsSegmenter {}
 impl WordsSegmenter {
     #[inline] pub fn create_with_language(language: &HStringArg) -> Result<ComPtr<WordsSegmenter>> {
-        <Self as RtActivatable<IWordsSegmenterFactory>>::get_activation_factory().create_with_language(language)
+        <Self as RtActivatable<IWordsSegmenterFactory>>::get_activation_factory().deref().create_with_language(language)
     }
 }
 DEFINE_CLSID!(WordsSegmenter(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,87,111,114,100,115,83,101,103,109,101,110,116,101,114,0]) [CLSID_WordsSegmenter]);
@@ -1410,14 +1410,14 @@ impl IXmlDocument {
         let hr = ((*self.lpVtbl).get_DocumentUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_attribute_ns(&self, namespaceUri: &IInspectable, qualifiedName: &HStringArg) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
+    #[inline] pub fn create_attribute_ns(&self, namespaceUri: &ComPtr<IInspectable>, qualifiedName: &HStringArg) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateAttributeNS)(self as *const _ as *mut _, namespaceUri as *const _ as *mut _, qualifiedName.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateAttributeNS)(self as *const _ as *mut _, namespaceUri.deref() as *const _ as *mut _, qualifiedName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_element_ns(&self, namespaceUri: &IInspectable, qualifiedName: &HStringArg) -> Result<Option<ComPtr<XmlElement>>> { unsafe { 
+    #[inline] pub fn create_element_ns(&self, namespaceUri: &ComPtr<IInspectable>, qualifiedName: &HStringArg) -> Result<Option<ComPtr<XmlElement>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateElementNS)(self as *const _ as *mut _, namespaceUri as *const _ as *mut _, qualifiedName.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateElementNS)(self as *const _ as *mut _, namespaceUri.deref() as *const _ as *mut _, qualifiedName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_element_by_id(&self, elementId: &HStringArg) -> Result<Option<ComPtr<XmlElement>>> { unsafe { 
@@ -1425,9 +1425,9 @@ impl IXmlDocument {
         let hr = ((*self.lpVtbl).GetElementById)(self as *const _ as *mut _, elementId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn import_node(&self, node: &IXmlNode, deep: bool) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
+    #[inline] pub fn import_node(&self, node: &ComPtr<IXmlNode>, deep: bool) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ImportNode)(self as *const _ as *mut _, node as *const _ as *mut _, deep, &mut out);
+        let hr = ((*self.lpVtbl).ImportNode)(self as *const _ as *mut _, node.deref() as *const _ as *mut _, deep, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1435,17 +1435,17 @@ RT_CLASS!{class XmlDocument: IXmlDocument}
 impl RtActivatable<IXmlDocumentStatics> for XmlDocument {}
 impl RtActivatable<IActivationFactory> for XmlDocument {}
 impl XmlDocument {
-    #[inline] pub fn load_from_uri_async(uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
-        <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_uri_async(uri)
+    #[inline] pub fn load_from_uri_async(uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
+        <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().deref().load_from_uri_async(uri)
     }
-    #[inline] pub fn load_from_uri_with_settings_async(uri: &foundation::Uri, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
-        <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_uri_with_settings_async(uri, loadSettings)
+    #[inline] pub fn load_from_uri_with_settings_async(uri: &ComPtr<foundation::Uri>, loadSettings: &ComPtr<XmlLoadSettings>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
+        <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().deref().load_from_uri_with_settings_async(uri, loadSettings)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &crate::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
-        <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_file_async(file)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &ComPtr<crate::windows::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
+        <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().deref().load_from_file_async(file)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(file: &crate::windows::storage::IStorageFile, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
-        <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_file_with_settings_async(file, loadSettings)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(file: &ComPtr<crate::windows::storage::IStorageFile>, loadSettings: &ComPtr<XmlLoadSettings>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
+        <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().deref().load_from_file_with_settings_async(file, loadSettings)
     }
 }
 DEFINE_CLSID!(XmlDocument(&[87,105,110,100,111,119,115,46,68,97,116,97,46,88,109,108,46,68,111,109,46,88,109,108,68,111,99,117,109,101,110,116,0]) [CLSID_XmlDocument]);
@@ -1465,13 +1465,13 @@ impl IXmlDocumentIO {
         let hr = ((*self.lpVtbl).LoadXml)(self as *const _ as *mut _, xml.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn load_xml_with_settings(&self, xml: &HStringArg, loadSettings: &XmlLoadSettings) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LoadXmlWithSettings)(self as *const _ as *mut _, xml.get(), loadSettings as *const _ as *mut _);
+    #[inline] pub fn load_xml_with_settings(&self, xml: &HStringArg, loadSettings: &ComPtr<XmlLoadSettings>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).LoadXmlWithSettings)(self as *const _ as *mut _, xml.get(), loadSettings.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_to_file_async(&self, file: &crate::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_to_file_async(&self, file: &ComPtr<crate::windows::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveToFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SaveToFileAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1481,12 +1481,12 @@ RT_INTERFACE!{interface IXmlDocumentIO2(IXmlDocumentIO2Vtbl): IInspectable(IInsp
     #[cfg(feature="windows-storage")] fn LoadXmlFromBufferWithSettings(&self, buffer: *mut crate::windows::storage::streams::IBuffer, loadSettings: *mut XmlLoadSettings) -> HRESULT
 }}
 impl IXmlDocumentIO2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_xml_from_buffer(&self, buffer: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LoadXmlFromBuffer)(self as *const _ as *mut _, buffer as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_xml_from_buffer(&self, buffer: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).LoadXmlFromBuffer)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_xml_from_buffer_with_settings(&self, buffer: &crate::windows::storage::streams::IBuffer, loadSettings: &XmlLoadSettings) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LoadXmlFromBufferWithSettings)(self as *const _ as *mut _, buffer as *const _ as *mut _, loadSettings as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_xml_from_buffer_with_settings(&self, buffer: &ComPtr<crate::windows::storage::streams::IBuffer>, loadSettings: &ComPtr<XmlLoadSettings>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).LoadXmlFromBufferWithSettings)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _, loadSettings.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1498,24 +1498,24 @@ RT_INTERFACE!{static interface IXmlDocumentStatics(IXmlDocumentStaticsVtbl): IIn
     #[cfg(feature="windows-storage")] fn LoadFromFileWithSettingsAsync(&self, file: *mut crate::windows::storage::IStorageFile, loadSettings: *mut XmlLoadSettings, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT
 }}
 impl IXmlDocumentStatics {
-    #[inline] pub fn load_from_uri_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
+    #[inline] pub fn load_from_uri_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromUriAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFromUriAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn load_from_uri_with_settings_async(&self, uri: &foundation::Uri, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
+    #[inline] pub fn load_from_uri_with_settings_async(&self, uri: &ComPtr<foundation::Uri>, loadSettings: &ComPtr<XmlLoadSettings>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromUriWithSettingsAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, loadSettings as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFromUriWithSettingsAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, loadSettings.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(&self, file: &crate::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(&self, file: &ComPtr<crate::windows::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFromFileAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(&self, file: &crate::windows::storage::IStorageFile, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(&self, file: &ComPtr<crate::windows::storage::IStorageFile>, loadSettings: &ComPtr<XmlLoadSettings>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromFileWithSettingsAsync)(self as *const _ as *mut _, file as *const _ as *mut _, loadSettings as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFromFileWithSettingsAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, loadSettings.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1548,9 +1548,9 @@ RT_INTERFACE!{interface IXmlDomImplementation(IXmlDomImplementationVtbl): IInspe
     fn HasFeature(&self, feature: HSTRING, version: *mut IInspectable, out: *mut bool) -> HRESULT
 }}
 impl IXmlDomImplementation {
-    #[inline] pub fn has_feature(&self, feature: &HStringArg, version: &IInspectable) -> Result<bool> { unsafe { 
+    #[inline] pub fn has_feature(&self, feature: &HStringArg, version: &ComPtr<IInspectable>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).HasFeature)(self as *const _ as *mut _, feature.get(), version as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).HasFeature)(self as *const _ as *mut _, feature.get(), version.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1595,14 +1595,14 @@ impl IXmlElement {
         let hr = ((*self.lpVtbl).GetAttributeNode)(self as *const _ as *mut _, attributeName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_attribute_node(&self, newAttribute: &XmlAttribute) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
+    #[inline] pub fn set_attribute_node(&self, newAttribute: &ComPtr<XmlAttribute>) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetAttributeNode)(self as *const _ as *mut _, newAttribute as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetAttributeNode)(self as *const _ as *mut _, newAttribute.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn remove_attribute_node(&self, attributeNode: &XmlAttribute) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
+    #[inline] pub fn remove_attribute_node(&self, attributeNode: &ComPtr<XmlAttribute>) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RemoveAttributeNode)(self as *const _ as *mut _, attributeNode as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RemoveAttributeNode)(self as *const _ as *mut _, attributeNode.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_elements_by_tag_name(&self, tagName: &HStringArg) -> Result<Option<ComPtr<XmlNodeList>>> { unsafe { 
@@ -1610,27 +1610,27 @@ impl IXmlElement {
         let hr = ((*self.lpVtbl).GetElementsByTagName)(self as *const _ as *mut _, tagName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_attribute_ns(&self, namespaceUri: &IInspectable, qualifiedName: &HStringArg, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetAttributeNS)(self as *const _ as *mut _, namespaceUri as *const _ as *mut _, qualifiedName.get(), value.get());
+    #[inline] pub fn set_attribute_ns(&self, namespaceUri: &ComPtr<IInspectable>, qualifiedName: &HStringArg, value: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetAttributeNS)(self as *const _ as *mut _, namespaceUri.deref() as *const _ as *mut _, qualifiedName.get(), value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_attribute_ns(&self, namespaceUri: &IInspectable, localName: &HStringArg) -> Result<HString> { unsafe { 
+    #[inline] pub fn get_attribute_ns(&self, namespaceUri: &ComPtr<IInspectable>, localName: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAttributeNS)(self as *const _ as *mut _, namespaceUri as *const _ as *mut _, localName.get(), &mut out);
+        let hr = ((*self.lpVtbl).GetAttributeNS)(self as *const _ as *mut _, namespaceUri.deref() as *const _ as *mut _, localName.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn remove_attribute_ns(&self, namespaceUri: &IInspectable, localName: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveAttributeNS)(self as *const _ as *mut _, namespaceUri as *const _ as *mut _, localName.get());
+    #[inline] pub fn remove_attribute_ns(&self, namespaceUri: &ComPtr<IInspectable>, localName: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RemoveAttributeNS)(self as *const _ as *mut _, namespaceUri.deref() as *const _ as *mut _, localName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn set_attribute_node_ns(&self, newAttribute: &XmlAttribute) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
+    #[inline] pub fn set_attribute_node_ns(&self, newAttribute: &ComPtr<XmlAttribute>) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetAttributeNodeNS)(self as *const _ as *mut _, newAttribute as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetAttributeNodeNS)(self as *const _ as *mut _, newAttribute.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_attribute_node_ns(&self, namespaceUri: &IInspectable, localName: &HStringArg) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
+    #[inline] pub fn get_attribute_node_ns(&self, namespaceUri: &ComPtr<IInspectable>, localName: &HStringArg) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetAttributeNodeNS)(self as *const _ as *mut _, namespaceUri as *const _ as *mut _, localName.get(), &mut out);
+        let hr = ((*self.lpVtbl).GetAttributeNodeNS)(self as *const _ as *mut _, namespaceUri.deref() as *const _ as *mut _, localName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1730,9 +1730,9 @@ impl IXmlNamedNodeMap {
         let hr = ((*self.lpVtbl).GetNamedItem)(self as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_named_item(&self, node: &IXmlNode) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
+    #[inline] pub fn set_named_item(&self, node: &ComPtr<IXmlNode>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetNamedItem)(self as *const _ as *mut _, node as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetNamedItem)(self as *const _ as *mut _, node.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove_named_item(&self, name: &HStringArg) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
@@ -1740,19 +1740,19 @@ impl IXmlNamedNodeMap {
         let hr = ((*self.lpVtbl).RemoveNamedItem)(self as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_named_item_ns(&self, namespaceUri: &IInspectable, name: &HStringArg) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
+    #[inline] pub fn get_named_item_ns(&self, namespaceUri: &ComPtr<IInspectable>, name: &HStringArg) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetNamedItemNS)(self as *const _ as *mut _, namespaceUri as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.lpVtbl).GetNamedItemNS)(self as *const _ as *mut _, namespaceUri.deref() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn remove_named_item_ns(&self, namespaceUri: &IInspectable, name: &HStringArg) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
+    #[inline] pub fn remove_named_item_ns(&self, namespaceUri: &ComPtr<IInspectable>, name: &HStringArg) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RemoveNamedItemNS)(self as *const _ as *mut _, namespaceUri as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.lpVtbl).RemoveNamedItemNS)(self as *const _ as *mut _, namespaceUri.deref() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_named_item_ns(&self, node: &IXmlNode) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
+    #[inline] pub fn set_named_item_ns(&self, node: &ComPtr<IXmlNode>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetNamedItemNS)(self as *const _ as *mut _, node as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetNamedItemNS)(self as *const _ as *mut _, node.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1789,8 +1789,8 @@ impl IXmlNode {
         let hr = ((*self.lpVtbl).get_NodeValue)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_node_value(&self, value: &IInspectable) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_NodeValue)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_node_value(&self, value: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_NodeValue)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_node_type(&self) -> Result<NodeType> { unsafe { 
@@ -1848,24 +1848,24 @@ impl IXmlNode {
         let hr = ((*self.lpVtbl).get_OwnerDocument)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn insert_before(&self, newChild: &IXmlNode, referenceChild: &IXmlNode) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
+    #[inline] pub fn insert_before(&self, newChild: &ComPtr<IXmlNode>, referenceChild: &ComPtr<IXmlNode>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).InsertBefore)(self as *const _ as *mut _, newChild as *const _ as *mut _, referenceChild as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).InsertBefore)(self as *const _ as *mut _, newChild.deref() as *const _ as *mut _, referenceChild.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn replace_child(&self, newChild: &IXmlNode, referenceChild: &IXmlNode) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
+    #[inline] pub fn replace_child(&self, newChild: &ComPtr<IXmlNode>, referenceChild: &ComPtr<IXmlNode>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReplaceChild)(self as *const _ as *mut _, newChild as *const _ as *mut _, referenceChild as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ReplaceChild)(self as *const _ as *mut _, newChild.deref() as *const _ as *mut _, referenceChild.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn remove_child(&self, childNode: &IXmlNode) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
+    #[inline] pub fn remove_child(&self, childNode: &ComPtr<IXmlNode>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RemoveChild)(self as *const _ as *mut _, childNode as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RemoveChild)(self as *const _ as *mut _, childNode.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn append_child(&self, newChild: &IXmlNode) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
+    #[inline] pub fn append_child(&self, newChild: &ComPtr<IXmlNode>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AppendChild)(self as *const _ as *mut _, newChild as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AppendChild)(self as *const _ as *mut _, newChild.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn clone_node(&self, deep: bool) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
@@ -1892,8 +1892,8 @@ impl IXmlNode {
         let hr = ((*self.lpVtbl).Normalize)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn set_prefix(&self, value: &IInspectable) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Prefix)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_prefix(&self, value: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Prefix)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1933,14 +1933,14 @@ impl IXmlNodeSelector {
         let hr = ((*self.lpVtbl).SelectNodes)(self as *const _ as *mut _, xpath.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn select_single_node_ns(&self, xpath: &HStringArg, namespaces: &IInspectable) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
+    #[inline] pub fn select_single_node_ns(&self, xpath: &HStringArg, namespaces: &ComPtr<IInspectable>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SelectSingleNodeNS)(self as *const _ as *mut _, xpath.get(), namespaces as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SelectSingleNodeNS)(self as *const _ as *mut _, xpath.get(), namespaces.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn select_nodes_ns(&self, xpath: &HStringArg, namespaces: &IInspectable) -> Result<Option<ComPtr<XmlNodeList>>> { unsafe { 
+    #[inline] pub fn select_nodes_ns(&self, xpath: &HStringArg, namespaces: &ComPtr<IInspectable>) -> Result<Option<ComPtr<XmlNodeList>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SelectNodesNS)(self as *const _ as *mut _, xpath.get(), namespaces as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SelectNodesNS)(self as *const _ as *mut _, xpath.get(), namespaces.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2009,17 +2009,17 @@ RT_INTERFACE!{interface IXsltProcessor(IXsltProcessorVtbl): IInspectable(IInspec
     fn TransformToString(&self, inputNode: *mut super::dom::IXmlNode, out: *mut HSTRING) -> HRESULT
 }}
 impl IXsltProcessor {
-    #[inline] pub fn transform_to_string(&self, inputNode: &super::dom::IXmlNode) -> Result<HString> { unsafe { 
+    #[inline] pub fn transform_to_string(&self, inputNode: &ComPtr<super::dom::IXmlNode>) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TransformToString)(self as *const _ as *mut _, inputNode as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TransformToString)(self as *const _ as *mut _, inputNode.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class XsltProcessor: IXsltProcessor}
 impl RtActivatable<IXsltProcessorFactory> for XsltProcessor {}
 impl XsltProcessor {
-    #[inline] pub fn create_instance(document: &super::dom::XmlDocument) -> Result<ComPtr<XsltProcessor>> {
-        <Self as RtActivatable<IXsltProcessorFactory>>::get_activation_factory().create_instance(document)
+    #[inline] pub fn create_instance(document: &ComPtr<super::dom::XmlDocument>) -> Result<ComPtr<XsltProcessor>> {
+        <Self as RtActivatable<IXsltProcessorFactory>>::get_activation_factory().deref().create_instance(document)
     }
 }
 DEFINE_CLSID!(XsltProcessor(&[87,105,110,100,111,119,115,46,68,97,116,97,46,88,109,108,46,88,115,108,46,88,115,108,116,80,114,111,99,101,115,115,111,114,0]) [CLSID_XsltProcessor]);
@@ -2028,9 +2028,9 @@ RT_INTERFACE!{interface IXsltProcessor2(IXsltProcessor2Vtbl): IInspectable(IInsp
     fn TransformToDocument(&self, inputNode: *mut super::dom::IXmlNode, out: *mut *mut super::dom::XmlDocument) -> HRESULT
 }}
 impl IXsltProcessor2 {
-    #[inline] pub fn transform_to_document(&self, inputNode: &super::dom::IXmlNode) -> Result<Option<ComPtr<super::dom::XmlDocument>>> { unsafe { 
+    #[inline] pub fn transform_to_document(&self, inputNode: &ComPtr<super::dom::IXmlNode>) -> Result<Option<ComPtr<super::dom::XmlDocument>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TransformToDocument)(self as *const _ as *mut _, inputNode as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TransformToDocument)(self as *const _ as *mut _, inputNode.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2039,9 +2039,9 @@ RT_INTERFACE!{static interface IXsltProcessorFactory(IXsltProcessorFactoryVtbl):
     fn CreateInstance(&self, document: *mut super::dom::XmlDocument, out: *mut *mut XsltProcessor) -> HRESULT
 }}
 impl IXsltProcessorFactory {
-    #[inline] pub fn create_instance(&self, document: &super::dom::XmlDocument) -> Result<ComPtr<XsltProcessor>> { unsafe { 
+    #[inline] pub fn create_instance(&self, document: &ComPtr<super::dom::XmlDocument>) -> Result<ComPtr<XsltProcessor>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInstance)(self as *const _ as *mut _, document as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateInstance)(self as *const _ as *mut _, document.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
