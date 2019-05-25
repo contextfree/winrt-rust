@@ -52,7 +52,7 @@ RT_CLASS!{class EnterpriseKeyCredentialRegistrationManager: IEnterpriseKeyCreden
 impl RtActivatable<IEnterpriseKeyCredentialRegistrationManagerStatics> for EnterpriseKeyCredentialRegistrationManager {}
 impl EnterpriseKeyCredentialRegistrationManager {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<EnterpriseKeyCredentialRegistrationManager>>> {
-        <Self as RtActivatable<IEnterpriseKeyCredentialRegistrationManagerStatics>>::get_activation_factory().get_current()
+        <Self as RtActivatable<IEnterpriseKeyCredentialRegistrationManagerStatics>>::get_activation_factory().deref().get_current()
     }
 }
 DEFINE_CLSID!(EnterpriseKeyCredentialRegistrationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,69,110,116,101,114,112,114,105,115,101,75,101,121,67,114,101,100,101,110,116,105,97,108,82,101,103,105,115,116,114,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_EnterpriseKeyCredentialRegistrationManager]);
@@ -103,19 +103,19 @@ impl IMicrosoftAccountMultiFactorAuthenticationManager {
         let hr = ((*self.lpVtbl).UpdateWnsChannelAsync)(self as *const _ as *mut _, userAccountId.get(), channelUri.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_sessions_async(&self, userAccountIdList: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorGetSessionsResult>>> { unsafe { 
+    #[inline] pub fn get_sessions_async(&self, userAccountIdList: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorGetSessionsResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSessionsAsync)(self as *const _ as *mut _, userAccountIdList as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetSessionsAsync)(self as *const _ as *mut _, userAccountIdList.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_sessions_and_unregistered_accounts_async(&self, userAccountIdList: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo>>> { unsafe { 
+    #[inline] pub fn get_sessions_and_unregistered_accounts_async(&self, userAccountIdList: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSessionsAndUnregisteredAccountsAsync)(self as *const _ as *mut _, userAccountIdList as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetSessionsAndUnregisteredAccountsAsync)(self as *const _ as *mut _, userAccountIdList.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn approve_session_using_auth_session_info_async(&self, sessionAuthentictionStatus: MicrosoftAccountMultiFactorSessionAuthenticationStatus, authenticationSessionInfo: &MicrosoftAccountMultiFactorSessionInfo) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
+    #[inline] pub fn approve_session_using_auth_session_info_async(&self, sessionAuthentictionStatus: MicrosoftAccountMultiFactorSessionAuthenticationStatus, authenticationSessionInfo: &ComPtr<MicrosoftAccountMultiFactorSessionInfo>) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ApproveSessionUsingAuthSessionInfoAsync)(self as *const _ as *mut _, sessionAuthentictionStatus, authenticationSessionInfo as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ApproveSessionUsingAuthSessionInfoAsync)(self as *const _ as *mut _, sessionAuthentictionStatus, authenticationSessionInfo.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn approve_session_async(&self, sessionAuthentictionStatus: MicrosoftAccountMultiFactorSessionAuthenticationStatus, userAccountId: &HStringArg, sessionId: &HStringArg, sessionAuthenticationType: MicrosoftAccountMultiFactorAuthenticationType) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
@@ -123,9 +123,9 @@ impl IMicrosoftAccountMultiFactorAuthenticationManager {
         let hr = ((*self.lpVtbl).ApproveSessionAsync)(self as *const _ as *mut _, sessionAuthentictionStatus, userAccountId.get(), sessionId.get(), sessionAuthenticationType, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn deny_session_using_auth_session_info_async(&self, authenticationSessionInfo: &MicrosoftAccountMultiFactorSessionInfo) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
+    #[inline] pub fn deny_session_using_auth_session_info_async(&self, authenticationSessionInfo: &ComPtr<MicrosoftAccountMultiFactorSessionInfo>) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DenySessionUsingAuthSessionInfoAsync)(self as *const _ as *mut _, authenticationSessionInfo as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).DenySessionUsingAuthSessionInfoAsync)(self as *const _ as *mut _, authenticationSessionInfo.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn deny_session_async(&self, userAccountId: &HStringArg, sessionId: &HStringArg, sessionAuthenticationType: MicrosoftAccountMultiFactorAuthenticationType) -> Result<ComPtr<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>>> { unsafe { 
@@ -138,7 +138,7 @@ RT_CLASS!{class MicrosoftAccountMultiFactorAuthenticationManager: IMicrosoftAcco
 impl RtActivatable<IMicrosoftAccountMultiFactorAuthenticatorStatics> for MicrosoftAccountMultiFactorAuthenticationManager {}
 impl MicrosoftAccountMultiFactorAuthenticationManager {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<MicrosoftAccountMultiFactorAuthenticationManager>>> {
-        <Self as RtActivatable<IMicrosoftAccountMultiFactorAuthenticatorStatics>>::get_activation_factory().get_current()
+        <Self as RtActivatable<IMicrosoftAccountMultiFactorAuthenticatorStatics>>::get_activation_factory().deref().get_current()
     }
 }
 DEFINE_CLSID!(MicrosoftAccountMultiFactorAuthenticationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,67,111,114,101,46,77,105,99,114,111,115,111,102,116,65,99,99,111,117,110,116,77,117,108,116,105,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MicrosoftAccountMultiFactorAuthenticationManager]);
@@ -323,9 +323,9 @@ impl ISecondaryAuthenticationFactorAuthentication {
         let hr = ((*self.lpVtbl).get_DeviceConfigurationData)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn finish_authentication_async(&self, deviceHmac: &crate::windows::storage::streams::IBuffer, sessionHmac: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorFinishAuthenticationStatus>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn finish_authentication_async(&self, deviceHmac: &ComPtr<crate::windows::storage::streams::IBuffer>, sessionHmac: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorFinishAuthenticationStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FinishAuthenticationAsync)(self as *const _ as *mut _, deviceHmac as *const _ as *mut _, sessionHmac as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FinishAuthenticationAsync)(self as *const _ as *mut _, deviceHmac.deref() as *const _ as *mut _, sessionHmac.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn abort_authentication_async(&self, errorLogMessage: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -338,19 +338,19 @@ RT_CLASS!{class SecondaryAuthenticationFactorAuthentication: ISecondaryAuthentic
 impl RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics> for SecondaryAuthenticationFactorAuthentication {}
 impl SecondaryAuthenticationFactorAuthentication {
     #[inline] pub fn show_notification_message_async(deviceName: &HStringArg, message: SecondaryAuthenticationFactorAuthenticationMessage) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().show_notification_message_async(deviceName, message)
+        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().deref().show_notification_message_async(deviceName, message)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn start_authentication_async(deviceId: &HStringArg, serviceAuthenticationNonce: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationResult>>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().start_authentication_async(deviceId, serviceAuthenticationNonce)
+    #[cfg(feature="windows-storage")] #[inline] pub fn start_authentication_async(deviceId: &HStringArg, serviceAuthenticationNonce: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationResult>>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().deref().start_authentication_async(deviceId, serviceAuthenticationNonce)
     }
-    #[inline] pub fn add_authentication_stage_changed(handler: &foundation::EventHandler<SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().add_authentication_stage_changed(handler)
+    #[inline] pub fn add_authentication_stage_changed(handler: &ComPtr<foundation::EventHandler<SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().deref().add_authentication_stage_changed(handler)
     }
     #[inline] pub fn remove_authentication_stage_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().remove_authentication_stage_changed(token)
+        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().deref().remove_authentication_stage_changed(token)
     }
     #[inline] pub fn get_authentication_stage_info_async() -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationStageInfo>>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().get_authentication_stage_info_async()
+        <Self as RtActivatable<ISecondaryAuthenticationFactorAuthenticationStatics>>::get_activation_factory().deref().get_authentication_stage_info_async()
     }
 }
 DEFINE_CLSID!(SecondaryAuthenticationFactorAuthentication(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,80,114,111,118,105,100,101,114,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,65,117,116,104,101,110,116,105,99,97,116,105,111,110,0]) [CLSID_SecondaryAuthenticationFactorAuthentication]);
@@ -432,14 +432,14 @@ impl ISecondaryAuthenticationFactorAuthenticationStatics {
         let hr = ((*self.lpVtbl).ShowNotificationMessageAsync)(self as *const _ as *mut _, deviceName.get(), message, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn start_authentication_async(&self, deviceId: &HStringArg, serviceAuthenticationNonce: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn start_authentication_async(&self, deviceId: &HStringArg, serviceAuthenticationNonce: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartAuthenticationAsync)(self as *const _ as *mut _, deviceId.get(), serviceAuthenticationNonce as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).StartAuthenticationAsync)(self as *const _ as *mut _, deviceId.get(), serviceAuthenticationNonce.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_authentication_stage_changed(&self, handler: &foundation::EventHandler<SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_authentication_stage_changed(&self, handler: &ComPtr<foundation::EventHandler<SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AuthenticationStageChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AuthenticationStageChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_authentication_stage_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -481,9 +481,9 @@ impl ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics {
         let hr = ((*self.lpVtbl).RegisterDevicePresenceMonitoringAsync)(self as *const _ as *mut _, deviceId.get(), deviceInstancePath.get(), monitoringMode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn register_device_presence_monitoring_with_new_device_async(&self, deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceConfigurationData: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn register_device_presence_monitoring_with_new_device_async(&self, deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceConfigurationData: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RegisterDevicePresenceMonitoringWithNewDeviceAsync)(self as *const _ as *mut _, deviceId.get(), deviceInstancePath.get(), monitoringMode, deviceFriendlyName.get(), deviceModelNumber.get(), deviceConfigurationData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RegisterDevicePresenceMonitoringWithNewDeviceAsync)(self as *const _ as *mut _, deviceId.get(), deviceInstancePath.get(), monitoringMode, deviceFriendlyName.get(), deviceModelNumber.get(), deviceConfigurationData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn unregister_device_presence_monitoring_async(&self, deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -563,9 +563,9 @@ RT_INTERFACE!{interface ISecondaryAuthenticationFactorRegistration(ISecondaryAut
     fn AbortRegisteringDeviceAsync(&self, errorLogMessage: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl ISecondaryAuthenticationFactorRegistration {
-    #[cfg(feature="windows-storage")] #[inline] pub fn finish_registering_device_async(&self, deviceConfigurationData: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn finish_registering_device_async(&self, deviceConfigurationData: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FinishRegisteringDeviceAsync)(self as *const _ as *mut _, deviceConfigurationData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FinishRegisteringDeviceAsync)(self as *const _ as *mut _, deviceConfigurationData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn abort_registering_device_async(&self, errorLogMessage: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -579,28 +579,28 @@ impl RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistr
 impl RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics> for SecondaryAuthenticationFactorRegistration {}
 impl SecondaryAuthenticationFactorRegistration {
     #[inline] pub fn register_device_presence_monitoring_async(deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().register_device_presence_monitoring_async(deviceId, deviceInstancePath, monitoringMode)
+        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().deref().register_device_presence_monitoring_async(deviceId, deviceInstancePath, monitoringMode)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn register_device_presence_monitoring_with_new_device_async(deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceConfigurationData: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().register_device_presence_monitoring_with_new_device_async(deviceId, deviceInstancePath, monitoringMode, deviceFriendlyName, deviceModelNumber, deviceConfigurationData)
+    #[cfg(feature="windows-storage")] #[inline] pub fn register_device_presence_monitoring_with_new_device_async(deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceConfigurationData: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().deref().register_device_presence_monitoring_with_new_device_async(deviceId, deviceInstancePath, monitoringMode, deviceFriendlyName, deviceModelNumber, deviceConfigurationData)
     }
     #[inline] pub fn unregister_device_presence_monitoring_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().unregister_device_presence_monitoring_async(deviceId)
+        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().deref().unregister_device_presence_monitoring_async(deviceId)
     }
     #[inline] pub fn is_device_presence_monitoring_supported() -> Result<bool> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().is_device_presence_monitoring_supported()
+        <Self as RtActivatable<ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>>::get_activation_factory().deref().is_device_presence_monitoring_supported()
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_start_registering_device_async(deviceId: &HStringArg, capabilities: SecondaryAuthenticationFactorDeviceCapabilities, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceKey: &crate::windows::storage::streams::IBuffer, mutualAuthenticationKey: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorRegistrationResult>>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().request_start_registering_device_async(deviceId, capabilities, deviceFriendlyName, deviceModelNumber, deviceKey, mutualAuthenticationKey)
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_start_registering_device_async(deviceId: &HStringArg, capabilities: SecondaryAuthenticationFactorDeviceCapabilities, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceKey: &ComPtr<crate::windows::storage::streams::IBuffer>, mutualAuthenticationKey: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorRegistrationResult>>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().deref().request_start_registering_device_async(deviceId, capabilities, deviceFriendlyName, deviceModelNumber, deviceKey, mutualAuthenticationKey)
     }
     #[inline] pub fn find_all_registered_device_info_async(queryType: SecondaryAuthenticationFactorDeviceFindScope) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<SecondaryAuthenticationFactorInfo>>>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().find_all_registered_device_info_async(queryType)
+        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().deref().find_all_registered_device_info_async(queryType)
     }
     #[inline] pub fn unregister_device_async(deviceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().unregister_device_async(deviceId)
+        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().deref().unregister_device_async(deviceId)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn update_device_configuration_data_async(deviceId: &HStringArg, deviceConfigurationData: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().update_device_configuration_data_async(deviceId, deviceConfigurationData)
+    #[cfg(feature="windows-storage")] #[inline] pub fn update_device_configuration_data_async(deviceId: &HStringArg, deviceConfigurationData: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<ISecondaryAuthenticationFactorRegistrationStatics>>::get_activation_factory().deref().update_device_configuration_data_async(deviceId, deviceConfigurationData)
     }
 }
 DEFINE_CLSID!(SecondaryAuthenticationFactorRegistration(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,80,114,111,118,105,100,101,114,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,82,101,103,105,115,116,114,97,116,105,111,110,0]) [CLSID_SecondaryAuthenticationFactorRegistration]);
@@ -630,9 +630,9 @@ RT_INTERFACE!{static interface ISecondaryAuthenticationFactorRegistrationStatics
     #[cfg(feature="windows-storage")] fn UpdateDeviceConfigurationDataAsync(&self, deviceId: HSTRING, deviceConfigurationData: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl ISecondaryAuthenticationFactorRegistrationStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_start_registering_device_async(&self, deviceId: &HStringArg, capabilities: SecondaryAuthenticationFactorDeviceCapabilities, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceKey: &crate::windows::storage::streams::IBuffer, mutualAuthenticationKey: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorRegistrationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_start_registering_device_async(&self, deviceId: &HStringArg, capabilities: SecondaryAuthenticationFactorDeviceCapabilities, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceKey: &ComPtr<crate::windows::storage::streams::IBuffer>, mutualAuthenticationKey: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<SecondaryAuthenticationFactorRegistrationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestStartRegisteringDeviceAsync)(self as *const _ as *mut _, deviceId.get(), capabilities, deviceFriendlyName.get(), deviceModelNumber.get(), deviceKey as *const _ as *mut _, mutualAuthenticationKey as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestStartRegisteringDeviceAsync)(self as *const _ as *mut _, deviceId.get(), capabilities, deviceFriendlyName.get(), deviceModelNumber.get(), deviceKey.deref() as *const _ as *mut _, mutualAuthenticationKey.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_all_registered_device_info_async(&self, queryType: SecondaryAuthenticationFactorDeviceFindScope) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<SecondaryAuthenticationFactorInfo>>>> { unsafe { 
@@ -645,9 +645,9 @@ impl ISecondaryAuthenticationFactorRegistrationStatics {
         let hr = ((*self.lpVtbl).UnregisterDeviceAsync)(self as *const _ as *mut _, deviceId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn update_device_configuration_data_async(&self, deviceId: &HStringArg, deviceConfigurationData: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn update_device_configuration_data_async(&self, deviceId: &HStringArg, deviceConfigurationData: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UpdateDeviceConfigurationDataAsync)(self as *const _ as *mut _, deviceId.get(), deviceConfigurationData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).UpdateDeviceConfigurationDataAsync)(self as *const _ as *mut _, deviceId.get(), deviceConfigurationData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -672,14 +672,14 @@ RT_INTERFACE!{interface IOnlineIdAuthenticator(IOnlineIdAuthenticatorVtbl): IIns
     fn get_AuthenticatedSafeCustomerId(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IOnlineIdAuthenticator {
-    #[inline] pub fn authenticate_user_async(&self, request: &OnlineIdServiceTicketRequest) -> Result<ComPtr<UserAuthenticationOperation>> { unsafe { 
+    #[inline] pub fn authenticate_user_async(&self, request: &ComPtr<OnlineIdServiceTicketRequest>) -> Result<ComPtr<UserAuthenticationOperation>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AuthenticateUserAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AuthenticateUserAsync)(self as *const _ as *mut _, request.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn authenticate_user_async_advanced(&self, requests: &foundation::collections::IIterable<OnlineIdServiceTicketRequest>, credentialPromptType: CredentialPromptType) -> Result<ComPtr<UserAuthenticationOperation>> { unsafe { 
+    #[inline] pub fn authenticate_user_async_advanced(&self, requests: &ComPtr<foundation::collections::IIterable<OnlineIdServiceTicketRequest>>, credentialPromptType: CredentialPromptType) -> Result<ComPtr<UserAuthenticationOperation>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AuthenticateUserAsyncAdvanced)(self as *const _ as *mut _, requests as *const _ as *mut _, credentialPromptType, &mut out);
+        let hr = ((*self.lpVtbl).AuthenticateUserAsyncAdvanced)(self as *const _ as *mut _, requests.deref() as *const _ as *mut _, credentialPromptType, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn sign_out_user_async(&self) -> Result<ComPtr<SignOutUserOperation>> { unsafe { 
@@ -755,10 +755,10 @@ RT_CLASS!{class OnlineIdServiceTicketRequest: IOnlineIdServiceTicketRequest}
 impl RtActivatable<IOnlineIdServiceTicketRequestFactory> for OnlineIdServiceTicketRequest {}
 impl OnlineIdServiceTicketRequest {
     #[inline] pub fn create_online_id_service_ticket_request(service: &HStringArg, policy: &HStringArg) -> Result<ComPtr<OnlineIdServiceTicketRequest>> {
-        <Self as RtActivatable<IOnlineIdServiceTicketRequestFactory>>::get_activation_factory().create_online_id_service_ticket_request(service, policy)
+        <Self as RtActivatable<IOnlineIdServiceTicketRequestFactory>>::get_activation_factory().deref().create_online_id_service_ticket_request(service, policy)
     }
     #[inline] pub fn create_online_id_service_ticket_request_advanced(service: &HStringArg) -> Result<ComPtr<OnlineIdServiceTicketRequest>> {
-        <Self as RtActivatable<IOnlineIdServiceTicketRequestFactory>>::get_activation_factory().create_online_id_service_ticket_request_advanced(service)
+        <Self as RtActivatable<IOnlineIdServiceTicketRequestFactory>>::get_activation_factory().deref().create_online_id_service_ticket_request_advanced(service)
     }
 }
 DEFINE_CLSID!(OnlineIdServiceTicketRequest(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,83,101,114,118,105,99,101,84,105,99,107,101,116,82,101,113,117,101,115,116,0]) [CLSID_OnlineIdServiceTicketRequest]);
@@ -783,10 +783,10 @@ RT_CLASS!{static class OnlineIdSystemAuthenticator}
 impl RtActivatable<IOnlineIdSystemAuthenticatorStatics> for OnlineIdSystemAuthenticator {}
 impl OnlineIdSystemAuthenticator {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> {
-        <Self as RtActivatable<IOnlineIdSystemAuthenticatorStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IOnlineIdSystemAuthenticatorStatics>>::get_activation_factory().deref().get_default()
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &crate::windows::system::User) -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> {
-        <Self as RtActivatable<IOnlineIdSystemAuthenticatorStatics>>::get_activation_factory().get_for_user(user)
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &ComPtr<crate::windows::system::User>) -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> {
+        <Self as RtActivatable<IOnlineIdSystemAuthenticatorStatics>>::get_activation_factory().deref().get_for_user(user)
     }
 }
 DEFINE_CLSID!(OnlineIdSystemAuthenticator(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,83,121,115,116,101,109,65,117,116,104,101,110,116,105,99,97,116,111,114,0]) [CLSID_OnlineIdSystemAuthenticator]);
@@ -798,9 +798,9 @@ RT_INTERFACE!{interface IOnlineIdSystemAuthenticatorForUser(IOnlineIdSystemAuthe
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut crate::windows::system::User) -> HRESULT
 }}
 impl IOnlineIdSystemAuthenticatorForUser {
-    #[inline] pub fn get_ticket_async(&self, request: &OnlineIdServiceTicketRequest) -> Result<ComPtr<foundation::IAsyncOperation<OnlineIdSystemTicketResult>>> { unsafe { 
+    #[inline] pub fn get_ticket_async(&self, request: &ComPtr<OnlineIdServiceTicketRequest>) -> Result<ComPtr<foundation::IAsyncOperation<OnlineIdSystemTicketResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetTicketAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetTicketAsync)(self as *const _ as *mut _, request.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_application_id(&self, value: Guid) -> Result<()> { unsafe { 
@@ -830,9 +830,9 @@ impl IOnlineIdSystemAuthenticatorStatics {
         let hr = ((*self.lpVtbl).get_Default)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &crate::windows::system::User) -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &ComPtr<crate::windows::system::User>) -> Result<Option<ComPtr<OnlineIdSystemAuthenticatorForUser>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -947,29 +947,29 @@ RT_CLASS!{static class WebAuthenticationBroker}
 impl RtActivatable<IWebAuthenticationBrokerStatics> for WebAuthenticationBroker {}
 impl RtActivatable<IWebAuthenticationBrokerStatics2> for WebAuthenticationBroker {}
 impl WebAuthenticationBroker {
-    #[inline] pub fn authenticate_with_callback_uri_async(options: WebAuthenticationOptions, requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().authenticate_with_callback_uri_async(options, requestUri, callbackUri)
+    #[inline] pub fn authenticate_with_callback_uri_async(options: WebAuthenticationOptions, requestUri: &ComPtr<foundation::Uri>, callbackUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().deref().authenticate_with_callback_uri_async(options, requestUri, callbackUri)
     }
-    #[inline] pub fn authenticate_without_callback_uri_async(options: WebAuthenticationOptions, requestUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().authenticate_without_callback_uri_async(options, requestUri)
+    #[inline] pub fn authenticate_without_callback_uri_async(options: WebAuthenticationOptions, requestUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().deref().authenticate_without_callback_uri_async(options, requestUri)
     }
     #[inline] pub fn get_current_application_callback_uri() -> Result<Option<ComPtr<foundation::Uri>>> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().get_current_application_callback_uri()
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics>>::get_activation_factory().deref().get_current_application_callback_uri()
     }
-    #[inline] pub fn authenticate_and_continue(requestUri: &foundation::Uri) -> Result<()> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_and_continue(requestUri)
+    #[inline] pub fn authenticate_and_continue(requestUri: &ComPtr<foundation::Uri>) -> Result<()> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().deref().authenticate_and_continue(requestUri)
     }
-    #[inline] pub fn authenticate_with_callback_uri_and_continue(requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<()> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_with_callback_uri_and_continue(requestUri, callbackUri)
+    #[inline] pub fn authenticate_with_callback_uri_and_continue(requestUri: &ComPtr<foundation::Uri>, callbackUri: &ComPtr<foundation::Uri>) -> Result<()> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().deref().authenticate_with_callback_uri_and_continue(requestUri, callbackUri)
     }
-    #[inline] pub fn authenticate_with_callback_uri_continuation_data_and_options_and_continue(requestUri: &foundation::Uri, callbackUri: &foundation::Uri, continuationData: &foundation::collections::ValueSet, options: WebAuthenticationOptions) -> Result<()> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_with_callback_uri_continuation_data_and_options_and_continue(requestUri, callbackUri, continuationData, options)
+    #[inline] pub fn authenticate_with_callback_uri_continuation_data_and_options_and_continue(requestUri: &ComPtr<foundation::Uri>, callbackUri: &ComPtr<foundation::Uri>, continuationData: &ComPtr<foundation::collections::ValueSet>, options: WebAuthenticationOptions) -> Result<()> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().deref().authenticate_with_callback_uri_continuation_data_and_options_and_continue(requestUri, callbackUri, continuationData, options)
     }
-    #[inline] pub fn authenticate_silently_async(requestUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_silently_async(requestUri)
+    #[inline] pub fn authenticate_silently_async(requestUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().deref().authenticate_silently_async(requestUri)
     }
-    #[inline] pub fn authenticate_silently_with_options_async(requestUri: &foundation::Uri, options: WebAuthenticationOptions) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
-        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().authenticate_silently_with_options_async(requestUri, options)
+    #[inline] pub fn authenticate_silently_with_options_async(requestUri: &ComPtr<foundation::Uri>, options: WebAuthenticationOptions) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> {
+        <Self as RtActivatable<IWebAuthenticationBrokerStatics2>>::get_activation_factory().deref().authenticate_silently_with_options_async(requestUri, options)
     }
 }
 DEFINE_CLSID!(WebAuthenticationBroker(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,66,114,111,107,101,114,0]) [CLSID_WebAuthenticationBroker]);
@@ -980,14 +980,14 @@ RT_INTERFACE!{static interface IWebAuthenticationBrokerStatics(IWebAuthenticatio
     fn GetCurrentApplicationCallbackUri(&self, out: *mut *mut foundation::Uri) -> HRESULT
 }}
 impl IWebAuthenticationBrokerStatics {
-    #[inline] pub fn authenticate_with_callback_uri_async(&self, options: WebAuthenticationOptions, requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
+    #[inline] pub fn authenticate_with_callback_uri_async(&self, options: WebAuthenticationOptions, requestUri: &ComPtr<foundation::Uri>, callbackUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AuthenticateWithCallbackUriAsync)(self as *const _ as *mut _, options, requestUri as *const _ as *mut _, callbackUri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AuthenticateWithCallbackUriAsync)(self as *const _ as *mut _, options, requestUri.deref() as *const _ as *mut _, callbackUri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn authenticate_without_callback_uri_async(&self, options: WebAuthenticationOptions, requestUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
+    #[inline] pub fn authenticate_without_callback_uri_async(&self, options: WebAuthenticationOptions, requestUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AuthenticateWithoutCallbackUriAsync)(self as *const _ as *mut _, options, requestUri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AuthenticateWithoutCallbackUriAsync)(self as *const _ as *mut _, options, requestUri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_application_callback_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
@@ -1005,26 +1005,26 @@ RT_INTERFACE!{static interface IWebAuthenticationBrokerStatics2(IWebAuthenticati
     fn AuthenticateSilentlyWithOptionsAsync(&self, requestUri: *mut foundation::Uri, options: WebAuthenticationOptions, out: *mut *mut foundation::IAsyncOperation<WebAuthenticationResult>) -> HRESULT
 }}
 impl IWebAuthenticationBrokerStatics2 {
-    #[inline] pub fn authenticate_and_continue(&self, requestUri: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AuthenticateAndContinue)(self as *const _ as *mut _, requestUri as *const _ as *mut _);
+    #[inline] pub fn authenticate_and_continue(&self, requestUri: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AuthenticateAndContinue)(self as *const _ as *mut _, requestUri.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn authenticate_with_callback_uri_and_continue(&self, requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AuthenticateWithCallbackUriAndContinue)(self as *const _ as *mut _, requestUri as *const _ as *mut _, callbackUri as *const _ as *mut _);
+    #[inline] pub fn authenticate_with_callback_uri_and_continue(&self, requestUri: &ComPtr<foundation::Uri>, callbackUri: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AuthenticateWithCallbackUriAndContinue)(self as *const _ as *mut _, requestUri.deref() as *const _ as *mut _, callbackUri.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn authenticate_with_callback_uri_continuation_data_and_options_and_continue(&self, requestUri: &foundation::Uri, callbackUri: &foundation::Uri, continuationData: &foundation::collections::ValueSet, options: WebAuthenticationOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AuthenticateWithCallbackUriContinuationDataAndOptionsAndContinue)(self as *const _ as *mut _, requestUri as *const _ as *mut _, callbackUri as *const _ as *mut _, continuationData as *const _ as *mut _, options);
+    #[inline] pub fn authenticate_with_callback_uri_continuation_data_and_options_and_continue(&self, requestUri: &ComPtr<foundation::Uri>, callbackUri: &ComPtr<foundation::Uri>, continuationData: &ComPtr<foundation::collections::ValueSet>, options: WebAuthenticationOptions) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AuthenticateWithCallbackUriContinuationDataAndOptionsAndContinue)(self as *const _ as *mut _, requestUri.deref() as *const _ as *mut _, callbackUri.deref() as *const _ as *mut _, continuationData.deref() as *const _ as *mut _, options);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn authenticate_silently_async(&self, requestUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
+    #[inline] pub fn authenticate_silently_async(&self, requestUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AuthenticateSilentlyAsync)(self as *const _ as *mut _, requestUri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AuthenticateSilentlyAsync)(self as *const _ as *mut _, requestUri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn authenticate_silently_with_options_async(&self, requestUri: &foundation::Uri, options: WebAuthenticationOptions) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
+    #[inline] pub fn authenticate_silently_with_options_async(&self, requestUri: &ComPtr<foundation::Uri>, options: WebAuthenticationOptions) -> Result<ComPtr<foundation::IAsyncOperation<WebAuthenticationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AuthenticateSilentlyWithOptionsAsync)(self as *const _ as *mut _, requestUri as *const _ as *mut _, options, &mut out);
+        let hr = ((*self.lpVtbl).AuthenticateSilentlyWithOptionsAsync)(self as *const _ as *mut _, requestUri.deref() as *const _ as *mut _, options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1109,27 +1109,27 @@ RT_INTERFACE!{interface IWebAccountMonitor(IWebAccountMonitorVtbl): IInspectable
     fn remove_DefaultSignInAccountChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IWebAccountMonitor {
-    #[inline] pub fn add_updated(&self, handler: &foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_updated(&self, handler: &ComPtr<foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Updated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Updated)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Updated)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_removed(&self, handler: &ComPtr<foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Removed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_default_sign_in_account_changed(&self, handler: &foundation::TypedEventHandler<WebAccountMonitor, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_default_sign_in_account_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<WebAccountMonitor, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DefaultSignInAccountChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DefaultSignInAccountChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_default_sign_in_account_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -1144,47 +1144,47 @@ impl RtActivatable<IWebAuthenticationCoreManagerStatics2> for WebAuthenticationC
 impl RtActivatable<IWebAuthenticationCoreManagerStatics3> for WebAuthenticationCoreManager {}
 impl RtActivatable<IWebAuthenticationCoreManagerStatics4> for WebAuthenticationCoreManager {}
 impl WebAuthenticationCoreManager {
-    #[inline] pub fn get_token_silently_async(request: &WebTokenRequest) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().get_token_silently_async(request)
+    #[inline] pub fn get_token_silently_async(request: &ComPtr<WebTokenRequest>) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().deref().get_token_silently_async(request)
     }
-    #[inline] pub fn get_token_silently_with_web_account_async(request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().get_token_silently_with_web_account_async(request, webAccount)
+    #[inline] pub fn get_token_silently_with_web_account_async(request: &ComPtr<WebTokenRequest>, webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().deref().get_token_silently_with_web_account_async(request, webAccount)
     }
-    #[inline] pub fn request_token_async(request: &WebTokenRequest) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().request_token_async(request)
+    #[inline] pub fn request_token_async(request: &ComPtr<WebTokenRequest>) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().deref().request_token_async(request)
     }
-    #[inline] pub fn request_token_with_web_account_async(request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().request_token_with_web_account_async(request, webAccount)
+    #[inline] pub fn request_token_with_web_account_async(request: &ComPtr<WebTokenRequest>, webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().deref().request_token_with_web_account_async(request, webAccount)
     }
-    #[inline] pub fn find_account_async(provider: &super::super::super::credentials::WebAccountProvider, webAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().find_account_async(provider, webAccountId)
+    #[inline] pub fn find_account_async(provider: &ComPtr<super::super::super::credentials::WebAccountProvider>, webAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().deref().find_account_async(provider, webAccountId)
     }
     #[inline] pub fn find_account_provider_async(webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().find_account_provider_async(webAccountProviderId)
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().deref().find_account_provider_async(webAccountProviderId)
     }
     #[inline] pub fn find_account_provider_with_authority_async(webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().find_account_provider_with_authority_async(webAccountProviderId, authority)
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics>>::get_activation_factory().deref().find_account_provider_with_authority_async(webAccountProviderId, authority)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn find_account_provider_with_authority_for_user_async(webAccountProviderId: &HStringArg, authority: &HStringArg, user: &crate::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics2>>::get_activation_factory().find_account_provider_with_authority_for_user_async(webAccountProviderId, authority, user)
+    #[cfg(feature="windows-system")] #[inline] pub fn find_account_provider_with_authority_for_user_async(webAccountProviderId: &HStringArg, authority: &HStringArg, user: &ComPtr<crate::windows::system::User>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics2>>::get_activation_factory().deref().find_account_provider_with_authority_for_user_async(webAccountProviderId, authority, user)
     }
-    #[inline] pub fn create_web_account_monitor(webAccounts: &foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<Option<ComPtr<WebAccountMonitor>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics3>>::get_activation_factory().create_web_account_monitor(webAccounts)
+    #[inline] pub fn create_web_account_monitor(webAccounts: &ComPtr<foundation::collections::IIterable<super::super::super::credentials::WebAccount>>) -> Result<Option<ComPtr<WebAccountMonitor>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics3>>::get_activation_factory().deref().create_web_account_monitor(webAccounts)
     }
-    #[inline] pub fn find_all_accounts_async(provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_all_accounts_async(provider)
+    #[inline] pub fn find_all_accounts_async(provider: &ComPtr<super::super::super::credentials::WebAccountProvider>) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().deref().find_all_accounts_async(provider)
     }
-    #[inline] pub fn find_all_accounts_with_client_id_async(provider: &super::super::super::credentials::WebAccountProvider, clientId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_all_accounts_with_client_id_async(provider, clientId)
+    #[inline] pub fn find_all_accounts_with_client_id_async(provider: &ComPtr<super::super::super::credentials::WebAccountProvider>, clientId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().deref().find_all_accounts_with_client_id_async(provider, clientId)
     }
     #[inline] pub fn find_system_account_provider_async(webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_system_account_provider_async(webAccountProviderId)
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().deref().find_system_account_provider_async(webAccountProviderId)
     }
     #[inline] pub fn find_system_account_provider_with_authority_async(webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_system_account_provider_with_authority_async(webAccountProviderId, authority)
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().deref().find_system_account_provider_with_authority_async(webAccountProviderId, authority)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn find_system_account_provider_with_authority_for_user_async(webAccountProviderId: &HStringArg, authority: &HStringArg, user: &crate::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
-        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().find_system_account_provider_with_authority_for_user_async(webAccountProviderId, authority, user)
+    #[cfg(feature="windows-system")] #[inline] pub fn find_system_account_provider_with_authority_for_user_async(webAccountProviderId: &HStringArg, authority: &HStringArg, user: &ComPtr<crate::windows::system::User>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> {
+        <Self as RtActivatable<IWebAuthenticationCoreManagerStatics4>>::get_activation_factory().deref().find_system_account_provider_with_authority_for_user_async(webAccountProviderId, authority, user)
     }
 }
 DEFINE_CLSID!(WebAuthenticationCoreManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,67,111,114,101,77,97,110,97,103,101,114,0]) [CLSID_WebAuthenticationCoreManager]);
@@ -1199,29 +1199,29 @@ RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics(IWebAuthenti
     fn FindAccountProviderWithAuthorityAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT
 }}
 impl IWebAuthenticationCoreManagerStatics {
-    #[inline] pub fn get_token_silently_async(&self, request: &WebTokenRequest) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
+    #[inline] pub fn get_token_silently_async(&self, request: &ComPtr<WebTokenRequest>) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetTokenSilentlyAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetTokenSilentlyAsync)(self as *const _ as *mut _, request.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_token_silently_with_web_account_async(&self, request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
+    #[inline] pub fn get_token_silently_with_web_account_async(&self, request: &ComPtr<WebTokenRequest>, webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetTokenSilentlyWithWebAccountAsync)(self as *const _ as *mut _, request as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetTokenSilentlyWithWebAccountAsync)(self as *const _ as *mut _, request.deref() as *const _ as *mut _, webAccount.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn request_token_async(&self, request: &WebTokenRequest) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
+    #[inline] pub fn request_token_async(&self, request: &ComPtr<WebTokenRequest>) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestTokenAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestTokenAsync)(self as *const _ as *mut _, request.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn request_token_with_web_account_async(&self, request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
+    #[inline] pub fn request_token_with_web_account_async(&self, request: &ComPtr<WebTokenRequest>, webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncOperation<WebTokenRequestResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestTokenWithWebAccountAsync)(self as *const _ as *mut _, request as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestTokenWithWebAccountAsync)(self as *const _ as *mut _, request.deref() as *const _ as *mut _, webAccount.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn find_account_async(&self, provider: &super::super::super::credentials::WebAccountProvider, webAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+    #[inline] pub fn find_account_async(&self, provider: &ComPtr<super::super::super::credentials::WebAccountProvider>, webAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAccountAsync)(self as *const _ as *mut _, provider as *const _ as *mut _, webAccountId.get(), &mut out);
+        let hr = ((*self.lpVtbl).FindAccountAsync)(self as *const _ as *mut _, provider.deref() as *const _ as *mut _, webAccountId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_account_provider_async(&self, webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
@@ -1240,9 +1240,9 @@ RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics2(IWebAuthent
     #[cfg(feature="windows-system")] fn FindAccountProviderWithAuthorityForUserAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, user: *mut crate::windows::system::User, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT
 }}
 impl IWebAuthenticationCoreManagerStatics2 {
-    #[cfg(feature="windows-system")] #[inline] pub fn find_account_provider_with_authority_for_user_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg, user: &crate::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn find_account_provider_with_authority_for_user_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg, user: &ComPtr<crate::windows::system::User>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAccountProviderWithAuthorityForUserAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FindAccountProviderWithAuthorityForUserAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1251,9 +1251,9 @@ RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics3(IWebAuthent
     fn CreateWebAccountMonitor(&self, webAccounts: *mut foundation::collections::IIterable<super::super::super::credentials::WebAccount>, out: *mut *mut WebAccountMonitor) -> HRESULT
 }}
 impl IWebAuthenticationCoreManagerStatics3 {
-    #[inline] pub fn create_web_account_monitor(&self, webAccounts: &foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<Option<ComPtr<WebAccountMonitor>>> { unsafe { 
+    #[inline] pub fn create_web_account_monitor(&self, webAccounts: &ComPtr<foundation::collections::IIterable<super::super::super::credentials::WebAccount>>) -> Result<Option<ComPtr<WebAccountMonitor>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWebAccountMonitor)(self as *const _ as *mut _, webAccounts as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWebAccountMonitor)(self as *const _ as *mut _, webAccounts.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1266,14 +1266,14 @@ RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics4(IWebAuthent
     #[cfg(feature="windows-system")] fn FindSystemAccountProviderWithAuthorityForUserAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, user: *mut crate::windows::system::User, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>) -> HRESULT
 }}
 impl IWebAuthenticationCoreManagerStatics4 {
-    #[inline] pub fn find_all_accounts_async(&self, provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> { unsafe { 
+    #[inline] pub fn find_all_accounts_async(&self, provider: &ComPtr<super::super::super::credentials::WebAccountProvider>) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAllAccountsAsync)(self as *const _ as *mut _, provider as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FindAllAccountsAsync)(self as *const _ as *mut _, provider.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn find_all_accounts_with_client_id_async(&self, provider: &super::super::super::credentials::WebAccountProvider, clientId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> { unsafe { 
+    #[inline] pub fn find_all_accounts_with_client_id_async(&self, provider: &ComPtr<super::super::super::credentials::WebAccountProvider>, clientId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FindAllAccountsResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAllAccountsWithClientIdAsync)(self as *const _ as *mut _, provider as *const _ as *mut _, clientId.get(), &mut out);
+        let hr = ((*self.lpVtbl).FindAllAccountsWithClientIdAsync)(self as *const _ as *mut _, provider.deref() as *const _ as *mut _, clientId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_system_account_provider_async(&self, webAccountProviderId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
@@ -1286,9 +1286,9 @@ impl IWebAuthenticationCoreManagerStatics4 {
         let hr = ((*self.lpVtbl).FindSystemAccountProviderWithAuthorityAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn find_system_account_provider_with_authority_for_user_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg, user: &crate::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn find_system_account_provider_with_authority_for_user_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg, user: &ComPtr<crate::windows::system::User>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindSystemAccountProviderWithAuthorityForUserAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FindSystemAccountProviderWithAuthorityForUserAsync)(self as *const _ as *mut _, webAccountProviderId.get(), authority.get(), user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1319,7 +1319,7 @@ RT_CLASS!{class WebProviderError: IWebProviderError}
 impl RtActivatable<IWebProviderErrorFactory> for WebProviderError {}
 impl WebProviderError {
     #[inline] pub fn create(errorCode: u32, errorMessage: &HStringArg) -> Result<ComPtr<WebProviderError>> {
-        <Self as RtActivatable<IWebProviderErrorFactory>>::get_activation_factory().create(errorCode, errorMessage)
+        <Self as RtActivatable<IWebProviderErrorFactory>>::get_activation_factory().deref().create(errorCode, errorMessage)
     }
 }
 DEFINE_CLSID!(WebProviderError(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,80,114,111,118,105,100,101,114,69,114,114,111,114,0]) [CLSID_WebProviderError]);
@@ -1372,17 +1372,17 @@ impl IWebTokenRequest {
 RT_CLASS!{class WebTokenRequest: IWebTokenRequest}
 impl RtActivatable<IWebTokenRequestFactory> for WebTokenRequest {}
 impl WebTokenRequest {
-    #[inline] pub fn create(provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg) -> Result<ComPtr<WebTokenRequest>> {
-        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().create(provider, scope, clientId)
+    #[inline] pub fn create(provider: &ComPtr<super::super::super::credentials::WebAccountProvider>, scope: &HStringArg, clientId: &HStringArg) -> Result<ComPtr<WebTokenRequest>> {
+        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().deref().create(provider, scope, clientId)
     }
-    #[inline] pub fn create_with_prompt_type(provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg, promptType: WebTokenRequestPromptType) -> Result<ComPtr<WebTokenRequest>> {
-        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().create_with_prompt_type(provider, scope, clientId, promptType)
+    #[inline] pub fn create_with_prompt_type(provider: &ComPtr<super::super::super::credentials::WebAccountProvider>, scope: &HStringArg, clientId: &HStringArg, promptType: WebTokenRequestPromptType) -> Result<ComPtr<WebTokenRequest>> {
+        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().deref().create_with_prompt_type(provider, scope, clientId, promptType)
     }
-    #[inline] pub fn create_with_provider(provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<WebTokenRequest>> {
-        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().create_with_provider(provider)
+    #[inline] pub fn create_with_provider(provider: &ComPtr<super::super::super::credentials::WebAccountProvider>) -> Result<ComPtr<WebTokenRequest>> {
+        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().deref().create_with_provider(provider)
     }
-    #[inline] pub fn create_with_scope(provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg) -> Result<ComPtr<WebTokenRequest>> {
-        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().create_with_scope(provider, scope)
+    #[inline] pub fn create_with_scope(provider: &ComPtr<super::super::super::credentials::WebAccountProvider>, scope: &HStringArg) -> Result<ComPtr<WebTokenRequest>> {
+        <Self as RtActivatable<IWebTokenRequestFactory>>::get_activation_factory().deref().create_with_scope(provider, scope)
     }
 }
 DEFINE_CLSID!(WebTokenRequest(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,84,111,107,101,110,82,101,113,117,101,115,116,0]) [CLSID_WebTokenRequest]);
@@ -1421,24 +1421,24 @@ RT_INTERFACE!{static interface IWebTokenRequestFactory(IWebTokenRequestFactoryVt
     fn CreateWithScope(&self, provider: *mut super::super::super::credentials::WebAccountProvider, scope: HSTRING, out: *mut *mut WebTokenRequest) -> HRESULT
 }}
 impl IWebTokenRequestFactory {
-    #[inline] pub fn create(&self, provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
+    #[inline] pub fn create(&self, provider: &ComPtr<super::super::super::credentials::WebAccountProvider>, scope: &HStringArg, clientId: &HStringArg) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, provider as *const _ as *mut _, scope.get(), clientId.get(), &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, provider.deref() as *const _ as *mut _, scope.get(), clientId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_prompt_type(&self, provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg, promptType: WebTokenRequestPromptType) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
+    #[inline] pub fn create_with_prompt_type(&self, provider: &ComPtr<super::super::super::credentials::WebAccountProvider>, scope: &HStringArg, clientId: &HStringArg, promptType: WebTokenRequestPromptType) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithPromptType)(self as *const _ as *mut _, provider as *const _ as *mut _, scope.get(), clientId.get(), promptType, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithPromptType)(self as *const _ as *mut _, provider.deref() as *const _ as *mut _, scope.get(), clientId.get(), promptType, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_provider(&self, provider: &super::super::super::credentials::WebAccountProvider) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
+    #[inline] pub fn create_with_provider(&self, provider: &ComPtr<super::super::super::credentials::WebAccountProvider>) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithProvider)(self as *const _ as *mut _, provider as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithProvider)(self as *const _ as *mut _, provider.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_scope(&self, provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
+    #[inline] pub fn create_with_scope(&self, provider: &ComPtr<super::super::super::credentials::WebAccountProvider>, scope: &HStringArg) -> Result<ComPtr<WebTokenRequest>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithScope)(self as *const _ as *mut _, provider as *const _ as *mut _, scope.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateWithScope)(self as *const _ as *mut _, provider.deref() as *const _ as *mut _, scope.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1512,13 +1512,13 @@ impl RtActivatable<IWebTokenResponseFactory> for WebTokenResponse {}
 impl RtActivatable<IActivationFactory> for WebTokenResponse {}
 impl WebTokenResponse {
     #[inline] pub fn create_with_token(token: &HStringArg) -> Result<ComPtr<WebTokenResponse>> {
-        <Self as RtActivatable<IWebTokenResponseFactory>>::get_activation_factory().create_with_token(token)
+        <Self as RtActivatable<IWebTokenResponseFactory>>::get_activation_factory().deref().create_with_token(token)
     }
-    #[inline] pub fn create_with_token_and_account(token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<WebTokenResponse>> {
-        <Self as RtActivatable<IWebTokenResponseFactory>>::get_activation_factory().create_with_token_and_account(token, webAccount)
+    #[inline] pub fn create_with_token_and_account(token: &HStringArg, webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<WebTokenResponse>> {
+        <Self as RtActivatable<IWebTokenResponseFactory>>::get_activation_factory().deref().create_with_token_and_account(token, webAccount)
     }
-    #[inline] pub fn create_with_token_account_and_error(token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount, error: &WebProviderError) -> Result<ComPtr<WebTokenResponse>> {
-        <Self as RtActivatable<IWebTokenResponseFactory>>::get_activation_factory().create_with_token_account_and_error(token, webAccount, error)
+    #[inline] pub fn create_with_token_account_and_error(token: &HStringArg, webAccount: &ComPtr<super::super::super::credentials::WebAccount>, error: &ComPtr<WebProviderError>) -> Result<ComPtr<WebTokenResponse>> {
+        <Self as RtActivatable<IWebTokenResponseFactory>>::get_activation_factory().deref().create_with_token_account_and_error(token, webAccount, error)
     }
 }
 DEFINE_CLSID!(WebTokenResponse(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,84,111,107,101,110,82,101,115,112,111,110,115,101,0]) [CLSID_WebTokenResponse]);
@@ -1534,14 +1534,14 @@ impl IWebTokenResponseFactory {
         let hr = ((*self.lpVtbl).CreateWithToken)(self as *const _ as *mut _, token.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_token_and_account(&self, token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<WebTokenResponse>> { unsafe { 
+    #[inline] pub fn create_with_token_and_account(&self, token: &HStringArg, webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<WebTokenResponse>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithTokenAndAccount)(self as *const _ as *mut _, token.get(), webAccount as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithTokenAndAccount)(self as *const _ as *mut _, token.get(), webAccount.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_token_account_and_error(&self, token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount, error: &WebProviderError) -> Result<ComPtr<WebTokenResponse>> { unsafe { 
+    #[inline] pub fn create_with_token_account_and_error(&self, token: &HStringArg, webAccount: &ComPtr<super::super::super::credentials::WebAccount>, error: &ComPtr<WebProviderError>) -> Result<ComPtr<WebTokenResponse>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithTokenAccountAndError)(self as *const _ as *mut _, token.get(), webAccount as *const _ as *mut _, error as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithTokenAccountAndError)(self as *const _ as *mut _, token.get(), webAccount.deref() as *const _ as *mut _, error.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1574,11 +1574,11 @@ impl IWebAccountClientView {
 RT_CLASS!{class WebAccountClientView: IWebAccountClientView}
 impl RtActivatable<IWebAccountClientViewFactory> for WebAccountClientView {}
 impl WebAccountClientView {
-    #[inline] pub fn create(viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri) -> Result<ComPtr<WebAccountClientView>> {
-        <Self as RtActivatable<IWebAccountClientViewFactory>>::get_activation_factory().create(viewType, applicationCallbackUri)
+    #[inline] pub fn create(viewType: WebAccountClientViewType, applicationCallbackUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<WebAccountClientView>> {
+        <Self as RtActivatable<IWebAccountClientViewFactory>>::get_activation_factory().deref().create(viewType, applicationCallbackUri)
     }
-    #[inline] pub fn create_with_pairwise_id(viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri, accountPairwiseId: &HStringArg) -> Result<ComPtr<WebAccountClientView>> {
-        <Self as RtActivatable<IWebAccountClientViewFactory>>::get_activation_factory().create_with_pairwise_id(viewType, applicationCallbackUri, accountPairwiseId)
+    #[inline] pub fn create_with_pairwise_id(viewType: WebAccountClientViewType, applicationCallbackUri: &ComPtr<foundation::Uri>, accountPairwiseId: &HStringArg) -> Result<ComPtr<WebAccountClientView>> {
+        <Self as RtActivatable<IWebAccountClientViewFactory>>::get_activation_factory().deref().create_with_pairwise_id(viewType, applicationCallbackUri, accountPairwiseId)
     }
 }
 DEFINE_CLSID!(WebAccountClientView(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,65,99,99,111,117,110,116,67,108,105,101,110,116,86,105,101,119,0]) [CLSID_WebAccountClientView]);
@@ -1588,14 +1588,14 @@ RT_INTERFACE!{static interface IWebAccountClientViewFactory(IWebAccountClientVie
     fn CreateWithPairwiseId(&self, viewType: WebAccountClientViewType, applicationCallbackUri: *mut foundation::Uri, accountPairwiseId: HSTRING, out: *mut *mut WebAccountClientView) -> HRESULT
 }}
 impl IWebAccountClientViewFactory {
-    #[inline] pub fn create(&self, viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri) -> Result<ComPtr<WebAccountClientView>> { unsafe { 
+    #[inline] pub fn create(&self, viewType: WebAccountClientViewType, applicationCallbackUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<WebAccountClientView>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, viewType, applicationCallbackUri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, viewType, applicationCallbackUri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_pairwise_id(&self, viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri, accountPairwiseId: &HStringArg) -> Result<ComPtr<WebAccountClientView>> { unsafe { 
+    #[inline] pub fn create_with_pairwise_id(&self, viewType: WebAccountClientViewType, applicationCallbackUri: &ComPtr<foundation::Uri>, accountPairwiseId: &HStringArg) -> Result<ComPtr<WebAccountClientView>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithPairwiseId)(self as *const _ as *mut _, viewType, applicationCallbackUri as *const _ as *mut _, accountPairwiseId.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateWithPairwiseId)(self as *const _ as *mut _, viewType, applicationCallbackUri.deref() as *const _ as *mut _, accountPairwiseId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1610,77 +1610,77 @@ impl RtActivatable<IWebAccountManagerStatics4> for WebAccountManager {}
 impl RtActivatable<IWebAccountMapManagerStatics> for WebAccountManager {}
 impl RtActivatable<IWebAccountScopeManagerStatics> for WebAccountManager {}
 impl WebAccountManager {
-    #[inline] pub fn update_web_account_properties_async(webAccount: &super::super::super::credentials::WebAccount, webAccountUserName: &HStringArg, additionalProperties: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().update_web_account_properties_async(webAccount, webAccountUserName, additionalProperties)
+    #[inline] pub fn update_web_account_properties_async(webAccount: &ComPtr<super::super::super::credentials::WebAccount>, webAccountUserName: &HStringArg, additionalProperties: &ComPtr<foundation::collections::IMapView<HString, HString>>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().deref().update_web_account_properties_async(webAccount, webAccountUserName, additionalProperties)
     }
-    #[inline] pub fn add_web_account_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().add_web_account_async(webAccountId, webAccountUserName, props)
+    #[inline] pub fn add_web_account_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &ComPtr<foundation::collections::IMapView<HString, HString>>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().deref().add_web_account_async(webAccountId, webAccountUserName, props)
     }
-    #[inline] pub fn delete_web_account_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().delete_web_account_async(webAccount)
+    #[inline] pub fn delete_web_account_async(webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().deref().delete_web_account_async(webAccount)
     }
     #[inline] pub fn find_all_provider_web_accounts_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().find_all_provider_web_accounts_async()
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().deref().find_all_provider_web_accounts_async()
     }
-    #[cfg(feature="windows-web")] #[inline] pub fn push_cookies_async(uri: &foundation::Uri, cookies: &foundation::collections::IVectorView<crate::windows::web::http::HttpCookie>) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().push_cookies_async(uri, cookies)
+    #[cfg(feature="windows-web")] #[inline] pub fn push_cookies_async(uri: &ComPtr<foundation::Uri>, cookies: &ComPtr<foundation::collections::IVectorView<crate::windows::web::http::HttpCookie>>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().deref().push_cookies_async(uri, cookies)
     }
-    #[inline] pub fn set_view_async(webAccount: &super::super::super::credentials::WebAccount, view: &WebAccountClientView) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().set_view_async(webAccount, view)
+    #[inline] pub fn set_view_async(webAccount: &ComPtr<super::super::super::credentials::WebAccount>, view: &ComPtr<WebAccountClientView>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().deref().set_view_async(webAccount, view)
     }
-    #[inline] pub fn clear_view_async(webAccount: &super::super::super::credentials::WebAccount, applicationCallbackUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().clear_view_async(webAccount, applicationCallbackUri)
+    #[inline] pub fn clear_view_async(webAccount: &ComPtr<super::super::super::credentials::WebAccount>, applicationCallbackUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().deref().clear_view_async(webAccount, applicationCallbackUri)
     }
-    #[inline] pub fn get_views_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<WebAccountClientView>>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().get_views_async(webAccount)
+    #[inline] pub fn get_views_async(webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<WebAccountClientView>>>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().deref().get_views_async(webAccount)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_web_account_picture_async(webAccount: &super::super::super::credentials::WebAccount, webAccountPicture: &crate::windows::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().set_web_account_picture_async(webAccount, webAccountPicture)
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_web_account_picture_async(webAccount: &ComPtr<super::super::super::credentials::WebAccount>, webAccountPicture: &ComPtr<crate::windows::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().deref().set_web_account_picture_async(webAccount, webAccountPicture)
     }
-    #[inline] pub fn clear_web_account_picture_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().clear_web_account_picture_async(webAccount)
+    #[inline] pub fn clear_web_account_picture_async(webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics>>::get_activation_factory().deref().clear_web_account_picture_async(webAccount)
     }
     #[inline] pub fn pull_cookies_async(uriString: &HStringArg, callerPFN: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics2>>::get_activation_factory().pull_cookies_async(uriString, callerPFN)
+        <Self as RtActivatable<IWebAccountManagerStatics2>>::get_activation_factory().deref().pull_cookies_async(uriString, callerPFN)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn find_all_provider_web_accounts_for_user_async(user: &crate::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().find_all_provider_web_accounts_for_user_async(user)
+    #[cfg(feature="windows-system")] #[inline] pub fn find_all_provider_web_accounts_for_user_async(user: &ComPtr<crate::windows::system::User>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> {
+        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().deref().find_all_provider_web_accounts_for_user_async(user)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_for_user_async(user: &crate::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_for_user_async(user, webAccountId, webAccountUserName, props)
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_for_user_async(user: &ComPtr<crate::windows::system::User>, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &ComPtr<foundation::collections::IMapView<HString, HString>>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().deref().add_web_account_for_user_async(user, webAccountId, webAccountUserName, props)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_for_user_async(user: &crate::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_with_scope_for_user_async(user, webAccountId, webAccountUserName, props, scope)
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_for_user_async(user: &ComPtr<crate::windows::system::User>, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &ComPtr<foundation::collections::IMapView<HString, HString>>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().deref().add_web_account_with_scope_for_user_async(user, webAccountId, webAccountUserName, props, scope)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_and_map_for_user_async(user: &crate::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().add_web_account_with_scope_and_map_for_user_async(user, webAccountId, webAccountUserName, props, scope, perUserWebAccountId)
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_and_map_for_user_async(user: &ComPtr<crate::windows::system::User>, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &ComPtr<foundation::collections::IMapView<HString, HString>>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountManagerStatics3>>::get_activation_factory().deref().add_web_account_with_scope_and_map_for_user_async(user, webAccountId, webAccountUserName, props, scope, perUserWebAccountId)
     }
     #[inline] pub fn invalidate_app_cache_for_all_accounts_async() -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics4>>::get_activation_factory().invalidate_app_cache_for_all_accounts_async()
+        <Self as RtActivatable<IWebAccountManagerStatics4>>::get_activation_factory().deref().invalidate_app_cache_for_all_accounts_async()
     }
-    #[inline] pub fn invalidate_app_cache_for_account_async(webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountManagerStatics4>>::get_activation_factory().invalidate_app_cache_for_account_async(webAccount)
+    #[inline] pub fn invalidate_app_cache_for_account_async(webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountManagerStatics4>>::get_activation_factory().deref().invalidate_app_cache_for_account_async(webAccount)
     }
-    #[inline] pub fn add_web_account_with_scope_and_map_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().add_web_account_with_scope_and_map_async(webAccountId, webAccountUserName, props, scope, perUserWebAccountId)
+    #[inline] pub fn add_web_account_with_scope_and_map_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &ComPtr<foundation::collections::IMapView<HString, HString>>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().deref().add_web_account_with_scope_and_map_async(webAccountId, webAccountUserName, props, scope, perUserWebAccountId)
     }
-    #[inline] pub fn set_per_app_to_per_user_account_async(perAppAccount: &super::super::super::credentials::WebAccount, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().set_per_app_to_per_user_account_async(perAppAccount, perUserWebAccountId)
+    #[inline] pub fn set_per_app_to_per_user_account_async(perAppAccount: &ComPtr<super::super::super::credentials::WebAccount>, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().deref().set_per_app_to_per_user_account_async(perAppAccount, perUserWebAccountId)
     }
-    #[inline] pub fn get_per_user_from_per_app_account_async(perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().get_per_user_from_per_app_account_async(perAppAccount)
+    #[inline] pub fn get_per_user_from_per_app_account_async(perAppAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().deref().get_per_user_from_per_app_account_async(perAppAccount)
     }
-    #[inline] pub fn clear_per_user_from_per_app_account_async(perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().clear_per_user_from_per_app_account_async(perAppAccount)
+    #[inline] pub fn clear_per_user_from_per_app_account_async(perAppAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountMapManagerStatics>>::get_activation_factory().deref().clear_per_user_from_per_app_account_async(perAppAccount)
     }
-    #[inline] pub fn add_web_account_with_scope_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
-        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().add_web_account_with_scope_async(webAccountId, webAccountUserName, props, scope)
+    #[inline] pub fn add_web_account_with_scope_async(webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &ComPtr<foundation::collections::IMapView<HString, HString>>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> {
+        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().deref().add_web_account_with_scope_async(webAccountId, webAccountUserName, props, scope)
     }
-    #[inline] pub fn set_scope_async(webAccount: &super::super::super::credentials::WebAccount, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().set_scope_async(webAccount, scope)
+    #[inline] pub fn set_scope_async(webAccount: &ComPtr<super::super::super::credentials::WebAccount>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().deref().set_scope_async(webAccount, scope)
     }
-    #[inline] pub fn get_scope(webAccount: &super::super::super::credentials::WebAccount) -> Result<WebAccountScope> {
-        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().get_scope(webAccount)
+    #[inline] pub fn get_scope(webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<WebAccountScope> {
+        <Self as RtActivatable<IWebAccountScopeManagerStatics>>::get_activation_factory().deref().get_scope(webAccount)
     }
 }
 DEFINE_CLSID!(WebAccountManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,65,99,99,111,117,110,116,77,97,110,97,103,101,114,0]) [CLSID_WebAccountManager]);
@@ -1700,19 +1700,19 @@ RT_INTERFACE!{static interface IWebAccountManagerStatics(IWebAccountManagerStati
     fn ClearWebAccountPictureAsync(&self, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IWebAccountManagerStatics {
-    #[inline] pub fn update_web_account_properties_async(&self, webAccount: &super::super::super::credentials::WebAccount, webAccountUserName: &HStringArg, additionalProperties: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn update_web_account_properties_async(&self, webAccount: &ComPtr<super::super::super::credentials::WebAccount>, webAccountUserName: &HStringArg, additionalProperties: &ComPtr<foundation::collections::IMapView<HString, HString>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UpdateWebAccountPropertiesAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, webAccountUserName.get(), additionalProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).UpdateWebAccountPropertiesAsync)(self as *const _ as *mut _, webAccount.deref() as *const _ as *mut _, webAccountUserName.get(), additionalProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_web_account_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+    #[inline] pub fn add_web_account_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &ComPtr<foundation::collections::IMapView<HString, HString>>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWebAccountAsync)(self as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AddWebAccountAsync)(self as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn delete_web_account_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn delete_web_account_async(&self, webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteWebAccountAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).DeleteWebAccountAsync)(self as *const _ as *mut _, webAccount.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_all_provider_web_accounts_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe { 
@@ -1720,34 +1720,34 @@ impl IWebAccountManagerStatics {
         let hr = ((*self.lpVtbl).FindAllProviderWebAccountsAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-web")] #[inline] pub fn push_cookies_async(&self, uri: &foundation::Uri, cookies: &foundation::collections::IVectorView<crate::windows::web::http::HttpCookie>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-web")] #[inline] pub fn push_cookies_async(&self, uri: &ComPtr<foundation::Uri>, cookies: &ComPtr<foundation::collections::IVectorView<crate::windows::web::http::HttpCookie>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PushCookiesAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, cookies as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).PushCookiesAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, cookies.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_view_async(&self, webAccount: &super::super::super::credentials::WebAccount, view: &WebAccountClientView) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn set_view_async(&self, webAccount: &ComPtr<super::super::super::credentials::WebAccount>, view: &ComPtr<WebAccountClientView>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetViewAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, view as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetViewAsync)(self as *const _ as *mut _, webAccount.deref() as *const _ as *mut _, view.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn clear_view_async(&self, webAccount: &super::super::super::credentials::WebAccount, applicationCallbackUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn clear_view_async(&self, webAccount: &ComPtr<super::super::super::credentials::WebAccount>, applicationCallbackUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ClearViewAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, applicationCallbackUri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ClearViewAsync)(self as *const _ as *mut _, webAccount.deref() as *const _ as *mut _, applicationCallbackUri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_views_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<WebAccountClientView>>>> { unsafe { 
+    #[inline] pub fn get_views_async(&self, webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<WebAccountClientView>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetViewsAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetViewsAsync)(self as *const _ as *mut _, webAccount.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_web_account_picture_async(&self, webAccount: &super::super::super::credentials::WebAccount, webAccountPicture: &crate::windows::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_web_account_picture_async(&self, webAccount: &ComPtr<super::super::super::credentials::WebAccount>, webAccountPicture: &ComPtr<crate::windows::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetWebAccountPictureAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, webAccountPicture as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetWebAccountPictureAsync)(self as *const _ as *mut _, webAccount.deref() as *const _ as *mut _, webAccountPicture.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn clear_web_account_picture_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn clear_web_account_picture_async(&self, webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ClearWebAccountPictureAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ClearWebAccountPictureAsync)(self as *const _ as *mut _, webAccount.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1770,24 +1770,24 @@ RT_INTERFACE!{static interface IWebAccountManagerStatics3(IWebAccountManagerStat
     #[cfg(feature="windows-system")] fn AddWebAccountWithScopeAndMapForUserAsync(&self, user: *mut crate::windows::system::User, webAccountId: HSTRING, webAccountUserName: HSTRING, props: *mut foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::super::credentials::WebAccount>) -> HRESULT
 }}
 impl IWebAccountManagerStatics3 {
-    #[cfg(feature="windows-system")] #[inline] pub fn find_all_provider_web_accounts_for_user_async(&self, user: &crate::windows::system::User) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn find_all_provider_web_accounts_for_user_async(&self, user: &ComPtr<crate::windows::system::User>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAllProviderWebAccountsForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FindAllProviderWebAccountsForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_for_user_async(&self, user: &crate::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_for_user_async(&self, user: &ComPtr<crate::windows::system::User>, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &ComPtr<foundation::collections::IMapView<HString, HString>>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWebAccountForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AddWebAccountForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_for_user_async(&self, user: &crate::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_for_user_async(&self, user: &ComPtr<crate::windows::system::User>, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &ComPtr<foundation::collections::IMapView<HString, HString>>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWebAccountWithScopeForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, scope, &mut out);
+        let hr = ((*self.lpVtbl).AddWebAccountWithScopeForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props.deref() as *const _ as *mut _, scope, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_and_map_for_user_async(&self, user: &crate::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_and_map_for_user_async(&self, user: &ComPtr<crate::windows::system::User>, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &ComPtr<foundation::collections::IMapView<HString, HString>>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWebAccountWithScopeAndMapForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, scope, perUserWebAccountId.get(), &mut out);
+        let hr = ((*self.lpVtbl).AddWebAccountWithScopeAndMapForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props.deref() as *const _ as *mut _, scope, perUserWebAccountId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1802,9 +1802,9 @@ impl IWebAccountManagerStatics4 {
         let hr = ((*self.lpVtbl).InvalidateAppCacheForAllAccountsAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn invalidate_app_cache_for_account_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn invalidate_app_cache_for_account_async(&self, webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).InvalidateAppCacheForAccountAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).InvalidateAppCacheForAccountAsync)(self as *const _ as *mut _, webAccount.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1816,24 +1816,24 @@ RT_INTERFACE!{static interface IWebAccountMapManagerStatics(IWebAccountMapManage
     fn ClearPerUserFromPerAppAccountAsync(&self, perAppAccount: *mut super::super::super::credentials::WebAccount, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IWebAccountMapManagerStatics {
-    #[inline] pub fn add_web_account_with_scope_and_map_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+    #[inline] pub fn add_web_account_with_scope_and_map_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &ComPtr<foundation::collections::IMapView<HString, HString>>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWebAccountWithScopeAndMapAsync)(self as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, scope, perUserWebAccountId.get(), &mut out);
+        let hr = ((*self.lpVtbl).AddWebAccountWithScopeAndMapAsync)(self as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props.deref() as *const _ as *mut _, scope, perUserWebAccountId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_per_app_to_per_user_account_async(&self, perAppAccount: &super::super::super::credentials::WebAccount, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn set_per_app_to_per_user_account_async(&self, perAppAccount: &ComPtr<super::super::super::credentials::WebAccount>, perUserWebAccountId: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetPerAppToPerUserAccountAsync)(self as *const _ as *mut _, perAppAccount as *const _ as *mut _, perUserWebAccountId.get(), &mut out);
+        let hr = ((*self.lpVtbl).SetPerAppToPerUserAccountAsync)(self as *const _ as *mut _, perAppAccount.deref() as *const _ as *mut _, perUserWebAccountId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_per_user_from_per_app_account_async(&self, perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+    #[inline] pub fn get_per_user_from_per_app_account_async(&self, perAppAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPerUserFromPerAppAccountAsync)(self as *const _ as *mut _, perAppAccount as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetPerUserFromPerAppAccountAsync)(self as *const _ as *mut _, perAppAccount.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn clear_per_user_from_per_app_account_async(&self, perAppAccount: &super::super::super::credentials::WebAccount) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn clear_per_user_from_per_app_account_async(&self, perAppAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ClearPerUserFromPerAppAccountAsync)(self as *const _ as *mut _, perAppAccount as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ClearPerUserFromPerAppAccountAsync)(self as *const _ as *mut _, perAppAccount.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1858,8 +1858,8 @@ impl IWebAccountProviderBaseReportOperation {
         let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn report_error(&self, value: &super::core::WebProviderError) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReportError)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn report_error(&self, value: &ComPtr<super::core::WebProviderError>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReportError)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1928,8 +1928,8 @@ impl IWebAccountProviderRetrieveCookiesOperation {
         let hr = ((*self.lpVtbl).get_Cookies)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_uri(&self, uri: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Uri)(self as *const _ as *mut _, uri as *const _ as *mut _);
+    #[inline] pub fn set_uri(&self, uri: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Uri)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
@@ -1978,8 +1978,8 @@ impl IWebAccountProviderSilentReportOperation {
         let hr = ((*self.lpVtbl).ReportUserInteractionRequired)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn report_user_interaction_required_with_error(&self, value: &super::core::WebProviderError) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReportUserInteractionRequiredWithError)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn report_user_interaction_required_with_error(&self, value: &ComPtr<super::core::WebProviderError>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReportUserInteractionRequiredWithError)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2054,19 +2054,19 @@ RT_INTERFACE!{static interface IWebAccountScopeManagerStatics(IWebAccountScopeMa
     fn GetScope(&self, webAccount: *mut super::super::super::credentials::WebAccount, out: *mut WebAccountScope) -> HRESULT
 }}
 impl IWebAccountScopeManagerStatics {
-    #[inline] pub fn add_web_account_with_scope_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
+    #[inline] pub fn add_web_account_with_scope_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &ComPtr<foundation::collections::IMapView<HString, HString>>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddWebAccountWithScopeAsync)(self as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props as *const _ as *mut _, scope, &mut out);
+        let hr = ((*self.lpVtbl).AddWebAccountWithScopeAsync)(self as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props.deref() as *const _ as *mut _, scope, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_scope_async(&self, webAccount: &super::super::super::credentials::WebAccount, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn set_scope_async(&self, webAccount: &ComPtr<super::super::super::credentials::WebAccount>, scope: WebAccountScope) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetScopeAsync)(self as *const _ as *mut _, webAccount as *const _ as *mut _, scope, &mut out);
+        let hr = ((*self.lpVtbl).SetScopeAsync)(self as *const _ as *mut _, webAccount.deref() as *const _ as *mut _, scope, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_scope(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<WebAccountScope> { unsafe { 
+    #[inline] pub fn get_scope(&self, webAccount: &ComPtr<super::super::super::credentials::WebAccount>) -> Result<WebAccountScope> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetScope)(self as *const _ as *mut _, webAccount as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetScope)(self as *const _ as *mut _, webAccount.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2102,9 +2102,9 @@ impl IWebProviderTokenRequest {
         let hr = ((*self.lpVtbl).get_ApplicationCallbackUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_application_token_binding_key_async(&self, keyType: super::TokenBindingKeyType, target: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::cryptography::core::CryptographicKey>>> { unsafe { 
+    #[inline] pub fn get_application_token_binding_key_async(&self, keyType: super::TokenBindingKeyType, target: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::super::cryptography::core::CryptographicKey>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetApplicationTokenBindingKeyAsync)(self as *const _ as *mut _, keyType, target as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetApplicationTokenBindingKeyAsync)(self as *const _ as *mut _, keyType, target.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2114,9 +2114,9 @@ RT_INTERFACE!{interface IWebProviderTokenRequest2(IWebProviderTokenRequest2Vtbl)
     #[cfg(feature="windows-storage")] fn GetApplicationTokenBindingKeyIdAsync(&self, keyType: super::TokenBindingKeyType, target: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>) -> HRESULT
 }}
 impl IWebProviderTokenRequest2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_application_token_binding_key_id_async(&self, keyType: super::TokenBindingKeyType, target: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_application_token_binding_key_id_async(&self, keyType: super::TokenBindingKeyType, target: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetApplicationTokenBindingKeyIdAsync)(self as *const _ as *mut _, keyType, target as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetApplicationTokenBindingKeyIdAsync)(self as *const _ as *mut _, keyType, target.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2157,8 +2157,8 @@ impl IWebProviderTokenResponse {
 RT_CLASS!{class WebProviderTokenResponse: IWebProviderTokenResponse}
 impl RtActivatable<IWebProviderTokenResponseFactory> for WebProviderTokenResponse {}
 impl WebProviderTokenResponse {
-    #[inline] pub fn create(webTokenResponse: &super::core::WebTokenResponse) -> Result<ComPtr<WebProviderTokenResponse>> {
-        <Self as RtActivatable<IWebProviderTokenResponseFactory>>::get_activation_factory().create(webTokenResponse)
+    #[inline] pub fn create(webTokenResponse: &ComPtr<super::core::WebTokenResponse>) -> Result<ComPtr<WebProviderTokenResponse>> {
+        <Self as RtActivatable<IWebProviderTokenResponseFactory>>::get_activation_factory().deref().create(webTokenResponse)
     }
 }
 DEFINE_CLSID!(WebProviderTokenResponse(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,80,114,111,118,105,100,101,114,84,111,107,101,110,82,101,115,112,111,110,115,101,0]) [CLSID_WebProviderTokenResponse]);
@@ -2167,9 +2167,9 @@ RT_INTERFACE!{static interface IWebProviderTokenResponseFactory(IWebProviderToke
     fn Create(&self, webTokenResponse: *mut super::core::WebTokenResponse, out: *mut *mut WebProviderTokenResponse) -> HRESULT
 }}
 impl IWebProviderTokenResponseFactory {
-    #[inline] pub fn create(&self, webTokenResponse: &super::core::WebTokenResponse) -> Result<ComPtr<WebProviderTokenResponse>> { unsafe { 
+    #[inline] pub fn create(&self, webTokenResponse: &ComPtr<super::core::WebTokenResponse>) -> Result<ComPtr<WebProviderTokenResponse>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, webTokenResponse as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, webTokenResponse.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2216,9 +2216,9 @@ impl IKeyCredential {
         let hr = ((*self.lpVtbl).RetrievePublicKeyWithBlobType)(self as *const _ as *mut _, blobType, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_sign_async(&self, data: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<KeyCredentialOperationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_sign_async(&self, data: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<KeyCredentialOperationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestSignAsync)(self as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestSignAsync)(self as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_attestation_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<KeyCredentialAttestationResult>>> { unsafe { 
@@ -2264,19 +2264,19 @@ RT_CLASS!{static class KeyCredentialManager}
 impl RtActivatable<IKeyCredentialManagerStatics> for KeyCredentialManager {}
 impl KeyCredentialManager {
     #[inline] pub fn is_supported_async() -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<IKeyCredentialManagerStatics>>::get_activation_factory().is_supported_async()
+        <Self as RtActivatable<IKeyCredentialManagerStatics>>::get_activation_factory().deref().is_supported_async()
     }
     #[inline] pub fn renew_attestation_async() -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IKeyCredentialManagerStatics>>::get_activation_factory().renew_attestation_async()
+        <Self as RtActivatable<IKeyCredentialManagerStatics>>::get_activation_factory().deref().renew_attestation_async()
     }
     #[inline] pub fn request_create_async(name: &HStringArg, option: KeyCredentialCreationOption) -> Result<ComPtr<foundation::IAsyncOperation<KeyCredentialRetrievalResult>>> {
-        <Self as RtActivatable<IKeyCredentialManagerStatics>>::get_activation_factory().request_create_async(name, option)
+        <Self as RtActivatable<IKeyCredentialManagerStatics>>::get_activation_factory().deref().request_create_async(name, option)
     }
     #[inline] pub fn open_async(name: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<KeyCredentialRetrievalResult>>> {
-        <Self as RtActivatable<IKeyCredentialManagerStatics>>::get_activation_factory().open_async(name)
+        <Self as RtActivatable<IKeyCredentialManagerStatics>>::get_activation_factory().deref().open_async(name)
     }
     #[inline] pub fn delete_async(name: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IKeyCredentialManagerStatics>>::get_activation_factory().delete_async(name)
+        <Self as RtActivatable<IKeyCredentialManagerStatics>>::get_activation_factory().deref().delete_async(name)
     }
 }
 DEFINE_CLSID!(KeyCredentialManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,75,101,121,67,114,101,100,101,110,116,105,97,108,77,97,110,97,103,101,114,0]) [CLSID_KeyCredentialManager]);
@@ -2409,7 +2409,7 @@ impl RtActivatable<ICredentialFactory> for PasswordCredential {}
 impl RtActivatable<IActivationFactory> for PasswordCredential {}
 impl PasswordCredential {
     #[inline] pub fn create_password_credential(resource: &HStringArg, userName: &HStringArg, password: &HStringArg) -> Result<ComPtr<PasswordCredential>> {
-        <Self as RtActivatable<ICredentialFactory>>::get_activation_factory().create_password_credential(resource, userName, password)
+        <Self as RtActivatable<ICredentialFactory>>::get_activation_factory().deref().create_password_credential(resource, userName, password)
     }
 }
 DEFINE_CLSID!(PasswordCredential(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,80,97,115,115,119,111,114,100,67,114,101,100,101,110,116,105,97,108,0]) [CLSID_PasswordCredential]);
@@ -2426,12 +2426,12 @@ RT_INTERFACE!{interface IPasswordVault(IPasswordVaultVtbl): IInspectable(IInspec
     fn RetrieveAll(&self, out: *mut *mut foundation::collections::IVectorView<PasswordCredential>) -> HRESULT
 }}
 impl IPasswordVault {
-    #[inline] pub fn add(&self, credential: &PasswordCredential) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Add)(self as *const _ as *mut _, credential as *const _ as *mut _);
+    #[inline] pub fn add(&self, credential: &ComPtr<PasswordCredential>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Add)(self as *const _ as *mut _, credential.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove(&self, credential: &PasswordCredential) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Remove)(self as *const _ as *mut _, credential as *const _ as *mut _);
+    #[inline] pub fn remove(&self, credential: &ComPtr<PasswordCredential>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Remove)(self as *const _ as *mut _, credential.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn retrieve(&self, resource: &HStringArg, userName: &HStringArg) -> Result<Option<ComPtr<PasswordCredential>>> { unsafe { 
@@ -2484,8 +2484,8 @@ impl IWebAccount {
 RT_CLASS!{class WebAccount: IWebAccount}
 impl RtActivatable<IWebAccountFactory> for WebAccount {}
 impl WebAccount {
-    #[inline] pub fn create_web_account(webAccountProvider: &WebAccountProvider, userName: &HStringArg, state: WebAccountState) -> Result<ComPtr<WebAccount>> {
-        <Self as RtActivatable<IWebAccountFactory>>::get_activation_factory().create_web_account(webAccountProvider, userName, state)
+    #[inline] pub fn create_web_account(webAccountProvider: &ComPtr<WebAccountProvider>, userName: &HStringArg, state: WebAccountState) -> Result<ComPtr<WebAccount>> {
+        <Self as RtActivatable<IWebAccountFactory>>::get_activation_factory().deref().create_web_account(webAccountProvider, userName, state)
     }
 }
 DEFINE_CLSID!(WebAccount(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,87,101,98,65,99,99,111,117,110,116,0]) [CLSID_WebAccount]);
@@ -2530,9 +2530,9 @@ RT_INTERFACE!{static interface IWebAccountFactory(IWebAccountFactoryVtbl): IInsp
     fn CreateWebAccount(&self, webAccountProvider: *mut WebAccountProvider, userName: HSTRING, state: WebAccountState, out: *mut *mut WebAccount) -> HRESULT
 }}
 impl IWebAccountFactory {
-    #[inline] pub fn create_web_account(&self, webAccountProvider: &WebAccountProvider, userName: &HStringArg, state: WebAccountState) -> Result<ComPtr<WebAccount>> { unsafe { 
+    #[inline] pub fn create_web_account(&self, webAccountProvider: &ComPtr<WebAccountProvider>, userName: &HStringArg, state: WebAccountState) -> Result<ComPtr<WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWebAccount)(self as *const _ as *mut _, webAccountProvider as *const _ as *mut _, userName.get(), state, &mut out);
+        let hr = ((*self.lpVtbl).CreateWebAccount)(self as *const _ as *mut _, webAccountProvider.deref() as *const _ as *mut _, userName.get(), state, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2565,8 +2565,8 @@ impl IWebAccountProvider {
 RT_CLASS!{class WebAccountProvider: IWebAccountProvider}
 impl RtActivatable<IWebAccountProviderFactory> for WebAccountProvider {}
 impl WebAccountProvider {
-    #[inline] pub fn create_web_account_provider(id: &HStringArg, displayName: &HStringArg, iconUri: &foundation::Uri) -> Result<ComPtr<WebAccountProvider>> {
-        <Self as RtActivatable<IWebAccountProviderFactory>>::get_activation_factory().create_web_account_provider(id, displayName, iconUri)
+    #[inline] pub fn create_web_account_provider(id: &HStringArg, displayName: &HStringArg, iconUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<WebAccountProvider>> {
+        <Self as RtActivatable<IWebAccountProviderFactory>>::get_activation_factory().deref().create_web_account_provider(id, displayName, iconUri)
     }
 }
 DEFINE_CLSID!(WebAccountProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,87,101,98,65,99,99,111,117,110,116,80,114,111,118,105,100,101,114,0]) [CLSID_WebAccountProvider]);
@@ -2614,9 +2614,9 @@ RT_INTERFACE!{static interface IWebAccountProviderFactory(IWebAccountProviderFac
     fn CreateWebAccountProvider(&self, id: HSTRING, displayName: HSTRING, iconUri: *mut foundation::Uri, out: *mut *mut WebAccountProvider) -> HRESULT
 }}
 impl IWebAccountProviderFactory {
-    #[inline] pub fn create_web_account_provider(&self, id: &HStringArg, displayName: &HStringArg, iconUri: &foundation::Uri) -> Result<ComPtr<WebAccountProvider>> { unsafe { 
+    #[inline] pub fn create_web_account_provider(&self, id: &HStringArg, displayName: &HStringArg, iconUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<WebAccountProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWebAccountProvider)(self as *const _ as *mut _, id.get(), displayName.get(), iconUri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWebAccountProvider)(self as *const _ as *mut _, id.get(), displayName.get(), iconUri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2631,14 +2631,14 @@ RT_ENUM! { enum AuthenticationProtocol: i32 {
 RT_CLASS!{static class CredentialPicker}
 impl RtActivatable<ICredentialPickerStatics> for CredentialPicker {}
 impl CredentialPicker {
-    #[inline] pub fn pick_with_options_async(options: &CredentialPickerOptions) -> Result<ComPtr<foundation::IAsyncOperation<CredentialPickerResults>>> {
-        <Self as RtActivatable<ICredentialPickerStatics>>::get_activation_factory().pick_with_options_async(options)
+    #[inline] pub fn pick_with_options_async(options: &ComPtr<CredentialPickerOptions>) -> Result<ComPtr<foundation::IAsyncOperation<CredentialPickerResults>>> {
+        <Self as RtActivatable<ICredentialPickerStatics>>::get_activation_factory().deref().pick_with_options_async(options)
     }
     #[inline] pub fn pick_with_message_async(targetName: &HStringArg, message: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<CredentialPickerResults>>> {
-        <Self as RtActivatable<ICredentialPickerStatics>>::get_activation_factory().pick_with_message_async(targetName, message)
+        <Self as RtActivatable<ICredentialPickerStatics>>::get_activation_factory().deref().pick_with_message_async(targetName, message)
     }
     #[inline] pub fn pick_with_caption_async(targetName: &HStringArg, message: &HStringArg, caption: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<CredentialPickerResults>>> {
-        <Self as RtActivatable<ICredentialPickerStatics>>::get_activation_factory().pick_with_caption_async(targetName, message, caption)
+        <Self as RtActivatable<ICredentialPickerStatics>>::get_activation_factory().deref().pick_with_caption_async(targetName, message, caption)
     }
 }
 DEFINE_CLSID!(CredentialPicker(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,85,73,46,67,114,101,100,101,110,116,105,97,108,80,105,99,107,101,114,0]) [CLSID_CredentialPicker]);
@@ -2722,8 +2722,8 @@ impl ICredentialPickerOptions {
         let hr = ((*self.lpVtbl).get_CustomAuthenticationProtocol)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_previous_credential(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PreviousCredential)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_previous_credential(&self, value: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PreviousCredential)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_previous_credential(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
@@ -2818,9 +2818,9 @@ RT_INTERFACE!{static interface ICredentialPickerStatics(ICredentialPickerStatics
     fn PickWithCaptionAsync(&self, targetName: HSTRING, message: HSTRING, caption: HSTRING, out: *mut *mut foundation::IAsyncOperation<CredentialPickerResults>) -> HRESULT
 }}
 impl ICredentialPickerStatics {
-    #[inline] pub fn pick_with_options_async(&self, options: &CredentialPickerOptions) -> Result<ComPtr<foundation::IAsyncOperation<CredentialPickerResults>>> { unsafe { 
+    #[inline] pub fn pick_with_options_async(&self, options: &ComPtr<CredentialPickerOptions>) -> Result<ComPtr<foundation::IAsyncOperation<CredentialPickerResults>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PickWithOptionsAsync)(self as *const _ as *mut _, options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).PickWithOptionsAsync)(self as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn pick_with_message_async(&self, targetName: &HStringArg, message: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<CredentialPickerResults>>> { unsafe { 
@@ -2844,10 +2844,10 @@ RT_CLASS!{static class UserConsentVerifier}
 impl RtActivatable<IUserConsentVerifierStatics> for UserConsentVerifier {}
 impl UserConsentVerifier {
     #[inline] pub fn check_availability_async() -> Result<ComPtr<foundation::IAsyncOperation<UserConsentVerifierAvailability>>> {
-        <Self as RtActivatable<IUserConsentVerifierStatics>>::get_activation_factory().check_availability_async()
+        <Self as RtActivatable<IUserConsentVerifierStatics>>::get_activation_factory().deref().check_availability_async()
     }
     #[inline] pub fn request_verification_async(message: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<UserConsentVerificationResult>>> {
-        <Self as RtActivatable<IUserConsentVerifierStatics>>::get_activation_factory().request_verification_async(message)
+        <Self as RtActivatable<IUserConsentVerifierStatics>>::get_activation_factory().deref().request_verification_async(message)
     }
 }
 DEFINE_CLSID!(UserConsentVerifier(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,85,73,46,85,115,101,114,67,111,110,115,101,110,116,86,101,114,105,102,105,101,114,0]) [CLSID_UserConsentVerifier]);
@@ -2881,38 +2881,38 @@ RT_ENUM! { enum BinaryStringEncoding: i32 {
 RT_CLASS!{static class CryptographicBuffer}
 impl RtActivatable<ICryptographicBufferStatics> for CryptographicBuffer {}
 impl CryptographicBuffer {
-    #[cfg(feature="windows-storage")] #[inline] pub fn compare(object1: &super::super::storage::streams::IBuffer, object2: &super::super::storage::streams::IBuffer) -> Result<bool> {
-        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().compare(object1, object2)
+    #[cfg(feature="windows-storage")] #[inline] pub fn compare(object1: &ComPtr<super::super::storage::streams::IBuffer>, object2: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<bool> {
+        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().deref().compare(object1, object2)
     }
     #[cfg(feature="windows-storage")] #[inline] pub fn generate_random(length: u32) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().generate_random(length)
+        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().deref().generate_random(length)
     }
     #[inline] pub fn generate_random_number() -> Result<u32> {
-        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().generate_random_number()
+        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().deref().generate_random_number()
     }
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_byte_array(value: &[u8]) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().create_from_byte_array(value)
+        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().deref().create_from_byte_array(value)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn copy_to_byte_array(buffer: &super::super::storage::streams::IBuffer) -> Result<ComArray<u8>> {
-        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().copy_to_byte_array(buffer)
+    #[cfg(feature="windows-storage")] #[inline] pub fn copy_to_byte_array(buffer: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComArray<u8>> {
+        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().deref().copy_to_byte_array(buffer)
     }
     #[cfg(feature="windows-storage")] #[inline] pub fn decode_from_hex_string(value: &HStringArg) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().decode_from_hex_string(value)
+        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().deref().decode_from_hex_string(value)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn encode_to_hex_string(buffer: &super::super::storage::streams::IBuffer) -> Result<HString> {
-        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().encode_to_hex_string(buffer)
+    #[cfg(feature="windows-storage")] #[inline] pub fn encode_to_hex_string(buffer: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<HString> {
+        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().deref().encode_to_hex_string(buffer)
     }
     #[cfg(feature="windows-storage")] #[inline] pub fn decode_from_base64_string(value: &HStringArg) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().decode_from_base64_string(value)
+        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().deref().decode_from_base64_string(value)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn encode_to_base64_string(buffer: &super::super::storage::streams::IBuffer) -> Result<HString> {
-        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().encode_to_base64_string(buffer)
+    #[cfg(feature="windows-storage")] #[inline] pub fn encode_to_base64_string(buffer: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<HString> {
+        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().deref().encode_to_base64_string(buffer)
     }
     #[cfg(feature="windows-storage")] #[inline] pub fn convert_string_to_binary(value: &HStringArg, encoding: BinaryStringEncoding) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().convert_string_to_binary(value, encoding)
+        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().deref().convert_string_to_binary(value, encoding)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn convert_binary_to_string(encoding: BinaryStringEncoding, buffer: &super::super::storage::streams::IBuffer) -> Result<HString> {
-        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().convert_binary_to_string(encoding, buffer)
+    #[cfg(feature="windows-storage")] #[inline] pub fn convert_binary_to_string(encoding: BinaryStringEncoding, buffer: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<HString> {
+        <Self as RtActivatable<ICryptographicBufferStatics>>::get_activation_factory().deref().convert_binary_to_string(encoding, buffer)
     }
 }
 DEFINE_CLSID!(CryptographicBuffer(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,114,121,112,116,111,103,114,97,112,104,105,99,66,117,102,102,101,114,0]) [CLSID_CryptographicBuffer]);
@@ -2931,9 +2931,9 @@ RT_INTERFACE!{static interface ICryptographicBufferStatics(ICryptographicBufferS
     #[cfg(feature="windows-storage")] fn ConvertBinaryToString(&self, encoding: BinaryStringEncoding, buffer: *mut super::super::storage::streams::IBuffer, out: *mut HSTRING) -> HRESULT
 }}
 impl ICryptographicBufferStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn compare(&self, object1: &super::super::storage::streams::IBuffer, object2: &super::super::storage::streams::IBuffer) -> Result<bool> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn compare(&self, object1: &ComPtr<super::super::storage::streams::IBuffer>, object2: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).Compare)(self as *const _ as *mut _, object1 as *const _ as *mut _, object2 as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Compare)(self as *const _ as *mut _, object1.deref() as *const _ as *mut _, object2.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn generate_random(&self, length: u32) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
@@ -2951,9 +2951,9 @@ impl ICryptographicBufferStatics {
         let hr = ((*self.lpVtbl).CreateFromByteArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn copy_to_byte_array(&self, buffer: &super::super::storage::streams::IBuffer) -> Result<ComArray<u8>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn copy_to_byte_array(&self, buffer: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComArray<u8>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.lpVtbl).CopyToByteArray)(self as *const _ as *mut _, buffer as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.lpVtbl).CopyToByteArray)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn decode_from_hex_string(&self, value: &HStringArg) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
@@ -2961,9 +2961,9 @@ impl ICryptographicBufferStatics {
         let hr = ((*self.lpVtbl).DecodeFromHexString)(self as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn encode_to_hex_string(&self, buffer: &super::super::storage::streams::IBuffer) -> Result<HString> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn encode_to_hex_string(&self, buffer: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).EncodeToHexString)(self as *const _ as *mut _, buffer as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).EncodeToHexString)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn decode_from_base64_string(&self, value: &HStringArg) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
@@ -2971,9 +2971,9 @@ impl ICryptographicBufferStatics {
         let hr = ((*self.lpVtbl).DecodeFromBase64String)(self as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn encode_to_base64_string(&self, buffer: &super::super::storage::streams::IBuffer) -> Result<HString> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn encode_to_base64_string(&self, buffer: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).EncodeToBase64String)(self as *const _ as *mut _, buffer as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).EncodeToBase64String)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn convert_string_to_binary(&self, value: &HStringArg, encoding: BinaryStringEncoding) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
@@ -2981,9 +2981,9 @@ impl ICryptographicBufferStatics {
         let hr = ((*self.lpVtbl).ConvertStringToBinary)(self as *const _ as *mut _, value.get(), encoding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn convert_binary_to_string(&self, encoding: BinaryStringEncoding, buffer: &super::super::storage::streams::IBuffer) -> Result<HString> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn convert_binary_to_string(&self, encoding: BinaryStringEncoding, buffer: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ConvertBinaryToString)(self as *const _ as *mut _, encoding, buffer as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ConvertBinaryToString)(self as *const _ as *mut _, encoding, buffer.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3009,14 +3009,14 @@ RT_INTERFACE!{interface ICertificate(ICertificateVtbl): IInspectable(IInspectabl
     fn get_FriendlyName(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ICertificate {
-    #[inline] pub fn build_chain_async(&self, certificates: &foundation::collections::IIterable<Certificate>) -> Result<ComPtr<foundation::IAsyncOperation<CertificateChain>>> { unsafe { 
+    #[inline] pub fn build_chain_async(&self, certificates: &ComPtr<foundation::collections::IIterable<Certificate>>) -> Result<ComPtr<foundation::IAsyncOperation<CertificateChain>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).BuildChainAsync)(self as *const _ as *mut _, certificates as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).BuildChainAsync)(self as *const _ as *mut _, certificates.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn build_chain_with_parameters_async(&self, certificates: &foundation::collections::IIterable<Certificate>, parameters: &ChainBuildingParameters) -> Result<ComPtr<foundation::IAsyncOperation<CertificateChain>>> { unsafe { 
+    #[inline] pub fn build_chain_with_parameters_async(&self, certificates: &ComPtr<foundation::collections::IIterable<Certificate>>, parameters: &ComPtr<ChainBuildingParameters>) -> Result<ComPtr<foundation::IAsyncOperation<CertificateChain>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).BuildChainWithParametersAsync)(self as *const _ as *mut _, certificates as *const _ as *mut _, parameters as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).BuildChainWithParametersAsync)(self as *const _ as *mut _, certificates.deref() as *const _ as *mut _, parameters.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_serial_number(&self) -> Result<ComArray<u8>> { unsafe { 
@@ -3087,8 +3087,8 @@ impl ICertificate {
 RT_CLASS!{class Certificate: ICertificate}
 impl RtActivatable<ICertificateFactory> for Certificate {}
 impl Certificate {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_certificate(certBlob: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<Certificate>> {
-        <Self as RtActivatable<ICertificateFactory>>::get_activation_factory().create_certificate(certBlob)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_certificate(certBlob: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<Certificate>> {
+        <Self as RtActivatable<ICertificateFactory>>::get_activation_factory().deref().create_certificate(certBlob)
     }
 }
 DEFINE_CLSID!(Certificate(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,0]) [CLSID_Certificate]);
@@ -3168,9 +3168,9 @@ impl ICertificateChain {
         let hr = ((*self.lpVtbl).Validate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn validate_with_parameters(&self, parameter: &ChainValidationParameters) -> Result<ChainValidationResult> { unsafe { 
+    #[inline] pub fn validate_with_parameters(&self, parameter: &ComPtr<ChainValidationParameters>) -> Result<ChainValidationResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).ValidateWithParameters)(self as *const _ as *mut _, parameter as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ValidateWithParameters)(self as *const _ as *mut _, parameter.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_certificates(&self, includeRoot: bool) -> Result<Option<ComPtr<foundation::collections::IVectorView<Certificate>>>> { unsafe { 
@@ -3188,23 +3188,23 @@ impl RtActivatable<ICertificateEnrollmentManagerStatics> for CertificateEnrollme
 impl RtActivatable<ICertificateEnrollmentManagerStatics2> for CertificateEnrollmentManager {}
 impl RtActivatable<ICertificateEnrollmentManagerStatics3> for CertificateEnrollmentManager {}
 impl CertificateEnrollmentManager {
-    #[inline] pub fn create_request_async(request: &CertificateRequestProperties) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<ICertificateEnrollmentManagerStatics>>::get_activation_factory().create_request_async(request)
+    #[inline] pub fn create_request_async(request: &ComPtr<CertificateRequestProperties>) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
+        <Self as RtActivatable<ICertificateEnrollmentManagerStatics>>::get_activation_factory().deref().create_request_async(request)
     }
     #[inline] pub fn install_certificate_async(certificate: &HStringArg, installOption: InstallOptions) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ICertificateEnrollmentManagerStatics>>::get_activation_factory().install_certificate_async(certificate, installOption)
+        <Self as RtActivatable<ICertificateEnrollmentManagerStatics>>::get_activation_factory().deref().install_certificate_async(certificate, installOption)
     }
     #[inline] pub fn import_pfx_data_async(pfxData: &HStringArg, password: &HStringArg, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ICertificateEnrollmentManagerStatics>>::get_activation_factory().import_pfx_data_async(pfxData, password, exportable, keyProtectionLevel, installOption, friendlyName)
+        <Self as RtActivatable<ICertificateEnrollmentManagerStatics>>::get_activation_factory().deref().import_pfx_data_async(pfxData, password, exportable, keyProtectionLevel, installOption, friendlyName)
     }
     #[inline] pub fn get_user_certificate_enrollment_manager() -> Result<Option<ComPtr<UserCertificateEnrollmentManager>>> {
-        <Self as RtActivatable<ICertificateEnrollmentManagerStatics2>>::get_activation_factory().get_user_certificate_enrollment_manager()
+        <Self as RtActivatable<ICertificateEnrollmentManagerStatics2>>::get_activation_factory().deref().get_user_certificate_enrollment_manager()
     }
     #[inline] pub fn import_pfx_data_to_ksp_async(pfxData: &HStringArg, password: &HStringArg, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: &HStringArg, keyStorageProvider: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ICertificateEnrollmentManagerStatics2>>::get_activation_factory().import_pfx_data_to_ksp_async(pfxData, password, exportable, keyProtectionLevel, installOption, friendlyName, keyStorageProvider)
+        <Self as RtActivatable<ICertificateEnrollmentManagerStatics2>>::get_activation_factory().deref().import_pfx_data_to_ksp_async(pfxData, password, exportable, keyProtectionLevel, installOption, friendlyName, keyStorageProvider)
     }
-    #[inline] pub fn import_pfx_data_to_ksp_with_parameters_async(pfxData: &HStringArg, password: &HStringArg, pfxImportParameters: &PfxImportParameters) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ICertificateEnrollmentManagerStatics3>>::get_activation_factory().import_pfx_data_to_ksp_with_parameters_async(pfxData, password, pfxImportParameters)
+    #[inline] pub fn import_pfx_data_to_ksp_with_parameters_async(pfxData: &HStringArg, password: &HStringArg, pfxImportParameters: &ComPtr<PfxImportParameters>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<ICertificateEnrollmentManagerStatics3>>::get_activation_factory().deref().import_pfx_data_to_ksp_with_parameters_async(pfxData, password, pfxImportParameters)
     }
 }
 DEFINE_CLSID!(CertificateEnrollmentManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,69,110,114,111,108,108,109,101,110,116,77,97,110,97,103,101,114,0]) [CLSID_CertificateEnrollmentManager]);
@@ -3215,9 +3215,9 @@ RT_INTERFACE!{static interface ICertificateEnrollmentManagerStatics(ICertificate
     fn ImportPfxDataAsync(&self, pfxData: HSTRING, password: HSTRING, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl ICertificateEnrollmentManagerStatics {
-    #[inline] pub fn create_request_async(&self, request: &CertificateRequestProperties) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
+    #[inline] pub fn create_request_async(&self, request: &ComPtr<CertificateRequestProperties>) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateRequestAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateRequestAsync)(self as *const _ as *mut _, request.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn install_certificate_async(&self, certificate: &HStringArg, installOption: InstallOptions) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -3253,9 +3253,9 @@ RT_INTERFACE!{static interface ICertificateEnrollmentManagerStatics3(ICertificat
     fn ImportPfxDataToKspWithParametersAsync(&self, pfxData: HSTRING, password: HSTRING, pfxImportParameters: *mut PfxImportParameters, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl ICertificateEnrollmentManagerStatics3 {
-    #[inline] pub fn import_pfx_data_to_ksp_with_parameters_async(&self, pfxData: &HStringArg, password: &HStringArg, pfxImportParameters: &PfxImportParameters) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn import_pfx_data_to_ksp_with_parameters_async(&self, pfxData: &HStringArg, password: &HStringArg, pfxImportParameters: &ComPtr<PfxImportParameters>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ImportPfxDataToKspWithParametersAsync)(self as *const _ as *mut _, pfxData.get(), password.get(), pfxImportParameters as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ImportPfxDataToKspWithParametersAsync)(self as *const _ as *mut _, pfxData.get(), password.get(), pfxImportParameters.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3310,9 +3310,9 @@ RT_INTERFACE!{static interface ICertificateFactory(ICertificateFactoryVtbl): IIn
     #[cfg(feature="windows-storage")] fn CreateCertificate(&self, certBlob: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut Certificate) -> HRESULT
 }}
 impl ICertificateFactory {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_certificate(&self, certBlob: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<Certificate>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_certificate(&self, certBlob: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<Certificate>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCertificate)(self as *const _ as *mut _, certBlob as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateCertificate)(self as *const _ as *mut _, certBlob.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3639,8 +3639,8 @@ impl ICertificateRequestProperties2 {
         let hr = ((*self.lpVtbl).get_SigningCertificate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_signing_certificate(&self, value: &Certificate) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SigningCertificate)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_signing_certificate(&self, value: &ComPtr<Certificate>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SigningCertificate)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_attestation_credential_certificate(&self) -> Result<Option<ComPtr<Certificate>>> { unsafe { 
@@ -3648,8 +3648,8 @@ impl ICertificateRequestProperties2 {
         let hr = ((*self.lpVtbl).get_AttestationCredentialCertificate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_attestation_credential_certificate(&self, value: &Certificate) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AttestationCredentialCertificate)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_attestation_credential_certificate(&self, value: &ComPtr<Certificate>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AttestationCredentialCertificate)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3742,12 +3742,12 @@ RT_INTERFACE!{interface ICertificateStore(ICertificateStoreVtbl): IInspectable(I
     fn Delete(&self, certificate: *mut Certificate) -> HRESULT
 }}
 impl ICertificateStore {
-    #[inline] pub fn add(&self, certificate: &Certificate) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Add)(self as *const _ as *mut _, certificate as *const _ as *mut _);
+    #[inline] pub fn add(&self, certificate: &ComPtr<Certificate>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Add)(self as *const _ as *mut _, certificate.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn delete(&self, certificate: &Certificate) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Delete)(self as *const _ as *mut _, certificate as *const _ as *mut _);
+    #[inline] pub fn delete(&self, certificate: &ComPtr<Certificate>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Delete)(self as *const _ as *mut _, certificate.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3768,22 +3768,22 @@ impl RtActivatable<ICertificateStoresStatics> for CertificateStores {}
 impl RtActivatable<ICertificateStoresStatics2> for CertificateStores {}
 impl CertificateStores {
     #[inline] pub fn find_all_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<Certificate>>>> {
-        <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().find_all_async()
+        <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().deref().find_all_async()
     }
-    #[inline] pub fn find_all_with_query_async(query: &CertificateQuery) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<Certificate>>>> {
-        <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().find_all_with_query_async(query)
+    #[inline] pub fn find_all_with_query_async(query: &ComPtr<CertificateQuery>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<Certificate>>>> {
+        <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().deref().find_all_with_query_async(query)
     }
     #[inline] pub fn get_trusted_root_certification_authorities() -> Result<Option<ComPtr<CertificateStore>>> {
-        <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().get_trusted_root_certification_authorities()
+        <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().deref().get_trusted_root_certification_authorities()
     }
     #[inline] pub fn get_intermediate_certification_authorities() -> Result<Option<ComPtr<CertificateStore>>> {
-        <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().get_intermediate_certification_authorities()
+        <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().deref().get_intermediate_certification_authorities()
     }
     #[inline] pub fn get_store_by_name(storeName: &HStringArg) -> Result<Option<ComPtr<CertificateStore>>> {
-        <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().get_store_by_name(storeName)
+        <Self as RtActivatable<ICertificateStoresStatics>>::get_activation_factory().deref().get_store_by_name(storeName)
     }
     #[inline] pub fn get_user_store_by_name(storeName: &HStringArg) -> Result<Option<ComPtr<UserCertificateStore>>> {
-        <Self as RtActivatable<ICertificateStoresStatics2>>::get_activation_factory().get_user_store_by_name(storeName)
+        <Self as RtActivatable<ICertificateStoresStatics2>>::get_activation_factory().deref().get_user_store_by_name(storeName)
     }
 }
 DEFINE_CLSID!(CertificateStores(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,83,116,111,114,101,115,0]) [CLSID_CertificateStores]);
@@ -3801,9 +3801,9 @@ impl ICertificateStoresStatics {
         let hr = ((*self.lpVtbl).FindAllAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn find_all_with_query_async(&self, query: &CertificateQuery) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<Certificate>>>> { unsafe { 
+    #[inline] pub fn find_all_with_query_async(&self, query: &ComPtr<CertificateQuery>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<Certificate>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAllWithQueryAsync)(self as *const _ as *mut _, query as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FindAllWithQueryAsync)(self as *const _ as *mut _, query.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_trusted_root_certification_authorities(&self) -> Result<Option<ComPtr<CertificateStore>>> { unsafe { 
@@ -3930,8 +3930,8 @@ impl IChainValidationParameters {
         let hr = ((*self.lpVtbl).get_ServerDnsName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn set_server_dns_name(&self, value: &crate::windows::networking::HostName) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ServerDnsName)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-networking")] #[inline] pub fn set_server_dns_name(&self, value: &ComPtr<crate::windows::networking::HostName>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ServerDnsName)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3974,11 +3974,11 @@ RT_CLASS!{class CmsAttachedSignature: ICmsAttachedSignature}
 impl RtActivatable<ICmsAttachedSignatureFactory> for CmsAttachedSignature {}
 impl RtActivatable<ICmsAttachedSignatureStatics> for CmsAttachedSignature {}
 impl CmsAttachedSignature {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_cms_attached_signature(inputBlob: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<CmsAttachedSignature>> {
-        <Self as RtActivatable<ICmsAttachedSignatureFactory>>::get_activation_factory().create_cms_attached_signature(inputBlob)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_cms_attached_signature(inputBlob: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<CmsAttachedSignature>> {
+        <Self as RtActivatable<ICmsAttachedSignatureFactory>>::get_activation_factory().deref().create_cms_attached_signature(inputBlob)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn generate_signature_async(data: &crate::windows::storage::streams::IBuffer, signers: &foundation::collections::IIterable<CmsSignerInfo>, certificates: &foundation::collections::IIterable<Certificate>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICmsAttachedSignatureStatics>>::get_activation_factory().generate_signature_async(data, signers, certificates)
+    #[cfg(feature="windows-storage")] #[inline] pub fn generate_signature_async(data: &ComPtr<crate::windows::storage::streams::IBuffer>, signers: &ComPtr<foundation::collections::IIterable<CmsSignerInfo>>, certificates: &ComPtr<foundation::collections::IIterable<Certificate>>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> {
+        <Self as RtActivatable<ICmsAttachedSignatureStatics>>::get_activation_factory().deref().generate_signature_async(data, signers, certificates)
     }
 }
 DEFINE_CLSID!(CmsAttachedSignature(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,109,115,65,116,116,97,99,104,101,100,83,105,103,110,97,116,117,114,101,0]) [CLSID_CmsAttachedSignature]);
@@ -3987,9 +3987,9 @@ RT_INTERFACE!{static interface ICmsAttachedSignatureFactory(ICmsAttachedSignatur
     #[cfg(feature="windows-storage")] fn CreateCmsAttachedSignature(&self, inputBlob: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut CmsAttachedSignature) -> HRESULT
 }}
 impl ICmsAttachedSignatureFactory {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_cms_attached_signature(&self, inputBlob: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<CmsAttachedSignature>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_cms_attached_signature(&self, inputBlob: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<CmsAttachedSignature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCmsAttachedSignature)(self as *const _ as *mut _, inputBlob as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateCmsAttachedSignature)(self as *const _ as *mut _, inputBlob.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3998,9 +3998,9 @@ RT_INTERFACE!{static interface ICmsAttachedSignatureStatics(ICmsAttachedSignatur
     #[cfg(feature="windows-storage")] fn GenerateSignatureAsync(&self, data: *mut crate::windows::storage::streams::IBuffer, signers: *mut foundation::collections::IIterable<CmsSignerInfo>, certificates: *mut foundation::collections::IIterable<Certificate>, out: *mut *mut foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>) -> HRESULT
 }}
 impl ICmsAttachedSignatureStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn generate_signature_async(&self, data: &crate::windows::storage::streams::IBuffer, signers: &foundation::collections::IIterable<CmsSignerInfo>, certificates: &foundation::collections::IIterable<Certificate>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn generate_signature_async(&self, data: &ComPtr<crate::windows::storage::streams::IBuffer>, signers: &ComPtr<foundation::collections::IIterable<CmsSignerInfo>>, certificates: &ComPtr<foundation::collections::IIterable<Certificate>>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GenerateSignatureAsync)(self as *const _ as *mut _, data as *const _ as *mut _, signers as *const _ as *mut _, certificates as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GenerateSignatureAsync)(self as *const _ as *mut _, data.deref() as *const _ as *mut _, signers.deref() as *const _ as *mut _, certificates.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4021,9 +4021,9 @@ impl ICmsDetachedSignature {
         let hr = ((*self.lpVtbl).get_Signers)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature_async(&self, data: &crate::windows::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncOperation<SignatureValidationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature_async(&self, data: &ComPtr<crate::windows::storage::streams::IInputStream>) -> Result<ComPtr<foundation::IAsyncOperation<SignatureValidationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).VerifySignatureAsync)(self as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).VerifySignatureAsync)(self as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4031,11 +4031,11 @@ RT_CLASS!{class CmsDetachedSignature: ICmsDetachedSignature}
 impl RtActivatable<ICmsDetachedSignatureFactory> for CmsDetachedSignature {}
 impl RtActivatable<ICmsDetachedSignatureStatics> for CmsDetachedSignature {}
 impl CmsDetachedSignature {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_cms_detached_signature(inputBlob: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<CmsDetachedSignature>> {
-        <Self as RtActivatable<ICmsDetachedSignatureFactory>>::get_activation_factory().create_cms_detached_signature(inputBlob)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_cms_detached_signature(inputBlob: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<CmsDetachedSignature>> {
+        <Self as RtActivatable<ICmsDetachedSignatureFactory>>::get_activation_factory().deref().create_cms_detached_signature(inputBlob)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn generate_signature_async(data: &crate::windows::storage::streams::IInputStream, signers: &foundation::collections::IIterable<CmsSignerInfo>, certificates: &foundation::collections::IIterable<Certificate>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICmsDetachedSignatureStatics>>::get_activation_factory().generate_signature_async(data, signers, certificates)
+    #[cfg(feature="windows-storage")] #[inline] pub fn generate_signature_async(data: &ComPtr<crate::windows::storage::streams::IInputStream>, signers: &ComPtr<foundation::collections::IIterable<CmsSignerInfo>>, certificates: &ComPtr<foundation::collections::IIterable<Certificate>>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> {
+        <Self as RtActivatable<ICmsDetachedSignatureStatics>>::get_activation_factory().deref().generate_signature_async(data, signers, certificates)
     }
 }
 DEFINE_CLSID!(CmsDetachedSignature(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,109,115,68,101,116,97,99,104,101,100,83,105,103,110,97,116,117,114,101,0]) [CLSID_CmsDetachedSignature]);
@@ -4044,9 +4044,9 @@ RT_INTERFACE!{static interface ICmsDetachedSignatureFactory(ICmsDetachedSignatur
     #[cfg(feature="windows-storage")] fn CreateCmsDetachedSignature(&self, inputBlob: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut CmsDetachedSignature) -> HRESULT
 }}
 impl ICmsDetachedSignatureFactory {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_cms_detached_signature(&self, inputBlob: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<CmsDetachedSignature>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_cms_detached_signature(&self, inputBlob: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<CmsDetachedSignature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCmsDetachedSignature)(self as *const _ as *mut _, inputBlob as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateCmsDetachedSignature)(self as *const _ as *mut _, inputBlob.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4055,9 +4055,9 @@ RT_INTERFACE!{static interface ICmsDetachedSignatureStatics(ICmsDetachedSignatur
     #[cfg(feature="windows-storage")] fn GenerateSignatureAsync(&self, data: *mut crate::windows::storage::streams::IInputStream, signers: *mut foundation::collections::IIterable<CmsSignerInfo>, certificates: *mut foundation::collections::IIterable<Certificate>, out: *mut *mut foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>) -> HRESULT
 }}
 impl ICmsDetachedSignatureStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn generate_signature_async(&self, data: &crate::windows::storage::streams::IInputStream, signers: &foundation::collections::IIterable<CmsSignerInfo>, certificates: &foundation::collections::IIterable<Certificate>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn generate_signature_async(&self, data: &ComPtr<crate::windows::storage::streams::IInputStream>, signers: &ComPtr<foundation::collections::IIterable<CmsSignerInfo>>, certificates: &ComPtr<foundation::collections::IIterable<Certificate>>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GenerateSignatureAsync)(self as *const _ as *mut _, data as *const _ as *mut _, signers as *const _ as *mut _, certificates as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GenerateSignatureAsync)(self as *const _ as *mut _, data.deref() as *const _ as *mut _, signers.deref() as *const _ as *mut _, certificates.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4075,8 +4075,8 @@ impl ICmsSignerInfo {
         let hr = ((*self.lpVtbl).get_Certificate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_certificate(&self, value: &Certificate) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Certificate)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_certificate(&self, value: &ComPtr<Certificate>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Certificate)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_hash_algorithm_name(&self) -> Result<HString> { unsafe { 
@@ -4135,34 +4135,34 @@ impl RtActivatable<IKeyAlgorithmNamesStatics> for KeyAlgorithmNames {}
 impl RtActivatable<IKeyAlgorithmNamesStatics2> for KeyAlgorithmNames {}
 impl KeyAlgorithmNames {
     #[inline] pub fn get_rsa() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_rsa()
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa()
     }
     #[inline] pub fn get_dsa() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_dsa()
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().deref().get_dsa()
     }
     #[inline] pub fn get_ecdh_256() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdh_256()
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().deref().get_ecdh_256()
     }
     #[inline] pub fn get_ecdh_384() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdh_384()
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().deref().get_ecdh_384()
     }
     #[inline] pub fn get_ecdh_521() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdh_521()
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().deref().get_ecdh_521()
     }
     #[inline] pub fn get_ecdsa_256() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdsa_256()
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().deref().get_ecdsa_256()
     }
     #[inline] pub fn get_ecdsa_384() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdsa_384()
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().deref().get_ecdsa_384()
     }
     #[inline] pub fn get_ecdsa_521() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().get_ecdsa_521()
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics>>::get_activation_factory().deref().get_ecdsa_521()
     }
     #[inline] pub fn get_ecdsa() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics2>>::get_activation_factory().get_ecdsa()
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics2>>::get_activation_factory().deref().get_ecdsa()
     }
     #[inline] pub fn get_ecdh() -> Result<HString> {
-        <Self as RtActivatable<IKeyAlgorithmNamesStatics2>>::get_activation_factory().get_ecdh()
+        <Self as RtActivatable<IKeyAlgorithmNamesStatics2>>::get_activation_factory().deref().get_ecdh()
     }
 }
 DEFINE_CLSID!(KeyAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,75,101,121,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_KeyAlgorithmNames]);
@@ -4241,13 +4241,13 @@ impl RtActivatable<IKeyAttestationHelperStatics> for KeyAttestationHelper {}
 impl RtActivatable<IKeyAttestationHelperStatics2> for KeyAttestationHelper {}
 impl KeyAttestationHelper {
     #[inline] pub fn decrypt_tpm_attestation_credential_async(credential: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IKeyAttestationHelperStatics>>::get_activation_factory().decrypt_tpm_attestation_credential_async(credential)
+        <Self as RtActivatable<IKeyAttestationHelperStatics>>::get_activation_factory().deref().decrypt_tpm_attestation_credential_async(credential)
     }
     #[inline] pub fn get_tpm_attestation_credential_id(credential: &HStringArg) -> Result<HString> {
-        <Self as RtActivatable<IKeyAttestationHelperStatics>>::get_activation_factory().get_tpm_attestation_credential_id(credential)
+        <Self as RtActivatable<IKeyAttestationHelperStatics>>::get_activation_factory().deref().get_tpm_attestation_credential_id(credential)
     }
     #[inline] pub fn decrypt_tpm_attestation_credential_with_container_name_async(credential: &HStringArg, containerName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IKeyAttestationHelperStatics2>>::get_activation_factory().decrypt_tpm_attestation_credential_with_container_name_async(credential, containerName)
+        <Self as RtActivatable<IKeyAttestationHelperStatics2>>::get_activation_factory().deref().decrypt_tpm_attestation_credential_with_container_name_async(credential, containerName)
     }
 }
 DEFINE_CLSID!(KeyAttestationHelper(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,75,101,121,65,116,116,101,115,116,97,116,105,111,110,72,101,108,112,101,114,0]) [CLSID_KeyAttestationHelper]);
@@ -4290,16 +4290,16 @@ impl RtActivatable<IKeyStorageProviderNamesStatics> for KeyStorageProviderNames 
 impl RtActivatable<IKeyStorageProviderNamesStatics2> for KeyStorageProviderNames {}
 impl KeyStorageProviderNames {
     #[inline] pub fn get_software_key_storage_provider() -> Result<HString> {
-        <Self as RtActivatable<IKeyStorageProviderNamesStatics>>::get_activation_factory().get_software_key_storage_provider()
+        <Self as RtActivatable<IKeyStorageProviderNamesStatics>>::get_activation_factory().deref().get_software_key_storage_provider()
     }
     #[inline] pub fn get_smartcard_key_storage_provider() -> Result<HString> {
-        <Self as RtActivatable<IKeyStorageProviderNamesStatics>>::get_activation_factory().get_smartcard_key_storage_provider()
+        <Self as RtActivatable<IKeyStorageProviderNamesStatics>>::get_activation_factory().deref().get_smartcard_key_storage_provider()
     }
     #[inline] pub fn get_platform_key_storage_provider() -> Result<HString> {
-        <Self as RtActivatable<IKeyStorageProviderNamesStatics>>::get_activation_factory().get_platform_key_storage_provider()
+        <Self as RtActivatable<IKeyStorageProviderNamesStatics>>::get_activation_factory().deref().get_platform_key_storage_provider()
     }
     #[inline] pub fn get_passport_key_storage_provider() -> Result<HString> {
-        <Self as RtActivatable<IKeyStorageProviderNamesStatics2>>::get_activation_factory().get_passport_key_storage_provider()
+        <Self as RtActivatable<IKeyStorageProviderNamesStatics2>>::get_activation_factory().deref().get_passport_key_storage_provider()
     }
 }
 DEFINE_CLSID!(KeyStorageProviderNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,75,101,121,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,78,97,109,101,115,0]) [CLSID_KeyStorageProviderNames]);
@@ -4429,13 +4429,13 @@ RT_CLASS!{static class StandardCertificateStoreNames}
 impl RtActivatable<IStandardCertificateStoreNamesStatics> for StandardCertificateStoreNames {}
 impl StandardCertificateStoreNames {
     #[inline] pub fn get_personal() -> Result<HString> {
-        <Self as RtActivatable<IStandardCertificateStoreNamesStatics>>::get_activation_factory().get_personal()
+        <Self as RtActivatable<IStandardCertificateStoreNamesStatics>>::get_activation_factory().deref().get_personal()
     }
     #[inline] pub fn get_trusted_root_certification_authorities() -> Result<HString> {
-        <Self as RtActivatable<IStandardCertificateStoreNamesStatics>>::get_activation_factory().get_trusted_root_certification_authorities()
+        <Self as RtActivatable<IStandardCertificateStoreNamesStatics>>::get_activation_factory().deref().get_trusted_root_certification_authorities()
     }
     #[inline] pub fn get_intermediate_certification_authorities() -> Result<HString> {
-        <Self as RtActivatable<IStandardCertificateStoreNamesStatics>>::get_activation_factory().get_intermediate_certification_authorities()
+        <Self as RtActivatable<IStandardCertificateStoreNamesStatics>>::get_activation_factory().deref().get_intermediate_certification_authorities()
     }
 }
 DEFINE_CLSID!(StandardCertificateStoreNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,83,116,97,110,100,97,114,100,67,101,114,116,105,102,105,99,97,116,101,83,116,111,114,101,78,97,109,101,115,0]) [CLSID_StandardCertificateStoreNames]);
@@ -4561,9 +4561,9 @@ RT_INTERFACE!{interface IUserCertificateEnrollmentManager(IUserCertificateEnroll
     fn ImportPfxDataToKspAsync(&self, pfxData: HSTRING, password: HSTRING, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: HSTRING, keyStorageProvider: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IUserCertificateEnrollmentManager {
-    #[inline] pub fn create_request_async(&self, request: &CertificateRequestProperties) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
+    #[inline] pub fn create_request_async(&self, request: &ComPtr<CertificateRequestProperties>) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateRequestAsync)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateRequestAsync)(self as *const _ as *mut _, request.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn install_certificate_async(&self, certificate: &HStringArg, installOption: InstallOptions) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -4588,9 +4588,9 @@ RT_INTERFACE!{interface IUserCertificateEnrollmentManager2(IUserCertificateEnrol
     fn ImportPfxDataToKspWithParametersAsync(&self, pfxData: HSTRING, password: HSTRING, pfxImportParameters: *mut PfxImportParameters, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IUserCertificateEnrollmentManager2 {
-    #[inline] pub fn import_pfx_data_to_ksp_with_parameters_async(&self, pfxData: &HStringArg, password: &HStringArg, pfxImportParameters: &PfxImportParameters) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn import_pfx_data_to_ksp_with_parameters_async(&self, pfxData: &HStringArg, password: &HStringArg, pfxImportParameters: &ComPtr<PfxImportParameters>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ImportPfxDataToKspWithParametersAsync)(self as *const _ as *mut _, pfxData.get(), password.get(), pfxImportParameters as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ImportPfxDataToKspWithParametersAsync)(self as *const _ as *mut _, pfxData.get(), password.get(), pfxImportParameters.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4601,14 +4601,14 @@ RT_INTERFACE!{interface IUserCertificateStore(IUserCertificateStoreVtbl): IInspe
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IUserCertificateStore {
-    #[inline] pub fn request_add_async(&self, certificate: &Certificate) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn request_add_async(&self, certificate: &ComPtr<Certificate>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAddAsync)(self as *const _ as *mut _, certificate as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestAddAsync)(self as *const _ as *mut _, certificate.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn request_delete_async(&self, certificate: &Certificate) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn request_delete_async(&self, certificate: &ComPtr<Certificate>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestDeleteAsync)(self as *const _ as *mut _, certificate as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestDeleteAsync)(self as *const _ as *mut _, certificate.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
@@ -4626,67 +4626,67 @@ impl RtActivatable<IAsymmetricAlgorithmNamesStatics> for AsymmetricAlgorithmName
 impl RtActivatable<IAsymmetricAlgorithmNamesStatics2> for AsymmetricAlgorithmNames {}
 impl AsymmetricAlgorithmNames {
     #[inline] pub fn get_rsa_pkcs1() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rsa_pkcs1()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa_pkcs1()
     }
     #[inline] pub fn get_rsa_oaep_sha1() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rsa_oaep_sha1()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa_oaep_sha1()
     }
     #[inline] pub fn get_rsa_oaep_sha256() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rsa_oaep_sha256()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa_oaep_sha256()
     }
     #[inline] pub fn get_rsa_oaep_sha384() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rsa_oaep_sha384()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa_oaep_sha384()
     }
     #[inline] pub fn get_rsa_oaep_sha512() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rsa_oaep_sha512()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa_oaep_sha512()
     }
     #[inline] pub fn get_ecdsa_p256_sha256() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_ecdsa_p256_sha256()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_ecdsa_p256_sha256()
     }
     #[inline] pub fn get_ecdsa_p384_sha384() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_ecdsa_p384_sha384()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_ecdsa_p384_sha384()
     }
     #[inline] pub fn get_ecdsa_p521_sha512() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_ecdsa_p521_sha512()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_ecdsa_p521_sha512()
     }
     #[inline] pub fn get_dsa_sha1() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_dsa_sha1()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_dsa_sha1()
     }
     #[inline] pub fn get_dsa_sha256() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_dsa_sha256()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_dsa_sha256()
     }
     #[inline] pub fn get_rsa_sign_pkcs1_sha1() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rsa_sign_pkcs1_sha1()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa_sign_pkcs1_sha1()
     }
     #[inline] pub fn get_rsa_sign_pkcs1_sha256() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rsa_sign_pkcs1_sha256()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa_sign_pkcs1_sha256()
     }
     #[inline] pub fn get_rsa_sign_pkcs1_sha384() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rsa_sign_pkcs1_sha384()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa_sign_pkcs1_sha384()
     }
     #[inline] pub fn get_rsa_sign_pkcs1_sha512() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rsa_sign_pkcs1_sha512()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa_sign_pkcs1_sha512()
     }
     #[inline] pub fn get_rsa_sign_pss_sha1() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rsa_sign_pss_sha1()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa_sign_pss_sha1()
     }
     #[inline] pub fn get_rsa_sign_pss_sha256() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rsa_sign_pss_sha256()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa_sign_pss_sha256()
     }
     #[inline] pub fn get_rsa_sign_pss_sha384() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rsa_sign_pss_sha384()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa_sign_pss_sha384()
     }
     #[inline] pub fn get_rsa_sign_pss_sha512() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rsa_sign_pss_sha512()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rsa_sign_pss_sha512()
     }
     #[inline] pub fn get_ecdsa_sha256() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics2>>::get_activation_factory().get_ecdsa_sha256()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics2>>::get_activation_factory().deref().get_ecdsa_sha256()
     }
     #[inline] pub fn get_ecdsa_sha384() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics2>>::get_activation_factory().get_ecdsa_sha384()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics2>>::get_activation_factory().deref().get_ecdsa_sha384()
     }
     #[inline] pub fn get_ecdsa_sha512() -> Result<HString> {
-        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics2>>::get_activation_factory().get_ecdsa_sha512()
+        <Self as RtActivatable<IAsymmetricAlgorithmNamesStatics2>>::get_activation_factory().deref().get_ecdsa_sha512()
     }
 }
 DEFINE_CLSID!(AsymmetricAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,65,115,121,109,109,101,116,114,105,99,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_AsymmetricAlgorithmNames]);
@@ -4846,24 +4846,24 @@ impl IAsymmetricKeyAlgorithmProvider {
         let hr = ((*self.lpVtbl).CreateKeyPair)(self as *const _ as *mut _, keySize, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn import_default_private_key_blob(&self, keyBlob: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn import_default_private_key_blob(&self, keyBlob: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ImportDefaultPrivateKeyBlob)(self as *const _ as *mut _, keyBlob as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ImportDefaultPrivateKeyBlob)(self as *const _ as *mut _, keyBlob.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn import_key_pair_with_blob_type(&self, keyBlob: &crate::windows::storage::streams::IBuffer, blobType: CryptographicPrivateKeyBlobType) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn import_key_pair_with_blob_type(&self, keyBlob: &ComPtr<crate::windows::storage::streams::IBuffer>, blobType: CryptographicPrivateKeyBlobType) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ImportKeyPairWithBlobType)(self as *const _ as *mut _, keyBlob as *const _ as *mut _, blobType, &mut out);
+        let hr = ((*self.lpVtbl).ImportKeyPairWithBlobType)(self as *const _ as *mut _, keyBlob.deref() as *const _ as *mut _, blobType, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn import_default_public_key_blob(&self, keyBlob: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn import_default_public_key_blob(&self, keyBlob: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ImportDefaultPublicKeyBlob)(self as *const _ as *mut _, keyBlob as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ImportDefaultPublicKeyBlob)(self as *const _ as *mut _, keyBlob.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn import_public_key_with_blob_type(&self, keyBlob: &crate::windows::storage::streams::IBuffer, blobType: CryptographicPublicKeyBlobType) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn import_public_key_with_blob_type(&self, keyBlob: &ComPtr<crate::windows::storage::streams::IBuffer>, blobType: CryptographicPublicKeyBlobType) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ImportPublicKeyWithBlobType)(self as *const _ as *mut _, keyBlob as *const _ as *mut _, blobType, &mut out);
+        let hr = ((*self.lpVtbl).ImportPublicKeyWithBlobType)(self as *const _ as *mut _, keyBlob.deref() as *const _ as *mut _, blobType, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4871,7 +4871,7 @@ RT_CLASS!{class AsymmetricKeyAlgorithmProvider: IAsymmetricKeyAlgorithmProvider}
 impl RtActivatable<IAsymmetricKeyAlgorithmProviderStatics> for AsymmetricKeyAlgorithmProvider {}
 impl AsymmetricKeyAlgorithmProvider {
     #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<AsymmetricKeyAlgorithmProvider>>> {
-        <Self as RtActivatable<IAsymmetricKeyAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
+        <Self as RtActivatable<IAsymmetricKeyAlgorithmProviderStatics>>::get_activation_factory().deref().open_algorithm(algorithm)
     }
 }
 DEFINE_CLSID!(AsymmetricKeyAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,65,115,121,109,109,101,116,114,105,99,75,101,121,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_AsymmetricKeyAlgorithmProvider]);
@@ -4910,41 +4910,41 @@ RT_CLASS!{static class CryptographicEngine}
 impl RtActivatable<ICryptographicEngineStatics> for CryptographicEngine {}
 impl RtActivatable<ICryptographicEngineStatics2> for CryptographicEngine {}
 impl CryptographicEngine {
-    #[cfg(feature="windows-storage")] #[inline] pub fn encrypt(key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, iv: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().encrypt(key, data, iv)
+    #[cfg(feature="windows-storage")] #[inline] pub fn encrypt(key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, iv: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> {
+        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().deref().encrypt(key, data, iv)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt(key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, iv: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().decrypt(key, data, iv)
+    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt(key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, iv: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> {
+        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().deref().decrypt(key, data, iv)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn encrypt_and_authenticate(key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, nonce: &crate::windows::storage::streams::IBuffer, authenticatedData: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<EncryptedAndAuthenticatedData>>> {
-        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().encrypt_and_authenticate(key, data, nonce, authenticatedData)
+    #[cfg(feature="windows-storage")] #[inline] pub fn encrypt_and_authenticate(key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, nonce: &ComPtr<crate::windows::storage::streams::IBuffer>, authenticatedData: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<EncryptedAndAuthenticatedData>>> {
+        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().deref().encrypt_and_authenticate(key, data, nonce, authenticatedData)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt_and_authenticate(key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, nonce: &crate::windows::storage::streams::IBuffer, authenticationTag: &crate::windows::storage::streams::IBuffer, authenticatedData: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().decrypt_and_authenticate(key, data, nonce, authenticationTag, authenticatedData)
+    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt_and_authenticate(key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, nonce: &ComPtr<crate::windows::storage::streams::IBuffer>, authenticationTag: &ComPtr<crate::windows::storage::streams::IBuffer>, authenticatedData: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> {
+        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().deref().decrypt_and_authenticate(key, data, nonce, authenticationTag, authenticatedData)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn sign(key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().sign(key, data)
+    #[cfg(feature="windows-storage")] #[inline] pub fn sign(key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> {
+        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().deref().sign(key, data)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature(key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, signature: &crate::windows::storage::streams::IBuffer) -> Result<bool> {
-        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().verify_signature(key, data, signature)
+    #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature(key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, signature: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<bool> {
+        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().deref().verify_signature(key, data, signature)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn derive_key_material(key: &CryptographicKey, parameters: &KeyDerivationParameters, desiredKeySize: u32) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().derive_key_material(key, parameters, desiredKeySize)
+    #[cfg(feature="windows-storage")] #[inline] pub fn derive_key_material(key: &ComPtr<CryptographicKey>, parameters: &ComPtr<KeyDerivationParameters>, desiredKeySize: u32) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> {
+        <Self as RtActivatable<ICryptographicEngineStatics>>::get_activation_factory().deref().derive_key_material(key, parameters, desiredKeySize)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn sign_hashed_data(key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicEngineStatics2>>::get_activation_factory().sign_hashed_data(key, data)
+    #[cfg(feature="windows-storage")] #[inline] pub fn sign_hashed_data(key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> {
+        <Self as RtActivatable<ICryptographicEngineStatics2>>::get_activation_factory().deref().sign_hashed_data(key, data)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature_with_hash_input(key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, signature: &crate::windows::storage::streams::IBuffer) -> Result<bool> {
-        <Self as RtActivatable<ICryptographicEngineStatics2>>::get_activation_factory().verify_signature_with_hash_input(key, data, signature)
+    #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature_with_hash_input(key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, signature: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<bool> {
+        <Self as RtActivatable<ICryptographicEngineStatics2>>::get_activation_factory().deref().verify_signature_with_hash_input(key, data, signature)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt_async(key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, iv: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicEngineStatics2>>::get_activation_factory().decrypt_async(key, data, iv)
+    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt_async(key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, iv: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> {
+        <Self as RtActivatable<ICryptographicEngineStatics2>>::get_activation_factory().deref().decrypt_async(key, data, iv)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn sign_async(key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicEngineStatics2>>::get_activation_factory().sign_async(key, data)
+    #[cfg(feature="windows-storage")] #[inline] pub fn sign_async(key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> {
+        <Self as RtActivatable<ICryptographicEngineStatics2>>::get_activation_factory().deref().sign_async(key, data)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn sign_hashed_data_async(key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> {
-        <Self as RtActivatable<ICryptographicEngineStatics2>>::get_activation_factory().sign_hashed_data_async(key, data)
+    #[cfg(feature="windows-storage")] #[inline] pub fn sign_hashed_data_async(key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> {
+        <Self as RtActivatable<ICryptographicEngineStatics2>>::get_activation_factory().deref().sign_hashed_data_async(key, data)
     }
 }
 DEFINE_CLSID!(CryptographicEngine(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,67,114,121,112,116,111,103,114,97,112,104,105,99,69,110,103,105,110,101,0]) [CLSID_CryptographicEngine]);
@@ -4959,39 +4959,39 @@ RT_INTERFACE!{static interface ICryptographicEngineStatics(ICryptographicEngineS
     #[cfg(feature="windows-storage")] fn DeriveKeyMaterial(&self, key: *mut CryptographicKey, parameters: *mut KeyDerivationParameters, desiredKeySize: u32, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl ICryptographicEngineStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn encrypt(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, iv: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn encrypt(&self, key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, iv: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Encrypt)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, iv as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Encrypt)(self as *const _ as *mut _, key.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, iv.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, iv: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt(&self, key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, iv: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Decrypt)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, iv as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Decrypt)(self as *const _ as *mut _, key.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, iv.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn encrypt_and_authenticate(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, nonce: &crate::windows::storage::streams::IBuffer, authenticatedData: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<EncryptedAndAuthenticatedData>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn encrypt_and_authenticate(&self, key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, nonce: &ComPtr<crate::windows::storage::streams::IBuffer>, authenticatedData: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<EncryptedAndAuthenticatedData>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).EncryptAndAuthenticate)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, nonce as *const _ as *mut _, authenticatedData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).EncryptAndAuthenticate)(self as *const _ as *mut _, key.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, nonce.deref() as *const _ as *mut _, authenticatedData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt_and_authenticate(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, nonce: &crate::windows::storage::streams::IBuffer, authenticationTag: &crate::windows::storage::streams::IBuffer, authenticatedData: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt_and_authenticate(&self, key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, nonce: &ComPtr<crate::windows::storage::streams::IBuffer>, authenticationTag: &ComPtr<crate::windows::storage::streams::IBuffer>, authenticatedData: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DecryptAndAuthenticate)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, nonce as *const _ as *mut _, authenticationTag as *const _ as *mut _, authenticatedData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).DecryptAndAuthenticate)(self as *const _ as *mut _, key.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, nonce.deref() as *const _ as *mut _, authenticationTag.deref() as *const _ as *mut _, authenticatedData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn sign(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn sign(&self, key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Sign)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Sign)(self as *const _ as *mut _, key.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, signature: &crate::windows::storage::streams::IBuffer) -> Result<bool> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature(&self, key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, signature: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).VerifySignature)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, signature as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).VerifySignature)(self as *const _ as *mut _, key.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, signature.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn derive_key_material(&self, key: &CryptographicKey, parameters: &KeyDerivationParameters, desiredKeySize: u32) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn derive_key_material(&self, key: &ComPtr<CryptographicKey>, parameters: &ComPtr<KeyDerivationParameters>, desiredKeySize: u32) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeriveKeyMaterial)(self as *const _ as *mut _, key as *const _ as *mut _, parameters as *const _ as *mut _, desiredKeySize, &mut out);
+        let hr = ((*self.lpVtbl).DeriveKeyMaterial)(self as *const _ as *mut _, key.deref() as *const _ as *mut _, parameters.deref() as *const _ as *mut _, desiredKeySize, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5004,29 +5004,29 @@ RT_INTERFACE!{static interface ICryptographicEngineStatics2(ICryptographicEngine
     #[cfg(feature="windows-storage")] fn SignHashedDataAsync(&self, key: *mut CryptographicKey, data: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>) -> HRESULT
 }}
 impl ICryptographicEngineStatics2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn sign_hashed_data(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn sign_hashed_data(&self, key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SignHashedData)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SignHashedData)(self as *const _ as *mut _, key.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature_with_hash_input(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, signature: &crate::windows::storage::streams::IBuffer) -> Result<bool> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature_with_hash_input(&self, key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, signature: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).VerifySignatureWithHashInput)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, signature as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).VerifySignatureWithHashInput)(self as *const _ as *mut _, key.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, signature.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt_async(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, iv: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn decrypt_async(&self, key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>, iv: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DecryptAsync)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, iv as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).DecryptAsync)(self as *const _ as *mut _, key.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, iv.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn sign_async(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn sign_async(&self, key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SignAsync)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SignAsync)(self as *const _ as *mut _, key.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn sign_hashed_data_async(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn sign_hashed_data_async(&self, key: &ComPtr<CryptographicKey>, data: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SignHashedDataAsync)(self as *const _ as *mut _, key as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SignHashedDataAsync)(self as *const _ as *mut _, key.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5080,142 +5080,142 @@ RT_CLASS!{static class EccCurveNames}
 impl RtActivatable<IEccCurveNamesStatics> for EccCurveNames {}
 impl EccCurveNames {
     #[inline] pub fn get_brainpool_p160r1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p160r1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p160r1()
     }
     #[inline] pub fn get_brainpool_p160t1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p160t1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p160t1()
     }
     #[inline] pub fn get_brainpool_p192r1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p192r1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p192r1()
     }
     #[inline] pub fn get_brainpool_p192t1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p192t1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p192t1()
     }
     #[inline] pub fn get_brainpool_p224r1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p224r1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p224r1()
     }
     #[inline] pub fn get_brainpool_p224t1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p224t1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p224t1()
     }
     #[inline] pub fn get_brainpool_p256r1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p256r1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p256r1()
     }
     #[inline] pub fn get_brainpool_p256t1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p256t1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p256t1()
     }
     #[inline] pub fn get_brainpool_p320r1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p320r1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p320r1()
     }
     #[inline] pub fn get_brainpool_p320t1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p320t1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p320t1()
     }
     #[inline] pub fn get_brainpool_p384r1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p384r1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p384r1()
     }
     #[inline] pub fn get_brainpool_p384t1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p384t1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p384t1()
     }
     #[inline] pub fn get_brainpool_p512r1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p512r1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p512r1()
     }
     #[inline] pub fn get_brainpool_p512t1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_brainpool_p512t1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_brainpool_p512t1()
     }
     #[inline] pub fn get_curve_25519() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_curve_25519()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_curve_25519()
     }
     #[inline] pub fn get_ec192wapi() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_ec192wapi()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_ec192wapi()
     }
     #[inline] pub fn get_nist_p192() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_nist_p192()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_nist_p192()
     }
     #[inline] pub fn get_nist_p224() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_nist_p224()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_nist_p224()
     }
     #[inline] pub fn get_nist_p256() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_nist_p256()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_nist_p256()
     }
     #[inline] pub fn get_nist_p384() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_nist_p384()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_nist_p384()
     }
     #[inline] pub fn get_nist_p521() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_nist_p521()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_nist_p521()
     }
     #[inline] pub fn get_nums_p256t1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_nums_p256t1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_nums_p256t1()
     }
     #[inline] pub fn get_nums_p384t1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_nums_p384t1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_nums_p384t1()
     }
     #[inline] pub fn get_nums_p512t1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_nums_p512t1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_nums_p512t1()
     }
     #[inline] pub fn get_sec_p160k1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_sec_p160k1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_sec_p160k1()
     }
     #[inline] pub fn get_sec_p160r1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_sec_p160r1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_sec_p160r1()
     }
     #[inline] pub fn get_sec_p160r2() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_sec_p160r2()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_sec_p160r2()
     }
     #[inline] pub fn get_sec_p192k1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_sec_p192k1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_sec_p192k1()
     }
     #[inline] pub fn get_sec_p192r1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_sec_p192r1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_sec_p192r1()
     }
     #[inline] pub fn get_sec_p224k1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_sec_p224k1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_sec_p224k1()
     }
     #[inline] pub fn get_sec_p224r1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_sec_p224r1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_sec_p224r1()
     }
     #[inline] pub fn get_sec_p256k1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_sec_p256k1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_sec_p256k1()
     }
     #[inline] pub fn get_sec_p256r1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_sec_p256r1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_sec_p256r1()
     }
     #[inline] pub fn get_sec_p384r1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_sec_p384r1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_sec_p384r1()
     }
     #[inline] pub fn get_sec_p521r1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_sec_p521r1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_sec_p521r1()
     }
     #[inline] pub fn get_wtls7() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_wtls7()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_wtls7()
     }
     #[inline] pub fn get_wtls9() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_wtls9()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_wtls9()
     }
     #[inline] pub fn get_wtls12() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_wtls12()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_wtls12()
     }
     #[inline] pub fn get_x962p192v1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p192v1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_x962p192v1()
     }
     #[inline] pub fn get_x962p192v2() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p192v2()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_x962p192v2()
     }
     #[inline] pub fn get_x962p192v3() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p192v3()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_x962p192v3()
     }
     #[inline] pub fn get_x962p239v1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p239v1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_x962p239v1()
     }
     #[inline] pub fn get_x962p239v2() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p239v2()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_x962p239v2()
     }
     #[inline] pub fn get_x962p239v3() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p239v3()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_x962p239v3()
     }
     #[inline] pub fn get_x962p256v1() -> Result<HString> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_x962p256v1()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_x962p256v1()
     }
     #[inline] pub fn get_all_ecc_curve_names() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
-        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().get_all_ecc_curve_names()
+        <Self as RtActivatable<IEccCurveNamesStatics>>::get_activation_factory().deref().get_all_ecc_curve_names()
     }
 }
 DEFINE_CLSID!(EccCurveNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,69,99,99,67,117,114,118,101,78,97,109,101,115,0]) [CLSID_EccCurveNames]);
@@ -5522,19 +5522,19 @@ RT_CLASS!{static class HashAlgorithmNames}
 impl RtActivatable<IHashAlgorithmNamesStatics> for HashAlgorithmNames {}
 impl HashAlgorithmNames {
     #[inline] pub fn get_md5() -> Result<HString> {
-        <Self as RtActivatable<IHashAlgorithmNamesStatics>>::get_activation_factory().get_md5()
+        <Self as RtActivatable<IHashAlgorithmNamesStatics>>::get_activation_factory().deref().get_md5()
     }
     #[inline] pub fn get_sha1() -> Result<HString> {
-        <Self as RtActivatable<IHashAlgorithmNamesStatics>>::get_activation_factory().get_sha1()
+        <Self as RtActivatable<IHashAlgorithmNamesStatics>>::get_activation_factory().deref().get_sha1()
     }
     #[inline] pub fn get_sha256() -> Result<HString> {
-        <Self as RtActivatable<IHashAlgorithmNamesStatics>>::get_activation_factory().get_sha256()
+        <Self as RtActivatable<IHashAlgorithmNamesStatics>>::get_activation_factory().deref().get_sha256()
     }
     #[inline] pub fn get_sha384() -> Result<HString> {
-        <Self as RtActivatable<IHashAlgorithmNamesStatics>>::get_activation_factory().get_sha384()
+        <Self as RtActivatable<IHashAlgorithmNamesStatics>>::get_activation_factory().deref().get_sha384()
     }
     #[inline] pub fn get_sha512() -> Result<HString> {
-        <Self as RtActivatable<IHashAlgorithmNamesStatics>>::get_activation_factory().get_sha512()
+        <Self as RtActivatable<IHashAlgorithmNamesStatics>>::get_activation_factory().deref().get_sha512()
     }
 }
 DEFINE_CLSID!(HashAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,72,97,115,104,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_HashAlgorithmNames]);
@@ -5592,9 +5592,9 @@ impl IHashAlgorithmProvider {
         let hr = ((*self.lpVtbl).get_HashLength)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn hash_data(&self, data: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn hash_data(&self, data: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).HashData)(self as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).HashData)(self as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_hash(&self) -> Result<Option<ComPtr<CryptographicHash>>> { unsafe { 
@@ -5607,7 +5607,7 @@ RT_CLASS!{class HashAlgorithmProvider: IHashAlgorithmProvider}
 impl RtActivatable<IHashAlgorithmProviderStatics> for HashAlgorithmProvider {}
 impl HashAlgorithmProvider {
     #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<HashAlgorithmProvider>>> {
-        <Self as RtActivatable<IHashAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
+        <Self as RtActivatable<IHashAlgorithmProviderStatics>>::get_activation_factory().deref().open_algorithm(algorithm)
     }
 }
 DEFINE_CLSID!(HashAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,72,97,115,104,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_HashAlgorithmProvider]);
@@ -5628,8 +5628,8 @@ RT_INTERFACE!{interface IHashComputation(IHashComputationVtbl): IInspectable(IIn
     #[cfg(feature="windows-storage")] fn GetValueAndReset(&self, out: *mut *mut crate::windows::storage::streams::IBuffer) -> HRESULT
 }}
 impl IHashComputation {
-    #[cfg(feature="windows-storage")] #[inline] pub fn append(&self, data: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Append)(self as *const _ as *mut _, data as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn append(&self, data: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Append)(self as *const _ as *mut _, data.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_value_and_reset(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
@@ -5643,64 +5643,64 @@ impl RtActivatable<IKeyDerivationAlgorithmNamesStatics> for KeyDerivationAlgorit
 impl RtActivatable<IKeyDerivationAlgorithmNamesStatics2> for KeyDerivationAlgorithmNames {}
 impl KeyDerivationAlgorithmNames {
     #[inline] pub fn get_pbkdf2_md5() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_pbkdf2_md5()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_pbkdf2_md5()
     }
     #[inline] pub fn get_pbkdf2_sha1() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_pbkdf2_sha1()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_pbkdf2_sha1()
     }
     #[inline] pub fn get_pbkdf2_sha256() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_pbkdf2_sha256()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_pbkdf2_sha256()
     }
     #[inline] pub fn get_pbkdf2_sha384() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_pbkdf2_sha384()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_pbkdf2_sha384()
     }
     #[inline] pub fn get_pbkdf2_sha512() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_pbkdf2_sha512()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_pbkdf2_sha512()
     }
     #[inline] pub fn get_sp800108_ctr_hmac_md5() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_sp800108_ctr_hmac_md5()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_sp800108_ctr_hmac_md5()
     }
     #[inline] pub fn get_sp800108_ctr_hmac_sha1() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_sp800108_ctr_hmac_sha1()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_sp800108_ctr_hmac_sha1()
     }
     #[inline] pub fn get_sp800108_ctr_hmac_sha256() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_sp800108_ctr_hmac_sha256()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_sp800108_ctr_hmac_sha256()
     }
     #[inline] pub fn get_sp800108_ctr_hmac_sha384() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_sp800108_ctr_hmac_sha384()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_sp800108_ctr_hmac_sha384()
     }
     #[inline] pub fn get_sp800108_ctr_hmac_sha512() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_sp800108_ctr_hmac_sha512()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_sp800108_ctr_hmac_sha512()
     }
     #[inline] pub fn get_sp80056a_concat_md5() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_sp80056a_concat_md5()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_sp80056a_concat_md5()
     }
     #[inline] pub fn get_sp80056a_concat_sha1() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_sp80056a_concat_sha1()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_sp80056a_concat_sha1()
     }
     #[inline] pub fn get_sp80056a_concat_sha256() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_sp80056a_concat_sha256()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_sp80056a_concat_sha256()
     }
     #[inline] pub fn get_sp80056a_concat_sha384() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_sp80056a_concat_sha384()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_sp80056a_concat_sha384()
     }
     #[inline] pub fn get_sp80056a_concat_sha512() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().get_sp80056a_concat_sha512()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics>>::get_activation_factory().deref().get_sp80056a_concat_sha512()
     }
     #[inline] pub fn get_capi_kdf_md5() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics2>>::get_activation_factory().get_capi_kdf_md5()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics2>>::get_activation_factory().deref().get_capi_kdf_md5()
     }
     #[inline] pub fn get_capi_kdf_sha1() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics2>>::get_activation_factory().get_capi_kdf_sha1()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics2>>::get_activation_factory().deref().get_capi_kdf_sha1()
     }
     #[inline] pub fn get_capi_kdf_sha256() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics2>>::get_activation_factory().get_capi_kdf_sha256()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics2>>::get_activation_factory().deref().get_capi_kdf_sha256()
     }
     #[inline] pub fn get_capi_kdf_sha384() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics2>>::get_activation_factory().get_capi_kdf_sha384()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics2>>::get_activation_factory().deref().get_capi_kdf_sha384()
     }
     #[inline] pub fn get_capi_kdf_sha512() -> Result<HString> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics2>>::get_activation_factory().get_capi_kdf_sha512()
+        <Self as RtActivatable<IKeyDerivationAlgorithmNamesStatics2>>::get_activation_factory().deref().get_capi_kdf_sha512()
     }
 }
 DEFINE_CLSID!(KeyDerivationAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,75,101,121,68,101,114,105,118,97,116,105,111,110,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_KeyDerivationAlgorithmNames]);
@@ -5845,9 +5845,9 @@ impl IKeyDerivationAlgorithmProvider {
         let hr = ((*self.lpVtbl).get_AlgorithmName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_key(&self, keyMaterial: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_key(&self, keyMaterial: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateKey)(self as *const _ as *mut _, keyMaterial as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateKey)(self as *const _ as *mut _, keyMaterial.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5855,7 +5855,7 @@ RT_CLASS!{class KeyDerivationAlgorithmProvider: IKeyDerivationAlgorithmProvider}
 impl RtActivatable<IKeyDerivationAlgorithmProviderStatics> for KeyDerivationAlgorithmProvider {}
 impl KeyDerivationAlgorithmProvider {
     #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<KeyDerivationAlgorithmProvider>>> {
-        <Self as RtActivatable<IKeyDerivationAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
+        <Self as RtActivatable<IKeyDerivationAlgorithmProviderStatics>>::get_activation_factory().deref().open_algorithm(algorithm)
     }
 }
 DEFINE_CLSID!(KeyDerivationAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,75,101,121,68,101,114,105,118,97,116,105,111,110,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_KeyDerivationAlgorithmProvider]);
@@ -5884,8 +5884,8 @@ impl IKeyDerivationParameters {
         let hr = ((*self.lpVtbl).get_KdfGenericBinary)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_kdf_generic_binary(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_KdfGenericBinary)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_kdf_generic_binary(&self, value: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_KdfGenericBinary)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_iteration_count(&self) -> Result<u32> { unsafe { 
@@ -5898,17 +5898,17 @@ RT_CLASS!{class KeyDerivationParameters: IKeyDerivationParameters}
 impl RtActivatable<IKeyDerivationParametersStatics> for KeyDerivationParameters {}
 impl RtActivatable<IKeyDerivationParametersStatics2> for KeyDerivationParameters {}
 impl KeyDerivationParameters {
-    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_pbkdf2(pbkdf2Salt: &crate::windows::storage::streams::IBuffer, iterationCount: u32) -> Result<Option<ComPtr<KeyDerivationParameters>>> {
-        <Self as RtActivatable<IKeyDerivationParametersStatics>>::get_activation_factory().build_for_pbkdf2(pbkdf2Salt, iterationCount)
+    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_pbkdf2(pbkdf2Salt: &ComPtr<crate::windows::storage::streams::IBuffer>, iterationCount: u32) -> Result<Option<ComPtr<KeyDerivationParameters>>> {
+        <Self as RtActivatable<IKeyDerivationParametersStatics>>::get_activation_factory().deref().build_for_pbkdf2(pbkdf2Salt, iterationCount)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp800108(label: &crate::windows::storage::streams::IBuffer, context: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<KeyDerivationParameters>>> {
-        <Self as RtActivatable<IKeyDerivationParametersStatics>>::get_activation_factory().build_for_sp800108(label, context)
+    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp800108(label: &ComPtr<crate::windows::storage::streams::IBuffer>, context: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<KeyDerivationParameters>>> {
+        <Self as RtActivatable<IKeyDerivationParametersStatics>>::get_activation_factory().deref().build_for_sp800108(label, context)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp80056a(algorithmId: &crate::windows::storage::streams::IBuffer, partyUInfo: &crate::windows::storage::streams::IBuffer, partyVInfo: &crate::windows::storage::streams::IBuffer, suppPubInfo: &crate::windows::storage::streams::IBuffer, suppPrivInfo: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<KeyDerivationParameters>>> {
-        <Self as RtActivatable<IKeyDerivationParametersStatics>>::get_activation_factory().build_for_sp80056a(algorithmId, partyUInfo, partyVInfo, suppPubInfo, suppPrivInfo)
+    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp80056a(algorithmId: &ComPtr<crate::windows::storage::streams::IBuffer>, partyUInfo: &ComPtr<crate::windows::storage::streams::IBuffer>, partyVInfo: &ComPtr<crate::windows::storage::streams::IBuffer>, suppPubInfo: &ComPtr<crate::windows::storage::streams::IBuffer>, suppPrivInfo: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<KeyDerivationParameters>>> {
+        <Self as RtActivatable<IKeyDerivationParametersStatics>>::get_activation_factory().deref().build_for_sp80056a(algorithmId, partyUInfo, partyVInfo, suppPubInfo, suppPrivInfo)
     }
     #[inline] pub fn build_for_capi1_kdf(capi1KdfTargetAlgorithm: Capi1KdfTargetAlgorithm) -> Result<Option<ComPtr<KeyDerivationParameters>>> {
-        <Self as RtActivatable<IKeyDerivationParametersStatics2>>::get_activation_factory().build_for_capi1_kdf(capi1KdfTargetAlgorithm)
+        <Self as RtActivatable<IKeyDerivationParametersStatics2>>::get_activation_factory().deref().build_for_capi1_kdf(capi1KdfTargetAlgorithm)
     }
 }
 DEFINE_CLSID!(KeyDerivationParameters(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,75,101,121,68,101,114,105,118,97,116,105,111,110,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_KeyDerivationParameters]);
@@ -5935,19 +5935,19 @@ RT_INTERFACE!{static interface IKeyDerivationParametersStatics(IKeyDerivationPar
     #[cfg(feature="windows-storage")] fn BuildForSP80056a(&self, algorithmId: *mut crate::windows::storage::streams::IBuffer, partyUInfo: *mut crate::windows::storage::streams::IBuffer, partyVInfo: *mut crate::windows::storage::streams::IBuffer, suppPubInfo: *mut crate::windows::storage::streams::IBuffer, suppPrivInfo: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut KeyDerivationParameters) -> HRESULT
 }}
 impl IKeyDerivationParametersStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_pbkdf2(&self, pbkdf2Salt: &crate::windows::storage::streams::IBuffer, iterationCount: u32) -> Result<Option<ComPtr<KeyDerivationParameters>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_pbkdf2(&self, pbkdf2Salt: &ComPtr<crate::windows::storage::streams::IBuffer>, iterationCount: u32) -> Result<Option<ComPtr<KeyDerivationParameters>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).BuildForPbkdf2)(self as *const _ as *mut _, pbkdf2Salt as *const _ as *mut _, iterationCount, &mut out);
+        let hr = ((*self.lpVtbl).BuildForPbkdf2)(self as *const _ as *mut _, pbkdf2Salt.deref() as *const _ as *mut _, iterationCount, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp800108(&self, label: &crate::windows::storage::streams::IBuffer, context: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<KeyDerivationParameters>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp800108(&self, label: &ComPtr<crate::windows::storage::streams::IBuffer>, context: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<KeyDerivationParameters>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).BuildForSP800108)(self as *const _ as *mut _, label as *const _ as *mut _, context as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).BuildForSP800108)(self as *const _ as *mut _, label.deref() as *const _ as *mut _, context.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp80056a(&self, algorithmId: &crate::windows::storage::streams::IBuffer, partyUInfo: &crate::windows::storage::streams::IBuffer, partyVInfo: &crate::windows::storage::streams::IBuffer, suppPubInfo: &crate::windows::storage::streams::IBuffer, suppPrivInfo: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<KeyDerivationParameters>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp80056a(&self, algorithmId: &ComPtr<crate::windows::storage::streams::IBuffer>, partyUInfo: &ComPtr<crate::windows::storage::streams::IBuffer>, partyVInfo: &ComPtr<crate::windows::storage::streams::IBuffer>, suppPubInfo: &ComPtr<crate::windows::storage::streams::IBuffer>, suppPrivInfo: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<KeyDerivationParameters>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).BuildForSP80056a)(self as *const _ as *mut _, algorithmId as *const _ as *mut _, partyUInfo as *const _ as *mut _, partyVInfo as *const _ as *mut _, suppPubInfo as *const _ as *mut _, suppPrivInfo as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).BuildForSP80056a)(self as *const _ as *mut _, algorithmId.deref() as *const _ as *mut _, partyUInfo.deref() as *const _ as *mut _, partyVInfo.deref() as *const _ as *mut _, suppPubInfo.deref() as *const _ as *mut _, suppPrivInfo.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -5966,22 +5966,22 @@ RT_CLASS!{static class MacAlgorithmNames}
 impl RtActivatable<IMacAlgorithmNamesStatics> for MacAlgorithmNames {}
 impl MacAlgorithmNames {
     #[inline] pub fn get_hmac_md5() -> Result<HString> {
-        <Self as RtActivatable<IMacAlgorithmNamesStatics>>::get_activation_factory().get_hmac_md5()
+        <Self as RtActivatable<IMacAlgorithmNamesStatics>>::get_activation_factory().deref().get_hmac_md5()
     }
     #[inline] pub fn get_hmac_sha1() -> Result<HString> {
-        <Self as RtActivatable<IMacAlgorithmNamesStatics>>::get_activation_factory().get_hmac_sha1()
+        <Self as RtActivatable<IMacAlgorithmNamesStatics>>::get_activation_factory().deref().get_hmac_sha1()
     }
     #[inline] pub fn get_hmac_sha256() -> Result<HString> {
-        <Self as RtActivatable<IMacAlgorithmNamesStatics>>::get_activation_factory().get_hmac_sha256()
+        <Self as RtActivatable<IMacAlgorithmNamesStatics>>::get_activation_factory().deref().get_hmac_sha256()
     }
     #[inline] pub fn get_hmac_sha384() -> Result<HString> {
-        <Self as RtActivatable<IMacAlgorithmNamesStatics>>::get_activation_factory().get_hmac_sha384()
+        <Self as RtActivatable<IMacAlgorithmNamesStatics>>::get_activation_factory().deref().get_hmac_sha384()
     }
     #[inline] pub fn get_hmac_sha512() -> Result<HString> {
-        <Self as RtActivatable<IMacAlgorithmNamesStatics>>::get_activation_factory().get_hmac_sha512()
+        <Self as RtActivatable<IMacAlgorithmNamesStatics>>::get_activation_factory().deref().get_hmac_sha512()
     }
     #[inline] pub fn get_aes_cmac() -> Result<HString> {
-        <Self as RtActivatable<IMacAlgorithmNamesStatics>>::get_activation_factory().get_aes_cmac()
+        <Self as RtActivatable<IMacAlgorithmNamesStatics>>::get_activation_factory().deref().get_aes_cmac()
     }
 }
 DEFINE_CLSID!(MacAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,77,97,99,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_MacAlgorithmNames]);
@@ -6043,9 +6043,9 @@ impl IMacAlgorithmProvider {
         let hr = ((*self.lpVtbl).get_MacLength)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_key(&self, keyMaterial: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_key(&self, keyMaterial: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateKey)(self as *const _ as *mut _, keyMaterial as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateKey)(self as *const _ as *mut _, keyMaterial.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -6053,7 +6053,7 @@ RT_CLASS!{class MacAlgorithmProvider: IMacAlgorithmProvider}
 impl RtActivatable<IMacAlgorithmProviderStatics> for MacAlgorithmProvider {}
 impl MacAlgorithmProvider {
     #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<MacAlgorithmProvider>>> {
-        <Self as RtActivatable<IMacAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
+        <Self as RtActivatable<IMacAlgorithmProviderStatics>>::get_activation_factory().deref().open_algorithm(algorithm)
     }
 }
 DEFINE_CLSID!(MacAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,77,97,99,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_MacAlgorithmProvider]);
@@ -6062,9 +6062,9 @@ RT_INTERFACE!{interface IMacAlgorithmProvider2(IMacAlgorithmProvider2Vtbl): IIns
     #[cfg(feature="windows-storage")] fn CreateHash(&self, keyMaterial: *mut crate::windows::storage::streams::IBuffer, out: *mut *mut CryptographicHash) -> HRESULT
 }}
 impl IMacAlgorithmProvider2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_hash(&self, keyMaterial: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<CryptographicHash>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_hash(&self, keyMaterial: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<CryptographicHash>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateHash)(self as *const _ as *mut _, keyMaterial as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateHash)(self as *const _ as *mut _, keyMaterial.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -6082,11 +6082,11 @@ impl IMacAlgorithmProviderStatics {
 RT_CLASS!{static class PersistedKeyProvider}
 impl RtActivatable<IPersistedKeyProviderStatics> for PersistedKeyProvider {}
 impl PersistedKeyProvider {
-    #[inline] pub fn open_key_pair_from_certificate_async(certificate: &super::certificates::Certificate, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<ComPtr<foundation::IAsyncOperation<CryptographicKey>>> {
-        <Self as RtActivatable<IPersistedKeyProviderStatics>>::get_activation_factory().open_key_pair_from_certificate_async(certificate, hashAlgorithmName, padding)
+    #[inline] pub fn open_key_pair_from_certificate_async(certificate: &ComPtr<super::certificates::Certificate>, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<ComPtr<foundation::IAsyncOperation<CryptographicKey>>> {
+        <Self as RtActivatable<IPersistedKeyProviderStatics>>::get_activation_factory().deref().open_key_pair_from_certificate_async(certificate, hashAlgorithmName, padding)
     }
-    #[inline] pub fn open_public_key_from_certificate(certificate: &super::certificates::Certificate, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<Option<ComPtr<CryptographicKey>>> {
-        <Self as RtActivatable<IPersistedKeyProviderStatics>>::get_activation_factory().open_public_key_from_certificate(certificate, hashAlgorithmName, padding)
+    #[inline] pub fn open_public_key_from_certificate(certificate: &ComPtr<super::certificates::Certificate>, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<Option<ComPtr<CryptographicKey>>> {
+        <Self as RtActivatable<IPersistedKeyProviderStatics>>::get_activation_factory().deref().open_public_key_from_certificate(certificate, hashAlgorithmName, padding)
     }
 }
 DEFINE_CLSID!(PersistedKeyProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,80,101,114,115,105,115,116,101,100,75,101,121,80,114,111,118,105,100,101,114,0]) [CLSID_PersistedKeyProvider]);
@@ -6096,14 +6096,14 @@ RT_INTERFACE!{static interface IPersistedKeyProviderStatics(IPersistedKeyProvide
     fn OpenPublicKeyFromCertificate(&self, certificate: *mut super::certificates::Certificate, hashAlgorithmName: HSTRING, padding: CryptographicPadding, out: *mut *mut CryptographicKey) -> HRESULT
 }}
 impl IPersistedKeyProviderStatics {
-    #[inline] pub fn open_key_pair_from_certificate_async(&self, certificate: &super::certificates::Certificate, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<ComPtr<foundation::IAsyncOperation<CryptographicKey>>> { unsafe { 
+    #[inline] pub fn open_key_pair_from_certificate_async(&self, certificate: &ComPtr<super::certificates::Certificate>, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<ComPtr<foundation::IAsyncOperation<CryptographicKey>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenKeyPairFromCertificateAsync)(self as *const _ as *mut _, certificate as *const _ as *mut _, hashAlgorithmName.get(), padding, &mut out);
+        let hr = ((*self.lpVtbl).OpenKeyPairFromCertificateAsync)(self as *const _ as *mut _, certificate.deref() as *const _ as *mut _, hashAlgorithmName.get(), padding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn open_public_key_from_certificate(&self, certificate: &super::certificates::Certificate, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
+    #[inline] pub fn open_public_key_from_certificate(&self, certificate: &ComPtr<super::certificates::Certificate>, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).OpenPublicKeyFromCertificate)(self as *const _ as *mut _, certificate as *const _ as *mut _, hashAlgorithmName.get(), padding, &mut out);
+        let hr = ((*self.lpVtbl).OpenPublicKeyFromCertificate)(self as *const _ as *mut _, certificate.deref() as *const _ as *mut _, hashAlgorithmName.get(), padding, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -6111,61 +6111,61 @@ RT_CLASS!{static class SymmetricAlgorithmNames}
 impl RtActivatable<ISymmetricAlgorithmNamesStatics> for SymmetricAlgorithmNames {}
 impl SymmetricAlgorithmNames {
     #[inline] pub fn get_des_cbc() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_des_cbc()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_des_cbc()
     }
     #[inline] pub fn get_des_ecb() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_des_ecb()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_des_ecb()
     }
     #[inline] pub fn get_triple_des_cbc() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_triple_des_cbc()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_triple_des_cbc()
     }
     #[inline] pub fn get_triple_des_ecb() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_triple_des_ecb()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_triple_des_ecb()
     }
     #[inline] pub fn get_rc2_cbc() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rc2_cbc()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rc2_cbc()
     }
     #[inline] pub fn get_rc2_ecb() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rc2_ecb()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rc2_ecb()
     }
     #[inline] pub fn get_aes_cbc() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_aes_cbc()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_aes_cbc()
     }
     #[inline] pub fn get_aes_ecb() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_aes_ecb()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_aes_ecb()
     }
     #[inline] pub fn get_aes_gcm() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_aes_gcm()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_aes_gcm()
     }
     #[inline] pub fn get_aes_ccm() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_aes_ccm()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_aes_ccm()
     }
     #[inline] pub fn get_aes_cbc_pkcs7() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_aes_cbc_pkcs7()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_aes_cbc_pkcs7()
     }
     #[inline] pub fn get_aes_ecb_pkcs7() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_aes_ecb_pkcs7()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_aes_ecb_pkcs7()
     }
     #[inline] pub fn get_des_cbc_pkcs7() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_des_cbc_pkcs7()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_des_cbc_pkcs7()
     }
     #[inline] pub fn get_des_ecb_pkcs7() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_des_ecb_pkcs7()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_des_ecb_pkcs7()
     }
     #[inline] pub fn get_triple_des_cbc_pkcs7() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_triple_des_cbc_pkcs7()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_triple_des_cbc_pkcs7()
     }
     #[inline] pub fn get_triple_des_ecb_pkcs7() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_triple_des_ecb_pkcs7()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_triple_des_ecb_pkcs7()
     }
     #[inline] pub fn get_rc2_cbc_pkcs7() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rc2_cbc_pkcs7()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rc2_cbc_pkcs7()
     }
     #[inline] pub fn get_rc2_ecb_pkcs7() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rc2_ecb_pkcs7()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rc2_ecb_pkcs7()
     }
     #[inline] pub fn get_rc4() -> Result<HString> {
-        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().get_rc4()
+        <Self as RtActivatable<ISymmetricAlgorithmNamesStatics>>::get_activation_factory().deref().get_rc4()
     }
 }
 DEFINE_CLSID!(SymmetricAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,83,121,109,109,101,116,114,105,99,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_SymmetricAlgorithmNames]);
@@ -6305,9 +6305,9 @@ impl ISymmetricKeyAlgorithmProvider {
         let hr = ((*self.lpVtbl).get_BlockLength)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_symmetric_key(&self, keyMaterial: &crate::windows::storage::streams::IBuffer) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_symmetric_key(&self, keyMaterial: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<Option<ComPtr<CryptographicKey>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateSymmetricKey)(self as *const _ as *mut _, keyMaterial as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateSymmetricKey)(self as *const _ as *mut _, keyMaterial.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -6315,7 +6315,7 @@ RT_CLASS!{class SymmetricKeyAlgorithmProvider: ISymmetricKeyAlgorithmProvider}
 impl RtActivatable<ISymmetricKeyAlgorithmProviderStatics> for SymmetricKeyAlgorithmProvider {}
 impl SymmetricKeyAlgorithmProvider {
     #[inline] pub fn open_algorithm(algorithm: &HStringArg) -> Result<Option<ComPtr<SymmetricKeyAlgorithmProvider>>> {
-        <Self as RtActivatable<ISymmetricKeyAlgorithmProviderStatics>>::get_activation_factory().open_algorithm(algorithm)
+        <Self as RtActivatable<ISymmetricKeyAlgorithmProviderStatics>>::get_activation_factory().deref().open_algorithm(algorithm)
     }
 }
 DEFINE_CLSID!(SymmetricKeyAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,83,121,109,109,101,116,114,105,99,75,101,121,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_SymmetricKeyAlgorithmProvider]);
@@ -6341,24 +6341,24 @@ RT_INTERFACE!{interface IDataProtectionProvider(IDataProtectionProviderVtbl): II
     #[cfg(feature="windows-storage")] fn UnprotectStreamAsync(&self, src: *mut crate::windows::storage::streams::IInputStream, dest: *mut crate::windows::storage::streams::IOutputStream, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IDataProtectionProvider {
-    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(&self, data: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(&self, data: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ProtectAsync)(self as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ProtectAsync)(self as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(&self, data: &crate::windows::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(&self, data: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnprotectAsync)(self as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).UnprotectAsync)(self as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn protect_stream_async(&self, src: &crate::windows::storage::streams::IInputStream, dest: &crate::windows::storage::streams::IOutputStream) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn protect_stream_async(&self, src: &ComPtr<crate::windows::storage::streams::IInputStream>, dest: &ComPtr<crate::windows::storage::streams::IOutputStream>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ProtectStreamAsync)(self as *const _ as *mut _, src as *const _ as *mut _, dest as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ProtectStreamAsync)(self as *const _ as *mut _, src.deref() as *const _ as *mut _, dest.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_stream_async(&self, src: &crate::windows::storage::streams::IInputStream, dest: &crate::windows::storage::streams::IOutputStream) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_stream_async(&self, src: &ComPtr<crate::windows::storage::streams::IInputStream>, dest: &ComPtr<crate::windows::storage::streams::IOutputStream>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnprotectStreamAsync)(self as *const _ as *mut _, src as *const _ as *mut _, dest as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).UnprotectStreamAsync)(self as *const _ as *mut _, src.deref() as *const _ as *mut _, dest.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6367,7 +6367,7 @@ impl RtActivatable<IDataProtectionProviderFactory> for DataProtectionProvider {}
 impl RtActivatable<IActivationFactory> for DataProtectionProvider {}
 impl DataProtectionProvider {
     #[inline] pub fn create_overload_explicit(protectionDescriptor: &HStringArg) -> Result<ComPtr<DataProtectionProvider>> {
-        <Self as RtActivatable<IDataProtectionProviderFactory>>::get_activation_factory().create_overload_explicit(protectionDescriptor)
+        <Self as RtActivatable<IDataProtectionProviderFactory>>::get_activation_factory().deref().create_overload_explicit(protectionDescriptor)
     }
 }
 DEFINE_CLSID!(DataProtectionProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,68,97,116,97,80,114,111,116,101,99,116,105,111,110,46,68,97,116,97,80,114,111,116,101,99,116,105,111,110,80,114,111,118,105,100,101,114,0]) [CLSID_DataProtectionProvider]);
@@ -6426,23 +6426,23 @@ RT_CLASS!{class DataProtectionInfo: IDataProtectionInfo}
 RT_CLASS!{static class DataProtectionManager}
 impl RtActivatable<IDataProtectionManagerStatics> for DataProtectionManager {}
 impl DataProtectionManager {
-    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(data: &super::super::storage::streams::IBuffer, identity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<BufferProtectUnprotectResult>>> {
-        <Self as RtActivatable<IDataProtectionManagerStatics>>::get_activation_factory().protect_async(data, identity)
+    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(data: &ComPtr<super::super::storage::streams::IBuffer>, identity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<BufferProtectUnprotectResult>>> {
+        <Self as RtActivatable<IDataProtectionManagerStatics>>::get_activation_factory().deref().protect_async(data, identity)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(data: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<BufferProtectUnprotectResult>>> {
-        <Self as RtActivatable<IDataProtectionManagerStatics>>::get_activation_factory().unprotect_async(data)
+    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(data: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<BufferProtectUnprotectResult>>> {
+        <Self as RtActivatable<IDataProtectionManagerStatics>>::get_activation_factory().deref().unprotect_async(data)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn protect_stream_async(unprotectedStream: &super::super::storage::streams::IInputStream, identity: &HStringArg, protectedStream: &super::super::storage::streams::IOutputStream) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> {
-        <Self as RtActivatable<IDataProtectionManagerStatics>>::get_activation_factory().protect_stream_async(unprotectedStream, identity, protectedStream)
+    #[cfg(feature="windows-storage")] #[inline] pub fn protect_stream_async(unprotectedStream: &ComPtr<super::super::storage::streams::IInputStream>, identity: &HStringArg, protectedStream: &ComPtr<super::super::storage::streams::IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> {
+        <Self as RtActivatable<IDataProtectionManagerStatics>>::get_activation_factory().deref().protect_stream_async(unprotectedStream, identity, protectedStream)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_stream_async(protectedStream: &super::super::storage::streams::IInputStream, unprotectedStream: &super::super::storage::streams::IOutputStream) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> {
-        <Self as RtActivatable<IDataProtectionManagerStatics>>::get_activation_factory().unprotect_stream_async(protectedStream, unprotectedStream)
+    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_stream_async(protectedStream: &ComPtr<super::super::storage::streams::IInputStream>, unprotectedStream: &ComPtr<super::super::storage::streams::IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> {
+        <Self as RtActivatable<IDataProtectionManagerStatics>>::get_activation_factory().deref().unprotect_stream_async(protectedStream, unprotectedStream)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_protection_info_async(protectedData: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> {
-        <Self as RtActivatable<IDataProtectionManagerStatics>>::get_activation_factory().get_protection_info_async(protectedData)
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_protection_info_async(protectedData: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> {
+        <Self as RtActivatable<IDataProtectionManagerStatics>>::get_activation_factory().deref().get_protection_info_async(protectedData)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_stream_protection_info_async(protectedStream: &super::super::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> {
-        <Self as RtActivatable<IDataProtectionManagerStatics>>::get_activation_factory().get_stream_protection_info_async(protectedStream)
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_stream_protection_info_async(protectedStream: &ComPtr<super::super::storage::streams::IInputStream>) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> {
+        <Self as RtActivatable<IDataProtectionManagerStatics>>::get_activation_factory().deref().get_stream_protection_info_async(protectedStream)
     }
 }
 DEFINE_CLSID!(DataProtectionManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,68,97,116,97,80,114,111,116,101,99,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_DataProtectionManager]);
@@ -6456,34 +6456,34 @@ RT_INTERFACE!{static interface IDataProtectionManagerStatics(IDataProtectionMana
     #[cfg(feature="windows-storage")] fn GetStreamProtectionInfoAsync(&self, protectedStream: *mut super::super::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncOperation<DataProtectionInfo>) -> HRESULT
 }}
 impl IDataProtectionManagerStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(&self, data: &super::super::storage::streams::IBuffer, identity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<BufferProtectUnprotectResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(&self, data: &ComPtr<super::super::storage::streams::IBuffer>, identity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<BufferProtectUnprotectResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ProtectAsync)(self as *const _ as *mut _, data as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.lpVtbl).ProtectAsync)(self as *const _ as *mut _, data.deref() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(&self, data: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<BufferProtectUnprotectResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(&self, data: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<BufferProtectUnprotectResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnprotectAsync)(self as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).UnprotectAsync)(self as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn protect_stream_async(&self, unprotectedStream: &super::super::storage::streams::IInputStream, identity: &HStringArg, protectedStream: &super::super::storage::streams::IOutputStream) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn protect_stream_async(&self, unprotectedStream: &ComPtr<super::super::storage::streams::IInputStream>, identity: &HStringArg, protectedStream: &ComPtr<super::super::storage::streams::IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ProtectStreamAsync)(self as *const _ as *mut _, unprotectedStream as *const _ as *mut _, identity.get(), protectedStream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ProtectStreamAsync)(self as *const _ as *mut _, unprotectedStream.deref() as *const _ as *mut _, identity.get(), protectedStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_stream_async(&self, protectedStream: &super::super::storage::streams::IInputStream, unprotectedStream: &super::super::storage::streams::IOutputStream) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_stream_async(&self, protectedStream: &ComPtr<super::super::storage::streams::IInputStream>, unprotectedStream: &ComPtr<super::super::storage::streams::IOutputStream>) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnprotectStreamAsync)(self as *const _ as *mut _, protectedStream as *const _ as *mut _, unprotectedStream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).UnprotectStreamAsync)(self as *const _ as *mut _, protectedStream.deref() as *const _ as *mut _, unprotectedStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_protection_info_async(&self, protectedData: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_protection_info_async(&self, protectedData: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetProtectionInfoAsync)(self as *const _ as *mut _, protectedData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetProtectionInfoAsync)(self as *const _ as *mut _, protectedData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_stream_protection_info_async(&self, protectedStream: &super::super::storage::streams::IInputStream) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_stream_protection_info_async(&self, protectedStream: &ComPtr<super::super::storage::streams::IInputStream>) -> Result<ComPtr<foundation::IAsyncOperation<DataProtectionInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetStreamProtectionInfoAsync)(self as *const _ as *mut _, protectedStream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetStreamProtectionInfoAsync)(self as *const _ as *mut _, protectedStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6533,41 +6533,41 @@ impl RtActivatable<IFileProtectionManagerStatics> for FileProtectionManager {}
 impl RtActivatable<IFileProtectionManagerStatics2> for FileProtectionManager {}
 impl RtActivatable<IFileProtectionManagerStatics3> for FileProtectionManager {}
 impl FileProtectionManager {
-    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(target: &super::super::storage::IStorageItem, identity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> {
-        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().protect_async(target, identity)
+    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(target: &ComPtr<super::super::storage::IStorageItem>, identity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> {
+        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().deref().protect_async(target, identity)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn copy_protection_async(source: &super::super::storage::IStorageItem, target: &super::super::storage::IStorageItem) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().copy_protection_async(source, target)
+    #[cfg(feature="windows-storage")] #[inline] pub fn copy_protection_async(source: &ComPtr<super::super::storage::IStorageItem>, target: &ComPtr<super::super::storage::IStorageItem>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().deref().copy_protection_async(source, target)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_protection_info_async(source: &super::super::storage::IStorageItem) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> {
-        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().get_protection_info_async(source)
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_protection_info_async(source: &ComPtr<super::super::storage::IStorageItem>) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> {
+        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().deref().get_protection_info_async(source)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_file_as_container_async(protectedFile: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerExportResult>>> {
-        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().save_file_as_container_async(protectedFile)
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_file_as_container_async(protectedFile: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerExportResult>>> {
+        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().deref().save_file_as_container_async(protectedFile)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_async(containerFile: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerImportResult>>> {
-        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().load_file_from_container_async(containerFile)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_async(containerFile: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerImportResult>>> {
+        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().deref().load_file_from_container_async(containerFile)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_with_target_async(containerFile: &super::super::storage::IStorageFile, target: &super::super::storage::IStorageItem) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerImportResult>>> {
-        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().load_file_from_container_with_target_async(containerFile, target)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_with_target_async(containerFile: &ComPtr<super::super::storage::IStorageFile>, target: &ComPtr<super::super::storage::IStorageItem>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerImportResult>>> {
+        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().deref().load_file_from_container_with_target_async(containerFile, target)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_protected_and_open_async(parentFolder: &super::super::storage::IStorageFolder, desiredName: &HStringArg, identity: &HStringArg, collisionOption: super::super::storage::CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedFileCreateResult>>> {
-        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().create_protected_and_open_async(parentFolder, desiredName, identity, collisionOption)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_protected_and_open_async(parentFolder: &ComPtr<super::super::storage::IStorageFolder>, desiredName: &HStringArg, identity: &HStringArg, collisionOption: super::super::storage::CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedFileCreateResult>>> {
+        <Self as RtActivatable<IFileProtectionManagerStatics>>::get_activation_factory().deref().create_protected_and_open_async(parentFolder, desiredName, identity, collisionOption)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn is_container_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<IFileProtectionManagerStatics2>>::get_activation_factory().is_container_async(file)
+    #[cfg(feature="windows-storage")] #[inline] pub fn is_container_async(file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<IFileProtectionManagerStatics2>>::get_activation_factory().deref().is_container_async(file)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_with_target_and_name_collision_option_async(containerFile: &super::super::storage::IStorageFile, target: &super::super::storage::IStorageItem, collisionOption: super::super::storage::NameCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerImportResult>>> {
-        <Self as RtActivatable<IFileProtectionManagerStatics2>>::get_activation_factory().load_file_from_container_with_target_and_name_collision_option_async(containerFile, target, collisionOption)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_with_target_and_name_collision_option_async(containerFile: &ComPtr<super::super::storage::IStorageFile>, target: &ComPtr<super::super::storage::IStorageItem>, collisionOption: super::super::storage::NameCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerImportResult>>> {
+        <Self as RtActivatable<IFileProtectionManagerStatics2>>::get_activation_factory().deref().load_file_from_container_with_target_and_name_collision_option_async(containerFile, target, collisionOption)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_file_as_container_with_sharing_async(protectedFile: &super::super::storage::IStorageFile, sharedWithIdentities: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerExportResult>>> {
-        <Self as RtActivatable<IFileProtectionManagerStatics2>>::get_activation_factory().save_file_as_container_with_sharing_async(protectedFile, sharedWithIdentities)
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_file_as_container_with_sharing_async(protectedFile: &ComPtr<super::super::storage::IStorageFile>, sharedWithIdentities: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerExportResult>>> {
+        <Self as RtActivatable<IFileProtectionManagerStatics2>>::get_activation_factory().deref().save_file_as_container_with_sharing_async(protectedFile, sharedWithIdentities)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(target: &super::super::storage::IStorageItem) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> {
-        <Self as RtActivatable<IFileProtectionManagerStatics3>>::get_activation_factory().unprotect_async(target)
+    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(target: &ComPtr<super::super::storage::IStorageItem>) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> {
+        <Self as RtActivatable<IFileProtectionManagerStatics3>>::get_activation_factory().deref().unprotect_async(target)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_with_options_async(target: &super::super::storage::IStorageItem, options: &FileUnprotectOptions) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> {
-        <Self as RtActivatable<IFileProtectionManagerStatics3>>::get_activation_factory().unprotect_with_options_async(target, options)
+    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_with_options_async(target: &ComPtr<super::super::storage::IStorageItem>, options: &ComPtr<FileUnprotectOptions>) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> {
+        <Self as RtActivatable<IFileProtectionManagerStatics3>>::get_activation_factory().deref().unprotect_with_options_async(target, options)
     }
 }
 DEFINE_CLSID!(FileProtectionManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,70,105,108,101,80,114,111,116,101,99,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_FileProtectionManager]);
@@ -6582,39 +6582,39 @@ RT_INTERFACE!{static interface IFileProtectionManagerStatics(IFileProtectionMana
     #[cfg(feature="windows-storage")] fn CreateProtectedAndOpenAsync(&self, parentFolder: *mut super::super::storage::IStorageFolder, desiredName: HSTRING, identity: HSTRING, collisionOption: super::super::storage::CreationCollisionOption, out: *mut *mut foundation::IAsyncOperation<ProtectedFileCreateResult>) -> HRESULT
 }}
 impl IFileProtectionManagerStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(&self, target: &super::super::storage::IStorageItem, identity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(&self, target: &ComPtr<super::super::storage::IStorageItem>, identity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ProtectAsync)(self as *const _ as *mut _, target as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.lpVtbl).ProtectAsync)(self as *const _ as *mut _, target.deref() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn copy_protection_async(&self, source: &super::super::storage::IStorageItem, target: &super::super::storage::IStorageItem) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn copy_protection_async(&self, source: &ComPtr<super::super::storage::IStorageItem>, target: &ComPtr<super::super::storage::IStorageItem>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyProtectionAsync)(self as *const _ as *mut _, source as *const _ as *mut _, target as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CopyProtectionAsync)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, target.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_protection_info_async(&self, source: &super::super::storage::IStorageItem) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_protection_info_async(&self, source: &ComPtr<super::super::storage::IStorageItem>) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetProtectionInfoAsync)(self as *const _ as *mut _, source as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetProtectionInfoAsync)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_file_as_container_async(&self, protectedFile: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerExportResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_file_as_container_async(&self, protectedFile: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerExportResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveFileAsContainerAsync)(self as *const _ as *mut _, protectedFile as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SaveFileAsContainerAsync)(self as *const _ as *mut _, protectedFile.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_async(&self, containerFile: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerImportResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_async(&self, containerFile: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerImportResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFileFromContainerAsync)(self as *const _ as *mut _, containerFile as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFileFromContainerAsync)(self as *const _ as *mut _, containerFile.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_with_target_async(&self, containerFile: &super::super::storage::IStorageFile, target: &super::super::storage::IStorageItem) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerImportResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_with_target_async(&self, containerFile: &ComPtr<super::super::storage::IStorageFile>, target: &ComPtr<super::super::storage::IStorageItem>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerImportResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFileFromContainerWithTargetAsync)(self as *const _ as *mut _, containerFile as *const _ as *mut _, target as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFileFromContainerWithTargetAsync)(self as *const _ as *mut _, containerFile.deref() as *const _ as *mut _, target.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_protected_and_open_async(&self, parentFolder: &super::super::storage::IStorageFolder, desiredName: &HStringArg, identity: &HStringArg, collisionOption: super::super::storage::CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedFileCreateResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_protected_and_open_async(&self, parentFolder: &ComPtr<super::super::storage::IStorageFolder>, desiredName: &HStringArg, identity: &HStringArg, collisionOption: super::super::storage::CreationCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedFileCreateResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateProtectedAndOpenAsync)(self as *const _ as *mut _, parentFolder as *const _ as *mut _, desiredName.get(), identity.get(), collisionOption, &mut out);
+        let hr = ((*self.lpVtbl).CreateProtectedAndOpenAsync)(self as *const _ as *mut _, parentFolder.deref() as *const _ as *mut _, desiredName.get(), identity.get(), collisionOption, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6625,19 +6625,19 @@ RT_INTERFACE!{static interface IFileProtectionManagerStatics2(IFileProtectionMan
     #[cfg(feature="windows-storage")] fn SaveFileAsContainerWithSharingAsync(&self, protectedFile: *mut super::super::storage::IStorageFile, sharedWithIdentities: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<ProtectedContainerExportResult>) -> HRESULT
 }}
 impl IFileProtectionManagerStatics2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn is_container_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn is_container_async(&self, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).IsContainerAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).IsContainerAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_with_target_and_name_collision_option_async(&self, containerFile: &super::super::storage::IStorageFile, target: &super::super::storage::IStorageItem, collisionOption: super::super::storage::NameCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerImportResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_with_target_and_name_collision_option_async(&self, containerFile: &ComPtr<super::super::storage::IStorageFile>, target: &ComPtr<super::super::storage::IStorageItem>, collisionOption: super::super::storage::NameCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerImportResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFileFromContainerWithTargetAndNameCollisionOptionAsync)(self as *const _ as *mut _, containerFile as *const _ as *mut _, target as *const _ as *mut _, collisionOption, &mut out);
+        let hr = ((*self.lpVtbl).LoadFileFromContainerWithTargetAndNameCollisionOptionAsync)(self as *const _ as *mut _, containerFile.deref() as *const _ as *mut _, target.deref() as *const _ as *mut _, collisionOption, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_file_as_container_with_sharing_async(&self, protectedFile: &super::super::storage::IStorageFile, sharedWithIdentities: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerExportResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_file_as_container_with_sharing_async(&self, protectedFile: &ComPtr<super::super::storage::IStorageFile>, sharedWithIdentities: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectedContainerExportResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveFileAsContainerWithSharingAsync)(self as *const _ as *mut _, protectedFile as *const _ as *mut _, sharedWithIdentities as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SaveFileAsContainerWithSharingAsync)(self as *const _ as *mut _, protectedFile.deref() as *const _ as *mut _, sharedWithIdentities.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6647,14 +6647,14 @@ RT_INTERFACE!{static interface IFileProtectionManagerStatics3(IFileProtectionMan
     #[cfg(feature="windows-storage")] fn UnprotectWithOptionsAsync(&self, target: *mut super::super::storage::IStorageItem, options: *mut FileUnprotectOptions, out: *mut *mut foundation::IAsyncOperation<FileProtectionInfo>) -> HRESULT
 }}
 impl IFileProtectionManagerStatics3 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(&self, target: &super::super::storage::IStorageItem) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(&self, target: &ComPtr<super::super::storage::IStorageItem>) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnprotectAsync)(self as *const _ as *mut _, target as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).UnprotectAsync)(self as *const _ as *mut _, target.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_with_options_async(&self, target: &super::super::storage::IStorageItem, options: &FileUnprotectOptions) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_with_options_async(&self, target: &ComPtr<super::super::storage::IStorageItem>, options: &ComPtr<FileUnprotectOptions>) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).UnprotectWithOptionsAsync)(self as *const _ as *mut _, target as *const _ as *mut _, options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).UnprotectWithOptionsAsync)(self as *const _ as *mut _, target.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6664,17 +6664,17 @@ RT_ENUM! { enum FileProtectionStatus: i32 {
 RT_CLASS!{static class FileRevocationManager}
 impl RtActivatable<IFileRevocationManagerStatics> for FileRevocationManager {}
 impl FileRevocationManager {
-    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(storageItem: &super::super::storage::IStorageItem, enterpriseIdentity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionStatus>>> {
-        <Self as RtActivatable<IFileRevocationManagerStatics>>::get_activation_factory().protect_async(storageItem, enterpriseIdentity)
+    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(storageItem: &ComPtr<super::super::storage::IStorageItem>, enterpriseIdentity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionStatus>>> {
+        <Self as RtActivatable<IFileRevocationManagerStatics>>::get_activation_factory().deref().protect_async(storageItem, enterpriseIdentity)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn copy_protection_async(sourceStorageItem: &super::super::storage::IStorageItem, targetStorageItem: &super::super::storage::IStorageItem) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<IFileRevocationManagerStatics>>::get_activation_factory().copy_protection_async(sourceStorageItem, targetStorageItem)
+    #[cfg(feature="windows-storage")] #[inline] pub fn copy_protection_async(sourceStorageItem: &ComPtr<super::super::storage::IStorageItem>, targetStorageItem: &ComPtr<super::super::storage::IStorageItem>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<IFileRevocationManagerStatics>>::get_activation_factory().deref().copy_protection_async(sourceStorageItem, targetStorageItem)
     }
     #[inline] pub fn revoke(enterpriseIdentity: &HStringArg) -> Result<()> {
-        <Self as RtActivatable<IFileRevocationManagerStatics>>::get_activation_factory().revoke(enterpriseIdentity)
+        <Self as RtActivatable<IFileRevocationManagerStatics>>::get_activation_factory().deref().revoke(enterpriseIdentity)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_status_async(storageItem: &super::super::storage::IStorageItem) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionStatus>>> {
-        <Self as RtActivatable<IFileRevocationManagerStatics>>::get_activation_factory().get_status_async(storageItem)
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_status_async(storageItem: &ComPtr<super::super::storage::IStorageItem>) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionStatus>>> {
+        <Self as RtActivatable<IFileRevocationManagerStatics>>::get_activation_factory().deref().get_status_async(storageItem)
     }
 }
 DEFINE_CLSID!(FileRevocationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,70,105,108,101,82,101,118,111,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_FileRevocationManager]);
@@ -6686,23 +6686,23 @@ RT_INTERFACE!{static interface IFileRevocationManagerStatics(IFileRevocationMana
     #[cfg(feature="windows-storage")] fn GetStatusAsync(&self, storageItem: *mut super::super::storage::IStorageItem, out: *mut *mut foundation::IAsyncOperation<FileProtectionStatus>) -> HRESULT
 }}
 impl IFileRevocationManagerStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(&self, storageItem: &super::super::storage::IStorageItem, enterpriseIdentity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionStatus>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(&self, storageItem: &ComPtr<super::super::storage::IStorageItem>, enterpriseIdentity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ProtectAsync)(self as *const _ as *mut _, storageItem as *const _ as *mut _, enterpriseIdentity.get(), &mut out);
+        let hr = ((*self.lpVtbl).ProtectAsync)(self as *const _ as *mut _, storageItem.deref() as *const _ as *mut _, enterpriseIdentity.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn copy_protection_async(&self, sourceStorageItem: &super::super::storage::IStorageItem, targetStorageItem: &super::super::storage::IStorageItem) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn copy_protection_async(&self, sourceStorageItem: &ComPtr<super::super::storage::IStorageItem>, targetStorageItem: &ComPtr<super::super::storage::IStorageItem>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyProtectionAsync)(self as *const _ as *mut _, sourceStorageItem as *const _ as *mut _, targetStorageItem as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CopyProtectionAsync)(self as *const _ as *mut _, sourceStorageItem.deref() as *const _ as *mut _, targetStorageItem.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn revoke(&self, enterpriseIdentity: &HStringArg) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).Revoke)(self as *const _ as *mut _, enterpriseIdentity.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_status_async(&self, storageItem: &super::super::storage::IStorageItem) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionStatus>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_status_async(&self, storageItem: &ComPtr<super::super::storage::IStorageItem>) -> Result<ComPtr<foundation::IAsyncOperation<FileProtectionStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetStatusAsync)(self as *const _ as *mut _, storageItem as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetStatusAsync)(self as *const _ as *mut _, storageItem.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6726,7 +6726,7 @@ RT_CLASS!{class FileUnprotectOptions: IFileUnprotectOptions}
 impl RtActivatable<IFileUnprotectOptionsFactory> for FileUnprotectOptions {}
 impl FileUnprotectOptions {
     #[inline] pub fn create(audit: bool) -> Result<ComPtr<FileUnprotectOptions>> {
-        <Self as RtActivatable<IFileUnprotectOptionsFactory>>::get_activation_factory().create(audit)
+        <Self as RtActivatable<IFileUnprotectOptionsFactory>>::get_activation_factory().deref().create(audit)
     }
 }
 DEFINE_CLSID!(FileUnprotectOptions(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,70,105,108,101,85,110,112,114,111,116,101,99,116,79,112,116,105,111,110,115,0]) [CLSID_FileUnprotectOptions]);
@@ -6910,10 +6910,10 @@ RT_CLASS!{class ProtectionPolicyAuditInfo: IProtectionPolicyAuditInfo}
 impl RtActivatable<IProtectionPolicyAuditInfoFactory> for ProtectionPolicyAuditInfo {}
 impl ProtectionPolicyAuditInfo {
     #[inline] pub fn create(action: ProtectionPolicyAuditAction, dataDescription: &HStringArg, sourceDescription: &HStringArg, targetDescription: &HStringArg) -> Result<ComPtr<ProtectionPolicyAuditInfo>> {
-        <Self as RtActivatable<IProtectionPolicyAuditInfoFactory>>::get_activation_factory().create(action, dataDescription, sourceDescription, targetDescription)
+        <Self as RtActivatable<IProtectionPolicyAuditInfoFactory>>::get_activation_factory().deref().create(action, dataDescription, sourceDescription, targetDescription)
     }
     #[inline] pub fn create_with_action_and_data_description(action: ProtectionPolicyAuditAction, dataDescription: &HStringArg) -> Result<ComPtr<ProtectionPolicyAuditInfo>> {
-        <Self as RtActivatable<IProtectionPolicyAuditInfoFactory>>::get_activation_factory().create_with_action_and_data_description(action, dataDescription)
+        <Self as RtActivatable<IProtectionPolicyAuditInfoFactory>>::get_activation_factory().deref().create_with_action_and_data_description(action, dataDescription)
     }
 }
 DEFINE_CLSID!(ProtectionPolicyAuditInfo(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,80,114,111,116,101,99,116,105,111,110,80,111,108,105,99,121,65,117,100,105,116,73,110,102,111,0]) [CLSID_ProtectionPolicyAuditInfo]);
@@ -6960,124 +6960,124 @@ impl RtActivatable<IProtectionPolicyManagerStatics3> for ProtectionPolicyManager
 impl RtActivatable<IProtectionPolicyManagerStatics4> for ProtectionPolicyManager {}
 impl ProtectionPolicyManager {
     #[inline] pub fn is_identity_managed(identity: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().is_identity_managed(identity)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().is_identity_managed(identity)
     }
     #[inline] pub fn try_apply_process_ui_policy(identity: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().try_apply_process_ui_policy(identity)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().try_apply_process_ui_policy(identity)
     }
     #[inline] pub fn clear_process_ui_policy() -> Result<()> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().clear_process_ui_policy()
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().clear_process_ui_policy()
     }
     #[inline] pub fn create_current_thread_network_context(identity: &HStringArg) -> Result<Option<ComPtr<ThreadNetworkContext>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().create_current_thread_network_context(identity)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().create_current_thread_network_context(identity)
     }
-    #[cfg(feature="windows-networking")] #[inline] pub fn get_primary_managed_identity_for_network_endpoint_async(endpointHost: &super::super::networking::HostName) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().get_primary_managed_identity_for_network_endpoint_async(endpointHost)
+    #[cfg(feature="windows-networking")] #[inline] pub fn get_primary_managed_identity_for_network_endpoint_async(endpointHost: &ComPtr<super::super::networking::HostName>) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().get_primary_managed_identity_for_network_endpoint_async(endpointHost)
     }
     #[inline] pub fn revoke_content(identity: &HStringArg) -> Result<()> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().revoke_content(identity)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().revoke_content(identity)
     }
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<ProtectionPolicyManager>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().get_for_current_view()
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().get_for_current_view()
     }
-    #[inline] pub fn add_protected_access_suspending(handler: &foundation::EventHandler<ProtectedAccessSuspendingEventArgs>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().add_protected_access_suspending(handler)
+    #[inline] pub fn add_protected_access_suspending(handler: &ComPtr<foundation::EventHandler<ProtectedAccessSuspendingEventArgs>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().add_protected_access_suspending(handler)
     }
     #[inline] pub fn remove_protected_access_suspending(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().remove_protected_access_suspending(token)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().remove_protected_access_suspending(token)
     }
-    #[inline] pub fn add_protected_access_resumed(handler: &foundation::EventHandler<ProtectedAccessResumedEventArgs>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().add_protected_access_resumed(handler)
+    #[inline] pub fn add_protected_access_resumed(handler: &ComPtr<foundation::EventHandler<ProtectedAccessResumedEventArgs>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().add_protected_access_resumed(handler)
     }
     #[inline] pub fn remove_protected_access_resumed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().remove_protected_access_resumed(token)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().remove_protected_access_resumed(token)
     }
-    #[inline] pub fn add_protected_content_revoked(handler: &foundation::EventHandler<ProtectedContentRevokedEventArgs>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().add_protected_content_revoked(handler)
+    #[inline] pub fn add_protected_content_revoked(handler: &ComPtr<foundation::EventHandler<ProtectedContentRevokedEventArgs>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().add_protected_content_revoked(handler)
     }
     #[inline] pub fn remove_protected_content_revoked(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().remove_protected_content_revoked(token)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().remove_protected_content_revoked(token)
     }
     #[inline] pub fn check_access(sourceIdentity: &HStringArg, targetIdentity: &HStringArg) -> Result<ProtectionPolicyEvaluationResult> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().check_access(sourceIdentity, targetIdentity)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().check_access(sourceIdentity, targetIdentity)
     }
     #[inline] pub fn request_access_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().request_access_async(sourceIdentity, targetIdentity)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics>>::get_activation_factory().deref().request_access_async(sourceIdentity, targetIdentity)
     }
     #[inline] pub fn has_content_been_revoked_since(identity: &HStringArg, since: foundation::DateTime) -> Result<bool> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().has_content_been_revoked_since(identity, since)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().deref().has_content_been_revoked_since(identity, since)
     }
     #[inline] pub fn check_access_for_app(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg) -> Result<ProtectionPolicyEvaluationResult> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().check_access_for_app(sourceIdentity, appPackageFamilyName)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().deref().check_access_for_app(sourceIdentity, appPackageFamilyName)
     }
     #[inline] pub fn request_access_for_app_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().request_access_for_app_async(sourceIdentity, appPackageFamilyName)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().deref().request_access_for_app_async(sourceIdentity, appPackageFamilyName)
     }
     #[inline] pub fn get_enforcement_level(identity: &HStringArg) -> Result<EnforcementLevel> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().get_enforcement_level(identity)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().deref().get_enforcement_level(identity)
     }
     #[inline] pub fn is_user_decryption_allowed(identity: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().is_user_decryption_allowed(identity)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().deref().is_user_decryption_allowed(identity)
     }
     #[inline] pub fn is_protection_under_lock_required(identity: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().is_protection_under_lock_required(identity)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().deref().is_protection_under_lock_required(identity)
     }
-    #[inline] pub fn add_policy_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().add_policy_changed(handler)
+    #[inline] pub fn add_policy_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().deref().add_policy_changed(handler)
     }
     #[inline] pub fn remove_policy_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().remove_policy_changed(token)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().deref().remove_policy_changed(token)
     }
     #[inline] pub fn get_is_protection_enabled() -> Result<bool> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().get_is_protection_enabled()
+        <Self as RtActivatable<IProtectionPolicyManagerStatics2>>::get_activation_factory().deref().get_is_protection_enabled()
     }
-    #[inline] pub fn request_access_with_auditing_info_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().request_access_with_auditing_info_async(sourceIdentity, targetIdentity, auditInfo)
+    #[inline] pub fn request_access_with_auditing_info_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().deref().request_access_with_auditing_info_async(sourceIdentity, targetIdentity, auditInfo)
     }
-    #[inline] pub fn request_access_with_message_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().request_access_with_message_async(sourceIdentity, targetIdentity, auditInfo, messageFromApp)
+    #[inline] pub fn request_access_with_message_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>, messageFromApp: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().deref().request_access_with_message_async(sourceIdentity, targetIdentity, auditInfo, messageFromApp)
     }
-    #[inline] pub fn request_access_for_app_with_auditing_info_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().request_access_for_app_with_auditing_info_async(sourceIdentity, appPackageFamilyName, auditInfo)
+    #[inline] pub fn request_access_for_app_with_auditing_info_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().deref().request_access_for_app_with_auditing_info_async(sourceIdentity, appPackageFamilyName, auditInfo)
     }
-    #[inline] pub fn request_access_for_app_with_message_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().request_access_for_app_with_message_async(sourceIdentity, appPackageFamilyName, auditInfo, messageFromApp)
+    #[inline] pub fn request_access_for_app_with_message_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>, messageFromApp: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().deref().request_access_for_app_with_message_async(sourceIdentity, appPackageFamilyName, auditInfo, messageFromApp)
     }
-    #[inline] pub fn log_audit_event(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<()> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().log_audit_event(sourceIdentity, targetIdentity, auditInfo)
+    #[inline] pub fn log_audit_event(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>) -> Result<()> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics3>>::get_activation_factory().deref().log_audit_event(sourceIdentity, targetIdentity, auditInfo)
     }
     #[inline] pub fn is_roamable_protection_enabled(identity: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().is_roamable_protection_enabled(identity)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().deref().is_roamable_protection_enabled(identity)
     }
-    #[inline] pub fn request_access_with_behavior_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_with_behavior_async(sourceIdentity, targetIdentity, auditInfo, messageFromApp, behavior)
+    #[inline] pub fn request_access_with_behavior_async(sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().deref().request_access_with_behavior_async(sourceIdentity, targetIdentity, auditInfo, messageFromApp, behavior)
     }
-    #[inline] pub fn request_access_for_app_with_behavior_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_for_app_with_behavior_async(sourceIdentity, appPackageFamilyName, auditInfo, messageFromApp, behavior)
+    #[inline] pub fn request_access_for_app_with_behavior_async(sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().deref().request_access_for_app_with_behavior_async(sourceIdentity, appPackageFamilyName, auditInfo, messageFromApp, behavior)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_async(sourceItemList: &foundation::collections::IIterable<super::super::storage::IStorageItem>, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_to_files_for_app_async(sourceItemList, appPackageFamilyName, auditInfo)
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_async(sourceItemList: &ComPtr<foundation::collections::IIterable<super::super::storage::IStorageItem>>, appPackageFamilyName: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().deref().request_access_to_files_for_app_async(sourceItemList, appPackageFamilyName, auditInfo)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_with_message_and_behavior_async(sourceItemList: &foundation::collections::IIterable<super::super::storage::IStorageItem>, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_to_files_for_app_with_message_and_behavior_async(sourceItemList, appPackageFamilyName, auditInfo, messageFromApp, behavior)
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_with_message_and_behavior_async(sourceItemList: &ComPtr<foundation::collections::IIterable<super::super::storage::IStorageItem>>, appPackageFamilyName: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().deref().request_access_to_files_for_app_with_message_and_behavior_async(sourceItemList, appPackageFamilyName, auditInfo, messageFromApp, behavior)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_async(sourceItemList: &foundation::collections::IIterable<super::super::storage::IStorageItem>, processId: u32, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_to_files_for_process_async(sourceItemList, processId, auditInfo)
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_async(sourceItemList: &ComPtr<foundation::collections::IIterable<super::super::storage::IStorageItem>>, processId: u32, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().deref().request_access_to_files_for_process_async(sourceItemList, processId, auditInfo)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_with_message_and_behavior_async(sourceItemList: &foundation::collections::IIterable<super::super::storage::IStorageItem>, processId: u32, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().request_access_to_files_for_process_with_message_and_behavior_async(sourceItemList, processId, auditInfo, messageFromApp, behavior)
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_with_message_and_behavior_async(sourceItemList: &ComPtr<foundation::collections::IIterable<super::super::storage::IStorageItem>>, processId: u32, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().deref().request_access_to_files_for_process_with_message_and_behavior_async(sourceItemList, processId, auditInfo, messageFromApp, behavior)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_async(target: &super::super::storage::IStorageItem, identity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().is_file_protection_required_async(target, identity)
+    #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_async(target: &ComPtr<super::super::storage::IStorageItem>, identity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().deref().is_file_protection_required_async(target, identity)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_for_new_file_async(parentFolder: &super::super::storage::IStorageFolder, identity: &HStringArg, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().is_file_protection_required_for_new_file_async(parentFolder, identity, desiredName)
+    #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_for_new_file_async(parentFolder: &ComPtr<super::super::storage::IStorageFolder>, identity: &HStringArg, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().deref().is_file_protection_required_for_new_file_async(parentFolder, identity, desiredName)
     }
     #[inline] pub fn get_primary_managed_identity() -> Result<HString> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().get_primary_managed_identity()
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().deref().get_primary_managed_identity()
     }
     #[inline] pub fn get_primary_managed_identity_for_identity(identity: &HStringArg) -> Result<HString> {
-        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().get_primary_managed_identity_for_identity(identity)
+        <Self as RtActivatable<IProtectionPolicyManagerStatics4>>::get_activation_factory().deref().get_primary_managed_identity_for_identity(identity)
     }
 }
 DEFINE_CLSID!(ProtectionPolicyManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,80,114,111,116,101,99,116,105,111,110,80,111,108,105,99,121,77,97,110,97,103,101,114,0]) [CLSID_ProtectionPolicyManager]);
@@ -7136,9 +7136,9 @@ impl IProtectionPolicyManagerStatics {
         let hr = ((*self.lpVtbl).CreateCurrentThreadNetworkContext)(self as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-networking")] #[inline] pub fn get_primary_managed_identity_for_network_endpoint_async(&self, endpointHost: &super::super::networking::HostName) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn get_primary_managed_identity_for_network_endpoint_async(&self, endpointHost: &ComPtr<super::super::networking::HostName>) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPrimaryManagedIdentityForNetworkEndpointAsync)(self as *const _ as *mut _, endpointHost as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetPrimaryManagedIdentityForNetworkEndpointAsync)(self as *const _ as *mut _, endpointHost.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn revoke_content(&self, identity: &HStringArg) -> Result<()> { unsafe { 
@@ -7150,27 +7150,27 @@ impl IProtectionPolicyManagerStatics {
         let hr = ((*self.lpVtbl).GetForCurrentView)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_protected_access_suspending(&self, handler: &foundation::EventHandler<ProtectedAccessSuspendingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_protected_access_suspending(&self, handler: &ComPtr<foundation::EventHandler<ProtectedAccessSuspendingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ProtectedAccessSuspending)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ProtectedAccessSuspending)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_protected_access_suspending(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ProtectedAccessSuspending)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_protected_access_resumed(&self, handler: &foundation::EventHandler<ProtectedAccessResumedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_protected_access_resumed(&self, handler: &ComPtr<foundation::EventHandler<ProtectedAccessResumedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ProtectedAccessResumed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ProtectedAccessResumed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_protected_access_resumed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ProtectedAccessResumed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_protected_content_revoked(&self, handler: &foundation::EventHandler<ProtectedContentRevokedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_protected_content_revoked(&self, handler: &ComPtr<foundation::EventHandler<ProtectedContentRevokedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ProtectedContentRevoked)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ProtectedContentRevoked)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_protected_content_revoked(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -7231,9 +7231,9 @@ impl IProtectionPolicyManagerStatics2 {
         let hr = ((*self.lpVtbl).IsProtectionUnderLockRequired)(self as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_policy_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_policy_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PolicyChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PolicyChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_policy_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -7255,28 +7255,28 @@ RT_INTERFACE!{static interface IProtectionPolicyManagerStatics3(IProtectionPolic
     fn LogAuditEvent(&self, sourceIdentity: HSTRING, targetIdentity: HSTRING, auditInfo: *mut ProtectionPolicyAuditInfo) -> HRESULT
 }}
 impl IProtectionPolicyManagerStatics3 {
-    #[inline] pub fn request_access_with_auditing_info_async(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
+    #[inline] pub fn request_access_with_auditing_info_async(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAccessWithAuditingInfoAsync)(self as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), auditInfo as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestAccessWithAuditingInfoAsync)(self as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), auditInfo.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn request_access_with_message_async(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
+    #[inline] pub fn request_access_with_message_async(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>, messageFromApp: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAccessWithMessageAsync)(self as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), auditInfo as *const _ as *mut _, messageFromApp.get(), &mut out);
+        let hr = ((*self.lpVtbl).RequestAccessWithMessageAsync)(self as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), auditInfo.deref() as *const _ as *mut _, messageFromApp.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn request_access_for_app_with_auditing_info_async(&self, sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
+    #[inline] pub fn request_access_for_app_with_auditing_info_async(&self, sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAccessForAppWithAuditingInfoAsync)(self as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), auditInfo as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestAccessForAppWithAuditingInfoAsync)(self as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), auditInfo.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn request_access_for_app_with_message_async(&self, sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
+    #[inline] pub fn request_access_for_app_with_message_async(&self, sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>, messageFromApp: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAccessForAppWithMessageAsync)(self as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), auditInfo as *const _ as *mut _, messageFromApp.get(), &mut out);
+        let hr = ((*self.lpVtbl).RequestAccessForAppWithMessageAsync)(self as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), auditInfo.deref() as *const _ as *mut _, messageFromApp.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn log_audit_event(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LogAuditEvent)(self as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), auditInfo as *const _ as *mut _);
+    #[inline] pub fn log_audit_event(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).LogAuditEvent)(self as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), auditInfo.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -7306,44 +7306,44 @@ impl IProtectionPolicyManagerStatics4 {
         let hr = ((*self.lpVtbl).IsRoamableProtectionEnabled)(self as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn request_access_with_behavior_async(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
+    #[inline] pub fn request_access_with_behavior_async(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAccessWithBehaviorAsync)(self as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), auditInfo as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
+        let hr = ((*self.lpVtbl).RequestAccessWithBehaviorAsync)(self as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), auditInfo.deref() as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn request_access_for_app_with_behavior_async(&self, sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
+    #[inline] pub fn request_access_for_app_with_behavior_async(&self, sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAccessForAppWithBehaviorAsync)(self as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), auditInfo as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
+        let hr = ((*self.lpVtbl).RequestAccessForAppWithBehaviorAsync)(self as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), auditInfo.deref() as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_async(&self, sourceItemList: &foundation::collections::IIterable<super::super::storage::IStorageItem>, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_async(&self, sourceItemList: &ComPtr<foundation::collections::IIterable<super::super::storage::IStorageItem>>, appPackageFamilyName: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAccessToFilesForAppAsync)(self as *const _ as *mut _, sourceItemList as *const _ as *mut _, appPackageFamilyName.get(), auditInfo as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestAccessToFilesForAppAsync)(self as *const _ as *mut _, sourceItemList.deref() as *const _ as *mut _, appPackageFamilyName.get(), auditInfo.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_with_message_and_behavior_async(&self, sourceItemList: &foundation::collections::IIterable<super::super::storage::IStorageItem>, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_with_message_and_behavior_async(&self, sourceItemList: &ComPtr<foundation::collections::IIterable<super::super::storage::IStorageItem>>, appPackageFamilyName: &HStringArg, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAccessToFilesForAppWithMessageAndBehaviorAsync)(self as *const _ as *mut _, sourceItemList as *const _ as *mut _, appPackageFamilyName.get(), auditInfo as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
+        let hr = ((*self.lpVtbl).RequestAccessToFilesForAppWithMessageAndBehaviorAsync)(self as *const _ as *mut _, sourceItemList.deref() as *const _ as *mut _, appPackageFamilyName.get(), auditInfo.deref() as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_async(&self, sourceItemList: &foundation::collections::IIterable<super::super::storage::IStorageItem>, processId: u32, auditInfo: &ProtectionPolicyAuditInfo) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_async(&self, sourceItemList: &ComPtr<foundation::collections::IIterable<super::super::storage::IStorageItem>>, processId: u32, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAccessToFilesForProcessAsync)(self as *const _ as *mut _, sourceItemList as *const _ as *mut _, processId, auditInfo as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestAccessToFilesForProcessAsync)(self as *const _ as *mut _, sourceItemList.deref() as *const _ as *mut _, processId, auditInfo.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_with_message_and_behavior_async(&self, sourceItemList: &foundation::collections::IIterable<super::super::storage::IStorageItem>, processId: u32, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_with_message_and_behavior_async(&self, sourceItemList: &ComPtr<foundation::collections::IIterable<super::super::storage::IStorageItem>>, processId: u32, auditInfo: &ComPtr<ProtectionPolicyAuditInfo>, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<ComPtr<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestAccessToFilesForProcessWithMessageAndBehaviorAsync)(self as *const _ as *mut _, sourceItemList as *const _ as *mut _, processId, auditInfo as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
+        let hr = ((*self.lpVtbl).RequestAccessToFilesForProcessWithMessageAndBehaviorAsync)(self as *const _ as *mut _, sourceItemList.deref() as *const _ as *mut _, processId, auditInfo.deref() as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_async(&self, target: &super::super::storage::IStorageItem, identity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_async(&self, target: &ComPtr<super::super::storage::IStorageItem>, identity: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).IsFileProtectionRequiredAsync)(self as *const _ as *mut _, target as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.lpVtbl).IsFileProtectionRequiredAsync)(self as *const _ as *mut _, target.deref() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_for_new_file_async(&self, parentFolder: &super::super::storage::IStorageFolder, identity: &HStringArg, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_for_new_file_async(&self, parentFolder: &ComPtr<super::super::storage::IStorageFolder>, identity: &HStringArg, desiredName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).IsFileProtectionRequiredForNewFileAsync)(self as *const _ as *mut _, parentFolder as *const _ as *mut _, identity.get(), desiredName.get(), &mut out);
+        let hr = ((*self.lpVtbl).IsFileProtectionRequiredForNewFileAsync)(self as *const _ as *mut _, parentFolder.deref() as *const _ as *mut _, identity.get(), desiredName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_primary_managed_identity(&self) -> Result<HString> { unsafe { 

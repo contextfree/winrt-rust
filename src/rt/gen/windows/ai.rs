@@ -46,8 +46,8 @@ impl IImageFeatureValue {
 RT_CLASS!{class ImageFeatureValue: IImageFeatureValue}
 impl RtActivatable<IImageFeatureValueStatics> for ImageFeatureValue {}
 impl ImageFeatureValue {
-    #[cfg(feature="windows-media")] #[inline] pub fn create_from_video_frame(image: &super::super::media::VideoFrame) -> Result<Option<ComPtr<ImageFeatureValue>>> {
-        <Self as RtActivatable<IImageFeatureValueStatics>>::get_activation_factory().create_from_video_frame(image)
+    #[cfg(feature="windows-media")] #[inline] pub fn create_from_video_frame(image: &ComPtr<super::super::media::VideoFrame>) -> Result<Option<ComPtr<ImageFeatureValue>>> {
+        <Self as RtActivatable<IImageFeatureValueStatics>>::get_activation_factory().deref().create_from_video_frame(image)
     }
 }
 DEFINE_CLSID!(ImageFeatureValue(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,73,109,97,103,101,70,101,97,116,117,114,101,86,97,108,117,101,0]) [CLSID_ImageFeatureValue]);
@@ -56,9 +56,9 @@ RT_INTERFACE!{static interface IImageFeatureValueStatics(IImageFeatureValueStati
     #[cfg(feature="windows-media")] fn CreateFromVideoFrame(&self, image: *mut super::super::media::VideoFrame, out: *mut *mut ImageFeatureValue) -> HRESULT
 }}
 impl IImageFeatureValueStatics {
-    #[cfg(feature="windows-media")] #[inline] pub fn create_from_video_frame(&self, image: &super::super::media::VideoFrame) -> Result<Option<ComPtr<ImageFeatureValue>>> { unsafe { 
+    #[cfg(feature="windows-media")] #[inline] pub fn create_from_video_frame(&self, image: &ComPtr<super::super::media::VideoFrame>) -> Result<Option<ComPtr<ImageFeatureValue>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromVideoFrame)(self as *const _ as *mut _, image as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromVideoFrame)(self as *const _ as *mut _, image.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -118,29 +118,29 @@ impl ILearningModel {
 RT_CLASS!{class LearningModel: ILearningModel}
 impl RtActivatable<ILearningModelStatics> for LearningModel {}
 impl LearningModel {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_storage_file_async(modelFile: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> {
-        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().load_from_storage_file_async(modelFile)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_storage_file_async(modelFile: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> {
+        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().deref().load_from_storage_file_async(modelFile)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(modelStream: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> {
-        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().load_from_stream_async(modelStream)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(modelStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> {
+        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().deref().load_from_stream_async(modelStream)
     }
     #[inline] pub fn load_from_file_path(filePath: &HStringArg) -> Result<Option<ComPtr<LearningModel>>> {
-        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().load_from_file_path(filePath)
+        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().deref().load_from_file_path(filePath)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream(modelStream: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<Option<ComPtr<LearningModel>>> {
-        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().load_from_stream(modelStream)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream(modelStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>) -> Result<Option<ComPtr<LearningModel>>> {
+        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().deref().load_from_stream(modelStream)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_storage_file_with_operator_provider_async(modelFile: &super::super::storage::IStorageFile, operatorProvider: &ILearningModelOperatorProvider) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> {
-        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().load_from_storage_file_with_operator_provider_async(modelFile, operatorProvider)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_storage_file_with_operator_provider_async(modelFile: &ComPtr<super::super::storage::IStorageFile>, operatorProvider: &ComPtr<ILearningModelOperatorProvider>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> {
+        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().deref().load_from_storage_file_with_operator_provider_async(modelFile, operatorProvider)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_operator_provider_async(modelStream: &super::super::storage::streams::IRandomAccessStreamReference, operatorProvider: &ILearningModelOperatorProvider) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> {
-        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().load_from_stream_with_operator_provider_async(modelStream, operatorProvider)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_operator_provider_async(modelStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>, operatorProvider: &ComPtr<ILearningModelOperatorProvider>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> {
+        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().deref().load_from_stream_with_operator_provider_async(modelStream, operatorProvider)
     }
-    #[inline] pub fn load_from_file_path_with_operator_provider(filePath: &HStringArg, operatorProvider: &ILearningModelOperatorProvider) -> Result<Option<ComPtr<LearningModel>>> {
-        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().load_from_file_path_with_operator_provider(filePath, operatorProvider)
+    #[inline] pub fn load_from_file_path_with_operator_provider(filePath: &HStringArg, operatorProvider: &ComPtr<ILearningModelOperatorProvider>) -> Result<Option<ComPtr<LearningModel>>> {
+        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().deref().load_from_file_path_with_operator_provider(filePath, operatorProvider)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_operator_provider(modelStream: &super::super::storage::streams::IRandomAccessStreamReference, operatorProvider: &ILearningModelOperatorProvider) -> Result<Option<ComPtr<LearningModel>>> {
-        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().load_from_stream_with_operator_provider(modelStream, operatorProvider)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_operator_provider(modelStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>, operatorProvider: &ComPtr<ILearningModelOperatorProvider>) -> Result<Option<ComPtr<LearningModel>>> {
+        <Self as RtActivatable<ILearningModelStatics>>::get_activation_factory().deref().load_from_stream_with_operator_provider(modelStream, operatorProvider)
     }
 }
 DEFINE_CLSID!(LearningModel(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,76,101,97,114,110,105,110,103,77,111,100,101,108,0]) [CLSID_LearningModel]);
@@ -151,12 +151,12 @@ RT_INTERFACE!{interface ILearningModelBinding(ILearningModelBindingVtbl): IInspe
     fn Clear(&self) -> HRESULT
 }}
 impl ILearningModelBinding {
-    #[inline] pub fn bind(&self, name: &HStringArg, value: &IInspectable) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Bind)(self as *const _ as *mut _, name.get(), value as *const _ as *mut _);
+    #[inline] pub fn bind(&self, name: &HStringArg, value: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Bind)(self as *const _ as *mut _, name.get(), value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn bind_with_properties(&self, name: &HStringArg, value: &IInspectable, props: &foundation::collections::IPropertySet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).BindWithProperties)(self as *const _ as *mut _, name.get(), value as *const _ as *mut _, props as *const _ as *mut _);
+    #[inline] pub fn bind_with_properties(&self, name: &HStringArg, value: &ComPtr<IInspectable>, props: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).BindWithProperties)(self as *const _ as *mut _, name.get(), value.deref() as *const _ as *mut _, props.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn clear(&self) -> Result<()> { unsafe { 
@@ -167,8 +167,8 @@ impl ILearningModelBinding {
 RT_CLASS!{class LearningModelBinding: ILearningModelBinding}
 impl RtActivatable<ILearningModelBindingFactory> for LearningModelBinding {}
 impl LearningModelBinding {
-    #[inline] pub fn create_from_session(session: &LearningModelSession) -> Result<ComPtr<LearningModelBinding>> {
-        <Self as RtActivatable<ILearningModelBindingFactory>>::get_activation_factory().create_from_session(session)
+    #[inline] pub fn create_from_session(session: &ComPtr<LearningModelSession>) -> Result<ComPtr<LearningModelBinding>> {
+        <Self as RtActivatable<ILearningModelBindingFactory>>::get_activation_factory().deref().create_from_session(session)
     }
 }
 DEFINE_CLSID!(LearningModelBinding(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,76,101,97,114,110,105,110,103,77,111,100,101,108,66,105,110,100,105,110,103,0]) [CLSID_LearningModelBinding]);
@@ -177,9 +177,9 @@ RT_INTERFACE!{static interface ILearningModelBindingFactory(ILearningModelBindin
     fn CreateFromSession(&self, session: *mut LearningModelSession, out: *mut *mut LearningModelBinding) -> HRESULT
 }}
 impl ILearningModelBindingFactory {
-    #[inline] pub fn create_from_session(&self, session: &LearningModelSession) -> Result<ComPtr<LearningModelBinding>> { unsafe { 
+    #[inline] pub fn create_from_session(&self, session: &ComPtr<LearningModelSession>) -> Result<ComPtr<LearningModelBinding>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromSession)(self as *const _ as *mut _, session as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromSession)(self as *const _ as *mut _, session.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -205,10 +205,10 @@ impl RtActivatable<ILearningModelDeviceFactory> for LearningModelDevice {}
 impl RtActivatable<ILearningModelDeviceStatics> for LearningModelDevice {}
 impl LearningModelDevice {
     #[inline] pub fn create(deviceKind: LearningModelDeviceKind) -> Result<ComPtr<LearningModelDevice>> {
-        <Self as RtActivatable<ILearningModelDeviceFactory>>::get_activation_factory().create(deviceKind)
+        <Self as RtActivatable<ILearningModelDeviceFactory>>::get_activation_factory().deref().create(deviceKind)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d11_device(device: &super::super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<LearningModelDevice>>> {
-        <Self as RtActivatable<ILearningModelDeviceStatics>>::get_activation_factory().create_from_direct3d11_device(device)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d11_device(device: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DDevice>) -> Result<Option<ComPtr<LearningModelDevice>>> {
+        <Self as RtActivatable<ILearningModelDeviceStatics>>::get_activation_factory().deref().create_from_direct3d11_device(device)
     }
 }
 DEFINE_CLSID!(LearningModelDevice(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,76,101,97,114,110,105,110,103,77,111,100,101,108,68,101,118,105,99,101,0]) [CLSID_LearningModelDevice]);
@@ -231,9 +231,9 @@ RT_INTERFACE!{static interface ILearningModelDeviceStatics(ILearningModelDeviceS
     #[cfg(feature="windows-graphics")] fn CreateFromDirect3D11Device(&self, device: *mut super::super::graphics::directx::direct3d11::IDirect3DDevice, out: *mut *mut LearningModelDevice) -> HRESULT
 }}
 impl ILearningModelDeviceStatics {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d11_device(&self, device: &super::super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<LearningModelDevice>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d11_device(&self, device: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DDevice>) -> Result<Option<ComPtr<LearningModelDevice>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromDirect3D11Device)(self as *const _ as *mut _, device as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromDirect3D11Device)(self as *const _ as *mut _, device.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -340,35 +340,35 @@ impl ILearningModelSession {
         let hr = ((*self.lpVtbl).get_EvaluationProperties)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn evaluate_async(&self, bindings: &LearningModelBinding, correlationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelEvaluationResult>>> { unsafe { 
+    #[inline] pub fn evaluate_async(&self, bindings: &ComPtr<LearningModelBinding>, correlationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).EvaluateAsync)(self as *const _ as *mut _, bindings as *const _ as *mut _, correlationId.get(), &mut out);
+        let hr = ((*self.lpVtbl).EvaluateAsync)(self as *const _ as *mut _, bindings.deref() as *const _ as *mut _, correlationId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn evaluate_features_async(&self, features: &foundation::collections::IMap<HString, IInspectable>, correlationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelEvaluationResult>>> { unsafe { 
+    #[inline] pub fn evaluate_features_async(&self, features: &ComPtr<foundation::collections::IMap<HString, IInspectable>>, correlationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).EvaluateFeaturesAsync)(self as *const _ as *mut _, features as *const _ as *mut _, correlationId.get(), &mut out);
+        let hr = ((*self.lpVtbl).EvaluateFeaturesAsync)(self as *const _ as *mut _, features.deref() as *const _ as *mut _, correlationId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn evaluate(&self, bindings: &LearningModelBinding, correlationId: &HStringArg) -> Result<Option<ComPtr<LearningModelEvaluationResult>>> { unsafe { 
+    #[inline] pub fn evaluate(&self, bindings: &ComPtr<LearningModelBinding>, correlationId: &HStringArg) -> Result<Option<ComPtr<LearningModelEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Evaluate)(self as *const _ as *mut _, bindings as *const _ as *mut _, correlationId.get(), &mut out);
+        let hr = ((*self.lpVtbl).Evaluate)(self as *const _ as *mut _, bindings.deref() as *const _ as *mut _, correlationId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn evaluate_features(&self, features: &foundation::collections::IMap<HString, IInspectable>, correlationId: &HStringArg) -> Result<Option<ComPtr<LearningModelEvaluationResult>>> { unsafe { 
+    #[inline] pub fn evaluate_features(&self, features: &ComPtr<foundation::collections::IMap<HString, IInspectable>>, correlationId: &HStringArg) -> Result<Option<ComPtr<LearningModelEvaluationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).EvaluateFeatures)(self as *const _ as *mut _, features as *const _ as *mut _, correlationId.get(), &mut out);
+        let hr = ((*self.lpVtbl).EvaluateFeatures)(self as *const _ as *mut _, features.deref() as *const _ as *mut _, correlationId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class LearningModelSession: ILearningModelSession}
 impl RtActivatable<ILearningModelSessionFactory> for LearningModelSession {}
 impl LearningModelSession {
-    #[inline] pub fn create_from_model(model: &LearningModel) -> Result<ComPtr<LearningModelSession>> {
-        <Self as RtActivatable<ILearningModelSessionFactory>>::get_activation_factory().create_from_model(model)
+    #[inline] pub fn create_from_model(model: &ComPtr<LearningModel>) -> Result<ComPtr<LearningModelSession>> {
+        <Self as RtActivatable<ILearningModelSessionFactory>>::get_activation_factory().deref().create_from_model(model)
     }
-    #[inline] pub fn create_from_model_on_device(model: &LearningModel, deviceToRunOn: &LearningModelDevice) -> Result<ComPtr<LearningModelSession>> {
-        <Self as RtActivatable<ILearningModelSessionFactory>>::get_activation_factory().create_from_model_on_device(model, deviceToRunOn)
+    #[inline] pub fn create_from_model_on_device(model: &ComPtr<LearningModel>, deviceToRunOn: &ComPtr<LearningModelDevice>) -> Result<ComPtr<LearningModelSession>> {
+        <Self as RtActivatable<ILearningModelSessionFactory>>::get_activation_factory().deref().create_from_model_on_device(model, deviceToRunOn)
     }
 }
 DEFINE_CLSID!(LearningModelSession(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,76,101,97,114,110,105,110,103,77,111,100,101,108,83,101,115,115,105,111,110,0]) [CLSID_LearningModelSession]);
@@ -378,14 +378,14 @@ RT_INTERFACE!{static interface ILearningModelSessionFactory(ILearningModelSessio
     fn CreateFromModelOnDevice(&self, model: *mut LearningModel, deviceToRunOn: *mut LearningModelDevice, out: *mut *mut LearningModelSession) -> HRESULT
 }}
 impl ILearningModelSessionFactory {
-    #[inline] pub fn create_from_model(&self, model: &LearningModel) -> Result<ComPtr<LearningModelSession>> { unsafe { 
+    #[inline] pub fn create_from_model(&self, model: &ComPtr<LearningModel>) -> Result<ComPtr<LearningModelSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromModel)(self as *const _ as *mut _, model as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromModel)(self as *const _ as *mut _, model.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_model_on_device(&self, model: &LearningModel, deviceToRunOn: &LearningModelDevice) -> Result<ComPtr<LearningModelSession>> { unsafe { 
+    #[inline] pub fn create_from_model_on_device(&self, model: &ComPtr<LearningModel>, deviceToRunOn: &ComPtr<LearningModelDevice>) -> Result<ComPtr<LearningModelSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromModelOnDevice)(self as *const _ as *mut _, model as *const _ as *mut _, deviceToRunOn as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromModelOnDevice)(self as *const _ as *mut _, model.deref() as *const _ as *mut _, deviceToRunOn.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -401,14 +401,14 @@ RT_INTERFACE!{static interface ILearningModelStatics(ILearningModelStaticsVtbl):
     #[cfg(feature="windows-storage")] fn LoadFromStreamWithOperatorProvider(&self, modelStream: *mut super::super::storage::streams::IRandomAccessStreamReference, operatorProvider: *mut ILearningModelOperatorProvider, out: *mut *mut LearningModel) -> HRESULT
 }}
 impl ILearningModelStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_storage_file_async(&self, modelFile: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_storage_file_async(&self, modelFile: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromStorageFileAsync)(self as *const _ as *mut _, modelFile as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFromStorageFileAsync)(self as *const _ as *mut _, modelFile.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(&self, modelStream: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(&self, modelStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromStreamAsync)(self as *const _ as *mut _, modelStream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFromStreamAsync)(self as *const _ as *mut _, modelStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn load_from_file_path(&self, filePath: &HStringArg) -> Result<Option<ComPtr<LearningModel>>> { unsafe { 
@@ -416,29 +416,29 @@ impl ILearningModelStatics {
         let hr = ((*self.lpVtbl).LoadFromFilePath)(self as *const _ as *mut _, filePath.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream(&self, modelStream: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<Option<ComPtr<LearningModel>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream(&self, modelStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>) -> Result<Option<ComPtr<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromStream)(self as *const _ as *mut _, modelStream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFromStream)(self as *const _ as *mut _, modelStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_storage_file_with_operator_provider_async(&self, modelFile: &super::super::storage::IStorageFile, operatorProvider: &ILearningModelOperatorProvider) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_storage_file_with_operator_provider_async(&self, modelFile: &ComPtr<super::super::storage::IStorageFile>, operatorProvider: &ComPtr<ILearningModelOperatorProvider>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromStorageFileWithOperatorProviderAsync)(self as *const _ as *mut _, modelFile as *const _ as *mut _, operatorProvider as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFromStorageFileWithOperatorProviderAsync)(self as *const _ as *mut _, modelFile.deref() as *const _ as *mut _, operatorProvider.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_operator_provider_async(&self, modelStream: &super::super::storage::streams::IRandomAccessStreamReference, operatorProvider: &ILearningModelOperatorProvider) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_operator_provider_async(&self, modelStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>, operatorProvider: &ComPtr<ILearningModelOperatorProvider>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromStreamWithOperatorProviderAsync)(self as *const _ as *mut _, modelStream as *const _ as *mut _, operatorProvider as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFromStreamWithOperatorProviderAsync)(self as *const _ as *mut _, modelStream.deref() as *const _ as *mut _, operatorProvider.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn load_from_file_path_with_operator_provider(&self, filePath: &HStringArg, operatorProvider: &ILearningModelOperatorProvider) -> Result<Option<ComPtr<LearningModel>>> { unsafe { 
+    #[inline] pub fn load_from_file_path_with_operator_provider(&self, filePath: &HStringArg, operatorProvider: &ComPtr<ILearningModelOperatorProvider>) -> Result<Option<ComPtr<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromFilePathWithOperatorProvider)(self as *const _ as *mut _, filePath.get(), operatorProvider as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFromFilePathWithOperatorProvider)(self as *const _ as *mut _, filePath.get(), operatorProvider.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_operator_provider(&self, modelStream: &super::super::storage::streams::IRandomAccessStreamReference, operatorProvider: &ILearningModelOperatorProvider) -> Result<Option<ComPtr<LearningModel>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_operator_provider(&self, modelStream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>, operatorProvider: &ComPtr<ILearningModelOperatorProvider>) -> Result<Option<ComPtr<LearningModel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadFromStreamWithOperatorProvider)(self as *const _ as *mut _, modelStream as *const _ as *mut _, operatorProvider as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadFromStreamWithOperatorProvider)(self as *const _ as *mut _, modelStream.deref() as *const _ as *mut _, operatorProvider.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -504,16 +504,16 @@ RT_CLASS!{class TensorBoolean: ITensorBoolean}
 impl RtActivatable<ITensorBooleanStatics> for TensorBoolean {}
 impl TensorBoolean {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorBoolean>>> {
-        <Self as RtActivatable<ITensorBooleanStatics>>::get_activation_factory().create()
+        <Self as RtActivatable<ITensorBooleanStatics>>::get_activation_factory().deref().create()
     }
-    #[inline] pub fn create2(shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorBoolean>>> {
-        <Self as RtActivatable<ITensorBooleanStatics>>::get_activation_factory().create2(shape)
+    #[inline] pub fn create2(shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorBoolean>>> {
+        <Self as RtActivatable<ITensorBooleanStatics>>::get_activation_factory().deref().create2(shape)
     }
-    #[inline] pub fn create_from_array(shape: &foundation::collections::IIterable<i64>, data: &[bool]) -> Result<Option<ComPtr<TensorBoolean>>> {
-        <Self as RtActivatable<ITensorBooleanStatics>>::get_activation_factory().create_from_array(shape, data)
+    #[inline] pub fn create_from_array(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[bool]) -> Result<Option<ComPtr<TensorBoolean>>> {
+        <Self as RtActivatable<ITensorBooleanStatics>>::get_activation_factory().deref().create_from_array(shape, data)
     }
-    #[inline] pub fn create_from_iterable(shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<bool>) -> Result<Option<ComPtr<TensorBoolean>>> {
-        <Self as RtActivatable<ITensorBooleanStatics>>::get_activation_factory().create_from_iterable(shape, data)
+    #[inline] pub fn create_from_iterable(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<bool>>) -> Result<Option<ComPtr<TensorBoolean>>> {
+        <Self as RtActivatable<ITensorBooleanStatics>>::get_activation_factory().deref().create_from_iterable(shape, data)
     }
 }
 DEFINE_CLSID!(TensorBoolean(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,84,101,110,115,111,114,66,111,111,108,101,97,110,0]) [CLSID_TensorBoolean]);
@@ -530,19 +530,19 @@ impl ITensorBooleanStatics {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create2(&self, shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorBoolean>>> { unsafe { 
+    #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorBoolean>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_array(&self, shape: &foundation::collections::IIterable<i64>, data: &[bool]) -> Result<Option<ComPtr<TensorBoolean>>> { unsafe { 
+    #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[bool]) -> Result<Option<ComPtr<TensorBoolean>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_iterable(&self, shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<bool>) -> Result<Option<ComPtr<TensorBoolean>>> { unsafe { 
+    #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<bool>>) -> Result<Option<ComPtr<TensorBoolean>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -561,16 +561,16 @@ RT_CLASS!{class TensorDouble: ITensorDouble}
 impl RtActivatable<ITensorDoubleStatics> for TensorDouble {}
 impl TensorDouble {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorDouble>>> {
-        <Self as RtActivatable<ITensorDoubleStatics>>::get_activation_factory().create()
+        <Self as RtActivatable<ITensorDoubleStatics>>::get_activation_factory().deref().create()
     }
-    #[inline] pub fn create2(shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorDouble>>> {
-        <Self as RtActivatable<ITensorDoubleStatics>>::get_activation_factory().create2(shape)
+    #[inline] pub fn create2(shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorDouble>>> {
+        <Self as RtActivatable<ITensorDoubleStatics>>::get_activation_factory().deref().create2(shape)
     }
-    #[inline] pub fn create_from_array(shape: &foundation::collections::IIterable<i64>, data: &[f64]) -> Result<Option<ComPtr<TensorDouble>>> {
-        <Self as RtActivatable<ITensorDoubleStatics>>::get_activation_factory().create_from_array(shape, data)
+    #[inline] pub fn create_from_array(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[f64]) -> Result<Option<ComPtr<TensorDouble>>> {
+        <Self as RtActivatable<ITensorDoubleStatics>>::get_activation_factory().deref().create_from_array(shape, data)
     }
-    #[inline] pub fn create_from_iterable(shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<f64>) -> Result<Option<ComPtr<TensorDouble>>> {
-        <Self as RtActivatable<ITensorDoubleStatics>>::get_activation_factory().create_from_iterable(shape, data)
+    #[inline] pub fn create_from_iterable(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<f64>>) -> Result<Option<ComPtr<TensorDouble>>> {
+        <Self as RtActivatable<ITensorDoubleStatics>>::get_activation_factory().deref().create_from_iterable(shape, data)
     }
 }
 DEFINE_CLSID!(TensorDouble(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,84,101,110,115,111,114,68,111,117,98,108,101,0]) [CLSID_TensorDouble]);
@@ -587,19 +587,19 @@ impl ITensorDoubleStatics {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create2(&self, shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorDouble>>> { unsafe { 
+    #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorDouble>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_array(&self, shape: &foundation::collections::IIterable<i64>, data: &[f64]) -> Result<Option<ComPtr<TensorDouble>>> { unsafe { 
+    #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[f64]) -> Result<Option<ComPtr<TensorDouble>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_iterable(&self, shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<f64>) -> Result<Option<ComPtr<TensorDouble>>> { unsafe { 
+    #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<f64>>) -> Result<Option<ComPtr<TensorDouble>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -636,16 +636,16 @@ RT_CLASS!{class TensorFloat: ITensorFloat}
 impl RtActivatable<ITensorFloatStatics> for TensorFloat {}
 impl TensorFloat {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorFloat>>> {
-        <Self as RtActivatable<ITensorFloatStatics>>::get_activation_factory().create()
+        <Self as RtActivatable<ITensorFloatStatics>>::get_activation_factory().deref().create()
     }
-    #[inline] pub fn create2(shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorFloat>>> {
-        <Self as RtActivatable<ITensorFloatStatics>>::get_activation_factory().create2(shape)
+    #[inline] pub fn create2(shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorFloat>>> {
+        <Self as RtActivatable<ITensorFloatStatics>>::get_activation_factory().deref().create2(shape)
     }
-    #[inline] pub fn create_from_array(shape: &foundation::collections::IIterable<i64>, data: &[f32]) -> Result<Option<ComPtr<TensorFloat>>> {
-        <Self as RtActivatable<ITensorFloatStatics>>::get_activation_factory().create_from_array(shape, data)
+    #[inline] pub fn create_from_array(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[f32]) -> Result<Option<ComPtr<TensorFloat>>> {
+        <Self as RtActivatable<ITensorFloatStatics>>::get_activation_factory().deref().create_from_array(shape, data)
     }
-    #[inline] pub fn create_from_iterable(shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<f32>) -> Result<Option<ComPtr<TensorFloat>>> {
-        <Self as RtActivatable<ITensorFloatStatics>>::get_activation_factory().create_from_iterable(shape, data)
+    #[inline] pub fn create_from_iterable(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<f32>>) -> Result<Option<ComPtr<TensorFloat>>> {
+        <Self as RtActivatable<ITensorFloatStatics>>::get_activation_factory().deref().create_from_iterable(shape, data)
     }
 }
 DEFINE_CLSID!(TensorFloat(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,84,101,110,115,111,114,70,108,111,97,116,0]) [CLSID_TensorFloat]);
@@ -664,16 +664,16 @@ RT_CLASS!{class TensorFloat16Bit: ITensorFloat16Bit}
 impl RtActivatable<ITensorFloat16BitStatics> for TensorFloat16Bit {}
 impl TensorFloat16Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorFloat16Bit>>> {
-        <Self as RtActivatable<ITensorFloat16BitStatics>>::get_activation_factory().create()
+        <Self as RtActivatable<ITensorFloat16BitStatics>>::get_activation_factory().deref().create()
     }
-    #[inline] pub fn create2(shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorFloat16Bit>>> {
-        <Self as RtActivatable<ITensorFloat16BitStatics>>::get_activation_factory().create2(shape)
+    #[inline] pub fn create2(shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorFloat16Bit>>> {
+        <Self as RtActivatable<ITensorFloat16BitStatics>>::get_activation_factory().deref().create2(shape)
     }
-    #[inline] pub fn create_from_array(shape: &foundation::collections::IIterable<i64>, data: &[f32]) -> Result<Option<ComPtr<TensorFloat16Bit>>> {
-        <Self as RtActivatable<ITensorFloat16BitStatics>>::get_activation_factory().create_from_array(shape, data)
+    #[inline] pub fn create_from_array(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[f32]) -> Result<Option<ComPtr<TensorFloat16Bit>>> {
+        <Self as RtActivatable<ITensorFloat16BitStatics>>::get_activation_factory().deref().create_from_array(shape, data)
     }
-    #[inline] pub fn create_from_iterable(shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<f32>) -> Result<Option<ComPtr<TensorFloat16Bit>>> {
-        <Self as RtActivatable<ITensorFloat16BitStatics>>::get_activation_factory().create_from_iterable(shape, data)
+    #[inline] pub fn create_from_iterable(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<f32>>) -> Result<Option<ComPtr<TensorFloat16Bit>>> {
+        <Self as RtActivatable<ITensorFloat16BitStatics>>::get_activation_factory().deref().create_from_iterable(shape, data)
     }
 }
 DEFINE_CLSID!(TensorFloat16Bit(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,84,101,110,115,111,114,70,108,111,97,116,49,54,66,105,116,0]) [CLSID_TensorFloat16Bit]);
@@ -690,19 +690,19 @@ impl ITensorFloat16BitStatics {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create2(&self, shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorFloat16Bit>>> { unsafe { 
+    #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorFloat16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_array(&self, shape: &foundation::collections::IIterable<i64>, data: &[f32]) -> Result<Option<ComPtr<TensorFloat16Bit>>> { unsafe { 
+    #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[f32]) -> Result<Option<ComPtr<TensorFloat16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_iterable(&self, shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<f32>) -> Result<Option<ComPtr<TensorFloat16Bit>>> { unsafe { 
+    #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<f32>>) -> Result<Option<ComPtr<TensorFloat16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -719,19 +719,19 @@ impl ITensorFloatStatics {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create2(&self, shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorFloat>>> { unsafe { 
+    #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorFloat>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_array(&self, shape: &foundation::collections::IIterable<i64>, data: &[f32]) -> Result<Option<ComPtr<TensorFloat>>> { unsafe { 
+    #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[f32]) -> Result<Option<ComPtr<TensorFloat>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_iterable(&self, shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<f32>) -> Result<Option<ComPtr<TensorFloat>>> { unsafe { 
+    #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<f32>>) -> Result<Option<ComPtr<TensorFloat>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -750,16 +750,16 @@ RT_CLASS!{class TensorInt16Bit: ITensorInt16Bit}
 impl RtActivatable<ITensorInt16BitStatics> for TensorInt16Bit {}
 impl TensorInt16Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorInt16Bit>>> {
-        <Self as RtActivatable<ITensorInt16BitStatics>>::get_activation_factory().create()
+        <Self as RtActivatable<ITensorInt16BitStatics>>::get_activation_factory().deref().create()
     }
-    #[inline] pub fn create2(shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorInt16Bit>>> {
-        <Self as RtActivatable<ITensorInt16BitStatics>>::get_activation_factory().create2(shape)
+    #[inline] pub fn create2(shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt16Bit>>> {
+        <Self as RtActivatable<ITensorInt16BitStatics>>::get_activation_factory().deref().create2(shape)
     }
-    #[inline] pub fn create_from_array(shape: &foundation::collections::IIterable<i64>, data: &[i16]) -> Result<Option<ComPtr<TensorInt16Bit>>> {
-        <Self as RtActivatable<ITensorInt16BitStatics>>::get_activation_factory().create_from_array(shape, data)
+    #[inline] pub fn create_from_array(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[i16]) -> Result<Option<ComPtr<TensorInt16Bit>>> {
+        <Self as RtActivatable<ITensorInt16BitStatics>>::get_activation_factory().deref().create_from_array(shape, data)
     }
-    #[inline] pub fn create_from_iterable(shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<i16>) -> Result<Option<ComPtr<TensorInt16Bit>>> {
-        <Self as RtActivatable<ITensorInt16BitStatics>>::get_activation_factory().create_from_iterable(shape, data)
+    #[inline] pub fn create_from_iterable(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<i16>>) -> Result<Option<ComPtr<TensorInt16Bit>>> {
+        <Self as RtActivatable<ITensorInt16BitStatics>>::get_activation_factory().deref().create_from_iterable(shape, data)
     }
 }
 DEFINE_CLSID!(TensorInt16Bit(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,84,101,110,115,111,114,73,110,116,49,54,66,105,116,0]) [CLSID_TensorInt16Bit]);
@@ -776,19 +776,19 @@ impl ITensorInt16BitStatics {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create2(&self, shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorInt16Bit>>> { unsafe { 
+    #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_array(&self, shape: &foundation::collections::IIterable<i64>, data: &[i16]) -> Result<Option<ComPtr<TensorInt16Bit>>> { unsafe { 
+    #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[i16]) -> Result<Option<ComPtr<TensorInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_iterable(&self, shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<i16>) -> Result<Option<ComPtr<TensorInt16Bit>>> { unsafe { 
+    #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<i16>>) -> Result<Option<ComPtr<TensorInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -807,16 +807,16 @@ RT_CLASS!{class TensorInt32Bit: ITensorInt32Bit}
 impl RtActivatable<ITensorInt32BitStatics> for TensorInt32Bit {}
 impl TensorInt32Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorInt32Bit>>> {
-        <Self as RtActivatable<ITensorInt32BitStatics>>::get_activation_factory().create()
+        <Self as RtActivatable<ITensorInt32BitStatics>>::get_activation_factory().deref().create()
     }
-    #[inline] pub fn create2(shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorInt32Bit>>> {
-        <Self as RtActivatable<ITensorInt32BitStatics>>::get_activation_factory().create2(shape)
+    #[inline] pub fn create2(shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt32Bit>>> {
+        <Self as RtActivatable<ITensorInt32BitStatics>>::get_activation_factory().deref().create2(shape)
     }
-    #[inline] pub fn create_from_array(shape: &foundation::collections::IIterable<i64>, data: &[i32]) -> Result<Option<ComPtr<TensorInt32Bit>>> {
-        <Self as RtActivatable<ITensorInt32BitStatics>>::get_activation_factory().create_from_array(shape, data)
+    #[inline] pub fn create_from_array(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[i32]) -> Result<Option<ComPtr<TensorInt32Bit>>> {
+        <Self as RtActivatable<ITensorInt32BitStatics>>::get_activation_factory().deref().create_from_array(shape, data)
     }
-    #[inline] pub fn create_from_iterable(shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<i32>) -> Result<Option<ComPtr<TensorInt32Bit>>> {
-        <Self as RtActivatable<ITensorInt32BitStatics>>::get_activation_factory().create_from_iterable(shape, data)
+    #[inline] pub fn create_from_iterable(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<i32>>) -> Result<Option<ComPtr<TensorInt32Bit>>> {
+        <Self as RtActivatable<ITensorInt32BitStatics>>::get_activation_factory().deref().create_from_iterable(shape, data)
     }
 }
 DEFINE_CLSID!(TensorInt32Bit(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,84,101,110,115,111,114,73,110,116,51,50,66,105,116,0]) [CLSID_TensorInt32Bit]);
@@ -833,19 +833,19 @@ impl ITensorInt32BitStatics {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create2(&self, shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorInt32Bit>>> { unsafe { 
+    #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_array(&self, shape: &foundation::collections::IIterable<i64>, data: &[i32]) -> Result<Option<ComPtr<TensorInt32Bit>>> { unsafe { 
+    #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[i32]) -> Result<Option<ComPtr<TensorInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_iterable(&self, shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<i32>) -> Result<Option<ComPtr<TensorInt32Bit>>> { unsafe { 
+    #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<i32>>) -> Result<Option<ComPtr<TensorInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -864,16 +864,16 @@ RT_CLASS!{class TensorInt64Bit: ITensorInt64Bit}
 impl RtActivatable<ITensorInt64BitStatics> for TensorInt64Bit {}
 impl TensorInt64Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorInt64Bit>>> {
-        <Self as RtActivatable<ITensorInt64BitStatics>>::get_activation_factory().create()
+        <Self as RtActivatable<ITensorInt64BitStatics>>::get_activation_factory().deref().create()
     }
-    #[inline] pub fn create2(shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorInt64Bit>>> {
-        <Self as RtActivatable<ITensorInt64BitStatics>>::get_activation_factory().create2(shape)
+    #[inline] pub fn create2(shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt64Bit>>> {
+        <Self as RtActivatable<ITensorInt64BitStatics>>::get_activation_factory().deref().create2(shape)
     }
-    #[inline] pub fn create_from_array(shape: &foundation::collections::IIterable<i64>, data: &[i64]) -> Result<Option<ComPtr<TensorInt64Bit>>> {
-        <Self as RtActivatable<ITensorInt64BitStatics>>::get_activation_factory().create_from_array(shape, data)
+    #[inline] pub fn create_from_array(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[i64]) -> Result<Option<ComPtr<TensorInt64Bit>>> {
+        <Self as RtActivatable<ITensorInt64BitStatics>>::get_activation_factory().deref().create_from_array(shape, data)
     }
-    #[inline] pub fn create_from_iterable(shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorInt64Bit>>> {
-        <Self as RtActivatable<ITensorInt64BitStatics>>::get_activation_factory().create_from_iterable(shape, data)
+    #[inline] pub fn create_from_iterable(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt64Bit>>> {
+        <Self as RtActivatable<ITensorInt64BitStatics>>::get_activation_factory().deref().create_from_iterable(shape, data)
     }
 }
 DEFINE_CLSID!(TensorInt64Bit(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,84,101,110,115,111,114,73,110,116,54,52,66,105,116,0]) [CLSID_TensorInt64Bit]);
@@ -890,19 +890,19 @@ impl ITensorInt64BitStatics {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create2(&self, shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorInt64Bit>>> { unsafe { 
+    #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_array(&self, shape: &foundation::collections::IIterable<i64>, data: &[i64]) -> Result<Option<ComPtr<TensorInt64Bit>>> { unsafe { 
+    #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[i64]) -> Result<Option<ComPtr<TensorInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_iterable(&self, shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorInt64Bit>>> { unsafe { 
+    #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -921,16 +921,16 @@ RT_CLASS!{class TensorInt8Bit: ITensorInt8Bit}
 impl RtActivatable<ITensorInt8BitStatics> for TensorInt8Bit {}
 impl TensorInt8Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorInt8Bit>>> {
-        <Self as RtActivatable<ITensorInt8BitStatics>>::get_activation_factory().create()
+        <Self as RtActivatable<ITensorInt8BitStatics>>::get_activation_factory().deref().create()
     }
-    #[inline] pub fn create2(shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorInt8Bit>>> {
-        <Self as RtActivatable<ITensorInt8BitStatics>>::get_activation_factory().create2(shape)
+    #[inline] pub fn create2(shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt8Bit>>> {
+        <Self as RtActivatable<ITensorInt8BitStatics>>::get_activation_factory().deref().create2(shape)
     }
-    #[inline] pub fn create_from_array(shape: &foundation::collections::IIterable<i64>, data: &[u8]) -> Result<Option<ComPtr<TensorInt8Bit>>> {
-        <Self as RtActivatable<ITensorInt8BitStatics>>::get_activation_factory().create_from_array(shape, data)
+    #[inline] pub fn create_from_array(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u8]) -> Result<Option<ComPtr<TensorInt8Bit>>> {
+        <Self as RtActivatable<ITensorInt8BitStatics>>::get_activation_factory().deref().create_from_array(shape, data)
     }
-    #[inline] pub fn create_from_iterable(shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<u8>) -> Result<Option<ComPtr<TensorInt8Bit>>> {
-        <Self as RtActivatable<ITensorInt8BitStatics>>::get_activation_factory().create_from_iterable(shape, data)
+    #[inline] pub fn create_from_iterable(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u8>>) -> Result<Option<ComPtr<TensorInt8Bit>>> {
+        <Self as RtActivatable<ITensorInt8BitStatics>>::get_activation_factory().deref().create_from_iterable(shape, data)
     }
 }
 DEFINE_CLSID!(TensorInt8Bit(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,84,101,110,115,111,114,73,110,116,56,66,105,116,0]) [CLSID_TensorInt8Bit]);
@@ -947,19 +947,19 @@ impl ITensorInt8BitStatics {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create2(&self, shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorInt8Bit>>> { unsafe { 
+    #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_array(&self, shape: &foundation::collections::IIterable<i64>, data: &[u8]) -> Result<Option<ComPtr<TensorInt8Bit>>> { unsafe { 
+    #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u8]) -> Result<Option<ComPtr<TensorInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_iterable(&self, shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<u8>) -> Result<Option<ComPtr<TensorInt8Bit>>> { unsafe { 
+    #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u8>>) -> Result<Option<ComPtr<TensorInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -981,16 +981,16 @@ RT_CLASS!{class TensorString: ITensorString}
 impl RtActivatable<ITensorStringStatics> for TensorString {}
 impl TensorString {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorString>>> {
-        <Self as RtActivatable<ITensorStringStatics>>::get_activation_factory().create()
+        <Self as RtActivatable<ITensorStringStatics>>::get_activation_factory().deref().create()
     }
-    #[inline] pub fn create2(shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorString>>> {
-        <Self as RtActivatable<ITensorStringStatics>>::get_activation_factory().create2(shape)
+    #[inline] pub fn create2(shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorString>>> {
+        <Self as RtActivatable<ITensorStringStatics>>::get_activation_factory().deref().create2(shape)
     }
-    #[inline] pub fn create_from_array(shape: &foundation::collections::IIterable<i64>, data: &[&HStringArg]) -> Result<Option<ComPtr<TensorString>>> {
-        <Self as RtActivatable<ITensorStringStatics>>::get_activation_factory().create_from_array(shape, data)
+    #[inline] pub fn create_from_array(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[&HStringArg]) -> Result<Option<ComPtr<TensorString>>> {
+        <Self as RtActivatable<ITensorStringStatics>>::get_activation_factory().deref().create_from_array(shape, data)
     }
-    #[inline] pub fn create_from_iterable(shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<HString>) -> Result<Option<ComPtr<TensorString>>> {
-        <Self as RtActivatable<ITensorStringStatics>>::get_activation_factory().create_from_iterable(shape, data)
+    #[inline] pub fn create_from_iterable(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<Option<ComPtr<TensorString>>> {
+        <Self as RtActivatable<ITensorStringStatics>>::get_activation_factory().deref().create_from_iterable(shape, data)
     }
 }
 DEFINE_CLSID!(TensorString(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,84,101,110,115,111,114,83,116,114,105,110,103,0]) [CLSID_TensorString]);
@@ -1007,19 +1007,19 @@ impl ITensorStringStatics {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create2(&self, shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorString>>> { unsafe { 
+    #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_array(&self, shape: &foundation::collections::IIterable<i64>, data: &[&HStringArg]) -> Result<Option<ComPtr<TensorString>>> { unsafe { 
+    #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[&HStringArg]) -> Result<Option<ComPtr<TensorString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_iterable(&self, shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<HString>) -> Result<Option<ComPtr<TensorString>>> { unsafe { 
+    #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<Option<ComPtr<TensorString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1038,16 +1038,16 @@ RT_CLASS!{class TensorUInt16Bit: ITensorUInt16Bit}
 impl RtActivatable<ITensorUInt16BitStatics> for TensorUInt16Bit {}
 impl TensorUInt16Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorUInt16Bit>>> {
-        <Self as RtActivatable<ITensorUInt16BitStatics>>::get_activation_factory().create()
+        <Self as RtActivatable<ITensorUInt16BitStatics>>::get_activation_factory().deref().create()
     }
-    #[inline] pub fn create2(shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorUInt16Bit>>> {
-        <Self as RtActivatable<ITensorUInt16BitStatics>>::get_activation_factory().create2(shape)
+    #[inline] pub fn create2(shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorUInt16Bit>>> {
+        <Self as RtActivatable<ITensorUInt16BitStatics>>::get_activation_factory().deref().create2(shape)
     }
-    #[inline] pub fn create_from_array(shape: &foundation::collections::IIterable<i64>, data: &[u16]) -> Result<Option<ComPtr<TensorUInt16Bit>>> {
-        <Self as RtActivatable<ITensorUInt16BitStatics>>::get_activation_factory().create_from_array(shape, data)
+    #[inline] pub fn create_from_array(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u16]) -> Result<Option<ComPtr<TensorUInt16Bit>>> {
+        <Self as RtActivatable<ITensorUInt16BitStatics>>::get_activation_factory().deref().create_from_array(shape, data)
     }
-    #[inline] pub fn create_from_iterable(shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<u16>) -> Result<Option<ComPtr<TensorUInt16Bit>>> {
-        <Self as RtActivatable<ITensorUInt16BitStatics>>::get_activation_factory().create_from_iterable(shape, data)
+    #[inline] pub fn create_from_iterable(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u16>>) -> Result<Option<ComPtr<TensorUInt16Bit>>> {
+        <Self as RtActivatable<ITensorUInt16BitStatics>>::get_activation_factory().deref().create_from_iterable(shape, data)
     }
 }
 DEFINE_CLSID!(TensorUInt16Bit(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,84,101,110,115,111,114,85,73,110,116,49,54,66,105,116,0]) [CLSID_TensorUInt16Bit]);
@@ -1064,19 +1064,19 @@ impl ITensorUInt16BitStatics {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create2(&self, shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorUInt16Bit>>> { unsafe { 
+    #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorUInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_array(&self, shape: &foundation::collections::IIterable<i64>, data: &[u16]) -> Result<Option<ComPtr<TensorUInt16Bit>>> { unsafe { 
+    #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u16]) -> Result<Option<ComPtr<TensorUInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_iterable(&self, shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<u16>) -> Result<Option<ComPtr<TensorUInt16Bit>>> { unsafe { 
+    #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u16>>) -> Result<Option<ComPtr<TensorUInt16Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1095,16 +1095,16 @@ RT_CLASS!{class TensorUInt32Bit: ITensorUInt32Bit}
 impl RtActivatable<ITensorUInt32BitStatics> for TensorUInt32Bit {}
 impl TensorUInt32Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorUInt32Bit>>> {
-        <Self as RtActivatable<ITensorUInt32BitStatics>>::get_activation_factory().create()
+        <Self as RtActivatable<ITensorUInt32BitStatics>>::get_activation_factory().deref().create()
     }
-    #[inline] pub fn create2(shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorUInt32Bit>>> {
-        <Self as RtActivatable<ITensorUInt32BitStatics>>::get_activation_factory().create2(shape)
+    #[inline] pub fn create2(shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorUInt32Bit>>> {
+        <Self as RtActivatable<ITensorUInt32BitStatics>>::get_activation_factory().deref().create2(shape)
     }
-    #[inline] pub fn create_from_array(shape: &foundation::collections::IIterable<i64>, data: &[u32]) -> Result<Option<ComPtr<TensorUInt32Bit>>> {
-        <Self as RtActivatable<ITensorUInt32BitStatics>>::get_activation_factory().create_from_array(shape, data)
+    #[inline] pub fn create_from_array(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u32]) -> Result<Option<ComPtr<TensorUInt32Bit>>> {
+        <Self as RtActivatable<ITensorUInt32BitStatics>>::get_activation_factory().deref().create_from_array(shape, data)
     }
-    #[inline] pub fn create_from_iterable(shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<u32>) -> Result<Option<ComPtr<TensorUInt32Bit>>> {
-        <Self as RtActivatable<ITensorUInt32BitStatics>>::get_activation_factory().create_from_iterable(shape, data)
+    #[inline] pub fn create_from_iterable(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u32>>) -> Result<Option<ComPtr<TensorUInt32Bit>>> {
+        <Self as RtActivatable<ITensorUInt32BitStatics>>::get_activation_factory().deref().create_from_iterable(shape, data)
     }
 }
 DEFINE_CLSID!(TensorUInt32Bit(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,84,101,110,115,111,114,85,73,110,116,51,50,66,105,116,0]) [CLSID_TensorUInt32Bit]);
@@ -1121,19 +1121,19 @@ impl ITensorUInt32BitStatics {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create2(&self, shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorUInt32Bit>>> { unsafe { 
+    #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorUInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_array(&self, shape: &foundation::collections::IIterable<i64>, data: &[u32]) -> Result<Option<ComPtr<TensorUInt32Bit>>> { unsafe { 
+    #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u32]) -> Result<Option<ComPtr<TensorUInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_iterable(&self, shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<u32>) -> Result<Option<ComPtr<TensorUInt32Bit>>> { unsafe { 
+    #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u32>>) -> Result<Option<ComPtr<TensorUInt32Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1152,16 +1152,16 @@ RT_CLASS!{class TensorUInt64Bit: ITensorUInt64Bit}
 impl RtActivatable<ITensorUInt64BitStatics> for TensorUInt64Bit {}
 impl TensorUInt64Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorUInt64Bit>>> {
-        <Self as RtActivatable<ITensorUInt64BitStatics>>::get_activation_factory().create()
+        <Self as RtActivatable<ITensorUInt64BitStatics>>::get_activation_factory().deref().create()
     }
-    #[inline] pub fn create2(shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorUInt64Bit>>> {
-        <Self as RtActivatable<ITensorUInt64BitStatics>>::get_activation_factory().create2(shape)
+    #[inline] pub fn create2(shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorUInt64Bit>>> {
+        <Self as RtActivatable<ITensorUInt64BitStatics>>::get_activation_factory().deref().create2(shape)
     }
-    #[inline] pub fn create_from_array(shape: &foundation::collections::IIterable<i64>, data: &[u64]) -> Result<Option<ComPtr<TensorUInt64Bit>>> {
-        <Self as RtActivatable<ITensorUInt64BitStatics>>::get_activation_factory().create_from_array(shape, data)
+    #[inline] pub fn create_from_array(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u64]) -> Result<Option<ComPtr<TensorUInt64Bit>>> {
+        <Self as RtActivatable<ITensorUInt64BitStatics>>::get_activation_factory().deref().create_from_array(shape, data)
     }
-    #[inline] pub fn create_from_iterable(shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<u64>) -> Result<Option<ComPtr<TensorUInt64Bit>>> {
-        <Self as RtActivatable<ITensorUInt64BitStatics>>::get_activation_factory().create_from_iterable(shape, data)
+    #[inline] pub fn create_from_iterable(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u64>>) -> Result<Option<ComPtr<TensorUInt64Bit>>> {
+        <Self as RtActivatable<ITensorUInt64BitStatics>>::get_activation_factory().deref().create_from_iterable(shape, data)
     }
 }
 DEFINE_CLSID!(TensorUInt64Bit(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,84,101,110,115,111,114,85,73,110,116,54,52,66,105,116,0]) [CLSID_TensorUInt64Bit]);
@@ -1178,19 +1178,19 @@ impl ITensorUInt64BitStatics {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create2(&self, shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorUInt64Bit>>> { unsafe { 
+    #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorUInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_array(&self, shape: &foundation::collections::IIterable<i64>, data: &[u64]) -> Result<Option<ComPtr<TensorUInt64Bit>>> { unsafe { 
+    #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u64]) -> Result<Option<ComPtr<TensorUInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_iterable(&self, shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<u64>) -> Result<Option<ComPtr<TensorUInt64Bit>>> { unsafe { 
+    #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u64>>) -> Result<Option<ComPtr<TensorUInt64Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1209,16 +1209,16 @@ RT_CLASS!{class TensorUInt8Bit: ITensorUInt8Bit}
 impl RtActivatable<ITensorUInt8BitStatics> for TensorUInt8Bit {}
 impl TensorUInt8Bit {
     #[inline] pub fn create() -> Result<Option<ComPtr<TensorUInt8Bit>>> {
-        <Self as RtActivatable<ITensorUInt8BitStatics>>::get_activation_factory().create()
+        <Self as RtActivatable<ITensorUInt8BitStatics>>::get_activation_factory().deref().create()
     }
-    #[inline] pub fn create2(shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorUInt8Bit>>> {
-        <Self as RtActivatable<ITensorUInt8BitStatics>>::get_activation_factory().create2(shape)
+    #[inline] pub fn create2(shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorUInt8Bit>>> {
+        <Self as RtActivatable<ITensorUInt8BitStatics>>::get_activation_factory().deref().create2(shape)
     }
-    #[inline] pub fn create_from_array(shape: &foundation::collections::IIterable<i64>, data: &[u8]) -> Result<Option<ComPtr<TensorUInt8Bit>>> {
-        <Self as RtActivatable<ITensorUInt8BitStatics>>::get_activation_factory().create_from_array(shape, data)
+    #[inline] pub fn create_from_array(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u8]) -> Result<Option<ComPtr<TensorUInt8Bit>>> {
+        <Self as RtActivatable<ITensorUInt8BitStatics>>::get_activation_factory().deref().create_from_array(shape, data)
     }
-    #[inline] pub fn create_from_iterable(shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<u8>) -> Result<Option<ComPtr<TensorUInt8Bit>>> {
-        <Self as RtActivatable<ITensorUInt8BitStatics>>::get_activation_factory().create_from_iterable(shape, data)
+    #[inline] pub fn create_from_iterable(shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u8>>) -> Result<Option<ComPtr<TensorUInt8Bit>>> {
+        <Self as RtActivatable<ITensorUInt8BitStatics>>::get_activation_factory().deref().create_from_iterable(shape, data)
     }
 }
 DEFINE_CLSID!(TensorUInt8Bit(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,84,101,110,115,111,114,85,73,110,116,56,66,105,116,0]) [CLSID_TensorUInt8Bit]);
@@ -1235,19 +1235,19 @@ impl ITensorUInt8BitStatics {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create2(&self, shape: &foundation::collections::IIterable<i64>) -> Result<Option<ComPtr<TensorUInt8Bit>>> { unsafe { 
+    #[inline] pub fn create2(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>) -> Result<Option<ComPtr<TensorUInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create2)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_array(&self, shape: &foundation::collections::IIterable<i64>, data: &[u8]) -> Result<Option<ComPtr<TensorUInt8Bit>>> { unsafe { 
+    #[inline] pub fn create_from_array(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &[u8]) -> Result<Option<ComPtr<TensorUInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromArray)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.len() as u32, data.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_iterable(&self, shape: &foundation::collections::IIterable<i64>, data: &foundation::collections::IIterable<u8>) -> Result<Option<ComPtr<TensorUInt8Bit>>> { unsafe { 
+    #[inline] pub fn create_from_iterable(&self, shape: &ComPtr<foundation::collections::IIterable<i64>>, data: &ComPtr<foundation::collections::IIterable<u8>>) -> Result<Option<ComPtr<TensorUInt8Bit>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape as *const _ as *mut _, data as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIterable)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, data.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1349,12 +1349,12 @@ RT_INTERFACE!{interface ILearningModelBindingPreview(ILearningModelBindingPrevie
     fn Clear(&self) -> HRESULT
 }}
 impl ILearningModelBindingPreview {
-    #[inline] pub fn bind(&self, name: &HStringArg, value: &IInspectable) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Bind)(self as *const _ as *mut _, name.get(), value as *const _ as *mut _);
+    #[inline] pub fn bind(&self, name: &HStringArg, value: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Bind)(self as *const _ as *mut _, name.get(), value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn bind_with_properties(&self, name: &HStringArg, value: &IInspectable, metadata: &foundation::collections::IPropertySet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).BindWithProperties)(self as *const _ as *mut _, name.get(), value as *const _ as *mut _, metadata as *const _ as *mut _);
+    #[inline] pub fn bind_with_properties(&self, name: &HStringArg, value: &ComPtr<IInspectable>, metadata: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).BindWithProperties)(self as *const _ as *mut _, name.get(), value.deref() as *const _ as *mut _, metadata.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn clear(&self) -> Result<()> { unsafe { 
@@ -1365,8 +1365,8 @@ impl ILearningModelBindingPreview {
 RT_CLASS!{class LearningModelBindingPreview: ILearningModelBindingPreview}
 impl RtActivatable<ILearningModelBindingPreviewFactory> for LearningModelBindingPreview {}
 impl LearningModelBindingPreview {
-    #[inline] pub fn create_from_model(model: &LearningModelPreview) -> Result<ComPtr<LearningModelBindingPreview>> {
-        <Self as RtActivatable<ILearningModelBindingPreviewFactory>>::get_activation_factory().create_from_model(model)
+    #[inline] pub fn create_from_model(model: &ComPtr<LearningModelPreview>) -> Result<ComPtr<LearningModelBindingPreview>> {
+        <Self as RtActivatable<ILearningModelBindingPreviewFactory>>::get_activation_factory().deref().create_from_model(model)
     }
 }
 DEFINE_CLSID!(LearningModelBindingPreview(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,80,114,101,118,105,101,119,46,76,101,97,114,110,105,110,103,77,111,100,101,108,66,105,110,100,105,110,103,80,114,101,118,105,101,119,0]) [CLSID_LearningModelBindingPreview]);
@@ -1375,9 +1375,9 @@ RT_INTERFACE!{static interface ILearningModelBindingPreviewFactory(ILearningMode
     fn CreateFromModel(&self, model: *mut LearningModelPreview, out: *mut *mut LearningModelBindingPreview) -> HRESULT
 }}
 impl ILearningModelBindingPreviewFactory {
-    #[inline] pub fn create_from_model(&self, model: &LearningModelPreview) -> Result<ComPtr<LearningModelBindingPreview>> { unsafe { 
+    #[inline] pub fn create_from_model(&self, model: &ComPtr<LearningModelPreview>) -> Result<ComPtr<LearningModelBindingPreview>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromModel)(self as *const _ as *mut _, model as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromModel)(self as *const _ as *mut _, model.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1468,14 +1468,14 @@ RT_INTERFACE!{interface ILearningModelPreview(ILearningModelPreviewVtbl): IInspe
     fn put_InferencingOptions(&self, value: *mut InferencingOptionsPreview) -> HRESULT
 }}
 impl ILearningModelPreview {
-    #[inline] pub fn evaluate_async(&self, binding: &LearningModelBindingPreview, correlationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelEvaluationResultPreview>>> { unsafe { 
+    #[inline] pub fn evaluate_async(&self, binding: &ComPtr<LearningModelBindingPreview>, correlationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelEvaluationResultPreview>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).EvaluateAsync)(self as *const _ as *mut _, binding as *const _ as *mut _, correlationId.get(), &mut out);
+        let hr = ((*self.lpVtbl).EvaluateAsync)(self as *const _ as *mut _, binding.deref() as *const _ as *mut _, correlationId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn evaluate_features_async(&self, features: &foundation::collections::IMap<HString, IInspectable>, correlationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelEvaluationResultPreview>>> { unsafe { 
+    #[inline] pub fn evaluate_features_async(&self, features: &ComPtr<foundation::collections::IMap<HString, IInspectable>>, correlationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelEvaluationResultPreview>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).EvaluateFeaturesAsync)(self as *const _ as *mut _, features as *const _ as *mut _, correlationId.get(), &mut out);
+        let hr = ((*self.lpVtbl).EvaluateFeaturesAsync)(self as *const _ as *mut _, features.deref() as *const _ as *mut _, correlationId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<Option<ComPtr<LearningModelDescriptionPreview>>> { unsafe { 
@@ -1488,19 +1488,19 @@ impl ILearningModelPreview {
         let hr = ((*self.lpVtbl).get_InferencingOptions)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_inferencing_options(&self, value: &InferencingOptionsPreview) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_InferencingOptions)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_inferencing_options(&self, value: &ComPtr<InferencingOptionsPreview>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_InferencingOptions)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 RT_CLASS!{class LearningModelPreview: ILearningModelPreview}
 impl RtActivatable<ILearningModelPreviewStatics> for LearningModelPreview {}
 impl LearningModelPreview {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_storage_file_async(modelFile: &crate::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> {
-        <Self as RtActivatable<ILearningModelPreviewStatics>>::get_activation_factory().load_model_from_storage_file_async(modelFile)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_storage_file_async(modelFile: &ComPtr<crate::windows::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> {
+        <Self as RtActivatable<ILearningModelPreviewStatics>>::get_activation_factory().deref().load_model_from_storage_file_async(modelFile)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_stream_async(modelStream: &crate::windows::storage::streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> {
-        <Self as RtActivatable<ILearningModelPreviewStatics>>::get_activation_factory().load_model_from_stream_async(modelStream)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_stream_async(modelStream: &ComPtr<crate::windows::storage::streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> {
+        <Self as RtActivatable<ILearningModelPreviewStatics>>::get_activation_factory().deref().load_model_from_stream_async(modelStream)
     }
 }
 DEFINE_CLSID!(LearningModelPreview(&[87,105,110,100,111,119,115,46,65,73,46,77,97,99,104,105,110,101,76,101,97,114,110,105,110,103,46,80,114,101,118,105,101,119,46,76,101,97,114,110,105,110,103,77,111,100,101,108,80,114,101,118,105,101,119,0]) [CLSID_LearningModelPreview]);
@@ -1510,14 +1510,14 @@ RT_INTERFACE!{static interface ILearningModelPreviewStatics(ILearningModelPrevie
     #[cfg(feature="windows-storage")] fn LoadModelFromStreamAsync(&self, modelStream: *mut crate::windows::storage::streams::IRandomAccessStreamReference, out: *mut *mut foundation::IAsyncOperation<LearningModelPreview>) -> HRESULT
 }}
 impl ILearningModelPreviewStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_storage_file_async(&self, modelFile: &crate::windows::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_storage_file_async(&self, modelFile: &ComPtr<crate::windows::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadModelFromStorageFileAsync)(self as *const _ as *mut _, modelFile as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadModelFromStorageFileAsync)(self as *const _ as *mut _, modelFile.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_stream_async(&self, modelStream: &crate::windows::storage::streams::IRandomAccessStreamReference) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_stream_async(&self, modelStream: &ComPtr<crate::windows::storage::streams::IRandomAccessStreamReference>) -> Result<ComPtr<foundation::IAsyncOperation<LearningModelPreview>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadModelFromStreamAsync)(self as *const _ as *mut _, modelStream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadModelFromStreamAsync)(self as *const _ as *mut _, modelStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }

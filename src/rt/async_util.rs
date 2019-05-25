@@ -45,7 +45,7 @@ macro_rules! impl_blocking_wait {
         #[inline]
         fn blocking_wait(&self) {
             let info = crate::comptr::query_interface::<_, IAsyncInfo>(self).expect("query_interface failed");
-            let status = info.get_status().expect("get_status failed");
+            let status = info.deref().get_status().expect("get_status failed");
 
             if status == crate::windows::foundation::AsyncStatus::Completed {
                 return;

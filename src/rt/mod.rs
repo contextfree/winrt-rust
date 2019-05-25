@@ -143,7 +143,7 @@ impl<T> RtDefaultConstructible for T where T: RtActivatable<IActivationFactory> 
     #[inline]
     fn new() -> ComPtr<Self> where Self: Sized + RtActivatable<IActivationFactory> + ComInterface {
         let factory: ComPtr<IActivationFactory> = Self::get_activation_factory();
-        unsafe { factory.activate_instance().into_unchecked() }
+        unsafe { factory.deref().activate_instance().into_unchecked() }
     }
 }
 
@@ -172,13 +172,13 @@ impl<'a, T> Iterator for IteratorAdaptor<'a, T> where T: RtType
     fn next(&mut self) -> Option<Self::Item> {
         if !self.called_next {
             self.called_next = true;
-            match self.iter.get_has_current().expect("IIterator::get_has_current failed") {
-                true => Some(self.iter.get_current().expect("IIterator::get_current failed")),
+            match self.iter.deref().get_has_current().expect("IIterator::get_has_current failed") {
+                true => Some(self.iter.deref().get_current().expect("IIterator::get_current failed")),
                 false => None
             }
         } else {
-            match self.iter.move_next() {
-                Ok(true) => Some(self.iter.get_current().expect("IIterator::get_current failed")),
+            match self.iter.deref().move_next() {
+                Ok(true) => Some(self.iter.deref().get_current().expect("IIterator::get_current failed")),
                 Ok(false) => None,
                 Err(crate::Error::ChangedState) => panic!("the iterator was invalidated by an operation that changed the state of the container"),
                 Err(e) => panic!("IIterator::move_next failed: {:?}", e),
@@ -205,7 +205,7 @@ impl<'a, T> IntoIterator for &'a IVector<T> where T: RtType, IIterable<T>: ComIi
     type Item = <T as RtType>::Out;
     type IntoIter = IteratorAdaptor<'a, T>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self).unwrap().first().unwrap().unwrap())
+        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self).unwrap().deref().first().unwrap().unwrap())
     }
 }
 
@@ -214,7 +214,7 @@ impl<'a, T> IntoIterator for &'a IVectorView<T> where T: RtType, IIterable<T>: C
     type Item = <T as RtType>::Out;
     type IntoIter = IteratorAdaptor<'a, T>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self).unwrap().first().unwrap().unwrap())
+        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self).unwrap().deref().first().unwrap().unwrap())
     }
 }
 
@@ -223,7 +223,7 @@ impl<'a, T> IntoIterator for &'a IObservableVector<T> where T: RtType, IIterable
     type Item = <T as RtType>::Out;
     type IntoIter = IteratorAdaptor<'a, T>;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self).unwrap().first().unwrap().unwrap())
+        IteratorAdaptor::new(crate::comptr::query_interface::<_, IIterable<T>>(self).unwrap().deref().first().unwrap().unwrap())
     }
 }
 
@@ -235,7 +235,6 @@ impl<'a, T: ComInterface> IntoIterator for &'a ComPtr<T> where &'a T: IntoIterat
     type Item = <&'a T as IntoIterator>::Item;
     type IntoIter = <&'a T as IntoIterator>::IntoIter;
     #[inline] fn into_iter(self) -> Self::IntoIter {
-        use std::ops::Deref;
         self.deref().into_iter()
     }
 }
@@ -295,12 +294,12 @@ macro_rules! RT_INTERFACE {
             type Vtbl = $vtbl;
         }
         impl crate::RtType for $interface {
-            type In = $interface;
+            type In = ComPtr<$interface>;
             type Abi = *mut $interface;
             type Out = Option<Self::OutNonNull>;
             type OutNonNull = ComPtr<$interface>;
 
-            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.deref() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
             #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
@@ -344,12 +343,12 @@ macro_rules! RT_INTERFACE {
             type Vtbl = $vtbl;
         }
         impl crate::RtType for $interface {
-            type In = $interface;
+            type In = ComPtr<$interface>;
             type Abi = *mut $interface;
             type Out = Option<Self::OutNonNull>;
             type OutNonNull = ComPtr<$interface>;
 
-            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.deref() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
             #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
@@ -390,12 +389,12 @@ macro_rules! RT_INTERFACE {
             type Vtbl = $vtbl<$t1>;
         }
         impl<$t1> crate::RtType for $interface<$t1> where $t1: RtType{
-            type In = $interface<$t1>;
+            type In = ComPtr<$interface<$t1>>;
             type Abi = *mut $interface<$t1>;
             type Out = Option<Self::OutNonNull>;
             type OutNonNull = ComPtr<$interface<$t1>>;
 
-            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.deref() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
             #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
@@ -435,12 +434,12 @@ macro_rules! RT_INTERFACE {
             type Vtbl = $vtbl<$t1, $t2>;
         }
         impl<$t1, $t2> crate::RtType for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
-            type In = $interface<$t1, $t2>;
+            type In = ComPtr<$interface<$t1, $t2>>;
             type Abi = *mut $interface<$t1, $t2>;
             type Out = Option<Self::OutNonNull>;
             type OutNonNull = ComPtr<$interface<$t1, $t2>>;
 
-            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.deref() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
             #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
@@ -616,12 +615,12 @@ macro_rules! RT_CLASS {
             #[inline] fn iid() -> &'static crate::Guid { <$interface as ComIid>::iid() }
         }
         impl crate::RtType for $cls {
-            type In = $cls;
+            type In = ComPtr<$cls>;
             type Abi = *mut $cls;
             type Out = Option<Self::OutNonNull>;
             type OutNonNull = ComPtr<$cls>;
             
-            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v as *const _ as *mut _ }
+            #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.deref() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
             #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { ComPtr::wrap_optional(v) }
         }
@@ -636,6 +635,13 @@ macro_rules! RT_CLASS {
             #[inline]
             fn deref_mut(&mut self) -> &mut $interface {
                 &mut self.0
+            }
+        }
+        impl std::ops::Deref for ComPtr<$cls> {
+            type Target = ComPtr<$interface>;
+            #[inline]
+            fn deref(&self) -> &ComPtr<$interface> {
+                unsafe { &*(self as *const _ as *const ComPtr<$interface>) }
             }
         }
     };

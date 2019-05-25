@@ -6,8 +6,8 @@ RT_INTERFACE!{interface IAsyncAction(IAsyncActionVtbl): IInspectable(IInspectabl
     fn GetResults(&self) -> HRESULT
 }}
 impl IAsyncAction {
-    #[inline] pub fn set_completed(&self, handler: &AsyncActionCompletedHandler) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _);
+    #[inline] pub fn set_completed(&self, handler: &ComPtr<AsyncActionCompletedHandler>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_completed(&self) -> Result<Option<ComPtr<AsyncActionCompletedHandler>>> { unsafe { 
@@ -25,8 +25,8 @@ RT_DELEGATE!{delegate AsyncActionCompletedHandler(AsyncActionCompletedHandlerVtb
     fn Invoke(&self, asyncInfo: *mut IAsyncAction, asyncStatus: AsyncStatus) -> HRESULT
 }}
 impl AsyncActionCompletedHandler {
-    #[inline] pub fn invoke(&self, asyncInfo: &IAsyncAction, asyncStatus: AsyncStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, asyncStatus);
+    #[inline] pub fn invoke(&self, asyncInfo: &ComPtr<IAsyncAction>, asyncStatus: AsyncStatus) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, asyncStatus);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -35,8 +35,8 @@ RT_DELEGATE!{delegate AsyncActionProgressHandler<TProgress>(AsyncActionProgressH
     fn Invoke(&self, asyncInfo: *mut IAsyncActionWithProgress<TProgress>, progressInfo: TProgress::Abi) -> HRESULT
 }}
 impl<TProgress: RtType> AsyncActionProgressHandler<TProgress> {
-    #[inline] pub fn invoke(&self, asyncInfo: &IAsyncActionWithProgress<TProgress>, progressInfo: &TProgress::In) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, TProgress::unwrap(progressInfo));
+    #[inline] pub fn invoke(&self, asyncInfo: &ComPtr<IAsyncActionWithProgress<TProgress>>, progressInfo: &TProgress::In) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, TProgress::unwrap(progressInfo));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -49,8 +49,8 @@ RT_INTERFACE!{interface IAsyncActionWithProgress<TProgress>(IAsyncActionWithProg
     fn GetResults(&self) -> HRESULT
 }}
 impl<TProgress: RtType> IAsyncActionWithProgress<TProgress> {
-    #[inline] pub fn set_progress(&self, handler: &AsyncActionProgressHandler<TProgress>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Progress)(self as *const _ as *mut _, handler as *const _ as *mut _);
+    #[inline] pub fn set_progress(&self, handler: &ComPtr<AsyncActionProgressHandler<TProgress>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Progress)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_progress(&self) -> Result<Option<ComPtr<AsyncActionProgressHandler<TProgress>>>> { unsafe { 
@@ -58,8 +58,8 @@ impl<TProgress: RtType> IAsyncActionWithProgress<TProgress> {
         let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_completed(&self, handler: &AsyncActionWithProgressCompletedHandler<TProgress>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _);
+    #[inline] pub fn set_completed(&self, handler: &ComPtr<AsyncActionWithProgressCompletedHandler<TProgress>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_completed(&self) -> Result<Option<ComPtr<AsyncActionWithProgressCompletedHandler<TProgress>>>> { unsafe { 
@@ -77,8 +77,8 @@ RT_DELEGATE!{delegate AsyncActionWithProgressCompletedHandler<TProgress>(AsyncAc
     fn Invoke(&self, asyncInfo: *mut IAsyncActionWithProgress<TProgress>, asyncStatus: AsyncStatus) -> HRESULT
 }}
 impl<TProgress: RtType> AsyncActionWithProgressCompletedHandler<TProgress> {
-    #[inline] pub fn invoke(&self, asyncInfo: &IAsyncActionWithProgress<TProgress>, asyncStatus: AsyncStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, asyncStatus);
+    #[inline] pub fn invoke(&self, asyncInfo: &ComPtr<IAsyncActionWithProgress<TProgress>>, asyncStatus: AsyncStatus) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, asyncStatus);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -122,8 +122,8 @@ RT_INTERFACE!{interface IAsyncOperation<TResult>(IAsyncOperationVtbl): IInspecta
     fn GetResults(&self, out: *mut TResult::Abi) -> HRESULT
 }}
 impl<TResult: RtType> IAsyncOperation<TResult> {
-    #[inline] pub fn set_completed(&self, handler: &AsyncOperationCompletedHandler<TResult>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _);
+    #[inline] pub fn set_completed(&self, handler: &ComPtr<AsyncOperationCompletedHandler<TResult>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_completed(&self) -> Result<Option<ComPtr<AsyncOperationCompletedHandler<TResult>>>> { unsafe { 
@@ -142,8 +142,8 @@ RT_DELEGATE!{delegate AsyncOperationCompletedHandler<TResult>(AsyncOperationComp
     fn Invoke(&self, asyncInfo: *mut IAsyncOperation<TResult>, asyncStatus: AsyncStatus) -> HRESULT
 }}
 impl<TResult: RtType> AsyncOperationCompletedHandler<TResult> {
-    #[inline] pub fn invoke(&self, asyncInfo: &IAsyncOperation<TResult>, asyncStatus: AsyncStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, asyncStatus);
+    #[inline] pub fn invoke(&self, asyncInfo: &ComPtr<IAsyncOperation<TResult>>, asyncStatus: AsyncStatus) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, asyncStatus);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -152,8 +152,8 @@ RT_DELEGATE!{delegate AsyncOperationProgressHandler<TResult, TProgress>(AsyncOpe
     fn Invoke(&self, asyncInfo: *mut IAsyncOperationWithProgress<TResult, TProgress>, progressInfo: TProgress::Abi) -> HRESULT
 }}
 impl<TResult: RtType, TProgress: RtType> AsyncOperationProgressHandler<TResult, TProgress> {
-    #[inline] pub fn invoke(&self, asyncInfo: &IAsyncOperationWithProgress<TResult, TProgress>, progressInfo: &TProgress::In) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, TProgress::unwrap(progressInfo));
+    #[inline] pub fn invoke(&self, asyncInfo: &ComPtr<IAsyncOperationWithProgress<TResult, TProgress>>, progressInfo: &TProgress::In) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, TProgress::unwrap(progressInfo));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -166,8 +166,8 @@ RT_INTERFACE!{interface IAsyncOperationWithProgress<TResult, TProgress>(IAsyncOp
     fn GetResults(&self, out: *mut TResult::Abi) -> HRESULT
 }}
 impl<TResult: RtType, TProgress: RtType> IAsyncOperationWithProgress<TResult, TProgress> {
-    #[inline] pub fn set_progress(&self, handler: &AsyncOperationProgressHandler<TResult, TProgress>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Progress)(self as *const _ as *mut _, handler as *const _ as *mut _);
+    #[inline] pub fn set_progress(&self, handler: &ComPtr<AsyncOperationProgressHandler<TResult, TProgress>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Progress)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_progress(&self) -> Result<Option<ComPtr<AsyncOperationProgressHandler<TResult, TProgress>>>> { unsafe { 
@@ -175,8 +175,8 @@ impl<TResult: RtType, TProgress: RtType> IAsyncOperationWithProgress<TResult, TP
         let hr = ((*self.lpVtbl).get_Progress)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_completed(&self, handler: &AsyncOperationWithProgressCompletedHandler<TResult, TProgress>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler as *const _ as *mut _);
+    #[inline] pub fn set_completed(&self, handler: &ComPtr<AsyncOperationWithProgressCompletedHandler<TResult, TProgress>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Completed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_completed(&self) -> Result<Option<ComPtr<AsyncOperationWithProgressCompletedHandler<TResult, TProgress>>>> { unsafe { 
@@ -195,8 +195,8 @@ RT_DELEGATE!{delegate AsyncOperationWithProgressCompletedHandler<TResult, TProgr
     fn Invoke(&self, asyncInfo: *mut IAsyncOperationWithProgress<TResult, TProgress>, asyncStatus: AsyncStatus) -> HRESULT
 }}
 impl<TResult: RtType, TProgress: RtType> AsyncOperationWithProgressCompletedHandler<TResult, TProgress> {
-    #[inline] pub fn invoke(&self, asyncInfo: &IAsyncOperationWithProgress<TResult, TProgress>, asyncStatus: AsyncStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo as *const _ as *mut _, asyncStatus);
+    #[inline] pub fn invoke(&self, asyncInfo: &ComPtr<IAsyncOperationWithProgress<TResult, TProgress>>, asyncStatus: AsyncStatus) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, asyncInfo.deref() as *const _ as *mut _, asyncStatus);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -229,8 +229,8 @@ impl IDeferral {
 RT_CLASS!{class Deferral: IDeferral}
 impl RtActivatable<IDeferralFactory> for Deferral {}
 impl Deferral {
-    #[inline] pub fn create(handler: &DeferralCompletedHandler) -> Result<ComPtr<Deferral>> {
-        <Self as RtActivatable<IDeferralFactory>>::get_activation_factory().create(handler)
+    #[inline] pub fn create(handler: &ComPtr<DeferralCompletedHandler>) -> Result<ComPtr<Deferral>> {
+        <Self as RtActivatable<IDeferralFactory>>::get_activation_factory().deref().create(handler)
     }
 }
 DEFINE_CLSID!(Deferral(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,101,102,101,114,114,97,108,0]) [CLSID_Deferral]);
@@ -249,9 +249,9 @@ RT_INTERFACE!{static interface IDeferralFactory(IDeferralFactoryVtbl): IInspecta
     fn Create(&self, handler: *mut DeferralCompletedHandler, out: *mut *mut Deferral) -> HRESULT
 }}
 impl IDeferralFactory {
-    #[inline] pub fn create(&self, handler: &DeferralCompletedHandler) -> Result<ComPtr<Deferral>> { unsafe { 
+    #[inline] pub fn create(&self, handler: &ComPtr<DeferralCompletedHandler>) -> Result<ComPtr<Deferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -260,8 +260,8 @@ RT_DELEGATE!{delegate EventHandler<T>(EventHandlerVtbl, EventHandlerImpl) [IID_E
     fn Invoke(&self, sender: *mut IInspectable, args: T::Abi) -> HRESULT
 }}
 impl<T: RtType> EventHandler<T> {
-    #[inline] pub fn invoke(&self, sender: &IInspectable, args: &T::In) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, T::unwrap(args));
+    #[inline] pub fn invoke(&self, sender: &ComPtr<IInspectable>, args: &T::In) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _, T::unwrap(args));
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -283,13 +283,13 @@ RT_CLASS!{static class GuidHelper}
 impl RtActivatable<IGuidHelperStatics> for GuidHelper {}
 impl GuidHelper {
     #[inline] pub fn create_new_guid() -> Result<Guid> {
-        <Self as RtActivatable<IGuidHelperStatics>>::get_activation_factory().create_new_guid()
+        <Self as RtActivatable<IGuidHelperStatics>>::get_activation_factory().deref().create_new_guid()
     }
     #[inline] pub fn get_empty() -> Result<Guid> {
-        <Self as RtActivatable<IGuidHelperStatics>>::get_activation_factory().get_empty()
+        <Self as RtActivatable<IGuidHelperStatics>>::get_activation_factory().deref().get_empty()
     }
     #[inline] pub fn equals(target: &Guid, value: &Guid) -> Result<bool> {
-        <Self as RtActivatable<IGuidHelperStatics>>::get_activation_factory().equals(target, value)
+        <Self as RtActivatable<IGuidHelperStatics>>::get_activation_factory().deref().equals(target, value)
     }
 }
 DEFINE_CLSID!(GuidHelper(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,71,117,105,100,72,101,108,112,101,114,0]) [CLSID_GuidHelper]);
@@ -334,7 +334,7 @@ RT_CLASS!{class MemoryBuffer: IMemoryBuffer}
 impl RtActivatable<IMemoryBufferFactory> for MemoryBuffer {}
 impl MemoryBuffer {
     #[inline] pub fn create(capacity: u32) -> Result<ComPtr<MemoryBuffer>> {
-        <Self as RtActivatable<IMemoryBufferFactory>>::get_activation_factory().create(capacity)
+        <Self as RtActivatable<IMemoryBufferFactory>>::get_activation_factory().deref().create(capacity)
     }
 }
 DEFINE_CLSID!(MemoryBuffer(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,77,101,109,111,114,121,66,117,102,102,101,114,0]) [CLSID_MemoryBuffer]);
@@ -361,9 +361,9 @@ impl IMemoryBufferReference {
         let hr = ((*self.lpVtbl).get_Capacity)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_closed(&self, handler: &TypedEventHandler<IMemoryBufferReference, IInspectable>) -> Result<EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_closed(&self, handler: &ComPtr<TypedEventHandler<IMemoryBufferReference, IInspectable>>) -> Result<EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_closed(&self, cookie: EventRegistrationToken) -> Result<()> { unsafe { 
@@ -620,121 +620,121 @@ RT_CLASS!{static class PropertyValue}
 impl RtActivatable<IPropertyValueStatics> for PropertyValue {}
 impl PropertyValue {
     #[inline] pub fn create_empty() -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_empty()
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_empty()
     }
     #[inline] pub fn create_uint8(value: u8) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint8(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint8(value)
     }
     #[inline] pub fn create_int16(value: i16) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int16(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_int16(value)
     }
     #[inline] pub fn create_uint16(value: u16) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint16(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint16(value)
     }
     #[inline] pub fn create_int32(value: i32) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int32(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_int32(value)
     }
     #[inline] pub fn create_uint32(value: u32) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint32(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint32(value)
     }
     #[inline] pub fn create_int64(value: i64) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int64(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_int64(value)
     }
     #[inline] pub fn create_uint64(value: u64) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint64(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint64(value)
     }
     #[inline] pub fn create_single(value: f32) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_single(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_single(value)
     }
     #[inline] pub fn create_double(value: f64) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_double(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_double(value)
     }
     #[inline] pub fn create_char16(value: Char) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_char16(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_char16(value)
     }
     #[inline] pub fn create_boolean(value: bool) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_boolean(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_boolean(value)
     }
     #[inline] pub fn create_string(value: &HStringArg) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_string(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_string(value)
     }
-    #[inline] pub fn create_inspectable(value: &IInspectable) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_inspectable(value)
+    #[inline] pub fn create_inspectable(value: &ComPtr<IInspectable>) -> Result<Option<ComPtr<IInspectable>>> {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_inspectable(value)
     }
     #[inline] pub fn create_guid(value: Guid) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_guid(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_guid(value)
     }
     #[inline] pub fn create_date_time(value: DateTime) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_date_time(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_date_time(value)
     }
     #[inline] pub fn create_time_span(value: TimeSpan) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_time_span(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_time_span(value)
     }
     #[inline] pub fn create_point(value: Point) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_point(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_point(value)
     }
     #[inline] pub fn create_size(value: Size) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_size(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_size(value)
     }
     #[inline] pub fn create_rect(value: Rect) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_rect(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_rect(value)
     }
     #[inline] pub fn create_uint8_array(value: &[u8]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint8_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint8_array(value)
     }
     #[inline] pub fn create_int16_array(value: &[i16]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int16_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_int16_array(value)
     }
     #[inline] pub fn create_uint16_array(value: &[u16]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint16_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint16_array(value)
     }
     #[inline] pub fn create_int32_array(value: &[i32]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int32_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_int32_array(value)
     }
     #[inline] pub fn create_uint32_array(value: &[u32]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint32_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint32_array(value)
     }
     #[inline] pub fn create_int64_array(value: &[i64]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_int64_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_int64_array(value)
     }
     #[inline] pub fn create_uint64_array(value: &[u64]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_uint64_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_uint64_array(value)
     }
     #[inline] pub fn create_single_array(value: &[f32]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_single_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_single_array(value)
     }
     #[inline] pub fn create_double_array(value: &[f64]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_double_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_double_array(value)
     }
     #[inline] pub fn create_char16_array(value: &[Char]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_char16_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_char16_array(value)
     }
     #[inline] pub fn create_boolean_array(value: &[bool]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_boolean_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_boolean_array(value)
     }
     #[inline] pub fn create_string_array(value: &[&HStringArg]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_string_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_string_array(value)
     }
-    #[inline] pub fn create_inspectable_array(value: &[&IInspectable]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_inspectable_array(value)
+    #[inline] pub fn create_inspectable_array(value: &[&ComPtr<IInspectable>]) -> Result<Option<ComPtr<IInspectable>>> {
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_inspectable_array(value)
     }
     #[inline] pub fn create_guid_array(value: &[Guid]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_guid_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_guid_array(value)
     }
     #[inline] pub fn create_date_time_array(value: &[DateTime]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_date_time_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_date_time_array(value)
     }
     #[inline] pub fn create_time_span_array(value: &[TimeSpan]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_time_span_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_time_span_array(value)
     }
     #[inline] pub fn create_point_array(value: &[Point]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_point_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_point_array(value)
     }
     #[inline] pub fn create_size_array(value: &[Size]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_size_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_size_array(value)
     }
     #[inline] pub fn create_rect_array(value: &[Rect]) -> Result<Option<ComPtr<IInspectable>>> {
-        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().create_rect_array(value)
+        <Self as RtActivatable<IPropertyValueStatics>>::get_activation_factory().deref().create_rect_array(value)
     }
 }
 DEFINE_CLSID!(PropertyValue(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,80,114,111,112,101,114,116,121,86,97,108,117,101,0]) [CLSID_PropertyValue]);
@@ -846,9 +846,9 @@ impl IPropertyValueStatics {
         let hr = ((*self.lpVtbl).CreateString)(self as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_inspectable(&self, value: &IInspectable) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
+    #[inline] pub fn create_inspectable(&self, value: &ComPtr<IInspectable>) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInspectable)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateInspectable)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_guid(&self, value: Guid) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
@@ -941,7 +941,7 @@ impl IPropertyValueStatics {
         let hr = ((*self.lpVtbl).CreateStringArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_inspectable_array(&self, value: &[&IInspectable]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
+    #[inline] pub fn create_inspectable_array(&self, value: &[&ComPtr<IInspectable>]) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.lpVtbl).CreateInspectableArray)(self as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
@@ -1034,16 +1034,16 @@ impl RtActivatable<IUriRuntimeClassFactory> for Uri {}
 impl RtActivatable<IUriEscapeStatics> for Uri {}
 impl Uri {
     #[inline] pub fn create_uri(uri: &HStringArg) -> Result<ComPtr<Uri>> {
-        <Self as RtActivatable<IUriRuntimeClassFactory>>::get_activation_factory().create_uri(uri)
+        <Self as RtActivatable<IUriRuntimeClassFactory>>::get_activation_factory().deref().create_uri(uri)
     }
     #[inline] pub fn create_with_relative_uri(baseUri: &HStringArg, relativeUri: &HStringArg) -> Result<ComPtr<Uri>> {
-        <Self as RtActivatable<IUriRuntimeClassFactory>>::get_activation_factory().create_with_relative_uri(baseUri, relativeUri)
+        <Self as RtActivatable<IUriRuntimeClassFactory>>::get_activation_factory().deref().create_with_relative_uri(baseUri, relativeUri)
     }
     #[inline] pub fn unescape_component(toUnescape: &HStringArg) -> Result<HString> {
-        <Self as RtActivatable<IUriEscapeStatics>>::get_activation_factory().unescape_component(toUnescape)
+        <Self as RtActivatable<IUriEscapeStatics>>::get_activation_factory().deref().unescape_component(toUnescape)
     }
     #[inline] pub fn escape_component(toEscape: &HStringArg) -> Result<HString> {
-        <Self as RtActivatable<IUriEscapeStatics>>::get_activation_factory().escape_component(toEscape)
+        <Self as RtActivatable<IUriEscapeStatics>>::get_activation_factory().deref().escape_component(toEscape)
     }
 }
 DEFINE_CLSID!(Uri(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,85,114,105,0]) [CLSID_Uri]);
@@ -1160,9 +1160,9 @@ impl IUriRuntimeClass {
         let hr = ((*self.lpVtbl).get_Suspicious)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn equals(&self, pUri: &Uri) -> Result<bool> { unsafe { 
+    #[inline] pub fn equals(&self, pUri: &ComPtr<Uri>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).Equals)(self as *const _ as *mut _, pUri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Equals)(self as *const _ as *mut _, pUri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn combine_uri(&self, relativeUri: &HStringArg) -> Result<Option<ComPtr<Uri>>> { unsafe { 
@@ -1209,7 +1209,7 @@ RT_CLASS!{class WwwFormUrlDecoder: IWwwFormUrlDecoderRuntimeClass}
 impl RtActivatable<IWwwFormUrlDecoderRuntimeClassFactory> for WwwFormUrlDecoder {}
 impl WwwFormUrlDecoder {
     #[inline] pub fn create_www_form_url_decoder(query: &HStringArg) -> Result<ComPtr<WwwFormUrlDecoder>> {
-        <Self as RtActivatable<IWwwFormUrlDecoderRuntimeClassFactory>>::get_activation_factory().create_www_form_url_decoder(query)
+        <Self as RtActivatable<IWwwFormUrlDecoderRuntimeClassFactory>>::get_activation_factory().deref().create_www_form_url_decoder(query)
     }
 }
 DEFINE_CLSID!(WwwFormUrlDecoder(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,87,119,119,70,111,114,109,85,114,108,68,101,99,111,100,101,114,0]) [CLSID_WwwFormUrlDecoder]);
@@ -3536,8 +3536,8 @@ RT_DELEGATE!{delegate MapChangedEventHandler<K, V>(MapChangedEventHandlerVtbl, M
     fn Invoke(&self, sender: *mut IObservableMap<K, V>, event: *mut IMapChangedEventArgs<K>) -> HRESULT
 }}
 impl<K: RtType, V: RtType> MapChangedEventHandler<K, V> {
-    #[inline] pub fn invoke(&self, sender: &IObservableMap<K, V>, event: &IMapChangedEventArgs<K>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, event as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, sender: &ComPtr<IObservableMap<K, V>>, event: &ComPtr<IMapChangedEventArgs<K>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _, event.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3576,9 +3576,9 @@ RT_INTERFACE!{interface IObservableMap<K, V>(IObservableMapVtbl): IInspectable(I
     fn remove_MapChanged(&self, token: super::EventRegistrationToken) -> HRESULT
 }}
 impl<K: RtType, V: RtType> IObservableMap<K, V> {
-    #[inline] pub fn add_map_changed(&self, vhnd: &MapChangedEventHandler<K, V>) -> Result<super::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_map_changed(&self, vhnd: &ComPtr<MapChangedEventHandler<K, V>>) -> Result<super::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MapChanged)(self as *const _ as *mut _, vhnd as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MapChanged)(self as *const _ as *mut _, vhnd.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_map_changed(&self, token: super::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3592,9 +3592,9 @@ RT_INTERFACE!{interface IObservableVector<T>(IObservableVectorVtbl): IInspectabl
     fn remove_VectorChanged(&self, token: super::EventRegistrationToken) -> HRESULT
 }}
 impl<T: RtType> IObservableVector<T> {
-    #[inline] pub fn add_vector_changed(&self, vhnd: &VectorChangedEventHandler<T>) -> Result<super::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_vector_changed(&self, vhnd: &ComPtr<VectorChangedEventHandler<T>>) -> Result<super::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_VectorChanged)(self as *const _ as *mut _, vhnd as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_VectorChanged)(self as *const _ as *mut _, vhnd.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_vector_changed(&self, token: super::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3647,6 +3647,7 @@ impl<T: RtType> IVector<T> {
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn index_of(&self, value: &T::In) -> Result<(u32, bool)> { unsafe { 
+        println!("Calling IVector::index_of");
         let mut index = zeroed(); let mut out = zeroed();
         let hr = ((*self.lpVtbl).IndexOf)(self as *const _ as *mut _, T::unwrap(value), &mut index, &mut out);
         if hr == S_OK { Ok((index, out)) } else { err(hr) }
@@ -3708,8 +3709,8 @@ RT_DELEGATE!{delegate VectorChangedEventHandler<T>(VectorChangedEventHandlerVtbl
     fn Invoke(&self, sender: *mut IObservableVector<T>, event: *mut IVectorChangedEventArgs) -> HRESULT
 }}
 impl<T: RtType> VectorChangedEventHandler<T> {
-    #[inline] pub fn invoke(&self, sender: &IObservableVector<T>, event: &IVectorChangedEventArgs) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, event as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, sender: &ComPtr<IObservableVector<T>>, event: &ComPtr<IVectorChangedEventArgs>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _, event.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3732,6 +3733,7 @@ impl<T: RtType> IVectorView<T> {
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn index_of(&self, value: &T::In) -> Result<(u32, bool)> { unsafe { 
+        println!("Calling IVectorView::index_of");
         let mut index = zeroed(); let mut out = zeroed();
         let hr = ((*self.lpVtbl).IndexOf)(self as *const _ as *mut _, T::unwrap(value), &mut index, &mut out);
         if hr == S_OK { Ok((index, out)) } else { err(hr) }
@@ -5682,25 +5684,25 @@ RT_CLASS!{static class AsyncCausalityTracer}
 impl RtActivatable<IAsyncCausalityTracerStatics> for AsyncCausalityTracer {}
 impl AsyncCausalityTracer {
     #[inline] pub fn trace_operation_creation(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, operationName: &HStringArg, relatedContext: u64) -> Result<()> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_operation_creation(traceLevel, source, platformId, operationId, operationName, relatedContext)
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().trace_operation_creation(traceLevel, source, platformId, operationId, operationName, relatedContext)
     }
     #[inline] pub fn trace_operation_completion(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, status: super::AsyncStatus) -> Result<()> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_operation_completion(traceLevel, source, platformId, operationId, status)
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().trace_operation_completion(traceLevel, source, platformId, operationId, status)
     }
     #[inline] pub fn trace_operation_relation(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, relation: CausalityRelation) -> Result<()> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_operation_relation(traceLevel, source, platformId, operationId, relation)
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().trace_operation_relation(traceLevel, source, platformId, operationId, relation)
     }
     #[inline] pub fn trace_synchronous_work_start(traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, work: CausalitySynchronousWork) -> Result<()> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_synchronous_work_start(traceLevel, source, platformId, operationId, work)
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().trace_synchronous_work_start(traceLevel, source, platformId, operationId, work)
     }
     #[inline] pub fn trace_synchronous_work_completion(traceLevel: CausalityTraceLevel, source: CausalitySource, work: CausalitySynchronousWork) -> Result<()> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().trace_synchronous_work_completion(traceLevel, source, work)
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().trace_synchronous_work_completion(traceLevel, source, work)
     }
-    #[inline] pub fn add_tracing_status_changed(handler: &super::EventHandler<TracingStatusChangedEventArgs>) -> Result<super::EventRegistrationToken> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().add_tracing_status_changed(handler)
+    #[inline] pub fn add_tracing_status_changed(handler: &ComPtr<super::EventHandler<TracingStatusChangedEventArgs>>) -> Result<super::EventRegistrationToken> {
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().add_tracing_status_changed(handler)
     }
     #[inline] pub fn remove_tracing_status_changed(cookie: super::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().remove_tracing_status_changed(cookie)
+        <Self as RtActivatable<IAsyncCausalityTracerStatics>>::get_activation_factory().deref().remove_tracing_status_changed(cookie)
     }
 }
 DEFINE_CLSID!(AsyncCausalityTracer(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,65,115,121,110,99,67,97,117,115,97,108,105,116,121,84,114,97,99,101,114,0]) [CLSID_AsyncCausalityTracer]);
@@ -5735,9 +5737,9 @@ impl IAsyncCausalityTracerStatics {
         let hr = ((*self.lpVtbl).TraceSynchronousWorkCompletion)(self as *const _ as *mut _, traceLevel, source, work);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_tracing_status_changed(&self, handler: &super::EventHandler<TracingStatusChangedEventArgs>) -> Result<super::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_tracing_status_changed(&self, handler: &ComPtr<super::EventHandler<TracingStatusChangedEventArgs>>) -> Result<super::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_TracingStatusChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_TracingStatusChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_tracing_status_changed(&self, cookie: super::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5784,7 +5786,7 @@ RT_CLASS!{class ErrorDetails: IErrorDetails}
 impl RtActivatable<IErrorDetailsStatics> for ErrorDetails {}
 impl ErrorDetails {
     #[inline] pub fn create_from_hresult_async(errorCode: i32) -> Result<ComPtr<super::IAsyncOperation<ErrorDetails>>> {
-        <Self as RtActivatable<IErrorDetailsStatics>>::get_activation_factory().create_from_hresult_async(errorCode)
+        <Self as RtActivatable<IErrorDetailsStatics>>::get_activation_factory().deref().create_from_hresult_async(errorCode)
     }
 }
 DEFINE_CLSID!(ErrorDetails(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,69,114,114,111,114,68,101,116,97,105,108,115,0]) [CLSID_ErrorDetails]);
@@ -5835,16 +5837,16 @@ impl IFileLoggingSession {
         let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_logging_channel(&self, loggingChannel: &ILoggingChannel) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddLoggingChannel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _);
+    #[inline] pub fn add_logging_channel(&self, loggingChannel: &ComPtr<ILoggingChannel>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddLoggingChannel)(self as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_logging_channel_with_level(&self, loggingChannel: &ILoggingChannel, maxLevel: LoggingLevel) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddLoggingChannelWithLevel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _, maxLevel);
+    #[inline] pub fn add_logging_channel_with_level(&self, loggingChannel: &ComPtr<ILoggingChannel>, maxLevel: LoggingLevel) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddLoggingChannelWithLevel)(self as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _, maxLevel);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove_logging_channel(&self, loggingChannel: &ILoggingChannel) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveLoggingChannel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _);
+    #[inline] pub fn remove_logging_channel(&self, loggingChannel: &ComPtr<ILoggingChannel>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RemoveLoggingChannel)(self as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn close_and_save_to_file_async(&self) -> Result<ComPtr<super::IAsyncOperation<super::super::storage::StorageFile>>> { unsafe { 
@@ -5852,9 +5854,9 @@ impl IFileLoggingSession {
         let hr = ((*self.lpVtbl).CloseAndSaveToFileAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_log_file_generated(&self, handler: &super::TypedEventHandler<IFileLoggingSession, LogFileGeneratedEventArgs>) -> Result<super::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_log_file_generated(&self, handler: &ComPtr<super::TypedEventHandler<IFileLoggingSession, LogFileGeneratedEventArgs>>) -> Result<super::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_LogFileGenerated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_LogFileGenerated)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_log_file_generated(&self, token: super::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5866,7 +5868,7 @@ RT_CLASS!{class FileLoggingSession: IFileLoggingSession}
 impl RtActivatable<IFileLoggingSessionFactory> for FileLoggingSession {}
 impl FileLoggingSession {
     #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<FileLoggingSession>> {
-        <Self as RtActivatable<IFileLoggingSessionFactory>>::get_activation_factory().create(name)
+        <Self as RtActivatable<IFileLoggingSessionFactory>>::get_activation_factory().deref().create(name)
     }
 }
 DEFINE_CLSID!(FileLoggingSession(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,70,105,108,101,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]) [CLSID_FileLoggingSession]);
@@ -5913,11 +5915,11 @@ impl ILoggingActivity {
 RT_CLASS!{class LoggingActivity: ILoggingActivity}
 impl RtActivatable<ILoggingActivityFactory> for LoggingActivity {}
 impl LoggingActivity {
-    #[inline] pub fn create_logging_activity(activityName: &HStringArg, loggingChannel: &ILoggingChannel) -> Result<ComPtr<LoggingActivity>> {
-        <Self as RtActivatable<ILoggingActivityFactory>>::get_activation_factory().create_logging_activity(activityName, loggingChannel)
+    #[inline] pub fn create_logging_activity(activityName: &HStringArg, loggingChannel: &ComPtr<ILoggingChannel>) -> Result<ComPtr<LoggingActivity>> {
+        <Self as RtActivatable<ILoggingActivityFactory>>::get_activation_factory().deref().create_logging_activity(activityName, loggingChannel)
     }
-    #[inline] pub fn create_logging_activity_with_level(activityName: &HStringArg, loggingChannel: &ILoggingChannel, level: LoggingLevel) -> Result<ComPtr<LoggingActivity>> {
-        <Self as RtActivatable<ILoggingActivityFactory>>::get_activation_factory().create_logging_activity_with_level(activityName, loggingChannel, level)
+    #[inline] pub fn create_logging_activity_with_level(activityName: &HStringArg, loggingChannel: &ComPtr<ILoggingChannel>, level: LoggingLevel) -> Result<ComPtr<LoggingActivity>> {
+        <Self as RtActivatable<ILoggingActivityFactory>>::get_activation_factory().deref().create_logging_activity_with_level(activityName, loggingChannel, level)
     }
 }
 DEFINE_CLSID!(LoggingActivity(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,65,99,116,105,118,105,116,121,0]) [CLSID_LoggingActivity]);
@@ -5938,12 +5940,12 @@ impl ILoggingActivity2 {
         let hr = ((*self.lpVtbl).StopActivity)(self as *const _ as *mut _, stopEventName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn stop_activity_with_fields(&self, stopEventName: &HStringArg, fields: &LoggingFields) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).StopActivityWithFields)(self as *const _ as *mut _, stopEventName.get(), fields as *const _ as *mut _);
+    #[inline] pub fn stop_activity_with_fields(&self, stopEventName: &HStringArg, fields: &ComPtr<LoggingFields>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).StopActivityWithFields)(self as *const _ as *mut _, stopEventName.get(), fields.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn stop_activity_with_fields_and_options(&self, stopEventName: &HStringArg, fields: &LoggingFields, options: &LoggingOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).StopActivityWithFieldsAndOptions)(self as *const _ as *mut _, stopEventName.get(), fields as *const _ as *mut _, options as *const _ as *mut _);
+    #[inline] pub fn stop_activity_with_fields_and_options(&self, stopEventName: &HStringArg, fields: &ComPtr<LoggingFields>, options: &ComPtr<LoggingOptions>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).StopActivityWithFieldsAndOptions)(self as *const _ as *mut _, stopEventName.get(), fields.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5953,14 +5955,14 @@ RT_INTERFACE!{static interface ILoggingActivityFactory(ILoggingActivityFactoryVt
     fn CreateLoggingActivityWithLevel(&self, activityName: HSTRING, loggingChannel: *mut ILoggingChannel, level: LoggingLevel, out: *mut *mut LoggingActivity) -> HRESULT
 }}
 impl ILoggingActivityFactory {
-    #[inline] pub fn create_logging_activity(&self, activityName: &HStringArg, loggingChannel: &ILoggingChannel) -> Result<ComPtr<LoggingActivity>> { unsafe { 
+    #[inline] pub fn create_logging_activity(&self, activityName: &HStringArg, loggingChannel: &ComPtr<ILoggingChannel>) -> Result<ComPtr<LoggingActivity>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateLoggingActivity)(self as *const _ as *mut _, activityName.get(), loggingChannel as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateLoggingActivity)(self as *const _ as *mut _, activityName.get(), loggingChannel.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_logging_activity_with_level(&self, activityName: &HStringArg, loggingChannel: &ILoggingChannel, level: LoggingLevel) -> Result<ComPtr<LoggingActivity>> { unsafe { 
+    #[inline] pub fn create_logging_activity_with_level(&self, activityName: &HStringArg, loggingChannel: &ComPtr<ILoggingChannel>, level: LoggingLevel) -> Result<ComPtr<LoggingActivity>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateLoggingActivityWithLevel)(self as *const _ as *mut _, activityName.get(), loggingChannel as *const _ as *mut _, level, &mut out);
+        let hr = ((*self.lpVtbl).CreateLoggingActivityWithLevel)(self as *const _ as *mut _, activityName.get(), loggingChannel.deref() as *const _ as *mut _, level, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6008,9 +6010,9 @@ impl ILoggingChannel {
         let hr = ((*self.lpVtbl).LogValuePairWithLevel)(self as *const _ as *mut _, value1.get(), value2, level);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_logging_enabled(&self, handler: &super::TypedEventHandler<ILoggingChannel, IInspectable>) -> Result<super::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_logging_enabled(&self, handler: &ComPtr<super::TypedEventHandler<ILoggingChannel, IInspectable>>) -> Result<super::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_LoggingEnabled)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_LoggingEnabled)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_logging_enabled(&self, token: super::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -6023,13 +6025,13 @@ impl RtActivatable<ILoggingChannelFactory> for LoggingChannel {}
 impl RtActivatable<ILoggingChannelFactory2> for LoggingChannel {}
 impl LoggingChannel {
     #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<LoggingChannel>> {
-        <Self as RtActivatable<ILoggingChannelFactory>>::get_activation_factory().create(name)
+        <Self as RtActivatable<ILoggingChannelFactory>>::get_activation_factory().deref().create(name)
     }
-    #[inline] pub fn create_with_options(name: &HStringArg, options: &LoggingChannelOptions) -> Result<ComPtr<LoggingChannel>> {
-        <Self as RtActivatable<ILoggingChannelFactory2>>::get_activation_factory().create_with_options(name, options)
+    #[inline] pub fn create_with_options(name: &HStringArg, options: &ComPtr<LoggingChannelOptions>) -> Result<ComPtr<LoggingChannel>> {
+        <Self as RtActivatable<ILoggingChannelFactory2>>::get_activation_factory().deref().create_with_options(name, options)
     }
-    #[inline] pub fn create_with_options_and_id(name: &HStringArg, options: &LoggingChannelOptions, id: Guid) -> Result<ComPtr<LoggingChannel>> {
-        <Self as RtActivatable<ILoggingChannelFactory2>>::get_activation_factory().create_with_options_and_id(name, options, id)
+    #[inline] pub fn create_with_options_and_id(name: &HStringArg, options: &ComPtr<LoggingChannelOptions>, id: Guid) -> Result<ComPtr<LoggingChannel>> {
+        <Self as RtActivatable<ILoggingChannelFactory2>>::get_activation_factory().deref().create_with_options_and_id(name, options, id)
     }
 }
 DEFINE_CLSID!(LoggingChannel(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,0]) [CLSID_LoggingChannel]);
@@ -6061,14 +6063,14 @@ RT_INTERFACE!{static interface ILoggingChannelFactory2(ILoggingChannelFactory2Vt
     fn CreateWithOptionsAndId(&self, name: HSTRING, options: *mut LoggingChannelOptions, id: Guid, out: *mut *mut LoggingChannel) -> HRESULT
 }}
 impl ILoggingChannelFactory2 {
-    #[inline] pub fn create_with_options(&self, name: &HStringArg, options: &LoggingChannelOptions) -> Result<ComPtr<LoggingChannel>> { unsafe { 
+    #[inline] pub fn create_with_options(&self, name: &HStringArg, options: &ComPtr<LoggingChannelOptions>) -> Result<ComPtr<LoggingChannel>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithOptions)(self as *const _ as *mut _, name.get(), options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithOptions)(self as *const _ as *mut _, name.get(), options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_options_and_id(&self, name: &HStringArg, options: &LoggingChannelOptions, id: Guid) -> Result<ComPtr<LoggingChannel>> { unsafe { 
+    #[inline] pub fn create_with_options_and_id(&self, name: &HStringArg, options: &ComPtr<LoggingChannelOptions>, id: Guid) -> Result<ComPtr<LoggingChannel>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithOptionsAndId)(self as *const _ as *mut _, name.get(), options as *const _ as *mut _, id, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithOptionsAndId)(self as *const _ as *mut _, name.get(), options.deref() as *const _ as *mut _, id, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6093,7 +6095,7 @@ impl RtActivatable<ILoggingChannelOptionsFactory> for LoggingChannelOptions {}
 impl RtActivatable<IActivationFactory> for LoggingChannelOptions {}
 impl LoggingChannelOptions {
     #[inline] pub fn create(group: Guid) -> Result<ComPtr<LoggingChannelOptions>> {
-        <Self as RtActivatable<ILoggingChannelOptionsFactory>>::get_activation_factory().create(group)
+        <Self as RtActivatable<ILoggingChannelOptionsFactory>>::get_activation_factory().deref().create(group)
     }
 }
 DEFINE_CLSID!(LoggingChannelOptions(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,79,112,116,105,111,110,115,0]) [CLSID_LoggingChannelOptions]);
@@ -6776,7 +6778,7 @@ impl RtActivatable<ILoggingOptionsFactory> for LoggingOptions {}
 impl RtActivatable<IActivationFactory> for LoggingOptions {}
 impl LoggingOptions {
     #[inline] pub fn create_with_keywords(keywords: i64) -> Result<ComPtr<LoggingOptions>> {
-        <Self as RtActivatable<ILoggingOptionsFactory>>::get_activation_factory().create_with_keywords(keywords)
+        <Self as RtActivatable<ILoggingOptionsFactory>>::get_activation_factory().deref().create_with_keywords(keywords)
     }
 }
 DEFINE_CLSID!(LoggingOptions(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,79,112,116,105,111,110,115,0]) [CLSID_LoggingOptions]);
@@ -6806,21 +6808,21 @@ impl ILoggingSession {
         let hr = ((*self.lpVtbl).get_Name)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_to_file_async(&self, folder: &super::super::storage::IStorageFolder, fileName: &HStringArg) -> Result<ComPtr<super::IAsyncOperation<super::super::storage::StorageFile>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_to_file_async(&self, folder: &ComPtr<super::super::storage::IStorageFolder>, fileName: &HStringArg) -> Result<ComPtr<super::IAsyncOperation<super::super::storage::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveToFileAsync)(self as *const _ as *mut _, folder as *const _ as *mut _, fileName.get(), &mut out);
+        let hr = ((*self.lpVtbl).SaveToFileAsync)(self as *const _ as *mut _, folder.deref() as *const _ as *mut _, fileName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_logging_channel(&self, loggingChannel: &ILoggingChannel) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddLoggingChannel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _);
+    #[inline] pub fn add_logging_channel(&self, loggingChannel: &ComPtr<ILoggingChannel>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddLoggingChannel)(self as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_logging_channel_with_level(&self, loggingChannel: &ILoggingChannel, maxLevel: LoggingLevel) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddLoggingChannelWithLevel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _, maxLevel);
+    #[inline] pub fn add_logging_channel_with_level(&self, loggingChannel: &ComPtr<ILoggingChannel>, maxLevel: LoggingLevel) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddLoggingChannelWithLevel)(self as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _, maxLevel);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove_logging_channel(&self, loggingChannel: &ILoggingChannel) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveLoggingChannel)(self as *const _ as *mut _, loggingChannel as *const _ as *mut _);
+    #[inline] pub fn remove_logging_channel(&self, loggingChannel: &ComPtr<ILoggingChannel>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RemoveLoggingChannel)(self as *const _ as *mut _, loggingChannel.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6828,7 +6830,7 @@ RT_CLASS!{class LoggingSession: ILoggingSession}
 impl RtActivatable<ILoggingSessionFactory> for LoggingSession {}
 impl LoggingSession {
     #[inline] pub fn create(name: &HStringArg) -> Result<ComPtr<LoggingSession>> {
-        <Self as RtActivatable<ILoggingSessionFactory>>::get_activation_factory().create(name)
+        <Self as RtActivatable<ILoggingSessionFactory>>::get_activation_factory().deref().create(name)
     }
 }
 DEFINE_CLSID!(LoggingSession(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]) [CLSID_LoggingSession]);
@@ -6877,16 +6879,16 @@ impl ILoggingTarget {
         let hr = ((*self.lpVtbl).LogEvent)(self as *const _ as *mut _, eventName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn log_event_with_fields(&self, eventName: &HStringArg, fields: &LoggingFields) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LogEventWithFields)(self as *const _ as *mut _, eventName.get(), fields as *const _ as *mut _);
+    #[inline] pub fn log_event_with_fields(&self, eventName: &HStringArg, fields: &ComPtr<LoggingFields>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).LogEventWithFields)(self as *const _ as *mut _, eventName.get(), fields.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn log_event_with_fields_and_level(&self, eventName: &HStringArg, fields: &LoggingFields, level: LoggingLevel) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LogEventWithFieldsAndLevel)(self as *const _ as *mut _, eventName.get(), fields as *const _ as *mut _, level);
+    #[inline] pub fn log_event_with_fields_and_level(&self, eventName: &HStringArg, fields: &ComPtr<LoggingFields>, level: LoggingLevel) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).LogEventWithFieldsAndLevel)(self as *const _ as *mut _, eventName.get(), fields.deref() as *const _ as *mut _, level);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn log_event_with_fields_and_options(&self, eventName: &HStringArg, fields: &LoggingFields, level: LoggingLevel, options: &LoggingOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).LogEventWithFieldsAndOptions)(self as *const _ as *mut _, eventName.get(), fields as *const _ as *mut _, level, options as *const _ as *mut _);
+    #[inline] pub fn log_event_with_fields_and_options(&self, eventName: &HStringArg, fields: &ComPtr<LoggingFields>, level: LoggingLevel, options: &ComPtr<LoggingOptions>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).LogEventWithFieldsAndOptions)(self as *const _ as *mut _, eventName.get(), fields.deref() as *const _ as *mut _, level, options.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn start_activity(&self, startEventName: &HStringArg) -> Result<Option<ComPtr<LoggingActivity>>> { unsafe { 
@@ -6894,19 +6896,19 @@ impl ILoggingTarget {
         let hr = ((*self.lpVtbl).StartActivity)(self as *const _ as *mut _, startEventName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn start_activity_with_fields(&self, startEventName: &HStringArg, fields: &LoggingFields) -> Result<Option<ComPtr<LoggingActivity>>> { unsafe { 
+    #[inline] pub fn start_activity_with_fields(&self, startEventName: &HStringArg, fields: &ComPtr<LoggingFields>) -> Result<Option<ComPtr<LoggingActivity>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartActivityWithFields)(self as *const _ as *mut _, startEventName.get(), fields as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).StartActivityWithFields)(self as *const _ as *mut _, startEventName.get(), fields.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn start_activity_with_fields_and_level(&self, startEventName: &HStringArg, fields: &LoggingFields, level: LoggingLevel) -> Result<Option<ComPtr<LoggingActivity>>> { unsafe { 
+    #[inline] pub fn start_activity_with_fields_and_level(&self, startEventName: &HStringArg, fields: &ComPtr<LoggingFields>, level: LoggingLevel) -> Result<Option<ComPtr<LoggingActivity>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartActivityWithFieldsAndLevel)(self as *const _ as *mut _, startEventName.get(), fields as *const _ as *mut _, level, &mut out);
+        let hr = ((*self.lpVtbl).StartActivityWithFieldsAndLevel)(self as *const _ as *mut _, startEventName.get(), fields.deref() as *const _ as *mut _, level, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn start_activity_with_fields_and_options(&self, startEventName: &HStringArg, fields: &LoggingFields, level: LoggingLevel, options: &LoggingOptions) -> Result<Option<ComPtr<LoggingActivity>>> { unsafe { 
+    #[inline] pub fn start_activity_with_fields_and_options(&self, startEventName: &HStringArg, fields: &ComPtr<LoggingFields>, level: LoggingLevel, options: &ComPtr<LoggingOptions>) -> Result<Option<ComPtr<LoggingActivity>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartActivityWithFieldsAndOptions)(self as *const _ as *mut _, startEventName.get(), fields as *const _ as *mut _, level, options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).StartActivityWithFieldsAndOptions)(self as *const _ as *mut _, startEventName.get(), fields.deref() as *const _ as *mut _, level, options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -6938,34 +6940,34 @@ RT_CLASS!{static class ApiInformation}
 impl RtActivatable<IApiInformationStatics> for ApiInformation {}
 impl ApiInformation {
     #[inline] pub fn is_type_present(typeName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_type_present(typeName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_type_present(typeName)
     }
     #[inline] pub fn is_method_present(typeName: &HStringArg, methodName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_method_present(typeName, methodName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_method_present(typeName, methodName)
     }
     #[inline] pub fn is_method_present_with_arity(typeName: &HStringArg, methodName: &HStringArg, inputParameterCount: u32) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_method_present_with_arity(typeName, methodName, inputParameterCount)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_method_present_with_arity(typeName, methodName, inputParameterCount)
     }
     #[inline] pub fn is_event_present(typeName: &HStringArg, eventName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_event_present(typeName, eventName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_event_present(typeName, eventName)
     }
     #[inline] pub fn is_property_present(typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_property_present(typeName, propertyName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_property_present(typeName, propertyName)
     }
     #[inline] pub fn is_read_only_property_present(typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_read_only_property_present(typeName, propertyName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_read_only_property_present(typeName, propertyName)
     }
     #[inline] pub fn is_writeable_property_present(typeName: &HStringArg, propertyName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_writeable_property_present(typeName, propertyName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_writeable_property_present(typeName, propertyName)
     }
     #[inline] pub fn is_enum_named_value_present(enumTypeName: &HStringArg, valueName: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_enum_named_value_present(enumTypeName, valueName)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_enum_named_value_present(enumTypeName, valueName)
     }
     #[inline] pub fn is_api_contract_present_by_major(contractName: &HStringArg, majorVersion: u16) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_api_contract_present_by_major(contractName, majorVersion)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_api_contract_present_by_major(contractName, majorVersion)
     }
     #[inline] pub fn is_api_contract_present_by_major_and_minor(contractName: &HStringArg, majorVersion: u16, minorVersion: u16) -> Result<bool> {
-        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().is_api_contract_present_by_major_and_minor(contractName, majorVersion, minorVersion)
+        <Self as RtActivatable<IApiInformationStatics>>::get_activation_factory().deref().is_api_contract_present_by_major_and_minor(contractName, majorVersion, minorVersion)
     }
 }
 DEFINE_CLSID!(ApiInformation(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,77,101,116,97,100,97,116,97,46,65,112,105,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_ApiInformation]);

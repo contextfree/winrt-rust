@@ -33,22 +33,22 @@ impl RtActivatable<IAppDiagnosticInfoStatics> for AppDiagnosticInfo {}
 impl RtActivatable<IAppDiagnosticInfoStatics2> for AppDiagnosticInfo {}
 impl AppDiagnosticInfo {
     #[inline] pub fn request_info_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<AppDiagnosticInfo>>>> {
-        <Self as RtActivatable<IAppDiagnosticInfoStatics>>::get_activation_factory().request_info_async()
+        <Self as RtActivatable<IAppDiagnosticInfoStatics>>::get_activation_factory().deref().request_info_async()
     }
     #[inline] pub fn create_watcher() -> Result<Option<ComPtr<AppDiagnosticInfoWatcher>>> {
-        <Self as RtActivatable<IAppDiagnosticInfoStatics2>>::get_activation_factory().create_watcher()
+        <Self as RtActivatable<IAppDiagnosticInfoStatics2>>::get_activation_factory().deref().create_watcher()
     }
     #[inline] pub fn request_access_async() -> Result<ComPtr<foundation::IAsyncOperation<DiagnosticAccessStatus>>> {
-        <Self as RtActivatable<IAppDiagnosticInfoStatics2>>::get_activation_factory().request_access_async()
+        <Self as RtActivatable<IAppDiagnosticInfoStatics2>>::get_activation_factory().deref().request_access_async()
     }
     #[inline] pub fn request_info_for_package_async(packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<AppDiagnosticInfo>>>> {
-        <Self as RtActivatable<IAppDiagnosticInfoStatics2>>::get_activation_factory().request_info_for_package_async(packageFamilyName)
+        <Self as RtActivatable<IAppDiagnosticInfoStatics2>>::get_activation_factory().deref().request_info_for_package_async(packageFamilyName)
     }
     #[inline] pub fn request_info_for_app_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<AppDiagnosticInfo>>>> {
-        <Self as RtActivatable<IAppDiagnosticInfoStatics2>>::get_activation_factory().request_info_for_app_async()
+        <Self as RtActivatable<IAppDiagnosticInfoStatics2>>::get_activation_factory().deref().request_info_for_app_async()
     }
     #[inline] pub fn request_info_for_app_user_model_id(appUserModelId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<AppDiagnosticInfo>>>> {
-        <Self as RtActivatable<IAppDiagnosticInfoStatics2>>::get_activation_factory().request_info_for_app_user_model_id(appUserModelId)
+        <Self as RtActivatable<IAppDiagnosticInfoStatics2>>::get_activation_factory().deref().request_info_for_app_user_model_id(appUserModelId)
     }
 }
 DEFINE_CLSID!(AppDiagnosticInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,65,112,112,68,105,97,103,110,111,115,116,105,99,73,110,102,111,0]) [CLSID_AppDiagnosticInfo]);
@@ -141,36 +141,36 @@ RT_INTERFACE!{interface IAppDiagnosticInfoWatcher(IAppDiagnosticInfoWatcherVtbl)
     fn Stop(&self) -> HRESULT
 }}
 impl IAppDiagnosticInfoWatcher {
-    #[inline] pub fn add_added(&self, handler: &foundation::TypedEventHandler<AppDiagnosticInfoWatcher, AppDiagnosticInfoWatcherEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_added(&self, handler: &ComPtr<foundation::TypedEventHandler<AppDiagnosticInfoWatcher, AppDiagnosticInfoWatcherEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Added)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Added)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Added)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<AppDiagnosticInfoWatcher, AppDiagnosticInfoWatcherEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_removed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppDiagnosticInfoWatcher, AppDiagnosticInfoWatcherEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Removed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_enumeration_completed(&self, handler: &foundation::TypedEventHandler<AppDiagnosticInfoWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_enumeration_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppDiagnosticInfoWatcher, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_EnumerationCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_EnumerationCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_EnumerationCompleted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_stopped(&self, handler: &foundation::TypedEventHandler<AppDiagnosticInfoWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_stopped(&self, handler: &ComPtr<foundation::TypedEventHandler<AppDiagnosticInfoWatcher, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Stopped)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Stopped)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_stopped(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -399,45 +399,45 @@ RT_INTERFACE!{interface IAppResourceGroupInfoWatcher(IAppResourceGroupInfoWatche
     fn Stop(&self) -> HRESULT
 }}
 impl IAppResourceGroupInfoWatcher {
-    #[inline] pub fn add_added(&self, handler: &foundation::TypedEventHandler<AppResourceGroupInfoWatcher, AppResourceGroupInfoWatcherEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_added(&self, handler: &ComPtr<foundation::TypedEventHandler<AppResourceGroupInfoWatcher, AppResourceGroupInfoWatcherEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Added)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Added)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Added)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<AppResourceGroupInfoWatcher, AppResourceGroupInfoWatcherEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_removed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppResourceGroupInfoWatcher, AppResourceGroupInfoWatcherEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Removed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_enumeration_completed(&self, handler: &foundation::TypedEventHandler<AppResourceGroupInfoWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_enumeration_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppResourceGroupInfoWatcher, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_EnumerationCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_EnumerationCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_EnumerationCompleted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_stopped(&self, handler: &foundation::TypedEventHandler<AppResourceGroupInfoWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_stopped(&self, handler: &ComPtr<foundation::TypedEventHandler<AppResourceGroupInfoWatcher, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Stopped)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Stopped)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_stopped(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Stopped)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_execution_state_changed(&self, handler: &foundation::TypedEventHandler<AppResourceGroupInfoWatcher, AppResourceGroupInfoWatcherExecutionStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_execution_state_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppResourceGroupInfoWatcher, AppResourceGroupInfoWatcherExecutionStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ExecutionStateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ExecutionStateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_execution_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -567,7 +567,7 @@ impl RtActivatable<IAppUriHandlerHostFactory> for AppUriHandlerHost {}
 impl RtActivatable<IActivationFactory> for AppUriHandlerHost {}
 impl AppUriHandlerHost {
     #[inline] pub fn create_instance(name: &HStringArg) -> Result<ComPtr<AppUriHandlerHost>> {
-        <Self as RtActivatable<IAppUriHandlerHostFactory>>::get_activation_factory().create_instance(name)
+        <Self as RtActivatable<IAppUriHandlerHostFactory>>::get_activation_factory().deref().create_instance(name)
     }
 }
 DEFINE_CLSID!(AppUriHandlerHost(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,65,112,112,85,114,105,72,97,110,100,108,101,114,72,111,115,116,0]) [CLSID_AppUriHandlerHost]);
@@ -605,9 +605,9 @@ impl IAppUriHandlerRegistration {
         let hr = ((*self.lpVtbl).GetAppAddedHostsAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_app_added_hosts_async(&self, hosts: &foundation::collections::IIterable<AppUriHandlerHost>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn set_app_added_hosts_async(&self, hosts: &ComPtr<foundation::collections::IIterable<AppUriHandlerHost>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetAppAddedHostsAsync)(self as *const _ as *mut _, hosts as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetAppAddedHostsAsync)(self as *const _ as *mut _, hosts.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -633,10 +633,10 @@ RT_CLASS!{class AppUriHandlerRegistrationManager: IAppUriHandlerRegistrationMana
 impl RtActivatable<IAppUriHandlerRegistrationManagerStatics> for AppUriHandlerRegistrationManager {}
 impl AppUriHandlerRegistrationManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<AppUriHandlerRegistrationManager>>> {
-        <Self as RtActivatable<IAppUriHandlerRegistrationManagerStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IAppUriHandlerRegistrationManagerStatics>>::get_activation_factory().deref().get_default()
     }
-    #[inline] pub fn get_for_user(user: &User) -> Result<Option<ComPtr<AppUriHandlerRegistrationManager>>> {
-        <Self as RtActivatable<IAppUriHandlerRegistrationManagerStatics>>::get_activation_factory().get_for_user(user)
+    #[inline] pub fn get_for_user(user: &ComPtr<User>) -> Result<Option<ComPtr<AppUriHandlerRegistrationManager>>> {
+        <Self as RtActivatable<IAppUriHandlerRegistrationManagerStatics>>::get_activation_factory().deref().get_for_user(user)
     }
 }
 DEFINE_CLSID!(AppUriHandlerRegistrationManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,65,112,112,85,114,105,72,97,110,100,108,101,114,82,101,103,105,115,116,114,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_AppUriHandlerRegistrationManager]);
@@ -651,9 +651,9 @@ impl IAppUriHandlerRegistrationManagerStatics {
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_for_user(&self, user: &User) -> Result<Option<ComPtr<AppUriHandlerRegistrationManager>>> { unsafe { 
+    #[inline] pub fn get_for_user(&self, user: &ComPtr<User>) -> Result<Option<ComPtr<AppUriHandlerRegistrationManager>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -664,7 +664,7 @@ RT_CLASS!{static class DateTimeSettings}
 impl RtActivatable<IDateTimeSettingsStatics> for DateTimeSettings {}
 impl DateTimeSettings {
     #[inline] pub fn set_system_date_time(utcDateTime: foundation::DateTime) -> Result<()> {
-        <Self as RtActivatable<IDateTimeSettingsStatics>>::get_activation_factory().set_system_date_time(utcDateTime)
+        <Self as RtActivatable<IDateTimeSettingsStatics>>::get_activation_factory().deref().set_system_date_time(utcDateTime)
     }
 }
 DEFINE_CLSID!(DateTimeSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,97,116,101,84,105,109,101,83,101,116,116,105,110,103,115,0]) [CLSID_DateTimeSettings]);
@@ -697,28 +697,28 @@ impl IDispatcherQueue {
         let hr = ((*self.lpVtbl).CreateTimer)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn try_enqueue(&self, callback: &DispatcherQueueHandler) -> Result<bool> { unsafe { 
+    #[inline] pub fn try_enqueue(&self, callback: &ComPtr<DispatcherQueueHandler>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).TryEnqueue)(self as *const _ as *mut _, callback as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TryEnqueue)(self as *const _ as *mut _, callback.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn try_enqueue_with_priority(&self, priority: DispatcherQueuePriority, callback: &DispatcherQueueHandler) -> Result<bool> { unsafe { 
+    #[inline] pub fn try_enqueue_with_priority(&self, priority: DispatcherQueuePriority, callback: &ComPtr<DispatcherQueueHandler>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).TryEnqueueWithPriority)(self as *const _ as *mut _, priority, callback as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TryEnqueueWithPriority)(self as *const _ as *mut _, priority, callback.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_shutdown_starting(&self, handler: &foundation::TypedEventHandler<DispatcherQueue, DispatcherQueueShutdownStartingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_shutdown_starting(&self, handler: &ComPtr<foundation::TypedEventHandler<DispatcherQueue, DispatcherQueueShutdownStartingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ShutdownStarting)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ShutdownStarting)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_shutdown_starting(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ShutdownStarting)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_shutdown_completed(&self, handler: &foundation::TypedEventHandler<DispatcherQueue, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_shutdown_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<DispatcherQueue, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ShutdownCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ShutdownCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_shutdown_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -730,7 +730,7 @@ RT_CLASS!{class DispatcherQueue: IDispatcherQueue}
 impl RtActivatable<IDispatcherQueueStatics> for DispatcherQueue {}
 impl DispatcherQueue {
     #[inline] pub fn get_for_current_thread() -> Result<Option<ComPtr<DispatcherQueue>>> {
-        <Self as RtActivatable<IDispatcherQueueStatics>>::get_activation_factory().get_for_current_thread()
+        <Self as RtActivatable<IDispatcherQueueStatics>>::get_activation_factory().deref().get_for_current_thread()
     }
 }
 DEFINE_CLSID!(DispatcherQueue(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,115,112,97,116,99,104,101,114,81,117,101,117,101,0]) [CLSID_DispatcherQueue]);
@@ -755,7 +755,7 @@ RT_CLASS!{class DispatcherQueueController: IDispatcherQueueController}
 impl RtActivatable<IDispatcherQueueControllerStatics> for DispatcherQueueController {}
 impl DispatcherQueueController {
     #[inline] pub fn create_on_dedicated_thread() -> Result<Option<ComPtr<DispatcherQueueController>>> {
-        <Self as RtActivatable<IDispatcherQueueControllerStatics>>::get_activation_factory().create_on_dedicated_thread()
+        <Self as RtActivatable<IDispatcherQueueControllerStatics>>::get_activation_factory().deref().create_on_dedicated_thread()
     }
 }
 DEFINE_CLSID!(DispatcherQueueController(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,115,112,97,116,99,104,101,114,81,117,101,117,101,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_DispatcherQueueController]);
@@ -850,9 +850,9 @@ impl IDispatcherQueueTimer {
         let hr = ((*self.lpVtbl).Stop)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_tick(&self, handler: &foundation::TypedEventHandler<DispatcherQueueTimer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_tick(&self, handler: &ComPtr<foundation::TypedEventHandler<DispatcherQueueTimer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Tick)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Tick)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_tick(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -879,31 +879,31 @@ RT_CLASS!{static class KnownUserProperties}
 impl RtActivatable<IKnownUserPropertiesStatics> for KnownUserProperties {}
 impl KnownUserProperties {
     #[inline] pub fn get_display_name() -> Result<HString> {
-        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().get_display_name()
+        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().deref().get_display_name()
     }
     #[inline] pub fn get_first_name() -> Result<HString> {
-        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().get_first_name()
+        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().deref().get_first_name()
     }
     #[inline] pub fn get_last_name() -> Result<HString> {
-        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().get_last_name()
+        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().deref().get_last_name()
     }
     #[inline] pub fn get_provider_name() -> Result<HString> {
-        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().get_provider_name()
+        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().deref().get_provider_name()
     }
     #[inline] pub fn get_account_name() -> Result<HString> {
-        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().get_account_name()
+        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().deref().get_account_name()
     }
     #[inline] pub fn get_guest_host() -> Result<HString> {
-        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().get_guest_host()
+        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().deref().get_guest_host()
     }
     #[inline] pub fn get_principal_name() -> Result<HString> {
-        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().get_principal_name()
+        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().deref().get_principal_name()
     }
     #[inline] pub fn get_domain_name() -> Result<HString> {
-        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().get_domain_name()
+        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().deref().get_domain_name()
     }
     #[inline] pub fn get_session_initiation_protocol_uri() -> Result<HString> {
-        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().get_session_initiation_protocol_uri()
+        <Self as RtActivatable<IKnownUserPropertiesStatics>>::get_activation_factory().deref().get_session_initiation_protocol_uri()
     }
 }
 DEFINE_CLSID!(KnownUserProperties(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,75,110,111,119,110,85,115,101,114,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownUserProperties]);
@@ -973,89 +973,89 @@ impl RtActivatable<ILauncherStatics3> for Launcher {}
 impl RtActivatable<ILauncherStatics4> for Launcher {}
 impl RtActivatable<ILauncherStatics5> for Launcher {}
 impl Launcher {
-    #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_async(file: &super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().launch_file_async(file)
+    #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_async(file: &ComPtr<super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().deref().launch_file_async(file)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_with_options_async(file: &super::storage::IStorageFile, options: &LauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().launch_file_with_options_async(file, options)
+    #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_with_options_async(file: &ComPtr<super::storage::IStorageFile>, options: &ComPtr<LauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().deref().launch_file_with_options_async(file, options)
     }
-    #[inline] pub fn launch_uri_async(uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().launch_uri_async(uri)
+    #[inline] pub fn launch_uri_async(uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().deref().launch_uri_async(uri)
     }
-    #[inline] pub fn launch_uri_with_options_async(uri: &foundation::Uri, options: &LauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().launch_uri_with_options_async(uri, options)
+    #[inline] pub fn launch_uri_with_options_async(uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<ILauncherStatics>>::get_activation_factory().deref().launch_uri_with_options_async(uri, options)
     }
-    #[inline] pub fn launch_uri_for_results_async(uri: &foundation::Uri, options: &LauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> {
-        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().launch_uri_for_results_async(uri, options)
+    #[inline] pub fn launch_uri_for_results_async(uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> {
+        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().deref().launch_uri_for_results_async(uri, options)
     }
-    #[inline] pub fn launch_uri_for_results_with_data_async(uri: &foundation::Uri, options: &LauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> {
-        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().launch_uri_for_results_with_data_async(uri, options, inputData)
+    #[inline] pub fn launch_uri_for_results_with_data_async(uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>, inputData: &ComPtr<foundation::collections::ValueSet>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> {
+        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().deref().launch_uri_for_results_with_data_async(uri, options, inputData)
     }
-    #[inline] pub fn launch_uri_with_data_async(uri: &foundation::Uri, options: &LauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().launch_uri_with_data_async(uri, options, inputData)
+    #[inline] pub fn launch_uri_with_data_async(uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>, inputData: &ComPtr<foundation::collections::ValueSet>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().deref().launch_uri_with_data_async(uri, options, inputData)
     }
-    #[inline] pub fn query_uri_support_async(uri: &foundation::Uri, launchQuerySupportType: LaunchQuerySupportType) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> {
-        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().query_uri_support_async(uri, launchQuerySupportType)
+    #[inline] pub fn query_uri_support_async(uri: &ComPtr<foundation::Uri>, launchQuerySupportType: LaunchQuerySupportType) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> {
+        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().deref().query_uri_support_async(uri, launchQuerySupportType)
     }
-    #[inline] pub fn query_uri_support_with_package_family_name_async(uri: &foundation::Uri, launchQuerySupportType: LaunchQuerySupportType, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> {
-        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().query_uri_support_with_package_family_name_async(uri, launchQuerySupportType, packageFamilyName)
+    #[inline] pub fn query_uri_support_with_package_family_name_async(uri: &ComPtr<foundation::Uri>, launchQuerySupportType: LaunchQuerySupportType, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> {
+        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().deref().query_uri_support_with_package_family_name_async(uri, launchQuerySupportType, packageFamilyName)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn query_file_support_async(file: &super::storage::StorageFile) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> {
-        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().query_file_support_async(file)
+    #[cfg(feature="windows-storage")] #[inline] pub fn query_file_support_async(file: &ComPtr<super::storage::StorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> {
+        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().deref().query_file_support_async(file)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn query_file_support_with_package_family_name_async(file: &super::storage::StorageFile, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> {
-        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().query_file_support_with_package_family_name_async(file, packageFamilyName)
+    #[cfg(feature="windows-storage")] #[inline] pub fn query_file_support_with_package_family_name_async(file: &ComPtr<super::storage::StorageFile>, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> {
+        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().deref().query_file_support_with_package_family_name_async(file, packageFamilyName)
     }
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_uri_scheme_handlers_async(scheme: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::applicationmodel::AppInfo>>>> {
-        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().find_uri_scheme_handlers_async(scheme)
+        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().deref().find_uri_scheme_handlers_async(scheme)
     }
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_uri_scheme_handlers_with_launch_uri_type_async(scheme: &HStringArg, launchQuerySupportType: LaunchQuerySupportType) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::applicationmodel::AppInfo>>>> {
-        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().find_uri_scheme_handlers_with_launch_uri_type_async(scheme, launchQuerySupportType)
+        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().deref().find_uri_scheme_handlers_with_launch_uri_type_async(scheme, launchQuerySupportType)
     }
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_file_handlers_async(extension: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::applicationmodel::AppInfo>>>> {
-        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().find_file_handlers_async(extension)
+        <Self as RtActivatable<ILauncherStatics2>>::get_activation_factory().deref().find_file_handlers_async(extension)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_async(folder: &super::storage::IStorageFolder) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ILauncherStatics3>>::get_activation_factory().launch_folder_async(folder)
+    #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_async(folder: &ComPtr<super::storage::IStorageFolder>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<ILauncherStatics3>>::get_activation_factory().deref().launch_folder_async(folder)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_with_options_async(folder: &super::storage::IStorageFolder, options: &FolderLauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ILauncherStatics3>>::get_activation_factory().launch_folder_with_options_async(folder, options)
+    #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_with_options_async(folder: &ComPtr<super::storage::IStorageFolder>, options: &ComPtr<FolderLauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<ILauncherStatics3>>::get_activation_factory().deref().launch_folder_with_options_async(folder, options)
     }
-    #[inline] pub fn query_app_uri_support_async(uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> {
-        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().query_app_uri_support_async(uri)
+    #[inline] pub fn query_app_uri_support_async(uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> {
+        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().deref().query_app_uri_support_async(uri)
     }
-    #[inline] pub fn query_app_uri_support_with_package_family_name_async(uri: &foundation::Uri, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> {
-        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().query_app_uri_support_with_package_family_name_async(uri, packageFamilyName)
+    #[inline] pub fn query_app_uri_support_with_package_family_name_async(uri: &ComPtr<foundation::Uri>, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> {
+        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().deref().query_app_uri_support_with_package_family_name_async(uri, packageFamilyName)
     }
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_app_uri_handlers_async(uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::applicationmodel::AppInfo>>>> {
-        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().find_app_uri_handlers_async(uri)
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_app_uri_handlers_async(uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::applicationmodel::AppInfo>>>> {
+        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().deref().find_app_uri_handlers_async(uri)
     }
-    #[inline] pub fn launch_uri_for_user_async(user: &User, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriStatus>>> {
-        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().launch_uri_for_user_async(user, uri)
+    #[inline] pub fn launch_uri_for_user_async(user: &ComPtr<User>, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriStatus>>> {
+        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().deref().launch_uri_for_user_async(user, uri)
     }
-    #[inline] pub fn launch_uri_with_options_for_user_async(user: &User, uri: &foundation::Uri, options: &LauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriStatus>>> {
-        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().launch_uri_with_options_for_user_async(user, uri, options)
+    #[inline] pub fn launch_uri_with_options_for_user_async(user: &ComPtr<User>, uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriStatus>>> {
+        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().deref().launch_uri_with_options_for_user_async(user, uri, options)
     }
-    #[inline] pub fn launch_uri_with_data_for_user_async(user: &User, uri: &foundation::Uri, options: &LauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriStatus>>> {
-        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().launch_uri_with_data_for_user_async(user, uri, options, inputData)
+    #[inline] pub fn launch_uri_with_data_for_user_async(user: &ComPtr<User>, uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>, inputData: &ComPtr<foundation::collections::ValueSet>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriStatus>>> {
+        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().deref().launch_uri_with_data_for_user_async(user, uri, options, inputData)
     }
-    #[inline] pub fn launch_uri_for_results_for_user_async(user: &User, uri: &foundation::Uri, options: &LauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> {
-        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().launch_uri_for_results_for_user_async(user, uri, options)
+    #[inline] pub fn launch_uri_for_results_for_user_async(user: &ComPtr<User>, uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> {
+        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().deref().launch_uri_for_results_for_user_async(user, uri, options)
     }
-    #[inline] pub fn launch_uri_for_results_with_data_for_user_async(user: &User, uri: &foundation::Uri, options: &LauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> {
-        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().launch_uri_for_results_with_data_for_user_async(user, uri, options, inputData)
+    #[inline] pub fn launch_uri_for_results_with_data_for_user_async(user: &ComPtr<User>, uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>, inputData: &ComPtr<foundation::collections::ValueSet>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> {
+        <Self as RtActivatable<ILauncherStatics4>>::get_activation_factory().deref().launch_uri_for_results_with_data_for_user_async(user, uri, options, inputData)
     }
     #[inline] pub fn launch_folder_path_async(path: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ILauncherStatics5>>::get_activation_factory().launch_folder_path_async(path)
+        <Self as RtActivatable<ILauncherStatics5>>::get_activation_factory().deref().launch_folder_path_async(path)
     }
-    #[inline] pub fn launch_folder_path_with_options_async(path: &HStringArg, options: &FolderLauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ILauncherStatics5>>::get_activation_factory().launch_folder_path_with_options_async(path, options)
+    #[inline] pub fn launch_folder_path_with_options_async(path: &HStringArg, options: &ComPtr<FolderLauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<ILauncherStatics5>>::get_activation_factory().deref().launch_folder_path_with_options_async(path, options)
     }
-    #[inline] pub fn launch_folder_path_for_user_async(user: &User, path: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ILauncherStatics5>>::get_activation_factory().launch_folder_path_for_user_async(user, path)
+    #[inline] pub fn launch_folder_path_for_user_async(user: &ComPtr<User>, path: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<ILauncherStatics5>>::get_activation_factory().deref().launch_folder_path_for_user_async(user, path)
     }
-    #[inline] pub fn launch_folder_path_with_options_for_user_async(user: &User, path: &HStringArg, options: &FolderLauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ILauncherStatics5>>::get_activation_factory().launch_folder_path_with_options_for_user_async(user, path, options)
+    #[inline] pub fn launch_folder_path_with_options_for_user_async(user: &ComPtr<User>, path: &HStringArg, options: &ComPtr<FolderLauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<ILauncherStatics5>>::get_activation_factory().deref().launch_folder_path_with_options_for_user_async(user, path, options)
     }
 }
 DEFINE_CLSID!(Launcher(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,76,97,117,110,99,104,101,114,0]) [CLSID_Launcher]);
@@ -1122,8 +1122,8 @@ impl ILauncherOptions {
         let hr = ((*self.lpVtbl).get_FallbackUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_fallback_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_FallbackUri)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_fallback_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_FallbackUri)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_content_type(&self) -> Result<HString> { unsafe { 
@@ -1161,8 +1161,8 @@ impl ILauncherOptions2 {
         let hr = ((*self.lpVtbl).get_NeighboringFilesQuery)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_neighboring_files_query(&self, value: &super::storage::search::StorageFileQueryResult) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_NeighboringFilesQuery)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_neighboring_files_query(&self, value: &ComPtr<super::storage::search::StorageFileQueryResult>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_NeighboringFilesQuery)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1208,24 +1208,24 @@ RT_INTERFACE!{static interface ILauncherStatics(ILauncherStaticsVtbl): IInspecta
     fn LaunchUriWithOptionsAsync(&self, uri: *mut foundation::Uri, options: *mut LauncherOptions, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
 impl ILauncherStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_async(&self, file: &super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_async(&self, file: &ComPtr<super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchFileAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_with_options_async(&self, file: &super::storage::IStorageFile, options: &LauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_with_options_async(&self, file: &ComPtr<super::storage::IStorageFile>, options: &ComPtr<LauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchFileWithOptionsAsync)(self as *const _ as *mut _, file as *const _ as *mut _, options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchFileWithOptionsAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_uri_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn launch_uri_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchUriAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchUriAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_uri_with_options_async(&self, uri: &foundation::Uri, options: &LauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn launch_uri_with_options_async(&self, uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchUriWithOptionsAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchUriWithOptionsAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1245,39 +1245,39 @@ RT_INTERFACE!{static interface ILauncherStatics2(ILauncherStatics2Vtbl): IInspec
     #[cfg(feature="windows-applicationmodel")] fn FindFileHandlersAsync(&self, extension: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::applicationmodel::AppInfo>>) -> HRESULT
 }}
 impl ILauncherStatics2 {
-    #[inline] pub fn launch_uri_for_results_async(&self, uri: &foundation::Uri, options: &LauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> { unsafe { 
+    #[inline] pub fn launch_uri_for_results_async(&self, uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchUriForResultsAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchUriForResultsAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_uri_for_results_with_data_async(&self, uri: &foundation::Uri, options: &LauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> { unsafe { 
+    #[inline] pub fn launch_uri_for_results_with_data_async(&self, uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>, inputData: &ComPtr<foundation::collections::ValueSet>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchUriForResultsWithDataAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, options as *const _ as *mut _, inputData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchUriForResultsWithDataAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, inputData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_uri_with_data_async(&self, uri: &foundation::Uri, options: &LauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn launch_uri_with_data_async(&self, uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>, inputData: &ComPtr<foundation::collections::ValueSet>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchUriWithDataAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, options as *const _ as *mut _, inputData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchUriWithDataAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, inputData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn query_uri_support_async(&self, uri: &foundation::Uri, launchQuerySupportType: LaunchQuerySupportType) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> { unsafe { 
+    #[inline] pub fn query_uri_support_async(&self, uri: &ComPtr<foundation::Uri>, launchQuerySupportType: LaunchQuerySupportType) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).QueryUriSupportAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, launchQuerySupportType, &mut out);
+        let hr = ((*self.lpVtbl).QueryUriSupportAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, launchQuerySupportType, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn query_uri_support_with_package_family_name_async(&self, uri: &foundation::Uri, launchQuerySupportType: LaunchQuerySupportType, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> { unsafe { 
+    #[inline] pub fn query_uri_support_with_package_family_name_async(&self, uri: &ComPtr<foundation::Uri>, launchQuerySupportType: LaunchQuerySupportType, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).QueryUriSupportWithPackageFamilyNameAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, launchQuerySupportType, packageFamilyName.get(), &mut out);
+        let hr = ((*self.lpVtbl).QueryUriSupportWithPackageFamilyNameAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, launchQuerySupportType, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn query_file_support_async(&self, file: &super::storage::StorageFile) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn query_file_support_async(&self, file: &ComPtr<super::storage::StorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).QueryFileSupportAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).QueryFileSupportAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn query_file_support_with_package_family_name_async(&self, file: &super::storage::StorageFile, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn query_file_support_with_package_family_name_async(&self, file: &ComPtr<super::storage::StorageFile>, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).QueryFileSupportWithPackageFamilyNameAsync)(self as *const _ as *mut _, file as *const _ as *mut _, packageFamilyName.get(), &mut out);
+        let hr = ((*self.lpVtbl).QueryFileSupportWithPackageFamilyNameAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_uri_scheme_handlers_async(&self, scheme: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::applicationmodel::AppInfo>>>> { unsafe { 
@@ -1302,14 +1302,14 @@ RT_INTERFACE!{static interface ILauncherStatics3(ILauncherStatics3Vtbl): IInspec
     #[cfg(feature="windows-storage")] fn LaunchFolderWithOptionsAsync(&self, folder: *mut super::storage::IStorageFolder, options: *mut FolderLauncherOptions, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
 impl ILauncherStatics3 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_async(&self, folder: &super::storage::IStorageFolder) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_async(&self, folder: &ComPtr<super::storage::IStorageFolder>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchFolderAsync)(self as *const _ as *mut _, folder as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchFolderAsync)(self as *const _ as *mut _, folder.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_with_options_async(&self, folder: &super::storage::IStorageFolder, options: &FolderLauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_with_options_async(&self, folder: &ComPtr<super::storage::IStorageFolder>, options: &ComPtr<FolderLauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchFolderWithOptionsAsync)(self as *const _ as *mut _, folder as *const _ as *mut _, options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchFolderWithOptionsAsync)(self as *const _ as *mut _, folder.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1326,44 +1326,44 @@ RT_INTERFACE!{static interface ILauncherStatics4(ILauncherStatics4Vtbl): IInspec
     fn LaunchUriForResultsWithDataForUserAsync(&self, user: *mut User, uri: *mut foundation::Uri, options: *mut LauncherOptions, inputData: *mut foundation::collections::ValueSet, out: *mut *mut foundation::IAsyncOperation<LaunchUriResult>) -> HRESULT
 }}
 impl ILauncherStatics4 {
-    #[inline] pub fn query_app_uri_support_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> { unsafe { 
+    #[inline] pub fn query_app_uri_support_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).QueryAppUriSupportAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).QueryAppUriSupportAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn query_app_uri_support_with_package_family_name_async(&self, uri: &foundation::Uri, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> { unsafe { 
+    #[inline] pub fn query_app_uri_support_with_package_family_name_async(&self, uri: &ComPtr<foundation::Uri>, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<LaunchQuerySupportStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).QueryAppUriSupportWithPackageFamilyNameAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, packageFamilyName.get(), &mut out);
+        let hr = ((*self.lpVtbl).QueryAppUriSupportWithPackageFamilyNameAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_app_uri_handlers_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::applicationmodel::AppInfo>>>> { unsafe { 
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_app_uri_handlers_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::applicationmodel::AppInfo>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindAppUriHandlersAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FindAppUriHandlersAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_uri_for_user_async(&self, user: &User, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriStatus>>> { unsafe { 
+    #[inline] pub fn launch_uri_for_user_async(&self, user: &ComPtr<User>, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchUriForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchUriForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_uri_with_options_for_user_async(&self, user: &User, uri: &foundation::Uri, options: &LauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriStatus>>> { unsafe { 
+    #[inline] pub fn launch_uri_with_options_for_user_async(&self, user: &ComPtr<User>, uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchUriWithOptionsForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, uri as *const _ as *mut _, options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchUriWithOptionsForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_uri_with_data_for_user_async(&self, user: &User, uri: &foundation::Uri, options: &LauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriStatus>>> { unsafe { 
+    #[inline] pub fn launch_uri_with_data_for_user_async(&self, user: &ComPtr<User>, uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>, inputData: &ComPtr<foundation::collections::ValueSet>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchUriWithDataForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, uri as *const _ as *mut _, options as *const _ as *mut _, inputData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchUriWithDataForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, inputData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_uri_for_results_for_user_async(&self, user: &User, uri: &foundation::Uri, options: &LauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> { unsafe { 
+    #[inline] pub fn launch_uri_for_results_for_user_async(&self, user: &ComPtr<User>, uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchUriForResultsForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, uri as *const _ as *mut _, options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchUriForResultsForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_uri_for_results_with_data_for_user_async(&self, user: &User, uri: &foundation::Uri, options: &LauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> { unsafe { 
+    #[inline] pub fn launch_uri_for_results_with_data_for_user_async(&self, user: &ComPtr<User>, uri: &ComPtr<foundation::Uri>, options: &ComPtr<LauncherOptions>, inputData: &ComPtr<foundation::collections::ValueSet>) -> Result<ComPtr<foundation::IAsyncOperation<LaunchUriResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchUriForResultsWithDataForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, uri as *const _ as *mut _, options as *const _ as *mut _, inputData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchUriForResultsWithDataForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, inputData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1380,19 +1380,19 @@ impl ILauncherStatics5 {
         let hr = ((*self.lpVtbl).LaunchFolderPathAsync)(self as *const _ as *mut _, path.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_folder_path_with_options_async(&self, path: &HStringArg, options: &FolderLauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn launch_folder_path_with_options_async(&self, path: &HStringArg, options: &ComPtr<FolderLauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchFolderPathWithOptionsAsync)(self as *const _ as *mut _, path.get(), options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchFolderPathWithOptionsAsync)(self as *const _ as *mut _, path.get(), options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_folder_path_for_user_async(&self, user: &User, path: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn launch_folder_path_for_user_async(&self, user: &ComPtr<User>, path: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchFolderPathForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, path.get(), &mut out);
+        let hr = ((*self.lpVtbl).LaunchFolderPathForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, path.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_folder_path_with_options_for_user_async(&self, user: &User, path: &HStringArg, options: &FolderLauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn launch_folder_path_with_options_for_user_async(&self, user: &ComPtr<User>, path: &HStringArg, options: &ComPtr<FolderLauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchFolderPathWithOptionsForUserAsync)(self as *const _ as *mut _, user as *const _ as *mut _, path.get(), options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchFolderPathWithOptionsForUserAsync)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, path.get(), options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1411,8 +1411,8 @@ impl ILauncherUIOptions {
         let hr = ((*self.lpVtbl).get_InvocationPoint)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_invocation_point(&self, value: &foundation::IReference<foundation::Point>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_InvocationPoint)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_invocation_point(&self, value: &ComPtr<foundation::IReference<foundation::Point>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_InvocationPoint)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_selection_rect(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::Rect>>>> { unsafe { 
@@ -1420,8 +1420,8 @@ impl ILauncherUIOptions {
         let hr = ((*self.lpVtbl).get_SelectionRect)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_selection_rect(&self, value: &foundation::IReference<foundation::Rect>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SelectionRect)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_selection_rect(&self, value: &ComPtr<foundation::IReference<foundation::Rect>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SelectionRect)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn get_preferred_placement(&self) -> Result<super::ui::popups::Placement> { unsafe { 
@@ -1488,43 +1488,43 @@ impl RtActivatable<IMemoryManagerStatics3> for MemoryManager {}
 impl RtActivatable<IMemoryManagerStatics4> for MemoryManager {}
 impl MemoryManager {
     #[inline] pub fn get_app_memory_usage() -> Result<u64> {
-        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().get_app_memory_usage()
+        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().deref().get_app_memory_usage()
     }
     #[inline] pub fn get_app_memory_usage_limit() -> Result<u64> {
-        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().get_app_memory_usage_limit()
+        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().deref().get_app_memory_usage_limit()
     }
     #[inline] pub fn get_app_memory_usage_level() -> Result<AppMemoryUsageLevel> {
-        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().get_app_memory_usage_level()
+        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().deref().get_app_memory_usage_level()
     }
-    #[inline] pub fn add_app_memory_usage_increased(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().add_app_memory_usage_increased(handler)
+    #[inline] pub fn add_app_memory_usage_increased(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().deref().add_app_memory_usage_increased(handler)
     }
     #[inline] pub fn remove_app_memory_usage_increased(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().remove_app_memory_usage_increased(token)
+        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().deref().remove_app_memory_usage_increased(token)
     }
-    #[inline] pub fn add_app_memory_usage_decreased(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().add_app_memory_usage_decreased(handler)
+    #[inline] pub fn add_app_memory_usage_decreased(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().deref().add_app_memory_usage_decreased(handler)
     }
     #[inline] pub fn remove_app_memory_usage_decreased(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().remove_app_memory_usage_decreased(token)
+        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().deref().remove_app_memory_usage_decreased(token)
     }
-    #[inline] pub fn add_app_memory_usage_limit_changing(handler: &foundation::EventHandler<AppMemoryUsageLimitChangingEventArgs>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().add_app_memory_usage_limit_changing(handler)
+    #[inline] pub fn add_app_memory_usage_limit_changing(handler: &ComPtr<foundation::EventHandler<AppMemoryUsageLimitChangingEventArgs>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().deref().add_app_memory_usage_limit_changing(handler)
     }
     #[inline] pub fn remove_app_memory_usage_limit_changing(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().remove_app_memory_usage_limit_changing(token)
+        <Self as RtActivatable<IMemoryManagerStatics>>::get_activation_factory().deref().remove_app_memory_usage_limit_changing(token)
     }
     #[inline] pub fn get_app_memory_report() -> Result<Option<ComPtr<AppMemoryReport>>> {
-        <Self as RtActivatable<IMemoryManagerStatics2>>::get_activation_factory().get_app_memory_report()
+        <Self as RtActivatable<IMemoryManagerStatics2>>::get_activation_factory().deref().get_app_memory_report()
     }
     #[inline] pub fn get_process_memory_report() -> Result<Option<ComPtr<ProcessMemoryReport>>> {
-        <Self as RtActivatable<IMemoryManagerStatics2>>::get_activation_factory().get_process_memory_report()
+        <Self as RtActivatable<IMemoryManagerStatics2>>::get_activation_factory().deref().get_process_memory_report()
     }
     #[inline] pub fn try_set_app_memory_usage_limit(value: u64) -> Result<bool> {
-        <Self as RtActivatable<IMemoryManagerStatics3>>::get_activation_factory().try_set_app_memory_usage_limit(value)
+        <Self as RtActivatable<IMemoryManagerStatics3>>::get_activation_factory().deref().try_set_app_memory_usage_limit(value)
     }
     #[inline] pub fn get_expected_app_memory_usage_limit() -> Result<u64> {
-        <Self as RtActivatable<IMemoryManagerStatics4>>::get_activation_factory().get_expected_app_memory_usage_limit()
+        <Self as RtActivatable<IMemoryManagerStatics4>>::get_activation_factory().deref().get_expected_app_memory_usage_limit()
     }
 }
 DEFINE_CLSID!(MemoryManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,77,101,109,111,114,121,77,97,110,97,103,101,114,0]) [CLSID_MemoryManager]);
@@ -1556,27 +1556,27 @@ impl IMemoryManagerStatics {
         let hr = ((*self.lpVtbl).get_AppMemoryUsageLevel)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_app_memory_usage_increased(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_app_memory_usage_increased(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AppMemoryUsageIncreased)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AppMemoryUsageIncreased)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_app_memory_usage_increased(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_AppMemoryUsageIncreased)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_app_memory_usage_decreased(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_app_memory_usage_decreased(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AppMemoryUsageDecreased)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AppMemoryUsageDecreased)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_app_memory_usage_decreased(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_AppMemoryUsageDecreased)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_app_memory_usage_limit_changing(&self, handler: &foundation::EventHandler<AppMemoryUsageLimitChangingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_app_memory_usage_limit_changing(&self, handler: &ComPtr<foundation::EventHandler<AppMemoryUsageLimitChangingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AppMemoryUsageLimitChanging)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AppMemoryUsageLimitChanging)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_app_memory_usage_limit_changing(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -1630,10 +1630,10 @@ RT_CLASS!{static class ProcessLauncher}
 impl RtActivatable<IProcessLauncherStatics> for ProcessLauncher {}
 impl ProcessLauncher {
     #[inline] pub fn run_to_completion_async(fileName: &HStringArg, args: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ProcessLauncherResult>>> {
-        <Self as RtActivatable<IProcessLauncherStatics>>::get_activation_factory().run_to_completion_async(fileName, args)
+        <Self as RtActivatable<IProcessLauncherStatics>>::get_activation_factory().deref().run_to_completion_async(fileName, args)
     }
-    #[inline] pub fn run_to_completion_async_with_options(fileName: &HStringArg, args: &HStringArg, options: &ProcessLauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<ProcessLauncherResult>>> {
-        <Self as RtActivatable<IProcessLauncherStatics>>::get_activation_factory().run_to_completion_async_with_options(fileName, args, options)
+    #[inline] pub fn run_to_completion_async_with_options(fileName: &HStringArg, args: &HStringArg, options: &ComPtr<ProcessLauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<ProcessLauncherResult>>> {
+        <Self as RtActivatable<IProcessLauncherStatics>>::get_activation_factory().deref().run_to_completion_async_with_options(fileName, args, options)
     }
 }
 DEFINE_CLSID!(ProcessLauncher(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,99,101,115,115,76,97,117,110,99,104,101,114,0]) [CLSID_ProcessLauncher]);
@@ -1660,8 +1660,8 @@ impl IProcessLauncherOptions {
         let hr = ((*self.lpVtbl).get_StandardInput)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_standard_input(&self, value: &super::storage::streams::IInputStream) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_StandardInput)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_standard_input(&self, value: &ComPtr<super::storage::streams::IInputStream>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StandardInput)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_standard_output(&self) -> Result<Option<ComPtr<super::storage::streams::IOutputStream>>> { unsafe { 
@@ -1669,8 +1669,8 @@ impl IProcessLauncherOptions {
         let hr = ((*self.lpVtbl).get_StandardOutput)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_standard_output(&self, value: &super::storage::streams::IOutputStream) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_StandardOutput)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_standard_output(&self, value: &ComPtr<super::storage::streams::IOutputStream>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StandardOutput)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_standard_error(&self) -> Result<Option<ComPtr<super::storage::streams::IOutputStream>>> { unsafe { 
@@ -1678,8 +1678,8 @@ impl IProcessLauncherOptions {
         let hr = ((*self.lpVtbl).get_StandardError)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_standard_error(&self, value: &super::storage::streams::IOutputStream) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_StandardError)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_standard_error(&self, value: &ComPtr<super::storage::streams::IOutputStream>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StandardError)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_working_directory(&self) -> Result<HString> { unsafe { 
@@ -1718,9 +1718,9 @@ impl IProcessLauncherStatics {
         let hr = ((*self.lpVtbl).RunToCompletionAsync)(self as *const _ as *mut _, fileName.get(), args.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn run_to_completion_async_with_options(&self, fileName: &HStringArg, args: &HStringArg, options: &ProcessLauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<ProcessLauncherResult>>> { unsafe { 
+    #[inline] pub fn run_to_completion_async_with_options(&self, fileName: &HStringArg, args: &HStringArg, options: &ComPtr<ProcessLauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<ProcessLauncherResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RunToCompletionAsyncWithOptions)(self as *const _ as *mut _, fileName.get(), args.get(), options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RunToCompletionAsyncWithOptions)(self as *const _ as *mut _, fileName.get(), args.get(), options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1750,8 +1750,8 @@ RT_INTERFACE!{interface IProtocolForResultsOperation(IProtocolForResultsOperatio
     fn ReportCompleted(&self, data: *mut foundation::collections::ValueSet) -> HRESULT
 }}
 impl IProtocolForResultsOperation {
-    #[inline] pub fn report_completed(&self, data: &foundation::collections::ValueSet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _, data as *const _ as *mut _);
+    #[inline] pub fn report_completed(&self, data: &ComPtr<foundation::collections::ValueSet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ReportCompleted)(self as *const _ as *mut _, data.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1759,14 +1759,14 @@ RT_CLASS!{class ProtocolForResultsOperation: IProtocolForResultsOperation}
 RT_CLASS!{static class RemoteLauncher}
 impl RtActivatable<IRemoteLauncherStatics> for RemoteLauncher {}
 impl RemoteLauncher {
-    #[inline] pub fn launch_uri_async(remoteSystemConnectionRequest: &remotesystems::RemoteSystemConnectionRequest, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<RemoteLaunchUriStatus>>> {
-        <Self as RtActivatable<IRemoteLauncherStatics>>::get_activation_factory().launch_uri_async(remoteSystemConnectionRequest, uri)
+    #[inline] pub fn launch_uri_async(remoteSystemConnectionRequest: &ComPtr<remotesystems::RemoteSystemConnectionRequest>, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<RemoteLaunchUriStatus>>> {
+        <Self as RtActivatable<IRemoteLauncherStatics>>::get_activation_factory().deref().launch_uri_async(remoteSystemConnectionRequest, uri)
     }
-    #[inline] pub fn launch_uri_with_options_async(remoteSystemConnectionRequest: &remotesystems::RemoteSystemConnectionRequest, uri: &foundation::Uri, options: &RemoteLauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<RemoteLaunchUriStatus>>> {
-        <Self as RtActivatable<IRemoteLauncherStatics>>::get_activation_factory().launch_uri_with_options_async(remoteSystemConnectionRequest, uri, options)
+    #[inline] pub fn launch_uri_with_options_async(remoteSystemConnectionRequest: &ComPtr<remotesystems::RemoteSystemConnectionRequest>, uri: &ComPtr<foundation::Uri>, options: &ComPtr<RemoteLauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<RemoteLaunchUriStatus>>> {
+        <Self as RtActivatable<IRemoteLauncherStatics>>::get_activation_factory().deref().launch_uri_with_options_async(remoteSystemConnectionRequest, uri, options)
     }
-    #[inline] pub fn launch_uri_with_data_async(remoteSystemConnectionRequest: &remotesystems::RemoteSystemConnectionRequest, uri: &foundation::Uri, options: &RemoteLauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<RemoteLaunchUriStatus>>> {
-        <Self as RtActivatable<IRemoteLauncherStatics>>::get_activation_factory().launch_uri_with_data_async(remoteSystemConnectionRequest, uri, options, inputData)
+    #[inline] pub fn launch_uri_with_data_async(remoteSystemConnectionRequest: &ComPtr<remotesystems::RemoteSystemConnectionRequest>, uri: &ComPtr<foundation::Uri>, options: &ComPtr<RemoteLauncherOptions>, inputData: &ComPtr<foundation::collections::ValueSet>) -> Result<ComPtr<foundation::IAsyncOperation<RemoteLaunchUriStatus>>> {
+        <Self as RtActivatable<IRemoteLauncherStatics>>::get_activation_factory().deref().launch_uri_with_data_async(remoteSystemConnectionRequest, uri, options, inputData)
     }
 }
 DEFINE_CLSID!(RemoteLauncher(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,76,97,117,110,99,104,101,114,0]) [CLSID_RemoteLauncher]);
@@ -1782,8 +1782,8 @@ impl IRemoteLauncherOptions {
         let hr = ((*self.lpVtbl).get_FallbackUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_fallback_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_FallbackUri)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_fallback_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_FallbackUri)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_preferred_app_ids(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
@@ -1802,19 +1802,19 @@ RT_INTERFACE!{static interface IRemoteLauncherStatics(IRemoteLauncherStaticsVtbl
     fn LaunchUriWithDataAsync(&self, remoteSystemConnectionRequest: *mut remotesystems::RemoteSystemConnectionRequest, uri: *mut foundation::Uri, options: *mut RemoteLauncherOptions, inputData: *mut foundation::collections::ValueSet, out: *mut *mut foundation::IAsyncOperation<RemoteLaunchUriStatus>) -> HRESULT
 }}
 impl IRemoteLauncherStatics {
-    #[inline] pub fn launch_uri_async(&self, remoteSystemConnectionRequest: &remotesystems::RemoteSystemConnectionRequest, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<RemoteLaunchUriStatus>>> { unsafe { 
+    #[inline] pub fn launch_uri_async(&self, remoteSystemConnectionRequest: &ComPtr<remotesystems::RemoteSystemConnectionRequest>, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<RemoteLaunchUriStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchUriAsync)(self as *const _ as *mut _, remoteSystemConnectionRequest as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchUriAsync)(self as *const _ as *mut _, remoteSystemConnectionRequest.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_uri_with_options_async(&self, remoteSystemConnectionRequest: &remotesystems::RemoteSystemConnectionRequest, uri: &foundation::Uri, options: &RemoteLauncherOptions) -> Result<ComPtr<foundation::IAsyncOperation<RemoteLaunchUriStatus>>> { unsafe { 
+    #[inline] pub fn launch_uri_with_options_async(&self, remoteSystemConnectionRequest: &ComPtr<remotesystems::RemoteSystemConnectionRequest>, uri: &ComPtr<foundation::Uri>, options: &ComPtr<RemoteLauncherOptions>) -> Result<ComPtr<foundation::IAsyncOperation<RemoteLaunchUriStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchUriWithOptionsAsync)(self as *const _ as *mut _, remoteSystemConnectionRequest as *const _ as *mut _, uri as *const _ as *mut _, options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchUriWithOptionsAsync)(self as *const _ as *mut _, remoteSystemConnectionRequest.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn launch_uri_with_data_async(&self, remoteSystemConnectionRequest: &remotesystems::RemoteSystemConnectionRequest, uri: &foundation::Uri, options: &RemoteLauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<RemoteLaunchUriStatus>>> { unsafe { 
+    #[inline] pub fn launch_uri_with_data_async(&self, remoteSystemConnectionRequest: &ComPtr<remotesystems::RemoteSystemConnectionRequest>, uri: &ComPtr<foundation::Uri>, options: &ComPtr<RemoteLauncherOptions>, inputData: &ComPtr<foundation::collections::ValueSet>) -> Result<ComPtr<foundation::IAsyncOperation<RemoteLaunchUriStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LaunchUriWithDataAsync)(self as *const _ as *mut _, remoteSystemConnectionRequest as *const _ as *mut _, uri as *const _ as *mut _, options as *const _ as *mut _, inputData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LaunchUriWithDataAsync)(self as *const _ as *mut _, remoteSystemConnectionRequest.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, options.deref() as *const _ as *mut _, inputData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1829,19 +1829,19 @@ impl RtActivatable<IShutdownManagerStatics> for ShutdownManager {}
 impl RtActivatable<IShutdownManagerStatics2> for ShutdownManager {}
 impl ShutdownManager {
     #[inline] pub fn begin_shutdown(shutdownKind: ShutdownKind, timeout: foundation::TimeSpan) -> Result<()> {
-        <Self as RtActivatable<IShutdownManagerStatics>>::get_activation_factory().begin_shutdown(shutdownKind, timeout)
+        <Self as RtActivatable<IShutdownManagerStatics>>::get_activation_factory().deref().begin_shutdown(shutdownKind, timeout)
     }
     #[inline] pub fn cancel_shutdown() -> Result<()> {
-        <Self as RtActivatable<IShutdownManagerStatics>>::get_activation_factory().cancel_shutdown()
+        <Self as RtActivatable<IShutdownManagerStatics>>::get_activation_factory().deref().cancel_shutdown()
     }
     #[inline] pub fn is_power_state_supported(powerState: PowerState) -> Result<bool> {
-        <Self as RtActivatable<IShutdownManagerStatics2>>::get_activation_factory().is_power_state_supported(powerState)
+        <Self as RtActivatable<IShutdownManagerStatics2>>::get_activation_factory().deref().is_power_state_supported(powerState)
     }
     #[inline] pub fn enter_power_state(powerState: PowerState) -> Result<()> {
-        <Self as RtActivatable<IShutdownManagerStatics2>>::get_activation_factory().enter_power_state(powerState)
+        <Self as RtActivatable<IShutdownManagerStatics2>>::get_activation_factory().deref().enter_power_state(powerState)
     }
     #[inline] pub fn enter_power_state_with_time_span(powerState: PowerState, wakeUpAfter: foundation::TimeSpan) -> Result<()> {
-        <Self as RtActivatable<IShutdownManagerStatics2>>::get_activation_factory().enter_power_state_with_time_span(powerState, wakeUpAfter)
+        <Self as RtActivatable<IShutdownManagerStatics2>>::get_activation_factory().deref().enter_power_state_with_time_span(powerState, wakeUpAfter)
     }
 }
 DEFINE_CLSID!(ShutdownManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,83,104,117,116,100,111,119,110,77,97,110,97,103,101,114,0]) [CLSID_ShutdownManager]);
@@ -1886,19 +1886,19 @@ impl RtActivatable<ITimeZoneSettingsStatics> for TimeZoneSettings {}
 impl RtActivatable<ITimeZoneSettingsStatics2> for TimeZoneSettings {}
 impl TimeZoneSettings {
     #[inline] pub fn get_current_time_zone_display_name() -> Result<HString> {
-        <Self as RtActivatable<ITimeZoneSettingsStatics>>::get_activation_factory().get_current_time_zone_display_name()
+        <Self as RtActivatable<ITimeZoneSettingsStatics>>::get_activation_factory().deref().get_current_time_zone_display_name()
     }
     #[inline] pub fn get_supported_time_zone_display_names() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
-        <Self as RtActivatable<ITimeZoneSettingsStatics>>::get_activation_factory().get_supported_time_zone_display_names()
+        <Self as RtActivatable<ITimeZoneSettingsStatics>>::get_activation_factory().deref().get_supported_time_zone_display_names()
     }
     #[inline] pub fn get_can_change_time_zone() -> Result<bool> {
-        <Self as RtActivatable<ITimeZoneSettingsStatics>>::get_activation_factory().get_can_change_time_zone()
+        <Self as RtActivatable<ITimeZoneSettingsStatics>>::get_activation_factory().deref().get_can_change_time_zone()
     }
     #[inline] pub fn change_time_zone_by_display_name(timeZoneDisplayName: &HStringArg) -> Result<()> {
-        <Self as RtActivatable<ITimeZoneSettingsStatics>>::get_activation_factory().change_time_zone_by_display_name(timeZoneDisplayName)
+        <Self as RtActivatable<ITimeZoneSettingsStatics>>::get_activation_factory().deref().change_time_zone_by_display_name(timeZoneDisplayName)
     }
     #[inline] pub fn auto_update_time_zone_async(timeout: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<AutoUpdateTimeZoneStatus>>> {
-        <Self as RtActivatable<ITimeZoneSettingsStatics2>>::get_activation_factory().auto_update_time_zone_async(timeout)
+        <Self as RtActivatable<ITimeZoneSettingsStatics2>>::get_activation_factory().deref().auto_update_time_zone_async(timeout)
     }
 }
 DEFINE_CLSID!(TimeZoneSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,105,109,101,90,111,110,101,83,101,116,116,105,110,103,115,0]) [CLSID_TimeZoneSettings]);
@@ -1971,9 +1971,9 @@ impl IUser {
         let hr = ((*self.lpVtbl).GetPropertyAsync)(self as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_properties_async(&self, values: &foundation::collections::IVectorView<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IPropertySet>>> { unsafe { 
+    #[inline] pub fn get_properties_async(&self, values: &ComPtr<foundation::collections::IVectorView<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IPropertySet>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPropertiesAsync)(self as *const _ as *mut _, values as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetPropertiesAsync)(self as *const _ as *mut _, values.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_picture_async(&self, desiredSize: UserPictureSize) -> Result<ComPtr<foundation::IAsyncOperation<super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
@@ -1986,19 +1986,19 @@ RT_CLASS!{class User: IUser}
 impl RtActivatable<IUserStatics> for User {}
 impl User {
     #[inline] pub fn create_watcher() -> Result<Option<ComPtr<UserWatcher>>> {
-        <Self as RtActivatable<IUserStatics>>::get_activation_factory().create_watcher()
+        <Self as RtActivatable<IUserStatics>>::get_activation_factory().deref().create_watcher()
     }
     #[inline] pub fn find_all_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<User>>>> {
-        <Self as RtActivatable<IUserStatics>>::get_activation_factory().find_all_async()
+        <Self as RtActivatable<IUserStatics>>::get_activation_factory().deref().find_all_async()
     }
     #[inline] pub fn find_all_async_by_type(type_: UserType) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<User>>>> {
-        <Self as RtActivatable<IUserStatics>>::get_activation_factory().find_all_async_by_type(type_)
+        <Self as RtActivatable<IUserStatics>>::get_activation_factory().deref().find_all_async_by_type(type_)
     }
     #[inline] pub fn find_all_async_by_type_and_status(type_: UserType, status: UserAuthenticationStatus) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<User>>>> {
-        <Self as RtActivatable<IUserStatics>>::get_activation_factory().find_all_async_by_type_and_status(type_, status)
+        <Self as RtActivatable<IUserStatics>>::get_activation_factory().deref().find_all_async_by_type_and_status(type_, status)
     }
     #[inline] pub fn get_from_id(nonRoamableId: &HStringArg) -> Result<Option<ComPtr<User>>> {
-        <Self as RtActivatable<IUserStatics>>::get_activation_factory().get_from_id(nonRoamableId)
+        <Self as RtActivatable<IUserStatics>>::get_activation_factory().deref().get_from_id(nonRoamableId)
     }
 }
 DEFINE_CLSID!(User(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,0]) [CLSID_User]);
@@ -2062,13 +2062,13 @@ RT_CLASS!{static class UserDeviceAssociation}
 impl RtActivatable<IUserDeviceAssociationStatics> for UserDeviceAssociation {}
 impl UserDeviceAssociation {
     #[inline] pub fn find_user_from_device_id(deviceId: &HStringArg) -> Result<Option<ComPtr<User>>> {
-        <Self as RtActivatable<IUserDeviceAssociationStatics>>::get_activation_factory().find_user_from_device_id(deviceId)
+        <Self as RtActivatable<IUserDeviceAssociationStatics>>::get_activation_factory().deref().find_user_from_device_id(deviceId)
     }
-    #[inline] pub fn add_user_device_association_changed(handler: &foundation::EventHandler<UserDeviceAssociationChangedEventArgs>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IUserDeviceAssociationStatics>>::get_activation_factory().add_user_device_association_changed(handler)
+    #[inline] pub fn add_user_device_association_changed(handler: &ComPtr<foundation::EventHandler<UserDeviceAssociationChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IUserDeviceAssociationStatics>>::get_activation_factory().deref().add_user_device_association_changed(handler)
     }
     #[inline] pub fn remove_user_device_association_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IUserDeviceAssociationStatics>>::get_activation_factory().remove_user_device_association_changed(token)
+        <Self as RtActivatable<IUserDeviceAssociationStatics>>::get_activation_factory().deref().remove_user_device_association_changed(token)
     }
 }
 DEFINE_CLSID!(UserDeviceAssociation(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,68,101,118,105,99,101,65,115,115,111,99,105,97,116,105,111,110,0]) [CLSID_UserDeviceAssociation]);
@@ -2108,9 +2108,9 @@ impl IUserDeviceAssociationStatics {
         let hr = ((*self.lpVtbl).FindUserFromDeviceId)(self as *const _ as *mut _, deviceId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_user_device_association_changed(&self, handler: &foundation::EventHandler<UserDeviceAssociationChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_user_device_association_changed(&self, handler: &ComPtr<foundation::EventHandler<UserDeviceAssociationChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_UserDeviceAssociationChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_UserDeviceAssociationChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_user_device_association_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -2141,8 +2141,8 @@ impl IUserPicker {
         let hr = ((*self.lpVtbl).get_SuggestedSelectedUser)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_suggested_selected_user(&self, value: &User) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SuggestedSelectedUser)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_suggested_selected_user(&self, value: &ComPtr<User>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SuggestedSelectedUser)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn pick_single_user_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<User>>> { unsafe { 
@@ -2156,7 +2156,7 @@ impl RtActivatable<IUserPickerStatics> for UserPicker {}
 impl RtActivatable<IActivationFactory> for UserPicker {}
 impl UserPicker {
     #[inline] pub fn is_supported() -> Result<bool> {
-        <Self as RtActivatable<IUserPickerStatics>>::get_activation_factory().is_supported()
+        <Self as RtActivatable<IUserPickerStatics>>::get_activation_factory().deref().is_supported()
     }
 }
 DEFINE_CLSID!(UserPicker(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,105,99,107,101,114,0]) [CLSID_UserPicker]);
@@ -2246,63 +2246,63 @@ impl IUserWatcher {
         let hr = ((*self.lpVtbl).Stop)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_added(&self, handler: &foundation::TypedEventHandler<UserWatcher, UserChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_added(&self, handler: &ComPtr<foundation::TypedEventHandler<UserWatcher, UserChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Added)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Added)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Added)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<UserWatcher, UserChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_removed(&self, handler: &ComPtr<foundation::TypedEventHandler<UserWatcher, UserChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Removed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_updated(&self, handler: &foundation::TypedEventHandler<UserWatcher, UserChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_updated(&self, handler: &ComPtr<foundation::TypedEventHandler<UserWatcher, UserChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Updated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Updated)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Updated)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_authentication_status_changed(&self, handler: &foundation::TypedEventHandler<UserWatcher, UserChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_authentication_status_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<UserWatcher, UserChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AuthenticationStatusChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AuthenticationStatusChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_authentication_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_AuthenticationStatusChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_authentication_status_changing(&self, handler: &foundation::TypedEventHandler<UserWatcher, UserAuthenticationStatusChangingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_authentication_status_changing(&self, handler: &ComPtr<foundation::TypedEventHandler<UserWatcher, UserAuthenticationStatusChangingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AuthenticationStatusChanging)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AuthenticationStatusChanging)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_authentication_status_changing(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_AuthenticationStatusChanging)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_enumeration_completed(&self, handler: &foundation::TypedEventHandler<UserWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_enumeration_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<UserWatcher, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_EnumerationCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_EnumerationCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_EnumerationCompleted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_stopped(&self, handler: &foundation::TypedEventHandler<UserWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_stopped(&self, handler: &ComPtr<foundation::TypedEventHandler<UserWatcher, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Stopped)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Stopped)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_stopped(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -2348,9 +2348,9 @@ RT_INTERFACE!{interface IDiagnosticInvoker(IDiagnosticInvokerVtbl): IInspectable
     #[cfg(feature="windows-data")] fn RunDiagnosticActionAsync(&self, context: *mut super::super::data::json::JsonObject, out: *mut *mut foundation::IAsyncOperationWithProgress<DiagnosticActionResult, DiagnosticActionState>) -> HRESULT
 }}
 impl IDiagnosticInvoker {
-    #[cfg(feature="windows-data")] #[inline] pub fn run_diagnostic_action_async(&self, context: &super::super::data::json::JsonObject) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DiagnosticActionResult, DiagnosticActionState>>> { unsafe { 
+    #[cfg(feature="windows-data")] #[inline] pub fn run_diagnostic_action_async(&self, context: &ComPtr<super::super::data::json::JsonObject>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DiagnosticActionResult, DiagnosticActionState>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RunDiagnosticActionAsync)(self as *const _ as *mut _, context as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RunDiagnosticActionAsync)(self as *const _ as *mut _, context.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2358,13 +2358,13 @@ RT_CLASS!{class DiagnosticInvoker: IDiagnosticInvoker}
 impl RtActivatable<IDiagnosticInvokerStatics> for DiagnosticInvoker {}
 impl DiagnosticInvoker {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<DiagnosticInvoker>>> {
-        <Self as RtActivatable<IDiagnosticInvokerStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IDiagnosticInvokerStatics>>::get_activation_factory().deref().get_default()
     }
-    #[inline] pub fn get_for_user(user: &super::User) -> Result<Option<ComPtr<DiagnosticInvoker>>> {
-        <Self as RtActivatable<IDiagnosticInvokerStatics>>::get_activation_factory().get_for_user(user)
+    #[inline] pub fn get_for_user(user: &ComPtr<super::User>) -> Result<Option<ComPtr<DiagnosticInvoker>>> {
+        <Self as RtActivatable<IDiagnosticInvokerStatics>>::get_activation_factory().deref().get_for_user(user)
     }
     #[inline] pub fn get_is_supported() -> Result<bool> {
-        <Self as RtActivatable<IDiagnosticInvokerStatics>>::get_activation_factory().get_is_supported()
+        <Self as RtActivatable<IDiagnosticInvokerStatics>>::get_activation_factory().deref().get_is_supported()
     }
 }
 DEFINE_CLSID!(DiagnosticInvoker(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,68,105,97,103,110,111,115,116,105,99,73,110,118,111,107,101,114,0]) [CLSID_DiagnosticInvoker]);
@@ -2391,9 +2391,9 @@ impl IDiagnosticInvokerStatics {
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_for_user(&self, user: &super::User) -> Result<Option<ComPtr<DiagnosticInvoker>>> { unsafe { 
+    #[inline] pub fn get_for_user(&self, user: &ComPtr<super::User>) -> Result<Option<ComPtr<DiagnosticInvoker>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_supported(&self) -> Result<bool> { unsafe { 
@@ -2484,13 +2484,13 @@ impl RtActivatable<IProcessDiagnosticInfoStatics> for ProcessDiagnosticInfo {}
 impl RtActivatable<IProcessDiagnosticInfoStatics2> for ProcessDiagnosticInfo {}
 impl ProcessDiagnosticInfo {
     #[inline] pub fn get_for_processes() -> Result<Option<ComPtr<foundation::collections::IVectorView<ProcessDiagnosticInfo>>>> {
-        <Self as RtActivatable<IProcessDiagnosticInfoStatics>>::get_activation_factory().get_for_processes()
+        <Self as RtActivatable<IProcessDiagnosticInfoStatics>>::get_activation_factory().deref().get_for_processes()
     }
     #[inline] pub fn get_for_current_process() -> Result<Option<ComPtr<ProcessDiagnosticInfo>>> {
-        <Self as RtActivatable<IProcessDiagnosticInfoStatics>>::get_activation_factory().get_for_current_process()
+        <Self as RtActivatable<IProcessDiagnosticInfoStatics>>::get_activation_factory().deref().get_for_current_process()
     }
     #[inline] pub fn try_get_for_process_id(processId: u32) -> Result<Option<ComPtr<ProcessDiagnosticInfo>>> {
-        <Self as RtActivatable<IProcessDiagnosticInfoStatics2>>::get_activation_factory().try_get_for_process_id(processId)
+        <Self as RtActivatable<IProcessDiagnosticInfoStatics2>>::get_activation_factory().deref().try_get_for_process_id(processId)
     }
 }
 DEFINE_CLSID!(ProcessDiagnosticInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,80,114,111,99,101,115,115,68,105,97,103,110,111,115,116,105,99,73,110,102,111,0]) [CLSID_ProcessDiagnosticInfo]);
@@ -2740,7 +2740,7 @@ RT_CLASS!{class SystemDiagnosticInfo: ISystemDiagnosticInfo}
 impl RtActivatable<ISystemDiagnosticInfoStatics> for SystemDiagnosticInfo {}
 impl SystemDiagnosticInfo {
     #[inline] pub fn get_for_current_system() -> Result<Option<ComPtr<SystemDiagnosticInfo>>> {
-        <Self as RtActivatable<ISystemDiagnosticInfoStatics>>::get_activation_factory().get_for_current_system()
+        <Self as RtActivatable<ISystemDiagnosticInfoStatics>>::get_activation_factory().deref().get_for_current_system()
     }
 }
 DEFINE_CLSID!(SystemDiagnosticInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,83,121,115,116,101,109,68,105,97,103,110,111,115,116,105,99,73,110,102,111,0]) [CLSID_SystemDiagnosticInfo]);
@@ -2801,18 +2801,18 @@ RT_INTERFACE!{interface IDevicePortalConnection(IDevicePortalConnectionVtbl): II
     fn remove_RequestReceived(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IDevicePortalConnection {
-    #[inline] pub fn add_closed(&self, handler: &foundation::TypedEventHandler<DevicePortalConnection, DevicePortalConnectionClosedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_closed(&self, handler: &ComPtr<foundation::TypedEventHandler<DevicePortalConnection, DevicePortalConnectionClosedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_closed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Closed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_request_received(&self, handler: &foundation::TypedEventHandler<DevicePortalConnection, DevicePortalConnectionRequestReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_request_received(&self, handler: &ComPtr<foundation::TypedEventHandler<DevicePortalConnection, DevicePortalConnectionRequestReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RequestReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RequestReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_request_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -2823,8 +2823,8 @@ impl IDevicePortalConnection {
 RT_CLASS!{class DevicePortalConnection: IDevicePortalConnection}
 impl RtActivatable<IDevicePortalConnectionStatics> for DevicePortalConnection {}
 impl DevicePortalConnection {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_for_app_service_connection(appServiceConnection: &crate::windows::applicationmodel::appservice::AppServiceConnection) -> Result<Option<ComPtr<DevicePortalConnection>>> {
-        <Self as RtActivatable<IDevicePortalConnectionStatics>>::get_activation_factory().get_for_app_service_connection(appServiceConnection)
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_for_app_service_connection(appServiceConnection: &ComPtr<crate::windows::applicationmodel::appservice::AppServiceConnection>) -> Result<Option<ComPtr<DevicePortalConnection>>> {
+        <Self as RtActivatable<IDevicePortalConnectionStatics>>::get_activation_factory().deref().get_for_app_service_connection(appServiceConnection)
     }
 }
 DEFINE_CLSID!(DevicePortalConnection(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,68,101,118,105,99,101,80,111,114,116,97,108,46,68,101,118,105,99,101,80,111,114,116,97,108,67,111,110,110,101,99,116,105,111,110,0]) [CLSID_DevicePortalConnection]);
@@ -2866,9 +2866,9 @@ RT_INTERFACE!{static interface IDevicePortalConnectionStatics(IDevicePortalConne
     #[cfg(feature="windows-applicationmodel")] fn GetForAppServiceConnection(&self, appServiceConnection: *mut crate::windows::applicationmodel::appservice::AppServiceConnection, out: *mut *mut DevicePortalConnection) -> HRESULT
 }}
 impl IDevicePortalConnectionStatics {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_for_app_service_connection(&self, appServiceConnection: &crate::windows::applicationmodel::appservice::AppServiceConnection) -> Result<Option<ComPtr<DevicePortalConnection>>> { unsafe { 
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_for_app_service_connection(&self, appServiceConnection: &ComPtr<crate::windows::applicationmodel::appservice::AppServiceConnection>) -> Result<Option<ComPtr<DevicePortalConnection>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForAppServiceConnection)(self as *const _ as *mut _, appServiceConnection as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForAppServiceConnection)(self as *const _ as *mut _, appServiceConnection.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2881,29 +2881,29 @@ RT_INTERFACE!{interface IDevicePortalWebSocketConnection(IDevicePortalWebSocketC
     #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerStreamWebSocketForRequest2(&self, request: *mut crate::windows::web::http::HttpRequestMessage, protocol: HSTRING, outboundBufferSizeInBytes: u32, noDelay: bool, out: *mut *mut crate::windows::networking::sockets::ServerStreamWebSocket) -> HRESULT
 }}
 impl IDevicePortalWebSocketConnection {
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request(&self, request: &crate::windows::web::http::HttpRequestMessage) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request(&self, request: &ComPtr<crate::windows::web::http::HttpRequestMessage>) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetServerMessageWebSocketForRequest)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetServerMessageWebSocketForRequest)(self as *const _ as *mut _, request.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request2(&self, request: &crate::windows::web::http::HttpRequestMessage, messageType: crate::windows::networking::sockets::SocketMessageType, protocol: &HStringArg) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request2(&self, request: &ComPtr<crate::windows::web::http::HttpRequestMessage>, messageType: crate::windows::networking::sockets::SocketMessageType, protocol: &HStringArg) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetServerMessageWebSocketForRequest2)(self as *const _ as *mut _, request as *const _ as *mut _, messageType, protocol.get(), &mut out);
+        let hr = ((*self.lpVtbl).GetServerMessageWebSocketForRequest2)(self as *const _ as *mut _, request.deref() as *const _ as *mut _, messageType, protocol.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request3(&self, request: &crate::windows::web::http::HttpRequestMessage, messageType: crate::windows::networking::sockets::SocketMessageType, protocol: &HStringArg, outboundBufferSizeInBytes: u32, maxMessageSize: u32, receiveMode: crate::windows::networking::sockets::MessageWebSocketReceiveMode) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request3(&self, request: &ComPtr<crate::windows::web::http::HttpRequestMessage>, messageType: crate::windows::networking::sockets::SocketMessageType, protocol: &HStringArg, outboundBufferSizeInBytes: u32, maxMessageSize: u32, receiveMode: crate::windows::networking::sockets::MessageWebSocketReceiveMode) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerMessageWebSocket>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetServerMessageWebSocketForRequest3)(self as *const _ as *mut _, request as *const _ as *mut _, messageType, protocol.get(), outboundBufferSizeInBytes, maxMessageSize, receiveMode, &mut out);
+        let hr = ((*self.lpVtbl).GetServerMessageWebSocketForRequest3)(self as *const _ as *mut _, request.deref() as *const _ as *mut _, messageType, protocol.get(), outboundBufferSizeInBytes, maxMessageSize, receiveMode, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_stream_web_socket_for_request(&self, request: &crate::windows::web::http::HttpRequestMessage) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerStreamWebSocket>>> { unsafe { 
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_stream_web_socket_for_request(&self, request: &ComPtr<crate::windows::web::http::HttpRequestMessage>) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerStreamWebSocket>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetServerStreamWebSocketForRequest)(self as *const _ as *mut _, request as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetServerStreamWebSocketForRequest)(self as *const _ as *mut _, request.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_stream_web_socket_for_request2(&self, request: &crate::windows::web::http::HttpRequestMessage, protocol: &HStringArg, outboundBufferSizeInBytes: u32, noDelay: bool) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerStreamWebSocket>>> { unsafe { 
+    #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_stream_web_socket_for_request2(&self, request: &ComPtr<crate::windows::web::http::HttpRequestMessage>, protocol: &HStringArg, outboundBufferSizeInBytes: u32, noDelay: bool) -> Result<Option<ComPtr<crate::windows::networking::sockets::ServerStreamWebSocket>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetServerStreamWebSocketForRequest2)(self as *const _ as *mut _, request as *const _ as *mut _, protocol.get(), outboundBufferSizeInBytes, noDelay, &mut out);
+        let hr = ((*self.lpVtbl).GetServerStreamWebSocketForRequest2)(self as *const _ as *mut _, request.deref() as *const _ as *mut _, protocol.get(), outboundBufferSizeInBytes, noDelay, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -2937,10 +2937,10 @@ RT_CLASS!{static class PlatformTelemetryClient}
 impl RtActivatable<IPlatformTelemetryClientStatics> for PlatformTelemetryClient {}
 impl PlatformTelemetryClient {
     #[inline] pub fn register(id: &HStringArg) -> Result<Option<ComPtr<PlatformTelemetryRegistrationResult>>> {
-        <Self as RtActivatable<IPlatformTelemetryClientStatics>>::get_activation_factory().register(id)
+        <Self as RtActivatable<IPlatformTelemetryClientStatics>>::get_activation_factory().deref().register(id)
     }
-    #[inline] pub fn register_with_settings(id: &HStringArg, settings: &PlatformTelemetryRegistrationSettings) -> Result<Option<ComPtr<PlatformTelemetryRegistrationResult>>> {
-        <Self as RtActivatable<IPlatformTelemetryClientStatics>>::get_activation_factory().register_with_settings(id, settings)
+    #[inline] pub fn register_with_settings(id: &HStringArg, settings: &ComPtr<PlatformTelemetryRegistrationSettings>) -> Result<Option<ComPtr<PlatformTelemetryRegistrationResult>>> {
+        <Self as RtActivatable<IPlatformTelemetryClientStatics>>::get_activation_factory().deref().register_with_settings(id, settings)
     }
 }
 DEFINE_CLSID!(PlatformTelemetryClient(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,84,101,108,101,109,101,116,114,121,46,80,108,97,116,102,111,114,109,84,101,108,101,109,101,116,114,121,67,108,105,101,110,116,0]) [CLSID_PlatformTelemetryClient]);
@@ -2955,9 +2955,9 @@ impl IPlatformTelemetryClientStatics {
         let hr = ((*self.lpVtbl).Register)(self as *const _ as *mut _, id.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn register_with_settings(&self, id: &HStringArg, settings: &PlatformTelemetryRegistrationSettings) -> Result<Option<ComPtr<PlatformTelemetryRegistrationResult>>> { unsafe { 
+    #[inline] pub fn register_with_settings(&self, id: &HStringArg, settings: &ComPtr<PlatformTelemetryRegistrationSettings>) -> Result<Option<ComPtr<PlatformTelemetryRegistrationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RegisterWithSettings)(self as *const _ as *mut _, id.get(), settings as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RegisterWithSettings)(self as *const _ as *mut _, id.get(), settings.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3013,28 +3013,28 @@ RT_CLASS!{static class PlatformDiagnosticActions}
 impl RtActivatable<IPlatformDiagnosticActionsStatics> for PlatformDiagnosticActions {}
 impl PlatformDiagnosticActions {
     #[inline] pub fn is_scenario_enabled(scenarioId: Guid) -> Result<bool> {
-        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().is_scenario_enabled(scenarioId)
+        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().deref().is_scenario_enabled(scenarioId)
     }
-    #[inline] pub fn try_escalate_scenario(scenarioId: Guid, escalationType: PlatformDiagnosticEscalationType, outputDirectory: &HStringArg, timestampOutputDirectory: bool, forceEscalationUpload: bool, triggers: &foundation::collections::IMapView<HString, HString>) -> Result<bool> {
-        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().try_escalate_scenario(scenarioId, escalationType, outputDirectory, timestampOutputDirectory, forceEscalationUpload, triggers)
+    #[inline] pub fn try_escalate_scenario(scenarioId: Guid, escalationType: PlatformDiagnosticEscalationType, outputDirectory: &HStringArg, timestampOutputDirectory: bool, forceEscalationUpload: bool, triggers: &ComPtr<foundation::collections::IMapView<HString, HString>>) -> Result<bool> {
+        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().deref().try_escalate_scenario(scenarioId, escalationType, outputDirectory, timestampOutputDirectory, forceEscalationUpload, triggers)
     }
     #[inline] pub fn download_latest_settings_for_namespace(partner: &HStringArg, feature: &HStringArg, isScenarioNamespace: bool, downloadOverCostedNetwork: bool, downloadOverBattery: bool) -> Result<PlatformDiagnosticActionState> {
-        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().download_latest_settings_for_namespace(partner, feature, isScenarioNamespace, downloadOverCostedNetwork, downloadOverBattery)
+        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().deref().download_latest_settings_for_namespace(partner, feature, isScenarioNamespace, downloadOverCostedNetwork, downloadOverBattery)
     }
     #[inline] pub fn get_active_scenario_list() -> Result<Option<ComPtr<foundation::collections::IVectorView<Guid>>>> {
-        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().get_active_scenario_list()
+        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().deref().get_active_scenario_list()
     }
     #[inline] pub fn force_upload(latency: PlatformDiagnosticEventBufferLatencies, uploadOverCostedNetwork: bool, uploadOverBattery: bool) -> Result<PlatformDiagnosticActionState> {
-        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().force_upload(latency, uploadOverCostedNetwork, uploadOverBattery)
+        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().deref().force_upload(latency, uploadOverCostedNetwork, uploadOverBattery)
     }
     #[inline] pub fn is_trace_running(slotType: PlatformDiagnosticTraceSlotType, scenarioId: Guid, traceProfileHash: u64) -> Result<PlatformDiagnosticTraceSlotState> {
-        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().is_trace_running(slotType, scenarioId, traceProfileHash)
+        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().deref().is_trace_running(slotType, scenarioId, traceProfileHash)
     }
     #[inline] pub fn get_active_trace_runtime(slotType: PlatformDiagnosticTraceSlotType) -> Result<Option<ComPtr<PlatformDiagnosticTraceRuntimeInfo>>> {
-        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().get_active_trace_runtime(slotType)
+        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().deref().get_active_trace_runtime(slotType)
     }
     #[inline] pub fn get_known_trace_list(slotType: PlatformDiagnosticTraceSlotType) -> Result<Option<ComPtr<foundation::collections::IVectorView<PlatformDiagnosticTraceInfo>>>> {
-        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().get_known_trace_list(slotType)
+        <Self as RtActivatable<IPlatformDiagnosticActionsStatics>>::get_activation_factory().deref().get_known_trace_list(slotType)
     }
 }
 DEFINE_CLSID!(PlatformDiagnosticActions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,84,114,97,99,101,82,101,112,111,114,116,105,110,103,46,80,108,97,116,102,111,114,109,68,105,97,103,110,111,115,116,105,99,65,99,116,105,111,110,115,0]) [CLSID_PlatformDiagnosticActions]);
@@ -3055,9 +3055,9 @@ impl IPlatformDiagnosticActionsStatics {
         let hr = ((*self.lpVtbl).IsScenarioEnabled)(self as *const _ as *mut _, scenarioId, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn try_escalate_scenario(&self, scenarioId: Guid, escalationType: PlatformDiagnosticEscalationType, outputDirectory: &HStringArg, timestampOutputDirectory: bool, forceEscalationUpload: bool, triggers: &foundation::collections::IMapView<HString, HString>) -> Result<bool> { unsafe { 
+    #[inline] pub fn try_escalate_scenario(&self, scenarioId: Guid, escalationType: PlatformDiagnosticEscalationType, outputDirectory: &HStringArg, timestampOutputDirectory: bool, forceEscalationUpload: bool, triggers: &ComPtr<foundation::collections::IMapView<HString, HString>>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).TryEscalateScenario)(self as *const _ as *mut _, scenarioId, escalationType, outputDirectory.get(), timestampOutputDirectory, forceEscalationUpload, triggers as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TryEscalateScenario)(self as *const _ as *mut _, scenarioId, escalationType, outputDirectory.get(), timestampOutputDirectory, forceEscalationUpload, triggers.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn download_latest_settings_for_namespace(&self, partner: &HStringArg, feature: &HStringArg, isScenarioNamespace: bool, downloadOverCostedNetwork: bool, downloadOverBattery: bool) -> Result<PlatformDiagnosticActionState> { unsafe { 
@@ -3227,7 +3227,7 @@ RT_CLASS!{class InstalledDesktopApp: IInstalledDesktopApp}
 impl RtActivatable<IInstalledDesktopAppStatics> for InstalledDesktopApp {}
 impl InstalledDesktopApp {
     #[inline] pub fn get_inventory_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<InstalledDesktopApp>>>> {
-        <Self as RtActivatable<IInstalledDesktopAppStatics>>::get_activation_factory().get_inventory_async()
+        <Self as RtActivatable<IInstalledDesktopAppStatics>>::get_activation_factory().deref().get_inventory_async()
     }
 }
 DEFINE_CLSID!(InstalledDesktopApp(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,73,110,118,101,110,116,111,114,121,46,73,110,115,116,97,108,108,101,100,68,101,115,107,116,111,112,65,112,112,0]) [CLSID_InstalledDesktopApp]);
@@ -3249,40 +3249,40 @@ RT_CLASS!{static class BackgroundEnergyManager}
 impl RtActivatable<IBackgroundEnergyManagerStatics> for BackgroundEnergyManager {}
 impl BackgroundEnergyManager {
     #[inline] pub fn get_low_usage_level() -> Result<u32> {
-        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().get_low_usage_level()
+        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().deref().get_low_usage_level()
     }
     #[inline] pub fn get_near_max_acceptable_usage_level() -> Result<u32> {
-        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().get_near_max_acceptable_usage_level()
+        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().deref().get_near_max_acceptable_usage_level()
     }
     #[inline] pub fn get_max_acceptable_usage_level() -> Result<u32> {
-        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().get_max_acceptable_usage_level()
+        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().deref().get_max_acceptable_usage_level()
     }
     #[inline] pub fn get_excessive_usage_level() -> Result<u32> {
-        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().get_excessive_usage_level()
+        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().deref().get_excessive_usage_level()
     }
     #[inline] pub fn get_near_termination_usage_level() -> Result<u32> {
-        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().get_near_termination_usage_level()
+        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().deref().get_near_termination_usage_level()
     }
     #[inline] pub fn get_termination_usage_level() -> Result<u32> {
-        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().get_termination_usage_level()
+        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().deref().get_termination_usage_level()
     }
     #[inline] pub fn get_recent_energy_usage() -> Result<u32> {
-        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().get_recent_energy_usage()
+        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().deref().get_recent_energy_usage()
     }
     #[inline] pub fn get_recent_energy_usage_level() -> Result<u32> {
-        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().get_recent_energy_usage_level()
+        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().deref().get_recent_energy_usage_level()
     }
-    #[inline] pub fn add_recent_energy_usage_increased(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().add_recent_energy_usage_increased(handler)
+    #[inline] pub fn add_recent_energy_usage_increased(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().deref().add_recent_energy_usage_increased(handler)
     }
     #[inline] pub fn remove_recent_energy_usage_increased(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().remove_recent_energy_usage_increased(token)
+        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().deref().remove_recent_energy_usage_increased(token)
     }
-    #[inline] pub fn add_recent_energy_usage_returned_to_low(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().add_recent_energy_usage_returned_to_low(handler)
+    #[inline] pub fn add_recent_energy_usage_returned_to_low(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().deref().add_recent_energy_usage_returned_to_low(handler)
     }
     #[inline] pub fn remove_recent_energy_usage_returned_to_low(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().remove_recent_energy_usage_returned_to_low(token)
+        <Self as RtActivatable<IBackgroundEnergyManagerStatics>>::get_activation_factory().deref().remove_recent_energy_usage_returned_to_low(token)
     }
 }
 DEFINE_CLSID!(BackgroundEnergyManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,66,97,99,107,103,114,111,117,110,100,69,110,101,114,103,121,77,97,110,97,103,101,114,0]) [CLSID_BackgroundEnergyManager]);
@@ -3342,18 +3342,18 @@ impl IBackgroundEnergyManagerStatics {
         let hr = ((*self.lpVtbl).get_RecentEnergyUsageLevel)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_recent_energy_usage_increased(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_recent_energy_usage_increased(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RecentEnergyUsageIncreased)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RecentEnergyUsageIncreased)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_recent_energy_usage_increased(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_RecentEnergyUsageIncreased)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_recent_energy_usage_returned_to_low(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_recent_energy_usage_returned_to_low(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RecentEnergyUsageReturnedToLow)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RecentEnergyUsageReturnedToLow)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_recent_energy_usage_returned_to_low(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3371,34 +3371,34 @@ RT_CLASS!{static class ForegroundEnergyManager}
 impl RtActivatable<IForegroundEnergyManagerStatics> for ForegroundEnergyManager {}
 impl ForegroundEnergyManager {
     #[inline] pub fn get_low_usage_level() -> Result<u32> {
-        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().get_low_usage_level()
+        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().deref().get_low_usage_level()
     }
     #[inline] pub fn get_near_max_acceptable_usage_level() -> Result<u32> {
-        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().get_near_max_acceptable_usage_level()
+        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().deref().get_near_max_acceptable_usage_level()
     }
     #[inline] pub fn get_max_acceptable_usage_level() -> Result<u32> {
-        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().get_max_acceptable_usage_level()
+        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().deref().get_max_acceptable_usage_level()
     }
     #[inline] pub fn get_excessive_usage_level() -> Result<u32> {
-        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().get_excessive_usage_level()
+        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().deref().get_excessive_usage_level()
     }
     #[inline] pub fn get_recent_energy_usage() -> Result<u32> {
-        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().get_recent_energy_usage()
+        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().deref().get_recent_energy_usage()
     }
     #[inline] pub fn get_recent_energy_usage_level() -> Result<u32> {
-        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().get_recent_energy_usage_level()
+        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().deref().get_recent_energy_usage_level()
     }
-    #[inline] pub fn add_recent_energy_usage_increased(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().add_recent_energy_usage_increased(handler)
+    #[inline] pub fn add_recent_energy_usage_increased(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().deref().add_recent_energy_usage_increased(handler)
     }
     #[inline] pub fn remove_recent_energy_usage_increased(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().remove_recent_energy_usage_increased(token)
+        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().deref().remove_recent_energy_usage_increased(token)
     }
-    #[inline] pub fn add_recent_energy_usage_returned_to_low(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().add_recent_energy_usage_returned_to_low(handler)
+    #[inline] pub fn add_recent_energy_usage_returned_to_low(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().deref().add_recent_energy_usage_returned_to_low(handler)
     }
     #[inline] pub fn remove_recent_energy_usage_returned_to_low(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().remove_recent_energy_usage_returned_to_low(token)
+        <Self as RtActivatable<IForegroundEnergyManagerStatics>>::get_activation_factory().deref().remove_recent_energy_usage_returned_to_low(token)
     }
 }
 DEFINE_CLSID!(ForegroundEnergyManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,70,111,114,101,103,114,111,117,110,100,69,110,101,114,103,121,77,97,110,97,103,101,114,0]) [CLSID_ForegroundEnergyManager]);
@@ -3446,18 +3446,18 @@ impl IForegroundEnergyManagerStatics {
         let hr = ((*self.lpVtbl).get_RecentEnergyUsageLevel)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_recent_energy_usage_increased(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_recent_energy_usage_increased(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RecentEnergyUsageIncreased)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RecentEnergyUsageIncreased)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_recent_energy_usage_increased(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_RecentEnergyUsageIncreased)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_recent_energy_usage_returned_to_low(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_recent_energy_usage_returned_to_low(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RecentEnergyUsageReturnedToLow)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RecentEnergyUsageReturnedToLow)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_recent_energy_usage_returned_to_low(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3469,49 +3469,49 @@ RT_CLASS!{static class PowerManager}
 impl RtActivatable<IPowerManagerStatics> for PowerManager {}
 impl PowerManager {
     #[inline] pub fn get_energy_saver_status() -> Result<EnergySaverStatus> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().get_energy_saver_status()
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().get_energy_saver_status()
     }
-    #[inline] pub fn add_energy_saver_status_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().add_energy_saver_status_changed(handler)
+    #[inline] pub fn add_energy_saver_status_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().add_energy_saver_status_changed(handler)
     }
     #[inline] pub fn remove_energy_saver_status_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().remove_energy_saver_status_changed(token)
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().remove_energy_saver_status_changed(token)
     }
     #[inline] pub fn get_battery_status() -> Result<BatteryStatus> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().get_battery_status()
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().get_battery_status()
     }
-    #[inline] pub fn add_battery_status_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().add_battery_status_changed(handler)
+    #[inline] pub fn add_battery_status_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().add_battery_status_changed(handler)
     }
     #[inline] pub fn remove_battery_status_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().remove_battery_status_changed(token)
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().remove_battery_status_changed(token)
     }
     #[inline] pub fn get_power_supply_status() -> Result<PowerSupplyStatus> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().get_power_supply_status()
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().get_power_supply_status()
     }
-    #[inline] pub fn add_power_supply_status_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().add_power_supply_status_changed(handler)
+    #[inline] pub fn add_power_supply_status_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().add_power_supply_status_changed(handler)
     }
     #[inline] pub fn remove_power_supply_status_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().remove_power_supply_status_changed(token)
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().remove_power_supply_status_changed(token)
     }
     #[inline] pub fn get_remaining_charge_percent() -> Result<i32> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().get_remaining_charge_percent()
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().get_remaining_charge_percent()
     }
-    #[inline] pub fn add_remaining_charge_percent_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().add_remaining_charge_percent_changed(handler)
+    #[inline] pub fn add_remaining_charge_percent_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().add_remaining_charge_percent_changed(handler)
     }
     #[inline] pub fn remove_remaining_charge_percent_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().remove_remaining_charge_percent_changed(token)
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().remove_remaining_charge_percent_changed(token)
     }
     #[inline] pub fn get_remaining_discharge_time() -> Result<foundation::TimeSpan> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().get_remaining_discharge_time()
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().get_remaining_discharge_time()
     }
-    #[inline] pub fn add_remaining_discharge_time_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().add_remaining_discharge_time_changed(handler)
+    #[inline] pub fn add_remaining_discharge_time_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().add_remaining_discharge_time_changed(handler)
     }
     #[inline] pub fn remove_remaining_discharge_time_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().remove_remaining_discharge_time_changed(token)
+        <Self as RtActivatable<IPowerManagerStatics>>::get_activation_factory().deref().remove_remaining_discharge_time_changed(token)
     }
 }
 DEFINE_CLSID!(PowerManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,80,111,119,101,114,77,97,110,97,103,101,114,0]) [CLSID_PowerManager]);
@@ -3539,9 +3539,9 @@ impl IPowerManagerStatics {
         let hr = ((*self.lpVtbl).get_EnergySaverStatus)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_energy_saver_status_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_energy_saver_status_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_EnergySaverStatusChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_EnergySaverStatusChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_energy_saver_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3553,9 +3553,9 @@ impl IPowerManagerStatics {
         let hr = ((*self.lpVtbl).get_BatteryStatus)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_battery_status_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_battery_status_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BatteryStatusChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BatteryStatusChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_battery_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3567,9 +3567,9 @@ impl IPowerManagerStatics {
         let hr = ((*self.lpVtbl).get_PowerSupplyStatus)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_power_supply_status_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_power_supply_status_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PowerSupplyStatusChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PowerSupplyStatusChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_power_supply_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3581,9 +3581,9 @@ impl IPowerManagerStatics {
         let hr = ((*self.lpVtbl).get_RemainingChargePercent)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_remaining_charge_percent_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_remaining_charge_percent_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RemainingChargePercentChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RemainingChargePercentChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_remaining_charge_percent_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3595,9 +3595,9 @@ impl IPowerManagerStatics {
         let hr = ((*self.lpVtbl).get_RemainingDischargeTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_remaining_discharge_time_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_remaining_discharge_time_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RemainingDischargeTimeChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RemainingDischargeTimeChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_remaining_discharge_time_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3614,13 +3614,13 @@ RT_CLASS!{static class BackgroundEnergyDiagnostics}
 impl RtActivatable<IBackgroundEnergyDiagnosticsStatics> for BackgroundEnergyDiagnostics {}
 impl BackgroundEnergyDiagnostics {
     #[inline] pub fn get_device_specific_conversion_factor() -> Result<f64> {
-        <Self as RtActivatable<IBackgroundEnergyDiagnosticsStatics>>::get_activation_factory().get_device_specific_conversion_factor()
+        <Self as RtActivatable<IBackgroundEnergyDiagnosticsStatics>>::get_activation_factory().deref().get_device_specific_conversion_factor()
     }
     #[inline] pub fn compute_total_energy_usage() -> Result<u64> {
-        <Self as RtActivatable<IBackgroundEnergyDiagnosticsStatics>>::get_activation_factory().compute_total_energy_usage()
+        <Self as RtActivatable<IBackgroundEnergyDiagnosticsStatics>>::get_activation_factory().deref().compute_total_energy_usage()
     }
     #[inline] pub fn reset_total_energy_usage() -> Result<()> {
-        <Self as RtActivatable<IBackgroundEnergyDiagnosticsStatics>>::get_activation_factory().reset_total_energy_usage()
+        <Self as RtActivatable<IBackgroundEnergyDiagnosticsStatics>>::get_activation_factory().deref().reset_total_energy_usage()
     }
 }
 DEFINE_CLSID!(BackgroundEnergyDiagnostics(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,68,105,97,103,110,111,115,116,105,99,115,46,66,97,99,107,103,114,111,117,110,100,69,110,101,114,103,121,68,105,97,103,110,111,115,116,105,99,115,0]) [CLSID_BackgroundEnergyDiagnostics]);
@@ -3650,13 +3650,13 @@ RT_CLASS!{static class ForegroundEnergyDiagnostics}
 impl RtActivatable<IForegroundEnergyDiagnosticsStatics> for ForegroundEnergyDiagnostics {}
 impl ForegroundEnergyDiagnostics {
     #[inline] pub fn get_device_specific_conversion_factor() -> Result<f64> {
-        <Self as RtActivatable<IForegroundEnergyDiagnosticsStatics>>::get_activation_factory().get_device_specific_conversion_factor()
+        <Self as RtActivatable<IForegroundEnergyDiagnosticsStatics>>::get_activation_factory().deref().get_device_specific_conversion_factor()
     }
     #[inline] pub fn compute_total_energy_usage() -> Result<u64> {
-        <Self as RtActivatable<IForegroundEnergyDiagnosticsStatics>>::get_activation_factory().compute_total_energy_usage()
+        <Self as RtActivatable<IForegroundEnergyDiagnosticsStatics>>::get_activation_factory().deref().compute_total_energy_usage()
     }
     #[inline] pub fn reset_total_energy_usage() -> Result<()> {
-        <Self as RtActivatable<IForegroundEnergyDiagnosticsStatics>>::get_activation_factory().reset_total_energy_usage()
+        <Self as RtActivatable<IForegroundEnergyDiagnosticsStatics>>::get_activation_factory().deref().reset_total_energy_usage()
     }
 }
 DEFINE_CLSID!(ForegroundEnergyDiagnostics(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,68,105,97,103,110,111,115,116,105,99,115,46,70,111,114,101,103,114,111,117,110,100,69,110,101,114,103,121,68,105,97,103,110,111,115,116,105,99,115,0]) [CLSID_ForegroundEnergyDiagnostics]);
@@ -3701,9 +3701,9 @@ impl ITwoPanelHingedDevicePosturePreview {
         let hr = ((*self.lpVtbl).GetCurrentPostureAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_posture_changed(&self, handler: &foundation::TypedEventHandler<TwoPanelHingedDevicePosturePreview, TwoPanelHingedDevicePosturePreviewReadingChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_posture_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<TwoPanelHingedDevicePosturePreview, TwoPanelHingedDevicePosturePreviewReadingChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PostureChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PostureChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_posture_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3715,7 +3715,7 @@ RT_CLASS!{class TwoPanelHingedDevicePosturePreview: ITwoPanelHingedDevicePosture
 impl RtActivatable<ITwoPanelHingedDevicePosturePreviewStatics> for TwoPanelHingedDevicePosturePreview {}
 impl TwoPanelHingedDevicePosturePreview {
     #[inline] pub fn get_default_async() -> Result<ComPtr<foundation::IAsyncOperation<TwoPanelHingedDevicePosturePreview>>> {
-        <Self as RtActivatable<ITwoPanelHingedDevicePosturePreviewStatics>>::get_activation_factory().get_default_async()
+        <Self as RtActivatable<ITwoPanelHingedDevicePosturePreviewStatics>>::get_activation_factory().deref().get_default_async()
     }
 }
 DEFINE_CLSID!(TwoPanelHingedDevicePosturePreview(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,101,118,105,101,119,46,84,119,111,80,97,110,101,108,72,105,110,103,101,100,68,101,118,105,99,101,80,111,115,116,117,114,101,80,114,101,118,105,101,119,0]) [CLSID_TwoPanelHingedDevicePosturePreview]);
@@ -3794,13 +3794,13 @@ impl RtActivatable<IAnalyticsInfoStatics> for AnalyticsInfo {}
 impl RtActivatable<IAnalyticsInfoStatics2> for AnalyticsInfo {}
 impl AnalyticsInfo {
     #[inline] pub fn get_version_info() -> Result<Option<ComPtr<AnalyticsVersionInfo>>> {
-        <Self as RtActivatable<IAnalyticsInfoStatics>>::get_activation_factory().get_version_info()
+        <Self as RtActivatable<IAnalyticsInfoStatics>>::get_activation_factory().deref().get_version_info()
     }
     #[inline] pub fn get_device_form() -> Result<HString> {
-        <Self as RtActivatable<IAnalyticsInfoStatics>>::get_activation_factory().get_device_form()
+        <Self as RtActivatable<IAnalyticsInfoStatics>>::get_activation_factory().deref().get_device_form()
     }
-    #[inline] pub fn get_system_properties_async(attributeNames: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<HString, HString>>>> {
-        <Self as RtActivatable<IAnalyticsInfoStatics2>>::get_activation_factory().get_system_properties_async(attributeNames)
+    #[inline] pub fn get_system_properties_async(attributeNames: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<HString, HString>>>> {
+        <Self as RtActivatable<IAnalyticsInfoStatics2>>::get_activation_factory().deref().get_system_properties_async(attributeNames)
     }
 }
 DEFINE_CLSID!(AnalyticsInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,65,110,97,108,121,116,105,99,115,73,110,102,111,0]) [CLSID_AnalyticsInfo]);
@@ -3826,9 +3826,9 @@ RT_INTERFACE!{static interface IAnalyticsInfoStatics2(IAnalyticsInfoStatics2Vtbl
     fn GetSystemPropertiesAsync(&self, attributeNames: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IMapView<HString, HString>>) -> HRESULT
 }}
 impl IAnalyticsInfoStatics2 {
-    #[inline] pub fn get_system_properties_async(&self, attributeNames: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<HString, HString>>>> { unsafe { 
+    #[inline] pub fn get_system_properties_async(&self, attributeNames: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IMapView<HString, HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSystemPropertiesAsync)(self as *const _ as *mut _, attributeNames as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetSystemPropertiesAsync)(self as *const _ as *mut _, attributeNames.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3854,7 +3854,7 @@ RT_CLASS!{static class EducationSettings}
 impl RtActivatable<IEducationSettingsStatics> for EducationSettings {}
 impl EducationSettings {
     #[inline] pub fn get_is_education_environment() -> Result<bool> {
-        <Self as RtActivatable<IEducationSettingsStatics>>::get_activation_factory().get_is_education_environment()
+        <Self as RtActivatable<IEducationSettingsStatics>>::get_activation_factory().deref().get_is_education_environment()
     }
 }
 DEFINE_CLSID!(EducationSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,69,100,117,99,97,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_EducationSettings]);
@@ -3872,8 +3872,8 @@ impl IEducationSettingsStatics {
 RT_CLASS!{static class HardwareIdentification}
 impl RtActivatable<IHardwareIdentificationStatics> for HardwareIdentification {}
 impl HardwareIdentification {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_package_specific_token(nonce: &super::super::storage::streams::IBuffer) -> Result<Option<ComPtr<HardwareToken>>> {
-        <Self as RtActivatable<IHardwareIdentificationStatics>>::get_activation_factory().get_package_specific_token(nonce)
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_package_specific_token(nonce: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<Option<ComPtr<HardwareToken>>> {
+        <Self as RtActivatable<IHardwareIdentificationStatics>>::get_activation_factory().deref().get_package_specific_token(nonce)
     }
 }
 DEFINE_CLSID!(HardwareIdentification(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,72,97,114,100,119,97,114,101,73,100,101,110,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_HardwareIdentification]);
@@ -3882,9 +3882,9 @@ RT_INTERFACE!{static interface IHardwareIdentificationStatics(IHardwareIdentific
     #[cfg(feature="windows-storage")] fn GetPackageSpecificToken(&self, nonce: *mut super::super::storage::streams::IBuffer, out: *mut *mut HardwareToken) -> HRESULT
 }}
 impl IHardwareIdentificationStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_package_specific_token(&self, nonce: &super::super::storage::streams::IBuffer) -> Result<Option<ComPtr<HardwareToken>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_package_specific_token(&self, nonce: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<Option<ComPtr<HardwareToken>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPackageSpecificToken)(self as *const _ as *mut _, nonce as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetPackageSpecificToken)(self as *const _ as *mut _, nonce.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -3916,70 +3916,70 @@ RT_CLASS!{static class KnownRetailInfoProperties}
 impl RtActivatable<IKnownRetailInfoPropertiesStatics> for KnownRetailInfoProperties {}
 impl KnownRetailInfoProperties {
     #[inline] pub fn get_retail_access_code() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_retail_access_code()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_retail_access_code()
     }
     #[inline] pub fn get_manufacturer_name() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_manufacturer_name()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_manufacturer_name()
     }
     #[inline] pub fn get_model_name() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_model_name()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_model_name()
     }
     #[inline] pub fn get_display_model_name() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_display_model_name()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_display_model_name()
     }
     #[inline] pub fn get_price() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_price()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_price()
     }
     #[inline] pub fn get_is_featured() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_is_featured()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_is_featured()
     }
     #[inline] pub fn get_form_factor() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_form_factor()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_form_factor()
     }
     #[inline] pub fn get_screen_size() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_screen_size()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_screen_size()
     }
     #[inline] pub fn get_weight() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_weight()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_weight()
     }
     #[inline] pub fn get_display_description() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_display_description()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_display_description()
     }
     #[inline] pub fn get_battery_life_description() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_battery_life_description()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_battery_life_description()
     }
     #[inline] pub fn get_processor_description() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_processor_description()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_processor_description()
     }
     #[inline] pub fn get_memory() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_memory()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_memory()
     }
     #[inline] pub fn get_storage_description() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_storage_description()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_storage_description()
     }
     #[inline] pub fn get_graphics_description() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_graphics_description()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_graphics_description()
     }
     #[inline] pub fn get_front_camera_description() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_front_camera_description()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_front_camera_description()
     }
     #[inline] pub fn get_rear_camera_description() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_rear_camera_description()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_rear_camera_description()
     }
     #[inline] pub fn get_has_nfc() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_has_nfc()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_has_nfc()
     }
     #[inline] pub fn get_has_sd_slot() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_has_sd_slot()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_has_sd_slot()
     }
     #[inline] pub fn get_has_optical_drive() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_has_optical_drive()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_has_optical_drive()
     }
     #[inline] pub fn get_is_office_installed() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_is_office_installed()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_is_office_installed()
     }
     #[inline] pub fn get_windows_edition() -> Result<HString> {
-        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().get_windows_edition()
+        <Self as RtActivatable<IKnownRetailInfoPropertiesStatics>>::get_activation_factory().deref().get_windows_edition()
     }
 }
 DEFINE_CLSID!(KnownRetailInfoProperties(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,75,110,111,119,110,82,101,116,97,105,108,73,110,102,111,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownRetailInfoProperties]);
@@ -4127,16 +4127,16 @@ RT_CLASS!{static class PlatformDiagnosticsAndUsageDataSettings}
 impl RtActivatable<IPlatformDiagnosticsAndUsageDataSettingsStatics> for PlatformDiagnosticsAndUsageDataSettings {}
 impl PlatformDiagnosticsAndUsageDataSettings {
     #[inline] pub fn get_collection_level() -> Result<PlatformDataCollectionLevel> {
-        <Self as RtActivatable<IPlatformDiagnosticsAndUsageDataSettingsStatics>>::get_activation_factory().get_collection_level()
+        <Self as RtActivatable<IPlatformDiagnosticsAndUsageDataSettingsStatics>>::get_activation_factory().deref().get_collection_level()
     }
-    #[inline] pub fn add_collection_level_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IPlatformDiagnosticsAndUsageDataSettingsStatics>>::get_activation_factory().add_collection_level_changed(handler)
+    #[inline] pub fn add_collection_level_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IPlatformDiagnosticsAndUsageDataSettingsStatics>>::get_activation_factory().deref().add_collection_level_changed(handler)
     }
     #[inline] pub fn remove_collection_level_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IPlatformDiagnosticsAndUsageDataSettingsStatics>>::get_activation_factory().remove_collection_level_changed(token)
+        <Self as RtActivatable<IPlatformDiagnosticsAndUsageDataSettingsStatics>>::get_activation_factory().deref().remove_collection_level_changed(token)
     }
     #[inline] pub fn can_collect_diagnostics(level: PlatformDataCollectionLevel) -> Result<bool> {
-        <Self as RtActivatable<IPlatformDiagnosticsAndUsageDataSettingsStatics>>::get_activation_factory().can_collect_diagnostics(level)
+        <Self as RtActivatable<IPlatformDiagnosticsAndUsageDataSettingsStatics>>::get_activation_factory().deref().can_collect_diagnostics(level)
     }
 }
 DEFINE_CLSID!(PlatformDiagnosticsAndUsageDataSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,80,108,97,116,102,111,114,109,68,105,97,103,110,111,115,116,105,99,115,65,110,100,85,115,97,103,101,68,97,116,97,83,101,116,116,105,110,103,115,0]) [CLSID_PlatformDiagnosticsAndUsageDataSettings]);
@@ -4153,9 +4153,9 @@ impl IPlatformDiagnosticsAndUsageDataSettingsStatics {
         let hr = ((*self.lpVtbl).get_CollectionLevel)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_collection_level_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_collection_level_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CollectionLevelChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CollectionLevelChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_collection_level_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -4172,10 +4172,10 @@ RT_CLASS!{static class RetailInfo}
 impl RtActivatable<IRetailInfoStatics> for RetailInfo {}
 impl RetailInfo {
     #[inline] pub fn get_is_demo_mode_enabled() -> Result<bool> {
-        <Self as RtActivatable<IRetailInfoStatics>>::get_activation_factory().get_is_demo_mode_enabled()
+        <Self as RtActivatable<IRetailInfoStatics>>::get_activation_factory().deref().get_is_demo_mode_enabled()
     }
     #[inline] pub fn get_properties() -> Result<Option<ComPtr<foundation::collections::IMapView<HString, IInspectable>>>> {
-        <Self as RtActivatable<IRetailInfoStatics>>::get_activation_factory().get_properties()
+        <Self as RtActivatable<IRetailInfoStatics>>::get_activation_factory().deref().get_properties()
     }
 }
 DEFINE_CLSID!(RetailInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,82,101,116,97,105,108,73,110,102,111,0]) [CLSID_RetailInfo]);
@@ -4201,10 +4201,10 @@ impl RtActivatable<ISharedModeSettingsStatics> for SharedModeSettings {}
 impl RtActivatable<ISharedModeSettingsStatics2> for SharedModeSettings {}
 impl SharedModeSettings {
     #[inline] pub fn get_is_enabled() -> Result<bool> {
-        <Self as RtActivatable<ISharedModeSettingsStatics>>::get_activation_factory().get_is_enabled()
+        <Self as RtActivatable<ISharedModeSettingsStatics>>::get_activation_factory().deref().get_is_enabled()
     }
     #[inline] pub fn get_should_avoid_local_storage() -> Result<bool> {
-        <Self as RtActivatable<ISharedModeSettingsStatics2>>::get_activation_factory().get_should_avoid_local_storage()
+        <Self as RtActivatable<ISharedModeSettingsStatics2>>::get_activation_factory().deref().get_should_avoid_local_storage()
     }
 }
 DEFINE_CLSID!(SharedModeSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,104,97,114,101,100,77,111,100,101,83,101,116,116,105,110,103,115,0]) [CLSID_SharedModeSettings]);
@@ -4234,10 +4234,10 @@ RT_CLASS!{static class SystemIdentification}
 impl RtActivatable<ISystemIdentificationStatics> for SystemIdentification {}
 impl SystemIdentification {
     #[inline] pub fn get_system_id_for_publisher() -> Result<Option<ComPtr<SystemIdentificationInfo>>> {
-        <Self as RtActivatable<ISystemIdentificationStatics>>::get_activation_factory().get_system_id_for_publisher()
+        <Self as RtActivatable<ISystemIdentificationStatics>>::get_activation_factory().deref().get_system_id_for_publisher()
     }
-    #[inline] pub fn get_system_id_for_user(user: &super::User) -> Result<Option<ComPtr<SystemIdentificationInfo>>> {
-        <Self as RtActivatable<ISystemIdentificationStatics>>::get_activation_factory().get_system_id_for_user(user)
+    #[inline] pub fn get_system_id_for_user(user: &ComPtr<super::User>) -> Result<Option<ComPtr<SystemIdentificationInfo>>> {
+        <Self as RtActivatable<ISystemIdentificationStatics>>::get_activation_factory().deref().get_system_id_for_user(user)
     }
 }
 DEFINE_CLSID!(SystemIdentification(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,121,115,116,101,109,73,100,101,110,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_SystemIdentification]);
@@ -4274,9 +4274,9 @@ impl ISystemIdentificationStatics {
         let hr = ((*self.lpVtbl).GetSystemIdForPublisher)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_system_id_for_user(&self, user: &super::User) -> Result<Option<ComPtr<SystemIdentificationInfo>>> { unsafe { 
+    #[inline] pub fn get_system_id_for_user(&self, user: &ComPtr<super::User>) -> Result<Option<ComPtr<SystemIdentificationInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSystemIdForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetSystemIdForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4287,13 +4287,13 @@ RT_CLASS!{static class SystemSetupInfo}
 impl RtActivatable<ISystemSetupInfoStatics> for SystemSetupInfo {}
 impl SystemSetupInfo {
     #[inline] pub fn get_out_of_box_experience_state() -> Result<SystemOutOfBoxExperienceState> {
-        <Self as RtActivatable<ISystemSetupInfoStatics>>::get_activation_factory().get_out_of_box_experience_state()
+        <Self as RtActivatable<ISystemSetupInfoStatics>>::get_activation_factory().deref().get_out_of_box_experience_state()
     }
-    #[inline] pub fn add_out_of_box_experience_state_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<ISystemSetupInfoStatics>>::get_activation_factory().add_out_of_box_experience_state_changed(handler)
+    #[inline] pub fn add_out_of_box_experience_state_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<ISystemSetupInfoStatics>>::get_activation_factory().deref().add_out_of_box_experience_state_changed(handler)
     }
     #[inline] pub fn remove_out_of_box_experience_state_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<ISystemSetupInfoStatics>>::get_activation_factory().remove_out_of_box_experience_state_changed(token)
+        <Self as RtActivatable<ISystemSetupInfoStatics>>::get_activation_factory().deref().remove_out_of_box_experience_state_changed(token)
     }
 }
 DEFINE_CLSID!(SystemSetupInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,121,115,116,101,109,83,101,116,117,112,73,110,102,111,0]) [CLSID_SystemSetupInfo]);
@@ -4309,9 +4309,9 @@ impl ISystemSetupInfoStatics {
         let hr = ((*self.lpVtbl).get_OutOfBoxExperienceState)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_out_of_box_experience_state_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_out_of_box_experience_state_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_OutOfBoxExperienceStateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_OutOfBoxExperienceStateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_out_of_box_experience_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -4323,22 +4323,22 @@ RT_CLASS!{static class WindowsIntegrityPolicy}
 impl RtActivatable<IWindowsIntegrityPolicyStatics> for WindowsIntegrityPolicy {}
 impl WindowsIntegrityPolicy {
     #[inline] pub fn get_is_enabled() -> Result<bool> {
-        <Self as RtActivatable<IWindowsIntegrityPolicyStatics>>::get_activation_factory().get_is_enabled()
+        <Self as RtActivatable<IWindowsIntegrityPolicyStatics>>::get_activation_factory().deref().get_is_enabled()
     }
     #[inline] pub fn get_is_enabled_for_trial() -> Result<bool> {
-        <Self as RtActivatable<IWindowsIntegrityPolicyStatics>>::get_activation_factory().get_is_enabled_for_trial()
+        <Self as RtActivatable<IWindowsIntegrityPolicyStatics>>::get_activation_factory().deref().get_is_enabled_for_trial()
     }
     #[inline] pub fn get_can_disable() -> Result<bool> {
-        <Self as RtActivatable<IWindowsIntegrityPolicyStatics>>::get_activation_factory().get_can_disable()
+        <Self as RtActivatable<IWindowsIntegrityPolicyStatics>>::get_activation_factory().deref().get_can_disable()
     }
     #[inline] pub fn get_is_disable_supported() -> Result<bool> {
-        <Self as RtActivatable<IWindowsIntegrityPolicyStatics>>::get_activation_factory().get_is_disable_supported()
+        <Self as RtActivatable<IWindowsIntegrityPolicyStatics>>::get_activation_factory().deref().get_is_disable_supported()
     }
-    #[inline] pub fn add_policy_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IWindowsIntegrityPolicyStatics>>::get_activation_factory().add_policy_changed(handler)
+    #[inline] pub fn add_policy_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IWindowsIntegrityPolicyStatics>>::get_activation_factory().deref().add_policy_changed(handler)
     }
     #[inline] pub fn remove_policy_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IWindowsIntegrityPolicyStatics>>::get_activation_factory().remove_policy_changed(token)
+        <Self as RtActivatable<IWindowsIntegrityPolicyStatics>>::get_activation_factory().deref().remove_policy_changed(token)
     }
 }
 DEFINE_CLSID!(WindowsIntegrityPolicy(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,87,105,110,100,111,119,115,73,110,116,101,103,114,105,116,121,80,111,108,105,99,121,0]) [CLSID_WindowsIntegrityPolicy]);
@@ -4372,9 +4372,9 @@ impl IWindowsIntegrityPolicyStatics {
         let hr = ((*self.lpVtbl).get_IsDisableSupported)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_policy_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_policy_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PolicyChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PolicyChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_policy_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -4412,7 +4412,7 @@ RT_CLASS!{static class SmbiosInformation}
 impl RtActivatable<ISmbiosInformationStatics> for SmbiosInformation {}
 impl SmbiosInformation {
     #[inline] pub fn get_serial_number() -> Result<HString> {
-        <Self as RtActivatable<ISmbiosInformationStatics>>::get_activation_factory().get_serial_number()
+        <Self as RtActivatable<ISmbiosInformationStatics>>::get_activation_factory().deref().get_serial_number()
     }
 }
 DEFINE_CLSID!(SmbiosInformation(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,121,115,116,101,109,77,97,110,117,102,97,99,116,117,114,101,114,115,46,83,109,98,105,111,115,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_SmbiosInformation]);
@@ -4480,13 +4480,13 @@ impl RtActivatable<ISystemSupportInfoStatics> for SystemSupportInfo {}
 impl RtActivatable<ISystemSupportInfoStatics2> for SystemSupportInfo {}
 impl SystemSupportInfo {
     #[inline] pub fn get_local_system_edition() -> Result<HString> {
-        <Self as RtActivatable<ISystemSupportInfoStatics>>::get_activation_factory().get_local_system_edition()
+        <Self as RtActivatable<ISystemSupportInfoStatics>>::get_activation_factory().deref().get_local_system_edition()
     }
     #[inline] pub fn get_oem_support_info() -> Result<Option<ComPtr<OemSupportInfo>>> {
-        <Self as RtActivatable<ISystemSupportInfoStatics>>::get_activation_factory().get_oem_support_info()
+        <Self as RtActivatable<ISystemSupportInfoStatics>>::get_activation_factory().deref().get_oem_support_info()
     }
     #[inline] pub fn get_local_device_info() -> Result<Option<ComPtr<SystemSupportDeviceInfo>>> {
-        <Self as RtActivatable<ISystemSupportInfoStatics2>>::get_activation_factory().get_local_device_info()
+        <Self as RtActivatable<ISystemSupportInfoStatics2>>::get_activation_factory().deref().get_local_device_info()
     }
 }
 DEFINE_CLSID!(SystemSupportInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,121,115,116,101,109,77,97,110,117,102,97,99,116,117,114,101,114,115,46,83,121,115,116,101,109,83,117,112,112,111,114,116,73,110,102,111,0]) [CLSID_SystemSupportInfo]);
@@ -4526,7 +4526,7 @@ RT_CLASS!{static class InteractiveSession}
 impl RtActivatable<IInteractiveSessionStatics> for InteractiveSession {}
 impl InteractiveSession {
     #[inline] pub fn get_is_remote() -> Result<bool> {
-        <Self as RtActivatable<IInteractiveSessionStatics>>::get_activation_factory().get_is_remote()
+        <Self as RtActivatable<IInteractiveSessionStatics>>::get_activation_factory().deref().get_is_remote()
     }
 }
 DEFINE_CLSID!(InteractiveSession(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,68,101,115,107,116,111,112,46,73,110,116,101,114,97,99,116,105,118,101,83,101,115,115,105,111,110,0]) [CLSID_InteractiveSession]);
@@ -4548,16 +4548,16 @@ RT_CLASS!{static class KnownRemoteSystemCapabilities}
 impl RtActivatable<IKnownRemoteSystemCapabilitiesStatics> for KnownRemoteSystemCapabilities {}
 impl KnownRemoteSystemCapabilities {
     #[inline] pub fn get_app_service() -> Result<HString> {
-        <Self as RtActivatable<IKnownRemoteSystemCapabilitiesStatics>>::get_activation_factory().get_app_service()
+        <Self as RtActivatable<IKnownRemoteSystemCapabilitiesStatics>>::get_activation_factory().deref().get_app_service()
     }
     #[inline] pub fn get_launch_uri() -> Result<HString> {
-        <Self as RtActivatable<IKnownRemoteSystemCapabilitiesStatics>>::get_activation_factory().get_launch_uri()
+        <Self as RtActivatable<IKnownRemoteSystemCapabilitiesStatics>>::get_activation_factory().deref().get_launch_uri()
     }
     #[inline] pub fn get_remote_session() -> Result<HString> {
-        <Self as RtActivatable<IKnownRemoteSystemCapabilitiesStatics>>::get_activation_factory().get_remote_session()
+        <Self as RtActivatable<IKnownRemoteSystemCapabilitiesStatics>>::get_activation_factory().deref().get_remote_session()
     }
     #[inline] pub fn get_spatial_entity() -> Result<HString> {
-        <Self as RtActivatable<IKnownRemoteSystemCapabilitiesStatics>>::get_activation_factory().get_spatial_entity()
+        <Self as RtActivatable<IKnownRemoteSystemCapabilitiesStatics>>::get_activation_factory().deref().get_spatial_entity()
     }
 }
 DEFINE_CLSID!(KnownRemoteSystemCapabilities(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,75,110,111,119,110,82,101,109,111,116,101,83,121,115,116,101,109,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_KnownRemoteSystemCapabilities]);
@@ -4629,20 +4629,20 @@ RT_CLASS!{class RemoteSystem: IRemoteSystem}
 impl RtActivatable<IRemoteSystemStatics> for RemoteSystem {}
 impl RtActivatable<IRemoteSystemStatics2> for RemoteSystem {}
 impl RemoteSystem {
-    #[cfg(feature="windows-networking")] #[inline] pub fn find_by_host_name_async(hostName: &super::super::networking::HostName) -> Result<ComPtr<foundation::IAsyncOperation<RemoteSystem>>> {
-        <Self as RtActivatable<IRemoteSystemStatics>>::get_activation_factory().find_by_host_name_async(hostName)
+    #[cfg(feature="windows-networking")] #[inline] pub fn find_by_host_name_async(hostName: &ComPtr<super::super::networking::HostName>) -> Result<ComPtr<foundation::IAsyncOperation<RemoteSystem>>> {
+        <Self as RtActivatable<IRemoteSystemStatics>>::get_activation_factory().deref().find_by_host_name_async(hostName)
     }
     #[inline] pub fn create_watcher() -> Result<Option<ComPtr<RemoteSystemWatcher>>> {
-        <Self as RtActivatable<IRemoteSystemStatics>>::get_activation_factory().create_watcher()
+        <Self as RtActivatable<IRemoteSystemStatics>>::get_activation_factory().deref().create_watcher()
     }
-    #[inline] pub fn create_watcher_with_filters(filters: &foundation::collections::IIterable<IRemoteSystemFilter>) -> Result<Option<ComPtr<RemoteSystemWatcher>>> {
-        <Self as RtActivatable<IRemoteSystemStatics>>::get_activation_factory().create_watcher_with_filters(filters)
+    #[inline] pub fn create_watcher_with_filters(filters: &ComPtr<foundation::collections::IIterable<IRemoteSystemFilter>>) -> Result<Option<ComPtr<RemoteSystemWatcher>>> {
+        <Self as RtActivatable<IRemoteSystemStatics>>::get_activation_factory().deref().create_watcher_with_filters(filters)
     }
     #[inline] pub fn request_access_async() -> Result<ComPtr<foundation::IAsyncOperation<RemoteSystemAccessStatus>>> {
-        <Self as RtActivatable<IRemoteSystemStatics>>::get_activation_factory().request_access_async()
+        <Self as RtActivatable<IRemoteSystemStatics>>::get_activation_factory().deref().request_access_async()
     }
     #[inline] pub fn is_authorization_kind_enabled(kind: RemoteSystemAuthorizationKind) -> Result<bool> {
-        <Self as RtActivatable<IRemoteSystemStatics2>>::get_activation_factory().is_authorization_kind_enabled(kind)
+        <Self as RtActivatable<IRemoteSystemStatics2>>::get_activation_factory().deref().is_authorization_kind_enabled(kind)
     }
 }
 DEFINE_CLSID!(RemoteSystem(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,0]) [CLSID_RemoteSystem]);
@@ -4780,10 +4780,10 @@ RT_CLASS!{class RemoteSystemAppRegistration: IRemoteSystemAppRegistration}
 impl RtActivatable<IRemoteSystemAppRegistrationStatics> for RemoteSystemAppRegistration {}
 impl RemoteSystemAppRegistration {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<RemoteSystemAppRegistration>>> {
-        <Self as RtActivatable<IRemoteSystemAppRegistrationStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IRemoteSystemAppRegistrationStatics>>::get_activation_factory().deref().get_default()
     }
-    #[inline] pub fn get_for_user(user: &super::User) -> Result<Option<ComPtr<RemoteSystemAppRegistration>>> {
-        <Self as RtActivatable<IRemoteSystemAppRegistrationStatics>>::get_activation_factory().get_for_user(user)
+    #[inline] pub fn get_for_user(user: &ComPtr<super::User>) -> Result<Option<ComPtr<RemoteSystemAppRegistration>>> {
+        <Self as RtActivatable<IRemoteSystemAppRegistrationStatics>>::get_activation_factory().deref().get_for_user(user)
     }
 }
 DEFINE_CLSID!(RemoteSystemAppRegistration(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,65,112,112,82,101,103,105,115,116,114,97,116,105,111,110,0]) [CLSID_RemoteSystemAppRegistration]);
@@ -4798,9 +4798,9 @@ impl IRemoteSystemAppRegistrationStatics {
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_for_user(&self, user: &super::User) -> Result<Option<ComPtr<RemoteSystemAppRegistration>>> { unsafe { 
+    #[inline] pub fn get_for_user(&self, user: &ComPtr<super::User>) -> Result<Option<ComPtr<RemoteSystemAppRegistration>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4822,7 +4822,7 @@ RT_CLASS!{class RemoteSystemAuthorizationKindFilter: IRemoteSystemAuthorizationK
 impl RtActivatable<IRemoteSystemAuthorizationKindFilterFactory> for RemoteSystemAuthorizationKindFilter {}
 impl RemoteSystemAuthorizationKindFilter {
     #[inline] pub fn create(remoteSystemAuthorizationKind: RemoteSystemAuthorizationKind) -> Result<ComPtr<RemoteSystemAuthorizationKindFilter>> {
-        <Self as RtActivatable<IRemoteSystemAuthorizationKindFilterFactory>>::get_activation_factory().create(remoteSystemAuthorizationKind)
+        <Self as RtActivatable<IRemoteSystemAuthorizationKindFilterFactory>>::get_activation_factory().deref().create(remoteSystemAuthorizationKind)
     }
 }
 DEFINE_CLSID!(RemoteSystemAuthorizationKindFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,65,117,116,104,111,114,105,122,97,116,105,111,110,75,105,110,100,70,105,108,116,101,114,0]) [CLSID_RemoteSystemAuthorizationKindFilter]);
@@ -4851,8 +4851,8 @@ impl IRemoteSystemConnectionInfo {
 RT_CLASS!{class RemoteSystemConnectionInfo: IRemoteSystemConnectionInfo}
 impl RtActivatable<IRemoteSystemConnectionInfoStatics> for RemoteSystemConnectionInfo {}
 impl RemoteSystemConnectionInfo {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn try_create_from_app_service_connection(connection: &super::super::applicationmodel::appservice::AppServiceConnection) -> Result<Option<ComPtr<RemoteSystemConnectionInfo>>> {
-        <Self as RtActivatable<IRemoteSystemConnectionInfoStatics>>::get_activation_factory().try_create_from_app_service_connection(connection)
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn try_create_from_app_service_connection(connection: &ComPtr<super::super::applicationmodel::appservice::AppServiceConnection>) -> Result<Option<ComPtr<RemoteSystemConnectionInfo>>> {
+        <Self as RtActivatable<IRemoteSystemConnectionInfoStatics>>::get_activation_factory().deref().try_create_from_app_service_connection(connection)
     }
 }
 DEFINE_CLSID!(RemoteSystemConnectionInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,67,111,110,110,101,99,116,105,111,110,73,110,102,111,0]) [CLSID_RemoteSystemConnectionInfo]);
@@ -4861,9 +4861,9 @@ RT_INTERFACE!{static interface IRemoteSystemConnectionInfoStatics(IRemoteSystemC
     #[cfg(feature="windows-applicationmodel")] fn TryCreateFromAppServiceConnection(&self, connection: *mut super::super::applicationmodel::appservice::AppServiceConnection, out: *mut *mut RemoteSystemConnectionInfo) -> HRESULT
 }}
 impl IRemoteSystemConnectionInfoStatics {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn try_create_from_app_service_connection(&self, connection: &super::super::applicationmodel::appservice::AppServiceConnection) -> Result<Option<ComPtr<RemoteSystemConnectionInfo>>> { unsafe { 
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn try_create_from_app_service_connection(&self, connection: &ComPtr<super::super::applicationmodel::appservice::AppServiceConnection>) -> Result<Option<ComPtr<RemoteSystemConnectionInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryCreateFromAppServiceConnection)(self as *const _ as *mut _, connection as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TryCreateFromAppServiceConnection)(self as *const _ as *mut _, connection.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4882,11 +4882,11 @@ RT_CLASS!{class RemoteSystemConnectionRequest: IRemoteSystemConnectionRequest}
 impl RtActivatable<IRemoteSystemConnectionRequestFactory> for RemoteSystemConnectionRequest {}
 impl RtActivatable<IRemoteSystemConnectionRequestStatics> for RemoteSystemConnectionRequest {}
 impl RemoteSystemConnectionRequest {
-    #[inline] pub fn create(remoteSystem: &RemoteSystem) -> Result<ComPtr<RemoteSystemConnectionRequest>> {
-        <Self as RtActivatable<IRemoteSystemConnectionRequestFactory>>::get_activation_factory().create(remoteSystem)
+    #[inline] pub fn create(remoteSystem: &ComPtr<RemoteSystem>) -> Result<ComPtr<RemoteSystemConnectionRequest>> {
+        <Self as RtActivatable<IRemoteSystemConnectionRequestFactory>>::get_activation_factory().deref().create(remoteSystem)
     }
-    #[inline] pub fn create_for_app(remoteSystemApp: &RemoteSystemApp) -> Result<Option<ComPtr<RemoteSystemConnectionRequest>>> {
-        <Self as RtActivatable<IRemoteSystemConnectionRequestStatics>>::get_activation_factory().create_for_app(remoteSystemApp)
+    #[inline] pub fn create_for_app(remoteSystemApp: &ComPtr<RemoteSystemApp>) -> Result<Option<ComPtr<RemoteSystemConnectionRequest>>> {
+        <Self as RtActivatable<IRemoteSystemConnectionRequestStatics>>::get_activation_factory().deref().create_for_app(remoteSystemApp)
     }
 }
 DEFINE_CLSID!(RemoteSystemConnectionRequest(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,67,111,110,110,101,99,116,105,111,110,82,101,113,117,101,115,116,0]) [CLSID_RemoteSystemConnectionRequest]);
@@ -4906,9 +4906,9 @@ RT_INTERFACE!{static interface IRemoteSystemConnectionRequestFactory(IRemoteSyst
     fn Create(&self, remoteSystem: *mut RemoteSystem, out: *mut *mut RemoteSystemConnectionRequest) -> HRESULT
 }}
 impl IRemoteSystemConnectionRequestFactory {
-    #[inline] pub fn create(&self, remoteSystem: &RemoteSystem) -> Result<ComPtr<RemoteSystemConnectionRequest>> { unsafe { 
+    #[inline] pub fn create(&self, remoteSystem: &ComPtr<RemoteSystem>) -> Result<ComPtr<RemoteSystemConnectionRequest>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, remoteSystem as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, remoteSystem.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4917,9 +4917,9 @@ RT_INTERFACE!{static interface IRemoteSystemConnectionRequestStatics(IRemoteSyst
     fn CreateForApp(&self, remoteSystemApp: *mut RemoteSystemApp, out: *mut *mut RemoteSystemConnectionRequest) -> HRESULT
 }}
 impl IRemoteSystemConnectionRequestStatics {
-    #[inline] pub fn create_for_app(&self, remoteSystemApp: &RemoteSystemApp) -> Result<Option<ComPtr<RemoteSystemConnectionRequest>>> { unsafe { 
+    #[inline] pub fn create_for_app(&self, remoteSystemApp: &ComPtr<RemoteSystemApp>) -> Result<Option<ComPtr<RemoteSystemConnectionRequest>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateForApp)(self as *const _ as *mut _, remoteSystemApp as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateForApp)(self as *const _ as *mut _, remoteSystemApp.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4941,7 +4941,7 @@ RT_CLASS!{class RemoteSystemDiscoveryTypeFilter: IRemoteSystemDiscoveryTypeFilte
 impl RtActivatable<IRemoteSystemDiscoveryTypeFilterFactory> for RemoteSystemDiscoveryTypeFilter {}
 impl RemoteSystemDiscoveryTypeFilter {
     #[inline] pub fn create(discoveryType: RemoteSystemDiscoveryType) -> Result<ComPtr<RemoteSystemDiscoveryTypeFilter>> {
-        <Self as RtActivatable<IRemoteSystemDiscoveryTypeFilterFactory>>::get_activation_factory().create(discoveryType)
+        <Self as RtActivatable<IRemoteSystemDiscoveryTypeFilterFactory>>::get_activation_factory().deref().create(discoveryType)
     }
 }
 DEFINE_CLSID!(RemoteSystemDiscoveryTypeFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,68,105,115,99,111,118,101,114,121,84,121,112,101,70,105,108,116,101,114,0]) [CLSID_RemoteSystemDiscoveryTypeFilter]);
@@ -4979,8 +4979,8 @@ impl IRemoteSystemKindFilter {
 RT_CLASS!{class RemoteSystemKindFilter: IRemoteSystemKindFilter}
 impl RtActivatable<IRemoteSystemKindFilterFactory> for RemoteSystemKindFilter {}
 impl RemoteSystemKindFilter {
-    #[inline] pub fn create(remoteSystemKinds: &foundation::collections::IIterable<HString>) -> Result<ComPtr<RemoteSystemKindFilter>> {
-        <Self as RtActivatable<IRemoteSystemKindFilterFactory>>::get_activation_factory().create(remoteSystemKinds)
+    #[inline] pub fn create(remoteSystemKinds: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<RemoteSystemKindFilter>> {
+        <Self as RtActivatable<IRemoteSystemKindFilterFactory>>::get_activation_factory().deref().create(remoteSystemKinds)
     }
 }
 DEFINE_CLSID!(RemoteSystemKindFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,75,105,110,100,70,105,108,116,101,114,0]) [CLSID_RemoteSystemKindFilter]);
@@ -4989,9 +4989,9 @@ RT_INTERFACE!{static interface IRemoteSystemKindFilterFactory(IRemoteSystemKindF
     fn Create(&self, remoteSystemKinds: *mut foundation::collections::IIterable<HString>, out: *mut *mut RemoteSystemKindFilter) -> HRESULT
 }}
 impl IRemoteSystemKindFilterFactory {
-    #[inline] pub fn create(&self, remoteSystemKinds: &foundation::collections::IIterable<HString>) -> Result<ComPtr<RemoteSystemKindFilter>> { unsafe { 
+    #[inline] pub fn create(&self, remoteSystemKinds: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<RemoteSystemKindFilter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, remoteSystemKinds as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, remoteSystemKinds.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5000,28 +5000,28 @@ impl RtActivatable<IRemoteSystemKindStatics> for RemoteSystemKinds {}
 impl RtActivatable<IRemoteSystemKindStatics2> for RemoteSystemKinds {}
 impl RemoteSystemKinds {
     #[inline] pub fn get_phone() -> Result<HString> {
-        <Self as RtActivatable<IRemoteSystemKindStatics>>::get_activation_factory().get_phone()
+        <Self as RtActivatable<IRemoteSystemKindStatics>>::get_activation_factory().deref().get_phone()
     }
     #[inline] pub fn get_hub() -> Result<HString> {
-        <Self as RtActivatable<IRemoteSystemKindStatics>>::get_activation_factory().get_hub()
+        <Self as RtActivatable<IRemoteSystemKindStatics>>::get_activation_factory().deref().get_hub()
     }
     #[inline] pub fn get_holographic() -> Result<HString> {
-        <Self as RtActivatable<IRemoteSystemKindStatics>>::get_activation_factory().get_holographic()
+        <Self as RtActivatable<IRemoteSystemKindStatics>>::get_activation_factory().deref().get_holographic()
     }
     #[inline] pub fn get_desktop() -> Result<HString> {
-        <Self as RtActivatable<IRemoteSystemKindStatics>>::get_activation_factory().get_desktop()
+        <Self as RtActivatable<IRemoteSystemKindStatics>>::get_activation_factory().deref().get_desktop()
     }
     #[inline] pub fn get_xbox() -> Result<HString> {
-        <Self as RtActivatable<IRemoteSystemKindStatics>>::get_activation_factory().get_xbox()
+        <Self as RtActivatable<IRemoteSystemKindStatics>>::get_activation_factory().deref().get_xbox()
     }
     #[inline] pub fn get_iot() -> Result<HString> {
-        <Self as RtActivatable<IRemoteSystemKindStatics2>>::get_activation_factory().get_iot()
+        <Self as RtActivatable<IRemoteSystemKindStatics2>>::get_activation_factory().deref().get_iot()
     }
     #[inline] pub fn get_tablet() -> Result<HString> {
-        <Self as RtActivatable<IRemoteSystemKindStatics2>>::get_activation_factory().get_tablet()
+        <Self as RtActivatable<IRemoteSystemKindStatics2>>::get_activation_factory().deref().get_tablet()
     }
     #[inline] pub fn get_laptop() -> Result<HString> {
-        <Self as RtActivatable<IRemoteSystemKindStatics2>>::get_activation_factory().get_laptop()
+        <Self as RtActivatable<IRemoteSystemKindStatics2>>::get_activation_factory().deref().get_laptop()
     }
 }
 DEFINE_CLSID!(RemoteSystemKinds(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,75,105,110,100,115,0]) [CLSID_RemoteSystemKinds]);
@@ -5124,9 +5124,9 @@ impl IRemoteSystemSession {
         let hr = ((*self.lpVtbl).get_ControllerDisplayName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_disconnected(&self, handler: &foundation::TypedEventHandler<RemoteSystemSession, RemoteSystemSessionDisconnectedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_disconnected(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemSession, RemoteSystemSessionDisconnectedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Disconnected)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Disconnected)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_disconnected(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5138,9 +5138,9 @@ impl IRemoteSystemSession {
         let hr = ((*self.lpVtbl).CreateParticipantWatcher)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn send_invitation_async(&self, invitee: &RemoteSystem) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn send_invitation_async(&self, invitee: &ComPtr<RemoteSystem>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SendInvitationAsync)(self as *const _ as *mut _, invitee as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SendInvitationAsync)(self as *const _ as *mut _, invitee.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5148,7 +5148,7 @@ RT_CLASS!{class RemoteSystemSession: IRemoteSystemSession}
 impl RtActivatable<IRemoteSystemSessionStatics> for RemoteSystemSession {}
 impl RemoteSystemSession {
     #[inline] pub fn create_watcher() -> Result<Option<ComPtr<RemoteSystemSessionWatcher>>> {
-        <Self as RtActivatable<IRemoteSystemSessionStatics>>::get_activation_factory().create_watcher()
+        <Self as RtActivatable<IRemoteSystemSessionStatics>>::get_activation_factory().deref().create_watcher()
     }
 }
 DEFINE_CLSID!(RemoteSystemSession(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,0]) [CLSID_RemoteSystemSession]);
@@ -5172,18 +5172,18 @@ RT_INTERFACE!{interface IRemoteSystemSessionController(IRemoteSystemSessionContr
     fn CreateSessionAsync(&self, out: *mut *mut foundation::IAsyncOperation<RemoteSystemSessionCreationResult>) -> HRESULT
 }}
 impl IRemoteSystemSessionController {
-    #[inline] pub fn add_join_requested(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionController, RemoteSystemSessionJoinRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_join_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemSessionController, RemoteSystemSessionJoinRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_JoinRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_JoinRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_join_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_JoinRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove_participant_async(&self, pParticipant: &RemoteSystemSessionParticipant) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn remove_participant_async(&self, pParticipant: &ComPtr<RemoteSystemSessionParticipant>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RemoveParticipantAsync)(self as *const _ as *mut _, pParticipant as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RemoveParticipantAsync)(self as *const _ as *mut _, pParticipant.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_session_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<RemoteSystemSessionCreationResult>>> { unsafe { 
@@ -5196,10 +5196,10 @@ RT_CLASS!{class RemoteSystemSessionController: IRemoteSystemSessionController}
 impl RtActivatable<IRemoteSystemSessionControllerFactory> for RemoteSystemSessionController {}
 impl RemoteSystemSessionController {
     #[inline] pub fn create_controller(displayName: &HStringArg) -> Result<ComPtr<RemoteSystemSessionController>> {
-        <Self as RtActivatable<IRemoteSystemSessionControllerFactory>>::get_activation_factory().create_controller(displayName)
+        <Self as RtActivatable<IRemoteSystemSessionControllerFactory>>::get_activation_factory().deref().create_controller(displayName)
     }
-    #[inline] pub fn create_controller_with_session_options(displayName: &HStringArg, options: &RemoteSystemSessionOptions) -> Result<ComPtr<RemoteSystemSessionController>> {
-        <Self as RtActivatable<IRemoteSystemSessionControllerFactory>>::get_activation_factory().create_controller_with_session_options(displayName, options)
+    #[inline] pub fn create_controller_with_session_options(displayName: &HStringArg, options: &ComPtr<RemoteSystemSessionOptions>) -> Result<ComPtr<RemoteSystemSessionController>> {
+        <Self as RtActivatable<IRemoteSystemSessionControllerFactory>>::get_activation_factory().deref().create_controller_with_session_options(displayName, options)
     }
 }
 DEFINE_CLSID!(RemoteSystemSessionController(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_RemoteSystemSessionController]);
@@ -5214,9 +5214,9 @@ impl IRemoteSystemSessionControllerFactory {
         let hr = ((*self.lpVtbl).CreateController)(self as *const _ as *mut _, displayName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_controller_with_session_options(&self, displayName: &HStringArg, options: &RemoteSystemSessionOptions) -> Result<ComPtr<RemoteSystemSessionController>> { unsafe { 
+    #[inline] pub fn create_controller_with_session_options(&self, displayName: &HStringArg, options: &ComPtr<RemoteSystemSessionOptions>) -> Result<ComPtr<RemoteSystemSessionController>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateControllerWithSessionOptions)(self as *const _ as *mut _, displayName.get(), options as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateControllerWithSessionOptions)(self as *const _ as *mut _, displayName.get(), options.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5304,9 +5304,9 @@ RT_INTERFACE!{interface IRemoteSystemSessionInvitationListener(IRemoteSystemSess
     fn remove_InvitationReceived(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IRemoteSystemSessionInvitationListener {
-    #[inline] pub fn add_invitation_received(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionInvitationListener, RemoteSystemSessionInvitationReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_invitation_received(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemSessionInvitationListener, RemoteSystemSessionInvitationReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_InvitationReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_InvitationReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_invitation_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5400,24 +5400,24 @@ impl IRemoteSystemSessionMessageChannel {
         let hr = ((*self.lpVtbl).get_Session)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn broadcast_value_set_async(&self, messageData: &foundation::collections::ValueSet) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn broadcast_value_set_async(&self, messageData: &ComPtr<foundation::collections::ValueSet>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).BroadcastValueSetAsync)(self as *const _ as *mut _, messageData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).BroadcastValueSetAsync)(self as *const _ as *mut _, messageData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn send_value_set_async(&self, messageData: &foundation::collections::ValueSet, participant: &RemoteSystemSessionParticipant) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn send_value_set_async(&self, messageData: &ComPtr<foundation::collections::ValueSet>, participant: &ComPtr<RemoteSystemSessionParticipant>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SendValueSetAsync)(self as *const _ as *mut _, messageData as *const _ as *mut _, participant as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SendValueSetAsync)(self as *const _ as *mut _, messageData.deref() as *const _ as *mut _, participant.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn send_value_set_to_participants_async(&self, messageData: &foundation::collections::ValueSet, participants: &foundation::collections::IIterable<RemoteSystemSessionParticipant>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn send_value_set_to_participants_async(&self, messageData: &ComPtr<foundation::collections::ValueSet>, participants: &ComPtr<foundation::collections::IIterable<RemoteSystemSessionParticipant>>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SendValueSetToParticipantsAsync)(self as *const _ as *mut _, messageData as *const _ as *mut _, participants as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SendValueSetToParticipantsAsync)(self as *const _ as *mut _, messageData.deref() as *const _ as *mut _, participants.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_value_set_received(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionMessageChannel, RemoteSystemSessionValueSetReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_value_set_received(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemSessionMessageChannel, RemoteSystemSessionValueSetReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ValueSetReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ValueSetReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_value_set_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5428,11 +5428,11 @@ impl IRemoteSystemSessionMessageChannel {
 RT_CLASS!{class RemoteSystemSessionMessageChannel: IRemoteSystemSessionMessageChannel}
 impl RtActivatable<IRemoteSystemSessionMessageChannelFactory> for RemoteSystemSessionMessageChannel {}
 impl RemoteSystemSessionMessageChannel {
-    #[inline] pub fn create(session: &RemoteSystemSession, channelName: &HStringArg) -> Result<ComPtr<RemoteSystemSessionMessageChannel>> {
-        <Self as RtActivatable<IRemoteSystemSessionMessageChannelFactory>>::get_activation_factory().create(session, channelName)
+    #[inline] pub fn create(session: &ComPtr<RemoteSystemSession>, channelName: &HStringArg) -> Result<ComPtr<RemoteSystemSessionMessageChannel>> {
+        <Self as RtActivatable<IRemoteSystemSessionMessageChannelFactory>>::get_activation_factory().deref().create(session, channelName)
     }
-    #[inline] pub fn create_with_reliability(session: &RemoteSystemSession, channelName: &HStringArg, reliability: RemoteSystemSessionMessageChannelReliability) -> Result<ComPtr<RemoteSystemSessionMessageChannel>> {
-        <Self as RtActivatable<IRemoteSystemSessionMessageChannelFactory>>::get_activation_factory().create_with_reliability(session, channelName, reliability)
+    #[inline] pub fn create_with_reliability(session: &ComPtr<RemoteSystemSession>, channelName: &HStringArg, reliability: RemoteSystemSessionMessageChannelReliability) -> Result<ComPtr<RemoteSystemSessionMessageChannel>> {
+        <Self as RtActivatable<IRemoteSystemSessionMessageChannelFactory>>::get_activation_factory().deref().create_with_reliability(session, channelName, reliability)
     }
 }
 DEFINE_CLSID!(RemoteSystemSessionMessageChannel(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,77,101,115,115,97,103,101,67,104,97,110,110,101,108,0]) [CLSID_RemoteSystemSessionMessageChannel]);
@@ -5442,14 +5442,14 @@ RT_INTERFACE!{static interface IRemoteSystemSessionMessageChannelFactory(IRemote
     fn CreateWithReliability(&self, session: *mut RemoteSystemSession, channelName: HSTRING, reliability: RemoteSystemSessionMessageChannelReliability, out: *mut *mut RemoteSystemSessionMessageChannel) -> HRESULT
 }}
 impl IRemoteSystemSessionMessageChannelFactory {
-    #[inline] pub fn create(&self, session: &RemoteSystemSession, channelName: &HStringArg) -> Result<ComPtr<RemoteSystemSessionMessageChannel>> { unsafe { 
+    #[inline] pub fn create(&self, session: &ComPtr<RemoteSystemSession>, channelName: &HStringArg) -> Result<ComPtr<RemoteSystemSessionMessageChannel>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, session as *const _ as *mut _, channelName.get(), &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, session.deref() as *const _ as *mut _, channelName.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_reliability(&self, session: &RemoteSystemSession, channelName: &HStringArg, reliability: RemoteSystemSessionMessageChannelReliability) -> Result<ComPtr<RemoteSystemSessionMessageChannel>> { unsafe { 
+    #[inline] pub fn create_with_reliability(&self, session: &ComPtr<RemoteSystemSession>, channelName: &HStringArg, reliability: RemoteSystemSessionMessageChannelReliability) -> Result<ComPtr<RemoteSystemSessionMessageChannel>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithReliability)(self as *const _ as *mut _, session as *const _ as *mut _, channelName.get(), reliability, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithReliability)(self as *const _ as *mut _, session.deref() as *const _ as *mut _, channelName.get(), reliability, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5543,27 +5543,27 @@ impl IRemoteSystemSessionParticipantWatcher {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_added(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionParticipantWatcher, RemoteSystemSessionParticipantAddedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_added(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemSessionParticipantWatcher, RemoteSystemSessionParticipantAddedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Added)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Added)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Added)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionParticipantWatcher, RemoteSystemSessionParticipantRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_removed(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemSessionParticipantWatcher, RemoteSystemSessionParticipantRemovedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Removed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_enumeration_completed(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionParticipantWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_enumeration_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemSessionParticipantWatcher, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_EnumerationCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_EnumerationCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5654,27 +5654,27 @@ impl IRemoteSystemSessionWatcher {
         let hr = ((*self.lpVtbl).get_Status)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_added(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionWatcher, RemoteSystemSessionAddedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_added(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemSessionWatcher, RemoteSystemSessionAddedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Added)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Added)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Added)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_updated(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionWatcher, RemoteSystemSessionUpdatedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_updated(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemSessionWatcher, RemoteSystemSessionUpdatedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Updated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Updated)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Updated)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionWatcher, RemoteSystemSessionRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_removed(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemSessionWatcher, RemoteSystemSessionRemovedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Removed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5695,9 +5695,9 @@ RT_INTERFACE!{static interface IRemoteSystemStatics(IRemoteSystemStaticsVtbl): I
     fn RequestAccessAsync(&self, out: *mut *mut foundation::IAsyncOperation<RemoteSystemAccessStatus>) -> HRESULT
 }}
 impl IRemoteSystemStatics {
-    #[cfg(feature="windows-networking")] #[inline] pub fn find_by_host_name_async(&self, hostName: &super::super::networking::HostName) -> Result<ComPtr<foundation::IAsyncOperation<RemoteSystem>>> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn find_by_host_name_async(&self, hostName: &ComPtr<super::super::networking::HostName>) -> Result<ComPtr<foundation::IAsyncOperation<RemoteSystem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindByHostNameAsync)(self as *const _ as *mut _, hostName as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FindByHostNameAsync)(self as *const _ as *mut _, hostName.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_watcher(&self) -> Result<Option<ComPtr<RemoteSystemWatcher>>> { unsafe { 
@@ -5705,9 +5705,9 @@ impl IRemoteSystemStatics {
         let hr = ((*self.lpVtbl).CreateWatcher)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_watcher_with_filters(&self, filters: &foundation::collections::IIterable<IRemoteSystemFilter>) -> Result<Option<ComPtr<RemoteSystemWatcher>>> { unsafe { 
+    #[inline] pub fn create_watcher_with_filters(&self, filters: &ComPtr<foundation::collections::IIterable<IRemoteSystemFilter>>) -> Result<Option<ComPtr<RemoteSystemWatcher>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWatcherWithFilters)(self as *const _ as *mut _, filters as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWatcherWithFilters)(self as *const _ as *mut _, filters.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_access_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<RemoteSystemAccessStatus>>> { unsafe { 
@@ -5748,7 +5748,7 @@ RT_CLASS!{class RemoteSystemStatusTypeFilter: IRemoteSystemStatusTypeFilter}
 impl RtActivatable<IRemoteSystemStatusTypeFilterFactory> for RemoteSystemStatusTypeFilter {}
 impl RemoteSystemStatusTypeFilter {
     #[inline] pub fn create(remoteSystemStatusType: RemoteSystemStatusType) -> Result<ComPtr<RemoteSystemStatusTypeFilter>> {
-        <Self as RtActivatable<IRemoteSystemStatusTypeFilterFactory>>::get_activation_factory().create(remoteSystemStatusType)
+        <Self as RtActivatable<IRemoteSystemStatusTypeFilterFactory>>::get_activation_factory().deref().create(remoteSystemStatusType)
     }
 }
 DEFINE_CLSID!(RemoteSystemStatusTypeFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,116,97,116,117,115,84,121,112,101,70,105,108,116,101,114,0]) [CLSID_RemoteSystemStatusTypeFilter]);
@@ -5795,27 +5795,27 @@ impl IRemoteSystemWatcher {
         let hr = ((*self.lpVtbl).Stop)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_remote_system_added(&self, handler: &foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemAddedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_remote_system_added(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemAddedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RemoteSystemAdded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RemoteSystemAdded)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_remote_system_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_RemoteSystemAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_remote_system_updated(&self, handler: &foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemUpdatedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_remote_system_updated(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemUpdatedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RemoteSystemUpdated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RemoteSystemUpdated)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_remote_system_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_RemoteSystemUpdated)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_remote_system_removed(&self, handler: &foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_remote_system_removed(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemRemovedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RemoteSystemRemoved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RemoteSystemRemoved)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_remote_system_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5832,18 +5832,18 @@ RT_INTERFACE!{interface IRemoteSystemWatcher2(IRemoteSystemWatcher2Vtbl): IInspe
     fn remove_ErrorOccurred(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IRemoteSystemWatcher2 {
-    #[inline] pub fn add_enumeration_completed(&self, handler: &foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemEnumerationCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_enumeration_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemEnumerationCompletedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_EnumerationCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_EnumerationCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_EnumerationCompleted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_error_occurred(&self, handler: &foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemWatcherErrorOccurredEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_error_occurred(&self, handler: &ComPtr<foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemWatcherErrorOccurredEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ErrorOccurred)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ErrorOccurred)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_error_occurred(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5880,8 +5880,8 @@ impl IRemoteSystemWebAccountFilter {
 RT_CLASS!{class RemoteSystemWebAccountFilter: IRemoteSystemWebAccountFilter}
 impl RtActivatable<IRemoteSystemWebAccountFilterFactory> for RemoteSystemWebAccountFilter {}
 impl RemoteSystemWebAccountFilter {
-    #[cfg(feature="windows-security")] #[inline] pub fn create(account: &super::super::security::credentials::WebAccount) -> Result<ComPtr<RemoteSystemWebAccountFilter>> {
-        <Self as RtActivatable<IRemoteSystemWebAccountFilterFactory>>::get_activation_factory().create(account)
+    #[cfg(feature="windows-security")] #[inline] pub fn create(account: &ComPtr<super::super::security::credentials::WebAccount>) -> Result<ComPtr<RemoteSystemWebAccountFilter>> {
+        <Self as RtActivatable<IRemoteSystemWebAccountFilterFactory>>::get_activation_factory().deref().create(account)
     }
 }
 DEFINE_CLSID!(RemoteSystemWebAccountFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,87,101,98,65,99,99,111,117,110,116,70,105,108,116,101,114,0]) [CLSID_RemoteSystemWebAccountFilter]);
@@ -5890,9 +5890,9 @@ RT_INTERFACE!{static interface IRemoteSystemWebAccountFilterFactory(IRemoteSyste
     #[cfg(feature="windows-security")] fn Create(&self, account: *mut super::super::security::credentials::WebAccount, out: *mut *mut RemoteSystemWebAccountFilter) -> HRESULT
 }}
 impl IRemoteSystemWebAccountFilterFactory {
-    #[cfg(feature="windows-security")] #[inline] pub fn create(&self, account: &super::super::security::credentials::WebAccount) -> Result<ComPtr<RemoteSystemWebAccountFilter>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn create(&self, account: &ComPtr<super::super::security::credentials::WebAccount>) -> Result<ComPtr<RemoteSystemWebAccountFilter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, account as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, account.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5902,14 +5902,14 @@ use crate::prelude::*;
 RT_CLASS!{static class ThreadPool}
 impl RtActivatable<IThreadPoolStatics> for ThreadPool {}
 impl ThreadPool {
-    #[inline] pub fn run_async(handler: &WorkItemHandler) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IThreadPoolStatics>>::get_activation_factory().run_async(handler)
+    #[inline] pub fn run_async(handler: &ComPtr<WorkItemHandler>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IThreadPoolStatics>>::get_activation_factory().deref().run_async(handler)
     }
-    #[inline] pub fn run_with_priority_async(handler: &WorkItemHandler, priority: WorkItemPriority) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IThreadPoolStatics>>::get_activation_factory().run_with_priority_async(handler, priority)
+    #[inline] pub fn run_with_priority_async(handler: &ComPtr<WorkItemHandler>, priority: WorkItemPriority) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IThreadPoolStatics>>::get_activation_factory().deref().run_with_priority_async(handler, priority)
     }
-    #[inline] pub fn run_with_priority_and_options_async(handler: &WorkItemHandler, priority: WorkItemPriority, options: WorkItemOptions) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IThreadPoolStatics>>::get_activation_factory().run_with_priority_and_options_async(handler, priority, options)
+    #[inline] pub fn run_with_priority_and_options_async(handler: &ComPtr<WorkItemHandler>, priority: WorkItemPriority, options: WorkItemOptions) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IThreadPoolStatics>>::get_activation_factory().deref().run_with_priority_and_options_async(handler, priority, options)
     }
 }
 DEFINE_CLSID!(ThreadPool(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,104,114,101,97,100,105,110,103,46,84,104,114,101,97,100,80,111,111,108,0]) [CLSID_ThreadPool]);
@@ -5920,19 +5920,19 @@ RT_INTERFACE!{static interface IThreadPoolStatics(IThreadPoolStaticsVtbl): IInsp
     fn RunWithPriorityAndOptionsAsync(&self, handler: *mut WorkItemHandler, priority: WorkItemPriority, options: WorkItemOptions, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IThreadPoolStatics {
-    #[inline] pub fn run_async(&self, handler: &WorkItemHandler) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn run_async(&self, handler: &ComPtr<WorkItemHandler>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RunAsync)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RunAsync)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn run_with_priority_async(&self, handler: &WorkItemHandler, priority: WorkItemPriority) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn run_with_priority_async(&self, handler: &ComPtr<WorkItemHandler>, priority: WorkItemPriority) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RunWithPriorityAsync)(self as *const _ as *mut _, handler as *const _ as *mut _, priority, &mut out);
+        let hr = ((*self.lpVtbl).RunWithPriorityAsync)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, priority, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn run_with_priority_and_options_async(&self, handler: &WorkItemHandler, priority: WorkItemPriority, options: WorkItemOptions) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn run_with_priority_and_options_async(&self, handler: &ComPtr<WorkItemHandler>, priority: WorkItemPriority, options: WorkItemOptions) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RunWithPriorityAndOptionsAsync)(self as *const _ as *mut _, handler as *const _ as *mut _, priority, options, &mut out);
+        let hr = ((*self.lpVtbl).RunWithPriorityAndOptionsAsync)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, priority, options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5961,17 +5961,17 @@ impl IThreadPoolTimer {
 RT_CLASS!{class ThreadPoolTimer: IThreadPoolTimer}
 impl RtActivatable<IThreadPoolTimerStatics> for ThreadPoolTimer {}
 impl ThreadPoolTimer {
-    #[inline] pub fn create_periodic_timer(handler: &TimerElapsedHandler, period: foundation::TimeSpan) -> Result<Option<ComPtr<ThreadPoolTimer>>> {
-        <Self as RtActivatable<IThreadPoolTimerStatics>>::get_activation_factory().create_periodic_timer(handler, period)
+    #[inline] pub fn create_periodic_timer(handler: &ComPtr<TimerElapsedHandler>, period: foundation::TimeSpan) -> Result<Option<ComPtr<ThreadPoolTimer>>> {
+        <Self as RtActivatable<IThreadPoolTimerStatics>>::get_activation_factory().deref().create_periodic_timer(handler, period)
     }
-    #[inline] pub fn create_timer(handler: &TimerElapsedHandler, delay: foundation::TimeSpan) -> Result<Option<ComPtr<ThreadPoolTimer>>> {
-        <Self as RtActivatable<IThreadPoolTimerStatics>>::get_activation_factory().create_timer(handler, delay)
+    #[inline] pub fn create_timer(handler: &ComPtr<TimerElapsedHandler>, delay: foundation::TimeSpan) -> Result<Option<ComPtr<ThreadPoolTimer>>> {
+        <Self as RtActivatable<IThreadPoolTimerStatics>>::get_activation_factory().deref().create_timer(handler, delay)
     }
-    #[inline] pub fn create_periodic_timer_with_completion(handler: &TimerElapsedHandler, period: foundation::TimeSpan, destroyed: &TimerDestroyedHandler) -> Result<Option<ComPtr<ThreadPoolTimer>>> {
-        <Self as RtActivatable<IThreadPoolTimerStatics>>::get_activation_factory().create_periodic_timer_with_completion(handler, period, destroyed)
+    #[inline] pub fn create_periodic_timer_with_completion(handler: &ComPtr<TimerElapsedHandler>, period: foundation::TimeSpan, destroyed: &ComPtr<TimerDestroyedHandler>) -> Result<Option<ComPtr<ThreadPoolTimer>>> {
+        <Self as RtActivatable<IThreadPoolTimerStatics>>::get_activation_factory().deref().create_periodic_timer_with_completion(handler, period, destroyed)
     }
-    #[inline] pub fn create_timer_with_completion(handler: &TimerElapsedHandler, delay: foundation::TimeSpan, destroyed: &TimerDestroyedHandler) -> Result<Option<ComPtr<ThreadPoolTimer>>> {
-        <Self as RtActivatable<IThreadPoolTimerStatics>>::get_activation_factory().create_timer_with_completion(handler, delay, destroyed)
+    #[inline] pub fn create_timer_with_completion(handler: &ComPtr<TimerElapsedHandler>, delay: foundation::TimeSpan, destroyed: &ComPtr<TimerDestroyedHandler>) -> Result<Option<ComPtr<ThreadPoolTimer>>> {
+        <Self as RtActivatable<IThreadPoolTimerStatics>>::get_activation_factory().deref().create_timer_with_completion(handler, delay, destroyed)
     }
 }
 DEFINE_CLSID!(ThreadPoolTimer(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,104,114,101,97,100,105,110,103,46,84,104,114,101,97,100,80,111,111,108,84,105,109,101,114,0]) [CLSID_ThreadPoolTimer]);
@@ -5983,24 +5983,24 @@ RT_INTERFACE!{static interface IThreadPoolTimerStatics(IThreadPoolTimerStaticsVt
     fn CreateTimerWithCompletion(&self, handler: *mut TimerElapsedHandler, delay: foundation::TimeSpan, destroyed: *mut TimerDestroyedHandler, out: *mut *mut ThreadPoolTimer) -> HRESULT
 }}
 impl IThreadPoolTimerStatics {
-    #[inline] pub fn create_periodic_timer(&self, handler: &TimerElapsedHandler, period: foundation::TimeSpan) -> Result<Option<ComPtr<ThreadPoolTimer>>> { unsafe { 
+    #[inline] pub fn create_periodic_timer(&self, handler: &ComPtr<TimerElapsedHandler>, period: foundation::TimeSpan) -> Result<Option<ComPtr<ThreadPoolTimer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreatePeriodicTimer)(self as *const _ as *mut _, handler as *const _ as *mut _, period, &mut out);
+        let hr = ((*self.lpVtbl).CreatePeriodicTimer)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, period, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_timer(&self, handler: &TimerElapsedHandler, delay: foundation::TimeSpan) -> Result<Option<ComPtr<ThreadPoolTimer>>> { unsafe { 
+    #[inline] pub fn create_timer(&self, handler: &ComPtr<TimerElapsedHandler>, delay: foundation::TimeSpan) -> Result<Option<ComPtr<ThreadPoolTimer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateTimer)(self as *const _ as *mut _, handler as *const _ as *mut _, delay, &mut out);
+        let hr = ((*self.lpVtbl).CreateTimer)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, delay, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_periodic_timer_with_completion(&self, handler: &TimerElapsedHandler, period: foundation::TimeSpan, destroyed: &TimerDestroyedHandler) -> Result<Option<ComPtr<ThreadPoolTimer>>> { unsafe { 
+    #[inline] pub fn create_periodic_timer_with_completion(&self, handler: &ComPtr<TimerElapsedHandler>, period: foundation::TimeSpan, destroyed: &ComPtr<TimerDestroyedHandler>) -> Result<Option<ComPtr<ThreadPoolTimer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreatePeriodicTimerWithCompletion)(self as *const _ as *mut _, handler as *const _ as *mut _, period, destroyed as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreatePeriodicTimerWithCompletion)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, period, destroyed.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_timer_with_completion(&self, handler: &TimerElapsedHandler, delay: foundation::TimeSpan, destroyed: &TimerDestroyedHandler) -> Result<Option<ComPtr<ThreadPoolTimer>>> { unsafe { 
+    #[inline] pub fn create_timer_with_completion(&self, handler: &ComPtr<TimerElapsedHandler>, delay: foundation::TimeSpan, destroyed: &ComPtr<TimerDestroyedHandler>) -> Result<Option<ComPtr<ThreadPoolTimer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateTimerWithCompletion)(self as *const _ as *mut _, handler as *const _ as *mut _, delay, destroyed as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateTimerWithCompletion)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, delay, destroyed.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -6009,8 +6009,8 @@ RT_DELEGATE!{delegate TimerDestroyedHandler(TimerDestroyedHandlerVtbl, TimerDest
     fn Invoke(&self, timer: *mut ThreadPoolTimer) -> HRESULT
 }}
 impl TimerDestroyedHandler {
-    #[inline] pub fn invoke(&self, timer: &ThreadPoolTimer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, timer as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, timer: &ComPtr<ThreadPoolTimer>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, timer.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6019,8 +6019,8 @@ RT_DELEGATE!{delegate TimerElapsedHandler(TimerElapsedHandlerVtbl, TimerElapsedH
     fn Invoke(&self, timer: *mut ThreadPoolTimer) -> HRESULT
 }}
 impl TimerElapsedHandler {
-    #[inline] pub fn invoke(&self, timer: &ThreadPoolTimer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, timer as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, timer: &ComPtr<ThreadPoolTimer>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, timer.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6029,8 +6029,8 @@ RT_DELEGATE!{delegate WorkItemHandler(WorkItemHandlerVtbl, WorkItemHandlerImpl) 
     fn Invoke(&self, operation: *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl WorkItemHandler {
-    #[inline] pub fn invoke(&self, operation: &foundation::IAsyncAction) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, operation as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, operation: &ComPtr<foundation::IAsyncAction>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, operation.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6056,14 +6056,14 @@ impl IPreallocatedWorkItem {
 RT_CLASS!{class PreallocatedWorkItem: IPreallocatedWorkItem}
 impl RtActivatable<IPreallocatedWorkItemFactory> for PreallocatedWorkItem {}
 impl PreallocatedWorkItem {
-    #[inline] pub fn create_work_item(handler: &super::WorkItemHandler) -> Result<ComPtr<PreallocatedWorkItem>> {
-        <Self as RtActivatable<IPreallocatedWorkItemFactory>>::get_activation_factory().create_work_item(handler)
+    #[inline] pub fn create_work_item(handler: &ComPtr<super::WorkItemHandler>) -> Result<ComPtr<PreallocatedWorkItem>> {
+        <Self as RtActivatable<IPreallocatedWorkItemFactory>>::get_activation_factory().deref().create_work_item(handler)
     }
-    #[inline] pub fn create_work_item_with_priority(handler: &super::WorkItemHandler, priority: super::WorkItemPriority) -> Result<ComPtr<PreallocatedWorkItem>> {
-        <Self as RtActivatable<IPreallocatedWorkItemFactory>>::get_activation_factory().create_work_item_with_priority(handler, priority)
+    #[inline] pub fn create_work_item_with_priority(handler: &ComPtr<super::WorkItemHandler>, priority: super::WorkItemPriority) -> Result<ComPtr<PreallocatedWorkItem>> {
+        <Self as RtActivatable<IPreallocatedWorkItemFactory>>::get_activation_factory().deref().create_work_item_with_priority(handler, priority)
     }
-    #[inline] pub fn create_work_item_with_priority_and_options(handler: &super::WorkItemHandler, priority: super::WorkItemPriority, options: super::WorkItemOptions) -> Result<ComPtr<PreallocatedWorkItem>> {
-        <Self as RtActivatable<IPreallocatedWorkItemFactory>>::get_activation_factory().create_work_item_with_priority_and_options(handler, priority, options)
+    #[inline] pub fn create_work_item_with_priority_and_options(handler: &ComPtr<super::WorkItemHandler>, priority: super::WorkItemPriority, options: super::WorkItemOptions) -> Result<ComPtr<PreallocatedWorkItem>> {
+        <Self as RtActivatable<IPreallocatedWorkItemFactory>>::get_activation_factory().deref().create_work_item_with_priority_and_options(handler, priority, options)
     }
 }
 DEFINE_CLSID!(PreallocatedWorkItem(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,104,114,101,97,100,105,110,103,46,67,111,114,101,46,80,114,101,97,108,108,111,99,97,116,101,100,87,111,114,107,73,116,101,109,0]) [CLSID_PreallocatedWorkItem]);
@@ -6074,19 +6074,19 @@ RT_INTERFACE!{static interface IPreallocatedWorkItemFactory(IPreallocatedWorkIte
     fn CreateWorkItemWithPriorityAndOptions(&self, handler: *mut super::WorkItemHandler, priority: super::WorkItemPriority, options: super::WorkItemOptions, out: *mut *mut PreallocatedWorkItem) -> HRESULT
 }}
 impl IPreallocatedWorkItemFactory {
-    #[inline] pub fn create_work_item(&self, handler: &super::WorkItemHandler) -> Result<ComPtr<PreallocatedWorkItem>> { unsafe { 
+    #[inline] pub fn create_work_item(&self, handler: &ComPtr<super::WorkItemHandler>) -> Result<ComPtr<PreallocatedWorkItem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWorkItem)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWorkItem)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_work_item_with_priority(&self, handler: &super::WorkItemHandler, priority: super::WorkItemPriority) -> Result<ComPtr<PreallocatedWorkItem>> { unsafe { 
+    #[inline] pub fn create_work_item_with_priority(&self, handler: &ComPtr<super::WorkItemHandler>, priority: super::WorkItemPriority) -> Result<ComPtr<PreallocatedWorkItem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWorkItemWithPriority)(self as *const _ as *mut _, handler as *const _ as *mut _, priority, &mut out);
+        let hr = ((*self.lpVtbl).CreateWorkItemWithPriority)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, priority, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_work_item_with_priority_and_options(&self, handler: &super::WorkItemHandler, priority: super::WorkItemPriority, options: super::WorkItemOptions) -> Result<ComPtr<PreallocatedWorkItem>> { unsafe { 
+    #[inline] pub fn create_work_item_with_priority_and_options(&self, handler: &ComPtr<super::WorkItemHandler>, priority: super::WorkItemPriority, options: super::WorkItemOptions) -> Result<ComPtr<PreallocatedWorkItem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWorkItemWithPriorityAndOptions)(self as *const _ as *mut _, handler as *const _ as *mut _, priority, options, &mut out);
+        let hr = ((*self.lpVtbl).CreateWorkItemWithPriorityAndOptions)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, priority, options, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6095,8 +6095,8 @@ RT_DELEGATE!{delegate SignalHandler(SignalHandlerVtbl, SignalHandlerImpl) [IID_S
     fn Invoke(&self, signalNotifier: *mut SignalNotifier, timedOut: bool) -> HRESULT
 }}
 impl SignalHandler {
-    #[inline] pub fn invoke(&self, signalNotifier: &SignalNotifier, timedOut: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, signalNotifier as *const _ as *mut _, timedOut);
+    #[inline] pub fn invoke(&self, signalNotifier: &ComPtr<SignalNotifier>, timedOut: bool) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, signalNotifier.deref() as *const _ as *mut _, timedOut);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6118,17 +6118,17 @@ impl ISignalNotifier {
 RT_CLASS!{class SignalNotifier: ISignalNotifier}
 impl RtActivatable<ISignalNotifierStatics> for SignalNotifier {}
 impl SignalNotifier {
-    #[inline] pub fn attach_to_event(name: &HStringArg, handler: &SignalHandler) -> Result<Option<ComPtr<SignalNotifier>>> {
-        <Self as RtActivatable<ISignalNotifierStatics>>::get_activation_factory().attach_to_event(name, handler)
+    #[inline] pub fn attach_to_event(name: &HStringArg, handler: &ComPtr<SignalHandler>) -> Result<Option<ComPtr<SignalNotifier>>> {
+        <Self as RtActivatable<ISignalNotifierStatics>>::get_activation_factory().deref().attach_to_event(name, handler)
     }
-    #[inline] pub fn attach_to_event_with_timeout(name: &HStringArg, handler: &SignalHandler, timeout: foundation::TimeSpan) -> Result<Option<ComPtr<SignalNotifier>>> {
-        <Self as RtActivatable<ISignalNotifierStatics>>::get_activation_factory().attach_to_event_with_timeout(name, handler, timeout)
+    #[inline] pub fn attach_to_event_with_timeout(name: &HStringArg, handler: &ComPtr<SignalHandler>, timeout: foundation::TimeSpan) -> Result<Option<ComPtr<SignalNotifier>>> {
+        <Self as RtActivatable<ISignalNotifierStatics>>::get_activation_factory().deref().attach_to_event_with_timeout(name, handler, timeout)
     }
-    #[inline] pub fn attach_to_semaphore(name: &HStringArg, handler: &SignalHandler) -> Result<Option<ComPtr<SignalNotifier>>> {
-        <Self as RtActivatable<ISignalNotifierStatics>>::get_activation_factory().attach_to_semaphore(name, handler)
+    #[inline] pub fn attach_to_semaphore(name: &HStringArg, handler: &ComPtr<SignalHandler>) -> Result<Option<ComPtr<SignalNotifier>>> {
+        <Self as RtActivatable<ISignalNotifierStatics>>::get_activation_factory().deref().attach_to_semaphore(name, handler)
     }
-    #[inline] pub fn attach_to_semaphore_with_timeout(name: &HStringArg, handler: &SignalHandler, timeout: foundation::TimeSpan) -> Result<Option<ComPtr<SignalNotifier>>> {
-        <Self as RtActivatable<ISignalNotifierStatics>>::get_activation_factory().attach_to_semaphore_with_timeout(name, handler, timeout)
+    #[inline] pub fn attach_to_semaphore_with_timeout(name: &HStringArg, handler: &ComPtr<SignalHandler>, timeout: foundation::TimeSpan) -> Result<Option<ComPtr<SignalNotifier>>> {
+        <Self as RtActivatable<ISignalNotifierStatics>>::get_activation_factory().deref().attach_to_semaphore_with_timeout(name, handler, timeout)
     }
 }
 DEFINE_CLSID!(SignalNotifier(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,104,114,101,97,100,105,110,103,46,67,111,114,101,46,83,105,103,110,97,108,78,111,116,105,102,105,101,114,0]) [CLSID_SignalNotifier]);
@@ -6140,24 +6140,24 @@ RT_INTERFACE!{static interface ISignalNotifierStatics(ISignalNotifierStaticsVtbl
     fn AttachToSemaphoreWithTimeout(&self, name: HSTRING, handler: *mut SignalHandler, timeout: foundation::TimeSpan, out: *mut *mut SignalNotifier) -> HRESULT
 }}
 impl ISignalNotifierStatics {
-    #[inline] pub fn attach_to_event(&self, name: &HStringArg, handler: &SignalHandler) -> Result<Option<ComPtr<SignalNotifier>>> { unsafe { 
+    #[inline] pub fn attach_to_event(&self, name: &HStringArg, handler: &ComPtr<SignalHandler>) -> Result<Option<ComPtr<SignalNotifier>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AttachToEvent)(self as *const _ as *mut _, name.get(), handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AttachToEvent)(self as *const _ as *mut _, name.get(), handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn attach_to_event_with_timeout(&self, name: &HStringArg, handler: &SignalHandler, timeout: foundation::TimeSpan) -> Result<Option<ComPtr<SignalNotifier>>> { unsafe { 
+    #[inline] pub fn attach_to_event_with_timeout(&self, name: &HStringArg, handler: &ComPtr<SignalHandler>, timeout: foundation::TimeSpan) -> Result<Option<ComPtr<SignalNotifier>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AttachToEventWithTimeout)(self as *const _ as *mut _, name.get(), handler as *const _ as *mut _, timeout, &mut out);
+        let hr = ((*self.lpVtbl).AttachToEventWithTimeout)(self as *const _ as *mut _, name.get(), handler.deref() as *const _ as *mut _, timeout, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn attach_to_semaphore(&self, name: &HStringArg, handler: &SignalHandler) -> Result<Option<ComPtr<SignalNotifier>>> { unsafe { 
+    #[inline] pub fn attach_to_semaphore(&self, name: &HStringArg, handler: &ComPtr<SignalHandler>) -> Result<Option<ComPtr<SignalNotifier>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AttachToSemaphore)(self as *const _ as *mut _, name.get(), handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AttachToSemaphore)(self as *const _ as *mut _, name.get(), handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn attach_to_semaphore_with_timeout(&self, name: &HStringArg, handler: &SignalHandler, timeout: foundation::TimeSpan) -> Result<Option<ComPtr<SignalNotifier>>> { unsafe { 
+    #[inline] pub fn attach_to_semaphore_with_timeout(&self, name: &HStringArg, handler: &ComPtr<SignalHandler>, timeout: foundation::TimeSpan) -> Result<Option<ComPtr<SignalNotifier>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AttachToSemaphoreWithTimeout)(self as *const _ as *mut _, name.get(), handler as *const _ as *mut _, timeout, &mut out);
+        let hr = ((*self.lpVtbl).AttachToSemaphoreWithTimeout)(self as *const _ as *mut _, name.get(), handler.deref() as *const _ as *mut _, timeout, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -6253,76 +6253,76 @@ RT_CLASS!{static class SystemUpdateManager}
 impl RtActivatable<ISystemUpdateManagerStatics> for SystemUpdateManager {}
 impl SystemUpdateManager {
     #[inline] pub fn is_supported() -> Result<bool> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().is_supported()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().is_supported()
     }
     #[inline] pub fn get_state() -> Result<SystemUpdateManagerState> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_state()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_state()
     }
-    #[inline] pub fn add_state_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().add_state_changed(handler)
+    #[inline] pub fn add_state_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().add_state_changed(handler)
     }
     #[inline] pub fn remove_state_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().remove_state_changed(token)
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().remove_state_changed(token)
     }
     #[inline] pub fn get_download_progress() -> Result<f64> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_download_progress()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_download_progress()
     }
     #[inline] pub fn get_install_progress() -> Result<f64> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_install_progress()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_install_progress()
     }
     #[inline] pub fn get_user_active_hours_start() -> Result<foundation::TimeSpan> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_user_active_hours_start()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_user_active_hours_start()
     }
     #[inline] pub fn get_user_active_hours_end() -> Result<foundation::TimeSpan> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_user_active_hours_end()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_user_active_hours_end()
     }
     #[inline] pub fn get_user_active_hours_max() -> Result<i32> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_user_active_hours_max()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_user_active_hours_max()
     }
     #[inline] pub fn try_set_user_active_hours(start: foundation::TimeSpan, end: foundation::TimeSpan) -> Result<bool> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().try_set_user_active_hours(start, end)
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().try_set_user_active_hours(start, end)
     }
     #[inline] pub fn get_last_update_check_time() -> Result<foundation::DateTime> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_last_update_check_time()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_last_update_check_time()
     }
     #[inline] pub fn get_last_update_install_time() -> Result<foundation::DateTime> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_last_update_install_time()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_last_update_install_time()
     }
     #[inline] pub fn get_last_error_info() -> Result<Option<ComPtr<SystemUpdateLastErrorInfo>>> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_last_error_info()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_last_error_info()
     }
     #[inline] pub fn get_automatic_reboot_block_ids() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_automatic_reboot_block_ids()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_automatic_reboot_block_ids()
     }
     #[inline] pub fn block_automatic_reboot_async(lockId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().block_automatic_reboot_async(lockId)
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().block_automatic_reboot_async(lockId)
     }
     #[inline] pub fn unblock_automatic_reboot_async(lockId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().unblock_automatic_reboot_async(lockId)
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().unblock_automatic_reboot_async(lockId)
     }
     #[inline] pub fn get_extended_error() -> Result<foundation::HResult> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_extended_error()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_extended_error()
     }
     #[inline] pub fn get_update_items() -> Result<Option<ComPtr<foundation::collections::IVectorView<SystemUpdateItem>>>> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_update_items()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_update_items()
     }
     #[inline] pub fn get_attention_required_reason() -> Result<SystemUpdateAttentionRequiredReason> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_attention_required_reason()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_attention_required_reason()
     }
     #[inline] pub fn set_flight_ring(flightRing: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().set_flight_ring(flightRing)
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().set_flight_ring(flightRing)
     }
     #[inline] pub fn get_flight_ring() -> Result<HString> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().get_flight_ring()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().get_flight_ring()
     }
     #[inline] pub fn start_install(action: SystemUpdateStartInstallAction) -> Result<()> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().start_install(action)
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().start_install(action)
     }
     #[inline] pub fn reboot_to_complete_install() -> Result<()> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().reboot_to_complete_install()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().reboot_to_complete_install()
     }
     #[inline] pub fn start_cancel_updates() -> Result<()> {
-        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().start_cancel_updates()
+        <Self as RtActivatable<ISystemUpdateManagerStatics>>::get_activation_factory().deref().start_cancel_updates()
     }
 }
 DEFINE_CLSID!(SystemUpdateManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,112,100,97,116,101,46,83,121,115,116,101,109,85,112,100,97,116,101,77,97,110,97,103,101,114,0]) [CLSID_SystemUpdateManager]);
@@ -6367,9 +6367,9 @@ impl ISystemUpdateManagerStatics {
         let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_state_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_state_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -6488,10 +6488,10 @@ impl RtActivatable<IAdvertisingManagerStatics> for AdvertisingManager {}
 impl RtActivatable<IAdvertisingManagerStatics2> for AdvertisingManager {}
 impl AdvertisingManager {
     #[inline] pub fn get_advertising_id() -> Result<HString> {
-        <Self as RtActivatable<IAdvertisingManagerStatics>>::get_activation_factory().get_advertising_id()
+        <Self as RtActivatable<IAdvertisingManagerStatics>>::get_activation_factory().deref().get_advertising_id()
     }
-    #[inline] pub fn get_for_user(user: &super::User) -> Result<Option<ComPtr<AdvertisingManagerForUser>>> {
-        <Self as RtActivatable<IAdvertisingManagerStatics2>>::get_activation_factory().get_for_user(user)
+    #[inline] pub fn get_for_user(user: &ComPtr<super::User>) -> Result<Option<ComPtr<AdvertisingManagerForUser>>> {
+        <Self as RtActivatable<IAdvertisingManagerStatics2>>::get_activation_factory().deref().get_for_user(user)
     }
 }
 DEFINE_CLSID!(AdvertisingManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,65,100,118,101,114,116,105,115,105,110,103,77,97,110,97,103,101,114,0]) [CLSID_AdvertisingManager]);
@@ -6529,9 +6529,9 @@ RT_INTERFACE!{static interface IAdvertisingManagerStatics2(IAdvertisingManagerSt
     fn GetForUser(&self, user: *mut super::User, out: *mut *mut AdvertisingManagerForUser) -> HRESULT
 }}
 impl IAdvertisingManagerStatics2 {
-    #[inline] pub fn get_for_user(&self, user: &super::User) -> Result<Option<ComPtr<AdvertisingManagerForUser>>> { unsafe { 
+    #[inline] pub fn get_for_user(&self, user: &ComPtr<super::User>) -> Result<Option<ComPtr<AdvertisingManagerForUser>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -6562,10 +6562,10 @@ RT_CLASS!{class AssignedAccessSettings: IAssignedAccessSettings}
 impl RtActivatable<IAssignedAccessSettingsStatics> for AssignedAccessSettings {}
 impl AssignedAccessSettings {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<AssignedAccessSettings>>> {
-        <Self as RtActivatable<IAssignedAccessSettingsStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IAssignedAccessSettingsStatics>>::get_activation_factory().deref().get_default()
     }
-    #[inline] pub fn get_for_user(user: &super::User) -> Result<Option<ComPtr<AssignedAccessSettings>>> {
-        <Self as RtActivatable<IAssignedAccessSettingsStatics>>::get_activation_factory().get_for_user(user)
+    #[inline] pub fn get_for_user(user: &ComPtr<super::User>) -> Result<Option<ComPtr<AssignedAccessSettings>>> {
+        <Self as RtActivatable<IAssignedAccessSettingsStatics>>::get_activation_factory().deref().get_for_user(user)
     }
 }
 DEFINE_CLSID!(AssignedAccessSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,65,115,115,105,103,110,101,100,65,99,99,101,115,115,83,101,116,116,105,110,103,115,0]) [CLSID_AssignedAccessSettings]);
@@ -6580,9 +6580,9 @@ impl IAssignedAccessSettingsStatics {
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_for_user(&self, user: &super::User) -> Result<Option<ComPtr<AssignedAccessSettings>>> { unsafe { 
+    #[inline] pub fn get_for_user(&self, user: &ComPtr<super::User>) -> Result<Option<ComPtr<AssignedAccessSettings>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -6607,10 +6607,10 @@ RT_CLASS!{class DiagnosticsSettings: IDiagnosticsSettings}
 impl RtActivatable<IDiagnosticsSettingsStatics> for DiagnosticsSettings {}
 impl DiagnosticsSettings {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<DiagnosticsSettings>>> {
-        <Self as RtActivatable<IDiagnosticsSettingsStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IDiagnosticsSettingsStatics>>::get_activation_factory().deref().get_default()
     }
-    #[inline] pub fn get_for_user(user: &super::User) -> Result<Option<ComPtr<DiagnosticsSettings>>> {
-        <Self as RtActivatable<IDiagnosticsSettingsStatics>>::get_activation_factory().get_for_user(user)
+    #[inline] pub fn get_for_user(user: &ComPtr<super::User>) -> Result<Option<ComPtr<DiagnosticsSettings>>> {
+        <Self as RtActivatable<IDiagnosticsSettingsStatics>>::get_activation_factory().deref().get_for_user(user)
     }
 }
 DEFINE_CLSID!(DiagnosticsSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,68,105,97,103,110,111,115,116,105,99,115,83,101,116,116,105,110,103,115,0]) [CLSID_DiagnosticsSettings]);
@@ -6625,9 +6625,9 @@ impl IDiagnosticsSettingsStatics {
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_for_user(&self, user: &super::User) -> Result<Option<ComPtr<DiagnosticsSettings>>> { unsafe { 
+    #[inline] pub fn get_for_user(&self, user: &ComPtr<super::User>) -> Result<Option<ComPtr<DiagnosticsSettings>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -6639,7 +6639,7 @@ RT_CLASS!{class FirstSignInSettings: IFirstSignInSettings}
 impl RtActivatable<IFirstSignInSettingsStatics> for FirstSignInSettings {}
 impl FirstSignInSettings {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<FirstSignInSettings>>> {
-        <Self as RtActivatable<IFirstSignInSettingsStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IFirstSignInSettingsStatics>>::get_activation_factory().deref().get_default()
     }
 }
 DEFINE_CLSID!(FirstSignInSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,70,105,114,115,116,83,105,103,110,73,110,83,101,116,116,105,110,103,115,0]) [CLSID_FirstSignInSettings]);
@@ -6660,31 +6660,31 @@ impl RtActivatable<IGlobalizationPreferencesStatics2> for GlobalizationPreferenc
 impl RtActivatable<IGlobalizationPreferencesStatics3> for GlobalizationPreferences {}
 impl GlobalizationPreferences {
     #[inline] pub fn get_calendars() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
-        <Self as RtActivatable<IGlobalizationPreferencesStatics>>::get_activation_factory().get_calendars()
+        <Self as RtActivatable<IGlobalizationPreferencesStatics>>::get_activation_factory().deref().get_calendars()
     }
     #[inline] pub fn get_clocks() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
-        <Self as RtActivatable<IGlobalizationPreferencesStatics>>::get_activation_factory().get_clocks()
+        <Self as RtActivatable<IGlobalizationPreferencesStatics>>::get_activation_factory().deref().get_clocks()
     }
     #[inline] pub fn get_currencies() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
-        <Self as RtActivatable<IGlobalizationPreferencesStatics>>::get_activation_factory().get_currencies()
+        <Self as RtActivatable<IGlobalizationPreferencesStatics>>::get_activation_factory().deref().get_currencies()
     }
     #[inline] pub fn get_languages() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
-        <Self as RtActivatable<IGlobalizationPreferencesStatics>>::get_activation_factory().get_languages()
+        <Self as RtActivatable<IGlobalizationPreferencesStatics>>::get_activation_factory().deref().get_languages()
     }
     #[inline] pub fn get_home_geographic_region() -> Result<HString> {
-        <Self as RtActivatable<IGlobalizationPreferencesStatics>>::get_activation_factory().get_home_geographic_region()
+        <Self as RtActivatable<IGlobalizationPreferencesStatics>>::get_activation_factory().deref().get_home_geographic_region()
     }
     #[cfg(feature="windows-globalization")] #[inline] pub fn get_week_starts_on() -> Result<super::super::globalization::DayOfWeek> {
-        <Self as RtActivatable<IGlobalizationPreferencesStatics>>::get_activation_factory().get_week_starts_on()
+        <Self as RtActivatable<IGlobalizationPreferencesStatics>>::get_activation_factory().deref().get_week_starts_on()
     }
     #[inline] pub fn try_set_home_geographic_region(region: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IGlobalizationPreferencesStatics2>>::get_activation_factory().try_set_home_geographic_region(region)
+        <Self as RtActivatable<IGlobalizationPreferencesStatics2>>::get_activation_factory().deref().try_set_home_geographic_region(region)
     }
-    #[inline] pub fn try_set_languages(languageTags: &foundation::collections::IIterable<HString>) -> Result<bool> {
-        <Self as RtActivatable<IGlobalizationPreferencesStatics2>>::get_activation_factory().try_set_languages(languageTags)
+    #[inline] pub fn try_set_languages(languageTags: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<bool> {
+        <Self as RtActivatable<IGlobalizationPreferencesStatics2>>::get_activation_factory().deref().try_set_languages(languageTags)
     }
-    #[inline] pub fn get_for_user(user: &super::User) -> Result<Option<ComPtr<GlobalizationPreferencesForUser>>> {
-        <Self as RtActivatable<IGlobalizationPreferencesStatics3>>::get_activation_factory().get_for_user(user)
+    #[inline] pub fn get_for_user(user: &ComPtr<super::User>) -> Result<Option<ComPtr<GlobalizationPreferencesForUser>>> {
+        <Self as RtActivatable<IGlobalizationPreferencesStatics3>>::get_activation_factory().deref().get_for_user(user)
     }
 }
 DEFINE_CLSID!(GlobalizationPreferences(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,71,108,111,98,97,108,105,122,97,116,105,111,110,80,114,101,102,101,114,101,110,99,101,115,0]) [CLSID_GlobalizationPreferences]);
@@ -6788,9 +6788,9 @@ impl IGlobalizationPreferencesStatics2 {
         let hr = ((*self.lpVtbl).TrySetHomeGeographicRegion)(self as *const _ as *mut _, region.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn try_set_languages(&self, languageTags: &foundation::collections::IIterable<HString>) -> Result<bool> { unsafe { 
+    #[inline] pub fn try_set_languages(&self, languageTags: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).TrySetLanguages)(self as *const _ as *mut _, languageTags as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TrySetLanguages)(self as *const _ as *mut _, languageTags.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -6799,9 +6799,9 @@ RT_INTERFACE!{static interface IGlobalizationPreferencesStatics3(IGlobalizationP
     fn GetForUser(&self, user: *mut super::User, out: *mut *mut GlobalizationPreferencesForUser) -> HRESULT
 }}
 impl IGlobalizationPreferencesStatics3 {
-    #[inline] pub fn get_for_user(&self, user: &super::User) -> Result<Option<ComPtr<GlobalizationPreferencesForUser>>> { unsafe { 
+    #[inline] pub fn get_for_user(&self, user: &ComPtr<super::User>) -> Result<Option<ComPtr<GlobalizationPreferencesForUser>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -6809,23 +6809,23 @@ RT_CLASS!{static class LockScreen}
 impl RtActivatable<ILockScreenImageFeedStatics> for LockScreen {}
 impl RtActivatable<ILockScreenStatics> for LockScreen {}
 impl LockScreen {
-    #[inline] pub fn request_set_image_feed_async(syndicationFeedUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<SetImageFeedResult>>> {
-        <Self as RtActivatable<ILockScreenImageFeedStatics>>::get_activation_factory().request_set_image_feed_async(syndicationFeedUri)
+    #[inline] pub fn request_set_image_feed_async(syndicationFeedUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<SetImageFeedResult>>> {
+        <Self as RtActivatable<ILockScreenImageFeedStatics>>::get_activation_factory().deref().request_set_image_feed_async(syndicationFeedUri)
     }
     #[inline] pub fn try_remove_image_feed() -> Result<bool> {
-        <Self as RtActivatable<ILockScreenImageFeedStatics>>::get_activation_factory().try_remove_image_feed()
+        <Self as RtActivatable<ILockScreenImageFeedStatics>>::get_activation_factory().deref().try_remove_image_feed()
     }
     #[inline] pub fn get_original_image_file() -> Result<Option<ComPtr<foundation::Uri>>> {
-        <Self as RtActivatable<ILockScreenStatics>>::get_activation_factory().get_original_image_file()
+        <Self as RtActivatable<ILockScreenStatics>>::get_activation_factory().deref().get_original_image_file()
     }
     #[cfg(feature="windows-storage")] #[inline] pub fn get_image_stream() -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStream>>> {
-        <Self as RtActivatable<ILockScreenStatics>>::get_activation_factory().get_image_stream()
+        <Self as RtActivatable<ILockScreenStatics>>::get_activation_factory().deref().get_image_stream()
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_image_file_async(value: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ILockScreenStatics>>::get_activation_factory().set_image_file_async(value)
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_image_file_async(value: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<ILockScreenStatics>>::get_activation_factory().deref().set_image_file_async(value)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_image_stream_async(value: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<ILockScreenStatics>>::get_activation_factory().set_image_stream_async(value)
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_image_stream_async(value: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<ILockScreenStatics>>::get_activation_factory().deref().set_image_stream_async(value)
     }
 }
 DEFINE_CLSID!(LockScreen(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,76,111,99,107,83,99,114,101,101,110,0]) [CLSID_LockScreen]);
@@ -6835,9 +6835,9 @@ RT_INTERFACE!{static interface ILockScreenImageFeedStatics(ILockScreenImageFeedS
     fn TryRemoveImageFeed(&self, out: *mut bool) -> HRESULT
 }}
 impl ILockScreenImageFeedStatics {
-    #[inline] pub fn request_set_image_feed_async(&self, syndicationFeedUri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<SetImageFeedResult>>> { unsafe { 
+    #[inline] pub fn request_set_image_feed_async(&self, syndicationFeedUri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<SetImageFeedResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestSetImageFeedAsync)(self as *const _ as *mut _, syndicationFeedUri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestSetImageFeedAsync)(self as *const _ as *mut _, syndicationFeedUri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_remove_image_feed(&self) -> Result<bool> { unsafe { 
@@ -6864,14 +6864,14 @@ impl ILockScreenStatics {
         let hr = ((*self.lpVtbl).GetImageStream)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_image_file_async(&self, value: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_image_file_async(&self, value: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetImageFileAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetImageFileAsync)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_image_stream_async(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_image_stream_async(&self, value: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetImageStreamAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetImageStreamAsync)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6885,49 +6885,49 @@ RT_CLASS!{static class UserInformation}
 impl RtActivatable<IUserInformationStatics> for UserInformation {}
 impl UserInformation {
     #[inline] pub fn get_account_picture_change_enabled() -> Result<bool> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().get_account_picture_change_enabled()
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().get_account_picture_change_enabled()
     }
     #[inline] pub fn get_name_access_allowed() -> Result<bool> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().get_name_access_allowed()
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().get_name_access_allowed()
     }
     #[cfg(feature="windows-storage")] #[inline] pub fn get_account_picture(kind: AccountPictureKind) -> Result<Option<ComPtr<super::super::storage::IStorageFile>>> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().get_account_picture(kind)
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().get_account_picture(kind)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_picture_async(image: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().set_account_picture_async(image)
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_picture_async(image: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> {
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().set_account_picture_async(image)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_pictures_async(smallImage: &super::super::storage::IStorageFile, largeImage: &super::super::storage::IStorageFile, video: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().set_account_pictures_async(smallImage, largeImage, video)
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_pictures_async(smallImage: &ComPtr<super::super::storage::IStorageFile>, largeImage: &ComPtr<super::super::storage::IStorageFile>, video: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> {
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().set_account_pictures_async(smallImage, largeImage, video)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_picture_from_stream_async(image: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().set_account_picture_from_stream_async(image)
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_picture_from_stream_async(image: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> {
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().set_account_picture_from_stream_async(image)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_pictures_from_streams_async(smallImage: &super::super::storage::streams::IRandomAccessStream, largeImage: &super::super::storage::streams::IRandomAccessStream, video: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().set_account_pictures_from_streams_async(smallImage, largeImage, video)
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_pictures_from_streams_async(smallImage: &ComPtr<super::super::storage::streams::IRandomAccessStream>, largeImage: &ComPtr<super::super::storage::streams::IRandomAccessStream>, video: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> {
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().set_account_pictures_from_streams_async(smallImage, largeImage, video)
     }
-    #[inline] pub fn add_account_picture_changed(changeHandler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().add_account_picture_changed(changeHandler)
+    #[inline] pub fn add_account_picture_changed(changeHandler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().add_account_picture_changed(changeHandler)
     }
     #[inline] pub fn remove_account_picture_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().remove_account_picture_changed(token)
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().remove_account_picture_changed(token)
     }
     #[inline] pub fn get_display_name_async() -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().get_display_name_async()
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().get_display_name_async()
     }
     #[inline] pub fn get_first_name_async() -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().get_first_name_async()
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().get_first_name_async()
     }
     #[inline] pub fn get_last_name_async() -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().get_last_name_async()
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().get_last_name_async()
     }
     #[inline] pub fn get_principal_name_async() -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().get_principal_name_async()
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().get_principal_name_async()
     }
     #[inline] pub fn get_session_initiation_protocol_uri_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::Uri>>> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().get_session_initiation_protocol_uri_async()
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().get_session_initiation_protocol_uri_async()
     }
     #[inline] pub fn get_domain_name_async() -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().get_domain_name_async()
+        <Self as RtActivatable<IUserInformationStatics>>::get_activation_factory().deref().get_domain_name_async()
     }
 }
 DEFINE_CLSID!(UserInformation(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,85,115,101,114,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_UserInformation]);
@@ -6970,29 +6970,29 @@ impl IUserInformationStatics {
         let hr = ((*self.lpVtbl).GetAccountPicture)(self as *const _ as *mut _, kind, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_picture_async(&self, image: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_picture_async(&self, image: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetAccountPictureAsync)(self as *const _ as *mut _, image as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetAccountPictureAsync)(self as *const _ as *mut _, image.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_pictures_async(&self, smallImage: &super::super::storage::IStorageFile, largeImage: &super::super::storage::IStorageFile, video: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_pictures_async(&self, smallImage: &ComPtr<super::super::storage::IStorageFile>, largeImage: &ComPtr<super::super::storage::IStorageFile>, video: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetAccountPicturesAsync)(self as *const _ as *mut _, smallImage as *const _ as *mut _, largeImage as *const _ as *mut _, video as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetAccountPicturesAsync)(self as *const _ as *mut _, smallImage.deref() as *const _ as *mut _, largeImage.deref() as *const _ as *mut _, video.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_picture_from_stream_async(&self, image: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_picture_from_stream_async(&self, image: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetAccountPictureFromStreamAsync)(self as *const _ as *mut _, image as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetAccountPictureFromStreamAsync)(self as *const _ as *mut _, image.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_pictures_from_streams_async(&self, smallImage: &super::super::storage::streams::IRandomAccessStream, largeImage: &super::super::storage::streams::IRandomAccessStream, video: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_account_pictures_from_streams_async(&self, smallImage: &ComPtr<super::super::storage::streams::IRandomAccessStream>, largeImage: &ComPtr<super::super::storage::streams::IRandomAccessStream>, video: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<SetAccountPictureResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetAccountPicturesFromStreamsAsync)(self as *const _ as *mut _, smallImage as *const _ as *mut _, largeImage as *const _ as *mut _, video as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetAccountPicturesFromStreamsAsync)(self as *const _ as *mut _, smallImage.deref() as *const _ as *mut _, largeImage.deref() as *const _ as *mut _, video.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_account_picture_changed(&self, changeHandler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_account_picture_changed(&self, changeHandler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AccountPictureChanged)(self as *const _ as *mut _, changeHandler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AccountPictureChanged)(self as *const _ as *mut _, changeHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_account_picture_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -7036,14 +7036,14 @@ RT_INTERFACE!{interface IUserProfilePersonalizationSettings(IUserProfilePersonal
     #[cfg(feature="windows-storage")] fn TrySetWallpaperImageAsync(&self, imageFile: *mut super::super::storage::StorageFile, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
 impl IUserProfilePersonalizationSettings {
-    #[cfg(feature="windows-storage")] #[inline] pub fn try_set_lock_screen_image_async(&self, imageFile: &super::super::storage::StorageFile) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn try_set_lock_screen_image_async(&self, imageFile: &ComPtr<super::super::storage::StorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TrySetLockScreenImageAsync)(self as *const _ as *mut _, imageFile as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TrySetLockScreenImageAsync)(self as *const _ as *mut _, imageFile.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn try_set_wallpaper_image_async(&self, imageFile: &super::super::storage::StorageFile) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn try_set_wallpaper_image_async(&self, imageFile: &ComPtr<super::super::storage::StorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TrySetWallpaperImageAsync)(self as *const _ as *mut _, imageFile as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TrySetWallpaperImageAsync)(self as *const _ as *mut _, imageFile.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -7051,10 +7051,10 @@ RT_CLASS!{class UserProfilePersonalizationSettings: IUserProfilePersonalizationS
 impl RtActivatable<IUserProfilePersonalizationSettingsStatics> for UserProfilePersonalizationSettings {}
 impl UserProfilePersonalizationSettings {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<UserProfilePersonalizationSettings>>> {
-        <Self as RtActivatable<IUserProfilePersonalizationSettingsStatics>>::get_activation_factory().get_current()
+        <Self as RtActivatable<IUserProfilePersonalizationSettingsStatics>>::get_activation_factory().deref().get_current()
     }
     #[inline] pub fn is_supported() -> Result<bool> {
-        <Self as RtActivatable<IUserProfilePersonalizationSettingsStatics>>::get_activation_factory().is_supported()
+        <Self as RtActivatable<IUserProfilePersonalizationSettingsStatics>>::get_activation_factory().deref().is_supported()
     }
 }
 DEFINE_CLSID!(UserProfilePersonalizationSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,85,115,101,114,80,114,111,102,105,108,101,80,101,114,115,111,110,97,108,105,122,97,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_UserProfilePersonalizationSettings]);

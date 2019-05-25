@@ -4,19 +4,19 @@ impl RtActivatable<IApplicationLanguagesStatics> for ApplicationLanguages {}
 impl RtActivatable<IApplicationLanguagesStatics2> for ApplicationLanguages {}
 impl ApplicationLanguages {
     #[inline] pub fn get_primary_language_override() -> Result<HString> {
-        <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().get_primary_language_override()
+        <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().deref().get_primary_language_override()
     }
     #[inline] pub fn set_primary_language_override(value: &HStringArg) -> Result<()> {
-        <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().set_primary_language_override(value)
+        <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().deref().set_primary_language_override(value)
     }
     #[inline] pub fn get_languages() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
-        <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().get_languages()
+        <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().deref().get_languages()
     }
     #[inline] pub fn get_manifest_languages() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
-        <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().get_manifest_languages()
+        <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().deref().get_manifest_languages()
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(user: &super::system::User) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
-        <Self as RtActivatable<IApplicationLanguagesStatics2>>::get_activation_factory().get_languages_for_user(user)
+    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(user: &ComPtr<super::system::User>) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
+        <Self as RtActivatable<IApplicationLanguagesStatics2>>::get_activation_factory().deref().get_languages_for_user(user)
     }
 }
 DEFINE_CLSID!(ApplicationLanguages(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,65,112,112,108,105,99,97,116,105,111,110,76,97,110,103,117,97,103,101,115,0]) [CLSID_ApplicationLanguages]);
@@ -53,9 +53,9 @@ RT_INTERFACE!{static interface IApplicationLanguagesStatics2(IApplicationLanguag
     #[cfg(feature="windows-system")] fn GetLanguagesForUser(&self, user: *mut super::system::User, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
 }}
 impl IApplicationLanguagesStatics2 {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(&self, user: &super::system::User) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(&self, user: &ComPtr<super::system::User>) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetLanguagesForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetLanguagesForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -570,9 +570,9 @@ impl ICalendar {
         let hr = ((*self.lpVtbl).NanosecondAsPaddedString)(self as *const _ as *mut _, minDigits, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn compare(&self, other: &Calendar) -> Result<i32> { unsafe { 
+    #[inline] pub fn compare(&self, other: &ComPtr<Calendar>) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).Compare)(self as *const _ as *mut _, other as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Compare)(self as *const _ as *mut _, other.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn compare_date_time(&self, other: foundation::DateTime) -> Result<i32> { unsafe { 
@@ -580,8 +580,8 @@ impl ICalendar {
         let hr = ((*self.lpVtbl).CompareDateTime)(self as *const _ as *mut _, other, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn copy_to(&self, other: &Calendar) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).CopyTo)(self as *const _ as *mut _, other as *const _ as *mut _);
+    #[inline] pub fn copy_to(&self, other: &ComPtr<Calendar>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).CopyTo)(self as *const _ as *mut _, other.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_first_minute_in_this_hour(&self) -> Result<i32> { unsafe { 
@@ -630,14 +630,14 @@ impl RtActivatable<ICalendarFactory> for Calendar {}
 impl RtActivatable<ICalendarFactory2> for Calendar {}
 impl RtActivatable<IActivationFactory> for Calendar {}
 impl Calendar {
-    #[inline] pub fn create_calendar_default_calendar_and_clock(languages: &foundation::collections::IIterable<HString>) -> Result<ComPtr<Calendar>> {
-        <Self as RtActivatable<ICalendarFactory>>::get_activation_factory().create_calendar_default_calendar_and_clock(languages)
+    #[inline] pub fn create_calendar_default_calendar_and_clock(languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<Calendar>> {
+        <Self as RtActivatable<ICalendarFactory>>::get_activation_factory().deref().create_calendar_default_calendar_and_clock(languages)
     }
-    #[inline] pub fn create_calendar(languages: &foundation::collections::IIterable<HString>, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<Calendar>> {
-        <Self as RtActivatable<ICalendarFactory>>::get_activation_factory().create_calendar(languages, calendar, clock)
+    #[inline] pub fn create_calendar(languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<Calendar>> {
+        <Self as RtActivatable<ICalendarFactory>>::get_activation_factory().deref().create_calendar(languages, calendar, clock)
     }
-    #[inline] pub fn create_calendar_with_time_zone(languages: &foundation::collections::IIterable<HString>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<ComPtr<Calendar>> {
-        <Self as RtActivatable<ICalendarFactory2>>::get_activation_factory().create_calendar_with_time_zone(languages, calendar, clock, timeZoneId)
+    #[inline] pub fn create_calendar_with_time_zone(languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<ComPtr<Calendar>> {
+        <Self as RtActivatable<ICalendarFactory2>>::get_activation_factory().deref().create_calendar_with_time_zone(languages, calendar, clock, timeZoneId)
     }
 }
 DEFINE_CLSID!(Calendar(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,97,108,101,110,100,97,114,0]) [CLSID_Calendar]);
@@ -647,14 +647,14 @@ RT_INTERFACE!{static interface ICalendarFactory(ICalendarFactoryVtbl): IInspecta
     fn CreateCalendar(&self, languages: *mut foundation::collections::IIterable<HString>, calendar: HSTRING, clock: HSTRING, out: *mut *mut Calendar) -> HRESULT
 }}
 impl ICalendarFactory {
-    #[inline] pub fn create_calendar_default_calendar_and_clock(&self, languages: &foundation::collections::IIterable<HString>) -> Result<ComPtr<Calendar>> { unsafe { 
+    #[inline] pub fn create_calendar_default_calendar_and_clock(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<Calendar>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCalendarDefaultCalendarAndClock)(self as *const _ as *mut _, languages as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateCalendarDefaultCalendarAndClock)(self as *const _ as *mut _, languages.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_calendar(&self, languages: &foundation::collections::IIterable<HString>, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<Calendar>> { unsafe { 
+    #[inline] pub fn create_calendar(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<Calendar>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCalendar)(self as *const _ as *mut _, languages as *const _ as *mut _, calendar.get(), clock.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateCalendar)(self as *const _ as *mut _, languages.deref() as *const _ as *mut _, calendar.get(), clock.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -663,9 +663,9 @@ RT_INTERFACE!{static interface ICalendarFactory2(ICalendarFactory2Vtbl): IInspec
     fn CreateCalendarWithTimeZone(&self, languages: *mut foundation::collections::IIterable<HString>, calendar: HSTRING, clock: HSTRING, timeZoneId: HSTRING, out: *mut *mut Calendar) -> HRESULT
 }}
 impl ICalendarFactory2 {
-    #[inline] pub fn create_calendar_with_time_zone(&self, languages: &foundation::collections::IIterable<HString>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<ComPtr<Calendar>> { unsafe { 
+    #[inline] pub fn create_calendar_with_time_zone(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<ComPtr<Calendar>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCalendarWithTimeZone)(self as *const _ as *mut _, languages as *const _ as *mut _, calendar.get(), clock.get(), timeZoneId.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateCalendarWithTimeZone)(self as *const _ as *mut _, languages.deref() as *const _ as *mut _, calendar.get(), clock.get(), timeZoneId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -675,49 +675,49 @@ impl RtActivatable<ICalendarIdentifiersStatics2> for CalendarIdentifiers {}
 impl RtActivatable<ICalendarIdentifiersStatics3> for CalendarIdentifiers {}
 impl CalendarIdentifiers {
     #[inline] pub fn get_gregorian() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().get_gregorian()
+        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().deref().get_gregorian()
     }
     #[inline] pub fn get_hebrew() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().get_hebrew()
+        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().deref().get_hebrew()
     }
     #[inline] pub fn get_hijri() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().get_hijri()
+        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().deref().get_hijri()
     }
     #[inline] pub fn get_japanese() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().get_japanese()
+        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().deref().get_japanese()
     }
     #[inline] pub fn get_julian() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().get_julian()
+        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().deref().get_julian()
     }
     #[inline] pub fn get_korean() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().get_korean()
+        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().deref().get_korean()
     }
     #[inline] pub fn get_taiwan() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().get_taiwan()
+        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().deref().get_taiwan()
     }
     #[inline] pub fn get_thai() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().get_thai()
+        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().deref().get_thai()
     }
     #[inline] pub fn get_um_al_qura() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().get_um_al_qura()
+        <Self as RtActivatable<ICalendarIdentifiersStatics>>::get_activation_factory().deref().get_um_al_qura()
     }
     #[inline] pub fn get_persian() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics2>>::get_activation_factory().get_persian()
+        <Self as RtActivatable<ICalendarIdentifiersStatics2>>::get_activation_factory().deref().get_persian()
     }
     #[inline] pub fn get_chinese_lunar() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_chinese_lunar()
+        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().deref().get_chinese_lunar()
     }
     #[inline] pub fn get_japanese_lunar() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_japanese_lunar()
+        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().deref().get_japanese_lunar()
     }
     #[inline] pub fn get_korean_lunar() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_korean_lunar()
+        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().deref().get_korean_lunar()
     }
     #[inline] pub fn get_taiwan_lunar() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_taiwan_lunar()
+        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().deref().get_taiwan_lunar()
     }
     #[inline] pub fn get_vietnamese_lunar() -> Result<HString> {
-        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().get_vietnamese_lunar()
+        <Self as RtActivatable<ICalendarIdentifiersStatics3>>::get_activation_factory().deref().get_vietnamese_lunar()
     }
 }
 DEFINE_CLSID!(CalendarIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,97,108,101,110,100,97,114,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_CalendarIdentifiers]);
@@ -830,10 +830,10 @@ RT_CLASS!{static class ClockIdentifiers}
 impl RtActivatable<IClockIdentifiersStatics> for ClockIdentifiers {}
 impl ClockIdentifiers {
     #[inline] pub fn get_twelve_hour() -> Result<HString> {
-        <Self as RtActivatable<IClockIdentifiersStatics>>::get_activation_factory().get_twelve_hour()
+        <Self as RtActivatable<IClockIdentifiersStatics>>::get_activation_factory().deref().get_twelve_hour()
     }
     #[inline] pub fn get_twenty_four_hour() -> Result<HString> {
-        <Self as RtActivatable<IClockIdentifiersStatics>>::get_activation_factory().get_twenty_four_hour()
+        <Self as RtActivatable<IClockIdentifiersStatics>>::get_activation_factory().deref().get_twenty_four_hour()
     }
 }
 DEFINE_CLSID!(ClockIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,108,111,99,107,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_ClockIdentifiers]);
@@ -860,490 +860,490 @@ impl RtActivatable<ICurrencyIdentifiersStatics2> for CurrencyIdentifiers {}
 impl RtActivatable<ICurrencyIdentifiersStatics3> for CurrencyIdentifiers {}
 impl CurrencyIdentifiers {
     #[inline] pub fn get_aed() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_aed()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_aed()
     }
     #[inline] pub fn get_afn() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_afn()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_afn()
     }
     #[inline] pub fn get_all() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_all()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_all()
     }
     #[inline] pub fn get_amd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_amd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_amd()
     }
     #[inline] pub fn get_ang() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_ang()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_ang()
     }
     #[inline] pub fn get_aoa() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_aoa()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_aoa()
     }
     #[inline] pub fn get_ars() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_ars()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_ars()
     }
     #[inline] pub fn get_aud() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_aud()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_aud()
     }
     #[inline] pub fn get_awg() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_awg()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_awg()
     }
     #[inline] pub fn get_azn() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_azn()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_azn()
     }
     #[inline] pub fn get_bam() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_bam()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_bam()
     }
     #[inline] pub fn get_bbd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_bbd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_bbd()
     }
     #[inline] pub fn get_bdt() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_bdt()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_bdt()
     }
     #[inline] pub fn get_bgn() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_bgn()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_bgn()
     }
     #[inline] pub fn get_bhd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_bhd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_bhd()
     }
     #[inline] pub fn get_bif() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_bif()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_bif()
     }
     #[inline] pub fn get_bmd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_bmd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_bmd()
     }
     #[inline] pub fn get_bnd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_bnd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_bnd()
     }
     #[inline] pub fn get_bob() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_bob()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_bob()
     }
     #[inline] pub fn get_brl() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_brl()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_brl()
     }
     #[inline] pub fn get_bsd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_bsd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_bsd()
     }
     #[inline] pub fn get_btn() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_btn()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_btn()
     }
     #[inline] pub fn get_bwp() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_bwp()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_bwp()
     }
     #[inline] pub fn get_byr() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_byr()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_byr()
     }
     #[inline] pub fn get_bzd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_bzd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_bzd()
     }
     #[inline] pub fn get_cad() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_cad()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_cad()
     }
     #[inline] pub fn get_cdf() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_cdf()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_cdf()
     }
     #[inline] pub fn get_chf() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_chf()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_chf()
     }
     #[inline] pub fn get_clp() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_clp()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_clp()
     }
     #[inline] pub fn get_cny() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_cny()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_cny()
     }
     #[inline] pub fn get_cop() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_cop()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_cop()
     }
     #[inline] pub fn get_crc() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_crc()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_crc()
     }
     #[inline] pub fn get_cup() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_cup()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_cup()
     }
     #[inline] pub fn get_cve() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_cve()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_cve()
     }
     #[inline] pub fn get_czk() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_czk()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_czk()
     }
     #[inline] pub fn get_djf() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_djf()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_djf()
     }
     #[inline] pub fn get_dkk() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_dkk()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_dkk()
     }
     #[inline] pub fn get_dop() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_dop()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_dop()
     }
     #[inline] pub fn get_dzd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_dzd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_dzd()
     }
     #[inline] pub fn get_egp() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_egp()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_egp()
     }
     #[inline] pub fn get_ern() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_ern()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_ern()
     }
     #[inline] pub fn get_etb() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_etb()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_etb()
     }
     #[inline] pub fn get_eur() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_eur()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_eur()
     }
     #[inline] pub fn get_fjd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_fjd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_fjd()
     }
     #[inline] pub fn get_fkp() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_fkp()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_fkp()
     }
     #[inline] pub fn get_gbp() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_gbp()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_gbp()
     }
     #[inline] pub fn get_gel() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_gel()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_gel()
     }
     #[inline] pub fn get_ghs() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_ghs()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_ghs()
     }
     #[inline] pub fn get_gip() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_gip()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_gip()
     }
     #[inline] pub fn get_gmd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_gmd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_gmd()
     }
     #[inline] pub fn get_gnf() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_gnf()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_gnf()
     }
     #[inline] pub fn get_gtq() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_gtq()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_gtq()
     }
     #[inline] pub fn get_gyd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_gyd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_gyd()
     }
     #[inline] pub fn get_hkd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_hkd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_hkd()
     }
     #[inline] pub fn get_hnl() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_hnl()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_hnl()
     }
     #[inline] pub fn get_hrk() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_hrk()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_hrk()
     }
     #[inline] pub fn get_htg() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_htg()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_htg()
     }
     #[inline] pub fn get_huf() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_huf()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_huf()
     }
     #[inline] pub fn get_idr() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_idr()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_idr()
     }
     #[inline] pub fn get_ils() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_ils()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_ils()
     }
     #[inline] pub fn get_inr() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_inr()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_inr()
     }
     #[inline] pub fn get_iqd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_iqd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_iqd()
     }
     #[inline] pub fn get_irr() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_irr()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_irr()
     }
     #[inline] pub fn get_isk() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_isk()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_isk()
     }
     #[inline] pub fn get_jmd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_jmd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_jmd()
     }
     #[inline] pub fn get_jod() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_jod()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_jod()
     }
     #[inline] pub fn get_jpy() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_jpy()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_jpy()
     }
     #[inline] pub fn get_kes() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_kes()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_kes()
     }
     #[inline] pub fn get_kgs() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_kgs()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_kgs()
     }
     #[inline] pub fn get_khr() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_khr()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_khr()
     }
     #[inline] pub fn get_kmf() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_kmf()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_kmf()
     }
     #[inline] pub fn get_kpw() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_kpw()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_kpw()
     }
     #[inline] pub fn get_krw() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_krw()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_krw()
     }
     #[inline] pub fn get_kwd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_kwd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_kwd()
     }
     #[inline] pub fn get_kyd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_kyd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_kyd()
     }
     #[inline] pub fn get_kzt() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_kzt()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_kzt()
     }
     #[inline] pub fn get_lak() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_lak()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_lak()
     }
     #[inline] pub fn get_lbp() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_lbp()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_lbp()
     }
     #[inline] pub fn get_lkr() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_lkr()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_lkr()
     }
     #[inline] pub fn get_lrd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_lrd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_lrd()
     }
     #[inline] pub fn get_lsl() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_lsl()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_lsl()
     }
     #[inline] pub fn get_ltl() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_ltl()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_ltl()
     }
     #[inline] pub fn get_lvl() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_lvl()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_lvl()
     }
     #[inline] pub fn get_lyd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_lyd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_lyd()
     }
     #[inline] pub fn get_mad() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_mad()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_mad()
     }
     #[inline] pub fn get_mdl() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_mdl()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_mdl()
     }
     #[inline] pub fn get_mga() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_mga()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_mga()
     }
     #[inline] pub fn get_mkd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_mkd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_mkd()
     }
     #[inline] pub fn get_mmk() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_mmk()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_mmk()
     }
     #[inline] pub fn get_mnt() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_mnt()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_mnt()
     }
     #[inline] pub fn get_mop() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_mop()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_mop()
     }
     #[inline] pub fn get_mro() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_mro()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_mro()
     }
     #[inline] pub fn get_mur() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_mur()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_mur()
     }
     #[inline] pub fn get_mvr() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_mvr()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_mvr()
     }
     #[inline] pub fn get_mwk() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_mwk()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_mwk()
     }
     #[inline] pub fn get_mxn() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_mxn()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_mxn()
     }
     #[inline] pub fn get_myr() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_myr()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_myr()
     }
     #[inline] pub fn get_mzn() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_mzn()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_mzn()
     }
     #[inline] pub fn get_nad() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_nad()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_nad()
     }
     #[inline] pub fn get_ngn() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_ngn()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_ngn()
     }
     #[inline] pub fn get_nio() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_nio()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_nio()
     }
     #[inline] pub fn get_nok() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_nok()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_nok()
     }
     #[inline] pub fn get_npr() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_npr()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_npr()
     }
     #[inline] pub fn get_nzd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_nzd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_nzd()
     }
     #[inline] pub fn get_omr() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_omr()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_omr()
     }
     #[inline] pub fn get_pab() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_pab()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_pab()
     }
     #[inline] pub fn get_pen() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_pen()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_pen()
     }
     #[inline] pub fn get_pgk() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_pgk()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_pgk()
     }
     #[inline] pub fn get_php() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_php()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_php()
     }
     #[inline] pub fn get_pkr() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_pkr()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_pkr()
     }
     #[inline] pub fn get_pln() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_pln()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_pln()
     }
     #[inline] pub fn get_pyg() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_pyg()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_pyg()
     }
     #[inline] pub fn get_qar() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_qar()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_qar()
     }
     #[inline] pub fn get_ron() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_ron()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_ron()
     }
     #[inline] pub fn get_rsd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_rsd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_rsd()
     }
     #[inline] pub fn get_rub() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_rub()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_rub()
     }
     #[inline] pub fn get_rwf() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_rwf()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_rwf()
     }
     #[inline] pub fn get_sar() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_sar()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_sar()
     }
     #[inline] pub fn get_sbd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_sbd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_sbd()
     }
     #[inline] pub fn get_scr() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_scr()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_scr()
     }
     #[inline] pub fn get_sdg() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_sdg()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_sdg()
     }
     #[inline] pub fn get_sek() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_sek()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_sek()
     }
     #[inline] pub fn get_sgd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_sgd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_sgd()
     }
     #[inline] pub fn get_shp() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_shp()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_shp()
     }
     #[inline] pub fn get_sll() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_sll()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_sll()
     }
     #[inline] pub fn get_sos() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_sos()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_sos()
     }
     #[inline] pub fn get_srd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_srd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_srd()
     }
     #[inline] pub fn get_std() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_std()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_std()
     }
     #[inline] pub fn get_syp() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_syp()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_syp()
     }
     #[inline] pub fn get_szl() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_szl()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_szl()
     }
     #[inline] pub fn get_thb() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_thb()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_thb()
     }
     #[inline] pub fn get_tjs() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_tjs()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_tjs()
     }
     #[inline] pub fn get_tmt() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_tmt()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_tmt()
     }
     #[inline] pub fn get_tnd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_tnd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_tnd()
     }
     #[inline] pub fn get_top() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_top()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_top()
     }
     #[inline] pub fn get_try() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_try()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_try()
     }
     #[inline] pub fn get_ttd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_ttd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_ttd()
     }
     #[inline] pub fn get_twd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_twd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_twd()
     }
     #[inline] pub fn get_tzs() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_tzs()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_tzs()
     }
     #[inline] pub fn get_uah() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_uah()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_uah()
     }
     #[inline] pub fn get_ugx() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_ugx()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_ugx()
     }
     #[inline] pub fn get_usd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_usd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_usd()
     }
     #[inline] pub fn get_uyu() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_uyu()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_uyu()
     }
     #[inline] pub fn get_uzs() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_uzs()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_uzs()
     }
     #[inline] pub fn get_vef() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_vef()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_vef()
     }
     #[inline] pub fn get_vnd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_vnd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_vnd()
     }
     #[inline] pub fn get_vuv() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_vuv()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_vuv()
     }
     #[inline] pub fn get_wst() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_wst()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_wst()
     }
     #[inline] pub fn get_xaf() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_xaf()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_xaf()
     }
     #[inline] pub fn get_xcd() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_xcd()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_xcd()
     }
     #[inline] pub fn get_xof() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_xof()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_xof()
     }
     #[inline] pub fn get_xpf() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_xpf()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_xpf()
     }
     #[inline] pub fn get_xxx() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_xxx()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_xxx()
     }
     #[inline] pub fn get_yer() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_yer()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_yer()
     }
     #[inline] pub fn get_zar() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_zar()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_zar()
     }
     #[inline] pub fn get_zmw() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_zmw()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_zmw()
     }
     #[inline] pub fn get_zwl() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().get_zwl()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics>>::get_activation_factory().deref().get_zwl()
     }
     #[inline] pub fn get_byn() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics2>>::get_activation_factory().get_byn()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics2>>::get_activation_factory().deref().get_byn()
     }
     #[inline] pub fn get_mru() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics3>>::get_activation_factory().get_mru()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics3>>::get_activation_factory().deref().get_mru()
     }
     #[inline] pub fn get_ssp() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics3>>::get_activation_factory().get_ssp()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics3>>::get_activation_factory().deref().get_ssp()
     }
     #[inline] pub fn get_stn() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics3>>::get_activation_factory().get_stn()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics3>>::get_activation_factory().deref().get_stn()
     }
     #[inline] pub fn get_ves() -> Result<HString> {
-        <Self as RtActivatable<ICurrencyIdentifiersStatics3>>::get_activation_factory().get_ves()
+        <Self as RtActivatable<ICurrencyIdentifiersStatics3>>::get_activation_factory().deref().get_ves()
     }
 }
 DEFINE_CLSID!(CurrencyIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,117,114,114,101,110,99,121,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_CurrencyIdentifiers]);
@@ -2390,10 +2390,10 @@ impl RtActivatable<IGeographicRegionStatics> for GeographicRegion {}
 impl RtActivatable<IActivationFactory> for GeographicRegion {}
 impl GeographicRegion {
     #[inline] pub fn create_geographic_region(geographicRegionCode: &HStringArg) -> Result<ComPtr<GeographicRegion>> {
-        <Self as RtActivatable<IGeographicRegionFactory>>::get_activation_factory().create_geographic_region(geographicRegionCode)
+        <Self as RtActivatable<IGeographicRegionFactory>>::get_activation_factory().deref().create_geographic_region(geographicRegionCode)
     }
     #[inline] pub fn is_supported(geographicRegionCode: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IGeographicRegionStatics>>::get_activation_factory().is_supported(geographicRegionCode)
+        <Self as RtActivatable<IGeographicRegionStatics>>::get_activation_factory().deref().is_supported(geographicRegionCode)
     }
 }
 DEFINE_CLSID!(GeographicRegion(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,71,101,111,103,114,97,112,104,105,99,82,101,103,105,111,110,0]) [CLSID_GeographicRegion]);
@@ -2447,10 +2447,10 @@ RT_CLASS!{static class JapanesePhoneticAnalyzer}
 impl RtActivatable<IJapanesePhoneticAnalyzerStatics> for JapanesePhoneticAnalyzer {}
 impl JapanesePhoneticAnalyzer {
     #[inline] pub fn get_words(input: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<JapanesePhoneme>>>> {
-        <Self as RtActivatable<IJapanesePhoneticAnalyzerStatics>>::get_activation_factory().get_words(input)
+        <Self as RtActivatable<IJapanesePhoneticAnalyzerStatics>>::get_activation_factory().deref().get_words(input)
     }
     #[inline] pub fn get_words_with_mono_ruby_option(input: &HStringArg, monoRuby: bool) -> Result<Option<ComPtr<foundation::collections::IVectorView<JapanesePhoneme>>>> {
-        <Self as RtActivatable<IJapanesePhoneticAnalyzerStatics>>::get_activation_factory().get_words_with_mono_ruby_option(input, monoRuby)
+        <Self as RtActivatable<IJapanesePhoneticAnalyzerStatics>>::get_activation_factory().deref().get_words_with_mono_ruby_option(input, monoRuby)
     }
 }
 DEFINE_CLSID!(JapanesePhoneticAnalyzer(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,74,97,112,97,110,101,115,101,80,104,111,110,101,116,105,99,65,110,97,108,121,122,101,114,0]) [CLSID_JapanesePhoneticAnalyzer]);
@@ -2506,16 +2506,16 @@ impl RtActivatable<ILanguageStatics> for Language {}
 impl RtActivatable<ILanguageStatics2> for Language {}
 impl Language {
     #[inline] pub fn create_language(languageTag: &HStringArg) -> Result<ComPtr<Language>> {
-        <Self as RtActivatable<ILanguageFactory>>::get_activation_factory().create_language(languageTag)
+        <Self as RtActivatable<ILanguageFactory>>::get_activation_factory().deref().create_language(languageTag)
     }
     #[inline] pub fn is_well_formed(languageTag: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<ILanguageStatics>>::get_activation_factory().is_well_formed(languageTag)
+        <Self as RtActivatable<ILanguageStatics>>::get_activation_factory().deref().is_well_formed(languageTag)
     }
     #[inline] pub fn get_current_input_method_language_tag() -> Result<HString> {
-        <Self as RtActivatable<ILanguageStatics>>::get_activation_factory().get_current_input_method_language_tag()
+        <Self as RtActivatable<ILanguageStatics>>::get_activation_factory().deref().get_current_input_method_language_tag()
     }
     #[inline] pub fn try_set_input_method_language_tag(languageTag: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<ILanguageStatics2>>::get_activation_factory().try_set_input_method_language_tag(languageTag)
+        <Self as RtActivatable<ILanguageStatics2>>::get_activation_factory().deref().try_set_input_method_language_tag(languageTag)
     }
 }
 DEFINE_CLSID!(Language(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,76,97,110,103,117,97,103,101,0]) [CLSID_Language]);
@@ -2588,148 +2588,148 @@ impl RtActivatable<INumeralSystemIdentifiersStatics> for NumeralSystemIdentifier
 impl RtActivatable<INumeralSystemIdentifiersStatics2> for NumeralSystemIdentifiers {}
 impl NumeralSystemIdentifiers {
     #[inline] pub fn get_arab() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_arab()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_arab()
     }
     #[inline] pub fn get_arab_ext() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_arab_ext()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_arab_ext()
     }
     #[inline] pub fn get_bali() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_bali()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_bali()
     }
     #[inline] pub fn get_beng() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_beng()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_beng()
     }
     #[inline] pub fn get_cham() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_cham()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_cham()
     }
     #[inline] pub fn get_deva() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_deva()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_deva()
     }
     #[inline] pub fn get_full_wide() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_full_wide()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_full_wide()
     }
     #[inline] pub fn get_gujr() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_gujr()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_gujr()
     }
     #[inline] pub fn get_guru() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_guru()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_guru()
     }
     #[inline] pub fn get_hani_dec() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_hani_dec()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_hani_dec()
     }
     #[inline] pub fn get_java() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_java()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_java()
     }
     #[inline] pub fn get_kali() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_kali()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_kali()
     }
     #[inline] pub fn get_khmr() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_khmr()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_khmr()
     }
     #[inline] pub fn get_knda() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_knda()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_knda()
     }
     #[inline] pub fn get_lana() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_lana()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_lana()
     }
     #[inline] pub fn get_lana_tham() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_lana_tham()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_lana_tham()
     }
     #[inline] pub fn get_laoo() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_laoo()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_laoo()
     }
     #[inline] pub fn get_latn() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_latn()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_latn()
     }
     #[inline] pub fn get_lepc() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_lepc()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_lepc()
     }
     #[inline] pub fn get_limb() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_limb()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_limb()
     }
     #[inline] pub fn get_mlym() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_mlym()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_mlym()
     }
     #[inline] pub fn get_mong() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_mong()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_mong()
     }
     #[inline] pub fn get_mtei() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_mtei()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_mtei()
     }
     #[inline] pub fn get_mymr() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_mymr()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_mymr()
     }
     #[inline] pub fn get_mymr_shan() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_mymr_shan()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_mymr_shan()
     }
     #[inline] pub fn get_nkoo() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_nkoo()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_nkoo()
     }
     #[inline] pub fn get_olck() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_olck()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_olck()
     }
     #[inline] pub fn get_orya() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_orya()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_orya()
     }
     #[inline] pub fn get_saur() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_saur()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_saur()
     }
     #[inline] pub fn get_sund() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_sund()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_sund()
     }
     #[inline] pub fn get_talu() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_talu()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_talu()
     }
     #[inline] pub fn get_taml_dec() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_taml_dec()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_taml_dec()
     }
     #[inline] pub fn get_telu() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_telu()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_telu()
     }
     #[inline] pub fn get_thai() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_thai()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_thai()
     }
     #[inline] pub fn get_tibt() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_tibt()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_tibt()
     }
     #[inline] pub fn get_vaii() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().get_vaii()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics>>::get_activation_factory().deref().get_vaii()
     }
     #[inline] pub fn get_brah() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().get_brah()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().deref().get_brah()
     }
     #[inline] pub fn get_osma() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().get_osma()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().deref().get_osma()
     }
     #[inline] pub fn get_math_bold() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().get_math_bold()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().deref().get_math_bold()
     }
     #[inline] pub fn get_math_dbl() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().get_math_dbl()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().deref().get_math_dbl()
     }
     #[inline] pub fn get_math_sans() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().get_math_sans()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().deref().get_math_sans()
     }
     #[inline] pub fn get_math_sanb() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().get_math_sanb()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().deref().get_math_sanb()
     }
     #[inline] pub fn get_math_mono() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().get_math_mono()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().deref().get_math_mono()
     }
     #[inline] pub fn get_zmth_bold() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().get_zmth_bold()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().deref().get_zmth_bold()
     }
     #[inline] pub fn get_zmth_dbl() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().get_zmth_dbl()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().deref().get_zmth_dbl()
     }
     #[inline] pub fn get_zmth_sans() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().get_zmth_sans()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().deref().get_zmth_sans()
     }
     #[inline] pub fn get_zmth_sanb() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().get_zmth_sanb()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().deref().get_zmth_sanb()
     }
     #[inline] pub fn get_zmth_mono() -> Result<HString> {
-        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().get_zmth_mono()
+        <Self as RtActivatable<INumeralSystemIdentifiersStatics2>>::get_activation_factory().deref().get_zmth_mono()
     }
 }
 DEFINE_CLSID!(NumeralSystemIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,101,114,97,108,83,121,115,116,101,109,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_NumeralSystemIdentifiers]);
@@ -3095,7 +3095,7 @@ impl RtActivatable<ICharacterGroupingsFactory> for CharacterGroupings {}
 impl RtActivatable<IActivationFactory> for CharacterGroupings {}
 impl CharacterGroupings {
     #[inline] pub fn create(language: &HStringArg) -> Result<ComPtr<CharacterGroupings>> {
-        <Self as RtActivatable<ICharacterGroupingsFactory>>::get_activation_factory().create(language)
+        <Self as RtActivatable<ICharacterGroupingsFactory>>::get_activation_factory().deref().create(language)
     }
 }
 DEFINE_CLSID!(CharacterGroupings(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,111,108,108,97,116,105,111,110,46,67,104,97,114,97,99,116,101,114,71,114,111,117,112,105,110,103,115,0]) [CLSID_CharacterGroupings]);
@@ -3230,37 +3230,37 @@ impl RtActivatable<IDateTimeFormatterFactory> for DateTimeFormatter {}
 impl RtActivatable<IDateTimeFormatterStatics> for DateTimeFormatter {}
 impl DateTimeFormatter {
     #[inline] pub fn create_date_time_formatter(formatTemplate: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> {
-        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter(formatTemplate)
+        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().deref().create_date_time_formatter(formatTemplate)
     }
-    #[inline] pub fn create_date_time_formatter_languages(formatTemplate: &HStringArg, languages: &foundation::collections::IIterable<HString>) -> Result<ComPtr<DateTimeFormatter>> {
-        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_languages(formatTemplate, languages)
+    #[inline] pub fn create_date_time_formatter_languages(formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<DateTimeFormatter>> {
+        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().deref().create_date_time_formatter_languages(formatTemplate, languages)
     }
-    #[inline] pub fn create_date_time_formatter_context(formatTemplate: &HStringArg, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> {
-        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_context(formatTemplate, languages, geographicRegion, calendar, clock)
+    #[inline] pub fn create_date_time_formatter_context(formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> {
+        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().deref().create_date_time_formatter_context(formatTemplate, languages, geographicRegion, calendar, clock)
     }
     #[inline] pub fn create_date_time_formatter_date(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat) -> Result<ComPtr<DateTimeFormatter>> {
-        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_date(yearFormat, monthFormat, dayFormat, dayOfWeekFormat)
+        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().deref().create_date_time_formatter_date(yearFormat, monthFormat, dayFormat, dayOfWeekFormat)
     }
     #[inline] pub fn create_date_time_formatter_time(hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat) -> Result<ComPtr<DateTimeFormatter>> {
-        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_time(hourFormat, minuteFormat, secondFormat)
+        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().deref().create_date_time_formatter_time(hourFormat, minuteFormat, secondFormat)
     }
-    #[inline] pub fn create_date_time_formatter_date_time_languages(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &foundation::collections::IIterable<HString>) -> Result<ComPtr<DateTimeFormatter>> {
-        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_date_time_languages(yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages)
+    #[inline] pub fn create_date_time_formatter_date_time_languages(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<DateTimeFormatter>> {
+        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().deref().create_date_time_formatter_date_time_languages(yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages)
     }
-    #[inline] pub fn create_date_time_formatter_date_time_context(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> {
-        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_date_time_context(yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages, geographicRegion, calendar, clock)
+    #[inline] pub fn create_date_time_formatter_date_time_context(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> {
+        <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().deref().create_date_time_formatter_date_time_context(yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages, geographicRegion, calendar, clock)
     }
     #[inline] pub fn get_long_date() -> Result<Option<ComPtr<DateTimeFormatter>>> {
-        <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().get_long_date()
+        <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().deref().get_long_date()
     }
     #[inline] pub fn get_long_time() -> Result<Option<ComPtr<DateTimeFormatter>>> {
-        <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().get_long_time()
+        <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().deref().get_long_time()
     }
     #[inline] pub fn get_short_date() -> Result<Option<ComPtr<DateTimeFormatter>>> {
-        <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().get_short_date()
+        <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().deref().get_short_date()
     }
     #[inline] pub fn get_short_time() -> Result<Option<ComPtr<DateTimeFormatter>>> {
-        <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().get_short_time()
+        <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().deref().get_short_time()
     }
 }
 DEFINE_CLSID!(DateTimeFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,68,97,116,101,84,105,109,101,70,111,114,109,97,116,116,105,110,103,46,68,97,116,101,84,105,109,101,70,111,114,109,97,116,116,101,114,0]) [CLSID_DateTimeFormatter]);
@@ -3291,14 +3291,14 @@ impl IDateTimeFormatterFactory {
         let hr = ((*self.lpVtbl).CreateDateTimeFormatter)(self as *const _ as *mut _, formatTemplate.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_languages(&self, formatTemplate: &HStringArg, languages: &foundation::collections::IIterable<HString>) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_languages(&self, formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDateTimeFormatterLanguages)(self as *const _ as *mut _, formatTemplate.get(), languages as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateDateTimeFormatterLanguages)(self as *const _ as *mut _, formatTemplate.get(), languages.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_context(&self, formatTemplate: &HStringArg, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_context(&self, formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDateTimeFormatterContext)(self as *const _ as *mut _, formatTemplate.get(), languages as *const _ as *mut _, geographicRegion.get(), calendar.get(), clock.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateDateTimeFormatterContext)(self as *const _ as *mut _, formatTemplate.get(), languages.deref() as *const _ as *mut _, geographicRegion.get(), calendar.get(), clock.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_date_time_formatter_date(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
@@ -3311,14 +3311,14 @@ impl IDateTimeFormatterFactory {
         let hr = ((*self.lpVtbl).CreateDateTimeFormatterTime)(self as *const _ as *mut _, hourFormat, minuteFormat, secondFormat, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_date_time_languages(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &foundation::collections::IIterable<HString>) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_date_time_languages(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDateTimeFormatterDateTimeLanguages)(self as *const _ as *mut _, yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateDateTimeFormatterDateTimeLanguages)(self as *const _ as *mut _, yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_date_time_context(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_date_time_context(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDateTimeFormatterDateTimeContext)(self as *const _ as *mut _, yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages as *const _ as *mut _, geographicRegion.get(), calendar.get(), clock.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateDateTimeFormatterDateTimeContext)(self as *const _ as *mut _, yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages.deref() as *const _ as *mut _, geographicRegion.get(), calendar.get(), clock.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3489,7 +3489,7 @@ RT_CLASS!{class LanguageFontGroup: ILanguageFontGroup}
 impl RtActivatable<ILanguageFontGroupFactory> for LanguageFontGroup {}
 impl LanguageFontGroup {
     #[inline] pub fn create_language_font_group(languageTag: &HStringArg) -> Result<ComPtr<LanguageFontGroup>> {
-        <Self as RtActivatable<ILanguageFontGroupFactory>>::get_activation_factory().create_language_font_group(languageTag)
+        <Self as RtActivatable<ILanguageFontGroupFactory>>::get_activation_factory().deref().create_language_font_group(languageTag)
     }
 }
 DEFINE_CLSID!(LanguageFontGroup(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,70,111,110,116,115,46,76,97,110,103,117,97,103,101,70,111,110,116,71,114,111,117,112,0]) [CLSID_LanguageFontGroup]);
@@ -3527,10 +3527,10 @@ RT_CLASS!{class CurrencyFormatter: ICurrencyFormatter}
 impl RtActivatable<ICurrencyFormatterFactory> for CurrencyFormatter {}
 impl CurrencyFormatter {
     #[inline] pub fn create_currency_formatter_code(currencyCode: &HStringArg) -> Result<ComPtr<CurrencyFormatter>> {
-        <Self as RtActivatable<ICurrencyFormatterFactory>>::get_activation_factory().create_currency_formatter_code(currencyCode)
+        <Self as RtActivatable<ICurrencyFormatterFactory>>::get_activation_factory().deref().create_currency_formatter_code(currencyCode)
     }
-    #[inline] pub fn create_currency_formatter_code_context(currencyCode: &HStringArg, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<ComPtr<CurrencyFormatter>> {
-        <Self as RtActivatable<ICurrencyFormatterFactory>>::get_activation_factory().create_currency_formatter_code_context(currencyCode, languages, geographicRegion)
+    #[inline] pub fn create_currency_formatter_code_context(currencyCode: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<CurrencyFormatter>> {
+        <Self as RtActivatable<ICurrencyFormatterFactory>>::get_activation_factory().deref().create_currency_formatter_code_context(currencyCode, languages, geographicRegion)
     }
 }
 DEFINE_CLSID!(CurrencyFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,67,117,114,114,101,110,99,121,70,111,114,109,97,116,116,101,114,0]) [CLSID_CurrencyFormatter]);
@@ -3566,9 +3566,9 @@ impl ICurrencyFormatterFactory {
         let hr = ((*self.lpVtbl).CreateCurrencyFormatterCode)(self as *const _ as *mut _, currencyCode.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_currency_formatter_code_context(&self, currencyCode: &HStringArg, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<ComPtr<CurrencyFormatter>> { unsafe { 
+    #[inline] pub fn create_currency_formatter_code_context(&self, currencyCode: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<CurrencyFormatter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateCurrencyFormatterCodeContext)(self as *const _ as *mut _, currencyCode.get(), languages as *const _ as *mut _, geographicRegion.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateCurrencyFormatterCodeContext)(self as *const _ as *mut _, currencyCode.get(), languages.deref() as *const _ as *mut _, geographicRegion.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3579,8 +3579,8 @@ RT_CLASS!{class DecimalFormatter: INumberFormatter}
 impl RtActivatable<IDecimalFormatterFactory> for DecimalFormatter {}
 impl RtActivatable<IActivationFactory> for DecimalFormatter {}
 impl DecimalFormatter {
-    #[inline] pub fn create_decimal_formatter(languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<ComPtr<DecimalFormatter>> {
-        <Self as RtActivatable<IDecimalFormatterFactory>>::get_activation_factory().create_decimal_formatter(languages, geographicRegion)
+    #[inline] pub fn create_decimal_formatter(languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<DecimalFormatter>> {
+        <Self as RtActivatable<IDecimalFormatterFactory>>::get_activation_factory().deref().create_decimal_formatter(languages, geographicRegion)
     }
 }
 DEFINE_CLSID!(DecimalFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,68,101,99,105,109,97,108,70,111,114,109,97,116,116,101,114,0]) [CLSID_DecimalFormatter]);
@@ -3589,9 +3589,9 @@ RT_INTERFACE!{static interface IDecimalFormatterFactory(IDecimalFormatterFactory
     fn CreateDecimalFormatter(&self, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut *mut DecimalFormatter) -> HRESULT
 }}
 impl IDecimalFormatterFactory {
-    #[inline] pub fn create_decimal_formatter(&self, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<ComPtr<DecimalFormatter>> { unsafe { 
+    #[inline] pub fn create_decimal_formatter(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<DecimalFormatter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDecimalFormatter)(self as *const _ as *mut _, languages as *const _ as *mut _, geographicRegion.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateDecimalFormatter)(self as *const _ as *mut _, languages.deref() as *const _ as *mut _, geographicRegion.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3830,8 +3830,8 @@ impl INumberRounderOption {
         let hr = ((*self.lpVtbl).get_NumberRounder)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_number_rounder(&self, value: &INumberRounder) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_NumberRounder)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_number_rounder(&self, value: &ComPtr<INumberRounder>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_NumberRounder)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3873,8 +3873,8 @@ RT_CLASS!{class NumeralSystemTranslator: INumeralSystemTranslator}
 impl RtActivatable<INumeralSystemTranslatorFactory> for NumeralSystemTranslator {}
 impl RtActivatable<IActivationFactory> for NumeralSystemTranslator {}
 impl NumeralSystemTranslator {
-    #[inline] pub fn create(languages: &foundation::collections::IIterable<HString>) -> Result<ComPtr<NumeralSystemTranslator>> {
-        <Self as RtActivatable<INumeralSystemTranslatorFactory>>::get_activation_factory().create(languages)
+    #[inline] pub fn create(languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<NumeralSystemTranslator>> {
+        <Self as RtActivatable<INumeralSystemTranslatorFactory>>::get_activation_factory().deref().create(languages)
     }
 }
 DEFINE_CLSID!(NumeralSystemTranslator(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,78,117,109,101,114,97,108,83,121,115,116,101,109,84,114,97,110,115,108,97,116,111,114,0]) [CLSID_NumeralSystemTranslator]);
@@ -3883,9 +3883,9 @@ RT_INTERFACE!{static interface INumeralSystemTranslatorFactory(INumeralSystemTra
     fn Create(&self, languages: *mut foundation::collections::IIterable<HString>, out: *mut *mut NumeralSystemTranslator) -> HRESULT
 }}
 impl INumeralSystemTranslatorFactory {
-    #[inline] pub fn create(&self, languages: &foundation::collections::IIterable<HString>) -> Result<ComPtr<NumeralSystemTranslator>> { unsafe { 
+    #[inline] pub fn create(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<NumeralSystemTranslator>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, languages as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, languages.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3893,8 +3893,8 @@ RT_CLASS!{class PercentFormatter: INumberFormatter}
 impl RtActivatable<IPercentFormatterFactory> for PercentFormatter {}
 impl RtActivatable<IActivationFactory> for PercentFormatter {}
 impl PercentFormatter {
-    #[inline] pub fn create_percent_formatter(languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<ComPtr<PercentFormatter>> {
-        <Self as RtActivatable<IPercentFormatterFactory>>::get_activation_factory().create_percent_formatter(languages, geographicRegion)
+    #[inline] pub fn create_percent_formatter(languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<PercentFormatter>> {
+        <Self as RtActivatable<IPercentFormatterFactory>>::get_activation_factory().deref().create_percent_formatter(languages, geographicRegion)
     }
 }
 DEFINE_CLSID!(PercentFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,101,114,99,101,110,116,70,111,114,109,97,116,116,101,114,0]) [CLSID_PercentFormatter]);
@@ -3903,9 +3903,9 @@ RT_INTERFACE!{static interface IPercentFormatterFactory(IPercentFormatterFactory
     fn CreatePercentFormatter(&self, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut *mut PercentFormatter) -> HRESULT
 }}
 impl IPercentFormatterFactory {
-    #[inline] pub fn create_percent_formatter(&self, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<ComPtr<PercentFormatter>> { unsafe { 
+    #[inline] pub fn create_percent_formatter(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<PercentFormatter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreatePercentFormatter)(self as *const _ as *mut _, languages as *const _ as *mut _, geographicRegion.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreatePercentFormatter)(self as *const _ as *mut _, languages.deref() as *const _ as *mut _, geographicRegion.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3913,8 +3913,8 @@ RT_CLASS!{class PermilleFormatter: INumberFormatter}
 impl RtActivatable<IPermilleFormatterFactory> for PermilleFormatter {}
 impl RtActivatable<IActivationFactory> for PermilleFormatter {}
 impl PermilleFormatter {
-    #[inline] pub fn create_permille_formatter(languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<ComPtr<PermilleFormatter>> {
-        <Self as RtActivatable<IPermilleFormatterFactory>>::get_activation_factory().create_permille_formatter(languages, geographicRegion)
+    #[inline] pub fn create_permille_formatter(languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<PermilleFormatter>> {
+        <Self as RtActivatable<IPermilleFormatterFactory>>::get_activation_factory().deref().create_permille_formatter(languages, geographicRegion)
     }
 }
 DEFINE_CLSID!(PermilleFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,101,114,109,105,108,108,101,70,111,114,109,97,116,116,101,114,0]) [CLSID_PermilleFormatter]);
@@ -3923,9 +3923,9 @@ RT_INTERFACE!{static interface IPermilleFormatterFactory(IPermilleFormatterFacto
     fn CreatePermilleFormatter(&self, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut *mut PermilleFormatter) -> HRESULT
 }}
 impl IPermilleFormatterFactory {
-    #[inline] pub fn create_permille_formatter(&self, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<ComPtr<PermilleFormatter>> { unsafe { 
+    #[inline] pub fn create_permille_formatter(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<PermilleFormatter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreatePermilleFormatter)(self as *const _ as *mut _, languages as *const _ as *mut _, geographicRegion.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreatePermilleFormatter)(self as *const _ as *mut _, languages.deref() as *const _ as *mut _, geographicRegion.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4009,14 +4009,14 @@ RT_INTERFACE!{interface IPhoneNumberFormatter(IPhoneNumberFormatterVtbl): IInspe
     fn FormatStringWithLeftToRightMarkers(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
 impl IPhoneNumberFormatter {
-    #[inline] pub fn format(&self, number: &PhoneNumberInfo) -> Result<HString> { unsafe { 
+    #[inline] pub fn format(&self, number: &ComPtr<PhoneNumberInfo>) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Format)(self as *const _ as *mut _, number as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Format)(self as *const _ as *mut _, number.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn format_with_output_format(&self, number: &PhoneNumberInfo, numberFormat: PhoneNumberFormat) -> Result<HString> { unsafe { 
+    #[inline] pub fn format_with_output_format(&self, number: &ComPtr<PhoneNumberInfo>, numberFormat: PhoneNumberFormat) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FormatWithOutputFormat)(self as *const _ as *mut _, number as *const _ as *mut _, numberFormat, &mut out);
+        let hr = ((*self.lpVtbl).FormatWithOutputFormat)(self as *const _ as *mut _, number.deref() as *const _ as *mut _, numberFormat, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn format_partial_string(&self, number: &HStringArg) -> Result<HString> { unsafe { 
@@ -4040,16 +4040,16 @@ impl RtActivatable<IPhoneNumberFormatterStatics> for PhoneNumberFormatter {}
 impl RtActivatable<IActivationFactory> for PhoneNumberFormatter {}
 impl PhoneNumberFormatter {
     #[inline] pub fn try_create(regionCode: &HStringArg) -> Result<Option<ComPtr<PhoneNumberFormatter>>> {
-        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().try_create(regionCode)
+        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().deref().try_create(regionCode)
     }
     #[inline] pub fn get_country_code_for_region(regionCode: &HStringArg) -> Result<i32> {
-        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().get_country_code_for_region(regionCode)
+        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().deref().get_country_code_for_region(regionCode)
     }
     #[inline] pub fn get_national_direct_dialing_prefix_for_region(regionCode: &HStringArg, stripNonDigit: bool) -> Result<HString> {
-        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().get_national_direct_dialing_prefix_for_region(regionCode, stripNonDigit)
+        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().deref().get_national_direct_dialing_prefix_for_region(regionCode, stripNonDigit)
     }
     #[inline] pub fn wrap_with_left_to_right_markers(number: &HStringArg) -> Result<HString> {
-        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().wrap_with_left_to_right_markers(number)
+        <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().deref().wrap_with_left_to_right_markers(number)
     }
 }
 DEFINE_CLSID!(PhoneNumberFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,101,114,0]) [CLSID_PhoneNumberFormatter]);
@@ -4129,9 +4129,9 @@ impl IPhoneNumberInfo {
         let hr = ((*self.lpVtbl).GetGeographicRegionCode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn check_number_match(&self, otherNumber: &PhoneNumberInfo) -> Result<PhoneNumberMatchResult> { unsafe { 
+    #[inline] pub fn check_number_match(&self, otherNumber: &ComPtr<PhoneNumberInfo>) -> Result<PhoneNumberMatchResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).CheckNumberMatch)(self as *const _ as *mut _, otherNumber as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CheckNumberMatch)(self as *const _ as *mut _, otherNumber.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4140,13 +4140,13 @@ impl RtActivatable<IPhoneNumberInfoFactory> for PhoneNumberInfo {}
 impl RtActivatable<IPhoneNumberInfoStatics> for PhoneNumberInfo {}
 impl PhoneNumberInfo {
     #[inline] pub fn create(number: &HStringArg) -> Result<ComPtr<PhoneNumberInfo>> {
-        <Self as RtActivatable<IPhoneNumberInfoFactory>>::get_activation_factory().create(number)
+        <Self as RtActivatable<IPhoneNumberInfoFactory>>::get_activation_factory().deref().create(number)
     }
     #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> {
-        <Self as RtActivatable<IPhoneNumberInfoStatics>>::get_activation_factory().try_parse(input)
+        <Self as RtActivatable<IPhoneNumberInfoStatics>>::get_activation_factory().deref().try_parse(input)
     }
     #[inline] pub fn try_parse_with_region(input: &HStringArg, regionCode: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> {
-        <Self as RtActivatable<IPhoneNumberInfoStatics>>::get_activation_factory().try_parse_with_region(input, regionCode)
+        <Self as RtActivatable<IPhoneNumberInfoStatics>>::get_activation_factory().deref().try_parse_with_region(input, regionCode)
     }
 }
 DEFINE_CLSID!(PhoneNumberInfo(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,73,110,102,111,0]) [CLSID_PhoneNumberInfo]);

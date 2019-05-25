@@ -40,7 +40,7 @@ RT_CLASS!{class AudioFrame: IAudioFrame}
 impl RtActivatable<IAudioFrameFactory> for AudioFrame {}
 impl AudioFrame {
     #[inline] pub fn create(capacity: u32) -> Result<ComPtr<AudioFrame>> {
-        <Self as RtActivatable<IAudioFrameFactory>>::get_activation_factory().create(capacity)
+        <Self as RtActivatable<IAudioFrameFactory>>::get_activation_factory().deref().create(capacity)
     }
 }
 DEFINE_CLSID!(AudioFrame(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,70,114,97,109,101,0]) [CLSID_AudioFrame]);
@@ -135,108 +135,108 @@ RT_INTERFACE!{static interface IMediaControl(IMediaControlVtbl): IInspectable(II
     fn get_AlbumArt(&self, out: *mut *mut foundation::Uri) -> HRESULT
 }}
 impl IMediaControl {
-    #[inline] pub fn add_sound_level_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_sound_level_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SoundLevelChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SoundLevelChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_sound_level_changed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_SoundLevelChanged)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_play_pressed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_play_pressed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlayPressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlayPressed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_play_pressed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlayPressed)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_pause_pressed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_pause_pressed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PausePressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PausePressed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_pause_pressed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PausePressed)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_stop_pressed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_stop_pressed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_StopPressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_StopPressed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_stop_pressed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_StopPressed)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_play_pause_toggle_pressed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_play_pause_toggle_pressed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlayPauseTogglePressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlayPauseTogglePressed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_play_pause_toggle_pressed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlayPauseTogglePressed)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_record_pressed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_record_pressed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RecordPressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RecordPressed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_record_pressed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_RecordPressed)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_next_track_pressed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_next_track_pressed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_NextTrackPressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_NextTrackPressed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_next_track_pressed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_NextTrackPressed)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_previous_track_pressed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_previous_track_pressed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PreviousTrackPressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PreviousTrackPressed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_previous_track_pressed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PreviousTrackPressed)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_fast_forward_pressed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_fast_forward_pressed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FastForwardPressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FastForwardPressed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_fast_forward_pressed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_FastForwardPressed)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_rewind_pressed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_rewind_pressed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RewindPressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RewindPressed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_rewind_pressed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_RewindPressed)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_channel_up_pressed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_channel_up_pressed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ChannelUpPressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ChannelUpPressed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_channel_up_pressed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ChannelUpPressed)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_channel_down_pressed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_channel_down_pressed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ChannelDownPressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ChannelDownPressed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_channel_down_pressed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -275,8 +275,8 @@ impl IMediaControl {
         let hr = ((*self.lpVtbl).get_IsPlaying)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_album_art(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AlbumArt)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_album_art(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AlbumArt)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_album_art(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
@@ -288,104 +288,104 @@ impl IMediaControl {
 RT_CLASS!{static class MediaControl}
 impl RtActivatable<IMediaControl> for MediaControl {}
 impl MediaControl {
-    #[inline] pub fn add_sound_level_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().add_sound_level_changed(handler)
+    #[inline] pub fn add_sound_level_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().add_sound_level_changed(handler)
     }
     #[inline] pub fn remove_sound_level_changed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().remove_sound_level_changed(cookie)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().remove_sound_level_changed(cookie)
     }
-    #[inline] pub fn add_play_pressed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().add_play_pressed(handler)
+    #[inline] pub fn add_play_pressed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().add_play_pressed(handler)
     }
     #[inline] pub fn remove_play_pressed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().remove_play_pressed(cookie)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().remove_play_pressed(cookie)
     }
-    #[inline] pub fn add_pause_pressed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().add_pause_pressed(handler)
+    #[inline] pub fn add_pause_pressed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().add_pause_pressed(handler)
     }
     #[inline] pub fn remove_pause_pressed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().remove_pause_pressed(cookie)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().remove_pause_pressed(cookie)
     }
-    #[inline] pub fn add_stop_pressed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().add_stop_pressed(handler)
+    #[inline] pub fn add_stop_pressed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().add_stop_pressed(handler)
     }
     #[inline] pub fn remove_stop_pressed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().remove_stop_pressed(cookie)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().remove_stop_pressed(cookie)
     }
-    #[inline] pub fn add_play_pause_toggle_pressed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().add_play_pause_toggle_pressed(handler)
+    #[inline] pub fn add_play_pause_toggle_pressed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().add_play_pause_toggle_pressed(handler)
     }
     #[inline] pub fn remove_play_pause_toggle_pressed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().remove_play_pause_toggle_pressed(cookie)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().remove_play_pause_toggle_pressed(cookie)
     }
-    #[inline] pub fn add_record_pressed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().add_record_pressed(handler)
+    #[inline] pub fn add_record_pressed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().add_record_pressed(handler)
     }
     #[inline] pub fn remove_record_pressed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().remove_record_pressed(cookie)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().remove_record_pressed(cookie)
     }
-    #[inline] pub fn add_next_track_pressed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().add_next_track_pressed(handler)
+    #[inline] pub fn add_next_track_pressed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().add_next_track_pressed(handler)
     }
     #[inline] pub fn remove_next_track_pressed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().remove_next_track_pressed(cookie)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().remove_next_track_pressed(cookie)
     }
-    #[inline] pub fn add_previous_track_pressed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().add_previous_track_pressed(handler)
+    #[inline] pub fn add_previous_track_pressed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().add_previous_track_pressed(handler)
     }
     #[inline] pub fn remove_previous_track_pressed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().remove_previous_track_pressed(cookie)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().remove_previous_track_pressed(cookie)
     }
-    #[inline] pub fn add_fast_forward_pressed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().add_fast_forward_pressed(handler)
+    #[inline] pub fn add_fast_forward_pressed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().add_fast_forward_pressed(handler)
     }
     #[inline] pub fn remove_fast_forward_pressed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().remove_fast_forward_pressed(cookie)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().remove_fast_forward_pressed(cookie)
     }
-    #[inline] pub fn add_rewind_pressed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().add_rewind_pressed(handler)
+    #[inline] pub fn add_rewind_pressed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().add_rewind_pressed(handler)
     }
     #[inline] pub fn remove_rewind_pressed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().remove_rewind_pressed(cookie)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().remove_rewind_pressed(cookie)
     }
-    #[inline] pub fn add_channel_up_pressed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().add_channel_up_pressed(handler)
+    #[inline] pub fn add_channel_up_pressed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().add_channel_up_pressed(handler)
     }
     #[inline] pub fn remove_channel_up_pressed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().remove_channel_up_pressed(cookie)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().remove_channel_up_pressed(cookie)
     }
-    #[inline] pub fn add_channel_down_pressed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().add_channel_down_pressed(handler)
+    #[inline] pub fn add_channel_down_pressed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().add_channel_down_pressed(handler)
     }
     #[inline] pub fn remove_channel_down_pressed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().remove_channel_down_pressed(cookie)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().remove_channel_down_pressed(cookie)
     }
     #[inline] pub fn get_sound_level() -> Result<SoundLevel> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().get_sound_level()
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().get_sound_level()
     }
     #[inline] pub fn set_track_name(value: &HStringArg) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().set_track_name(value)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().set_track_name(value)
     }
     #[inline] pub fn get_track_name() -> Result<HString> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().get_track_name()
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().get_track_name()
     }
     #[inline] pub fn set_artist_name(value: &HStringArg) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().set_artist_name(value)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().set_artist_name(value)
     }
     #[inline] pub fn get_artist_name() -> Result<HString> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().get_artist_name()
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().get_artist_name()
     }
     #[inline] pub fn set_is_playing(value: bool) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().set_is_playing(value)
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().set_is_playing(value)
     }
     #[inline] pub fn get_is_playing() -> Result<bool> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().get_is_playing()
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().get_is_playing()
     }
-    #[inline] pub fn set_album_art(value: &foundation::Uri) -> Result<()> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().set_album_art(value)
+    #[inline] pub fn set_album_art(value: &ComPtr<foundation::Uri>) -> Result<()> {
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().set_album_art(value)
     }
     #[inline] pub fn get_album_art() -> Result<Option<ComPtr<foundation::Uri>>> {
-        <Self as RtActivatable<IMediaControl>>::get_activation_factory().get_album_art()
+        <Self as RtActivatable<IMediaControl>>::get_activation_factory().deref().get_album_art()
     }
 }
 DEFINE_CLSID!(MediaControl(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,67,111,110,116,114,111,108,0]) [CLSID_MediaControl]);
@@ -394,8 +394,8 @@ RT_INTERFACE!{interface IMediaExtension(IMediaExtensionVtbl): IInspectable(IInsp
     fn SetProperties(&self, configuration: *mut foundation::collections::IPropertySet) -> HRESULT
 }}
 impl IMediaExtension {
-    #[inline] pub fn set_properties(&self, configuration: &foundation::collections::IPropertySet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetProperties)(self as *const _ as *mut _, configuration as *const _ as *mut _);
+    #[inline] pub fn set_properties(&self, configuration: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetProperties)(self as *const _ as *mut _, configuration.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -419,48 +419,48 @@ impl IMediaExtensionManager {
         let hr = ((*self.lpVtbl).RegisterSchemeHandler)(self as *const _ as *mut _, activatableClassId.get(), scheme.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn register_scheme_handler_with_settings(&self, activatableClassId: &HStringArg, scheme: &HStringArg, configuration: &foundation::collections::IPropertySet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RegisterSchemeHandlerWithSettings)(self as *const _ as *mut _, activatableClassId.get(), scheme.get(), configuration as *const _ as *mut _);
+    #[inline] pub fn register_scheme_handler_with_settings(&self, activatableClassId: &HStringArg, scheme: &HStringArg, configuration: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RegisterSchemeHandlerWithSettings)(self as *const _ as *mut _, activatableClassId.get(), scheme.get(), configuration.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn register_byte_stream_handler(&self, activatableClassId: &HStringArg, fileExtension: &HStringArg, mimeType: &HStringArg) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).RegisterByteStreamHandler)(self as *const _ as *mut _, activatableClassId.get(), fileExtension.get(), mimeType.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn register_byte_stream_handler_with_settings(&self, activatableClassId: &HStringArg, fileExtension: &HStringArg, mimeType: &HStringArg, configuration: &foundation::collections::IPropertySet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RegisterByteStreamHandlerWithSettings)(self as *const _ as *mut _, activatableClassId.get(), fileExtension.get(), mimeType.get(), configuration as *const _ as *mut _);
+    #[inline] pub fn register_byte_stream_handler_with_settings(&self, activatableClassId: &HStringArg, fileExtension: &HStringArg, mimeType: &HStringArg, configuration: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RegisterByteStreamHandlerWithSettings)(self as *const _ as *mut _, activatableClassId.get(), fileExtension.get(), mimeType.get(), configuration.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn register_audio_decoder(&self, activatableClassId: &HStringArg, inputSubtype: Guid, outputSubtype: Guid) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).RegisterAudioDecoder)(self as *const _ as *mut _, activatableClassId.get(), inputSubtype, outputSubtype);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn register_audio_decoder_with_settings(&self, activatableClassId: &HStringArg, inputSubtype: Guid, outputSubtype: Guid, configuration: &foundation::collections::IPropertySet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RegisterAudioDecoderWithSettings)(self as *const _ as *mut _, activatableClassId.get(), inputSubtype, outputSubtype, configuration as *const _ as *mut _);
+    #[inline] pub fn register_audio_decoder_with_settings(&self, activatableClassId: &HStringArg, inputSubtype: Guid, outputSubtype: Guid, configuration: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RegisterAudioDecoderWithSettings)(self as *const _ as *mut _, activatableClassId.get(), inputSubtype, outputSubtype, configuration.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn register_audio_encoder(&self, activatableClassId: &HStringArg, inputSubtype: Guid, outputSubtype: Guid) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).RegisterAudioEncoder)(self as *const _ as *mut _, activatableClassId.get(), inputSubtype, outputSubtype);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn register_audio_encoder_with_settings(&self, activatableClassId: &HStringArg, inputSubtype: Guid, outputSubtype: Guid, configuration: &foundation::collections::IPropertySet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RegisterAudioEncoderWithSettings)(self as *const _ as *mut _, activatableClassId.get(), inputSubtype, outputSubtype, configuration as *const _ as *mut _);
+    #[inline] pub fn register_audio_encoder_with_settings(&self, activatableClassId: &HStringArg, inputSubtype: Guid, outputSubtype: Guid, configuration: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RegisterAudioEncoderWithSettings)(self as *const _ as *mut _, activatableClassId.get(), inputSubtype, outputSubtype, configuration.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn register_video_decoder(&self, activatableClassId: &HStringArg, inputSubtype: Guid, outputSubtype: Guid) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).RegisterVideoDecoder)(self as *const _ as *mut _, activatableClassId.get(), inputSubtype, outputSubtype);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn register_video_decoder_with_settings(&self, activatableClassId: &HStringArg, inputSubtype: Guid, outputSubtype: Guid, configuration: &foundation::collections::IPropertySet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RegisterVideoDecoderWithSettings)(self as *const _ as *mut _, activatableClassId.get(), inputSubtype, outputSubtype, configuration as *const _ as *mut _);
+    #[inline] pub fn register_video_decoder_with_settings(&self, activatableClassId: &HStringArg, inputSubtype: Guid, outputSubtype: Guid, configuration: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RegisterVideoDecoderWithSettings)(self as *const _ as *mut _, activatableClassId.get(), inputSubtype, outputSubtype, configuration.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn register_video_encoder(&self, activatableClassId: &HStringArg, inputSubtype: Guid, outputSubtype: Guid) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).RegisterVideoEncoder)(self as *const _ as *mut _, activatableClassId.get(), inputSubtype, outputSubtype);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn register_video_encoder_with_settings(&self, activatableClassId: &HStringArg, inputSubtype: Guid, outputSubtype: Guid, configuration: &foundation::collections::IPropertySet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RegisterVideoEncoderWithSettings)(self as *const _ as *mut _, activatableClassId.get(), inputSubtype, outputSubtype, configuration as *const _ as *mut _);
+    #[inline] pub fn register_video_encoder_with_settings(&self, activatableClassId: &HStringArg, inputSubtype: Guid, outputSubtype: Guid, configuration: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RegisterVideoEncoderWithSettings)(self as *const _ as *mut _, activatableClassId.get(), inputSubtype, outputSubtype, configuration.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -472,8 +472,8 @@ RT_INTERFACE!{interface IMediaExtensionManager2(IMediaExtensionManager2Vtbl): II
     #[cfg(feature="windows-applicationmodel")] fn RegisterMediaExtensionForAppService(&self, extension: *mut IMediaExtension, connection: *mut super::applicationmodel::appservice::AppServiceConnection) -> HRESULT
 }}
 impl IMediaExtensionManager2 {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn register_media_extension_for_app_service(&self, extension: &IMediaExtension, connection: &super::applicationmodel::appservice::AppServiceConnection) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RegisterMediaExtensionForAppService)(self as *const _ as *mut _, extension as *const _ as *mut _, connection as *const _ as *mut _);
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn register_media_extension_for_app_service(&self, extension: &ComPtr<IMediaExtension>, connection: &ComPtr<super::applicationmodel::appservice::AppServiceConnection>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RegisterMediaExtensionForAppService)(self as *const _ as *mut _, extension.deref() as *const _ as *mut _, connection.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -502,8 +502,8 @@ impl IMediaFrame {
         let hr = ((*self.lpVtbl).get_IsReadOnly)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_relative_time(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_RelativeTime)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_relative_time(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_RelativeTime)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_relative_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
@@ -511,8 +511,8 @@ impl IMediaFrame {
         let hr = ((*self.lpVtbl).get_RelativeTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_system_relative_time(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SystemRelativeTime)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_system_relative_time(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SystemRelativeTime)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_system_relative_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
@@ -520,8 +520,8 @@ impl IMediaFrame {
         let hr = ((*self.lpVtbl).get_SystemRelativeTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_duration(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Duration)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_duration(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Duration)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_duration(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
@@ -582,7 +582,7 @@ RT_CLASS!{static class MediaMarkerTypes}
 impl RtActivatable<IMediaMarkerTypesStatics> for MediaMarkerTypes {}
 impl MediaMarkerTypes {
     #[inline] pub fn get_bookmark() -> Result<HString> {
-        <Self as RtActivatable<IMediaMarkerTypesStatics>>::get_activation_factory().get_bookmark()
+        <Self as RtActivatable<IMediaMarkerTypesStatics>>::get_activation_factory().deref().get_bookmark()
     }
 }
 DEFINE_CLSID!(MediaMarkerTypes(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,77,97,114,107,101,114,84,121,112,101,115,0]) [CLSID_MediaMarkerTypes]);
@@ -669,18 +669,18 @@ impl IMediaTimelineController {
         let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_position_changed(&self, positionChangedEventHandler: &foundation::TypedEventHandler<MediaTimelineController, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_position_changed(&self, positionChangedEventHandler: &ComPtr<foundation::TypedEventHandler<MediaTimelineController, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PositionChanged)(self as *const _ as *mut _, positionChangedEventHandler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PositionChanged)(self as *const _ as *mut _, positionChangedEventHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_position_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PositionChanged)(self as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_state_changed(&self, stateChangedEventHandler: &foundation::TypedEventHandler<MediaTimelineController, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_state_changed(&self, stateChangedEventHandler: &ComPtr<foundation::TypedEventHandler<MediaTimelineController, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, stateChangedEventHandler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, stateChangedEventHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_state_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -708,8 +708,8 @@ impl IMediaTimelineController2 {
         let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_duration(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Duration)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_duration(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Duration)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_looping_enabled(&self) -> Result<bool> { unsafe { 
@@ -721,18 +721,18 @@ impl IMediaTimelineController2 {
         let hr = ((*self.lpVtbl).put_IsLoopingEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_failed(&self, eventHandler: &foundation::TypedEventHandler<MediaTimelineController, MediaTimelineControllerFailedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_failed(&self, eventHandler: &ComPtr<foundation::TypedEventHandler<MediaTimelineController, MediaTimelineControllerFailedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Failed)(self as *const _ as *mut _, eventHandler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Failed)(self as *const _ as *mut _, eventHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_failed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Failed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_ended(&self, eventHandler: &foundation::TypedEventHandler<MediaTimelineController, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_ended(&self, eventHandler: &ComPtr<foundation::TypedEventHandler<MediaTimelineController, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Ended)(self as *const _ as *mut _, eventHandler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Ended)(self as *const _ as *mut _, eventHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_ended(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -1037,18 +1037,18 @@ impl ISystemMediaTransportControls {
         let hr = ((*self.lpVtbl).put_IsChannelDownEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_button_pressed(&self, handler: &foundation::TypedEventHandler<SystemMediaTransportControls, SystemMediaTransportControlsButtonPressedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_button_pressed(&self, handler: &ComPtr<foundation::TypedEventHandler<SystemMediaTransportControls, SystemMediaTransportControlsButtonPressedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ButtonPressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ButtonPressed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_button_pressed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ButtonPressed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_property_changed(&self, handler: &foundation::TypedEventHandler<SystemMediaTransportControls, SystemMediaTransportControlsPropertyChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_property_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<SystemMediaTransportControls, SystemMediaTransportControlsPropertyChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PropertyChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PropertyChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_property_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -1060,7 +1060,7 @@ RT_CLASS!{class SystemMediaTransportControls: ISystemMediaTransportControls}
 impl RtActivatable<ISystemMediaTransportControlsStatics> for SystemMediaTransportControls {}
 impl SystemMediaTransportControls {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<SystemMediaTransportControls>>> {
-        <Self as RtActivatable<ISystemMediaTransportControlsStatics>>::get_activation_factory().get_for_current_view()
+        <Self as RtActivatable<ISystemMediaTransportControlsStatics>>::get_activation_factory().deref().get_for_current_view()
     }
 }
 DEFINE_CLSID!(SystemMediaTransportControls(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,121,115,116,101,109,77,101,100,105,97,84,114,97,110,115,112,111,114,116,67,111,110,116,114,111,108,115,0]) [CLSID_SystemMediaTransportControls]);
@@ -1110,40 +1110,40 @@ impl ISystemMediaTransportControls2 {
         let hr = ((*self.lpVtbl).put_PlaybackRate)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn update_timeline_properties(&self, timelineProperties: &SystemMediaTransportControlsTimelineProperties) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).UpdateTimelineProperties)(self as *const _ as *mut _, timelineProperties as *const _ as *mut _);
+    #[inline] pub fn update_timeline_properties(&self, timelineProperties: &ComPtr<SystemMediaTransportControlsTimelineProperties>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).UpdateTimelineProperties)(self as *const _ as *mut _, timelineProperties.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_playback_position_change_requested(&self, handler: &foundation::TypedEventHandler<SystemMediaTransportControls, PlaybackPositionChangeRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_playback_position_change_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<SystemMediaTransportControls, PlaybackPositionChangeRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlaybackPositionChangeRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlaybackPositionChangeRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_playback_position_change_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlaybackPositionChangeRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_playback_rate_change_requested(&self, handler: &foundation::TypedEventHandler<SystemMediaTransportControls, PlaybackRateChangeRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_playback_rate_change_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<SystemMediaTransportControls, PlaybackRateChangeRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlaybackRateChangeRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlaybackRateChangeRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_playback_rate_change_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlaybackRateChangeRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_shuffle_enabled_change_requested(&self, handler: &foundation::TypedEventHandler<SystemMediaTransportControls, ShuffleEnabledChangeRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_shuffle_enabled_change_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<SystemMediaTransportControls, ShuffleEnabledChangeRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ShuffleEnabledChangeRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ShuffleEnabledChangeRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_shuffle_enabled_change_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ShuffleEnabledChangeRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_auto_repeat_mode_change_requested(&self, handler: &foundation::TypedEventHandler<SystemMediaTransportControls, AutoRepeatModeChangeRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_auto_repeat_mode_change_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<SystemMediaTransportControls, AutoRepeatModeChangeRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AutoRepeatModeChangeRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AutoRepeatModeChangeRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_auto_repeat_mode_change_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -1208,8 +1208,8 @@ impl ISystemMediaTransportControlsDisplayUpdater {
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_thumbnail(&self, value: &super::storage::streams::RandomAccessStreamReference) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_thumbnail(&self, value: &ComPtr<super::storage::streams::RandomAccessStreamReference>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_music_properties(&self) -> Result<Option<ComPtr<MusicDisplayProperties>>> { unsafe { 
@@ -1227,9 +1227,9 @@ impl ISystemMediaTransportControlsDisplayUpdater {
         let hr = ((*self.lpVtbl).get_ImageProperties)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn copy_from_file_async(&self, type_: MediaPlaybackType, source: &super::storage::StorageFile) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn copy_from_file_async(&self, type_: MediaPlaybackType, source: &ComPtr<super::storage::StorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyFromFileAsync)(self as *const _ as *mut _, type_, source as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CopyFromFileAsync)(self as *const _ as *mut _, type_, source.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn clear_all(&self) -> Result<()> { unsafe { 
@@ -1374,7 +1374,7 @@ RT_CLASS!{static class VideoEffects}
 impl RtActivatable<IVideoEffectsStatics> for VideoEffects {}
 impl VideoEffects {
     #[inline] pub fn get_video_stabilization() -> Result<HString> {
-        <Self as RtActivatable<IVideoEffectsStatics>>::get_activation_factory().get_video_stabilization()
+        <Self as RtActivatable<IVideoEffectsStatics>>::get_activation_factory().deref().get_video_stabilization()
     }
 }
 DEFINE_CLSID!(VideoEffects(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,86,105,100,101,111,69,102,102,101,99,116,115,0]) [CLSID_VideoEffects]);
@@ -1401,9 +1401,9 @@ impl IVideoFrame {
         let hr = ((*self.lpVtbl).get_SoftwareBitmap)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn copy_to_async(&self, frame: &VideoFrame) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn copy_to_async(&self, frame: &ComPtr<VideoFrame>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyToAsync)(self as *const _ as *mut _, frame as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CopyToAsync)(self as *const _ as *mut _, frame.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_direct3d_surface(&self) -> Result<Option<ComPtr<super::graphics::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
@@ -1417,22 +1417,22 @@ impl RtActivatable<IVideoFrameFactory> for VideoFrame {}
 impl RtActivatable<IVideoFrameStatics> for VideoFrame {}
 impl VideoFrame {
     #[cfg(feature="windows-graphics")] #[inline] pub fn create(format: super::graphics::imaging::BitmapPixelFormat, width: i32, height: i32) -> Result<ComPtr<VideoFrame>> {
-        <Self as RtActivatable<IVideoFrameFactory>>::get_activation_factory().create(format, width, height)
+        <Self as RtActivatable<IVideoFrameFactory>>::get_activation_factory().deref().create(format, width, height)
     }
     #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_alpha(format: super::graphics::imaging::BitmapPixelFormat, width: i32, height: i32, alpha: super::graphics::imaging::BitmapAlphaMode) -> Result<ComPtr<VideoFrame>> {
-        <Self as RtActivatable<IVideoFrameFactory>>::get_activation_factory().create_with_alpha(format, width, height, alpha)
+        <Self as RtActivatable<IVideoFrameFactory>>::get_activation_factory().deref().create_with_alpha(format, width, height, alpha)
     }
     #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d11_surface_backed(format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32) -> Result<Option<ComPtr<VideoFrame>>> {
-        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_as_direct3d11_surface_backed(format, width, height)
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().deref().create_as_direct3d11_surface_backed(format, width, height)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d11_surface_backed_with_device(format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<VideoFrame>>> {
-        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_as_direct3d11_surface_backed_with_device(format, width, height, device)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d11_surface_backed_with_device(format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &ComPtr<super::graphics::directx::direct3d11::IDirect3DDevice>) -> Result<Option<ComPtr<VideoFrame>>> {
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().deref().create_as_direct3d11_surface_backed_with_device(format, width, height, device)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_software_bitmap(bitmap: &super::graphics::imaging::SoftwareBitmap) -> Result<Option<ComPtr<VideoFrame>>> {
-        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_with_software_bitmap(bitmap)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_software_bitmap(bitmap: &ComPtr<super::graphics::imaging::SoftwareBitmap>) -> Result<Option<ComPtr<VideoFrame>>> {
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().deref().create_with_software_bitmap(bitmap)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3d11_surface(surface: &super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<VideoFrame>>> {
-        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().create_with_direct3d11_surface(surface)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3d11_surface(surface: &ComPtr<super::graphics::directx::direct3d11::IDirect3DSurface>) -> Result<Option<ComPtr<VideoFrame>>> {
+        <Self as RtActivatable<IVideoFrameStatics>>::get_activation_factory().deref().create_with_direct3d11_surface(surface)
     }
 }
 DEFINE_CLSID!(VideoFrame(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,86,105,100,101,111,70,114,97,109,101,0]) [CLSID_VideoFrame]);
@@ -1441,9 +1441,9 @@ RT_INTERFACE!{interface IVideoFrame2(IVideoFrame2Vtbl): IInspectable(IInspectabl
     #[cfg(feature="windows-graphics")] fn CopyToWithBoundsAsync(&self, frame: *mut VideoFrame, sourceBounds: *mut foundation::IReference<super::graphics::imaging::BitmapBounds>, destinationBounds: *mut foundation::IReference<super::graphics::imaging::BitmapBounds>, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IVideoFrame2 {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn copy_to_with_bounds_async(&self, frame: &VideoFrame, sourceBounds: &foundation::IReference<super::graphics::imaging::BitmapBounds>, destinationBounds: &foundation::IReference<super::graphics::imaging::BitmapBounds>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn copy_to_with_bounds_async(&self, frame: &ComPtr<VideoFrame>, sourceBounds: &ComPtr<foundation::IReference<super::graphics::imaging::BitmapBounds>>, destinationBounds: &ComPtr<foundation::IReference<super::graphics::imaging::BitmapBounds>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CopyToWithBoundsAsync)(self as *const _ as *mut _, frame as *const _ as *mut _, sourceBounds as *const _ as *mut _, destinationBounds as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CopyToWithBoundsAsync)(self as *const _ as *mut _, frame.deref() as *const _ as *mut _, sourceBounds.deref() as *const _ as *mut _, destinationBounds.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1477,19 +1477,19 @@ impl IVideoFrameStatics {
         let hr = ((*self.lpVtbl).CreateAsDirect3D11SurfaceBacked)(self as *const _ as *mut _, format, width, height, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d11_surface_backed_with_device(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_as_direct3d11_surface_backed_with_device(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: &ComPtr<super::graphics::directx::direct3d11::IDirect3DDevice>) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateAsDirect3D11SurfaceBackedWithDevice)(self as *const _ as *mut _, format, width, height, device as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateAsDirect3D11SurfaceBackedWithDevice)(self as *const _ as *mut _, format, width, height, device.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_software_bitmap(&self, bitmap: &super::graphics::imaging::SoftwareBitmap) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_software_bitmap(&self, bitmap: &ComPtr<super::graphics::imaging::SoftwareBitmap>) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithSoftwareBitmap)(self as *const _ as *mut _, bitmap as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithSoftwareBitmap)(self as *const _ as *mut _, bitmap.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3d11_surface(&self, surface: &super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_with_direct3d11_surface(&self, surface: &ComPtr<super::graphics::directx::direct3d11::IDirect3DSurface>) -> Result<Option<ComPtr<VideoFrame>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithDirect3D11Surface)(self as *const _ as *mut _, surface as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithDirect3D11Surface)(self as *const _ as *mut _, surface.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1507,9 +1507,9 @@ impl IAppBroadcastingMonitor {
         let hr = ((*self.lpVtbl).get_IsCurrentAppBroadcasting)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_is_current_app_broadcasting_changed(&self, handler: &foundation::TypedEventHandler<AppBroadcastingMonitor, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_is_current_app_broadcasting_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppBroadcastingMonitor, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_IsCurrentAppBroadcastingChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_IsCurrentAppBroadcastingChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_is_current_app_broadcasting_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -1612,10 +1612,10 @@ RT_CLASS!{class AppBroadcastingUI: IAppBroadcastingUI}
 impl RtActivatable<IAppBroadcastingUIStatics> for AppBroadcastingUI {}
 impl AppBroadcastingUI {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<AppBroadcastingUI>>> {
-        <Self as RtActivatable<IAppBroadcastingUIStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IAppBroadcastingUIStatics>>::get_activation_factory().deref().get_default()
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<Option<ComPtr<AppBroadcastingUI>>> {
-        <Self as RtActivatable<IAppBroadcastingUIStatics>>::get_activation_factory().get_for_user(user)
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &ComPtr<super::super::system::User>) -> Result<Option<ComPtr<AppBroadcastingUI>>> {
+        <Self as RtActivatable<IAppBroadcastingUIStatics>>::get_activation_factory().deref().get_for_user(user)
     }
 }
 DEFINE_CLSID!(AppBroadcastingUI(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,112,112,66,114,111,97,100,99,97,115,116,105,110,103,46,65,112,112,66,114,111,97,100,99,97,115,116,105,110,103,85,73,0]) [CLSID_AppBroadcastingUI]);
@@ -1630,9 +1630,9 @@ impl IAppBroadcastingUIStatics {
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &super::super::system::User) -> Result<Option<ComPtr<AppBroadcastingUI>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &ComPtr<super::super::system::User>) -> Result<Option<ComPtr<AppBroadcastingUI>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -1653,14 +1653,14 @@ impl IAppRecordingManager {
         let hr = ((*self.lpVtbl).GetStatus)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn start_recording_to_file_async(&self, file: &super::super::storage::StorageFile) -> Result<ComPtr<foundation::IAsyncOperation<AppRecordingResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn start_recording_to_file_async(&self, file: &ComPtr<super::super::storage::StorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<AppRecordingResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartRecordingToFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).StartRecordingToFileAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn record_time_span_to_file_async(&self, startTime: foundation::DateTime, duration: foundation::TimeSpan, file: &super::super::storage::StorageFile) -> Result<ComPtr<foundation::IAsyncOperation<AppRecordingResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn record_time_span_to_file_async(&self, startTime: foundation::DateTime, duration: foundation::TimeSpan, file: &ComPtr<super::super::storage::StorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<AppRecordingResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RecordTimeSpanToFileAsync)(self as *const _ as *mut _, startTime, duration, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RecordTimeSpanToFileAsync)(self as *const _ as *mut _, startTime, duration, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_supported_screenshot_media_encoding_subtypes(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
@@ -1668,9 +1668,9 @@ impl IAppRecordingManager {
         let hr = ((*self.lpVtbl).get_SupportedScreenshotMediaEncodingSubtypes)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_screenshot_to_files_async(&self, folder: &super::super::storage::StorageFolder, filenamePrefix: &HStringArg, option: AppRecordingSaveScreenshotOption, requestedFormats: &foundation::collections::IIterable<HString>) -> Result<ComPtr<foundation::IAsyncOperation<AppRecordingSaveScreenshotResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_screenshot_to_files_async(&self, folder: &ComPtr<super::super::storage::StorageFolder>, filenamePrefix: &HStringArg, option: AppRecordingSaveScreenshotOption, requestedFormats: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<AppRecordingSaveScreenshotResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveScreenshotToFilesAsync)(self as *const _ as *mut _, folder as *const _ as *mut _, filenamePrefix.get(), option, requestedFormats as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SaveScreenshotToFilesAsync)(self as *const _ as *mut _, folder.deref() as *const _ as *mut _, filenamePrefix.get(), option, requestedFormats.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1678,7 +1678,7 @@ RT_CLASS!{class AppRecordingManager: IAppRecordingManager}
 impl RtActivatable<IAppRecordingManagerStatics> for AppRecordingManager {}
 impl AppRecordingManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<AppRecordingManager>>> {
-        <Self as RtActivatable<IAppRecordingManagerStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IAppRecordingManagerStatics>>::get_activation_factory().deref().get_default()
     }
 }
 DEFINE_CLSID!(AppRecordingManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,112,112,82,101,99,111,114,100,105,110,103,46,65,112,112,82,101,99,111,114,100,105,110,103,77,97,110,97,103,101,114,0]) [CLSID_AppRecordingManager]);
@@ -1931,8 +1931,8 @@ impl IAudioFileInputNode {
         let hr = ((*self.lpVtbl).get_StartTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_start_time(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_StartTime)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_start_time(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StartTime)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_end_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
@@ -1940,8 +1940,8 @@ impl IAudioFileInputNode {
         let hr = ((*self.lpVtbl).get_EndTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_end_time(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_EndTime)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_end_time(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_EndTime)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_loop_count(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
@@ -1949,8 +1949,8 @@ impl IAudioFileInputNode {
         let hr = ((*self.lpVtbl).get_LoopCount)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_loop_count(&self, value: &foundation::IReference<i32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_LoopCount)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_loop_count(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_LoopCount)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
@@ -1963,9 +1963,9 @@ impl IAudioFileInputNode {
         let hr = ((*self.lpVtbl).get_SourceFile)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_file_completed(&self, handler: &foundation::TypedEventHandler<AudioFileInputNode, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_file_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<AudioFileInputNode, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FileCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FileCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_file_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -2036,8 +2036,8 @@ impl IAudioFrameInputNode {
         let hr = ((*self.lpVtbl).get_PlaybackSpeedFactor)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_frame(&self, frame: &super::AudioFrame) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddFrame)(self as *const _ as *mut _, frame as *const _ as *mut _);
+    #[inline] pub fn add_frame(&self, frame: &ComPtr<super::AudioFrame>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddFrame)(self as *const _ as *mut _, frame.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn discard_queued_frames(&self) -> Result<()> { unsafe { 
@@ -2049,18 +2049,18 @@ impl IAudioFrameInputNode {
         let hr = ((*self.lpVtbl).get_QueuedSampleCount)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_audio_frame_completed(&self, handler: &foundation::TypedEventHandler<AudioFrameInputNode, AudioFrameCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_audio_frame_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<AudioFrameInputNode, AudioFrameCompletedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AudioFrameCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AudioFrameCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_audio_frame_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_AudioFrameCompleted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_quantum_started(&self, handler: &foundation::TypedEventHandler<AudioFrameInputNode, FrameInputNodeQuantumStartedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_quantum_started(&self, handler: &ComPtr<foundation::TypedEventHandler<AudioFrameInputNode, FrameInputNodeQuantumStartedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_QuantumStarted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_QuantumStarted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_quantum_started(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -2123,9 +2123,9 @@ impl IAudioGraph {
         let hr = ((*self.lpVtbl).CreateFrameInputNode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_frame_input_node_with_format(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<Option<ComPtr<AudioFrameInputNode>>> { unsafe { 
+    #[inline] pub fn create_frame_input_node_with_format(&self, encodingProperties: &ComPtr<super::mediaproperties::AudioEncodingProperties>) -> Result<Option<ComPtr<AudioFrameInputNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFrameInputNodeWithFormat)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFrameInputNodeWithFormat)(self as *const _ as *mut _, encodingProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_device_input_node_async(&self, category: super::capture::MediaCategory) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioDeviceInputNodeResult>>> { unsafe { 
@@ -2133,14 +2133,14 @@ impl IAudioGraph {
         let hr = ((*self.lpVtbl).CreateDeviceInputNodeAsync)(self as *const _ as *mut _, category, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_device_input_node_with_format_async(&self, category: super::capture::MediaCategory, encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioDeviceInputNodeResult>>> { unsafe { 
+    #[inline] pub fn create_device_input_node_with_format_async(&self, category: super::capture::MediaCategory, encodingProperties: &ComPtr<super::mediaproperties::AudioEncodingProperties>) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioDeviceInputNodeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDeviceInputNodeWithFormatAsync)(self as *const _ as *mut _, category, encodingProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateDeviceInputNodeWithFormatAsync)(self as *const _ as *mut _, category, encodingProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn create_device_input_node_with_format_on_device_async(&self, category: super::capture::MediaCategory, encodingProperties: &super::mediaproperties::AudioEncodingProperties, device: &super::super::devices::enumeration::DeviceInformation) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioDeviceInputNodeResult>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn create_device_input_node_with_format_on_device_async(&self, category: super::capture::MediaCategory, encodingProperties: &ComPtr<super::mediaproperties::AudioEncodingProperties>, device: &ComPtr<super::super::devices::enumeration::DeviceInformation>) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioDeviceInputNodeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDeviceInputNodeWithFormatOnDeviceAsync)(self as *const _ as *mut _, category, encodingProperties as *const _ as *mut _, device as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateDeviceInputNodeWithFormatOnDeviceAsync)(self as *const _ as *mut _, category, encodingProperties.deref() as *const _ as *mut _, device.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_frame_output_node(&self) -> Result<Option<ComPtr<AudioFrameOutputNode>>> { unsafe { 
@@ -2148,9 +2148,9 @@ impl IAudioGraph {
         let hr = ((*self.lpVtbl).CreateFrameOutputNode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_frame_output_node_with_format(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<Option<ComPtr<AudioFrameOutputNode>>> { unsafe { 
+    #[inline] pub fn create_frame_output_node_with_format(&self, encodingProperties: &ComPtr<super::mediaproperties::AudioEncodingProperties>) -> Result<Option<ComPtr<AudioFrameOutputNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFrameOutputNodeWithFormat)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFrameOutputNodeWithFormat)(self as *const _ as *mut _, encodingProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_device_output_node_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioDeviceOutputNodeResult>>> { unsafe { 
@@ -2158,19 +2158,19 @@ impl IAudioGraph {
         let hr = ((*self.lpVtbl).CreateDeviceOutputNodeAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_file_input_node_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioFileInputNodeResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_file_input_node_async(&self, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioFileInputNodeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileInputNodeAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFileInputNodeAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_file_output_node_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioFileOutputNodeResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_file_output_node_async(&self, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioFileOutputNodeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileOutputNodeAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFileOutputNodeAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_file_output_node_with_file_profile_async(&self, file: &super::super::storage::IStorageFile, fileEncodingProfile: &super::mediaproperties::MediaEncodingProfile) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioFileOutputNodeResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_file_output_node_with_file_profile_async(&self, file: &ComPtr<super::super::storage::IStorageFile>, fileEncodingProfile: &ComPtr<super::mediaproperties::MediaEncodingProfile>) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioFileOutputNodeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileOutputNodeWithFileProfileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, fileEncodingProfile as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFileOutputNodeWithFileProfileAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, fileEncodingProfile.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_submix_node(&self) -> Result<Option<ComPtr<AudioSubmixNode>>> { unsafe { 
@@ -2178,9 +2178,9 @@ impl IAudioGraph {
         let hr = ((*self.lpVtbl).CreateSubmixNode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_submix_node_with_format(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<Option<ComPtr<AudioSubmixNode>>> { unsafe { 
+    #[inline] pub fn create_submix_node_with_format(&self, encodingProperties: &ComPtr<super::mediaproperties::AudioEncodingProperties>) -> Result<Option<ComPtr<AudioSubmixNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateSubmixNodeWithFormat)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateSubmixNodeWithFormat)(self as *const _ as *mut _, encodingProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
@@ -2195,27 +2195,27 @@ impl IAudioGraph {
         let hr = ((*self.lpVtbl).ResetAllNodes)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_quantum_started(&self, handler: &foundation::TypedEventHandler<AudioGraph, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_quantum_started(&self, handler: &ComPtr<foundation::TypedEventHandler<AudioGraph, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_QuantumStarted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_QuantumStarted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_quantum_started(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_QuantumStarted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_quantum_processed(&self, handler: &foundation::TypedEventHandler<AudioGraph, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_quantum_processed(&self, handler: &ComPtr<foundation::TypedEventHandler<AudioGraph, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_QuantumProcessed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_QuantumProcessed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_quantum_processed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_QuantumProcessed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_unrecoverable_error_occurred(&self, handler: &foundation::TypedEventHandler<AudioGraph, AudioGraphUnrecoverableErrorOccurredEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_unrecoverable_error_occurred(&self, handler: &ComPtr<foundation::TypedEventHandler<AudioGraph, AudioGraphUnrecoverableErrorOccurredEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_UnrecoverableErrorOccurred)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_UnrecoverableErrorOccurred)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_unrecoverable_error_occurred(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -2256,8 +2256,8 @@ impl IAudioGraph {
 RT_CLASS!{class AudioGraph: IAudioGraph}
 impl RtActivatable<IAudioGraphStatics> for AudioGraph {}
 impl AudioGraph {
-    #[inline] pub fn create_async(settings: &AudioGraphSettings) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioGraphResult>>> {
-        <Self as RtActivatable<IAudioGraphStatics>>::get_activation_factory().create_async(settings)
+    #[inline] pub fn create_async(settings: &ComPtr<AudioGraphSettings>) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioGraphResult>>> {
+        <Self as RtActivatable<IAudioGraphStatics>>::get_activation_factory().deref().create_async(settings)
     }
 }
 DEFINE_CLSID!(AudioGraph(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,71,114,97,112,104,0]) [CLSID_AudioGraph]);
@@ -2272,24 +2272,24 @@ RT_INTERFACE!{interface IAudioGraph2(IAudioGraph2Vtbl): IInspectable(IInspectabl
     fn CreateBatchUpdater(&self, out: *mut *mut AudioGraphBatchUpdater) -> HRESULT
 }}
 impl IAudioGraph2 {
-    #[inline] pub fn create_frame_input_node_with_format_and_emitter(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties, emitter: &AudioNodeEmitter) -> Result<Option<ComPtr<AudioFrameInputNode>>> { unsafe { 
+    #[inline] pub fn create_frame_input_node_with_format_and_emitter(&self, encodingProperties: &ComPtr<super::mediaproperties::AudioEncodingProperties>, emitter: &ComPtr<AudioNodeEmitter>) -> Result<Option<ComPtr<AudioFrameInputNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFrameInputNodeWithFormatAndEmitter)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, emitter as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFrameInputNodeWithFormatAndEmitter)(self as *const _ as *mut _, encodingProperties.deref() as *const _ as *mut _, emitter.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn create_device_input_node_with_format_and_emitter_on_device_async(&self, category: super::capture::MediaCategory, encodingProperties: &super::mediaproperties::AudioEncodingProperties, device: &super::super::devices::enumeration::DeviceInformation, emitter: &AudioNodeEmitter) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioDeviceInputNodeResult>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn create_device_input_node_with_format_and_emitter_on_device_async(&self, category: super::capture::MediaCategory, encodingProperties: &ComPtr<super::mediaproperties::AudioEncodingProperties>, device: &ComPtr<super::super::devices::enumeration::DeviceInformation>, emitter: &ComPtr<AudioNodeEmitter>) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioDeviceInputNodeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateDeviceInputNodeWithFormatAndEmitterOnDeviceAsync)(self as *const _ as *mut _, category, encodingProperties as *const _ as *mut _, device as *const _ as *mut _, emitter as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateDeviceInputNodeWithFormatAndEmitterOnDeviceAsync)(self as *const _ as *mut _, category, encodingProperties.deref() as *const _ as *mut _, device.deref() as *const _ as *mut _, emitter.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_file_input_node_with_emitter_async(&self, file: &super::super::storage::IStorageFile, emitter: &AudioNodeEmitter) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioFileInputNodeResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_file_input_node_with_emitter_async(&self, file: &ComPtr<super::super::storage::IStorageFile>, emitter: &ComPtr<AudioNodeEmitter>) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioFileInputNodeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFileInputNodeWithEmitterAsync)(self as *const _ as *mut _, file as *const _ as *mut _, emitter as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFileInputNodeWithEmitterAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, emitter.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_submix_node_with_format_and_emitter(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties, emitter: &AudioNodeEmitter) -> Result<Option<ComPtr<AudioSubmixNode>>> { unsafe { 
+    #[inline] pub fn create_submix_node_with_format_and_emitter(&self, encodingProperties: &ComPtr<super::mediaproperties::AudioEncodingProperties>, emitter: &ComPtr<AudioNodeEmitter>) -> Result<Option<ComPtr<AudioSubmixNode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateSubmixNodeWithFormatAndEmitter)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, emitter as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateSubmixNodeWithFormatAndEmitter)(self as *const _ as *mut _, encodingProperties.deref() as *const _ as *mut _, emitter.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_batch_updater(&self) -> Result<Option<ComPtr<AudioGraphBatchUpdater>>> { unsafe { 
@@ -2304,14 +2304,14 @@ RT_INTERFACE!{interface IAudioGraph3(IAudioGraph3Vtbl): IInspectable(IInspectabl
     fn CreateMediaSourceAudioInputNodeWithEmitterAsync(&self, mediaSource: *mut super::core::MediaSource, emitter: *mut AudioNodeEmitter, out: *mut *mut foundation::IAsyncOperation<CreateMediaSourceAudioInputNodeResult>) -> HRESULT
 }}
 impl IAudioGraph3 {
-    #[inline] pub fn create_media_source_audio_input_node_async(&self, mediaSource: &super::core::MediaSource) -> Result<ComPtr<foundation::IAsyncOperation<CreateMediaSourceAudioInputNodeResult>>> { unsafe { 
+    #[inline] pub fn create_media_source_audio_input_node_async(&self, mediaSource: &ComPtr<super::core::MediaSource>) -> Result<ComPtr<foundation::IAsyncOperation<CreateMediaSourceAudioInputNodeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateMediaSourceAudioInputNodeAsync)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateMediaSourceAudioInputNodeAsync)(self as *const _ as *mut _, mediaSource.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_media_source_audio_input_node_with_emitter_async(&self, mediaSource: &super::core::MediaSource, emitter: &AudioNodeEmitter) -> Result<ComPtr<foundation::IAsyncOperation<CreateMediaSourceAudioInputNodeResult>>> { unsafe { 
+    #[inline] pub fn create_media_source_audio_input_node_with_emitter_async(&self, mediaSource: &ComPtr<super::core::MediaSource>, emitter: &ComPtr<AudioNodeEmitter>) -> Result<ComPtr<foundation::IAsyncOperation<CreateMediaSourceAudioInputNodeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateMediaSourceAudioInputNodeWithEmitterAsync)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, emitter as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateMediaSourceAudioInputNodeWithEmitterAsync)(self as *const _ as *mut _, mediaSource.deref() as *const _ as *mut _, emitter.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2365,8 +2365,8 @@ impl IAudioGraphSettings {
         let hr = ((*self.lpVtbl).get_EncodingProperties)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_encoding_properties(&self, value: &super::mediaproperties::AudioEncodingProperties) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_EncodingProperties)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_encoding_properties(&self, value: &ComPtr<super::mediaproperties::AudioEncodingProperties>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_EncodingProperties)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_primary_render_device(&self) -> Result<Option<ComPtr<super::super::devices::enumeration::DeviceInformation>>> { unsafe { 
@@ -2374,8 +2374,8 @@ impl IAudioGraphSettings {
         let hr = ((*self.lpVtbl).get_PrimaryRenderDevice)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_primary_render_device(&self, value: &super::super::devices::enumeration::DeviceInformation) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PrimaryRenderDevice)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_primary_render_device(&self, value: &ComPtr<super::super::devices::enumeration::DeviceInformation>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PrimaryRenderDevice)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_quantum_size_selection_mode(&self) -> Result<QuantumSizeSelectionMode> { unsafe { 
@@ -2419,7 +2419,7 @@ RT_CLASS!{class AudioGraphSettings: IAudioGraphSettings}
 impl RtActivatable<IAudioGraphSettingsFactory> for AudioGraphSettings {}
 impl AudioGraphSettings {
     #[inline] pub fn create(audioRenderCategory: super::render::AudioRenderCategory) -> Result<ComPtr<AudioGraphSettings>> {
-        <Self as RtActivatable<IAudioGraphSettingsFactory>>::get_activation_factory().create(audioRenderCategory)
+        <Self as RtActivatable<IAudioGraphSettingsFactory>>::get_activation_factory().deref().create(audioRenderCategory)
     }
 }
 DEFINE_CLSID!(AudioGraphSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,71,114,97,112,104,83,101,116,116,105,110,103,115,0]) [CLSID_AudioGraphSettings]);
@@ -2455,9 +2455,9 @@ RT_INTERFACE!{static interface IAudioGraphStatics(IAudioGraphStaticsVtbl): IInsp
     fn CreateAsync(&self, settings: *mut AudioGraphSettings, out: *mut *mut foundation::IAsyncOperation<CreateAudioGraphResult>) -> HRESULT
 }}
 impl IAudioGraphStatics {
-    #[inline] pub fn create_async(&self, settings: &AudioGraphSettings) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioGraphResult>>> { unsafe { 
+    #[inline] pub fn create_async(&self, settings: &ComPtr<AudioGraphSettings>) -> Result<ComPtr<foundation::IAsyncOperation<CreateAudioGraphResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateAsync)(self as *const _ as *mut _, settings as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateAsync)(self as *const _ as *mut _, settings.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2489,16 +2489,16 @@ impl IAudioInputNode {
         let hr = ((*self.lpVtbl).get_OutgoingConnections)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_outgoing_connection(&self, destination: &IAudioNode) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddOutgoingConnection)(self as *const _ as *mut _, destination as *const _ as *mut _);
+    #[inline] pub fn add_outgoing_connection(&self, destination: &ComPtr<IAudioNode>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddOutgoingConnection)(self as *const _ as *mut _, destination.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_outgoing_connection_with_gain(&self, destination: &IAudioNode, gain: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddOutgoingConnectionWithGain)(self as *const _ as *mut _, destination as *const _ as *mut _, gain);
+    #[inline] pub fn add_outgoing_connection_with_gain(&self, destination: &ComPtr<IAudioNode>, gain: f64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddOutgoingConnectionWithGain)(self as *const _ as *mut _, destination.deref() as *const _ as *mut _, gain);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove_outgoing_connection(&self, destination: &IAudioNode) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveOutgoingConnection)(self as *const _ as *mut _, destination as *const _ as *mut _);
+    #[inline] pub fn remove_outgoing_connection(&self, destination: &ComPtr<IAudioNode>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RemoveOutgoingConnection)(self as *const _ as *mut _, destination.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2568,12 +2568,12 @@ impl IAudioNode {
         let hr = ((*self.lpVtbl).Reset)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn disable_effects_by_definition(&self, definition: &super::effects::IAudioEffectDefinition) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).DisableEffectsByDefinition)(self as *const _ as *mut _, definition as *const _ as *mut _);
+    #[inline] pub fn disable_effects_by_definition(&self, definition: &ComPtr<super::effects::IAudioEffectDefinition>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).DisableEffectsByDefinition)(self as *const _ as *mut _, definition.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn enable_effects_by_definition(&self, definition: &super::effects::IAudioEffectDefinition) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).EnableEffectsByDefinition)(self as *const _ as *mut _, definition as *const _ as *mut _);
+    #[inline] pub fn enable_effects_by_definition(&self, definition: &ComPtr<super::effects::IAudioEffectDefinition>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).EnableEffectsByDefinition)(self as *const _ as *mut _, definition.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2670,8 +2670,8 @@ RT_CLASS!{class AudioNodeEmitter: IAudioNodeEmitter}
 impl RtActivatable<IAudioNodeEmitterFactory> for AudioNodeEmitter {}
 impl RtActivatable<IActivationFactory> for AudioNodeEmitter {}
 impl AudioNodeEmitter {
-    #[inline] pub fn create_audio_node_emitter(shape: &AudioNodeEmitterShape, decayModel: &AudioNodeEmitterDecayModel, settings: AudioNodeEmitterSettings) -> Result<ComPtr<AudioNodeEmitter>> {
-        <Self as RtActivatable<IAudioNodeEmitterFactory>>::get_activation_factory().create_audio_node_emitter(shape, decayModel, settings)
+    #[inline] pub fn create_audio_node_emitter(shape: &ComPtr<AudioNodeEmitterShape>, decayModel: &ComPtr<AudioNodeEmitterDecayModel>, settings: AudioNodeEmitterSettings) -> Result<ComPtr<AudioNodeEmitter>> {
+        <Self as RtActivatable<IAudioNodeEmitterFactory>>::get_activation_factory().deref().create_audio_node_emitter(shape, decayModel, settings)
     }
 }
 DEFINE_CLSID!(AudioNodeEmitter(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,78,111,100,101,69,109,105,116,116,101,114,0]) [CLSID_AudioNodeEmitter]);
@@ -2751,10 +2751,10 @@ RT_CLASS!{class AudioNodeEmitterDecayModel: IAudioNodeEmitterDecayModel}
 impl RtActivatable<IAudioNodeEmitterDecayModelStatics> for AudioNodeEmitterDecayModel {}
 impl AudioNodeEmitterDecayModel {
     #[inline] pub fn create_natural(minGain: f64, maxGain: f64, unityGainDistance: f64, cutoffDistance: f64) -> Result<Option<ComPtr<AudioNodeEmitterDecayModel>>> {
-        <Self as RtActivatable<IAudioNodeEmitterDecayModelStatics>>::get_activation_factory().create_natural(minGain, maxGain, unityGainDistance, cutoffDistance)
+        <Self as RtActivatable<IAudioNodeEmitterDecayModelStatics>>::get_activation_factory().deref().create_natural(minGain, maxGain, unityGainDistance, cutoffDistance)
     }
     #[inline] pub fn create_custom(minGain: f64, maxGain: f64) -> Result<Option<ComPtr<AudioNodeEmitterDecayModel>>> {
-        <Self as RtActivatable<IAudioNodeEmitterDecayModelStatics>>::get_activation_factory().create_custom(minGain, maxGain)
+        <Self as RtActivatable<IAudioNodeEmitterDecayModelStatics>>::get_activation_factory().deref().create_custom(minGain, maxGain)
     }
 }
 DEFINE_CLSID!(AudioNodeEmitterDecayModel(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,78,111,100,101,69,109,105,116,116,101,114,68,101,99,97,121,77,111,100,101,108,0]) [CLSID_AudioNodeEmitterDecayModel]);
@@ -2780,9 +2780,9 @@ RT_INTERFACE!{static interface IAudioNodeEmitterFactory(IAudioNodeEmitterFactory
     fn CreateAudioNodeEmitter(&self, shape: *mut AudioNodeEmitterShape, decayModel: *mut AudioNodeEmitterDecayModel, settings: AudioNodeEmitterSettings, out: *mut *mut AudioNodeEmitter) -> HRESULT
 }}
 impl IAudioNodeEmitterFactory {
-    #[inline] pub fn create_audio_node_emitter(&self, shape: &AudioNodeEmitterShape, decayModel: &AudioNodeEmitterDecayModel, settings: AudioNodeEmitterSettings) -> Result<ComPtr<AudioNodeEmitter>> { unsafe { 
+    #[inline] pub fn create_audio_node_emitter(&self, shape: &ComPtr<AudioNodeEmitterShape>, decayModel: &ComPtr<AudioNodeEmitterDecayModel>, settings: AudioNodeEmitterSettings) -> Result<ComPtr<AudioNodeEmitter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateAudioNodeEmitter)(self as *const _ as *mut _, shape as *const _ as *mut _, decayModel as *const _ as *mut _, settings, &mut out);
+        let hr = ((*self.lpVtbl).CreateAudioNodeEmitter)(self as *const _ as *mut _, shape.deref() as *const _ as *mut _, decayModel.deref() as *const _ as *mut _, settings, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2828,10 +2828,10 @@ RT_CLASS!{class AudioNodeEmitterShape: IAudioNodeEmitterShape}
 impl RtActivatable<IAudioNodeEmitterShapeStatics> for AudioNodeEmitterShape {}
 impl AudioNodeEmitterShape {
     #[inline] pub fn create_cone(innerAngle: f64, outerAngle: f64, outerAngleGain: f64) -> Result<Option<ComPtr<AudioNodeEmitterShape>>> {
-        <Self as RtActivatable<IAudioNodeEmitterShapeStatics>>::get_activation_factory().create_cone(innerAngle, outerAngle, outerAngleGain)
+        <Self as RtActivatable<IAudioNodeEmitterShapeStatics>>::get_activation_factory().deref().create_cone(innerAngle, outerAngle, outerAngleGain)
     }
     #[inline] pub fn create_omnidirectional() -> Result<Option<ComPtr<AudioNodeEmitterShape>>> {
-        <Self as RtActivatable<IAudioNodeEmitterShapeStatics>>::get_activation_factory().create_omnidirectional()
+        <Self as RtActivatable<IAudioNodeEmitterShapeStatics>>::get_activation_factory().deref().create_omnidirectional()
     }
 }
 DEFINE_CLSID!(AudioNodeEmitterShape(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,78,111,100,101,69,109,105,116,116,101,114,83,104,97,112,101,0]) [CLSID_AudioNodeEmitterShape]);
@@ -2913,8 +2913,8 @@ RT_INTERFACE!{interface IAudioNodeWithListener(IAudioNodeWithListenerVtbl): IIns
     fn get_Listener(&self, out: *mut *mut AudioNodeListener) -> HRESULT
 }}
 impl IAudioNodeWithListener {
-    #[inline] pub fn set_listener(&self, value: &AudioNodeListener) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Listener)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_listener(&self, value: &ComPtr<AudioNodeListener>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Listener)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_listener(&self) -> Result<Option<ComPtr<AudioNodeListener>>> { unsafe { 
@@ -2930,9 +2930,9 @@ RT_INTERFACE!{interface IAudioStateMonitor(IAudioStateMonitorVtbl): IInspectable
     fn get_SoundLevel(&self, out: *mut super::SoundLevel) -> HRESULT
 }}
 impl IAudioStateMonitor {
-    #[inline] pub fn add_sound_level_changed(&self, handler: &foundation::TypedEventHandler<AudioStateMonitor, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_sound_level_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AudioStateMonitor, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SoundLevelChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SoundLevelChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_sound_level_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -2949,28 +2949,28 @@ RT_CLASS!{class AudioStateMonitor: IAudioStateMonitor}
 impl RtActivatable<IAudioStateMonitorStatics> for AudioStateMonitor {}
 impl AudioStateMonitor {
     #[inline] pub fn create_for_render_monitoring() -> Result<Option<ComPtr<AudioStateMonitor>>> {
-        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_render_monitoring()
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().deref().create_for_render_monitoring()
     }
     #[inline] pub fn create_for_render_monitoring_with_category(category: super::render::AudioRenderCategory) -> Result<Option<ComPtr<AudioStateMonitor>>> {
-        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_render_monitoring_with_category(category)
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().deref().create_for_render_monitoring_with_category(category)
     }
     #[inline] pub fn create_for_render_monitoring_with_category_and_device_role(category: super::render::AudioRenderCategory, role: super::devices::AudioDeviceRole) -> Result<Option<ComPtr<AudioStateMonitor>>> {
-        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_render_monitoring_with_category_and_device_role(category, role)
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().deref().create_for_render_monitoring_with_category_and_device_role(category, role)
     }
     #[inline] pub fn create_for_render_monitoring_with_category_and_device_id(category: super::render::AudioRenderCategory, deviceId: &HStringArg) -> Result<Option<ComPtr<AudioStateMonitor>>> {
-        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_render_monitoring_with_category_and_device_id(category, deviceId)
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().deref().create_for_render_monitoring_with_category_and_device_id(category, deviceId)
     }
     #[inline] pub fn create_for_capture_monitoring() -> Result<Option<ComPtr<AudioStateMonitor>>> {
-        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_capture_monitoring()
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().deref().create_for_capture_monitoring()
     }
     #[inline] pub fn create_for_capture_monitoring_with_category(category: super::capture::MediaCategory) -> Result<Option<ComPtr<AudioStateMonitor>>> {
-        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_capture_monitoring_with_category(category)
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().deref().create_for_capture_monitoring_with_category(category)
     }
     #[inline] pub fn create_for_capture_monitoring_with_category_and_device_role(category: super::capture::MediaCategory, role: super::devices::AudioDeviceRole) -> Result<Option<ComPtr<AudioStateMonitor>>> {
-        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_capture_monitoring_with_category_and_device_role(category, role)
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().deref().create_for_capture_monitoring_with_category_and_device_role(category, role)
     }
     #[inline] pub fn create_for_capture_monitoring_with_category_and_device_id(category: super::capture::MediaCategory, deviceId: &HStringArg) -> Result<Option<ComPtr<AudioStateMonitor>>> {
-        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().create_for_capture_monitoring_with_category_and_device_id(category, deviceId)
+        <Self as RtActivatable<IAudioStateMonitorStatics>>::get_activation_factory().deref().create_for_capture_monitoring_with_category_and_device_id(category, deviceId)
     }
 }
 DEFINE_CLSID!(AudioStateMonitor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,83,116,97,116,101,77,111,110,105,116,111,114,0]) [CLSID_AudioStateMonitor]);
@@ -3243,8 +3243,8 @@ impl IEchoEffectDefinition {
 RT_CLASS!{class EchoEffectDefinition: IEchoEffectDefinition}
 impl RtActivatable<IEchoEffectDefinitionFactory> for EchoEffectDefinition {}
 impl EchoEffectDefinition {
-    #[inline] pub fn create(audioGraph: &AudioGraph) -> Result<ComPtr<EchoEffectDefinition>> {
-        <Self as RtActivatable<IEchoEffectDefinitionFactory>>::get_activation_factory().create(audioGraph)
+    #[inline] pub fn create(audioGraph: &ComPtr<AudioGraph>) -> Result<ComPtr<EchoEffectDefinition>> {
+        <Self as RtActivatable<IEchoEffectDefinitionFactory>>::get_activation_factory().deref().create(audioGraph)
     }
 }
 DEFINE_CLSID!(EchoEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,69,99,104,111,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_EchoEffectDefinition]);
@@ -3253,9 +3253,9 @@ RT_INTERFACE!{static interface IEchoEffectDefinitionFactory(IEchoEffectDefinitio
     fn Create(&self, audioGraph: *mut AudioGraph, out: *mut *mut EchoEffectDefinition) -> HRESULT
 }}
 impl IEchoEffectDefinitionFactory {
-    #[inline] pub fn create(&self, audioGraph: &AudioGraph) -> Result<ComPtr<EchoEffectDefinition>> { unsafe { 
+    #[inline] pub fn create(&self, audioGraph: &ComPtr<AudioGraph>) -> Result<ComPtr<EchoEffectDefinition>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, audioGraph as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, audioGraph.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3312,8 +3312,8 @@ impl IEqualizerEffectDefinition {
 RT_CLASS!{class EqualizerEffectDefinition: IEqualizerEffectDefinition}
 impl RtActivatable<IEqualizerEffectDefinitionFactory> for EqualizerEffectDefinition {}
 impl EqualizerEffectDefinition {
-    #[inline] pub fn create(audioGraph: &AudioGraph) -> Result<ComPtr<EqualizerEffectDefinition>> {
-        <Self as RtActivatable<IEqualizerEffectDefinitionFactory>>::get_activation_factory().create(audioGraph)
+    #[inline] pub fn create(audioGraph: &ComPtr<AudioGraph>) -> Result<ComPtr<EqualizerEffectDefinition>> {
+        <Self as RtActivatable<IEqualizerEffectDefinitionFactory>>::get_activation_factory().deref().create(audioGraph)
     }
 }
 DEFINE_CLSID!(EqualizerEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,69,113,117,97,108,105,122,101,114,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_EqualizerEffectDefinition]);
@@ -3322,9 +3322,9 @@ RT_INTERFACE!{static interface IEqualizerEffectDefinitionFactory(IEqualizerEffec
     fn Create(&self, audioGraph: *mut AudioGraph, out: *mut *mut EqualizerEffectDefinition) -> HRESULT
 }}
 impl IEqualizerEffectDefinitionFactory {
-    #[inline] pub fn create(&self, audioGraph: &AudioGraph) -> Result<ComPtr<EqualizerEffectDefinition>> { unsafe { 
+    #[inline] pub fn create(&self, audioGraph: &ComPtr<AudioGraph>) -> Result<ComPtr<EqualizerEffectDefinition>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, audioGraph as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, audioGraph.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3370,8 +3370,8 @@ impl ILimiterEffectDefinition {
 RT_CLASS!{class LimiterEffectDefinition: ILimiterEffectDefinition}
 impl RtActivatable<ILimiterEffectDefinitionFactory> for LimiterEffectDefinition {}
 impl LimiterEffectDefinition {
-    #[inline] pub fn create(audioGraph: &AudioGraph) -> Result<ComPtr<LimiterEffectDefinition>> {
-        <Self as RtActivatable<ILimiterEffectDefinitionFactory>>::get_activation_factory().create(audioGraph)
+    #[inline] pub fn create(audioGraph: &ComPtr<AudioGraph>) -> Result<ComPtr<LimiterEffectDefinition>> {
+        <Self as RtActivatable<ILimiterEffectDefinitionFactory>>::get_activation_factory().deref().create(audioGraph)
     }
 }
 DEFINE_CLSID!(LimiterEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,76,105,109,105,116,101,114,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_LimiterEffectDefinition]);
@@ -3380,9 +3380,9 @@ RT_INTERFACE!{static interface ILimiterEffectDefinitionFactory(ILimiterEffectDef
     fn Create(&self, audioGraph: *mut AudioGraph, out: *mut *mut LimiterEffectDefinition) -> HRESULT
 }}
 impl ILimiterEffectDefinitionFactory {
-    #[inline] pub fn create(&self, audioGraph: &AudioGraph) -> Result<ComPtr<LimiterEffectDefinition>> { unsafe { 
+    #[inline] pub fn create(&self, audioGraph: &ComPtr<AudioGraph>) -> Result<ComPtr<LimiterEffectDefinition>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, audioGraph as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, audioGraph.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3427,8 +3427,8 @@ impl IMediaSourceAudioInputNode {
         let hr = ((*self.lpVtbl).get_StartTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_start_time(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_StartTime)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_start_time(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StartTime)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_end_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
@@ -3436,8 +3436,8 @@ impl IMediaSourceAudioInputNode {
         let hr = ((*self.lpVtbl).get_EndTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_end_time(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_EndTime)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_end_time(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_EndTime)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_loop_count(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
@@ -3445,8 +3445,8 @@ impl IMediaSourceAudioInputNode {
         let hr = ((*self.lpVtbl).get_LoopCount)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_loop_count(&self, value: &foundation::IReference<i32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_LoopCount)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_loop_count(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_LoopCount)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
@@ -3459,9 +3459,9 @@ impl IMediaSourceAudioInputNode {
         let hr = ((*self.lpVtbl).get_MediaSource)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_media_source_completed(&self, handler: &foundation::TypedEventHandler<MediaSourceAudioInputNode, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_media_source_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaSourceAudioInputNode, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MediaSourceCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MediaSourceCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_media_source_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3740,8 +3740,8 @@ impl IReverbEffectDefinition {
 RT_CLASS!{class ReverbEffectDefinition: IReverbEffectDefinition}
 impl RtActivatable<IReverbEffectDefinitionFactory> for ReverbEffectDefinition {}
 impl ReverbEffectDefinition {
-    #[inline] pub fn create(audioGraph: &AudioGraph) -> Result<ComPtr<ReverbEffectDefinition>> {
-        <Self as RtActivatable<IReverbEffectDefinitionFactory>>::get_activation_factory().create(audioGraph)
+    #[inline] pub fn create(audioGraph: &ComPtr<AudioGraph>) -> Result<ComPtr<ReverbEffectDefinition>> {
+        <Self as RtActivatable<IReverbEffectDefinitionFactory>>::get_activation_factory().deref().create(audioGraph)
     }
 }
 DEFINE_CLSID!(ReverbEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,82,101,118,101,114,98,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_ReverbEffectDefinition]);
@@ -3750,9 +3750,9 @@ RT_INTERFACE!{static interface IReverbEffectDefinitionFactory(IReverbEffectDefin
     fn Create(&self, audioGraph: *mut AudioGraph, out: *mut *mut ReverbEffectDefinition) -> HRESULT
 }}
 impl IReverbEffectDefinitionFactory {
-    #[inline] pub fn create(&self, audioGraph: &AudioGraph) -> Result<ComPtr<ReverbEffectDefinition>> { unsafe { 
+    #[inline] pub fn create(&self, audioGraph: &ComPtr<AudioGraph>) -> Result<ComPtr<ReverbEffectDefinition>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, audioGraph as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, audioGraph.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3813,9 +3813,9 @@ impl ISpatialAudioDeviceConfiguration {
         let hr = ((*self.lpVtbl).SetDefaultSpatialAudioFormatAsync)(self as *const _ as *mut _, subtype.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_configuration_changed(&self, handler: &foundation::TypedEventHandler<SpatialAudioDeviceConfiguration, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_configuration_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<SpatialAudioDeviceConfiguration, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ConfigurationChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ConfigurationChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_configuration_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -3827,7 +3827,7 @@ RT_CLASS!{class SpatialAudioDeviceConfiguration: ISpatialAudioDeviceConfiguratio
 impl RtActivatable<ISpatialAudioDeviceConfigurationStatics> for SpatialAudioDeviceConfiguration {}
 impl SpatialAudioDeviceConfiguration {
     #[inline] pub fn get_for_device_id(deviceId: &HStringArg) -> Result<Option<ComPtr<SpatialAudioDeviceConfiguration>>> {
-        <Self as RtActivatable<ISpatialAudioDeviceConfigurationStatics>>::get_activation_factory().get_for_device_id(deviceId)
+        <Self as RtActivatable<ISpatialAudioDeviceConfigurationStatics>>::get_activation_factory().deref().get_for_device_id(deviceId)
     }
 }
 DEFINE_CLSID!(SpatialAudioDeviceConfiguration(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,83,112,97,116,105,97,108,65,117,100,105,111,68,101,118,105,99,101,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_SpatialAudioDeviceConfiguration]);
@@ -3874,7 +3874,7 @@ RT_CLASS!{class SpatialAudioFormatConfiguration: ISpatialAudioFormatConfiguratio
 impl RtActivatable<ISpatialAudioFormatConfigurationStatics> for SpatialAudioFormatConfiguration {}
 impl SpatialAudioFormatConfiguration {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<SpatialAudioFormatConfiguration>>> {
-        <Self as RtActivatable<ISpatialAudioFormatConfigurationStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<ISpatialAudioFormatConfigurationStatics>>::get_activation_factory().deref().get_default()
     }
 }
 DEFINE_CLSID!(SpatialAudioFormatConfiguration(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,83,112,97,116,105,97,108,65,117,100,105,111,70,111,114,109,97,116,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_SpatialAudioFormatConfiguration]);
@@ -3893,22 +3893,22 @@ RT_CLASS!{static class SpatialAudioFormatSubtype}
 impl RtActivatable<ISpatialAudioFormatSubtypeStatics> for SpatialAudioFormatSubtype {}
 impl SpatialAudioFormatSubtype {
     #[inline] pub fn get_windows_sonic() -> Result<HString> {
-        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().get_windows_sonic()
+        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().deref().get_windows_sonic()
     }
     #[inline] pub fn get_dolby_atmos_for_headphones() -> Result<HString> {
-        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().get_dolby_atmos_for_headphones()
+        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().deref().get_dolby_atmos_for_headphones()
     }
     #[inline] pub fn get_dolby_atmos_for_home_theater() -> Result<HString> {
-        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().get_dolby_atmos_for_home_theater()
+        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().deref().get_dolby_atmos_for_home_theater()
     }
     #[inline] pub fn get_dolby_atmos_for_speakers() -> Result<HString> {
-        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().get_dolby_atmos_for_speakers()
+        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().deref().get_dolby_atmos_for_speakers()
     }
     #[inline] pub fn get_dts_headphone_x() -> Result<HString> {
-        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().get_dts_headphone_x()
+        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().deref().get_dts_headphone_x()
     }
     #[inline] pub fn get_dtsx_ultra() -> Result<HString> {
-        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().get_dtsx_ultra()
+        <Self as RtActivatable<ISpatialAudioFormatSubtypeStatics>>::get_activation_factory().deref().get_dtsx_ultra()
     }
 }
 DEFINE_CLSID!(SpatialAudioFormatSubtype(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,83,112,97,116,105,97,108,65,117,100,105,111,70,111,114,109,97,116,83,117,98,116,121,112,101,0]) [CLSID_SpatialAudioFormatSubtype]);
@@ -4010,23 +4010,23 @@ impl IAdvancedPhotoCapture {
         let hr = ((*self.lpVtbl).CaptureAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn capture_with_context_async(&self, context: &IInspectable) -> Result<ComPtr<foundation::IAsyncOperation<AdvancedCapturedPhoto>>> { unsafe { 
+    #[inline] pub fn capture_with_context_async(&self, context: &ComPtr<IInspectable>) -> Result<ComPtr<foundation::IAsyncOperation<AdvancedCapturedPhoto>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CaptureWithContextAsync)(self as *const _ as *mut _, context as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CaptureWithContextAsync)(self as *const _ as *mut _, context.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_optional_reference_photo_captured(&self, handler: &foundation::TypedEventHandler<AdvancedPhotoCapture, OptionalReferencePhotoCapturedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_optional_reference_photo_captured(&self, handler: &ComPtr<foundation::TypedEventHandler<AdvancedPhotoCapture, OptionalReferencePhotoCapturedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_OptionalReferencePhotoCaptured)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_OptionalReferencePhotoCaptured)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_optional_reference_photo_captured(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_OptionalReferencePhotoCaptured)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_all_photos_captured(&self, handler: &foundation::TypedEventHandler<AdvancedPhotoCapture, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_all_photos_captured(&self, handler: &ComPtr<foundation::TypedEventHandler<AdvancedPhotoCapture, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AllPhotosCaptured)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AllPhotosCaptured)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_all_photos_captured(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -4067,8 +4067,8 @@ impl IAppBroadcastBackgroundService {
         let hr = ((*self.lpVtbl).get_PlugInState)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_sign_in_info(&self, value: &AppBroadcastBackgroundServiceSignInInfo) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SignInInfo)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_sign_in_info(&self, value: &ComPtr<AppBroadcastBackgroundServiceSignInInfo>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SignInInfo)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_sign_in_info(&self) -> Result<Option<ComPtr<AppBroadcastBackgroundServiceSignInInfo>>> { unsafe { 
@@ -4076,8 +4076,8 @@ impl IAppBroadcastBackgroundService {
         let hr = ((*self.lpVtbl).get_SignInInfo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_stream_info(&self, value: &AppBroadcastBackgroundServiceStreamInfo) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_StreamInfo)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_stream_info(&self, value: &ComPtr<AppBroadcastBackgroundServiceStreamInfo>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StreamInfo)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_stream_info(&self) -> Result<Option<ComPtr<AppBroadcastBackgroundServiceStreamInfo>>> { unsafe { 
@@ -4108,9 +4108,9 @@ impl IAppBroadcastBackgroundService {
         let hr = ((*self.lpVtbl).TerminateBroadcast)(self as *const _ as *mut _, reason, providerSpecificReason);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_heartbeat_requested(&self, handler: &foundation::TypedEventHandler<AppBroadcastBackgroundService, AppBroadcastHeartbeatRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_heartbeat_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<AppBroadcastBackgroundService, AppBroadcastHeartbeatRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_HeartbeatRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_HeartbeatRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_heartbeat_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -4161,27 +4161,27 @@ impl IAppBroadcastBackgroundService2 {
         let hr = ((*self.lpVtbl).put_BroadcastChannel)(self as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_broadcast_title_changed(&self, handler: &foundation::TypedEventHandler<AppBroadcastBackgroundService, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_broadcast_title_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppBroadcastBackgroundService, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BroadcastTitleChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BroadcastTitleChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_broadcast_title_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_BroadcastTitleChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_broadcast_language_changed(&self, handler: &foundation::TypedEventHandler<AppBroadcastBackgroundService, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_broadcast_language_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppBroadcastBackgroundService, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BroadcastLanguageChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BroadcastLanguageChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_broadcast_language_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_BroadcastLanguageChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_broadcast_channel_changed(&self, handler: &foundation::TypedEventHandler<AppBroadcastBackgroundService, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_broadcast_channel_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppBroadcastBackgroundService, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BroadcastChannelChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BroadcastChannelChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_broadcast_channel_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -4209,8 +4209,8 @@ impl IAppBroadcastBackgroundServiceSignInInfo {
         let hr = ((*self.lpVtbl).get_SignInState)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_oauth_request_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_OAuthRequestUri)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_oauth_request_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_OAuthRequestUri)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_oauth_request_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
@@ -4218,8 +4218,8 @@ impl IAppBroadcastBackgroundServiceSignInInfo {
         let hr = ((*self.lpVtbl).get_OAuthRequestUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_oauth_callback_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_OAuthCallbackUri)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_oauth_callback_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_OAuthCallbackUri)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_oauth_callback_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
@@ -4241,9 +4241,9 @@ impl IAppBroadcastBackgroundServiceSignInInfo {
         let hr = ((*self.lpVtbl).get_UserName)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_sign_in_state_changed(&self, handler: &foundation::TypedEventHandler<AppBroadcastBackgroundServiceSignInInfo, AppBroadcastSignInStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_sign_in_state_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppBroadcastBackgroundServiceSignInInfo, AppBroadcastSignInStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SignInStateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SignInStateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_sign_in_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -4258,9 +4258,9 @@ RT_INTERFACE!{interface IAppBroadcastBackgroundServiceSignInInfo2(IAppBroadcastB
     fn remove_UserNameChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IAppBroadcastBackgroundServiceSignInInfo2 {
-    #[inline] pub fn add_user_name_changed(&self, handler: &foundation::TypedEventHandler<AppBroadcastBackgroundServiceSignInInfo, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_user_name_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppBroadcastBackgroundServiceSignInInfo, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_UserNameChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_UserNameChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_user_name_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -4323,27 +4323,27 @@ impl IAppBroadcastBackgroundServiceStreamInfo {
         let hr = ((*self.lpVtbl).get_BroadcastStreamReader)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_stream_state_changed(&self, handler: &foundation::TypedEventHandler<AppBroadcastBackgroundServiceStreamInfo, AppBroadcastStreamStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_stream_state_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppBroadcastBackgroundServiceStreamInfo, AppBroadcastStreamStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_StreamStateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_StreamStateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_stream_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_StreamStateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_video_encoding_resolution_changed(&self, handler: &foundation::TypedEventHandler<AppBroadcastBackgroundServiceStreamInfo, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_video_encoding_resolution_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppBroadcastBackgroundServiceStreamInfo, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_VideoEncodingResolutionChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_VideoEncodingResolutionChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_video_encoding_resolution_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_VideoEncodingResolutionChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_video_encoding_bitrate_changed(&self, handler: &foundation::TypedEventHandler<AppBroadcastBackgroundServiceStreamInfo, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_video_encoding_bitrate_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppBroadcastBackgroundServiceStreamInfo, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_VideoEncodingBitrateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_VideoEncodingBitrateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_video_encoding_bitrate_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -4556,16 +4556,16 @@ RT_CLASS!{static class AppBroadcastManager}
 impl RtActivatable<IAppBroadcastManagerStatics> for AppBroadcastManager {}
 impl AppBroadcastManager {
     #[inline] pub fn get_global_settings() -> Result<Option<ComPtr<AppBroadcastGlobalSettings>>> {
-        <Self as RtActivatable<IAppBroadcastManagerStatics>>::get_activation_factory().get_global_settings()
+        <Self as RtActivatable<IAppBroadcastManagerStatics>>::get_activation_factory().deref().get_global_settings()
     }
-    #[inline] pub fn apply_global_settings(value: &AppBroadcastGlobalSettings) -> Result<()> {
-        <Self as RtActivatable<IAppBroadcastManagerStatics>>::get_activation_factory().apply_global_settings(value)
+    #[inline] pub fn apply_global_settings(value: &ComPtr<AppBroadcastGlobalSettings>) -> Result<()> {
+        <Self as RtActivatable<IAppBroadcastManagerStatics>>::get_activation_factory().deref().apply_global_settings(value)
     }
     #[inline] pub fn get_provider_settings() -> Result<Option<ComPtr<AppBroadcastProviderSettings>>> {
-        <Self as RtActivatable<IAppBroadcastManagerStatics>>::get_activation_factory().get_provider_settings()
+        <Self as RtActivatable<IAppBroadcastManagerStatics>>::get_activation_factory().deref().get_provider_settings()
     }
-    #[inline] pub fn apply_provider_settings(value: &AppBroadcastProviderSettings) -> Result<()> {
-        <Self as RtActivatable<IAppBroadcastManagerStatics>>::get_activation_factory().apply_provider_settings(value)
+    #[inline] pub fn apply_provider_settings(value: &ComPtr<AppBroadcastProviderSettings>) -> Result<()> {
+        <Self as RtActivatable<IAppBroadcastManagerStatics>>::get_activation_factory().deref().apply_provider_settings(value)
     }
 }
 DEFINE_CLSID!(AppBroadcastManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,66,114,111,97,100,99,97,115,116,77,97,110,97,103,101,114,0]) [CLSID_AppBroadcastManager]);
@@ -4582,8 +4582,8 @@ impl IAppBroadcastManagerStatics {
         let hr = ((*self.lpVtbl).GetGlobalSettings)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn apply_global_settings(&self, value: &AppBroadcastGlobalSettings) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ApplyGlobalSettings)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn apply_global_settings(&self, value: &ComPtr<AppBroadcastGlobalSettings>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ApplyGlobalSettings)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_provider_settings(&self) -> Result<Option<ComPtr<AppBroadcastProviderSettings>>> { unsafe { 
@@ -4591,8 +4591,8 @@ impl IAppBroadcastManagerStatics {
         let hr = ((*self.lpVtbl).GetProviderSettings)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn apply_provider_settings(&self, value: &AppBroadcastProviderSettings) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ApplyProviderSettings)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn apply_provider_settings(&self, value: &ComPtr<AppBroadcastProviderSettings>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ApplyProviderSettings)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4671,8 +4671,8 @@ impl IAppBroadcastPlugInManager {
         let hr = ((*self.lpVtbl).get_DefaultPlugIn)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_default_plug_in(&self, value: &AppBroadcastPlugIn) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DefaultPlugIn)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_default_plug_in(&self, value: &ComPtr<AppBroadcastPlugIn>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DefaultPlugIn)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4680,10 +4680,10 @@ RT_CLASS!{class AppBroadcastPlugInManager: IAppBroadcastPlugInManager}
 impl RtActivatable<IAppBroadcastPlugInManagerStatics> for AppBroadcastPlugInManager {}
 impl AppBroadcastPlugInManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<AppBroadcastPlugInManager>>> {
-        <Self as RtActivatable<IAppBroadcastPlugInManagerStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IAppBroadcastPlugInManagerStatics>>::get_activation_factory().deref().get_default()
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<Option<ComPtr<AppBroadcastPlugInManager>>> {
-        <Self as RtActivatable<IAppBroadcastPlugInManagerStatics>>::get_activation_factory().get_for_user(user)
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &ComPtr<super::super::system::User>) -> Result<Option<ComPtr<AppBroadcastPlugInManager>>> {
+        <Self as RtActivatable<IAppBroadcastPlugInManagerStatics>>::get_activation_factory().deref().get_for_user(user)
     }
 }
 DEFINE_CLSID!(AppBroadcastPlugInManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,66,114,111,97,100,99,97,115,116,80,108,117,103,73,110,77,97,110,97,103,101,114,0]) [CLSID_AppBroadcastPlugInManager]);
@@ -4698,9 +4698,9 @@ impl IAppBroadcastPlugInManagerStatics {
         let hr = ((*self.lpVtbl).GetDefault)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &super::super::system::User) -> Result<Option<ComPtr<AppBroadcastPlugInManager>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &ComPtr<super::super::system::User>) -> Result<Option<ComPtr<AppBroadcastPlugInManager>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetForUser)(self as *const _ as *mut _, user.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -4743,9 +4743,9 @@ impl IAppBroadcastPreview {
         let hr = ((*self.lpVtbl).get_ErrorCode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_preview_state_changed(&self, value: &foundation::TypedEventHandler<AppBroadcastPreview, AppBroadcastPreviewStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_preview_state_changed(&self, value: &ComPtr<foundation::TypedEventHandler<AppBroadcastPreview, AppBroadcastPreviewStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PreviewStateChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PreviewStateChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_preview_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -4824,9 +4824,9 @@ impl IAppBroadcastPreviewStreamReader {
         let hr = ((*self.lpVtbl).TryGetNextVideoFrame)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_video_frame_arrived(&self, value: &foundation::TypedEventHandler<AppBroadcastPreviewStreamReader, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_video_frame_arrived(&self, value: &ComPtr<foundation::TypedEventHandler<AppBroadcastPreviewStreamReader, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_VideoFrameArrived)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_VideoFrameArrived)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_video_frame_arrived(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5022,9 +5022,9 @@ impl IAppBroadcastServices {
         let hr = ((*self.lpVtbl).get_CanCapture)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn enter_broadcast_mode_async(&self, plugIn: &AppBroadcastPlugIn) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
+    #[inline] pub fn enter_broadcast_mode_async(&self, plugIn: &ComPtr<AppBroadcastPlugIn>) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).EnterBroadcastModeAsync)(self as *const _ as *mut _, plugIn as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).EnterBroadcastModeAsync)(self as *const _ as *mut _, plugIn.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn exit_broadcast_mode(&self, reason: AppBroadcastExitBroadcastModeReason) -> Result<()> { unsafe { 
@@ -5206,8 +5206,8 @@ impl IAppBroadcastState {
         let hr = ((*self.lpVtbl).get_AuthenticationResult)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_authentication_result(&self, value: &super::super::security::authentication::web::WebAuthenticationResult) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AuthenticationResult)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-security")] #[inline] pub fn set_authentication_result(&self, value: &ComPtr<super::super::security::authentication::web::WebAuthenticationResult>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AuthenticationResult)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_sign_in_state(&self, value: AppBroadcastSignInState) -> Result<()> { unsafe { 
@@ -5229,54 +5229,54 @@ impl IAppBroadcastState {
         let hr = ((*self.lpVtbl).get_TerminationReasonPlugInSpecific)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_viewer_count_changed(&self, value: &foundation::TypedEventHandler<AppBroadcastState, AppBroadcastViewerCountChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_viewer_count_changed(&self, value: &ComPtr<foundation::TypedEventHandler<AppBroadcastState, AppBroadcastViewerCountChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ViewerCountChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ViewerCountChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_viewer_count_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ViewerCountChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_microphone_capture_state_changed(&self, value: &foundation::TypedEventHandler<AppBroadcastState, AppBroadcastMicrophoneCaptureStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_microphone_capture_state_changed(&self, value: &ComPtr<foundation::TypedEventHandler<AppBroadcastState, AppBroadcastMicrophoneCaptureStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MicrophoneCaptureStateChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MicrophoneCaptureStateChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_microphone_capture_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_MicrophoneCaptureStateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_camera_capture_state_changed(&self, value: &foundation::TypedEventHandler<AppBroadcastState, AppBroadcastCameraCaptureStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_camera_capture_state_changed(&self, value: &ComPtr<foundation::TypedEventHandler<AppBroadcastState, AppBroadcastCameraCaptureStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CameraCaptureStateChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CameraCaptureStateChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_camera_capture_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_CameraCaptureStateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_plug_in_state_changed(&self, handler: &foundation::TypedEventHandler<AppBroadcastState, AppBroadcastPlugInStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_plug_in_state_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppBroadcastState, AppBroadcastPlugInStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlugInStateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlugInStateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_plug_in_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlugInStateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_stream_state_changed(&self, handler: &foundation::TypedEventHandler<AppBroadcastState, AppBroadcastStreamStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_stream_state_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppBroadcastState, AppBroadcastStreamStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_StreamStateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_StreamStateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_stream_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_StreamStateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_capture_target_closed(&self, value: &foundation::TypedEventHandler<AppBroadcastState, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_capture_target_closed(&self, value: &ComPtr<foundation::TypedEventHandler<AppBroadcastState, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CaptureTargetClosed)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CaptureTargetClosed)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_capture_target_closed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5402,18 +5402,18 @@ impl IAppBroadcastStreamReader {
         let hr = ((*self.lpVtbl).TryGetNextVideoFrame)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_audio_frame_arrived(&self, value: &foundation::TypedEventHandler<AppBroadcastStreamReader, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_audio_frame_arrived(&self, value: &ComPtr<foundation::TypedEventHandler<AppBroadcastStreamReader, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AudioFrameArrived)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AudioFrameArrived)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_audio_frame_arrived(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_AudioFrameArrived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_video_frame_arrived(&self, value: &foundation::TypedEventHandler<AppBroadcastStreamReader, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_video_frame_arrived(&self, value: &ComPtr<foundation::TypedEventHandler<AppBroadcastStreamReader, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_VideoFrameArrived)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_VideoFrameArrived)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_video_frame_arrived(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5548,9 +5548,9 @@ impl IAppCapture {
         let hr = ((*self.lpVtbl).get_IsCapturingVideo)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_capturing_changed(&self, handler: &foundation::TypedEventHandler<AppCapture, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_capturing_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AppCapture, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CapturingChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CapturingChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_capturing_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5563,10 +5563,10 @@ impl RtActivatable<IAppCaptureStatics> for AppCapture {}
 impl RtActivatable<IAppCaptureStatics2> for AppCapture {}
 impl AppCapture {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<AppCapture>>> {
-        <Self as RtActivatable<IAppCaptureStatics>>::get_activation_factory().get_for_current_view()
+        <Self as RtActivatable<IAppCaptureStatics>>::get_activation_factory().deref().get_for_current_view()
     }
     #[inline] pub fn set_allowed_async(allowed: bool) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IAppCaptureStatics2>>::get_activation_factory().set_allowed_async(allowed)
+        <Self as RtActivatable<IAppCaptureStatics2>>::get_activation_factory().deref().set_allowed_async(allowed)
     }
 }
 DEFINE_CLSID!(AppCapture(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,67,97,112,116,117,114,101,0]) [CLSID_AppCapture]);
@@ -5793,10 +5793,10 @@ RT_CLASS!{static class AppCaptureManager}
 impl RtActivatable<IAppCaptureManagerStatics> for AppCaptureManager {}
 impl AppCaptureManager {
     #[inline] pub fn get_current_settings() -> Result<Option<ComPtr<AppCaptureSettings>>> {
-        <Self as RtActivatable<IAppCaptureManagerStatics>>::get_activation_factory().get_current_settings()
+        <Self as RtActivatable<IAppCaptureManagerStatics>>::get_activation_factory().deref().get_current_settings()
     }
-    #[inline] pub fn apply_settings(appCaptureSettings: &AppCaptureSettings) -> Result<()> {
-        <Self as RtActivatable<IAppCaptureManagerStatics>>::get_activation_factory().apply_settings(appCaptureSettings)
+    #[inline] pub fn apply_settings(appCaptureSettings: &ComPtr<AppCaptureSettings>) -> Result<()> {
+        <Self as RtActivatable<IAppCaptureManagerStatics>>::get_activation_factory().deref().apply_settings(appCaptureSettings)
     }
 }
 DEFINE_CLSID!(AppCaptureManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,67,97,112,116,117,114,101,77,97,110,97,103,101,114,0]) [CLSID_AppCaptureManager]);
@@ -5811,8 +5811,8 @@ impl IAppCaptureManagerStatics {
         let hr = ((*self.lpVtbl).GetCurrentSettings)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn apply_settings(&self, appCaptureSettings: &AppCaptureSettings) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ApplySettings)(self as *const _ as *mut _, appCaptureSettings as *const _ as *mut _);
+    #[inline] pub fn apply_settings(&self, appCaptureSettings: &ComPtr<AppCaptureSettings>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ApplySettings)(self as *const _ as *mut _, appCaptureSettings.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5871,9 +5871,9 @@ impl IAppCaptureMetadataWriter {
         let hr = ((*self.lpVtbl).get_RemainingStorageBytesAvailable)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_metadata_purged(&self, handler: &foundation::TypedEventHandler<AppCaptureMetadataWriter, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_metadata_purged(&self, handler: &ComPtr<foundation::TypedEventHandler<AppCaptureMetadataWriter, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MetadataPurged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MetadataPurged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_metadata_purged(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -5972,27 +5972,27 @@ impl IAppCaptureRecordOperation {
         let hr = ((*self.lpVtbl).get_IsFileTruncated)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_state_changed(&self, value: &foundation::TypedEventHandler<AppCaptureRecordOperation, AppCaptureRecordingStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_state_changed(&self, value: &ComPtr<foundation::TypedEventHandler<AppCaptureRecordOperation, AppCaptureRecordingStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_StateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_duration_generated(&self, value: &foundation::TypedEventHandler<AppCaptureRecordOperation, AppCaptureDurationGeneratedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_duration_generated(&self, value: &ComPtr<foundation::TypedEventHandler<AppCaptureRecordOperation, AppCaptureDurationGeneratedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DurationGenerated)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DurationGenerated)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_duration_generated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_DurationGenerated)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_file_generated(&self, value: &foundation::TypedEventHandler<AppCaptureRecordOperation, AppCaptureFileGeneratedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_file_generated(&self, value: &ComPtr<foundation::TypedEventHandler<AppCaptureRecordOperation, AppCaptureFileGeneratedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FileGenerated)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FileGenerated)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_file_generated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -6075,8 +6075,8 @@ RT_INTERFACE!{interface IAppCaptureSettings(IAppCaptureSettingsVtbl): IInspectab
     fn get_HasHardwareEncoder(&self, out: *mut bool) -> HRESULT
 }}
 impl IAppCaptureSettings {
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_app_capture_destination_folder(&self, value: &super::super::storage::StorageFolder) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AppCaptureDestinationFolder)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_app_capture_destination_folder(&self, value: &ComPtr<super::super::storage::StorageFolder>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AppCaptureDestinationFolder)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_app_capture_destination_folder(&self) -> Result<Option<ComPtr<super::super::storage::StorageFolder>>> { unsafe { 
@@ -6183,8 +6183,8 @@ impl IAppCaptureSettings {
         let hr = ((*self.lpVtbl).get_MaximumRecordLength)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_screenshot_destination_folder(&self, value: &super::super::storage::StorageFolder) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ScreenshotDestinationFolder)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_screenshot_destination_folder(&self, value: &ComPtr<super::super::storage::StorageFolder>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ScreenshotDestinationFolder)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_screenshot_destination_folder(&self) -> Result<Option<ComPtr<super::super::storage::StorageFolder>>> { unsafe { 
@@ -6398,18 +6398,18 @@ impl IAppCaptureState {
         let hr = ((*self.lpVtbl).get_MicrophoneCaptureError)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_microphone_capture_state_changed(&self, value: &foundation::TypedEventHandler<AppCaptureState, AppCaptureMicrophoneCaptureStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_microphone_capture_state_changed(&self, value: &ComPtr<foundation::TypedEventHandler<AppCaptureState, AppCaptureMicrophoneCaptureStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MicrophoneCaptureStateChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MicrophoneCaptureStateChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_microphone_capture_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_MicrophoneCaptureStateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_capture_target_closed(&self, value: &foundation::TypedEventHandler<AppCaptureState, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_capture_target_closed(&self, value: &ComPtr<foundation::TypedEventHandler<AppCaptureState, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CaptureTargetClosed)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CaptureTargetClosed)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_capture_target_closed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -6604,8 +6604,8 @@ RT_ENUM! { enum CameraCaptureUIVideoFormat: i32 {
 RT_CLASS!{static class CameraOptionsUI}
 impl RtActivatable<ICameraOptionsUIStatics> for CameraOptionsUI {}
 impl CameraOptionsUI {
-    #[inline] pub fn show(mediaCapture: &MediaCapture) -> Result<()> {
-        <Self as RtActivatable<ICameraOptionsUIStatics>>::get_activation_factory().show(mediaCapture)
+    #[inline] pub fn show(mediaCapture: &ComPtr<MediaCapture>) -> Result<()> {
+        <Self as RtActivatable<ICameraOptionsUIStatics>>::get_activation_factory().deref().show(mediaCapture)
     }
 }
 DEFINE_CLSID!(CameraOptionsUI(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,67,97,109,101,114,97,79,112,116,105,111,110,115,85,73,0]) [CLSID_CameraOptionsUI]);
@@ -6614,8 +6614,8 @@ RT_INTERFACE!{static interface ICameraOptionsUIStatics(ICameraOptionsUIStaticsVt
     fn Show(&self, mediaCapture: *mut MediaCapture) -> HRESULT
 }}
 impl ICameraOptionsUIStatics {
-    #[inline] pub fn show(&self, mediaCapture: &MediaCapture) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Show)(self as *const _ as *mut _, mediaCapture as *const _ as *mut _);
+    #[inline] pub fn show(&self, mediaCapture: &ComPtr<MediaCapture>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Show)(self as *const _ as *mut _, mediaCapture.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6833,9 +6833,9 @@ impl IGameBarServices {
         let hr = ((*self.lpVtbl).get_AppCaptureServices)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_command_received(&self, value: &foundation::TypedEventHandler<GameBarServices, GameBarServicesCommandEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_command_received(&self, value: &ComPtr<foundation::TypedEventHandler<GameBarServices, GameBarServicesCommandEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CommandReceived)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CommandReceived)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_command_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -6871,9 +6871,9 @@ RT_INTERFACE!{interface IGameBarServicesManager(IGameBarServicesManagerVtbl): II
     fn remove_GameBarServicesCreated(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IGameBarServicesManager {
-    #[inline] pub fn add_game_bar_services_created(&self, value: &foundation::TypedEventHandler<GameBarServicesManager, GameBarServicesManagerGameBarServicesCreatedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_game_bar_services_created(&self, value: &ComPtr<foundation::TypedEventHandler<GameBarServicesManager, GameBarServicesManagerGameBarServicesCreatedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_GameBarServicesCreated)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_GameBarServicesCreated)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_game_bar_services_created(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -6885,7 +6885,7 @@ RT_CLASS!{class GameBarServicesManager: IGameBarServicesManager}
 impl RtActivatable<IGameBarServicesManagerStatics> for GameBarServicesManager {}
 impl GameBarServicesManager {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<GameBarServicesManager>>> {
-        <Self as RtActivatable<IGameBarServicesManagerStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<IGameBarServicesManagerStatics>>::get_activation_factory().deref().get_default()
     }
 }
 DEFINE_CLSID!(GameBarServicesManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,71,97,109,101,66,97,114,83,101,114,118,105,99,101,115,77,97,110,97,103,101,114,0]) [CLSID_GameBarServicesManager]);
@@ -7048,9 +7048,9 @@ impl ILowLagPhotoSequenceCapture {
         let hr = ((*self.lpVtbl).FinishAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_photo_captured(&self, handler: &foundation::TypedEventHandler<LowLagPhotoSequenceCapture, PhotoCapturedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_photo_captured(&self, handler: &ComPtr<foundation::TypedEventHandler<LowLagPhotoSequenceCapture, PhotoCapturedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PhotoCaptured)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PhotoCaptured)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_photo_captured(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -7098,29 +7098,29 @@ impl IMediaCapture {
         let hr = ((*self.lpVtbl).InitializeAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn initialize_with_settings_async(&self, mediaCaptureInitializationSettings: &MediaCaptureInitializationSettings) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn initialize_with_settings_async(&self, mediaCaptureInitializationSettings: &ComPtr<MediaCaptureInitializationSettings>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).InitializeWithSettingsAsync)(self as *const _ as *mut _, mediaCaptureInitializationSettings as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).InitializeWithSettingsAsync)(self as *const _ as *mut _, mediaCaptureInitializationSettings.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn start_record_to_storage_file_async(&self, encodingProfile: &super::mediaproperties::MediaEncodingProfile, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn start_record_to_storage_file_async(&self, encodingProfile: &ComPtr<super::mediaproperties::MediaEncodingProfile>, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartRecordToStorageFileAsync)(self as *const _ as *mut _, encodingProfile as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).StartRecordToStorageFileAsync)(self as *const _ as *mut _, encodingProfile.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn start_record_to_stream_async(&self, encodingProfile: &super::mediaproperties::MediaEncodingProfile, stream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn start_record_to_stream_async(&self, encodingProfile: &ComPtr<super::mediaproperties::MediaEncodingProfile>, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartRecordToStreamAsync)(self as *const _ as *mut _, encodingProfile as *const _ as *mut _, stream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).StartRecordToStreamAsync)(self as *const _ as *mut _, encodingProfile.deref() as *const _ as *mut _, stream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn start_record_to_custom_sink_async(&self, encodingProfile: &super::mediaproperties::MediaEncodingProfile, customMediaSink: &super::IMediaExtension) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn start_record_to_custom_sink_async(&self, encodingProfile: &ComPtr<super::mediaproperties::MediaEncodingProfile>, customMediaSink: &ComPtr<super::IMediaExtension>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartRecordToCustomSinkAsync)(self as *const _ as *mut _, encodingProfile as *const _ as *mut _, customMediaSink as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).StartRecordToCustomSinkAsync)(self as *const _ as *mut _, encodingProfile.deref() as *const _ as *mut _, customMediaSink.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn start_record_to_custom_sink_id_async(&self, encodingProfile: &super::mediaproperties::MediaEncodingProfile, customSinkActivationId: &HStringArg, customSinkSettings: &foundation::collections::IPropertySet) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn start_record_to_custom_sink_id_async(&self, encodingProfile: &ComPtr<super::mediaproperties::MediaEncodingProfile>, customSinkActivationId: &HStringArg, customSinkSettings: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartRecordToCustomSinkIdAsync)(self as *const _ as *mut _, encodingProfile as *const _ as *mut _, customSinkActivationId.get(), customSinkSettings as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).StartRecordToCustomSinkIdAsync)(self as *const _ as *mut _, encodingProfile.deref() as *const _ as *mut _, customSinkActivationId.get(), customSinkSettings.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn stop_record_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -7128,19 +7128,19 @@ impl IMediaCapture {
         let hr = ((*self.lpVtbl).StopRecordAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn capture_photo_to_storage_file_async(&self, type_: &super::mediaproperties::ImageEncodingProperties, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn capture_photo_to_storage_file_async(&self, type_: &ComPtr<super::mediaproperties::ImageEncodingProperties>, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CapturePhotoToStorageFileAsync)(self as *const _ as *mut _, type_ as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CapturePhotoToStorageFileAsync)(self as *const _ as *mut _, type_.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn capture_photo_to_stream_async(&self, type_: &super::mediaproperties::ImageEncodingProperties, stream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn capture_photo_to_stream_async(&self, type_: &ComPtr<super::mediaproperties::ImageEncodingProperties>, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CapturePhotoToStreamAsync)(self as *const _ as *mut _, type_ as *const _ as *mut _, stream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CapturePhotoToStreamAsync)(self as *const _ as *mut _, type_.deref() as *const _ as *mut _, stream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_effect_async(&self, mediaStreamType: MediaStreamType, effectActivationID: &HStringArg, effectSettings: &foundation::collections::IPropertySet) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn add_effect_async(&self, mediaStreamType: MediaStreamType, effectActivationID: &HStringArg, effectSettings: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddEffectAsync)(self as *const _ as *mut _, mediaStreamType, effectActivationID.get(), effectSettings as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AddEffectAsync)(self as *const _ as *mut _, mediaStreamType, effectActivationID.get(), effectSettings.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn clear_effects_async(&self, mediaStreamType: MediaStreamType) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -7148,8 +7148,8 @@ impl IMediaCapture {
         let hr = ((*self.lpVtbl).ClearEffectsAsync)(self as *const _ as *mut _, mediaStreamType, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_encoder_property(&self, mediaStreamType: MediaStreamType, propertyId: Guid, propertyValue: &IInspectable) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetEncoderProperty)(self as *const _ as *mut _, mediaStreamType, propertyId, propertyValue as *const _ as *mut _);
+    #[inline] pub fn set_encoder_property(&self, mediaStreamType: MediaStreamType, propertyId: Guid, propertyValue: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetEncoderProperty)(self as *const _ as *mut _, mediaStreamType, propertyId, propertyValue.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_encoder_property(&self, mediaStreamType: MediaStreamType, propertyId: Guid) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
@@ -7157,18 +7157,18 @@ impl IMediaCapture {
         let hr = ((*self.lpVtbl).GetEncoderProperty)(self as *const _ as *mut _, mediaStreamType, propertyId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_failed(&self, errorEventHandler: &MediaCaptureFailedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_failed(&self, errorEventHandler: &ComPtr<MediaCaptureFailedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Failed)(self as *const _ as *mut _, errorEventHandler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Failed)(self as *const _ as *mut _, errorEventHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_failed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Failed)(self as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_record_limitation_exceeded(&self, recordLimitationExceededEventHandler: &RecordLimitationExceededEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_record_limitation_exceeded(&self, recordLimitationExceededEventHandler: &ComPtr<RecordLimitationExceededEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RecordLimitationExceeded)(self as *const _ as *mut _, recordLimitationExceededEventHandler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RecordLimitationExceeded)(self as *const _ as *mut _, recordLimitationExceededEventHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_record_limitation_exceeded(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -7223,16 +7223,16 @@ impl RtActivatable<IMediaCaptureStatics> for MediaCapture {}
 impl RtActivatable<IActivationFactory> for MediaCapture {}
 impl MediaCapture {
     #[inline] pub fn is_video_profile_supported(videoDeviceId: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IMediaCaptureStatics>>::get_activation_factory().is_video_profile_supported(videoDeviceId)
+        <Self as RtActivatable<IMediaCaptureStatics>>::get_activation_factory().deref().is_video_profile_supported(videoDeviceId)
     }
     #[inline] pub fn find_all_video_profiles(videoDeviceId: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<MediaCaptureVideoProfile>>>> {
-        <Self as RtActivatable<IMediaCaptureStatics>>::get_activation_factory().find_all_video_profiles(videoDeviceId)
+        <Self as RtActivatable<IMediaCaptureStatics>>::get_activation_factory().deref().find_all_video_profiles(videoDeviceId)
     }
     #[inline] pub fn find_concurrent_profiles(videoDeviceId: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<MediaCaptureVideoProfile>>>> {
-        <Self as RtActivatable<IMediaCaptureStatics>>::get_activation_factory().find_concurrent_profiles(videoDeviceId)
+        <Self as RtActivatable<IMediaCaptureStatics>>::get_activation_factory().deref().find_concurrent_profiles(videoDeviceId)
     }
     #[inline] pub fn find_known_video_profiles(videoDeviceId: &HStringArg, name: KnownVideoProfile) -> Result<Option<ComPtr<foundation::collections::IVectorView<MediaCaptureVideoProfile>>>> {
-        <Self as RtActivatable<IMediaCaptureStatics>>::get_activation_factory().find_known_video_profiles(videoDeviceId, name)
+        <Self as RtActivatable<IMediaCaptureStatics>>::get_activation_factory().deref().find_known_video_profiles(videoDeviceId, name)
     }
 }
 DEFINE_CLSID!(MediaCapture(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,77,101,100,105,97,67,97,112,116,117,114,101,0]) [CLSID_MediaCapture]);
@@ -7249,39 +7249,39 @@ RT_INTERFACE!{interface IMediaCapture2(IMediaCapture2Vtbl): IInspectable(IInspec
     fn SetEncodingPropertiesAsync(&self, mediaStreamType: MediaStreamType, mediaEncodingProperties: *mut super::mediaproperties::IMediaEncodingProperties, encoderProperties: *mut super::mediaproperties::MediaPropertySet, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IMediaCapture2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn prepare_low_lag_record_to_storage_file_async(&self, encodingProfile: &super::mediaproperties::MediaEncodingProfile, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<LowLagMediaRecording>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn prepare_low_lag_record_to_storage_file_async(&self, encodingProfile: &ComPtr<super::mediaproperties::MediaEncodingProfile>, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<LowLagMediaRecording>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PrepareLowLagRecordToStorageFileAsync)(self as *const _ as *mut _, encodingProfile as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).PrepareLowLagRecordToStorageFileAsync)(self as *const _ as *mut _, encodingProfile.deref() as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn prepare_low_lag_record_to_stream_async(&self, encodingProfile: &super::mediaproperties::MediaEncodingProfile, stream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<LowLagMediaRecording>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn prepare_low_lag_record_to_stream_async(&self, encodingProfile: &ComPtr<super::mediaproperties::MediaEncodingProfile>, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<LowLagMediaRecording>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PrepareLowLagRecordToStreamAsync)(self as *const _ as *mut _, encodingProfile as *const _ as *mut _, stream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).PrepareLowLagRecordToStreamAsync)(self as *const _ as *mut _, encodingProfile.deref() as *const _ as *mut _, stream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn prepare_low_lag_record_to_custom_sink_async(&self, encodingProfile: &super::mediaproperties::MediaEncodingProfile, customMediaSink: &super::IMediaExtension) -> Result<ComPtr<foundation::IAsyncOperation<LowLagMediaRecording>>> { unsafe { 
+    #[inline] pub fn prepare_low_lag_record_to_custom_sink_async(&self, encodingProfile: &ComPtr<super::mediaproperties::MediaEncodingProfile>, customMediaSink: &ComPtr<super::IMediaExtension>) -> Result<ComPtr<foundation::IAsyncOperation<LowLagMediaRecording>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PrepareLowLagRecordToCustomSinkAsync)(self as *const _ as *mut _, encodingProfile as *const _ as *mut _, customMediaSink as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).PrepareLowLagRecordToCustomSinkAsync)(self as *const _ as *mut _, encodingProfile.deref() as *const _ as *mut _, customMediaSink.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn prepare_low_lag_record_to_custom_sink_id_async(&self, encodingProfile: &super::mediaproperties::MediaEncodingProfile, customSinkActivationId: &HStringArg, customSinkSettings: &foundation::collections::IPropertySet) -> Result<ComPtr<foundation::IAsyncOperation<LowLagMediaRecording>>> { unsafe { 
+    #[inline] pub fn prepare_low_lag_record_to_custom_sink_id_async(&self, encodingProfile: &ComPtr<super::mediaproperties::MediaEncodingProfile>, customSinkActivationId: &HStringArg, customSinkSettings: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<foundation::IAsyncOperation<LowLagMediaRecording>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PrepareLowLagRecordToCustomSinkIdAsync)(self as *const _ as *mut _, encodingProfile as *const _ as *mut _, customSinkActivationId.get(), customSinkSettings as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).PrepareLowLagRecordToCustomSinkIdAsync)(self as *const _ as *mut _, encodingProfile.deref() as *const _ as *mut _, customSinkActivationId.get(), customSinkSettings.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn prepare_low_lag_photo_capture_async(&self, type_: &super::mediaproperties::ImageEncodingProperties) -> Result<ComPtr<foundation::IAsyncOperation<LowLagPhotoCapture>>> { unsafe { 
+    #[inline] pub fn prepare_low_lag_photo_capture_async(&self, type_: &ComPtr<super::mediaproperties::ImageEncodingProperties>) -> Result<ComPtr<foundation::IAsyncOperation<LowLagPhotoCapture>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PrepareLowLagPhotoCaptureAsync)(self as *const _ as *mut _, type_ as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).PrepareLowLagPhotoCaptureAsync)(self as *const _ as *mut _, type_.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn prepare_low_lag_photo_sequence_capture_async(&self, type_: &super::mediaproperties::ImageEncodingProperties) -> Result<ComPtr<foundation::IAsyncOperation<LowLagPhotoSequenceCapture>>> { unsafe { 
+    #[inline] pub fn prepare_low_lag_photo_sequence_capture_async(&self, type_: &ComPtr<super::mediaproperties::ImageEncodingProperties>) -> Result<ComPtr<foundation::IAsyncOperation<LowLagPhotoSequenceCapture>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PrepareLowLagPhotoSequenceCaptureAsync)(self as *const _ as *mut _, type_ as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).PrepareLowLagPhotoSequenceCaptureAsync)(self as *const _ as *mut _, type_.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_encoding_properties_async(&self, mediaStreamType: MediaStreamType, mediaEncodingProperties: &super::mediaproperties::IMediaEncodingProperties, encoderProperties: &super::mediaproperties::MediaPropertySet) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn set_encoding_properties_async(&self, mediaStreamType: MediaStreamType, mediaEncodingProperties: &ComPtr<super::mediaproperties::IMediaEncodingProperties>, encoderProperties: &ComPtr<super::mediaproperties::MediaPropertySet>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetEncodingPropertiesAsync)(self as *const _ as *mut _, mediaStreamType, mediaEncodingProperties as *const _ as *mut _, encoderProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetEncodingPropertiesAsync)(self as *const _ as *mut _, mediaStreamType, mediaEncodingProperties.deref() as *const _ as *mut _, encoderProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -7294,23 +7294,23 @@ RT_INTERFACE!{interface IMediaCapture3(IMediaCapture3Vtbl): IInspectable(IInspec
     fn remove_PhotoConfirmationCaptured(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IMediaCapture3 {
-    #[inline] pub fn prepare_variable_photo_sequence_capture_async(&self, type_: &super::mediaproperties::ImageEncodingProperties) -> Result<ComPtr<foundation::IAsyncOperation<core::VariablePhotoSequenceCapture>>> { unsafe { 
+    #[inline] pub fn prepare_variable_photo_sequence_capture_async(&self, type_: &ComPtr<super::mediaproperties::ImageEncodingProperties>) -> Result<ComPtr<foundation::IAsyncOperation<core::VariablePhotoSequenceCapture>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PrepareVariablePhotoSequenceCaptureAsync)(self as *const _ as *mut _, type_ as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).PrepareVariablePhotoSequenceCaptureAsync)(self as *const _ as *mut _, type_.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_focus_changed(&self, handler: &foundation::TypedEventHandler<MediaCapture, MediaCaptureFocusChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_focus_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaCapture, MediaCaptureFocusChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FocusChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FocusChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_focus_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_FocusChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_photo_confirmation_captured(&self, handler: &foundation::TypedEventHandler<MediaCapture, PhotoConfirmationCapturedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_photo_confirmation_captured(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaCapture, PhotoConfirmationCapturedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PhotoConfirmationCaptured)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PhotoConfirmationCaptured)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_photo_confirmation_captured(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -7335,14 +7335,14 @@ RT_INTERFACE!{interface IMediaCapture4(IMediaCapture4Vtbl): IInspectable(IInspec
     fn PrepareAdvancedPhotoCaptureAsync(&self, encodingProperties: *mut super::mediaproperties::ImageEncodingProperties, out: *mut *mut foundation::IAsyncOperation<AdvancedPhotoCapture>) -> HRESULT
 }}
 impl IMediaCapture4 {
-    #[inline] pub fn add_audio_effect_async(&self, definition: &super::effects::IAudioEffectDefinition) -> Result<ComPtr<foundation::IAsyncOperation<super::IMediaExtension>>> { unsafe { 
+    #[inline] pub fn add_audio_effect_async(&self, definition: &ComPtr<super::effects::IAudioEffectDefinition>) -> Result<ComPtr<foundation::IAsyncOperation<super::IMediaExtension>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddAudioEffectAsync)(self as *const _ as *mut _, definition as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).AddAudioEffectAsync)(self as *const _ as *mut _, definition.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_video_effect_async(&self, definition: &super::effects::IVideoEffectDefinition, mediaStreamType: MediaStreamType) -> Result<ComPtr<foundation::IAsyncOperation<super::IMediaExtension>>> { unsafe { 
+    #[inline] pub fn add_video_effect_async(&self, definition: &ComPtr<super::effects::IVideoEffectDefinition>, mediaStreamType: MediaStreamType) -> Result<ComPtr<foundation::IAsyncOperation<super::IMediaExtension>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).AddVideoEffectAsync)(self as *const _ as *mut _, definition as *const _ as *mut _, mediaStreamType, &mut out);
+        let hr = ((*self.lpVtbl).AddVideoEffectAsync)(self as *const _ as *mut _, definition.deref() as *const _ as *mut _, mediaStreamType, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn pause_record_async(&self, behavior: super::devices::MediaCapturePauseBehavior) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -7355,9 +7355,9 @@ impl IMediaCapture4 {
         let hr = ((*self.lpVtbl).ResumeRecordAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_camera_stream_state_changed(&self, handler: &foundation::TypedEventHandler<MediaCapture, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_camera_stream_state_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaCapture, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CameraStreamStateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CameraStreamStateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_camera_stream_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -7374,14 +7374,14 @@ impl IMediaCapture4 {
         let hr = ((*self.lpVtbl).GetPreviewFrameAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_preview_frame_copy_async(&self, destination: &super::VideoFrame) -> Result<ComPtr<foundation::IAsyncOperation<super::VideoFrame>>> { unsafe { 
+    #[inline] pub fn get_preview_frame_copy_async(&self, destination: &ComPtr<super::VideoFrame>) -> Result<ComPtr<foundation::IAsyncOperation<super::VideoFrame>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPreviewFrameCopyAsync)(self as *const _ as *mut _, destination as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetPreviewFrameCopyAsync)(self as *const _ as *mut _, destination.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_thermal_status_changed(&self, handler: &foundation::TypedEventHandler<MediaCapture, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_thermal_status_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaCapture, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ThermalStatusChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ThermalStatusChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_thermal_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -7393,9 +7393,9 @@ impl IMediaCapture4 {
         let hr = ((*self.lpVtbl).get_ThermalStatus)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn prepare_advanced_photo_capture_async(&self, encodingProperties: &super::mediaproperties::ImageEncodingProperties) -> Result<ComPtr<foundation::IAsyncOperation<AdvancedPhotoCapture>>> { unsafe { 
+    #[inline] pub fn prepare_advanced_photo_capture_async(&self, encodingProperties: &ComPtr<super::mediaproperties::ImageEncodingProperties>) -> Result<ComPtr<foundation::IAsyncOperation<AdvancedPhotoCapture>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PrepareAdvancedPhotoCaptureAsync)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).PrepareAdvancedPhotoCaptureAsync)(self as *const _ as *mut _, encodingProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -7410,9 +7410,9 @@ RT_INTERFACE!{interface IMediaCapture5(IMediaCapture5Vtbl): IInspectable(IInspec
     #[cfg(feature="windows-graphics")] fn CreateFrameReaderWithSubtypeAndSizeAsync(&self, inputSource: *mut frames::MediaFrameSource, outputSubtype: HSTRING, outputSize: super::super::graphics::imaging::BitmapSize, out: *mut *mut foundation::IAsyncOperation<frames::MediaFrameReader>) -> HRESULT
 }}
 impl IMediaCapture5 {
-    #[inline] pub fn remove_effect_async(&self, effect: &super::IMediaExtension) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn remove_effect_async(&self, effect: &ComPtr<super::IMediaExtension>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RemoveEffectAsync)(self as *const _ as *mut _, effect as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RemoveEffectAsync)(self as *const _ as *mut _, effect.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn pause_record_with_result_async(&self, behavior: super::devices::MediaCapturePauseBehavior) -> Result<ComPtr<foundation::IAsyncOperation<MediaCapturePauseResult>>> { unsafe { 
@@ -7430,19 +7430,19 @@ impl IMediaCapture5 {
         let hr = ((*self.lpVtbl).get_FrameSources)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_frame_reader_async(&self, inputSource: &frames::MediaFrameSource) -> Result<ComPtr<foundation::IAsyncOperation<frames::MediaFrameReader>>> { unsafe { 
+    #[inline] pub fn create_frame_reader_async(&self, inputSource: &ComPtr<frames::MediaFrameSource>) -> Result<ComPtr<foundation::IAsyncOperation<frames::MediaFrameReader>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFrameReaderAsync)(self as *const _ as *mut _, inputSource as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFrameReaderAsync)(self as *const _ as *mut _, inputSource.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_frame_reader_with_subtype_async(&self, inputSource: &frames::MediaFrameSource, outputSubtype: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<frames::MediaFrameReader>>> { unsafe { 
+    #[inline] pub fn create_frame_reader_with_subtype_async(&self, inputSource: &ComPtr<frames::MediaFrameSource>, outputSubtype: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<frames::MediaFrameReader>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFrameReaderWithSubtypeAsync)(self as *const _ as *mut _, inputSource as *const _ as *mut _, outputSubtype.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateFrameReaderWithSubtypeAsync)(self as *const _ as *mut _, inputSource.deref() as *const _ as *mut _, outputSubtype.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_frame_reader_with_subtype_and_size_async(&self, inputSource: &frames::MediaFrameSource, outputSubtype: &HStringArg, outputSize: super::super::graphics::imaging::BitmapSize) -> Result<ComPtr<foundation::IAsyncOperation<frames::MediaFrameReader>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_frame_reader_with_subtype_and_size_async(&self, inputSource: &ComPtr<frames::MediaFrameSource>, outputSubtype: &HStringArg, outputSize: super::super::graphics::imaging::BitmapSize) -> Result<ComPtr<foundation::IAsyncOperation<frames::MediaFrameReader>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFrameReaderWithSubtypeAndSizeAsync)(self as *const _ as *mut _, inputSource as *const _ as *mut _, outputSubtype.get(), outputSize, &mut out);
+        let hr = ((*self.lpVtbl).CreateFrameReaderWithSubtypeAndSizeAsync)(self as *const _ as *mut _, inputSource.deref() as *const _ as *mut _, outputSubtype.get(), outputSize, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -7453,18 +7453,18 @@ RT_INTERFACE!{interface IMediaCapture6(IMediaCapture6Vtbl): IInspectable(IInspec
     fn CreateMultiSourceFrameReaderAsync(&self, inputSources: *mut foundation::collections::IIterable<frames::MediaFrameSource>, out: *mut *mut foundation::IAsyncOperation<frames::MultiSourceMediaFrameReader>) -> HRESULT
 }}
 impl IMediaCapture6 {
-    #[inline] pub fn add_capture_device_exclusive_control_status_changed(&self, handler: &foundation::TypedEventHandler<MediaCapture, MediaCaptureDeviceExclusiveControlStatusChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_capture_device_exclusive_control_status_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaCapture, MediaCaptureDeviceExclusiveControlStatusChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CaptureDeviceExclusiveControlStatusChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CaptureDeviceExclusiveControlStatusChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_capture_device_exclusive_control_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_CaptureDeviceExclusiveControlStatusChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn create_multi_source_frame_reader_async(&self, inputSources: &foundation::collections::IIterable<frames::MediaFrameSource>) -> Result<ComPtr<foundation::IAsyncOperation<frames::MultiSourceMediaFrameReader>>> { unsafe { 
+    #[inline] pub fn create_multi_source_frame_reader_async(&self, inputSources: &ComPtr<foundation::collections::IIterable<frames::MediaFrameSource>>) -> Result<ComPtr<foundation::IAsyncOperation<frames::MultiSourceMediaFrameReader>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateMultiSourceFrameReaderAsync)(self as *const _ as *mut _, inputSources as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateMultiSourceFrameReaderAsync)(self as *const _ as *mut _, inputSources.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -7512,8 +7512,8 @@ RT_DELEGATE!{delegate MediaCaptureFailedEventHandler(MediaCaptureFailedEventHand
     fn Invoke(&self, sender: *mut MediaCapture, errorEventArgs: *mut MediaCaptureFailedEventArgs) -> HRESULT
 }}
 impl MediaCaptureFailedEventHandler {
-    #[inline] pub fn invoke(&self, sender: &MediaCapture, errorEventArgs: &MediaCaptureFailedEventArgs) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, errorEventArgs as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, sender: &ComPtr<MediaCapture>, errorEventArgs: &ComPtr<MediaCaptureFailedEventArgs>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _, errorEventArgs.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -7616,8 +7616,8 @@ RT_INTERFACE!{interface IMediaCaptureInitializationSettings3(IMediaCaptureInitia
     fn get_VideoSource(&self, out: *mut *mut super::core::IMediaSource) -> HRESULT
 }}
 impl IMediaCaptureInitializationSettings3 {
-    #[inline] pub fn set_audio_source(&self, value: &super::core::IMediaSource) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AudioSource)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_audio_source(&self, value: &ComPtr<super::core::IMediaSource>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AudioSource)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_audio_source(&self) -> Result<Option<ComPtr<super::core::IMediaSource>>> { unsafe { 
@@ -7625,8 +7625,8 @@ impl IMediaCaptureInitializationSettings3 {
         let hr = ((*self.lpVtbl).get_AudioSource)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_video_source(&self, value: &super::core::IMediaSource) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_VideoSource)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_video_source(&self, value: &ComPtr<super::core::IMediaSource>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_VideoSource)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_video_source(&self) -> Result<Option<ComPtr<super::core::IMediaSource>>> { unsafe { 
@@ -7652,8 +7652,8 @@ impl IMediaCaptureInitializationSettings4 {
         let hr = ((*self.lpVtbl).get_VideoProfile)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_video_profile(&self, value: &MediaCaptureVideoProfile) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_VideoProfile)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_video_profile(&self, value: &ComPtr<MediaCaptureVideoProfile>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_VideoProfile)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_preview_media_description(&self) -> Result<Option<ComPtr<MediaCaptureVideoProfileMediaDescription>>> { unsafe { 
@@ -7661,8 +7661,8 @@ impl IMediaCaptureInitializationSettings4 {
         let hr = ((*self.lpVtbl).get_PreviewMediaDescription)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_preview_media_description(&self, value: &MediaCaptureVideoProfileMediaDescription) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PreviewMediaDescription)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_preview_media_description(&self, value: &ComPtr<MediaCaptureVideoProfileMediaDescription>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PreviewMediaDescription)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_record_media_description(&self) -> Result<Option<ComPtr<MediaCaptureVideoProfileMediaDescription>>> { unsafe { 
@@ -7670,8 +7670,8 @@ impl IMediaCaptureInitializationSettings4 {
         let hr = ((*self.lpVtbl).get_RecordMediaDescription)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_record_media_description(&self, value: &MediaCaptureVideoProfileMediaDescription) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_RecordMediaDescription)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_record_media_description(&self, value: &ComPtr<MediaCaptureVideoProfileMediaDescription>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_RecordMediaDescription)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_photo_media_description(&self) -> Result<Option<ComPtr<MediaCaptureVideoProfileMediaDescription>>> { unsafe { 
@@ -7679,8 +7679,8 @@ impl IMediaCaptureInitializationSettings4 {
         let hr = ((*self.lpVtbl).get_PhotoMediaDescription)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_photo_media_description(&self, value: &MediaCaptureVideoProfileMediaDescription) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PhotoMediaDescription)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_photo_media_description(&self, value: &ComPtr<MediaCaptureVideoProfileMediaDescription>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PhotoMediaDescription)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -7699,8 +7699,8 @@ impl IMediaCaptureInitializationSettings5 {
         let hr = ((*self.lpVtbl).get_SourceGroup)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_source_group(&self, value: &frames::MediaFrameSourceGroup) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SourceGroup)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_source_group(&self, value: &ComPtr<frames::MediaFrameSourceGroup>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SourceGroup)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_sharing_mode(&self) -> Result<MediaCaptureSharingMode> { unsafe { 
@@ -7925,14 +7925,14 @@ impl IMediaCaptureVideoPreview {
         let hr = ((*self.lpVtbl).StartPreviewAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn start_preview_to_custom_sink_async(&self, encodingProfile: &super::mediaproperties::MediaEncodingProfile, customMediaSink: &super::IMediaExtension) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn start_preview_to_custom_sink_async(&self, encodingProfile: &ComPtr<super::mediaproperties::MediaEncodingProfile>, customMediaSink: &ComPtr<super::IMediaExtension>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartPreviewToCustomSinkAsync)(self as *const _ as *mut _, encodingProfile as *const _ as *mut _, customMediaSink as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).StartPreviewToCustomSinkAsync)(self as *const _ as *mut _, encodingProfile.deref() as *const _ as *mut _, customMediaSink.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn start_preview_to_custom_sink_id_async(&self, encodingProfile: &super::mediaproperties::MediaEncodingProfile, customSinkActivationId: &HStringArg, customSinkSettings: &foundation::collections::IPropertySet) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn start_preview_to_custom_sink_id_async(&self, encodingProfile: &ComPtr<super::mediaproperties::MediaEncodingProfile>, customSinkActivationId: &HStringArg, customSinkSettings: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartPreviewToCustomSinkIdAsync)(self as *const _ as *mut _, encodingProfile as *const _ as *mut _, customSinkActivationId.get(), customSinkSettings as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).StartPreviewToCustomSinkIdAsync)(self as *const _ as *mut _, encodingProfile.deref() as *const _ as *mut _, customSinkActivationId.get(), customSinkSettings.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn stop_preview_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -8130,8 +8130,8 @@ RT_DELEGATE!{delegate RecordLimitationExceededEventHandler(RecordLimitationExcee
     fn Invoke(&self, sender: *mut MediaCapture) -> HRESULT
 }}
 impl RecordLimitationExceededEventHandler {
-    #[inline] pub fn invoke(&self, sender: &MediaCapture) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, sender: &ComPtr<MediaCapture>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -8223,18 +8223,18 @@ impl IVariablePhotoSequenceCapture {
         let hr = ((*self.lpVtbl).FinishAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_photo_captured(&self, handler: &foundation::TypedEventHandler<VariablePhotoSequenceCapture, VariablePhotoCapturedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_photo_captured(&self, handler: &ComPtr<foundation::TypedEventHandler<VariablePhotoSequenceCapture, VariablePhotoCapturedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PhotoCaptured)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PhotoCaptured)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_photo_captured(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PhotoCaptured)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_stopped(&self, handler: &foundation::TypedEventHandler<VariablePhotoSequenceCapture, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_stopped(&self, handler: &ComPtr<foundation::TypedEventHandler<VariablePhotoSequenceCapture, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Stopped)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Stopped)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_stopped(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -8322,9 +8322,9 @@ impl IDepthMediaFrame {
         let hr = ((*self.lpVtbl).get_DepthFormat)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_create_coordinate_mapper(&self, cameraIntrinsics: &super::super::devices::core::CameraIntrinsics, coordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<super::super::devices::core::DepthCorrelatedCoordinateMapper>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_create_coordinate_mapper(&self, cameraIntrinsics: &ComPtr<super::super::devices::core::CameraIntrinsics>, coordinateSystem: &ComPtr<crate::windows::perception::spatial::SpatialCoordinateSystem>) -> Result<Option<ComPtr<super::super::devices::core::DepthCorrelatedCoordinateMapper>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryCreateCoordinateMapper)(self as *const _ as *mut _, cameraIntrinsics as *const _ as *mut _, coordinateSystem as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TryCreateCoordinateMapper)(self as *const _ as *mut _, cameraIntrinsics.deref() as *const _ as *mut _, coordinateSystem.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -8449,9 +8449,9 @@ RT_INTERFACE!{interface IMediaFrameReader(IMediaFrameReaderVtbl): IInspectable(I
     fn StopAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IMediaFrameReader {
-    #[inline] pub fn add_frame_arrived(&self, handler: &foundation::TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_frame_arrived(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FrameArrived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FrameArrived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_frame_arrived(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -8594,23 +8594,23 @@ impl IMediaFrameSource {
         let hr = ((*self.lpVtbl).get_CurrentFormat)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_format_async(&self, format: &MediaFrameFormat) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn set_format_async(&self, format: &ComPtr<MediaFrameFormat>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetFormatAsync)(self as *const _ as *mut _, format as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetFormatAsync)(self as *const _ as *mut _, format.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_format_changed(&self, handler: &foundation::TypedEventHandler<MediaFrameSource, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_format_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaFrameSource, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FormatChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FormatChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_format_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_FormatChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn try_get_camera_intrinsics(&self, format: &MediaFrameFormat) -> Result<Option<ComPtr<super::super::devices::core::CameraIntrinsics>>> { unsafe { 
+    #[inline] pub fn try_get_camera_intrinsics(&self, format: &ComPtr<MediaFrameFormat>) -> Result<Option<ComPtr<super::super::devices::core::CameraIntrinsics>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryGetCameraIntrinsics)(self as *const _ as *mut _, format as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TryGetCameraIntrinsics)(self as *const _ as *mut _, format.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -8627,9 +8627,9 @@ impl IMediaFrameSourceController {
         let hr = ((*self.lpVtbl).GetPropertyAsync)(self as *const _ as *mut _, propertyId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_property_async(&self, propertyId: &HStringArg, propertyValue: &IInspectable) -> Result<ComPtr<foundation::IAsyncOperation<MediaFrameSourceSetPropertyStatus>>> { unsafe { 
+    #[inline] pub fn set_property_async(&self, propertyId: &HStringArg, propertyValue: &ComPtr<IInspectable>) -> Result<ComPtr<foundation::IAsyncOperation<MediaFrameSourceSetPropertyStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetPropertyAsync)(self as *const _ as *mut _, propertyId.get(), propertyValue as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetPropertyAsync)(self as *const _ as *mut _, propertyId.get(), propertyValue.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_video_device_controller(&self) -> Result<Option<ComPtr<super::super::devices::VideoDeviceController>>> { unsafe { 
@@ -8645,9 +8645,9 @@ RT_INTERFACE!{interface IMediaFrameSourceController2(IMediaFrameSourceController
     fn SetPropertyByExtendedIdAsync(&self, extendedPropertyIdSize: u32, extendedPropertyId: *mut u8, propertyValueSize: u32, propertyValue: *mut u8, out: *mut *mut foundation::IAsyncOperation<MediaFrameSourceSetPropertyStatus>) -> HRESULT
 }}
 impl IMediaFrameSourceController2 {
-    #[inline] pub fn get_property_by_extended_id_async(&self, extendedPropertyId: &[u8], maxPropertyValueSize: &foundation::IReference<u32>) -> Result<ComPtr<foundation::IAsyncOperation<MediaFrameSourceGetPropertyResult>>> { unsafe { 
+    #[inline] pub fn get_property_by_extended_id_async(&self, extendedPropertyId: &[u8], maxPropertyValueSize: &ComPtr<foundation::IReference<u32>>) -> Result<ComPtr<foundation::IAsyncOperation<MediaFrameSourceGetPropertyResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetPropertyByExtendedIdAsync)(self as *const _ as *mut _, extendedPropertyId.len() as u32, extendedPropertyId.as_ptr() as *mut _, maxPropertyValueSize as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetPropertyByExtendedIdAsync)(self as *const _ as *mut _, extendedPropertyId.len() as u32, extendedPropertyId.as_ptr() as *mut _, maxPropertyValueSize.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_property_by_extended_id_async(&self, extendedPropertyId: &[u8], propertyValue: &[u8]) -> Result<ComPtr<foundation::IAsyncOperation<MediaFrameSourceSetPropertyStatus>>> { unsafe { 
@@ -8715,13 +8715,13 @@ RT_CLASS!{class MediaFrameSourceGroup: IMediaFrameSourceGroup}
 impl RtActivatable<IMediaFrameSourceGroupStatics> for MediaFrameSourceGroup {}
 impl MediaFrameSourceGroup {
     #[inline] pub fn find_all_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<MediaFrameSourceGroup>>>> {
-        <Self as RtActivatable<IMediaFrameSourceGroupStatics>>::get_activation_factory().find_all_async()
+        <Self as RtActivatable<IMediaFrameSourceGroupStatics>>::get_activation_factory().deref().find_all_async()
     }
     #[inline] pub fn from_id_async(id: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<MediaFrameSourceGroup>>> {
-        <Self as RtActivatable<IMediaFrameSourceGroupStatics>>::get_activation_factory().from_id_async(id)
+        <Self as RtActivatable<IMediaFrameSourceGroupStatics>>::get_activation_factory().deref().from_id_async(id)
     }
     #[inline] pub fn get_device_selector() -> Result<HString> {
-        <Self as RtActivatable<IMediaFrameSourceGroupStatics>>::get_activation_factory().get_device_selector()
+        <Self as RtActivatable<IMediaFrameSourceGroupStatics>>::get_activation_factory().deref().get_device_selector()
     }
 }
 DEFINE_CLSID!(MediaFrameSourceGroup(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,70,114,97,109,101,115,46,77,101,100,105,97,70,114,97,109,101,83,111,117,114,99,101,71,114,111,117,112,0]) [CLSID_MediaFrameSourceGroup]);
@@ -8834,9 +8834,9 @@ RT_INTERFACE!{interface IMultiSourceMediaFrameReader(IMultiSourceMediaFrameReade
     fn StopAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IMultiSourceMediaFrameReader {
-    #[inline] pub fn add_frame_arrived(&self, handler: &foundation::TypedEventHandler<MultiSourceMediaFrameReader, MultiSourceMediaFrameArrivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_frame_arrived(&self, handler: &ComPtr<foundation::TypedEventHandler<MultiSourceMediaFrameReader, MultiSourceMediaFrameArrivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FrameArrived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FrameArrived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_frame_arrived(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -9010,31 +9010,31 @@ impl ICastingConnection {
         let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_source(&self, value: &CastingSource) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Source)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_source(&self, value: &ComPtr<CastingSource>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Source)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_state_changed(&self, handler: &foundation::TypedEventHandler<CastingConnection, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_state_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<CastingConnection, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_StateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_error_occurred(&self, handler: &foundation::TypedEventHandler<CastingConnection, CastingConnectionErrorOccurredEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_error_occurred(&self, handler: &ComPtr<foundation::TypedEventHandler<CastingConnection, CastingConnectionErrorOccurredEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ErrorOccurred)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ErrorOccurred)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_error_occurred(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ErrorOccurred)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn request_start_casting_async(&self, value: &CastingSource) -> Result<ComPtr<foundation::IAsyncOperation<CastingConnectionErrorStatus>>> { unsafe { 
+    #[inline] pub fn request_start_casting_async(&self, value: &ComPtr<CastingSource>) -> Result<ComPtr<foundation::IAsyncOperation<CastingConnectionErrorStatus>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestStartCastingAsync)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestStartCastingAsync)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn disconnect_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<CastingConnectionErrorStatus>>> { unsafe { 
@@ -9108,16 +9108,16 @@ RT_CLASS!{class CastingDevice: ICastingDevice}
 impl RtActivatable<ICastingDeviceStatics> for CastingDevice {}
 impl CastingDevice {
     #[inline] pub fn get_device_selector(type_: CastingPlaybackTypes) -> Result<HString> {
-        <Self as RtActivatable<ICastingDeviceStatics>>::get_activation_factory().get_device_selector(type_)
+        <Self as RtActivatable<ICastingDeviceStatics>>::get_activation_factory().deref().get_device_selector(type_)
     }
-    #[inline] pub fn get_device_selector_from_casting_source_async(castingSource: &CastingSource) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
-        <Self as RtActivatable<ICastingDeviceStatics>>::get_activation_factory().get_device_selector_from_casting_source_async(castingSource)
+    #[inline] pub fn get_device_selector_from_casting_source_async(castingSource: &ComPtr<CastingSource>) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> {
+        <Self as RtActivatable<ICastingDeviceStatics>>::get_activation_factory().deref().get_device_selector_from_casting_source_async(castingSource)
     }
     #[inline] pub fn from_id_async(value: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<CastingDevice>>> {
-        <Self as RtActivatable<ICastingDeviceStatics>>::get_activation_factory().from_id_async(value)
+        <Self as RtActivatable<ICastingDeviceStatics>>::get_activation_factory().deref().from_id_async(value)
     }
-    #[cfg(feature="windows-devices")] #[inline] pub fn device_info_supports_casting_async(device: &super::super::devices::enumeration::DeviceInformation) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ICastingDeviceStatics>>::get_activation_factory().device_info_supports_casting_async(device)
+    #[cfg(feature="windows-devices")] #[inline] pub fn device_info_supports_casting_async(device: &ComPtr<super::super::devices::enumeration::DeviceInformation>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<ICastingDeviceStatics>>::get_activation_factory().deref().device_info_supports_casting_async(device)
     }
 }
 DEFINE_CLSID!(CastingDevice(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,115,116,105,110,103,46,67,97,115,116,105,110,103,68,101,118,105,99,101,0]) [CLSID_CastingDevice]);
@@ -9146,18 +9146,18 @@ impl ICastingDevicePicker {
         let hr = ((*self.lpVtbl).get_Appearance)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_casting_device_selected(&self, handler: &foundation::TypedEventHandler<CastingDevicePicker, CastingDeviceSelectedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_casting_device_selected(&self, handler: &ComPtr<foundation::TypedEventHandler<CastingDevicePicker, CastingDeviceSelectedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CastingDeviceSelected)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CastingDeviceSelected)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_casting_device_selected(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_CastingDeviceSelected)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_casting_device_picker_dismissed(&self, handler: &foundation::TypedEventHandler<CastingDevicePicker, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_casting_device_picker_dismissed(&self, handler: &ComPtr<foundation::TypedEventHandler<CastingDevicePicker, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CastingDevicePickerDismissed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CastingDevicePickerDismissed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_casting_device_picker_dismissed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -9250,9 +9250,9 @@ impl ICastingDeviceStatics {
         let hr = ((*self.lpVtbl).GetDeviceSelector)(self as *const _ as *mut _, type_, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_device_selector_from_casting_source_async(&self, castingSource: &CastingSource) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
+    #[inline] pub fn get_device_selector_from_casting_source_async(&self, castingSource: &ComPtr<CastingSource>) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDeviceSelectorFromCastingSourceAsync)(self as *const _ as *mut _, castingSource as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetDeviceSelectorFromCastingSourceAsync)(self as *const _ as *mut _, castingSource.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn from_id_async(&self, value: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<CastingDevice>>> { unsafe { 
@@ -9260,9 +9260,9 @@ impl ICastingDeviceStatics {
         let hr = ((*self.lpVtbl).FromIdAsync)(self as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn device_info_supports_casting_async(&self, device: &super::super::devices::enumeration::DeviceInformation) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn device_info_supports_casting_async(&self, device: &ComPtr<super::super::devices::enumeration::DeviceInformation>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeviceInfoSupportsCastingAsync)(self as *const _ as *mut _, device as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).DeviceInfoSupportsCastingAsync)(self as *const _ as *mut _, device.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -9280,8 +9280,8 @@ impl ICastingSource {
         let hr = ((*self.lpVtbl).get_PreferredSourceUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_preferred_source_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PreferredSourceUri)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_preferred_source_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PreferredSourceUri)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -9302,40 +9302,40 @@ RT_CLASS!{static class ClosedCaptionProperties}
 impl RtActivatable<IClosedCaptionPropertiesStatics> for ClosedCaptionProperties {}
 impl ClosedCaptionProperties {
     #[inline] pub fn get_font_color() -> Result<ClosedCaptionColor> {
-        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().get_font_color()
+        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().deref().get_font_color()
     }
     #[cfg(feature="windows-ui")] #[inline] pub fn get_computed_font_color() -> Result<super::super::ui::Color> {
-        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().get_computed_font_color()
+        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().deref().get_computed_font_color()
     }
     #[inline] pub fn get_font_opacity() -> Result<ClosedCaptionOpacity> {
-        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().get_font_opacity()
+        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().deref().get_font_opacity()
     }
     #[inline] pub fn get_font_size() -> Result<ClosedCaptionSize> {
-        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().get_font_size()
+        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().deref().get_font_size()
     }
     #[inline] pub fn get_font_style() -> Result<ClosedCaptionStyle> {
-        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().get_font_style()
+        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().deref().get_font_style()
     }
     #[inline] pub fn get_font_effect() -> Result<ClosedCaptionEdgeEffect> {
-        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().get_font_effect()
+        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().deref().get_font_effect()
     }
     #[inline] pub fn get_background_color() -> Result<ClosedCaptionColor> {
-        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().get_background_color()
+        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().deref().get_background_color()
     }
     #[cfg(feature="windows-ui")] #[inline] pub fn get_computed_background_color() -> Result<super::super::ui::Color> {
-        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().get_computed_background_color()
+        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().deref().get_computed_background_color()
     }
     #[inline] pub fn get_background_opacity() -> Result<ClosedCaptionOpacity> {
-        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().get_background_opacity()
+        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().deref().get_background_opacity()
     }
     #[inline] pub fn get_region_color() -> Result<ClosedCaptionColor> {
-        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().get_region_color()
+        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().deref().get_region_color()
     }
     #[cfg(feature="windows-ui")] #[inline] pub fn get_computed_region_color() -> Result<super::super::ui::Color> {
-        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().get_computed_region_color()
+        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().deref().get_computed_region_color()
     }
     #[inline] pub fn get_region_opacity() -> Result<ClosedCaptionOpacity> {
-        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().get_region_opacity()
+        <Self as RtActivatable<IClosedCaptionPropertiesStatics>>::get_activation_factory().deref().get_region_opacity()
     }
 }
 DEFINE_CLSID!(ClosedCaptionProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,108,111,115,101,100,67,97,112,116,105,111,110,105,110,103,46,67,108,111,115,101,100,67,97,112,116,105,111,110,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_ClosedCaptionProperties]);
@@ -9497,8 +9497,8 @@ impl IRatedContentDescription {
         let hr = ((*self.lpVtbl).get_Image)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_image(&self, value: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Image)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_image(&self, value: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Image)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_category(&self) -> Result<RatedContentCategory> { unsafe { 
@@ -9515,8 +9515,8 @@ impl IRatedContentDescription {
         let hr = ((*self.lpVtbl).get_Ratings)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_ratings(&self, value: &foundation::collections::IVector<HString>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Ratings)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_ratings(&self, value: &ComPtr<foundation::collections::IVector<HString>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Ratings)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -9524,7 +9524,7 @@ RT_CLASS!{class RatedContentDescription: IRatedContentDescription}
 impl RtActivatable<IRatedContentDescriptionFactory> for RatedContentDescription {}
 impl RatedContentDescription {
     #[inline] pub fn create(id: &HStringArg, title: &HStringArg, category: RatedContentCategory) -> Result<ComPtr<RatedContentDescription>> {
-        <Self as RtActivatable<IRatedContentDescriptionFactory>>::get_activation_factory().create(id, title, category)
+        <Self as RtActivatable<IRatedContentDescriptionFactory>>::get_activation_factory().deref().create(id, title, category)
     }
 }
 DEFINE_CLSID!(RatedContentDescription(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,110,116,101,110,116,82,101,115,116,114,105,99,116,105,111,110,115,46,82,97,116,101,100,67,111,110,116,101,110,116,68,101,115,99,114,105,112,116,105,111,110,0]) [CLSID_RatedContentDescription]);
@@ -9553,19 +9553,19 @@ impl IRatedContentRestrictions {
         let hr = ((*self.lpVtbl).GetBrowsePolicyAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_restriction_level_async(&self, ratedContentDescription: &RatedContentDescription) -> Result<ComPtr<foundation::IAsyncOperation<ContentAccessRestrictionLevel>>> { unsafe { 
+    #[inline] pub fn get_restriction_level_async(&self, ratedContentDescription: &ComPtr<RatedContentDescription>) -> Result<ComPtr<foundation::IAsyncOperation<ContentAccessRestrictionLevel>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetRestrictionLevelAsync)(self as *const _ as *mut _, ratedContentDescription as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetRestrictionLevelAsync)(self as *const _ as *mut _, ratedContentDescription.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn request_content_access_async(&self, ratedContentDescription: &RatedContentDescription) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn request_content_access_async(&self, ratedContentDescription: &ComPtr<RatedContentDescription>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RequestContentAccessAsync)(self as *const _ as *mut _, ratedContentDescription as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RequestContentAccessAsync)(self as *const _ as *mut _, ratedContentDescription.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_restrictions_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_restrictions_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RestrictionsChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RestrictionsChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_restrictions_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -9578,7 +9578,7 @@ impl RtActivatable<IRatedContentRestrictionsFactory> for RatedContentRestriction
 impl RtActivatable<IActivationFactory> for RatedContentRestrictions {}
 impl RatedContentRestrictions {
     #[inline] pub fn create_with_max_age_rating(maxAgeRating: u32) -> Result<ComPtr<RatedContentRestrictions>> {
-        <Self as RtActivatable<IRatedContentRestrictionsFactory>>::get_activation_factory().create_with_max_age_rating(maxAgeRating)
+        <Self as RtActivatable<IRatedContentRestrictionsFactory>>::get_activation_factory().deref().create_with_max_age_rating(maxAgeRating)
     }
 }
 DEFINE_CLSID!(RatedContentRestrictions(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,110,116,101,110,116,82,101,115,116,114,105,99,116,105,111,110,115,46,82,97,116,101,100,67,111,110,116,101,110,116,82,101,115,116,114,105,99,116,105,111,110,115,0]) [CLSID_RatedContentRestrictions]);
@@ -9725,27 +9725,27 @@ impl IGlobalSystemMediaTransportControlsSession {
         let hr = ((*self.lpVtbl).TryChangePlaybackPositionAsync)(self as *const _ as *mut _, requestedPlaybackPosition, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_timeline_properties_changed(&self, handler: &foundation::TypedEventHandler<GlobalSystemMediaTransportControlsSession, TimelinePropertiesChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_timeline_properties_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<GlobalSystemMediaTransportControlsSession, TimelinePropertiesChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_TimelinePropertiesChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_TimelinePropertiesChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_timeline_properties_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_TimelinePropertiesChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_playback_info_changed(&self, handler: &foundation::TypedEventHandler<GlobalSystemMediaTransportControlsSession, PlaybackInfoChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_playback_info_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<GlobalSystemMediaTransportControlsSession, PlaybackInfoChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlaybackInfoChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlaybackInfoChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_playback_info_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlaybackInfoChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_media_properties_changed(&self, handler: &foundation::TypedEventHandler<GlobalSystemMediaTransportControlsSession, MediaPropertiesChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_media_properties_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<GlobalSystemMediaTransportControlsSession, MediaPropertiesChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MediaPropertiesChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MediaPropertiesChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_media_properties_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -9774,18 +9774,18 @@ impl IGlobalSystemMediaTransportControlsSessionManager {
         let hr = ((*self.lpVtbl).GetSessions)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_current_session_changed(&self, handler: &foundation::TypedEventHandler<GlobalSystemMediaTransportControlsSessionManager, CurrentSessionChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_current_session_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<GlobalSystemMediaTransportControlsSessionManager, CurrentSessionChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CurrentSessionChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CurrentSessionChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_current_session_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_CurrentSessionChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_sessions_changed(&self, handler: &foundation::TypedEventHandler<GlobalSystemMediaTransportControlsSessionManager, SessionsChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_sessions_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<GlobalSystemMediaTransportControlsSessionManager, SessionsChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SessionsChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SessionsChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_sessions_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -9797,7 +9797,7 @@ RT_CLASS!{class GlobalSystemMediaTransportControlsSessionManager: IGlobalSystemM
 impl RtActivatable<IGlobalSystemMediaTransportControlsSessionManagerStatics> for GlobalSystemMediaTransportControlsSessionManager {}
 impl GlobalSystemMediaTransportControlsSessionManager {
     #[inline] pub fn request_async() -> Result<ComPtr<foundation::IAsyncOperation<GlobalSystemMediaTransportControlsSessionManager>>> {
-        <Self as RtActivatable<IGlobalSystemMediaTransportControlsSessionManagerStatics>>::get_activation_factory().request_async()
+        <Self as RtActivatable<IGlobalSystemMediaTransportControlsSessionManagerStatics>>::get_activation_factory().deref().request_async()
     }
 }
 DEFINE_CLSID!(GlobalSystemMediaTransportControlsSessionManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,110,116,114,111,108,46,71,108,111,98,97,108,83,121,115,116,101,109,77,101,100,105,97,84,114,97,110,115,112,111,114,116,67,111,110,116,114,111,108,115,83,101,115,115,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_GlobalSystemMediaTransportControlsSessionManager]);
@@ -10104,8 +10104,8 @@ impl IAudioStreamDescriptor {
 RT_CLASS!{class AudioStreamDescriptor: IAudioStreamDescriptor}
 impl RtActivatable<IAudioStreamDescriptorFactory> for AudioStreamDescriptor {}
 impl AudioStreamDescriptor {
-    #[inline] pub fn create(encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<ComPtr<AudioStreamDescriptor>> {
-        <Self as RtActivatable<IAudioStreamDescriptorFactory>>::get_activation_factory().create(encodingProperties)
+    #[inline] pub fn create(encodingProperties: &ComPtr<super::mediaproperties::AudioEncodingProperties>) -> Result<ComPtr<AudioStreamDescriptor>> {
+        <Self as RtActivatable<IAudioStreamDescriptorFactory>>::get_activation_factory().deref().create(encodingProperties)
     }
 }
 DEFINE_CLSID!(AudioStreamDescriptor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,65,117,100,105,111,83,116,114,101,97,109,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_AudioStreamDescriptor]);
@@ -10117,8 +10117,8 @@ RT_INTERFACE!{interface IAudioStreamDescriptor2(IAudioStreamDescriptor2Vtbl): II
     fn get_TrailingEncoderPadding(&self, out: *mut *mut foundation::IReference<u32>) -> HRESULT
 }}
 impl IAudioStreamDescriptor2 {
-    #[inline] pub fn set_leading_encoder_padding(&self, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_LeadingEncoderPadding)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_leading_encoder_padding(&self, value: &ComPtr<foundation::IReference<u32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_LeadingEncoderPadding)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_leading_encoder_padding(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
@@ -10126,8 +10126,8 @@ impl IAudioStreamDescriptor2 {
         let hr = ((*self.lpVtbl).get_LeadingEncoderPadding)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_trailing_encoder_padding(&self, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TrailingEncoderPadding)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_trailing_encoder_padding(&self, value: &ComPtr<foundation::IReference<u32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TrailingEncoderPadding)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_trailing_encoder_padding(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
@@ -10152,9 +10152,9 @@ RT_INTERFACE!{static interface IAudioStreamDescriptorFactory(IAudioStreamDescrip
     fn Create(&self, encodingProperties: *mut super::mediaproperties::AudioEncodingProperties, out: *mut *mut AudioStreamDescriptor) -> HRESULT
 }}
 impl IAudioStreamDescriptorFactory {
-    #[inline] pub fn create(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<ComPtr<AudioStreamDescriptor>> { unsafe { 
+    #[inline] pub fn create(&self, encodingProperties: &ComPtr<super::mediaproperties::AudioEncodingProperties>) -> Result<ComPtr<AudioStreamDescriptor>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, encodingProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -10168,9 +10168,9 @@ RT_INTERFACE!{interface IAudioTrack(IAudioTrackVtbl): IInspectable(IInspectableV
     fn get_SupportInfo(&self, out: *mut *mut AudioTrackSupportInfo) -> HRESULT
 }}
 impl IAudioTrack {
-    #[inline] pub fn add_open_failed(&self, handler: &foundation::TypedEventHandler<AudioTrack, AudioTrackOpenFailedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_open_failed(&self, handler: &ComPtr<foundation::TypedEventHandler<AudioTrack, AudioTrackOpenFailedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_OpenFailed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_OpenFailed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_open_failed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -10320,157 +10320,157 @@ RT_CLASS!{static class CodecSubtypes}
 impl RtActivatable<ICodecSubtypesStatics> for CodecSubtypes {}
 impl CodecSubtypes {
     #[inline] pub fn get_video_format_dv25() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_dv25()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_dv25()
     }
     #[inline] pub fn get_video_format_dv50() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_dv50()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_dv50()
     }
     #[inline] pub fn get_video_format_dvc() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_dvc()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_dvc()
     }
     #[inline] pub fn get_video_format_dvh1() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_dvh1()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_dvh1()
     }
     #[inline] pub fn get_video_format_dvh_d() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_dvh_d()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_dvh_d()
     }
     #[inline] pub fn get_video_format_dvsd() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_dvsd()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_dvsd()
     }
     #[inline] pub fn get_video_format_dvsl() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_dvsl()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_dvsl()
     }
     #[inline] pub fn get_video_format_h263() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_h263()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_h263()
     }
     #[inline] pub fn get_video_format_h264() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_h264()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_h264()
     }
     #[inline] pub fn get_video_format_h265() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_h265()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_h265()
     }
     #[inline] pub fn get_video_format_h264es() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_h264es()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_h264es()
     }
     #[inline] pub fn get_video_format_hevc() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_hevc()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_hevc()
     }
     #[inline] pub fn get_video_format_hevc_es() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_hevc_es()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_hevc_es()
     }
     #[inline] pub fn get_video_format_m4s2() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_m4s2()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_m4s2()
     }
     #[inline] pub fn get_video_format_mjpg() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mjpg()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_mjpg()
     }
     #[inline] pub fn get_video_format_mp43() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mp43()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_mp43()
     }
     #[inline] pub fn get_video_format_mp4s() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mp4s()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_mp4s()
     }
     #[inline] pub fn get_video_format_mp4v() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mp4v()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_mp4v()
     }
     #[inline] pub fn get_video_format_mpeg2() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mpeg2()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_mpeg2()
     }
     #[inline] pub fn get_video_format_vp80() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_vp80()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_vp80()
     }
     #[inline] pub fn get_video_format_vp90() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_vp90()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_vp90()
     }
     #[inline] pub fn get_video_format_mpg1() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mpg1()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_mpg1()
     }
     #[inline] pub fn get_video_format_mss1() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mss1()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_mss1()
     }
     #[inline] pub fn get_video_format_mss2() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_mss2()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_mss2()
     }
     #[inline] pub fn get_video_format_wmv1() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_wmv1()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_wmv1()
     }
     #[inline] pub fn get_video_format_wmv2() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_wmv2()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_wmv2()
     }
     #[inline] pub fn get_video_format_wmv3() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_wmv3()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_wmv3()
     }
     #[inline] pub fn get_video_format_wvc1() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_wvc1()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_wvc1()
     }
     #[inline] pub fn get_video_format_420o() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_video_format_420o()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_video_format_420o()
     }
     #[inline] pub fn get_audio_format_aac() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_aac()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_aac()
     }
     #[inline] pub fn get_audio_format_adts() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_adts()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_adts()
     }
     #[inline] pub fn get_audio_format_alac() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_alac()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_alac()
     }
     #[inline] pub fn get_audio_format_amr_nb() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_amr_nb()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_amr_nb()
     }
     #[inline] pub fn get_audio_format_amr_wb() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_amr_wb()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_amr_wb()
     }
     #[inline] pub fn get_audio_format_amr_wp() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_amr_wp()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_amr_wp()
     }
     #[inline] pub fn get_audio_format_dolby_ac3() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_dolby_ac3()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_dolby_ac3()
     }
     #[inline] pub fn get_audio_format_dolby_ac3_spdif() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_dolby_ac3_spdif()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_dolby_ac3_spdif()
     }
     #[inline] pub fn get_audio_format_dolby_dd_plus() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_dolby_dd_plus()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_dolby_dd_plus()
     }
     #[inline] pub fn get_audio_format_drm() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_drm()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_drm()
     }
     #[inline] pub fn get_audio_format_dts() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_dts()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_dts()
     }
     #[inline] pub fn get_audio_format_flac() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_flac()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_flac()
     }
     #[inline] pub fn get_audio_format_float() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_float()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_float()
     }
     #[inline] pub fn get_audio_format_mp3() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_mp3()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_mp3()
     }
     #[inline] pub fn get_audio_format_mpeg() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_mpeg()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_mpeg()
     }
     #[inline] pub fn get_audio_format_msp1() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_msp1()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_msp1()
     }
     #[inline] pub fn get_audio_format_opus() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_opus()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_opus()
     }
     #[inline] pub fn get_audio_format_pcm() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_pcm()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_pcm()
     }
     #[inline] pub fn get_audio_format_wma_spdif() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_wma_spdif()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_wma_spdif()
     }
     #[inline] pub fn get_audio_format_wmaudio_lossless() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_wmaudio_lossless()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_wmaudio_lossless()
     }
     #[inline] pub fn get_audio_format_wmaudio_v8() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_wmaudio_v8()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_wmaudio_v8()
     }
     #[inline] pub fn get_audio_format_wmaudio_v9() -> Result<HString> {
-        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().get_audio_format_wmaudio_v9()
+        <Self as RtActivatable<ICodecSubtypesStatics>>::get_activation_factory().deref().get_audio_format_wmaudio_v9()
     }
 }
 DEFINE_CLSID!(CodecSubtypes(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,67,111,100,101,99,83,117,98,116,121,112,101,115,0]) [CLSID_CodecSubtypes]);
@@ -10791,8 +10791,8 @@ RT_INTERFACE!{interface IDataCue(IDataCueVtbl): IInspectable(IInspectableVtbl) [
     #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
 }}
 impl IDataCue {
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_data(&self, value: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Data)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_data(&self, value: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Data)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
@@ -10855,9 +10855,9 @@ impl IFaceDetectionEffect {
         let hr = ((*self.lpVtbl).get_DesiredDetectionInterval)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_face_detected(&self, handler: &foundation::TypedEventHandler<FaceDetectionEffect, FaceDetectedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_face_detected(&self, handler: &ComPtr<foundation::TypedEventHandler<FaceDetectionEffect, FaceDetectedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FaceDetected)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FaceDetected)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_face_detected(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -10974,8 +10974,8 @@ impl IImageCue {
         let hr = ((*self.lpVtbl).put_Extent)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_software_bitmap(&self, value: &super::super::graphics::imaging::SoftwareBitmap) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SoftwareBitmap)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_software_bitmap(&self, value: &ComPtr<super::super::graphics::imaging::SoftwareBitmap>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SoftwareBitmap)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_software_bitmap(&self) -> Result<Option<ComPtr<super::super::graphics::imaging::SoftwareBitmap>>> { unsafe { 
@@ -11016,13 +11016,13 @@ RT_CLASS!{static class LowLightFusion}
 impl RtActivatable<ILowLightFusionStatics> for LowLightFusion {}
 impl LowLightFusion {
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_bitmap_pixel_formats() -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>>> {
-        <Self as RtActivatable<ILowLightFusionStatics>>::get_activation_factory().get_supported_bitmap_pixel_formats()
+        <Self as RtActivatable<ILowLightFusionStatics>>::get_activation_factory().deref().get_supported_bitmap_pixel_formats()
     }
     #[inline] pub fn get_max_supported_frame_count() -> Result<i32> {
-        <Self as RtActivatable<ILowLightFusionStatics>>::get_activation_factory().get_max_supported_frame_count()
+        <Self as RtActivatable<ILowLightFusionStatics>>::get_activation_factory().deref().get_max_supported_frame_count()
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn fuse_async(frameSet: &foundation::collections::IIterable<super::super::graphics::imaging::SoftwareBitmap>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<LowLightFusionResult, f64>>> {
-        <Self as RtActivatable<ILowLightFusionStatics>>::get_activation_factory().fuse_async(frameSet)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn fuse_async(frameSet: &ComPtr<foundation::collections::IIterable<super::super::graphics::imaging::SoftwareBitmap>>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<LowLightFusionResult, f64>>> {
+        <Self as RtActivatable<ILowLightFusionStatics>>::get_activation_factory().deref().fuse_async(frameSet)
     }
 }
 DEFINE_CLSID!(LowLightFusion(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,76,111,119,76,105,103,104,116,70,117,115,105,111,110,0]) [CLSID_LowLightFusion]);
@@ -11055,9 +11055,9 @@ impl ILowLightFusionStatics {
         let hr = ((*self.lpVtbl).get_MaxSupportedFrameCount)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn fuse_async(&self, frameSet: &foundation::collections::IIterable<super::super::graphics::imaging::SoftwareBitmap>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<LowLightFusionResult, f64>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn fuse_async(&self, frameSet: &ComPtr<foundation::collections::IIterable<super::super::graphics::imaging::SoftwareBitmap>>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<LowLightFusionResult, f64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FuseAsync)(self as *const _ as *mut _, frameSet as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FuseAsync)(self as *const _ as *mut _, frameSet.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -11070,9 +11070,9 @@ RT_INTERFACE!{interface IMediaBinder(IMediaBinderVtbl): IInspectable(IInspectabl
     fn get_Source(&self, out: *mut *mut MediaSource) -> HRESULT
 }}
 impl IMediaBinder {
-    #[inline] pub fn add_binding(&self, handler: &foundation::TypedEventHandler<MediaBinder, MediaBindingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_binding(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaBinder, MediaBindingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Binding)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Binding)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_binding(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -11108,9 +11108,9 @@ RT_INTERFACE!{interface IMediaBindingEventArgs(IMediaBindingEventArgsVtbl): IIns
     #[cfg(feature="windows-storage")] fn SetStreamReference(&self, stream: *mut super::super::storage::streams::IRandomAccessStreamReference, contentType: HSTRING) -> HRESULT
 }}
 impl IMediaBindingEventArgs {
-    #[inline] pub fn add_canceled(&self, handler: &foundation::TypedEventHandler<MediaBindingEventArgs, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_canceled(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaBindingEventArgs, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Canceled)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Canceled)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_canceled(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -11127,16 +11127,16 @@ impl IMediaBindingEventArgs {
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_uri(&self, uri: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetUri)(self as *const _ as *mut _, uri as *const _ as *mut _);
+    #[inline] pub fn set_uri(&self, uri: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetUri)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_stream(&self, stream: &super::super::storage::streams::IRandomAccessStream, contentType: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetStream)(self as *const _ as *mut _, stream as *const _ as *mut _, contentType.get());
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_stream(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, contentType: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetStream)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, contentType.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_stream_reference(&self, stream: &super::super::storage::streams::IRandomAccessStreamReference, contentType: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetStreamReference)(self as *const _ as *mut _, stream as *const _ as *mut _, contentType.get());
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_stream_reference(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>, contentType: &HStringArg) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetStreamReference)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, contentType.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -11147,12 +11147,12 @@ RT_INTERFACE!{interface IMediaBindingEventArgs2(IMediaBindingEventArgs2Vtbl): II
     #[cfg(feature="windows-storage")] fn SetStorageFile(&self, file: *mut super::super::storage::IStorageFile) -> HRESULT
 }}
 impl IMediaBindingEventArgs2 {
-    #[inline] pub fn set_adaptive_media_source(&self, mediaSource: &super::streaming::adaptive::AdaptiveMediaSource) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetAdaptiveMediaSource)(self as *const _ as *mut _, mediaSource as *const _ as *mut _);
+    #[inline] pub fn set_adaptive_media_source(&self, mediaSource: &ComPtr<super::streaming::adaptive::AdaptiveMediaSource>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetAdaptiveMediaSource)(self as *const _ as *mut _, mediaSource.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_storage_file(&self, file: &super::super::storage::IStorageFile) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetStorageFile)(self as *const _ as *mut _, file as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_storage_file(&self, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetStorageFile)(self as *const _ as *mut _, file.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -11161,8 +11161,8 @@ RT_INTERFACE!{interface IMediaBindingEventArgs3(IMediaBindingEventArgs3Vtbl): II
     #[cfg(feature="windows-networking")] fn SetDownloadOperation(&self, downloadOperation: *mut super::super::networking::backgroundtransfer::DownloadOperation) -> HRESULT
 }}
 impl IMediaBindingEventArgs3 {
-    #[cfg(feature="windows-networking")] #[inline] pub fn set_download_operation(&self, downloadOperation: &super::super::networking::backgroundtransfer::DownloadOperation) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetDownloadOperation)(self as *const _ as *mut _, downloadOperation as *const _ as *mut _);
+    #[cfg(feature="windows-networking")] #[inline] pub fn set_download_operation(&self, downloadOperation: &ComPtr<super::super::networking::backgroundtransfer::DownloadOperation>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetDownloadOperation)(self as *const _ as *mut _, downloadOperation.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -11229,38 +11229,38 @@ impl RtActivatable<IMediaSourceStatics2> for MediaSource {}
 impl RtActivatable<IMediaSourceStatics3> for MediaSource {}
 impl RtActivatable<IMediaSourceStatics4> for MediaSource {}
 impl MediaSource {
-    #[inline] pub fn create_from_adaptive_media_source(mediaSource: &super::streaming::adaptive::AdaptiveMediaSource) -> Result<Option<ComPtr<MediaSource>>> {
-        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_adaptive_media_source(mediaSource)
+    #[inline] pub fn create_from_adaptive_media_source(mediaSource: &ComPtr<super::streaming::adaptive::AdaptiveMediaSource>) -> Result<Option<ComPtr<MediaSource>>> {
+        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().deref().create_from_adaptive_media_source(mediaSource)
     }
-    #[inline] pub fn create_from_media_stream_source(mediaSource: &MediaStreamSource) -> Result<Option<ComPtr<MediaSource>>> {
-        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_media_stream_source(mediaSource)
+    #[inline] pub fn create_from_media_stream_source(mediaSource: &ComPtr<MediaStreamSource>) -> Result<Option<ComPtr<MediaSource>>> {
+        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().deref().create_from_media_stream_source(mediaSource)
     }
-    #[inline] pub fn create_from_mse_stream_source(mediaSource: &MseStreamSource) -> Result<Option<ComPtr<MediaSource>>> {
-        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_mse_stream_source(mediaSource)
+    #[inline] pub fn create_from_mse_stream_source(mediaSource: &ComPtr<MseStreamSource>) -> Result<Option<ComPtr<MediaSource>>> {
+        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().deref().create_from_mse_stream_source(mediaSource)
     }
-    #[inline] pub fn create_from_imediasource(mediaSource: &IMediaSource) -> Result<Option<ComPtr<MediaSource>>> {
-        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_imediasource(mediaSource)
+    #[inline] pub fn create_from_imediasource(mediaSource: &ComPtr<IMediaSource>) -> Result<Option<ComPtr<MediaSource>>> {
+        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().deref().create_from_imediasource(mediaSource)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_storage_file(file: &super::super::storage::IStorageFile) -> Result<Option<ComPtr<MediaSource>>> {
-        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_storage_file(file)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_storage_file(file: &ComPtr<super::super::storage::IStorageFile>) -> Result<Option<ComPtr<MediaSource>>> {
+        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().deref().create_from_storage_file(file)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream(stream: &super::super::storage::streams::IRandomAccessStream, contentType: &HStringArg) -> Result<Option<ComPtr<MediaSource>>> {
-        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_stream(stream, contentType)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream(stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, contentType: &HStringArg) -> Result<Option<ComPtr<MediaSource>>> {
+        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().deref().create_from_stream(stream, contentType)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_reference(stream: &super::super::storage::streams::IRandomAccessStreamReference, contentType: &HStringArg) -> Result<Option<ComPtr<MediaSource>>> {
-        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_stream_reference(stream, contentType)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_reference(stream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>, contentType: &HStringArg) -> Result<Option<ComPtr<MediaSource>>> {
+        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().deref().create_from_stream_reference(stream, contentType)
     }
-    #[inline] pub fn create_from_uri(uri: &foundation::Uri) -> Result<Option<ComPtr<MediaSource>>> {
-        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().create_from_uri(uri)
+    #[inline] pub fn create_from_uri(uri: &ComPtr<foundation::Uri>) -> Result<Option<ComPtr<MediaSource>>> {
+        <Self as RtActivatable<IMediaSourceStatics>>::get_activation_factory().deref().create_from_uri(uri)
     }
-    #[inline] pub fn create_from_media_binder(binder: &MediaBinder) -> Result<Option<ComPtr<MediaSource>>> {
-        <Self as RtActivatable<IMediaSourceStatics2>>::get_activation_factory().create_from_media_binder(binder)
+    #[inline] pub fn create_from_media_binder(binder: &ComPtr<MediaBinder>) -> Result<Option<ComPtr<MediaSource>>> {
+        <Self as RtActivatable<IMediaSourceStatics2>>::get_activation_factory().deref().create_from_media_binder(binder)
     }
-    #[inline] pub fn create_from_media_frame_source(frameSource: &super::capture::frames::MediaFrameSource) -> Result<Option<ComPtr<MediaSource>>> {
-        <Self as RtActivatable<IMediaSourceStatics3>>::get_activation_factory().create_from_media_frame_source(frameSource)
+    #[inline] pub fn create_from_media_frame_source(frameSource: &ComPtr<super::capture::frames::MediaFrameSource>) -> Result<Option<ComPtr<MediaSource>>> {
+        <Self as RtActivatable<IMediaSourceStatics3>>::get_activation_factory().deref().create_from_media_frame_source(frameSource)
     }
-    #[cfg(feature="windows-networking")] #[inline] pub fn create_from_download_operation(downloadOperation: &super::super::networking::backgroundtransfer::DownloadOperation) -> Result<Option<ComPtr<MediaSource>>> {
-        <Self as RtActivatable<IMediaSourceStatics4>>::get_activation_factory().create_from_download_operation(downloadOperation)
+    #[cfg(feature="windows-networking")] #[inline] pub fn create_from_download_operation(downloadOperation: &ComPtr<super::super::networking::backgroundtransfer::DownloadOperation>) -> Result<Option<ComPtr<MediaSource>>> {
+        <Self as RtActivatable<IMediaSourceStatics4>>::get_activation_factory().deref().create_from_download_operation(downloadOperation)
     }
 }
 DEFINE_CLSID!(MediaSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,111,117,114,99,101,0]) [CLSID_MediaSource]);
@@ -11275,9 +11275,9 @@ RT_INTERFACE!{interface IMediaSource2(IMediaSource2Vtbl): IInspectable(IInspecta
     fn get_ExternalTimedMetadataTracks(&self, out: *mut *mut foundation::collections::IObservableVector<TimedMetadataTrack>) -> HRESULT
 }}
 impl IMediaSource2 {
-    #[inline] pub fn add_open_operation_completed(&self, handler: &foundation::TypedEventHandler<MediaSource, MediaSourceOpenOperationCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_open_operation_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaSource, MediaSourceOpenOperationCompletedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_OpenOperationCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_OpenOperationCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_open_operation_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -11318,9 +11318,9 @@ RT_INTERFACE!{interface IMediaSource3(IMediaSource3Vtbl): IInspectable(IInspecta
     fn Reset(&self) -> HRESULT
 }}
 impl IMediaSource3 {
-    #[inline] pub fn add_state_changed(&self, handler: &foundation::TypedEventHandler<MediaSource, MediaSourceStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_state_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaSource, MediaSourceStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -11390,9 +11390,9 @@ RT_INTERFACE!{interface IMediaSourceAppServiceConnection(IMediaSourceAppServiceC
     fn Start(&self) -> HRESULT
 }}
 impl IMediaSourceAppServiceConnection {
-    #[inline] pub fn add_initialize_media_stream_source_requested(&self, handler: &foundation::TypedEventHandler<MediaSourceAppServiceConnection, InitializeMediaStreamSourceRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_initialize_media_stream_source_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaSourceAppServiceConnection, InitializeMediaStreamSourceRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_InitializeMediaStreamSourceRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_InitializeMediaStreamSourceRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_initialize_media_stream_source_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -11407,8 +11407,8 @@ impl IMediaSourceAppServiceConnection {
 RT_CLASS!{class MediaSourceAppServiceConnection: IMediaSourceAppServiceConnection}
 impl RtActivatable<IMediaSourceAppServiceConnectionFactory> for MediaSourceAppServiceConnection {}
 impl MediaSourceAppServiceConnection {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn create(appServiceConnection: &super::super::applicationmodel::appservice::AppServiceConnection) -> Result<ComPtr<MediaSourceAppServiceConnection>> {
-        <Self as RtActivatable<IMediaSourceAppServiceConnectionFactory>>::get_activation_factory().create(appServiceConnection)
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn create(appServiceConnection: &ComPtr<super::super::applicationmodel::appservice::AppServiceConnection>) -> Result<ComPtr<MediaSourceAppServiceConnection>> {
+        <Self as RtActivatable<IMediaSourceAppServiceConnectionFactory>>::get_activation_factory().deref().create(appServiceConnection)
     }
 }
 DEFINE_CLSID!(MediaSourceAppServiceConnection(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,111,117,114,99,101,65,112,112,83,101,114,118,105,99,101,67,111,110,110,101,99,116,105,111,110,0]) [CLSID_MediaSourceAppServiceConnection]);
@@ -11417,9 +11417,9 @@ RT_INTERFACE!{static interface IMediaSourceAppServiceConnectionFactory(IMediaSou
     #[cfg(feature="windows-applicationmodel")] fn Create(&self, appServiceConnection: *mut super::super::applicationmodel::appservice::AppServiceConnection, out: *mut *mut MediaSourceAppServiceConnection) -> HRESULT
 }}
 impl IMediaSourceAppServiceConnectionFactory {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn create(&self, appServiceConnection: &super::super::applicationmodel::appservice::AppServiceConnection) -> Result<ComPtr<MediaSourceAppServiceConnection>> { unsafe { 
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn create(&self, appServiceConnection: &ComPtr<super::super::applicationmodel::appservice::AppServiceConnection>) -> Result<ComPtr<MediaSourceAppServiceConnection>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, appServiceConnection as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, appServiceConnection.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -11483,44 +11483,44 @@ RT_INTERFACE!{static interface IMediaSourceStatics(IMediaSourceStaticsVtbl): IIn
     fn CreateFromUri(&self, uri: *mut foundation::Uri, out: *mut *mut MediaSource) -> HRESULT
 }}
 impl IMediaSourceStatics {
-    #[inline] pub fn create_from_adaptive_media_source(&self, mediaSource: &super::streaming::adaptive::AdaptiveMediaSource) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
+    #[inline] pub fn create_from_adaptive_media_source(&self, mediaSource: &ComPtr<super::streaming::adaptive::AdaptiveMediaSource>) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromAdaptiveMediaSource)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromAdaptiveMediaSource)(self as *const _ as *mut _, mediaSource.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_media_stream_source(&self, mediaSource: &MediaStreamSource) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
+    #[inline] pub fn create_from_media_stream_source(&self, mediaSource: &ComPtr<MediaStreamSource>) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromMediaStreamSource)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromMediaStreamSource)(self as *const _ as *mut _, mediaSource.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_mse_stream_source(&self, mediaSource: &MseStreamSource) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
+    #[inline] pub fn create_from_mse_stream_source(&self, mediaSource: &ComPtr<MseStreamSource>) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromMseStreamSource)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromMseStreamSource)(self as *const _ as *mut _, mediaSource.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_imediasource(&self, mediaSource: &IMediaSource) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
+    #[inline] pub fn create_from_imediasource(&self, mediaSource: &ComPtr<IMediaSource>) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromIMediaSource)(self as *const _ as *mut _, mediaSource as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromIMediaSource)(self as *const _ as *mut _, mediaSource.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_storage_file(&self, file: &super::super::storage::IStorageFile) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_storage_file(&self, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStorageFile)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromStorageFile)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream(&self, stream: &super::super::storage::streams::IRandomAccessStream, contentType: &HStringArg) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, contentType: &HStringArg) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStream)(self as *const _ as *mut _, stream as *const _ as *mut _, contentType.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateFromStream)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, contentType.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_reference(&self, stream: &super::super::storage::streams::IRandomAccessStreamReference, contentType: &HStringArg) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_reference(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>, contentType: &HStringArg) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStreamReference)(self as *const _ as *mut _, stream as *const _ as *mut _, contentType.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateFromStreamReference)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, contentType.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_uri(&self, uri: &foundation::Uri) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
+    #[inline] pub fn create_from_uri(&self, uri: &ComPtr<foundation::Uri>) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromUri)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromUri)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -11529,9 +11529,9 @@ RT_INTERFACE!{static interface IMediaSourceStatics2(IMediaSourceStatics2Vtbl): I
     fn CreateFromMediaBinder(&self, binder: *mut MediaBinder, out: *mut *mut MediaSource) -> HRESULT
 }}
 impl IMediaSourceStatics2 {
-    #[inline] pub fn create_from_media_binder(&self, binder: &MediaBinder) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
+    #[inline] pub fn create_from_media_binder(&self, binder: &ComPtr<MediaBinder>) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromMediaBinder)(self as *const _ as *mut _, binder as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromMediaBinder)(self as *const _ as *mut _, binder.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -11540,9 +11540,9 @@ RT_INTERFACE!{static interface IMediaSourceStatics3(IMediaSourceStatics3Vtbl): I
     fn CreateFromMediaFrameSource(&self, frameSource: *mut super::capture::frames::MediaFrameSource, out: *mut *mut MediaSource) -> HRESULT
 }}
 impl IMediaSourceStatics3 {
-    #[inline] pub fn create_from_media_frame_source(&self, frameSource: &super::capture::frames::MediaFrameSource) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
+    #[inline] pub fn create_from_media_frame_source(&self, frameSource: &ComPtr<super::capture::frames::MediaFrameSource>) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromMediaFrameSource)(self as *const _ as *mut _, frameSource as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromMediaFrameSource)(self as *const _ as *mut _, frameSource.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -11551,9 +11551,9 @@ RT_INTERFACE!{static interface IMediaSourceStatics4(IMediaSourceStatics4Vtbl): I
     #[cfg(feature="windows-networking")] fn CreateFromDownloadOperation(&self, downloadOperation: *mut super::super::networking::backgroundtransfer::DownloadOperation, out: *mut *mut MediaSource) -> HRESULT
 }}
 impl IMediaSourceStatics4 {
-    #[cfg(feature="windows-networking")] #[inline] pub fn create_from_download_operation(&self, downloadOperation: &super::super::networking::backgroundtransfer::DownloadOperation) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
+    #[cfg(feature="windows-networking")] #[inline] pub fn create_from_download_operation(&self, downloadOperation: &ComPtr<super::super::networking::backgroundtransfer::DownloadOperation>) -> Result<Option<ComPtr<MediaSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromDownloadOperation)(self as *const _ as *mut _, downloadOperation as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromDownloadOperation)(self as *const _ as *mut _, downloadOperation.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -11628,9 +11628,9 @@ RT_INTERFACE!{interface IMediaStreamSample(IMediaStreamSampleVtbl): IInspectable
     fn get_Discontinuous(&self, out: *mut bool) -> HRESULT
 }}
 impl IMediaStreamSample {
-    #[inline] pub fn add_processed(&self, handler: &foundation::TypedEventHandler<MediaStreamSample, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_processed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaStreamSample, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Processed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Processed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_processed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -11698,14 +11698,14 @@ RT_CLASS!{class MediaStreamSample: IMediaStreamSample}
 impl RtActivatable<IMediaStreamSampleStatics> for MediaStreamSample {}
 impl RtActivatable<IMediaStreamSampleStatics2> for MediaStreamSample {}
 impl MediaStreamSample {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_buffer(buffer: &super::super::storage::streams::IBuffer, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> {
-        <Self as RtActivatable<IMediaStreamSampleStatics>>::get_activation_factory().create_from_buffer(buffer, timestamp)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_buffer(buffer: &ComPtr<super::super::storage::streams::IBuffer>, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> {
+        <Self as RtActivatable<IMediaStreamSampleStatics>>::get_activation_factory().deref().create_from_buffer(buffer, timestamp)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(stream: &super::super::storage::streams::IInputStream, count: u32, timestamp: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<MediaStreamSample>>> {
-        <Self as RtActivatable<IMediaStreamSampleStatics>>::get_activation_factory().create_from_stream_async(stream, count, timestamp)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(stream: &ComPtr<super::super::storage::streams::IInputStream>, count: u32, timestamp: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<MediaStreamSample>>> {
+        <Self as RtActivatable<IMediaStreamSampleStatics>>::get_activation_factory().deref().create_from_stream_async(stream, count, timestamp)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d11_surface(surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> {
-        <Self as RtActivatable<IMediaStreamSampleStatics2>>::get_activation_factory().create_from_direct3d11_surface(surface, timestamp)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d11_surface(surface: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> {
+        <Self as RtActivatable<IMediaStreamSampleStatics2>>::get_activation_factory().deref().create_from_direct3d11_surface(surface, timestamp)
     }
 }
 DEFINE_CLSID!(MediaStreamSample(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,116,114,101,97,109,83,97,109,112,108,101,0]) [CLSID_MediaStreamSample]);
@@ -11766,14 +11766,14 @@ RT_INTERFACE!{static interface IMediaStreamSampleStatics(IMediaStreamSampleStati
     #[cfg(feature="windows-storage")] fn CreateFromStreamAsync(&self, stream: *mut super::super::storage::streams::IInputStream, count: u32, timestamp: foundation::TimeSpan, out: *mut *mut foundation::IAsyncOperation<MediaStreamSample>) -> HRESULT
 }}
 impl IMediaStreamSampleStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_buffer(&self, buffer: &super::super::storage::streams::IBuffer, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_buffer(&self, buffer: &ComPtr<super::super::storage::streams::IBuffer>, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromBuffer)(self as *const _ as *mut _, buffer as *const _ as *mut _, timestamp, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromBuffer)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _, timestamp, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(&self, stream: &super::super::storage::streams::IInputStream, count: u32, timestamp: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<MediaStreamSample>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(&self, stream: &ComPtr<super::super::storage::streams::IInputStream>, count: u32, timestamp: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<MediaStreamSample>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStreamAsync)(self as *const _ as *mut _, stream as *const _ as *mut _, count, timestamp, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromStreamAsync)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, count, timestamp, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -11782,9 +11782,9 @@ RT_INTERFACE!{static interface IMediaStreamSampleStatics2(IMediaStreamSampleStat
     #[cfg(feature="windows-graphics")] fn CreateFromDirect3D11Surface(&self, surface: *mut super::super::graphics::directx::direct3d11::IDirect3DSurface, timestamp: foundation::TimeSpan, out: *mut *mut MediaStreamSample) -> HRESULT
 }}
 impl IMediaStreamSampleStatics2 {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d11_surface(&self, surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_direct3d11_surface(&self, surface: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>, timestamp: foundation::TimeSpan) -> Result<Option<ComPtr<MediaStreamSample>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromDirect3D11Surface)(self as *const _ as *mut _, surface as *const _ as *mut _, timestamp, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromDirect3D11Surface)(self as *const _ as *mut _, surface.deref() as *const _ as *mut _, timestamp, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -11822,45 +11822,45 @@ RT_INTERFACE!{interface IMediaStreamSource(IMediaStreamSourceVtbl): IInspectable
     fn AddProtectionKey(&self, streamDescriptor: *mut IMediaStreamDescriptor, keyIdentifierSize: u32, keyIdentifier: *mut u8, licenseDataSize: u32, licenseData: *mut u8) -> HRESULT
 }}
 impl IMediaStreamSource {
-    #[inline] pub fn add_closed(&self, handler: &foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceClosedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_closed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceClosedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_closed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Closed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_starting(&self, handler: &foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceStartingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_starting(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceStartingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Starting)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Starting)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_starting(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Starting)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_paused(&self, handler: &foundation::TypedEventHandler<MediaStreamSource, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_paused(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaStreamSource, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Paused)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Paused)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_paused(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Paused)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_sample_requested(&self, handler: &foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceSampleRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_sample_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceSampleRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SampleRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SampleRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_sample_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_SampleRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_switch_streams_requested(&self, handler: &foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceSwitchStreamsRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_switch_streams_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceSwitchStreamsRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SwitchStreamsRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SwitchStreamsRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_switch_streams_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -11871,12 +11871,12 @@ impl IMediaStreamSource {
         let hr = ((*self.lpVtbl).NotifyError)(self as *const _ as *mut _, errorStatus);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_stream_descriptor(&self, descriptor: &IMediaStreamDescriptor) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddStreamDescriptor)(self as *const _ as *mut _, descriptor as *const _ as *mut _);
+    #[inline] pub fn add_stream_descriptor(&self, descriptor: &ComPtr<IMediaStreamDescriptor>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddStreamDescriptor)(self as *const _ as *mut _, descriptor.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn set_media_protection_manager(&self, value: &super::protection::MediaProtectionManager) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MediaProtectionManager)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_media_protection_manager(&self, value: &ComPtr<super::protection::MediaProtectionManager>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MediaProtectionManager)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_media_protection_manager(&self) -> Result<Option<ComPtr<super::protection::MediaProtectionManager>>> { unsafe { 
@@ -11925,8 +11925,8 @@ impl IMediaStreamSource {
         let hr = ((*self.lpVtbl).get_VideoProperties)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_thumbnail(&self, value: &super::super::storage::streams::IRandomAccessStreamReference) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_thumbnail(&self, value: &ComPtr<super::super::storage::streams::IRandomAccessStreamReference>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_thumbnail(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
@@ -11934,19 +11934,19 @@ impl IMediaStreamSource {
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_protection_key(&self, streamDescriptor: &IMediaStreamDescriptor, keyIdentifier: &[u8], licenseData: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddProtectionKey)(self as *const _ as *mut _, streamDescriptor as *const _ as *mut _, keyIdentifier.len() as u32, keyIdentifier.as_ptr() as *mut _, licenseData.len() as u32, licenseData.as_ptr() as *mut _);
+    #[inline] pub fn add_protection_key(&self, streamDescriptor: &ComPtr<IMediaStreamDescriptor>, keyIdentifier: &[u8], licenseData: &[u8]) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddProtectionKey)(self as *const _ as *mut _, streamDescriptor.deref() as *const _ as *mut _, keyIdentifier.len() as u32, keyIdentifier.as_ptr() as *mut _, licenseData.len() as u32, licenseData.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MediaStreamSource: IMediaStreamSource}
 impl RtActivatable<IMediaStreamSourceFactory> for MediaStreamSource {}
 impl MediaStreamSource {
-    #[inline] pub fn create_from_descriptor(descriptor: &IMediaStreamDescriptor) -> Result<ComPtr<MediaStreamSource>> {
-        <Self as RtActivatable<IMediaStreamSourceFactory>>::get_activation_factory().create_from_descriptor(descriptor)
+    #[inline] pub fn create_from_descriptor(descriptor: &ComPtr<IMediaStreamDescriptor>) -> Result<ComPtr<MediaStreamSource>> {
+        <Self as RtActivatable<IMediaStreamSourceFactory>>::get_activation_factory().deref().create_from_descriptor(descriptor)
     }
-    #[inline] pub fn create_from_descriptors(descriptor: &IMediaStreamDescriptor, descriptor2: &IMediaStreamDescriptor) -> Result<ComPtr<MediaStreamSource>> {
-        <Self as RtActivatable<IMediaStreamSourceFactory>>::get_activation_factory().create_from_descriptors(descriptor, descriptor2)
+    #[inline] pub fn create_from_descriptors(descriptor: &ComPtr<IMediaStreamDescriptor>, descriptor2: &ComPtr<IMediaStreamDescriptor>) -> Result<ComPtr<MediaStreamSource>> {
+        <Self as RtActivatable<IMediaStreamSourceFactory>>::get_activation_factory().deref().create_from_descriptors(descriptor, descriptor2)
     }
 }
 DEFINE_CLSID!(MediaStreamSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,116,114,101,97,109,83,111,117,114,99,101,0]) [CLSID_MediaStreamSource]);
@@ -11956,9 +11956,9 @@ RT_INTERFACE!{interface IMediaStreamSource2(IMediaStreamSource2Vtbl): IInspectab
     fn remove_SampleRendered(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IMediaStreamSource2 {
-    #[inline] pub fn add_sample_rendered(&self, handler: &foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceSampleRenderedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_sample_rendered(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceSampleRenderedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SampleRendered)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SampleRendered)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_sample_rendered(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -11972,8 +11972,8 @@ RT_INTERFACE!{interface IMediaStreamSource3(IMediaStreamSource3Vtbl): IInspectab
     fn get_MaxSupportedPlaybackRate(&self, out: *mut *mut foundation::IReference<f64>) -> HRESULT
 }}
 impl IMediaStreamSource3 {
-    #[inline] pub fn set_max_supported_playback_rate(&self, value: &foundation::IReference<f64>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MaxSupportedPlaybackRate)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_max_supported_playback_rate(&self, value: &ComPtr<foundation::IReference<f64>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaxSupportedPlaybackRate)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_max_supported_playback_rate(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
@@ -12034,14 +12034,14 @@ RT_INTERFACE!{static interface IMediaStreamSourceFactory(IMediaStreamSourceFacto
     fn CreateFromDescriptors(&self, descriptor: *mut IMediaStreamDescriptor, descriptor2: *mut IMediaStreamDescriptor, out: *mut *mut MediaStreamSource) -> HRESULT
 }}
 impl IMediaStreamSourceFactory {
-    #[inline] pub fn create_from_descriptor(&self, descriptor: &IMediaStreamDescriptor) -> Result<ComPtr<MediaStreamSource>> { unsafe { 
+    #[inline] pub fn create_from_descriptor(&self, descriptor: &ComPtr<IMediaStreamDescriptor>) -> Result<ComPtr<MediaStreamSource>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromDescriptor)(self as *const _ as *mut _, descriptor as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromDescriptor)(self as *const _ as *mut _, descriptor.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_descriptors(&self, descriptor: &IMediaStreamDescriptor, descriptor2: &IMediaStreamDescriptor) -> Result<ComPtr<MediaStreamSource>> { unsafe { 
+    #[inline] pub fn create_from_descriptors(&self, descriptor: &ComPtr<IMediaStreamDescriptor>, descriptor2: &ComPtr<IMediaStreamDescriptor>) -> Result<ComPtr<MediaStreamSource>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromDescriptors)(self as *const _ as *mut _, descriptor as *const _ as *mut _, descriptor2 as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromDescriptors)(self as *const _ as *mut _, descriptor.deref() as *const _ as *mut _, descriptor2.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -12076,8 +12076,8 @@ impl IMediaStreamSourceSampleRequest {
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_sample(&self, value: &MediaStreamSample) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Sample)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_sample(&self, value: &ComPtr<MediaStreamSample>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Sample)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_sample(&self) -> Result<Option<ComPtr<MediaStreamSample>>> { unsafe { 
@@ -12285,45 +12285,45 @@ RT_INTERFACE!{interface IMseSourceBuffer(IMseSourceBufferVtbl): IInspectable(IIn
     fn Remove(&self, start: foundation::TimeSpan, end: *mut foundation::IReference<foundation::TimeSpan>) -> HRESULT
 }}
 impl IMseSourceBuffer {
-    #[inline] pub fn add_update_starting(&self, handler: &foundation::TypedEventHandler<MseSourceBuffer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_update_starting(&self, handler: &ComPtr<foundation::TypedEventHandler<MseSourceBuffer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_UpdateStarting)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_UpdateStarting)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_update_starting(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_UpdateStarting)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_updated(&self, handler: &foundation::TypedEventHandler<MseSourceBuffer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_updated(&self, handler: &ComPtr<foundation::TypedEventHandler<MseSourceBuffer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Updated)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Updated)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Updated)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_update_ended(&self, handler: &foundation::TypedEventHandler<MseSourceBuffer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_update_ended(&self, handler: &ComPtr<foundation::TypedEventHandler<MseSourceBuffer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_UpdateEnded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_UpdateEnded)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_update_ended(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_UpdateEnded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_error_occurred(&self, handler: &foundation::TypedEventHandler<MseSourceBuffer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_error_occurred(&self, handler: &ComPtr<foundation::TypedEventHandler<MseSourceBuffer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ErrorOccurred)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ErrorOccurred)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_error_occurred(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ErrorOccurred)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_aborted(&self, handler: &foundation::TypedEventHandler<MseSourceBuffer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_aborted(&self, handler: &ComPtr<foundation::TypedEventHandler<MseSourceBuffer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Aborted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Aborted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_aborted(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -12372,28 +12372,28 @@ impl IMseSourceBuffer {
         let hr = ((*self.lpVtbl).get_AppendWindowEnd)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_append_window_end(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AppendWindowEnd)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_append_window_end(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AppendWindowEnd)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn append_buffer(&self, buffer: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AppendBuffer)(self as *const _ as *mut _, buffer as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn append_buffer(&self, buffer: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AppendBuffer)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn append_stream(&self, stream: &super::super::storage::streams::IInputStream) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AppendStream)(self as *const _ as *mut _, stream as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn append_stream(&self, stream: &ComPtr<super::super::storage::streams::IInputStream>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AppendStream)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn append_stream_max_size(&self, stream: &super::super::storage::streams::IInputStream, maxSize: u64) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AppendStreamMaxSize)(self as *const _ as *mut _, stream as *const _ as *mut _, maxSize);
+    #[cfg(feature="windows-storage")] #[inline] pub fn append_stream_max_size(&self, stream: &ComPtr<super::super::storage::streams::IInputStream>, maxSize: u64) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AppendStreamMaxSize)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, maxSize);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn abort(&self) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).Abort)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove(&self, start: foundation::TimeSpan, end: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Remove)(self as *const _ as *mut _, start, end as *const _ as *mut _);
+    #[inline] pub fn remove(&self, start: foundation::TimeSpan, end: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Remove)(self as *const _ as *mut _, start, end.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -12407,18 +12407,18 @@ RT_INTERFACE!{interface IMseSourceBufferList(IMseSourceBufferListVtbl): IInspect
     fn get_Buffers(&self, out: *mut *mut foundation::collections::IVectorView<MseSourceBuffer>) -> HRESULT
 }}
 impl IMseSourceBufferList {
-    #[inline] pub fn add_source_buffer_added(&self, handler: &foundation::TypedEventHandler<MseSourceBufferList, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_source_buffer_added(&self, handler: &ComPtr<foundation::TypedEventHandler<MseSourceBufferList, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SourceBufferAdded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SourceBufferAdded)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_source_buffer_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_SourceBufferAdded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_source_buffer_removed(&self, handler: &foundation::TypedEventHandler<MseSourceBufferList, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_source_buffer_removed(&self, handler: &ComPtr<foundation::TypedEventHandler<MseSourceBufferList, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SourceBufferRemoved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SourceBufferRemoved)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_source_buffer_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -12450,27 +12450,27 @@ RT_INTERFACE!{interface IMseStreamSource(IMseStreamSourceVtbl): IInspectable(IIn
     fn EndOfStream(&self, status: MseEndOfStreamStatus) -> HRESULT
 }}
 impl IMseStreamSource {
-    #[inline] pub fn add_opened(&self, handler: &foundation::TypedEventHandler<MseStreamSource, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_opened(&self, handler: &ComPtr<foundation::TypedEventHandler<MseStreamSource, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Opened)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Opened)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_opened(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Opened)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_ended(&self, handler: &foundation::TypedEventHandler<MseStreamSource, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_ended(&self, handler: &ComPtr<foundation::TypedEventHandler<MseStreamSource, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Ended)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Ended)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_ended(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Ended)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_closed(&self, handler: &foundation::TypedEventHandler<MseStreamSource, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_closed(&self, handler: &ComPtr<foundation::TypedEventHandler<MseStreamSource, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Closed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_closed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -12497,8 +12497,8 @@ impl IMseStreamSource {
         let hr = ((*self.lpVtbl).get_Duration)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_duration(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Duration)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_duration(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Duration)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_source_buffer(&self, mimeType: &HStringArg) -> Result<Option<ComPtr<MseSourceBuffer>>> { unsafe { 
@@ -12506,8 +12506,8 @@ impl IMseStreamSource {
         let hr = ((*self.lpVtbl).AddSourceBuffer)(self as *const _ as *mut _, mimeType.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn remove_source_buffer(&self, buffer: &MseSourceBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveSourceBuffer)(self as *const _ as *mut _, buffer as *const _ as *mut _);
+    #[inline] pub fn remove_source_buffer(&self, buffer: &ComPtr<MseSourceBuffer>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RemoveSourceBuffer)(self as *const _ as *mut _, buffer.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn end_of_stream(&self, status: MseEndOfStreamStatus) -> Result<()> { unsafe { 
@@ -12520,7 +12520,7 @@ impl RtActivatable<IMseStreamSourceStatics> for MseStreamSource {}
 impl RtActivatable<IActivationFactory> for MseStreamSource {}
 impl MseStreamSource {
     #[inline] pub fn is_content_type_supported(contentType: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IMseStreamSourceStatics>>::get_activation_factory().is_content_type_supported(contentType)
+        <Self as RtActivatable<IMseStreamSourceStatics>>::get_activation_factory().deref().is_content_type_supported(contentType)
     }
 }
 DEFINE_CLSID!(MseStreamSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,115,101,83,116,114,101,97,109,83,111,117,114,99,101,0]) [CLSID_MseStreamSource]);
@@ -12535,8 +12535,8 @@ impl IMseStreamSource2 {
         let hr = ((*self.lpVtbl).get_LiveSeekableRange)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_live_seekable_range(&self, value: &foundation::IReference<MseTimeRange>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_LiveSeekableRange)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_live_seekable_range(&self, value: &ComPtr<foundation::IReference<MseTimeRange>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_LiveSeekableRange)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -12577,9 +12577,9 @@ impl ISceneAnalysisEffect {
         let hr = ((*self.lpVtbl).get_DesiredAnalysisInterval)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_scene_analyzed(&self, handler: &foundation::TypedEventHandler<SceneAnalysisEffect, SceneAnalyzedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_scene_analyzed(&self, handler: &ComPtr<foundation::TypedEventHandler<SceneAnalysisEffect, SceneAnalyzedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SceneAnalyzed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SceneAnalyzed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_scene_analyzed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -12643,9 +12643,9 @@ RT_INTERFACE!{interface ISingleSelectMediaTrackList(ISingleSelectMediaTrackListV
     fn get_SelectedIndex(&self, out: *mut i32) -> HRESULT
 }}
 impl ISingleSelectMediaTrackList {
-    #[inline] pub fn add_selected_index_changed(&self, handler: &foundation::TypedEventHandler<ISingleSelectMediaTrackList, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_selected_index_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<ISingleSelectMediaTrackList, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SelectedIndexChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SelectedIndexChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_selected_index_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -12686,8 +12686,8 @@ impl ISpeechCue {
         let hr = ((*self.lpVtbl).get_StartPositionInInput)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_start_position_in_input(&self, value: &foundation::IReference<i32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_StartPositionInInput)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_start_position_in_input(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StartPositionInInput)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_end_position_in_input(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
@@ -12695,8 +12695,8 @@ impl ISpeechCue {
         let hr = ((*self.lpVtbl).get_EndPositionInInput)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_end_position_in_input(&self, value: &foundation::IReference<i32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_EndPositionInInput)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_end_position_in_input(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_EndPositionInInput)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -12726,8 +12726,8 @@ impl ITimedMetadataStreamDescriptor {
 RT_CLASS!{class TimedMetadataStreamDescriptor: IMediaStreamDescriptor}
 impl RtActivatable<ITimedMetadataStreamDescriptorFactory> for TimedMetadataStreamDescriptor {}
 impl TimedMetadataStreamDescriptor {
-    #[inline] pub fn create(encodingProperties: &super::mediaproperties::TimedMetadataEncodingProperties) -> Result<ComPtr<TimedMetadataStreamDescriptor>> {
-        <Self as RtActivatable<ITimedMetadataStreamDescriptorFactory>>::get_activation_factory().create(encodingProperties)
+    #[inline] pub fn create(encodingProperties: &ComPtr<super::mediaproperties::TimedMetadataEncodingProperties>) -> Result<ComPtr<TimedMetadataStreamDescriptor>> {
+        <Self as RtActivatable<ITimedMetadataStreamDescriptorFactory>>::get_activation_factory().deref().create(encodingProperties)
     }
 }
 DEFINE_CLSID!(TimedMetadataStreamDescriptor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,77,101,116,97,100,97,116,97,83,116,114,101,97,109,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_TimedMetadataStreamDescriptor]);
@@ -12736,9 +12736,9 @@ RT_INTERFACE!{static interface ITimedMetadataStreamDescriptorFactory(ITimedMetad
     fn Create(&self, encodingProperties: *mut super::mediaproperties::TimedMetadataEncodingProperties, out: *mut *mut TimedMetadataStreamDescriptor) -> HRESULT
 }}
 impl ITimedMetadataStreamDescriptorFactory {
-    #[inline] pub fn create(&self, encodingProperties: &super::mediaproperties::TimedMetadataEncodingProperties) -> Result<ComPtr<TimedMetadataStreamDescriptor>> { unsafe { 
+    #[inline] pub fn create(&self, encodingProperties: &ComPtr<super::mediaproperties::TimedMetadataEncodingProperties>) -> Result<ComPtr<TimedMetadataStreamDescriptor>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, encodingProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -12758,27 +12758,27 @@ RT_INTERFACE!{interface ITimedMetadataTrack(ITimedMetadataTrackVtbl): IInspectab
     fn RemoveCue(&self, cue: *mut IMediaCue) -> HRESULT
 }}
 impl ITimedMetadataTrack {
-    #[inline] pub fn add_cue_entered(&self, handler: &foundation::TypedEventHandler<TimedMetadataTrack, MediaCueEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_cue_entered(&self, handler: &ComPtr<foundation::TypedEventHandler<TimedMetadataTrack, MediaCueEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CueEntered)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CueEntered)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_cue_entered(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_CueEntered)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_cue_exited(&self, handler: &foundation::TypedEventHandler<TimedMetadataTrack, MediaCueEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_cue_exited(&self, handler: &ComPtr<foundation::TypedEventHandler<TimedMetadataTrack, MediaCueEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CueExited)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CueExited)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_cue_exited(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_CueExited)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_track_failed(&self, handler: &foundation::TypedEventHandler<TimedMetadataTrack, TimedMetadataTrackFailedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_track_failed(&self, handler: &ComPtr<foundation::TypedEventHandler<TimedMetadataTrack, TimedMetadataTrackFailedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_TrackFailed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_TrackFailed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_track_failed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -12805,12 +12805,12 @@ impl ITimedMetadataTrack {
         let hr = ((*self.lpVtbl).get_DispatchType)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_cue(&self, cue: &IMediaCue) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddCue)(self as *const _ as *mut _, cue as *const _ as *mut _);
+    #[inline] pub fn add_cue(&self, cue: &ComPtr<IMediaCue>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddCue)(self as *const _ as *mut _, cue.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove_cue(&self, cue: &IMediaCue) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveCue)(self as *const _ as *mut _, cue as *const _ as *mut _);
+    #[inline] pub fn remove_cue(&self, cue: &ComPtr<IMediaCue>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RemoveCue)(self as *const _ as *mut _, cue.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -12818,7 +12818,7 @@ RT_CLASS!{class TimedMetadataTrack: ITimedMetadataTrack}
 impl RtActivatable<ITimedMetadataTrackFactory> for TimedMetadataTrack {}
 impl TimedMetadataTrack {
     #[inline] pub fn create(id: &HStringArg, language: &HStringArg, kind: TimedMetadataKind) -> Result<ComPtr<TimedMetadataTrack>> {
-        <Self as RtActivatable<ITimedMetadataTrackFactory>>::get_activation_factory().create(id, language, kind)
+        <Self as RtActivatable<ITimedMetadataTrackFactory>>::get_activation_factory().deref().create(id, language, kind)
     }
 }
 DEFINE_CLSID!(TimedMetadataTrack(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,77,101,116,97,100,97,116,97,84,114,97,99,107,0]) [CLSID_TimedMetadataTrack]);
@@ -12908,8 +12908,8 @@ impl ITimedTextCue {
         let hr = ((*self.lpVtbl).get_CueRegion)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_cue_region(&self, value: &TimedTextRegion) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CueRegion)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_cue_region(&self, value: &ComPtr<TimedTextRegion>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CueRegion)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_cue_style(&self) -> Result<Option<ComPtr<TimedTextStyle>>> { unsafe { 
@@ -12917,8 +12917,8 @@ impl ITimedTextCue {
         let hr = ((*self.lpVtbl).get_CueStyle)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_cue_style(&self, value: &TimedTextStyle) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_CueStyle)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_cue_style(&self, value: &ComPtr<TimedTextStyle>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_CueStyle)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_lines(&self) -> Result<Option<ComPtr<foundation::collections::IVector<TimedTextLine>>>> { unsafe { 
@@ -13130,9 +13130,9 @@ RT_INTERFACE!{interface ITimedTextSource(ITimedTextSourceVtbl): IInspectable(IIn
     fn remove_Resolved(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ITimedTextSource {
-    #[inline] pub fn add_resolved(&self, handler: &foundation::TypedEventHandler<TimedTextSource, TimedTextSourceResolveResultEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_resolved(&self, handler: &ComPtr<foundation::TypedEventHandler<TimedTextSource, TimedTextSourceResolveResultEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Resolved)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Resolved)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_resolved(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -13144,29 +13144,29 @@ RT_CLASS!{class TimedTextSource: ITimedTextSource}
 impl RtActivatable<ITimedTextSourceStatics> for TimedTextSource {}
 impl RtActivatable<ITimedTextSourceStatics2> for TimedTextSource {}
 impl TimedTextSource {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream(stream: &super::super::storage::streams::IRandomAccessStream) -> Result<Option<ComPtr<TimedTextSource>>> {
-        <Self as RtActivatable<ITimedTextSourceStatics>>::get_activation_factory().create_from_stream(stream)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream(stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<Option<ComPtr<TimedTextSource>>> {
+        <Self as RtActivatable<ITimedTextSourceStatics>>::get_activation_factory().deref().create_from_stream(stream)
     }
-    #[inline] pub fn create_from_uri(uri: &foundation::Uri) -> Result<Option<ComPtr<TimedTextSource>>> {
-        <Self as RtActivatable<ITimedTextSourceStatics>>::get_activation_factory().create_from_uri(uri)
+    #[inline] pub fn create_from_uri(uri: &ComPtr<foundation::Uri>) -> Result<Option<ComPtr<TimedTextSource>>> {
+        <Self as RtActivatable<ITimedTextSourceStatics>>::get_activation_factory().deref().create_from_uri(uri)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_language(stream: &super::super::storage::streams::IRandomAccessStream, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> {
-        <Self as RtActivatable<ITimedTextSourceStatics>>::get_activation_factory().create_from_stream_with_language(stream, defaultLanguage)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_language(stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> {
+        <Self as RtActivatable<ITimedTextSourceStatics>>::get_activation_factory().deref().create_from_stream_with_language(stream, defaultLanguage)
     }
-    #[inline] pub fn create_from_uri_with_language(uri: &foundation::Uri, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> {
-        <Self as RtActivatable<ITimedTextSourceStatics>>::get_activation_factory().create_from_uri_with_language(uri, defaultLanguage)
+    #[inline] pub fn create_from_uri_with_language(uri: &ComPtr<foundation::Uri>, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> {
+        <Self as RtActivatable<ITimedTextSourceStatics>>::get_activation_factory().deref().create_from_uri_with_language(uri, defaultLanguage)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_index(stream: &super::super::storage::streams::IRandomAccessStream, indexStream: &super::super::storage::streams::IRandomAccessStream) -> Result<Option<ComPtr<TimedTextSource>>> {
-        <Self as RtActivatable<ITimedTextSourceStatics2>>::get_activation_factory().create_from_stream_with_index(stream, indexStream)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_index(stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, indexStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<Option<ComPtr<TimedTextSource>>> {
+        <Self as RtActivatable<ITimedTextSourceStatics2>>::get_activation_factory().deref().create_from_stream_with_index(stream, indexStream)
     }
-    #[inline] pub fn create_from_uri_with_index(uri: &foundation::Uri, indexUri: &foundation::Uri) -> Result<Option<ComPtr<TimedTextSource>>> {
-        <Self as RtActivatable<ITimedTextSourceStatics2>>::get_activation_factory().create_from_uri_with_index(uri, indexUri)
+    #[inline] pub fn create_from_uri_with_index(uri: &ComPtr<foundation::Uri>, indexUri: &ComPtr<foundation::Uri>) -> Result<Option<ComPtr<TimedTextSource>>> {
+        <Self as RtActivatable<ITimedTextSourceStatics2>>::get_activation_factory().deref().create_from_uri_with_index(uri, indexUri)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_index_and_language(stream: &super::super::storage::streams::IRandomAccessStream, indexStream: &super::super::storage::streams::IRandomAccessStream, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> {
-        <Self as RtActivatable<ITimedTextSourceStatics2>>::get_activation_factory().create_from_stream_with_index_and_language(stream, indexStream, defaultLanguage)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_index_and_language(stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, indexStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> {
+        <Self as RtActivatable<ITimedTextSourceStatics2>>::get_activation_factory().deref().create_from_stream_with_index_and_language(stream, indexStream, defaultLanguage)
     }
-    #[inline] pub fn create_from_uri_with_index_and_language(uri: &foundation::Uri, indexUri: &foundation::Uri, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> {
-        <Self as RtActivatable<ITimedTextSourceStatics2>>::get_activation_factory().create_from_uri_with_index_and_language(uri, indexUri, defaultLanguage)
+    #[inline] pub fn create_from_uri_with_index_and_language(uri: &ComPtr<foundation::Uri>, indexUri: &ComPtr<foundation::Uri>, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> {
+        <Self as RtActivatable<ITimedTextSourceStatics2>>::get_activation_factory().deref().create_from_uri_with_index_and_language(uri, indexUri, defaultLanguage)
     }
 }
 DEFINE_CLSID!(TimedTextSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,83,111,117,114,99,101,0]) [CLSID_TimedTextSource]);
@@ -13198,24 +13198,24 @@ RT_INTERFACE!{static interface ITimedTextSourceStatics(ITimedTextSourceStaticsVt
     fn CreateFromUriWithLanguage(&self, uri: *mut foundation::Uri, defaultLanguage: HSTRING, out: *mut *mut TimedTextSource) -> HRESULT
 }}
 impl ITimedTextSourceStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream(&self, stream: &super::super::storage::streams::IRandomAccessStream) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStream)(self as *const _ as *mut _, stream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromStream)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_uri(&self, uri: &foundation::Uri) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
+    #[inline] pub fn create_from_uri(&self, uri: &ComPtr<foundation::Uri>) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromUri)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromUri)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_language(&self, stream: &super::super::storage::streams::IRandomAccessStream, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_language(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStreamWithLanguage)(self as *const _ as *mut _, stream as *const _ as *mut _, defaultLanguage.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateFromStreamWithLanguage)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, defaultLanguage.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_uri_with_language(&self, uri: &foundation::Uri, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
+    #[inline] pub fn create_from_uri_with_language(&self, uri: &ComPtr<foundation::Uri>, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromUriWithLanguage)(self as *const _ as *mut _, uri as *const _ as *mut _, defaultLanguage.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateFromUriWithLanguage)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, defaultLanguage.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -13229,24 +13229,24 @@ RT_INTERFACE!{static interface ITimedTextSourceStatics2(ITimedTextSourceStatics2
     fn CreateFromUriWithIndexAndLanguage(&self, uri: *mut foundation::Uri, indexUri: *mut foundation::Uri, defaultLanguage: HSTRING, out: *mut *mut TimedTextSource) -> HRESULT
 }}
 impl ITimedTextSourceStatics2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_index(&self, stream: &super::super::storage::streams::IRandomAccessStream, indexStream: &super::super::storage::streams::IRandomAccessStream) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_index(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, indexStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStreamWithIndex)(self as *const _ as *mut _, stream as *const _ as *mut _, indexStream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromStreamWithIndex)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, indexStream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_uri_with_index(&self, uri: &foundation::Uri, indexUri: &foundation::Uri) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
+    #[inline] pub fn create_from_uri_with_index(&self, uri: &ComPtr<foundation::Uri>, indexUri: &ComPtr<foundation::Uri>) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromUriWithIndex)(self as *const _ as *mut _, uri as *const _ as *mut _, indexUri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromUriWithIndex)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, indexUri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_index_and_language(&self, stream: &super::super::storage::streams::IRandomAccessStream, indexStream: &super::super::storage::streams::IRandomAccessStream, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_with_index_and_language(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, indexStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStreamWithIndexAndLanguage)(self as *const _ as *mut _, stream as *const _ as *mut _, indexStream as *const _ as *mut _, defaultLanguage.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateFromStreamWithIndexAndLanguage)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, indexStream.deref() as *const _ as *mut _, defaultLanguage.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_uri_with_index_and_language(&self, uri: &foundation::Uri, indexUri: &foundation::Uri, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
+    #[inline] pub fn create_from_uri_with_index_and_language(&self, uri: &ComPtr<foundation::Uri>, indexUri: &ComPtr<foundation::Uri>, defaultLanguage: &HStringArg) -> Result<Option<ComPtr<TimedTextSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromUriWithIndexAndLanguage)(self as *const _ as *mut _, uri as *const _ as *mut _, indexUri as *const _ as *mut _, defaultLanguage.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateFromUriWithIndexAndLanguage)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, indexUri.deref() as *const _ as *mut _, defaultLanguage.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -13478,8 +13478,8 @@ impl ITimedTextSubformat {
         let hr = ((*self.lpVtbl).get_SubformatStyle)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_subformat_style(&self, value: &TimedTextStyle) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_SubformatStyle)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_subformat_style(&self, value: &ComPtr<TimedTextStyle>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_SubformatStyle)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -13516,18 +13516,18 @@ impl IVideoStabilizationEffect {
         let hr = ((*self.lpVtbl).get_Enabled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_enabled_changed(&self, handler: &foundation::TypedEventHandler<VideoStabilizationEffect, VideoStabilizationEffectEnabledChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_enabled_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<VideoStabilizationEffect, VideoStabilizationEffectEnabledChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_EnabledChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_EnabledChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_enabled_changed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_EnabledChanged)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_recommended_stream_configuration(&self, controller: &super::devices::VideoDeviceController, desiredProperties: &super::mediaproperties::VideoEncodingProperties) -> Result<Option<ComPtr<super::capture::VideoStreamConfiguration>>> { unsafe { 
+    #[inline] pub fn get_recommended_stream_configuration(&self, controller: &ComPtr<super::devices::VideoDeviceController>, desiredProperties: &ComPtr<super::mediaproperties::VideoEncodingProperties>) -> Result<Option<ComPtr<super::capture::VideoStreamConfiguration>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetRecommendedStreamConfiguration)(self as *const _ as *mut _, controller as *const _ as *mut _, desiredProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetRecommendedStreamConfiguration)(self as *const _ as *mut _, controller.deref() as *const _ as *mut _, desiredProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -13564,8 +13564,8 @@ impl IVideoStreamDescriptor {
 RT_CLASS!{class VideoStreamDescriptor: IVideoStreamDescriptor}
 impl RtActivatable<IVideoStreamDescriptorFactory> for VideoStreamDescriptor {}
 impl VideoStreamDescriptor {
-    #[inline] pub fn create(encodingProperties: &super::mediaproperties::VideoEncodingProperties) -> Result<ComPtr<VideoStreamDescriptor>> {
-        <Self as RtActivatable<IVideoStreamDescriptorFactory>>::get_activation_factory().create(encodingProperties)
+    #[inline] pub fn create(encodingProperties: &ComPtr<super::mediaproperties::VideoEncodingProperties>) -> Result<ComPtr<VideoStreamDescriptor>> {
+        <Self as RtActivatable<IVideoStreamDescriptorFactory>>::get_activation_factory().deref().create(encodingProperties)
     }
 }
 DEFINE_CLSID!(VideoStreamDescriptor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,86,105,100,101,111,83,116,114,101,97,109,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_VideoStreamDescriptor]);
@@ -13585,9 +13585,9 @@ RT_INTERFACE!{static interface IVideoStreamDescriptorFactory(IVideoStreamDescrip
     fn Create(&self, encodingProperties: *mut super::mediaproperties::VideoEncodingProperties, out: *mut *mut VideoStreamDescriptor) -> HRESULT
 }}
 impl IVideoStreamDescriptorFactory {
-    #[inline] pub fn create(&self, encodingProperties: &super::mediaproperties::VideoEncodingProperties) -> Result<ComPtr<VideoStreamDescriptor>> { unsafe { 
+    #[inline] pub fn create(&self, encodingProperties: &ComPtr<super::mediaproperties::VideoEncodingProperties>) -> Result<ComPtr<VideoStreamDescriptor>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, encodingProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -13601,9 +13601,9 @@ RT_INTERFACE!{interface IVideoTrack(IVideoTrackVtbl): IInspectable(IInspectableV
     fn get_SupportInfo(&self, out: *mut *mut VideoTrackSupportInfo) -> HRESULT
 }}
 impl IVideoTrack {
-    #[inline] pub fn add_open_failed(&self, handler: &foundation::TypedEventHandler<VideoTrack, VideoTrackOpenFailedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_open_failed(&self, handler: &ComPtr<foundation::TypedEventHandler<VideoTrack, VideoTrackOpenFailedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_OpenFailed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_OpenFailed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_open_failed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -13668,13 +13668,13 @@ RT_CLASS!{static class SoundLevelBroker}
 impl RtActivatable<ISoundLevelBrokerStatics> for SoundLevelBroker {}
 impl SoundLevelBroker {
     #[inline] pub fn get_sound_level() -> Result<super::super::SoundLevel> {
-        <Self as RtActivatable<ISoundLevelBrokerStatics>>::get_activation_factory().get_sound_level()
+        <Self as RtActivatable<ISoundLevelBrokerStatics>>::get_activation_factory().deref().get_sound_level()
     }
-    #[inline] pub fn add_sound_level_changed(handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<ISoundLevelBrokerStatics>>::get_activation_factory().add_sound_level_changed(handler)
+    #[inline] pub fn add_sound_level_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<ISoundLevelBrokerStatics>>::get_activation_factory().deref().add_sound_level_changed(handler)
     }
     #[inline] pub fn remove_sound_level_changed(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<ISoundLevelBrokerStatics>>::get_activation_factory().remove_sound_level_changed(token)
+        <Self as RtActivatable<ISoundLevelBrokerStatics>>::get_activation_factory().deref().remove_sound_level_changed(token)
     }
 }
 DEFINE_CLSID!(SoundLevelBroker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,80,114,101,118,105,101,119,46,83,111,117,110,100,76,101,118,101,108,66,114,111,107,101,114,0]) [CLSID_SoundLevelBroker]);
@@ -13690,9 +13690,9 @@ impl ISoundLevelBrokerStatics {
         let hr = ((*self.lpVtbl).get_SoundLevel)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_sound_level_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_sound_level_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SoundLevelChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SoundLevelChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_sound_level_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -13746,8 +13746,8 @@ impl IAdvancedPhotoControl {
         let hr = ((*self.lpVtbl).get_Mode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn configure(&self, settings: &AdvancedPhotoCaptureSettings) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Configure)(self as *const _ as *mut _, settings as *const _ as *mut _);
+    #[inline] pub fn configure(&self, settings: &ComPtr<AdvancedPhotoCaptureSettings>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Configure)(self as *const _ as *mut _, settings.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -13761,8 +13761,8 @@ RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController(IAdvancedVideoCapt
     fn GetDeviceProperty(&self, propertyId: HSTRING, out: *mut *mut IInspectable) -> HRESULT
 }}
 impl IAdvancedVideoCaptureDeviceController {
-    #[inline] pub fn set_device_property(&self, propertyId: &HStringArg, propertyValue: &IInspectable) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetDeviceProperty)(self as *const _ as *mut _, propertyId.get(), propertyValue as *const _ as *mut _);
+    #[inline] pub fn set_device_property(&self, propertyId: &HStringArg, propertyValue: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetDeviceProperty)(self as *const _ as *mut _, propertyId.get(), propertyValue.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_device_property(&self, propertyId: &HStringArg) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
@@ -13930,19 +13930,19 @@ impl IAdvancedVideoCaptureDeviceController5 {
         let hr = ((*self.lpVtbl).get_Id)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_device_property_by_id(&self, propertyId: &HStringArg, maxPropertyValueSize: &foundation::IReference<u32>) -> Result<Option<ComPtr<VideoDeviceControllerGetDevicePropertyResult>>> { unsafe { 
+    #[inline] pub fn get_device_property_by_id(&self, propertyId: &HStringArg, maxPropertyValueSize: &ComPtr<foundation::IReference<u32>>) -> Result<Option<ComPtr<VideoDeviceControllerGetDevicePropertyResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDevicePropertyById)(self as *const _ as *mut _, propertyId.get(), maxPropertyValueSize as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetDevicePropertyById)(self as *const _ as *mut _, propertyId.get(), maxPropertyValueSize.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_device_property_by_id(&self, propertyId: &HStringArg, propertyValue: &IInspectable) -> Result<VideoDeviceControllerSetDevicePropertyStatus> { unsafe { 
+    #[inline] pub fn set_device_property_by_id(&self, propertyId: &HStringArg, propertyValue: &ComPtr<IInspectable>) -> Result<VideoDeviceControllerSetDevicePropertyStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).SetDevicePropertyById)(self as *const _ as *mut _, propertyId.get(), propertyValue as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetDevicePropertyById)(self as *const _ as *mut _, propertyId.get(), propertyValue.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_device_property_by_extended_id(&self, extendedPropertyId: &[u8], maxPropertyValueSize: &foundation::IReference<u32>) -> Result<Option<ComPtr<VideoDeviceControllerGetDevicePropertyResult>>> { unsafe { 
+    #[inline] pub fn get_device_property_by_extended_id(&self, extendedPropertyId: &[u8], maxPropertyValueSize: &ComPtr<foundation::IReference<u32>>) -> Result<Option<ComPtr<VideoDeviceControllerGetDevicePropertyResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetDevicePropertyByExtendedId)(self as *const _ as *mut _, extendedPropertyId.len() as u32, extendedPropertyId.as_ptr() as *mut _, maxPropertyValueSize as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetDevicePropertyByExtendedId)(self as *const _ as *mut _, extendedPropertyId.len() as u32, extendedPropertyId.as_ptr() as *mut _, maxPropertyValueSize.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_device_property_by_extended_id(&self, extendedPropertyId: &[u8], propertyValue: &[u8]) -> Result<VideoDeviceControllerSetDevicePropertyStatus> { unsafe { 
@@ -14025,9 +14025,9 @@ impl IAudioDeviceModule {
         let hr = ((*self.lpVtbl).get_MinorVersion)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn send_command_async(&self, command: &super::super::storage::streams::IBuffer) -> Result<ComPtr<foundation::IAsyncOperation<ModuleCommandResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn send_command_async(&self, command: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<ModuleCommandResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SendCommandAsync)(self as *const _ as *mut _, command as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SendCommandAsync)(self as *const _ as *mut _, command.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -14058,9 +14058,9 @@ RT_INTERFACE!{interface IAudioDeviceModulesManager(IAudioDeviceModulesManagerVtb
     fn FindAll(&self, out: *mut *mut foundation::collections::IVectorView<AudioDeviceModule>) -> HRESULT
 }}
 impl IAudioDeviceModulesManager {
-    #[inline] pub fn add_module_notification_received(&self, handler: &foundation::TypedEventHandler<AudioDeviceModulesManager, AudioDeviceModuleNotificationEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_module_notification_received(&self, handler: &ComPtr<foundation::TypedEventHandler<AudioDeviceModulesManager, AudioDeviceModuleNotificationEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ModuleNotificationReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ModuleNotificationReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_module_notification_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -14082,7 +14082,7 @@ RT_CLASS!{class AudioDeviceModulesManager: IAudioDeviceModulesManager}
 impl RtActivatable<IAudioDeviceModulesManagerFactory> for AudioDeviceModulesManager {}
 impl AudioDeviceModulesManager {
     #[inline] pub fn create(deviceId: &HStringArg) -> Result<ComPtr<AudioDeviceModulesManager>> {
-        <Self as RtActivatable<IAudioDeviceModulesManagerFactory>>::get_activation_factory().create(deviceId)
+        <Self as RtActivatable<IAudioDeviceModulesManagerFactory>>::get_activation_factory().deref().create(deviceId)
     }
 }
 DEFINE_CLSID!(AudioDeviceModulesManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,65,117,100,105,111,68,101,118,105,99,101,77,111,100,117,108,101,115,77,97,110,97,103,101,114,0]) [CLSID_AudioDeviceModulesManager]);
@@ -14147,54 +14147,54 @@ impl ICallControl {
         let hr = ((*self.lpVtbl).get_HasRinger)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_answer_requested(&self, handler: &CallControlEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_answer_requested(&self, handler: &ComPtr<CallControlEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AnswerRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AnswerRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_answer_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_AnswerRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_hang_up_requested(&self, handler: &CallControlEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_hang_up_requested(&self, handler: &ComPtr<CallControlEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_HangUpRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_HangUpRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_hang_up_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_HangUpRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_dial_requested(&self, handler: &DialRequestedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_dial_requested(&self, handler: &ComPtr<DialRequestedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DialRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DialRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_dial_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_DialRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_redial_requested(&self, handler: &RedialRequestedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_redial_requested(&self, handler: &ComPtr<RedialRequestedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RedialRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RedialRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_redial_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_RedialRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_keypad_pressed(&self, handler: &KeypadPressedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_keypad_pressed(&self, handler: &ComPtr<KeypadPressedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_KeypadPressed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_KeypadPressed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_keypad_pressed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_KeypadPressed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_audio_transfer_requested(&self, handler: &CallControlEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_audio_transfer_requested(&self, handler: &ComPtr<CallControlEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AudioTransferRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AudioTransferRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_audio_transfer_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -14206,10 +14206,10 @@ RT_CLASS!{class CallControl: ICallControl}
 impl RtActivatable<ICallControlStatics> for CallControl {}
 impl CallControl {
     #[inline] pub fn get_default() -> Result<Option<ComPtr<CallControl>>> {
-        <Self as RtActivatable<ICallControlStatics>>::get_activation_factory().get_default()
+        <Self as RtActivatable<ICallControlStatics>>::get_activation_factory().deref().get_default()
     }
     #[inline] pub fn from_id(deviceId: &HStringArg) -> Result<Option<ComPtr<CallControl>>> {
-        <Self as RtActivatable<ICallControlStatics>>::get_activation_factory().from_id(deviceId)
+        <Self as RtActivatable<ICallControlStatics>>::get_activation_factory().deref().from_id(deviceId)
     }
 }
 DEFINE_CLSID!(CallControl(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,67,97,108,108,67,111,110,116,114,111,108,0]) [CLSID_CallControl]);
@@ -14218,8 +14218,8 @@ RT_DELEGATE!{delegate CallControlEventHandler(CallControlEventHandlerVtbl, CallC
     fn Invoke(&self, sender: *mut CallControl) -> HRESULT
 }}
 impl CallControlEventHandler {
-    #[inline] pub fn invoke(&self, sender: &CallControl) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, sender: &ComPtr<CallControl>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -14293,8 +14293,8 @@ RT_DELEGATE!{delegate DialRequestedEventHandler(DialRequestedEventHandlerVtbl, D
     fn Invoke(&self, sender: *mut CallControl, e: *mut DialRequestedEventArgs) -> HRESULT
 }}
 impl DialRequestedEventHandler {
-    #[inline] pub fn invoke(&self, sender: &CallControl, e: &DialRequestedEventArgs) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, e as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, sender: &ComPtr<CallControl>, e: &ComPtr<DialRequestedEventArgs>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _, e.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -14638,8 +14638,8 @@ impl IFocusControl2 {
         let hr = ((*self.lpVtbl).LockAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn configure(&self, settings: &FocusSettings) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Configure)(self as *const _ as *mut _, settings as *const _ as *mut _);
+    #[inline] pub fn configure(&self, settings: &ComPtr<FocusSettings>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Configure)(self as *const _ as *mut _, settings.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -14688,8 +14688,8 @@ impl IFocusSettings {
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_value(&self, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_value(&self, value: &ComPtr<foundation::IReference<u32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_distance(&self) -> Result<Option<ComPtr<foundation::IReference<ManualFocusDistance>>>> { unsafe { 
@@ -14697,8 +14697,8 @@ impl IFocusSettings {
         let hr = ((*self.lpVtbl).get_Distance)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_distance(&self, value: &foundation::IReference<ManualFocusDistance>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Distance)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_distance(&self, value: &ComPtr<foundation::IReference<ManualFocusDistance>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Distance)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_wait_for_focus(&self) -> Result<bool> { unsafe { 
@@ -14852,8 +14852,8 @@ RT_DELEGATE!{delegate KeypadPressedEventHandler(KeypadPressedEventHandlerVtbl, K
     fn Invoke(&self, sender: *mut CallControl, e: *mut KeypadPressedEventArgs) -> HRESULT
 }}
 impl KeypadPressedEventHandler {
-    #[inline] pub fn invoke(&self, sender: &CallControl, e: &KeypadPressedEventArgs) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, e as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, sender: &ComPtr<CallControl>, e: &ComPtr<KeypadPressedEventArgs>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _, e.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -14870,9 +14870,9 @@ RT_INTERFACE!{interface ILowLagPhotoControl(ILowLagPhotoControlVtbl): IInspectab
     fn get_HardwareAcceleratedThumbnailSupported(&self, out: *mut u32) -> HRESULT
 }}
 impl ILowLagPhotoControl {
-    #[inline] pub fn get_highest_concurrent_frame_rate(&self, captureProperties: &super::mediaproperties::IMediaEncodingProperties) -> Result<Option<ComPtr<super::mediaproperties::MediaRatio>>> { unsafe { 
+    #[inline] pub fn get_highest_concurrent_frame_rate(&self, captureProperties: &ComPtr<super::mediaproperties::IMediaEncodingProperties>) -> Result<Option<ComPtr<super::mediaproperties::MediaRatio>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetHighestConcurrentFrameRate)(self as *const _ as *mut _, captureProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetHighestConcurrentFrameRate)(self as *const _ as *mut _, captureProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_frame_rate(&self) -> Result<Option<ComPtr<super::mediaproperties::MediaRatio>>> { unsafe { 
@@ -14967,9 +14967,9 @@ impl ILowLagPhotoSequenceControl {
         let hr = ((*self.lpVtbl).put_PhotosPerSecondLimit)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_highest_concurrent_frame_rate(&self, captureProperties: &super::mediaproperties::IMediaEncodingProperties) -> Result<Option<ComPtr<super::mediaproperties::MediaRatio>>> { unsafe { 
+    #[inline] pub fn get_highest_concurrent_frame_rate(&self, captureProperties: &ComPtr<super::mediaproperties::IMediaEncodingProperties>) -> Result<Option<ComPtr<super::mediaproperties::MediaRatio>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetHighestConcurrentFrameRate)(self as *const _ as *mut _, captureProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetHighestConcurrentFrameRate)(self as *const _ as *mut _, captureProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_frame_rate(&self) -> Result<Option<ComPtr<super::mediaproperties::MediaRatio>>> { unsafe { 
@@ -15027,31 +15027,31 @@ RT_CLASS!{static class MediaDevice}
 impl RtActivatable<IMediaDeviceStatics> for MediaDevice {}
 impl MediaDevice {
     #[inline] pub fn get_audio_capture_selector() -> Result<HString> {
-        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().get_audio_capture_selector()
+        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().deref().get_audio_capture_selector()
     }
     #[inline] pub fn get_audio_render_selector() -> Result<HString> {
-        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().get_audio_render_selector()
+        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().deref().get_audio_render_selector()
     }
     #[inline] pub fn get_video_capture_selector() -> Result<HString> {
-        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().get_video_capture_selector()
+        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().deref().get_video_capture_selector()
     }
     #[inline] pub fn get_default_audio_capture_id(role: AudioDeviceRole) -> Result<HString> {
-        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().get_default_audio_capture_id(role)
+        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().deref().get_default_audio_capture_id(role)
     }
     #[inline] pub fn get_default_audio_render_id(role: AudioDeviceRole) -> Result<HString> {
-        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().get_default_audio_render_id(role)
+        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().deref().get_default_audio_render_id(role)
     }
-    #[inline] pub fn add_default_audio_capture_device_changed(handler: &foundation::TypedEventHandler<IInspectable, DefaultAudioCaptureDeviceChangedEventArgs>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().add_default_audio_capture_device_changed(handler)
+    #[inline] pub fn add_default_audio_capture_device_changed(handler: &ComPtr<foundation::TypedEventHandler<IInspectable, DefaultAudioCaptureDeviceChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().deref().add_default_audio_capture_device_changed(handler)
     }
     #[inline] pub fn remove_default_audio_capture_device_changed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().remove_default_audio_capture_device_changed(cookie)
+        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().deref().remove_default_audio_capture_device_changed(cookie)
     }
-    #[inline] pub fn add_default_audio_render_device_changed(handler: &foundation::TypedEventHandler<IInspectable, DefaultAudioRenderDeviceChangedEventArgs>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().add_default_audio_render_device_changed(handler)
+    #[inline] pub fn add_default_audio_render_device_changed(handler: &ComPtr<foundation::TypedEventHandler<IInspectable, DefaultAudioRenderDeviceChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().deref().add_default_audio_render_device_changed(handler)
     }
     #[inline] pub fn remove_default_audio_render_device_changed(cookie: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().remove_default_audio_render_device_changed(cookie)
+        <Self as RtActivatable<IMediaDeviceStatics>>::get_activation_factory().deref().remove_default_audio_render_device_changed(cookie)
     }
 }
 DEFINE_CLSID!(MediaDevice(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,77,101,100,105,97,68,101,118,105,99,101,0]) [CLSID_MediaDevice]);
@@ -15150,9 +15150,9 @@ impl IMediaDeviceController {
         let hr = ((*self.lpVtbl).GetMediaStreamProperties)(self as *const _ as *mut _, mediaStreamType, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_media_stream_properties_async(&self, mediaStreamType: super::capture::MediaStreamType, mediaEncodingProperties: &super::mediaproperties::IMediaEncodingProperties) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn set_media_stream_properties_async(&self, mediaStreamType: super::capture::MediaStreamType, mediaEncodingProperties: &ComPtr<super::mediaproperties::IMediaEncodingProperties>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetMediaStreamPropertiesAsync)(self as *const _ as *mut _, mediaStreamType, mediaEncodingProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetMediaStreamPropertiesAsync)(self as *const _ as *mut _, mediaStreamType, mediaEncodingProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -15194,18 +15194,18 @@ impl IMediaDeviceStatics {
         let hr = ((*self.lpVtbl).GetDefaultAudioRenderId)(self as *const _ as *mut _, role, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_default_audio_capture_device_changed(&self, handler: &foundation::TypedEventHandler<IInspectable, DefaultAudioCaptureDeviceChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_default_audio_capture_device_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<IInspectable, DefaultAudioCaptureDeviceChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DefaultAudioCaptureDeviceChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DefaultAudioCaptureDeviceChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_default_audio_capture_device_changed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_DefaultAudioCaptureDeviceChanged)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_default_audio_render_device_changed(&self, handler: &foundation::TypedEventHandler<IInspectable, DefaultAudioRenderDeviceChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_default_audio_render_device_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<IInspectable, DefaultAudioRenderDeviceChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DefaultAudioRenderDeviceChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DefaultAudioRenderDeviceChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_default_audio_render_device_changed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -15313,8 +15313,8 @@ RT_DELEGATE!{delegate RedialRequestedEventHandler(RedialRequestedEventHandlerVtb
     fn Invoke(&self, sender: *mut CallControl, e: *mut RedialRequestedEventArgs) -> HRESULT
 }}
 impl RedialRequestedEventHandler {
-    #[inline] pub fn invoke(&self, sender: &CallControl, e: &RedialRequestedEventArgs) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, e as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, sender: &ComPtr<CallControl>, e: &ComPtr<RedialRequestedEventArgs>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _, e.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -15427,14 +15427,14 @@ impl IRegionsOfInterestControl {
         let hr = ((*self.lpVtbl).get_MaxRegions)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn set_regions_async(&self, regions: &foundation::collections::IIterable<RegionOfInterest>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn set_regions_async(&self, regions: &ComPtr<foundation::collections::IIterable<RegionOfInterest>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetRegionsAsync)(self as *const _ as *mut _, regions as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetRegionsAsync)(self as *const _ as *mut _, regions.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_regions_with_lock_async(&self, regions: &foundation::collections::IIterable<RegionOfInterest>, lockValues: bool) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn set_regions_with_lock_async(&self, regions: &ComPtr<foundation::collections::IIterable<RegionOfInterest>>, lockValues: bool) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetRegionsWithLockAsync)(self as *const _ as *mut _, regions as *const _ as *mut _, lockValues, &mut out);
+        let hr = ((*self.lpVtbl).SetRegionsWithLockAsync)(self as *const _ as *mut _, regions.deref() as *const _ as *mut _, lockValues, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn clear_regions_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
@@ -15781,8 +15781,8 @@ impl IZoomControl2 {
         let hr = ((*self.lpVtbl).get_Mode)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn configure(&self, settings: &ZoomSettings) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Configure)(self as *const _ as *mut _, settings as *const _ as *mut _);
+    #[inline] pub fn configure(&self, settings: &ComPtr<ZoomSettings>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Configure)(self as *const _ as *mut _, settings.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -15888,7 +15888,7 @@ RT_CLASS!{class CameraIntrinsics: ICameraIntrinsics}
 impl RtActivatable<ICameraIntrinsicsFactory> for CameraIntrinsics {}
 impl CameraIntrinsics {
     #[inline] pub fn create(focalLength: foundation::numerics::Vector2, principalPoint: foundation::numerics::Vector2, radialDistortion: foundation::numerics::Vector3, tangentialDistortion: foundation::numerics::Vector2, imageWidth: u32, imageHeight: u32) -> Result<ComPtr<CameraIntrinsics>> {
-        <Self as RtActivatable<ICameraIntrinsicsFactory>>::get_activation_factory().create(focalLength, principalPoint, radialDistortion, tangentialDistortion, imageWidth, imageHeight)
+        <Self as RtActivatable<ICameraIntrinsicsFactory>>::get_activation_factory().deref().create(focalLength, principalPoint, radialDistortion, tangentialDistortion, imageWidth, imageHeight)
     }
 }
 DEFINE_CLSID!(CameraIntrinsics(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,67,111,114,101,46,67,97,109,101,114,97,73,110,116,114,105,110,115,105,99,115,0]) [CLSID_CameraIntrinsics]);
@@ -15944,22 +15944,22 @@ RT_INTERFACE!{interface IDepthCorrelatedCoordinateMapper(IDepthCorrelatedCoordin
     #[cfg(feature="windows-perception")] fn MapPoints(&self, sourcePointsSize: u32, sourcePoints: *mut foundation::Point, targetCoordinateSystem: *mut crate::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: *mut CameraIntrinsics, resultsSize: u32, results: *mut foundation::Point) -> HRESULT
 }}
 impl IDepthCorrelatedCoordinateMapper {
-    #[cfg(feature="windows-perception")] #[inline] pub fn unproject_point(&self, sourcePoint: foundation::Point, targetCoordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem) -> Result<foundation::numerics::Vector3> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn unproject_point(&self, sourcePoint: foundation::Point, targetCoordinateSystem: &ComPtr<crate::windows::perception::spatial::SpatialCoordinateSystem>) -> Result<foundation::numerics::Vector3> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).UnprojectPoint)(self as *const _ as *mut _, sourcePoint, targetCoordinateSystem as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).UnprojectPoint)(self as *const _ as *mut _, sourcePoint, targetCoordinateSystem.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn unproject_points(&self, sourcePoints: &[foundation::Point], targetCoordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem, results: &mut [foundation::numerics::Vector3]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).UnprojectPoints)(self as *const _ as *mut _, sourcePoints.len() as u32, sourcePoints.as_ptr() as *mut _, targetCoordinateSystem as *const _ as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
+    #[cfg(feature="windows-perception")] #[inline] pub fn unproject_points(&self, sourcePoints: &[foundation::Point], targetCoordinateSystem: &ComPtr<crate::windows::perception::spatial::SpatialCoordinateSystem>, results: &mut [foundation::numerics::Vector3]) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).UnprojectPoints)(self as *const _ as *mut _, sourcePoints.len() as u32, sourcePoints.as_ptr() as *mut _, targetCoordinateSystem.deref() as *const _ as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn map_point(&self, sourcePoint: foundation::Point, targetCoordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: &CameraIntrinsics) -> Result<foundation::Point> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn map_point(&self, sourcePoint: foundation::Point, targetCoordinateSystem: &ComPtr<crate::windows::perception::spatial::SpatialCoordinateSystem>, targetCameraIntrinsics: &ComPtr<CameraIntrinsics>) -> Result<foundation::Point> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).MapPoint)(self as *const _ as *mut _, sourcePoint, targetCoordinateSystem as *const _ as *mut _, targetCameraIntrinsics as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).MapPoint)(self as *const _ as *mut _, sourcePoint, targetCoordinateSystem.deref() as *const _ as *mut _, targetCameraIntrinsics.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn map_points(&self, sourcePoints: &[foundation::Point], targetCoordinateSystem: &crate::windows::perception::spatial::SpatialCoordinateSystem, targetCameraIntrinsics: &CameraIntrinsics, results: &mut [foundation::Point]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).MapPoints)(self as *const _ as *mut _, sourcePoints.len() as u32, sourcePoints.as_ptr() as *mut _, targetCoordinateSystem as *const _ as *mut _, targetCameraIntrinsics as *const _ as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
+    #[cfg(feature="windows-perception")] #[inline] pub fn map_points(&self, sourcePoints: &[foundation::Point], targetCoordinateSystem: &ComPtr<crate::windows::perception::spatial::SpatialCoordinateSystem>, targetCameraIntrinsics: &ComPtr<CameraIntrinsics>, results: &mut [foundation::Point]) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).MapPoints)(self as *const _ as *mut _, sourcePoints.len() as u32, sourcePoints.as_ptr() as *mut _, targetCoordinateSystem.deref() as *const _ as *mut _, targetCameraIntrinsics.deref() as *const _ as *mut _, results.len() as u32, results.as_mut_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -16046,8 +16046,8 @@ impl IFrameController {
         let hr = ((*self.lpVtbl).get_PhotoConfirmationEnabled)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_photo_confirmation_enabled(&self, value: &foundation::IReference<bool>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PhotoConfirmationEnabled)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_photo_confirmation_enabled(&self, value: &ComPtr<foundation::IReference<bool>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PhotoConfirmationEnabled)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -16136,8 +16136,8 @@ impl IFrameExposureCompensationControl {
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_value(&self, value: &foundation::IReference<f32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_value(&self, value: &ComPtr<foundation::IReference<f32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -16164,8 +16164,8 @@ impl IFrameExposureControl {
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_value(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_value(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -16288,8 +16288,8 @@ impl IFrameFocusControl {
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_value(&self, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_value(&self, value: &ComPtr<foundation::IReference<u32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -16346,8 +16346,8 @@ impl IFrameIsoSpeedControl {
         let hr = ((*self.lpVtbl).get_Value)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_value(&self, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_value(&self, value: &ComPtr<foundation::IReference<u32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Value)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -16383,9 +16383,9 @@ impl IVariablePhotoSequenceController {
         let hr = ((*self.lpVtbl).put_PhotosPerSecondLimit)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_highest_concurrent_frame_rate(&self, captureProperties: &super::super::mediaproperties::IMediaEncodingProperties) -> Result<Option<ComPtr<super::super::mediaproperties::MediaRatio>>> { unsafe { 
+    #[inline] pub fn get_highest_concurrent_frame_rate(&self, captureProperties: &ComPtr<super::super::mediaproperties::IMediaEncodingProperties>) -> Result<Option<ComPtr<super::super::mediaproperties::MediaRatio>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetHighestConcurrentFrameRate)(self as *const _ as *mut _, captureProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetHighestConcurrentFrameRate)(self as *const _ as *mut _, captureProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_frame_rate(&self) -> Result<Option<ComPtr<super::super::mediaproperties::MediaRatio>>> { unsafe { 
@@ -16487,13 +16487,13 @@ RT_CLASS!{class DialDevice: IDialDevice}
 impl RtActivatable<IDialDeviceStatics> for DialDevice {}
 impl DialDevice {
     #[inline] pub fn get_device_selector(appName: &HStringArg) -> Result<HString> {
-        <Self as RtActivatable<IDialDeviceStatics>>::get_activation_factory().get_device_selector(appName)
+        <Self as RtActivatable<IDialDeviceStatics>>::get_activation_factory().deref().get_device_selector(appName)
     }
     #[inline] pub fn from_id_async(value: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<DialDevice>>> {
-        <Self as RtActivatable<IDialDeviceStatics>>::get_activation_factory().from_id_async(value)
+        <Self as RtActivatable<IDialDeviceStatics>>::get_activation_factory().deref().from_id_async(value)
     }
-    #[cfg(feature="windows-devices")] #[inline] pub fn device_info_supports_dial_async(device: &super::super::devices::enumeration::DeviceInformation) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<IDialDeviceStatics>>::get_activation_factory().device_info_supports_dial_async(device)
+    #[cfg(feature="windows-devices")] #[inline] pub fn device_info_supports_dial_async(device: &ComPtr<super::super::devices::enumeration::DeviceInformation>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<IDialDeviceStatics>>::get_activation_factory().deref().device_info_supports_dial_async(device)
     }
 }
 DEFINE_CLSID!(DialDevice(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,105,97,108,80,114,111,116,111,99,111,108,46,68,105,97,108,68,101,118,105,99,101,0]) [CLSID_DialDevice]);
@@ -16548,27 +16548,27 @@ impl IDialDevicePicker {
         let hr = ((*self.lpVtbl).get_Appearance)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_dial_device_selected(&self, handler: &foundation::TypedEventHandler<DialDevicePicker, DialDeviceSelectedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_dial_device_selected(&self, handler: &ComPtr<foundation::TypedEventHandler<DialDevicePicker, DialDeviceSelectedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DialDeviceSelected)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DialDeviceSelected)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_dial_device_selected(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_DialDeviceSelected)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_disconnect_button_clicked(&self, handler: &foundation::TypedEventHandler<DialDevicePicker, DialDisconnectButtonClickedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_disconnect_button_clicked(&self, handler: &ComPtr<foundation::TypedEventHandler<DialDevicePicker, DialDisconnectButtonClickedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DisconnectButtonClicked)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DisconnectButtonClicked)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_disconnect_button_clicked(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_DisconnectButtonClicked)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_dial_device_picker_dismissed(&self, handler: &foundation::TypedEventHandler<DialDevicePicker, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_dial_device_picker_dismissed(&self, handler: &ComPtr<foundation::TypedEventHandler<DialDevicePicker, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DialDevicePickerDismissed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DialDevicePickerDismissed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_dial_device_picker_dismissed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -16597,8 +16597,8 @@ impl IDialDevicePicker {
         let hr = ((*self.lpVtbl).Hide)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn set_display_status(&self, device: &DialDevice, status: DialDeviceDisplayStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetDisplayStatus)(self as *const _ as *mut _, device as *const _ as *mut _, status);
+    #[inline] pub fn set_display_status(&self, device: &ComPtr<DialDevice>, status: DialDeviceDisplayStatus) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetDisplayStatus)(self as *const _ as *mut _, device.deref() as *const _ as *mut _, status);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -16646,9 +16646,9 @@ impl IDialDeviceStatics {
         let hr = ((*self.lpVtbl).FromIdAsync)(self as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn device_info_supports_dial_async(&self, device: &super::super::devices::enumeration::DeviceInformation) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn device_info_supports_dial_async(&self, device: &ComPtr<super::super::devices::enumeration::DeviceInformation>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeviceInfoSupportsDialAsync)(self as *const _ as *mut _, device as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).DeviceInfoSupportsDialAsync)(self as *const _ as *mut _, device.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -16675,9 +16675,9 @@ impl IDialReceiverApp {
         let hr = ((*self.lpVtbl).GetAdditionalDataAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_additional_data_async(&self, additionalData: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, HString>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn set_additional_data_async(&self, additionalData: &ComPtr<foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, HString>>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SetAdditionalDataAsync)(self as *const _ as *mut _, additionalData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SetAdditionalDataAsync)(self as *const _ as *mut _, additionalData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -16685,7 +16685,7 @@ RT_CLASS!{class DialReceiverApp: IDialReceiverApp}
 impl RtActivatable<IDialReceiverAppStatics> for DialReceiverApp {}
 impl DialReceiverApp {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<DialReceiverApp>>> {
-        <Self as RtActivatable<IDialReceiverAppStatics>>::get_activation_factory().get_current()
+        <Self as RtActivatable<IDialReceiverAppStatics>>::get_activation_factory().deref().get_current()
     }
 }
 DEFINE_CLSID!(DialReceiverApp(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,105,97,108,80,114,111,116,111,99,111,108,46,68,105,97,108,82,101,99,101,105,118,101,114,65,112,112,0]) [CLSID_DialReceiverApp]);
@@ -16802,11 +16802,11 @@ impl IBackgroundAudioTrack {
 RT_CLASS!{class BackgroundAudioTrack: IBackgroundAudioTrack}
 impl RtActivatable<IBackgroundAudioTrackStatics> for BackgroundAudioTrack {}
 impl BackgroundAudioTrack {
-    #[inline] pub fn create_from_embedded_audio_track(embeddedAudioTrack: &EmbeddedAudioTrack) -> Result<Option<ComPtr<BackgroundAudioTrack>>> {
-        <Self as RtActivatable<IBackgroundAudioTrackStatics>>::get_activation_factory().create_from_embedded_audio_track(embeddedAudioTrack)
+    #[inline] pub fn create_from_embedded_audio_track(embeddedAudioTrack: &ComPtr<EmbeddedAudioTrack>) -> Result<Option<ComPtr<BackgroundAudioTrack>>> {
+        <Self as RtActivatable<IBackgroundAudioTrackStatics>>::get_activation_factory().deref().create_from_embedded_audio_track(embeddedAudioTrack)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<BackgroundAudioTrack>>> {
-        <Self as RtActivatable<IBackgroundAudioTrackStatics>>::get_activation_factory().create_from_file_async(file)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<BackgroundAudioTrack>>> {
+        <Self as RtActivatable<IBackgroundAudioTrackStatics>>::get_activation_factory().deref().create_from_file_async(file)
     }
 }
 DEFINE_CLSID!(BackgroundAudioTrack(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,66,97,99,107,103,114,111,117,110,100,65,117,100,105,111,84,114,97,99,107,0]) [CLSID_BackgroundAudioTrack]);
@@ -16816,14 +16816,14 @@ RT_INTERFACE!{static interface IBackgroundAudioTrackStatics(IBackgroundAudioTrac
     #[cfg(feature="windows-storage")] fn CreateFromFileAsync(&self, file: *mut super::super::storage::IStorageFile, out: *mut *mut foundation::IAsyncOperation<BackgroundAudioTrack>) -> HRESULT
 }}
 impl IBackgroundAudioTrackStatics {
-    #[inline] pub fn create_from_embedded_audio_track(&self, embeddedAudioTrack: &EmbeddedAudioTrack) -> Result<Option<ComPtr<BackgroundAudioTrack>>> { unsafe { 
+    #[inline] pub fn create_from_embedded_audio_track(&self, embeddedAudioTrack: &ComPtr<EmbeddedAudioTrack>) -> Result<Option<ComPtr<BackgroundAudioTrack>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromEmbeddedAudioTrack)(self as *const _ as *mut _, embeddedAudioTrack as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromEmbeddedAudioTrack)(self as *const _ as *mut _, embeddedAudioTrack.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<BackgroundAudioTrack>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(&self, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<BackgroundAudioTrack>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromFileAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -16953,16 +16953,16 @@ impl RtActivatable<IMediaClipStatics> for MediaClip {}
 impl RtActivatable<IMediaClipStatics2> for MediaClip {}
 impl MediaClip {
     #[cfg(feature="windows-ui")] #[inline] pub fn create_from_color(color: super::super::ui::Color, originalDuration: foundation::TimeSpan) -> Result<Option<ComPtr<MediaClip>>> {
-        <Self as RtActivatable<IMediaClipStatics>>::get_activation_factory().create_from_color(color, originalDuration)
+        <Self as RtActivatable<IMediaClipStatics>>::get_activation_factory().deref().create_from_color(color, originalDuration)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<MediaClip>>> {
-        <Self as RtActivatable<IMediaClipStatics>>::get_activation_factory().create_from_file_async(file)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<MediaClip>>> {
+        <Self as RtActivatable<IMediaClipStatics>>::get_activation_factory().deref().create_from_file_async(file)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_image_file_async(file: &super::super::storage::IStorageFile, originalDuration: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<MediaClip>>> {
-        <Self as RtActivatable<IMediaClipStatics>>::get_activation_factory().create_from_image_file_async(file, originalDuration)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_image_file_async(file: &ComPtr<super::super::storage::IStorageFile>, originalDuration: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<MediaClip>>> {
+        <Self as RtActivatable<IMediaClipStatics>>::get_activation_factory().deref().create_from_image_file_async(file, originalDuration)
     }
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_surface(surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, originalDuration: foundation::TimeSpan) -> Result<Option<ComPtr<MediaClip>>> {
-        <Self as RtActivatable<IMediaClipStatics2>>::get_activation_factory().create_from_surface(surface, originalDuration)
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_surface(surface: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>, originalDuration: foundation::TimeSpan) -> Result<Option<ComPtr<MediaClip>>> {
+        <Self as RtActivatable<IMediaClipStatics2>>::get_activation_factory().deref().create_from_surface(surface, originalDuration)
     }
 }
 DEFINE_CLSID!(MediaClip(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,77,101,100,105,97,67,108,105,112,0]) [CLSID_MediaClip]);
@@ -16979,14 +16979,14 @@ impl IMediaClipStatics {
         let hr = ((*self.lpVtbl).CreateFromColor)(self as *const _ as *mut _, color, originalDuration, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<MediaClip>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(&self, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<MediaClip>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromFileAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_image_file_async(&self, file: &super::super::storage::IStorageFile, originalDuration: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<MediaClip>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_image_file_async(&self, file: &ComPtr<super::super::storage::IStorageFile>, originalDuration: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<MediaClip>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromImageFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, originalDuration, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromImageFileAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, originalDuration, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -16995,9 +16995,9 @@ RT_INTERFACE!{static interface IMediaClipStatics2(IMediaClipStatics2Vtbl): IInsp
     #[cfg(feature="windows-graphics")] fn CreateFromSurface(&self, surface: *mut super::super::graphics::directx::direct3d11::IDirect3DSurface, originalDuration: foundation::TimeSpan, out: *mut *mut MediaClip) -> HRESULT
 }}
 impl IMediaClipStatics2 {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_surface(&self, surface: &super::super::graphics::directx::direct3d11::IDirect3DSurface, originalDuration: foundation::TimeSpan) -> Result<Option<ComPtr<MediaClip>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn create_from_surface(&self, surface: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>, originalDuration: foundation::TimeSpan) -> Result<Option<ComPtr<MediaClip>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromSurface)(self as *const _ as *mut _, surface as *const _ as *mut _, originalDuration, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromSurface)(self as *const _ as *mut _, surface.deref() as *const _ as *mut _, originalDuration, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -17051,9 +17051,9 @@ impl IMediaComposition {
         let hr = ((*self.lpVtbl).Clone)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_async(&self, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).SaveAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_thumbnail_async(&self, timeFromStart: foundation::TimeSpan, scaledWidth: i32, scaledHeight: i32, framePrecision: VideoFramePrecision) -> Result<ComPtr<foundation::IAsyncOperation<super::super::graphics::imaging::ImageStream>>> { unsafe { 
@@ -17061,24 +17061,24 @@ impl IMediaComposition {
         let hr = ((*self.lpVtbl).GetThumbnailAsync)(self as *const _ as *mut _, timeFromStart, scaledWidth, scaledHeight, framePrecision, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_thumbnails_async(&self, timesFromStart: &foundation::collections::IIterable<foundation::TimeSpan>, scaledWidth: i32, scaledHeight: i32, framePrecision: VideoFramePrecision) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::graphics::imaging::ImageStream>>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_thumbnails_async(&self, timesFromStart: &ComPtr<foundation::collections::IIterable<foundation::TimeSpan>>, scaledWidth: i32, scaledHeight: i32, framePrecision: VideoFramePrecision) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::graphics::imaging::ImageStream>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetThumbnailsAsync)(self as *const _ as *mut _, timesFromStart as *const _ as *mut _, scaledWidth, scaledHeight, framePrecision, &mut out);
+        let hr = ((*self.lpVtbl).GetThumbnailsAsync)(self as *const _ as *mut _, timesFromStart.deref() as *const _ as *mut _, scaledWidth, scaledHeight, framePrecision, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn render_to_file_async(&self, destination: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::transcoding::TranscodeFailureReason, f64>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn render_to_file_async(&self, destination: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::transcoding::TranscodeFailureReason, f64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RenderToFileAsync)(self as *const _ as *mut _, destination as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RenderToFileAsync)(self as *const _ as *mut _, destination.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn render_to_file_with_trimming_preference_async(&self, destination: &super::super::storage::IStorageFile, trimmingPreference: MediaTrimmingPreference) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::transcoding::TranscodeFailureReason, f64>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn render_to_file_with_trimming_preference_async(&self, destination: &ComPtr<super::super::storage::IStorageFile>, trimmingPreference: MediaTrimmingPreference) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::transcoding::TranscodeFailureReason, f64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RenderToFileWithTrimmingPreferenceAsync)(self as *const _ as *mut _, destination as *const _ as *mut _, trimmingPreference, &mut out);
+        let hr = ((*self.lpVtbl).RenderToFileWithTrimmingPreferenceAsync)(self as *const _ as *mut _, destination.deref() as *const _ as *mut _, trimmingPreference, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn render_to_file_with_profile_async(&self, destination: &super::super::storage::IStorageFile, trimmingPreference: MediaTrimmingPreference, encodingProfile: &super::mediaproperties::MediaEncodingProfile) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::transcoding::TranscodeFailureReason, f64>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn render_to_file_with_profile_async(&self, destination: &ComPtr<super::super::storage::IStorageFile>, trimmingPreference: MediaTrimmingPreference, encodingProfile: &ComPtr<super::mediaproperties::MediaEncodingProfile>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<super::transcoding::TranscodeFailureReason, f64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RenderToFileWithProfileAsync)(self as *const _ as *mut _, destination as *const _ as *mut _, trimmingPreference, encodingProfile as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RenderToFileWithProfileAsync)(self as *const _ as *mut _, destination.deref() as *const _ as *mut _, trimmingPreference, encodingProfile.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_default_encoding_profile(&self) -> Result<Option<ComPtr<super::mediaproperties::MediaEncodingProfile>>> { unsafe { 
@@ -17091,9 +17091,9 @@ impl IMediaComposition {
         let hr = ((*self.lpVtbl).GenerateMediaStreamSource)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn generate_media_stream_source_with_profile(&self, encodingProfile: &super::mediaproperties::MediaEncodingProfile) -> Result<Option<ComPtr<super::core::MediaStreamSource>>> { unsafe { 
+    #[inline] pub fn generate_media_stream_source_with_profile(&self, encodingProfile: &ComPtr<super::mediaproperties::MediaEncodingProfile>) -> Result<Option<ComPtr<super::core::MediaStreamSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GenerateMediaStreamSourceWithProfile)(self as *const _ as *mut _, encodingProfile as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GenerateMediaStreamSourceWithProfile)(self as *const _ as *mut _, encodingProfile.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn generate_preview_media_stream_source(&self, scaledWidth: i32, scaledHeight: i32) -> Result<Option<ComPtr<super::core::MediaStreamSource>>> { unsafe { 
@@ -17106,8 +17106,8 @@ RT_CLASS!{class MediaComposition: IMediaComposition}
 impl RtActivatable<IMediaCompositionStatics> for MediaComposition {}
 impl RtActivatable<IActivationFactory> for MediaComposition {}
 impl MediaComposition {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(file: &super::super::storage::StorageFile) -> Result<ComPtr<foundation::IAsyncOperation<MediaComposition>>> {
-        <Self as RtActivatable<IMediaCompositionStatics>>::get_activation_factory().load_async(file)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(file: &ComPtr<super::super::storage::StorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<MediaComposition>>> {
+        <Self as RtActivatable<IMediaCompositionStatics>>::get_activation_factory().deref().load_async(file)
     }
 }
 DEFINE_CLSID!(MediaComposition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,77,101,100,105,97,67,111,109,112,111,115,105,116,105,111,110,0]) [CLSID_MediaComposition]);
@@ -17127,9 +17127,9 @@ RT_INTERFACE!{static interface IMediaCompositionStatics(IMediaCompositionStatics
     #[cfg(feature="windows-storage")] fn LoadAsync(&self, file: *mut super::super::storage::StorageFile, out: *mut *mut foundation::IAsyncOperation<MediaComposition>) -> HRESULT
 }}
 impl IMediaCompositionStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(&self, file: &super::super::storage::StorageFile) -> Result<ComPtr<foundation::IAsyncOperation<MediaComposition>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(&self, file: &ComPtr<super::super::storage::StorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<MediaComposition>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -17197,11 +17197,11 @@ impl IMediaOverlay {
 RT_CLASS!{class MediaOverlay: IMediaOverlay}
 impl RtActivatable<IMediaOverlayFactory> for MediaOverlay {}
 impl MediaOverlay {
-    #[inline] pub fn create(clip: &MediaClip) -> Result<ComPtr<MediaOverlay>> {
-        <Self as RtActivatable<IMediaOverlayFactory>>::get_activation_factory().create(clip)
+    #[inline] pub fn create(clip: &ComPtr<MediaClip>) -> Result<ComPtr<MediaOverlay>> {
+        <Self as RtActivatable<IMediaOverlayFactory>>::get_activation_factory().deref().create(clip)
     }
-    #[inline] pub fn create_with_position_and_opacity(clip: &MediaClip, position: foundation::Rect, opacity: f64) -> Result<ComPtr<MediaOverlay>> {
-        <Self as RtActivatable<IMediaOverlayFactory>>::get_activation_factory().create_with_position_and_opacity(clip, position, opacity)
+    #[inline] pub fn create_with_position_and_opacity(clip: &ComPtr<MediaClip>, position: foundation::Rect, opacity: f64) -> Result<ComPtr<MediaOverlay>> {
+        <Self as RtActivatable<IMediaOverlayFactory>>::get_activation_factory().deref().create_with_position_and_opacity(clip, position, opacity)
     }
 }
 DEFINE_CLSID!(MediaOverlay(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,77,101,100,105,97,79,118,101,114,108,97,121,0]) [CLSID_MediaOverlay]);
@@ -17211,14 +17211,14 @@ RT_INTERFACE!{static interface IMediaOverlayFactory(IMediaOverlayFactoryVtbl): I
     fn CreateWithPositionAndOpacity(&self, clip: *mut MediaClip, position: foundation::Rect, opacity: f64, out: *mut *mut MediaOverlay) -> HRESULT
 }}
 impl IMediaOverlayFactory {
-    #[inline] pub fn create(&self, clip: &MediaClip) -> Result<ComPtr<MediaOverlay>> { unsafe { 
+    #[inline] pub fn create(&self, clip: &ComPtr<MediaClip>) -> Result<ComPtr<MediaOverlay>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, clip as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, clip.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_position_and_opacity(&self, clip: &MediaClip, position: foundation::Rect, opacity: f64) -> Result<ComPtr<MediaOverlay>> { unsafe { 
+    #[inline] pub fn create_with_position_and_opacity(&self, clip: &ComPtr<MediaClip>, position: foundation::Rect, opacity: f64) -> Result<ComPtr<MediaOverlay>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithPositionAndOpacity)(self as *const _ as *mut _, clip as *const _ as *mut _, position, opacity, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithPositionAndOpacity)(self as *const _ as *mut _, clip.deref() as *const _ as *mut _, position, opacity, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -17249,8 +17249,8 @@ RT_CLASS!{class MediaOverlayLayer: IMediaOverlayLayer}
 impl RtActivatable<IMediaOverlayLayerFactory> for MediaOverlayLayer {}
 impl RtActivatable<IActivationFactory> for MediaOverlayLayer {}
 impl MediaOverlayLayer {
-    #[inline] pub fn create_with_compositor_definition(compositorDefinition: &super::effects::IVideoCompositorDefinition) -> Result<ComPtr<MediaOverlayLayer>> {
-        <Self as RtActivatable<IMediaOverlayLayerFactory>>::get_activation_factory().create_with_compositor_definition(compositorDefinition)
+    #[inline] pub fn create_with_compositor_definition(compositorDefinition: &ComPtr<super::effects::IVideoCompositorDefinition>) -> Result<ComPtr<MediaOverlayLayer>> {
+        <Self as RtActivatable<IMediaOverlayLayerFactory>>::get_activation_factory().deref().create_with_compositor_definition(compositorDefinition)
     }
 }
 DEFINE_CLSID!(MediaOverlayLayer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,77,101,100,105,97,79,118,101,114,108,97,121,76,97,121,101,114,0]) [CLSID_MediaOverlayLayer]);
@@ -17259,9 +17259,9 @@ RT_INTERFACE!{static interface IMediaOverlayLayerFactory(IMediaOverlayLayerFacto
     fn CreateWithCompositorDefinition(&self, compositorDefinition: *mut super::effects::IVideoCompositorDefinition, out: *mut *mut MediaOverlayLayer) -> HRESULT
 }}
 impl IMediaOverlayLayerFactory {
-    #[inline] pub fn create_with_compositor_definition(&self, compositorDefinition: &super::effects::IVideoCompositorDefinition) -> Result<ComPtr<MediaOverlayLayer>> { unsafe { 
+    #[inline] pub fn create_with_compositor_definition(&self, compositorDefinition: &ComPtr<super::effects::IVideoCompositorDefinition>) -> Result<ComPtr<MediaOverlayLayer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithCompositorDefinition)(self as *const _ as *mut _, compositorDefinition as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithCompositorDefinition)(self as *const _ as *mut _, compositorDefinition.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -17281,9 +17281,9 @@ RT_INTERFACE!{interface IAudioCaptureEffectsManager(IAudioCaptureEffectsManagerV
     fn GetAudioCaptureEffects(&self, out: *mut *mut foundation::collections::IVectorView<AudioEffect>) -> HRESULT
 }}
 impl IAudioCaptureEffectsManager {
-    #[inline] pub fn add_audio_capture_effects_changed(&self, handler: &foundation::TypedEventHandler<AudioCaptureEffectsManager, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_audio_capture_effects_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AudioCaptureEffectsManager, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AudioCaptureEffectsChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AudioCaptureEffectsChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_audio_capture_effects_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -17330,10 +17330,10 @@ RT_CLASS!{class AudioEffectDefinition: IAudioEffectDefinition}
 impl RtActivatable<IAudioEffectDefinitionFactory> for AudioEffectDefinition {}
 impl AudioEffectDefinition {
     #[inline] pub fn create(activatableClassId: &HStringArg) -> Result<ComPtr<AudioEffectDefinition>> {
-        <Self as RtActivatable<IAudioEffectDefinitionFactory>>::get_activation_factory().create(activatableClassId)
+        <Self as RtActivatable<IAudioEffectDefinitionFactory>>::get_activation_factory().deref().create(activatableClassId)
     }
-    #[inline] pub fn create_with_properties(activatableClassId: &HStringArg, props: &foundation::collections::IPropertySet) -> Result<ComPtr<AudioEffectDefinition>> {
-        <Self as RtActivatable<IAudioEffectDefinitionFactory>>::get_activation_factory().create_with_properties(activatableClassId, props)
+    #[inline] pub fn create_with_properties(activatableClassId: &HStringArg, props: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<AudioEffectDefinition>> {
+        <Self as RtActivatable<IAudioEffectDefinitionFactory>>::get_activation_factory().deref().create_with_properties(activatableClassId, props)
     }
 }
 DEFINE_CLSID!(AudioEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,65,117,100,105,111,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_AudioEffectDefinition]);
@@ -17348,9 +17348,9 @@ impl IAudioEffectDefinitionFactory {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, activatableClassId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_properties(&self, activatableClassId: &HStringArg, props: &foundation::collections::IPropertySet) -> Result<ComPtr<AudioEffectDefinition>> { unsafe { 
+    #[inline] pub fn create_with_properties(&self, activatableClassId: &HStringArg, props: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<AudioEffectDefinition>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithProperties)(self as *const _ as *mut _, activatableClassId.get(), props as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithProperties)(self as *const _ as *mut _, activatableClassId.get(), props.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -17358,16 +17358,16 @@ RT_CLASS!{static class AudioEffectsManager}
 impl RtActivatable<IAudioEffectsManagerStatics> for AudioEffectsManager {}
 impl AudioEffectsManager {
     #[inline] pub fn create_audio_render_effects_manager(deviceId: &HStringArg, category: super::render::AudioRenderCategory) -> Result<Option<ComPtr<AudioRenderEffectsManager>>> {
-        <Self as RtActivatable<IAudioEffectsManagerStatics>>::get_activation_factory().create_audio_render_effects_manager(deviceId, category)
+        <Self as RtActivatable<IAudioEffectsManagerStatics>>::get_activation_factory().deref().create_audio_render_effects_manager(deviceId, category)
     }
     #[inline] pub fn create_audio_render_effects_manager_with_mode(deviceId: &HStringArg, category: super::render::AudioRenderCategory, mode: super::AudioProcessing) -> Result<Option<ComPtr<AudioRenderEffectsManager>>> {
-        <Self as RtActivatable<IAudioEffectsManagerStatics>>::get_activation_factory().create_audio_render_effects_manager_with_mode(deviceId, category, mode)
+        <Self as RtActivatable<IAudioEffectsManagerStatics>>::get_activation_factory().deref().create_audio_render_effects_manager_with_mode(deviceId, category, mode)
     }
     #[inline] pub fn create_audio_capture_effects_manager(deviceId: &HStringArg, category: super::capture::MediaCategory) -> Result<Option<ComPtr<AudioCaptureEffectsManager>>> {
-        <Self as RtActivatable<IAudioEffectsManagerStatics>>::get_activation_factory().create_audio_capture_effects_manager(deviceId, category)
+        <Self as RtActivatable<IAudioEffectsManagerStatics>>::get_activation_factory().deref().create_audio_capture_effects_manager(deviceId, category)
     }
     #[inline] pub fn create_audio_capture_effects_manager_with_mode(deviceId: &HStringArg, category: super::capture::MediaCategory, mode: super::AudioProcessing) -> Result<Option<ComPtr<AudioCaptureEffectsManager>>> {
-        <Self as RtActivatable<IAudioEffectsManagerStatics>>::get_activation_factory().create_audio_capture_effects_manager_with_mode(deviceId, category, mode)
+        <Self as RtActivatable<IAudioEffectsManagerStatics>>::get_activation_factory().deref().create_audio_capture_effects_manager_with_mode(deviceId, category, mode)
     }
 }
 DEFINE_CLSID!(AudioEffectsManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,65,117,100,105,111,69,102,102,101,99,116,115,77,97,110,97,103,101,114,0]) [CLSID_AudioEffectsManager]);
@@ -17410,9 +17410,9 @@ RT_INTERFACE!{interface IAudioRenderEffectsManager(IAudioRenderEffectsManagerVtb
     fn GetAudioRenderEffects(&self, out: *mut *mut foundation::collections::IVectorView<AudioEffect>) -> HRESULT
 }}
 impl IAudioRenderEffectsManager {
-    #[inline] pub fn add_audio_render_effects_changed(&self, handler: &foundation::TypedEventHandler<AudioRenderEffectsManager, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_audio_render_effects_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AudioRenderEffectsManager, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AudioRenderEffectsChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AudioRenderEffectsChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_audio_render_effects_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -17469,12 +17469,12 @@ impl IBasicAudioEffect {
         let hr = ((*self.lpVtbl).get_SupportedEncodingProperties)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_encoding_properties(&self, encodingProperties: &super::mediaproperties::AudioEncodingProperties) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetEncodingProperties)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _);
+    #[inline] pub fn set_encoding_properties(&self, encodingProperties: &ComPtr<super::mediaproperties::AudioEncodingProperties>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetEncodingProperties)(self as *const _ as *mut _, encodingProperties.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn process_frame(&self, context: &ProcessAudioFrameContext) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ProcessFrame)(self as *const _ as *mut _, context as *const _ as *mut _);
+    #[inline] pub fn process_frame(&self, context: &ComPtr<ProcessAudioFrameContext>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ProcessFrame)(self as *const _ as *mut _, context.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn close(&self, reason: MediaEffectClosedReason) -> Result<()> { unsafe { 
@@ -17519,12 +17519,12 @@ impl IBasicVideoEffect {
         let hr = ((*self.lpVtbl).get_SupportedEncodingProperties)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_encoding_properties(&self, encodingProperties: &super::mediaproperties::VideoEncodingProperties, device: &super::super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetEncodingProperties)(self as *const _ as *mut _, encodingProperties as *const _ as *mut _, device as *const _ as *mut _);
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_encoding_properties(&self, encodingProperties: &ComPtr<super::mediaproperties::VideoEncodingProperties>, device: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DDevice>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetEncodingProperties)(self as *const _ as *mut _, encodingProperties.deref() as *const _ as *mut _, device.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn process_frame(&self, context: &ProcessVideoFrameContext) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ProcessFrame)(self as *const _ as *mut _, context as *const _ as *mut _);
+    #[inline] pub fn process_frame(&self, context: &ComPtr<ProcessVideoFrameContext>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ProcessFrame)(self as *const _ as *mut _, context.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn close(&self, reason: MediaEffectClosedReason) -> Result<()> { unsafe { 
@@ -17559,9 +17559,9 @@ impl ICompositeVideoFrameContext {
         let hr = ((*self.lpVtbl).get_OutputFrame)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn get_overlay_for_surface(&self, surfaceToOverlay: &super::super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<Option<ComPtr<super::editing::MediaOverlay>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn get_overlay_for_surface(&self, surfaceToOverlay: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>) -> Result<Option<ComPtr<super::editing::MediaOverlay>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetOverlayForSurface)(self as *const _ as *mut _, surfaceToOverlay as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetOverlayForSurface)(self as *const _ as *mut _, surfaceToOverlay.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -17623,12 +17623,12 @@ impl IVideoCompositor {
         let hr = ((*self.lpVtbl).get_TimeIndependent)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn set_encoding_properties(&self, backgroundProperties: &super::mediaproperties::VideoEncodingProperties, device: &super::super::graphics::directx::direct3d11::IDirect3DDevice) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetEncodingProperties)(self as *const _ as *mut _, backgroundProperties as *const _ as *mut _, device as *const _ as *mut _);
+    #[cfg(feature="windows-graphics")] #[inline] pub fn set_encoding_properties(&self, backgroundProperties: &ComPtr<super::mediaproperties::VideoEncodingProperties>, device: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DDevice>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetEncodingProperties)(self as *const _ as *mut _, backgroundProperties.deref() as *const _ as *mut _, device.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn composite_frame(&self, context: &CompositeVideoFrameContext) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).CompositeFrame)(self as *const _ as *mut _, context as *const _ as *mut _);
+    #[inline] pub fn composite_frame(&self, context: &ComPtr<CompositeVideoFrameContext>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).CompositeFrame)(self as *const _ as *mut _, context.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn close(&self, reason: MediaEffectClosedReason) -> Result<()> { unsafe { 
@@ -17661,10 +17661,10 @@ RT_CLASS!{class VideoCompositorDefinition: IVideoCompositorDefinition}
 impl RtActivatable<IVideoCompositorDefinitionFactory> for VideoCompositorDefinition {}
 impl VideoCompositorDefinition {
     #[inline] pub fn create(activatableClassId: &HStringArg) -> Result<ComPtr<VideoCompositorDefinition>> {
-        <Self as RtActivatable<IVideoCompositorDefinitionFactory>>::get_activation_factory().create(activatableClassId)
+        <Self as RtActivatable<IVideoCompositorDefinitionFactory>>::get_activation_factory().deref().create(activatableClassId)
     }
-    #[inline] pub fn create_with_properties(activatableClassId: &HStringArg, props: &foundation::collections::IPropertySet) -> Result<ComPtr<VideoCompositorDefinition>> {
-        <Self as RtActivatable<IVideoCompositorDefinitionFactory>>::get_activation_factory().create_with_properties(activatableClassId, props)
+    #[inline] pub fn create_with_properties(activatableClassId: &HStringArg, props: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<VideoCompositorDefinition>> {
+        <Self as RtActivatable<IVideoCompositorDefinitionFactory>>::get_activation_factory().deref().create_with_properties(activatableClassId, props)
     }
 }
 DEFINE_CLSID!(VideoCompositorDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,86,105,100,101,111,67,111,109,112,111,115,105,116,111,114,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_VideoCompositorDefinition]);
@@ -17679,9 +17679,9 @@ impl IVideoCompositorDefinitionFactory {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, activatableClassId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_properties(&self, activatableClassId: &HStringArg, props: &foundation::collections::IPropertySet) -> Result<ComPtr<VideoCompositorDefinition>> { unsafe { 
+    #[inline] pub fn create_with_properties(&self, activatableClassId: &HStringArg, props: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<VideoCompositorDefinition>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithProperties)(self as *const _ as *mut _, activatableClassId.get(), props as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithProperties)(self as *const _ as *mut _, activatableClassId.get(), props.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -17706,10 +17706,10 @@ RT_CLASS!{class VideoEffectDefinition: IVideoEffectDefinition}
 impl RtActivatable<IVideoEffectDefinitionFactory> for VideoEffectDefinition {}
 impl VideoEffectDefinition {
     #[inline] pub fn create(activatableClassId: &HStringArg) -> Result<ComPtr<VideoEffectDefinition>> {
-        <Self as RtActivatable<IVideoEffectDefinitionFactory>>::get_activation_factory().create(activatableClassId)
+        <Self as RtActivatable<IVideoEffectDefinitionFactory>>::get_activation_factory().deref().create(activatableClassId)
     }
-    #[inline] pub fn create_with_properties(activatableClassId: &HStringArg, props: &foundation::collections::IPropertySet) -> Result<ComPtr<VideoEffectDefinition>> {
-        <Self as RtActivatable<IVideoEffectDefinitionFactory>>::get_activation_factory().create_with_properties(activatableClassId, props)
+    #[inline] pub fn create_with_properties(activatableClassId: &HStringArg, props: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<VideoEffectDefinition>> {
+        <Self as RtActivatable<IVideoEffectDefinitionFactory>>::get_activation_factory().deref().create_with_properties(activatableClassId, props)
     }
 }
 DEFINE_CLSID!(VideoEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,86,105,100,101,111,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_VideoEffectDefinition]);
@@ -17724,9 +17724,9 @@ impl IVideoEffectDefinitionFactory {
         let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, activatableClassId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_properties(&self, activatableClassId: &HStringArg, props: &foundation::collections::IPropertySet) -> Result<ComPtr<VideoEffectDefinition>> { unsafe { 
+    #[inline] pub fn create_with_properties(&self, activatableClassId: &HStringArg, props: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<VideoEffectDefinition>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithProperties)(self as *const _ as *mut _, activatableClassId.get(), props as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithProperties)(self as *const _ as *mut _, activatableClassId.get(), props.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -17903,14 +17903,14 @@ RT_INTERFACE!{interface IFaceDetector(IFaceDetectorVtbl): IInspectable(IInspecta
     #[cfg(feature="windows-graphics")] fn put_MaxDetectableFaceSize(&self, value: super::super::graphics::imaging::BitmapSize) -> HRESULT
 }}
 impl IFaceDetector {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn detect_faces_async(&self, image: &super::super::graphics::imaging::SoftwareBitmap) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<DetectedFace>>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn detect_faces_async(&self, image: &ComPtr<super::super::graphics::imaging::SoftwareBitmap>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<DetectedFace>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DetectFacesAsync)(self as *const _ as *mut _, image as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).DetectFacesAsync)(self as *const _ as *mut _, image.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn detect_faces_with_search_area_async(&self, image: &super::super::graphics::imaging::SoftwareBitmap, searchArea: super::super::graphics::imaging::BitmapBounds) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<DetectedFace>>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn detect_faces_with_search_area_async(&self, image: &ComPtr<super::super::graphics::imaging::SoftwareBitmap>, searchArea: super::super::graphics::imaging::BitmapBounds) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<DetectedFace>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DetectFacesWithSearchAreaAsync)(self as *const _ as *mut _, image as *const _ as *mut _, searchArea, &mut out);
+        let hr = ((*self.lpVtbl).DetectFacesWithSearchAreaAsync)(self as *const _ as *mut _, image.deref() as *const _ as *mut _, searchArea, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_min_detectable_face_size(&self) -> Result<super::super::graphics::imaging::BitmapSize> { unsafe { 
@@ -17936,16 +17936,16 @@ RT_CLASS!{class FaceDetector: IFaceDetector}
 impl RtActivatable<IFaceDetectorStatics> for FaceDetector {}
 impl FaceDetector {
     #[inline] pub fn create_async() -> Result<ComPtr<foundation::IAsyncOperation<FaceDetector>>> {
-        <Self as RtActivatable<IFaceDetectorStatics>>::get_activation_factory().create_async()
+        <Self as RtActivatable<IFaceDetectorStatics>>::get_activation_factory().deref().create_async()
     }
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_bitmap_pixel_formats() -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>>> {
-        <Self as RtActivatable<IFaceDetectorStatics>>::get_activation_factory().get_supported_bitmap_pixel_formats()
+        <Self as RtActivatable<IFaceDetectorStatics>>::get_activation_factory().deref().get_supported_bitmap_pixel_formats()
     }
     #[cfg(feature="windows-graphics")] #[inline] pub fn is_bitmap_pixel_format_supported(bitmapPixelFormat: super::super::graphics::imaging::BitmapPixelFormat) -> Result<bool> {
-        <Self as RtActivatable<IFaceDetectorStatics>>::get_activation_factory().is_bitmap_pixel_format_supported(bitmapPixelFormat)
+        <Self as RtActivatable<IFaceDetectorStatics>>::get_activation_factory().deref().is_bitmap_pixel_format_supported(bitmapPixelFormat)
     }
     #[inline] pub fn get_is_supported() -> Result<bool> {
-        <Self as RtActivatable<IFaceDetectorStatics>>::get_activation_factory().get_is_supported()
+        <Self as RtActivatable<IFaceDetectorStatics>>::get_activation_factory().deref().get_is_supported()
     }
 }
 DEFINE_CLSID!(FaceDetector(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,70,97,99,101,65,110,97,108,121,115,105,115,46,70,97,99,101,68,101,116,101,99,116,111,114,0]) [CLSID_FaceDetector]);
@@ -17989,9 +17989,9 @@ RT_INTERFACE!{interface IFaceTracker(IFaceTrackerVtbl): IInspectable(IInspectabl
     #[cfg(feature="windows-graphics")] fn put_MaxDetectableFaceSize(&self, value: super::super::graphics::imaging::BitmapSize) -> HRESULT
 }}
 impl IFaceTracker {
-    #[inline] pub fn process_next_frame_async(&self, videoFrame: &super::VideoFrame) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<DetectedFace>>>> { unsafe { 
+    #[inline] pub fn process_next_frame_async(&self, videoFrame: &ComPtr<super::VideoFrame>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVector<DetectedFace>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ProcessNextFrameAsync)(self as *const _ as *mut _, videoFrame as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ProcessNextFrameAsync)(self as *const _ as *mut _, videoFrame.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_min_detectable_face_size(&self) -> Result<super::super::graphics::imaging::BitmapSize> { unsafe { 
@@ -18017,16 +18017,16 @@ RT_CLASS!{class FaceTracker: IFaceTracker}
 impl RtActivatable<IFaceTrackerStatics> for FaceTracker {}
 impl FaceTracker {
     #[inline] pub fn create_async() -> Result<ComPtr<foundation::IAsyncOperation<FaceTracker>>> {
-        <Self as RtActivatable<IFaceTrackerStatics>>::get_activation_factory().create_async()
+        <Self as RtActivatable<IFaceTrackerStatics>>::get_activation_factory().deref().create_async()
     }
     #[cfg(feature="windows-graphics")] #[inline] pub fn get_supported_bitmap_pixel_formats() -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat>>>> {
-        <Self as RtActivatable<IFaceTrackerStatics>>::get_activation_factory().get_supported_bitmap_pixel_formats()
+        <Self as RtActivatable<IFaceTrackerStatics>>::get_activation_factory().deref().get_supported_bitmap_pixel_formats()
     }
     #[cfg(feature="windows-graphics")] #[inline] pub fn is_bitmap_pixel_format_supported(bitmapPixelFormat: super::super::graphics::imaging::BitmapPixelFormat) -> Result<bool> {
-        <Self as RtActivatable<IFaceTrackerStatics>>::get_activation_factory().is_bitmap_pixel_format_supported(bitmapPixelFormat)
+        <Self as RtActivatable<IFaceTrackerStatics>>::get_activation_factory().deref().is_bitmap_pixel_format_supported(bitmapPixelFormat)
     }
     #[inline] pub fn get_is_supported() -> Result<bool> {
-        <Self as RtActivatable<IFaceTrackerStatics>>::get_activation_factory().get_is_supported()
+        <Self as RtActivatable<IFaceTrackerStatics>>::get_activation_factory().deref().get_is_supported()
     }
 }
 DEFINE_CLSID!(FaceTracker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,70,97,99,101,65,110,97,108,121,115,105,115,46,70,97,99,101,84,114,97,99,107,101,114,0]) [CLSID_FaceTracker]);
@@ -18334,9 +18334,9 @@ impl IPhotoImportFindItemsResult {
         let hr = ((*self.lpVtbl).get_SelectedTotalSizeInBytes)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_selection_changed(&self, value: &foundation::TypedEventHandler<PhotoImportFindItemsResult, PhotoImportSelectionChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_selection_changed(&self, value: &ComPtr<foundation::TypedEventHandler<PhotoImportFindItemsResult, PhotoImportSelectionChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SelectionChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SelectionChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_selection_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -18348,9 +18348,9 @@ impl IPhotoImportFindItemsResult {
         let hr = ((*self.lpVtbl).ImportItemsAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_item_imported(&self, value: &foundation::TypedEventHandler<PhotoImportFindItemsResult, PhotoImportItemImportedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_item_imported(&self, value: &ComPtr<foundation::TypedEventHandler<PhotoImportFindItemsResult, PhotoImportItemImportedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ItemImported)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ItemImported)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_item_imported(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -18576,13 +18576,13 @@ RT_CLASS!{static class PhotoImportManager}
 impl RtActivatable<IPhotoImportManagerStatics> for PhotoImportManager {}
 impl PhotoImportManager {
     #[inline] pub fn is_supported_async() -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<IPhotoImportManagerStatics>>::get_activation_factory().is_supported_async()
+        <Self as RtActivatable<IPhotoImportManagerStatics>>::get_activation_factory().deref().is_supported_async()
     }
     #[inline] pub fn find_all_sources_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<PhotoImportSource>>>> {
-        <Self as RtActivatable<IPhotoImportManagerStatics>>::get_activation_factory().find_all_sources_async()
+        <Self as RtActivatable<IPhotoImportManagerStatics>>::get_activation_factory().deref().find_all_sources_async()
     }
     #[inline] pub fn get_pending_operations() -> Result<Option<ComPtr<foundation::collections::IVectorView<PhotoImportOperation>>>> {
-        <Self as RtActivatable<IPhotoImportManagerStatics>>::get_activation_factory().get_pending_operations()
+        <Self as RtActivatable<IPhotoImportManagerStatics>>::get_activation_factory().deref().get_pending_operations()
     }
 }
 DEFINE_CLSID!(PhotoImportManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,73,109,112,111,114,116,46,80,104,111,116,111,73,109,112,111,114,116,77,97,110,97,103,101,114,0]) [CLSID_PhotoImportManager]);
@@ -18690,8 +18690,8 @@ impl IPhotoImportSession {
         let hr = ((*self.lpVtbl).get_SessionId)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_destination_folder(&self, value: &super::super::storage::IStorageFolder) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DestinationFolder)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_destination_folder(&self, value: &ComPtr<super::super::storage::IStorageFolder>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DestinationFolder)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_destination_folder(&self) -> Result<Option<ComPtr<super::super::storage::IStorageFolder>>> { unsafe { 
@@ -18896,10 +18896,10 @@ RT_CLASS!{class PhotoImportSource: IPhotoImportSource}
 impl RtActivatable<IPhotoImportSourceStatics> for PhotoImportSource {}
 impl PhotoImportSource {
     #[inline] pub fn from_id_async(sourceId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PhotoImportSource>>> {
-        <Self as RtActivatable<IPhotoImportSourceStatics>>::get_activation_factory().from_id_async(sourceId)
+        <Self as RtActivatable<IPhotoImportSourceStatics>>::get_activation_factory().deref().from_id_async(sourceId)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn from_folder_async(sourceRootFolder: &super::super::storage::IStorageFolder) -> Result<ComPtr<foundation::IAsyncOperation<PhotoImportSource>>> {
-        <Self as RtActivatable<IPhotoImportSourceStatics>>::get_activation_factory().from_folder_async(sourceRootFolder)
+    #[cfg(feature="windows-storage")] #[inline] pub fn from_folder_async(sourceRootFolder: &ComPtr<super::super::storage::IStorageFolder>) -> Result<ComPtr<foundation::IAsyncOperation<PhotoImportSource>>> {
+        <Self as RtActivatable<IPhotoImportSourceStatics>>::get_activation_factory().deref().from_folder_async(sourceRootFolder)
     }
 }
 DEFINE_CLSID!(PhotoImportSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,73,109,112,111,114,116,46,80,104,111,116,111,73,109,112,111,114,116,83,111,117,114,99,101,0]) [CLSID_PhotoImportSource]);
@@ -18914,9 +18914,9 @@ impl IPhotoImportSourceStatics {
         let hr = ((*self.lpVtbl).FromIdAsync)(self as *const _ as *mut _, sourceId.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn from_folder_async(&self, sourceRootFolder: &super::super::storage::IStorageFolder) -> Result<ComPtr<foundation::IAsyncOperation<PhotoImportSource>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn from_folder_async(&self, sourceRootFolder: &ComPtr<super::super::storage::IStorageFolder>) -> Result<ComPtr<foundation::IAsyncOperation<PhotoImportSource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FromFolderAsync)(self as *const _ as *mut _, sourceRootFolder as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FromFolderAsync)(self as *const _ as *mut _, sourceRootFolder.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -19082,25 +19082,25 @@ impl RtActivatable<IAudioEncodingPropertiesStatics2> for AudioEncodingProperties
 impl RtActivatable<IActivationFactory> for AudioEncodingProperties {}
 impl AudioEncodingProperties {
     #[inline] pub fn create_aac(sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
-        <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().create_aac(sampleRate, channelCount, bitrate)
+        <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().deref().create_aac(sampleRate, channelCount, bitrate)
     }
     #[inline] pub fn create_aac_adts(sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
-        <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().create_aac_adts(sampleRate, channelCount, bitrate)
+        <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().deref().create_aac_adts(sampleRate, channelCount, bitrate)
     }
     #[inline] pub fn create_mp3(sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
-        <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().create_mp3(sampleRate, channelCount, bitrate)
+        <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().deref().create_mp3(sampleRate, channelCount, bitrate)
     }
     #[inline] pub fn create_pcm(sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
-        <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().create_pcm(sampleRate, channelCount, bitsPerSample)
+        <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().deref().create_pcm(sampleRate, channelCount, bitsPerSample)
     }
     #[inline] pub fn create_wma(sampleRate: u32, channelCount: u32, bitrate: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
-        <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().create_wma(sampleRate, channelCount, bitrate)
+        <Self as RtActivatable<IAudioEncodingPropertiesStatics>>::get_activation_factory().deref().create_wma(sampleRate, channelCount, bitrate)
     }
     #[inline] pub fn create_alac(sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
-        <Self as RtActivatable<IAudioEncodingPropertiesStatics2>>::get_activation_factory().create_alac(sampleRate, channelCount, bitsPerSample)
+        <Self as RtActivatable<IAudioEncodingPropertiesStatics2>>::get_activation_factory().deref().create_alac(sampleRate, channelCount, bitsPerSample)
     }
     #[inline] pub fn create_flac(sampleRate: u32, channelCount: u32, bitsPerSample: u32) -> Result<Option<ComPtr<AudioEncodingProperties>>> {
-        <Self as RtActivatable<IAudioEncodingPropertiesStatics2>>::get_activation_factory().create_flac(sampleRate, channelCount, bitsPerSample)
+        <Self as RtActivatable<IAudioEncodingPropertiesStatics2>>::get_activation_factory().deref().create_flac(sampleRate, channelCount, bitsPerSample)
     }
 }
 DEFINE_CLSID!(AudioEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,65,117,100,105,111,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_AudioEncodingProperties]);
@@ -19219,34 +19219,34 @@ RT_CLASS!{static class H264ProfileIds}
 impl RtActivatable<IH264ProfileIdsStatics> for H264ProfileIds {}
 impl H264ProfileIds {
     #[inline] pub fn get_constrained_baseline() -> Result<i32> {
-        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_constrained_baseline()
+        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().deref().get_constrained_baseline()
     }
     #[inline] pub fn get_baseline() -> Result<i32> {
-        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_baseline()
+        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().deref().get_baseline()
     }
     #[inline] pub fn get_extended() -> Result<i32> {
-        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_extended()
+        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().deref().get_extended()
     }
     #[inline] pub fn get_main() -> Result<i32> {
-        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_main()
+        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().deref().get_main()
     }
     #[inline] pub fn get_high() -> Result<i32> {
-        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_high()
+        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().deref().get_high()
     }
     #[inline] pub fn get_high_10() -> Result<i32> {
-        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_high_10()
+        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().deref().get_high_10()
     }
     #[inline] pub fn get_high_422() -> Result<i32> {
-        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_high_422()
+        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().deref().get_high_422()
     }
     #[inline] pub fn get_high_444() -> Result<i32> {
-        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_high_444()
+        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().deref().get_high_444()
     }
     #[inline] pub fn get_stereo_high() -> Result<i32> {
-        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_stereo_high()
+        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().deref().get_stereo_high()
     }
     #[inline] pub fn get_multiview_high() -> Result<i32> {
-        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().get_multiview_high()
+        <Self as RtActivatable<IH264ProfileIdsStatics>>::get_activation_factory().deref().get_multiview_high()
     }
 }
 DEFINE_CLSID!(H264ProfileIds(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,72,50,54,52,80,114,111,102,105,108,101,73,100,115,0]) [CLSID_H264ProfileIds]);
@@ -19349,22 +19349,22 @@ impl RtActivatable<IImageEncodingPropertiesStatics3> for ImageEncodingProperties
 impl RtActivatable<IActivationFactory> for ImageEncodingProperties {}
 impl ImageEncodingProperties {
     #[inline] pub fn create_jpeg() -> Result<Option<ComPtr<ImageEncodingProperties>>> {
-        <Self as RtActivatable<IImageEncodingPropertiesStatics>>::get_activation_factory().create_jpeg()
+        <Self as RtActivatable<IImageEncodingPropertiesStatics>>::get_activation_factory().deref().create_jpeg()
     }
     #[inline] pub fn create_png() -> Result<Option<ComPtr<ImageEncodingProperties>>> {
-        <Self as RtActivatable<IImageEncodingPropertiesStatics>>::get_activation_factory().create_png()
+        <Self as RtActivatable<IImageEncodingPropertiesStatics>>::get_activation_factory().deref().create_png()
     }
     #[inline] pub fn create_jpeg_xr() -> Result<Option<ComPtr<ImageEncodingProperties>>> {
-        <Self as RtActivatable<IImageEncodingPropertiesStatics>>::get_activation_factory().create_jpeg_xr()
+        <Self as RtActivatable<IImageEncodingPropertiesStatics>>::get_activation_factory().deref().create_jpeg_xr()
     }
     #[inline] pub fn create_uncompressed(format: MediaPixelFormat) -> Result<Option<ComPtr<ImageEncodingProperties>>> {
-        <Self as RtActivatable<IImageEncodingPropertiesStatics2>>::get_activation_factory().create_uncompressed(format)
+        <Self as RtActivatable<IImageEncodingPropertiesStatics2>>::get_activation_factory().deref().create_uncompressed(format)
     }
     #[inline] pub fn create_bmp() -> Result<Option<ComPtr<ImageEncodingProperties>>> {
-        <Self as RtActivatable<IImageEncodingPropertiesStatics2>>::get_activation_factory().create_bmp()
+        <Self as RtActivatable<IImageEncodingPropertiesStatics2>>::get_activation_factory().deref().create_bmp()
     }
     #[inline] pub fn create_heif() -> Result<Option<ComPtr<ImageEncodingProperties>>> {
-        <Self as RtActivatable<IImageEncodingPropertiesStatics3>>::get_activation_factory().create_heif()
+        <Self as RtActivatable<IImageEncodingPropertiesStatics3>>::get_activation_factory().deref().create_heif()
     }
 }
 DEFINE_CLSID!(ImageEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,73,109,97,103,101,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_ImageEncodingProperties]);
@@ -19440,8 +19440,8 @@ RT_INTERFACE!{interface IMediaEncodingProfile(IMediaEncodingProfileVtbl): IInspe
     fn get_Container(&self, out: *mut *mut ContainerEncodingProperties) -> HRESULT
 }}
 impl IMediaEncodingProfile {
-    #[inline] pub fn set_audio(&self, value: &AudioEncodingProperties) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Audio)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_audio(&self, value: &ComPtr<AudioEncodingProperties>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Audio)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_audio(&self) -> Result<Option<ComPtr<AudioEncodingProperties>>> { unsafe { 
@@ -19449,8 +19449,8 @@ impl IMediaEncodingProfile {
         let hr = ((*self.lpVtbl).get_Audio)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_video(&self, value: &VideoEncodingProperties) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Video)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_video(&self, value: &ComPtr<VideoEncodingProperties>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Video)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_video(&self) -> Result<Option<ComPtr<VideoEncodingProperties>>> { unsafe { 
@@ -19458,8 +19458,8 @@ impl IMediaEncodingProfile {
         let hr = ((*self.lpVtbl).get_Video)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_container(&self, value: &ContainerEncodingProperties) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Container)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_container(&self, value: &ComPtr<ContainerEncodingProperties>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Container)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_container(&self) -> Result<Option<ComPtr<ContainerEncodingProperties>>> { unsafe { 
@@ -19475,40 +19475,40 @@ impl RtActivatable<IMediaEncodingProfileStatics3> for MediaEncodingProfile {}
 impl RtActivatable<IActivationFactory> for MediaEncodingProfile {}
 impl MediaEncodingProfile {
     #[inline] pub fn create_m4a(quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
-        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_m4a(quality)
+        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().deref().create_m4a(quality)
     }
     #[inline] pub fn create_mp3(quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
-        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_mp3(quality)
+        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().deref().create_mp3(quality)
     }
     #[inline] pub fn create_wma(quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
-        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_wma(quality)
+        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().deref().create_wma(quality)
     }
     #[inline] pub fn create_mp4(quality: VideoEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
-        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_mp4(quality)
+        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().deref().create_mp4(quality)
     }
     #[inline] pub fn create_wmv(quality: VideoEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
-        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_wmv(quality)
+        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().deref().create_wmv(quality)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<MediaEncodingProfile>>> {
-        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_from_file_async(file)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<MediaEncodingProfile>>> {
+        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().deref().create_from_file_async(file)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(stream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<MediaEncodingProfile>>> {
-        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().create_from_stream_async(stream)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<MediaEncodingProfile>>> {
+        <Self as RtActivatable<IMediaEncodingProfileStatics>>::get_activation_factory().deref().create_from_stream_async(stream)
     }
     #[inline] pub fn create_wav(quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
-        <Self as RtActivatable<IMediaEncodingProfileStatics2>>::get_activation_factory().create_wav(quality)
+        <Self as RtActivatable<IMediaEncodingProfileStatics2>>::get_activation_factory().deref().create_wav(quality)
     }
     #[inline] pub fn create_avi(quality: VideoEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
-        <Self as RtActivatable<IMediaEncodingProfileStatics2>>::get_activation_factory().create_avi(quality)
+        <Self as RtActivatable<IMediaEncodingProfileStatics2>>::get_activation_factory().deref().create_avi(quality)
     }
     #[inline] pub fn create_alac(quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
-        <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().create_alac(quality)
+        <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().deref().create_alac(quality)
     }
     #[inline] pub fn create_flac(quality: AudioEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
-        <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().create_flac(quality)
+        <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().deref().create_flac(quality)
     }
     #[inline] pub fn create_hevc(quality: VideoEncodingQuality) -> Result<Option<ComPtr<MediaEncodingProfile>>> {
-        <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().create_hevc(quality)
+        <Self as RtActivatable<IMediaEncodingProfileStatics3>>::get_activation_factory().deref().create_hevc(quality)
     }
 }
 DEFINE_CLSID!(MediaEncodingProfile(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,101,100,105,97,69,110,99,111,100,105,110,103,80,114,111,102,105,108,101,0]) [CLSID_MediaEncodingProfile]);
@@ -19520,8 +19520,8 @@ RT_INTERFACE!{interface IMediaEncodingProfile2(IMediaEncodingProfile2Vtbl): IIns
     fn GetVideoTracks(&self, out: *mut *mut foundation::collections::IVector<super::core::VideoStreamDescriptor>) -> HRESULT
 }}
 impl IMediaEncodingProfile2 {
-    #[inline] pub fn set_audio_tracks(&self, value: &foundation::collections::IIterable<super::core::AudioStreamDescriptor>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetAudioTracks)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_audio_tracks(&self, value: &ComPtr<foundation::collections::IIterable<super::core::AudioStreamDescriptor>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetAudioTracks)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_audio_tracks(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::core::AudioStreamDescriptor>>>> { unsafe { 
@@ -19529,8 +19529,8 @@ impl IMediaEncodingProfile2 {
         let hr = ((*self.lpVtbl).GetAudioTracks)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_video_tracks(&self, value: &foundation::collections::IIterable<super::core::VideoStreamDescriptor>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetVideoTracks)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_video_tracks(&self, value: &ComPtr<foundation::collections::IIterable<super::core::VideoStreamDescriptor>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetVideoTracks)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_video_tracks(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::core::VideoStreamDescriptor>>>> { unsafe { 
@@ -19545,8 +19545,8 @@ RT_INTERFACE!{interface IMediaEncodingProfile3(IMediaEncodingProfile3Vtbl): IIns
     fn GetTimedMetadataTracks(&self, out: *mut *mut foundation::collections::IVector<super::core::TimedMetadataStreamDescriptor>) -> HRESULT
 }}
 impl IMediaEncodingProfile3 {
-    #[inline] pub fn set_timed_metadata_tracks(&self, value: &foundation::collections::IIterable<super::core::TimedMetadataStreamDescriptor>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetTimedMetadataTracks)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_timed_metadata_tracks(&self, value: &ComPtr<foundation::collections::IIterable<super::core::TimedMetadataStreamDescriptor>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetTimedMetadataTracks)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_timed_metadata_tracks(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::core::TimedMetadataStreamDescriptor>>>> { unsafe { 
@@ -19591,14 +19591,14 @@ impl IMediaEncodingProfileStatics {
         let hr = ((*self.lpVtbl).CreateWmv)(self as *const _ as *mut _, quality, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<MediaEncodingProfile>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_file_async(&self, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<MediaEncodingProfile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromFileAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromFileAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(&self, stream: &super::super::storage::streams::IRandomAccessStream) -> Result<ComPtr<foundation::IAsyncOperation<MediaEncodingProfile>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<MediaEncodingProfile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStreamAsync)(self as *const _ as *mut _, stream as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromStreamAsync)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -19678,148 +19678,148 @@ impl RtActivatable<IMediaEncodingSubtypesStatics4> for MediaEncodingSubtypes {}
 impl RtActivatable<IMediaEncodingSubtypesStatics5> for MediaEncodingSubtypes {}
 impl MediaEncodingSubtypes {
     #[inline] pub fn get_aac() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_aac()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_aac()
     }
     #[inline] pub fn get_aac_adts() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_aac_adts()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_aac_adts()
     }
     #[inline] pub fn get_ac3() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_ac3()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_ac3()
     }
     #[inline] pub fn get_amr_nb() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_amr_nb()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_amr_nb()
     }
     #[inline] pub fn get_amr_wb() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_amr_wb()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_amr_wb()
     }
     #[inline] pub fn get_argb32() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_argb32()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_argb32()
     }
     #[inline] pub fn get_asf() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_asf()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_asf()
     }
     #[inline] pub fn get_avi() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_avi()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_avi()
     }
     #[inline] pub fn get_bgra8() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_bgra8()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_bgra8()
     }
     #[inline] pub fn get_bmp() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_bmp()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_bmp()
     }
     #[inline] pub fn get_eac3() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_eac3()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_eac3()
     }
     #[inline] pub fn get_float() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_float()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_float()
     }
     #[inline] pub fn get_gif() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_gif()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_gif()
     }
     #[inline] pub fn get_h263() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_h263()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_h263()
     }
     #[inline] pub fn get_h264() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_h264()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_h264()
     }
     #[inline] pub fn get_h264_es() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_h264_es()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_h264_es()
     }
     #[inline] pub fn get_hevc() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_hevc()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_hevc()
     }
     #[inline] pub fn get_hevc_es() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_hevc_es()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_hevc_es()
     }
     #[inline] pub fn get_iyuv() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_iyuv()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_iyuv()
     }
     #[inline] pub fn get_jpeg() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_jpeg()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_jpeg()
     }
     #[inline] pub fn get_jpeg_xr() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_jpeg_xr()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_jpeg_xr()
     }
     #[inline] pub fn get_mjpg() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_mjpg()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_mjpg()
     }
     #[inline] pub fn get_mpeg() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_mpeg()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_mpeg()
     }
     #[inline] pub fn get_mpeg1() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_mpeg1()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_mpeg1()
     }
     #[inline] pub fn get_mpeg2() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_mpeg2()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_mpeg2()
     }
     #[inline] pub fn get_mp3() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_mp3()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_mp3()
     }
     #[inline] pub fn get_mpeg4() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_mpeg4()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_mpeg4()
     }
     #[inline] pub fn get_nv12() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_nv12()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_nv12()
     }
     #[inline] pub fn get_pcm() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_pcm()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_pcm()
     }
     #[inline] pub fn get_png() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_png()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_png()
     }
     #[inline] pub fn get_rgb24() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_rgb24()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_rgb24()
     }
     #[inline] pub fn get_rgb32() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_rgb32()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_rgb32()
     }
     #[inline] pub fn get_tiff() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_tiff()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_tiff()
     }
     #[inline] pub fn get_wave() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_wave()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_wave()
     }
     #[inline] pub fn get_wma8() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_wma8()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_wma8()
     }
     #[inline] pub fn get_wma9() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_wma9()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_wma9()
     }
     #[inline] pub fn get_wmv3() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_wmv3()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_wmv3()
     }
     #[inline] pub fn get_wvc1() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_wvc1()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_wvc1()
     }
     #[inline] pub fn get_yuy2() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_yuy2()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_yuy2()
     }
     #[inline] pub fn get_yv12() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().get_yv12()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics>>::get_activation_factory().deref().get_yv12()
     }
     #[inline] pub fn get_vp9() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics2>>::get_activation_factory().get_vp9()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics2>>::get_activation_factory().deref().get_vp9()
     }
     #[inline] pub fn get_l8() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics2>>::get_activation_factory().get_l8()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics2>>::get_activation_factory().deref().get_l8()
     }
     #[inline] pub fn get_l16() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics2>>::get_activation_factory().get_l16()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics2>>::get_activation_factory().deref().get_l16()
     }
     #[inline] pub fn get_d16() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics2>>::get_activation_factory().get_d16()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics2>>::get_activation_factory().deref().get_d16()
     }
     #[inline] pub fn get_alac() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics3>>::get_activation_factory().get_alac()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics3>>::get_activation_factory().deref().get_alac()
     }
     #[inline] pub fn get_flac() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics3>>::get_activation_factory().get_flac()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics3>>::get_activation_factory().deref().get_flac()
     }
     #[inline] pub fn get_p010() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics4>>::get_activation_factory().get_p010()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics4>>::get_activation_factory().deref().get_p010()
     }
     #[inline] pub fn get_heif() -> Result<HString> {
-        <Self as RtActivatable<IMediaEncodingSubtypesStatics5>>::get_activation_factory().get_heif()
+        <Self as RtActivatable<IMediaEncodingSubtypesStatics5>>::get_activation_factory().deref().get_heif()
     }
 }
 DEFINE_CLSID!(MediaEncodingSubtypes(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,101,100,105,97,69,110,99,111,100,105,110,103,83,117,98,116,121,112,101,115,0]) [CLSID_MediaEncodingSubtypes]);
@@ -20183,19 +20183,19 @@ RT_CLASS!{static class Mpeg2ProfileIds}
 impl RtActivatable<IMpeg2ProfileIdsStatics> for Mpeg2ProfileIds {}
 impl Mpeg2ProfileIds {
     #[inline] pub fn get_simple() -> Result<i32> {
-        <Self as RtActivatable<IMpeg2ProfileIdsStatics>>::get_activation_factory().get_simple()
+        <Self as RtActivatable<IMpeg2ProfileIdsStatics>>::get_activation_factory().deref().get_simple()
     }
     #[inline] pub fn get_main() -> Result<i32> {
-        <Self as RtActivatable<IMpeg2ProfileIdsStatics>>::get_activation_factory().get_main()
+        <Self as RtActivatable<IMpeg2ProfileIdsStatics>>::get_activation_factory().deref().get_main()
     }
     #[inline] pub fn get_signal_noise_ratio_scalable() -> Result<i32> {
-        <Self as RtActivatable<IMpeg2ProfileIdsStatics>>::get_activation_factory().get_signal_noise_ratio_scalable()
+        <Self as RtActivatable<IMpeg2ProfileIdsStatics>>::get_activation_factory().deref().get_signal_noise_ratio_scalable()
     }
     #[inline] pub fn get_spatially_scalable() -> Result<i32> {
-        <Self as RtActivatable<IMpeg2ProfileIdsStatics>>::get_activation_factory().get_spatially_scalable()
+        <Self as RtActivatable<IMpeg2ProfileIdsStatics>>::get_activation_factory().deref().get_spatially_scalable()
     }
     #[inline] pub fn get_high() -> Result<i32> {
-        <Self as RtActivatable<IMpeg2ProfileIdsStatics>>::get_activation_factory().get_high()
+        <Self as RtActivatable<IMpeg2ProfileIdsStatics>>::get_activation_factory().deref().get_high()
     }
 }
 DEFINE_CLSID!(Mpeg2ProfileIds(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,112,101,103,50,80,114,111,102,105,108,101,73,100,115,0]) [CLSID_Mpeg2ProfileIds]);
@@ -20321,16 +20321,16 @@ impl RtActivatable<IVideoEncodingPropertiesStatics2> for VideoEncodingProperties
 impl RtActivatable<IActivationFactory> for VideoEncodingProperties {}
 impl VideoEncodingProperties {
     #[inline] pub fn create_h264() -> Result<Option<ComPtr<VideoEncodingProperties>>> {
-        <Self as RtActivatable<IVideoEncodingPropertiesStatics>>::get_activation_factory().create_h264()
+        <Self as RtActivatable<IVideoEncodingPropertiesStatics>>::get_activation_factory().deref().create_h264()
     }
     #[inline] pub fn create_mpeg2() -> Result<Option<ComPtr<VideoEncodingProperties>>> {
-        <Self as RtActivatable<IVideoEncodingPropertiesStatics>>::get_activation_factory().create_mpeg2()
+        <Self as RtActivatable<IVideoEncodingPropertiesStatics>>::get_activation_factory().deref().create_mpeg2()
     }
     #[inline] pub fn create_uncompressed(subtype: &HStringArg, width: u32, height: u32) -> Result<Option<ComPtr<VideoEncodingProperties>>> {
-        <Self as RtActivatable<IVideoEncodingPropertiesStatics>>::get_activation_factory().create_uncompressed(subtype, width, height)
+        <Self as RtActivatable<IVideoEncodingPropertiesStatics>>::get_activation_factory().deref().create_uncompressed(subtype, width, height)
     }
     #[inline] pub fn create_hevc() -> Result<Option<ComPtr<VideoEncodingProperties>>> {
-        <Self as RtActivatable<IVideoEncodingPropertiesStatics2>>::get_activation_factory().create_hevc()
+        <Self as RtActivatable<IVideoEncodingPropertiesStatics2>>::get_activation_factory().deref().create_hevc()
     }
 }
 DEFINE_CLSID!(VideoEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,86,105,100,101,111,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_VideoEncodingProperties]);
@@ -20441,9 +20441,9 @@ RT_INTERFACE!{interface IOcrEngine(IOcrEngineVtbl): IInspectable(IInspectableVtb
     #[cfg(feature="windows-globalization")] fn get_RecognizerLanguage(&self, out: *mut *mut super::super::globalization::Language) -> HRESULT
 }}
 impl IOcrEngine {
-    #[cfg(feature="windows-graphics")] #[inline] pub fn recognize_async(&self, bitmap: &super::super::graphics::imaging::SoftwareBitmap) -> Result<ComPtr<foundation::IAsyncOperation<OcrResult>>> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn recognize_async(&self, bitmap: &ComPtr<super::super::graphics::imaging::SoftwareBitmap>) -> Result<ComPtr<foundation::IAsyncOperation<OcrResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RecognizeAsync)(self as *const _ as *mut _, bitmap as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RecognizeAsync)(self as *const _ as *mut _, bitmap.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-globalization")] #[inline] pub fn get_recognizer_language(&self) -> Result<Option<ComPtr<super::super::globalization::Language>>> { unsafe { 
@@ -20456,19 +20456,19 @@ RT_CLASS!{class OcrEngine: IOcrEngine}
 impl RtActivatable<IOcrEngineStatics> for OcrEngine {}
 impl OcrEngine {
     #[inline] pub fn get_max_image_dimension() -> Result<u32> {
-        <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().get_max_image_dimension()
+        <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().deref().get_max_image_dimension()
     }
     #[cfg(feature="windows-globalization")] #[inline] pub fn get_available_recognizer_languages() -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::globalization::Language>>>> {
-        <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().get_available_recognizer_languages()
+        <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().deref().get_available_recognizer_languages()
     }
-    #[cfg(feature="windows-globalization")] #[inline] pub fn is_language_supported(language: &super::super::globalization::Language) -> Result<bool> {
-        <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().is_language_supported(language)
+    #[cfg(feature="windows-globalization")] #[inline] pub fn is_language_supported(language: &ComPtr<super::super::globalization::Language>) -> Result<bool> {
+        <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().deref().is_language_supported(language)
     }
-    #[cfg(feature="windows-globalization")] #[inline] pub fn try_create_from_language(language: &super::super::globalization::Language) -> Result<Option<ComPtr<OcrEngine>>> {
-        <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().try_create_from_language(language)
+    #[cfg(feature="windows-globalization")] #[inline] pub fn try_create_from_language(language: &ComPtr<super::super::globalization::Language>) -> Result<Option<ComPtr<OcrEngine>>> {
+        <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().deref().try_create_from_language(language)
     }
     #[inline] pub fn try_create_from_user_profile_languages() -> Result<Option<ComPtr<OcrEngine>>> {
-        <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().try_create_from_user_profile_languages()
+        <Self as RtActivatable<IOcrEngineStatics>>::get_activation_factory().deref().try_create_from_user_profile_languages()
     }
 }
 DEFINE_CLSID!(OcrEngine(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,79,99,114,46,79,99,114,69,110,103,105,110,101,0]) [CLSID_OcrEngine]);
@@ -20494,14 +20494,14 @@ impl IOcrEngineStatics {
         let hr = ((*self.lpVtbl).get_AvailableRecognizerLanguages)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-globalization")] #[inline] pub fn is_language_supported(&self, language: &super::super::globalization::Language) -> Result<bool> { unsafe { 
+    #[cfg(feature="windows-globalization")] #[inline] pub fn is_language_supported(&self, language: &ComPtr<super::super::globalization::Language>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).IsLanguageSupported)(self as *const _ as *mut _, language as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).IsLanguageSupported)(self as *const _ as *mut _, language.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-globalization")] #[inline] pub fn try_create_from_language(&self, language: &super::super::globalization::Language) -> Result<Option<ComPtr<OcrEngine>>> { unsafe { 
+    #[cfg(feature="windows-globalization")] #[inline] pub fn try_create_from_language(&self, language: &ComPtr<super::super::globalization::Language>) -> Result<Option<ComPtr<OcrEngine>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TryCreateFromLanguage)(self as *const _ as *mut _, language as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TryCreateFromLanguage)(self as *const _ as *mut _, language.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_create_from_user_profile_languages(&self) -> Result<Option<ComPtr<OcrEngine>>> { unsafe { 
@@ -20625,27 +20625,27 @@ impl IPlayToConnection {
         let hr = ((*self.lpVtbl).get_State)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn add_state_changed(&self, handler: &foundation::TypedEventHandler<PlayToConnection, PlayToConnectionStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_state_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToConnection, PlayToConnectionStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_StateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_transferred(&self, handler: &foundation::TypedEventHandler<PlayToConnection, PlayToConnectionTransferredEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_transferred(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToConnection, PlayToConnectionTransferredEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Transferred)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Transferred)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_transferred(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Transferred)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_error(&self, handler: &foundation::TypedEventHandler<PlayToConnection, PlayToConnectionErrorEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_error(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToConnection, PlayToConnectionErrorEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Error)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Error)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_error(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -20724,18 +20724,18 @@ RT_INTERFACE!{interface IPlayToManager(IPlayToManagerVtbl): IInspectable(IInspec
     fn get_DefaultSourceSelection(&self, out: *mut bool) -> HRESULT
 }}
 impl IPlayToManager {
-    #[inline] pub fn add_source_requested(&self, handler: &foundation::TypedEventHandler<PlayToManager, PlayToSourceRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_source_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToManager, PlayToSourceRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SourceRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SourceRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_source_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_SourceRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_source_selected(&self, handler: &foundation::TypedEventHandler<PlayToManager, PlayToSourceSelectedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_source_selected(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToManager, PlayToSourceSelectedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SourceSelected)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SourceSelected)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_source_selected(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -20756,10 +20756,10 @@ RT_CLASS!{class PlayToManager: IPlayToManager}
 impl RtActivatable<IPlayToManagerStatics> for PlayToManager {}
 impl PlayToManager {
     #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<PlayToManager>>> {
-        <Self as RtActivatable<IPlayToManagerStatics>>::get_activation_factory().get_for_current_view()
+        <Self as RtActivatable<IPlayToManagerStatics>>::get_activation_factory().deref().get_for_current_view()
     }
     #[inline] pub fn show_play_to_ui() -> Result<()> {
-        <Self as RtActivatable<IPlayToManagerStatics>>::get_activation_factory().show_play_to_ui()
+        <Self as RtActivatable<IPlayToManagerStatics>>::get_activation_factory().deref().show_play_to_ui()
     }
 }
 DEFINE_CLSID!(PlayToManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,84,111,46,80,108,97,121,84,111,77,97,110,97,103,101,114,0]) [CLSID_PlayToManager]);
@@ -20824,81 +20824,81 @@ RT_INTERFACE!{interface IPlayToReceiver(IPlayToReceiverVtbl): IInspectable(IInsp
     fn StopAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IPlayToReceiver {
-    #[inline] pub fn add_play_requested(&self, handler: &foundation::TypedEventHandler<PlayToReceiver, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_play_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToReceiver, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlayRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlayRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_play_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlayRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_pause_requested(&self, handler: &foundation::TypedEventHandler<PlayToReceiver, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_pause_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToReceiver, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PauseRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PauseRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_pause_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PauseRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_source_change_requested(&self, handler: &foundation::TypedEventHandler<PlayToReceiver, SourceChangeRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_source_change_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToReceiver, SourceChangeRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SourceChangeRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SourceChangeRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_source_change_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_SourceChangeRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_playback_rate_change_requested(&self, handler: &foundation::TypedEventHandler<PlayToReceiver, PlaybackRateChangeRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_playback_rate_change_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToReceiver, PlaybackRateChangeRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlaybackRateChangeRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlaybackRateChangeRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_playback_rate_change_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlaybackRateChangeRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_current_time_change_requested(&self, handler: &foundation::TypedEventHandler<PlayToReceiver, CurrentTimeChangeRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_current_time_change_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToReceiver, CurrentTimeChangeRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CurrentTimeChangeRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CurrentTimeChangeRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_current_time_change_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_CurrentTimeChangeRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_mute_change_requested(&self, handler: &foundation::TypedEventHandler<PlayToReceiver, MuteChangeRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_mute_change_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToReceiver, MuteChangeRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MuteChangeRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MuteChangeRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_mute_change_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_MuteChangeRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_volume_change_requested(&self, handler: &foundation::TypedEventHandler<PlayToReceiver, VolumeChangeRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_volume_change_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToReceiver, VolumeChangeRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_VolumeChangeRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_VolumeChangeRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_volume_change_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_VolumeChangeRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_time_update_requested(&self, handler: &foundation::TypedEventHandler<PlayToReceiver, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_time_update_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToReceiver, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_TimeUpdateRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_TimeUpdateRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_time_update_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_TimeUpdateRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_stop_requested(&self, handler: &foundation::TypedEventHandler<PlayToReceiver, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_stop_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<PlayToReceiver, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_StopRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_StopRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_stop_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -21026,8 +21026,8 @@ impl IPlayToSource {
         let hr = ((*self.lpVtbl).get_Next)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_next(&self, value: &PlayToSource) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Next)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_next(&self, value: &ComPtr<PlayToSource>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Next)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn play_next(&self) -> Result<()> { unsafe { 
@@ -21069,8 +21069,8 @@ impl IPlayToSourceRequest {
         let hr = ((*self.lpVtbl).GetDeferral)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_source(&self, value: &PlayToSource) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetSource)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_source(&self, value: &ComPtr<PlayToSource>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetSource)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -21135,8 +21135,8 @@ impl IPlayToSourceWithPreferredSourceUri {
         let hr = ((*self.lpVtbl).get_PreferredSourceUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_preferred_source_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PreferredSourceUri)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_preferred_source_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PreferredSourceUri)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -21230,31 +21230,31 @@ RT_CLASS!{static class BackgroundMediaPlayer}
 impl RtActivatable<IBackgroundMediaPlayerStatics> for BackgroundMediaPlayer {}
 impl BackgroundMediaPlayer {
     #[inline] pub fn get_current() -> Result<Option<ComPtr<MediaPlayer>>> {
-        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().get_current()
+        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().deref().get_current()
     }
-    #[inline] pub fn add_message_received_from_background(value: &foundation::EventHandler<MediaPlayerDataReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().add_message_received_from_background(value)
+    #[inline] pub fn add_message_received_from_background(value: &ComPtr<foundation::EventHandler<MediaPlayerDataReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().deref().add_message_received_from_background(value)
     }
     #[inline] pub fn remove_message_received_from_background(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().remove_message_received_from_background(token)
+        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().deref().remove_message_received_from_background(token)
     }
-    #[inline] pub fn add_message_received_from_foreground(value: &foundation::EventHandler<MediaPlayerDataReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> {
-        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().add_message_received_from_foreground(value)
+    #[inline] pub fn add_message_received_from_foreground(value: &ComPtr<foundation::EventHandler<MediaPlayerDataReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> {
+        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().deref().add_message_received_from_foreground(value)
     }
     #[inline] pub fn remove_message_received_from_foreground(token: foundation::EventRegistrationToken) -> Result<()> {
-        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().remove_message_received_from_foreground(token)
+        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().deref().remove_message_received_from_foreground(token)
     }
-    #[inline] pub fn send_message_to_background(value: &foundation::collections::ValueSet) -> Result<()> {
-        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().send_message_to_background(value)
+    #[inline] pub fn send_message_to_background(value: &ComPtr<foundation::collections::ValueSet>) -> Result<()> {
+        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().deref().send_message_to_background(value)
     }
-    #[inline] pub fn send_message_to_foreground(value: &foundation::collections::ValueSet) -> Result<()> {
-        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().send_message_to_foreground(value)
+    #[inline] pub fn send_message_to_foreground(value: &ComPtr<foundation::collections::ValueSet>) -> Result<()> {
+        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().deref().send_message_to_foreground(value)
     }
     #[inline] pub fn is_media_playing() -> Result<bool> {
-        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().is_media_playing()
+        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().deref().is_media_playing()
     }
     #[inline] pub fn shutdown() -> Result<()> {
-        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().shutdown()
+        <Self as RtActivatable<IBackgroundMediaPlayerStatics>>::get_activation_factory().deref().shutdown()
     }
 }
 DEFINE_CLSID!(BackgroundMediaPlayer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,66,97,99,107,103,114,111,117,110,100,77,101,100,105,97,80,108,97,121,101,114,0]) [CLSID_BackgroundMediaPlayer]);
@@ -21276,30 +21276,30 @@ impl IBackgroundMediaPlayerStatics {
         let hr = ((*self.lpVtbl).get_Current)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_message_received_from_background(&self, value: &foundation::EventHandler<MediaPlayerDataReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_message_received_from_background(&self, value: &ComPtr<foundation::EventHandler<MediaPlayerDataReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MessageReceivedFromBackground)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MessageReceivedFromBackground)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_message_received_from_background(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_MessageReceivedFromBackground)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_message_received_from_foreground(&self, value: &foundation::EventHandler<MediaPlayerDataReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_message_received_from_foreground(&self, value: &ComPtr<foundation::EventHandler<MediaPlayerDataReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MessageReceivedFromForeground)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MessageReceivedFromForeground)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_message_received_from_foreground(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_MessageReceivedFromForeground)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn send_message_to_background(&self, value: &foundation::collections::ValueSet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SendMessageToBackground)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn send_message_to_background(&self, value: &ComPtr<foundation::collections::ValueSet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SendMessageToBackground)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn send_message_to_foreground(&self, value: &foundation::collections::ValueSet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SendMessageToForeground)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn send_message_to_foreground(&self, value: &ComPtr<foundation::collections::ValueSet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SendMessageToForeground)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn is_media_playing(&self) -> Result<bool> { unsafe { 
@@ -21388,10 +21388,10 @@ RT_CLASS!{class MediaBreak: IMediaBreak}
 impl RtActivatable<IMediaBreakFactory> for MediaBreak {}
 impl MediaBreak {
     #[inline] pub fn create(insertionMethod: MediaBreakInsertionMethod) -> Result<ComPtr<MediaBreak>> {
-        <Self as RtActivatable<IMediaBreakFactory>>::get_activation_factory().create(insertionMethod)
+        <Self as RtActivatable<IMediaBreakFactory>>::get_activation_factory().deref().create(insertionMethod)
     }
     #[inline] pub fn create_with_presentation_position(insertionMethod: MediaBreakInsertionMethod, presentationPosition: foundation::TimeSpan) -> Result<ComPtr<MediaBreak>> {
-        <Self as RtActivatable<IMediaBreakFactory>>::get_activation_factory().create_with_presentation_position(insertionMethod, presentationPosition)
+        <Self as RtActivatable<IMediaBreakFactory>>::get_activation_factory().deref().create_with_presentation_position(insertionMethod, presentationPosition)
     }
 }
 DEFINE_CLSID!(MediaBreak(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,77,101,100,105,97,66,114,101,97,107,0]) [CLSID_MediaBreak]);
@@ -21443,36 +21443,36 @@ RT_INTERFACE!{interface IMediaBreakManager(IMediaBreakManagerVtbl): IInspectable
     fn SkipCurrentBreak(&self) -> HRESULT
 }}
 impl IMediaBreakManager {
-    #[inline] pub fn add_breaks_seeked_over(&self, handler: &foundation::TypedEventHandler<MediaBreakManager, MediaBreakSeekedOverEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_breaks_seeked_over(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaBreakManager, MediaBreakSeekedOverEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BreaksSeekedOver)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BreaksSeekedOver)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_breaks_seeked_over(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_BreaksSeekedOver)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_break_started(&self, handler: &foundation::TypedEventHandler<MediaBreakManager, MediaBreakStartedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_break_started(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaBreakManager, MediaBreakStartedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BreakStarted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BreakStarted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_break_started(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_BreakStarted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_break_ended(&self, handler: &foundation::TypedEventHandler<MediaBreakManager, MediaBreakEndedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_break_ended(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaBreakManager, MediaBreakEndedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BreakEnded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BreakEnded)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_break_ended(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_BreakEnded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_break_skipped(&self, handler: &foundation::TypedEventHandler<MediaBreakManager, MediaBreakSkippedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_break_skipped(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaBreakManager, MediaBreakSkippedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BreakSkipped)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BreakSkipped)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_break_skipped(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -21489,8 +21489,8 @@ impl IMediaBreakManager {
         let hr = ((*self.lpVtbl).get_PlaybackSession)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn play_break(&self, value: &MediaBreak) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).PlayBreak)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn play_break(&self, value: &ComPtr<MediaBreak>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).PlayBreak)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn skip_current_break(&self) -> Result<()> { unsafe { 
@@ -21513,21 +21513,21 @@ RT_INTERFACE!{interface IMediaBreakSchedule(IMediaBreakScheduleVtbl): IInspectab
     fn get_PlaybackItem(&self, out: *mut *mut MediaPlaybackItem) -> HRESULT
 }}
 impl IMediaBreakSchedule {
-    #[inline] pub fn add_schedule_changed(&self, handler: &foundation::TypedEventHandler<MediaBreakSchedule, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_schedule_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaBreakSchedule, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ScheduleChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ScheduleChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_schedule_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ScheduleChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn insert_midroll_break(&self, mediaBreak: &MediaBreak) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).InsertMidrollBreak)(self as *const _ as *mut _, mediaBreak as *const _ as *mut _);
+    #[inline] pub fn insert_midroll_break(&self, mediaBreak: &ComPtr<MediaBreak>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).InsertMidrollBreak)(self as *const _ as *mut _, mediaBreak.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove_midroll_break(&self, mediaBreak: &MediaBreak) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).RemoveMidrollBreak)(self as *const _ as *mut _, mediaBreak as *const _ as *mut _);
+    #[inline] pub fn remove_midroll_break(&self, mediaBreak: &ComPtr<MediaBreak>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).RemoveMidrollBreak)(self as *const _ as *mut _, mediaBreak.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_midroll_breaks(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MediaBreak>>>> { unsafe { 
@@ -21535,8 +21535,8 @@ impl IMediaBreakSchedule {
         let hr = ((*self.lpVtbl).get_MidrollBreaks)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_preroll_break(&self, value: &MediaBreak) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PrerollBreak)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_preroll_break(&self, value: &ComPtr<MediaBreak>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PrerollBreak)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_preroll_break(&self) -> Result<Option<ComPtr<MediaBreak>>> { unsafe { 
@@ -21544,8 +21544,8 @@ impl IMediaBreakSchedule {
         let hr = ((*self.lpVtbl).get_PrerollBreak)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_postroll_break(&self, value: &MediaBreak) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_PostrollBreak)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_postroll_break(&self, value: &ComPtr<MediaBreak>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_PostrollBreak)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_postroll_break(&self) -> Result<Option<ComPtr<MediaBreak>>> { unsafe { 
@@ -21622,8 +21622,8 @@ impl IMediaEnginePlaybackSource {
         let hr = ((*self.lpVtbl).get_CurrentItem)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_playback_source(&self, source: &IMediaPlaybackSource) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetPlaybackSource)(self as *const _ as *mut _, source as *const _ as *mut _);
+    #[inline] pub fn set_playback_source(&self, source: &ComPtr<IMediaPlaybackSource>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetPlaybackSource)(self as *const _ as *mut _, source.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -21664,8 +21664,8 @@ impl IMediaItemDisplayProperties {
         let hr = ((*self.lpVtbl).get_Thumbnail)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_thumbnail(&self, value: &super::super::storage::streams::RandomAccessStreamReference) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_thumbnail(&self, value: &ComPtr<super::super::storage::streams::RandomAccessStreamReference>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Thumbnail)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn clear_all(&self) -> Result<()> { unsafe { 
@@ -21776,90 +21776,90 @@ impl IMediaPlaybackCommandManager {
         let hr = ((*self.lpVtbl).get_RateBehavior)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_play_received(&self, handler: &foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerPlayReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_play_received(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerPlayReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlayReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlayReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_play_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlayReceived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_pause_received(&self, handler: &foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerPauseReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_pause_received(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerPauseReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PauseReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PauseReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_pause_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PauseReceived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_next_received(&self, handler: &foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerNextReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_next_received(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerNextReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_NextReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_NextReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_next_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_NextReceived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_previous_received(&self, handler: &foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerPreviousReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_previous_received(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerPreviousReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PreviousReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PreviousReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_previous_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PreviousReceived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_fast_forward_received(&self, handler: &foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerFastForwardReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_fast_forward_received(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerFastForwardReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_FastForwardReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_FastForwardReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_fast_forward_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_FastForwardReceived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_rewind_received(&self, handler: &foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerRewindReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_rewind_received(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerRewindReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RewindReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RewindReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_rewind_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_RewindReceived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_shuffle_received(&self, handler: &foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerShuffleReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_shuffle_received(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerShuffleReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ShuffleReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ShuffleReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_shuffle_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ShuffleReceived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_auto_repeat_mode_received(&self, handler: &foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_auto_repeat_mode_received(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AutoRepeatModeReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AutoRepeatModeReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_auto_repeat_mode_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_AutoRepeatModeReceived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_position_received(&self, handler: &foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerPositionReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_position_received(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerPositionReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PositionReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PositionReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_position_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PositionReceived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_rate_received(&self, handler: &foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerRateReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_rate_received(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackCommandManager, MediaPlaybackCommandManagerRateReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RateReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RateReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_rate_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -21926,9 +21926,9 @@ impl IMediaPlaybackCommandManagerCommandBehavior {
         let hr = ((*self.lpVtbl).put_EnablingRule)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_is_enabled_changed(&self, handler: &foundation::TypedEventHandler<MediaPlaybackCommandManagerCommandBehavior, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_is_enabled_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackCommandManagerCommandBehavior, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_IsEnabledChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_IsEnabledChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_is_enabled_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -22176,27 +22176,27 @@ RT_INTERFACE!{interface IMediaPlaybackItem(IMediaPlaybackItemVtbl): IInspectable
     fn get_TimedMetadataTracks(&self, out: *mut *mut MediaPlaybackTimedMetadataTrackList) -> HRESULT
 }}
 impl IMediaPlaybackItem {
-    #[inline] pub fn add_audio_tracks_changed(&self, handler: &foundation::TypedEventHandler<MediaPlaybackItem, foundation::collections::IVectorChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_audio_tracks_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackItem, foundation::collections::IVectorChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_AudioTracksChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_AudioTracksChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_audio_tracks_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_AudioTracksChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_video_tracks_changed(&self, handler: &foundation::TypedEventHandler<MediaPlaybackItem, foundation::collections::IVectorChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_video_tracks_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackItem, foundation::collections::IVectorChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_VideoTracksChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_VideoTracksChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_video_tracks_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_VideoTracksChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_timed_metadata_tracks_changed(&self, handler: &foundation::TypedEventHandler<MediaPlaybackItem, foundation::collections::IVectorChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_timed_metadata_tracks_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackItem, foundation::collections::IVectorChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_TimedMetadataTracksChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_TimedMetadataTracksChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_timed_metadata_tracks_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -22229,17 +22229,17 @@ impl RtActivatable<IMediaPlaybackItemFactory> for MediaPlaybackItem {}
 impl RtActivatable<IMediaPlaybackItemFactory2> for MediaPlaybackItem {}
 impl RtActivatable<IMediaPlaybackItemStatics> for MediaPlaybackItem {}
 impl MediaPlaybackItem {
-    #[inline] pub fn create(source: &super::core::MediaSource) -> Result<ComPtr<MediaPlaybackItem>> {
-        <Self as RtActivatable<IMediaPlaybackItemFactory>>::get_activation_factory().create(source)
+    #[inline] pub fn create(source: &ComPtr<super::core::MediaSource>) -> Result<ComPtr<MediaPlaybackItem>> {
+        <Self as RtActivatable<IMediaPlaybackItemFactory>>::get_activation_factory().deref().create(source)
     }
-    #[inline] pub fn create_with_start_time(source: &super::core::MediaSource, startTime: foundation::TimeSpan) -> Result<ComPtr<MediaPlaybackItem>> {
-        <Self as RtActivatable<IMediaPlaybackItemFactory2>>::get_activation_factory().create_with_start_time(source, startTime)
+    #[inline] pub fn create_with_start_time(source: &ComPtr<super::core::MediaSource>, startTime: foundation::TimeSpan) -> Result<ComPtr<MediaPlaybackItem>> {
+        <Self as RtActivatable<IMediaPlaybackItemFactory2>>::get_activation_factory().deref().create_with_start_time(source, startTime)
     }
-    #[inline] pub fn create_with_start_time_and_duration_limit(source: &super::core::MediaSource, startTime: foundation::TimeSpan, durationLimit: foundation::TimeSpan) -> Result<ComPtr<MediaPlaybackItem>> {
-        <Self as RtActivatable<IMediaPlaybackItemFactory2>>::get_activation_factory().create_with_start_time_and_duration_limit(source, startTime, durationLimit)
+    #[inline] pub fn create_with_start_time_and_duration_limit(source: &ComPtr<super::core::MediaSource>, startTime: foundation::TimeSpan, durationLimit: foundation::TimeSpan) -> Result<ComPtr<MediaPlaybackItem>> {
+        <Self as RtActivatable<IMediaPlaybackItemFactory2>>::get_activation_factory().deref().create_with_start_time_and_duration_limit(source, startTime, durationLimit)
     }
-    #[inline] pub fn find_from_media_source(source: &super::core::MediaSource) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
-        <Self as RtActivatable<IMediaPlaybackItemStatics>>::get_activation_factory().find_from_media_source(source)
+    #[inline] pub fn find_from_media_source(source: &ComPtr<super::core::MediaSource>) -> Result<Option<ComPtr<MediaPlaybackItem>>> {
+        <Self as RtActivatable<IMediaPlaybackItemStatics>>::get_activation_factory().deref().find_from_media_source(source)
     }
 }
 DEFINE_CLSID!(MediaPlaybackItem(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,77,101,100,105,97,80,108,97,121,98,97,99,107,73,116,101,109,0]) [CLSID_MediaPlaybackItem]);
@@ -22283,8 +22283,8 @@ impl IMediaPlaybackItem2 {
         let hr = ((*self.lpVtbl).GetDisplayProperties)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn apply_display_properties(&self, value: &MediaItemDisplayProperties) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ApplyDisplayProperties)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn apply_display_properties(&self, value: &ComPtr<MediaItemDisplayProperties>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ApplyDisplayProperties)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -22350,9 +22350,9 @@ RT_INTERFACE!{static interface IMediaPlaybackItemFactory(IMediaPlaybackItemFacto
     fn Create(&self, source: *mut super::core::MediaSource, out: *mut *mut MediaPlaybackItem) -> HRESULT
 }}
 impl IMediaPlaybackItemFactory {
-    #[inline] pub fn create(&self, source: &super::core::MediaSource) -> Result<ComPtr<MediaPlaybackItem>> { unsafe { 
+    #[inline] pub fn create(&self, source: &ComPtr<super::core::MediaSource>) -> Result<ComPtr<MediaPlaybackItem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, source as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -22362,14 +22362,14 @@ RT_INTERFACE!{static interface IMediaPlaybackItemFactory2(IMediaPlaybackItemFact
     fn CreateWithStartTimeAndDurationLimit(&self, source: *mut super::core::MediaSource, startTime: foundation::TimeSpan, durationLimit: foundation::TimeSpan, out: *mut *mut MediaPlaybackItem) -> HRESULT
 }}
 impl IMediaPlaybackItemFactory2 {
-    #[inline] pub fn create_with_start_time(&self, source: &super::core::MediaSource, startTime: foundation::TimeSpan) -> Result<ComPtr<MediaPlaybackItem>> { unsafe { 
+    #[inline] pub fn create_with_start_time(&self, source: &ComPtr<super::core::MediaSource>, startTime: foundation::TimeSpan) -> Result<ComPtr<MediaPlaybackItem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithStartTime)(self as *const _ as *mut _, source as *const _ as *mut _, startTime, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithStartTime)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, startTime, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_start_time_and_duration_limit(&self, source: &super::core::MediaSource, startTime: foundation::TimeSpan, durationLimit: foundation::TimeSpan) -> Result<ComPtr<MediaPlaybackItem>> { unsafe { 
+    #[inline] pub fn create_with_start_time_and_duration_limit(&self, source: &ComPtr<super::core::MediaSource>, startTime: foundation::TimeSpan, durationLimit: foundation::TimeSpan) -> Result<ComPtr<MediaPlaybackItem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithStartTimeAndDurationLimit)(self as *const _ as *mut _, source as *const _ as *mut _, startTime, durationLimit, &mut out);
+        let hr = ((*self.lpVtbl).CreateWithStartTimeAndDurationLimit)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, startTime, durationLimit, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -22408,9 +22408,9 @@ RT_INTERFACE!{static interface IMediaPlaybackItemStatics(IMediaPlaybackItemStati
     fn FindFromMediaSource(&self, source: *mut super::core::MediaSource, out: *mut *mut MediaPlaybackItem) -> HRESULT
 }}
 impl IMediaPlaybackItemStatics {
-    #[inline] pub fn find_from_media_source(&self, source: &super::core::MediaSource) -> Result<Option<ComPtr<MediaPlaybackItem>>> { unsafe { 
+    #[inline] pub fn find_from_media_source(&self, source: &ComPtr<super::core::MediaSource>) -> Result<Option<ComPtr<MediaPlaybackItem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).FindFromMediaSource)(self as *const _ as *mut _, source as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).FindFromMediaSource)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -22434,27 +22434,27 @@ RT_INTERFACE!{interface IMediaPlaybackList(IMediaPlaybackListVtbl): IInspectable
     fn MoveTo(&self, itemIndex: u32, out: *mut *mut MediaPlaybackItem) -> HRESULT
 }}
 impl IMediaPlaybackList {
-    #[inline] pub fn add_item_failed(&self, handler: &foundation::TypedEventHandler<MediaPlaybackList, MediaPlaybackItemFailedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_item_failed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackList, MediaPlaybackItemFailedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ItemFailed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ItemFailed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_item_failed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ItemFailed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_current_item_changed(&self, handler: &foundation::TypedEventHandler<MediaPlaybackList, CurrentMediaPlaybackItemChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_current_item_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackList, CurrentMediaPlaybackItemChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CurrentItemChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CurrentItemChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_current_item_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_CurrentItemChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_item_opened(&self, handler: &foundation::TypedEventHandler<MediaPlaybackList, MediaPlaybackItemOpenedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_item_opened(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackList, MediaPlaybackItemOpenedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ItemOpened)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ItemOpened)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_item_opened(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -22528,8 +22528,8 @@ impl IMediaPlaybackList2 {
         let hr = ((*self.lpVtbl).get_MaxPrefetchTime)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_max_prefetch_time(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MaxPrefetchTime)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_max_prefetch_time(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaxPrefetchTime)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_starting_item(&self) -> Result<Option<ComPtr<MediaPlaybackItem>>> { unsafe { 
@@ -22537,8 +22537,8 @@ impl IMediaPlaybackList2 {
         let hr = ((*self.lpVtbl).get_StartingItem)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_starting_item(&self, value: &MediaPlaybackItem) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_StartingItem)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_starting_item(&self, value: &ComPtr<MediaPlaybackItem>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_StartingItem)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_shuffled_items(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MediaPlaybackItem>>>> { unsafe { 
@@ -22546,8 +22546,8 @@ impl IMediaPlaybackList2 {
         let hr = ((*self.lpVtbl).get_ShuffledItems)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_shuffled_items(&self, value: &foundation::collections::IIterable<MediaPlaybackItem>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetShuffledItems)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_shuffled_items(&self, value: &ComPtr<foundation::collections::IIterable<MediaPlaybackItem>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetShuffledItems)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -22562,8 +22562,8 @@ impl IMediaPlaybackList3 {
         let hr = ((*self.lpVtbl).get_MaxPlayedItemsToKeepOpen)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_max_played_items_to_keep_open(&self, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_MaxPlayedItemsToKeepOpen)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_max_played_items_to_keep_open(&self, value: &ComPtr<foundation::IReference<u32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_MaxPlayedItemsToKeepOpen)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -22609,90 +22609,90 @@ RT_INTERFACE!{interface IMediaPlaybackSession(IMediaPlaybackSessionVtbl): IInspe
     fn put_StereoscopicVideoPackingMode(&self, value: super::mediaproperties::StereoscopicVideoPackingMode) -> HRESULT
 }}
 impl IMediaPlaybackSession {
-    #[inline] pub fn add_playback_state_changed(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_playback_state_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlaybackStateChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlaybackStateChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_playback_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlaybackStateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_playback_rate_changed(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_playback_rate_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlaybackRateChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlaybackRateChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_playback_rate_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlaybackRateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_seek_completed(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_seek_completed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SeekCompleted)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SeekCompleted)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_seek_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_SeekCompleted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_buffering_started(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_buffering_started(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BufferingStarted)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BufferingStarted)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_buffering_started(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_BufferingStarted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_buffering_ended(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_buffering_ended(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BufferingEnded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BufferingEnded)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_buffering_ended(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_BufferingEnded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_buffering_progress_changed(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_buffering_progress_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BufferingProgressChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BufferingProgressChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_buffering_progress_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_BufferingProgressChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_download_progress_changed(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_download_progress_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DownloadProgressChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DownloadProgressChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_download_progress_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_DownloadProgressChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_natural_duration_changed(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_natural_duration_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_NaturalDurationChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_NaturalDurationChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_natural_duration_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_NaturalDurationChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_position_changed(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_position_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PositionChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PositionChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_position_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PositionChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_natural_video_size_changed(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_natural_video_size_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_NaturalVideoSizeChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_NaturalVideoSizeChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_natural_video_size_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -22806,36 +22806,36 @@ RT_INTERFACE!{interface IMediaPlaybackSession2(IMediaPlaybackSession2Vtbl): IIns
     fn IsSupportedPlaybackRateRange(&self, rate1: f64, rate2: f64, out: *mut bool) -> HRESULT
 }}
 impl IMediaPlaybackSession2 {
-    #[inline] pub fn add_buffered_ranges_changed(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_buffered_ranges_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BufferedRangesChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BufferedRangesChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_buffered_ranges_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_BufferedRangesChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_played_ranges_changed(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_played_ranges_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlayedRangesChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlayedRangesChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_played_ranges_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlayedRangesChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_seekable_ranges_changed(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_seekable_ranges_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SeekableRangesChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SeekableRangesChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_seekable_ranges_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_SeekableRangesChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_supported_playback_rates_changed(&self, value: &foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_supported_playback_rates_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlaybackSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SupportedPlaybackRatesChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SupportedPlaybackRatesChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_supported_playback_rates_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -23002,9 +23002,9 @@ RT_INTERFACE!{interface IMediaPlaybackTimedMetadataTrackList(IMediaPlaybackTimed
     fn SetPresentationMode(&self, index: u32, value: TimedMetadataTrackPresentationMode) -> HRESULT
 }}
 impl IMediaPlaybackTimedMetadataTrackList {
-    #[inline] pub fn add_presentation_mode_changed(&self, handler: &foundation::TypedEventHandler<MediaPlaybackTimedMetadataTrackList, TimedMetadataPresentationModeChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_presentation_mode_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlaybackTimedMetadataTrackList, TimedMetadataPresentationModeChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PresentationModeChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PresentationModeChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_presentation_mode_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -23158,90 +23158,90 @@ impl IMediaPlayer {
         let hr = ((*self.lpVtbl).get_PlaybackMediaMarkers)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_media_opened(&self, value: &foundation::TypedEventHandler<MediaPlayer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_media_opened(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlayer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MediaOpened)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MediaOpened)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_media_opened(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_MediaOpened)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_media_ended(&self, value: &foundation::TypedEventHandler<MediaPlayer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_media_ended(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlayer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MediaEnded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MediaEnded)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_media_ended(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_MediaEnded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_media_failed(&self, value: &foundation::TypedEventHandler<MediaPlayer, MediaPlayerFailedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_media_failed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlayer, MediaPlayerFailedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MediaFailed)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MediaFailed)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_media_failed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_MediaFailed)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_current_state_changed(&self, value: &foundation::TypedEventHandler<MediaPlayer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_current_state_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlayer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_CurrentStateChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_CurrentStateChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_current_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_CurrentStateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_playback_media_marker_reached(&self, value: &foundation::TypedEventHandler<MediaPlayer, PlaybackMediaMarkerReachedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_playback_media_marker_reached(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlayer, PlaybackMediaMarkerReachedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlaybackMediaMarkerReached)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlaybackMediaMarkerReached)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_playback_media_marker_reached(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlaybackMediaMarkerReached)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_media_player_rate_changed(&self, value: &foundation::TypedEventHandler<MediaPlayer, MediaPlayerRateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_media_player_rate_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlayer, MediaPlayerRateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_MediaPlayerRateChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_MediaPlayerRateChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_media_player_rate_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_MediaPlayerRateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_volume_changed(&self, value: &foundation::TypedEventHandler<MediaPlayer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_volume_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlayer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_VolumeChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_VolumeChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_volume_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_VolumeChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_seek_completed(&self, value: &foundation::TypedEventHandler<MediaPlayer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_seek_completed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlayer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SeekCompleted)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SeekCompleted)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_seek_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_SeekCompleted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_buffering_started(&self, value: &foundation::TypedEventHandler<MediaPlayer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_buffering_started(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlayer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BufferingStarted)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BufferingStarted)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_buffering_started(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_BufferingStarted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_buffering_ended(&self, value: &foundation::TypedEventHandler<MediaPlayer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_buffering_ended(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlayer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_BufferingEnded)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_BufferingEnded)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_buffering_ended(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -23256,8 +23256,8 @@ impl IMediaPlayer {
         let hr = ((*self.lpVtbl).Pause)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn set_uri_source(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetUriSource)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_uri_source(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetUriSource)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -23325,18 +23325,18 @@ RT_INTERFACE!{interface IMediaPlayer3(IMediaPlayer3Vtbl): IInspectable(IInspecta
     fn GetAsCastingSource(&self, out: *mut *mut super::casting::CastingSource) -> HRESULT
 }}
 impl IMediaPlayer3 {
-    #[inline] pub fn add_is_muted_changed(&self, value: &foundation::TypedEventHandler<MediaPlayer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_is_muted_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlayer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_IsMutedChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_IsMutedChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_is_muted_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_IsMutedChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_source_changed(&self, value: &foundation::TypedEventHandler<MediaPlayer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_source_changed(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlayer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SourceChanged)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SourceChanged)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_source_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -23385,8 +23385,8 @@ impl IMediaPlayer3 {
         let hr = ((*self.lpVtbl).get_AudioDevice)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-devices")] #[inline] pub fn set_audio_device(&self, value: &super::super::devices::enumeration::DeviceInformation) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_AudioDevice)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-devices")] #[inline] pub fn set_audio_device(&self, value: &ComPtr<super::super::devices::enumeration::DeviceInformation>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_AudioDevice)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_timeline_controller(&self) -> Result<Option<ComPtr<super::MediaTimelineController>>> { unsafe { 
@@ -23394,8 +23394,8 @@ impl IMediaPlayer3 {
         let hr = ((*self.lpVtbl).get_TimelineController)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_timeline_controller(&self, value: &super::MediaTimelineController) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_TimelineController)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_timeline_controller(&self, value: &ComPtr<super::MediaTimelineController>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_TimelineController)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_timeline_controller_position_offset(&self) -> Result<foundation::TimeSpan> { unsafe { 
@@ -23436,9 +23436,9 @@ impl IMediaPlayer4 {
         let hr = ((*self.lpVtbl).SetSurfaceSize)(self as *const _ as *mut _, size);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_surface(&self, compositor: &super::super::ui::composition::Compositor) -> Result<Option<ComPtr<MediaPlayerSurface>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_surface(&self, compositor: &ComPtr<super::super::ui::composition::Compositor>) -> Result<Option<ComPtr<MediaPlayerSurface>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetSurface)(self as *const _ as *mut _, compositor as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetSurface)(self as *const _ as *mut _, compositor.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -23453,9 +23453,9 @@ RT_INTERFACE!{interface IMediaPlayer5(IMediaPlayer5Vtbl): IInspectable(IInspecta
     #[cfg(feature="windows-graphics")] fn CopyFrameToStereoscopicVideoSurfaces(&self, destinationLeftEye: *mut super::super::graphics::directx::direct3d11::IDirect3DSurface, destinationRightEye: *mut super::super::graphics::directx::direct3d11::IDirect3DSurface) -> HRESULT
 }}
 impl IMediaPlayer5 {
-    #[inline] pub fn add_video_frame_available(&self, value: &foundation::TypedEventHandler<MediaPlayer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_video_frame_available(&self, value: &ComPtr<foundation::TypedEventHandler<MediaPlayer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_VideoFrameAvailable)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_VideoFrameAvailable)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_video_frame_available(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -23471,16 +23471,16 @@ impl IMediaPlayer5 {
         let hr = ((*self.lpVtbl).put_IsVideoFrameServerEnabled)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn copy_frame_to_video_surface(&self, destination: &super::super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).CopyFrameToVideoSurface)(self as *const _ as *mut _, destination as *const _ as *mut _);
+    #[cfg(feature="windows-graphics")] #[inline] pub fn copy_frame_to_video_surface(&self, destination: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).CopyFrameToVideoSurface)(self as *const _ as *mut _, destination.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn copy_frame_to_video_surface_with_target_rectangle(&self, destination: &super::super::graphics::directx::direct3d11::IDirect3DSurface, targetRectangle: foundation::Rect) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).CopyFrameToVideoSurfaceWithTargetRectangle)(self as *const _ as *mut _, destination as *const _ as *mut _, targetRectangle);
+    #[cfg(feature="windows-graphics")] #[inline] pub fn copy_frame_to_video_surface_with_target_rectangle(&self, destination: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>, targetRectangle: foundation::Rect) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).CopyFrameToVideoSurfaceWithTargetRectangle)(self as *const _ as *mut _, destination.deref() as *const _ as *mut _, targetRectangle);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn copy_frame_to_stereoscopic_video_surfaces(&self, destinationLeftEye: &super::super::graphics::directx::direct3d11::IDirect3DSurface, destinationRightEye: &super::super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).CopyFrameToStereoscopicVideoSurfaces)(self as *const _ as *mut _, destinationLeftEye as *const _ as *mut _, destinationRightEye as *const _ as *mut _);
+    #[cfg(feature="windows-graphics")] #[inline] pub fn copy_frame_to_stereoscopic_video_surfaces(&self, destinationLeftEye: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>, destinationRightEye: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).CopyFrameToStereoscopicVideoSurfaces)(self as *const _ as *mut _, destinationLeftEye.deref() as *const _ as *mut _, destinationRightEye.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -23492,23 +23492,23 @@ RT_INTERFACE!{interface IMediaPlayer6(IMediaPlayer6Vtbl): IInspectable(IInspecta
     #[cfg(feature="windows-graphics")] fn RenderSubtitlesToSurfaceWithTargetRectangle(&self, destination: *mut super::super::graphics::directx::direct3d11::IDirect3DSurface, targetRectangle: foundation::Rect, out: *mut bool) -> HRESULT
 }}
 impl IMediaPlayer6 {
-    #[inline] pub fn add_subtitle_frame_changed(&self, handler: &foundation::TypedEventHandler<MediaPlayer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_subtitle_frame_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<MediaPlayer, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_SubtitleFrameChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_SubtitleFrameChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_subtitle_frame_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_SubtitleFrameChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn render_subtitles_to_surface(&self, destination: &super::super::graphics::directx::direct3d11::IDirect3DSurface) -> Result<bool> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn render_subtitles_to_surface(&self, destination: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).RenderSubtitlesToSurface)(self as *const _ as *mut _, destination as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RenderSubtitlesToSurface)(self as *const _ as *mut _, destination.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-graphics")] #[inline] pub fn render_subtitles_to_surface_with_target_rectangle(&self, destination: &super::super::graphics::directx::direct3d11::IDirect3DSurface, targetRectangle: foundation::Rect) -> Result<bool> { unsafe { 
+    #[cfg(feature="windows-graphics")] #[inline] pub fn render_subtitles_to_surface_with_target_rectangle(&self, destination: &ComPtr<super::super::graphics::directx::direct3d11::IDirect3DSurface>, targetRectangle: foundation::Rect) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).RenderSubtitlesToSurfaceWithTargetRectangle)(self as *const _ as *mut _, destination as *const _ as *mut _, targetRectangle, &mut out);
+        let hr = ((*self.lpVtbl).RenderSubtitlesToSurfaceWithTargetRectangle)(self as *const _ as *mut _, destination.deref() as *const _ as *mut _, targetRectangle, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -23547,8 +23547,8 @@ RT_INTERFACE!{interface IMediaPlayerEffects(IMediaPlayerEffectsVtbl): IInspectab
     fn RemoveAllEffects(&self) -> HRESULT
 }}
 impl IMediaPlayerEffects {
-    #[inline] pub fn add_audio_effect(&self, activatableClassId: &HStringArg, effectOptional: bool, configuration: &foundation::collections::IPropertySet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddAudioEffect)(self as *const _ as *mut _, activatableClassId.get(), effectOptional, configuration as *const _ as *mut _);
+    #[inline] pub fn add_audio_effect(&self, activatableClassId: &HStringArg, effectOptional: bool, configuration: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddAudioEffect)(self as *const _ as *mut _, activatableClassId.get(), effectOptional, configuration.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn remove_all_effects(&self) -> Result<()> { unsafe { 
@@ -23561,8 +23561,8 @@ RT_INTERFACE!{interface IMediaPlayerEffects2(IMediaPlayerEffects2Vtbl): IInspect
     fn AddVideoEffect(&self, activatableClassId: HSTRING, effectOptional: bool, effectConfiguration: *mut foundation::collections::IPropertySet) -> HRESULT
 }}
 impl IMediaPlayerEffects2 {
-    #[inline] pub fn add_video_effect(&self, activatableClassId: &HStringArg, effectOptional: bool, effectConfiguration: &foundation::collections::IPropertySet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddVideoEffect)(self as *const _ as *mut _, activatableClassId.get(), effectOptional, effectConfiguration as *const _ as *mut _);
+    #[inline] pub fn add_video_effect(&self, activatableClassId: &HStringArg, effectOptional: bool, effectConfiguration: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddVideoEffect)(self as *const _ as *mut _, activatableClassId.get(), effectOptional, effectConfiguration.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -23621,20 +23621,20 @@ impl IMediaPlayerSource {
         let hr = ((*self.lpVtbl).get_ProtectionManager)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_protection_manager(&self, value: &super::protection::MediaProtectionManager) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ProtectionManager)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_protection_manager(&self, value: &ComPtr<super::protection::MediaProtectionManager>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ProtectionManager)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_file_source(&self, file: &super::super::storage::IStorageFile) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetFileSource)(self as *const _ as *mut _, file as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_file_source(&self, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetFileSource)(self as *const _ as *mut _, file.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_stream_source(&self, stream: &super::super::storage::streams::IRandomAccessStream) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetStreamSource)(self as *const _ as *mut _, stream as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_stream_source(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetStreamSource)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn set_media_source(&self, source: &super::core::IMediaSource) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).SetMediaSource)(self as *const _ as *mut _, source as *const _ as *mut _);
+    #[inline] pub fn set_media_source(&self, source: &ComPtr<super::core::IMediaSource>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).SetMediaSource)(self as *const _ as *mut _, source.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -23649,8 +23649,8 @@ impl IMediaPlayerSource2 {
         let hr = ((*self.lpVtbl).get_Source)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_source(&self, value: &IMediaPlaybackSource) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Source)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_source(&self, value: &ComPtr<IMediaPlaybackSource>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Source)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -23710,10 +23710,10 @@ RT_CLASS!{class PlaybackMediaMarker: IPlaybackMediaMarker}
 impl RtActivatable<IPlaybackMediaMarkerFactory> for PlaybackMediaMarker {}
 impl PlaybackMediaMarker {
     #[inline] pub fn create_from_time(value: foundation::TimeSpan) -> Result<ComPtr<PlaybackMediaMarker>> {
-        <Self as RtActivatable<IPlaybackMediaMarkerFactory>>::get_activation_factory().create_from_time(value)
+        <Self as RtActivatable<IPlaybackMediaMarkerFactory>>::get_activation_factory().deref().create_from_time(value)
     }
     #[inline] pub fn create(value: foundation::TimeSpan, mediaMarketType: &HStringArg, text: &HStringArg) -> Result<ComPtr<PlaybackMediaMarker>> {
-        <Self as RtActivatable<IPlaybackMediaMarkerFactory>>::get_activation_factory().create(value, mediaMarketType, text)
+        <Self as RtActivatable<IPlaybackMediaMarkerFactory>>::get_activation_factory().deref().create(value, mediaMarketType, text)
     }
 }
 DEFINE_CLSID!(PlaybackMediaMarker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,80,108,97,121,98,97,99,107,77,101,100,105,97,77,97,114,107,101,114,0]) [CLSID_PlaybackMediaMarker]);
@@ -23758,8 +23758,8 @@ impl IPlaybackMediaMarkerSequence {
         let hr = ((*self.lpVtbl).get_Size)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn insert(&self, value: &PlaybackMediaMarker) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Insert)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn insert(&self, value: &ComPtr<PlaybackMediaMarker>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Insert)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn clear(&self) -> Result<()> { unsafe { 
@@ -23822,14 +23822,14 @@ impl IPlaylist {
         let hr = ((*self.lpVtbl).SaveAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_as_async(&self, saveLocation: &super::super::storage::IStorageFolder, desiredName: &HStringArg, option: super::super::storage::NameCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::StorageFile>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_as_async(&self, saveLocation: &ComPtr<super::super::storage::IStorageFolder>, desiredName: &HStringArg, option: super::super::storage::NameCollisionOption) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveAsAsync)(self as *const _ as *mut _, saveLocation as *const _ as *mut _, desiredName.get(), option, &mut out);
+        let hr = ((*self.lpVtbl).SaveAsAsync)(self as *const _ as *mut _, saveLocation.deref() as *const _ as *mut _, desiredName.get(), option, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn save_as_with_format_async(&self, saveLocation: &super::super::storage::IStorageFolder, desiredName: &HStringArg, option: super::super::storage::NameCollisionOption, playlistFormat: PlaylistFormat) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::StorageFile>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn save_as_with_format_async(&self, saveLocation: &ComPtr<super::super::storage::IStorageFolder>, desiredName: &HStringArg, option: super::super::storage::NameCollisionOption, playlistFormat: PlaylistFormat) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::StorageFile>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).SaveAsWithFormatAsync)(self as *const _ as *mut _, saveLocation as *const _ as *mut _, desiredName.get(), option, playlistFormat, &mut out);
+        let hr = ((*self.lpVtbl).SaveAsWithFormatAsync)(self as *const _ as *mut _, saveLocation.deref() as *const _ as *mut _, desiredName.get(), option, playlistFormat, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -23837,8 +23837,8 @@ RT_CLASS!{class Playlist: IPlaylist}
 impl RtActivatable<IPlaylistStatics> for Playlist {}
 impl RtActivatable<IActivationFactory> for Playlist {}
 impl Playlist {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<Playlist>>> {
-        <Self as RtActivatable<IPlaylistStatics>>::get_activation_factory().load_async(file)
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<Playlist>>> {
+        <Self as RtActivatable<IPlaylistStatics>>::get_activation_factory().deref().load_async(file)
     }
 }
 DEFINE_CLSID!(Playlist(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,108,105,115,116,115,46,80,108,97,121,108,105,115,116,0]) [CLSID_Playlist]);
@@ -23850,9 +23850,9 @@ RT_INTERFACE!{static interface IPlaylistStatics(IPlaylistStaticsVtbl): IInspecta
     #[cfg(feature="windows-storage")] fn LoadAsync(&self, file: *mut super::super::storage::IStorageFile, out: *mut *mut foundation::IAsyncOperation<Playlist>) -> HRESULT
 }}
 impl IPlaylistStatics {
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(&self, file: &super::super::storage::IStorageFile) -> Result<ComPtr<foundation::IAsyncOperation<Playlist>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_async(&self, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<Playlist>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LoadAsync)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LoadAsync)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -23882,16 +23882,16 @@ RT_DELEGATE!{delegate ComponentLoadFailedEventHandler(ComponentLoadFailedEventHa
     fn Invoke(&self, sender: *mut MediaProtectionManager, e: *mut ComponentLoadFailedEventArgs) -> HRESULT
 }}
 impl ComponentLoadFailedEventHandler {
-    #[inline] pub fn invoke(&self, sender: &MediaProtectionManager, e: &ComponentLoadFailedEventArgs) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, e as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, sender: &ComPtr<MediaProtectionManager>, e: &ComPtr<ComponentLoadFailedEventArgs>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _, e.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 RT_CLASS!{static class ComponentRenewal}
 impl RtActivatable<IComponentRenewalStatics> for ComponentRenewal {}
 impl ComponentRenewal {
-    #[inline] pub fn renew_system_components_async(information: &RevocationAndRenewalInformation) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<RenewalStatus, u32>>> {
-        <Self as RtActivatable<IComponentRenewalStatics>>::get_activation_factory().renew_system_components_async(information)
+    #[inline] pub fn renew_system_components_async(information: &ComPtr<RevocationAndRenewalInformation>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<RenewalStatus, u32>>> {
+        <Self as RtActivatable<IComponentRenewalStatics>>::get_activation_factory().deref().renew_system_components_async(information)
     }
 }
 DEFINE_CLSID!(ComponentRenewal(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,67,111,109,112,111,110,101,110,116,82,101,110,101,119,97,108,0]) [CLSID_ComponentRenewal]);
@@ -23900,9 +23900,9 @@ RT_INTERFACE!{static interface IComponentRenewalStatics(IComponentRenewalStatics
     fn RenewSystemComponentsAsync(&self, information: *mut RevocationAndRenewalInformation, out: *mut *mut foundation::IAsyncOperationWithProgress<RenewalStatus, u32>) -> HRESULT
 }}
 impl IComponentRenewalStatics {
-    #[inline] pub fn renew_system_components_async(&self, information: &RevocationAndRenewalInformation) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<RenewalStatus, u32>>> { unsafe { 
+    #[inline] pub fn renew_system_components_async(&self, information: &ComPtr<RevocationAndRenewalInformation>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<RenewalStatus, u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).RenewSystemComponentsAsync)(self as *const _ as *mut _, information as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).RenewSystemComponentsAsync)(self as *const _ as *mut _, information.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -23936,9 +23936,9 @@ impl IHdcpSession {
         let hr = ((*self.lpVtbl).SetDesiredMinProtectionAsync)(self as *const _ as *mut _, protection, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_protection_changed(&self, handler: &foundation::TypedEventHandler<HdcpSession, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_protection_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<HdcpSession, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ProtectionChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ProtectionChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_protection_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -23963,27 +23963,27 @@ RT_INTERFACE!{interface IMediaProtectionManager(IMediaProtectionManagerVtbl): II
     fn get_Properties(&self, out: *mut *mut foundation::collections::IPropertySet) -> HRESULT
 }}
 impl IMediaProtectionManager {
-    #[inline] pub fn add_service_requested(&self, handler: &ServiceRequestedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_service_requested(&self, handler: &ComPtr<ServiceRequestedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ServiceRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ServiceRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_service_requested(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ServiceRequested)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_reboot_needed(&self, handler: &RebootNeededEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_reboot_needed(&self, handler: &ComPtr<RebootNeededEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RebootNeeded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RebootNeeded)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_reboot_needed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_RebootNeeded)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_component_load_failed(&self, handler: &ComponentLoadFailedEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_component_load_failed(&self, handler: &ComPtr<ComponentLoadFailedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ComponentLoadFailed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ComponentLoadFailed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_component_load_failed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -24013,8 +24013,8 @@ impl IMediaProtectionPMPServer {
 RT_CLASS!{class MediaProtectionPMPServer: IMediaProtectionPMPServer}
 impl RtActivatable<IMediaProtectionPMPServerFactory> for MediaProtectionPMPServer {}
 impl MediaProtectionPMPServer {
-    #[inline] pub fn create_pmp_server(pProperties: &foundation::collections::IPropertySet) -> Result<ComPtr<MediaProtectionPMPServer>> {
-        <Self as RtActivatable<IMediaProtectionPMPServerFactory>>::get_activation_factory().create_pmp_server(pProperties)
+    #[inline] pub fn create_pmp_server(pProperties: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<MediaProtectionPMPServer>> {
+        <Self as RtActivatable<IMediaProtectionPMPServerFactory>>::get_activation_factory().deref().create_pmp_server(pProperties)
     }
 }
 DEFINE_CLSID!(MediaProtectionPMPServer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,77,101,100,105,97,80,114,111,116,101,99,116,105,111,110,80,77,80,83,101,114,118,101,114,0]) [CLSID_MediaProtectionPMPServer]);
@@ -24023,9 +24023,9 @@ RT_INTERFACE!{static interface IMediaProtectionPMPServerFactory(IMediaProtection
     fn CreatePMPServer(&self, pProperties: *mut foundation::collections::IPropertySet, out: *mut *mut MediaProtectionPMPServer) -> HRESULT
 }}
 impl IMediaProtectionPMPServerFactory {
-    #[inline] pub fn create_pmp_server(&self, pProperties: &foundation::collections::IPropertySet) -> Result<ComPtr<MediaProtectionPMPServer>> { unsafe { 
+    #[inline] pub fn create_pmp_server(&self, pProperties: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<MediaProtectionPMPServer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreatePMPServer)(self as *const _ as *mut _, pProperties as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreatePMPServer)(self as *const _ as *mut _, pProperties.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -24079,8 +24079,8 @@ RT_DELEGATE!{delegate RebootNeededEventHandler(RebootNeededEventHandlerVtbl, Reb
     fn Invoke(&self, sender: *mut MediaProtectionManager) -> HRESULT
 }}
 impl RebootNeededEventHandler {
-    #[inline] pub fn invoke(&self, sender: &MediaProtectionManager) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, sender: &ComPtr<MediaProtectionManager>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -24172,8 +24172,8 @@ RT_DELEGATE!{delegate ServiceRequestedEventHandler(ServiceRequestedEventHandlerV
     fn Invoke(&self, sender: *mut MediaProtectionManager, e: *mut ServiceRequestedEventArgs) -> HRESULT
 }}
 impl ServiceRequestedEventHandler {
-    #[inline] pub fn invoke(&self, sender: &MediaProtectionManager, e: &ServiceRequestedEventArgs) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender as *const _ as *mut _, e as *const _ as *mut _);
+    #[inline] pub fn invoke(&self, sender: &ComPtr<MediaProtectionManager>, e: &ComPtr<ServiceRequestedEventArgs>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Invoke)(self as *const _ as *mut _, sender.deref() as *const _ as *mut _, e.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -24206,64 +24206,64 @@ RT_INTERFACE!{interface INDClient(INDClientVtbl): IInspectable(IInspectableVtbl)
     fn Close(&self) -> HRESULT
 }}
 impl INDClient {
-    #[inline] pub fn add_registration_completed(&self, handler: &foundation::TypedEventHandler<NDClient, INDRegistrationCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_registration_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<NDClient, INDRegistrationCompletedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RegistrationCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RegistrationCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_registration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_RegistrationCompleted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_proximity_detection_completed(&self, handler: &foundation::TypedEventHandler<NDClient, INDProximityDetectionCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_proximity_detection_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<NDClient, INDProximityDetectionCompletedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ProximityDetectionCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ProximityDetectionCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_proximity_detection_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ProximityDetectionCompleted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_license_fetch_completed(&self, handler: &foundation::TypedEventHandler<NDClient, INDLicenseFetchCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_license_fetch_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<NDClient, INDLicenseFetchCompletedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_LicenseFetchCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_LicenseFetchCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_license_fetch_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_LicenseFetchCompleted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_re_registration_needed(&self, handler: &foundation::TypedEventHandler<NDClient, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_re_registration_needed(&self, handler: &ComPtr<foundation::TypedEventHandler<NDClient, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ReRegistrationNeeded)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ReRegistrationNeeded)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_re_registration_needed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ReRegistrationNeeded)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_closed_caption_data_received(&self, handler: &foundation::TypedEventHandler<NDClient, INDClosedCaptionDataReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_closed_caption_data_received(&self, handler: &ComPtr<foundation::TypedEventHandler<NDClient, INDClosedCaptionDataReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ClosedCaptionDataReceived)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ClosedCaptionDataReceived)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_closed_caption_data_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_ClosedCaptionDataReceived)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn start_async(&self, contentUrl: &foundation::Uri, startAsyncOptions: u32, registrationCustomData: &INDCustomData, licenseFetchDescriptor: &INDLicenseFetchDescriptor) -> Result<ComPtr<foundation::IAsyncOperation<INDStartResult>>> { unsafe { 
+    #[inline] pub fn start_async(&self, contentUrl: &ComPtr<foundation::Uri>, startAsyncOptions: u32, registrationCustomData: &ComPtr<INDCustomData>, licenseFetchDescriptor: &ComPtr<INDLicenseFetchDescriptor>) -> Result<ComPtr<foundation::IAsyncOperation<INDStartResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).StartAsync)(self as *const _ as *mut _, contentUrl as *const _ as *mut _, startAsyncOptions, registrationCustomData as *const _ as *mut _, licenseFetchDescriptor as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).StartAsync)(self as *const _ as *mut _, contentUrl.deref() as *const _ as *mut _, startAsyncOptions, registrationCustomData.deref() as *const _ as *mut _, licenseFetchDescriptor.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn license_fetch_async(&self, licenseFetchDescriptor: &INDLicenseFetchDescriptor) -> Result<ComPtr<foundation::IAsyncOperation<INDLicenseFetchResult>>> { unsafe { 
+    #[inline] pub fn license_fetch_async(&self, licenseFetchDescriptor: &ComPtr<INDLicenseFetchDescriptor>) -> Result<ComPtr<foundation::IAsyncOperation<INDLicenseFetchResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).LicenseFetchAsync)(self as *const _ as *mut _, licenseFetchDescriptor as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).LicenseFetchAsync)(self as *const _ as *mut _, licenseFetchDescriptor.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn re_registration_async(&self, registrationCustomData: &INDCustomData) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn re_registration_async(&self, registrationCustomData: &ComPtr<INDCustomData>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ReRegistrationAsync)(self as *const _ as *mut _, registrationCustomData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ReRegistrationAsync)(self as *const _ as *mut _, registrationCustomData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn close(&self) -> Result<()> { unsafe { 
@@ -24274,8 +24274,8 @@ impl INDClient {
 RT_CLASS!{class NDClient: INDClient}
 impl RtActivatable<INDClientFactory> for NDClient {}
 impl NDClient {
-    #[inline] pub fn create_instance(downloadEngine: &INDDownloadEngine, streamParser: &INDStreamParser, pMessenger: &INDMessenger) -> Result<ComPtr<NDClient>> {
-        <Self as RtActivatable<INDClientFactory>>::get_activation_factory().create_instance(downloadEngine, streamParser, pMessenger)
+    #[inline] pub fn create_instance(downloadEngine: &ComPtr<INDDownloadEngine>, streamParser: &ComPtr<INDStreamParser>, pMessenger: &ComPtr<INDMessenger>) -> Result<ComPtr<NDClient>> {
+        <Self as RtActivatable<INDClientFactory>>::get_activation_factory().deref().create_instance(downloadEngine, streamParser, pMessenger)
     }
 }
 DEFINE_CLSID!(NDClient(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,67,108,105,101,110,116,0]) [CLSID_NDClient]);
@@ -24284,9 +24284,9 @@ RT_INTERFACE!{static interface INDClientFactory(INDClientFactoryVtbl): IInspecta
     fn CreateInstance(&self, downloadEngine: *mut INDDownloadEngine, streamParser: *mut INDStreamParser, pMessenger: *mut INDMessenger, out: *mut *mut NDClient) -> HRESULT
 }}
 impl INDClientFactory {
-    #[inline] pub fn create_instance(&self, downloadEngine: &INDDownloadEngine, streamParser: &INDStreamParser, pMessenger: &INDMessenger) -> Result<ComPtr<NDClient>> { unsafe { 
+    #[inline] pub fn create_instance(&self, downloadEngine: &ComPtr<INDDownloadEngine>, streamParser: &ComPtr<INDStreamParser>, pMessenger: &ComPtr<INDMessenger>) -> Result<ComPtr<NDClient>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInstance)(self as *const _ as *mut _, downloadEngine as *const _ as *mut _, streamParser as *const _ as *mut _, pMessenger as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateInstance)(self as *const _ as *mut _, downloadEngine.deref() as *const _ as *mut _, streamParser.deref() as *const _ as *mut _, pMessenger.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -24340,7 +24340,7 @@ RT_CLASS!{class NDCustomData: INDCustomData}
 impl RtActivatable<INDCustomDataFactory> for NDCustomData {}
 impl NDCustomData {
     #[inline] pub fn create_instance(customDataTypeIDBytes: &[u8], customDataBytes: &[u8]) -> Result<ComPtr<NDCustomData>> {
-        <Self as RtActivatable<INDCustomDataFactory>>::get_activation_factory().create_instance(customDataTypeIDBytes, customDataBytes)
+        <Self as RtActivatable<INDCustomDataFactory>>::get_activation_factory().deref().create_instance(customDataTypeIDBytes, customDataBytes)
     }
 }
 DEFINE_CLSID!(NDCustomData(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,67,117,115,116,111,109,68,97,116,97,0]) [CLSID_NDCustomData]);
@@ -24368,8 +24368,8 @@ RT_INTERFACE!{interface INDDownloadEngine(INDDownloadEngineVtbl): IInspectable(I
     fn get_Notifier(&self, out: *mut *mut NDDownloadEngineNotifier) -> HRESULT
 }}
 impl INDDownloadEngine {
-    #[inline] pub fn open(&self, uri: &foundation::Uri, sessionIDBytes: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).Open)(self as *const _ as *mut _, uri as *const _ as *mut _, sessionIDBytes.len() as u32, sessionIDBytes.as_ptr() as *mut _);
+    #[inline] pub fn open(&self, uri: &ComPtr<foundation::Uri>, sessionIDBytes: &[u8]) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).Open)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, sessionIDBytes.len() as u32, sessionIDBytes.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn pause(&self) -> Result<()> { unsafe { 
@@ -24427,8 +24427,8 @@ impl INDDownloadEngineNotifier {
         let hr = ((*self.lpVtbl).OnPlayReadyObjectReceived)(self as *const _ as *mut _, dataBytes.len() as u32, dataBytes.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn on_content_id_received(&self, licenseFetchDescriptor: &INDLicenseFetchDescriptor) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).OnContentIDReceived)(self as *const _ as *mut _, licenseFetchDescriptor as *const _ as *mut _);
+    #[inline] pub fn on_content_id_received(&self, licenseFetchDescriptor: &ComPtr<INDLicenseFetchDescriptor>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).OnContentIDReceived)(self as *const _ as *mut _, licenseFetchDescriptor.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn on_data_received(&self, dataBytes: &[u8], bytesReceived: u32) -> Result<()> { unsafe { 
@@ -24481,16 +24481,16 @@ impl INDLicenseFetchDescriptor {
         let hr = ((*self.lpVtbl).get_LicenseFetchChallengeCustomData)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_license_fetch_challenge_custom_data(&self, licenseFetchChallengeCustomData: &INDCustomData) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_LicenseFetchChallengeCustomData)(self as *const _ as *mut _, licenseFetchChallengeCustomData as *const _ as *mut _);
+    #[inline] pub fn set_license_fetch_challenge_custom_data(&self, licenseFetchChallengeCustomData: &ComPtr<INDCustomData>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_LicenseFetchChallengeCustomData)(self as *const _ as *mut _, licenseFetchChallengeCustomData.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 RT_CLASS!{class NDLicenseFetchDescriptor: INDLicenseFetchDescriptor}
 impl RtActivatable<INDLicenseFetchDescriptorFactory> for NDLicenseFetchDescriptor {}
 impl NDLicenseFetchDescriptor {
-    #[inline] pub fn create_instance(contentIDType: NDContentIDType, contentIDBytes: &[u8], licenseFetchChallengeCustomData: &INDCustomData) -> Result<ComPtr<NDLicenseFetchDescriptor>> {
-        <Self as RtActivatable<INDLicenseFetchDescriptorFactory>>::get_activation_factory().create_instance(contentIDType, contentIDBytes, licenseFetchChallengeCustomData)
+    #[inline] pub fn create_instance(contentIDType: NDContentIDType, contentIDBytes: &[u8], licenseFetchChallengeCustomData: &ComPtr<INDCustomData>) -> Result<ComPtr<NDLicenseFetchDescriptor>> {
+        <Self as RtActivatable<INDLicenseFetchDescriptorFactory>>::get_activation_factory().deref().create_instance(contentIDType, contentIDBytes, licenseFetchChallengeCustomData)
     }
 }
 DEFINE_CLSID!(NDLicenseFetchDescriptor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,76,105,99,101,110,115,101,70,101,116,99,104,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_NDLicenseFetchDescriptor]);
@@ -24499,9 +24499,9 @@ RT_INTERFACE!{static interface INDLicenseFetchDescriptorFactory(INDLicenseFetchD
     fn CreateInstance(&self, contentIDType: NDContentIDType, contentIDBytesSize: u32, contentIDBytes: *mut u8, licenseFetchChallengeCustomData: *mut INDCustomData, out: *mut *mut NDLicenseFetchDescriptor) -> HRESULT
 }}
 impl INDLicenseFetchDescriptorFactory {
-    #[inline] pub fn create_instance(&self, contentIDType: NDContentIDType, contentIDBytes: &[u8], licenseFetchChallengeCustomData: &INDCustomData) -> Result<ComPtr<NDLicenseFetchDescriptor>> { unsafe { 
+    #[inline] pub fn create_instance(&self, contentIDType: NDContentIDType, contentIDBytes: &[u8], licenseFetchChallengeCustomData: &ComPtr<INDCustomData>) -> Result<ComPtr<NDLicenseFetchDescriptor>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInstance)(self as *const _ as *mut _, contentIDType, contentIDBytes.len() as u32, contentIDBytes.as_ptr() as *mut _, licenseFetchChallengeCustomData as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateInstance)(self as *const _ as *mut _, contentIDType, contentIDBytes.len() as u32, contentIDBytes.as_ptr() as *mut _, licenseFetchChallengeCustomData.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -24620,9 +24620,9 @@ RT_INTERFACE!{interface INDStorageFileHelper(INDStorageFileHelperVtbl): IInspect
     #[cfg(feature="windows-storage")] fn GetFileURLs(&self, file: *mut crate::windows::storage::IStorageFile, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT
 }}
 impl INDStorageFileHelper {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_file_urls(&self, file: &crate::windows::storage::IStorageFile) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_file_urls(&self, file: &ComPtr<crate::windows::storage::IStorageFile>) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GetFileURLs)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).GetFileURLs)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -24642,9 +24642,9 @@ impl INDStreamParser {
         let hr = ((*self.lpVtbl).ParseData)(self as *const _ as *mut _, dataBytes.len() as u32, dataBytes.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_stream_information(&self, descriptor: &super::super::core::IMediaStreamDescriptor) -> Result<(NDMediaStreamType, u32)> { unsafe { 
+    #[inline] pub fn get_stream_information(&self, descriptor: &ComPtr<super::super::core::IMediaStreamDescriptor>) -> Result<(NDMediaStreamType, u32)> { unsafe { 
         let mut streamType = zeroed(); let mut out = zeroed();
-        let hr = ((*self.lpVtbl).GetStreamInformation)(self as *const _ as *mut _, descriptor as *const _ as *mut _, &mut streamType, &mut out);
+        let hr = ((*self.lpVtbl).GetStreamInformation)(self as *const _ as *mut _, descriptor.deref() as *const _ as *mut _, &mut streamType, &mut out);
         if hr == S_OK { Ok((streamType, out)) } else { err(hr) }
     }}
     #[inline] pub fn begin_of_stream(&self) -> Result<()> { unsafe { 
@@ -24669,20 +24669,20 @@ RT_INTERFACE!{interface INDStreamParserNotifier(INDStreamParserNotifierVtbl): II
     fn OnBeginSetupDecryptor(&self, descriptor: *mut super::super::core::IMediaStreamDescriptor, keyID: Guid, proBytesSize: u32, proBytes: *mut u8) -> HRESULT
 }}
 impl INDStreamParserNotifier {
-    #[inline] pub fn on_content_id_received(&self, licenseFetchDescriptor: &INDLicenseFetchDescriptor) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).OnContentIDReceived)(self as *const _ as *mut _, licenseFetchDescriptor as *const _ as *mut _);
+    #[inline] pub fn on_content_id_received(&self, licenseFetchDescriptor: &ComPtr<INDLicenseFetchDescriptor>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).OnContentIDReceived)(self as *const _ as *mut _, licenseFetchDescriptor.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn on_media_stream_descriptor_created(&self, audioStreamDescriptors: &foundation::collections::IVector<super::super::core::AudioStreamDescriptor>, videoStreamDescriptors: &foundation::collections::IVector<super::super::core::VideoStreamDescriptor>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).OnMediaStreamDescriptorCreated)(self as *const _ as *mut _, audioStreamDescriptors as *const _ as *mut _, videoStreamDescriptors as *const _ as *mut _);
+    #[inline] pub fn on_media_stream_descriptor_created(&self, audioStreamDescriptors: &ComPtr<foundation::collections::IVector<super::super::core::AudioStreamDescriptor>>, videoStreamDescriptors: &ComPtr<foundation::collections::IVector<super::super::core::VideoStreamDescriptor>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).OnMediaStreamDescriptorCreated)(self as *const _ as *mut _, audioStreamDescriptors.deref() as *const _ as *mut _, videoStreamDescriptors.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn on_sample_parsed(&self, streamID: u32, streamType: NDMediaStreamType, streamSample: &super::super::core::MediaStreamSample, pts: i64, ccFormat: NDClosedCaptionFormat, ccDataBytes: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).OnSampleParsed)(self as *const _ as *mut _, streamID, streamType, streamSample as *const _ as *mut _, pts, ccFormat, ccDataBytes.len() as u32, ccDataBytes.as_ptr() as *mut _);
+    #[inline] pub fn on_sample_parsed(&self, streamID: u32, streamType: NDMediaStreamType, streamSample: &ComPtr<super::super::core::MediaStreamSample>, pts: i64, ccFormat: NDClosedCaptionFormat, ccDataBytes: &[u8]) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).OnSampleParsed)(self as *const _ as *mut _, streamID, streamType, streamSample.deref() as *const _ as *mut _, pts, ccFormat, ccDataBytes.len() as u32, ccDataBytes.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn on_begin_setup_decryptor(&self, descriptor: &super::super::core::IMediaStreamDescriptor, keyID: Guid, proBytes: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).OnBeginSetupDecryptor)(self as *const _ as *mut _, descriptor as *const _ as *mut _, keyID, proBytes.len() as u32, proBytes.as_ptr() as *mut _);
+    #[inline] pub fn on_begin_setup_decryptor(&self, descriptor: &ComPtr<super::super::core::IMediaStreamDescriptor>, keyID: Guid, proBytes: &[u8]) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).OnBeginSetupDecryptor)(self as *const _ as *mut _, descriptor.deref() as *const _ as *mut _, keyID, proBytes.len() as u32, proBytes.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -24693,7 +24693,7 @@ RT_CLASS!{class NDTCPMessenger: INDMessenger}
 impl RtActivatable<INDTCPMessengerFactory> for NDTCPMessenger {}
 impl NDTCPMessenger {
     #[inline] pub fn create_instance(remoteHostName: &HStringArg, remoteHostPort: u32) -> Result<ComPtr<NDTCPMessenger>> {
-        <Self as RtActivatable<INDTCPMessengerFactory>>::get_activation_factory().create_instance(remoteHostName, remoteHostPort)
+        <Self as RtActivatable<INDTCPMessengerFactory>>::get_activation_factory().deref().create_instance(remoteHostName, remoteHostPort)
     }
 }
 DEFINE_CLSID!(NDTCPMessenger(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,84,67,80,77,101,115,115,101,110,103,101,114,0]) [CLSID_NDTCPMessenger]);
@@ -24848,17 +24848,17 @@ RT_CLASS!{class PlayReadyContentHeader: IPlayReadyContentHeader}
 impl RtActivatable<IPlayReadyContentHeaderFactory> for PlayReadyContentHeader {}
 impl RtActivatable<IPlayReadyContentHeaderFactory2> for PlayReadyContentHeader {}
 impl PlayReadyContentHeader {
-    #[inline] pub fn create_instance_from_windows_media_drm_header(headerBytes: &[u8], licenseAcquisitionUrl: &foundation::Uri, licenseAcquisitionUserInterfaceUrl: &foundation::Uri, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> {
-        <Self as RtActivatable<IPlayReadyContentHeaderFactory>>::get_activation_factory().create_instance_from_windows_media_drm_header(headerBytes, licenseAcquisitionUrl, licenseAcquisitionUserInterfaceUrl, customAttributes, domainServiceId)
+    #[inline] pub fn create_instance_from_windows_media_drm_header(headerBytes: &[u8], licenseAcquisitionUrl: &ComPtr<foundation::Uri>, licenseAcquisitionUserInterfaceUrl: &ComPtr<foundation::Uri>, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> {
+        <Self as RtActivatable<IPlayReadyContentHeaderFactory>>::get_activation_factory().deref().create_instance_from_windows_media_drm_header(headerBytes, licenseAcquisitionUrl, licenseAcquisitionUserInterfaceUrl, customAttributes, domainServiceId)
     }
-    #[inline] pub fn create_instance_from_components(contentKeyId: Guid, contentKeyIdString: &HStringArg, contentEncryptionAlgorithm: PlayReadyEncryptionAlgorithm, licenseAcquisitionUrl: &foundation::Uri, licenseAcquisitionUserInterfaceUrl: &foundation::Uri, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> {
-        <Self as RtActivatable<IPlayReadyContentHeaderFactory>>::get_activation_factory().create_instance_from_components(contentKeyId, contentKeyIdString, contentEncryptionAlgorithm, licenseAcquisitionUrl, licenseAcquisitionUserInterfaceUrl, customAttributes, domainServiceId)
+    #[inline] pub fn create_instance_from_components(contentKeyId: Guid, contentKeyIdString: &HStringArg, contentEncryptionAlgorithm: PlayReadyEncryptionAlgorithm, licenseAcquisitionUrl: &ComPtr<foundation::Uri>, licenseAcquisitionUserInterfaceUrl: &ComPtr<foundation::Uri>, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> {
+        <Self as RtActivatable<IPlayReadyContentHeaderFactory>>::get_activation_factory().deref().create_instance_from_components(contentKeyId, contentKeyIdString, contentEncryptionAlgorithm, licenseAcquisitionUrl, licenseAcquisitionUserInterfaceUrl, customAttributes, domainServiceId)
     }
     #[inline] pub fn create_instance_from_play_ready_header(headerBytes: &[u8]) -> Result<ComPtr<PlayReadyContentHeader>> {
-        <Self as RtActivatable<IPlayReadyContentHeaderFactory>>::get_activation_factory().create_instance_from_play_ready_header(headerBytes)
+        <Self as RtActivatable<IPlayReadyContentHeaderFactory>>::get_activation_factory().deref().create_instance_from_play_ready_header(headerBytes)
     }
-    #[inline] pub fn create_instance_from_components2(dwFlags: u32, contentKeyIds: &[Guid], contentKeyIdStrings: &[&HStringArg], contentEncryptionAlgorithm: PlayReadyEncryptionAlgorithm, licenseAcquisitionUrl: &foundation::Uri, licenseAcquisitionUserInterfaceUrl: &foundation::Uri, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> {
-        <Self as RtActivatable<IPlayReadyContentHeaderFactory2>>::get_activation_factory().create_instance_from_components2(dwFlags, contentKeyIds, contentKeyIdStrings, contentEncryptionAlgorithm, licenseAcquisitionUrl, licenseAcquisitionUserInterfaceUrl, customAttributes, domainServiceId)
+    #[inline] pub fn create_instance_from_components2(dwFlags: u32, contentKeyIds: &[Guid], contentKeyIdStrings: &[&HStringArg], contentEncryptionAlgorithm: PlayReadyEncryptionAlgorithm, licenseAcquisitionUrl: &ComPtr<foundation::Uri>, licenseAcquisitionUserInterfaceUrl: &ComPtr<foundation::Uri>, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> {
+        <Self as RtActivatable<IPlayReadyContentHeaderFactory2>>::get_activation_factory().deref().create_instance_from_components2(dwFlags, contentKeyIds, contentKeyIdStrings, contentEncryptionAlgorithm, licenseAcquisitionUrl, licenseAcquisitionUserInterfaceUrl, customAttributes, domainServiceId)
     }
 }
 DEFINE_CLSID!(PlayReadyContentHeader(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,67,111,110,116,101,110,116,72,101,97,100,101,114,0]) [CLSID_PlayReadyContentHeader]);
@@ -24886,14 +24886,14 @@ RT_INTERFACE!{static interface IPlayReadyContentHeaderFactory(IPlayReadyContentH
     fn CreateInstanceFromPlayReadyHeader(&self, headerBytesSize: u32, headerBytes: *mut u8, out: *mut *mut PlayReadyContentHeader) -> HRESULT
 }}
 impl IPlayReadyContentHeaderFactory {
-    #[inline] pub fn create_instance_from_windows_media_drm_header(&self, headerBytes: &[u8], licenseAcquisitionUrl: &foundation::Uri, licenseAcquisitionUserInterfaceUrl: &foundation::Uri, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> { unsafe { 
+    #[inline] pub fn create_instance_from_windows_media_drm_header(&self, headerBytes: &[u8], licenseAcquisitionUrl: &ComPtr<foundation::Uri>, licenseAcquisitionUserInterfaceUrl: &ComPtr<foundation::Uri>, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInstanceFromWindowsMediaDrmHeader)(self as *const _ as *mut _, headerBytes.len() as u32, headerBytes.as_ptr() as *mut _, licenseAcquisitionUrl as *const _ as *mut _, licenseAcquisitionUserInterfaceUrl as *const _ as *mut _, customAttributes.get(), domainServiceId, &mut out);
+        let hr = ((*self.lpVtbl).CreateInstanceFromWindowsMediaDrmHeader)(self as *const _ as *mut _, headerBytes.len() as u32, headerBytes.as_ptr() as *mut _, licenseAcquisitionUrl.deref() as *const _ as *mut _, licenseAcquisitionUserInterfaceUrl.deref() as *const _ as *mut _, customAttributes.get(), domainServiceId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_instance_from_components(&self, contentKeyId: Guid, contentKeyIdString: &HStringArg, contentEncryptionAlgorithm: PlayReadyEncryptionAlgorithm, licenseAcquisitionUrl: &foundation::Uri, licenseAcquisitionUserInterfaceUrl: &foundation::Uri, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> { unsafe { 
+    #[inline] pub fn create_instance_from_components(&self, contentKeyId: Guid, contentKeyIdString: &HStringArg, contentEncryptionAlgorithm: PlayReadyEncryptionAlgorithm, licenseAcquisitionUrl: &ComPtr<foundation::Uri>, licenseAcquisitionUserInterfaceUrl: &ComPtr<foundation::Uri>, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInstanceFromComponents)(self as *const _ as *mut _, contentKeyId, contentKeyIdString.get(), contentEncryptionAlgorithm, licenseAcquisitionUrl as *const _ as *mut _, licenseAcquisitionUserInterfaceUrl as *const _ as *mut _, customAttributes.get(), domainServiceId, &mut out);
+        let hr = ((*self.lpVtbl).CreateInstanceFromComponents)(self as *const _ as *mut _, contentKeyId, contentKeyIdString.get(), contentEncryptionAlgorithm, licenseAcquisitionUrl.deref() as *const _ as *mut _, licenseAcquisitionUserInterfaceUrl.deref() as *const _ as *mut _, customAttributes.get(), domainServiceId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_instance_from_play_ready_header(&self, headerBytes: &[u8]) -> Result<ComPtr<PlayReadyContentHeader>> { unsafe { 
@@ -24907,9 +24907,9 @@ RT_INTERFACE!{static interface IPlayReadyContentHeaderFactory2(IPlayReadyContent
     fn CreateInstanceFromComponents2(&self, dwFlags: u32, contentKeyIdsSize: u32, contentKeyIds: *mut Guid, contentKeyIdStringsSize: u32, contentKeyIdStrings: *mut HSTRING, contentEncryptionAlgorithm: PlayReadyEncryptionAlgorithm, licenseAcquisitionUrl: *mut foundation::Uri, licenseAcquisitionUserInterfaceUrl: *mut foundation::Uri, customAttributes: HSTRING, domainServiceId: Guid, out: *mut *mut PlayReadyContentHeader) -> HRESULT
 }}
 impl IPlayReadyContentHeaderFactory2 {
-    #[inline] pub fn create_instance_from_components2(&self, dwFlags: u32, contentKeyIds: &[Guid], contentKeyIdStrings: &[&HStringArg], contentEncryptionAlgorithm: PlayReadyEncryptionAlgorithm, licenseAcquisitionUrl: &foundation::Uri, licenseAcquisitionUserInterfaceUrl: &foundation::Uri, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> { unsafe { 
+    #[inline] pub fn create_instance_from_components2(&self, dwFlags: u32, contentKeyIds: &[Guid], contentKeyIdStrings: &[&HStringArg], contentEncryptionAlgorithm: PlayReadyEncryptionAlgorithm, licenseAcquisitionUrl: &ComPtr<foundation::Uri>, licenseAcquisitionUserInterfaceUrl: &ComPtr<foundation::Uri>, customAttributes: &HStringArg, domainServiceId: Guid) -> Result<ComPtr<PlayReadyContentHeader>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInstanceFromComponents2)(self as *const _ as *mut _, dwFlags, contentKeyIds.len() as u32, contentKeyIds.as_ptr() as *mut _, contentKeyIdStrings.len() as u32, contentKeyIdStrings.as_ptr() as *mut _, contentEncryptionAlgorithm, licenseAcquisitionUrl as *const _ as *mut _, licenseAcquisitionUserInterfaceUrl as *const _ as *mut _, customAttributes.get(), domainServiceId, &mut out);
+        let hr = ((*self.lpVtbl).CreateInstanceFromComponents2)(self as *const _ as *mut _, dwFlags, contentKeyIds.len() as u32, contentKeyIds.as_ptr() as *mut _, contentKeyIdStrings.len() as u32, contentKeyIdStrings.as_ptr() as *mut _, contentEncryptionAlgorithm, licenseAcquisitionUrl.deref() as *const _ as *mut _, licenseAcquisitionUserInterfaceUrl.deref() as *const _ as *mut _, customAttributes.get(), domainServiceId, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -24918,17 +24918,17 @@ RT_INTERFACE!{static interface IPlayReadyContentResolver(IPlayReadyContentResolv
     fn ServiceRequest(&self, contentHeader: *mut PlayReadyContentHeader, out: *mut *mut IPlayReadyServiceRequest) -> HRESULT
 }}
 impl IPlayReadyContentResolver {
-    #[inline] pub fn service_request(&self, contentHeader: &PlayReadyContentHeader) -> Result<Option<ComPtr<IPlayReadyServiceRequest>>> { unsafe { 
+    #[inline] pub fn service_request(&self, contentHeader: &ComPtr<PlayReadyContentHeader>) -> Result<Option<ComPtr<IPlayReadyServiceRequest>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).ServiceRequest)(self as *const _ as *mut _, contentHeader as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).ServiceRequest)(self as *const _ as *mut _, contentHeader.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{static class PlayReadyContentResolver}
 impl RtActivatable<IPlayReadyContentResolver> for PlayReadyContentResolver {}
 impl PlayReadyContentResolver {
-    #[inline] pub fn service_request(contentHeader: &PlayReadyContentHeader) -> Result<Option<ComPtr<IPlayReadyServiceRequest>>> {
-        <Self as RtActivatable<IPlayReadyContentResolver>>::get_activation_factory().service_request(contentHeader)
+    #[inline] pub fn service_request(contentHeader: &ComPtr<PlayReadyContentHeader>) -> Result<Option<ComPtr<IPlayReadyServiceRequest>>> {
+        <Self as RtActivatable<IPlayReadyContentResolver>>::get_activation_factory().deref().service_request(contentHeader)
     }
 }
 DEFINE_CLSID!(PlayReadyContentResolver(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,67,111,110,116,101,110,116,82,101,115,111,108,118,101,114,0]) [CLSID_PlayReadyContentResolver]);
@@ -24975,7 +24975,7 @@ RT_CLASS!{class PlayReadyDomainIterable: foundation::collections::IIterable<IPla
 impl RtActivatable<IPlayReadyDomainIterableFactory> for PlayReadyDomainIterable {}
 impl PlayReadyDomainIterable {
     #[inline] pub fn create_instance(domainAccountId: Guid) -> Result<ComPtr<PlayReadyDomainIterable>> {
-        <Self as RtActivatable<IPlayReadyDomainIterableFactory>>::get_activation_factory().create_instance(domainAccountId)
+        <Self as RtActivatable<IPlayReadyDomainIterableFactory>>::get_activation_factory().deref().create_instance(domainAccountId)
     }
 }
 DEFINE_CLSID!(PlayReadyDomainIterable(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,68,111,109,97,105,110,73,116,101,114,97,98,108,101,0]) [CLSID_PlayReadyDomainIterable]);
@@ -25083,9 +25083,9 @@ RT_INTERFACE!{interface IPlayReadyITADataGenerator(IPlayReadyITADataGeneratorVtb
     fn GenerateData(&self, guidCPSystemId: Guid, countOfStreams: u32, configuration: *mut foundation::collections::IPropertySet, format: PlayReadyITADataFormat, outSize: *mut u32, out: *mut *mut u8) -> HRESULT
 }}
 impl IPlayReadyITADataGenerator {
-    #[inline] pub fn generate_data(&self, guidCPSystemId: Guid, countOfStreams: u32, configuration: &foundation::collections::IPropertySet, format: PlayReadyITADataFormat) -> Result<ComArray<u8>> { unsafe { 
+    #[inline] pub fn generate_data(&self, guidCPSystemId: Guid, countOfStreams: u32, configuration: &ComPtr<foundation::collections::IPropertySet>, format: PlayReadyITADataFormat) -> Result<ComArray<u8>> { unsafe { 
         let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.lpVtbl).GenerateData)(self as *const _ as *mut _, guidCPSystemId, countOfStreams, configuration as *const _ as *mut _, format, &mut outSize, &mut out);
+        let hr = ((*self.lpVtbl).GenerateData)(self as *const _ as *mut _, guidCPSystemId, countOfStreams, configuration.deref() as *const _ as *mut _, format, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
@@ -25182,8 +25182,8 @@ impl IPlayReadyLicenseAcquisitionServiceRequest {
         let hr = ((*self.lpVtbl).get_ContentHeader)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_content_header(&self, value: &PlayReadyContentHeader) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ContentHeader)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_content_header(&self, value: &ComPtr<PlayReadyContentHeader>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ContentHeader)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_domain_service_id(&self) -> Result<Guid> { unsafe { 
@@ -25215,9 +25215,9 @@ RT_INTERFACE!{interface IPlayReadyLicenseAcquisitionServiceRequest3(IPlayReadyLi
     fn CreateLicenseIterable(&self, contentHeader: *mut PlayReadyContentHeader, fullyEvaluated: bool, out: *mut *mut PlayReadyLicenseIterable) -> HRESULT
 }}
 impl IPlayReadyLicenseAcquisitionServiceRequest3 {
-    #[inline] pub fn create_license_iterable(&self, contentHeader: &PlayReadyContentHeader, fullyEvaluated: bool) -> Result<Option<ComPtr<PlayReadyLicenseIterable>>> { unsafe { 
+    #[inline] pub fn create_license_iterable(&self, contentHeader: &ComPtr<PlayReadyContentHeader>, fullyEvaluated: bool) -> Result<Option<ComPtr<PlayReadyLicenseIterable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateLicenseIterable)(self as *const _ as *mut _, contentHeader as *const _ as *mut _, fullyEvaluated, &mut out);
+        let hr = ((*self.lpVtbl).CreateLicenseIterable)(self as *const _ as *mut _, contentHeader.deref() as *const _ as *mut _, fullyEvaluated, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -25225,8 +25225,8 @@ RT_CLASS!{class PlayReadyLicenseIterable: foundation::collections::IIterable<IPl
 impl RtActivatable<IPlayReadyLicenseIterableFactory> for PlayReadyLicenseIterable {}
 impl RtActivatable<IActivationFactory> for PlayReadyLicenseIterable {}
 impl PlayReadyLicenseIterable {
-    #[inline] pub fn create_instance(contentHeader: &PlayReadyContentHeader, fullyEvaluated: bool) -> Result<ComPtr<PlayReadyLicenseIterable>> {
-        <Self as RtActivatable<IPlayReadyLicenseIterableFactory>>::get_activation_factory().create_instance(contentHeader, fullyEvaluated)
+    #[inline] pub fn create_instance(contentHeader: &ComPtr<PlayReadyContentHeader>, fullyEvaluated: bool) -> Result<ComPtr<PlayReadyLicenseIterable>> {
+        <Self as RtActivatable<IPlayReadyLicenseIterableFactory>>::get_activation_factory().deref().create_instance(contentHeader, fullyEvaluated)
     }
 }
 DEFINE_CLSID!(PlayReadyLicenseIterable(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,76,105,99,101,110,115,101,73,116,101,114,97,98,108,101,0]) [CLSID_PlayReadyLicenseIterable]);
@@ -25235,9 +25235,9 @@ RT_INTERFACE!{static interface IPlayReadyLicenseIterableFactory(IPlayReadyLicens
     fn CreateInstance(&self, contentHeader: *mut PlayReadyContentHeader, fullyEvaluated: bool, out: *mut *mut PlayReadyLicenseIterable) -> HRESULT
 }}
 impl IPlayReadyLicenseIterableFactory {
-    #[inline] pub fn create_instance(&self, contentHeader: &PlayReadyContentHeader, fullyEvaluated: bool) -> Result<ComPtr<PlayReadyLicenseIterable>> { unsafe { 
+    #[inline] pub fn create_instance(&self, contentHeader: &ComPtr<PlayReadyContentHeader>, fullyEvaluated: bool) -> Result<ComPtr<PlayReadyLicenseIterable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInstance)(self as *const _ as *mut _, contentHeader as *const _ as *mut _, fullyEvaluated, &mut out);
+        let hr = ((*self.lpVtbl).CreateInstance)(self as *const _ as *mut _, contentHeader.deref() as *const _ as *mut _, fullyEvaluated, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -25247,17 +25247,17 @@ RT_INTERFACE!{static interface IPlayReadyLicenseManagement(IPlayReadyLicenseMana
     fn DeleteLicenses(&self, contentHeader: *mut PlayReadyContentHeader, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl IPlayReadyLicenseManagement {
-    #[inline] pub fn delete_licenses(&self, contentHeader: &PlayReadyContentHeader) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn delete_licenses(&self, contentHeader: &ComPtr<PlayReadyContentHeader>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).DeleteLicenses)(self as *const _ as *mut _, contentHeader as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).DeleteLicenses)(self as *const _ as *mut _, contentHeader.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{static class PlayReadyLicenseManagement}
 impl RtActivatable<IPlayReadyLicenseManagement> for PlayReadyLicenseManagement {}
 impl PlayReadyLicenseManagement {
-    #[inline] pub fn delete_licenses(contentHeader: &PlayReadyContentHeader) -> Result<ComPtr<foundation::IAsyncAction>> {
-        <Self as RtActivatable<IPlayReadyLicenseManagement>>::get_activation_factory().delete_licenses(contentHeader)
+    #[inline] pub fn delete_licenses(contentHeader: &ComPtr<PlayReadyContentHeader>) -> Result<ComPtr<foundation::IAsyncAction>> {
+        <Self as RtActivatable<IPlayReadyLicenseManagement>>::get_activation_factory().deref().delete_licenses(contentHeader)
     }
 }
 DEFINE_CLSID!(PlayReadyLicenseManagement(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,76,105,99,101,110,115,101,77,97,110,97,103,101,109,101,110,116,0]) [CLSID_PlayReadyLicenseManagement]);
@@ -25272,16 +25272,16 @@ impl IPlayReadyLicenseSession {
         let hr = ((*self.lpVtbl).CreateLAServiceRequest)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn configure_media_protection_manager(&self, mpm: &super::MediaProtectionManager) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).ConfigureMediaProtectionManager)(self as *const _ as *mut _, mpm as *const _ as *mut _);
+    #[inline] pub fn configure_media_protection_manager(&self, mpm: &ComPtr<super::MediaProtectionManager>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).ConfigureMediaProtectionManager)(self as *const _ as *mut _, mpm.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PlayReadyLicenseSession: IPlayReadyLicenseSession}
 impl RtActivatable<IPlayReadyLicenseSessionFactory> for PlayReadyLicenseSession {}
 impl PlayReadyLicenseSession {
-    #[inline] pub fn create_instance(configuration: &foundation::collections::IPropertySet) -> Result<ComPtr<PlayReadyLicenseSession>> {
-        <Self as RtActivatable<IPlayReadyLicenseSessionFactory>>::get_activation_factory().create_instance(configuration)
+    #[inline] pub fn create_instance(configuration: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<PlayReadyLicenseSession>> {
+        <Self as RtActivatable<IPlayReadyLicenseSessionFactory>>::get_activation_factory().deref().create_instance(configuration)
     }
 }
 DEFINE_CLSID!(PlayReadyLicenseSession(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,76,105,99,101,110,115,101,83,101,115,115,105,111,110,0]) [CLSID_PlayReadyLicenseSession]);
@@ -25290,9 +25290,9 @@ RT_INTERFACE!{interface IPlayReadyLicenseSession2(IPlayReadyLicenseSession2Vtbl)
     fn CreateLicenseIterable(&self, contentHeader: *mut PlayReadyContentHeader, fullyEvaluated: bool, out: *mut *mut PlayReadyLicenseIterable) -> HRESULT
 }}
 impl IPlayReadyLicenseSession2 {
-    #[inline] pub fn create_license_iterable(&self, contentHeader: &PlayReadyContentHeader, fullyEvaluated: bool) -> Result<Option<ComPtr<PlayReadyLicenseIterable>>> { unsafe { 
+    #[inline] pub fn create_license_iterable(&self, contentHeader: &ComPtr<PlayReadyContentHeader>, fullyEvaluated: bool) -> Result<Option<ComPtr<PlayReadyLicenseIterable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateLicenseIterable)(self as *const _ as *mut _, contentHeader as *const _ as *mut _, fullyEvaluated, &mut out);
+        let hr = ((*self.lpVtbl).CreateLicenseIterable)(self as *const _ as *mut _, contentHeader.deref() as *const _ as *mut _, fullyEvaluated, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
 }
@@ -25301,9 +25301,9 @@ RT_INTERFACE!{static interface IPlayReadyLicenseSessionFactory(IPlayReadyLicense
     fn CreateInstance(&self, configuration: *mut foundation::collections::IPropertySet, out: *mut *mut PlayReadyLicenseSession) -> HRESULT
 }}
 impl IPlayReadyLicenseSessionFactory {
-    #[inline] pub fn create_instance(&self, configuration: &foundation::collections::IPropertySet) -> Result<ComPtr<PlayReadyLicenseSession>> { unsafe { 
+    #[inline] pub fn create_instance(&self, configuration: &ComPtr<foundation::collections::IPropertySet>) -> Result<ComPtr<PlayReadyLicenseSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateInstance)(self as *const _ as *mut _, configuration as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateInstance)(self as *const _ as *mut _, configuration.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -25337,7 +25337,7 @@ RT_CLASS!{class PlayReadySecureStopIterable: foundation::collections::IIterable<
 impl RtActivatable<IPlayReadySecureStopIterableFactory> for PlayReadySecureStopIterable {}
 impl PlayReadySecureStopIterable {
     #[inline] pub fn create_instance(publisherCertBytes: &[u8]) -> Result<ComPtr<PlayReadySecureStopIterable>> {
-        <Self as RtActivatable<IPlayReadySecureStopIterableFactory>>::get_activation_factory().create_instance(publisherCertBytes)
+        <Self as RtActivatable<IPlayReadySecureStopIterableFactory>>::get_activation_factory().deref().create_instance(publisherCertBytes)
     }
 }
 DEFINE_CLSID!(PlayReadySecureStopIterable(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,83,101,99,117,114,101,83,116,111,112,73,116,101,114,97,98,108,101,0]) [CLSID_PlayReadySecureStopIterable]);
@@ -25392,10 +25392,10 @@ RT_CLASS!{class PlayReadySecureStopServiceRequest: IPlayReadySecureStopServiceRe
 impl RtActivatable<IPlayReadySecureStopServiceRequestFactory> for PlayReadySecureStopServiceRequest {}
 impl PlayReadySecureStopServiceRequest {
     #[inline] pub fn create_instance(publisherCertBytes: &[u8]) -> Result<ComPtr<PlayReadySecureStopServiceRequest>> {
-        <Self as RtActivatable<IPlayReadySecureStopServiceRequestFactory>>::get_activation_factory().create_instance(publisherCertBytes)
+        <Self as RtActivatable<IPlayReadySecureStopServiceRequestFactory>>::get_activation_factory().deref().create_instance(publisherCertBytes)
     }
     #[inline] pub fn create_instance_from_session_id(sessionID: Guid, publisherCertBytes: &[u8]) -> Result<ComPtr<PlayReadySecureStopServiceRequest>> {
-        <Self as RtActivatable<IPlayReadySecureStopServiceRequestFactory>>::get_activation_factory().create_instance_from_session_id(sessionID, publisherCertBytes)
+        <Self as RtActivatable<IPlayReadySecureStopServiceRequestFactory>>::get_activation_factory().deref().create_instance_from_session_id(sessionID, publisherCertBytes)
     }
 }
 DEFINE_CLSID!(PlayReadySecureStopServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,83,101,99,117,114,101,83,116,111,112,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadySecureStopServiceRequest]);
@@ -25434,8 +25434,8 @@ impl IPlayReadyServiceRequest {
         let hr = ((*self.lpVtbl).get_Uri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Uri)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Uri)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_response_custom_data(&self) -> Result<HString> { unsafe { 
@@ -25558,52 +25558,52 @@ impl RtActivatable<IPlayReadyStatics4> for PlayReadyStatics {}
 impl RtActivatable<IPlayReadyStatics5> for PlayReadyStatics {}
 impl PlayReadyStatics {
     #[inline] pub fn get_domain_join_service_request_type() -> Result<Guid> {
-        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().get_domain_join_service_request_type()
+        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().deref().get_domain_join_service_request_type()
     }
     #[inline] pub fn get_domain_leave_service_request_type() -> Result<Guid> {
-        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().get_domain_leave_service_request_type()
+        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().deref().get_domain_leave_service_request_type()
     }
     #[inline] pub fn get_individualization_service_request_type() -> Result<Guid> {
-        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().get_individualization_service_request_type()
+        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().deref().get_individualization_service_request_type()
     }
     #[inline] pub fn get_license_acquirer_service_request_type() -> Result<Guid> {
-        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().get_license_acquirer_service_request_type()
+        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().deref().get_license_acquirer_service_request_type()
     }
     #[inline] pub fn get_metering_report_service_request_type() -> Result<Guid> {
-        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().get_metering_report_service_request_type()
+        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().deref().get_metering_report_service_request_type()
     }
     #[inline] pub fn get_revocation_service_request_type() -> Result<Guid> {
-        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().get_revocation_service_request_type()
+        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().deref().get_revocation_service_request_type()
     }
     #[inline] pub fn get_media_protection_system_id() -> Result<Guid> {
-        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().get_media_protection_system_id()
+        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().deref().get_media_protection_system_id()
     }
     #[inline] pub fn get_play_ready_security_version() -> Result<u32> {
-        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().get_play_ready_security_version()
+        <Self as RtActivatable<IPlayReadyStatics>>::get_activation_factory().deref().get_play_ready_security_version()
     }
     #[inline] pub fn get_play_ready_certificate_security_level() -> Result<u32> {
-        <Self as RtActivatable<IPlayReadyStatics2>>::get_activation_factory().get_play_ready_certificate_security_level()
+        <Self as RtActivatable<IPlayReadyStatics2>>::get_activation_factory().deref().get_play_ready_certificate_security_level()
     }
     #[inline] pub fn get_secure_stop_service_request_type() -> Result<Guid> {
-        <Self as RtActivatable<IPlayReadyStatics3>>::get_activation_factory().get_secure_stop_service_request_type()
+        <Self as RtActivatable<IPlayReadyStatics3>>::get_activation_factory().deref().get_secure_stop_service_request_type()
     }
     #[inline] pub fn check_supported_hardware(hwdrmFeature: PlayReadyHardwareDRMFeatures) -> Result<bool> {
-        <Self as RtActivatable<IPlayReadyStatics3>>::get_activation_factory().check_supported_hardware(hwdrmFeature)
+        <Self as RtActivatable<IPlayReadyStatics3>>::get_activation_factory().deref().check_supported_hardware(hwdrmFeature)
     }
     #[inline] pub fn get_input_trust_authority_to_create() -> Result<HString> {
-        <Self as RtActivatable<IPlayReadyStatics4>>::get_activation_factory().get_input_trust_authority_to_create()
+        <Self as RtActivatable<IPlayReadyStatics4>>::get_activation_factory().deref().get_input_trust_authority_to_create()
     }
     #[inline] pub fn get_protection_system_id() -> Result<Guid> {
-        <Self as RtActivatable<IPlayReadyStatics4>>::get_activation_factory().get_protection_system_id()
+        <Self as RtActivatable<IPlayReadyStatics4>>::get_activation_factory().deref().get_protection_system_id()
     }
     #[inline] pub fn get_hardware_drm_disabled_at_time() -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
-        <Self as RtActivatable<IPlayReadyStatics5>>::get_activation_factory().get_hardware_drm_disabled_at_time()
+        <Self as RtActivatable<IPlayReadyStatics5>>::get_activation_factory().deref().get_hardware_drm_disabled_at_time()
     }
     #[inline] pub fn get_hardware_drm_disabled_until_time() -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
-        <Self as RtActivatable<IPlayReadyStatics5>>::get_activation_factory().get_hardware_drm_disabled_until_time()
+        <Self as RtActivatable<IPlayReadyStatics5>>::get_activation_factory().deref().get_hardware_drm_disabled_until_time()
     }
     #[inline] pub fn reset_hardware_drm_disabled() -> Result<()> {
-        <Self as RtActivatable<IPlayReadyStatics5>>::get_activation_factory().reset_hardware_drm_disabled()
+        <Self as RtActivatable<IPlayReadyStatics5>>::get_activation_factory().deref().reset_hardware_drm_disabled()
     }
 }
 DEFINE_CLSID!(PlayReadyStatics(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,83,116,97,116,105,99,115,0]) [CLSID_PlayReadyStatics]);
@@ -25765,18 +25765,18 @@ impl ISpeechContinuousRecognitionSession {
         let hr = ((*self.lpVtbl).Resume)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_completed(&self, value: &foundation::TypedEventHandler<SpeechContinuousRecognitionSession, SpeechContinuousRecognitionCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_completed(&self, value: &ComPtr<foundation::TypedEventHandler<SpeechContinuousRecognitionSession, SpeechContinuousRecognitionCompletedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_Completed)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_Completed)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_completed(&self, value: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_Completed)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_result_generated(&self, value: &foundation::TypedEventHandler<SpeechContinuousRecognitionSession, SpeechContinuousRecognitionResultGeneratedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_result_generated(&self, value: &ComPtr<foundation::TypedEventHandler<SpeechContinuousRecognitionSession, SpeechContinuousRecognitionResultGeneratedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_ResultGenerated)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_ResultGenerated)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_result_generated(&self, value: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -25867,11 +25867,11 @@ impl ISpeechRecognitionGrammarFileConstraint {
 RT_CLASS!{class SpeechRecognitionGrammarFileConstraint: ISpeechRecognitionGrammarFileConstraint}
 impl RtActivatable<ISpeechRecognitionGrammarFileConstraintFactory> for SpeechRecognitionGrammarFileConstraint {}
 impl SpeechRecognitionGrammarFileConstraint {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(file: &super::super::storage::StorageFile) -> Result<ComPtr<SpeechRecognitionGrammarFileConstraint>> {
-        <Self as RtActivatable<ISpeechRecognitionGrammarFileConstraintFactory>>::get_activation_factory().create(file)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(file: &ComPtr<super::super::storage::StorageFile>) -> Result<ComPtr<SpeechRecognitionGrammarFileConstraint>> {
+        <Self as RtActivatable<ISpeechRecognitionGrammarFileConstraintFactory>>::get_activation_factory().deref().create(file)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_with_tag(file: &super::super::storage::StorageFile, tag: &HStringArg) -> Result<ComPtr<SpeechRecognitionGrammarFileConstraint>> {
-        <Self as RtActivatable<ISpeechRecognitionGrammarFileConstraintFactory>>::get_activation_factory().create_with_tag(file, tag)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_with_tag(file: &ComPtr<super::super::storage::StorageFile>, tag: &HStringArg) -> Result<ComPtr<SpeechRecognitionGrammarFileConstraint>> {
+        <Self as RtActivatable<ISpeechRecognitionGrammarFileConstraintFactory>>::get_activation_factory().deref().create_with_tag(file, tag)
     }
 }
 DEFINE_CLSID!(SpeechRecognitionGrammarFileConstraint(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,71,114,97,109,109,97,114,70,105,108,101,67,111,110,115,116,114,97,105,110,116,0]) [CLSID_SpeechRecognitionGrammarFileConstraint]);
@@ -25881,14 +25881,14 @@ RT_INTERFACE!{static interface ISpeechRecognitionGrammarFileConstraintFactory(IS
     #[cfg(feature="windows-storage")] fn CreateWithTag(&self, file: *mut super::super::storage::StorageFile, tag: HSTRING, out: *mut *mut SpeechRecognitionGrammarFileConstraint) -> HRESULT
 }}
 impl ISpeechRecognitionGrammarFileConstraintFactory {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, file: &super::super::storage::StorageFile) -> Result<ComPtr<SpeechRecognitionGrammarFileConstraint>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, file: &ComPtr<super::super::storage::StorageFile>) -> Result<ComPtr<SpeechRecognitionGrammarFileConstraint>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, file as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_with_tag(&self, file: &super::super::storage::StorageFile, tag: &HStringArg) -> Result<ComPtr<SpeechRecognitionGrammarFileConstraint>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_with_tag(&self, file: &ComPtr<super::super::storage::StorageFile>, tag: &HStringArg) -> Result<ComPtr<SpeechRecognitionGrammarFileConstraint>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithTag)(self as *const _ as *mut _, file as *const _ as *mut _, tag.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateWithTag)(self as *const _ as *mut _, file.deref() as *const _ as *mut _, tag.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -25930,11 +25930,11 @@ impl ISpeechRecognitionListConstraint {
 RT_CLASS!{class SpeechRecognitionListConstraint: ISpeechRecognitionListConstraint}
 impl RtActivatable<ISpeechRecognitionListConstraintFactory> for SpeechRecognitionListConstraint {}
 impl SpeechRecognitionListConstraint {
-    #[inline] pub fn create(commands: &foundation::collections::IIterable<HString>) -> Result<ComPtr<SpeechRecognitionListConstraint>> {
-        <Self as RtActivatable<ISpeechRecognitionListConstraintFactory>>::get_activation_factory().create(commands)
+    #[inline] pub fn create(commands: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<SpeechRecognitionListConstraint>> {
+        <Self as RtActivatable<ISpeechRecognitionListConstraintFactory>>::get_activation_factory().deref().create(commands)
     }
-    #[inline] pub fn create_with_tag(commands: &foundation::collections::IIterable<HString>, tag: &HStringArg) -> Result<ComPtr<SpeechRecognitionListConstraint>> {
-        <Self as RtActivatable<ISpeechRecognitionListConstraintFactory>>::get_activation_factory().create_with_tag(commands, tag)
+    #[inline] pub fn create_with_tag(commands: &ComPtr<foundation::collections::IIterable<HString>>, tag: &HStringArg) -> Result<ComPtr<SpeechRecognitionListConstraint>> {
+        <Self as RtActivatable<ISpeechRecognitionListConstraintFactory>>::get_activation_factory().deref().create_with_tag(commands, tag)
     }
 }
 DEFINE_CLSID!(SpeechRecognitionListConstraint(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,76,105,115,116,67,111,110,115,116,114,97,105,110,116,0]) [CLSID_SpeechRecognitionListConstraint]);
@@ -25944,14 +25944,14 @@ RT_INTERFACE!{static interface ISpeechRecognitionListConstraintFactory(ISpeechRe
     fn CreateWithTag(&self, commands: *mut foundation::collections::IIterable<HString>, tag: HSTRING, out: *mut *mut SpeechRecognitionListConstraint) -> HRESULT
 }}
 impl ISpeechRecognitionListConstraintFactory {
-    #[inline] pub fn create(&self, commands: &foundation::collections::IIterable<HString>) -> Result<ComPtr<SpeechRecognitionListConstraint>> { unsafe { 
+    #[inline] pub fn create(&self, commands: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<SpeechRecognitionListConstraint>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, commands as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, commands.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_tag(&self, commands: &foundation::collections::IIterable<HString>, tag: &HStringArg) -> Result<ComPtr<SpeechRecognitionListConstraint>> { unsafe { 
+    #[inline] pub fn create_with_tag(&self, commands: &ComPtr<foundation::collections::IIterable<HString>>, tag: &HStringArg) -> Result<ComPtr<SpeechRecognitionListConstraint>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateWithTag)(self as *const _ as *mut _, commands as *const _ as *mut _, tag.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateWithTag)(self as *const _ as *mut _, commands.deref() as *const _ as *mut _, tag.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -26077,10 +26077,10 @@ RT_CLASS!{class SpeechRecognitionTopicConstraint: ISpeechRecognitionTopicConstra
 impl RtActivatable<ISpeechRecognitionTopicConstraintFactory> for SpeechRecognitionTopicConstraint {}
 impl SpeechRecognitionTopicConstraint {
     #[inline] pub fn create(scenario: SpeechRecognitionScenario, topicHint: &HStringArg) -> Result<ComPtr<SpeechRecognitionTopicConstraint>> {
-        <Self as RtActivatable<ISpeechRecognitionTopicConstraintFactory>>::get_activation_factory().create(scenario, topicHint)
+        <Self as RtActivatable<ISpeechRecognitionTopicConstraintFactory>>::get_activation_factory().deref().create(scenario, topicHint)
     }
     #[inline] pub fn create_with_tag(scenario: SpeechRecognitionScenario, topicHint: &HStringArg, tag: &HStringArg) -> Result<ComPtr<SpeechRecognitionTopicConstraint>> {
-        <Self as RtActivatable<ISpeechRecognitionTopicConstraintFactory>>::get_activation_factory().create_with_tag(scenario, topicHint, tag)
+        <Self as RtActivatable<ISpeechRecognitionTopicConstraintFactory>>::get_activation_factory().deref().create_with_tag(scenario, topicHint, tag)
     }
 }
 DEFINE_CLSID!(SpeechRecognitionTopicConstraint(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,84,111,112,105,99,67,111,110,115,116,114,97,105,110,116,0]) [CLSID_SpeechRecognitionTopicConstraint]);
@@ -26157,18 +26157,18 @@ impl ISpeechRecognizer {
         let hr = ((*self.lpVtbl).RecognizeWithUIAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_recognition_quality_degrading(&self, speechRecognitionQualityDegradingHandler: &foundation::TypedEventHandler<SpeechRecognizer, SpeechRecognitionQualityDegradingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_recognition_quality_degrading(&self, speechRecognitionQualityDegradingHandler: &ComPtr<foundation::TypedEventHandler<SpeechRecognizer, SpeechRecognitionQualityDegradingEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_RecognitionQualityDegrading)(self as *const _ as *mut _, speechRecognitionQualityDegradingHandler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_RecognitionQualityDegrading)(self as *const _ as *mut _, speechRecognitionQualityDegradingHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_recognition_quality_degrading(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_RecognitionQualityDegrading)(self as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_state_changed(&self, stateChangedHandler: &foundation::TypedEventHandler<SpeechRecognizer, SpeechRecognizerStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_state_changed(&self, stateChangedHandler: &ComPtr<foundation::TypedEventHandler<SpeechRecognizer, SpeechRecognizerStateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, stateChangedHandler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_StateChanged)(self as *const _ as *mut _, stateChangedHandler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_state_changed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -26182,20 +26182,20 @@ impl RtActivatable<ISpeechRecognizerStatics> for SpeechRecognizer {}
 impl RtActivatable<ISpeechRecognizerStatics2> for SpeechRecognizer {}
 impl RtActivatable<IActivationFactory> for SpeechRecognizer {}
 impl SpeechRecognizer {
-    #[cfg(feature="windows-globalization")] #[inline] pub fn create(language: &super::super::globalization::Language) -> Result<ComPtr<SpeechRecognizer>> {
-        <Self as RtActivatable<ISpeechRecognizerFactory>>::get_activation_factory().create(language)
+    #[cfg(feature="windows-globalization")] #[inline] pub fn create(language: &ComPtr<super::super::globalization::Language>) -> Result<ComPtr<SpeechRecognizer>> {
+        <Self as RtActivatable<ISpeechRecognizerFactory>>::get_activation_factory().deref().create(language)
     }
     #[cfg(feature="windows-globalization")] #[inline] pub fn get_system_speech_language() -> Result<Option<ComPtr<super::super::globalization::Language>>> {
-        <Self as RtActivatable<ISpeechRecognizerStatics>>::get_activation_factory().get_system_speech_language()
+        <Self as RtActivatable<ISpeechRecognizerStatics>>::get_activation_factory().deref().get_system_speech_language()
     }
     #[cfg(feature="windows-globalization")] #[inline] pub fn get_supported_topic_languages() -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::globalization::Language>>>> {
-        <Self as RtActivatable<ISpeechRecognizerStatics>>::get_activation_factory().get_supported_topic_languages()
+        <Self as RtActivatable<ISpeechRecognizerStatics>>::get_activation_factory().deref().get_supported_topic_languages()
     }
     #[cfg(feature="windows-globalization")] #[inline] pub fn get_supported_grammar_languages() -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::globalization::Language>>>> {
-        <Self as RtActivatable<ISpeechRecognizerStatics>>::get_activation_factory().get_supported_grammar_languages()
+        <Self as RtActivatable<ISpeechRecognizerStatics>>::get_activation_factory().deref().get_supported_grammar_languages()
     }
-    #[cfg(feature="windows-globalization")] #[inline] pub fn try_set_system_speech_language_async(speechLanguage: &super::super::globalization::Language) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<ISpeechRecognizerStatics2>>::get_activation_factory().try_set_system_speech_language_async(speechLanguage)
+    #[cfg(feature="windows-globalization")] #[inline] pub fn try_set_system_speech_language_async(speechLanguage: &ComPtr<super::super::globalization::Language>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<ISpeechRecognizerStatics2>>::get_activation_factory().deref().try_set_system_speech_language_async(speechLanguage)
     }
 }
 DEFINE_CLSID!(SpeechRecognizer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,46,83,112,101,101,99,104,82,101,99,111,103,110,105,122,101,114,0]) [CLSID_SpeechRecognizer]);
@@ -26223,9 +26223,9 @@ impl ISpeechRecognizer2 {
         let hr = ((*self.lpVtbl).StopRecognitionAsync)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_hypothesis_generated(&self, value: &foundation::TypedEventHandler<SpeechRecognizer, SpeechRecognitionHypothesisGeneratedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_hypothesis_generated(&self, value: &ComPtr<foundation::TypedEventHandler<SpeechRecognizer, SpeechRecognitionHypothesisGeneratedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_HypothesisGenerated)(self as *const _ as *mut _, value as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_HypothesisGenerated)(self as *const _ as *mut _, value.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_hypothesis_generated(&self, value: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -26238,9 +26238,9 @@ RT_INTERFACE!{static interface ISpeechRecognizerFactory(ISpeechRecognizerFactory
     #[cfg(feature="windows-globalization")] fn Create(&self, language: *mut super::super::globalization::Language, out: *mut *mut SpeechRecognizer) -> HRESULT
 }}
 impl ISpeechRecognizerFactory {
-    #[cfg(feature="windows-globalization")] #[inline] pub fn create(&self, language: &super::super::globalization::Language) -> Result<ComPtr<SpeechRecognizer>> { unsafe { 
+    #[cfg(feature="windows-globalization")] #[inline] pub fn create(&self, language: &ComPtr<super::super::globalization::Language>) -> Result<ComPtr<SpeechRecognizer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, language as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).Create)(self as *const _ as *mut _, language.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -26287,9 +26287,9 @@ RT_INTERFACE!{static interface ISpeechRecognizerStatics2(ISpeechRecognizerStatic
     #[cfg(feature="windows-globalization")] fn TrySetSystemSpeechLanguageAsync(&self, speechLanguage: *mut super::super::globalization::Language, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
 impl ISpeechRecognizerStatics2 {
-    #[cfg(feature="windows-globalization")] #[inline] pub fn try_set_system_speech_language_async(&self, speechLanguage: &super::super::globalization::Language) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[cfg(feature="windows-globalization")] #[inline] pub fn try_set_system_speech_language_async(&self, speechLanguage: &ComPtr<super::super::globalization::Language>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TrySetSystemSpeechLanguageAsync)(self as *const _ as *mut _, speechLanguage as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TrySetSystemSpeechLanguageAsync)(self as *const _ as *mut _, speechLanguage.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -26407,9 +26407,9 @@ RT_INTERFACE!{static interface IInstalledVoicesStatic2(IInstalledVoicesStatic2Vt
     fn TrySetDefaultVoiceAsync(&self, voice: *mut VoiceInformation, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
 impl IInstalledVoicesStatic2 {
-    #[inline] pub fn try_set_default_voice_async(&self, voice: &VoiceInformation) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn try_set_default_voice_async(&self, voice: &ComPtr<VoiceInformation>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).TrySetDefaultVoiceAsync)(self as *const _ as *mut _, voice as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).TrySetDefaultVoiceAsync)(self as *const _ as *mut _, voice.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -26449,8 +26449,8 @@ impl ISpeechSynthesizer {
         let hr = ((*self.lpVtbl).SynthesizeSsmlToStreamAsync)(self as *const _ as *mut _, ssml.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_voice(&self, value: &VoiceInformation) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Voice)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_voice(&self, value: &ComPtr<VoiceInformation>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Voice)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_voice(&self) -> Result<Option<ComPtr<VoiceInformation>>> { unsafe { 
@@ -26465,13 +26465,13 @@ impl RtActivatable<IInstalledVoicesStatic2> for SpeechSynthesizer {}
 impl RtActivatable<IActivationFactory> for SpeechSynthesizer {}
 impl SpeechSynthesizer {
     #[inline] pub fn get_all_voices() -> Result<Option<ComPtr<foundation::collections::IVectorView<VoiceInformation>>>> {
-        <Self as RtActivatable<IInstalledVoicesStatic>>::get_activation_factory().get_all_voices()
+        <Self as RtActivatable<IInstalledVoicesStatic>>::get_activation_factory().deref().get_all_voices()
     }
     #[inline] pub fn get_default_voice() -> Result<Option<ComPtr<VoiceInformation>>> {
-        <Self as RtActivatable<IInstalledVoicesStatic>>::get_activation_factory().get_default_voice()
+        <Self as RtActivatable<IInstalledVoicesStatic>>::get_activation_factory().deref().get_default_voice()
     }
-    #[inline] pub fn try_set_default_voice_async(voice: &VoiceInformation) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
-        <Self as RtActivatable<IInstalledVoicesStatic2>>::get_activation_factory().try_set_default_voice_async(voice)
+    #[inline] pub fn try_set_default_voice_async(voice: &ComPtr<VoiceInformation>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+        <Self as RtActivatable<IInstalledVoicesStatic2>>::get_activation_factory().deref().try_set_default_voice_async(voice)
     }
 }
 DEFINE_CLSID!(SpeechSynthesizer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,83,121,110,116,104,101,115,105,115,46,83,112,101,101,99,104,83,121,110,116,104,101,115,105,122,101,114,0]) [CLSID_SpeechSynthesizer]);
@@ -26695,8 +26695,8 @@ impl IAdaptiveMediaSource {
         let hr = ((*self.lpVtbl).get_DesiredMinBitrate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_desired_min_bitrate(&self, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DesiredMinBitrate)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_desired_min_bitrate(&self, value: &ComPtr<foundation::IReference<u32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DesiredMinBitrate)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_desired_max_bitrate(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
@@ -26704,8 +26704,8 @@ impl IAdaptiveMediaSource {
         let hr = ((*self.lpVtbl).get_DesiredMaxBitrate)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_desired_max_bitrate(&self, value: &foundation::IReference<u32>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DesiredMaxBitrate)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_desired_max_bitrate(&self, value: &ComPtr<foundation::IReference<u32>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DesiredMaxBitrate)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_audio_only_playback(&self) -> Result<bool> { unsafe { 
@@ -26727,45 +26727,45 @@ impl IAdaptiveMediaSource {
         let hr = ((*self.lpVtbl).put_InboundBitsPerSecondWindow)(self as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_download_bitrate_changed(&self, handler: &foundation::TypedEventHandler<AdaptiveMediaSource, AdaptiveMediaSourceDownloadBitrateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_download_bitrate_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AdaptiveMediaSource, AdaptiveMediaSourceDownloadBitrateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DownloadBitrateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DownloadBitrateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_download_bitrate_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_DownloadBitrateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_playback_bitrate_changed(&self, handler: &foundation::TypedEventHandler<AdaptiveMediaSource, AdaptiveMediaSourcePlaybackBitrateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_playback_bitrate_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<AdaptiveMediaSource, AdaptiveMediaSourcePlaybackBitrateChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_PlaybackBitrateChanged)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_PlaybackBitrateChanged)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_playback_bitrate_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_PlaybackBitrateChanged)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_download_requested(&self, handler: &foundation::TypedEventHandler<AdaptiveMediaSource, AdaptiveMediaSourceDownloadRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_download_requested(&self, handler: &ComPtr<foundation::TypedEventHandler<AdaptiveMediaSource, AdaptiveMediaSourceDownloadRequestedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DownloadRequested)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DownloadRequested)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_download_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_DownloadRequested)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_download_completed(&self, handler: &foundation::TypedEventHandler<AdaptiveMediaSource, AdaptiveMediaSourceDownloadCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_download_completed(&self, handler: &ComPtr<foundation::TypedEventHandler<AdaptiveMediaSource, AdaptiveMediaSourceDownloadCompletedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DownloadCompleted)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DownloadCompleted)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_download_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).remove_DownloadCompleted)(self as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_download_failed(&self, handler: &foundation::TypedEventHandler<AdaptiveMediaSource, AdaptiveMediaSourceDownloadFailedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_download_failed(&self, handler: &ComPtr<foundation::TypedEventHandler<AdaptiveMediaSource, AdaptiveMediaSourceDownloadFailedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DownloadFailed)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DownloadFailed)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_download_failed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -26777,19 +26777,19 @@ RT_CLASS!{class AdaptiveMediaSource: IAdaptiveMediaSource}
 impl RtActivatable<IAdaptiveMediaSourceStatics> for AdaptiveMediaSource {}
 impl AdaptiveMediaSource {
     #[inline] pub fn is_content_type_supported(contentType: &HStringArg) -> Result<bool> {
-        <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().is_content_type_supported(contentType)
+        <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().deref().is_content_type_supported(contentType)
     }
-    #[inline] pub fn create_from_uri_async(uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
-        <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().create_from_uri_async(uri)
+    #[inline] pub fn create_from_uri_async(uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
+        <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().deref().create_from_uri_async(uri)
     }
-    #[cfg(feature="windows-web")] #[inline] pub fn create_from_uri_with_downloader_async(uri: &foundation::Uri, httpClient: &crate::windows::web::http::HttpClient) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
-        <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().create_from_uri_with_downloader_async(uri, httpClient)
+    #[cfg(feature="windows-web")] #[inline] pub fn create_from_uri_with_downloader_async(uri: &ComPtr<foundation::Uri>, httpClient: &ComPtr<crate::windows::web::http::HttpClient>) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
+        <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().deref().create_from_uri_with_downloader_async(uri, httpClient)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(stream: &crate::windows::storage::streams::IInputStream, uri: &foundation::Uri, contentType: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
-        <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().create_from_stream_async(stream, uri, contentType)
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(stream: &ComPtr<crate::windows::storage::streams::IInputStream>, uri: &ComPtr<foundation::Uri>, contentType: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
+        <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().deref().create_from_stream_async(stream, uri, contentType)
     }
-    #[cfg(all(feature="windows-storage",feature="windows-web"))] #[inline] pub fn create_from_stream_with_downloader_async(stream: &crate::windows::storage::streams::IInputStream, uri: &foundation::Uri, contentType: &HStringArg, httpClient: &crate::windows::web::http::HttpClient) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
-        <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().create_from_stream_with_downloader_async(stream, uri, contentType, httpClient)
+    #[cfg(all(feature="windows-storage",feature="windows-web"))] #[inline] pub fn create_from_stream_with_downloader_async(stream: &ComPtr<crate::windows::storage::streams::IInputStream>, uri: &ComPtr<foundation::Uri>, contentType: &HStringArg, httpClient: &ComPtr<crate::windows::web::http::HttpClient>) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> {
+        <Self as RtActivatable<IAdaptiveMediaSourceStatics>>::get_activation_factory().deref().create_from_stream_with_downloader_async(stream, uri, contentType, httpClient)
     }
 }
 DEFINE_CLSID!(AdaptiveMediaSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,116,114,101,97,109,105,110,103,46,65,100,97,112,116,105,118,101,46,65,100,97,112,116,105,118,101,77,101,100,105,97,83,111,117,114,99,101,0]) [CLSID_AdaptiveMediaSource]);
@@ -26829,8 +26829,8 @@ impl IAdaptiveMediaSource3 {
         let hr = ((*self.lpVtbl).get_DesiredSeekableWindowSize)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_desired_seekable_window_size(&self, value: &foundation::IReference<foundation::TimeSpan>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DesiredSeekableWindowSize)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_desired_seekable_window_size(&self, value: &ComPtr<foundation::IReference<foundation::TimeSpan>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DesiredSeekableWindowSize)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_diagnostics(&self) -> Result<Option<ComPtr<AdaptiveMediaSourceDiagnostics>>> { unsafe { 
@@ -26868,8 +26868,8 @@ impl IAdaptiveMediaSourceAdvancedSettings {
         let hr = ((*self.lpVtbl).get_DesiredBitrateHeadroomRatio)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_desired_bitrate_headroom_ratio(&self, value: &foundation::IReference<f64>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_DesiredBitrateHeadroomRatio)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_desired_bitrate_headroom_ratio(&self, value: &ComPtr<foundation::IReference<f64>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_DesiredBitrateHeadroomRatio)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_bitrate_downgrade_trigger_ratio(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
@@ -26877,8 +26877,8 @@ impl IAdaptiveMediaSourceAdvancedSettings {
         let hr = ((*self.lpVtbl).get_BitrateDowngradeTriggerRatio)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_bitrate_downgrade_trigger_ratio(&self, value: &foundation::IReference<f64>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_BitrateDowngradeTriggerRatio)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_bitrate_downgrade_trigger_ratio(&self, value: &ComPtr<foundation::IReference<f64>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_BitrateDowngradeTriggerRatio)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -27039,9 +27039,9 @@ RT_INTERFACE!{interface IAdaptiveMediaSourceDiagnostics(IAdaptiveMediaSourceDiag
     fn remove_DiagnosticAvailable(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl IAdaptiveMediaSourceDiagnostics {
-    #[inline] pub fn add_diagnostic_available(&self, handler: &foundation::TypedEventHandler<AdaptiveMediaSourceDiagnostics, AdaptiveMediaSourceDiagnosticAvailableEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
+    #[inline] pub fn add_diagnostic_available(&self, handler: &ComPtr<foundation::TypedEventHandler<AdaptiveMediaSourceDiagnostics, AdaptiveMediaSourceDiagnosticAvailableEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.lpVtbl).add_DiagnosticAvailable)(self as *const _ as *mut _, handler as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).add_DiagnosticAvailable)(self as *const _ as *mut _, handler.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_diagnostic_available(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
@@ -27353,8 +27353,8 @@ impl IAdaptiveMediaSourceDownloadResult {
         let hr = ((*self.lpVtbl).get_ResourceUri)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_resource_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ResourceUri)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_resource_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ResourceUri)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_input_stream(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IInputStream>>> { unsafe { 
@@ -27362,8 +27362,8 @@ impl IAdaptiveMediaSourceDownloadResult {
         let hr = ((*self.lpVtbl).get_InputStream)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_input_stream(&self, value: &crate::windows::storage::streams::IInputStream) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_InputStream)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_input_stream(&self, value: &ComPtr<crate::windows::storage::streams::IInputStream>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_InputStream)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_buffer(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IBuffer>>> { unsafe { 
@@ -27371,8 +27371,8 @@ impl IAdaptiveMediaSourceDownloadResult {
         let hr = ((*self.lpVtbl).get_Buffer)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn set_buffer(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_Buffer)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[cfg(feature="windows-storage")] #[inline] pub fn set_buffer(&self, value: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_Buffer)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_content_type(&self) -> Result<HString> { unsafe { 
@@ -27408,8 +27408,8 @@ impl IAdaptiveMediaSourceDownloadResult2 {
         let hr = ((*self.lpVtbl).get_ResourceByteRangeOffset)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_resource_byte_range_offset(&self, value: &foundation::IReference<u64>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ResourceByteRangeOffset)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_resource_byte_range_offset(&self, value: &ComPtr<foundation::IReference<u64>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ResourceByteRangeOffset)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_resource_byte_range_length(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
@@ -27417,8 +27417,8 @@ impl IAdaptiveMediaSourceDownloadResult2 {
         let hr = ((*self.lpVtbl).get_ResourceByteRangeLength)(self as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_resource_byte_range_length(&self, value: &foundation::IReference<u64>) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).put_ResourceByteRangeLength)(self as *const _ as *mut _, value as *const _ as *mut _);
+    #[inline] pub fn set_resource_byte_range_length(&self, value: &ComPtr<foundation::IReference<u64>>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).put_ResourceByteRangeLength)(self as *const _ as *mut _, value.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -27495,24 +27495,24 @@ impl IAdaptiveMediaSourceStatics {
         let hr = ((*self.lpVtbl).IsContentTypeSupported)(self as *const _ as *mut _, contentType.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_uri_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
+    #[inline] pub fn create_from_uri_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromUriAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromUriAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-web")] #[inline] pub fn create_from_uri_with_downloader_async(&self, uri: &foundation::Uri, httpClient: &crate::windows::web::http::HttpClient) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
+    #[cfg(feature="windows-web")] #[inline] pub fn create_from_uri_with_downloader_async(&self, uri: &ComPtr<foundation::Uri>, httpClient: &ComPtr<crate::windows::web::http::HttpClient>) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromUriWithDownloaderAsync)(self as *const _ as *mut _, uri as *const _ as *mut _, httpClient as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromUriWithDownloaderAsync)(self as *const _ as *mut _, uri.deref() as *const _ as *mut _, httpClient.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(&self, stream: &crate::windows::storage::streams::IInputStream, uri: &foundation::Uri, contentType: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_stream_async(&self, stream: &ComPtr<crate::windows::storage::streams::IInputStream>, uri: &ComPtr<foundation::Uri>, contentType: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStreamAsync)(self as *const _ as *mut _, stream as *const _ as *mut _, uri as *const _ as *mut _, contentType.get(), &mut out);
+        let hr = ((*self.lpVtbl).CreateFromStreamAsync)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, contentType.get(), &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(all(feature="windows-storage",feature="windows-web"))] #[inline] pub fn create_from_stream_with_downloader_async(&self, stream: &crate::windows::storage::streams::IInputStream, uri: &foundation::Uri, contentType: &HStringArg, httpClient: &crate::windows::web::http::HttpClient) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
+    #[cfg(all(feature="windows-storage",feature="windows-web"))] #[inline] pub fn create_from_stream_with_downloader_async(&self, stream: &ComPtr<crate::windows::storage::streams::IInputStream>, uri: &ComPtr<foundation::Uri>, contentType: &HStringArg, httpClient: &ComPtr<crate::windows::web::http::HttpClient>) -> Result<ComPtr<foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).CreateFromStreamWithDownloaderAsync)(self as *const _ as *mut _, stream as *const _ as *mut _, uri as *const _ as *mut _, contentType.get(), httpClient as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).CreateFromStreamWithDownloaderAsync)(self as *const _ as *mut _, stream.deref() as *const _ as *mut _, uri.deref() as *const _ as *mut _, contentType.get(), httpClient.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -27579,30 +27579,30 @@ impl IMediaTranscoder {
         let hr = ((*self.lpVtbl).AddAudioEffect)(self as *const _ as *mut _, activatableClassId.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_audio_effect_with_settings(&self, activatableClassId: &HStringArg, effectRequired: bool, configuration: &foundation::collections::IPropertySet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddAudioEffectWithSettings)(self as *const _ as *mut _, activatableClassId.get(), effectRequired, configuration as *const _ as *mut _);
+    #[inline] pub fn add_audio_effect_with_settings(&self, activatableClassId: &HStringArg, effectRequired: bool, configuration: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddAudioEffectWithSettings)(self as *const _ as *mut _, activatableClassId.get(), effectRequired, configuration.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_video_effect(&self, activatableClassId: &HStringArg) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).AddVideoEffect)(self as *const _ as *mut _, activatableClassId.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_video_effect_with_settings(&self, activatableClassId: &HStringArg, effectRequired: bool, configuration: &foundation::collections::IPropertySet) -> Result<()> { unsafe { 
-        let hr = ((*self.lpVtbl).AddVideoEffectWithSettings)(self as *const _ as *mut _, activatableClassId.get(), effectRequired, configuration as *const _ as *mut _);
+    #[inline] pub fn add_video_effect_with_settings(&self, activatableClassId: &HStringArg, effectRequired: bool, configuration: &ComPtr<foundation::collections::IPropertySet>) -> Result<()> { unsafe { 
+        let hr = ((*self.lpVtbl).AddVideoEffectWithSettings)(self as *const _ as *mut _, activatableClassId.get(), effectRequired, configuration.deref() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn clear_effects(&self) -> Result<()> { unsafe { 
         let hr = ((*self.lpVtbl).ClearEffects)(self as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn prepare_file_transcode_async(&self, source: &super::super::storage::IStorageFile, destination: &super::super::storage::IStorageFile, profile: &super::mediaproperties::MediaEncodingProfile) -> Result<ComPtr<foundation::IAsyncOperation<PrepareTranscodeResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn prepare_file_transcode_async(&self, source: &ComPtr<super::super::storage::IStorageFile>, destination: &ComPtr<super::super::storage::IStorageFile>, profile: &ComPtr<super::mediaproperties::MediaEncodingProfile>) -> Result<ComPtr<foundation::IAsyncOperation<PrepareTranscodeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PrepareFileTranscodeAsync)(self as *const _ as *mut _, source as *const _ as *mut _, destination as *const _ as *mut _, profile as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).PrepareFileTranscodeAsync)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, destination.deref() as *const _ as *mut _, profile.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn prepare_stream_transcode_async(&self, source: &super::super::storage::streams::IRandomAccessStream, destination: &super::super::storage::streams::IRandomAccessStream, profile: &super::mediaproperties::MediaEncodingProfile) -> Result<ComPtr<foundation::IAsyncOperation<PrepareTranscodeResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn prepare_stream_transcode_async(&self, source: &ComPtr<super::super::storage::streams::IRandomAccessStream>, destination: &ComPtr<super::super::storage::streams::IRandomAccessStream>, profile: &ComPtr<super::mediaproperties::MediaEncodingProfile>) -> Result<ComPtr<foundation::IAsyncOperation<PrepareTranscodeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PrepareStreamTranscodeAsync)(self as *const _ as *mut _, source as *const _ as *mut _, destination as *const _ as *mut _, profile as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).PrepareStreamTranscodeAsync)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, destination.deref() as *const _ as *mut _, profile.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
@@ -27617,9 +27617,9 @@ RT_INTERFACE!{interface IMediaTranscoder2(IMediaTranscoder2Vtbl): IInspectable(I
     fn get_VideoProcessingAlgorithm(&self, out: *mut MediaVideoProcessingAlgorithm) -> HRESULT
 }}
 impl IMediaTranscoder2 {
-    #[cfg(feature="windows-storage")] #[inline] pub fn prepare_media_stream_source_transcode_async(&self, source: &super::core::IMediaSource, destination: &super::super::storage::streams::IRandomAccessStream, profile: &super::mediaproperties::MediaEncodingProfile) -> Result<ComPtr<foundation::IAsyncOperation<PrepareTranscodeResult>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn prepare_media_stream_source_transcode_async(&self, source: &ComPtr<super::core::IMediaSource>, destination: &ComPtr<super::super::storage::streams::IRandomAccessStream>, profile: &ComPtr<super::mediaproperties::MediaEncodingProfile>) -> Result<ComPtr<foundation::IAsyncOperation<PrepareTranscodeResult>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.lpVtbl).PrepareMediaStreamSourceTranscodeAsync)(self as *const _ as *mut _, source as *const _ as *mut _, destination as *const _ as *mut _, profile as *const _ as *mut _, &mut out);
+        let hr = ((*self.lpVtbl).PrepareMediaStreamSourceTranscodeAsync)(self as *const _ as *mut _, source.deref() as *const _ as *mut _, destination.deref() as *const _ as *mut _, profile.deref() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_video_processing_algorithm(&self, value: MediaVideoProcessingAlgorithm) -> Result<()> { unsafe { 
