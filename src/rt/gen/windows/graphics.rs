@@ -27,7 +27,7 @@ impl ComPtr<IDirect3D11CaptureFrame> {
     #[inline] pub fn get_surface(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Surface)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_relative_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
@@ -44,21 +44,21 @@ RT_CLASS!{class Direct3D11CaptureFrame: IDirect3D11CaptureFrame}
 DEFINE_IID!(IID_IDirect3D11CaptureFramePool, 619408674, 6517, 16942, 130, 231, 120, 13, 189, 141, 223, 36);
 RT_INTERFACE!{interface IDirect3D11CaptureFramePool(IDirect3D11CaptureFramePoolVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePool] {
     fn Recreate(&self, device: *mut super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> HRESULT,
-    fn TryGetNextFrame(&self, out: *mut *mut Direct3D11CaptureFrame) -> HRESULT,
+    fn TryGetNextFrame(&self, out: *mut <Direct3D11CaptureFrame as RtType>::Abi) -> HRESULT,
     fn add_FrameArrived(&self, handler: *mut foundation::TypedEventHandler<Direct3D11CaptureFramePool, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_FrameArrived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn CreateCaptureSession(&self, item: *mut GraphicsCaptureItem, out: *mut *mut GraphicsCaptureSession) -> HRESULT,
-    #[cfg(feature="windows-system")] fn get_DispatcherQueue(&self, out: *mut *mut super::super::system::DispatcherQueue) -> HRESULT
+    fn CreateCaptureSession(&self, item: <GraphicsCaptureItem as RtType>::Abi, out: *mut <GraphicsCaptureSession as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-system")] fn get_DispatcherQueue(&self, out: *mut <super::super::system::DispatcherQueue as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IDirect3D11CaptureFramePool> {
     #[inline] pub fn recreate(&self, device: &ComPtr<super::directx::direct3d11::IDirect3DDevice>, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Recreate)(self.as_abi() as *const _ as *mut _, device.as_abi() as *const _ as *mut _, pixelFormat, numberOfBuffers, size);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn try_get_next_frame(&self) -> Result<Option<ComPtr<Direct3D11CaptureFrame>>> { unsafe { 
+    #[inline] pub fn try_get_next_frame(&self) -> Result<Option<Direct3D11CaptureFrame>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryGetNextFrame)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Direct3D11CaptureFrame::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_frame_arrived(&self, handler: &ComPtr<foundation::TypedEventHandler<Direct3D11CaptureFramePool, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -69,49 +69,49 @@ impl ComPtr<IDirect3D11CaptureFramePool> {
         let hr = ((*self.as_abi().lpVtbl).remove_FrameArrived)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn create_capture_session(&self, item: &ComPtr<GraphicsCaptureItem>) -> Result<Option<ComPtr<GraphicsCaptureSession>>> { unsafe { 
+    #[inline] pub fn create_capture_session(&self, item: &GraphicsCaptureItem) -> Result<Option<GraphicsCaptureSession>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateCaptureSession)(self.as_abi() as *const _ as *mut _, item.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(GraphicsCaptureSession::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_dispatcher_queue(&self) -> Result<Option<ComPtr<super::super::system::DispatcherQueue>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_dispatcher_queue(&self) -> Result<Option<super::super::system::DispatcherQueue>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DispatcherQueue)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::system::DispatcherQueue::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class Direct3D11CaptureFramePool: IDirect3D11CaptureFramePool}
 impl RtActivatable<IDirect3D11CaptureFramePoolStatics> for Direct3D11CaptureFramePool {}
 impl RtActivatable<IDirect3D11CaptureFramePoolStatics2> for Direct3D11CaptureFramePool {}
 impl Direct3D11CaptureFramePool {
-    #[inline] pub fn create(device: &ComPtr<super::directx::direct3d11::IDirect3DDevice>, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<ComPtr<Direct3D11CaptureFramePool>>> {
+    #[inline] pub fn create(device: &ComPtr<super::directx::direct3d11::IDirect3DDevice>, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<Direct3D11CaptureFramePool>> {
         <Self as RtActivatable<IDirect3D11CaptureFramePoolStatics>>::get_activation_factory().create(device, pixelFormat, numberOfBuffers, size)
     }
-    #[inline] pub fn create_free_threaded(device: &ComPtr<super::directx::direct3d11::IDirect3DDevice>, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<ComPtr<Direct3D11CaptureFramePool>>> {
+    #[inline] pub fn create_free_threaded(device: &ComPtr<super::directx::direct3d11::IDirect3DDevice>, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<Direct3D11CaptureFramePool>> {
         <Self as RtActivatable<IDirect3D11CaptureFramePoolStatics2>>::get_activation_factory().create_free_threaded(device, pixelFormat, numberOfBuffers, size)
     }
 }
 DEFINE_CLSID!(Direct3D11CaptureFramePool(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,68,105,114,101,99,116,51,68,49,49,67,97,112,116,117,114,101,70,114,97,109,101,80,111,111,108,0]) [CLSID_Direct3D11CaptureFramePool]);
 DEFINE_IID!(IID_IDirect3D11CaptureFramePoolStatics, 2005140842, 26538, 19795, 174, 84, 16, 136, 213, 168, 202, 33);
 RT_INTERFACE!{static interface IDirect3D11CaptureFramePoolStatics(IDirect3D11CaptureFramePoolStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePoolStatics] {
-    fn Create(&self, device: *mut super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32, out: *mut *mut Direct3D11CaptureFramePool) -> HRESULT
+    fn Create(&self, device: *mut super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32, out: *mut <Direct3D11CaptureFramePool as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IDirect3D11CaptureFramePoolStatics> {
-    #[inline] pub fn create(&self, device: &ComPtr<super::directx::direct3d11::IDirect3DDevice>, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<ComPtr<Direct3D11CaptureFramePool>>> { unsafe { 
+    #[inline] pub fn create(&self, device: &ComPtr<super::directx::direct3d11::IDirect3DDevice>, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<Direct3D11CaptureFramePool>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, device.as_abi() as *const _ as *mut _, pixelFormat, numberOfBuffers, size, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Direct3D11CaptureFramePool::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IDirect3D11CaptureFramePoolStatics2, 1486557247, 27580, 24053, 169, 145, 2, 226, 139, 59, 102, 213);
 RT_INTERFACE!{static interface IDirect3D11CaptureFramePoolStatics2(IDirect3D11CaptureFramePoolStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePoolStatics2] {
-    fn CreateFreeThreaded(&self, device: *mut super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32, out: *mut *mut Direct3D11CaptureFramePool) -> HRESULT
+    fn CreateFreeThreaded(&self, device: *mut super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32, out: *mut <Direct3D11CaptureFramePool as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IDirect3D11CaptureFramePoolStatics2> {
-    #[inline] pub fn create_free_threaded(&self, device: &ComPtr<super::directx::direct3d11::IDirect3DDevice>, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<ComPtr<Direct3D11CaptureFramePool>>> { unsafe { 
+    #[inline] pub fn create_free_threaded(&self, device: &ComPtr<super::directx::direct3d11::IDirect3DDevice>, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<Direct3D11CaptureFramePool>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFreeThreaded)(self.as_abi() as *const _ as *mut _, device.as_abi() as *const _ as *mut _, pixelFormat, numberOfBuffers, size, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Direct3D11CaptureFramePool::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IGraphicsCaptureItem, 2042886491, 12791, 20162, 164, 100, 99, 46, 245, 211, 7, 96);
@@ -145,20 +145,20 @@ impl ComPtr<IGraphicsCaptureItem> {
 RT_CLASS!{class GraphicsCaptureItem: IGraphicsCaptureItem}
 impl RtActivatable<IGraphicsCaptureItemStatics> for GraphicsCaptureItem {}
 impl GraphicsCaptureItem {
-    #[cfg(feature="windows-ui")] #[inline] pub fn create_from_visual(visual: &ComPtr<super::super::ui::composition::Visual>) -> Result<Option<ComPtr<GraphicsCaptureItem>>> {
+    #[cfg(feature="windows-ui")] #[inline] pub fn create_from_visual(visual: &super::super::ui::composition::Visual) -> Result<Option<GraphicsCaptureItem>> {
         <Self as RtActivatable<IGraphicsCaptureItemStatics>>::get_activation_factory().create_from_visual(visual)
     }
 }
 DEFINE_CLSID!(GraphicsCaptureItem(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,71,114,97,112,104,105,99,115,67,97,112,116,117,114,101,73,116,101,109,0]) [CLSID_GraphicsCaptureItem]);
 DEFINE_IID!(IID_IGraphicsCaptureItemStatics, 2826878629, 17788, 22408, 171, 71, 12, 241, 211, 99, 126, 116);
 RT_INTERFACE!{static interface IGraphicsCaptureItemStatics(IGraphicsCaptureItemStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureItemStatics] {
-    #[cfg(feature="windows-ui")] fn CreateFromVisual(&self, visual: *mut super::super::ui::composition::Visual, out: *mut *mut GraphicsCaptureItem) -> HRESULT
+    #[cfg(feature="windows-ui")] fn CreateFromVisual(&self, visual: <super::super::ui::composition::Visual as RtType>::Abi, out: *mut <GraphicsCaptureItem as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IGraphicsCaptureItemStatics> {
-    #[cfg(feature="windows-ui")] #[inline] pub fn create_from_visual(&self, visual: &ComPtr<super::super::ui::composition::Visual>) -> Result<Option<ComPtr<GraphicsCaptureItem>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn create_from_visual(&self, visual: &super::super::ui::composition::Visual) -> Result<Option<GraphicsCaptureItem>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromVisual)(self.as_abi() as *const _ as *mut _, visual.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(GraphicsCaptureItem::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IGraphicsCapturePicker, 1511461299, 44409, 19274, 147, 54, 19, 24, 253, 222, 53, 57);
@@ -169,7 +169,7 @@ impl ComPtr<IGraphicsCapturePicker> {
     #[inline] pub fn pick_single_item_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GraphicsCaptureItem>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).PickSingleItemAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GraphicsCapturePicker: IGraphicsCapturePicker}
@@ -415,13 +415,13 @@ impl ComPtr<IBrightnessOverride> {
 RT_CLASS!{class BrightnessOverride: IBrightnessOverride}
 impl RtActivatable<IBrightnessOverrideStatics> for BrightnessOverride {}
 impl BrightnessOverride {
-    #[inline] pub fn get_default_for_system() -> Result<Option<ComPtr<BrightnessOverride>>> {
+    #[inline] pub fn get_default_for_system() -> Result<Option<BrightnessOverride>> {
         <Self as RtActivatable<IBrightnessOverrideStatics>>::get_activation_factory().get_default_for_system()
     }
-    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<BrightnessOverride>>> {
+    #[inline] pub fn get_for_current_view() -> Result<Option<BrightnessOverride>> {
         <Self as RtActivatable<IBrightnessOverrideStatics>>::get_activation_factory().get_for_current_view()
     }
-    #[inline] pub fn save_for_system_async(value: &ComPtr<BrightnessOverride>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
+    #[inline] pub fn save_for_system_async(value: &BrightnessOverride) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
         <Self as RtActivatable<IBrightnessOverrideStatics>>::get_activation_factory().save_for_system_async(value)
     }
 }
@@ -446,61 +446,61 @@ impl ComPtr<IBrightnessOverrideSettings> {
 RT_CLASS!{class BrightnessOverrideSettings: IBrightnessOverrideSettings}
 impl RtActivatable<IBrightnessOverrideSettingsStatics> for BrightnessOverrideSettings {}
 impl BrightnessOverrideSettings {
-    #[inline] pub fn create_from_level(level: f64) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> {
+    #[inline] pub fn create_from_level(level: f64) -> Result<Option<BrightnessOverrideSettings>> {
         <Self as RtActivatable<IBrightnessOverrideSettingsStatics>>::get_activation_factory().create_from_level(level)
     }
-    #[inline] pub fn create_from_nits(nits: f32) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> {
+    #[inline] pub fn create_from_nits(nits: f32) -> Result<Option<BrightnessOverrideSettings>> {
         <Self as RtActivatable<IBrightnessOverrideSettingsStatics>>::get_activation_factory().create_from_nits(nits)
     }
-    #[inline] pub fn create_from_display_brightness_override_scenario(overrideScenario: DisplayBrightnessOverrideScenario) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> {
+    #[inline] pub fn create_from_display_brightness_override_scenario(overrideScenario: DisplayBrightnessOverrideScenario) -> Result<Option<BrightnessOverrideSettings>> {
         <Self as RtActivatable<IBrightnessOverrideSettingsStatics>>::get_activation_factory().create_from_display_brightness_override_scenario(overrideScenario)
     }
 }
 DEFINE_CLSID!(BrightnessOverrideSettings(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,66,114,105,103,104,116,110,101,115,115,79,118,101,114,114,105,100,101,83,101,116,116,105,110,103,115,0]) [CLSID_BrightnessOverrideSettings]);
 DEFINE_IID!(IID_IBrightnessOverrideSettingsStatics, 3565673616, 28532, 17419, 179, 131, 95, 233, 108, 240, 11, 15);
 RT_INTERFACE!{static interface IBrightnessOverrideSettingsStatics(IBrightnessOverrideSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBrightnessOverrideSettingsStatics] {
-    fn CreateFromLevel(&self, level: f64, out: *mut *mut BrightnessOverrideSettings) -> HRESULT,
-    fn CreateFromNits(&self, nits: f32, out: *mut *mut BrightnessOverrideSettings) -> HRESULT,
-    fn CreateFromDisplayBrightnessOverrideScenario(&self, overrideScenario: DisplayBrightnessOverrideScenario, out: *mut *mut BrightnessOverrideSettings) -> HRESULT
+    fn CreateFromLevel(&self, level: f64, out: *mut <BrightnessOverrideSettings as RtType>::Abi) -> HRESULT,
+    fn CreateFromNits(&self, nits: f32, out: *mut <BrightnessOverrideSettings as RtType>::Abi) -> HRESULT,
+    fn CreateFromDisplayBrightnessOverrideScenario(&self, overrideScenario: DisplayBrightnessOverrideScenario, out: *mut <BrightnessOverrideSettings as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IBrightnessOverrideSettingsStatics> {
-    #[inline] pub fn create_from_level(&self, level: f64) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> { unsafe { 
+    #[inline] pub fn create_from_level(&self, level: f64) -> Result<Option<BrightnessOverrideSettings>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromLevel)(self.as_abi() as *const _ as *mut _, level, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BrightnessOverrideSettings::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_nits(&self, nits: f32) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> { unsafe { 
+    #[inline] pub fn create_from_nits(&self, nits: f32) -> Result<Option<BrightnessOverrideSettings>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromNits)(self.as_abi() as *const _ as *mut _, nits, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BrightnessOverrideSettings::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_display_brightness_override_scenario(&self, overrideScenario: DisplayBrightnessOverrideScenario) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> { unsafe { 
+    #[inline] pub fn create_from_display_brightness_override_scenario(&self, overrideScenario: DisplayBrightnessOverrideScenario) -> Result<Option<BrightnessOverrideSettings>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromDisplayBrightnessOverrideScenario)(self.as_abi() as *const _ as *mut _, overrideScenario, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BrightnessOverrideSettings::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBrightnessOverrideStatics, 61323757, 57841, 19048, 161, 31, 148, 106, 216, 206, 83, 147);
 RT_INTERFACE!{static interface IBrightnessOverrideStatics(IBrightnessOverrideStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBrightnessOverrideStatics] {
-    fn GetDefaultForSystem(&self, out: *mut *mut BrightnessOverride) -> HRESULT,
-    fn GetForCurrentView(&self, out: *mut *mut BrightnessOverride) -> HRESULT,
-    fn SaveForSystemAsync(&self, value: *mut BrightnessOverride, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
+    fn GetDefaultForSystem(&self, out: *mut <BrightnessOverride as RtType>::Abi) -> HRESULT,
+    fn GetForCurrentView(&self, out: *mut <BrightnessOverride as RtType>::Abi) -> HRESULT,
+    fn SaveForSystemAsync(&self, value: <BrightnessOverride as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
 impl ComPtr<IBrightnessOverrideStatics> {
-    #[inline] pub fn get_default_for_system(&self) -> Result<Option<ComPtr<BrightnessOverride>>> { unsafe { 
+    #[inline] pub fn get_default_for_system(&self) -> Result<Option<BrightnessOverride>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDefaultForSystem)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BrightnessOverride::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_for_current_view(&self) -> Result<Option<ComPtr<BrightnessOverride>>> { unsafe { 
+    #[inline] pub fn get_for_current_view(&self) -> Result<Option<BrightnessOverride>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetForCurrentView)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BrightnessOverride::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn save_for_system_async(&self, value: &ComPtr<BrightnessOverride>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn save_for_system_async(&self, value: &BrightnessOverride) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SaveForSystemAsync)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IColorOverrideSettings, 4226785588, 19073, 19533, 165, 182, 125, 27, 92, 75, 208, 11);
@@ -517,20 +517,20 @@ impl ComPtr<IColorOverrideSettings> {
 RT_CLASS!{class ColorOverrideSettings: IColorOverrideSettings}
 impl RtActivatable<IColorOverrideSettingsStatics> for ColorOverrideSettings {}
 impl ColorOverrideSettings {
-    #[inline] pub fn create_from_display_color_override_scenario(overrideScenario: DisplayColorOverrideScenario) -> Result<Option<ComPtr<ColorOverrideSettings>>> {
+    #[inline] pub fn create_from_display_color_override_scenario(overrideScenario: DisplayColorOverrideScenario) -> Result<Option<ColorOverrideSettings>> {
         <Self as RtActivatable<IColorOverrideSettingsStatics>>::get_activation_factory().create_from_display_color_override_scenario(overrideScenario)
     }
 }
 DEFINE_CLSID!(ColorOverrideSettings(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,67,111,108,111,114,79,118,101,114,114,105,100,101,83,101,116,116,105,110,103,115,0]) [CLSID_ColorOverrideSettings]);
 DEFINE_IID!(IID_IColorOverrideSettingsStatics, 2959663199, 50207, 19145, 175, 171, 130, 122, 182, 36, 143, 154);
 RT_INTERFACE!{static interface IColorOverrideSettingsStatics(IColorOverrideSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IColorOverrideSettingsStatics] {
-    fn CreateFromDisplayColorOverrideScenario(&self, overrideScenario: DisplayColorOverrideScenario, out: *mut *mut ColorOverrideSettings) -> HRESULT
+    fn CreateFromDisplayColorOverrideScenario(&self, overrideScenario: DisplayColorOverrideScenario, out: *mut <ColorOverrideSettings as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IColorOverrideSettingsStatics> {
-    #[inline] pub fn create_from_display_color_override_scenario(&self, overrideScenario: DisplayColorOverrideScenario) -> Result<Option<ComPtr<ColorOverrideSettings>>> { unsafe { 
+    #[inline] pub fn create_from_display_color_override_scenario(&self, overrideScenario: DisplayColorOverrideScenario) -> Result<Option<ColorOverrideSettings>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromDisplayColorOverrideScenario)(self.as_abi() as *const _ as *mut _, overrideScenario, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ColorOverrideSettings::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum DisplayBrightnessOverrideOptions: u32 {
@@ -547,13 +547,13 @@ RT_ENUM! { enum DisplayColorOverrideScenario: i32 {
 }}
 DEFINE_IID!(IID_IDisplayEnhancementOverride, 1117099215, 55674, 19202, 164, 40, 92, 66, 146, 247, 245, 34);
 RT_INTERFACE!{interface IDisplayEnhancementOverride(IDisplayEnhancementOverrideVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverride] {
-    fn get_ColorOverrideSettings(&self, out: *mut *mut ColorOverrideSettings) -> HRESULT,
-    fn put_ColorOverrideSettings(&self, value: *mut ColorOverrideSettings) -> HRESULT,
-    fn get_BrightnessOverrideSettings(&self, out: *mut *mut BrightnessOverrideSettings) -> HRESULT,
-    fn put_BrightnessOverrideSettings(&self, value: *mut BrightnessOverrideSettings) -> HRESULT,
+    fn get_ColorOverrideSettings(&self, out: *mut <ColorOverrideSettings as RtType>::Abi) -> HRESULT,
+    fn put_ColorOverrideSettings(&self, value: <ColorOverrideSettings as RtType>::Abi) -> HRESULT,
+    fn get_BrightnessOverrideSettings(&self, out: *mut <BrightnessOverrideSettings as RtType>::Abi) -> HRESULT,
+    fn put_BrightnessOverrideSettings(&self, value: <BrightnessOverrideSettings as RtType>::Abi) -> HRESULT,
     fn get_CanOverride(&self, out: *mut bool) -> HRESULT,
     fn get_IsOverrideActive(&self, out: *mut bool) -> HRESULT,
-    fn GetCurrentDisplayEnhancementOverrideCapabilities(&self, out: *mut *mut DisplayEnhancementOverrideCapabilities) -> HRESULT,
+    fn GetCurrentDisplayEnhancementOverrideCapabilities(&self, out: *mut <DisplayEnhancementOverrideCapabilities as RtType>::Abi) -> HRESULT,
     fn RequestOverride(&self) -> HRESULT,
     fn StopOverride(&self) -> HRESULT,
     fn add_CanOverrideChanged(&self, handler: *mut foundation::TypedEventHandler<DisplayEnhancementOverride, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -564,21 +564,21 @@ RT_INTERFACE!{interface IDisplayEnhancementOverride(IDisplayEnhancementOverrideV
     fn remove_DisplayEnhancementOverrideCapabilitiesChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ComPtr<IDisplayEnhancementOverride> {
-    #[inline] pub fn get_color_override_settings(&self) -> Result<Option<ComPtr<ColorOverrideSettings>>> { unsafe { 
+    #[inline] pub fn get_color_override_settings(&self) -> Result<Option<ColorOverrideSettings>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ColorOverrideSettings)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ColorOverrideSettings::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_color_override_settings(&self, value: &ComPtr<ColorOverrideSettings>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_color_override_settings(&self, value: &ColorOverrideSettings) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_ColorOverrideSettings)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_brightness_override_settings(&self) -> Result<Option<ComPtr<BrightnessOverrideSettings>>> { unsafe { 
+    #[inline] pub fn get_brightness_override_settings(&self) -> Result<Option<BrightnessOverrideSettings>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BrightnessOverrideSettings)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BrightnessOverrideSettings::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_brightness_override_settings(&self, value: &ComPtr<BrightnessOverrideSettings>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_brightness_override_settings(&self, value: &BrightnessOverrideSettings) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_BrightnessOverrideSettings)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -592,10 +592,10 @@ impl ComPtr<IDisplayEnhancementOverride> {
         let hr = ((*self.as_abi().lpVtbl).get_IsOverrideActive)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_current_display_enhancement_override_capabilities(&self) -> Result<Option<ComPtr<DisplayEnhancementOverrideCapabilities>>> { unsafe { 
+    #[inline] pub fn get_current_display_enhancement_override_capabilities(&self) -> Result<Option<DisplayEnhancementOverrideCapabilities>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCurrentDisplayEnhancementOverrideCapabilities)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DisplayEnhancementOverrideCapabilities::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_override(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).RequestOverride)(self.as_abi() as *const _ as *mut _);
@@ -636,7 +636,7 @@ impl ComPtr<IDisplayEnhancementOverride> {
 RT_CLASS!{class DisplayEnhancementOverride: IDisplayEnhancementOverride}
 impl RtActivatable<IDisplayEnhancementOverrideStatics> for DisplayEnhancementOverride {}
 impl DisplayEnhancementOverride {
-    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<DisplayEnhancementOverride>>> {
+    #[inline] pub fn get_for_current_view() -> Result<Option<DisplayEnhancementOverride>> {
         <Self as RtActivatable<IDisplayEnhancementOverrideStatics>>::get_activation_factory().get_for_current_view()
     }
 }
@@ -661,31 +661,31 @@ impl ComPtr<IDisplayEnhancementOverrideCapabilities> {
     #[inline] pub fn get_supported_nit_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<NitRange>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetSupportedNitRanges)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class DisplayEnhancementOverrideCapabilities: IDisplayEnhancementOverrideCapabilities}
 DEFINE_IID!(IID_IDisplayEnhancementOverrideCapabilitiesChangedEventArgs, 3680626276, 5626, 18906, 139, 119, 7, 219, 210, 175, 88, 93);
 RT_INTERFACE!{interface IDisplayEnhancementOverrideCapabilitiesChangedEventArgs(IDisplayEnhancementOverrideCapabilitiesChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverrideCapabilitiesChangedEventArgs] {
-    fn get_Capabilities(&self, out: *mut *mut DisplayEnhancementOverrideCapabilities) -> HRESULT
+    fn get_Capabilities(&self, out: *mut <DisplayEnhancementOverrideCapabilities as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IDisplayEnhancementOverrideCapabilitiesChangedEventArgs> {
-    #[inline] pub fn get_capabilities(&self) -> Result<Option<ComPtr<DisplayEnhancementOverrideCapabilities>>> { unsafe { 
+    #[inline] pub fn get_capabilities(&self) -> Result<Option<DisplayEnhancementOverrideCapabilities>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Capabilities)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DisplayEnhancementOverrideCapabilities::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class DisplayEnhancementOverrideCapabilitiesChangedEventArgs: IDisplayEnhancementOverrideCapabilitiesChangedEventArgs}
 DEFINE_IID!(IID_IDisplayEnhancementOverrideStatics, 3478879937, 38801, 17491, 176, 19, 41, 182, 247, 120, 229, 25);
 RT_INTERFACE!{static interface IDisplayEnhancementOverrideStatics(IDisplayEnhancementOverrideStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverrideStatics] {
-    fn GetForCurrentView(&self, out: *mut *mut DisplayEnhancementOverride) -> HRESULT
+    fn GetForCurrentView(&self, out: *mut <DisplayEnhancementOverride as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IDisplayEnhancementOverrideStatics> {
-    #[inline] pub fn get_for_current_view(&self) -> Result<Option<ComPtr<DisplayEnhancementOverride>>> { unsafe { 
+    #[inline] pub fn get_for_current_view(&self) -> Result<Option<DisplayEnhancementOverride>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetForCurrentView)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DisplayEnhancementOverride::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IDisplayInformation, 3201372846, 44483, 19913, 174, 101, 133, 31, 77, 125, 71, 153);
@@ -774,7 +774,7 @@ impl ComPtr<IDisplayInformation> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_color_profile_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::streams::IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetColorProfileAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_color_profile_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<DisplayInformation, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -789,7 +789,7 @@ impl ComPtr<IDisplayInformation> {
 RT_CLASS!{class DisplayInformation: IDisplayInformation}
 impl RtActivatable<IDisplayInformationStatics> for DisplayInformation {}
 impl DisplayInformation {
-    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<DisplayInformation>>> {
+    #[inline] pub fn get_for_current_view() -> Result<Option<DisplayInformation>> {
         <Self as RtActivatable<IDisplayInformationStatics>>::get_activation_factory().get_for_current_view()
     }
     #[inline] pub fn get_auto_rotation_preferences() -> Result<DisplayOrientations> {
@@ -825,7 +825,7 @@ impl ComPtr<IDisplayInformation3> {
     #[inline] pub fn get_diagonal_size_in_inches(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DiagonalSizeInInches)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IDisplayInformation4, 3379744303, 4674, 18110, 181, 54, 225, 170, 254, 158, 122, 207);
@@ -847,15 +847,15 @@ impl ComPtr<IDisplayInformation4> {
 }
 DEFINE_IID!(IID_IDisplayInformation5, 978600668, 11486, 19085, 128, 209, 33, 220, 90, 220, 193, 170);
 RT_INTERFACE!{interface IDisplayInformation5(IDisplayInformation5Vtbl): IInspectable(IInspectableVtbl) [IID_IDisplayInformation5] {
-    fn GetAdvancedColorInfo(&self, out: *mut *mut AdvancedColorInfo) -> HRESULT,
+    fn GetAdvancedColorInfo(&self, out: *mut <AdvancedColorInfo as RtType>::Abi) -> HRESULT,
     fn add_AdvancedColorInfoChanged(&self, handler: *mut foundation::TypedEventHandler<DisplayInformation, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_AdvancedColorInfoChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ComPtr<IDisplayInformation5> {
-    #[inline] pub fn get_advanced_color_info(&self) -> Result<Option<ComPtr<AdvancedColorInfo>>> { unsafe { 
+    #[inline] pub fn get_advanced_color_info(&self) -> Result<Option<AdvancedColorInfo>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetAdvancedColorInfo)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(AdvancedColorInfo::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_advanced_color_info_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<DisplayInformation, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -869,17 +869,17 @@ impl ComPtr<IDisplayInformation5> {
 }
 DEFINE_IID!(IID_IDisplayInformationStatics, 3332385388, 54354, 17628, 186, 7, 150, 243, 198, 173, 249, 209);
 RT_INTERFACE!{static interface IDisplayInformationStatics(IDisplayInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayInformationStatics] {
-    fn GetForCurrentView(&self, out: *mut *mut DisplayInformation) -> HRESULT,
+    fn GetForCurrentView(&self, out: *mut <DisplayInformation as RtType>::Abi) -> HRESULT,
     fn get_AutoRotationPreferences(&self, out: *mut DisplayOrientations) -> HRESULT,
     fn put_AutoRotationPreferences(&self, value: DisplayOrientations) -> HRESULT,
     fn add_DisplayContentsInvalidated(&self, handler: *mut foundation::TypedEventHandler<DisplayInformation, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_DisplayContentsInvalidated(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ComPtr<IDisplayInformationStatics> {
-    #[inline] pub fn get_for_current_view(&self) -> Result<Option<ComPtr<DisplayInformation>>> { unsafe { 
+    #[inline] pub fn get_for_current_view(&self) -> Result<Option<DisplayInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetForCurrentView)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DisplayInformation::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_auto_rotation_preferences(&self) -> Result<DisplayOrientations> { unsafe { 
         let mut out = zeroed();
@@ -1059,7 +1059,7 @@ impl ComPtr<IDisplayPropertiesStatics> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_color_profile_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::streams::IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetColorProfileAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_color_profile_changed(&self, handler: &ComPtr<DisplayPropertiesEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -1103,11 +1103,11 @@ RT_ENUM! { enum HdmiDisplayHdrOption: i32 {
 DEFINE_IID!(IID_IHdmiDisplayInformation, 319503370, 62821, 18286, 171, 213, 234, 5, 174, 231, 76, 105);
 RT_INTERFACE!{interface IHdmiDisplayInformation(IHdmiDisplayInformationVtbl): IInspectable(IInspectableVtbl) [IID_IHdmiDisplayInformation] {
     fn GetSupportedDisplayModes(&self, out: *mut *mut foundation::collections::IVectorView<HdmiDisplayMode>) -> HRESULT,
-    fn GetCurrentDisplayMode(&self, out: *mut *mut HdmiDisplayMode) -> HRESULT,
+    fn GetCurrentDisplayMode(&self, out: *mut <HdmiDisplayMode as RtType>::Abi) -> HRESULT,
     fn SetDefaultDisplayModeAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn RequestSetCurrentDisplayModeAsync(&self, mode: *mut HdmiDisplayMode, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
-    fn RequestSetCurrentDisplayModeWithHdrAsync(&self, mode: *mut HdmiDisplayMode, hdrOption: HdmiDisplayHdrOption, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
-    fn RequestSetCurrentDisplayModeWithHdrAndMetadataAsync(&self, mode: *mut HdmiDisplayMode, hdrOption: HdmiDisplayHdrOption, hdrMetadata: HdmiDisplayHdr2086Metadata, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn RequestSetCurrentDisplayModeAsync(&self, mode: <HdmiDisplayMode as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn RequestSetCurrentDisplayModeWithHdrAsync(&self, mode: <HdmiDisplayMode as RtType>::Abi, hdrOption: HdmiDisplayHdrOption, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
+    fn RequestSetCurrentDisplayModeWithHdrAndMetadataAsync(&self, mode: <HdmiDisplayMode as RtType>::Abi, hdrOption: HdmiDisplayHdrOption, hdrMetadata: HdmiDisplayHdr2086Metadata, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
     fn add_DisplayModesChanged(&self, value: *mut foundation::TypedEventHandler<HdmiDisplayInformation, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_DisplayModesChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
@@ -1115,32 +1115,32 @@ impl ComPtr<IHdmiDisplayInformation> {
     #[inline] pub fn get_supported_display_modes(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HdmiDisplayMode>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetSupportedDisplayModes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_current_display_mode(&self) -> Result<Option<ComPtr<HdmiDisplayMode>>> { unsafe { 
+    #[inline] pub fn get_current_display_mode(&self) -> Result<Option<HdmiDisplayMode>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCurrentDisplayMode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HdmiDisplayMode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_default_display_mode_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetDefaultDisplayModeAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn request_set_current_display_mode_async(&self, mode: &ComPtr<HdmiDisplayMode>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn request_set_current_display_mode_async(&self, mode: &HdmiDisplayMode) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RequestSetCurrentDisplayModeAsync)(self.as_abi() as *const _ as *mut _, mode.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn request_set_current_display_mode_with_hdr_async(&self, mode: &ComPtr<HdmiDisplayMode>, hdrOption: HdmiDisplayHdrOption) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn request_set_current_display_mode_with_hdr_async(&self, mode: &HdmiDisplayMode, hdrOption: HdmiDisplayHdrOption) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RequestSetCurrentDisplayModeWithHdrAsync)(self.as_abi() as *const _ as *mut _, mode.as_abi() as *const _ as *mut _, hdrOption, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn request_set_current_display_mode_with_hdr_and_metadata_async(&self, mode: &ComPtr<HdmiDisplayMode>, hdrOption: HdmiDisplayHdrOption, hdrMetadata: HdmiDisplayHdr2086Metadata) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
+    #[inline] pub fn request_set_current_display_mode_with_hdr_and_metadata_async(&self, mode: &HdmiDisplayMode, hdrOption: HdmiDisplayHdrOption, hdrMetadata: HdmiDisplayHdr2086Metadata) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RequestSetCurrentDisplayModeWithHdrAndMetadataAsync)(self.as_abi() as *const _ as *mut _, mode.as_abi() as *const _ as *mut _, hdrOption, hdrMetadata, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_display_modes_changed(&self, value: &ComPtr<foundation::TypedEventHandler<HdmiDisplayInformation, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -1155,20 +1155,20 @@ impl ComPtr<IHdmiDisplayInformation> {
 RT_CLASS!{class HdmiDisplayInformation: IHdmiDisplayInformation}
 impl RtActivatable<IHdmiDisplayInformationStatics> for HdmiDisplayInformation {}
 impl HdmiDisplayInformation {
-    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<HdmiDisplayInformation>>> {
+    #[inline] pub fn get_for_current_view() -> Result<Option<HdmiDisplayInformation>> {
         <Self as RtActivatable<IHdmiDisplayInformationStatics>>::get_activation_factory().get_for_current_view()
     }
 }
 DEFINE_CLSID!(HdmiDisplayInformation(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,67,111,114,101,46,72,100,109,105,68,105,115,112,108,97,121,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_HdmiDisplayInformation]);
 DEFINE_IID!(IID_IHdmiDisplayInformationStatics, 1827058272, 62506, 18965, 145, 76, 123, 142, 42, 90, 101, 223);
 RT_INTERFACE!{static interface IHdmiDisplayInformationStatics(IHdmiDisplayInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHdmiDisplayInformationStatics] {
-    fn GetForCurrentView(&self, out: *mut *mut HdmiDisplayInformation) -> HRESULT
+    fn GetForCurrentView(&self, out: *mut <HdmiDisplayInformation as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHdmiDisplayInformationStatics> {
-    #[inline] pub fn get_for_current_view(&self) -> Result<Option<ComPtr<HdmiDisplayInformation>>> { unsafe { 
+    #[inline] pub fn get_for_current_view(&self) -> Result<Option<HdmiDisplayInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetForCurrentView)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HdmiDisplayInformation::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IHdmiDisplayMode, 201774509, 7056, 20305, 153, 129, 239, 90, 28, 13, 223, 102);
@@ -1178,7 +1178,7 @@ RT_INTERFACE!{interface IHdmiDisplayMode(IHdmiDisplayModeVtbl): IInspectable(IIn
     fn get_RefreshRate(&self, out: *mut f64) -> HRESULT,
     fn get_StereoEnabled(&self, out: *mut bool) -> HRESULT,
     fn get_BitsPerPixel(&self, out: *mut u16) -> HRESULT,
-    fn IsEqual(&self, mode: *mut HdmiDisplayMode, out: *mut bool) -> HRESULT,
+    fn IsEqual(&self, mode: <HdmiDisplayMode as RtType>::Abi, out: *mut bool) -> HRESULT,
     fn get_ColorSpace(&self, out: *mut HdmiDisplayColorSpace) -> HRESULT,
     fn get_PixelEncoding(&self, out: *mut HdmiDisplayPixelEncoding) -> HRESULT,
     fn get_IsSdrLuminanceSupported(&self, out: *mut bool) -> HRESULT,
@@ -1211,7 +1211,7 @@ impl ComPtr<IHdmiDisplayMode> {
         let hr = ((*self.as_abi().lpVtbl).get_BitsPerPixel)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn is_equal(&self, mode: &ComPtr<HdmiDisplayMode>) -> Result<bool> { unsafe { 
+    #[inline] pub fn is_equal(&self, mode: &HdmiDisplayMode) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).IsEqual)(self.as_abi() as *const _ as *mut _, mode.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -1334,25 +1334,25 @@ impl ComPtr<IHolographicCamera> {
 RT_CLASS!{class HolographicCamera: IHolographicCamera}
 DEFINE_IID!(IID_IHolographicCamera2, 3042680602, 47756, 20356, 173, 121, 46, 126, 30, 36, 80, 243);
 RT_INTERFACE!{interface IHolographicCamera2(IHolographicCamera2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera2] {
-    fn get_LeftViewportParameters(&self, out: *mut *mut HolographicCameraViewportParameters) -> HRESULT,
-    fn get_RightViewportParameters(&self, out: *mut *mut HolographicCameraViewportParameters) -> HRESULT,
-    fn get_Display(&self, out: *mut *mut HolographicDisplay) -> HRESULT
+    fn get_LeftViewportParameters(&self, out: *mut <HolographicCameraViewportParameters as RtType>::Abi) -> HRESULT,
+    fn get_RightViewportParameters(&self, out: *mut <HolographicCameraViewportParameters as RtType>::Abi) -> HRESULT,
+    fn get_Display(&self, out: *mut <HolographicDisplay as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHolographicCamera2> {
-    #[inline] pub fn get_left_viewport_parameters(&self) -> Result<Option<ComPtr<HolographicCameraViewportParameters>>> { unsafe { 
+    #[inline] pub fn get_left_viewport_parameters(&self) -> Result<Option<HolographicCameraViewportParameters>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LeftViewportParameters)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicCameraViewportParameters::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_right_viewport_parameters(&self) -> Result<Option<ComPtr<HolographicCameraViewportParameters>>> { unsafe { 
+    #[inline] pub fn get_right_viewport_parameters(&self) -> Result<Option<HolographicCameraViewportParameters>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RightViewportParameters)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicCameraViewportParameters::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_display(&self) -> Result<Option<ComPtr<HolographicDisplay>>> { unsafe { 
+    #[inline] pub fn get_display(&self) -> Result<Option<HolographicDisplay>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Display)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicDisplay::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IHolographicCamera3, 1168789427, 31577, 21070, 74, 63, 74, 106, 214, 101, 4, 119);
@@ -1380,7 +1380,7 @@ impl ComPtr<IHolographicCamera3> {
     #[inline] pub fn get_quad_layers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HolographicQuadLayer>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_QuadLayers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IHolographicCamera4, 2586128854, 18211, 20281, 169, 165, 157, 5, 24, 29, 155, 68);
@@ -1418,48 +1418,48 @@ impl ComPtr<IHolographicCamera5> {
 }
 DEFINE_IID!(IID_IHolographicCameraPose, 226328112, 4830, 17853, 145, 43, 199, 246, 86, 21, 153, 209);
 RT_INTERFACE!{interface IHolographicCameraPose(IHolographicCameraPoseVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraPose] {
-    fn get_HolographicCamera(&self, out: *mut *mut HolographicCamera) -> HRESULT,
+    fn get_HolographicCamera(&self, out: *mut <HolographicCamera as RtType>::Abi) -> HRESULT,
     fn get_Viewport(&self, out: *mut foundation::Rect) -> HRESULT,
     #[cfg(not(feature="windows-perception"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-perception")] fn TryGetViewTransform(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, out: *mut *mut foundation::IReference<HolographicStereoTransform>) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn TryGetViewTransform(&self, coordinateSystem: <super::super::perception::spatial::SpatialCoordinateSystem as RtType>::Abi, out: *mut *mut foundation::IReference<HolographicStereoTransform>) -> HRESULT,
     fn get_ProjectionTransform(&self, out: *mut HolographicStereoTransform) -> HRESULT,
     #[cfg(not(feature="windows-perception"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-perception")] fn TryGetCullingFrustum(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, out: *mut *mut foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn TryGetCullingFrustum(&self, coordinateSystem: <super::super::perception::spatial::SpatialCoordinateSystem as RtType>::Abi, out: *mut *mut foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>) -> HRESULT,
     #[cfg(not(feature="windows-perception"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-perception")] fn TryGetVisibleFrustum(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, out: *mut *mut foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn TryGetVisibleFrustum(&self, coordinateSystem: <super::super::perception::spatial::SpatialCoordinateSystem as RtType>::Abi, out: *mut *mut foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>) -> HRESULT,
     fn get_NearPlaneDistance(&self, out: *mut f64) -> HRESULT,
     fn get_FarPlaneDistance(&self, out: *mut f64) -> HRESULT
 }}
 impl ComPtr<IHolographicCameraPose> {
-    #[inline] pub fn get_holographic_camera(&self) -> Result<Option<ComPtr<HolographicCamera>>> { unsafe { 
+    #[inline] pub fn get_holographic_camera(&self) -> Result<Option<HolographicCamera>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_HolographicCamera)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicCamera::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_viewport(&self) -> Result<foundation::Rect> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).get_Viewport)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_view_transform(&self, coordinateSystem: &ComPtr<super::super::perception::spatial::SpatialCoordinateSystem>) -> Result<Option<ComPtr<foundation::IReference<HolographicStereoTransform>>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_view_transform(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<foundation::IReference<HolographicStereoTransform>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryGetViewTransform)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_projection_transform(&self) -> Result<HolographicStereoTransform> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).get_ProjectionTransform)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_culling_frustum(&self, coordinateSystem: &ComPtr<super::super::perception::spatial::SpatialCoordinateSystem>) -> Result<Option<ComPtr<foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_culling_frustum(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryGetCullingFrustum)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_visible_frustum(&self, coordinateSystem: &ComPtr<super::super::perception::spatial::SpatialCoordinateSystem>) -> Result<Option<ComPtr<foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn try_get_visible_frustum(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem) -> Result<Option<ComPtr<foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryGetVisibleFrustum)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_near_plane_distance(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
@@ -1476,12 +1476,12 @@ RT_CLASS!{class HolographicCameraPose: IHolographicCameraPose}
 DEFINE_IID!(IID_IHolographicCameraPose2, 590078067, 23853, 17760, 129, 78, 38, 151, 196, 252, 225, 107);
 RT_INTERFACE!{interface IHolographicCameraPose2(IHolographicCameraPose2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraPose2] {
     #[cfg(not(feature="windows-perception"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-perception")] fn OverrideViewTransform(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, coordinateSystemToViewTransform: HolographicStereoTransform) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn OverrideViewTransform(&self, coordinateSystem: <super::super::perception::spatial::SpatialCoordinateSystem as RtType>::Abi, coordinateSystemToViewTransform: HolographicStereoTransform) -> HRESULT,
     fn OverrideProjectionTransform(&self, projectionTransform: HolographicStereoTransform) -> HRESULT,
     fn OverrideViewport(&self, leftViewport: foundation::Rect, rightViewport: foundation::Rect) -> HRESULT
 }}
 impl ComPtr<IHolographicCameraPose2> {
-    #[cfg(feature="windows-perception")] #[inline] pub fn override_view_transform(&self, coordinateSystem: &ComPtr<super::super::perception::spatial::SpatialCoordinateSystem>, coordinateSystemToViewTransform: HolographicStereoTransform) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn override_view_transform(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, coordinateSystemToViewTransform: HolographicStereoTransform) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).OverrideViewTransform)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, coordinateSystemToViewTransform);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -1497,36 +1497,36 @@ impl ComPtr<IHolographicCameraPose2> {
 DEFINE_IID!(IID_IHolographicCameraRenderingParameters, 2393648849, 23540, 19990, 130, 54, 174, 8, 0, 193, 29, 13);
 RT_INTERFACE!{interface IHolographicCameraRenderingParameters(IHolographicCameraRenderingParametersVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraRenderingParameters] {
     #[cfg(not(feature="windows-perception"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-perception")] fn SetFocusPoint(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn SetFocusPoint(&self, coordinateSystem: <super::super::perception::spatial::SpatialCoordinateSystem as RtType>::Abi, position: foundation::numerics::Vector3) -> HRESULT,
     #[cfg(not(feature="windows-perception"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-perception")] fn SetFocusPointWithNormal(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn SetFocusPointWithNormal(&self, coordinateSystem: <super::super::perception::spatial::SpatialCoordinateSystem as RtType>::Abi, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3) -> HRESULT,
     #[cfg(not(feature="windows-perception"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-perception")] fn SetFocusPointWithNormalLinearVelocity(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3, linearVelocity: foundation::numerics::Vector3) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn SetFocusPointWithNormalLinearVelocity(&self, coordinateSystem: <super::super::perception::spatial::SpatialCoordinateSystem as RtType>::Abi, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3, linearVelocity: foundation::numerics::Vector3) -> HRESULT,
     fn get_Direct3D11Device(&self, out: *mut *mut super::directx::direct3d11::IDirect3DDevice) -> HRESULT,
     fn get_Direct3D11BackBuffer(&self, out: *mut *mut super::directx::direct3d11::IDirect3DSurface) -> HRESULT
 }}
 impl ComPtr<IHolographicCameraRenderingParameters> {
-    #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point(&self, coordinateSystem: &ComPtr<super::super::perception::spatial::SpatialCoordinateSystem>, position: foundation::numerics::Vector3) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).SetFocusPoint)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, position);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point_with_normal(&self, coordinateSystem: &ComPtr<super::super::perception::spatial::SpatialCoordinateSystem>, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point_with_normal(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).SetFocusPointWithNormal)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, position, normal);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point_with_normal_linear_velocity(&self, coordinateSystem: &ComPtr<super::super::perception::spatial::SpatialCoordinateSystem>, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3, linearVelocity: foundation::numerics::Vector3) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point_with_normal_linear_velocity(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3, linearVelocity: foundation::numerics::Vector3) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).SetFocusPointWithNormalLinearVelocity)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, position, normal, linearVelocity);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_direct3d11_device(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DDevice>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Direct3D11Device)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_direct3d11_back_buffer(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Direct3D11BackBuffer)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class HolographicCameraRenderingParameters: IHolographicCameraRenderingParameters}
@@ -1592,7 +1592,7 @@ RT_INTERFACE!{interface IHolographicDisplay(IHolographicDisplayVtbl): IInspectab
     fn get_IsStereo(&self, out: *mut bool) -> HRESULT,
     fn get_IsOpaque(&self, out: *mut bool) -> HRESULT,
     fn get_AdapterId(&self, out: *mut HolographicAdapterId) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn get_SpatialLocator(&self, out: *mut *mut super::super::perception::spatial::SpatialLocator) -> HRESULT
+    #[cfg(feature="windows-perception")] fn get_SpatialLocator(&self, out: *mut <super::super::perception::spatial::SpatialLocator as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHolographicDisplay> {
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
@@ -1620,16 +1620,16 @@ impl ComPtr<IHolographicDisplay> {
         let hr = ((*self.as_abi().lpVtbl).get_AdapterId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn get_spatial_locator(&self) -> Result<Option<ComPtr<super::super::perception::spatial::SpatialLocator>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn get_spatial_locator(&self) -> Result<Option<super::super::perception::spatial::SpatialLocator>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SpatialLocator)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::perception::spatial::SpatialLocator::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class HolographicDisplay: IHolographicDisplay}
 impl RtActivatable<IHolographicDisplayStatics> for HolographicDisplay {}
 impl HolographicDisplay {
-    #[inline] pub fn get_default() -> Result<Option<ComPtr<HolographicDisplay>>> {
+    #[inline] pub fn get_default() -> Result<Option<HolographicDisplay>> {
         <Self as RtActivatable<IHolographicDisplayStatics>>::get_activation_factory().get_default()
     }
 }
@@ -1647,22 +1647,22 @@ impl ComPtr<IHolographicDisplay2> {
 }
 DEFINE_IID!(IID_IHolographicDisplayStatics, 3409398147, 59312, 18497, 131, 85, 58, 229, 181, 54, 233, 164);
 RT_INTERFACE!{static interface IHolographicDisplayStatics(IHolographicDisplayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicDisplayStatics] {
-    fn GetDefault(&self, out: *mut *mut HolographicDisplay) -> HRESULT
+    fn GetDefault(&self, out: *mut <HolographicDisplay as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHolographicDisplayStatics> {
-    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<HolographicDisplay>>> { unsafe { 
+    #[inline] pub fn get_default(&self) -> Result<Option<HolographicDisplay>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicDisplay::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IHolographicFrame, 3331886774, 43193, 12372, 166, 235, 214, 36, 182, 83, 99, 117);
 RT_INTERFACE!{interface IHolographicFrame(IHolographicFrameVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFrame] {
     fn get_AddedCameras(&self, out: *mut *mut foundation::collections::IVectorView<HolographicCamera>) -> HRESULT,
     fn get_RemovedCameras(&self, out: *mut *mut foundation::collections::IVectorView<HolographicCamera>) -> HRESULT,
-    fn GetRenderingParameters(&self, cameraPose: *mut HolographicCameraPose, out: *mut *mut HolographicCameraRenderingParameters) -> HRESULT,
+    fn GetRenderingParameters(&self, cameraPose: <HolographicCameraPose as RtType>::Abi, out: *mut <HolographicCameraRenderingParameters as RtType>::Abi) -> HRESULT,
     fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    fn get_CurrentPrediction(&self, out: *mut *mut HolographicFramePrediction) -> HRESULT,
+    fn get_CurrentPrediction(&self, out: *mut <HolographicFramePrediction as RtType>::Abi) -> HRESULT,
     fn UpdateCurrentPrediction(&self) -> HRESULT,
     fn PresentUsingCurrentPrediction(&self, out: *mut HolographicFramePresentResult) -> HRESULT,
     fn PresentUsingCurrentPredictionWithBehavior(&self, waitBehavior: HolographicFramePresentWaitBehavior, out: *mut HolographicFramePresentResult) -> HRESULT,
@@ -1672,27 +1672,27 @@ impl ComPtr<IHolographicFrame> {
     #[inline] pub fn get_added_cameras(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HolographicCamera>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AddedCameras)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_removed_cameras(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HolographicCamera>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RemovedCameras)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_rendering_parameters(&self, cameraPose: &ComPtr<HolographicCameraPose>) -> Result<Option<ComPtr<HolographicCameraRenderingParameters>>> { unsafe { 
+    #[inline] pub fn get_rendering_parameters(&self, cameraPose: &HolographicCameraPose) -> Result<Option<HolographicCameraRenderingParameters>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetRenderingParameters)(self.as_abi() as *const _ as *mut _, cameraPose.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicCameraRenderingParameters::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).get_Duration)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_current_prediction(&self) -> Result<Option<ComPtr<HolographicFramePrediction>>> { unsafe { 
+    #[inline] pub fn get_current_prediction(&self) -> Result<Option<HolographicFramePrediction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CurrentPrediction)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicFramePrediction::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn update_current_prediction(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).UpdateCurrentPrediction)(self.as_abi() as *const _ as *mut _);
@@ -1716,30 +1716,30 @@ impl ComPtr<IHolographicFrame> {
 RT_CLASS!{class HolographicFrame: IHolographicFrame}
 DEFINE_IID!(IID_IHolographicFrame2, 675231679, 15346, 24209, 102, 51, 135, 5, 116, 230, 242, 23);
 RT_INTERFACE!{interface IHolographicFrame2(IHolographicFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFrame2] {
-    fn GetQuadLayerUpdateParameters(&self, layer: *mut HolographicQuadLayer, out: *mut *mut HolographicQuadLayerUpdateParameters) -> HRESULT
+    fn GetQuadLayerUpdateParameters(&self, layer: <HolographicQuadLayer as RtType>::Abi, out: *mut <HolographicQuadLayerUpdateParameters as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHolographicFrame2> {
-    #[inline] pub fn get_quad_layer_update_parameters(&self, layer: &ComPtr<HolographicQuadLayer>) -> Result<Option<ComPtr<HolographicQuadLayerUpdateParameters>>> { unsafe { 
+    #[inline] pub fn get_quad_layer_update_parameters(&self, layer: &HolographicQuadLayer) -> Result<Option<HolographicQuadLayerUpdateParameters>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetQuadLayerUpdateParameters)(self.as_abi() as *const _ as *mut _, layer.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicQuadLayerUpdateParameters::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IHolographicFramePrediction, 1376734689, 23562, 20089, 168, 30, 106, 190, 2, 187, 39, 57);
 RT_INTERFACE!{interface IHolographicFramePrediction(IHolographicFramePredictionVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePrediction] {
     fn get_CameraPoses(&self, out: *mut *mut foundation::collections::IVectorView<HolographicCameraPose>) -> HRESULT,
-    #[cfg(feature="windows-perception")] fn get_Timestamp(&self, out: *mut *mut super::super::perception::PerceptionTimestamp) -> HRESULT
+    #[cfg(feature="windows-perception")] fn get_Timestamp(&self, out: *mut <super::super::perception::PerceptionTimestamp as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHolographicFramePrediction> {
     #[inline] pub fn get_camera_poses(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HolographicCameraPose>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CameraPoses)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn get_timestamp(&self) -> Result<Option<ComPtr<super::super::perception::PerceptionTimestamp>>> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn get_timestamp(&self) -> Result<Option<super::super::perception::PerceptionTimestamp>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Timestamp)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::perception::PerceptionTimestamp::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class HolographicFramePrediction: IHolographicFramePrediction}
@@ -1751,7 +1751,7 @@ impl ComPtr<IHolographicFramePresentationMonitor> {
     #[inline] pub fn read_reports(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HolographicFramePresentationReport>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ReadReports)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class HolographicFramePresentationMonitor: IHolographicFramePresentationMonitor}
@@ -1817,29 +1817,29 @@ impl ComPtr<IHolographicQuadLayer> {
 RT_CLASS!{class HolographicQuadLayer: IHolographicQuadLayer}
 impl RtActivatable<IHolographicQuadLayerFactory> for HolographicQuadLayer {}
 impl HolographicQuadLayer {
-    #[inline] pub fn create(size: foundation::Size) -> Result<ComPtr<HolographicQuadLayer>> {
+    #[inline] pub fn create(size: foundation::Size) -> Result<HolographicQuadLayer> {
         <Self as RtActivatable<IHolographicQuadLayerFactory>>::get_activation_factory().create(size)
     }
-    #[inline] pub fn create_with_pixel_format(size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat) -> Result<ComPtr<HolographicQuadLayer>> {
+    #[inline] pub fn create_with_pixel_format(size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat) -> Result<HolographicQuadLayer> {
         <Self as RtActivatable<IHolographicQuadLayerFactory>>::get_activation_factory().create_with_pixel_format(size, pixelFormat)
     }
 }
 DEFINE_CLSID!(HolographicQuadLayer(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,81,117,97,100,76,97,121,101,114,0]) [CLSID_HolographicQuadLayer]);
 DEFINE_IID!(IID_IHolographicQuadLayerFactory, 2792700147, 23060, 23056, 72, 154, 69, 80, 101, 179, 123, 118);
 RT_INTERFACE!{static interface IHolographicQuadLayerFactory(IHolographicQuadLayerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayerFactory] {
-    fn Create(&self, size: foundation::Size, out: *mut *mut HolographicQuadLayer) -> HRESULT,
-    fn CreateWithPixelFormat(&self, size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat, out: *mut *mut HolographicQuadLayer) -> HRESULT
+    fn Create(&self, size: foundation::Size, out: *mut <HolographicQuadLayer as RtType>::Abi) -> HRESULT,
+    fn CreateWithPixelFormat(&self, size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat, out: *mut <HolographicQuadLayer as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHolographicQuadLayerFactory> {
-    #[inline] pub fn create(&self, size: foundation::Size) -> Result<ComPtr<HolographicQuadLayer>> { unsafe { 
+    #[inline] pub fn create(&self, size: foundation::Size) -> Result<HolographicQuadLayer> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, size, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicQuadLayer::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_pixel_format(&self, size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat) -> Result<ComPtr<HolographicQuadLayer>> { unsafe { 
+    #[inline] pub fn create_with_pixel_format(&self, size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat) -> Result<HolographicQuadLayer> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWithPixelFormat)(self.as_abi() as *const _ as *mut _, size, pixelFormat, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicQuadLayer::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IHolographicQuadLayerUpdateParameters, 722379696, 31117, 23498, 85, 194, 44, 12, 118, 46, 187, 8);
@@ -1849,14 +1849,14 @@ RT_INTERFACE!{interface IHolographicQuadLayerUpdateParameters(IHolographicQuadLa
     fn UpdateContentProtectionEnabled(&self, value: bool) -> HRESULT,
     fn UpdateExtents(&self, value: foundation::numerics::Vector2) -> HRESULT,
     #[cfg(not(feature="windows-perception"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-perception")] fn UpdateLocationWithStationaryMode(&self, coordinateSystem: *mut super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> HRESULT,
+    #[cfg(feature="windows-perception")] fn UpdateLocationWithStationaryMode(&self, coordinateSystem: <super::super::perception::spatial::SpatialCoordinateSystem as RtType>::Abi, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> HRESULT,
     fn UpdateLocationWithDisplayRelativeMode(&self, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> HRESULT
 }}
 impl ComPtr<IHolographicQuadLayerUpdateParameters> {
     #[inline] pub fn acquire_buffer_to_update_content(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).AcquireBufferToUpdateContent)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn update_viewport(&self, value: foundation::Rect) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).UpdateViewport)(self.as_abi() as *const _ as *mut _, value);
@@ -1870,7 +1870,7 @@ impl ComPtr<IHolographicQuadLayerUpdateParameters> {
         let hr = ((*self.as_abi().lpVtbl).UpdateExtents)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-perception")] #[inline] pub fn update_location_with_stationary_mode(&self, coordinateSystem: &ComPtr<super::super::perception::spatial::SpatialCoordinateSystem>, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-perception")] #[inline] pub fn update_location_with_stationary_mode(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).UpdateLocationWithStationaryMode)(self.as_abi() as *const _ as *mut _, coordinateSystem.as_abi() as *const _ as *mut _, position, orientation);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -1894,7 +1894,7 @@ impl ComPtr<IHolographicQuadLayerUpdateParameters2> {
     #[inline] pub fn acquire_buffer_to_update_content_with_hardware_protection(&self) -> Result<Option<ComPtr<super::directx::direct3d11::IDirect3DSurface>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).AcquireBufferToUpdateContentWithHardwareProtection)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum HolographicReprojectionMode: i32 {
@@ -1908,7 +1908,7 @@ RT_INTERFACE!{interface IHolographicSpace(IHolographicSpaceVtbl): IInspectable(I
     fn remove_CameraAdded(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
     fn add_CameraRemoved(&self, handler: *mut foundation::TypedEventHandler<HolographicSpace, HolographicSpaceCameraRemovedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_CameraRemoved(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn CreateNextFrame(&self, out: *mut *mut HolographicFrame) -> HRESULT
+    fn CreateNextFrame(&self, out: *mut <HolographicFrame as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHolographicSpace> {
     #[inline] pub fn get_primary_adapter_id(&self) -> Result<HolographicAdapterId> { unsafe { 
@@ -1938,10 +1938,10 @@ impl ComPtr<IHolographicSpace> {
         let hr = ((*self.as_abi().lpVtbl).remove_CameraRemoved)(self.as_abi() as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn create_next_frame(&self) -> Result<Option<ComPtr<HolographicFrame>>> { unsafe { 
+    #[inline] pub fn create_next_frame(&self) -> Result<Option<HolographicFrame>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateNextFrame)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicFrame::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class HolographicSpace: IHolographicSpace}
@@ -1949,7 +1949,7 @@ impl RtActivatable<IHolographicSpaceStatics> for HolographicSpace {}
 impl RtActivatable<IHolographicSpaceStatics2> for HolographicSpace {}
 impl RtActivatable<IHolographicSpaceStatics3> for HolographicSpace {}
 impl HolographicSpace {
-    #[cfg(feature="windows-ui")] #[inline] pub fn create_for_core_window(window: &ComPtr<super::super::ui::core::CoreWindow>) -> Result<Option<ComPtr<HolographicSpace>>> {
+    #[cfg(feature="windows-ui")] #[inline] pub fn create_for_core_window(window: &super::super::ui::core::CoreWindow) -> Result<Option<HolographicSpace>> {
         <Self as RtActivatable<IHolographicSpaceStatics>>::get_activation_factory().create_for_core_window(window)
     }
     #[inline] pub fn get_is_supported() -> Result<bool> {
@@ -1976,7 +1976,7 @@ RT_INTERFACE!{interface IHolographicSpace2(IHolographicSpace2Vtbl): IInspectable
     fn remove_UserPresenceChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn WaitForNextFrameReady(&self) -> HRESULT,
     fn WaitForNextFrameReadyWithHeadStart(&self, requestedHeadStartDuration: foundation::TimeSpan) -> HRESULT,
-    fn CreateFramePresentationMonitor(&self, maxQueuedReports: u32, out: *mut *mut HolographicFramePresentationMonitor) -> HRESULT
+    fn CreateFramePresentationMonitor(&self, maxQueuedReports: u32, out: *mut <HolographicFramePresentationMonitor as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHolographicSpace2> {
     #[inline] pub fn get_user_presence(&self) -> Result<HolographicSpaceUserPresence> { unsafe { 
@@ -2001,51 +2001,51 @@ impl ComPtr<IHolographicSpace2> {
         let hr = ((*self.as_abi().lpVtbl).WaitForNextFrameReadyWithHeadStart)(self.as_abi() as *const _ as *mut _, requestedHeadStartDuration);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn create_frame_presentation_monitor(&self, maxQueuedReports: u32) -> Result<Option<ComPtr<HolographicFramePresentationMonitor>>> { unsafe { 
+    #[inline] pub fn create_frame_presentation_monitor(&self, maxQueuedReports: u32) -> Result<Option<HolographicFramePresentationMonitor>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFramePresentationMonitor)(self.as_abi() as *const _ as *mut _, maxQueuedReports, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicFramePresentationMonitor::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IHolographicSpaceCameraAddedEventArgs, 1492245045, 48051, 15503, 153, 61, 108, 128, 231, 254, 185, 159);
 RT_INTERFACE!{interface IHolographicSpaceCameraAddedEventArgs(IHolographicSpaceCameraAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceCameraAddedEventArgs] {
-    fn get_Camera(&self, out: *mut *mut HolographicCamera) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+    fn get_Camera(&self, out: *mut <HolographicCamera as RtType>::Abi) -> HRESULT,
+    fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHolographicSpaceCameraAddedEventArgs> {
-    #[inline] pub fn get_camera(&self) -> Result<Option<ComPtr<HolographicCamera>>> { unsafe { 
+    #[inline] pub fn get_camera(&self) -> Result<Option<HolographicCamera>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Camera)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicCamera::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+    #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class HolographicSpaceCameraAddedEventArgs: IHolographicSpaceCameraAddedEventArgs}
 DEFINE_IID!(IID_IHolographicSpaceCameraRemovedEventArgs, 2153006248, 62126, 12846, 141, 169, 131, 106, 10, 149, 164, 193);
 RT_INTERFACE!{interface IHolographicSpaceCameraRemovedEventArgs(IHolographicSpaceCameraRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceCameraRemovedEventArgs] {
-    fn get_Camera(&self, out: *mut *mut HolographicCamera) -> HRESULT
+    fn get_Camera(&self, out: *mut <HolographicCamera as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHolographicSpaceCameraRemovedEventArgs> {
-    #[inline] pub fn get_camera(&self) -> Result<Option<ComPtr<HolographicCamera>>> { unsafe { 
+    #[inline] pub fn get_camera(&self) -> Result<Option<HolographicCamera>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Camera)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicCamera::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class HolographicSpaceCameraRemovedEventArgs: IHolographicSpaceCameraRemovedEventArgs}
 DEFINE_IID!(IID_IHolographicSpaceStatics, 911106148, 51442, 15265, 131, 145, 102, 184, 72, 158, 103, 253);
 RT_INTERFACE!{static interface IHolographicSpaceStatics(IHolographicSpaceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceStatics] {
-    #[cfg(feature="windows-ui")] fn CreateForCoreWindow(&self, window: *mut super::super::ui::core::CoreWindow, out: *mut *mut HolographicSpace) -> HRESULT
+    #[cfg(feature="windows-ui")] fn CreateForCoreWindow(&self, window: <super::super::ui::core::CoreWindow as RtType>::Abi, out: *mut <HolographicSpace as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHolographicSpaceStatics> {
-    #[cfg(feature="windows-ui")] #[inline] pub fn create_for_core_window(&self, window: &ComPtr<super::super::ui::core::CoreWindow>) -> Result<Option<ComPtr<HolographicSpace>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn create_for_core_window(&self, window: &super::super::ui::core::CoreWindow) -> Result<Option<HolographicSpace>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateForCoreWindow)(self.as_abi() as *const _ as *mut _, window.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HolographicSpace::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IHolographicSpaceStatics2, 242708616, 30204, 18607, 135, 88, 6, 82, 246, 240, 124, 89);
@@ -2139,7 +2139,7 @@ impl ComPtr<IBitmapCodecInformation> {
     #[inline] pub fn get_file_extensions(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_FileExtensions)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_friendly_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -2149,28 +2149,28 @@ impl ComPtr<IBitmapCodecInformation> {
     #[inline] pub fn get_mime_types(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_MimeTypes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class BitmapCodecInformation: IBitmapCodecInformation}
 DEFINE_IID!(IID_IBitmapDecoder, 2901353146, 7540, 19601, 157, 252, 150, 32, 116, 82, 51, 230);
 RT_INTERFACE!{interface IBitmapDecoder(IBitmapDecoderVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapDecoder] {
-    fn get_BitmapContainerProperties(&self, out: *mut *mut BitmapPropertiesView) -> HRESULT,
-    fn get_DecoderInformation(&self, out: *mut *mut BitmapCodecInformation) -> HRESULT,
+    fn get_BitmapContainerProperties(&self, out: *mut <BitmapPropertiesView as RtType>::Abi) -> HRESULT,
+    fn get_DecoderInformation(&self, out: *mut <BitmapCodecInformation as RtType>::Abi) -> HRESULT,
     fn get_FrameCount(&self, out: *mut u32) -> HRESULT,
     fn GetPreviewAsync(&self, out: *mut *mut foundation::IAsyncOperation<ImageStream>) -> HRESULT,
     fn GetFrameAsync(&self, frameIndex: u32, out: *mut *mut foundation::IAsyncOperation<BitmapFrame>) -> HRESULT
 }}
 impl ComPtr<IBitmapDecoder> {
-    #[inline] pub fn get_bitmap_container_properties(&self) -> Result<Option<ComPtr<BitmapPropertiesView>>> { unsafe { 
+    #[inline] pub fn get_bitmap_container_properties(&self) -> Result<Option<BitmapPropertiesView>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BitmapContainerProperties)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BitmapPropertiesView::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_decoder_information(&self) -> Result<Option<ComPtr<BitmapCodecInformation>>> { unsafe { 
+    #[inline] pub fn get_decoder_information(&self) -> Result<Option<BitmapCodecInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DecoderInformation)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BitmapCodecInformation::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_frame_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
@@ -2180,12 +2180,12 @@ impl ComPtr<IBitmapDecoder> {
     #[inline] pub fn get_preview_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ImageStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetPreviewAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_frame_async(&self, frameIndex: u32) -> Result<ComPtr<foundation::IAsyncOperation<BitmapFrame>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetFrameAsync)(self.as_abi() as *const _ as *mut _, frameIndex, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class BitmapDecoder: IBitmapDecoder}
@@ -2282,17 +2282,17 @@ impl ComPtr<IBitmapDecoderStatics> {
     #[inline] pub fn get_decoder_information_enumerator(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<BitmapCodecInformation>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDecoderInformationEnumerator)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_async(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<BitmapDecoder>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateAsync)(self.as_abi() as *const _ as *mut _, stream.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_with_id_async(&self, decoderId: Guid, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<BitmapDecoder>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWithIdAsync)(self.as_abi() as *const _ as *mut _, decoderId, stream.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBitmapDecoderStatics2, 1354393834, 39329, 16580, 128, 217, 174, 240, 218, 250, 108, 63);
@@ -2314,36 +2314,36 @@ impl ComPtr<IBitmapDecoderStatics2> {
 }
 DEFINE_IID!(IID_IBitmapEncoder, 734292195, 57848, 19284, 149, 232, 50, 145, 149, 81, 206, 98);
 RT_INTERFACE!{interface IBitmapEncoder(IBitmapEncoderVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapEncoder] {
-    fn get_EncoderInformation(&self, out: *mut *mut BitmapCodecInformation) -> HRESULT,
-    fn get_BitmapProperties(&self, out: *mut *mut BitmapProperties) -> HRESULT,
-    fn get_BitmapContainerProperties(&self, out: *mut *mut BitmapProperties) -> HRESULT,
+    fn get_EncoderInformation(&self, out: *mut <BitmapCodecInformation as RtType>::Abi) -> HRESULT,
+    fn get_BitmapProperties(&self, out: *mut <BitmapProperties as RtType>::Abi) -> HRESULT,
+    fn get_BitmapContainerProperties(&self, out: *mut <BitmapProperties as RtType>::Abi) -> HRESULT,
     fn get_IsThumbnailGenerated(&self, out: *mut bool) -> HRESULT,
     fn put_IsThumbnailGenerated(&self, value: bool) -> HRESULT,
     fn get_GeneratedThumbnailWidth(&self, out: *mut u32) -> HRESULT,
     fn put_GeneratedThumbnailWidth(&self, value: u32) -> HRESULT,
     fn get_GeneratedThumbnailHeight(&self, out: *mut u32) -> HRESULT,
     fn put_GeneratedThumbnailHeight(&self, value: u32) -> HRESULT,
-    fn get_BitmapTransform(&self, out: *mut *mut BitmapTransform) -> HRESULT,
+    fn get_BitmapTransform(&self, out: *mut <BitmapTransform as RtType>::Abi) -> HRESULT,
     fn SetPixelData(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, width: u32, height: u32, dpiX: f64, dpiY: f64, pixelsSize: u32, pixels: *mut u8) -> HRESULT,
     fn GoToNextFrameAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn GoToNextFrameWithEncodingOptionsAsync(&self, encodingOptions: *mut foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, BitmapTypedValue>>, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn FlushAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl ComPtr<IBitmapEncoder> {
-    #[inline] pub fn get_encoder_information(&self) -> Result<Option<ComPtr<BitmapCodecInformation>>> { unsafe { 
+    #[inline] pub fn get_encoder_information(&self) -> Result<Option<BitmapCodecInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_EncoderInformation)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BitmapCodecInformation::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_bitmap_properties(&self) -> Result<Option<ComPtr<BitmapProperties>>> { unsafe { 
+    #[inline] pub fn get_bitmap_properties(&self) -> Result<Option<BitmapProperties>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BitmapProperties)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BitmapProperties::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_bitmap_container_properties(&self) -> Result<Option<ComPtr<BitmapProperties>>> { unsafe { 
+    #[inline] pub fn get_bitmap_container_properties(&self) -> Result<Option<BitmapProperties>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BitmapContainerProperties)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BitmapProperties::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_thumbnail_generated(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
@@ -2372,10 +2372,10 @@ impl ComPtr<IBitmapEncoder> {
         let hr = ((*self.as_abi().lpVtbl).put_GeneratedThumbnailHeight)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_bitmap_transform(&self) -> Result<Option<ComPtr<BitmapTransform>>> { unsafe { 
+    #[inline] pub fn get_bitmap_transform(&self) -> Result<Option<BitmapTransform>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BitmapTransform)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BitmapTransform::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_pixel_data(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, width: u32, height: u32, dpiX: f64, dpiY: f64, pixels: &[u8]) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).SetPixelData)(self.as_abi() as *const _ as *mut _, pixelFormat, alphaMode, width, height, dpiX, dpiY, pixels.len() as u32, pixels.as_ptr() as *mut _);
@@ -2384,17 +2384,17 @@ impl ComPtr<IBitmapEncoder> {
     #[inline] pub fn go_to_next_frame_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GoToNextFrameAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn go_to_next_frame_with_encoding_options_async(&self, encodingOptions: &ComPtr<foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, BitmapTypedValue>>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GoToNextFrameWithEncodingOptionsAsync)(self.as_abi() as *const _ as *mut _, encodingOptions.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn flush_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FlushAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class BitmapEncoder: IBitmapEncoder}
@@ -2428,10 +2428,10 @@ impl BitmapEncoder {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_with_encoding_options_async(encoderId: Guid, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, encodingOptions: &ComPtr<foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, BitmapTypedValue>>>) -> Result<ComPtr<foundation::IAsyncOperation<BitmapEncoder>>> {
         <Self as RtActivatable<IBitmapEncoderStatics>>::get_activation_factory().create_with_encoding_options_async(encoderId, stream, encodingOptions)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_for_transcoding_async(stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, bitmapDecoder: &ComPtr<BitmapDecoder>) -> Result<ComPtr<foundation::IAsyncOperation<BitmapEncoder>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_for_transcoding_async(stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, bitmapDecoder: &BitmapDecoder) -> Result<ComPtr<foundation::IAsyncOperation<BitmapEncoder>>> {
         <Self as RtActivatable<IBitmapEncoderStatics>>::get_activation_factory().create_for_transcoding_async(stream, bitmapDecoder)
     }
-    #[inline] pub fn create_for_in_place_property_encoding_async(bitmapDecoder: &ComPtr<BitmapDecoder>) -> Result<ComPtr<foundation::IAsyncOperation<BitmapEncoder>>> {
+    #[inline] pub fn create_for_in_place_property_encoding_async(bitmapDecoder: &BitmapDecoder) -> Result<ComPtr<foundation::IAsyncOperation<BitmapEncoder>>> {
         <Self as RtActivatable<IBitmapEncoderStatics>>::get_activation_factory().create_for_in_place_property_encoding_async(bitmapDecoder)
     }
     #[inline] pub fn get_heif_encoder_id() -> Result<Guid> {
@@ -2453,8 +2453,8 @@ RT_INTERFACE!{static interface IBitmapEncoderStatics(IBitmapEncoderStaticsVtbl):
     #[cfg(not(feature="windows-storage"))] fn __Dummy8(&self) -> (),
     #[cfg(feature="windows-storage")] fn CreateWithEncodingOptionsAsync(&self, encoderId: Guid, stream: *mut super::super::storage::streams::IRandomAccessStream, encodingOptions: *mut foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, BitmapTypedValue>>, out: *mut *mut foundation::IAsyncOperation<BitmapEncoder>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy9(&self) -> (),
-    #[cfg(feature="windows-storage")] fn CreateForTranscodingAsync(&self, stream: *mut super::super::storage::streams::IRandomAccessStream, bitmapDecoder: *mut BitmapDecoder, out: *mut *mut foundation::IAsyncOperation<BitmapEncoder>) -> HRESULT,
-    fn CreateForInPlacePropertyEncodingAsync(&self, bitmapDecoder: *mut BitmapDecoder, out: *mut *mut foundation::IAsyncOperation<BitmapEncoder>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn CreateForTranscodingAsync(&self, stream: *mut super::super::storage::streams::IRandomAccessStream, bitmapDecoder: <BitmapDecoder as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<BitmapEncoder>) -> HRESULT,
+    fn CreateForInPlacePropertyEncodingAsync(&self, bitmapDecoder: <BitmapDecoder as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<BitmapEncoder>) -> HRESULT
 }}
 impl ComPtr<IBitmapEncoderStatics> {
     #[inline] pub fn get_bmp_encoder_id(&self) -> Result<Guid> { unsafe { 
@@ -2490,27 +2490,27 @@ impl ComPtr<IBitmapEncoderStatics> {
     #[inline] pub fn get_encoder_information_enumerator(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<BitmapCodecInformation>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetEncoderInformationEnumerator)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_async(&self, encoderId: Guid, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<BitmapEncoder>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateAsync)(self.as_abi() as *const _ as *mut _, encoderId, stream.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_with_encoding_options_async(&self, encoderId: Guid, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, encodingOptions: &ComPtr<foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, BitmapTypedValue>>>) -> Result<ComPtr<foundation::IAsyncOperation<BitmapEncoder>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWithEncodingOptionsAsync)(self.as_abi() as *const _ as *mut _, encoderId, stream.as_abi() as *const _ as *mut _, encodingOptions.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_for_transcoding_async(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, bitmapDecoder: &ComPtr<BitmapDecoder>) -> Result<ComPtr<foundation::IAsyncOperation<BitmapEncoder>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_for_transcoding_async(&self, stream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, bitmapDecoder: &BitmapDecoder) -> Result<ComPtr<foundation::IAsyncOperation<BitmapEncoder>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateForTranscodingAsync)(self.as_abi() as *const _ as *mut _, stream.as_abi() as *const _ as *mut _, bitmapDecoder.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_for_in_place_property_encoding_async(&self, bitmapDecoder: &ComPtr<BitmapDecoder>) -> Result<ComPtr<foundation::IAsyncOperation<BitmapEncoder>>> { unsafe { 
+    #[inline] pub fn create_for_in_place_property_encoding_async(&self, bitmapDecoder: &BitmapDecoder) -> Result<ComPtr<foundation::IAsyncOperation<BitmapEncoder>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateForInPlacePropertyEncodingAsync)(self.as_abi() as *const _ as *mut _, bitmapDecoder.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBitmapEncoderStatics2, 868991577, 65073, 16817, 184, 18, 8, 109, 33, 232, 126, 22);
@@ -2526,10 +2526,10 @@ impl ComPtr<IBitmapEncoderStatics2> {
 }
 DEFINE_IID!(IID_IBitmapEncoderWithSoftwareBitmap, 1751962177, 17200, 19575, 172, 228, 3, 52, 150, 139, 23, 104);
 RT_INTERFACE!{interface IBitmapEncoderWithSoftwareBitmap(IBitmapEncoderWithSoftwareBitmapVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapEncoderWithSoftwareBitmap] {
-    fn SetSoftwareBitmap(&self, bitmap: *mut SoftwareBitmap) -> HRESULT
+    fn SetSoftwareBitmap(&self, bitmap: <SoftwareBitmap as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IBitmapEncoderWithSoftwareBitmap> {
-    #[inline] pub fn set_software_bitmap(&self, bitmap: &ComPtr<SoftwareBitmap>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_software_bitmap(&self, bitmap: &SoftwareBitmap) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).SetSoftwareBitmap)(self.as_abi() as *const _ as *mut _, bitmap.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -2540,7 +2540,7 @@ RT_ENUM! { enum BitmapFlip: i32 {
 DEFINE_IID!(IID_IBitmapFrame, 1923389980, 32897, 17293, 145, 188, 148, 236, 252, 129, 133, 198);
 RT_INTERFACE!{interface IBitmapFrame(IBitmapFrameVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapFrame] {
     fn GetThumbnailAsync(&self, out: *mut *mut foundation::IAsyncOperation<ImageStream>) -> HRESULT,
-    fn get_BitmapProperties(&self, out: *mut *mut BitmapPropertiesView) -> HRESULT,
+    fn get_BitmapProperties(&self, out: *mut <BitmapPropertiesView as RtType>::Abi) -> HRESULT,
     fn get_BitmapPixelFormat(&self, out: *mut BitmapPixelFormat) -> HRESULT,
     fn get_BitmapAlphaMode(&self, out: *mut BitmapAlphaMode) -> HRESULT,
     fn get_DpiX(&self, out: *mut f64) -> HRESULT,
@@ -2550,18 +2550,18 @@ RT_INTERFACE!{interface IBitmapFrame(IBitmapFrameVtbl): IInspectable(IInspectabl
     fn get_OrientedPixelWidth(&self, out: *mut u32) -> HRESULT,
     fn get_OrientedPixelHeight(&self, out: *mut u32) -> HRESULT,
     fn GetPixelDataAsync(&self, out: *mut *mut foundation::IAsyncOperation<PixelDataProvider>) -> HRESULT,
-    fn GetPixelDataTransformedAsync(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, transform: *mut BitmapTransform, exifOrientationMode: ExifOrientationMode, colorManagementMode: ColorManagementMode, out: *mut *mut foundation::IAsyncOperation<PixelDataProvider>) -> HRESULT
+    fn GetPixelDataTransformedAsync(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, transform: <BitmapTransform as RtType>::Abi, exifOrientationMode: ExifOrientationMode, colorManagementMode: ColorManagementMode, out: *mut *mut foundation::IAsyncOperation<PixelDataProvider>) -> HRESULT
 }}
 impl ComPtr<IBitmapFrame> {
     #[inline] pub fn get_thumbnail_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ImageStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetThumbnailAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_bitmap_properties(&self) -> Result<Option<ComPtr<BitmapPropertiesView>>> { unsafe { 
+    #[inline] pub fn get_bitmap_properties(&self) -> Result<Option<BitmapPropertiesView>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BitmapProperties)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BitmapPropertiesView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bitmap_pixel_format(&self) -> Result<BitmapPixelFormat> { unsafe { 
         let mut out = zeroed();
@@ -2606,12 +2606,12 @@ impl ComPtr<IBitmapFrame> {
     #[inline] pub fn get_pixel_data_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<PixelDataProvider>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetPixelDataAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_pixel_data_transformed_async(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, transform: &ComPtr<BitmapTransform>, exifOrientationMode: ExifOrientationMode, colorManagementMode: ColorManagementMode) -> Result<ComPtr<foundation::IAsyncOperation<PixelDataProvider>>> { unsafe { 
+    #[inline] pub fn get_pixel_data_transformed_async(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, transform: &BitmapTransform, exifOrientationMode: ExifOrientationMode, colorManagementMode: ColorManagementMode) -> Result<ComPtr<foundation::IAsyncOperation<PixelDataProvider>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetPixelDataTransformedAsync)(self.as_abi() as *const _ as *mut _, pixelFormat, alphaMode, transform.as_abi() as *const _ as *mut _, exifOrientationMode, colorManagementMode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class BitmapFrame: IBitmapFrame}
@@ -2619,23 +2619,23 @@ DEFINE_IID!(IID_IBitmapFrameWithSoftwareBitmap, 4264066202, 16908, 18787, 135, 1
 RT_INTERFACE!{interface IBitmapFrameWithSoftwareBitmap(IBitmapFrameWithSoftwareBitmapVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapFrameWithSoftwareBitmap] {
     fn GetSoftwareBitmapAsync(&self, out: *mut *mut foundation::IAsyncOperation<SoftwareBitmap>) -> HRESULT,
     fn GetSoftwareBitmapConvertedAsync(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, out: *mut *mut foundation::IAsyncOperation<SoftwareBitmap>) -> HRESULT,
-    fn GetSoftwareBitmapTransformedAsync(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, transform: *mut BitmapTransform, exifOrientationMode: ExifOrientationMode, colorManagementMode: ColorManagementMode, out: *mut *mut foundation::IAsyncOperation<SoftwareBitmap>) -> HRESULT
+    fn GetSoftwareBitmapTransformedAsync(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, transform: <BitmapTransform as RtType>::Abi, exifOrientationMode: ExifOrientationMode, colorManagementMode: ColorManagementMode, out: *mut *mut foundation::IAsyncOperation<SoftwareBitmap>) -> HRESULT
 }}
 impl ComPtr<IBitmapFrameWithSoftwareBitmap> {
     #[inline] pub fn get_software_bitmap_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<SoftwareBitmap>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetSoftwareBitmapAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_software_bitmap_converted_async(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode) -> Result<ComPtr<foundation::IAsyncOperation<SoftwareBitmap>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetSoftwareBitmapConvertedAsync)(self.as_abi() as *const _ as *mut _, pixelFormat, alphaMode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_software_bitmap_transformed_async(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, transform: &ComPtr<BitmapTransform>, exifOrientationMode: ExifOrientationMode, colorManagementMode: ColorManagementMode) -> Result<ComPtr<foundation::IAsyncOperation<SoftwareBitmap>>> { unsafe { 
+    #[inline] pub fn get_software_bitmap_transformed_async(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, transform: &BitmapTransform, exifOrientationMode: ExifOrientationMode, colorManagementMode: ColorManagementMode) -> Result<ComPtr<foundation::IAsyncOperation<SoftwareBitmap>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetSoftwareBitmapTransformedAsync)(self.as_abi() as *const _ as *mut _, pixelFormat, alphaMode, transform.as_abi() as *const _ as *mut _, exifOrientationMode, colorManagementMode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum BitmapInterpolationMode: i32 {
@@ -2655,7 +2655,7 @@ impl ComPtr<IBitmapProperties> {
     #[inline] pub fn set_properties_async(&self, propertiesToSet: &ComPtr<foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, BitmapTypedValue>>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetPropertiesAsync)(self.as_abi() as *const _ as *mut _, propertiesToSet.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class BitmapProperties: IBitmapProperties}
@@ -2667,7 +2667,7 @@ impl ComPtr<IBitmapPropertiesView> {
     #[inline] pub fn get_properties_async(&self, propertiesToRetrieve: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<BitmapPropertySet>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetPropertiesAsync)(self.as_abi() as *const _ as *mut _, propertiesToRetrieve.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class BitmapPropertiesView: IBitmapPropertiesView}
@@ -2763,7 +2763,7 @@ impl ComPtr<IBitmapTypedValue> {
     #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_type(&self) -> Result<foundation::PropertyType> { unsafe { 
         let mut out = zeroed();
@@ -2774,20 +2774,20 @@ impl ComPtr<IBitmapTypedValue> {
 RT_CLASS!{class BitmapTypedValue: IBitmapTypedValue}
 impl RtActivatable<IBitmapTypedValueFactory> for BitmapTypedValue {}
 impl BitmapTypedValue {
-    #[inline] pub fn create(value: &ComPtr<IInspectable>, type_: foundation::PropertyType) -> Result<ComPtr<BitmapTypedValue>> {
+    #[inline] pub fn create(value: &ComPtr<IInspectable>, type_: foundation::PropertyType) -> Result<BitmapTypedValue> {
         <Self as RtActivatable<IBitmapTypedValueFactory>>::get_activation_factory().create(value, type_)
     }
 }
 DEFINE_CLSID!(BitmapTypedValue(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,84,121,112,101,100,86,97,108,117,101,0]) [CLSID_BitmapTypedValue]);
 DEFINE_IID!(IID_IBitmapTypedValueFactory, 2463872409, 52755, 18107, 149, 69, 203, 58, 63, 99, 235, 139);
 RT_INTERFACE!{static interface IBitmapTypedValueFactory(IBitmapTypedValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapTypedValueFactory] {
-    fn Create(&self, value: *mut IInspectable, type_: foundation::PropertyType, out: *mut *mut BitmapTypedValue) -> HRESULT
+    fn Create(&self, value: *mut IInspectable, type_: foundation::PropertyType, out: *mut <BitmapTypedValue as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IBitmapTypedValueFactory> {
-    #[inline] pub fn create(&self, value: &ComPtr<IInspectable>, type_: foundation::PropertyType) -> Result<ComPtr<BitmapTypedValue>> { unsafe { 
+    #[inline] pub fn create(&self, value: &ComPtr<IInspectable>, type_: foundation::PropertyType) -> Result<BitmapTypedValue> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, type_, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BitmapTypedValue::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum ColorManagementMode: i32 {
@@ -2827,13 +2827,13 @@ RT_INTERFACE!{interface ISoftwareBitmap(ISoftwareBitmapVtbl): IInspectable(IInsp
     fn get_DpiX(&self, out: *mut f64) -> HRESULT,
     fn put_DpiY(&self, value: f64) -> HRESULT,
     fn get_DpiY(&self, out: *mut f64) -> HRESULT,
-    fn LockBuffer(&self, mode: BitmapBufferAccessMode, out: *mut *mut BitmapBuffer) -> HRESULT,
-    fn CopyTo(&self, bitmap: *mut SoftwareBitmap) -> HRESULT,
+    fn LockBuffer(&self, mode: BitmapBufferAccessMode, out: *mut <BitmapBuffer as RtType>::Abi) -> HRESULT,
+    fn CopyTo(&self, bitmap: <SoftwareBitmap as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy11(&self) -> (),
     #[cfg(feature="windows-storage")] fn CopyFromBuffer(&self, buffer: *mut super::super::storage::streams::IBuffer) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy12(&self) -> (),
     #[cfg(feature="windows-storage")] fn CopyToBuffer(&self, buffer: *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    fn GetReadOnlyView(&self, out: *mut *mut SoftwareBitmap) -> HRESULT
+    fn GetReadOnlyView(&self, out: *mut <SoftwareBitmap as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ISoftwareBitmap> {
     #[inline] pub fn get_bitmap_pixel_format(&self) -> Result<BitmapPixelFormat> { unsafe { 
@@ -2879,12 +2879,12 @@ impl ComPtr<ISoftwareBitmap> {
         let hr = ((*self.as_abi().lpVtbl).get_DpiY)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn lock_buffer(&self, mode: BitmapBufferAccessMode) -> Result<Option<ComPtr<BitmapBuffer>>> { unsafe { 
+    #[inline] pub fn lock_buffer(&self, mode: BitmapBufferAccessMode) -> Result<Option<BitmapBuffer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).LockBuffer)(self.as_abi() as *const _ as *mut _, mode, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BitmapBuffer::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn copy_to(&self, bitmap: &ComPtr<SoftwareBitmap>) -> Result<()> { unsafe { 
+    #[inline] pub fn copy_to(&self, bitmap: &SoftwareBitmap) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).CopyTo)(self.as_abi() as *const _ as *mut _, bitmap.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -2896,35 +2896,35 @@ impl ComPtr<ISoftwareBitmap> {
         let hr = ((*self.as_abi().lpVtbl).CopyToBuffer)(self.as_abi() as *const _ as *mut _, buffer.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_read_only_view(&self) -> Result<Option<ComPtr<SoftwareBitmap>>> { unsafe { 
+    #[inline] pub fn get_read_only_view(&self) -> Result<Option<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetReadOnlyView)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SoftwareBitmap::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class SoftwareBitmap: ISoftwareBitmap}
 impl RtActivatable<ISoftwareBitmapFactory> for SoftwareBitmap {}
 impl RtActivatable<ISoftwareBitmapStatics> for SoftwareBitmap {}
 impl SoftwareBitmap {
-    #[inline] pub fn create(format: BitmapPixelFormat, width: i32, height: i32) -> Result<ComPtr<SoftwareBitmap>> {
+    #[inline] pub fn create(format: BitmapPixelFormat, width: i32, height: i32) -> Result<SoftwareBitmap> {
         <Self as RtActivatable<ISoftwareBitmapFactory>>::get_activation_factory().create(format, width, height)
     }
-    #[inline] pub fn create_with_alpha(format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode) -> Result<ComPtr<SoftwareBitmap>> {
+    #[inline] pub fn create_with_alpha(format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode) -> Result<SoftwareBitmap> {
         <Self as RtActivatable<ISoftwareBitmapFactory>>::get_activation_factory().create_with_alpha(format, width, height, alpha)
     }
-    #[inline] pub fn copy(source: &ComPtr<SoftwareBitmap>) -> Result<Option<ComPtr<SoftwareBitmap>>> {
+    #[inline] pub fn copy(source: &SoftwareBitmap) -> Result<Option<SoftwareBitmap>> {
         <Self as RtActivatable<ISoftwareBitmapStatics>>::get_activation_factory().copy(source)
     }
-    #[inline] pub fn convert(source: &ComPtr<SoftwareBitmap>, format: BitmapPixelFormat) -> Result<Option<ComPtr<SoftwareBitmap>>> {
+    #[inline] pub fn convert(source: &SoftwareBitmap, format: BitmapPixelFormat) -> Result<Option<SoftwareBitmap>> {
         <Self as RtActivatable<ISoftwareBitmapStatics>>::get_activation_factory().convert(source, format)
     }
-    #[inline] pub fn convert_with_alpha(source: &ComPtr<SoftwareBitmap>, format: BitmapPixelFormat, alpha: BitmapAlphaMode) -> Result<Option<ComPtr<SoftwareBitmap>>> {
+    #[inline] pub fn convert_with_alpha(source: &SoftwareBitmap, format: BitmapPixelFormat, alpha: BitmapAlphaMode) -> Result<Option<SoftwareBitmap>> {
         <Self as RtActivatable<ISoftwareBitmapStatics>>::get_activation_factory().convert_with_alpha(source, format, alpha)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_copy_from_buffer(source: &ComPtr<super::super::storage::streams::IBuffer>, format: BitmapPixelFormat, width: i32, height: i32) -> Result<Option<ComPtr<SoftwareBitmap>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_copy_from_buffer(source: &ComPtr<super::super::storage::streams::IBuffer>, format: BitmapPixelFormat, width: i32, height: i32) -> Result<Option<SoftwareBitmap>> {
         <Self as RtActivatable<ISoftwareBitmapStatics>>::get_activation_factory().create_copy_from_buffer(source, format, width, height)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_copy_with_alpha_from_buffer(source: &ComPtr<super::super::storage::streams::IBuffer>, format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode) -> Result<Option<ComPtr<SoftwareBitmap>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_copy_with_alpha_from_buffer(source: &ComPtr<super::super::storage::streams::IBuffer>, format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode) -> Result<Option<SoftwareBitmap>> {
         <Self as RtActivatable<ISoftwareBitmapStatics>>::get_activation_factory().create_copy_with_alpha_from_buffer(source, format, width, height, alpha)
     }
     #[inline] pub fn create_copy_from_surface_async(surface: &ComPtr<super::directx::direct3d11::IDirect3DSurface>) -> Result<ComPtr<foundation::IAsyncOperation<SoftwareBitmap>>> {
@@ -2937,68 +2937,68 @@ impl SoftwareBitmap {
 DEFINE_CLSID!(SoftwareBitmap(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,83,111,102,116,119,97,114,101,66,105,116,109,97,112,0]) [CLSID_SoftwareBitmap]);
 DEFINE_IID!(IID_ISoftwareBitmapFactory, 3382700905, 11618, 19783, 166, 179, 79, 219, 106, 7, 253, 248);
 RT_INTERFACE!{static interface ISoftwareBitmapFactory(ISoftwareBitmapFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISoftwareBitmapFactory] {
-    fn Create(&self, format: BitmapPixelFormat, width: i32, height: i32, out: *mut *mut SoftwareBitmap) -> HRESULT,
-    fn CreateWithAlpha(&self, format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode, out: *mut *mut SoftwareBitmap) -> HRESULT
+    fn Create(&self, format: BitmapPixelFormat, width: i32, height: i32, out: *mut <SoftwareBitmap as RtType>::Abi) -> HRESULT,
+    fn CreateWithAlpha(&self, format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode, out: *mut <SoftwareBitmap as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ISoftwareBitmapFactory> {
-    #[inline] pub fn create(&self, format: BitmapPixelFormat, width: i32, height: i32) -> Result<ComPtr<SoftwareBitmap>> { unsafe { 
+    #[inline] pub fn create(&self, format: BitmapPixelFormat, width: i32, height: i32) -> Result<SoftwareBitmap> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, format, width, height, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SoftwareBitmap::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_alpha(&self, format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode) -> Result<ComPtr<SoftwareBitmap>> { unsafe { 
+    #[inline] pub fn create_with_alpha(&self, format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode) -> Result<SoftwareBitmap> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWithAlpha)(self.as_abi() as *const _ as *mut _, format, width, height, alpha, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SoftwareBitmap::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ISoftwareBitmapStatics, 3741550043, 26415, 19101, 128, 110, 194, 68, 47, 52, 62, 134);
 RT_INTERFACE!{static interface ISoftwareBitmapStatics(ISoftwareBitmapStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISoftwareBitmapStatics] {
-    fn Copy(&self, source: *mut SoftwareBitmap, out: *mut *mut SoftwareBitmap) -> HRESULT,
-    fn Convert(&self, source: *mut SoftwareBitmap, format: BitmapPixelFormat, out: *mut *mut SoftwareBitmap) -> HRESULT,
-    fn ConvertWithAlpha(&self, source: *mut SoftwareBitmap, format: BitmapPixelFormat, alpha: BitmapAlphaMode, out: *mut *mut SoftwareBitmap) -> HRESULT,
+    fn Copy(&self, source: <SoftwareBitmap as RtType>::Abi, out: *mut <SoftwareBitmap as RtType>::Abi) -> HRESULT,
+    fn Convert(&self, source: <SoftwareBitmap as RtType>::Abi, format: BitmapPixelFormat, out: *mut <SoftwareBitmap as RtType>::Abi) -> HRESULT,
+    fn ConvertWithAlpha(&self, source: <SoftwareBitmap as RtType>::Abi, format: BitmapPixelFormat, alpha: BitmapAlphaMode, out: *mut <SoftwareBitmap as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-storage")] fn CreateCopyFromBuffer(&self, source: *mut super::super::storage::streams::IBuffer, format: BitmapPixelFormat, width: i32, height: i32, out: *mut *mut SoftwareBitmap) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn CreateCopyFromBuffer(&self, source: *mut super::super::storage::streams::IBuffer, format: BitmapPixelFormat, width: i32, height: i32, out: *mut <SoftwareBitmap as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-storage")] fn CreateCopyWithAlphaFromBuffer(&self, source: *mut super::super::storage::streams::IBuffer, format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode, out: *mut *mut SoftwareBitmap) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn CreateCopyWithAlphaFromBuffer(&self, source: *mut super::super::storage::streams::IBuffer, format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode, out: *mut <SoftwareBitmap as RtType>::Abi) -> HRESULT,
     fn CreateCopyFromSurfaceAsync(&self, surface: *mut super::directx::direct3d11::IDirect3DSurface, out: *mut *mut foundation::IAsyncOperation<SoftwareBitmap>) -> HRESULT,
     fn CreateCopyWithAlphaFromSurfaceAsync(&self, surface: *mut super::directx::direct3d11::IDirect3DSurface, alpha: BitmapAlphaMode, out: *mut *mut foundation::IAsyncOperation<SoftwareBitmap>) -> HRESULT
 }}
 impl ComPtr<ISoftwareBitmapStatics> {
-    #[inline] pub fn copy(&self, source: &ComPtr<SoftwareBitmap>) -> Result<Option<ComPtr<SoftwareBitmap>>> { unsafe { 
+    #[inline] pub fn copy(&self, source: &SoftwareBitmap) -> Result<Option<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Copy)(self.as_abi() as *const _ as *mut _, source.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SoftwareBitmap::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn convert(&self, source: &ComPtr<SoftwareBitmap>, format: BitmapPixelFormat) -> Result<Option<ComPtr<SoftwareBitmap>>> { unsafe { 
+    #[inline] pub fn convert(&self, source: &SoftwareBitmap, format: BitmapPixelFormat) -> Result<Option<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Convert)(self.as_abi() as *const _ as *mut _, source.as_abi() as *const _ as *mut _, format, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SoftwareBitmap::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn convert_with_alpha(&self, source: &ComPtr<SoftwareBitmap>, format: BitmapPixelFormat, alpha: BitmapAlphaMode) -> Result<Option<ComPtr<SoftwareBitmap>>> { unsafe { 
+    #[inline] pub fn convert_with_alpha(&self, source: &SoftwareBitmap, format: BitmapPixelFormat, alpha: BitmapAlphaMode) -> Result<Option<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConvertWithAlpha)(self.as_abi() as *const _ as *mut _, source.as_abi() as *const _ as *mut _, format, alpha, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SoftwareBitmap::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_copy_from_buffer(&self, source: &ComPtr<super::super::storage::streams::IBuffer>, format: BitmapPixelFormat, width: i32, height: i32) -> Result<Option<ComPtr<SoftwareBitmap>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_copy_from_buffer(&self, source: &ComPtr<super::super::storage::streams::IBuffer>, format: BitmapPixelFormat, width: i32, height: i32) -> Result<Option<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateCopyFromBuffer)(self.as_abi() as *const _ as *mut _, source.as_abi() as *const _ as *mut _, format, width, height, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SoftwareBitmap::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_copy_with_alpha_from_buffer(&self, source: &ComPtr<super::super::storage::streams::IBuffer>, format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode) -> Result<Option<ComPtr<SoftwareBitmap>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_copy_with_alpha_from_buffer(&self, source: &ComPtr<super::super::storage::streams::IBuffer>, format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode) -> Result<Option<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateCopyWithAlphaFromBuffer)(self.as_abi() as *const _ as *mut _, source.as_abi() as *const _ as *mut _, format, width, height, alpha, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SoftwareBitmap::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_copy_from_surface_async(&self, surface: &ComPtr<super::directx::direct3d11::IDirect3DSurface>) -> Result<ComPtr<foundation::IAsyncOperation<SoftwareBitmap>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateCopyFromSurfaceAsync)(self.as_abi() as *const _ as *mut _, surface.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_copy_with_alpha_from_surface_async(&self, surface: &ComPtr<super::directx::direct3d11::IDirect3DSurface>, alpha: BitmapAlphaMode) -> Result<ComPtr<foundation::IAsyncOperation<SoftwareBitmap>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateCopyWithAlphaFromSurfaceAsync)(self.as_abi() as *const _ as *mut _, surface.as_abi() as *const _ as *mut _, alpha, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum TiffCompressionMode: i32 {
@@ -3049,7 +3049,7 @@ RT_CLASS!{class PrintManager: IPrintManager}
 impl RtActivatable<IPrintManagerStatic> for PrintManager {}
 impl RtActivatable<IPrintManagerStatic2> for PrintManager {}
 impl PrintManager {
-    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<PrintManager>>> {
+    #[inline] pub fn get_for_current_view() -> Result<Option<PrintManager>> {
         <Self as RtActivatable<IPrintManagerStatic>>::get_activation_factory().get_for_current_view()
     }
     #[inline] pub fn show_print_ui_async() -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
@@ -3062,19 +3062,19 @@ impl PrintManager {
 DEFINE_CLSID!(PrintManager(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,80,114,105,110,116,77,97,110,97,103,101,114,0]) [CLSID_PrintManager]);
 DEFINE_IID!(IID_IPrintManagerStatic, 1477991885, 58932, 18004, 132, 240, 224, 21, 42, 130, 23, 172);
 RT_INTERFACE!{static interface IPrintManagerStatic(IPrintManagerStaticVtbl): IInspectable(IInspectableVtbl) [IID_IPrintManagerStatic] {
-    fn GetForCurrentView(&self, out: *mut *mut PrintManager) -> HRESULT,
+    fn GetForCurrentView(&self, out: *mut <PrintManager as RtType>::Abi) -> HRESULT,
     fn ShowPrintUIAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
 impl ComPtr<IPrintManagerStatic> {
-    #[inline] pub fn get_for_current_view(&self) -> Result<Option<ComPtr<PrintManager>>> { unsafe { 
+    #[inline] pub fn get_for_current_view(&self) -> Result<Option<PrintManager>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetForCurrentView)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintManager::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn show_print_ui_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ShowPrintUIAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrintManagerStatic2, 900307285, 59051, 16697, 154, 189, 184, 106, 114, 155, 53, 152);
@@ -3183,29 +3183,29 @@ impl ComPtr<IPrintPageRange> {
 RT_CLASS!{class PrintPageRange: IPrintPageRange}
 impl RtActivatable<IPrintPageRangeFactory> for PrintPageRange {}
 impl PrintPageRange {
-    #[inline] pub fn create(firstPage: i32, lastPage: i32) -> Result<ComPtr<PrintPageRange>> {
+    #[inline] pub fn create(firstPage: i32, lastPage: i32) -> Result<PrintPageRange> {
         <Self as RtActivatable<IPrintPageRangeFactory>>::get_activation_factory().create(firstPage, lastPage)
     }
-    #[inline] pub fn create_with_single_page(page: i32) -> Result<ComPtr<PrintPageRange>> {
+    #[inline] pub fn create_with_single_page(page: i32) -> Result<PrintPageRange> {
         <Self as RtActivatable<IPrintPageRangeFactory>>::get_activation_factory().create_with_single_page(page)
     }
 }
 DEFINE_CLSID!(PrintPageRange(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,80,114,105,110,116,80,97,103,101,82,97,110,103,101,0]) [CLSID_PrintPageRange]);
 DEFINE_IID!(IID_IPrintPageRangeFactory, 1083167839, 57415, 24453, 113, 41, 251, 8, 90, 79, 173, 20);
 RT_INTERFACE!{static interface IPrintPageRangeFactory(IPrintPageRangeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrintPageRangeFactory] {
-    fn Create(&self, firstPage: i32, lastPage: i32, out: *mut *mut PrintPageRange) -> HRESULT,
-    fn CreateWithSinglePage(&self, page: i32, out: *mut *mut PrintPageRange) -> HRESULT
+    fn Create(&self, firstPage: i32, lastPage: i32, out: *mut <PrintPageRange as RtType>::Abi) -> HRESULT,
+    fn CreateWithSinglePage(&self, page: i32, out: *mut <PrintPageRange as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintPageRangeFactory> {
-    #[inline] pub fn create(&self, firstPage: i32, lastPage: i32) -> Result<ComPtr<PrintPageRange>> { unsafe { 
+    #[inline] pub fn create(&self, firstPage: i32, lastPage: i32) -> Result<PrintPageRange> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, firstPage, lastPage, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintPageRange::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_single_page(&self, page: i32) -> Result<ComPtr<PrintPageRange>> { unsafe { 
+    #[inline] pub fn create_with_single_page(&self, page: i32) -> Result<PrintPageRange> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWithSinglePage)(self.as_abi() as *const _ as *mut _, page, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintPageRange::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrintPageRangeOptions, 3463296808, 4951, 18098, 169, 35, 121, 249, 149, 244, 72, 252);
@@ -3256,9 +3256,9 @@ RT_ENUM! { enum PrintStaple: i32 {
 DEFINE_IID!(IID_IPrintTask, 1641546311, 27894, 20397, 132, 226, 165, 232, 46, 45, 76, 235);
 RT_INTERFACE!{interface IPrintTask(IPrintTaskVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTask] {
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-applicationmodel")] fn get_Properties(&self, out: *mut *mut super::super::applicationmodel::datatransfer::DataPackagePropertySet) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn get_Properties(&self, out: *mut <super::super::applicationmodel::datatransfer::DataPackagePropertySet as RtType>::Abi) -> HRESULT,
     fn get_Source(&self, out: *mut *mut IPrintDocumentSource) -> HRESULT,
-    fn get_Options(&self, out: *mut *mut PrintTaskOptions) -> HRESULT,
+    fn get_Options(&self, out: *mut <PrintTaskOptions as RtType>::Abi) -> HRESULT,
     fn add_Previewing(&self, eventHandler: *mut foundation::TypedEventHandler<PrintTask, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Previewing(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
     fn add_Submitting(&self, eventHandler: *mut foundation::TypedEventHandler<PrintTask, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -3269,20 +3269,20 @@ RT_INTERFACE!{interface IPrintTask(IPrintTaskVtbl): IInspectable(IInspectableVtb
     fn remove_Completed(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ComPtr<IPrintTask> {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<super::super::applicationmodel::datatransfer::DataPackagePropertySet>>> { unsafe { 
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_properties(&self) -> Result<Option<super::super::applicationmodel::datatransfer::DataPackagePropertySet>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Properties)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::applicationmodel::datatransfer::DataPackagePropertySet::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_source(&self) -> Result<Option<ComPtr<IPrintDocumentSource>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Source)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_options(&self) -> Result<Option<ComPtr<PrintTaskOptions>>> { unsafe { 
+    #[inline] pub fn get_options(&self) -> Result<Option<PrintTaskOptions>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Options)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTaskOptions::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_previewing(&self, eventHandler: &ComPtr<foundation::TypedEventHandler<PrintTask, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -3357,7 +3357,7 @@ DEFINE_IID!(IID_IPrintTaskOptions, 1510631099, 53897, 16827, 150, 221, 87, 226, 
 RT_INTERFACE!{interface IPrintTaskOptions(IPrintTaskOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptions] {
     fn put_Bordering(&self, value: PrintBordering) -> HRESULT,
     fn get_Bordering(&self, out: *mut PrintBordering) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn GetPagePrintTicket(&self, printPageInfo: *mut PrintPageInfo, out: *mut *mut super::super::storage::streams::IRandomAccessStream) -> HRESULT
+    #[cfg(feature="windows-storage")] fn GetPagePrintTicket(&self, printPageInfo: <PrintPageInfo as RtType>::Abi, out: *mut *mut super::super::storage::streams::IRandomAccessStream) -> HRESULT
 }}
 impl ComPtr<IPrintTaskOptions> {
     #[inline] pub fn set_bordering(&self, value: PrintBordering) -> Result<()> { unsafe { 
@@ -3369,28 +3369,28 @@ impl ComPtr<IPrintTaskOptions> {
         let hr = ((*self.as_abi().lpVtbl).get_Bordering)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_page_print_ticket(&self, printPageInfo: &ComPtr<PrintPageInfo>) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStream>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_page_print_ticket(&self, printPageInfo: &PrintPageInfo) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetPagePrintTicket)(self.as_abi() as *const _ as *mut _, printPageInfo.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintTaskOptions: IPrintTaskOptionsCore}
 DEFINE_IID!(IID_IPrintTaskOptions2, 3952809478, 39478, 19289, 134, 23, 178, 23, 132, 146, 98, 225);
 RT_INTERFACE!{interface IPrintTaskOptions2(IPrintTaskOptions2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptions2] {
-    fn get_PageRangeOptions(&self, out: *mut *mut PrintPageRangeOptions) -> HRESULT,
+    fn get_PageRangeOptions(&self, out: *mut <PrintPageRangeOptions as RtType>::Abi) -> HRESULT,
     fn get_CustomPageRanges(&self, out: *mut *mut foundation::collections::IVector<PrintPageRange>) -> HRESULT
 }}
 impl ComPtr<IPrintTaskOptions2> {
-    #[inline] pub fn get_page_range_options(&self) -> Result<Option<ComPtr<PrintPageRangeOptions>>> { unsafe { 
+    #[inline] pub fn get_page_range_options(&self) -> Result<Option<PrintPageRangeOptions>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageRangeOptions)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintPageRangeOptions::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_custom_page_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVector<PrintPageRange>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CustomPageRanges)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrintTaskOptionsCore, 467383412, 20177, 16875, 190, 60, 114, 209, 142, 214, 115, 55);
@@ -3550,7 +3550,7 @@ impl ComPtr<IPrintTaskOptionsCoreUIConfiguration> {
     #[inline] pub fn get_displayed_options(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DisplayedOptions)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrintTaskProgressingEventArgs, 2165101515, 46096, 17026, 160, 115, 90, 195, 120, 35, 65, 116);
@@ -3568,8 +3568,8 @@ RT_CLASS!{class PrintTaskProgressingEventArgs: IPrintTaskProgressingEventArgs}
 DEFINE_IID!(IID_IPrintTaskRequest, 1878400558, 10018, 16960, 166, 124, 243, 100, 132, 154, 23, 243);
 RT_INTERFACE!{interface IPrintTaskRequest(IPrintTaskRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskRequest] {
     fn get_Deadline(&self, out: *mut foundation::DateTime) -> HRESULT,
-    fn CreatePrintTask(&self, title: HSTRING, handler: *mut PrintTaskSourceRequestedHandler, out: *mut *mut PrintTask) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut PrintTaskRequestedDeferral) -> HRESULT
+    fn CreatePrintTask(&self, title: HSTRING, handler: *mut PrintTaskSourceRequestedHandler, out: *mut <PrintTask as RtType>::Abi) -> HRESULT,
+    fn GetDeferral(&self, out: *mut <PrintTaskRequestedDeferral as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintTaskRequest> {
     #[inline] pub fn get_deadline(&self) -> Result<foundation::DateTime> { unsafe { 
@@ -3577,15 +3577,15 @@ impl ComPtr<IPrintTaskRequest> {
         let hr = ((*self.as_abi().lpVtbl).get_Deadline)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn create_print_task(&self, title: &HStringArg, handler: &ComPtr<PrintTaskSourceRequestedHandler>) -> Result<Option<ComPtr<PrintTask>>> { unsafe { 
+    #[inline] pub fn create_print_task(&self, title: &HStringArg, handler: &ComPtr<PrintTaskSourceRequestedHandler>) -> Result<Option<PrintTask>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreatePrintTask)(self.as_abi() as *const _ as *mut _, title.get(), handler.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTask::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<PrintTaskRequestedDeferral>>> { unsafe { 
+    #[inline] pub fn get_deferral(&self) -> Result<Option<PrintTaskRequestedDeferral>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTaskRequestedDeferral::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintTaskRequest: IPrintTaskRequest}
@@ -3602,13 +3602,13 @@ impl ComPtr<IPrintTaskRequestedDeferral> {
 RT_CLASS!{class PrintTaskRequestedDeferral: IPrintTaskRequestedDeferral}
 DEFINE_IID!(IID_IPrintTaskRequestedEventArgs, 3501193508, 41755, 17740, 167, 182, 93, 12, 197, 34, 252, 22);
 RT_INTERFACE!{interface IPrintTaskRequestedEventArgs(IPrintTaskRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskRequestedEventArgs] {
-    fn get_Request(&self, out: *mut *mut PrintTaskRequest) -> HRESULT
+    fn get_Request(&self, out: *mut <PrintTaskRequest as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintTaskRequestedEventArgs> {
-    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<PrintTaskRequest>>> { unsafe { 
+    #[inline] pub fn get_request(&self) -> Result<Option<PrintTaskRequest>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Request)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTaskRequest::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintTaskRequestedEventArgs: IPrintTaskRequestedEventArgs}
@@ -3616,7 +3616,7 @@ DEFINE_IID!(IID_IPrintTaskSourceRequestedArgs, 4193281982, 62550, 16880, 156, 15
 RT_INTERFACE!{interface IPrintTaskSourceRequestedArgs(IPrintTaskSourceRequestedArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskSourceRequestedArgs] {
     fn get_Deadline(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn SetSource(&self, source: *mut IPrintDocumentSource) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut PrintTaskSourceRequestedDeferral) -> HRESULT
+    fn GetDeferral(&self, out: *mut <PrintTaskSourceRequestedDeferral as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintTaskSourceRequestedArgs> {
     #[inline] pub fn get_deadline(&self) -> Result<foundation::DateTime> { unsafe { 
@@ -3628,10 +3628,10 @@ impl ComPtr<IPrintTaskSourceRequestedArgs> {
         let hr = ((*self.as_abi().lpVtbl).SetSource)(self.as_abi() as *const _ as *mut _, source.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<PrintTaskSourceRequestedDeferral>>> { unsafe { 
+    #[inline] pub fn get_deferral(&self) -> Result<Option<PrintTaskSourceRequestedDeferral>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTaskSourceRequestedDeferral::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintTaskSourceRequestedArgs: IPrintTaskSourceRequestedArgs}
@@ -3648,10 +3648,10 @@ impl ComPtr<IPrintTaskSourceRequestedDeferral> {
 RT_CLASS!{class PrintTaskSourceRequestedDeferral: IPrintTaskSourceRequestedDeferral}
 DEFINE_IID!(IID_PrintTaskSourceRequestedHandler, 1813028776, 23734, 19258, 134, 99, 243, 156, 176, 45, 201, 180);
 RT_DELEGATE!{delegate PrintTaskSourceRequestedHandler(PrintTaskSourceRequestedHandlerVtbl, PrintTaskSourceRequestedHandlerImpl) [IID_PrintTaskSourceRequestedHandler] {
-    fn Invoke(&self, args: *mut PrintTaskSourceRequestedArgs) -> HRESULT
+    fn Invoke(&self, args: <PrintTaskSourceRequestedArgs as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<PrintTaskSourceRequestedHandler> {
-    #[inline] pub fn invoke(&self, args: &ComPtr<PrintTaskSourceRequestedArgs>) -> Result<()> { unsafe { 
+    #[inline] pub fn invoke(&self, args: &PrintTaskSourceRequestedArgs) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Invoke)(self.as_abi() as *const _ as *mut _, args.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -4205,7 +4205,7 @@ impl ComPtr<IPrintItemListOptionDetails> {
     #[inline] pub fn get_items(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<IInspectable>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Items)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrintMediaSizeOptionDetails, 1821203407, 49343, 18376, 184, 74, 98, 142, 125, 13, 26, 29);
@@ -4324,7 +4324,7 @@ impl ComPtr<IPrintOptionDetails> {
     #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_set_value(&self, value: &ComPtr<IInspectable>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
@@ -4458,15 +4458,15 @@ impl ComPtr<IPrintTaskOptionChangedEventArgs> {
     #[inline] pub fn get_option_id(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_OptionId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintTaskOptionChangedEventArgs: IPrintTaskOptionChangedEventArgs}
 DEFINE_IID!(IID_IPrintTaskOptionDetails, 4117891825, 43166, 17062, 129, 175, 248, 224, 16, 179, 138, 104);
 RT_INTERFACE!{interface IPrintTaskOptionDetails(IPrintTaskOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionDetails] {
     fn get_Options(&self, out: *mut *mut foundation::collections::IMapView<HString, IPrintOptionDetails>) -> HRESULT,
-    fn CreateItemListOption(&self, optionId: HSTRING, displayName: HSTRING, out: *mut *mut PrintCustomItemListOptionDetails) -> HRESULT,
-    fn CreateTextOption(&self, optionId: HSTRING, displayName: HSTRING, out: *mut *mut PrintCustomTextOptionDetails) -> HRESULT,
+    fn CreateItemListOption(&self, optionId: HSTRING, displayName: HSTRING, out: *mut <PrintCustomItemListOptionDetails as RtType>::Abi) -> HRESULT,
+    fn CreateTextOption(&self, optionId: HSTRING, displayName: HSTRING, out: *mut <PrintCustomTextOptionDetails as RtType>::Abi) -> HRESULT,
     fn add_OptionChanged(&self, eventHandler: *mut foundation::TypedEventHandler<PrintTaskOptionDetails, PrintTaskOptionChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_OptionChanged(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
     fn add_BeginValidation(&self, eventHandler: *mut foundation::TypedEventHandler<PrintTaskOptionDetails, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -4476,17 +4476,17 @@ impl ComPtr<IPrintTaskOptionDetails> {
     #[inline] pub fn get_options(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, IPrintOptionDetails>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Options)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_item_list_option(&self, optionId: &HStringArg, displayName: &HStringArg) -> Result<Option<ComPtr<PrintCustomItemListOptionDetails>>> { unsafe { 
+    #[inline] pub fn create_item_list_option(&self, optionId: &HStringArg, displayName: &HStringArg) -> Result<Option<PrintCustomItemListOptionDetails>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateItemListOption)(self.as_abi() as *const _ as *mut _, optionId.get(), displayName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintCustomItemListOptionDetails::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_text_option(&self, optionId: &HStringArg, displayName: &HStringArg) -> Result<Option<ComPtr<PrintCustomTextOptionDetails>>> { unsafe { 
+    #[inline] pub fn create_text_option(&self, optionId: &HStringArg, displayName: &HStringArg) -> Result<Option<PrintCustomTextOptionDetails>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateTextOption)(self.as_abi() as *const _ as *mut _, optionId.get(), displayName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintCustomTextOptionDetails::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_option_changed(&self, eventHandler: &ComPtr<foundation::TypedEventHandler<PrintTaskOptionDetails, PrintTaskOptionChangedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -4510,31 +4510,31 @@ impl ComPtr<IPrintTaskOptionDetails> {
 RT_CLASS!{class PrintTaskOptionDetails: IPrintTaskOptionDetails}
 impl RtActivatable<IPrintTaskOptionDetailsStatic> for PrintTaskOptionDetails {}
 impl PrintTaskOptionDetails {
-    #[inline] pub fn get_from_print_task_options(printTaskOptions: &ComPtr<super::PrintTaskOptions>) -> Result<Option<ComPtr<PrintTaskOptionDetails>>> {
+    #[inline] pub fn get_from_print_task_options(printTaskOptions: &super::PrintTaskOptions) -> Result<Option<PrintTaskOptionDetails>> {
         <Self as RtActivatable<IPrintTaskOptionDetailsStatic>>::get_activation_factory().get_from_print_task_options(printTaskOptions)
     }
 }
 DEFINE_CLSID!(PrintTaskOptionDetails(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,79,112,116,105,111,110,68,101,116,97,105,108,115,46,80,114,105,110,116,84,97,115,107,79,112,116,105,111,110,68,101,116,97,105,108,115,0]) [CLSID_PrintTaskOptionDetails]);
 DEFINE_IID!(IID_IPrintTaskOptionDetails2, 1400048137, 63848, 18066, 161, 119, 192, 116, 89, 113, 134, 219);
 RT_INTERFACE!{interface IPrintTaskOptionDetails2(IPrintTaskOptionDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionDetails2] {
-    fn CreateToggleOption(&self, optionId: HSTRING, displayName: HSTRING, out: *mut *mut PrintCustomToggleOptionDetails) -> HRESULT
+    fn CreateToggleOption(&self, optionId: HSTRING, displayName: HSTRING, out: *mut <PrintCustomToggleOptionDetails as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintTaskOptionDetails2> {
-    #[inline] pub fn create_toggle_option(&self, optionId: &HStringArg, displayName: &HStringArg) -> Result<Option<ComPtr<PrintCustomToggleOptionDetails>>> { unsafe { 
+    #[inline] pub fn create_toggle_option(&self, optionId: &HStringArg, displayName: &HStringArg) -> Result<Option<PrintCustomToggleOptionDetails>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateToggleOption)(self.as_abi() as *const _ as *mut _, optionId.get(), displayName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintCustomToggleOptionDetails::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrintTaskOptionDetailsStatic, 324903315, 2401, 19310, 135, 102, 241, 59, 127, 188, 205, 88);
 RT_INTERFACE!{static interface IPrintTaskOptionDetailsStatic(IPrintTaskOptionDetailsStaticVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionDetailsStatic] {
-    fn GetFromPrintTaskOptions(&self, printTaskOptions: *mut super::PrintTaskOptions, out: *mut *mut PrintTaskOptionDetails) -> HRESULT
+    fn GetFromPrintTaskOptions(&self, printTaskOptions: <super::PrintTaskOptions as RtType>::Abi, out: *mut <PrintTaskOptionDetails as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintTaskOptionDetailsStatic> {
-    #[inline] pub fn get_from_print_task_options(&self, printTaskOptions: &ComPtr<super::PrintTaskOptions>) -> Result<Option<ComPtr<PrintTaskOptionDetails>>> { unsafe { 
+    #[inline] pub fn get_from_print_task_options(&self, printTaskOptions: &super::PrintTaskOptions) -> Result<Option<PrintTaskOptionDetails>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetFromPrintTaskOptions)(self.as_abi() as *const _ as *mut _, printTaskOptions.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTaskOptionDetails::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrintTextOptionDetails, 2910184803, 23780, 18108, 153, 24, 171, 159, 173, 20, 76, 91);
@@ -4557,23 +4557,23 @@ RT_INTERFACE!{interface IPrintTicketCapabilities(IPrintTicketCapabilitiesVtbl): 
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
     #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
-    fn get_DocumentBindingFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_DocumentCollateFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_DocumentDuplexFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_DocumentHolePunchFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_DocumentInputBinFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_DocumentNUpFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_DocumentStapleFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_JobPasscodeFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageBorderlessFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageMediaSizeFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageMediaTypeFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageOrientationFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageOutputColorFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageOutputQualityFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageResolutionFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn GetFeature(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn GetParameterDefinition(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut PrintTicketParameterDefinition) -> HRESULT
+    fn get_DocumentBindingFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_DocumentCollateFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_DocumentDuplexFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_DocumentHolePunchFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_DocumentInputBinFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_DocumentNUpFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_DocumentStapleFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_JobPasscodeFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageBorderlessFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageMediaSizeFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageMediaTypeFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageOrientationFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageOutputColorFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageOutputQualityFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageResolutionFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn GetFeature(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn GetParameterDefinition(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut <PrintTicketParameterDefinition as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintTicketCapabilities> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
@@ -4589,92 +4589,92 @@ impl ComPtr<IPrintTicketCapabilities> {
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_XmlNode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_binding_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_binding_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentBindingFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_collate_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_collate_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentCollateFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_duplex_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_duplex_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentDuplexFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_hole_punch_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_hole_punch_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentHolePunchFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_input_bin_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_input_bin_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentInputBinFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_n_up_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_n_up_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentNUpFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_staple_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_staple_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentStapleFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_job_passcode_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_job_passcode_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_JobPasscodeFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_borderless_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_borderless_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageBorderlessFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_media_size_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_media_size_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageMediaSizeFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_media_type_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_media_type_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageMediaTypeFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_orientation_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_orientation_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageOrientationFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_output_color_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_output_color_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageOutputColorFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_output_quality_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_output_quality_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageOutputQualityFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_resolution_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_resolution_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageResolutionFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_feature(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_feature(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetFeature)(self.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_parameter_definition(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<ComPtr<PrintTicketParameterDefinition>>> { unsafe { 
+    #[inline] pub fn get_parameter_definition(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketParameterDefinition>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetParameterDefinition)(self.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketParameterDefinition::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintTicketCapabilities: IPrintTicketCapabilities}
@@ -4685,10 +4685,10 @@ RT_INTERFACE!{interface IPrintTicketFeature(IPrintTicketFeatureVtbl): IInspectab
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
     #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
-    fn GetOption(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut PrintTicketOption) -> HRESULT,
+    fn GetOption(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut <PrintTicketOption as RtType>::Abi) -> HRESULT,
     fn get_Options(&self, out: *mut *mut foundation::collections::IVectorView<PrintTicketOption>) -> HRESULT,
-    fn GetSelectedOption(&self, out: *mut *mut PrintTicketOption) -> HRESULT,
-    fn SetSelectedOption(&self, value: *mut PrintTicketOption) -> HRESULT,
+    fn GetSelectedOption(&self, out: *mut <PrintTicketOption as RtType>::Abi) -> HRESULT,
+    fn SetSelectedOption(&self, value: <PrintTicketOption as RtType>::Abi) -> HRESULT,
     fn get_SelectionType(&self, out: *mut PrintTicketFeatureSelectionType) -> HRESULT
 }}
 impl ComPtr<IPrintTicketFeature> {
@@ -4705,29 +4705,29 @@ impl ComPtr<IPrintTicketFeature> {
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_XmlNode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DisplayName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_option(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<ComPtr<PrintTicketOption>>> { unsafe { 
+    #[inline] pub fn get_option(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketOption>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetOption)(self.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketOption::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_options(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<PrintTicketOption>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Options)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_selected_option(&self) -> Result<Option<ComPtr<PrintTicketOption>>> { unsafe { 
+    #[inline] pub fn get_selected_option(&self) -> Result<Option<PrintTicketOption>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetSelectedOption)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketOption::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_selected_option(&self, value: &ComPtr<PrintTicketOption>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_selected_option(&self, value: &PrintTicketOption) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).SetSelectedOption)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -4752,8 +4752,8 @@ RT_INTERFACE!{interface IPrintTicketOption(IPrintTicketOptionVtbl): IInspectable
     #[cfg(feature="windows-data")] fn GetPropertyNode(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy5(&self) -> (),
     #[cfg(feature="windows-data")] fn GetScoredPropertyNode(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
-    fn GetPropertyValue(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut PrintTicketValue) -> HRESULT,
-    fn GetScoredPropertyValue(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut PrintTicketValue) -> HRESULT
+    fn GetPropertyValue(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut <PrintTicketValue as RtType>::Abi) -> HRESULT,
+    fn GetScoredPropertyValue(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut <PrintTicketValue as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintTicketOption> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
@@ -4769,7 +4769,7 @@ impl ComPtr<IPrintTicketOption> {
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_XmlNode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -4779,22 +4779,22 @@ impl ComPtr<IPrintTicketOption> {
     #[cfg(feature="windows-data")] #[inline] pub fn get_property_node(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetPropertyNode)(self.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_scored_property_node(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetScoredPropertyNode)(self.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_property_value(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<ComPtr<PrintTicketValue>>> { unsafe { 
+    #[inline] pub fn get_property_value(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketValue>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetPropertyValue)(self.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketValue::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_scored_property_value(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<ComPtr<PrintTicketValue>>> { unsafe { 
+    #[inline] pub fn get_scored_property_value(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketValue>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetScoredPropertyValue)(self.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketValue::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintTicketOption: IPrintTicketOption}
@@ -4826,7 +4826,7 @@ impl ComPtr<IPrintTicketParameterDefinition> {
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_XmlNode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_data_type(&self) -> Result<PrintTicketParameterDataType> { unsafe { 
         let mut out = zeroed();
@@ -4856,8 +4856,8 @@ RT_INTERFACE!{interface IPrintTicketParameterInitializer(IPrintTicketParameterIn
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
     #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
-    fn put_Value(&self, value: *mut PrintTicketValue) -> HRESULT,
-    fn get_Value(&self, out: *mut *mut PrintTicketValue) -> HRESULT
+    fn put_Value(&self, value: <PrintTicketValue as RtType>::Abi) -> HRESULT,
+    fn get_Value(&self, out: *mut <PrintTicketValue as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintTicketParameterInitializer> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
@@ -4873,16 +4873,16 @@ impl ComPtr<IPrintTicketParameterInitializer> {
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_XmlNode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_value(&self, value: &ComPtr<PrintTicketValue>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_value(&self, value: &PrintTicketValue) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_Value)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<PrintTicketValue>>> { unsafe { 
+    #[inline] pub fn get_value(&self) -> Result<Option<PrintTicketValue>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketValue::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintTicketParameterInitializer: IPrintTicketParameterInitializer}
@@ -4919,29 +4919,29 @@ RT_INTERFACE!{interface IWorkflowPrintTicket(IWorkflowPrintTicketVtbl): IInspect
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
     #[cfg(feature="windows-data")] fn get_XmlNode(&self, out: *mut *mut crate::windows::data::xml::dom::IXmlNode) -> HRESULT,
-    fn GetCapabilities(&self, out: *mut *mut PrintTicketCapabilities) -> HRESULT,
-    fn get_DocumentBindingFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_DocumentCollateFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_DocumentDuplexFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_DocumentHolePunchFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_DocumentInputBinFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_DocumentNUpFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_DocumentStapleFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_JobPasscodeFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageBorderlessFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageMediaSizeFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageMediaTypeFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageOrientationFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageOutputColorFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageOutputQualityFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn get_PageResolutionFeature(&self, out: *mut *mut PrintTicketFeature) -> HRESULT,
-    fn GetFeature(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut PrintTicketFeature) -> HRESULT,
+    fn GetCapabilities(&self, out: *mut <PrintTicketCapabilities as RtType>::Abi) -> HRESULT,
+    fn get_DocumentBindingFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_DocumentCollateFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_DocumentDuplexFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_DocumentHolePunchFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_DocumentInputBinFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_DocumentNUpFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_DocumentStapleFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_JobPasscodeFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageBorderlessFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageMediaSizeFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageMediaTypeFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageOrientationFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageOutputColorFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageOutputQualityFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn get_PageResolutionFeature(&self, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
+    fn GetFeature(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut <PrintTicketFeature as RtType>::Abi) -> HRESULT,
     fn NotifyXmlChangedAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn ValidateAsync(&self, out: *mut *mut foundation::IAsyncOperation<WorkflowPrintTicketValidationResult>) -> HRESULT,
-    fn GetParameterInitializer(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut *mut PrintTicketParameterInitializer) -> HRESULT,
-    fn SetParameterInitializerAsInteger(&self, name: HSTRING, xmlNamespace: HSTRING, integerValue: i32, out: *mut *mut PrintTicketParameterInitializer) -> HRESULT,
-    fn SetParameterInitializerAsString(&self, name: HSTRING, xmlNamespace: HSTRING, stringValue: HSTRING, out: *mut *mut PrintTicketParameterInitializer) -> HRESULT,
-    fn MergeAndValidateTicket(&self, deltaShemaTicket: *mut WorkflowPrintTicket, out: *mut *mut WorkflowPrintTicket) -> HRESULT
+    fn GetParameterInitializer(&self, name: HSTRING, xmlNamespace: HSTRING, out: *mut <PrintTicketParameterInitializer as RtType>::Abi) -> HRESULT,
+    fn SetParameterInitializerAsInteger(&self, name: HSTRING, xmlNamespace: HSTRING, integerValue: i32, out: *mut <PrintTicketParameterInitializer as RtType>::Abi) -> HRESULT,
+    fn SetParameterInitializerAsString(&self, name: HSTRING, xmlNamespace: HSTRING, stringValue: HSTRING, out: *mut <PrintTicketParameterInitializer as RtType>::Abi) -> HRESULT,
+    fn MergeAndValidateTicket(&self, deltaShemaTicket: <WorkflowPrintTicket as RtType>::Abi, out: *mut <WorkflowPrintTicket as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IWorkflowPrintTicket> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
@@ -4957,122 +4957,122 @@ impl ComPtr<IWorkflowPrintTicket> {
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<ComPtr<crate::windows::data::xml::dom::IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_XmlNode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_capabilities(&self) -> Result<Option<ComPtr<PrintTicketCapabilities>>> { unsafe { 
+    #[inline] pub fn get_capabilities(&self) -> Result<Option<PrintTicketCapabilities>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCapabilities)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketCapabilities::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_binding_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_binding_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentBindingFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_collate_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_collate_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentCollateFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_duplex_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_duplex_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentDuplexFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_hole_punch_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_hole_punch_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentHolePunchFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_input_bin_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_input_bin_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentInputBinFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_n_up_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_n_up_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentNUpFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_staple_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_document_staple_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentStapleFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_job_passcode_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_job_passcode_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_JobPasscodeFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_borderless_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_borderless_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageBorderlessFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_media_size_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_media_size_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageMediaSizeFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_media_type_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_media_type_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageMediaTypeFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_orientation_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_orientation_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageOrientationFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_output_color_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_output_color_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageOutputColorFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_output_quality_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_output_quality_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageOutputQualityFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_page_resolution_feature(&self) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_page_resolution_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PageResolutionFeature)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_feature(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<ComPtr<PrintTicketFeature>>> { unsafe { 
+    #[inline] pub fn get_feature(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetFeature)(self.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn notify_xml_changed_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).NotifyXmlChangedAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn validate_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<WorkflowPrintTicketValidationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ValidateAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_parameter_initializer(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<ComPtr<PrintTicketParameterInitializer>>> { unsafe { 
+    #[inline] pub fn get_parameter_initializer(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketParameterInitializer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetParameterInitializer)(self.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketParameterInitializer::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_parameter_initializer_as_integer(&self, name: &HStringArg, xmlNamespace: &HStringArg, integerValue: i32) -> Result<Option<ComPtr<PrintTicketParameterInitializer>>> { unsafe { 
+    #[inline] pub fn set_parameter_initializer_as_integer(&self, name: &HStringArg, xmlNamespace: &HStringArg, integerValue: i32) -> Result<Option<PrintTicketParameterInitializer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetParameterInitializerAsInteger)(self.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), integerValue, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketParameterInitializer::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_parameter_initializer_as_string(&self, name: &HStringArg, xmlNamespace: &HStringArg, stringValue: &HStringArg) -> Result<Option<ComPtr<PrintTicketParameterInitializer>>> { unsafe { 
+    #[inline] pub fn set_parameter_initializer_as_string(&self, name: &HStringArg, xmlNamespace: &HStringArg, stringValue: &HStringArg) -> Result<Option<PrintTicketParameterInitializer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetParameterInitializerAsString)(self.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), stringValue.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintTicketParameterInitializer::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn merge_and_validate_ticket(&self, deltaShemaTicket: &ComPtr<WorkflowPrintTicket>) -> Result<Option<ComPtr<WorkflowPrintTicket>>> { unsafe { 
+    #[inline] pub fn merge_and_validate_ticket(&self, deltaShemaTicket: &WorkflowPrintTicket) -> Result<Option<WorkflowPrintTicket>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).MergeAndValidateTicket)(self.as_abi() as *const _ as *mut _, deltaShemaTicket.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(WorkflowPrintTicket::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class WorkflowPrintTicket: IWorkflowPrintTicket}
@@ -5139,29 +5139,29 @@ RT_CLASS!{class PrintWorkflowBackgroundSession: IPrintWorkflowBackgroundSession}
 DEFINE_IID!(IID_IPrintWorkflowBackgroundSetupRequestedEventArgs, 1139372866, 5968, 22985, 97, 251, 56, 55, 72, 162, 3, 98);
 RT_INTERFACE!{interface IPrintWorkflowBackgroundSetupRequestedEventArgs(IPrintWorkflowBackgroundSetupRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowBackgroundSetupRequestedEventArgs] {
     fn GetUserPrintTicketAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket>) -> HRESULT,
-    fn get_Configuration(&self, out: *mut *mut PrintWorkflowConfiguration) -> HRESULT,
+    fn get_Configuration(&self, out: *mut <PrintWorkflowConfiguration as RtType>::Abi) -> HRESULT,
     fn SetRequiresUI(&self) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+    fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintWorkflowBackgroundSetupRequestedEventArgs> {
     #[inline] pub fn get_user_print_ticket_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetUserPrintTicketAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_configuration(&self) -> Result<Option<ComPtr<PrintWorkflowConfiguration>>> { unsafe { 
+    #[inline] pub fn get_configuration(&self) -> Result<Option<PrintWorkflowConfiguration>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Configuration)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintWorkflowConfiguration::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_requires_ui(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).SetRequiresUI)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+    #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintWorkflowBackgroundSetupRequestedEventArgs: IPrintWorkflowBackgroundSetupRequestedEventArgs}
@@ -5231,24 +5231,24 @@ RT_CLASS!{class PrintWorkflowForegroundSession: IPrintWorkflowForegroundSession}
 DEFINE_IID!(IID_IPrintWorkflowForegroundSetupRequestedEventArgs, 3152249415, 39963, 19923, 155, 43, 200, 4, 104, 217, 65, 179);
 RT_INTERFACE!{interface IPrintWorkflowForegroundSetupRequestedEventArgs(IPrintWorkflowForegroundSetupRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowForegroundSetupRequestedEventArgs] {
     fn GetUserPrintTicketAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket>) -> HRESULT,
-    fn get_Configuration(&self, out: *mut *mut PrintWorkflowConfiguration) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+    fn get_Configuration(&self, out: *mut <PrintWorkflowConfiguration as RtType>::Abi) -> HRESULT,
+    fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintWorkflowForegroundSetupRequestedEventArgs> {
     #[inline] pub fn get_user_print_ticket_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetUserPrintTicketAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_configuration(&self) -> Result<Option<ComPtr<PrintWorkflowConfiguration>>> { unsafe { 
+    #[inline] pub fn get_configuration(&self) -> Result<Option<PrintWorkflowConfiguration>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Configuration)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintWorkflowConfiguration::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+    #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintWorkflowForegroundSetupRequestedEventArgs: IPrintWorkflowForegroundSetupRequestedEventArgs}
@@ -5268,24 +5268,24 @@ RT_ENUM! { enum PrintWorkflowSessionStatus: i32 {
 DEFINE_IID!(IID_IPrintWorkflowSourceContent, 438879809, 52913, 17715, 187, 115, 251, 230, 62, 239, 219, 24);
 RT_INTERFACE!{interface IPrintWorkflowSourceContent(IPrintWorkflowSourceContentVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowSourceContent] {
     fn GetJobPrintTicketAsync(&self, out: *mut *mut foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket>) -> HRESULT,
-    fn GetSourceSpoolDataAsStreamContent(&self, out: *mut *mut PrintWorkflowSpoolStreamContent) -> HRESULT,
-    fn GetSourceSpoolDataAsXpsObjectModel(&self, out: *mut *mut PrintWorkflowObjectModelSourceFileContent) -> HRESULT
+    fn GetSourceSpoolDataAsStreamContent(&self, out: *mut <PrintWorkflowSpoolStreamContent as RtType>::Abi) -> HRESULT,
+    fn GetSourceSpoolDataAsXpsObjectModel(&self, out: *mut <PrintWorkflowObjectModelSourceFileContent as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintWorkflowSourceContent> {
     #[inline] pub fn get_job_print_ticket_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetJobPrintTicketAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_source_spool_data_as_stream_content(&self) -> Result<Option<ComPtr<PrintWorkflowSpoolStreamContent>>> { unsafe { 
+    #[inline] pub fn get_source_spool_data_as_stream_content(&self) -> Result<Option<PrintWorkflowSpoolStreamContent>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetSourceSpoolDataAsStreamContent)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintWorkflowSpoolStreamContent::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_source_spool_data_as_xps_object_model(&self) -> Result<Option<ComPtr<PrintWorkflowObjectModelSourceFileContent>>> { unsafe { 
+    #[inline] pub fn get_source_spool_data_as_xps_object_model(&self) -> Result<Option<PrintWorkflowObjectModelSourceFileContent>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetSourceSpoolDataAsXpsObjectModel)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintWorkflowObjectModelSourceFileContent::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintWorkflowSourceContent: IPrintWorkflowSourceContent}
@@ -5297,7 +5297,7 @@ impl ComPtr<IPrintWorkflowSpoolStreamContent> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_input_stream(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IInputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetInputStream)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintWorkflowSpoolStreamContent: IPrintWorkflowSpoolStreamContent}
@@ -5309,54 +5309,54 @@ impl ComPtr<IPrintWorkflowStreamTarget> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream(&self) -> Result<Option<ComPtr<crate::windows::storage::streams::IOutputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetOutputStream)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintWorkflowStreamTarget: IPrintWorkflowStreamTarget}
 DEFINE_IID!(IID_IPrintWorkflowSubmittedEventArgs, 987564609, 14228, 21865, 92, 135, 64, 232, 255, 114, 15, 131);
 RT_INTERFACE!{interface IPrintWorkflowSubmittedEventArgs(IPrintWorkflowSubmittedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowSubmittedEventArgs] {
-    fn get_Operation(&self, out: *mut *mut PrintWorkflowSubmittedOperation) -> HRESULT,
-    fn GetTarget(&self, jobPrintTicket: *mut super::printticket::WorkflowPrintTicket, out: *mut *mut PrintWorkflowTarget) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+    fn get_Operation(&self, out: *mut <PrintWorkflowSubmittedOperation as RtType>::Abi) -> HRESULT,
+    fn GetTarget(&self, jobPrintTicket: <super::printticket::WorkflowPrintTicket as RtType>::Abi, out: *mut <PrintWorkflowTarget as RtType>::Abi) -> HRESULT,
+    fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintWorkflowSubmittedEventArgs> {
-    #[inline] pub fn get_operation(&self) -> Result<Option<ComPtr<PrintWorkflowSubmittedOperation>>> { unsafe { 
+    #[inline] pub fn get_operation(&self) -> Result<Option<PrintWorkflowSubmittedOperation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Operation)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintWorkflowSubmittedOperation::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_target(&self, jobPrintTicket: &ComPtr<super::printticket::WorkflowPrintTicket>) -> Result<Option<ComPtr<PrintWorkflowTarget>>> { unsafe { 
+    #[inline] pub fn get_target(&self, jobPrintTicket: &super::printticket::WorkflowPrintTicket) -> Result<Option<PrintWorkflowTarget>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetTarget)(self.as_abi() as *const _ as *mut _, jobPrintTicket.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintWorkflowTarget::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+    #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintWorkflowSubmittedEventArgs: IPrintWorkflowSubmittedEventArgs}
 DEFINE_IID!(IID_IPrintWorkflowSubmittedOperation, 776888854, 15329, 24335, 92, 129, 165, 162, 189, 78, 171, 14);
 RT_INTERFACE!{interface IPrintWorkflowSubmittedOperation(IPrintWorkflowSubmittedOperationVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowSubmittedOperation] {
     fn Complete(&self, status: PrintWorkflowSubmittedStatus) -> HRESULT,
-    fn get_Configuration(&self, out: *mut *mut PrintWorkflowConfiguration) -> HRESULT,
-    fn get_XpsContent(&self, out: *mut *mut PrintWorkflowSourceContent) -> HRESULT
+    fn get_Configuration(&self, out: *mut <PrintWorkflowConfiguration as RtType>::Abi) -> HRESULT,
+    fn get_XpsContent(&self, out: *mut <PrintWorkflowSourceContent as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintWorkflowSubmittedOperation> {
     #[inline] pub fn complete(&self, status: PrintWorkflowSubmittedStatus) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Complete)(self.as_abi() as *const _ as *mut _, status);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_configuration(&self) -> Result<Option<ComPtr<PrintWorkflowConfiguration>>> { unsafe { 
+    #[inline] pub fn get_configuration(&self) -> Result<Option<PrintWorkflowConfiguration>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Configuration)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintWorkflowConfiguration::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_xps_content(&self) -> Result<Option<ComPtr<PrintWorkflowSourceContent>>> { unsafe { 
+    #[inline] pub fn get_xps_content(&self) -> Result<Option<PrintWorkflowSourceContent>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_XpsContent)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintWorkflowSourceContent::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintWorkflowSubmittedOperation: IPrintWorkflowSubmittedOperation}
@@ -5365,61 +5365,61 @@ RT_ENUM! { enum PrintWorkflowSubmittedStatus: i32 {
 }}
 DEFINE_IID!(IID_IPrintWorkflowTarget, 702162796, 2675, 23277, 79, 61, 151, 13, 50, 81, 240, 87);
 RT_INTERFACE!{interface IPrintWorkflowTarget(IPrintWorkflowTargetVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowTarget] {
-    fn get_TargetAsStream(&self, out: *mut *mut PrintWorkflowStreamTarget) -> HRESULT,
-    fn get_TargetAsXpsObjectModelPackage(&self, out: *mut *mut PrintWorkflowObjectModelTargetPackage) -> HRESULT
+    fn get_TargetAsStream(&self, out: *mut <PrintWorkflowStreamTarget as RtType>::Abi) -> HRESULT,
+    fn get_TargetAsXpsObjectModelPackage(&self, out: *mut <PrintWorkflowObjectModelTargetPackage as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintWorkflowTarget> {
-    #[inline] pub fn get_target_as_stream(&self) -> Result<Option<ComPtr<PrintWorkflowStreamTarget>>> { unsafe { 
+    #[inline] pub fn get_target_as_stream(&self) -> Result<Option<PrintWorkflowStreamTarget>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TargetAsStream)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintWorkflowStreamTarget::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_target_as_xps_object_model_package(&self) -> Result<Option<ComPtr<PrintWorkflowObjectModelTargetPackage>>> { unsafe { 
+    #[inline] pub fn get_target_as_xps_object_model_package(&self) -> Result<Option<PrintWorkflowObjectModelTargetPackage>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TargetAsXpsObjectModelPackage)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintWorkflowObjectModelTargetPackage::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintWorkflowTarget: IPrintWorkflowTarget}
 DEFINE_IID!(IID_IPrintWorkflowTriggerDetails, 1463408744, 40326, 16466, 176, 203, 243, 16, 190, 205, 89, 187);
 RT_INTERFACE!{interface IPrintWorkflowTriggerDetails(IPrintWorkflowTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowTriggerDetails] {
-    fn get_PrintWorkflowSession(&self, out: *mut *mut PrintWorkflowBackgroundSession) -> HRESULT
+    fn get_PrintWorkflowSession(&self, out: *mut <PrintWorkflowBackgroundSession as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintWorkflowTriggerDetails> {
-    #[inline] pub fn get_print_workflow_session(&self) -> Result<Option<ComPtr<PrintWorkflowBackgroundSession>>> { unsafe { 
+    #[inline] pub fn get_print_workflow_session(&self) -> Result<Option<PrintWorkflowBackgroundSession>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PrintWorkflowSession)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintWorkflowBackgroundSession::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintWorkflowTriggerDetails: IPrintWorkflowTriggerDetails}
 DEFINE_IID!(IID_IPrintWorkflowUIActivatedEventArgs, 3163194445, 2539, 22342, 114, 166, 141, 200, 181, 237, 190, 155);
 RT_INTERFACE!{interface IPrintWorkflowUIActivatedEventArgs(IPrintWorkflowUIActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowUIActivatedEventArgs] {
-    fn get_PrintWorkflowSession(&self, out: *mut *mut PrintWorkflowForegroundSession) -> HRESULT
+    fn get_PrintWorkflowSession(&self, out: *mut <PrintWorkflowForegroundSession as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintWorkflowUIActivatedEventArgs> {
-    #[inline] pub fn get_print_workflow_session(&self) -> Result<Option<ComPtr<PrintWorkflowForegroundSession>>> { unsafe { 
+    #[inline] pub fn get_print_workflow_session(&self) -> Result<Option<PrintWorkflowForegroundSession>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PrintWorkflowSession)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintWorkflowForegroundSession::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintWorkflowUIActivatedEventArgs: IPrintWorkflowUIActivatedEventArgs}
 DEFINE_IID!(IID_IPrintWorkflowXpsDataAvailableEventArgs, 1293009713, 21713, 17230, 190, 14, 130, 197, 250, 88, 229, 178);
 RT_INTERFACE!{interface IPrintWorkflowXpsDataAvailableEventArgs(IPrintWorkflowXpsDataAvailableEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowXpsDataAvailableEventArgs] {
-    fn get_Operation(&self, out: *mut *mut PrintWorkflowSubmittedOperation) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+    fn get_Operation(&self, out: *mut <PrintWorkflowSubmittedOperation as RtType>::Abi) -> HRESULT,
+    fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrintWorkflowXpsDataAvailableEventArgs> {
-    #[inline] pub fn get_operation(&self) -> Result<Option<ComPtr<PrintWorkflowSubmittedOperation>>> { unsafe { 
+    #[inline] pub fn get_operation(&self) -> Result<Option<PrintWorkflowSubmittedOperation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Operation)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PrintWorkflowSubmittedOperation::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+    #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PrintWorkflowXpsDataAvailableEventArgs: IPrintWorkflowXpsDataAvailableEventArgs}
@@ -5446,7 +5446,7 @@ impl ComPtr<IPrint3DManager> {
 RT_CLASS!{class Print3DManager: IPrint3DManager}
 impl RtActivatable<IPrint3DManagerStatics> for Print3DManager {}
 impl Print3DManager {
-    #[inline] pub fn get_for_current_view() -> Result<Option<ComPtr<Print3DManager>>> {
+    #[inline] pub fn get_for_current_view() -> Result<Option<Print3DManager>> {
         <Self as RtActivatable<IPrint3DManagerStatics>>::get_activation_factory().get_for_current_view()
     }
     #[inline] pub fn show_print_ui_async() -> Result<ComPtr<foundation::IAsyncOperation<bool>>> {
@@ -5456,24 +5456,24 @@ impl Print3DManager {
 DEFINE_CLSID!(Print3DManager(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,51,68,77,97,110,97,103,101,114,0]) [CLSID_Print3DManager]);
 DEFINE_IID!(IID_IPrint3DManagerStatics, 250727166, 43437, 19464, 169, 23, 29, 31, 134, 62, 171, 203);
 RT_INTERFACE!{static interface IPrint3DManagerStatics(IPrint3DManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DManagerStatics] {
-    fn GetForCurrentView(&self, out: *mut *mut Print3DManager) -> HRESULT,
+    fn GetForCurrentView(&self, out: *mut <Print3DManager as RtType>::Abi) -> HRESULT,
     fn ShowPrintUIAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT
 }}
 impl ComPtr<IPrint3DManagerStatics> {
-    #[inline] pub fn get_for_current_view(&self) -> Result<Option<ComPtr<Print3DManager>>> { unsafe { 
+    #[inline] pub fn get_for_current_view(&self) -> Result<Option<Print3DManager>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetForCurrentView)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Print3DManager::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn show_print_ui_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ShowPrintUIAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrint3DTask, 2363740288, 8472, 19496, 128, 222, 244, 38, 215, 1, 145, 174);
 RT_INTERFACE!{interface IPrint3DTask(IPrint3DTaskVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTask] {
-    fn get_Source(&self, out: *mut *mut Printing3D3MFPackage) -> HRESULT,
+    fn get_Source(&self, out: *mut <Printing3D3MFPackage as RtType>::Abi) -> HRESULT,
     fn add_Submitting(&self, eventHandler: *mut foundation::TypedEventHandler<Print3DTask, IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Submitting(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
     fn add_Completed(&self, eventHandler: *mut foundation::TypedEventHandler<Print3DTask, Print3DTaskCompletedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5482,10 +5482,10 @@ RT_INTERFACE!{interface IPrint3DTask(IPrint3DTaskVtbl): IInspectable(IInspectabl
     fn remove_SourceChanged(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ComPtr<IPrint3DTask> {
-    #[inline] pub fn get_source(&self) -> Result<Option<ComPtr<Printing3D3MFPackage>>> { unsafe { 
+    #[inline] pub fn get_source(&self) -> Result<Option<Printing3D3MFPackage>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Source)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3D3MFPackage::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_submitting(&self, eventHandler: &ComPtr<foundation::TypedEventHandler<Print3DTask, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -5542,46 +5542,46 @@ RT_ENUM! { enum Print3DTaskDetail: i32 {
 }}
 DEFINE_IID!(IID_IPrint3DTaskRequest, 630572143, 8773, 19546, 135, 49, 13, 96, 77, 198, 188, 60);
 RT_INTERFACE!{interface IPrint3DTaskRequest(IPrint3DTaskRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskRequest] {
-    fn CreateTask(&self, title: HSTRING, printerId: HSTRING, handler: *mut Print3DTaskSourceRequestedHandler, out: *mut *mut Print3DTask) -> HRESULT
+    fn CreateTask(&self, title: HSTRING, printerId: HSTRING, handler: *mut Print3DTaskSourceRequestedHandler, out: *mut <Print3DTask as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrint3DTaskRequest> {
-    #[inline] pub fn create_task(&self, title: &HStringArg, printerId: &HStringArg, handler: &ComPtr<Print3DTaskSourceRequestedHandler>) -> Result<Option<ComPtr<Print3DTask>>> { unsafe { 
+    #[inline] pub fn create_task(&self, title: &HStringArg, printerId: &HStringArg, handler: &ComPtr<Print3DTaskSourceRequestedHandler>) -> Result<Option<Print3DTask>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateTask)(self.as_abi() as *const _ as *mut _, title.get(), printerId.get(), handler.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Print3DTask::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class Print3DTaskRequest: IPrint3DTaskRequest}
 DEFINE_IID!(IID_IPrint3DTaskRequestedEventArgs, 353154943, 6341, 16599, 159, 64, 250, 179, 9, 110, 5, 169);
 RT_INTERFACE!{interface IPrint3DTaskRequestedEventArgs(IPrint3DTaskRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskRequestedEventArgs] {
-    fn get_Request(&self, out: *mut *mut Print3DTaskRequest) -> HRESULT
+    fn get_Request(&self, out: *mut <Print3DTaskRequest as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrint3DTaskRequestedEventArgs> {
-    #[inline] pub fn get_request(&self) -> Result<Option<ComPtr<Print3DTaskRequest>>> { unsafe { 
+    #[inline] pub fn get_request(&self) -> Result<Option<Print3DTaskRequest>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Request)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Print3DTaskRequest::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class Print3DTaskRequestedEventArgs: IPrint3DTaskRequestedEventArgs}
 DEFINE_IID!(IID_IPrint3DTaskSourceChangedEventArgs, 1540175023, 9449, 19472, 141, 7, 20, 195, 70, 186, 63, 207);
 RT_INTERFACE!{interface IPrint3DTaskSourceChangedEventArgs(IPrint3DTaskSourceChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskSourceChangedEventArgs] {
-    fn get_Source(&self, out: *mut *mut Printing3D3MFPackage) -> HRESULT
+    fn get_Source(&self, out: *mut <Printing3D3MFPackage as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrint3DTaskSourceChangedEventArgs> {
-    #[inline] pub fn get_source(&self) -> Result<Option<ComPtr<Printing3D3MFPackage>>> { unsafe { 
+    #[inline] pub fn get_source(&self) -> Result<Option<Printing3D3MFPackage>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Source)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3D3MFPackage::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class Print3DTaskSourceChangedEventArgs: IPrint3DTaskSourceChangedEventArgs}
 DEFINE_IID!(IID_IPrint3DTaskSourceRequestedArgs, 3346832058, 9391, 16973, 163, 191, 146, 37, 12, 53, 86, 2);
 RT_INTERFACE!{interface IPrint3DTaskSourceRequestedArgs(IPrint3DTaskSourceRequestedArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskSourceRequestedArgs] {
-    fn SetSource(&self, source: *mut Printing3D3MFPackage) -> HRESULT
+    fn SetSource(&self, source: <Printing3D3MFPackage as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrint3DTaskSourceRequestedArgs> {
-    #[inline] pub fn set_source(&self, source: &ComPtr<Printing3D3MFPackage>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_source(&self, source: &Printing3D3MFPackage) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).SetSource)(self.as_abi() as *const _ as *mut _, source.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -5589,10 +5589,10 @@ impl ComPtr<IPrint3DTaskSourceRequestedArgs> {
 RT_CLASS!{class Print3DTaskSourceRequestedArgs: IPrint3DTaskSourceRequestedArgs}
 DEFINE_IID!(IID_Print3DTaskSourceRequestedHandler, 3910622832, 51479, 18142, 187, 81, 217, 169, 77, 179, 113, 31);
 RT_DELEGATE!{delegate Print3DTaskSourceRequestedHandler(Print3DTaskSourceRequestedHandlerVtbl, Print3DTaskSourceRequestedHandlerImpl) [IID_Print3DTaskSourceRequestedHandler] {
-    fn Invoke(&self, args: *mut Print3DTaskSourceRequestedArgs) -> HRESULT
+    fn Invoke(&self, args: <Print3DTaskSourceRequestedArgs as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<Print3DTaskSourceRequestedHandler> {
-    #[inline] pub fn invoke(&self, args: &ComPtr<Print3DTaskSourceRequestedArgs>) -> Result<()> { unsafe { 
+    #[inline] pub fn invoke(&self, args: &Print3DTaskSourceRequestedArgs) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Invoke)(self.as_abi() as *const _ as *mut _, args.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -5609,23 +5609,23 @@ RT_INTERFACE!{interface IPrinting3D3MFPackage(IPrinting3D3MFPackageVtbl): IInspe
     #[cfg(feature="windows-storage")] fn get_ModelPart(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStream) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
     #[cfg(feature="windows-storage")] fn put_ModelPart(&self, value: *mut super::super::storage::streams::IRandomAccessStream) -> HRESULT,
-    fn get_Thumbnail(&self, out: *mut *mut Printing3DTextureResource) -> HRESULT,
-    fn put_Thumbnail(&self, value: *mut Printing3DTextureResource) -> HRESULT,
+    fn get_Thumbnail(&self, out: *mut <Printing3DTextureResource as RtType>::Abi) -> HRESULT,
+    fn put_Thumbnail(&self, value: <Printing3DTextureResource as RtType>::Abi) -> HRESULT,
     fn get_Textures(&self, out: *mut *mut foundation::collections::IVector<Printing3DTextureResource>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy8(&self) -> (),
     #[cfg(feature="windows-storage")] fn LoadModelFromPackageAsync(&self, value: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncOperation<Printing3DModel>) -> HRESULT,
-    fn SaveModelToPackageAsync(&self, value: *mut Printing3DModel, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+    fn SaveModelToPackageAsync(&self, value: <Printing3DModel as RtType>::Abi, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl ComPtr<IPrinting3D3MFPackage> {
     #[cfg(feature="windows-storage")] #[inline] pub fn save_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::streams::IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SaveAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_print_ticket(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PrintTicket)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_print_ticket(&self, value: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_PrintTicket)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -5634,35 +5634,35 @@ impl ComPtr<IPrinting3D3MFPackage> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_model_part(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ModelPart)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_model_part(&self, value: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_ModelPart)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_thumbnail(&self) -> Result<Option<ComPtr<Printing3DTextureResource>>> { unsafe { 
+    #[inline] pub fn get_thumbnail(&self) -> Result<Option<Printing3DTextureResource>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Thumbnail)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DTextureResource::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_thumbnail(&self, value: &ComPtr<Printing3DTextureResource>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_thumbnail(&self, value: &Printing3DTextureResource) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_Thumbnail)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_textures(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DTextureResource>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Textures)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_package_async(&self, value: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<Printing3DModel>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).LoadModelFromPackageAsync)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn save_model_to_package_async(&self, value: &ComPtr<Printing3DModel>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn save_model_to_package_async(&self, value: &Printing3DModel) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SaveModelToPackageAsync)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class Printing3D3MFPackage: IPrinting3D3MFPackage}
@@ -5698,15 +5698,15 @@ impl ComPtr<IPrinting3D3MFPackageStatics> {
     #[cfg(feature="windows-storage")] #[inline] pub fn load_async(&self, value: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<Printing3D3MFPackage>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).LoadAsync)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrinting3DBaseMaterial, 3505448771, 50444, 19403, 157, 4, 252, 22, 173, 206, 162, 201);
 RT_INTERFACE!{interface IPrinting3DBaseMaterial(IPrinting3DBaseMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterial] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Name(&self, value: HSTRING) -> HRESULT,
-    fn get_Color(&self, out: *mut *mut Printing3DColorMaterial) -> HRESULT,
-    fn put_Color(&self, value: *mut Printing3DColorMaterial) -> HRESULT
+    fn get_Color(&self, out: *mut <Printing3DColorMaterial as RtType>::Abi) -> HRESULT,
+    fn put_Color(&self, value: <Printing3DColorMaterial as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrinting3DBaseMaterial> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
@@ -5718,12 +5718,12 @@ impl ComPtr<IPrinting3DBaseMaterial> {
         let hr = ((*self.as_abi().lpVtbl).put_Name)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_color(&self) -> Result<Option<ComPtr<Printing3DColorMaterial>>> { unsafe { 
+    #[inline] pub fn get_color(&self) -> Result<Option<Printing3DColorMaterial>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Color)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DColorMaterial::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_color(&self, value: &ComPtr<Printing3DColorMaterial>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_color(&self, value: &Printing3DColorMaterial) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_Color)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -5749,7 +5749,7 @@ impl ComPtr<IPrinting3DBaseMaterialGroup> {
     #[inline] pub fn get_bases(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DBaseMaterial>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Bases)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
@@ -5760,20 +5760,20 @@ impl ComPtr<IPrinting3DBaseMaterialGroup> {
 RT_CLASS!{class Printing3DBaseMaterialGroup: IPrinting3DBaseMaterialGroup}
 impl RtActivatable<IPrinting3DBaseMaterialGroupFactory> for Printing3DBaseMaterialGroup {}
 impl Printing3DBaseMaterialGroup {
-    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DBaseMaterialGroup>> {
+    #[inline] pub fn create(materialGroupId: u32) -> Result<Printing3DBaseMaterialGroup> {
         <Self as RtActivatable<IPrinting3DBaseMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
     }
 }
 DEFINE_CLSID!(Printing3DBaseMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,66,97,115,101,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DBaseMaterialGroup]);
 DEFINE_IID!(IID_IPrinting3DBaseMaterialGroupFactory, 1544898268, 34455, 16787, 151, 107, 132, 187, 65, 22, 229, 191);
 RT_INTERFACE!{static interface IPrinting3DBaseMaterialGroupFactory(IPrinting3DBaseMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterialGroupFactory] {
-    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DBaseMaterialGroup) -> HRESULT
+    fn Create(&self, materialGroupId: u32, out: *mut <Printing3DBaseMaterialGroup as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrinting3DBaseMaterialGroupFactory> {
-    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DBaseMaterialGroup>> { unsafe { 
+    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<Printing3DBaseMaterialGroup> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, materialGroupId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DBaseMaterialGroup::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrinting3DBaseMaterialStatics, 2170177468, 14154, 18285, 190, 146, 62, 207, 209, 203, 151, 118);
@@ -5843,7 +5843,7 @@ impl ComPtr<IPrinting3DColorMaterialGroup> {
     #[inline] pub fn get_colors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DColorMaterial>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Colors)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
@@ -5854,29 +5854,29 @@ impl ComPtr<IPrinting3DColorMaterialGroup> {
 RT_CLASS!{class Printing3DColorMaterialGroup: IPrinting3DColorMaterialGroup}
 impl RtActivatable<IPrinting3DColorMaterialGroupFactory> for Printing3DColorMaterialGroup {}
 impl Printing3DColorMaterialGroup {
-    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DColorMaterialGroup>> {
+    #[inline] pub fn create(materialGroupId: u32) -> Result<Printing3DColorMaterialGroup> {
         <Self as RtActivatable<IPrinting3DColorMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
     }
 }
 DEFINE_CLSID!(Printing3DColorMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,108,111,114,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DColorMaterialGroup]);
 DEFINE_IID!(IID_IPrinting3DColorMaterialGroupFactory, 1909689709, 45546, 19035, 188, 84, 25, 198, 95, 61, 240, 68);
 RT_INTERFACE!{static interface IPrinting3DColorMaterialGroupFactory(IPrinting3DColorMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterialGroupFactory] {
-    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DColorMaterialGroup) -> HRESULT
+    fn Create(&self, materialGroupId: u32, out: *mut <Printing3DColorMaterialGroup as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrinting3DColorMaterialGroupFactory> {
-    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DColorMaterialGroup>> { unsafe { 
+    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<Printing3DColorMaterialGroup> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, materialGroupId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DColorMaterialGroup::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrinting3DComponent, 2116581445, 49023, 19675, 162, 127, 48, 160, 20, 55, 254, 222);
 RT_INTERFACE!{interface IPrinting3DComponent(IPrinting3DComponentVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DComponent] {
-    fn get_Mesh(&self, out: *mut *mut Printing3DMesh) -> HRESULT,
-    fn put_Mesh(&self, value: *mut Printing3DMesh) -> HRESULT,
+    fn get_Mesh(&self, out: *mut <Printing3DMesh as RtType>::Abi) -> HRESULT,
+    fn put_Mesh(&self, value: <Printing3DMesh as RtType>::Abi) -> HRESULT,
     fn get_Components(&self, out: *mut *mut foundation::collections::IVector<Printing3DComponentWithMatrix>) -> HRESULT,
-    fn get_Thumbnail(&self, out: *mut *mut Printing3DTextureResource) -> HRESULT,
-    fn put_Thumbnail(&self, value: *mut Printing3DTextureResource) -> HRESULT,
+    fn get_Thumbnail(&self, out: *mut <Printing3DTextureResource as RtType>::Abi) -> HRESULT,
+    fn put_Thumbnail(&self, value: <Printing3DTextureResource as RtType>::Abi) -> HRESULT,
     fn get_Type(&self, out: *mut Printing3DObjectType) -> HRESULT,
     fn put_Type(&self, value: Printing3DObjectType) -> HRESULT,
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -5885,26 +5885,26 @@ RT_INTERFACE!{interface IPrinting3DComponent(IPrinting3DComponentVtbl): IInspect
     fn put_PartNumber(&self, value: HSTRING) -> HRESULT
 }}
 impl ComPtr<IPrinting3DComponent> {
-    #[inline] pub fn get_mesh(&self) -> Result<Option<ComPtr<Printing3DMesh>>> { unsafe { 
+    #[inline] pub fn get_mesh(&self) -> Result<Option<Printing3DMesh>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Mesh)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DMesh::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_mesh(&self, value: &ComPtr<Printing3DMesh>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_mesh(&self, value: &Printing3DMesh) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_Mesh)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_components(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DComponentWithMatrix>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Components)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_thumbnail(&self) -> Result<Option<ComPtr<Printing3DTextureResource>>> { unsafe { 
+    #[inline] pub fn get_thumbnail(&self) -> Result<Option<Printing3DTextureResource>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Thumbnail)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DTextureResource::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_thumbnail(&self, value: &ComPtr<Printing3DTextureResource>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_thumbnail(&self, value: &Printing3DTextureResource) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_Thumbnail)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -5941,18 +5941,18 @@ impl RtActivatable<IActivationFactory> for Printing3DComponent {}
 DEFINE_CLSID!(Printing3DComponent(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,110,101,110,116,0]) [CLSID_Printing3DComponent]);
 DEFINE_IID!(IID_IPrinting3DComponentWithMatrix, 846852917, 3824, 17771, 154, 33, 73, 190, 190, 139, 81, 194);
 RT_INTERFACE!{interface IPrinting3DComponentWithMatrix(IPrinting3DComponentWithMatrixVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DComponentWithMatrix] {
-    fn get_Component(&self, out: *mut *mut Printing3DComponent) -> HRESULT,
-    fn put_Component(&self, value: *mut Printing3DComponent) -> HRESULT,
+    fn get_Component(&self, out: *mut <Printing3DComponent as RtType>::Abi) -> HRESULT,
+    fn put_Component(&self, value: <Printing3DComponent as RtType>::Abi) -> HRESULT,
     fn get_Matrix(&self, out: *mut foundation::numerics::Matrix4x4) -> HRESULT,
     fn put_Matrix(&self, value: foundation::numerics::Matrix4x4) -> HRESULT
 }}
 impl ComPtr<IPrinting3DComponentWithMatrix> {
-    #[inline] pub fn get_component(&self) -> Result<Option<ComPtr<Printing3DComponent>>> { unsafe { 
+    #[inline] pub fn get_component(&self) -> Result<Option<Printing3DComponent>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Component)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DComponent::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_component(&self, value: &ComPtr<Printing3DComponent>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_component(&self, value: &Printing3DComponent) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_Component)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -5977,7 +5977,7 @@ impl ComPtr<IPrinting3DCompositeMaterial> {
     #[inline] pub fn get_values(&self) -> Result<Option<ComPtr<foundation::collections::IVector<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Values)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class Printing3DCompositeMaterial: IPrinting3DCompositeMaterial}
@@ -5993,7 +5993,7 @@ impl ComPtr<IPrinting3DCompositeMaterialGroup> {
     #[inline] pub fn get_composites(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DCompositeMaterial>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Composites)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
@@ -6003,42 +6003,42 @@ impl ComPtr<IPrinting3DCompositeMaterialGroup> {
     #[inline] pub fn get_material_indices(&self) -> Result<Option<ComPtr<foundation::collections::IVector<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_MaterialIndices)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class Printing3DCompositeMaterialGroup: IPrinting3DCompositeMaterialGroup}
 impl RtActivatable<IPrinting3DCompositeMaterialGroupFactory> for Printing3DCompositeMaterialGroup {}
 impl Printing3DCompositeMaterialGroup {
-    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DCompositeMaterialGroup>> {
+    #[inline] pub fn create(materialGroupId: u32) -> Result<Printing3DCompositeMaterialGroup> {
         <Self as RtActivatable<IPrinting3DCompositeMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
     }
 }
 DEFINE_CLSID!(Printing3DCompositeMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,115,105,116,101,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DCompositeMaterialGroup]);
 DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroup2, 115895650, 32059, 16865, 148, 76, 186, 253, 228, 85, 84, 131);
 RT_INTERFACE!{interface IPrinting3DCompositeMaterialGroup2(IPrinting3DCompositeMaterialGroup2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterialGroup2] {
-    fn get_BaseMaterialGroup(&self, out: *mut *mut Printing3DBaseMaterialGroup) -> HRESULT,
-    fn put_BaseMaterialGroup(&self, value: *mut Printing3DBaseMaterialGroup) -> HRESULT
+    fn get_BaseMaterialGroup(&self, out: *mut <Printing3DBaseMaterialGroup as RtType>::Abi) -> HRESULT,
+    fn put_BaseMaterialGroup(&self, value: <Printing3DBaseMaterialGroup as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrinting3DCompositeMaterialGroup2> {
-    #[inline] pub fn get_base_material_group(&self) -> Result<Option<ComPtr<Printing3DBaseMaterialGroup>>> { unsafe { 
+    #[inline] pub fn get_base_material_group(&self) -> Result<Option<Printing3DBaseMaterialGroup>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BaseMaterialGroup)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DBaseMaterialGroup::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_base_material_group(&self, value: &ComPtr<Printing3DBaseMaterialGroup>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_base_material_group(&self, value: &Printing3DBaseMaterialGroup) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_BaseMaterialGroup)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroupFactory, 3499019539, 37631, 17322, 166, 39, 141, 67, 194, 44, 129, 126);
 RT_INTERFACE!{static interface IPrinting3DCompositeMaterialGroupFactory(IPrinting3DCompositeMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterialGroupFactory] {
-    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DCompositeMaterialGroup) -> HRESULT
+    fn Create(&self, materialGroupId: u32, out: *mut <Printing3DCompositeMaterialGroup as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrinting3DCompositeMaterialGroupFactory> {
-    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DCompositeMaterialGroup>> { unsafe { 
+    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<Printing3DCompositeMaterialGroup> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, materialGroupId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DCompositeMaterialGroup::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrinting3DFaceReductionOptions, 3154039703, 11636, 18167, 190, 133, 153, 166, 123, 187, 102, 41);
@@ -6094,27 +6094,27 @@ impl ComPtr<IPrinting3DMaterial> {
     #[inline] pub fn get_base_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DBaseMaterialGroup>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BaseGroups)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_color_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DColorMaterialGroup>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ColorGroups)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_texture2_coord_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DTexture2CoordMaterialGroup>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Texture2CoordGroups)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_composite_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DCompositeMaterialGroup>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CompositeGroups)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_multiple_property_groups(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DMultiplePropertyMaterialGroup>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_MultiplePropertyGroups)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class Printing3DMaterial: IPrinting3DMaterial}
@@ -6208,7 +6208,7 @@ impl ComPtr<IPrinting3DMesh> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_vertex_positions(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetVertexPositions)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_vertex_positions(&self, value: u32) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).CreateVertexPositions)(self.as_abi() as *const _ as *mut _, value);
@@ -6217,7 +6217,7 @@ impl ComPtr<IPrinting3DMesh> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_vertex_normals(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetVertexNormals)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_vertex_normals(&self, value: u32) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).CreateVertexNormals)(self.as_abi() as *const _ as *mut _, value);
@@ -6226,7 +6226,7 @@ impl ComPtr<IPrinting3DMesh> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_triangle_indices(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetTriangleIndices)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_triangle_indices(&self, value: u32) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).CreateTriangleIndices)(self.as_abi() as *const _ as *mut _, value);
@@ -6235,7 +6235,7 @@ impl ComPtr<IPrinting3DMesh> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_triangle_material_indices(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetTriangleMaterialIndices)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_triangle_material_indices(&self, value: u32) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).CreateTriangleMaterialIndices)(self.as_abi() as *const _ as *mut _, value);
@@ -6244,17 +6244,17 @@ impl ComPtr<IPrinting3DMesh> {
     #[inline] pub fn get_buffer_description_set(&self) -> Result<Option<ComPtr<foundation::collections::IPropertySet>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BufferDescriptionSet)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_buffer_set(&self) -> Result<Option<ComPtr<foundation::collections::IPropertySet>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BufferSet)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn verify_async(&self, value: Printing3DMeshVerificationMode) -> Result<ComPtr<foundation::IAsyncOperation<Printing3DMeshVerificationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).VerifyAsync)(self.as_abi() as *const _ as *mut _, value, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class Printing3DMesh: IPrinting3DMesh}
@@ -6278,12 +6278,12 @@ impl ComPtr<IPrinting3DMeshVerificationResult> {
     #[inline] pub fn get_nonmanifold_triangles(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NonmanifoldTriangles)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_reversed_normal_triangles(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ReversedNormalTriangles)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class Printing3DMeshVerificationResult: IPrinting3DMeshVerificationResult}
@@ -6294,16 +6294,16 @@ RT_INTERFACE!{interface IPrinting3DModel(IPrinting3DModelVtbl): IInspectable(IIn
     fn get_Textures(&self, out: *mut *mut foundation::collections::IVector<Printing3DModelTexture>) -> HRESULT,
     fn get_Meshes(&self, out: *mut *mut foundation::collections::IVector<Printing3DMesh>) -> HRESULT,
     fn get_Components(&self, out: *mut *mut foundation::collections::IVector<Printing3DComponent>) -> HRESULT,
-    fn get_Material(&self, out: *mut *mut Printing3DMaterial) -> HRESULT,
-    fn put_Material(&self, value: *mut Printing3DMaterial) -> HRESULT,
-    fn get_Build(&self, out: *mut *mut Printing3DComponent) -> HRESULT,
-    fn put_Build(&self, value: *mut Printing3DComponent) -> HRESULT,
+    fn get_Material(&self, out: *mut <Printing3DMaterial as RtType>::Abi) -> HRESULT,
+    fn put_Material(&self, value: <Printing3DMaterial as RtType>::Abi) -> HRESULT,
+    fn get_Build(&self, out: *mut <Printing3DComponent as RtType>::Abi) -> HRESULT,
+    fn put_Build(&self, value: <Printing3DComponent as RtType>::Abi) -> HRESULT,
     fn get_Version(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Version(&self, value: HSTRING) -> HRESULT,
     fn get_RequiredExtensions(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
     fn get_Metadata(&self, out: *mut *mut foundation::collections::IMap<HString, HString>) -> HRESULT,
     fn RepairAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn Clone(&self, out: *mut *mut Printing3DModel) -> HRESULT
+    fn Clone(&self, out: *mut <Printing3DModel as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrinting3DModel> {
     #[inline] pub fn get_unit(&self) -> Result<Printing3DModelUnit> { unsafe { 
@@ -6318,33 +6318,33 @@ impl ComPtr<IPrinting3DModel> {
     #[inline] pub fn get_textures(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DModelTexture>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Textures)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_meshes(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DMesh>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Meshes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_components(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DComponent>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Components)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_material(&self) -> Result<Option<ComPtr<Printing3DMaterial>>> { unsafe { 
+    #[inline] pub fn get_material(&self) -> Result<Option<Printing3DMaterial>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Material)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DMaterial::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_material(&self, value: &ComPtr<Printing3DMaterial>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_material(&self, value: &Printing3DMaterial) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_Material)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_build(&self) -> Result<Option<ComPtr<Printing3DComponent>>> { unsafe { 
+    #[inline] pub fn get_build(&self) -> Result<Option<Printing3DComponent>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Build)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DComponent::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_build(&self, value: &ComPtr<Printing3DComponent>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_build(&self, value: &Printing3DComponent) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_Build)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -6360,22 +6360,22 @@ impl ComPtr<IPrinting3DModel> {
     #[inline] pub fn get_required_extensions(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RequiredExtensions)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_metadata(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Metadata)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn repair_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RepairAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn clone(&self) -> Result<Option<ComPtr<Printing3DModel>>> { unsafe { 
+    #[inline] pub fn clone(&self) -> Result<Option<Printing3DModel>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Clone)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DModel::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class Printing3DModel: IPrinting3DModel}
@@ -6386,58 +6386,58 @@ RT_INTERFACE!{interface IPrinting3DModel2(IPrinting3DModel2Vtbl): IInspectable(I
     fn TryPartialRepairAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
     fn TryPartialRepairWithTimeAsync(&self, maxWaitTime: foundation::TimeSpan, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
     fn TryReduceFacesAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT,
-    fn TryReduceFacesWithOptionsAsync(&self, printing3DFaceReductionOptions: *mut Printing3DFaceReductionOptions, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT,
-    fn TryReduceFacesWithOptionsAndTimeAsync(&self, printing3DFaceReductionOptions: *mut Printing3DFaceReductionOptions, maxWait: foundation::TimeSpan, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT,
+    fn TryReduceFacesWithOptionsAsync(&self, printing3DFaceReductionOptions: <Printing3DFaceReductionOptions as RtType>::Abi, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT,
+    fn TryReduceFacesWithOptionsAndTimeAsync(&self, printing3DFaceReductionOptions: <Printing3DFaceReductionOptions as RtType>::Abi, maxWait: foundation::TimeSpan, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT,
     fn RepairWithProgressAsync(&self, out: *mut *mut foundation::IAsyncOperationWithProgress<bool, f64>) -> HRESULT
 }}
 impl ComPtr<IPrinting3DModel2> {
     #[inline] pub fn try_partial_repair_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryPartialRepairAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_partial_repair_with_time_async(&self, maxWaitTime: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryPartialRepairWithTimeAsync)(self.as_abi() as *const _ as *mut _, maxWaitTime, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_reduce_faces_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryReduceFacesAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn try_reduce_faces_with_options_async(&self, printing3DFaceReductionOptions: &ComPtr<Printing3DFaceReductionOptions>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
+    #[inline] pub fn try_reduce_faces_with_options_async(&self, printing3DFaceReductionOptions: &Printing3DFaceReductionOptions) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryReduceFacesWithOptionsAsync)(self.as_abi() as *const _ as *mut _, printing3DFaceReductionOptions.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn try_reduce_faces_with_options_and_time_async(&self, printing3DFaceReductionOptions: &ComPtr<Printing3DFaceReductionOptions>, maxWait: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
+    #[inline] pub fn try_reduce_faces_with_options_and_time_async(&self, printing3DFaceReductionOptions: &Printing3DFaceReductionOptions, maxWait: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryReduceFacesWithOptionsAndTimeAsync)(self.as_abi() as *const _ as *mut _, printing3DFaceReductionOptions.as_abi() as *const _ as *mut _, maxWait, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn repair_with_progress_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<bool, f64>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RepairWithProgressAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrinting3DModelTexture, 1571802881, 46493, 18492, 151, 187, 164, 213, 70, 209, 199, 92);
 RT_INTERFACE!{interface IPrinting3DModelTexture(IPrinting3DModelTextureVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DModelTexture] {
-    fn get_TextureResource(&self, out: *mut *mut Printing3DTextureResource) -> HRESULT,
-    fn put_TextureResource(&self, value: *mut Printing3DTextureResource) -> HRESULT,
+    fn get_TextureResource(&self, out: *mut <Printing3DTextureResource as RtType>::Abi) -> HRESULT,
+    fn put_TextureResource(&self, value: <Printing3DTextureResource as RtType>::Abi) -> HRESULT,
     fn get_TileStyleU(&self, out: *mut Printing3DTextureEdgeBehavior) -> HRESULT,
     fn put_TileStyleU(&self, value: Printing3DTextureEdgeBehavior) -> HRESULT,
     fn get_TileStyleV(&self, out: *mut Printing3DTextureEdgeBehavior) -> HRESULT,
     fn put_TileStyleV(&self, value: Printing3DTextureEdgeBehavior) -> HRESULT
 }}
 impl ComPtr<IPrinting3DModelTexture> {
-    #[inline] pub fn get_texture_resource(&self) -> Result<Option<ComPtr<Printing3DTextureResource>>> { unsafe { 
+    #[inline] pub fn get_texture_resource(&self) -> Result<Option<Printing3DTextureResource>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TextureResource)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DTextureResource::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_texture_resource(&self, value: &ComPtr<Printing3DTextureResource>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_texture_resource(&self, value: &Printing3DTextureResource) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_TextureResource)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -6474,7 +6474,7 @@ impl ComPtr<IPrinting3DMultiplePropertyMaterial> {
     #[inline] pub fn get_material_indices(&self) -> Result<Option<ComPtr<foundation::collections::IVector<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_MaterialIndices)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class Printing3DMultiplePropertyMaterial: IPrinting3DMultiplePropertyMaterial}
@@ -6490,12 +6490,12 @@ impl ComPtr<IPrinting3DMultiplePropertyMaterialGroup> {
     #[inline] pub fn get_multiple_properties(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DMultiplePropertyMaterial>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_MultipleProperties)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_material_group_indices(&self) -> Result<Option<ComPtr<foundation::collections::IVector<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_MaterialGroupIndices)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
@@ -6506,20 +6506,20 @@ impl ComPtr<IPrinting3DMultiplePropertyMaterialGroup> {
 RT_CLASS!{class Printing3DMultiplePropertyMaterialGroup: IPrinting3DMultiplePropertyMaterialGroup}
 impl RtActivatable<IPrinting3DMultiplePropertyMaterialGroupFactory> for Printing3DMultiplePropertyMaterialGroup {}
 impl Printing3DMultiplePropertyMaterialGroup {
-    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DMultiplePropertyMaterialGroup>> {
+    #[inline] pub fn create(materialGroupId: u32) -> Result<Printing3DMultiplePropertyMaterialGroup> {
         <Self as RtActivatable<IPrinting3DMultiplePropertyMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
     }
 }
 DEFINE_CLSID!(Printing3DMultiplePropertyMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,117,108,116,105,112,108,101,80,114,111,112,101,114,116,121,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DMultiplePropertyMaterialGroup]);
 DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterialGroupFactory, 842930542, 54470, 17694, 168, 20, 77, 120, 162, 16, 254, 83);
 RT_INTERFACE!{static interface IPrinting3DMultiplePropertyMaterialGroupFactory(IPrinting3DMultiplePropertyMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMultiplePropertyMaterialGroupFactory] {
-    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DMultiplePropertyMaterialGroup) -> HRESULT
+    fn Create(&self, materialGroupId: u32, out: *mut <Printing3DMultiplePropertyMaterialGroup as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrinting3DMultiplePropertyMaterialGroupFactory> {
-    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DMultiplePropertyMaterialGroup>> { unsafe { 
+    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<Printing3DMultiplePropertyMaterialGroup> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, materialGroupId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DMultiplePropertyMaterialGroup::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum Printing3DObjectType: i32 {
@@ -6530,20 +6530,20 @@ RT_ENUM! { enum Printing3DPackageCompression: i32 {
 }}
 DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterial, 2374257659, 2025, 18822, 152, 51, 141, 211, 212, 140, 104, 89);
 RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterial(IPrinting3DTexture2CoordMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterial] {
-    fn get_Texture(&self, out: *mut *mut Printing3DModelTexture) -> HRESULT,
-    fn put_Texture(&self, value: *mut Printing3DModelTexture) -> HRESULT,
+    fn get_Texture(&self, out: *mut <Printing3DModelTexture as RtType>::Abi) -> HRESULT,
+    fn put_Texture(&self, value: <Printing3DModelTexture as RtType>::Abi) -> HRESULT,
     fn get_U(&self, out: *mut f64) -> HRESULT,
     fn put_U(&self, value: f64) -> HRESULT,
     fn get_V(&self, out: *mut f64) -> HRESULT,
     fn put_V(&self, value: f64) -> HRESULT
 }}
 impl ComPtr<IPrinting3DTexture2CoordMaterial> {
-    #[inline] pub fn get_texture(&self) -> Result<Option<ComPtr<Printing3DModelTexture>>> { unsafe { 
+    #[inline] pub fn get_texture(&self) -> Result<Option<Printing3DModelTexture>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Texture)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DModelTexture::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_texture(&self, value: &ComPtr<Printing3DModelTexture>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_texture(&self, value: &Printing3DModelTexture) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_Texture)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -6578,7 +6578,7 @@ impl ComPtr<IPrinting3DTexture2CoordMaterialGroup> {
     #[inline] pub fn get_texture2_coords(&self) -> Result<Option<ComPtr<foundation::collections::IVector<Printing3DTexture2CoordMaterial>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Texture2Coords)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
@@ -6589,36 +6589,36 @@ impl ComPtr<IPrinting3DTexture2CoordMaterialGroup> {
 RT_CLASS!{class Printing3DTexture2CoordMaterialGroup: IPrinting3DTexture2CoordMaterialGroup}
 impl RtActivatable<IPrinting3DTexture2CoordMaterialGroupFactory> for Printing3DTexture2CoordMaterialGroup {}
 impl Printing3DTexture2CoordMaterialGroup {
-    #[inline] pub fn create(materialGroupId: u32) -> Result<ComPtr<Printing3DTexture2CoordMaterialGroup>> {
+    #[inline] pub fn create(materialGroupId: u32) -> Result<Printing3DTexture2CoordMaterialGroup> {
         <Self as RtActivatable<IPrinting3DTexture2CoordMaterialGroupFactory>>::get_activation_factory().create(materialGroupId)
     }
 }
 DEFINE_CLSID!(Printing3DTexture2CoordMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,50,67,111,111,114,100,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DTexture2CoordMaterialGroup]);
 DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroup2, 1778113466, 45358, 17051, 131, 134, 223, 82, 132, 246, 232, 15);
 RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterialGroup2(IPrinting3DTexture2CoordMaterialGroup2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterialGroup2] {
-    fn get_Texture(&self, out: *mut *mut Printing3DModelTexture) -> HRESULT,
-    fn put_Texture(&self, value: *mut Printing3DModelTexture) -> HRESULT
+    fn get_Texture(&self, out: *mut <Printing3DModelTexture as RtType>::Abi) -> HRESULT,
+    fn put_Texture(&self, value: <Printing3DModelTexture as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrinting3DTexture2CoordMaterialGroup2> {
-    #[inline] pub fn get_texture(&self) -> Result<Option<ComPtr<Printing3DModelTexture>>> { unsafe { 
+    #[inline] pub fn get_texture(&self) -> Result<Option<Printing3DModelTexture>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Texture)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DModelTexture::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_texture(&self, value: &ComPtr<Printing3DModelTexture>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_texture(&self, value: &Printing3DModelTexture) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_Texture)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroupFactory, 3417328048, 18058, 19567, 178, 162, 142, 184, 186, 141, 234, 72);
 RT_INTERFACE!{static interface IPrinting3DTexture2CoordMaterialGroupFactory(IPrinting3DTexture2CoordMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterialGroupFactory] {
-    fn Create(&self, materialGroupId: u32, out: *mut *mut Printing3DTexture2CoordMaterialGroup) -> HRESULT
+    fn Create(&self, materialGroupId: u32, out: *mut <Printing3DTexture2CoordMaterialGroup as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPrinting3DTexture2CoordMaterialGroupFactory> {
-    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<ComPtr<Printing3DTexture2CoordMaterialGroup>> { unsafe { 
+    #[inline] pub fn create(&self, materialGroupId: u32) -> Result<Printing3DTexture2CoordMaterialGroup> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, materialGroupId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Printing3DTexture2CoordMaterialGroup::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum Printing3DTextureEdgeBehavior: i32 {
@@ -6637,7 +6637,7 @@ impl ComPtr<IPrinting3DTextureResource> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_texture_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamWithContentType>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TextureData)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_texture_data(&self, value: &ComPtr<super::super::storage::streams::IRandomAccessStreamWithContentType>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_TextureData)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);

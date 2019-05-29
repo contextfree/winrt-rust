@@ -30,7 +30,7 @@ pub fn query_interface<T, Target>(interface: &T) -> Option<ComPtr<Target>> where
     let mut res = ptr::null_mut();
     unsafe {
         match as_unknown.QueryInterface(iid.as_ref(), &mut res as *mut _ as *mut *mut VOID) {
-            S_OK => Some(ComPtr::wrap(res)),
+            S_OK => Some(ComPtr::wrap_nonnull(res)),
             _ => None
         }
     }
@@ -46,8 +46,7 @@ impl<T: ComInterface> ComPtr<T> {
     /// It takes ownership over the pointer which means it does __not__ call `AddRef`.
     /// The wrapped pointer must not be null.
     #[inline]
-    pub unsafe fn wrap(ptr: *mut T) -> ComPtr<T>
-    {
+    pub unsafe fn wrap_nonnull(ptr: *mut T) -> ComPtr<T> {
         debug_assert!(!ptr.is_null());
         ComPtr(ptr::NonNull::new_unchecked(ptr))
     }
@@ -55,8 +54,7 @@ impl<T: ComInterface> ComPtr<T> {
     /// Creates an optional `ComPtr` to wrap a raw pointer that may be null.
     /// It takes ownership over the pointer which means it does __not__ call `AddRef`.
     #[inline]
-    pub unsafe fn wrap_optional(ptr: *mut T) -> Option<ComPtr<T>>
-    {
+    pub unsafe fn wrap(ptr: *mut T) -> Option<ComPtr<T>> {
         if ptr.is_null() {
             None
         } else {
@@ -129,7 +127,7 @@ impl<T: ComInterface> Clone for ComPtr<T> {
     fn clone(&self) -> Self {
         unsafe { 
             self.as_unknown().AddRef();
-            ComPtr::wrap(self.0.as_ptr())
+            ComPtr::wrap_nonnull(self.0.as_ptr())
         }
     }
 }

@@ -36,7 +36,7 @@ impl ArcadeStick {
     #[inline] pub fn get_arcade_sticks() -> Result<Option<ComPtr<foundation::collections::IVectorView<ArcadeStick>>>> {
         <Self as RtActivatable<IArcadeStickStatics>>::get_activation_factory().get_arcade_sticks()
     }
-    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<ArcadeStick>>> {
+    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<ArcadeStick>> {
         <Self as RtActivatable<IArcadeStickStatics2>>::get_activation_factory().from_game_controller(gameController)
     }
 }
@@ -77,18 +77,18 @@ impl ComPtr<IArcadeStickStatics> {
     #[inline] pub fn get_arcade_sticks(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<ArcadeStick>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ArcadeSticks)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IArcadeStickStatics2, 1387648836, 48006, 17498, 181, 156, 89, 111, 14, 42, 73, 223);
 RT_INTERFACE!{static interface IArcadeStickStatics2(IArcadeStickStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IArcadeStickStatics2] {
-    fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut ArcadeStick) -> HRESULT
+    fn FromGameController(&self, gameController: *mut IGameController, out: *mut <ArcadeStick as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IArcadeStickStatics2> {
-    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<ArcadeStick>>> { unsafe { 
+    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ArcadeStick>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FromGameController)(self.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ArcadeStick::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IFlightStick, 3030564892, 47163, 17497, 161, 169, 151, 176, 60, 51, 218, 124);
@@ -132,7 +132,7 @@ impl FlightStick {
     #[inline] pub fn get_flight_sticks() -> Result<Option<ComPtr<foundation::collections::IVectorView<FlightStick>>>> {
         <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().get_flight_sticks()
     }
-    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<FlightStick>>> {
+    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<FlightStick>> {
         <Self as RtActivatable<IFlightStickStatics>>::get_activation_factory().from_game_controller(gameController)
     }
 }
@@ -150,7 +150,7 @@ RT_INTERFACE!{static interface IFlightStickStatics(IFlightStickStaticsVtbl): IIn
     fn add_FlightStickRemoved(&self, value: *mut foundation::EventHandler<FlightStick>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_FlightStickRemoved(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn get_FlightSticks(&self, out: *mut *mut foundation::collections::IVectorView<FlightStick>) -> HRESULT,
-    fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut FlightStick) -> HRESULT
+    fn FromGameController(&self, gameController: *mut IGameController, out: *mut <FlightStick as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IFlightStickStatics> {
     #[inline] pub fn add_flight_stick_added(&self, value: &ComPtr<foundation::EventHandler<FlightStick>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
@@ -174,12 +174,12 @@ impl ComPtr<IFlightStickStatics> {
     #[inline] pub fn get_flight_sticks(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<FlightStick>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_FlightSticks)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<FlightStick>>> { unsafe { 
+    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<FlightStick>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FromGameController)(self.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(FlightStick::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IGameController, 464479522, 24420, 17093, 130, 103, 185, 254, 34, 21, 191, 189);
@@ -190,9 +190,9 @@ RT_INTERFACE!{interface IGameController(IGameControllerVtbl): IInspectable(IInsp
     fn remove_HeadsetDisconnected(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     #[cfg(feature="windows-system")] fn add_UserChanged(&self, value: *mut foundation::TypedEventHandler<IGameController, super::super::system::UserChangedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_UserChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn get_Headset(&self, out: *mut *mut Headset) -> HRESULT,
+    fn get_Headset(&self, out: *mut <Headset as RtType>::Abi) -> HRESULT,
     fn get_IsWireless(&self, out: *mut bool) -> HRESULT,
-    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
+    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut <super::super::system::User as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IGameController> {
     #[inline] pub fn add_headset_connected(&self, value: &ComPtr<foundation::TypedEventHandler<IGameController, Headset>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
@@ -222,31 +222,31 @@ impl ComPtr<IGameController> {
         let hr = ((*self.as_abi().lpVtbl).remove_UserChanged)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_headset(&self) -> Result<Option<ComPtr<Headset>>> { unsafe { 
+    #[inline] pub fn get_headset(&self) -> Result<Option<Headset>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Headset)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Headset::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_wireless(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).get_IsWireless)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<super::super::system::User>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_User)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::system::User::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IGameControllerBatteryInfo, 3706504833, 14691, 19878, 149, 93, 85, 63, 59, 111, 97, 97);
 RT_INTERFACE!{interface IGameControllerBatteryInfo(IGameControllerBatteryInfoVtbl): IInspectable(IInspectableVtbl) [IID_IGameControllerBatteryInfo] {
-    #[cfg(feature="windows-devices")] fn TryGetBatteryReport(&self, out: *mut *mut super::super::devices::power::BatteryReport) -> HRESULT
+    #[cfg(feature="windows-devices")] fn TryGetBatteryReport(&self, out: *mut <super::super::devices::power::BatteryReport as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IGameControllerBatteryInfo> {
-    #[cfg(feature="windows-devices")] #[inline] pub fn try_get_battery_report(&self) -> Result<Option<ComPtr<super::super::devices::power::BatteryReport>>> { unsafe { 
+    #[cfg(feature="windows-devices")] #[inline] pub fn try_get_battery_report(&self) -> Result<Option<super::super::devices::power::BatteryReport>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryGetBatteryReport)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::devices::power::BatteryReport::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum GameControllerButtonLabel: i32 {
@@ -299,7 +299,7 @@ impl Gamepad {
     #[inline] pub fn get_gamepads() -> Result<Option<ComPtr<foundation::collections::IVectorView<Gamepad>>>> {
         <Self as RtActivatable<IGamepadStatics>>::get_activation_factory().get_gamepads()
     }
-    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<Gamepad>>> {
+    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<Gamepad>> {
         <Self as RtActivatable<IGamepadStatics2>>::get_activation_factory().from_game_controller(gameController)
     }
 }
@@ -351,18 +351,18 @@ impl ComPtr<IGamepadStatics> {
     #[inline] pub fn get_gamepads(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<Gamepad>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Gamepads)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IGamepadStatics2, 1114074565, 2134, 18372, 146, 19, 179, 149, 80, 76, 58, 60);
 RT_INTERFACE!{static interface IGamepadStatics2(IGamepadStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGamepadStatics2] {
-    fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut Gamepad) -> HRESULT
+    fn FromGameController(&self, gameController: *mut IGameController, out: *mut <Gamepad as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IGamepadStatics2> {
-    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<Gamepad>>> { unsafe { 
+    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<Gamepad>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FromGameController)(self.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Gamepad::wrap(out)) } else { err(hr) }
     }}
 }
 RT_STRUCT! { struct GamepadVibration {
@@ -396,7 +396,7 @@ RT_INTERFACE!{interface IRacingWheel(IRacingWheelVtbl): IInspectable(IInspectabl
     fn get_HasPatternShifter(&self, out: *mut bool) -> HRESULT,
     fn get_MaxPatternShifterGear(&self, out: *mut i32) -> HRESULT,
     fn get_MaxWheelAngle(&self, out: *mut f64) -> HRESULT,
-    fn get_WheelMotor(&self, out: *mut *mut forcefeedback::ForceFeedbackMotor) -> HRESULT,
+    fn get_WheelMotor(&self, out: *mut <forcefeedback::ForceFeedbackMotor as RtType>::Abi) -> HRESULT,
     fn GetButtonLabel(&self, button: RacingWheelButtons, out: *mut GameControllerButtonLabel) -> HRESULT,
     fn GetCurrentReading(&self, out: *mut RacingWheelReading) -> HRESULT
 }}
@@ -426,10 +426,10 @@ impl ComPtr<IRacingWheel> {
         let hr = ((*self.as_abi().lpVtbl).get_MaxWheelAngle)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_wheel_motor(&self) -> Result<Option<ComPtr<forcefeedback::ForceFeedbackMotor>>> { unsafe { 
+    #[inline] pub fn get_wheel_motor(&self) -> Result<Option<forcefeedback::ForceFeedbackMotor>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_WheelMotor)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(forcefeedback::ForceFeedbackMotor::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_button_label(&self, button: RacingWheelButtons) -> Result<GameControllerButtonLabel> { unsafe { 
         let mut out = zeroed();
@@ -461,7 +461,7 @@ impl RacingWheel {
     #[inline] pub fn get_racing_wheels() -> Result<Option<ComPtr<foundation::collections::IVectorView<RacingWheel>>>> {
         <Self as RtActivatable<IRacingWheelStatics>>::get_activation_factory().get_racing_wheels()
     }
-    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<RacingWheel>>> {
+    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<RacingWheel>> {
         <Self as RtActivatable<IRacingWheelStatics2>>::get_activation_factory().from_game_controller(gameController)
     }
 }
@@ -502,18 +502,18 @@ impl ComPtr<IRacingWheelStatics> {
     #[inline] pub fn get_racing_wheels(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<RacingWheel>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RacingWheels)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IRacingWheelStatics2, 3865492650, 60925, 17187, 169, 246, 60, 56, 64, 72, 209, 237);
 RT_INTERFACE!{static interface IRacingWheelStatics2(IRacingWheelStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IRacingWheelStatics2] {
-    fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut RacingWheel) -> HRESULT
+    fn FromGameController(&self, gameController: *mut IGameController, out: *mut <RacingWheel as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IRacingWheelStatics2> {
-    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<RacingWheel>>> { unsafe { 
+    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<RacingWheel>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FromGameController)(self.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(RacingWheel::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IRawGameController, 2091740561, 42977, 20337, 154, 120, 51, 233, 197, 223, 234, 98);
@@ -542,7 +542,7 @@ impl ComPtr<IRawGameController> {
     #[inline] pub fn get_force_feedback_motors(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<forcefeedback::ForceFeedbackMotor>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ForceFeedbackMotors)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hardware_product_id(&self) -> Result<u16> { unsafe { 
         let mut out = zeroed();
@@ -593,7 +593,7 @@ impl RawGameController {
     #[inline] pub fn get_raw_game_controllers() -> Result<Option<ComPtr<foundation::collections::IVectorView<RawGameController>>>> {
         <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().get_raw_game_controllers()
     }
-    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<RawGameController>>> {
+    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<RawGameController>> {
         <Self as RtActivatable<IRawGameControllerStatics>>::get_activation_factory().from_game_controller(gameController)
     }
 }
@@ -609,7 +609,7 @@ impl ComPtr<IRawGameController2> {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_simple_haptics_controllers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::devices::haptics::SimpleHapticsController>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SimpleHapticsControllers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_non_roamable_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -629,7 +629,7 @@ RT_INTERFACE!{static interface IRawGameControllerStatics(IRawGameControllerStati
     fn add_RawGameControllerRemoved(&self, value: *mut foundation::EventHandler<RawGameController>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_RawGameControllerRemoved(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn get_RawGameControllers(&self, out: *mut *mut foundation::collections::IVectorView<RawGameController>) -> HRESULT,
-    fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut RawGameController) -> HRESULT
+    fn FromGameController(&self, gameController: *mut IGameController, out: *mut <RawGameController as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IRawGameControllerStatics> {
     #[inline] pub fn add_raw_game_controller_added(&self, value: &ComPtr<foundation::EventHandler<RawGameController>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
@@ -653,12 +653,12 @@ impl ComPtr<IRawGameControllerStatics> {
     #[inline] pub fn get_raw_game_controllers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<RawGameController>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RawGameControllers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<RawGameController>>> { unsafe { 
+    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<RawGameController>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FromGameController)(self.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(RawGameController::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum RequiredUINavigationButtons: u32 {
@@ -706,7 +706,7 @@ impl UINavigationController {
     #[inline] pub fn get_ui_navigation_controllers() -> Result<Option<ComPtr<foundation::collections::IVectorView<UINavigationController>>>> {
         <Self as RtActivatable<IUINavigationControllerStatics>>::get_activation_factory().get_ui_navigation_controllers()
     }
-    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<UINavigationController>>> {
+    #[inline] pub fn from_game_controller(gameController: &ComPtr<IGameController>) -> Result<Option<UINavigationController>> {
         <Self as RtActivatable<IUINavigationControllerStatics2>>::get_activation_factory().from_game_controller(gameController)
     }
 }
@@ -741,18 +741,18 @@ impl ComPtr<IUINavigationControllerStatics> {
     #[inline] pub fn get_ui_navigation_controllers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<UINavigationController>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_UINavigationControllers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IUINavigationControllerStatics2, 3771410659, 45579, 19211, 158, 212, 243, 213, 60, 236, 13, 228);
 RT_INTERFACE!{static interface IUINavigationControllerStatics2(IUINavigationControllerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IUINavigationControllerStatics2] {
-    fn FromGameController(&self, gameController: *mut IGameController, out: *mut *mut UINavigationController) -> HRESULT
+    fn FromGameController(&self, gameController: *mut IGameController, out: *mut <UINavigationController as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IUINavigationControllerStatics2> {
-    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<ComPtr<UINavigationController>>> { unsafe { 
+    #[inline] pub fn from_game_controller(&self, gameController: &ComPtr<IGameController>) -> Result<Option<UINavigationController>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FromGameController)(self.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(UINavigationController::wrap(out)) } else { err(hr) }
     }}
 }
 RT_STRUCT! { struct UINavigationReading {
@@ -770,7 +770,7 @@ impl ComPtr<ICustomGameControllerFactory> {
     #[inline] pub fn create_game_controller(&self, provider: &ComPtr<IGameControllerProvider>) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateGameController)(self.as_abi() as *const _ as *mut _, provider.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn on_game_controller_added(&self, value: &ComPtr<super::IGameController>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).OnGameControllerAdded)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -827,7 +827,7 @@ impl ComPtr<IGameControllerFactoryManagerStatics2> {
     #[inline] pub fn try_get_factory_controller_from_game_controller(&self, factory: &ComPtr<ICustomGameControllerFactory>, gameController: &ComPtr<super::IGameController>) -> Result<Option<ComPtr<super::IGameController>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryGetFactoryControllerFromGameController)(self.as_abi() as *const _ as *mut _, factory.as_abi() as *const _ as *mut _, gameController.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IGameControllerInputSink, 536279330, 50752, 19576, 168, 32, 154, 113, 92, 85, 139, 203);
@@ -946,7 +946,7 @@ impl ComPtr<IGipGameControllerProvider> {
     #[cfg(feature="windows-storage")] #[inline] pub fn update_firmware_async(&self, firmwareImage: &ComPtr<crate::windows::storage::streams::IInputStream>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<GipFirmwareUpdateResult, GipFirmwareUpdateProgress>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).UpdateFirmwareAsync)(self.as_abi() as *const _ as *mut _, firmwareImage.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GipGameControllerProvider: IGipGameControllerProvider}
@@ -1045,20 +1045,20 @@ impl ComPtr<IConditionForceEffect> {
 RT_CLASS!{class ConditionForceEffect: IForceFeedbackEffect}
 impl RtActivatable<IConditionForceEffectFactory> for ConditionForceEffect {}
 impl ConditionForceEffect {
-    #[inline] pub fn create_instance(effectKind: ConditionForceEffectKind) -> Result<ComPtr<ConditionForceEffect>> {
+    #[inline] pub fn create_instance(effectKind: ConditionForceEffectKind) -> Result<ConditionForceEffect> {
         <Self as RtActivatable<IConditionForceEffectFactory>>::get_activation_factory().create_instance(effectKind)
     }
 }
 DEFINE_CLSID!(ConditionForceEffect(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,111,114,99,101,70,101,101,100,98,97,99,107,46,67,111,110,100,105,116,105,111,110,70,111,114,99,101,69,102,102,101,99,116,0]) [CLSID_ConditionForceEffect]);
 DEFINE_IID!(IID_IConditionForceEffectFactory, 2443809380, 6160, 20150, 167, 115, 191, 211, 184, 205, 219, 171);
 RT_INTERFACE!{static interface IConditionForceEffectFactory(IConditionForceEffectFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IConditionForceEffectFactory] {
-    fn CreateInstance(&self, effectKind: ConditionForceEffectKind, out: *mut *mut ConditionForceEffect) -> HRESULT
+    fn CreateInstance(&self, effectKind: ConditionForceEffectKind, out: *mut <ConditionForceEffect as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IConditionForceEffectFactory> {
-    #[inline] pub fn create_instance(&self, effectKind: ConditionForceEffectKind) -> Result<ComPtr<ConditionForceEffect>> { unsafe { 
+    #[inline] pub fn create_instance(&self, effectKind: ConditionForceEffectKind) -> Result<ConditionForceEffect> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateInstance)(self.as_abi() as *const _ as *mut _, effectKind, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ConditionForceEffect::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum ConditionForceEffectKind: i32 {
@@ -1167,7 +1167,7 @@ impl ComPtr<IForceFeedbackMotor> {
     #[inline] pub fn load_effect_async(&self, effect: &ComPtr<IForceFeedbackEffect>) -> Result<ComPtr<foundation::IAsyncOperation<ForceFeedbackLoadEffectResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).LoadEffectAsync)(self.as_abi() as *const _ as *mut _, effect.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn pause_all_effects(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).PauseAllEffects)(self.as_abi() as *const _ as *mut _);
@@ -1184,22 +1184,22 @@ impl ComPtr<IForceFeedbackMotor> {
     #[inline] pub fn try_disable_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryDisableAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_enable_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryEnableAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_reset_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryResetAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_unload_effect_async(&self, effect: &ComPtr<IForceFeedbackEffect>) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryUnloadEffectAsync)(self.as_abi() as *const _ as *mut _, effect.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ForceFeedbackMotor: IForceFeedbackMotor}
@@ -1227,20 +1227,20 @@ impl ComPtr<IPeriodicForceEffect> {
 RT_CLASS!{class PeriodicForceEffect: IForceFeedbackEffect}
 impl RtActivatable<IPeriodicForceEffectFactory> for PeriodicForceEffect {}
 impl PeriodicForceEffect {
-    #[inline] pub fn create_instance(effectKind: PeriodicForceEffectKind) -> Result<ComPtr<PeriodicForceEffect>> {
+    #[inline] pub fn create_instance(effectKind: PeriodicForceEffectKind) -> Result<PeriodicForceEffect> {
         <Self as RtActivatable<IPeriodicForceEffectFactory>>::get_activation_factory().create_instance(effectKind)
     }
 }
 DEFINE_CLSID!(PeriodicForceEffect(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,73,110,112,117,116,46,70,111,114,99,101,70,101,101,100,98,97,99,107,46,80,101,114,105,111,100,105,99,70,111,114,99,101,69,102,102,101,99,116,0]) [CLSID_PeriodicForceEffect]);
 DEFINE_IID!(IID_IPeriodicForceEffectFactory, 1868753690, 38993, 18299, 179, 24, 53, 236, 170, 21, 7, 15);
 RT_INTERFACE!{static interface IPeriodicForceEffectFactory(IPeriodicForceEffectFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPeriodicForceEffectFactory] {
-    fn CreateInstance(&self, effectKind: PeriodicForceEffectKind, out: *mut *mut PeriodicForceEffect) -> HRESULT
+    fn CreateInstance(&self, effectKind: PeriodicForceEffectKind, out: *mut <PeriodicForceEffect as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPeriodicForceEffectFactory> {
-    #[inline] pub fn create_instance(&self, effectKind: PeriodicForceEffectKind) -> Result<ComPtr<PeriodicForceEffect>> { unsafe { 
+    #[inline] pub fn create_instance(&self, effectKind: PeriodicForceEffectKind) -> Result<PeriodicForceEffect> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateInstance)(self.as_abi() as *const _ as *mut _, effectKind, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PeriodicForceEffect::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum PeriodicForceEffectKind: i32 {
@@ -1328,10 +1328,10 @@ impl GameList {
     #[inline] pub fn remove_game_updated(token: foundation::EventRegistrationToken) -> Result<()> {
         <Self as RtActivatable<IGameListStatics>>::get_activation_factory().remove_game_updated(token)
     }
-    #[inline] pub fn merge_entries_async(left: &ComPtr<GameListEntry>, right: &ComPtr<GameListEntry>) -> Result<ComPtr<foundation::IAsyncOperation<GameListEntry>>> {
+    #[inline] pub fn merge_entries_async(left: &GameListEntry, right: &GameListEntry) -> Result<ComPtr<foundation::IAsyncOperation<GameListEntry>>> {
         <Self as RtActivatable<IGameListStatics2>>::get_activation_factory().merge_entries_async(left, right)
     }
-    #[inline] pub fn unmerge_entry_async(mergedEntry: &ComPtr<GameListEntry>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> {
+    #[inline] pub fn unmerge_entry_async(mergedEntry: &GameListEntry) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> {
         <Self as RtActivatable<IGameListStatics2>>::get_activation_factory().unmerge_entry_async(mergedEntry)
     }
 }
@@ -1341,10 +1341,10 @@ RT_ENUM! { enum GameListCategory: i32 {
 }}
 DEFINE_IID!(IID_GameListChangedEventHandler, 636920865, 55541, 19857, 180, 14, 83, 213, 232, 111, 222, 100);
 RT_DELEGATE!{delegate GameListChangedEventHandler(GameListChangedEventHandlerVtbl, GameListChangedEventHandlerImpl) [IID_GameListChangedEventHandler] {
-    fn Invoke(&self, game: *mut GameListEntry) -> HRESULT
+    fn Invoke(&self, game: <GameListEntry as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<GameListChangedEventHandler> {
-    #[inline] pub fn invoke(&self, game: &ComPtr<GameListEntry>) -> Result<()> { unsafe { 
+    #[inline] pub fn invoke(&self, game: &GameListEntry) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Invoke)(self.as_abi() as *const _ as *mut _, game.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -1352,22 +1352,22 @@ impl ComPtr<GameListChangedEventHandler> {
 DEFINE_IID!(IID_IGameListEntry, 1935221971, 33055, 17556, 182, 156, 198, 65, 160, 198, 21, 67);
 RT_INTERFACE!{interface IGameListEntry(IGameListEntryVtbl): IInspectable(IInspectableVtbl) [IID_IGameListEntry] {
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-applicationmodel")] fn get_DisplayInfo(&self, out: *mut *mut crate::windows::applicationmodel::AppDisplayInfo) -> HRESULT,
+    #[cfg(feature="windows-applicationmodel")] fn get_DisplayInfo(&self, out: *mut <crate::windows::applicationmodel::AppDisplayInfo as RtType>::Abi) -> HRESULT,
     fn LaunchAsync(&self, out: *mut *mut foundation::IAsyncOperation<bool>) -> HRESULT,
     fn get_Category(&self, out: *mut GameListCategory) -> HRESULT,
     fn get_Properties(&self, out: *mut *mut foundation::collections::IMapView<HString, IInspectable>) -> HRESULT,
     fn SetCategoryAsync(&self, value: GameListCategory, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl ComPtr<IGameListEntry> {
-    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_display_info(&self) -> Result<Option<ComPtr<crate::windows::applicationmodel::AppDisplayInfo>>> { unsafe { 
+    #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_display_info(&self) -> Result<Option<crate::windows::applicationmodel::AppDisplayInfo>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DisplayInfo)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(crate::windows::applicationmodel::AppDisplayInfo::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).LaunchAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_category(&self) -> Result<GameListCategory> { unsafe { 
         let mut out = zeroed();
@@ -1377,12 +1377,12 @@ impl ComPtr<IGameListEntry> {
     #[inline] pub fn get_properties(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, IInspectable>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Properties)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_category_async(&self, value: GameListCategory) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetCategoryAsync)(self.as_abi() as *const _ as *mut _, value, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GameListEntry: IGameListEntry}
@@ -1398,7 +1398,7 @@ RT_INTERFACE!{interface IGameListEntry2(IGameListEntry2Vtbl): IInspectable(IInsp
     #[cfg(feature="windows-storage")] fn SetLauncherExecutableFileWithParamsAsync(&self, executableFile: *mut crate::windows::storage::IStorageFile, launchParams: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn get_TitleId(&self, out: *mut HSTRING) -> HRESULT,
     fn SetTitleIdAsync(&self, id: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn get_GameModeConfiguration(&self, out: *mut *mut GameModeConfiguration) -> HRESULT
+    fn get_GameModeConfiguration(&self, out: *mut <GameModeConfiguration as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IGameListEntry2> {
     #[inline] pub fn get_launchable_state(&self) -> Result<GameListEntryLaunchableState> { unsafe { 
@@ -1409,7 +1409,7 @@ impl ComPtr<IGameListEntry2> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_launcher_executable(&self) -> Result<Option<ComPtr<crate::windows::storage::IStorageFile>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LauncherExecutable)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_launch_parameters(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -1419,12 +1419,12 @@ impl ComPtr<IGameListEntry2> {
     #[cfg(feature="windows-storage")] #[inline] pub fn set_launcher_executable_file_async(&self, executableFile: &ComPtr<crate::windows::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetLauncherExecutableFileAsync)(self.as_abi() as *const _ as *mut _, executableFile.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_launcher_executable_file_with_params_async(&self, executableFile: &ComPtr<crate::windows::storage::IStorageFile>, launchParams: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetLauncherExecutableFileWithParamsAsync)(self.as_abi() as *const _ as *mut _, executableFile.as_abi() as *const _ as *mut _, launchParams.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_title_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -1434,12 +1434,12 @@ impl ComPtr<IGameListEntry2> {
     #[inline] pub fn set_title_id_async(&self, id: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetTitleIdAsync)(self.as_abi() as *const _ as *mut _, id.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_game_mode_configuration(&self) -> Result<Option<ComPtr<GameModeConfiguration>>> { unsafe { 
+    #[inline] pub fn get_game_mode_configuration(&self) -> Result<Option<GameModeConfiguration>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_GameModeConfiguration)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(GameModeConfiguration::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum GameListEntryLaunchableState: i32 {
@@ -1470,12 +1470,12 @@ impl ComPtr<IGameListStatics> {
     #[inline] pub fn find_all_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FindAllAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_all_async_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FindAllAsyncPackageFamilyName)(self.as_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_game_added(&self, handler: &ComPtr<GameListChangedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -1507,19 +1507,19 @@ impl ComPtr<IGameListStatics> {
 }
 DEFINE_IID!(IID_IGameListStatics2, 962535576, 59930, 17834, 146, 104, 168, 57, 5, 104, 111, 39);
 RT_INTERFACE!{static interface IGameListStatics2(IGameListStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGameListStatics2] {
-    fn MergeEntriesAsync(&self, left: *mut GameListEntry, right: *mut GameListEntry, out: *mut *mut foundation::IAsyncOperation<GameListEntry>) -> HRESULT,
-    fn UnmergeEntryAsync(&self, mergedEntry: *mut GameListEntry, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>) -> HRESULT
+    fn MergeEntriesAsync(&self, left: <GameListEntry as RtType>::Abi, right: <GameListEntry as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<GameListEntry>) -> HRESULT,
+    fn UnmergeEntryAsync(&self, mergedEntry: <GameListEntry as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>) -> HRESULT
 }}
 impl ComPtr<IGameListStatics2> {
-    #[inline] pub fn merge_entries_async(&self, left: &ComPtr<GameListEntry>, right: &ComPtr<GameListEntry>) -> Result<ComPtr<foundation::IAsyncOperation<GameListEntry>>> { unsafe { 
+    #[inline] pub fn merge_entries_async(&self, left: &GameListEntry, right: &GameListEntry) -> Result<ComPtr<foundation::IAsyncOperation<GameListEntry>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).MergeEntriesAsync)(self.as_abi() as *const _ as *mut _, left.as_abi() as *const _ as *mut _, right.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn unmerge_entry_async(&self, mergedEntry: &ComPtr<GameListEntry>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> { unsafe { 
+    #[inline] pub fn unmerge_entry_async(&self, mergedEntry: &GameListEntry) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<GameListEntry>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).UnmergeEntryAsync)(self.as_abi() as *const _ as *mut _, mergedEntry.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IGameModeConfiguration, 2028310959, 45378, 20208, 136, 48, 85, 188, 43, 228, 245, 234);
@@ -1556,12 +1556,12 @@ impl ComPtr<IGameModeConfiguration> {
     #[inline] pub fn get_related_process_names(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RelatedProcessNames)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_percent_gpu_time_allocated_to_game(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PercentGpuTimeAllocatedToGame)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_percent_gpu_time_allocated_to_game(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_PercentGpuTimeAllocatedToGame)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -1570,7 +1570,7 @@ impl ComPtr<IGameModeConfiguration> {
     #[inline] pub fn get_percent_gpu_memory_allocated_to_game(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PercentGpuMemoryAllocatedToGame)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_percent_gpu_memory_allocated_to_game(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_PercentGpuMemoryAllocatedToGame)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -1579,7 +1579,7 @@ impl ComPtr<IGameModeConfiguration> {
     #[inline] pub fn get_percent_gpu_memory_allocated_to_system_compositor(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PercentGpuMemoryAllocatedToSystemCompositor)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_percent_gpu_memory_allocated_to_system_compositor(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_PercentGpuMemoryAllocatedToSystemCompositor)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -1588,7 +1588,7 @@ impl ComPtr<IGameModeConfiguration> {
     #[inline] pub fn get_max_cpu_count(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_MaxCpuCount)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_max_cpu_count(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_MaxCpuCount)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -1597,7 +1597,7 @@ impl ComPtr<IGameModeConfiguration> {
     #[inline] pub fn get_cpu_exclusivity_mask_low(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CpuExclusivityMaskLow)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_cpu_exclusivity_mask_low(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_CpuExclusivityMaskLow)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -1606,7 +1606,7 @@ impl ComPtr<IGameModeConfiguration> {
     #[inline] pub fn get_cpu_exclusivity_mask_high(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CpuExclusivityMaskHigh)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_cpu_exclusivity_mask_high(&self, value: &ComPtr<foundation::IReference<i32>>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_CpuExclusivityMaskHigh)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -1624,7 +1624,7 @@ impl ComPtr<IGameModeConfiguration> {
     #[inline] pub fn save_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SaveAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GameModeConfiguration: IGameModeConfiguration}
@@ -1637,31 +1637,31 @@ impl ComPtr<IGameModeUserConfiguration> {
     #[inline] pub fn get_gaming_related_process_names(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_GamingRelatedProcessNames)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn save_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SaveAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GameModeUserConfiguration: IGameModeUserConfiguration}
 impl RtActivatable<IGameModeUserConfigurationStatics> for GameModeUserConfiguration {}
 impl GameModeUserConfiguration {
-    #[inline] pub fn get_default() -> Result<Option<ComPtr<GameModeUserConfiguration>>> {
+    #[inline] pub fn get_default() -> Result<Option<GameModeUserConfiguration>> {
         <Self as RtActivatable<IGameModeUserConfigurationStatics>>::get_activation_factory().get_default()
     }
 }
 DEFINE_CLSID!(GameModeUserConfiguration(&[87,105,110,100,111,119,115,46,71,97,109,105,110,103,46,80,114,101,118,105,101,119,46,71,97,109,101,115,69,110,117,109,101,114,97,116,105,111,110,46,71,97,109,101,77,111,100,101,85,115,101,114,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_GameModeUserConfiguration]);
 DEFINE_IID!(IID_IGameModeUserConfigurationStatics, 1850792316, 26346, 18318, 164, 161, 245, 124, 14, 141, 0, 231);
 RT_INTERFACE!{static interface IGameModeUserConfigurationStatics(IGameModeUserConfigurationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameModeUserConfigurationStatics] {
-    fn GetDefault(&self, out: *mut *mut GameModeUserConfiguration) -> HRESULT
+    fn GetDefault(&self, out: *mut <GameModeUserConfiguration as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IGameModeUserConfigurationStatics> {
-    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<GameModeUserConfiguration>>> { unsafe { 
+    #[inline] pub fn get_default(&self) -> Result<Option<GameModeUserConfiguration>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(GameModeUserConfiguration::wrap(out)) } else { err(hr) }
     }}
 }
 } // Windows.Gaming.Preview.GamesEnumeration
@@ -1793,7 +1793,7 @@ impl ComPtr<IGameChatOverlay> {
 RT_CLASS!{class GameChatOverlay: IGameChatOverlay}
 impl RtActivatable<IGameChatOverlayStatics> for GameChatOverlay {}
 impl GameChatOverlay {
-    #[inline] pub fn get_default() -> Result<Option<ComPtr<GameChatOverlay>>> {
+    #[inline] pub fn get_default() -> Result<Option<GameChatOverlay>> {
         <Self as RtActivatable<IGameChatOverlayStatics>>::get_activation_factory().get_default()
     }
 }
@@ -1827,27 +1827,27 @@ RT_ENUM! { enum GameChatOverlayPosition: i32 {
 }}
 DEFINE_IID!(IID_IGameChatOverlayStatics, 2309813780, 30823, 18935, 150, 135, 37, 217, 219, 244, 68, 209);
 RT_INTERFACE!{static interface IGameChatOverlayStatics(IGameChatOverlayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameChatOverlayStatics] {
-    fn GetDefault(&self, out: *mut *mut GameChatOverlay) -> HRESULT
+    fn GetDefault(&self, out: *mut <GameChatOverlay as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IGameChatOverlayStatics> {
-    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<GameChatOverlay>>> { unsafe { 
+    #[inline] pub fn get_default(&self) -> Result<Option<GameChatOverlay>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(GameChatOverlay::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IGameUIProviderActivatedEventArgs, 2813534270, 51959, 19949, 187, 210, 71, 222, 67, 187, 109, 213);
 RT_INTERFACE!{interface IGameUIProviderActivatedEventArgs(IGameUIProviderActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGameUIProviderActivatedEventArgs] {
-    fn get_GameUIArgs(&self, out: *mut *mut foundation::collections::ValueSet) -> HRESULT,
-    fn ReportCompleted(&self, results: *mut foundation::collections::ValueSet) -> HRESULT
+    fn get_GameUIArgs(&self, out: *mut <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT,
+    fn ReportCompleted(&self, results: <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IGameUIProviderActivatedEventArgs> {
-    #[inline] pub fn get_game_ui_args(&self) -> Result<Option<ComPtr<foundation::collections::ValueSet>>> { unsafe { 
+    #[inline] pub fn get_game_ui_args(&self) -> Result<Option<foundation::collections::ValueSet>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_GameUIArgs)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::collections::ValueSet::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn report_completed(&self, results: &ComPtr<foundation::collections::ValueSet>) -> Result<()> { unsafe { 
+    #[inline] pub fn report_completed(&self, results: &foundation::collections::ValueSet) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).ReportCompleted)(self.as_abi() as *const _ as *mut _, results.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -1871,7 +1871,7 @@ impl ComPtr<IGameSaveBlobGetResult> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GameSaveBlobGetResult: IGameSaveBlobGetResult}
@@ -1907,7 +1907,7 @@ impl ComPtr<IGameSaveBlobInfoGetResult> {
     #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<GameSaveBlobInfo>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GameSaveBlobInfoGetResult: IGameSaveBlobInfoGetResult}
@@ -1921,31 +1921,31 @@ impl ComPtr<IGameSaveBlobInfoQuery> {
     #[inline] pub fn get_blob_info_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobInfoGetResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetBlobInfoAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_blob_info_with_index_and_max_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobInfoGetResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetBlobInfoWithIndexAndMaxAsync)(self.as_abi() as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_item_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetItemCountAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GameSaveBlobInfoQuery: IGameSaveBlobInfoQuery}
 DEFINE_IID!(IID_IGameSaveContainer, 3284176777, 22079, 20173, 156, 111, 51, 253, 14, 50, 61, 16);
 RT_INTERFACE!{interface IGameSaveContainer(IGameSaveContainerVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveContainer] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Provider(&self, out: *mut *mut GameSaveProvider) -> HRESULT,
+    fn get_Provider(&self, out: *mut <GameSaveProvider as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
     #[cfg(feature="windows-storage")] fn SubmitUpdatesAsync(&self, blobsToWrite: *mut foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>, blobsToDelete: *mut foundation::collections::IIterable<HString>, displayName: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
     #[cfg(feature="windows-storage")] fn ReadAsync(&self, blobsToRead: *mut foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
     fn GetAsync(&self, blobsToRead: *mut foundation::collections::IIterable<HString>, out: *mut *mut foundation::IAsyncOperation<GameSaveBlobGetResult>) -> HRESULT,
     fn SubmitPropertySetUpdatesAsync(&self, blobsToWrite: *mut foundation::collections::IPropertySet, blobsToDelete: *mut foundation::collections::IIterable<HString>, displayName: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
-    fn CreateBlobInfoQuery(&self, blobNamePrefix: HSTRING, out: *mut *mut GameSaveBlobInfoQuery) -> HRESULT
+    fn CreateBlobInfoQuery(&self, blobNamePrefix: HSTRING, out: *mut <GameSaveBlobInfoQuery as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IGameSaveContainer> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
@@ -1953,35 +1953,35 @@ impl ComPtr<IGameSaveContainer> {
         let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_provider(&self) -> Result<Option<ComPtr<GameSaveProvider>>> { unsafe { 
+    #[inline] pub fn get_provider(&self) -> Result<Option<GameSaveProvider>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Provider)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(GameSaveProvider::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn submit_updates_async(&self, blobsToWrite: &ComPtr<foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>>, blobsToDelete: &ComPtr<foundation::collections::IIterable<HString>>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SubmitUpdatesAsync)(self.as_abi() as *const _ as *mut _, blobsToWrite.as_abi() as *const _ as *mut _, blobsToDelete.as_abi() as *const _ as *mut _, displayName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn read_async(&self, blobsToRead: &ComPtr<foundation::collections::IMapView<HString, crate::windows::storage::streams::IBuffer>>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ReadAsync)(self.as_abi() as *const _ as *mut _, blobsToRead.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_async(&self, blobsToRead: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveBlobGetResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetAsync)(self.as_abi() as *const _ as *mut _, blobsToRead.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn submit_property_set_updates_async(&self, blobsToWrite: &ComPtr<foundation::collections::IPropertySet>, blobsToDelete: &ComPtr<foundation::collections::IIterable<HString>>, displayName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SubmitPropertySetUpdatesAsync)(self.as_abi() as *const _ as *mut _, blobsToWrite.as_abi() as *const _ as *mut _, blobsToDelete.as_abi() as *const _ as *mut _, displayName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_blob_info_query(&self, blobNamePrefix: &HStringArg) -> Result<Option<ComPtr<GameSaveBlobInfoQuery>>> { unsafe { 
+    #[inline] pub fn create_blob_info_query(&self, blobNamePrefix: &HStringArg) -> Result<Option<GameSaveBlobInfoQuery>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateBlobInfoQuery)(self.as_abi() as *const _ as *mut _, blobNamePrefix.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(GameSaveBlobInfoQuery::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GameSaveContainer: IGameSaveContainer}
@@ -2035,7 +2035,7 @@ impl ComPtr<IGameSaveContainerInfoGetResult> {
     #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<GameSaveContainerInfo>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GameSaveContainerInfoGetResult: IGameSaveContainerInfoGetResult}
@@ -2049,17 +2049,17 @@ impl ComPtr<IGameSaveContainerInfoQuery> {
     #[inline] pub fn get_container_info_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveContainerInfoGetResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetContainerInfoAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_container_info_with_index_and_max_async(&self, startIndex: u32, maxNumberOfItems: u32) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveContainerInfoGetResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetContainerInfoWithIndexAndMaxAsync)(self.as_abi() as *const _ as *mut _, startIndex, maxNumberOfItems, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_item_count_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<u32>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetItemCountAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GameSaveContainerInfoQuery: IGameSaveContainerInfoQuery}
@@ -2081,58 +2081,58 @@ RT_CLASS!{class GameSaveOperationResult: IGameSaveOperationResult}
 DEFINE_IID!(IID_IGameSaveProvider, 2426798996, 33022, 16913, 151, 248, 165, 222, 20, 221, 149, 210);
 RT_INTERFACE!{interface IGameSaveProvider(IGameSaveProviderVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProvider] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut crate::windows::system::User) -> HRESULT,
-    fn CreateContainer(&self, name: HSTRING, out: *mut *mut GameSaveContainer) -> HRESULT,
+    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut <crate::windows::system::User as RtType>::Abi) -> HRESULT,
+    fn CreateContainer(&self, name: HSTRING, out: *mut <GameSaveContainer as RtType>::Abi) -> HRESULT,
     fn DeleteContainerAsync(&self, name: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveOperationResult>) -> HRESULT,
-    fn CreateContainerInfoQuery(&self, out: *mut *mut GameSaveContainerInfoQuery) -> HRESULT,
-    fn CreateContainerInfoQueryWithName(&self, containerNamePrefix: HSTRING, out: *mut *mut GameSaveContainerInfoQuery) -> HRESULT,
+    fn CreateContainerInfoQuery(&self, out: *mut <GameSaveContainerInfoQuery as RtType>::Abi) -> HRESULT,
+    fn CreateContainerInfoQueryWithName(&self, containerNamePrefix: HSTRING, out: *mut <GameSaveContainerInfoQuery as RtType>::Abi) -> HRESULT,
     fn GetRemainingBytesInQuotaAsync(&self, out: *mut *mut foundation::IAsyncOperation<i64>) -> HRESULT,
     fn get_ContainersChangedSinceLastSync(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
 }}
 impl ComPtr<IGameSaveProvider> {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<crate::windows::system::User>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<crate::windows::system::User>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_User)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(crate::windows::system::User::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_container(&self, name: &HStringArg) -> Result<Option<ComPtr<GameSaveContainer>>> { unsafe { 
+    #[inline] pub fn create_container(&self, name: &HStringArg) -> Result<Option<GameSaveContainer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateContainer)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(GameSaveContainer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_container_async(&self, name: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).DeleteContainerAsync)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_container_info_query(&self) -> Result<Option<ComPtr<GameSaveContainerInfoQuery>>> { unsafe { 
+    #[inline] pub fn create_container_info_query(&self) -> Result<Option<GameSaveContainerInfoQuery>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateContainerInfoQuery)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(GameSaveContainerInfoQuery::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_container_info_query_with_name(&self, containerNamePrefix: &HStringArg) -> Result<Option<ComPtr<GameSaveContainerInfoQuery>>> { unsafe { 
+    #[inline] pub fn create_container_info_query_with_name(&self, containerNamePrefix: &HStringArg) -> Result<Option<GameSaveContainerInfoQuery>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateContainerInfoQueryWithName)(self.as_abi() as *const _ as *mut _, containerNamePrefix.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(GameSaveContainerInfoQuery::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_remaining_bytes_in_quota_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<i64>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetRemainingBytesInQuotaAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_containers_changed_since_last_sync(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ContainersChangedSinceLastSync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GameSaveProvider: IGameSaveProvider}
 impl RtActivatable<IGameSaveProviderStatics> for GameSaveProvider {}
 impl GameSaveProvider {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &ComPtr<crate::windows::system::User>, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(user: &crate::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
         <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().get_for_user_async(user, serviceConfigId)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(user: &ComPtr<crate::windows::system::User>, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(user: &crate::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> {
         <Self as RtActivatable<IGameSaveProviderStatics>>::get_activation_factory().get_sync_on_demand_for_user_async(user, serviceConfigId)
     }
 }
@@ -2140,7 +2140,7 @@ DEFINE_CLSID!(GameSaveProvider(&[87,105,110,100,111,119,115,46,71,97,109,105,110
 DEFINE_IID!(IID_IGameSaveProviderGetResult, 985204758, 54163, 19813, 172, 22, 65, 195, 230, 122, 185, 69);
 RT_INTERFACE!{interface IGameSaveProviderGetResult(IGameSaveProviderGetResultVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProviderGetResult] {
     fn get_Status(&self, out: *mut GameSaveErrorStatus) -> HRESULT,
-    fn get_Value(&self, out: *mut *mut GameSaveProvider) -> HRESULT
+    fn get_Value(&self, out: *mut <GameSaveProvider as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IGameSaveProviderGetResult> {
     #[inline] pub fn get_status(&self) -> Result<GameSaveErrorStatus> { unsafe { 
@@ -2148,28 +2148,28 @@ impl ComPtr<IGameSaveProviderGetResult> {
         let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<GameSaveProvider>>> { unsafe { 
+    #[inline] pub fn get_value(&self) -> Result<Option<GameSaveProvider>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(GameSaveProvider::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GameSaveProviderGetResult: IGameSaveProviderGetResult}
 DEFINE_IID!(IID_IGameSaveProviderStatics, 3491577552, 31491, 17565, 140, 189, 52, 2, 132, 42, 16, 72);
 RT_INTERFACE!{static interface IGameSaveProviderStatics(IGameSaveProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameSaveProviderStatics] {
-    #[cfg(feature="windows-system")] fn GetForUserAsync(&self, user: *mut crate::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn GetSyncOnDemandForUserAsync(&self, user: *mut crate::windows::system::User, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT
+    #[cfg(feature="windows-system")] fn GetForUserAsync(&self, user: <crate::windows::system::User as RtType>::Abi, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT,
+    #[cfg(feature="windows-system")] fn GetSyncOnDemandForUserAsync(&self, user: <crate::windows::system::User as RtType>::Abi, serviceConfigId: HSTRING, out: *mut *mut foundation::IAsyncOperation<GameSaveProviderGetResult>) -> HRESULT
 }}
 impl ComPtr<IGameSaveProviderStatics> {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(&self, user: &ComPtr<crate::windows::system::User>, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user_async(&self, user: &crate::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetForUserAsync)(self.as_abi() as *const _ as *mut _, user.as_abi() as *const _ as *mut _, serviceConfigId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(&self, user: &ComPtr<crate::windows::system::User>, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_sync_on_demand_for_user_async(&self, user: &crate::windows::system::User, serviceConfigId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<GameSaveProviderGetResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetSyncOnDemandForUserAsync)(self.as_abi() as *const _ as *mut _, user.as_abi() as *const _ as *mut _, serviceConfigId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 } // Windows.Gaming.XboxLive.Storage

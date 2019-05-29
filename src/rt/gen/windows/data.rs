@@ -24,22 +24,22 @@ pub mod json { // Windows.Data.Json
 use crate::prelude::*;
 DEFINE_IID!(IID_IJsonArray, 146922934, 3261, 19098, 181, 211, 47, 133, 45, 195, 126, 129);
 RT_INTERFACE!{interface IJsonArray(IJsonArrayVtbl): IInspectable(IInspectableVtbl) [IID_IJsonArray] {
-    fn GetObjectAt(&self, index: u32, out: *mut *mut JsonObject) -> HRESULT,
-    fn GetArrayAt(&self, index: u32, out: *mut *mut JsonArray) -> HRESULT,
+    fn GetObjectAt(&self, index: u32, out: *mut <JsonObject as RtType>::Abi) -> HRESULT,
+    fn GetArrayAt(&self, index: u32, out: *mut <JsonArray as RtType>::Abi) -> HRESULT,
     fn GetStringAt(&self, index: u32, out: *mut HSTRING) -> HRESULT,
     fn GetNumberAt(&self, index: u32, out: *mut f64) -> HRESULT,
     fn GetBooleanAt(&self, index: u32, out: *mut bool) -> HRESULT
 }}
 impl ComPtr<IJsonArray> {
-    #[inline] pub fn get_object_at(&self, index: u32) -> Result<Option<ComPtr<JsonObject>>> { unsafe { 
+    #[inline] pub fn get_object_at(&self, index: u32) -> Result<Option<JsonObject>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetObjectAt)(self.as_abi() as *const _ as *mut _, index, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonObject::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_array_at(&self, index: u32) -> Result<Option<ComPtr<JsonArray>>> { unsafe { 
+    #[inline] pub fn get_array_at(&self, index: u32) -> Result<Option<JsonArray>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetArrayAt)(self.as_abi() as *const _ as *mut _, index, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonArray::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_string_at(&self, index: u32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -61,29 +61,29 @@ RT_CLASS!{class JsonArray: IJsonArray}
 impl RtActivatable<IJsonArrayStatics> for JsonArray {}
 impl RtActivatable<IActivationFactory> for JsonArray {}
 impl JsonArray {
-    #[inline] pub fn parse(input: &HStringArg) -> Result<Option<ComPtr<JsonArray>>> {
+    #[inline] pub fn parse(input: &HStringArg) -> Result<Option<JsonArray>> {
         <Self as RtActivatable<IJsonArrayStatics>>::get_activation_factory().parse(input)
     }
-    #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<ComPtr<JsonArray>>, bool)> {
+    #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<JsonArray>, bool)> {
         <Self as RtActivatable<IJsonArrayStatics>>::get_activation_factory().try_parse(input)
     }
 }
 DEFINE_CLSID!(JsonArray(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,65,114,114,97,121,0]) [CLSID_JsonArray]);
 DEFINE_IID!(IID_IJsonArrayStatics, 3675534505, 57700, 18847, 147, 226, 138, 143, 73, 187, 144, 186);
 RT_INTERFACE!{static interface IJsonArrayStatics(IJsonArrayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJsonArrayStatics] {
-    fn Parse(&self, input: HSTRING, out: *mut *mut JsonArray) -> HRESULT,
-    fn TryParse(&self, input: HSTRING, result: *mut *mut JsonArray, out: *mut bool) -> HRESULT
+    fn Parse(&self, input: HSTRING, out: *mut <JsonArray as RtType>::Abi) -> HRESULT,
+    fn TryParse(&self, input: HSTRING, result: *mut <JsonArray as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
 impl ComPtr<IJsonArrayStatics> {
-    #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<JsonArray>>> { unsafe { 
+    #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<JsonArray>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonArray::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<JsonArray>>, bool)> { unsafe { 
+    #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<JsonArray>, bool)> { unsafe { 
         let mut result = null_mut(); let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut result, &mut out);
-        if hr == S_OK { Ok((ComPtr::wrap_optional(result), out)) } else { err(hr) }
+        if hr == S_OK { Ok((JsonArray::wrap(result), out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{static class JsonError}
@@ -110,33 +110,33 @@ RT_ENUM! { enum JsonErrorStatus: i32 {
 }}
 DEFINE_IID!(IID_IJsonObject, 105784541, 10690, 20355, 154, 193, 158, 225, 21, 120, 190, 179);
 RT_INTERFACE!{interface IJsonObject(IJsonObjectVtbl): IInspectable(IInspectableVtbl) [IID_IJsonObject] {
-    fn GetNamedValue(&self, name: HSTRING, out: *mut *mut JsonValue) -> HRESULT,
+    fn GetNamedValue(&self, name: HSTRING, out: *mut <JsonValue as RtType>::Abi) -> HRESULT,
     fn SetNamedValue(&self, name: HSTRING, value: *mut IJsonValue) -> HRESULT,
-    fn GetNamedObject(&self, name: HSTRING, out: *mut *mut JsonObject) -> HRESULT,
-    fn GetNamedArray(&self, name: HSTRING, out: *mut *mut JsonArray) -> HRESULT,
+    fn GetNamedObject(&self, name: HSTRING, out: *mut <JsonObject as RtType>::Abi) -> HRESULT,
+    fn GetNamedArray(&self, name: HSTRING, out: *mut <JsonArray as RtType>::Abi) -> HRESULT,
     fn GetNamedString(&self, name: HSTRING, out: *mut HSTRING) -> HRESULT,
     fn GetNamedNumber(&self, name: HSTRING, out: *mut f64) -> HRESULT,
     fn GetNamedBoolean(&self, name: HSTRING, out: *mut bool) -> HRESULT
 }}
 impl ComPtr<IJsonObject> {
-    #[inline] pub fn get_named_value(&self, name: &HStringArg) -> Result<Option<ComPtr<JsonValue>>> { unsafe { 
+    #[inline] pub fn get_named_value(&self, name: &HStringArg) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetNamedValue)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_named_value(&self, name: &HStringArg, value: &ComPtr<IJsonValue>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).SetNamedValue)(self.as_abi() as *const _ as *mut _, name.get(), value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_named_object(&self, name: &HStringArg) -> Result<Option<ComPtr<JsonObject>>> { unsafe { 
+    #[inline] pub fn get_named_object(&self, name: &HStringArg) -> Result<Option<JsonObject>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetNamedObject)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonObject::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_named_array(&self, name: &HStringArg) -> Result<Option<ComPtr<JsonArray>>> { unsafe { 
+    #[inline] pub fn get_named_array(&self, name: &HStringArg) -> Result<Option<JsonArray>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetNamedArray)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonArray::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_string(&self, name: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -158,60 +158,60 @@ RT_CLASS!{class JsonObject: IJsonObject}
 impl RtActivatable<IJsonObjectStatics> for JsonObject {}
 impl RtActivatable<IActivationFactory> for JsonObject {}
 impl JsonObject {
-    #[inline] pub fn parse(input: &HStringArg) -> Result<Option<ComPtr<JsonObject>>> {
+    #[inline] pub fn parse(input: &HStringArg) -> Result<Option<JsonObject>> {
         <Self as RtActivatable<IJsonObjectStatics>>::get_activation_factory().parse(input)
     }
-    #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<ComPtr<JsonObject>>, bool)> {
+    #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<JsonObject>, bool)> {
         <Self as RtActivatable<IJsonObjectStatics>>::get_activation_factory().try_parse(input)
     }
 }
 DEFINE_CLSID!(JsonObject(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,79,98,106,101,99,116,0]) [CLSID_JsonObject]);
 DEFINE_IID!(IID_IJsonObjectStatics, 579465561, 21726, 17880, 171, 204, 34, 96, 63, 160, 102, 160);
 RT_INTERFACE!{static interface IJsonObjectStatics(IJsonObjectStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJsonObjectStatics] {
-    fn Parse(&self, input: HSTRING, out: *mut *mut JsonObject) -> HRESULT,
-    fn TryParse(&self, input: HSTRING, result: *mut *mut JsonObject, out: *mut bool) -> HRESULT
+    fn Parse(&self, input: HSTRING, out: *mut <JsonObject as RtType>::Abi) -> HRESULT,
+    fn TryParse(&self, input: HSTRING, result: *mut <JsonObject as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
 impl ComPtr<IJsonObjectStatics> {
-    #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<JsonObject>>> { unsafe { 
+    #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<JsonObject>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonObject::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<JsonObject>>, bool)> { unsafe { 
+    #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<JsonObject>, bool)> { unsafe { 
         let mut result = null_mut(); let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut result, &mut out);
-        if hr == S_OK { Ok((ComPtr::wrap_optional(result), out)) } else { err(hr) }
+        if hr == S_OK { Ok((JsonObject::wrap(result), out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IJsonObjectWithDefaultValues, 3647001250, 47088, 20224, 142, 68, 216, 44, 244, 21, 234, 19);
 RT_INTERFACE!{interface IJsonObjectWithDefaultValues(IJsonObjectWithDefaultValuesVtbl): IInspectable(IInspectableVtbl) [IID_IJsonObjectWithDefaultValues] {
-    fn GetNamedValueOrDefault(&self, name: HSTRING, defaultValue: *mut JsonValue, out: *mut *mut JsonValue) -> HRESULT,
-    fn GetNamedObjectOrDefault(&self, name: HSTRING, defaultValue: *mut JsonObject, out: *mut *mut JsonObject) -> HRESULT,
+    fn GetNamedValueOrDefault(&self, name: HSTRING, defaultValue: <JsonValue as RtType>::Abi, out: *mut <JsonValue as RtType>::Abi) -> HRESULT,
+    fn GetNamedObjectOrDefault(&self, name: HSTRING, defaultValue: <JsonObject as RtType>::Abi, out: *mut <JsonObject as RtType>::Abi) -> HRESULT,
     fn GetNamedStringOrDefault(&self, name: HSTRING, defaultValue: HSTRING, out: *mut HSTRING) -> HRESULT,
-    fn GetNamedArrayOrDefault(&self, name: HSTRING, defaultValue: *mut JsonArray, out: *mut *mut JsonArray) -> HRESULT,
+    fn GetNamedArrayOrDefault(&self, name: HSTRING, defaultValue: <JsonArray as RtType>::Abi, out: *mut <JsonArray as RtType>::Abi) -> HRESULT,
     fn GetNamedNumberOrDefault(&self, name: HSTRING, defaultValue: f64, out: *mut f64) -> HRESULT,
     fn GetNamedBooleanOrDefault(&self, name: HSTRING, defaultValue: bool, out: *mut bool) -> HRESULT
 }}
 impl ComPtr<IJsonObjectWithDefaultValues> {
-    #[inline] pub fn get_named_value_or_default(&self, name: &HStringArg, defaultValue: &ComPtr<JsonValue>) -> Result<Option<ComPtr<JsonValue>>> { unsafe { 
+    #[inline] pub fn get_named_value_or_default(&self, name: &HStringArg, defaultValue: &JsonValue) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetNamedValueOrDefault)(self.as_abi() as *const _ as *mut _, name.get(), defaultValue.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_named_object_or_default(&self, name: &HStringArg, defaultValue: &ComPtr<JsonObject>) -> Result<Option<ComPtr<JsonObject>>> { unsafe { 
+    #[inline] pub fn get_named_object_or_default(&self, name: &HStringArg, defaultValue: &JsonObject) -> Result<Option<JsonObject>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetNamedObjectOrDefault)(self.as_abi() as *const _ as *mut _, name.get(), defaultValue.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonObject::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_string_or_default(&self, name: &HStringArg, defaultValue: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetNamedStringOrDefault)(self.as_abi() as *const _ as *mut _, name.get(), defaultValue.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_named_array_or_default(&self, name: &HStringArg, defaultValue: &ComPtr<JsonArray>) -> Result<Option<ComPtr<JsonArray>>> { unsafe { 
+    #[inline] pub fn get_named_array_or_default(&self, name: &HStringArg, defaultValue: &JsonArray) -> Result<Option<JsonArray>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetNamedArrayOrDefault)(self.as_abi() as *const _ as *mut _, name.get(), defaultValue.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonArray::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_number_or_default(&self, name: &HStringArg, defaultValue: f64) -> Result<f64> { unsafe { 
         let mut out = zeroed();
@@ -231,8 +231,8 @@ RT_INTERFACE!{interface IJsonValue(IJsonValueVtbl): IInspectable(IInspectableVtb
     fn GetString(&self, out: *mut HSTRING) -> HRESULT,
     fn GetNumber(&self, out: *mut f64) -> HRESULT,
     fn GetBoolean(&self, out: *mut bool) -> HRESULT,
-    fn GetArray(&self, out: *mut *mut JsonArray) -> HRESULT,
-    fn GetObject(&self, out: *mut *mut JsonObject) -> HRESULT
+    fn GetArray(&self, out: *mut <JsonArray as RtType>::Abi) -> HRESULT,
+    fn GetObject(&self, out: *mut <JsonObject as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IJsonValue> {
     #[inline] pub fn get_value_type(&self) -> Result<JsonValueType> { unsafe { 
@@ -260,85 +260,85 @@ impl ComPtr<IJsonValue> {
         let hr = ((*self.as_abi().lpVtbl).GetBoolean)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_array(&self) -> Result<Option<ComPtr<JsonArray>>> { unsafe { 
+    #[inline] pub fn get_array(&self) -> Result<Option<JsonArray>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetArray)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonArray::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_object(&self) -> Result<Option<ComPtr<JsonObject>>> { unsafe { 
+    #[inline] pub fn get_object(&self) -> Result<Option<JsonObject>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetObject)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonObject::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class JsonValue: IJsonValue}
 impl RtActivatable<IJsonValueStatics> for JsonValue {}
 impl RtActivatable<IJsonValueStatics2> for JsonValue {}
 impl JsonValue {
-    #[inline] pub fn parse(input: &HStringArg) -> Result<Option<ComPtr<JsonValue>>> {
+    #[inline] pub fn parse(input: &HStringArg) -> Result<Option<JsonValue>> {
         <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().parse(input)
     }
-    #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<ComPtr<JsonValue>>, bool)> {
+    #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<JsonValue>, bool)> {
         <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().try_parse(input)
     }
-    #[inline] pub fn create_boolean_value(input: bool) -> Result<Option<ComPtr<JsonValue>>> {
+    #[inline] pub fn create_boolean_value(input: bool) -> Result<Option<JsonValue>> {
         <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().create_boolean_value(input)
     }
-    #[inline] pub fn create_number_value(input: f64) -> Result<Option<ComPtr<JsonValue>>> {
+    #[inline] pub fn create_number_value(input: f64) -> Result<Option<JsonValue>> {
         <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().create_number_value(input)
     }
-    #[inline] pub fn create_string_value(input: &HStringArg) -> Result<Option<ComPtr<JsonValue>>> {
+    #[inline] pub fn create_string_value(input: &HStringArg) -> Result<Option<JsonValue>> {
         <Self as RtActivatable<IJsonValueStatics>>::get_activation_factory().create_string_value(input)
     }
-    #[inline] pub fn create_null_value() -> Result<Option<ComPtr<JsonValue>>> {
+    #[inline] pub fn create_null_value() -> Result<Option<JsonValue>> {
         <Self as RtActivatable<IJsonValueStatics2>>::get_activation_factory().create_null_value()
     }
 }
 DEFINE_CLSID!(JsonValue(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,86,97,108,117,101,0]) [CLSID_JsonValue]);
 DEFINE_IID!(IID_IJsonValueStatics, 1600869450, 12115, 18657, 145, 163, 247, 139, 80, 166, 52, 92);
 RT_INTERFACE!{static interface IJsonValueStatics(IJsonValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJsonValueStatics] {
-    fn Parse(&self, input: HSTRING, out: *mut *mut JsonValue) -> HRESULT,
-    fn TryParse(&self, input: HSTRING, result: *mut *mut JsonValue, out: *mut bool) -> HRESULT,
-    fn CreateBooleanValue(&self, input: bool, out: *mut *mut JsonValue) -> HRESULT,
-    fn CreateNumberValue(&self, input: f64, out: *mut *mut JsonValue) -> HRESULT,
-    fn CreateStringValue(&self, input: HSTRING, out: *mut *mut JsonValue) -> HRESULT
+    fn Parse(&self, input: HSTRING, out: *mut <JsonValue as RtType>::Abi) -> HRESULT,
+    fn TryParse(&self, input: HSTRING, result: *mut <JsonValue as RtType>::Abi, out: *mut bool) -> HRESULT,
+    fn CreateBooleanValue(&self, input: bool, out: *mut <JsonValue as RtType>::Abi) -> HRESULT,
+    fn CreateNumberValue(&self, input: f64, out: *mut <JsonValue as RtType>::Abi) -> HRESULT,
+    fn CreateStringValue(&self, input: HSTRING, out: *mut <JsonValue as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IJsonValueStatics> {
-    #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<ComPtr<JsonValue>>> { unsafe { 
+    #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Parse)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<JsonValue>>, bool)> { unsafe { 
+    #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<JsonValue>, bool)> { unsafe { 
         let mut result = null_mut(); let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut result, &mut out);
-        if hr == S_OK { Ok((ComPtr::wrap_optional(result), out)) } else { err(hr) }
+        if hr == S_OK { Ok((JsonValue::wrap(result), out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_boolean_value(&self, input: bool) -> Result<Option<ComPtr<JsonValue>>> { unsafe { 
+    #[inline] pub fn create_boolean_value(&self, input: bool) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateBooleanValue)(self.as_abi() as *const _ as *mut _, input, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_number_value(&self, input: f64) -> Result<Option<ComPtr<JsonValue>>> { unsafe { 
+    #[inline] pub fn create_number_value(&self, input: f64) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateNumberValue)(self.as_abi() as *const _ as *mut _, input, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_string_value(&self, input: &HStringArg) -> Result<Option<ComPtr<JsonValue>>> { unsafe { 
+    #[inline] pub fn create_string_value(&self, input: &HStringArg) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateStringValue)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IJsonValueStatics2, 496946148, 16360, 17205, 131, 146, 147, 216, 227, 104, 101, 240);
 RT_INTERFACE!{static interface IJsonValueStatics2(IJsonValueStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IJsonValueStatics2] {
-    fn CreateNullValue(&self, out: *mut *mut JsonValue) -> HRESULT
+    fn CreateNullValue(&self, out: *mut <JsonValue as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IJsonValueStatics2> {
-    #[inline] pub fn create_null_value(&self) -> Result<Option<ComPtr<JsonValue>>> { unsafe { 
+    #[inline] pub fn create_null_value(&self) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateNullValue)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum JsonValueType: i32 {
@@ -349,15 +349,15 @@ pub mod pdf { // Windows.Data.Pdf
 use crate::prelude::*;
 DEFINE_IID!(IID_IPdfDocument, 2893987549, 33018, 16521, 132, 110, 129, 183, 127, 245, 168, 108);
 RT_INTERFACE!{interface IPdfDocument(IPdfDocumentVtbl): IInspectable(IInspectableVtbl) [IID_IPdfDocument] {
-    fn GetPage(&self, pageIndex: u32, out: *mut *mut PdfPage) -> HRESULT,
+    fn GetPage(&self, pageIndex: u32, out: *mut <PdfPage as RtType>::Abi) -> HRESULT,
     fn get_PageCount(&self, out: *mut u32) -> HRESULT,
     fn get_IsPasswordProtected(&self, out: *mut bool) -> HRESULT
 }}
 impl ComPtr<IPdfDocument> {
-    #[inline] pub fn get_page(&self, pageIndex: u32) -> Result<Option<ComPtr<PdfPage>>> { unsafe { 
+    #[inline] pub fn get_page(&self, pageIndex: u32) -> Result<Option<PdfPage>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetPage)(self.as_abi() as *const _ as *mut _, pageIndex, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PdfPage::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
@@ -398,22 +398,22 @@ impl ComPtr<IPdfDocumentStatics> {
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(&self, file: &ComPtr<super::super::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).LoadFromFileAsync)(self.as_abi() as *const _ as *mut _, file.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_password_async(&self, file: &ComPtr<super::super::storage::IStorageFile>, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).LoadFromFileWithPasswordAsync)(self.as_abi() as *const _ as *mut _, file.as_abi() as *const _ as *mut _, password.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(&self, inputStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).LoadFromStreamAsync)(self.as_abi() as *const _ as *mut _, inputStream.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_password_async(&self, inputStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, password: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PdfDocument>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).LoadFromStreamWithPasswordAsync)(self.as_abi() as *const _ as *mut _, inputStream.as_abi() as *const _ as *mut _, password.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPdfPage, 2645864648, 21280, 19708, 173, 118, 73, 63, 218, 208, 229, 148);
@@ -421,11 +421,11 @@ RT_INTERFACE!{interface IPdfPage(IPdfPageVtbl): IInspectable(IInspectableVtbl) [
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn RenderToStreamAsync(&self, outputStream: *mut super::super::storage::streams::IRandomAccessStream, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn RenderWithOptionsToStreamAsync(&self, outputStream: *mut super::super::storage::streams::IRandomAccessStream, options: *mut PdfPageRenderOptions, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn RenderWithOptionsToStreamAsync(&self, outputStream: *mut super::super::storage::streams::IRandomAccessStream, options: <PdfPageRenderOptions as RtType>::Abi, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn PreparePageAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn get_Index(&self, out: *mut u32) -> HRESULT,
     fn get_Size(&self, out: *mut foundation::Size) -> HRESULT,
-    fn get_Dimensions(&self, out: *mut *mut PdfPageDimensions) -> HRESULT,
+    fn get_Dimensions(&self, out: *mut <PdfPageDimensions as RtType>::Abi) -> HRESULT,
     fn get_Rotation(&self, out: *mut PdfPageRotation) -> HRESULT,
     fn get_PreferredZoom(&self, out: *mut f32) -> HRESULT
 }}
@@ -433,17 +433,17 @@ impl ComPtr<IPdfPage> {
     #[cfg(feature="windows-storage")] #[inline] pub fn render_to_stream_async(&self, outputStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RenderToStreamAsync)(self.as_abi() as *const _ as *mut _, outputStream.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn render_with_options_to_stream_async(&self, outputStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, options: &ComPtr<PdfPageRenderOptions>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn render_with_options_to_stream_async(&self, outputStream: &ComPtr<super::super::storage::streams::IRandomAccessStream>, options: &PdfPageRenderOptions) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RenderWithOptionsToStreamAsync)(self.as_abi() as *const _ as *mut _, outputStream.as_abi() as *const _ as *mut _, options.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn prepare_page_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).PreparePageAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_index(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
@@ -455,10 +455,10 @@ impl ComPtr<IPdfPage> {
         let hr = ((*self.as_abi().lpVtbl).get_Size)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_dimensions(&self) -> Result<Option<ComPtr<PdfPageDimensions>>> { unsafe { 
+    #[inline] pub fn get_dimensions(&self) -> Result<Option<PdfPageDimensions>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Dimensions)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PdfPageDimensions::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rotation(&self) -> Result<PdfPageRotation> { unsafe { 
         let mut out = zeroed();
@@ -648,7 +648,7 @@ impl ComPtr<SelectableWordSegmentsTokenizingHandler> {
 DEFINE_IID!(IID_ISelectableWordsSegmenter, 4141625831, 19219, 17861, 136, 151, 125, 113, 38, 158, 8, 93);
 RT_INTERFACE!{interface ISelectableWordsSegmenter(ISelectableWordsSegmenterVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordsSegmenter] {
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
-    fn GetTokenAt(&self, text: HSTRING, startIndex: u32, out: *mut *mut SelectableWordSegment) -> HRESULT,
+    fn GetTokenAt(&self, text: HSTRING, startIndex: u32, out: *mut <SelectableWordSegment as RtType>::Abi) -> HRESULT,
     fn GetTokens(&self, text: HSTRING, out: *mut *mut foundation::collections::IVectorView<SelectableWordSegment>) -> HRESULT,
     fn Tokenize(&self, text: HSTRING, startIndex: u32, handler: *mut SelectableWordSegmentsTokenizingHandler) -> HRESULT
 }}
@@ -658,15 +658,15 @@ impl ComPtr<ISelectableWordsSegmenter> {
         let hr = ((*self.as_abi().lpVtbl).get_ResolvedLanguage)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_token_at(&self, text: &HStringArg, startIndex: u32) -> Result<Option<ComPtr<SelectableWordSegment>>> { unsafe { 
+    #[inline] pub fn get_token_at(&self, text: &HStringArg, startIndex: u32) -> Result<Option<SelectableWordSegment>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetTokenAt)(self.as_abi() as *const _ as *mut _, text.get(), startIndex, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SelectableWordSegment::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_tokens(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<SelectableWordSegment>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetTokens)(self.as_abi() as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn tokenize(&self, text: &HStringArg, startIndex: u32, handler: &ComPtr<SelectableWordSegmentsTokenizingHandler>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Tokenize)(self.as_abi() as *const _ as *mut _, text.get(), startIndex, handler.as_abi() as *const _ as *mut _);
@@ -676,20 +676,20 @@ impl ComPtr<ISelectableWordsSegmenter> {
 RT_CLASS!{class SelectableWordsSegmenter: ISelectableWordsSegmenter}
 impl RtActivatable<ISelectableWordsSegmenterFactory> for SelectableWordsSegmenter {}
 impl SelectableWordsSegmenter {
-    #[inline] pub fn create_with_language(language: &HStringArg) -> Result<ComPtr<SelectableWordsSegmenter>> {
+    #[inline] pub fn create_with_language(language: &HStringArg) -> Result<SelectableWordsSegmenter> {
         <Self as RtActivatable<ISelectableWordsSegmenterFactory>>::get_activation_factory().create_with_language(language)
     }
 }
 DEFINE_CLSID!(SelectableWordsSegmenter(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,83,101,108,101,99,116,97,98,108,101,87,111,114,100,115,83,101,103,109,101,110,116,101,114,0]) [CLSID_SelectableWordsSegmenter]);
 DEFINE_IID!(IID_ISelectableWordsSegmenterFactory, 2356835912, 24663, 17209, 188, 112, 242, 16, 1, 10, 65, 80);
 RT_INTERFACE!{static interface ISelectableWordsSegmenterFactory(ISelectableWordsSegmenterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordsSegmenterFactory] {
-    fn CreateWithLanguage(&self, language: HSTRING, out: *mut *mut SelectableWordsSegmenter) -> HRESULT
+    fn CreateWithLanguage(&self, language: HSTRING, out: *mut <SelectableWordsSegmenter as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ISelectableWordsSegmenterFactory> {
-    #[inline] pub fn create_with_language(&self, language: &HStringArg) -> Result<ComPtr<SelectableWordsSegmenter>> { unsafe { 
+    #[inline] pub fn create_with_language(&self, language: &HStringArg) -> Result<SelectableWordsSegmenter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWithLanguage)(self.as_abi() as *const _ as *mut _, language.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SelectableWordsSegmenter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ISemanticTextQuery, 1780263761, 8114, 18697, 128, 184, 53, 115, 26, 43, 62, 127);
@@ -701,40 +701,40 @@ impl ComPtr<ISemanticTextQuery> {
     #[inline] pub fn find(&self, content: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<TextSegment>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Find)(self.as_abi() as *const _ as *mut _, content.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_in_property(&self, propertyContent: &HStringArg, propertyName: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<TextSegment>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FindInProperty)(self.as_abi() as *const _ as *mut _, propertyContent.get(), propertyName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class SemanticTextQuery: ISemanticTextQuery}
 impl RtActivatable<ISemanticTextQueryFactory> for SemanticTextQuery {}
 impl SemanticTextQuery {
-    #[inline] pub fn create(aqsFilter: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> {
+    #[inline] pub fn create(aqsFilter: &HStringArg) -> Result<SemanticTextQuery> {
         <Self as RtActivatable<ISemanticTextQueryFactory>>::get_activation_factory().create(aqsFilter)
     }
-    #[inline] pub fn create_with_language(aqsFilter: &HStringArg, filterLanguage: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> {
+    #[inline] pub fn create_with_language(aqsFilter: &HStringArg, filterLanguage: &HStringArg) -> Result<SemanticTextQuery> {
         <Self as RtActivatable<ISemanticTextQueryFactory>>::get_activation_factory().create_with_language(aqsFilter, filterLanguage)
     }
 }
 DEFINE_CLSID!(SemanticTextQuery(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,83,101,109,97,110,116,105,99,84,101,120,116,81,117,101,114,121,0]) [CLSID_SemanticTextQuery]);
 DEFINE_IID!(IID_ISemanticTextQueryFactory, 596378883, 63893, 17799, 135, 119, 162, 183, 216, 10, 207, 239);
 RT_INTERFACE!{static interface ISemanticTextQueryFactory(ISemanticTextQueryFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISemanticTextQueryFactory] {
-    fn Create(&self, aqsFilter: HSTRING, out: *mut *mut SemanticTextQuery) -> HRESULT,
-    fn CreateWithLanguage(&self, aqsFilter: HSTRING, filterLanguage: HSTRING, out: *mut *mut SemanticTextQuery) -> HRESULT
+    fn Create(&self, aqsFilter: HSTRING, out: *mut <SemanticTextQuery as RtType>::Abi) -> HRESULT,
+    fn CreateWithLanguage(&self, aqsFilter: HSTRING, filterLanguage: HSTRING, out: *mut <SemanticTextQuery as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ISemanticTextQueryFactory> {
-    #[inline] pub fn create(&self, aqsFilter: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> { unsafe { 
+    #[inline] pub fn create(&self, aqsFilter: &HStringArg) -> Result<SemanticTextQuery> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, aqsFilter.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SemanticTextQuery::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_language(&self, aqsFilter: &HStringArg, filterLanguage: &HStringArg) -> Result<ComPtr<SemanticTextQuery>> { unsafe { 
+    #[inline] pub fn create_with_language(&self, aqsFilter: &HStringArg, filterLanguage: &HStringArg) -> Result<SemanticTextQuery> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWithLanguage)(self.as_abi() as *const _ as *mut _, aqsFilter.get(), filterLanguage.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SemanticTextQuery::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ITextConversionGenerator, 56650334, 10921, 19126, 175, 139, 165, 98, 182, 58, 137, 146);
@@ -758,31 +758,31 @@ impl ComPtr<ITextConversionGenerator> {
     #[inline] pub fn get_candidates_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCandidatesAsync)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_candidates_with_max_count_async(&self, input: &HStringArg, maxCandidates: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCandidatesWithMaxCountAsync)(self.as_abi() as *const _ as *mut _, input.get(), maxCandidates, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class TextConversionGenerator: ITextConversionGenerator}
 impl RtActivatable<ITextConversionGeneratorFactory> for TextConversionGenerator {}
 impl TextConversionGenerator {
-    #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextConversionGenerator>> {
+    #[inline] pub fn create(languageTag: &HStringArg) -> Result<TextConversionGenerator> {
         <Self as RtActivatable<ITextConversionGeneratorFactory>>::get_activation_factory().create(languageTag)
     }
 }
 DEFINE_CLSID!(TextConversionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,67,111,110,118,101,114,115,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextConversionGenerator]);
 DEFINE_IID!(IID_ITextConversionGeneratorFactory, 4239013761, 12419, 18859, 190, 21, 86, 223, 187, 183, 77, 111);
 RT_INTERFACE!{static interface ITextConversionGeneratorFactory(ITextConversionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextConversionGeneratorFactory] {
-    fn Create(&self, languageTag: HSTRING, out: *mut *mut TextConversionGenerator) -> HRESULT
+    fn Create(&self, languageTag: HSTRING, out: *mut <TextConversionGenerator as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ITextConversionGeneratorFactory> {
-    #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<ComPtr<TextConversionGenerator>> { unsafe { 
+    #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<TextConversionGenerator> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(TextConversionGenerator::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ITextPhoneme, 2472715274, 39802, 17769, 148, 207, 216, 79, 47, 56, 207, 155);
@@ -824,18 +824,18 @@ impl ComPtr<ITextPredictionGenerator> {
     #[inline] pub fn get_candidates_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCandidatesAsync)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_candidates_with_max_count_async(&self, input: &HStringArg, maxCandidates: u32) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCandidatesWithMaxCountAsync)(self.as_abi() as *const _ as *mut _, input.get(), maxCandidates, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class TextPredictionGenerator: ITextPredictionGenerator}
 impl RtActivatable<ITextPredictionGeneratorFactory> for TextPredictionGenerator {}
 impl TextPredictionGenerator {
-    #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextPredictionGenerator>> {
+    #[inline] pub fn create(languageTag: &HStringArg) -> Result<TextPredictionGenerator> {
         <Self as RtActivatable<ITextPredictionGeneratorFactory>>::get_activation_factory().create(languageTag)
     }
 }
@@ -851,12 +851,12 @@ impl ComPtr<ITextPredictionGenerator2> {
     #[inline] pub fn get_candidates_with_parameters_async(&self, input: &HStringArg, maxCandidates: u32, predictionOptions: TextPredictionOptions, previousStrings: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCandidatesWithParametersAsync)(self.as_abi() as *const _ as *mut _, input.get(), maxCandidates, predictionOptions, previousStrings.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_next_word_candidates_async(&self, maxCandidates: u32, previousStrings: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetNextWordCandidatesAsync)(self.as_abi() as *const _ as *mut _, maxCandidates, previousStrings.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn get_input_scope(&self) -> Result<super::super::ui::text::core::CoreTextInputScope> { unsafe { 
         let mut out = zeroed();
@@ -870,13 +870,13 @@ impl ComPtr<ITextPredictionGenerator2> {
 }
 DEFINE_IID!(IID_ITextPredictionGeneratorFactory, 1918350358, 35746, 18257, 157, 48, 157, 133, 67, 86, 83, 162);
 RT_INTERFACE!{static interface ITextPredictionGeneratorFactory(ITextPredictionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextPredictionGeneratorFactory] {
-    fn Create(&self, languageTag: HSTRING, out: *mut *mut TextPredictionGenerator) -> HRESULT
+    fn Create(&self, languageTag: HSTRING, out: *mut <TextPredictionGenerator as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ITextPredictionGeneratorFactory> {
-    #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<ComPtr<TextPredictionGenerator>> { unsafe { 
+    #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<TextPredictionGenerator> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(TextPredictionGenerator::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum TextPredictionOptions: u32 {
@@ -902,13 +902,13 @@ impl ComPtr<ITextReverseConversionGenerator> {
     #[inline] pub fn convert_back_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<HString>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConvertBackAsync)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class TextReverseConversionGenerator: ITextReverseConversionGenerator}
 impl RtActivatable<ITextReverseConversionGeneratorFactory> for TextReverseConversionGenerator {}
 impl TextReverseConversionGenerator {
-    #[inline] pub fn create(languageTag: &HStringArg) -> Result<ComPtr<TextReverseConversionGenerator>> {
+    #[inline] pub fn create(languageTag: &HStringArg) -> Result<TextReverseConversionGenerator> {
         <Self as RtActivatable<ITextReverseConversionGeneratorFactory>>::get_activation_factory().create(languageTag)
     }
 }
@@ -921,18 +921,18 @@ impl ComPtr<ITextReverseConversionGenerator2> {
     #[inline] pub fn get_phonemes_async(&self, input: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<TextPhoneme>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetPhonemesAsync)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ITextReverseConversionGeneratorFactory, 1673450278, 8154, 16886, 137, 213, 35, 221, 234, 60, 114, 154);
 RT_INTERFACE!{static interface ITextReverseConversionGeneratorFactory(ITextReverseConversionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGeneratorFactory] {
-    fn Create(&self, languageTag: HSTRING, out: *mut *mut TextReverseConversionGenerator) -> HRESULT
+    fn Create(&self, languageTag: HSTRING, out: *mut <TextReverseConversionGenerator as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ITextReverseConversionGeneratorFactory> {
-    #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<ComPtr<TextReverseConversionGenerator>> { unsafe { 
+    #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<TextReverseConversionGenerator> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(TextReverseConversionGenerator::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_STRUCT! { struct TextSegment {
@@ -1127,7 +1127,7 @@ impl ComPtr<IWordSegment> {
     #[inline] pub fn get_alternate_forms(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<AlternateWordForm>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AlternateForms)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class WordSegment: IWordSegment}
@@ -1144,7 +1144,7 @@ impl ComPtr<WordSegmentsTokenizingHandler> {
 DEFINE_IID!(IID_IWordsSegmenter, 2259997905, 45822, 20020, 168, 29, 102, 100, 3, 0, 69, 79);
 RT_INTERFACE!{interface IWordsSegmenter(IWordsSegmenterVtbl): IInspectable(IInspectableVtbl) [IID_IWordsSegmenter] {
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
-    fn GetTokenAt(&self, text: HSTRING, startIndex: u32, out: *mut *mut WordSegment) -> HRESULT,
+    fn GetTokenAt(&self, text: HSTRING, startIndex: u32, out: *mut <WordSegment as RtType>::Abi) -> HRESULT,
     fn GetTokens(&self, text: HSTRING, out: *mut *mut foundation::collections::IVectorView<WordSegment>) -> HRESULT,
     fn Tokenize(&self, text: HSTRING, startIndex: u32, handler: *mut WordSegmentsTokenizingHandler) -> HRESULT
 }}
@@ -1154,15 +1154,15 @@ impl ComPtr<IWordsSegmenter> {
         let hr = ((*self.as_abi().lpVtbl).get_ResolvedLanguage)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_token_at(&self, text: &HStringArg, startIndex: u32) -> Result<Option<ComPtr<WordSegment>>> { unsafe { 
+    #[inline] pub fn get_token_at(&self, text: &HStringArg, startIndex: u32) -> Result<Option<WordSegment>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetTokenAt)(self.as_abi() as *const _ as *mut _, text.get(), startIndex, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(WordSegment::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_tokens(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<WordSegment>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetTokens)(self.as_abi() as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn tokenize(&self, text: &HStringArg, startIndex: u32, handler: &ComPtr<WordSegmentsTokenizingHandler>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Tokenize)(self.as_abi() as *const _ as *mut _, text.get(), startIndex, handler.as_abi() as *const _ as *mut _);
@@ -1172,20 +1172,20 @@ impl ComPtr<IWordsSegmenter> {
 RT_CLASS!{class WordsSegmenter: IWordsSegmenter}
 impl RtActivatable<IWordsSegmenterFactory> for WordsSegmenter {}
 impl WordsSegmenter {
-    #[inline] pub fn create_with_language(language: &HStringArg) -> Result<ComPtr<WordsSegmenter>> {
+    #[inline] pub fn create_with_language(language: &HStringArg) -> Result<WordsSegmenter> {
         <Self as RtActivatable<IWordsSegmenterFactory>>::get_activation_factory().create_with_language(language)
     }
 }
 DEFINE_CLSID!(WordsSegmenter(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,87,111,114,100,115,83,101,103,109,101,110,116,101,114,0]) [CLSID_WordsSegmenter]);
 DEFINE_IID!(IID_IWordsSegmenterFactory, 3868684916, 64565, 17756, 139, 251, 109, 127, 70, 83, 202, 151);
 RT_INTERFACE!{static interface IWordsSegmenterFactory(IWordsSegmenterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWordsSegmenterFactory] {
-    fn CreateWithLanguage(&self, language: HSTRING, out: *mut *mut WordsSegmenter) -> HRESULT
+    fn CreateWithLanguage(&self, language: HSTRING, out: *mut <WordsSegmenter as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IWordsSegmenterFactory> {
-    #[inline] pub fn create_with_language(&self, language: &HStringArg) -> Result<ComPtr<WordsSegmenter>> { unsafe { 
+    #[inline] pub fn create_with_language(&self, language: &HStringArg) -> Result<WordsSegmenter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWithLanguage)(self.as_abi() as *const _ as *mut _, language.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(WordsSegmenter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 } // Windows.Data.Text
@@ -1202,17 +1202,17 @@ impl ComPtr<IDtdEntity> {
     #[inline] pub fn get_public_id(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PublicId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_id(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SystemId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_notation_name(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NotationName)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class DtdEntity: IDtdEntity}
@@ -1225,12 +1225,12 @@ impl ComPtr<IDtdNotation> {
     #[inline] pub fn get_public_id(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PublicId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_id(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SystemId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class DtdNotation: IDtdNotation}
@@ -1326,125 +1326,125 @@ RT_INTERFACE!{interface IXmlComment(IXmlCommentVtbl): IInspectable(IInspectableV
 RT_CLASS!{class XmlComment: IXmlComment}
 DEFINE_IID!(IID_IXmlDocument, 4159939846, 7815, 17110, 188, 251, 184, 200, 9, 250, 84, 148);
 RT_INTERFACE!{interface IXmlDocument(IXmlDocumentVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocument] {
-    fn get_Doctype(&self, out: *mut *mut XmlDocumentType) -> HRESULT,
-    fn get_Implementation(&self, out: *mut *mut XmlDomImplementation) -> HRESULT,
-    fn get_DocumentElement(&self, out: *mut *mut XmlElement) -> HRESULT,
-    fn CreateElement(&self, tagName: HSTRING, out: *mut *mut XmlElement) -> HRESULT,
-    fn CreateDocumentFragment(&self, out: *mut *mut XmlDocumentFragment) -> HRESULT,
-    fn CreateTextNode(&self, data: HSTRING, out: *mut *mut XmlText) -> HRESULT,
-    fn CreateComment(&self, data: HSTRING, out: *mut *mut XmlComment) -> HRESULT,
-    fn CreateProcessingInstruction(&self, target: HSTRING, data: HSTRING, out: *mut *mut XmlProcessingInstruction) -> HRESULT,
-    fn CreateAttribute(&self, name: HSTRING, out: *mut *mut XmlAttribute) -> HRESULT,
-    fn CreateEntityReference(&self, name: HSTRING, out: *mut *mut XmlEntityReference) -> HRESULT,
-    fn GetElementsByTagName(&self, tagName: HSTRING, out: *mut *mut XmlNodeList) -> HRESULT,
-    fn CreateCDataSection(&self, data: HSTRING, out: *mut *mut XmlCDataSection) -> HRESULT,
+    fn get_Doctype(&self, out: *mut <XmlDocumentType as RtType>::Abi) -> HRESULT,
+    fn get_Implementation(&self, out: *mut <XmlDomImplementation as RtType>::Abi) -> HRESULT,
+    fn get_DocumentElement(&self, out: *mut <XmlElement as RtType>::Abi) -> HRESULT,
+    fn CreateElement(&self, tagName: HSTRING, out: *mut <XmlElement as RtType>::Abi) -> HRESULT,
+    fn CreateDocumentFragment(&self, out: *mut <XmlDocumentFragment as RtType>::Abi) -> HRESULT,
+    fn CreateTextNode(&self, data: HSTRING, out: *mut <XmlText as RtType>::Abi) -> HRESULT,
+    fn CreateComment(&self, data: HSTRING, out: *mut <XmlComment as RtType>::Abi) -> HRESULT,
+    fn CreateProcessingInstruction(&self, target: HSTRING, data: HSTRING, out: *mut <XmlProcessingInstruction as RtType>::Abi) -> HRESULT,
+    fn CreateAttribute(&self, name: HSTRING, out: *mut <XmlAttribute as RtType>::Abi) -> HRESULT,
+    fn CreateEntityReference(&self, name: HSTRING, out: *mut <XmlEntityReference as RtType>::Abi) -> HRESULT,
+    fn GetElementsByTagName(&self, tagName: HSTRING, out: *mut <XmlNodeList as RtType>::Abi) -> HRESULT,
+    fn CreateCDataSection(&self, data: HSTRING, out: *mut <XmlCDataSection as RtType>::Abi) -> HRESULT,
     fn get_DocumentUri(&self, out: *mut HSTRING) -> HRESULT,
-    fn CreateAttributeNS(&self, namespaceUri: *mut IInspectable, qualifiedName: HSTRING, out: *mut *mut XmlAttribute) -> HRESULT,
-    fn CreateElementNS(&self, namespaceUri: *mut IInspectable, qualifiedName: HSTRING, out: *mut *mut XmlElement) -> HRESULT,
-    fn GetElementById(&self, elementId: HSTRING, out: *mut *mut XmlElement) -> HRESULT,
+    fn CreateAttributeNS(&self, namespaceUri: *mut IInspectable, qualifiedName: HSTRING, out: *mut <XmlAttribute as RtType>::Abi) -> HRESULT,
+    fn CreateElementNS(&self, namespaceUri: *mut IInspectable, qualifiedName: HSTRING, out: *mut <XmlElement as RtType>::Abi) -> HRESULT,
+    fn GetElementById(&self, elementId: HSTRING, out: *mut <XmlElement as RtType>::Abi) -> HRESULT,
     fn ImportNode(&self, node: *mut IXmlNode, deep: bool, out: *mut *mut IXmlNode) -> HRESULT
 }}
 impl ComPtr<IXmlDocument> {
-    #[inline] pub fn get_doctype(&self) -> Result<Option<ComPtr<XmlDocumentType>>> { unsafe { 
+    #[inline] pub fn get_doctype(&self) -> Result<Option<XmlDocumentType>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Doctype)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlDocumentType::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_implementation(&self) -> Result<Option<ComPtr<XmlDomImplementation>>> { unsafe { 
+    #[inline] pub fn get_implementation(&self) -> Result<Option<XmlDomImplementation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Implementation)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlDomImplementation::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_element(&self) -> Result<Option<ComPtr<XmlElement>>> { unsafe { 
+    #[inline] pub fn get_document_element(&self) -> Result<Option<XmlElement>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentElement)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlElement::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_element(&self, tagName: &HStringArg) -> Result<Option<ComPtr<XmlElement>>> { unsafe { 
+    #[inline] pub fn create_element(&self, tagName: &HStringArg) -> Result<Option<XmlElement>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateElement)(self.as_abi() as *const _ as *mut _, tagName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlElement::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_document_fragment(&self) -> Result<Option<ComPtr<XmlDocumentFragment>>> { unsafe { 
+    #[inline] pub fn create_document_fragment(&self) -> Result<Option<XmlDocumentFragment>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateDocumentFragment)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlDocumentFragment::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_text_node(&self, data: &HStringArg) -> Result<Option<ComPtr<XmlText>>> { unsafe { 
+    #[inline] pub fn create_text_node(&self, data: &HStringArg) -> Result<Option<XmlText>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateTextNode)(self.as_abi() as *const _ as *mut _, data.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlText::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_comment(&self, data: &HStringArg) -> Result<Option<ComPtr<XmlComment>>> { unsafe { 
+    #[inline] pub fn create_comment(&self, data: &HStringArg) -> Result<Option<XmlComment>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateComment)(self.as_abi() as *const _ as *mut _, data.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlComment::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_processing_instruction(&self, target: &HStringArg, data: &HStringArg) -> Result<Option<ComPtr<XmlProcessingInstruction>>> { unsafe { 
+    #[inline] pub fn create_processing_instruction(&self, target: &HStringArg, data: &HStringArg) -> Result<Option<XmlProcessingInstruction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateProcessingInstruction)(self.as_abi() as *const _ as *mut _, target.get(), data.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlProcessingInstruction::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_attribute(&self, name: &HStringArg) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
+    #[inline] pub fn create_attribute(&self, name: &HStringArg) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateAttribute)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_entity_reference(&self, name: &HStringArg) -> Result<Option<ComPtr<XmlEntityReference>>> { unsafe { 
+    #[inline] pub fn create_entity_reference(&self, name: &HStringArg) -> Result<Option<XmlEntityReference>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateEntityReference)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlEntityReference::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_elements_by_tag_name(&self, tagName: &HStringArg) -> Result<Option<ComPtr<XmlNodeList>>> { unsafe { 
+    #[inline] pub fn get_elements_by_tag_name(&self, tagName: &HStringArg) -> Result<Option<XmlNodeList>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetElementsByTagName)(self.as_abi() as *const _ as *mut _, tagName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlNodeList::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_cdata_section(&self, data: &HStringArg) -> Result<Option<ComPtr<XmlCDataSection>>> { unsafe { 
+    #[inline] pub fn create_cdata_section(&self, data: &HStringArg) -> Result<Option<XmlCDataSection>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateCDataSection)(self.as_abi() as *const _ as *mut _, data.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlCDataSection::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_uri(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentUri)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_attribute_ns(&self, namespaceUri: &ComPtr<IInspectable>, qualifiedName: &HStringArg) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
+    #[inline] pub fn create_attribute_ns(&self, namespaceUri: &ComPtr<IInspectable>, qualifiedName: &HStringArg) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateAttributeNS)(self.as_abi() as *const _ as *mut _, namespaceUri.as_abi() as *const _ as *mut _, qualifiedName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_element_ns(&self, namespaceUri: &ComPtr<IInspectable>, qualifiedName: &HStringArg) -> Result<Option<ComPtr<XmlElement>>> { unsafe { 
+    #[inline] pub fn create_element_ns(&self, namespaceUri: &ComPtr<IInspectable>, qualifiedName: &HStringArg) -> Result<Option<XmlElement>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateElementNS)(self.as_abi() as *const _ as *mut _, namespaceUri.as_abi() as *const _ as *mut _, qualifiedName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlElement::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_element_by_id(&self, elementId: &HStringArg) -> Result<Option<ComPtr<XmlElement>>> { unsafe { 
+    #[inline] pub fn get_element_by_id(&self, elementId: &HStringArg) -> Result<Option<XmlElement>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetElementById)(self.as_abi() as *const _ as *mut _, elementId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlElement::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn import_node(&self, node: &ComPtr<IXmlNode>, deep: bool) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ImportNode)(self.as_abi() as *const _ as *mut _, node.as_abi() as *const _ as *mut _, deep, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class XmlDocument: IXmlDocument}
 impl RtActivatable<IXmlDocumentStatics> for XmlDocument {}
 impl RtActivatable<IActivationFactory> for XmlDocument {}
 impl XmlDocument {
-    #[inline] pub fn load_from_uri_async(uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
+    #[inline] pub fn load_from_uri_async(uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
         <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_uri_async(uri)
     }
-    #[inline] pub fn load_from_uri_with_settings_async(uri: &ComPtr<foundation::Uri>, loadSettings: &ComPtr<XmlLoadSettings>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
+    #[inline] pub fn load_from_uri_with_settings_async(uri: &foundation::Uri, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
         <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_uri_with_settings_async(uri, loadSettings)
     }
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(file: &ComPtr<crate::windows::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
         <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_file_async(file)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(file: &ComPtr<crate::windows::storage::IStorageFile>, loadSettings: &ComPtr<XmlLoadSettings>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(file: &ComPtr<crate::windows::storage::IStorageFile>, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> {
         <Self as RtActivatable<IXmlDocumentStatics>>::get_activation_factory().load_from_file_with_settings_async(file, loadSettings)
     }
 }
@@ -1457,7 +1457,7 @@ RT_CLASS!{class XmlDocumentFragment: IXmlDocumentFragment}
 DEFINE_IID!(IID_IXmlDocumentIO, 1825630030, 61029, 17545, 158, 191, 202, 67, 232, 123, 166, 55);
 RT_INTERFACE!{interface IXmlDocumentIO(IXmlDocumentIOVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentIO] {
     fn LoadXml(&self, xml: HSTRING) -> HRESULT,
-    fn LoadXmlWithSettings(&self, xml: HSTRING, loadSettings: *mut XmlLoadSettings) -> HRESULT,
+    fn LoadXmlWithSettings(&self, xml: HSTRING, loadSettings: <XmlLoadSettings as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn SaveToFileAsync(&self, file: *mut crate::windows::storage::IStorageFile, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl ComPtr<IXmlDocumentIO> {
@@ -1465,65 +1465,65 @@ impl ComPtr<IXmlDocumentIO> {
         let hr = ((*self.as_abi().lpVtbl).LoadXml)(self.as_abi() as *const _ as *mut _, xml.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn load_xml_with_settings(&self, xml: &HStringArg, loadSettings: &ComPtr<XmlLoadSettings>) -> Result<()> { unsafe { 
+    #[inline] pub fn load_xml_with_settings(&self, xml: &HStringArg, loadSettings: &XmlLoadSettings) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).LoadXmlWithSettings)(self.as_abi() as *const _ as *mut _, xml.get(), loadSettings.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn save_to_file_async(&self, file: &ComPtr<crate::windows::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SaveToFileAsync)(self.as_abi() as *const _ as *mut _, file.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IXmlDocumentIO2, 1560495713, 31704, 19157, 158, 191, 129, 230, 52, 114, 99, 177);
 RT_INTERFACE!{interface IXmlDocumentIO2(IXmlDocumentIO2Vtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentIO2] {
     #[cfg(feature="windows-storage")] fn LoadXmlFromBuffer(&self, buffer: *mut crate::windows::storage::streams::IBuffer) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadXmlFromBufferWithSettings(&self, buffer: *mut crate::windows::storage::streams::IBuffer, loadSettings: *mut XmlLoadSettings) -> HRESULT
+    #[cfg(feature="windows-storage")] fn LoadXmlFromBufferWithSettings(&self, buffer: *mut crate::windows::storage::streams::IBuffer, loadSettings: <XmlLoadSettings as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IXmlDocumentIO2> {
     #[cfg(feature="windows-storage")] #[inline] pub fn load_xml_from_buffer(&self, buffer: &ComPtr<crate::windows::storage::streams::IBuffer>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).LoadXmlFromBuffer)(self.as_abi() as *const _ as *mut _, buffer.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_xml_from_buffer_with_settings(&self, buffer: &ComPtr<crate::windows::storage::streams::IBuffer>, loadSettings: &ComPtr<XmlLoadSettings>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_xml_from_buffer_with_settings(&self, buffer: &ComPtr<crate::windows::storage::streams::IBuffer>, loadSettings: &XmlLoadSettings) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).LoadXmlFromBufferWithSettings)(self.as_abi() as *const _ as *mut _, buffer.as_abi() as *const _ as *mut _, loadSettings.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IXmlDocumentStatics, 1430508116, 55127, 19321, 149, 57, 35, 43, 24, 245, 11, 241);
 RT_INTERFACE!{static interface IXmlDocumentStatics(IXmlDocumentStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentStatics] {
-    fn LoadFromUriAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
-    fn LoadFromUriWithSettingsAsync(&self, uri: *mut foundation::Uri, loadSettings: *mut XmlLoadSettings, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
+    fn LoadFromUriAsync(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
+    fn LoadFromUriWithSettingsAsync(&self, uri: <foundation::Uri as RtType>::Abi, loadSettings: <XmlLoadSettings as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
     #[cfg(feature="windows-storage")] fn LoadFromFileAsync(&self, file: *mut crate::windows::storage::IStorageFile, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn LoadFromFileWithSettingsAsync(&self, file: *mut crate::windows::storage::IStorageFile, loadSettings: *mut XmlLoadSettings, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn LoadFromFileWithSettingsAsync(&self, file: *mut crate::windows::storage::IStorageFile, loadSettings: <XmlLoadSettings as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<XmlDocument>) -> HRESULT
 }}
 impl ComPtr<IXmlDocumentStatics> {
-    #[inline] pub fn load_from_uri_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
+    #[inline] pub fn load_from_uri_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).LoadFromUriAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn load_from_uri_with_settings_async(&self, uri: &ComPtr<foundation::Uri>, loadSettings: &ComPtr<XmlLoadSettings>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
+    #[inline] pub fn load_from_uri_with_settings_async(&self, uri: &foundation::Uri, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).LoadFromUriWithSettingsAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, loadSettings.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(&self, file: &ComPtr<crate::windows::storage::IStorageFile>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).LoadFromFileAsync)(self.as_abi() as *const _ as *mut _, file.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(&self, file: &ComPtr<crate::windows::storage::IStorageFile>, loadSettings: &ComPtr<XmlLoadSettings>) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(&self, file: &ComPtr<crate::windows::storage::IStorageFile>, loadSettings: &XmlLoadSettings) -> Result<ComPtr<foundation::IAsyncOperation<XmlDocument>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).LoadFromFileWithSettingsAsync)(self.as_abi() as *const _ as *mut _, file.as_abi() as *const _ as *mut _, loadSettings.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IXmlDocumentType, 4147389477, 38785, 18788, 142, 148, 155, 28, 109, 252, 155, 199);
 RT_INTERFACE!{interface IXmlDocumentType(IXmlDocumentTypeVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentType] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Entities(&self, out: *mut *mut XmlNamedNodeMap) -> HRESULT,
-    fn get_Notations(&self, out: *mut *mut XmlNamedNodeMap) -> HRESULT
+    fn get_Entities(&self, out: *mut <XmlNamedNodeMap as RtType>::Abi) -> HRESULT,
+    fn get_Notations(&self, out: *mut <XmlNamedNodeMap as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IXmlDocumentType> {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
@@ -1531,15 +1531,15 @@ impl ComPtr<IXmlDocumentType> {
         let hr = ((*self.as_abi().lpVtbl).get_Name)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_entities(&self) -> Result<Option<ComPtr<XmlNamedNodeMap>>> { unsafe { 
+    #[inline] pub fn get_entities(&self) -> Result<Option<XmlNamedNodeMap>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Entities)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlNamedNodeMap::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_notations(&self) -> Result<Option<ComPtr<XmlNamedNodeMap>>> { unsafe { 
+    #[inline] pub fn get_notations(&self) -> Result<Option<XmlNamedNodeMap>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Notations)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlNamedNodeMap::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class XmlDocumentType: IXmlDocumentType}
@@ -1561,15 +1561,15 @@ RT_INTERFACE!{interface IXmlElement(IXmlElementVtbl): IInspectable(IInspectableV
     fn GetAttribute(&self, attributeName: HSTRING, out: *mut HSTRING) -> HRESULT,
     fn SetAttribute(&self, attributeName: HSTRING, attributeValue: HSTRING) -> HRESULT,
     fn RemoveAttribute(&self, attributeName: HSTRING) -> HRESULT,
-    fn GetAttributeNode(&self, attributeName: HSTRING, out: *mut *mut XmlAttribute) -> HRESULT,
-    fn SetAttributeNode(&self, newAttribute: *mut XmlAttribute, out: *mut *mut XmlAttribute) -> HRESULT,
-    fn RemoveAttributeNode(&self, attributeNode: *mut XmlAttribute, out: *mut *mut XmlAttribute) -> HRESULT,
-    fn GetElementsByTagName(&self, tagName: HSTRING, out: *mut *mut XmlNodeList) -> HRESULT,
+    fn GetAttributeNode(&self, attributeName: HSTRING, out: *mut <XmlAttribute as RtType>::Abi) -> HRESULT,
+    fn SetAttributeNode(&self, newAttribute: <XmlAttribute as RtType>::Abi, out: *mut <XmlAttribute as RtType>::Abi) -> HRESULT,
+    fn RemoveAttributeNode(&self, attributeNode: <XmlAttribute as RtType>::Abi, out: *mut <XmlAttribute as RtType>::Abi) -> HRESULT,
+    fn GetElementsByTagName(&self, tagName: HSTRING, out: *mut <XmlNodeList as RtType>::Abi) -> HRESULT,
     fn SetAttributeNS(&self, namespaceUri: *mut IInspectable, qualifiedName: HSTRING, value: HSTRING) -> HRESULT,
     fn GetAttributeNS(&self, namespaceUri: *mut IInspectable, localName: HSTRING, out: *mut HSTRING) -> HRESULT,
     fn RemoveAttributeNS(&self, namespaceUri: *mut IInspectable, localName: HSTRING) -> HRESULT,
-    fn SetAttributeNodeNS(&self, newAttribute: *mut XmlAttribute, out: *mut *mut XmlAttribute) -> HRESULT,
-    fn GetAttributeNodeNS(&self, namespaceUri: *mut IInspectable, localName: HSTRING, out: *mut *mut XmlAttribute) -> HRESULT
+    fn SetAttributeNodeNS(&self, newAttribute: <XmlAttribute as RtType>::Abi, out: *mut <XmlAttribute as RtType>::Abi) -> HRESULT,
+    fn GetAttributeNodeNS(&self, namespaceUri: *mut IInspectable, localName: HSTRING, out: *mut <XmlAttribute as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IXmlElement> {
     #[inline] pub fn get_tag_name(&self) -> Result<HString> { unsafe { 
@@ -1590,25 +1590,25 @@ impl ComPtr<IXmlElement> {
         let hr = ((*self.as_abi().lpVtbl).RemoveAttribute)(self.as_abi() as *const _ as *mut _, attributeName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_attribute_node(&self, attributeName: &HStringArg) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
+    #[inline] pub fn get_attribute_node(&self, attributeName: &HStringArg) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetAttributeNode)(self.as_abi() as *const _ as *mut _, attributeName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_attribute_node(&self, newAttribute: &ComPtr<XmlAttribute>) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
+    #[inline] pub fn set_attribute_node(&self, newAttribute: &XmlAttribute) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetAttributeNode)(self.as_abi() as *const _ as *mut _, newAttribute.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn remove_attribute_node(&self, attributeNode: &ComPtr<XmlAttribute>) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
+    #[inline] pub fn remove_attribute_node(&self, attributeNode: &XmlAttribute) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RemoveAttributeNode)(self.as_abi() as *const _ as *mut _, attributeNode.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_elements_by_tag_name(&self, tagName: &HStringArg) -> Result<Option<ComPtr<XmlNodeList>>> { unsafe { 
+    #[inline] pub fn get_elements_by_tag_name(&self, tagName: &HStringArg) -> Result<Option<XmlNodeList>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetElementsByTagName)(self.as_abi() as *const _ as *mut _, tagName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlNodeList::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_attribute_ns(&self, namespaceUri: &ComPtr<IInspectable>, qualifiedName: &HStringArg, value: &HStringArg) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).SetAttributeNS)(self.as_abi() as *const _ as *mut _, namespaceUri.as_abi() as *const _ as *mut _, qualifiedName.get(), value.get());
@@ -1623,15 +1623,15 @@ impl ComPtr<IXmlElement> {
         let hr = ((*self.as_abi().lpVtbl).RemoveAttributeNS)(self.as_abi() as *const _ as *mut _, namespaceUri.as_abi() as *const _ as *mut _, localName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn set_attribute_node_ns(&self, newAttribute: &ComPtr<XmlAttribute>) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
+    #[inline] pub fn set_attribute_node_ns(&self, newAttribute: &XmlAttribute) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetAttributeNodeNS)(self.as_abi() as *const _ as *mut _, newAttribute.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_attribute_node_ns(&self, namespaceUri: &ComPtr<IInspectable>, localName: &HStringArg) -> Result<Option<ComPtr<XmlAttribute>>> { unsafe { 
+    #[inline] pub fn get_attribute_node_ns(&self, namespaceUri: &ComPtr<IInspectable>, localName: &HStringArg) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetAttributeNodeNS)(self.as_abi() as *const _ as *mut _, namespaceUri.as_abi() as *const _ as *mut _, localName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class XmlElement: IXmlElement}
@@ -1723,37 +1723,37 @@ impl ComPtr<IXmlNamedNodeMap> {
     #[inline] pub fn item(&self, index: u32) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Item)(self.as_abi() as *const _ as *mut _, index, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_item(&self, name: &HStringArg) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetNamedItem)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_named_item(&self, node: &ComPtr<IXmlNode>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetNamedItem)(self.as_abi() as *const _ as *mut _, node.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove_named_item(&self, name: &HStringArg) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RemoveNamedItem)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_item_ns(&self, namespaceUri: &ComPtr<IInspectable>, name: &HStringArg) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetNamedItemNS)(self.as_abi() as *const _ as *mut _, namespaceUri.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove_named_item_ns(&self, namespaceUri: &ComPtr<IInspectable>, name: &HStringArg) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RemoveNamedItemNS)(self.as_abi() as *const _ as *mut _, namespaceUri.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_named_item_ns(&self, node: &ComPtr<IXmlNode>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetNamedItemNS)(self.as_abi() as *const _ as *mut _, node.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class XmlNamedNodeMap: IXmlNamedNodeMap}
@@ -1764,14 +1764,14 @@ RT_INTERFACE!{interface IXmlNode(IXmlNodeVtbl): IInspectable(IInspectableVtbl) [
     fn get_NodeType(&self, out: *mut NodeType) -> HRESULT,
     fn get_NodeName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ParentNode(&self, out: *mut *mut IXmlNode) -> HRESULT,
-    fn get_ChildNodes(&self, out: *mut *mut XmlNodeList) -> HRESULT,
+    fn get_ChildNodes(&self, out: *mut <XmlNodeList as RtType>::Abi) -> HRESULT,
     fn get_FirstChild(&self, out: *mut *mut IXmlNode) -> HRESULT,
     fn get_LastChild(&self, out: *mut *mut IXmlNode) -> HRESULT,
     fn get_PreviousSibling(&self, out: *mut *mut IXmlNode) -> HRESULT,
     fn get_NextSibling(&self, out: *mut *mut IXmlNode) -> HRESULT,
-    fn get_Attributes(&self, out: *mut *mut XmlNamedNodeMap) -> HRESULT,
+    fn get_Attributes(&self, out: *mut <XmlNamedNodeMap as RtType>::Abi) -> HRESULT,
     fn HasChildNodes(&self, out: *mut bool) -> HRESULT,
-    fn get_OwnerDocument(&self, out: *mut *mut XmlDocument) -> HRESULT,
+    fn get_OwnerDocument(&self, out: *mut <XmlDocument as RtType>::Abi) -> HRESULT,
     fn InsertBefore(&self, newChild: *mut IXmlNode, referenceChild: *mut IXmlNode, out: *mut *mut IXmlNode) -> HRESULT,
     fn ReplaceChild(&self, newChild: *mut IXmlNode, referenceChild: *mut IXmlNode, out: *mut *mut IXmlNode) -> HRESULT,
     fn RemoveChild(&self, childNode: *mut IXmlNode, out: *mut *mut IXmlNode) -> HRESULT,
@@ -1787,7 +1787,7 @@ impl ComPtr<IXmlNode> {
     #[inline] pub fn get_node_value(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NodeValue)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_node_value(&self, value: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_NodeValue)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -1806,87 +1806,87 @@ impl ComPtr<IXmlNode> {
     #[inline] pub fn get_parent_node(&self) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ParentNode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_child_nodes(&self) -> Result<Option<ComPtr<XmlNodeList>>> { unsafe { 
+    #[inline] pub fn get_child_nodes(&self) -> Result<Option<XmlNodeList>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ChildNodes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlNodeList::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_first_child(&self) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_FirstChild)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_last_child(&self) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LastChild)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_previous_sibling(&self) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PreviousSibling)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_next_sibling(&self) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NextSibling)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_attributes(&self) -> Result<Option<ComPtr<XmlNamedNodeMap>>> { unsafe { 
+    #[inline] pub fn get_attributes(&self) -> Result<Option<XmlNamedNodeMap>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Attributes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlNamedNodeMap::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn has_child_nodes(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).HasChildNodes)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_owner_document(&self) -> Result<Option<ComPtr<XmlDocument>>> { unsafe { 
+    #[inline] pub fn get_owner_document(&self) -> Result<Option<XmlDocument>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_OwnerDocument)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlDocument::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn insert_before(&self, newChild: &ComPtr<IXmlNode>, referenceChild: &ComPtr<IXmlNode>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).InsertBefore)(self.as_abi() as *const _ as *mut _, newChild.as_abi() as *const _ as *mut _, referenceChild.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn replace_child(&self, newChild: &ComPtr<IXmlNode>, referenceChild: &ComPtr<IXmlNode>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ReplaceChild)(self.as_abi() as *const _ as *mut _, newChild.as_abi() as *const _ as *mut _, referenceChild.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove_child(&self, childNode: &ComPtr<IXmlNode>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RemoveChild)(self.as_abi() as *const _ as *mut _, childNode.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn append_child(&self, newChild: &ComPtr<IXmlNode>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).AppendChild)(self.as_abi() as *const _ as *mut _, newChild.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn clone_node(&self, deep: bool) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CloneNode)(self.as_abi() as *const _ as *mut _, deep, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_namespace_uri(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NamespaceUri)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_local_name(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocalName)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_prefix(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Prefix)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn normalize(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Normalize)(self.as_abi() as *const _ as *mut _);
@@ -1911,37 +1911,37 @@ impl ComPtr<IXmlNodeList> {
     #[inline] pub fn item(&self, index: u32) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Item)(self.as_abi() as *const _ as *mut _, index, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class XmlNodeList: IXmlNodeList}
 DEFINE_IID!(IID_IXmlNodeSelector, 1675344523, 53467, 20449, 183, 69, 249, 67, 58, 253, 194, 91);
 RT_INTERFACE!{interface IXmlNodeSelector(IXmlNodeSelectorVtbl): IInspectable(IInspectableVtbl) [IID_IXmlNodeSelector] {
     fn SelectSingleNode(&self, xpath: HSTRING, out: *mut *mut IXmlNode) -> HRESULT,
-    fn SelectNodes(&self, xpath: HSTRING, out: *mut *mut XmlNodeList) -> HRESULT,
+    fn SelectNodes(&self, xpath: HSTRING, out: *mut <XmlNodeList as RtType>::Abi) -> HRESULT,
     fn SelectSingleNodeNS(&self, xpath: HSTRING, namespaces: *mut IInspectable, out: *mut *mut IXmlNode) -> HRESULT,
-    fn SelectNodesNS(&self, xpath: HSTRING, namespaces: *mut IInspectable, out: *mut *mut XmlNodeList) -> HRESULT
+    fn SelectNodesNS(&self, xpath: HSTRING, namespaces: *mut IInspectable, out: *mut <XmlNodeList as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IXmlNodeSelector> {
     #[inline] pub fn select_single_node(&self, xpath: &HStringArg) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SelectSingleNode)(self.as_abi() as *const _ as *mut _, xpath.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn select_nodes(&self, xpath: &HStringArg) -> Result<Option<ComPtr<XmlNodeList>>> { unsafe { 
+    #[inline] pub fn select_nodes(&self, xpath: &HStringArg) -> Result<Option<XmlNodeList>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SelectNodes)(self.as_abi() as *const _ as *mut _, xpath.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlNodeList::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn select_single_node_ns(&self, xpath: &HStringArg, namespaces: &ComPtr<IInspectable>) -> Result<Option<ComPtr<IXmlNode>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SelectSingleNodeNS)(self.as_abi() as *const _ as *mut _, xpath.get(), namespaces.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn select_nodes_ns(&self, xpath: &HStringArg, namespaces: &ComPtr<IInspectable>) -> Result<Option<ComPtr<XmlNodeList>>> { unsafe { 
+    #[inline] pub fn select_nodes_ns(&self, xpath: &HStringArg, namespaces: &ComPtr<IInspectable>) -> Result<Option<XmlNodeList>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SelectNodesNS)(self.as_abi() as *const _ as *mut _, xpath.get(), namespaces.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XmlNodeList::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IXmlNodeSerializer, 1556460418, 59101, 18833, 171, 239, 6, 216, 210, 231, 189, 12);
@@ -1997,7 +1997,7 @@ impl ComPtr<IXmlText> {
     #[inline] pub fn split_text(&self, offset: u32) -> Result<Option<ComPtr<IXmlText>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SplitText)(self.as_abi() as *const _ as *mut _, offset, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class XmlText: IXmlText}
@@ -2018,31 +2018,31 @@ impl ComPtr<IXsltProcessor> {
 RT_CLASS!{class XsltProcessor: IXsltProcessor}
 impl RtActivatable<IXsltProcessorFactory> for XsltProcessor {}
 impl XsltProcessor {
-    #[inline] pub fn create_instance(document: &ComPtr<super::dom::XmlDocument>) -> Result<ComPtr<XsltProcessor>> {
+    #[inline] pub fn create_instance(document: &super::dom::XmlDocument) -> Result<XsltProcessor> {
         <Self as RtActivatable<IXsltProcessorFactory>>::get_activation_factory().create_instance(document)
     }
 }
 DEFINE_CLSID!(XsltProcessor(&[87,105,110,100,111,119,115,46,68,97,116,97,46,88,109,108,46,88,115,108,46,88,115,108,116,80,114,111,99,101,115,115,111,114,0]) [CLSID_XsltProcessor]);
 DEFINE_IID!(IID_IXsltProcessor2, 2376358998, 38821, 17611, 168, 190, 39, 216, 98, 128, 199, 10);
 RT_INTERFACE!{interface IXsltProcessor2(IXsltProcessor2Vtbl): IInspectable(IInspectableVtbl) [IID_IXsltProcessor2] {
-    fn TransformToDocument(&self, inputNode: *mut super::dom::IXmlNode, out: *mut *mut super::dom::XmlDocument) -> HRESULT
+    fn TransformToDocument(&self, inputNode: *mut super::dom::IXmlNode, out: *mut <super::dom::XmlDocument as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IXsltProcessor2> {
-    #[inline] pub fn transform_to_document(&self, inputNode: &ComPtr<super::dom::IXmlNode>) -> Result<Option<ComPtr<super::dom::XmlDocument>>> { unsafe { 
+    #[inline] pub fn transform_to_document(&self, inputNode: &ComPtr<super::dom::IXmlNode>) -> Result<Option<super::dom::XmlDocument>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TransformToDocument)(self.as_abi() as *const _ as *mut _, inputNode.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::dom::XmlDocument::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IXsltProcessorFactory, 658589376, 39505, 18019, 191, 48, 14, 247, 66, 20, 111, 32);
 RT_INTERFACE!{static interface IXsltProcessorFactory(IXsltProcessorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IXsltProcessorFactory] {
-    fn CreateInstance(&self, document: *mut super::dom::XmlDocument, out: *mut *mut XsltProcessor) -> HRESULT
+    fn CreateInstance(&self, document: <super::dom::XmlDocument as RtType>::Abi, out: *mut <XsltProcessor as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IXsltProcessorFactory> {
-    #[inline] pub fn create_instance(&self, document: &ComPtr<super::dom::XmlDocument>) -> Result<ComPtr<XsltProcessor>> { unsafe { 
+    #[inline] pub fn create_instance(&self, document: &super::dom::XmlDocument) -> Result<XsltProcessor> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateInstance)(self.as_abi() as *const _ as *mut _, document.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XsltProcessor::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 } // Windows.Data.Xml.Xsl

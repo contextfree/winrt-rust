@@ -4,22 +4,22 @@ RT_ENUM! { enum DomainNameType: i32 {
 }}
 DEFINE_IID!(IID_IEndpointPair, 866167350, 63738, 19248, 184, 86, 118, 81, 124, 59, 208, 109);
 RT_INTERFACE!{interface IEndpointPair(IEndpointPairVtbl): IInspectable(IInspectableVtbl) [IID_IEndpointPair] {
-    fn get_LocalHostName(&self, out: *mut *mut HostName) -> HRESULT,
-    fn put_LocalHostName(&self, value: *mut HostName) -> HRESULT,
+    fn get_LocalHostName(&self, out: *mut <HostName as RtType>::Abi) -> HRESULT,
+    fn put_LocalHostName(&self, value: <HostName as RtType>::Abi) -> HRESULT,
     fn get_LocalServiceName(&self, out: *mut HSTRING) -> HRESULT,
     fn put_LocalServiceName(&self, value: HSTRING) -> HRESULT,
-    fn get_RemoteHostName(&self, out: *mut *mut HostName) -> HRESULT,
-    fn put_RemoteHostName(&self, value: *mut HostName) -> HRESULT,
+    fn get_RemoteHostName(&self, out: *mut <HostName as RtType>::Abi) -> HRESULT,
+    fn put_RemoteHostName(&self, value: <HostName as RtType>::Abi) -> HRESULT,
     fn get_RemoteServiceName(&self, out: *mut HSTRING) -> HRESULT,
     fn put_RemoteServiceName(&self, value: HSTRING) -> HRESULT
 }}
 impl ComPtr<IEndpointPair> {
-    #[inline] pub fn get_local_host_name(&self) -> Result<Option<ComPtr<HostName>>> { unsafe { 
+    #[inline] pub fn get_local_host_name(&self) -> Result<Option<HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocalHostName)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HostName::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_local_host_name(&self, value: &ComPtr<HostName>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_local_host_name(&self, value: &HostName) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_LocalHostName)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -32,12 +32,12 @@ impl ComPtr<IEndpointPair> {
         let hr = ((*self.as_abi().lpVtbl).put_LocalServiceName)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_remote_host_name(&self) -> Result<Option<ComPtr<HostName>>> { unsafe { 
+    #[inline] pub fn get_remote_host_name(&self) -> Result<Option<HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RemoteHostName)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HostName::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_remote_host_name(&self, value: &ComPtr<HostName>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_remote_host_name(&self, value: &HostName) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_RemoteHostName)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -54,36 +54,36 @@ impl ComPtr<IEndpointPair> {
 RT_CLASS!{class EndpointPair: IEndpointPair}
 impl RtActivatable<IEndpointPairFactory> for EndpointPair {}
 impl EndpointPair {
-    #[inline] pub fn create_endpoint_pair(localHostName: &ComPtr<HostName>, localServiceName: &HStringArg, remoteHostName: &ComPtr<HostName>, remoteServiceName: &HStringArg) -> Result<ComPtr<EndpointPair>> {
+    #[inline] pub fn create_endpoint_pair(localHostName: &HostName, localServiceName: &HStringArg, remoteHostName: &HostName, remoteServiceName: &HStringArg) -> Result<EndpointPair> {
         <Self as RtActivatable<IEndpointPairFactory>>::get_activation_factory().create_endpoint_pair(localHostName, localServiceName, remoteHostName, remoteServiceName)
     }
 }
 DEFINE_CLSID!(EndpointPair(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,69,110,100,112,111,105,110,116,80,97,105,114,0]) [CLSID_EndpointPair]);
 DEFINE_IID!(IID_IEndpointPairFactory, 3054098801, 25824, 17451, 170, 111, 204, 140, 143, 24, 31, 120);
 RT_INTERFACE!{static interface IEndpointPairFactory(IEndpointPairFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEndpointPairFactory] {
-    fn CreateEndpointPair(&self, localHostName: *mut HostName, localServiceName: HSTRING, remoteHostName: *mut HostName, remoteServiceName: HSTRING, out: *mut *mut EndpointPair) -> HRESULT
+    fn CreateEndpointPair(&self, localHostName: <HostName as RtType>::Abi, localServiceName: HSTRING, remoteHostName: <HostName as RtType>::Abi, remoteServiceName: HSTRING, out: *mut <EndpointPair as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IEndpointPairFactory> {
-    #[inline] pub fn create_endpoint_pair(&self, localHostName: &ComPtr<HostName>, localServiceName: &HStringArg, remoteHostName: &ComPtr<HostName>, remoteServiceName: &HStringArg) -> Result<ComPtr<EndpointPair>> { unsafe { 
+    #[inline] pub fn create_endpoint_pair(&self, localHostName: &HostName, localServiceName: &HStringArg, remoteHostName: &HostName, remoteServiceName: &HStringArg) -> Result<EndpointPair> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateEndpointPair)(self.as_abi() as *const _ as *mut _, localHostName.as_abi() as *const _ as *mut _, localServiceName.get(), remoteHostName.as_abi() as *const _ as *mut _, remoteServiceName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(EndpointPair::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IHostName, 3213806253, 60822, 18855, 144, 132, 212, 22, 202, 232, 141, 203);
 RT_INTERFACE!{interface IHostName(IHostNameVtbl): IInspectable(IInspectableVtbl) [IID_IHostName] {
-    fn get_IPInformation(&self, out: *mut *mut connectivity::IPInformation) -> HRESULT,
+    fn get_IPInformation(&self, out: *mut <connectivity::IPInformation as RtType>::Abi) -> HRESULT,
     fn get_RawName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_CanonicalName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Type(&self, out: *mut HostNameType) -> HRESULT,
-    fn IsEqual(&self, hostName: *mut HostName, out: *mut bool) -> HRESULT
+    fn IsEqual(&self, hostName: <HostName as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
 impl ComPtr<IHostName> {
-    #[inline] pub fn get_ip_information(&self) -> Result<Option<ComPtr<connectivity::IPInformation>>> { unsafe { 
+    #[inline] pub fn get_ip_information(&self) -> Result<Option<connectivity::IPInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_IPInformation)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(connectivity::IPInformation::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_raw_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -105,7 +105,7 @@ impl ComPtr<IHostName> {
         let hr = ((*self.as_abi().lpVtbl).get_Type)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn is_equal(&self, hostName: &ComPtr<HostName>) -> Result<bool> { unsafe { 
+    #[inline] pub fn is_equal(&self, hostName: &HostName) -> Result<bool> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).IsEqual)(self.as_abi() as *const _ as *mut _, hostName.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -115,7 +115,7 @@ RT_CLASS!{class HostName: IHostName}
 impl RtActivatable<IHostNameFactory> for HostName {}
 impl RtActivatable<IHostNameStatics> for HostName {}
 impl HostName {
-    #[inline] pub fn create_host_name(hostName: &HStringArg) -> Result<ComPtr<HostName>> {
+    #[inline] pub fn create_host_name(hostName: &HStringArg) -> Result<HostName> {
         <Self as RtActivatable<IHostNameFactory>>::get_activation_factory().create_host_name(hostName)
     }
     #[inline] pub fn compare(value1: &HStringArg, value2: &HStringArg) -> Result<i32> {
@@ -125,13 +125,13 @@ impl HostName {
 DEFINE_CLSID!(HostName(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,72,111,115,116,78,97,109,101,0]) [CLSID_HostName]);
 DEFINE_IID!(IID_IHostNameFactory, 1166812141, 28975, 17782, 173, 241, 194, 11, 44, 100, 53, 88);
 RT_INTERFACE!{static interface IHostNameFactory(IHostNameFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHostNameFactory] {
-    fn CreateHostName(&self, hostName: HSTRING, out: *mut *mut HostName) -> HRESULT
+    fn CreateHostName(&self, hostName: HSTRING, out: *mut <HostName as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHostNameFactory> {
-    #[inline] pub fn create_host_name(&self, hostName: &HStringArg) -> Result<ComPtr<HostName>> { unsafe { 
+    #[inline] pub fn create_host_name(&self, hostName: &HStringArg) -> Result<HostName> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateHostName)(self.as_abi() as *const _ as *mut _, hostName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(HostName::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum HostNameSortOptions: u32 {
@@ -155,25 +155,25 @@ pub mod backgroundtransfer { // Windows.Networking.BackgroundTransfer
 use crate::prelude::*;
 DEFINE_IID!(IID_IBackgroundDownloader, 3251082035, 26185, 19229, 168, 38, 164, 179, 221, 35, 77, 11);
 RT_INTERFACE!{interface IBackgroundDownloader(IBackgroundDownloaderVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader] {
-    #[cfg(feature="windows-storage")] fn CreateDownload(&self, uri: *mut foundation::Uri, resultFile: *mut super::super::storage::IStorageFile, out: *mut *mut DownloadOperation) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn CreateDownloadFromFile(&self, uri: *mut foundation::Uri, resultFile: *mut super::super::storage::IStorageFile, requestBodyFile: *mut super::super::storage::IStorageFile, out: *mut *mut DownloadOperation) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn CreateDownloadAsync(&self, uri: *mut foundation::Uri, resultFile: *mut super::super::storage::IStorageFile, requestBodyStream: *mut super::super::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncOperation<DownloadOperation>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn CreateDownload(&self, uri: <foundation::Uri as RtType>::Abi, resultFile: *mut super::super::storage::IStorageFile, out: *mut <DownloadOperation as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn CreateDownloadFromFile(&self, uri: <foundation::Uri as RtType>::Abi, resultFile: *mut super::super::storage::IStorageFile, requestBodyFile: *mut super::super::storage::IStorageFile, out: *mut <DownloadOperation as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn CreateDownloadAsync(&self, uri: <foundation::Uri as RtType>::Abi, resultFile: *mut super::super::storage::IStorageFile, requestBodyStream: *mut super::super::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncOperation<DownloadOperation>) -> HRESULT
 }}
 impl ComPtr<IBackgroundDownloader> {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_download(&self, uri: &ComPtr<foundation::Uri>, resultFile: &ComPtr<super::super::storage::IStorageFile>) -> Result<Option<ComPtr<DownloadOperation>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_download(&self, uri: &foundation::Uri, resultFile: &ComPtr<super::super::storage::IStorageFile>) -> Result<Option<DownloadOperation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateDownload)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, resultFile.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DownloadOperation::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_download_from_file(&self, uri: &ComPtr<foundation::Uri>, resultFile: &ComPtr<super::super::storage::IStorageFile>, requestBodyFile: &ComPtr<super::super::storage::IStorageFile>) -> Result<Option<ComPtr<DownloadOperation>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_download_from_file(&self, uri: &foundation::Uri, resultFile: &ComPtr<super::super::storage::IStorageFile>, requestBodyFile: &ComPtr<super::super::storage::IStorageFile>) -> Result<Option<DownloadOperation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateDownloadFromFile)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, resultFile.as_abi() as *const _ as *mut _, requestBodyFile.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DownloadOperation::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_download_async(&self, uri: &ComPtr<foundation::Uri>, resultFile: &ComPtr<super::super::storage::IStorageFile>, requestBodyStream: &ComPtr<super::super::storage::streams::IInputStream>) -> Result<ComPtr<foundation::IAsyncOperation<DownloadOperation>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_download_async(&self, uri: &foundation::Uri, resultFile: &ComPtr<super::super::storage::IStorageFile>, requestBodyStream: &ComPtr<super::super::storage::streams::IInputStream>) -> Result<ComPtr<foundation::IAsyncOperation<DownloadOperation>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateDownloadAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, resultFile.as_abi() as *const _ as *mut _, requestBodyStream.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class BackgroundDownloader: IBackgroundDownloader}
@@ -183,7 +183,7 @@ impl RtActivatable<IBackgroundDownloaderStaticMethods2> for BackgroundDownloader
 impl RtActivatable<IBackgroundDownloaderUserConsent> for BackgroundDownloader {}
 impl RtActivatable<IActivationFactory> for BackgroundDownloader {}
 impl BackgroundDownloader {
-    #[inline] pub fn create_with_completion_group(completionGroup: &ComPtr<BackgroundTransferCompletionGroup>) -> Result<ComPtr<BackgroundDownloader>> {
+    #[inline] pub fn create_with_completion_group(completionGroup: &BackgroundTransferCompletionGroup) -> Result<BackgroundDownloader> {
         <Self as RtActivatable<IBackgroundDownloaderFactory>>::get_activation_factory().create_with_completion_group(completionGroup)
     }
     #[inline] pub fn get_current_downloads_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> {
@@ -192,7 +192,7 @@ impl BackgroundDownloader {
     #[inline] pub fn get_current_downloads_for_group_async(group: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> {
         <Self as RtActivatable<IBackgroundDownloaderStaticMethods>>::get_activation_factory().get_current_downloads_for_group_async(group)
     }
-    #[inline] pub fn get_current_downloads_for_transfer_group_async(group: &ComPtr<BackgroundTransferGroup>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> {
+    #[inline] pub fn get_current_downloads_for_transfer_group_async(group: &BackgroundTransferGroup) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> {
         <Self as RtActivatable<IBackgroundDownloaderStaticMethods2>>::get_activation_factory().get_current_downloads_for_transfer_group_async(group)
     }
     #[inline] pub fn request_unconstrained_downloads_async(operations: &ComPtr<foundation::collections::IIterable<DownloadOperation>>) -> Result<ComPtr<foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> {
@@ -202,84 +202,84 @@ impl BackgroundDownloader {
 DEFINE_CLSID!(BackgroundDownloader(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,68,111,119,110,108,111,97,100,101,114,0]) [CLSID_BackgroundDownloader]);
 DEFINE_IID!(IID_IBackgroundDownloader2, 2840221767, 13453, 18997, 137, 14, 138, 30, 243, 121, 132, 121);
 RT_INTERFACE!{interface IBackgroundDownloader2(IBackgroundDownloader2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader2] {
-    fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT,
-    fn put_TransferGroup(&self, value: *mut BackgroundTransferGroup) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_SuccessToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_SuccessToastNotification(&self, value: *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_FailureToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_FailureToastNotification(&self, value: *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_SuccessTileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_SuccessTileNotification(&self, value: *mut super::super::ui::notifications::TileNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_FailureTileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_FailureTileNotification(&self, value: *mut super::super::ui::notifications::TileNotification) -> HRESULT
+    fn get_TransferGroup(&self, out: *mut <BackgroundTransferGroup as RtType>::Abi) -> HRESULT,
+    fn put_TransferGroup(&self, value: <BackgroundTransferGroup as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_SuccessToastNotification(&self, out: *mut <super::super::ui::notifications::ToastNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_SuccessToastNotification(&self, value: <super::super::ui::notifications::ToastNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_FailureToastNotification(&self, out: *mut <super::super::ui::notifications::ToastNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_FailureToastNotification(&self, value: <super::super::ui::notifications::ToastNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_SuccessTileNotification(&self, out: *mut <super::super::ui::notifications::TileNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_SuccessTileNotification(&self, value: <super::super::ui::notifications::TileNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_FailureTileNotification(&self, out: *mut <super::super::ui::notifications::TileNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_FailureTileNotification(&self, value: <super::super::ui::notifications::TileNotification as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IBackgroundDownloader2> {
-    #[inline] pub fn get_transfer_group(&self) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
+    #[inline] pub fn get_transfer_group(&self) -> Result<Option<BackgroundTransferGroup>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TransferGroup)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BackgroundTransferGroup::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_transfer_group(&self, value: &ComPtr<BackgroundTransferGroup>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_transfer_group(&self, value: &BackgroundTransferGroup) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_TransferGroup)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_toast_notification(&self) -> Result<Option<super::super::ui::notifications::ToastNotification>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SuccessToastNotification)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::ui::notifications::ToastNotification::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_toast_notification(&self, value: &ComPtr<super::super::ui::notifications::ToastNotification>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_toast_notification(&self, value: &super::super::ui::notifications::ToastNotification) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_SuccessToastNotification)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_toast_notification(&self) -> Result<Option<super::super::ui::notifications::ToastNotification>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_FailureToastNotification)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::ui::notifications::ToastNotification::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_toast_notification(&self, value: &ComPtr<super::super::ui::notifications::ToastNotification>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_toast_notification(&self, value: &super::super::ui::notifications::ToastNotification) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_FailureToastNotification)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_tile_notification(&self) -> Result<Option<super::super::ui::notifications::TileNotification>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SuccessTileNotification)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::ui::notifications::TileNotification::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_tile_notification(&self, value: &ComPtr<super::super::ui::notifications::TileNotification>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_tile_notification(&self, value: &super::super::ui::notifications::TileNotification) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_SuccessTileNotification)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_tile_notification(&self) -> Result<Option<super::super::ui::notifications::TileNotification>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_FailureTileNotification)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::ui::notifications::TileNotification::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_tile_notification(&self, value: &ComPtr<super::super::ui::notifications::TileNotification>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_tile_notification(&self, value: &super::super::ui::notifications::TileNotification) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_FailureTileNotification)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBackgroundDownloader3, 3508177992, 34536, 18658, 182, 21, 105, 118, 170, 191, 134, 29);
 RT_INTERFACE!{interface IBackgroundDownloader3(IBackgroundDownloader3Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader3] {
-    fn get_CompletionGroup(&self, out: *mut *mut BackgroundTransferCompletionGroup) -> HRESULT
+    fn get_CompletionGroup(&self, out: *mut <BackgroundTransferCompletionGroup as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IBackgroundDownloader3> {
-    #[inline] pub fn get_completion_group(&self) -> Result<Option<ComPtr<BackgroundTransferCompletionGroup>>> { unsafe { 
+    #[inline] pub fn get_completion_group(&self) -> Result<Option<BackgroundTransferCompletionGroup>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CompletionGroup)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BackgroundTransferCompletionGroup::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBackgroundDownloaderFactory, 646147108, 55454, 18164, 162, 154, 79, 77, 79, 20, 65, 85);
 RT_INTERFACE!{static interface IBackgroundDownloaderFactory(IBackgroundDownloaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderFactory] {
-    fn CreateWithCompletionGroup(&self, completionGroup: *mut BackgroundTransferCompletionGroup, out: *mut *mut BackgroundDownloader) -> HRESULT
+    fn CreateWithCompletionGroup(&self, completionGroup: <BackgroundTransferCompletionGroup as RtType>::Abi, out: *mut <BackgroundDownloader as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IBackgroundDownloaderFactory> {
-    #[inline] pub fn create_with_completion_group(&self, completionGroup: &ComPtr<BackgroundTransferCompletionGroup>) -> Result<ComPtr<BackgroundDownloader>> { unsafe { 
+    #[inline] pub fn create_with_completion_group(&self, completionGroup: &BackgroundTransferCompletionGroup) -> Result<BackgroundDownloader> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWithCompletionGroup)(self.as_abi() as *const _ as *mut _, completionGroup.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BackgroundDownloader::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBackgroundDownloaderStaticMethods, 1386633781, 50766, 17004, 153, 25, 84, 13, 13, 33, 166, 80);
@@ -291,23 +291,23 @@ impl ComPtr<IBackgroundDownloaderStaticMethods> {
     #[inline] pub fn get_current_downloads_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCurrentDownloadsAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_downloads_for_group_async(&self, group: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCurrentDownloadsForGroupAsync)(self.as_abi() as *const _ as *mut _, group.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBackgroundDownloaderStaticMethods2, 799675175, 6868, 19621, 178, 205, 8, 219, 240, 116, 106, 254);
 RT_INTERFACE!{static interface IBackgroundDownloaderStaticMethods2(IBackgroundDownloaderStaticMethods2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderStaticMethods2] {
-    fn GetCurrentDownloadsForTransferGroupAsync(&self, group: *mut BackgroundTransferGroup, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>) -> HRESULT
+    fn GetCurrentDownloadsForTransferGroupAsync(&self, group: <BackgroundTransferGroup as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>) -> HRESULT
 }}
 impl ComPtr<IBackgroundDownloaderStaticMethods2> {
-    #[inline] pub fn get_current_downloads_for_transfer_group_async(&self, group: &ComPtr<BackgroundTransferGroup>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> { unsafe { 
+    #[inline] pub fn get_current_downloads_for_transfer_group_async(&self, group: &BackgroundTransferGroup) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCurrentDownloadsForTransferGroupAsync)(self.as_abi() as *const _ as *mut _, group.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBackgroundDownloaderUserConsent, 1561651462, 37478, 18440, 189, 113, 89, 37, 242, 163, 19, 10);
@@ -318,7 +318,7 @@ impl ComPtr<IBackgroundDownloaderUserConsent> {
     #[inline] pub fn request_unconstrained_downloads_async(&self, operations: &ComPtr<foundation::collections::IIterable<DownloadOperation>>) -> Result<ComPtr<foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RequestUnconstrainedDownloadsAsync)(self.as_abi() as *const _ as *mut _, operations.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_STRUCT! { struct BackgroundDownloadProgress {
@@ -328,13 +328,13 @@ DEFINE_IID!(IID_IBackgroundTransferBase, 714973776, 51049, 17804, 175, 232, 254,
 RT_INTERFACE!{interface IBackgroundTransferBase(IBackgroundTransferBaseVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferBase] {
     fn SetRequestHeader(&self, headerName: HSTRING, headerValue: HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ServerCredential(&self, out: *mut *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ServerCredential(&self, out: *mut <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-security")] fn put_ServerCredential(&self, credential: *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn put_ServerCredential(&self, credential: <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ProxyCredential(&self, out: *mut *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ProxyCredential(&self, out: *mut <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-security")] fn put_ProxyCredential(&self, credential: *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn put_ProxyCredential(&self, credential: <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
     fn get_Method(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Method(&self, value: HSTRING) -> HRESULT,
     fn get_Group(&self, out: *mut HSTRING) -> HRESULT,
@@ -347,21 +347,21 @@ impl ComPtr<IBackgroundTransferBase> {
         let hr = ((*self.as_abi().lpVtbl).SetRequestHeader)(self.as_abi() as *const _ as *mut _, headerName.get(), headerValue.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_server_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_server_credential(&self) -> Result<Option<super::super::security::credentials::PasswordCredential>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerCredential)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::credentials::PasswordCredential::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_server_credential(&self, credential: &ComPtr<super::super::security::credentials::PasswordCredential>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn set_server_credential(&self, credential: &super::super::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_ServerCredential)(self.as_abi() as *const _ as *mut _, credential.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_proxy_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_proxy_credential(&self) -> Result<Option<super::super::security::credentials::PasswordCredential>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ProxyCredential)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::credentials::PasswordCredential::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_proxy_credential(&self, credential: &ComPtr<super::super::security::credentials::PasswordCredential>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn set_proxy_credential(&self, credential: &super::super::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_ProxyCredential)(self.as_abi() as *const _ as *mut _, credential.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -407,7 +407,7 @@ impl ComPtr<IBackgroundTransferCompletionGroup> {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_trigger(&self) -> Result<Option<ComPtr<super::super::applicationmodel::background::IBackgroundTrigger>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Trigger)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
@@ -431,12 +431,12 @@ impl ComPtr<IBackgroundTransferCompletionGroupTriggerDetails> {
     #[inline] pub fn get_downloads(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<DownloadOperation>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Downloads)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_uploads(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<UploadOperation>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Uploads)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class BackgroundTransferCompletionGroupTriggerDetails: IBackgroundTransferCompletionGroupTriggerDetails}
@@ -464,29 +464,29 @@ RT_CLASS!{class BackgroundTransferContentPart: IBackgroundTransferContentPart}
 impl RtActivatable<IBackgroundTransferContentPartFactory> for BackgroundTransferContentPart {}
 impl RtActivatable<IActivationFactory> for BackgroundTransferContentPart {}
 impl BackgroundTransferContentPart {
-    #[inline] pub fn create_with_name(name: &HStringArg) -> Result<ComPtr<BackgroundTransferContentPart>> {
+    #[inline] pub fn create_with_name(name: &HStringArg) -> Result<BackgroundTransferContentPart> {
         <Self as RtActivatable<IBackgroundTransferContentPartFactory>>::get_activation_factory().create_with_name(name)
     }
-    #[inline] pub fn create_with_name_and_file_name(name: &HStringArg, fileName: &HStringArg) -> Result<ComPtr<BackgroundTransferContentPart>> {
+    #[inline] pub fn create_with_name_and_file_name(name: &HStringArg, fileName: &HStringArg) -> Result<BackgroundTransferContentPart> {
         <Self as RtActivatable<IBackgroundTransferContentPartFactory>>::get_activation_factory().create_with_name_and_file_name(name, fileName)
     }
 }
 DEFINE_CLSID!(BackgroundTransferContentPart(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,67,111,110,116,101,110,116,80,97,114,116,0]) [CLSID_BackgroundTransferContentPart]);
 DEFINE_IID!(IID_IBackgroundTransferContentPartFactory, 2431621289, 31233, 18955, 159, 128, 160, 176, 187, 55, 15, 141);
 RT_INTERFACE!{static interface IBackgroundTransferContentPartFactory(IBackgroundTransferContentPartFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferContentPartFactory] {
-    fn CreateWithName(&self, name: HSTRING, out: *mut *mut BackgroundTransferContentPart) -> HRESULT,
-    fn CreateWithNameAndFileName(&self, name: HSTRING, fileName: HSTRING, out: *mut *mut BackgroundTransferContentPart) -> HRESULT
+    fn CreateWithName(&self, name: HSTRING, out: *mut <BackgroundTransferContentPart as RtType>::Abi) -> HRESULT,
+    fn CreateWithNameAndFileName(&self, name: HSTRING, fileName: HSTRING, out: *mut <BackgroundTransferContentPart as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IBackgroundTransferContentPartFactory> {
-    #[inline] pub fn create_with_name(&self, name: &HStringArg) -> Result<ComPtr<BackgroundTransferContentPart>> { unsafe { 
+    #[inline] pub fn create_with_name(&self, name: &HStringArg) -> Result<BackgroundTransferContentPart> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWithName)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BackgroundTransferContentPart::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_with_name_and_file_name(&self, name: &HStringArg, fileName: &HStringArg) -> Result<ComPtr<BackgroundTransferContentPart>> { unsafe { 
+    #[inline] pub fn create_with_name_and_file_name(&self, name: &HStringArg, fileName: &HStringArg) -> Result<BackgroundTransferContentPart> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWithNameAndFileName)(self.as_abi() as *const _ as *mut _, name.get(), fileName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BackgroundTransferContentPart::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum BackgroundTransferCostPolicy: i32 {
@@ -539,33 +539,33 @@ impl ComPtr<IBackgroundTransferGroup> {
 RT_CLASS!{class BackgroundTransferGroup: IBackgroundTransferGroup}
 impl RtActivatable<IBackgroundTransferGroupStatics> for BackgroundTransferGroup {}
 impl BackgroundTransferGroup {
-    #[inline] pub fn create_group(name: &HStringArg) -> Result<Option<ComPtr<BackgroundTransferGroup>>> {
+    #[inline] pub fn create_group(name: &HStringArg) -> Result<Option<BackgroundTransferGroup>> {
         <Self as RtActivatable<IBackgroundTransferGroupStatics>>::get_activation_factory().create_group(name)
     }
 }
 DEFINE_CLSID!(BackgroundTransferGroup(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,71,114,111,117,112,0]) [CLSID_BackgroundTransferGroup]);
 DEFINE_IID!(IID_IBackgroundTransferGroupStatics, 49041586, 32024, 18779, 170, 34, 50, 169, 125, 69, 211, 226);
 RT_INTERFACE!{static interface IBackgroundTransferGroupStatics(IBackgroundTransferGroupStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferGroupStatics] {
-    fn CreateGroup(&self, name: HSTRING, out: *mut *mut BackgroundTransferGroup) -> HRESULT
+    fn CreateGroup(&self, name: HSTRING, out: *mut <BackgroundTransferGroup as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IBackgroundTransferGroupStatics> {
-    #[inline] pub fn create_group(&self, name: &HStringArg) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
+    #[inline] pub fn create_group(&self, name: &HStringArg) -> Result<Option<BackgroundTransferGroup>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateGroup)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BackgroundTransferGroup::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBackgroundTransferOperation, 3738200134, 37066, 17659, 143, 177, 18, 65, 84, 192, 213, 57);
 RT_INTERFACE!{interface IBackgroundTransferOperation(IBackgroundTransferOperationVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferOperation] {
     fn get_Guid(&self, out: *mut Guid) -> HRESULT,
-    fn get_RequestedUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_RequestedUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_Method(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Group(&self, out: *mut HSTRING) -> HRESULT,
     fn get_CostPolicy(&self, out: *mut BackgroundTransferCostPolicy) -> HRESULT,
     fn put_CostPolicy(&self, value: BackgroundTransferCostPolicy) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy6(&self) -> (),
     #[cfg(feature="windows-storage")] fn GetResultStreamAt(&self, position: u64, out: *mut *mut super::super::storage::streams::IInputStream) -> HRESULT,
-    fn GetResponseInformation(&self, out: *mut *mut ResponseInformation) -> HRESULT
+    fn GetResponseInformation(&self, out: *mut <ResponseInformation as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IBackgroundTransferOperation> {
     #[inline] pub fn get_guid(&self) -> Result<Guid> { unsafe { 
@@ -573,10 +573,10 @@ impl ComPtr<IBackgroundTransferOperation> {
         let hr = ((*self.as_abi().lpVtbl).get_Guid)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_requested_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_requested_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RequestedUri)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_method(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -600,12 +600,12 @@ impl ComPtr<IBackgroundTransferOperation> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_result_stream_at(&self, position: u64) -> Result<Option<ComPtr<super::super::storage::streams::IInputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetResultStreamAt)(self.as_abi() as *const _ as *mut _, position, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_response_information(&self) -> Result<Option<ComPtr<ResponseInformation>>> { unsafe { 
+    #[inline] pub fn get_response_information(&self) -> Result<Option<ResponseInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetResponseInformation)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ResponseInformation::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBackgroundTransferOperationPriority, 75842343, 21076, 19258, 145, 94, 10, 164, 146, 117, 192, 249);
@@ -631,7 +631,7 @@ DEFINE_IID!(IID_IBackgroundTransferRangesDownloadedEventArgs, 1052537939, 48968,
 RT_INTERFACE!{interface IBackgroundTransferRangesDownloadedEventArgs(IBackgroundTransferRangesDownloadedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferRangesDownloadedEventArgs] {
     fn get_WasDownloadRestarted(&self, out: *mut bool) -> HRESULT,
     fn get_AddedRanges(&self, out: *mut *mut foundation::collections::IVector<BackgroundTransferFileRange>) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+    fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IBackgroundTransferRangesDownloadedEventArgs> {
     #[inline] pub fn get_was_download_restarted(&self) -> Result<bool> { unsafe { 
@@ -642,12 +642,12 @@ impl ComPtr<IBackgroundTransferRangesDownloadedEventArgs> {
     #[inline] pub fn get_added_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVector<BackgroundTransferFileRange>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AddedRanges)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+    #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class BackgroundTransferRangesDownloadedEventArgs: IBackgroundTransferRangesDownloadedEventArgs}
@@ -657,38 +657,38 @@ RT_ENUM! { enum BackgroundTransferStatus: i32 {
 DEFINE_IID!(IID_IBackgroundUploader, 3314928046, 52909, 18011, 136, 1, 197, 90, 201, 10, 1, 206);
 RT_INTERFACE!{interface IBackgroundUploader(IBackgroundUploaderVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn CreateUpload(&self, uri: *mut foundation::Uri, sourceFile: *mut super::super::storage::IStorageFile, out: *mut *mut UploadOperation) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn CreateUpload(&self, uri: <foundation::Uri as RtType>::Abi, sourceFile: *mut super::super::storage::IStorageFile, out: *mut <UploadOperation as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn CreateUploadFromStreamAsync(&self, uri: *mut foundation::Uri, sourceStream: *mut super::super::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT,
-    fn CreateUploadWithFormDataAndAutoBoundaryAsync(&self, uri: *mut foundation::Uri, parts: *mut foundation::collections::IIterable<BackgroundTransferContentPart>, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT,
-    fn CreateUploadWithSubTypeAsync(&self, uri: *mut foundation::Uri, parts: *mut foundation::collections::IIterable<BackgroundTransferContentPart>, subType: HSTRING, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT,
-    fn CreateUploadWithSubTypeAndBoundaryAsync(&self, uri: *mut foundation::Uri, parts: *mut foundation::collections::IIterable<BackgroundTransferContentPart>, subType: HSTRING, boundary: HSTRING, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT
+    #[cfg(feature="windows-storage")] fn CreateUploadFromStreamAsync(&self, uri: <foundation::Uri as RtType>::Abi, sourceStream: *mut super::super::storage::streams::IInputStream, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT,
+    fn CreateUploadWithFormDataAndAutoBoundaryAsync(&self, uri: <foundation::Uri as RtType>::Abi, parts: *mut foundation::collections::IIterable<BackgroundTransferContentPart>, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT,
+    fn CreateUploadWithSubTypeAsync(&self, uri: <foundation::Uri as RtType>::Abi, parts: *mut foundation::collections::IIterable<BackgroundTransferContentPart>, subType: HSTRING, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT,
+    fn CreateUploadWithSubTypeAndBoundaryAsync(&self, uri: <foundation::Uri as RtType>::Abi, parts: *mut foundation::collections::IIterable<BackgroundTransferContentPart>, subType: HSTRING, boundary: HSTRING, out: *mut *mut foundation::IAsyncOperation<UploadOperation>) -> HRESULT
 }}
 impl ComPtr<IBackgroundUploader> {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_upload(&self, uri: &ComPtr<foundation::Uri>, sourceFile: &ComPtr<super::super::storage::IStorageFile>) -> Result<Option<ComPtr<UploadOperation>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_upload(&self, uri: &foundation::Uri, sourceFile: &ComPtr<super::super::storage::IStorageFile>) -> Result<Option<UploadOperation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateUpload)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, sourceFile.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(UploadOperation::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_upload_from_stream_async(&self, uri: &ComPtr<foundation::Uri>, sourceStream: &ComPtr<super::super::storage::streams::IInputStream>) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_upload_from_stream_async(&self, uri: &foundation::Uri, sourceStream: &ComPtr<super::super::storage::streams::IInputStream>) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateUploadFromStreamAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, sourceStream.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_upload_with_form_data_and_auto_boundary_async(&self, uri: &ComPtr<foundation::Uri>, parts: &ComPtr<foundation::collections::IIterable<BackgroundTransferContentPart>>) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
+    #[inline] pub fn create_upload_with_form_data_and_auto_boundary_async(&self, uri: &foundation::Uri, parts: &ComPtr<foundation::collections::IIterable<BackgroundTransferContentPart>>) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateUploadWithFormDataAndAutoBoundaryAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, parts.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_upload_with_sub_type_async(&self, uri: &ComPtr<foundation::Uri>, parts: &ComPtr<foundation::collections::IIterable<BackgroundTransferContentPart>>, subType: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
+    #[inline] pub fn create_upload_with_sub_type_async(&self, uri: &foundation::Uri, parts: &ComPtr<foundation::collections::IIterable<BackgroundTransferContentPart>>, subType: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateUploadWithSubTypeAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, parts.as_abi() as *const _ as *mut _, subType.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_upload_with_sub_type_and_boundary_async(&self, uri: &ComPtr<foundation::Uri>, parts: &ComPtr<foundation::collections::IIterable<BackgroundTransferContentPart>>, subType: &HStringArg, boundary: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
+    #[inline] pub fn create_upload_with_sub_type_and_boundary_async(&self, uri: &foundation::Uri, parts: &ComPtr<foundation::collections::IIterable<BackgroundTransferContentPart>>, subType: &HStringArg, boundary: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<UploadOperation>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateUploadWithSubTypeAndBoundaryAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, parts.as_abi() as *const _ as *mut _, subType.get(), boundary.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class BackgroundUploader: IBackgroundUploader}
@@ -698,7 +698,7 @@ impl RtActivatable<IBackgroundUploaderStaticMethods2> for BackgroundUploader {}
 impl RtActivatable<IBackgroundUploaderUserConsent> for BackgroundUploader {}
 impl RtActivatable<IActivationFactory> for BackgroundUploader {}
 impl BackgroundUploader {
-    #[inline] pub fn create_with_completion_group(completionGroup: &ComPtr<BackgroundTransferCompletionGroup>) -> Result<ComPtr<BackgroundUploader>> {
+    #[inline] pub fn create_with_completion_group(completionGroup: &BackgroundTransferCompletionGroup) -> Result<BackgroundUploader> {
         <Self as RtActivatable<IBackgroundUploaderFactory>>::get_activation_factory().create_with_completion_group(completionGroup)
     }
     #[inline] pub fn get_current_uploads_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> {
@@ -707,7 +707,7 @@ impl BackgroundUploader {
     #[inline] pub fn get_current_uploads_for_group_async(group: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> {
         <Self as RtActivatable<IBackgroundUploaderStaticMethods>>::get_activation_factory().get_current_uploads_for_group_async(group)
     }
-    #[inline] pub fn get_current_uploads_for_transfer_group_async(group: &ComPtr<BackgroundTransferGroup>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> {
+    #[inline] pub fn get_current_uploads_for_transfer_group_async(group: &BackgroundTransferGroup) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> {
         <Self as RtActivatable<IBackgroundUploaderStaticMethods2>>::get_activation_factory().get_current_uploads_for_transfer_group_async(group)
     }
     #[inline] pub fn request_unconstrained_uploads_async(operations: &ComPtr<foundation::collections::IIterable<UploadOperation>>) -> Result<ComPtr<foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> {
@@ -717,84 +717,84 @@ impl BackgroundUploader {
 DEFINE_CLSID!(BackgroundUploader(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,85,112,108,111,97,100,101,114,0]) [CLSID_BackgroundUploader]);
 DEFINE_IID!(IID_IBackgroundUploader2, 2382762702, 3124, 17507, 128, 127, 25, 138, 27, 139, 212, 173);
 RT_INTERFACE!{interface IBackgroundUploader2(IBackgroundUploader2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader2] {
-    fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT,
-    fn put_TransferGroup(&self, value: *mut BackgroundTransferGroup) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_SuccessToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_SuccessToastNotification(&self, value: *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_FailureToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_FailureToastNotification(&self, value: *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_SuccessTileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_SuccessTileNotification(&self, value: *mut super::super::ui::notifications::TileNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn get_FailureTileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
-    #[cfg(feature="windows-ui")] fn put_FailureTileNotification(&self, value: *mut super::super::ui::notifications::TileNotification) -> HRESULT
+    fn get_TransferGroup(&self, out: *mut <BackgroundTransferGroup as RtType>::Abi) -> HRESULT,
+    fn put_TransferGroup(&self, value: <BackgroundTransferGroup as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_SuccessToastNotification(&self, out: *mut <super::super::ui::notifications::ToastNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_SuccessToastNotification(&self, value: <super::super::ui::notifications::ToastNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_FailureToastNotification(&self, out: *mut <super::super::ui::notifications::ToastNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_FailureToastNotification(&self, value: <super::super::ui::notifications::ToastNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_SuccessTileNotification(&self, out: *mut <super::super::ui::notifications::TileNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_SuccessTileNotification(&self, value: <super::super::ui::notifications::TileNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_FailureTileNotification(&self, out: *mut <super::super::ui::notifications::TileNotification as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn put_FailureTileNotification(&self, value: <super::super::ui::notifications::TileNotification as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IBackgroundUploader2> {
-    #[inline] pub fn get_transfer_group(&self) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
+    #[inline] pub fn get_transfer_group(&self) -> Result<Option<BackgroundTransferGroup>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TransferGroup)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BackgroundTransferGroup::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_transfer_group(&self, value: &ComPtr<BackgroundTransferGroup>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_transfer_group(&self, value: &BackgroundTransferGroup) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_TransferGroup)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_toast_notification(&self) -> Result<Option<super::super::ui::notifications::ToastNotification>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SuccessToastNotification)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::ui::notifications::ToastNotification::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_toast_notification(&self, value: &ComPtr<super::super::ui::notifications::ToastNotification>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_toast_notification(&self, value: &super::super::ui::notifications::ToastNotification) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_SuccessToastNotification)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_toast_notification(&self) -> Result<Option<super::super::ui::notifications::ToastNotification>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_FailureToastNotification)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::ui::notifications::ToastNotification::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_toast_notification(&self, value: &ComPtr<super::super::ui::notifications::ToastNotification>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_toast_notification(&self, value: &super::super::ui::notifications::ToastNotification) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_FailureToastNotification)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_success_tile_notification(&self) -> Result<Option<super::super::ui::notifications::TileNotification>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SuccessTileNotification)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::ui::notifications::TileNotification::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_tile_notification(&self, value: &ComPtr<super::super::ui::notifications::TileNotification>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_success_tile_notification(&self, value: &super::super::ui::notifications::TileNotification) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_SuccessTileNotification)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_failure_tile_notification(&self) -> Result<Option<super::super::ui::notifications::TileNotification>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_FailureTileNotification)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::ui::notifications::TileNotification::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_tile_notification(&self, value: &ComPtr<super::super::ui::notifications::TileNotification>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn set_failure_tile_notification(&self, value: &super::super::ui::notifications::TileNotification) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_FailureTileNotification)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBackgroundUploader3, 3109983289, 23536, 19258, 140, 71, 44, 97, 153, 168, 84, 185);
 RT_INTERFACE!{interface IBackgroundUploader3(IBackgroundUploader3Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader3] {
-    fn get_CompletionGroup(&self, out: *mut *mut BackgroundTransferCompletionGroup) -> HRESULT
+    fn get_CompletionGroup(&self, out: *mut <BackgroundTransferCompletionGroup as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IBackgroundUploader3> {
-    #[inline] pub fn get_completion_group(&self) -> Result<Option<ComPtr<BackgroundTransferCompletionGroup>>> { unsafe { 
+    #[inline] pub fn get_completion_group(&self) -> Result<Option<BackgroundTransferCompletionGroup>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CompletionGroup)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BackgroundTransferCompletionGroup::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBackgroundUploaderFactory, 1935803335, 4327, 18592, 172, 60, 26, 199, 16, 149, 236, 87);
 RT_INTERFACE!{static interface IBackgroundUploaderFactory(IBackgroundUploaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderFactory] {
-    fn CreateWithCompletionGroup(&self, completionGroup: *mut BackgroundTransferCompletionGroup, out: *mut *mut BackgroundUploader) -> HRESULT
+    fn CreateWithCompletionGroup(&self, completionGroup: <BackgroundTransferCompletionGroup as RtType>::Abi, out: *mut <BackgroundUploader as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IBackgroundUploaderFactory> {
-    #[inline] pub fn create_with_completion_group(&self, completionGroup: &ComPtr<BackgroundTransferCompletionGroup>) -> Result<ComPtr<BackgroundUploader>> { unsafe { 
+    #[inline] pub fn create_with_completion_group(&self, completionGroup: &BackgroundTransferCompletionGroup) -> Result<BackgroundUploader> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWithCompletionGroup)(self.as_abi() as *const _ as *mut _, completionGroup.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BackgroundUploader::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBackgroundUploaderStaticMethods, 4068957435, 39685, 18241, 145, 33, 116, 10, 131, 226, 71, 223);
@@ -806,23 +806,23 @@ impl ComPtr<IBackgroundUploaderStaticMethods> {
     #[inline] pub fn get_current_uploads_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCurrentUploadsAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_uploads_for_group_async(&self, group: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCurrentUploadsForGroupAsync)(self.as_abi() as *const _ as *mut _, group.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBackgroundUploaderStaticMethods2, 3910773858, 59912, 17136, 162, 172, 7, 228, 103, 84, 144, 128);
 RT_INTERFACE!{static interface IBackgroundUploaderStaticMethods2(IBackgroundUploaderStaticMethods2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderStaticMethods2] {
-    fn GetCurrentUploadsForTransferGroupAsync(&self, group: *mut BackgroundTransferGroup, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>) -> HRESULT
+    fn GetCurrentUploadsForTransferGroupAsync(&self, group: <BackgroundTransferGroup as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>) -> HRESULT
 }}
 impl ComPtr<IBackgroundUploaderStaticMethods2> {
-    #[inline] pub fn get_current_uploads_for_transfer_group_async(&self, group: &ComPtr<BackgroundTransferGroup>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> { unsafe { 
+    #[inline] pub fn get_current_uploads_for_transfer_group_async(&self, group: &BackgroundTransferGroup) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCurrentUploadsForTransferGroupAsync)(self.as_abi() as *const _ as *mut _, group.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IBackgroundUploaderUserConsent, 1001620683, 1888, 17949, 144, 127, 81, 56, 248, 77, 68, 193);
@@ -833,7 +833,7 @@ impl ComPtr<IBackgroundUploaderUserConsent> {
     #[inline] pub fn request_unconstrained_uploads_async(&self, operations: &ComPtr<foundation::collections::IIterable<UploadOperation>>) -> Result<ComPtr<foundation::IAsyncOperation<UnconstrainedTransferRequestResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RequestUnconstrainedUploadsAsync)(self.as_abi() as *const _ as *mut _, operations.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_STRUCT! { struct BackgroundUploadProgress {
@@ -842,23 +842,23 @@ RT_STRUCT! { struct BackgroundUploadProgress {
 DEFINE_IID!(IID_IContentPrefetcher, 2832660308, 32193, 19673, 136, 16, 42, 106, 169, 65, 126, 17);
 RT_INTERFACE!{static interface IContentPrefetcher(IContentPrefetcherVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetcher] {
     fn get_ContentUris(&self, out: *mut *mut foundation::collections::IVector<foundation::Uri>) -> HRESULT,
-    fn put_IndirectContentUri(&self, value: *mut foundation::Uri) -> HRESULT,
-    fn get_IndirectContentUri(&self, out: *mut *mut foundation::Uri) -> HRESULT
+    fn put_IndirectContentUri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT,
+    fn get_IndirectContentUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IContentPrefetcher> {
     #[inline] pub fn get_content_uris(&self) -> Result<Option<ComPtr<foundation::collections::IVector<foundation::Uri>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ContentUris)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_indirect_content_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_indirect_content_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_IndirectContentUri)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_indirect_content_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_indirect_content_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_IndirectContentUri)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{static class ContentPrefetcher}
@@ -868,10 +868,10 @@ impl ContentPrefetcher {
     #[inline] pub fn get_content_uris() -> Result<Option<ComPtr<foundation::collections::IVector<foundation::Uri>>>> {
         <Self as RtActivatable<IContentPrefetcher>>::get_activation_factory().get_content_uris()
     }
-    #[inline] pub fn set_indirect_content_uri(value: &ComPtr<foundation::Uri>) -> Result<()> {
+    #[inline] pub fn set_indirect_content_uri(value: &foundation::Uri) -> Result<()> {
         <Self as RtActivatable<IContentPrefetcher>>::get_activation_factory().set_indirect_content_uri(value)
     }
-    #[inline] pub fn get_indirect_content_uri() -> Result<Option<ComPtr<foundation::Uri>>> {
+    #[inline] pub fn get_indirect_content_uri() -> Result<Option<foundation::Uri>> {
         <Self as RtActivatable<IContentPrefetcher>>::get_activation_factory().get_indirect_content_uri()
     }
     #[inline] pub fn get_last_successful_prefetch_time() -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> {
@@ -887,7 +887,7 @@ impl ComPtr<IContentPrefetcherTime> {
     #[inline] pub fn get_last_successful_prefetch_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LastSuccessfulPrefetchTime)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IDownloadOperation, 3179801520, 22292, 19977, 186, 104, 190, 247, 57, 3, 176, 215);
@@ -904,7 +904,7 @@ impl ComPtr<IDownloadOperation> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_result_file(&self) -> Result<Option<ComPtr<super::super::storage::IStorageFile>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ResultFile)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_progress(&self) -> Result<BackgroundDownloadProgress> { unsafe { 
         let mut out = zeroed();
@@ -914,12 +914,12 @@ impl ComPtr<IDownloadOperation> {
     #[inline] pub fn start_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DownloadOperation, DownloadOperation>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).StartAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn attach_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<DownloadOperation, DownloadOperation>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).AttachAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn pause(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Pause)(self.as_abi() as *const _ as *mut _);
@@ -933,13 +933,13 @@ impl ComPtr<IDownloadOperation> {
 RT_CLASS!{class DownloadOperation: IDownloadOperation}
 DEFINE_IID!(IID_IDownloadOperation2, 2748116288, 36764, 17235, 156, 212, 41, 13, 238, 56, 124, 56);
 RT_INTERFACE!{interface IDownloadOperation2(IDownloadOperation2Vtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation2] {
-    fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT
+    fn get_TransferGroup(&self, out: *mut <BackgroundTransferGroup as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IDownloadOperation2> {
-    #[inline] pub fn get_transfer_group(&self) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
+    #[inline] pub fn get_transfer_group(&self) -> Result<Option<BackgroundTransferGroup>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TransferGroup)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BackgroundTransferGroup::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IDownloadOperation3, 1344746780, 32094, 19164, 184, 211, 223, 92, 96, 49, 185, 204);
@@ -951,7 +951,7 @@ RT_INTERFACE!{interface IDownloadOperation3(IDownloadOperation3Vtbl): IInspectab
     fn GetDownloadedRanges(&self, out: *mut *mut foundation::collections::IVector<BackgroundTransferFileRange>) -> HRESULT,
     fn add_RangesDownloaded(&self, eventHandler: *mut foundation::TypedEventHandler<DownloadOperation, BackgroundTransferRangesDownloadedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_RangesDownloaded(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
-    fn put_RequestedUri(&self, value: *mut foundation::Uri) -> HRESULT,
+    fn put_RequestedUri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-web")] fn get_RecoverableWebErrorStatuses(&self, out: *mut *mut foundation::collections::IVector<super::super::web::WebErrorStatus>) -> HRESULT,
     #[cfg(feature="windows-web")] fn get_CurrentWebErrorStatus(&self, out: *mut *mut foundation::IReference<super::super::web::WebErrorStatus>) -> HRESULT
 }}
@@ -968,12 +968,12 @@ impl ComPtr<IDownloadOperation3> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_result_random_access_stream_reference(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetResultRandomAccessStreamReference)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_downloaded_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVector<BackgroundTransferFileRange>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDownloadedRanges)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_ranges_downloaded(&self, eventHandler: &ComPtr<foundation::TypedEventHandler<DownloadOperation, BackgroundTransferRangesDownloadedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -984,19 +984,19 @@ impl ComPtr<IDownloadOperation3> {
         let hr = ((*self.as_abi().lpVtbl).remove_RangesDownloaded)(self.as_abi() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn set_requested_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_requested_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_RequestedUri)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-web")] #[inline] pub fn get_recoverable_web_error_statuses(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::web::WebErrorStatus>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RecoverableWebErrorStatuses)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-web")] #[inline] pub fn get_current_web_error_status(&self) -> Result<Option<ComPtr<foundation::IReference<super::super::web::WebErrorStatus>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CurrentWebErrorStatus)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IDownloadOperation4, 215658228, 36079, 16458, 150, 109, 240, 88, 64, 11, 237, 128);
@@ -1012,7 +1012,7 @@ impl ComPtr<IDownloadOperation4> {
 DEFINE_IID!(IID_IResponseInformation, 4173044242, 63251, 18322, 139, 104, 217, 210, 151, 249, 29, 46);
 RT_INTERFACE!{interface IResponseInformation(IResponseInformationVtbl): IInspectable(IInspectableVtbl) [IID_IResponseInformation] {
     fn get_IsResumable(&self, out: *mut bool) -> HRESULT,
-    fn get_ActualUri(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_ActualUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_StatusCode(&self, out: *mut u32) -> HRESULT,
     fn get_Headers(&self, out: *mut *mut foundation::collections::IMapView<HString, HString>) -> HRESULT
 }}
@@ -1022,10 +1022,10 @@ impl ComPtr<IResponseInformation> {
         let hr = ((*self.as_abi().lpVtbl).get_IsResumable)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_actual_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_actual_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ActualUri)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_status_code(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
@@ -1035,7 +1035,7 @@ impl ComPtr<IResponseInformation> {
     #[inline] pub fn get_headers(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Headers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ResponseInformation: IResponseInformation}
@@ -1063,7 +1063,7 @@ impl ComPtr<IUploadOperation> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_source_file(&self) -> Result<Option<ComPtr<super::super::storage::IStorageFile>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SourceFile)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_progress(&self) -> Result<BackgroundUploadProgress> { unsafe { 
         let mut out = zeroed();
@@ -1073,24 +1073,24 @@ impl ComPtr<IUploadOperation> {
     #[inline] pub fn start_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<UploadOperation, UploadOperation>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).StartAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn attach_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<UploadOperation, UploadOperation>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).AttachAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class UploadOperation: IUploadOperation}
 DEFINE_IID!(IID_IUploadOperation2, 1432455666, 10100, 19958, 159, 165, 32, 159, 43, 251, 18, 247);
 RT_INTERFACE!{interface IUploadOperation2(IUploadOperation2Vtbl): IInspectable(IInspectableVtbl) [IID_IUploadOperation2] {
-    fn get_TransferGroup(&self, out: *mut *mut BackgroundTransferGroup) -> HRESULT
+    fn get_TransferGroup(&self, out: *mut <BackgroundTransferGroup as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IUploadOperation2> {
-    #[inline] pub fn get_transfer_group(&self) -> Result<Option<ComPtr<BackgroundTransferGroup>>> { unsafe { 
+    #[inline] pub fn get_transfer_group(&self) -> Result<Option<BackgroundTransferGroup>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TransferGroup)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(BackgroundTransferGroup::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IUploadOperation3, 1120480419, 56889, 17734, 188, 98, 55, 116, 180, 41, 77, 227);
@@ -1138,7 +1138,7 @@ impl ComPtr<IAttributedNetworkUsage> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_attribution_thumbnail(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AttributionThumbnail)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class AttributedNetworkUsage: IAttributedNetworkUsage}
@@ -1281,12 +1281,12 @@ RT_INTERFACE!{interface IConnectionProfile(IConnectionProfileVtbl): IInspectable
     fn get_ProfileName(&self, out: *mut HSTRING) -> HRESULT,
     fn GetNetworkConnectivityLevel(&self, out: *mut NetworkConnectivityLevel) -> HRESULT,
     fn GetNetworkNames(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
-    fn GetConnectionCost(&self, out: *mut *mut ConnectionCost) -> HRESULT,
-    fn GetDataPlanStatus(&self, out: *mut *mut DataPlanStatus) -> HRESULT,
-    fn get_NetworkAdapter(&self, out: *mut *mut NetworkAdapter) -> HRESULT,
-    fn GetLocalUsage(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, out: *mut *mut DataUsage) -> HRESULT,
-    fn GetLocalUsagePerRoamingStates(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: RoamingStates, out: *mut *mut DataUsage) -> HRESULT,
-    fn get_NetworkSecuritySettings(&self, out: *mut *mut NetworkSecuritySettings) -> HRESULT
+    fn GetConnectionCost(&self, out: *mut <ConnectionCost as RtType>::Abi) -> HRESULT,
+    fn GetDataPlanStatus(&self, out: *mut <DataPlanStatus as RtType>::Abi) -> HRESULT,
+    fn get_NetworkAdapter(&self, out: *mut <NetworkAdapter as RtType>::Abi) -> HRESULT,
+    fn GetLocalUsage(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, out: *mut <DataUsage as RtType>::Abi) -> HRESULT,
+    fn GetLocalUsagePerRoamingStates(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: RoamingStates, out: *mut <DataUsage as RtType>::Abi) -> HRESULT,
+    fn get_NetworkSecuritySettings(&self, out: *mut <NetworkSecuritySettings as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IConnectionProfile> {
     #[inline] pub fn get_profile_name(&self) -> Result<HString> { unsafe { 
@@ -1302,37 +1302,37 @@ impl ComPtr<IConnectionProfile> {
     #[inline] pub fn get_network_names(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetNetworkNames)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_connection_cost(&self) -> Result<Option<ComPtr<ConnectionCost>>> { unsafe { 
+    #[inline] pub fn get_connection_cost(&self) -> Result<Option<ConnectionCost>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetConnectionCost)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ConnectionCost::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_data_plan_status(&self) -> Result<Option<ComPtr<DataPlanStatus>>> { unsafe { 
+    #[inline] pub fn get_data_plan_status(&self) -> Result<Option<DataPlanStatus>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDataPlanStatus)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DataPlanStatus::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_network_adapter(&self) -> Result<Option<ComPtr<NetworkAdapter>>> { unsafe { 
+    #[inline] pub fn get_network_adapter(&self) -> Result<Option<NetworkAdapter>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NetworkAdapter)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(NetworkAdapter::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_local_usage(&self, startTime: foundation::DateTime, endTime: foundation::DateTime) -> Result<Option<ComPtr<DataUsage>>> { unsafe { 
+    #[inline] pub fn get_local_usage(&self, startTime: foundation::DateTime, endTime: foundation::DateTime) -> Result<Option<DataUsage>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetLocalUsage)(self.as_abi() as *const _ as *mut _, startTime, endTime, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DataUsage::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_local_usage_per_roaming_states(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: RoamingStates) -> Result<Option<ComPtr<DataUsage>>> { unsafe { 
+    #[inline] pub fn get_local_usage_per_roaming_states(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: RoamingStates) -> Result<Option<DataUsage>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetLocalUsagePerRoamingStates)(self.as_abi() as *const _ as *mut _, startTime, endTime, states, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DataUsage::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_network_security_settings(&self) -> Result<Option<ComPtr<NetworkSecuritySettings>>> { unsafe { 
+    #[inline] pub fn get_network_security_settings(&self) -> Result<Option<NetworkSecuritySettings>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NetworkSecuritySettings)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(NetworkSecuritySettings::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ConnectionProfile: IConnectionProfile}
@@ -1340,8 +1340,8 @@ DEFINE_IID!(IID_IConnectionProfile2, 3791933765, 19615, 16396, 145, 80, 126, 199
 RT_INTERFACE!{interface IConnectionProfile2(IConnectionProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile2] {
     fn get_IsWwanConnectionProfile(&self, out: *mut bool) -> HRESULT,
     fn get_IsWlanConnectionProfile(&self, out: *mut bool) -> HRESULT,
-    fn get_WwanConnectionProfileDetails(&self, out: *mut *mut WwanConnectionProfileDetails) -> HRESULT,
-    fn get_WlanConnectionProfileDetails(&self, out: *mut *mut WlanConnectionProfileDetails) -> HRESULT,
+    fn get_WwanConnectionProfileDetails(&self, out: *mut <WwanConnectionProfileDetails as RtType>::Abi) -> HRESULT,
+    fn get_WlanConnectionProfileDetails(&self, out: *mut <WlanConnectionProfileDetails as RtType>::Abi) -> HRESULT,
     fn get_ServiceProviderGuid(&self, out: *mut *mut foundation::IReference<Guid>) -> HRESULT,
     fn GetSignalBars(&self, out: *mut *mut foundation::IReference<u8>) -> HRESULT,
     fn GetDomainConnectivityLevel(&self, out: *mut DomainConnectivityLevel) -> HRESULT,
@@ -1359,25 +1359,25 @@ impl ComPtr<IConnectionProfile2> {
         let hr = ((*self.as_abi().lpVtbl).get_IsWlanConnectionProfile)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_wwan_connection_profile_details(&self) -> Result<Option<ComPtr<WwanConnectionProfileDetails>>> { unsafe { 
+    #[inline] pub fn get_wwan_connection_profile_details(&self) -> Result<Option<WwanConnectionProfileDetails>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_WwanConnectionProfileDetails)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(WwanConnectionProfileDetails::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_wlan_connection_profile_details(&self) -> Result<Option<ComPtr<WlanConnectionProfileDetails>>> { unsafe { 
+    #[inline] pub fn get_wlan_connection_profile_details(&self) -> Result<Option<WlanConnectionProfileDetails>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_WlanConnectionProfileDetails)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(WlanConnectionProfileDetails::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_service_provider_guid(&self) -> Result<Option<ComPtr<foundation::IReference<Guid>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServiceProviderGuid)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_signal_bars(&self) -> Result<Option<ComPtr<foundation::IReference<u8>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetSignalBars)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_domain_connectivity_level(&self) -> Result<DomainConnectivityLevel> { unsafe { 
         let mut out = zeroed();
@@ -1387,12 +1387,12 @@ impl ComPtr<IConnectionProfile2> {
     #[inline] pub fn get_network_usage_async(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, granularity: DataUsageGranularity, states: NetworkUsageStates) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<NetworkUsage>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetNetworkUsageAsync)(self.as_abi() as *const _ as *mut _, startTime, endTime, granularity, states, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_connectivity_intervals_async(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectivityInterval>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetConnectivityIntervalsAsync)(self.as_abi() as *const _ as *mut _, startTime, endTime, states, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IConnectionProfile3, 1468802344, 19673, 16737, 128, 69, 32, 28, 253, 91, 17, 92);
@@ -1403,7 +1403,7 @@ impl ComPtr<IConnectionProfile3> {
     #[inline] pub fn get_attributed_network_usage_async(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<AttributedNetworkUsage>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetAttributedNetworkUsageAsync)(self.as_abi() as *const _ as *mut _, startTime, endTime, states, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IConnectionProfile4, 2049786573, 33248, 19174, 171, 237, 171, 156, 161, 62, 183, 20);
@@ -1414,7 +1414,7 @@ impl ComPtr<IConnectionProfile4> {
     #[inline] pub fn get_provider_network_usage_async(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ProviderNetworkUsage>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetProviderNetworkUsageAsync)(self.as_abi() as *const _ as *mut _, startTime, endTime, states, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IConnectionProfile5, 2234916551, 40051, 19424, 143, 20, 87, 142, 236, 113, 238, 14);
@@ -1431,7 +1431,7 @@ impl ComPtr<IConnectionProfile5> {
     #[inline] pub fn try_delete_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ConnectionProfileDeleteStatus>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryDeleteAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum ConnectionProfileDeleteStatus: i32 {
@@ -1494,7 +1494,7 @@ impl ComPtr<IConnectionProfileFilter> {
     #[inline] pub fn get_service_provider_guid(&self) -> Result<Option<ComPtr<foundation::IReference<Guid>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServiceProviderGuid)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ConnectionProfileFilter: IConnectionProfileFilter}
@@ -1518,7 +1518,7 @@ impl ComPtr<IConnectionProfileFilter2> {
     #[inline] pub fn get_is_roaming(&self) -> Result<Option<ComPtr<foundation::IReference<bool>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_IsRoaming)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_is_over_data_limit(&self, value: &ComPtr<foundation::IReference<bool>>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_IsOverDataLimit)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -1527,7 +1527,7 @@ impl ComPtr<IConnectionProfileFilter2> {
     #[inline] pub fn get_is_over_data_limit(&self) -> Result<Option<ComPtr<foundation::IReference<bool>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_IsOverDataLimit)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_is_background_data_usage_restricted(&self, value: &ComPtr<foundation::IReference<bool>>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_IsBackgroundDataUsageRestricted)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -1536,12 +1536,12 @@ impl ComPtr<IConnectionProfileFilter2> {
     #[inline] pub fn get_is_background_data_usage_restricted(&self) -> Result<Option<ComPtr<foundation::IReference<bool>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_IsBackgroundDataUsageRestricted)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_raw_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RawData)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IConnectionProfileFilter3, 178915776, 20500, 17532, 136, 9, 174, 228, 203, 10, 249, 74);
@@ -1557,18 +1557,18 @@ impl ComPtr<IConnectionProfileFilter3> {
     #[inline] pub fn get_purpose_guid(&self) -> Result<Option<ComPtr<foundation::IReference<Guid>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PurposeGuid)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IConnectionSession, 4287651148, 63547, 16816, 138, 12, 20, 98, 217, 197, 107, 115);
 RT_INTERFACE!{interface IConnectionSession(IConnectionSessionVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionSession] {
-    fn get_ConnectionProfile(&self, out: *mut *mut ConnectionProfile) -> HRESULT
+    fn get_ConnectionProfile(&self, out: *mut <ConnectionProfile as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IConnectionSession> {
-    #[inline] pub fn get_connection_profile(&self) -> Result<Option<ComPtr<ConnectionProfile>>> { unsafe { 
+    #[inline] pub fn get_connection_profile(&self) -> Result<Option<ConnectionProfile>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ConnectionProfile)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ConnectionProfile::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ConnectionSession: IConnectionSession}
@@ -1593,41 +1593,41 @@ RT_CLASS!{class ConnectivityInterval: IConnectivityInterval}
 RT_CLASS!{static class ConnectivityManager}
 impl RtActivatable<IConnectivityManagerStatics> for ConnectivityManager {}
 impl ConnectivityManager {
-    #[inline] pub fn acquire_connection_async(cellularApnContext: &ComPtr<CellularApnContext>) -> Result<ComPtr<foundation::IAsyncOperation<ConnectionSession>>> {
+    #[inline] pub fn acquire_connection_async(cellularApnContext: &CellularApnContext) -> Result<ComPtr<foundation::IAsyncOperation<ConnectionSession>>> {
         <Self as RtActivatable<IConnectivityManagerStatics>>::get_activation_factory().acquire_connection_async(cellularApnContext)
     }
-    #[inline] pub fn add_http_route_policy(routePolicy: &ComPtr<RoutePolicy>) -> Result<()> {
+    #[inline] pub fn add_http_route_policy(routePolicy: &RoutePolicy) -> Result<()> {
         <Self as RtActivatable<IConnectivityManagerStatics>>::get_activation_factory().add_http_route_policy(routePolicy)
     }
-    #[inline] pub fn remove_http_route_policy(routePolicy: &ComPtr<RoutePolicy>) -> Result<()> {
+    #[inline] pub fn remove_http_route_policy(routePolicy: &RoutePolicy) -> Result<()> {
         <Self as RtActivatable<IConnectivityManagerStatics>>::get_activation_factory().remove_http_route_policy(routePolicy)
     }
 }
 DEFINE_CLSID!(ConnectivityManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,111,110,110,101,99,116,105,118,105,116,121,77,97,110,97,103,101,114,0]) [CLSID_ConnectivityManager]);
 DEFINE_IID!(IID_IConnectivityManagerStatics, 1361106097, 20401, 18608, 175, 201, 66, 224, 9, 42, 129, 100);
 RT_INTERFACE!{static interface IConnectivityManagerStatics(IConnectivityManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IConnectivityManagerStatics] {
-    fn AcquireConnectionAsync(&self, cellularApnContext: *mut CellularApnContext, out: *mut *mut foundation::IAsyncOperation<ConnectionSession>) -> HRESULT,
-    fn AddHttpRoutePolicy(&self, routePolicy: *mut RoutePolicy) -> HRESULT,
-    fn RemoveHttpRoutePolicy(&self, routePolicy: *mut RoutePolicy) -> HRESULT
+    fn AcquireConnectionAsync(&self, cellularApnContext: <CellularApnContext as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<ConnectionSession>) -> HRESULT,
+    fn AddHttpRoutePolicy(&self, routePolicy: <RoutePolicy as RtType>::Abi) -> HRESULT,
+    fn RemoveHttpRoutePolicy(&self, routePolicy: <RoutePolicy as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IConnectivityManagerStatics> {
-    #[inline] pub fn acquire_connection_async(&self, cellularApnContext: &ComPtr<CellularApnContext>) -> Result<ComPtr<foundation::IAsyncOperation<ConnectionSession>>> { unsafe { 
+    #[inline] pub fn acquire_connection_async(&self, cellularApnContext: &CellularApnContext) -> Result<ComPtr<foundation::IAsyncOperation<ConnectionSession>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).AcquireConnectionAsync)(self.as_abi() as *const _ as *mut _, cellularApnContext.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_http_route_policy(&self, routePolicy: &ComPtr<RoutePolicy>) -> Result<()> { unsafe { 
+    #[inline] pub fn add_http_route_policy(&self, routePolicy: &RoutePolicy) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).AddHttpRoutePolicy)(self.as_abi() as *const _ as *mut _, routePolicy.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove_http_route_policy(&self, routePolicy: &ComPtr<RoutePolicy>) -> Result<()> { unsafe { 
+    #[inline] pub fn remove_http_route_policy(&self, routePolicy: &RoutePolicy) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).RemoveHttpRoutePolicy)(self.as_abi() as *const _ as *mut _, routePolicy.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IDataPlanStatus, 2541390732, 14469, 16627, 136, 81, 66, 205, 43, 213, 104, 187);
 RT_INTERFACE!{interface IDataPlanStatus(IDataPlanStatusVtbl): IInspectable(IInspectableVtbl) [IID_IDataPlanStatus] {
-    fn get_DataPlanUsage(&self, out: *mut *mut DataPlanUsage) -> HRESULT,
+    fn get_DataPlanUsage(&self, out: *mut <DataPlanUsage as RtType>::Abi) -> HRESULT,
     fn get_DataLimitInMegabytes(&self, out: *mut *mut foundation::IReference<u32>) -> HRESULT,
     fn get_InboundBitsPerSecond(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
     fn get_OutboundBitsPerSecond(&self, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
@@ -1635,35 +1635,35 @@ RT_INTERFACE!{interface IDataPlanStatus(IDataPlanStatusVtbl): IInspectable(IInsp
     fn get_MaxTransferSizeInMegabytes(&self, out: *mut *mut foundation::IReference<u32>) -> HRESULT
 }}
 impl ComPtr<IDataPlanStatus> {
-    #[inline] pub fn get_data_plan_usage(&self) -> Result<Option<ComPtr<DataPlanUsage>>> { unsafe { 
+    #[inline] pub fn get_data_plan_usage(&self) -> Result<Option<DataPlanUsage>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DataPlanUsage)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DataPlanUsage::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_data_limit_in_megabytes(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DataLimitInMegabytes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_inbound_bits_per_second(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_InboundBitsPerSecond)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_outbound_bits_per_second(&self) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_OutboundBitsPerSecond)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_next_billing_cycle(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::DateTime>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NextBillingCycle)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_max_transfer_size_in_megabytes(&self) -> Result<Option<ComPtr<foundation::IReference<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_MaxTransferSizeInMegabytes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class DataPlanStatus: IDataPlanStatus}
@@ -1711,37 +1711,37 @@ RT_ENUM! { enum DomainConnectivityLevel: i32 {
 }}
 DEFINE_IID!(IID_IIPInformation, 3629204960, 5007, 18391, 155, 58, 54, 187, 72, 140, 239, 51);
 RT_INTERFACE!{interface IIPInformation(IIPInformationVtbl): IInspectable(IInspectableVtbl) [IID_IIPInformation] {
-    fn get_NetworkAdapter(&self, out: *mut *mut NetworkAdapter) -> HRESULT,
+    fn get_NetworkAdapter(&self, out: *mut <NetworkAdapter as RtType>::Abi) -> HRESULT,
     fn get_PrefixLength(&self, out: *mut *mut foundation::IReference<u8>) -> HRESULT
 }}
 impl ComPtr<IIPInformation> {
-    #[inline] pub fn get_network_adapter(&self) -> Result<Option<ComPtr<NetworkAdapter>>> { unsafe { 
+    #[inline] pub fn get_network_adapter(&self) -> Result<Option<NetworkAdapter>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NetworkAdapter)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(NetworkAdapter::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_prefix_length(&self) -> Result<Option<ComPtr<foundation::IReference<u8>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PrefixLength)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ILanIdentifier, 1219122090, 4360, 17734, 166, 203, 154, 116, 218, 75, 123, 160);
 RT_INTERFACE!{interface ILanIdentifier(ILanIdentifierVtbl): IInspectable(IInspectableVtbl) [IID_ILanIdentifier] {
-    fn get_InfrastructureId(&self, out: *mut *mut LanIdentifierData) -> HRESULT,
-    fn get_PortId(&self, out: *mut *mut LanIdentifierData) -> HRESULT,
+    fn get_InfrastructureId(&self, out: *mut <LanIdentifierData as RtType>::Abi) -> HRESULT,
+    fn get_PortId(&self, out: *mut <LanIdentifierData as RtType>::Abi) -> HRESULT,
     fn get_NetworkAdapterId(&self, out: *mut Guid) -> HRESULT
 }}
 impl ComPtr<ILanIdentifier> {
-    #[inline] pub fn get_infrastructure_id(&self) -> Result<Option<ComPtr<LanIdentifierData>>> { unsafe { 
+    #[inline] pub fn get_infrastructure_id(&self) -> Result<Option<LanIdentifierData>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_InfrastructureId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanIdentifierData::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_port_id(&self) -> Result<Option<ComPtr<LanIdentifierData>>> { unsafe { 
+    #[inline] pub fn get_port_id(&self) -> Result<Option<LanIdentifierData>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PortId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanIdentifierData::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_network_adapter_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
@@ -1764,7 +1764,7 @@ impl ComPtr<ILanIdentifierData> {
     #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u8>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class LanIdentifierData: ILanIdentifierData}
@@ -1773,7 +1773,7 @@ RT_INTERFACE!{interface INetworkAdapter(INetworkAdapterVtbl): IInspectable(IInsp
     fn get_OutboundMaxBitsPerSecond(&self, out: *mut u64) -> HRESULT,
     fn get_InboundMaxBitsPerSecond(&self, out: *mut u64) -> HRESULT,
     fn get_IanaInterfaceType(&self, out: *mut u32) -> HRESULT,
-    fn get_NetworkItem(&self, out: *mut *mut NetworkItem) -> HRESULT,
+    fn get_NetworkItem(&self, out: *mut <NetworkItem as RtType>::Abi) -> HRESULT,
     fn get_NetworkAdapterId(&self, out: *mut Guid) -> HRESULT,
     fn GetConnectedProfileAsync(&self, out: *mut *mut foundation::IAsyncOperation<ConnectionProfile>) -> HRESULT
 }}
@@ -1793,10 +1793,10 @@ impl ComPtr<INetworkAdapter> {
         let hr = ((*self.as_abi().lpVtbl).get_IanaInterfaceType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_network_item(&self) -> Result<Option<ComPtr<NetworkItem>>> { unsafe { 
+    #[inline] pub fn get_network_item(&self) -> Result<Option<NetworkItem>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NetworkItem)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(NetworkItem::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_network_adapter_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
@@ -1806,7 +1806,7 @@ impl ComPtr<INetworkAdapter> {
     #[inline] pub fn get_connected_profile_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ConnectionProfile>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetConnectedProfileAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class NetworkAdapter: INetworkAdapter}
@@ -1829,7 +1829,7 @@ impl NetworkInformation {
     #[inline] pub fn get_connection_profiles() -> Result<Option<ComPtr<foundation::collections::IVectorView<ConnectionProfile>>>> {
         <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_connection_profiles()
     }
-    #[inline] pub fn get_internet_connection_profile() -> Result<Option<ComPtr<ConnectionProfile>>> {
+    #[inline] pub fn get_internet_connection_profile() -> Result<Option<ConnectionProfile>> {
         <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_internet_connection_profile()
     }
     #[inline] pub fn get_lan_identifiers() -> Result<Option<ComPtr<foundation::collections::IVectorView<LanIdentifier>>>> {
@@ -1838,7 +1838,7 @@ impl NetworkInformation {
     #[inline] pub fn get_host_names() -> Result<Option<ComPtr<foundation::collections::IVectorView<super::HostName>>>> {
         <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_host_names()
     }
-    #[inline] pub fn get_proxy_configuration_async(uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<ProxyConfiguration>>> {
+    #[inline] pub fn get_proxy_configuration_async(uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<ProxyConfiguration>>> {
         <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().get_proxy_configuration_async(uri)
     }
     #[inline] pub fn get_sorted_endpoint_pairs(destinationList: &ComPtr<foundation::collections::IIterable<super::EndpointPair>>, sortOptions: super::HostNameSortOptions) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::EndpointPair>>>> {
@@ -1850,7 +1850,7 @@ impl NetworkInformation {
     #[inline] pub fn remove_network_status_changed(eventCookie: foundation::EventRegistrationToken) -> Result<()> {
         <Self as RtActivatable<INetworkInformationStatics>>::get_activation_factory().remove_network_status_changed(eventCookie)
     }
-    #[inline] pub fn find_connection_profiles_async(pProfileFilter: &ComPtr<ConnectionProfileFilter>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectionProfile>>>> {
+    #[inline] pub fn find_connection_profiles_async(pProfileFilter: &ConnectionProfileFilter) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectionProfile>>>> {
         <Self as RtActivatable<INetworkInformationStatics2>>::get_activation_factory().find_connection_profiles_async(pProfileFilter)
     }
 }
@@ -1858,10 +1858,10 @@ DEFINE_CLSID!(NetworkInformation(&[87,105,110,100,111,119,115,46,78,101,116,119,
 DEFINE_IID!(IID_INetworkInformationStatics, 1349843025, 38157, 16741, 156, 21, 54, 86, 25, 72, 30, 234);
 RT_INTERFACE!{static interface INetworkInformationStatics(INetworkInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkInformationStatics] {
     fn GetConnectionProfiles(&self, out: *mut *mut foundation::collections::IVectorView<ConnectionProfile>) -> HRESULT,
-    fn GetInternetConnectionProfile(&self, out: *mut *mut ConnectionProfile) -> HRESULT,
+    fn GetInternetConnectionProfile(&self, out: *mut <ConnectionProfile as RtType>::Abi) -> HRESULT,
     fn GetLanIdentifiers(&self, out: *mut *mut foundation::collections::IVectorView<LanIdentifier>) -> HRESULT,
     fn GetHostNames(&self, out: *mut *mut foundation::collections::IVectorView<super::HostName>) -> HRESULT,
-    fn GetProxyConfigurationAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncOperation<ProxyConfiguration>) -> HRESULT,
+    fn GetProxyConfigurationAsync(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<ProxyConfiguration>) -> HRESULT,
     fn GetSortedEndpointPairs(&self, destinationList: *mut foundation::collections::IIterable<super::EndpointPair>, sortOptions: super::HostNameSortOptions, out: *mut *mut foundation::collections::IVectorView<super::EndpointPair>) -> HRESULT,
     fn add_NetworkStatusChanged(&self, networkStatusHandler: *mut NetworkStatusChangedEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_NetworkStatusChanged(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
@@ -1870,32 +1870,32 @@ impl ComPtr<INetworkInformationStatics> {
     #[inline] pub fn get_connection_profiles(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<ConnectionProfile>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetConnectionProfiles)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_internet_connection_profile(&self) -> Result<Option<ComPtr<ConnectionProfile>>> { unsafe { 
+    #[inline] pub fn get_internet_connection_profile(&self) -> Result<Option<ConnectionProfile>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetInternetConnectionProfile)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ConnectionProfile::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_lan_identifiers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<LanIdentifier>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetLanIdentifiers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_host_names(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::HostName>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetHostNames)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_proxy_configuration_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncOperation<ProxyConfiguration>>> { unsafe { 
+    #[inline] pub fn get_proxy_configuration_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncOperation<ProxyConfiguration>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetProxyConfigurationAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sorted_endpoint_pairs(&self, destinationList: &ComPtr<foundation::collections::IIterable<super::EndpointPair>>, sortOptions: super::HostNameSortOptions) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::EndpointPair>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetSortedEndpointPairs)(self.as_abi() as *const _ as *mut _, destinationList.as_abi() as *const _ as *mut _, sortOptions, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_network_status_changed(&self, networkStatusHandler: &ComPtr<NetworkStatusChangedEventHandler>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -1909,13 +1909,13 @@ impl ComPtr<INetworkInformationStatics> {
 }
 DEFINE_IID!(IID_INetworkInformationStatics2, 1167912212, 10290, 18870, 186, 110, 226, 101, 240, 71, 134, 168);
 RT_INTERFACE!{static interface INetworkInformationStatics2(INetworkInformationStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_INetworkInformationStatics2] {
-    fn FindConnectionProfilesAsync(&self, pProfileFilter: *mut ConnectionProfileFilter, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectionProfile>>) -> HRESULT
+    fn FindConnectionProfilesAsync(&self, pProfileFilter: <ConnectionProfileFilter as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectionProfile>>) -> HRESULT
 }}
 impl ComPtr<INetworkInformationStatics2> {
-    #[inline] pub fn find_connection_profiles_async(&self, pProfileFilter: &ComPtr<ConnectionProfileFilter>) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectionProfile>>>> { unsafe { 
+    #[inline] pub fn find_connection_profiles_async(&self, pProfileFilter: &ConnectionProfileFilter) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectionProfile>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FindConnectionProfilesAsync)(self.as_abi() as *const _ as *mut _, pProfileFilter.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_INetworkItem, 29117753, 62944, 17767, 162, 140, 66, 8, 12, 131, 27, 43);
@@ -2087,7 +2087,7 @@ impl ComPtr<IProxyConfiguration> {
     #[inline] pub fn get_proxy_uris(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<foundation::Uri>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ProxyUris)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_can_connect_directly(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
@@ -2101,20 +2101,20 @@ RT_ENUM! { enum RoamingStates: u32 {
 }}
 DEFINE_IID!(IID_IRoutePolicy, 296469676, 4039, 17124, 135, 66, 86, 153, 35, 177, 202, 17);
 RT_INTERFACE!{interface IRoutePolicy(IRoutePolicyVtbl): IInspectable(IInspectableVtbl) [IID_IRoutePolicy] {
-    fn get_ConnectionProfile(&self, out: *mut *mut ConnectionProfile) -> HRESULT,
-    fn get_HostName(&self, out: *mut *mut super::HostName) -> HRESULT,
+    fn get_ConnectionProfile(&self, out: *mut <ConnectionProfile as RtType>::Abi) -> HRESULT,
+    fn get_HostName(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_HostNameType(&self, out: *mut super::DomainNameType) -> HRESULT
 }}
 impl ComPtr<IRoutePolicy> {
-    #[inline] pub fn get_connection_profile(&self) -> Result<Option<ComPtr<ConnectionProfile>>> { unsafe { 
+    #[inline] pub fn get_connection_profile(&self) -> Result<Option<ConnectionProfile>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ConnectionProfile)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ConnectionProfile::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_host_name(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_host_name(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_HostName)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_host_name_type(&self) -> Result<super::DomainNameType> { unsafe { 
         let mut out = zeroed();
@@ -2125,20 +2125,20 @@ impl ComPtr<IRoutePolicy> {
 RT_CLASS!{class RoutePolicy: IRoutePolicy}
 impl RtActivatable<IRoutePolicyFactory> for RoutePolicy {}
 impl RoutePolicy {
-    #[inline] pub fn create_route_policy(connectionProfile: &ComPtr<ConnectionProfile>, hostName: &ComPtr<super::HostName>, type_: super::DomainNameType) -> Result<ComPtr<RoutePolicy>> {
+    #[inline] pub fn create_route_policy(connectionProfile: &ConnectionProfile, hostName: &super::HostName, type_: super::DomainNameType) -> Result<RoutePolicy> {
         <Self as RtActivatable<IRoutePolicyFactory>>::get_activation_factory().create_route_policy(connectionProfile, hostName, type_)
     }
 }
 DEFINE_CLSID!(RoutePolicy(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,82,111,117,116,101,80,111,108,105,99,121,0]) [CLSID_RoutePolicy]);
 DEFINE_IID!(IID_IRoutePolicyFactory, 906131763, 41358, 19893, 166, 151, 245, 143, 167, 54, 78, 68);
 RT_INTERFACE!{static interface IRoutePolicyFactory(IRoutePolicyFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRoutePolicyFactory] {
-    fn CreateRoutePolicy(&self, connectionProfile: *mut ConnectionProfile, hostName: *mut super::HostName, type_: super::DomainNameType, out: *mut *mut RoutePolicy) -> HRESULT
+    fn CreateRoutePolicy(&self, connectionProfile: <ConnectionProfile as RtType>::Abi, hostName: <super::HostName as RtType>::Abi, type_: super::DomainNameType, out: *mut <RoutePolicy as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IRoutePolicyFactory> {
-    #[inline] pub fn create_route_policy(&self, connectionProfile: &ComPtr<ConnectionProfile>, hostName: &ComPtr<super::HostName>, type_: super::DomainNameType) -> Result<ComPtr<RoutePolicy>> { unsafe { 
+    #[inline] pub fn create_route_policy(&self, connectionProfile: &ConnectionProfile, hostName: &super::HostName, type_: super::DomainNameType) -> Result<RoutePolicy> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateRoutePolicy)(self.as_abi() as *const _ as *mut _, connectionProfile.as_abi() as *const _ as *mut _, hostName.as_abi() as *const _ as *mut _, type_, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(RoutePolicy::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum TriStates: i32 {
@@ -2200,7 +2200,7 @@ impl ComPtr<IWwanConnectionProfileDetails2> {
     #[inline] pub fn get_purpose_guids(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<Guid>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PurposeGuids)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum WwanDataClass: u32 {
@@ -2224,7 +2224,7 @@ RT_INTERFACE!{interface IESim(IESimVtbl): IInspectable(IInspectableVtbl) [IID_IE
     fn get_Eid(&self, out: *mut HSTRING) -> HRESULT,
     fn get_FirmwareVersion(&self, out: *mut HSTRING) -> HRESULT,
     fn get_MobileBroadbandModemDeviceId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Policy(&self, out: *mut *mut ESimPolicy) -> HRESULT,
+    fn get_Policy(&self, out: *mut <ESimPolicy as RtType>::Abi) -> HRESULT,
     fn get_State(&self, out: *mut ESimState) -> HRESULT,
     fn GetProfiles(&self, out: *mut *mut foundation::collections::IVectorView<ESimProfile>) -> HRESULT,
     fn DeleteProfileAsync(&self, profileId: HSTRING, out: *mut *mut foundation::IAsyncOperation<ESimOperationResult>) -> HRESULT,
@@ -2237,7 +2237,7 @@ impl ComPtr<IESim> {
     #[inline] pub fn get_available_memory_in_bytes(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AvailableMemoryInBytes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_eid(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -2254,10 +2254,10 @@ impl ComPtr<IESim> {
         let hr = ((*self.as_abi().lpVtbl).get_MobileBroadbandModemDeviceId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_policy(&self) -> Result<Option<ComPtr<ESimPolicy>>> { unsafe { 
+    #[inline] pub fn get_policy(&self) -> Result<Option<ESimPolicy>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Policy)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ESimPolicy::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_state(&self) -> Result<ESimState> { unsafe { 
         let mut out = zeroed();
@@ -2267,22 +2267,22 @@ impl ComPtr<IESim> {
     #[inline] pub fn get_profiles(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<ESimProfile>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetProfiles)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_profile_async(&self, profileId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).DeleteProfileAsync)(self.as_abi() as *const _ as *mut _, profileId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn download_profile_metadata_async(&self, activationCode: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ESimDownloadProfileMetadataResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).DownloadProfileMetadataAsync)(self.as_abi() as *const _ as *mut _, activationCode.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn reset_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ResetAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_profile_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<ESim, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -2297,13 +2297,13 @@ impl ComPtr<IESim> {
 RT_CLASS!{class ESim: IESim}
 DEFINE_IID!(IID_IESimAddedEventArgs, 951913048, 19802, 19720, 141, 167, 231, 62, 255, 54, 157, 221);
 RT_INTERFACE!{interface IESimAddedEventArgs(IESimAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IESimAddedEventArgs] {
-    fn get_ESim(&self, out: *mut *mut ESim) -> HRESULT
+    fn get_ESim(&self, out: *mut <ESim as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IESimAddedEventArgs> {
-    #[inline] pub fn get_esim(&self) -> Result<Option<ComPtr<ESim>>> { unsafe { 
+    #[inline] pub fn get_esim(&self) -> Result<Option<ESim>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ESim)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ESim::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ESimAddedEventArgs: IESimAddedEventArgs}
@@ -2312,29 +2312,29 @@ RT_ENUM! { enum ESimAuthenticationPreference: i32 {
 }}
 DEFINE_IID!(IID_IESimDownloadProfileMetadataResult, 3290647966, 23254, 17005, 141, 0, 68, 52, 244, 73, 175, 236);
 RT_INTERFACE!{interface IESimDownloadProfileMetadataResult(IESimDownloadProfileMetadataResultVtbl): IInspectable(IInspectableVtbl) [IID_IESimDownloadProfileMetadataResult] {
-    fn get_Result(&self, out: *mut *mut ESimOperationResult) -> HRESULT,
-    fn get_ProfileMetadata(&self, out: *mut *mut ESimProfileMetadata) -> HRESULT
+    fn get_Result(&self, out: *mut <ESimOperationResult as RtType>::Abi) -> HRESULT,
+    fn get_ProfileMetadata(&self, out: *mut <ESimProfileMetadata as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IESimDownloadProfileMetadataResult> {
-    #[inline] pub fn get_result(&self) -> Result<Option<ComPtr<ESimOperationResult>>> { unsafe { 
+    #[inline] pub fn get_result(&self) -> Result<Option<ESimOperationResult>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Result)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ESimOperationResult::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_profile_metadata(&self) -> Result<Option<ComPtr<ESimProfileMetadata>>> { unsafe { 
+    #[inline] pub fn get_profile_metadata(&self) -> Result<Option<ESimProfileMetadata>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ProfileMetadata)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ESimProfileMetadata::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ESimDownloadProfileMetadataResult: IESimDownloadProfileMetadataResult}
 RT_CLASS!{static class ESimManager}
 impl RtActivatable<IESimManagerStatics> for ESimManager {}
 impl ESimManager {
-    #[inline] pub fn get_service_info() -> Result<Option<ComPtr<ESimServiceInfo>>> {
+    #[inline] pub fn get_service_info() -> Result<Option<ESimServiceInfo>> {
         <Self as RtActivatable<IESimManagerStatics>>::get_activation_factory().get_service_info()
     }
-    #[inline] pub fn try_create_esim_watcher() -> Result<Option<ComPtr<ESimWatcher>>> {
+    #[inline] pub fn try_create_esim_watcher() -> Result<Option<ESimWatcher>> {
         <Self as RtActivatable<IESimManagerStatics>>::get_activation_factory().try_create_esim_watcher()
     }
     #[inline] pub fn add_service_info_changed(handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> {
@@ -2347,21 +2347,21 @@ impl ESimManager {
 DEFINE_CLSID!(ESimManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,69,83,105,109,77,97,110,97,103,101,114,0]) [CLSID_ESimManager]);
 DEFINE_IID!(IID_IESimManagerStatics, 200944652, 57224, 17969, 191, 4, 193, 46, 40, 27, 57, 98);
 RT_INTERFACE!{static interface IESimManagerStatics(IESimManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IESimManagerStatics] {
-    fn get_ServiceInfo(&self, out: *mut *mut ESimServiceInfo) -> HRESULT,
-    fn TryCreateESimWatcher(&self, out: *mut *mut ESimWatcher) -> HRESULT,
+    fn get_ServiceInfo(&self, out: *mut <ESimServiceInfo as RtType>::Abi) -> HRESULT,
+    fn TryCreateESimWatcher(&self, out: *mut <ESimWatcher as RtType>::Abi) -> HRESULT,
     fn add_ServiceInfoChanged(&self, handler: *mut foundation::EventHandler<IInspectable>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ServiceInfoChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ComPtr<IESimManagerStatics> {
-    #[inline] pub fn get_service_info(&self) -> Result<Option<ComPtr<ESimServiceInfo>>> { unsafe { 
+    #[inline] pub fn get_service_info(&self) -> Result<Option<ESimServiceInfo>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServiceInfo)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ESimServiceInfo::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn try_create_esim_watcher(&self) -> Result<Option<ComPtr<ESimWatcher>>> { unsafe { 
+    #[inline] pub fn try_create_esim_watcher(&self) -> Result<Option<ESimWatcher>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryCreateESimWatcher)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ESimWatcher::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_service_info_changed(&self, handler: &ComPtr<foundation::EventHandler<IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -2404,7 +2404,7 @@ DEFINE_IID!(IID_IESimProfile, 3994974336, 1705, 16423, 180, 248, 221, 178, 61, 1
 RT_INTERFACE!{interface IESimProfile(IESimProfileVtbl): IInspectable(IInspectableVtbl) [IID_IESimProfile] {
     fn get_Class(&self, out: *mut ESimProfileClass) -> HRESULT,
     fn get_Nickname(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Policy(&self, out: *mut *mut ESimProfilePolicy) -> HRESULT,
+    fn get_Policy(&self, out: *mut <ESimProfilePolicy as RtType>::Abi) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_ProviderIcon(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStreamReference) -> HRESULT,
@@ -2426,10 +2426,10 @@ impl ComPtr<IESimProfile> {
         let hr = ((*self.as_abi().lpVtbl).get_Nickname)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_policy(&self) -> Result<Option<ComPtr<ESimProfilePolicy>>> { unsafe { 
+    #[inline] pub fn get_policy(&self) -> Result<Option<ESimProfilePolicy>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Policy)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ESimProfilePolicy::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -2439,7 +2439,7 @@ impl ComPtr<IESimProfile> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_provider_icon(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ProviderIcon)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_provider_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -2459,17 +2459,17 @@ impl ComPtr<IESimProfile> {
     #[inline] pub fn disable_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).DisableAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn enable_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).EnableAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_nickname_async(&self, newNickname: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetNicknameAsync)(self.as_abi() as *const _ as *mut _, newNickname.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ESimProfile: IESimProfile}
@@ -2482,7 +2482,7 @@ RT_STRUCT! { struct ESimProfileInstallProgress {
 DEFINE_IID!(IID_IESimProfileMetadata, 3978658591, 37083, 18829, 167, 180, 235, 206, 128, 125, 60, 35);
 RT_INTERFACE!{interface IESimProfileMetadata(IESimProfileMetadataVtbl): IInspectable(IInspectableVtbl) [IID_IESimProfileMetadata] {
     fn get_IsConfirmationCodeRequired(&self, out: *mut bool) -> HRESULT,
-    fn get_Policy(&self, out: *mut *mut ESimProfilePolicy) -> HRESULT,
+    fn get_Policy(&self, out: *mut <ESimProfilePolicy as RtType>::Abi) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_ProviderIcon(&self, out: *mut *mut super::super::storage::streams::IRandomAccessStreamReference) -> HRESULT,
@@ -2502,10 +2502,10 @@ impl ComPtr<IESimProfileMetadata> {
         let hr = ((*self.as_abi().lpVtbl).get_IsConfirmationCodeRequired)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_policy(&self) -> Result<Option<ComPtr<ESimProfilePolicy>>> { unsafe { 
+    #[inline] pub fn get_policy(&self) -> Result<Option<ESimProfilePolicy>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Policy)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ESimProfilePolicy::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -2515,7 +2515,7 @@ impl ComPtr<IESimProfileMetadata> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_provider_icon(&self) -> Result<Option<ComPtr<super::super::storage::streams::IRandomAccessStreamReference>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ProviderIcon)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_provider_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -2535,22 +2535,22 @@ impl ComPtr<IESimProfileMetadata> {
     #[inline] pub fn deny_install_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).DenyInstallAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn confirm_install_async(&self) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<ESimOperationResult, ESimProfileInstallProgress>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConfirmInstallAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn confirm_install_with_confirmation_code_async(&self, confirmationCode: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<ESimOperationResult, ESimProfileInstallProgress>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConfirmInstallWithConfirmationCodeAsync)(self.as_abi() as *const _ as *mut _, confirmationCode.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn postpone_install_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<ESimOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).PostponeInstallAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_state_changed(&self, handler: &ComPtr<foundation::TypedEventHandler<ESimProfileMetadata, IInspectable>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -2595,13 +2595,13 @@ RT_ENUM! { enum ESimProfileState: i32 {
 }}
 DEFINE_IID!(IID_IESimRemovedEventArgs, 3737462651, 12249, 20185, 131, 118, 217, 181, 228, 18, 120, 163);
 RT_INTERFACE!{interface IESimRemovedEventArgs(IESimRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IESimRemovedEventArgs] {
-    fn get_ESim(&self, out: *mut *mut ESim) -> HRESULT
+    fn get_ESim(&self, out: *mut <ESim as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IESimRemovedEventArgs> {
-    #[inline] pub fn get_esim(&self) -> Result<Option<ComPtr<ESim>>> { unsafe { 
+    #[inline] pub fn get_esim(&self) -> Result<Option<ESim>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ESim)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ESim::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ESimRemovedEventArgs: IESimRemovedEventArgs}
@@ -2628,13 +2628,13 @@ RT_ENUM! { enum ESimState: i32 {
 }}
 DEFINE_IID!(IID_IESimUpdatedEventArgs, 1276271852, 20621, 19336, 131, 203, 104, 190, 248, 22, 141, 18);
 RT_INTERFACE!{interface IESimUpdatedEventArgs(IESimUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IESimUpdatedEventArgs] {
-    fn get_ESim(&self, out: *mut *mut ESim) -> HRESULT
+    fn get_ESim(&self, out: *mut <ESim as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IESimUpdatedEventArgs> {
-    #[inline] pub fn get_esim(&self) -> Result<Option<ComPtr<ESim>>> { unsafe { 
+    #[inline] pub fn get_esim(&self) -> Result<Option<ESim>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ESim)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ESim::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ESimUpdatedEventArgs: IESimUpdatedEventArgs}
@@ -2721,11 +2721,11 @@ RT_ENUM! { enum ESimWatcherStatus: i32 {
 DEFINE_IID!(IID_IHotspotAuthenticationContext, 3881224081, 4099, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
 RT_INTERFACE!{interface IHotspotAuthenticationContext(IHotspotAuthenticationContextVtbl): IInspectable(IInspectableVtbl) [IID_IHotspotAuthenticationContext] {
     fn get_WirelessNetworkId(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT,
-    fn get_NetworkAdapter(&self, out: *mut *mut super::connectivity::NetworkAdapter) -> HRESULT,
-    fn get_RedirectMessageUrl(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    fn get_NetworkAdapter(&self, out: *mut <super::connectivity::NetworkAdapter as RtType>::Abi) -> HRESULT,
+    fn get_RedirectMessageUrl(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-data")] fn get_RedirectMessageXml(&self, out: *mut *mut super::super::data::xml::dom::XmlDocument) -> HRESULT,
-    fn get_AuthenticationUrl(&self, out: *mut *mut foundation::Uri) -> HRESULT,
+    #[cfg(feature="windows-data")] fn get_RedirectMessageXml(&self, out: *mut <super::super::data::xml::dom::XmlDocument as RtType>::Abi) -> HRESULT,
+    fn get_AuthenticationUrl(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn IssueCredentials(&self, userName: HSTRING, password: HSTRING, extraParameters: HSTRING, markAsManualConnectOnFailure: bool) -> HRESULT,
     fn AbortAuthentication(&self, markAsManual: bool) -> HRESULT,
     fn SkipAuthentication(&self) -> HRESULT,
@@ -2737,25 +2737,25 @@ impl ComPtr<IHotspotAuthenticationContext> {
         let hr = ((*self.as_abi().lpVtbl).get_WirelessNetworkId)(self.as_abi() as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_network_adapter(&self) -> Result<Option<ComPtr<super::connectivity::NetworkAdapter>>> { unsafe { 
+    #[inline] pub fn get_network_adapter(&self) -> Result<Option<super::connectivity::NetworkAdapter>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NetworkAdapter)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::connectivity::NetworkAdapter::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_redirect_message_url(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_redirect_message_url(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RedirectMessageUrl)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_redirect_message_xml(&self) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> { unsafe { 
+    #[cfg(feature="windows-data")] #[inline] pub fn get_redirect_message_xml(&self) -> Result<Option<super::super::data::xml::dom::XmlDocument>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RedirectMessageXml)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::data::xml::dom::XmlDocument::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_authentication_url(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_authentication_url(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AuthenticationUrl)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn issue_credentials(&self, userName: &HStringArg, password: &HStringArg, extraParameters: &HStringArg, markAsManualConnectOnFailure: bool) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).IssueCredentials)(self.as_abi() as *const _ as *mut _, userName.get(), password.get(), extraParameters.get(), markAsManualConnectOnFailure);
@@ -2777,7 +2777,7 @@ impl ComPtr<IHotspotAuthenticationContext> {
 RT_CLASS!{class HotspotAuthenticationContext: IHotspotAuthenticationContext}
 impl RtActivatable<IHotspotAuthenticationContextStatics> for HotspotAuthenticationContext {}
 impl HotspotAuthenticationContext {
-    #[inline] pub fn try_get_authentication_context(evenToken: &HStringArg) -> Result<(Option<ComPtr<HotspotAuthenticationContext>>, bool)> {
+    #[inline] pub fn try_get_authentication_context(evenToken: &HStringArg) -> Result<(Option<HotspotAuthenticationContext>, bool)> {
         <Self as RtActivatable<IHotspotAuthenticationContextStatics>>::get_activation_factory().try_get_authentication_context(evenToken)
     }
 }
@@ -2790,18 +2790,18 @@ impl ComPtr<IHotspotAuthenticationContext2> {
     #[inline] pub fn issue_credentials_async(&self, userName: &HStringArg, password: &HStringArg, extraParameters: &HStringArg, markAsManualConnectOnFailure: bool) -> Result<ComPtr<foundation::IAsyncOperation<HotspotCredentialsAuthenticationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).IssueCredentialsAsync)(self.as_abi() as *const _ as *mut _, userName.get(), password.get(), extraParameters.get(), markAsManualConnectOnFailure, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IHotspotAuthenticationContextStatics, 3881224081, 4098, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
 RT_INTERFACE!{static interface IHotspotAuthenticationContextStatics(IHotspotAuthenticationContextStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHotspotAuthenticationContextStatics] {
-    fn TryGetAuthenticationContext(&self, evenToken: HSTRING, context: *mut *mut HotspotAuthenticationContext, out: *mut bool) -> HRESULT
+    fn TryGetAuthenticationContext(&self, evenToken: HSTRING, context: *mut <HotspotAuthenticationContext as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
 impl ComPtr<IHotspotAuthenticationContextStatics> {
-    #[inline] pub fn try_get_authentication_context(&self, evenToken: &HStringArg) -> Result<(Option<ComPtr<HotspotAuthenticationContext>>, bool)> { unsafe { 
+    #[inline] pub fn try_get_authentication_context(&self, evenToken: &HStringArg) -> Result<(Option<HotspotAuthenticationContext>, bool)> { unsafe { 
         let mut context = null_mut(); let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).TryGetAuthenticationContext)(self.as_abi() as *const _ as *mut _, evenToken.get(), &mut context, &mut out);
-        if hr == S_OK { Ok((ComPtr::wrap_optional(context), out)) } else { err(hr) }
+        if hr == S_OK { Ok((HotspotAuthenticationContext::wrap(context), out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IHotspotAuthenticationEventDetails, 3881224081, 4097, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
@@ -2823,8 +2823,8 @@ DEFINE_IID!(IID_IHotspotCredentialsAuthenticationResult, 3881224081, 4101, 19941
 RT_INTERFACE!{interface IHotspotCredentialsAuthenticationResult(IHotspotCredentialsAuthenticationResultVtbl): IInspectable(IInspectableVtbl) [IID_IHotspotCredentialsAuthenticationResult] {
     fn get_HasNetworkErrorOccurred(&self, out: *mut bool) -> HRESULT,
     fn get_ResponseCode(&self, out: *mut HotspotAuthenticationResponseCode) -> HRESULT,
-    fn get_LogoffUrl(&self, out: *mut *mut foundation::Uri) -> HRESULT,
-    #[cfg(feature="windows-data")] fn get_AuthenticationReplyXml(&self, out: *mut *mut super::super::data::xml::dom::XmlDocument) -> HRESULT
+    fn get_LogoffUrl(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-data")] fn get_AuthenticationReplyXml(&self, out: *mut <super::super::data::xml::dom::XmlDocument as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IHotspotCredentialsAuthenticationResult> {
     #[inline] pub fn get_has_network_error_occurred(&self) -> Result<bool> { unsafe { 
@@ -2837,15 +2837,15 @@ impl ComPtr<IHotspotCredentialsAuthenticationResult> {
         let hr = ((*self.as_abi().lpVtbl).get_ResponseCode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_logoff_url(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_logoff_url(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LogoffUrl)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-data")] #[inline] pub fn get_authentication_reply_xml(&self) -> Result<Option<ComPtr<super::super::data::xml::dom::XmlDocument>>> { unsafe { 
+    #[cfg(feature="windows-data")] #[inline] pub fn get_authentication_reply_xml(&self) -> Result<Option<super::super::data::xml::dom::XmlDocument>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AuthenticationReplyXml)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::data::xml::dom::XmlDocument::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class HotspotCredentialsAuthenticationResult: IHotspotCredentialsAuthenticationResult}
@@ -2873,17 +2873,17 @@ impl ComPtr<IKnownCSimFilePathsStatics> {
     #[inline] pub fn get_efspn(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_EFSpn)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gid1(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Gid1)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gid2(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Gid2)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{static class KnownRuimFilePaths}
@@ -2910,17 +2910,17 @@ impl ComPtr<IKnownRuimFilePathsStatics> {
     #[inline] pub fn get_efspn(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_EFSpn)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gid1(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Gid1)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gid2(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Gid2)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{static class KnownSimFilePaths}
@@ -2951,22 +2951,22 @@ impl ComPtr<IKnownSimFilePathsStatics> {
     #[inline] pub fn get_efons(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_EFOns)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_efspn(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_EFSpn)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gid1(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Gid1)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gid2(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Gid2)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{static class KnownUSimFilePaths}
@@ -3001,27 +3001,27 @@ impl ComPtr<IKnownUSimFilePathsStatics> {
     #[inline] pub fn get_efspn(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_EFSpn)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_efopl(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_EFOpl)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_efpnn(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_EFPnn)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gid1(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Gid1)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gid2(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Gid2)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandAccount, 918703309, 52962, 17376, 166, 3, 238, 134, 163, 109, 101, 112);
@@ -3029,8 +3029,8 @@ RT_INTERFACE!{interface IMobileBroadbandAccount(IMobileBroadbandAccountVtbl): II
     fn get_NetworkAccountId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ServiceProviderGuid(&self, out: *mut Guid) -> HRESULT,
     fn get_ServiceProviderName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_CurrentNetwork(&self, out: *mut *mut MobileBroadbandNetwork) -> HRESULT,
-    fn get_CurrentDeviceInformation(&self, out: *mut *mut MobileBroadbandDeviceInformation) -> HRESULT
+    fn get_CurrentNetwork(&self, out: *mut <MobileBroadbandNetwork as RtType>::Abi) -> HRESULT,
+    fn get_CurrentDeviceInformation(&self, out: *mut <MobileBroadbandDeviceInformation as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandAccount> {
     #[inline] pub fn get_network_account_id(&self) -> Result<HString> { unsafe { 
@@ -3048,15 +3048,15 @@ impl ComPtr<IMobileBroadbandAccount> {
         let hr = ((*self.as_abi().lpVtbl).get_ServiceProviderName)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_current_network(&self) -> Result<Option<ComPtr<MobileBroadbandNetwork>>> { unsafe { 
+    #[inline] pub fn get_current_network(&self) -> Result<Option<MobileBroadbandNetwork>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CurrentNetwork)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandNetwork::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_current_device_information(&self) -> Result<Option<ComPtr<MobileBroadbandDeviceInformation>>> { unsafe { 
+    #[inline] pub fn get_current_device_information(&self) -> Result<Option<MobileBroadbandDeviceInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CurrentDeviceInformation)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandDeviceInformation::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandAccount: IMobileBroadbandAccount}
@@ -3065,7 +3065,7 @@ impl MobileBroadbandAccount {
     #[inline] pub fn get_available_network_account_ids() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
         <Self as RtActivatable<IMobileBroadbandAccountStatics>>::get_activation_factory().get_available_network_account_ids()
     }
-    #[inline] pub fn create_from_network_account_id(networkAccountId: &HStringArg) -> Result<Option<ComPtr<MobileBroadbandAccount>>> {
+    #[inline] pub fn create_from_network_account_id(networkAccountId: &HStringArg) -> Result<Option<MobileBroadbandAccount>> {
         <Self as RtActivatable<IMobileBroadbandAccountStatics>>::get_activation_factory().create_from_network_account_id(networkAccountId)
     }
 }
@@ -3078,18 +3078,18 @@ impl ComPtr<IMobileBroadbandAccount2> {
     #[inline] pub fn get_connection_profiles(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::connectivity::ConnectionProfile>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetConnectionProfiles)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandAccount3, 153755169, 37753, 19355, 173, 49, 213, 254, 226, 247, 72, 198);
 RT_INTERFACE!{interface IMobileBroadbandAccount3(IMobileBroadbandAccount3Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAccount3] {
-    fn get_AccountExperienceUrl(&self, out: *mut *mut foundation::Uri) -> HRESULT
+    fn get_AccountExperienceUrl(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandAccount3> {
-    #[inline] pub fn get_account_experience_url(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_account_experience_url(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AccountExperienceUrl)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandAccountEventArgs, 945014912, 30686, 19460, 190, 173, 161, 35, 176, 140, 159, 89);
@@ -3107,18 +3107,18 @@ RT_CLASS!{class MobileBroadbandAccountEventArgs: IMobileBroadbandAccountEventArg
 DEFINE_IID!(IID_IMobileBroadbandAccountStatics, 2860469540, 44993, 20424, 174, 154, 169, 23, 83, 16, 250, 173);
 RT_INTERFACE!{static interface IMobileBroadbandAccountStatics(IMobileBroadbandAccountStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAccountStatics] {
     fn get_AvailableNetworkAccountIds(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
-    fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut *mut MobileBroadbandAccount) -> HRESULT
+    fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut <MobileBroadbandAccount as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandAccountStatics> {
     #[inline] pub fn get_available_network_account_ids(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AvailableNetworkAccountIds)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_network_account_id(&self, networkAccountId: &HStringArg) -> Result<Option<ComPtr<MobileBroadbandAccount>>> { unsafe { 
+    #[inline] pub fn create_from_network_account_id(&self, networkAccountId: &HStringArg) -> Result<Option<MobileBroadbandAccount>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromNetworkAccountId)(self.as_abi() as *const _ as *mut _, networkAccountId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandAccount::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandAccountUpdatedEventArgs, 2076384648, 42685, 18913, 128, 171, 107, 145, 53, 74, 87, 212);
@@ -3247,20 +3247,20 @@ impl ComPtr<IMobileBroadbandAntennaSar> {
 RT_CLASS!{class MobileBroadbandAntennaSar: IMobileBroadbandAntennaSar}
 impl RtActivatable<IMobileBroadbandAntennaSarFactory> for MobileBroadbandAntennaSar {}
 impl MobileBroadbandAntennaSar {
-    #[inline] pub fn create_with_index(antennaIndex: i32, sarBackoffIndex: i32) -> Result<ComPtr<MobileBroadbandAntennaSar>> {
+    #[inline] pub fn create_with_index(antennaIndex: i32, sarBackoffIndex: i32) -> Result<MobileBroadbandAntennaSar> {
         <Self as RtActivatable<IMobileBroadbandAntennaSarFactory>>::get_activation_factory().create_with_index(antennaIndex, sarBackoffIndex)
     }
 }
 DEFINE_CLSID!(MobileBroadbandAntennaSar(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,65,110,116,101,110,110,97,83,97,114,0]) [CLSID_MobileBroadbandAntennaSar]);
 DEFINE_IID!(IID_IMobileBroadbandAntennaSarFactory, 2837321494, 49229, 18977, 134, 152, 20, 89, 220, 103, 44, 110);
 RT_INTERFACE!{static interface IMobileBroadbandAntennaSarFactory(IMobileBroadbandAntennaSarFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAntennaSarFactory] {
-    fn CreateWithIndex(&self, antennaIndex: i32, sarBackoffIndex: i32, out: *mut *mut MobileBroadbandAntennaSar) -> HRESULT
+    fn CreateWithIndex(&self, antennaIndex: i32, sarBackoffIndex: i32, out: *mut <MobileBroadbandAntennaSar as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandAntennaSarFactory> {
-    #[inline] pub fn create_with_index(&self, antennaIndex: i32, sarBackoffIndex: i32) -> Result<ComPtr<MobileBroadbandAntennaSar>> { unsafe { 
+    #[inline] pub fn create_with_index(&self, antennaIndex: i32, sarBackoffIndex: i32) -> Result<MobileBroadbandAntennaSar> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWithIndex)(self.as_abi() as *const _ as *mut _, antennaIndex, sarBackoffIndex, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandAntennaSar::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandCellCdma, 100774836, 16666, 20270, 130, 135, 118, 245, 101, 12, 96, 205);
@@ -3278,42 +3278,42 @@ impl ComPtr<IMobileBroadbandCellCdma> {
     #[inline] pub fn get_base_station_id(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BaseStationId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_base_station_pn_code(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BaseStationPNCode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_base_station_latitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BaseStationLatitude)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_base_station_longitude(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BaseStationLongitude)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_base_station_last_broadcast_gps_time(&self) -> Result<Option<ComPtr<foundation::IReference<foundation::TimeSpan>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BaseStationLastBroadcastGpsTime)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_network_id(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NetworkId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pilot_signal_strength_in_db(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PilotSignalStrengthInDB)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_id(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SystemId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandCellCdma: IMobileBroadbandCellCdma}
@@ -3331,22 +3331,22 @@ impl ComPtr<IMobileBroadbandCellGsm> {
     #[inline] pub fn get_base_station_id(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BaseStationId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cell_id(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CellId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_channel_number(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ChannelNumber)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_location_area_code(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocationAreaCode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_provider_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -3356,12 +3356,12 @@ impl ComPtr<IMobileBroadbandCellGsm> {
     #[inline] pub fn get_received_signal_strength_in_dbm(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ReceivedSignalStrengthInDBm)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_timing_advance_in_bit_periods(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TimingAdvanceInBitPeriods)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandCellGsm: IMobileBroadbandCellGsm}
@@ -3380,17 +3380,17 @@ impl ComPtr<IMobileBroadbandCellLte> {
     #[inline] pub fn get_cell_id(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CellId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_channel_number(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ChannelNumber)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_physical_cell_id(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PhysicalCellId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_provider_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -3400,22 +3400,22 @@ impl ComPtr<IMobileBroadbandCellLte> {
     #[inline] pub fn get_reference_signal_received_power_in_dbm(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ReferenceSignalReceivedPowerInDBm)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_reference_signal_received_quality_in_dbm(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ReferenceSignalReceivedQualityInDBm)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_timing_advance_in_bit_periods(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TimingAdvanceInBitPeriods)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_tracking_area_code(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TrackingAreaCode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandCellLte: IMobileBroadbandCellLte}
@@ -3436,52 +3436,52 @@ impl ComPtr<IMobileBroadbandCellsInfo> {
     #[inline] pub fn get_neighboring_cells_cdma(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandCellCdma>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NeighboringCellsCdma)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_neighboring_cells_gsm(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandCellGsm>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NeighboringCellsGsm)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_neighboring_cells_lte(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandCellLte>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NeighboringCellsLte)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_neighboring_cells_tdscdma(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandCellTdscdma>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NeighboringCellsTdscdma)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_neighboring_cells_umts(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandCellUmts>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NeighboringCellsUmts)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_serving_cells_cdma(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandCellCdma>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServingCellsCdma)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_serving_cells_gsm(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandCellGsm>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServingCellsGsm)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_serving_cells_lte(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandCellLte>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServingCellsLte)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_serving_cells_tdscdma(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandCellTdscdma>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServingCellsTdscdma)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_serving_cells_umts(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandCellUmts>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServingCellsUmts)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandCellsInfo: IMobileBroadbandCellsInfo}
@@ -3500,27 +3500,27 @@ impl ComPtr<IMobileBroadbandCellTdscdma> {
     #[inline] pub fn get_cell_id(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CellId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cell_parameter_id(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CellParameterId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_channel_number(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ChannelNumber)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_location_area_code(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocationAreaCode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_path_loss_in_db(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PathLossInDB)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_provider_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -3530,12 +3530,12 @@ impl ComPtr<IMobileBroadbandCellTdscdma> {
     #[inline] pub fn get_received_signal_code_power_in_dbm(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ReceivedSignalCodePowerInDBm)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_timing_advance_in_bit_periods(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TimingAdvanceInBitPeriods)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandCellTdscdma: IMobileBroadbandCellTdscdma}
@@ -3554,27 +3554,27 @@ impl ComPtr<IMobileBroadbandCellUmts> {
     #[inline] pub fn get_cell_id(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CellId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_channel_number(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ChannelNumber)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_location_area_code(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocationAreaCode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_path_loss_in_db(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PathLossInDB)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_primary_scrambling_code(&self) -> Result<Option<ComPtr<foundation::IReference<i32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PrimaryScramblingCode)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_provider_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -3584,12 +3584,12 @@ impl ComPtr<IMobileBroadbandCellUmts> {
     #[inline] pub fn get_received_signal_code_power_in_dbm(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ReceivedSignalCodePowerInDBm)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_signal_to_noise_ratio_in_db(&self) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SignalToNoiseRatioInDB)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandCellUmts: IMobileBroadbandCellUmts}
@@ -3655,7 +3655,7 @@ impl ComPtr<IMobileBroadbandDeviceInformation> {
     #[inline] pub fn get_telephone_numbers(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TelephoneNumbers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_subscriber_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -3686,15 +3686,15 @@ impl ComPtr<IMobileBroadbandDeviceInformation> {
 RT_CLASS!{class MobileBroadbandDeviceInformation: IMobileBroadbandDeviceInformation}
 DEFINE_IID!(IID_IMobileBroadbandDeviceInformation2, 776370929, 63794, 18231, 167, 34, 3, 186, 114, 55, 12, 184);
 RT_INTERFACE!{interface IMobileBroadbandDeviceInformation2(IMobileBroadbandDeviceInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceInformation2] {
-    fn get_PinManager(&self, out: *mut *mut MobileBroadbandPinManager) -> HRESULT,
+    fn get_PinManager(&self, out: *mut <MobileBroadbandPinManager as RtType>::Abi) -> HRESULT,
     fn get_Revision(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SerialNumber(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandDeviceInformation2> {
-    #[inline] pub fn get_pin_manager(&self) -> Result<Option<ComPtr<MobileBroadbandPinManager>>> { unsafe { 
+    #[inline] pub fn get_pin_manager(&self) -> Result<Option<MobileBroadbandPinManager>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PinManager)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandPinManager::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_revision(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -3734,8 +3734,8 @@ DEFINE_IID!(IID_IMobileBroadbandDeviceService, 582883922, 48512, 16556, 142, 31,
 RT_INTERFACE!{interface IMobileBroadbandDeviceService(IMobileBroadbandDeviceServiceVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceService] {
     fn get_DeviceServiceId(&self, out: *mut Guid) -> HRESULT,
     fn get_SupportedCommands(&self, out: *mut *mut foundation::collections::IVectorView<u32>) -> HRESULT,
-    fn OpenDataSession(&self, out: *mut *mut MobileBroadbandDeviceServiceDataSession) -> HRESULT,
-    fn OpenCommandSession(&self, out: *mut *mut MobileBroadbandDeviceServiceCommandSession) -> HRESULT
+    fn OpenDataSession(&self, out: *mut <MobileBroadbandDeviceServiceDataSession as RtType>::Abi) -> HRESULT,
+    fn OpenCommandSession(&self, out: *mut <MobileBroadbandDeviceServiceCommandSession as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandDeviceService> {
     #[inline] pub fn get_device_service_id(&self) -> Result<Guid> { unsafe { 
@@ -3746,17 +3746,17 @@ impl ComPtr<IMobileBroadbandDeviceService> {
     #[inline] pub fn get_supported_commands(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<u32>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SupportedCommands)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn open_data_session(&self) -> Result<Option<ComPtr<MobileBroadbandDeviceServiceDataSession>>> { unsafe { 
+    #[inline] pub fn open_data_session(&self) -> Result<Option<MobileBroadbandDeviceServiceDataSession>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).OpenDataSession)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandDeviceServiceDataSession::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn open_command_session(&self) -> Result<Option<ComPtr<MobileBroadbandDeviceServiceCommandSession>>> { unsafe { 
+    #[inline] pub fn open_command_session(&self) -> Result<Option<MobileBroadbandDeviceServiceCommandSession>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).OpenCommandSession)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandDeviceServiceCommandSession::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandDeviceService: IMobileBroadbandDeviceService}
@@ -3774,7 +3774,7 @@ impl ComPtr<IMobileBroadbandDeviceServiceCommandResult> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_response_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ResponseData)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandDeviceServiceCommandResult: IMobileBroadbandDeviceServiceCommandResult}
@@ -3790,12 +3790,12 @@ impl ComPtr<IMobileBroadbandDeviceServiceCommandSession> {
     #[cfg(feature="windows-storage")] #[inline] pub fn send_query_command_async(&self, commandId: u32, data: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandDeviceServiceCommandResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SendQueryCommandAsync)(self.as_abi() as *const _ as *mut _, commandId, data.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn send_set_command_async(&self, commandId: u32, data: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandDeviceServiceCommandResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SendSetCommandAsync)(self.as_abi() as *const _ as *mut _, commandId, data.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn close_session(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).CloseSession)(self.as_abi() as *const _ as *mut _);
@@ -3811,7 +3811,7 @@ impl ComPtr<IMobileBroadbandDeviceServiceDataReceivedEventArgs> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_received_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ReceivedData)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandDeviceServiceDataReceivedEventArgs: IMobileBroadbandDeviceServiceDataReceivedEventArgs}
@@ -3827,7 +3827,7 @@ impl ComPtr<IMobileBroadbandDeviceServiceDataSession> {
     #[cfg(feature="windows-storage")] #[inline] pub fn write_data_async(&self, value: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).WriteDataAsync)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn close_session(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).CloseSession)(self.as_abi() as *const _ as *mut _);
@@ -3888,7 +3888,7 @@ impl ComPtr<IMobileBroadbandDeviceServiceTriggerDetails> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_received_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ReceivedData)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandDeviceServiceTriggerDetails: IMobileBroadbandDeviceServiceTriggerDetails}
@@ -3897,27 +3897,27 @@ RT_ENUM! { enum MobileBroadbandDeviceType: i32 {
 }}
 DEFINE_IID!(IID_IMobileBroadbandModem, 3493161234, 59897, 20327, 160, 61, 67, 24, 154, 49, 107, 241);
 RT_INTERFACE!{interface IMobileBroadbandModem(IMobileBroadbandModemVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModem] {
-    fn get_CurrentAccount(&self, out: *mut *mut MobileBroadbandAccount) -> HRESULT,
-    fn get_DeviceInformation(&self, out: *mut *mut MobileBroadbandDeviceInformation) -> HRESULT,
+    fn get_CurrentAccount(&self, out: *mut <MobileBroadbandAccount as RtType>::Abi) -> HRESULT,
+    fn get_DeviceInformation(&self, out: *mut <MobileBroadbandDeviceInformation as RtType>::Abi) -> HRESULT,
     fn get_MaxDeviceServiceCommandSizeInBytes(&self, out: *mut u32) -> HRESULT,
     fn get_MaxDeviceServiceDataSizeInBytes(&self, out: *mut u32) -> HRESULT,
     fn get_DeviceServices(&self, out: *mut *mut foundation::collections::IVectorView<MobileBroadbandDeviceServiceInformation>) -> HRESULT,
-    fn GetDeviceService(&self, deviceServiceId: Guid, out: *mut *mut MobileBroadbandDeviceService) -> HRESULT,
+    fn GetDeviceService(&self, deviceServiceId: Guid, out: *mut <MobileBroadbandDeviceService as RtType>::Abi) -> HRESULT,
     fn get_IsResetSupported(&self, out: *mut bool) -> HRESULT,
     fn ResetAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn GetCurrentConfigurationAsync(&self, out: *mut *mut foundation::IAsyncOperation<MobileBroadbandModemConfiguration>) -> HRESULT,
-    fn get_CurrentNetwork(&self, out: *mut *mut MobileBroadbandNetwork) -> HRESULT
+    fn get_CurrentNetwork(&self, out: *mut <MobileBroadbandNetwork as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandModem> {
-    #[inline] pub fn get_current_account(&self) -> Result<Option<ComPtr<MobileBroadbandAccount>>> { unsafe { 
+    #[inline] pub fn get_current_account(&self) -> Result<Option<MobileBroadbandAccount>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CurrentAccount)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandAccount::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_device_information(&self) -> Result<Option<ComPtr<MobileBroadbandDeviceInformation>>> { unsafe { 
+    #[inline] pub fn get_device_information(&self) -> Result<Option<MobileBroadbandDeviceInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DeviceInformation)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandDeviceInformation::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_max_device_service_command_size_in_bytes(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
@@ -3932,12 +3932,12 @@ impl ComPtr<IMobileBroadbandModem> {
     #[inline] pub fn get_device_services(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandDeviceServiceInformation>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DeviceServices)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_device_service(&self, deviceServiceId: Guid) -> Result<Option<ComPtr<MobileBroadbandDeviceService>>> { unsafe { 
+    #[inline] pub fn get_device_service(&self, deviceServiceId: Guid) -> Result<Option<MobileBroadbandDeviceService>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDeviceService)(self.as_abi() as *const _ as *mut _, deviceServiceId, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandDeviceService::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_reset_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
@@ -3947,17 +3947,17 @@ impl ComPtr<IMobileBroadbandModem> {
     #[inline] pub fn reset_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ResetAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_configuration_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandModemConfiguration>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCurrentConfigurationAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_current_network(&self) -> Result<Option<ComPtr<MobileBroadbandNetwork>>> { unsafe { 
+    #[inline] pub fn get_current_network(&self) -> Result<Option<MobileBroadbandNetwork>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CurrentNetwork)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandNetwork::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandModem: IMobileBroadbandModem}
@@ -3966,10 +3966,10 @@ impl MobileBroadbandModem {
     #[inline] pub fn get_device_selector() -> Result<HString> {
         <Self as RtActivatable<IMobileBroadbandModemStatics>>::get_activation_factory().get_device_selector()
     }
-    #[inline] pub fn from_id(deviceId: &HStringArg) -> Result<Option<ComPtr<MobileBroadbandModem>>> {
+    #[inline] pub fn from_id(deviceId: &HStringArg) -> Result<Option<MobileBroadbandModem>> {
         <Self as RtActivatable<IMobileBroadbandModemStatics>>::get_activation_factory().from_id(deviceId)
     }
-    #[inline] pub fn get_default() -> Result<Option<ComPtr<MobileBroadbandModem>>> {
+    #[inline] pub fn get_default() -> Result<Option<MobileBroadbandModem>> {
         <Self as RtActivatable<IMobileBroadbandModemStatics>>::get_activation_factory().get_default()
     }
 }
@@ -3983,12 +3983,12 @@ impl ComPtr<IMobileBroadbandModem2> {
     #[inline] pub fn get_is_passthrough_enabled_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetIsPassthroughEnabledAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_is_passthrough_enabled_async(&self, value: bool) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandModemStatus>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetIsPassthroughEnabledAsync)(self.as_abi() as *const _ as *mut _, value, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandModem3, 3925788394, 12084, 17794, 145, 2, 195, 20, 210, 168, 126, 236);
@@ -4002,7 +4002,7 @@ impl ComPtr<IMobileBroadbandModem3> {
     #[inline] pub fn try_get_pco_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandPco>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryGetPcoAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_in_emergency_call_mode(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
@@ -4021,15 +4021,15 @@ impl ComPtr<IMobileBroadbandModem3> {
 }
 DEFINE_IID!(IID_IMobileBroadbandModemConfiguration, 4242552227, 54989, 17184, 185, 130, 190, 157, 62, 199, 137, 15);
 RT_INTERFACE!{interface IMobileBroadbandModemConfiguration(IMobileBroadbandModemConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemConfiguration] {
-    fn get_Uicc(&self, out: *mut *mut MobileBroadbandUicc) -> HRESULT,
+    fn get_Uicc(&self, out: *mut <MobileBroadbandUicc as RtType>::Abi) -> HRESULT,
     fn get_HomeProviderId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_HomeProviderName(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandModemConfiguration> {
-    #[inline] pub fn get_uicc(&self) -> Result<Option<ComPtr<MobileBroadbandUicc>>> { unsafe { 
+    #[inline] pub fn get_uicc(&self) -> Result<Option<MobileBroadbandUicc>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Uicc)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandUicc::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_home_provider_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -4045,66 +4045,66 @@ impl ComPtr<IMobileBroadbandModemConfiguration> {
 RT_CLASS!{class MobileBroadbandModemConfiguration: IMobileBroadbandModemConfiguration}
 DEFINE_IID!(IID_IMobileBroadbandModemConfiguration2, 839906757, 58464, 17070, 170, 81, 105, 98, 30, 122, 68, 119);
 RT_INTERFACE!{interface IMobileBroadbandModemConfiguration2(IMobileBroadbandModemConfiguration2Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemConfiguration2] {
-    fn get_SarManager(&self, out: *mut *mut MobileBroadbandSarManager) -> HRESULT
+    fn get_SarManager(&self, out: *mut <MobileBroadbandSarManager as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandModemConfiguration2> {
-    #[inline] pub fn get_sar_manager(&self) -> Result<Option<ComPtr<MobileBroadbandSarManager>>> { unsafe { 
+    #[inline] pub fn get_sar_manager(&self) -> Result<Option<MobileBroadbandSarManager>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SarManager)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandSarManager::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandModemIsolation, 3043069932, 58977, 17200, 155, 180, 52, 128, 33, 46, 195, 84);
 RT_INTERFACE!{interface IMobileBroadbandModemIsolation(IMobileBroadbandModemIsolationVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemIsolation] {
-    fn AddAllowedHost(&self, host: *mut super::HostName) -> HRESULT,
-    fn AddAllowedHostRange(&self, first: *mut super::HostName, last: *mut super::HostName) -> HRESULT,
+    fn AddAllowedHost(&self, host: <super::HostName as RtType>::Abi) -> HRESULT,
+    fn AddAllowedHostRange(&self, first: <super::HostName as RtType>::Abi, last: <super::HostName as RtType>::Abi) -> HRESULT,
     fn ApplyConfigurationAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn ClearConfigurationAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandModemIsolation> {
-    #[inline] pub fn add_allowed_host(&self, host: &ComPtr<super::HostName>) -> Result<()> { unsafe { 
+    #[inline] pub fn add_allowed_host(&self, host: &super::HostName) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).AddAllowedHost)(self.as_abi() as *const _ as *mut _, host.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_allowed_host_range(&self, first: &ComPtr<super::HostName>, last: &ComPtr<super::HostName>) -> Result<()> { unsafe { 
+    #[inline] pub fn add_allowed_host_range(&self, first: &super::HostName, last: &super::HostName) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).AddAllowedHostRange)(self.as_abi() as *const _ as *mut _, first.as_abi() as *const _ as *mut _, last.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn apply_configuration_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ApplyConfigurationAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn clear_configuration_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ClearConfigurationAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandModemIsolation: IMobileBroadbandModemIsolation}
 impl RtActivatable<IMobileBroadbandModemIsolationFactory> for MobileBroadbandModemIsolation {}
 impl MobileBroadbandModemIsolation {
-    #[inline] pub fn create(modemDeviceId: &HStringArg, ruleGroupId: &HStringArg) -> Result<ComPtr<MobileBroadbandModemIsolation>> {
+    #[inline] pub fn create(modemDeviceId: &HStringArg, ruleGroupId: &HStringArg) -> Result<MobileBroadbandModemIsolation> {
         <Self as RtActivatable<IMobileBroadbandModemIsolationFactory>>::get_activation_factory().create(modemDeviceId, ruleGroupId)
     }
 }
 DEFINE_CLSID!(MobileBroadbandModemIsolation(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,77,111,100,101,109,73,115,111,108,97,116,105,111,110,0]) [CLSID_MobileBroadbandModemIsolation]);
 DEFINE_IID!(IID_IMobileBroadbandModemIsolationFactory, 567798872, 49841, 19503, 160, 48, 114, 130, 10, 36, 236, 217);
 RT_INTERFACE!{static interface IMobileBroadbandModemIsolationFactory(IMobileBroadbandModemIsolationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemIsolationFactory] {
-    fn Create(&self, modemDeviceId: HSTRING, ruleGroupId: HSTRING, out: *mut *mut MobileBroadbandModemIsolation) -> HRESULT
+    fn Create(&self, modemDeviceId: HSTRING, ruleGroupId: HSTRING, out: *mut <MobileBroadbandModemIsolation as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandModemIsolationFactory> {
-    #[inline] pub fn create(&self, modemDeviceId: &HStringArg, ruleGroupId: &HStringArg) -> Result<ComPtr<MobileBroadbandModemIsolation>> { unsafe { 
+    #[inline] pub fn create(&self, modemDeviceId: &HStringArg, ruleGroupId: &HStringArg) -> Result<MobileBroadbandModemIsolation> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, modemDeviceId.get(), ruleGroupId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandModemIsolation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandModemStatics, 4187936311, 55025, 19064, 140, 188, 100, 33, 166, 80, 99, 200);
 RT_INTERFACE!{static interface IMobileBroadbandModemStatics(IMobileBroadbandModemStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemStatics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
-    fn FromId(&self, deviceId: HSTRING, out: *mut *mut MobileBroadbandModem) -> HRESULT,
-    fn GetDefault(&self, out: *mut *mut MobileBroadbandModem) -> HRESULT
+    fn FromId(&self, deviceId: HSTRING, out: *mut <MobileBroadbandModem as RtType>::Abi) -> HRESULT,
+    fn GetDefault(&self, out: *mut <MobileBroadbandModem as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandModemStatics> {
     #[inline] pub fn get_device_selector(&self) -> Result<HString> { unsafe { 
@@ -4112,15 +4112,15 @@ impl ComPtr<IMobileBroadbandModemStatics> {
         let hr = ((*self.as_abi().lpVtbl).GetDeviceSelector)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn from_id(&self, deviceId: &HStringArg) -> Result<Option<ComPtr<MobileBroadbandModem>>> { unsafe { 
+    #[inline] pub fn from_id(&self, deviceId: &HStringArg) -> Result<Option<MobileBroadbandModem>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FromId)(self.as_abi() as *const _ as *mut _, deviceId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandModem::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<MobileBroadbandModem>>> { unsafe { 
+    #[inline] pub fn get_default(&self) -> Result<Option<MobileBroadbandModem>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandModem::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum MobileBroadbandModemStatus: i32 {
@@ -4128,7 +4128,7 @@ RT_ENUM! { enum MobileBroadbandModemStatus: i32 {
 }}
 DEFINE_IID!(IID_IMobileBroadbandNetwork, 3412300428, 777, 19638, 168, 193, 106, 90, 60, 142, 31, 246);
 RT_INTERFACE!{interface IMobileBroadbandNetwork(IMobileBroadbandNetworkVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandNetwork] {
-    fn get_NetworkAdapter(&self, out: *mut *mut super::connectivity::NetworkAdapter) -> HRESULT,
+    fn get_NetworkAdapter(&self, out: *mut <super::connectivity::NetworkAdapter as RtType>::Abi) -> HRESULT,
     fn get_NetworkRegistrationState(&self, out: *mut NetworkRegistrationState) -> HRESULT,
     fn get_RegistrationNetworkError(&self, out: *mut u32) -> HRESULT,
     fn get_PacketAttachNetworkError(&self, out: *mut u32) -> HRESULT,
@@ -4140,10 +4140,10 @@ RT_INTERFACE!{interface IMobileBroadbandNetwork(IMobileBroadbandNetworkVtbl): II
     fn ShowConnectionUI(&self) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandNetwork> {
-    #[inline] pub fn get_network_adapter(&self) -> Result<Option<ComPtr<super::connectivity::NetworkAdapter>>> { unsafe { 
+    #[inline] pub fn get_network_adapter(&self) -> Result<Option<super::connectivity::NetworkAdapter>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NetworkAdapter)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::connectivity::NetworkAdapter::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_network_registration_state(&self) -> Result<NetworkRegistrationState> { unsafe { 
         let mut out = zeroed();
@@ -4200,12 +4200,12 @@ impl ComPtr<IMobileBroadbandNetwork2> {
     #[inline] pub fn get_voice_call_support_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetVoiceCallSupportAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_registration_uicc_apps(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandUiccApp>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RegistrationUiccApps)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandNetwork3, 862390922, 51183, 17484, 171, 108, 223, 126, 247, 163, 144, 254);
@@ -4216,13 +4216,13 @@ impl ComPtr<IMobileBroadbandNetwork3> {
     #[inline] pub fn get_cells_info_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandCellsInfo>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCellsInfoAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandNetworkRegistrationStateChange, 3199177953, 38415, 18868, 160, 141, 125, 133, 233, 104, 199, 236);
 RT_INTERFACE!{interface IMobileBroadbandNetworkRegistrationStateChange(IMobileBroadbandNetworkRegistrationStateChangeVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandNetworkRegistrationStateChange] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_Network(&self, out: *mut *mut MobileBroadbandNetwork) -> HRESULT
+    fn get_Network(&self, out: *mut <MobileBroadbandNetwork as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandNetworkRegistrationStateChange> {
     #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
@@ -4230,10 +4230,10 @@ impl ComPtr<IMobileBroadbandNetworkRegistrationStateChange> {
         let hr = ((*self.as_abi().lpVtbl).get_DeviceId)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_network(&self) -> Result<Option<ComPtr<MobileBroadbandNetwork>>> { unsafe { 
+    #[inline] pub fn get_network(&self) -> Result<Option<MobileBroadbandNetwork>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Network)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandNetwork::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandNetworkRegistrationStateChange: IMobileBroadbandNetworkRegistrationStateChange}
@@ -4245,7 +4245,7 @@ impl ComPtr<IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails> {
     #[inline] pub fn get_network_registration_state_changes(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandNetworkRegistrationStateChange>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NetworkRegistrationStateChanges)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandNetworkRegistrationStateChangeTriggerDetails: IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails}
@@ -4260,7 +4260,7 @@ impl ComPtr<IMobileBroadbandPco> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Data)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_complete(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
@@ -4276,13 +4276,13 @@ impl ComPtr<IMobileBroadbandPco> {
 RT_CLASS!{class MobileBroadbandPco: IMobileBroadbandPco}
 DEFINE_IID!(IID_IMobileBroadbandPcoDataChangeTriggerDetails, 641683732, 25824, 17555, 144, 155, 45, 20, 160, 25, 98, 177);
 RT_INTERFACE!{interface IMobileBroadbandPcoDataChangeTriggerDetails(IMobileBroadbandPcoDataChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPcoDataChangeTriggerDetails] {
-    fn get_UpdatedData(&self, out: *mut *mut MobileBroadbandPco) -> HRESULT
+    fn get_UpdatedData(&self, out: *mut <MobileBroadbandPco as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandPcoDataChangeTriggerDetails> {
-    #[inline] pub fn get_updated_data(&self) -> Result<Option<ComPtr<MobileBroadbandPco>>> { unsafe { 
+    #[inline] pub fn get_updated_data(&self) -> Result<Option<MobileBroadbandPco>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_UpdatedData)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandPco::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandPcoDataChangeTriggerDetails: IMobileBroadbandPcoDataChangeTriggerDetails}
@@ -4340,27 +4340,27 @@ impl ComPtr<IMobileBroadbandPin> {
     #[inline] pub fn enable_async(&self, currentPin: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandPinOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).EnableAsync)(self.as_abi() as *const _ as *mut _, currentPin.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn disable_async(&self, currentPin: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandPinOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).DisableAsync)(self.as_abi() as *const _ as *mut _, currentPin.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn enter_async(&self, currentPin: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandPinOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).EnterAsync)(self.as_abi() as *const _ as *mut _, currentPin.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn change_async(&self, currentPin: &HStringArg, newPin: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandPinOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ChangeAsync)(self.as_abi() as *const _ as *mut _, currentPin.get(), newPin.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn unblock_async(&self, pinUnblockKey: &HStringArg, newPin: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandPinOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).UnblockAsync)(self.as_abi() as *const _ as *mut _, pinUnblockKey.get(), newPin.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandPin: IMobileBroadbandPin}
@@ -4402,25 +4402,25 @@ impl ComPtr<IMobileBroadbandPinLockStateChangeTriggerDetails> {
     #[inline] pub fn get_pin_lock_state_changes(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandPinLockStateChange>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PinLockStateChanges)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandPinLockStateChangeTriggerDetails: IMobileBroadbandPinLockStateChangeTriggerDetails}
 DEFINE_IID!(IID_IMobileBroadbandPinManager, 2203483869, 28191, 19355, 164, 19, 43, 31, 80, 204, 54, 223);
 RT_INTERFACE!{interface IMobileBroadbandPinManager(IMobileBroadbandPinManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPinManager] {
     fn get_SupportedPins(&self, out: *mut *mut foundation::collections::IVectorView<MobileBroadbandPinType>) -> HRESULT,
-    fn GetPin(&self, pinType: MobileBroadbandPinType, out: *mut *mut MobileBroadbandPin) -> HRESULT
+    fn GetPin(&self, pinType: MobileBroadbandPinType, out: *mut <MobileBroadbandPin as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IMobileBroadbandPinManager> {
     #[inline] pub fn get_supported_pins(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandPinType>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SupportedPins)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_pin(&self, pinType: MobileBroadbandPinType) -> Result<Option<ComPtr<MobileBroadbandPin>>> { unsafe { 
+    #[inline] pub fn get_pin(&self, pinType: MobileBroadbandPinType) -> Result<Option<MobileBroadbandPin>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetPin)(self.as_abi() as *const _ as *mut _, pinType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MobileBroadbandPin::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandPinManager: IMobileBroadbandPinManager}
@@ -4474,7 +4474,7 @@ impl ComPtr<IMobileBroadbandRadioStateChangeTriggerDetails> {
     #[inline] pub fn get_radio_state_changes(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandRadioStateChange>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RadioStateChanges)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandRadioStateChangeTriggerDetails: IMobileBroadbandRadioStateChangeTriggerDetails}
@@ -4515,7 +4515,7 @@ impl ComPtr<IMobileBroadbandSarManager> {
     #[inline] pub fn get_antennas(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandAntennaSar>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Antennas)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hysteresis_timer_period(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
@@ -4534,32 +4534,32 @@ impl ComPtr<IMobileBroadbandSarManager> {
     #[inline] pub fn enable_backoff_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).EnableBackoffAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn disable_backoff_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).DisableBackoffAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_configuration_async(&self, antennas: &ComPtr<foundation::collections::IIterable<MobileBroadbandAntennaSar>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetConfigurationAsync)(self.as_abi() as *const _ as *mut _, antennas.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn revert_sar_to_hardware_control_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RevertSarToHardwareControlAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_transmission_state_changed_hysteresis_async(&self, timerPeriod: foundation::TimeSpan) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SetTransmissionStateChangedHysteresisAsync)(self.as_abi() as *const _ as *mut _, timerPeriod, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_transmitting_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<bool>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetIsTransmittingAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn start_transmission_state_monitoring(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).StartTransmissionStateMonitoring)(self.as_abi() as *const _ as *mut _);
@@ -4597,7 +4597,7 @@ impl ComPtr<IMobileBroadbandUicc> {
     #[inline] pub fn get_uicc_apps_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandUiccAppsResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetUiccAppsAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandUicc: IMobileBroadbandUicc}
@@ -4613,7 +4613,7 @@ impl ComPtr<IMobileBroadbandUiccApp> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_id(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Id)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kind(&self) -> Result<UiccAppKind> { unsafe { 
         let mut out = zeroed();
@@ -4623,12 +4623,12 @@ impl ComPtr<IMobileBroadbandUiccApp> {
     #[inline] pub fn get_record_details_async(&self, uiccFilePath: &ComPtr<foundation::collections::IIterable<u32>>) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandUiccAppRecordDetailsResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetRecordDetailsAsync)(self.as_abi() as *const _ as *mut _, uiccFilePath.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn read_record_async(&self, uiccFilePath: &ComPtr<foundation::collections::IIterable<u32>>, recordIndex: i32) -> Result<ComPtr<foundation::IAsyncOperation<MobileBroadbandUiccAppReadRecordResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ReadRecordAsync)(self.as_abi() as *const _ as *mut _, uiccFilePath.as_abi() as *const _ as *mut _, recordIndex, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandUiccApp: IMobileBroadbandUiccApp}
@@ -4649,7 +4649,7 @@ impl ComPtr<IMobileBroadbandUiccAppReadRecordResult> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Data)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandUiccAppReadRecordResult: IMobileBroadbandUiccAppReadRecordResult}
@@ -4709,7 +4709,7 @@ impl ComPtr<IMobileBroadbandUiccAppsResult> {
     #[inline] pub fn get_uicc_apps(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<MobileBroadbandUiccApp>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_UiccApps)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MobileBroadbandUiccAppsResult: IMobileBroadbandUiccAppsResult}
@@ -4772,7 +4772,7 @@ impl ComPtr<INetworkOperatorNotificationEventDetails> {
     #[cfg(feature="windows-devices")] #[inline] pub fn get_sms_message(&self) -> Result<Option<ComPtr<super::super::devices::sms::ISmsMessage>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SmsMessage)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class NetworkOperatorNotificationEventDetails: INetworkOperatorNotificationEventDetails}
@@ -4820,7 +4820,7 @@ impl ComPtr<INetworkOperatorTetheringClient> {
     #[inline] pub fn get_host_names(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::HostName>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_HostNames)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class NetworkOperatorTetheringClient: INetworkOperatorTetheringClient}
@@ -4832,7 +4832,7 @@ impl ComPtr<INetworkOperatorTetheringClientManager> {
     #[inline] pub fn get_tethering_clients(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<NetworkOperatorTetheringClient>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetTetheringClients)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_INetworkOperatorTetheringEntitlementCheck, 17338733, 40602, 19190, 141, 163, 96, 73, 59, 25, 194, 4);
@@ -4850,8 +4850,8 @@ RT_INTERFACE!{interface INetworkOperatorTetheringManager(INetworkOperatorTetheri
     fn get_MaxClientCount(&self, out: *mut u32) -> HRESULT,
     fn get_ClientCount(&self, out: *mut u32) -> HRESULT,
     fn get_TetheringOperationalState(&self, out: *mut TetheringOperationalState) -> HRESULT,
-    fn GetCurrentAccessPointConfiguration(&self, out: *mut *mut NetworkOperatorTetheringAccessPointConfiguration) -> HRESULT,
-    fn ConfigureAccessPointAsync(&self, configuration: *mut NetworkOperatorTetheringAccessPointConfiguration, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn GetCurrentAccessPointConfiguration(&self, out: *mut <NetworkOperatorTetheringAccessPointConfiguration as RtType>::Abi) -> HRESULT,
+    fn ConfigureAccessPointAsync(&self, configuration: <NetworkOperatorTetheringAccessPointConfiguration as RtType>::Abi, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn StartTetheringAsync(&self, out: *mut *mut foundation::IAsyncOperation<NetworkOperatorTetheringOperationResult>) -> HRESULT,
     fn StopTetheringAsync(&self, out: *mut *mut foundation::IAsyncOperation<NetworkOperatorTetheringOperationResult>) -> HRESULT
 }}
@@ -4871,25 +4871,25 @@ impl ComPtr<INetworkOperatorTetheringManager> {
         let hr = ((*self.as_abi().lpVtbl).get_TetheringOperationalState)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_current_access_point_configuration(&self) -> Result<Option<ComPtr<NetworkOperatorTetheringAccessPointConfiguration>>> { unsafe { 
+    #[inline] pub fn get_current_access_point_configuration(&self) -> Result<Option<NetworkOperatorTetheringAccessPointConfiguration>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetCurrentAccessPointConfiguration)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(NetworkOperatorTetheringAccessPointConfiguration::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn configure_access_point_async(&self, configuration: &ComPtr<NetworkOperatorTetheringAccessPointConfiguration>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn configure_access_point_async(&self, configuration: &NetworkOperatorTetheringAccessPointConfiguration) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConfigureAccessPointAsync)(self.as_abi() as *const _ as *mut _, configuration.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn start_tethering_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<NetworkOperatorTetheringOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).StartTetheringAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn stop_tethering_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<NetworkOperatorTetheringOperationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).StopTetheringAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class NetworkOperatorTetheringManager: INetworkOperatorTetheringManager}
@@ -4900,16 +4900,16 @@ impl NetworkOperatorTetheringManager {
     #[inline] pub fn get_tethering_capability(networkAccountId: &HStringArg) -> Result<TetheringCapability> {
         <Self as RtActivatable<INetworkOperatorTetheringManagerStatics>>::get_activation_factory().get_tethering_capability(networkAccountId)
     }
-    #[inline] pub fn create_from_network_account_id(networkAccountId: &HStringArg) -> Result<Option<ComPtr<NetworkOperatorTetheringManager>>> {
+    #[inline] pub fn create_from_network_account_id(networkAccountId: &HStringArg) -> Result<Option<NetworkOperatorTetheringManager>> {
         <Self as RtActivatable<INetworkOperatorTetheringManagerStatics>>::get_activation_factory().create_from_network_account_id(networkAccountId)
     }
-    #[inline] pub fn get_tethering_capability_from_connection_profile(profile: &ComPtr<super::connectivity::ConnectionProfile>) -> Result<TetheringCapability> {
+    #[inline] pub fn get_tethering_capability_from_connection_profile(profile: &super::connectivity::ConnectionProfile) -> Result<TetheringCapability> {
         <Self as RtActivatable<INetworkOperatorTetheringManagerStatics2>>::get_activation_factory().get_tethering_capability_from_connection_profile(profile)
     }
-    #[inline] pub fn create_from_connection_profile(profile: &ComPtr<super::connectivity::ConnectionProfile>) -> Result<Option<ComPtr<NetworkOperatorTetheringManager>>> {
+    #[inline] pub fn create_from_connection_profile(profile: &super::connectivity::ConnectionProfile) -> Result<Option<NetworkOperatorTetheringManager>> {
         <Self as RtActivatable<INetworkOperatorTetheringManagerStatics2>>::get_activation_factory().create_from_connection_profile(profile)
     }
-    #[inline] pub fn create_from_connection_profile_with_target_adapter(profile: &ComPtr<super::connectivity::ConnectionProfile>, adapter: &ComPtr<super::connectivity::NetworkAdapter>) -> Result<Option<ComPtr<NetworkOperatorTetheringManager>>> {
+    #[inline] pub fn create_from_connection_profile_with_target_adapter(profile: &super::connectivity::ConnectionProfile, adapter: &super::connectivity::NetworkAdapter) -> Result<Option<NetworkOperatorTetheringManager>> {
         <Self as RtActivatable<INetworkOperatorTetheringManagerStatics3>>::get_activation_factory().create_from_connection_profile_with_target_adapter(profile, adapter)
     }
 }
@@ -4917,7 +4917,7 @@ DEFINE_CLSID!(NetworkOperatorTetheringManager(&[87,105,110,100,111,119,115,46,78
 DEFINE_IID!(IID_INetworkOperatorTetheringManagerStatics, 1052555980, 63683, 16476, 153, 100, 112, 161, 238, 171, 225, 148);
 RT_INTERFACE!{static interface INetworkOperatorTetheringManagerStatics(INetworkOperatorTetheringManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringManagerStatics] {
     fn GetTetheringCapability(&self, networkAccountId: HSTRING, out: *mut TetheringCapability) -> HRESULT,
-    fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut *mut NetworkOperatorTetheringManager) -> HRESULT
+    fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut <NetworkOperatorTetheringManager as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<INetworkOperatorTetheringManagerStatics> {
     #[inline] pub fn get_tethering_capability(&self, networkAccountId: &HStringArg) -> Result<TetheringCapability> { unsafe { 
@@ -4925,38 +4925,38 @@ impl ComPtr<INetworkOperatorTetheringManagerStatics> {
         let hr = ((*self.as_abi().lpVtbl).GetTetheringCapability)(self.as_abi() as *const _ as *mut _, networkAccountId.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_network_account_id(&self, networkAccountId: &HStringArg) -> Result<Option<ComPtr<NetworkOperatorTetheringManager>>> { unsafe { 
+    #[inline] pub fn create_from_network_account_id(&self, networkAccountId: &HStringArg) -> Result<Option<NetworkOperatorTetheringManager>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromNetworkAccountId)(self.as_abi() as *const _ as *mut _, networkAccountId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(NetworkOperatorTetheringManager::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_INetworkOperatorTetheringManagerStatics2, 1529041938, 13808, 18919, 155, 8, 22, 210, 120, 251, 170, 66);
 RT_INTERFACE!{static interface INetworkOperatorTetheringManagerStatics2(INetworkOperatorTetheringManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringManagerStatics2] {
-    fn GetTetheringCapabilityFromConnectionProfile(&self, profile: *mut super::connectivity::ConnectionProfile, out: *mut TetheringCapability) -> HRESULT,
-    fn CreateFromConnectionProfile(&self, profile: *mut super::connectivity::ConnectionProfile, out: *mut *mut NetworkOperatorTetheringManager) -> HRESULT
+    fn GetTetheringCapabilityFromConnectionProfile(&self, profile: <super::connectivity::ConnectionProfile as RtType>::Abi, out: *mut TetheringCapability) -> HRESULT,
+    fn CreateFromConnectionProfile(&self, profile: <super::connectivity::ConnectionProfile as RtType>::Abi, out: *mut <NetworkOperatorTetheringManager as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<INetworkOperatorTetheringManagerStatics2> {
-    #[inline] pub fn get_tethering_capability_from_connection_profile(&self, profile: &ComPtr<super::connectivity::ConnectionProfile>) -> Result<TetheringCapability> { unsafe { 
+    #[inline] pub fn get_tethering_capability_from_connection_profile(&self, profile: &super::connectivity::ConnectionProfile) -> Result<TetheringCapability> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).GetTetheringCapabilityFromConnectionProfile)(self.as_abi() as *const _ as *mut _, profile.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_connection_profile(&self, profile: &ComPtr<super::connectivity::ConnectionProfile>) -> Result<Option<ComPtr<NetworkOperatorTetheringManager>>> { unsafe { 
+    #[inline] pub fn create_from_connection_profile(&self, profile: &super::connectivity::ConnectionProfile) -> Result<Option<NetworkOperatorTetheringManager>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromConnectionProfile)(self.as_abi() as *const _ as *mut _, profile.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(NetworkOperatorTetheringManager::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_INetworkOperatorTetheringManagerStatics3, 2413473206, 19193, 20257, 155, 88, 213, 62, 159, 36, 35, 30);
 RT_INTERFACE!{static interface INetworkOperatorTetheringManagerStatics3(INetworkOperatorTetheringManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringManagerStatics3] {
-    fn CreateFromConnectionProfileWithTargetAdapter(&self, profile: *mut super::connectivity::ConnectionProfile, adapter: *mut super::connectivity::NetworkAdapter, out: *mut *mut NetworkOperatorTetheringManager) -> HRESULT
+    fn CreateFromConnectionProfileWithTargetAdapter(&self, profile: <super::connectivity::ConnectionProfile as RtType>::Abi, adapter: <super::connectivity::NetworkAdapter as RtType>::Abi, out: *mut <NetworkOperatorTetheringManager as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<INetworkOperatorTetheringManagerStatics3> {
-    #[inline] pub fn create_from_connection_profile_with_target_adapter(&self, profile: &ComPtr<super::connectivity::ConnectionProfile>, adapter: &ComPtr<super::connectivity::NetworkAdapter>) -> Result<Option<ComPtr<NetworkOperatorTetheringManager>>> { unsafe { 
+    #[inline] pub fn create_from_connection_profile_with_target_adapter(&self, profile: &super::connectivity::ConnectionProfile, adapter: &super::connectivity::NetworkAdapter) -> Result<Option<NetworkOperatorTetheringManager>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromConnectionProfileWithTargetAdapter)(self.as_abi() as *const _ as *mut _, profile.as_abi() as *const _ as *mut _, adapter.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(NetworkOperatorTetheringManager::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_INetworkOperatorTetheringOperationResult, 3956409249, 442, 18285, 180, 179, 191, 61, 18, 200, 248, 12);
@@ -5023,38 +5023,38 @@ RT_CLASS!{class ProvisionFromXmlDocumentResults: IProvisionFromXmlDocumentResult
 DEFINE_IID!(IID_IProvisioningAgent, 561447136, 33281, 4575, 173, 185, 244, 206, 70, 45, 145, 55);
 RT_INTERFACE!{interface IProvisioningAgent(IProvisioningAgentVtbl): IInspectable(IInspectableVtbl) [IID_IProvisioningAgent] {
     fn ProvisionFromXmlDocumentAsync(&self, provisioningXmlDocument: HSTRING, out: *mut *mut foundation::IAsyncOperation<ProvisionFromXmlDocumentResults>) -> HRESULT,
-    fn GetProvisionedProfile(&self, mediaType: ProfileMediaType, profileName: HSTRING, out: *mut *mut ProvisionedProfile) -> HRESULT
+    fn GetProvisionedProfile(&self, mediaType: ProfileMediaType, profileName: HSTRING, out: *mut <ProvisionedProfile as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IProvisioningAgent> {
     #[inline] pub fn provision_from_xml_document_async(&self, provisioningXmlDocument: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<ProvisionFromXmlDocumentResults>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ProvisionFromXmlDocumentAsync)(self.as_abi() as *const _ as *mut _, provisioningXmlDocument.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_provisioned_profile(&self, mediaType: ProfileMediaType, profileName: &HStringArg) -> Result<Option<ComPtr<ProvisionedProfile>>> { unsafe { 
+    #[inline] pub fn get_provisioned_profile(&self, mediaType: ProfileMediaType, profileName: &HStringArg) -> Result<Option<ProvisionedProfile>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetProvisionedProfile)(self.as_abi() as *const _ as *mut _, mediaType, profileName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ProvisionedProfile::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ProvisioningAgent: IProvisioningAgent}
 impl RtActivatable<IProvisioningAgentStaticMethods> for ProvisioningAgent {}
 impl RtActivatable<IActivationFactory> for ProvisioningAgent {}
 impl ProvisioningAgent {
-    #[inline] pub fn create_from_network_account_id(networkAccountId: &HStringArg) -> Result<Option<ComPtr<ProvisioningAgent>>> {
+    #[inline] pub fn create_from_network_account_id(networkAccountId: &HStringArg) -> Result<Option<ProvisioningAgent>> {
         <Self as RtActivatable<IProvisioningAgentStaticMethods>>::get_activation_factory().create_from_network_account_id(networkAccountId)
     }
 }
 DEFINE_CLSID!(ProvisioningAgent(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,80,114,111,118,105,115,105,111,110,105,110,103,65,103,101,110,116,0]) [CLSID_ProvisioningAgent]);
 DEFINE_IID!(IID_IProvisioningAgentStaticMethods, 561447136, 33025, 4575, 173, 185, 244, 206, 70, 45, 145, 55);
 RT_INTERFACE!{static interface IProvisioningAgentStaticMethods(IProvisioningAgentStaticMethodsVtbl): IInspectable(IInspectableVtbl) [IID_IProvisioningAgentStaticMethods] {
-    fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut *mut ProvisioningAgent) -> HRESULT
+    fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut <ProvisioningAgent as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IProvisioningAgentStaticMethods> {
-    #[inline] pub fn create_from_network_account_id(&self, networkAccountId: &HStringArg) -> Result<Option<ComPtr<ProvisioningAgent>>> { unsafe { 
+    #[inline] pub fn create_from_network_account_id(&self, networkAccountId: &HStringArg) -> Result<Option<ProvisioningAgent>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromNetworkAccountId)(self.as_abi() as *const _ as *mut _, networkAccountId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ProvisioningAgent::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum TetheringCapability: i32 {
@@ -5138,26 +5138,26 @@ impl ComPtr<IUssdMessage> {
 RT_CLASS!{class UssdMessage: IUssdMessage}
 impl RtActivatable<IUssdMessageFactory> for UssdMessage {}
 impl UssdMessage {
-    #[inline] pub fn create_message(messageText: &HStringArg) -> Result<ComPtr<UssdMessage>> {
+    #[inline] pub fn create_message(messageText: &HStringArg) -> Result<UssdMessage> {
         <Self as RtActivatable<IUssdMessageFactory>>::get_activation_factory().create_message(messageText)
     }
 }
 DEFINE_CLSID!(UssdMessage(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,85,115,115,100,77,101,115,115,97,103,101,0]) [CLSID_UssdMessage]);
 DEFINE_IID!(IID_IUssdMessageFactory, 798674818, 4099, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
 RT_INTERFACE!{static interface IUssdMessageFactory(IUssdMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUssdMessageFactory] {
-    fn CreateMessage(&self, messageText: HSTRING, out: *mut *mut UssdMessage) -> HRESULT
+    fn CreateMessage(&self, messageText: HSTRING, out: *mut <UssdMessage as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IUssdMessageFactory> {
-    #[inline] pub fn create_message(&self, messageText: &HStringArg) -> Result<ComPtr<UssdMessage>> { unsafe { 
+    #[inline] pub fn create_message(&self, messageText: &HStringArg) -> Result<UssdMessage> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateMessage)(self.as_abi() as *const _ as *mut _, messageText.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(UssdMessage::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IUssdReply, 798674818, 8197, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
 RT_INTERFACE!{interface IUssdReply(IUssdReplyVtbl): IInspectable(IInspectableVtbl) [IID_IUssdReply] {
     fn get_ResultCode(&self, out: *mut UssdResultCode) -> HRESULT,
-    fn get_Message(&self, out: *mut *mut UssdMessage) -> HRESULT
+    fn get_Message(&self, out: *mut <UssdMessage as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IUssdReply> {
     #[inline] pub fn get_result_code(&self) -> Result<UssdResultCode> { unsafe { 
@@ -5165,10 +5165,10 @@ impl ComPtr<IUssdReply> {
         let hr = ((*self.as_abi().lpVtbl).get_ResultCode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_message(&self) -> Result<Option<ComPtr<UssdMessage>>> { unsafe { 
+    #[inline] pub fn get_message(&self) -> Result<Option<UssdMessage>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Message)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(UssdMessage::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class UssdReply: IUssdReply}
@@ -5177,14 +5177,14 @@ RT_ENUM! { enum UssdResultCode: i32 {
 }}
 DEFINE_IID!(IID_IUssdSession, 798674818, 8194, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
 RT_INTERFACE!{interface IUssdSession(IUssdSessionVtbl): IInspectable(IInspectableVtbl) [IID_IUssdSession] {
-    fn SendMessageAndGetReplyAsync(&self, message: *mut UssdMessage, out: *mut *mut foundation::IAsyncOperation<UssdReply>) -> HRESULT,
+    fn SendMessageAndGetReplyAsync(&self, message: <UssdMessage as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<UssdReply>) -> HRESULT,
     fn Close(&self) -> HRESULT
 }}
 impl ComPtr<IUssdSession> {
-    #[inline] pub fn send_message_and_get_reply_async(&self, message: &ComPtr<UssdMessage>) -> Result<ComPtr<foundation::IAsyncOperation<UssdReply>>> { unsafe { 
+    #[inline] pub fn send_message_and_get_reply_async(&self, message: &UssdMessage) -> Result<ComPtr<foundation::IAsyncOperation<UssdReply>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SendMessageAndGetReplyAsync)(self.as_abi() as *const _ as *mut _, message.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn close(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Close)(self.as_abi() as *const _ as *mut _);
@@ -5194,29 +5194,29 @@ impl ComPtr<IUssdSession> {
 RT_CLASS!{class UssdSession: IUssdSession}
 impl RtActivatable<IUssdSessionStatics> for UssdSession {}
 impl UssdSession {
-    #[inline] pub fn create_from_network_account_id(networkAccountId: &HStringArg) -> Result<Option<ComPtr<UssdSession>>> {
+    #[inline] pub fn create_from_network_account_id(networkAccountId: &HStringArg) -> Result<Option<UssdSession>> {
         <Self as RtActivatable<IUssdSessionStatics>>::get_activation_factory().create_from_network_account_id(networkAccountId)
     }
-    #[inline] pub fn create_from_network_interface_id(networkInterfaceId: &HStringArg) -> Result<Option<ComPtr<UssdSession>>> {
+    #[inline] pub fn create_from_network_interface_id(networkInterfaceId: &HStringArg) -> Result<Option<UssdSession>> {
         <Self as RtActivatable<IUssdSessionStatics>>::get_activation_factory().create_from_network_interface_id(networkInterfaceId)
     }
 }
 DEFINE_CLSID!(UssdSession(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,85,115,115,100,83,101,115,115,105,111,110,0]) [CLSID_UssdSession]);
 DEFINE_IID!(IID_IUssdSessionStatics, 798674818, 4097, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
 RT_INTERFACE!{static interface IUssdSessionStatics(IUssdSessionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUssdSessionStatics] {
-    fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut *mut UssdSession) -> HRESULT,
-    fn CreateFromNetworkInterfaceId(&self, networkInterfaceId: HSTRING, out: *mut *mut UssdSession) -> HRESULT
+    fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut <UssdSession as RtType>::Abi) -> HRESULT,
+    fn CreateFromNetworkInterfaceId(&self, networkInterfaceId: HSTRING, out: *mut <UssdSession as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IUssdSessionStatics> {
-    #[inline] pub fn create_from_network_account_id(&self, networkAccountId: &HStringArg) -> Result<Option<ComPtr<UssdSession>>> { unsafe { 
+    #[inline] pub fn create_from_network_account_id(&self, networkAccountId: &HStringArg) -> Result<Option<UssdSession>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromNetworkAccountId)(self.as_abi() as *const _ as *mut _, networkAccountId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(UssdSession::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_network_interface_id(&self, networkInterfaceId: &HStringArg) -> Result<Option<ComPtr<UssdSession>>> { unsafe { 
+    #[inline] pub fn create_from_network_interface_id(&self, networkInterfaceId: &HStringArg) -> Result<Option<UssdSession>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromNetworkInterfaceId)(self.as_abi() as *const _ as *mut _, networkInterfaceId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(UssdSession::wrap(out)) } else { err(hr) }
     }}
 }
 } // Windows.Networking.NetworkOperators
@@ -5224,52 +5224,52 @@ pub mod proximity { // Windows.Networking.Proximity
 use crate::prelude::*;
 DEFINE_IID!(IID_IConnectionRequestedEventArgs, 3949498798, 20254, 19558, 189, 13, 70, 146, 74, 148, 46, 8);
 RT_INTERFACE!{interface IConnectionRequestedEventArgs(IConnectionRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionRequestedEventArgs] {
-    fn get_PeerInformation(&self, out: *mut *mut PeerInformation) -> HRESULT
+    fn get_PeerInformation(&self, out: *mut <PeerInformation as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IConnectionRequestedEventArgs> {
-    #[inline] pub fn get_peer_information(&self) -> Result<Option<ComPtr<PeerInformation>>> { unsafe { 
+    #[inline] pub fn get_peer_information(&self) -> Result<Option<PeerInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PeerInformation)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PeerInformation::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ConnectionRequestedEventArgs: IConnectionRequestedEventArgs}
 DEFINE_IID!(IID_DeviceArrivedEventHandler, 4020886121, 63201, 18889, 164, 158, 142, 15, 197, 143, 185, 17);
 RT_DELEGATE!{delegate DeviceArrivedEventHandler(DeviceArrivedEventHandlerVtbl, DeviceArrivedEventHandlerImpl) [IID_DeviceArrivedEventHandler] {
-    fn Invoke(&self, sender: *mut ProximityDevice) -> HRESULT
+    fn Invoke(&self, sender: <ProximityDevice as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<DeviceArrivedEventHandler> {
-    #[inline] pub fn invoke(&self, sender: &ComPtr<ProximityDevice>) -> Result<()> { unsafe { 
+    #[inline] pub fn invoke(&self, sender: &ProximityDevice) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Invoke)(self.as_abi() as *const _ as *mut _, sender.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_DeviceDepartedEventHandler, 4020886121, 63202, 18889, 164, 158, 142, 15, 197, 143, 185, 17);
 RT_DELEGATE!{delegate DeviceDepartedEventHandler(DeviceDepartedEventHandlerVtbl, DeviceDepartedEventHandlerImpl) [IID_DeviceDepartedEventHandler] {
-    fn Invoke(&self, sender: *mut ProximityDevice) -> HRESULT
+    fn Invoke(&self, sender: <ProximityDevice as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<DeviceDepartedEventHandler> {
-    #[inline] pub fn invoke(&self, sender: &ComPtr<ProximityDevice>) -> Result<()> { unsafe { 
+    #[inline] pub fn invoke(&self, sender: &ProximityDevice) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Invoke)(self.as_abi() as *const _ as *mut _, sender.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_MessageReceivedHandler, 4020963202, 63202, 18037, 160, 69, 216, 227, 32, 194, 72, 8);
 RT_DELEGATE!{delegate MessageReceivedHandler(MessageReceivedHandlerVtbl, MessageReceivedHandlerImpl) [IID_MessageReceivedHandler] {
-    fn Invoke(&self, sender: *mut ProximityDevice, message: *mut ProximityMessage) -> HRESULT
+    fn Invoke(&self, sender: <ProximityDevice as RtType>::Abi, message: <ProximityMessage as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<MessageReceivedHandler> {
-    #[inline] pub fn invoke(&self, sender: &ComPtr<ProximityDevice>, message: &ComPtr<ProximityMessage>) -> Result<()> { unsafe { 
+    #[inline] pub fn invoke(&self, sender: &ProximityDevice, message: &ProximityMessage) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Invoke)(self.as_abi() as *const _ as *mut _, sender.as_abi() as *const _ as *mut _, message.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_MessageTransmittedHandler, 4020898634, 63202, 19837, 133, 108, 120, 252, 142, 252, 2, 30);
 RT_DELEGATE!{delegate MessageTransmittedHandler(MessageTransmittedHandlerVtbl, MessageTransmittedHandlerImpl) [IID_MessageTransmittedHandler] {
-    fn Invoke(&self, sender: *mut ProximityDevice, messageId: i64) -> HRESULT
+    fn Invoke(&self, sender: <ProximityDevice as RtType>::Abi, messageId: i64) -> HRESULT
 }}
 impl ComPtr<MessageTransmittedHandler> {
-    #[inline] pub fn invoke(&self, sender: &ComPtr<ProximityDevice>, messageId: i64) -> Result<()> { unsafe { 
+    #[inline] pub fn invoke(&self, sender: &ProximityDevice, messageId: i64) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Invoke)(self.as_abi() as *const _ as *mut _, sender.as_abi() as *const _ as *mut _, messageId);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -5335,7 +5335,7 @@ impl PeerFinder {
     #[inline] pub fn find_all_peers_async() -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<PeerInformation>>>> {
         <Self as RtActivatable<IPeerFinderStatics>>::get_activation_factory().find_all_peers_async()
     }
-    #[inline] pub fn connect_async(peerInformation: &ComPtr<PeerInformation>) -> Result<ComPtr<foundation::IAsyncOperation<super::sockets::StreamSocket>>> {
+    #[inline] pub fn connect_async(peerInformation: &PeerInformation) -> Result<ComPtr<foundation::IAsyncOperation<super::sockets::StreamSocket>>> {
         <Self as RtActivatable<IPeerFinderStatics>>::get_activation_factory().connect_async(peerInformation)
     }
     #[inline] pub fn get_role() -> Result<PeerRole> {
@@ -5350,7 +5350,7 @@ impl PeerFinder {
     #[cfg(feature="windows-storage")] #[inline] pub fn set_discovery_data(value: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<()> {
         <Self as RtActivatable<IPeerFinderStatics2>>::get_activation_factory().set_discovery_data(value)
     }
-    #[inline] pub fn create_watcher() -> Result<Option<ComPtr<PeerWatcher>>> {
+    #[inline] pub fn create_watcher() -> Result<Option<PeerWatcher>> {
         <Self as RtActivatable<IPeerFinderStatics2>>::get_activation_factory().create_watcher()
     }
 }
@@ -5375,7 +5375,7 @@ RT_INTERFACE!{static interface IPeerFinderStatics(IPeerFinderStaticsVtbl): IInsp
     fn add_ConnectionRequested(&self, handler: *mut foundation::TypedEventHandler<IInspectable, ConnectionRequestedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ConnectionRequested(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
     fn FindAllPeersAsync(&self, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<PeerInformation>>) -> HRESULT,
-    fn ConnectAsync(&self, peerInformation: *mut PeerInformation, out: *mut *mut foundation::IAsyncOperation<super::sockets::StreamSocket>) -> HRESULT
+    fn ConnectAsync(&self, peerInformation: <PeerInformation as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<super::sockets::StreamSocket>) -> HRESULT
 }}
 impl ComPtr<IPeerFinderStatics> {
     #[inline] pub fn get_allow_bluetooth(&self) -> Result<bool> { unsafe { 
@@ -5422,7 +5422,7 @@ impl ComPtr<IPeerFinderStatics> {
     #[inline] pub fn get_alternate_identities(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AlternateIdentities)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Start)(self.as_abi() as *const _ as *mut _);
@@ -5457,12 +5457,12 @@ impl ComPtr<IPeerFinderStatics> {
     #[inline] pub fn find_all_peers_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<PeerInformation>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FindAllPeersAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn connect_async(&self, peerInformation: &ComPtr<PeerInformation>) -> Result<ComPtr<foundation::IAsyncOperation<super::sockets::StreamSocket>>> { unsafe { 
+    #[inline] pub fn connect_async(&self, peerInformation: &PeerInformation) -> Result<ComPtr<foundation::IAsyncOperation<super::sockets::StreamSocket>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConnectAsync)(self.as_abi() as *const _ as *mut _, peerInformation.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPeerFinderStatics2, 3605478501, 64976, 19211, 147, 18, 134, 100, 8, 147, 93, 130);
@@ -5473,7 +5473,7 @@ RT_INTERFACE!{static interface IPeerFinderStatics2(IPeerFinderStatics2Vtbl): IIn
     #[cfg(feature="windows-storage")] fn get_DiscoveryData(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
     #[cfg(feature="windows-storage")] fn put_DiscoveryData(&self, value: *mut super::super::storage::streams::IBuffer) -> HRESULT,
-    fn CreateWatcher(&self, out: *mut *mut PeerWatcher) -> HRESULT
+    fn CreateWatcher(&self, out: *mut <PeerWatcher as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPeerFinderStatics2> {
     #[inline] pub fn get_role(&self) -> Result<PeerRole> { unsafe { 
@@ -5488,16 +5488,16 @@ impl ComPtr<IPeerFinderStatics2> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_discovery_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DiscoveryData)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_discovery_data(&self, value: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_DiscoveryData)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn create_watcher(&self) -> Result<Option<ComPtr<PeerWatcher>>> { unsafe { 
+    #[inline] pub fn create_watcher(&self) -> Result<Option<PeerWatcher>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateWatcher)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PeerWatcher::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPeerInformation, 537022216, 40959, 17908, 182, 233, 64, 139, 46, 190, 243, 115);
@@ -5526,19 +5526,19 @@ impl ComPtr<IPeerInformation3> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_discovery_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DiscoveryData)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPeerInformationWithHostAndService, 3972517037, 7024, 20107, 146, 219, 187, 231, 129, 65, 147, 8);
 RT_INTERFACE!{interface IPeerInformationWithHostAndService(IPeerInformationWithHostAndServiceVtbl): IInspectable(IInspectableVtbl) [IID_IPeerInformationWithHostAndService] {
-    fn get_HostName(&self, out: *mut *mut super::HostName) -> HRESULT,
+    fn get_HostName(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_ServiceName(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ComPtr<IPeerInformationWithHostAndService> {
-    #[inline] pub fn get_host_name(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_host_name(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_HostName)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_service_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -5638,8 +5638,8 @@ RT_INTERFACE!{interface IProximityDevice(IProximityDeviceVtbl): IInspectable(IIn
     #[cfg(feature="windows-storage")] fn PublishBinaryMessage(&self, messageType: HSTRING, message: *mut super::super::storage::streams::IBuffer, out: *mut i64) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
     #[cfg(feature="windows-storage")] fn PublishBinaryMessageWithCallback(&self, messageType: HSTRING, message: *mut super::super::storage::streams::IBuffer, messageTransmittedHandler: *mut MessageTransmittedHandler, out: *mut i64) -> HRESULT,
-    fn PublishUriMessage(&self, message: *mut foundation::Uri, out: *mut i64) -> HRESULT,
-    fn PublishUriMessageWithCallback(&self, message: *mut foundation::Uri, messageTransmittedHandler: *mut MessageTransmittedHandler, out: *mut i64) -> HRESULT,
+    fn PublishUriMessage(&self, message: <foundation::Uri as RtType>::Abi, out: *mut i64) -> HRESULT,
+    fn PublishUriMessageWithCallback(&self, message: <foundation::Uri as RtType>::Abi, messageTransmittedHandler: *mut MessageTransmittedHandler, out: *mut i64) -> HRESULT,
     fn StopSubscribingForMessage(&self, subscriptionId: i64) -> HRESULT,
     fn StopPublishingMessage(&self, messageId: i64) -> HRESULT,
     fn add_DeviceArrived(&self, arrivedHandler: *mut DeviceArrivedEventHandler, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5676,12 +5676,12 @@ impl ComPtr<IProximityDevice> {
         let hr = ((*self.as_abi().lpVtbl).PublishBinaryMessageWithCallback)(self.as_abi() as *const _ as *mut _, messageType.get(), message.as_abi() as *const _ as *mut _, messageTransmittedHandler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn publish_uri_message(&self, message: &ComPtr<foundation::Uri>) -> Result<i64> { unsafe { 
+    #[inline] pub fn publish_uri_message(&self, message: &foundation::Uri) -> Result<i64> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).PublishUriMessage)(self.as_abi() as *const _ as *mut _, message.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn publish_uri_message_with_callback(&self, message: &ComPtr<foundation::Uri>, messageTransmittedHandler: &ComPtr<MessageTransmittedHandler>) -> Result<i64> { unsafe { 
+    #[inline] pub fn publish_uri_message_with_callback(&self, message: &foundation::Uri, messageTransmittedHandler: &ComPtr<MessageTransmittedHandler>) -> Result<i64> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).PublishUriMessageWithCallback)(self.as_abi() as *const _ as *mut _, message.as_abi() as *const _ as *mut _, messageTransmittedHandler.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -5734,10 +5734,10 @@ impl ProximityDevice {
     #[inline] pub fn get_device_selector() -> Result<HString> {
         <Self as RtActivatable<IProximityDeviceStatics>>::get_activation_factory().get_device_selector()
     }
-    #[inline] pub fn get_default() -> Result<Option<ComPtr<ProximityDevice>>> {
+    #[inline] pub fn get_default() -> Result<Option<ProximityDevice>> {
         <Self as RtActivatable<IProximityDeviceStatics>>::get_activation_factory().get_default()
     }
-    #[inline] pub fn from_id(deviceId: &HStringArg) -> Result<Option<ComPtr<ProximityDevice>>> {
+    #[inline] pub fn from_id(deviceId: &HStringArg) -> Result<Option<ProximityDevice>> {
         <Self as RtActivatable<IProximityDeviceStatics>>::get_activation_factory().from_id(deviceId)
     }
 }
@@ -5745,8 +5745,8 @@ DEFINE_CLSID!(ProximityDevice(&[87,105,110,100,111,119,115,46,78,101,116,119,111
 DEFINE_IID!(IID_IProximityDeviceStatics, 2437652509, 63201, 18372, 161, 76, 20, 138, 25, 3, 208, 198);
 RT_INTERFACE!{static interface IProximityDeviceStatics(IProximityDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IProximityDeviceStatics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
-    fn GetDefault(&self, out: *mut *mut ProximityDevice) -> HRESULT,
-    fn FromId(&self, deviceId: HSTRING, out: *mut *mut ProximityDevice) -> HRESULT
+    fn GetDefault(&self, out: *mut <ProximityDevice as RtType>::Abi) -> HRESULT,
+    fn FromId(&self, deviceId: HSTRING, out: *mut <ProximityDevice as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IProximityDeviceStatics> {
     #[inline] pub fn get_device_selector(&self) -> Result<HString> { unsafe { 
@@ -5754,15 +5754,15 @@ impl ComPtr<IProximityDeviceStatics> {
         let hr = ((*self.as_abi().lpVtbl).GetDeviceSelector)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<ProximityDevice>>> { unsafe { 
+    #[inline] pub fn get_default(&self) -> Result<Option<ProximityDevice>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ProximityDevice::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn from_id(&self, deviceId: &HStringArg) -> Result<Option<ComPtr<ProximityDevice>>> { unsafe { 
+    #[inline] pub fn from_id(&self, deviceId: &HStringArg) -> Result<Option<ProximityDevice>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FromId)(self.as_abi() as *const _ as *mut _, deviceId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ProximityDevice::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IProximityMessage, 4020963202, 63201, 18037, 160, 69, 216, 227, 32, 194, 72, 8);
@@ -5787,7 +5787,7 @@ impl ComPtr<IProximityMessage> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Data)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_data_as_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -5800,7 +5800,7 @@ DEFINE_IID!(IID_ITriggeredConnectionStateChangedEventArgs, 3332866221, 63201, 19
 RT_INTERFACE!{interface ITriggeredConnectionStateChangedEventArgs(ITriggeredConnectionStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITriggeredConnectionStateChangedEventArgs] {
     fn get_State(&self, out: *mut TriggeredConnectState) -> HRESULT,
     fn get_Id(&self, out: *mut u32) -> HRESULT,
-    fn get_Socket(&self, out: *mut *mut super::sockets::StreamSocket) -> HRESULT
+    fn get_Socket(&self, out: *mut <super::sockets::StreamSocket as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ITriggeredConnectionStateChangedEventArgs> {
     #[inline] pub fn get_state(&self) -> Result<TriggeredConnectState> { unsafe { 
@@ -5813,10 +5813,10 @@ impl ComPtr<ITriggeredConnectionStateChangedEventArgs> {
         let hr = ((*self.as_abi().lpVtbl).get_Id)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_socket(&self) -> Result<Option<ComPtr<super::sockets::StreamSocket>>> { unsafe { 
+    #[inline] pub fn get_socket(&self) -> Result<Option<super::sockets::StreamSocket>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Socket)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::sockets::StreamSocket::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class TriggeredConnectionStateChangedEventArgs: ITriggeredConnectionStateChangedEventArgs}
@@ -5874,10 +5874,10 @@ impl PushNotificationChannelManager {
     #[inline] pub fn create_push_notification_channel_for_secondary_tile_async(tileId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> {
         <Self as RtActivatable<IPushNotificationChannelManagerStatics>>::get_activation_factory().create_push_notification_channel_for_secondary_tile_async(tileId)
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &ComPtr<super::super::system::User>) -> Result<Option<ComPtr<PushNotificationChannelManagerForUser>>> {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(user: &super::super::system::User) -> Result<Option<PushNotificationChannelManagerForUser>> {
         <Self as RtActivatable<IPushNotificationChannelManagerStatics2>>::get_activation_factory().get_for_user(user)
     }
-    #[inline] pub fn get_default() -> Result<Option<ComPtr<PushNotificationChannelManagerForUser>>> {
+    #[inline] pub fn get_default() -> Result<Option<PushNotificationChannelManagerForUser>> {
         <Self as RtActivatable<IPushNotificationChannelManagerStatics3>>::get_activation_factory().get_default()
     }
 }
@@ -5887,28 +5887,28 @@ RT_INTERFACE!{interface IPushNotificationChannelManagerForUser(IPushNotification
     fn CreatePushNotificationChannelForApplicationAsync(&self, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
     fn CreatePushNotificationChannelForApplicationAsyncWithId(&self, applicationId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
     fn CreatePushNotificationChannelForSecondaryTileAsync(&self, tileId: HSTRING, out: *mut *mut foundation::IAsyncOperation<PushNotificationChannel>) -> HRESULT,
-    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut *mut super::super::system::User) -> HRESULT
+    #[cfg(feature="windows-system")] fn get_User(&self, out: *mut <super::super::system::User as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPushNotificationChannelManagerForUser> {
     #[inline] pub fn create_push_notification_channel_for_application_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreatePushNotificationChannelForApplicationAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_push_notification_channel_for_application_async_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreatePushNotificationChannelForApplicationAsyncWithId)(self.as_abi() as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_push_notification_channel_for_secondary_tile_async(&self, tileId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreatePushNotificationChannelForSecondaryTileAsync)(self.as_abi() as *const _ as *mut _, tileId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<ComPtr<super::super::system::User>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<super::super::system::User>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_User)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::system::User::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PushNotificationChannelManagerForUser: IPushNotificationChannelManagerForUser}
@@ -5921,12 +5921,12 @@ impl ComPtr<IPushNotificationChannelManagerForUser2> {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_raw_push_notification_channel_with_alternate_key_for_application_async(&self, appServerKey: &ComPtr<super::super::storage::streams::IBuffer>, channelId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateRawPushNotificationChannelWithAlternateKeyForApplicationAsync)(self.as_abi() as *const _ as *mut _, appServerKey.as_abi() as *const _ as *mut _, channelId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_raw_push_notification_channel_with_alternate_key_for_application_async_with_id(&self, appServerKey: &ComPtr<super::super::storage::streams::IBuffer>, channelId: &HStringArg, appId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateRawPushNotificationChannelWithAlternateKeyForApplicationAsyncWithId)(self.as_abi() as *const _ as *mut _, appServerKey.as_abi() as *const _ as *mut _, channelId.get(), appId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPushNotificationChannelManagerStatics, 2343541605, 30625, 17800, 189, 25, 134, 21, 41, 169, 220, 240);
@@ -5939,39 +5939,39 @@ impl ComPtr<IPushNotificationChannelManagerStatics> {
     #[inline] pub fn create_push_notification_channel_for_application_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreatePushNotificationChannelForApplicationAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_push_notification_channel_for_application_async_with_id(&self, applicationId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreatePushNotificationChannelForApplicationAsyncWithId)(self.as_abi() as *const _ as *mut _, applicationId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_push_notification_channel_for_secondary_tile_async(&self, tileId: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<PushNotificationChannel>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreatePushNotificationChannelForSecondaryTileAsync)(self.as_abi() as *const _ as *mut _, tileId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPushNotificationChannelManagerStatics2, 3024397917, 42985, 19240, 149, 14, 243, 117, 169, 7, 249, 223);
 RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics2(IPushNotificationChannelManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerStatics2] {
-    #[cfg(feature="windows-system")] fn GetForUser(&self, user: *mut super::super::system::User, out: *mut *mut PushNotificationChannelManagerForUser) -> HRESULT
+    #[cfg(feature="windows-system")] fn GetForUser(&self, user: <super::super::system::User as RtType>::Abi, out: *mut <PushNotificationChannelManagerForUser as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPushNotificationChannelManagerStatics2> {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &ComPtr<super::super::system::User>) -> Result<Option<ComPtr<PushNotificationChannelManagerForUser>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &super::super::system::User) -> Result<Option<PushNotificationChannelManagerForUser>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetForUser)(self.as_abi() as *const _ as *mut _, user.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PushNotificationChannelManagerForUser::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPushNotificationChannelManagerStatics3, 1191313150, 3806, 19007, 174, 120, 191, 164, 113, 73, 105, 37);
 RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics3(IPushNotificationChannelManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerStatics3] {
-    fn GetDefault(&self, out: *mut *mut PushNotificationChannelManagerForUser) -> HRESULT
+    fn GetDefault(&self, out: *mut <PushNotificationChannelManagerForUser as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPushNotificationChannelManagerStatics3> {
-    #[inline] pub fn get_default(&self) -> Result<Option<ComPtr<PushNotificationChannelManagerForUser>>> { unsafe { 
+    #[inline] pub fn get_default(&self) -> Result<Option<PushNotificationChannelManagerForUser>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDefault)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PushNotificationChannelManagerForUser::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPushNotificationReceivedEventArgs, 3506855436, 14029, 18508, 185, 53, 10, 153, 183, 83, 207, 0);
@@ -5980,12 +5980,12 @@ RT_INTERFACE!{interface IPushNotificationReceivedEventArgs(IPushNotificationRece
     fn get_Cancel(&self, out: *mut bool) -> HRESULT,
     fn get_NotificationType(&self, out: *mut PushNotificationType) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_ToastNotification(&self, out: *mut *mut super::super::ui::notifications::ToastNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_ToastNotification(&self, out: *mut <super::super::ui::notifications::ToastNotification as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_TileNotification(&self, out: *mut *mut super::super::ui::notifications::TileNotification) -> HRESULT,
+    #[cfg(feature="windows-ui")] fn get_TileNotification(&self, out: *mut <super::super::ui::notifications::TileNotification as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-ui")] fn get_BadgeNotification(&self, out: *mut *mut super::super::ui::notifications::BadgeNotification) -> HRESULT,
-    fn get_RawNotification(&self, out: *mut *mut RawNotification) -> HRESULT
+    #[cfg(feature="windows-ui")] fn get_BadgeNotification(&self, out: *mut <super::super::ui::notifications::BadgeNotification as RtType>::Abi) -> HRESULT,
+    fn get_RawNotification(&self, out: *mut <RawNotification as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPushNotificationReceivedEventArgs> {
     #[inline] pub fn set_cancel(&self, value: bool) -> Result<()> { unsafe { 
@@ -6002,25 +6002,25 @@ impl ComPtr<IPushNotificationReceivedEventArgs> {
         let hr = ((*self.as_abi().lpVtbl).get_NotificationType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_toast_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::ToastNotification>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_toast_notification(&self) -> Result<Option<super::super::ui::notifications::ToastNotification>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ToastNotification)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::ui::notifications::ToastNotification::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_tile_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::TileNotification>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_tile_notification(&self) -> Result<Option<super::super::ui::notifications::TileNotification>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TileNotification)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::ui::notifications::TileNotification::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-ui")] #[inline] pub fn get_badge_notification(&self) -> Result<Option<ComPtr<super::super::ui::notifications::BadgeNotification>>> { unsafe { 
+    #[cfg(feature="windows-ui")] #[inline] pub fn get_badge_notification(&self) -> Result<Option<super::super::ui::notifications::BadgeNotification>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_BadgeNotification)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::ui::notifications::BadgeNotification::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_raw_notification(&self) -> Result<Option<ComPtr<RawNotification>>> { unsafe { 
+    #[inline] pub fn get_raw_notification(&self) -> Result<Option<RawNotification>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RawNotification)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(RawNotification::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PushNotificationReceivedEventArgs: IPushNotificationReceivedEventArgs}
@@ -6048,7 +6048,7 @@ impl ComPtr<IRawNotification2> {
     #[inline] pub fn get_headers(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Headers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_channel_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -6063,7 +6063,7 @@ use crate::prelude::*;
 DEFINE_IID!(IID_IDnssdRegistrationResult, 1031301842, 58886, 21328, 115, 234, 126, 151, 240, 102, 22, 47);
 RT_INTERFACE!{interface IDnssdRegistrationResult(IDnssdRegistrationResultVtbl): IInspectable(IInspectableVtbl) [IID_IDnssdRegistrationResult] {
     fn get_Status(&self, out: *mut DnssdRegistrationStatus) -> HRESULT,
-    fn get_IPAddress(&self, out: *mut *mut super::super::HostName) -> HRESULT,
+    fn get_IPAddress(&self, out: *mut <super::super::HostName as RtType>::Abi) -> HRESULT,
     fn get_HasInstanceNameChanged(&self, out: *mut bool) -> HRESULT
 }}
 impl ComPtr<IDnssdRegistrationResult> {
@@ -6072,10 +6072,10 @@ impl ComPtr<IDnssdRegistrationResult> {
         let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_ip_address(&self) -> Result<Option<ComPtr<super::super::HostName>>> { unsafe { 
+    #[inline] pub fn get_ip_address(&self) -> Result<Option<super::super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_IPAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::HostName::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_has_instance_name_changed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
@@ -6093,8 +6093,8 @@ DEFINE_IID!(IID_IDnssdServiceInstance, 3796294526, 39077, 19617, 185, 228, 194, 
 RT_INTERFACE!{interface IDnssdServiceInstance(IDnssdServiceInstanceVtbl): IInspectable(IInspectableVtbl) [IID_IDnssdServiceInstance] {
     fn get_DnssdServiceInstanceName(&self, out: *mut HSTRING) -> HRESULT,
     fn put_DnssdServiceInstanceName(&self, value: HSTRING) -> HRESULT,
-    fn get_HostName(&self, out: *mut *mut super::super::HostName) -> HRESULT,
-    fn put_HostName(&self, value: *mut super::super::HostName) -> HRESULT,
+    fn get_HostName(&self, out: *mut <super::super::HostName as RtType>::Abi) -> HRESULT,
+    fn put_HostName(&self, value: <super::super::HostName as RtType>::Abi) -> HRESULT,
     fn get_Port(&self, out: *mut u16) -> HRESULT,
     fn put_Port(&self, value: u16) -> HRESULT,
     fn get_Priority(&self, out: *mut u16) -> HRESULT,
@@ -6102,10 +6102,10 @@ RT_INTERFACE!{interface IDnssdServiceInstance(IDnssdServiceInstanceVtbl): IInspe
     fn get_Weight(&self, out: *mut u16) -> HRESULT,
     fn put_Weight(&self, value: u16) -> HRESULT,
     fn get_TextAttributes(&self, out: *mut *mut foundation::collections::IMap<HString, HString>) -> HRESULT,
-    fn RegisterStreamSocketListenerAsync1(&self, socket: *mut super::super::sockets::StreamSocketListener, out: *mut *mut foundation::IAsyncOperation<DnssdRegistrationResult>) -> HRESULT,
-    fn RegisterStreamSocketListenerAsync2(&self, socket: *mut super::super::sockets::StreamSocketListener, adapter: *mut super::super::connectivity::NetworkAdapter, out: *mut *mut foundation::IAsyncOperation<DnssdRegistrationResult>) -> HRESULT,
-    fn RegisterDatagramSocketAsync1(&self, socket: *mut super::super::sockets::DatagramSocket, out: *mut *mut foundation::IAsyncOperation<DnssdRegistrationResult>) -> HRESULT,
-    fn RegisterDatagramSocketAsync2(&self, socket: *mut super::super::sockets::DatagramSocket, adapter: *mut super::super::connectivity::NetworkAdapter, out: *mut *mut foundation::IAsyncOperation<DnssdRegistrationResult>) -> HRESULT
+    fn RegisterStreamSocketListenerAsync1(&self, socket: <super::super::sockets::StreamSocketListener as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<DnssdRegistrationResult>) -> HRESULT,
+    fn RegisterStreamSocketListenerAsync2(&self, socket: <super::super::sockets::StreamSocketListener as RtType>::Abi, adapter: <super::super::connectivity::NetworkAdapter as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<DnssdRegistrationResult>) -> HRESULT,
+    fn RegisterDatagramSocketAsync1(&self, socket: <super::super::sockets::DatagramSocket as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<DnssdRegistrationResult>) -> HRESULT,
+    fn RegisterDatagramSocketAsync2(&self, socket: <super::super::sockets::DatagramSocket as RtType>::Abi, adapter: <super::super::connectivity::NetworkAdapter as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<DnssdRegistrationResult>) -> HRESULT
 }}
 impl ComPtr<IDnssdServiceInstance> {
     #[inline] pub fn get_dnssd_service_instance_name(&self) -> Result<HString> { unsafe { 
@@ -6117,12 +6117,12 @@ impl ComPtr<IDnssdServiceInstance> {
         let hr = ((*self.as_abi().lpVtbl).put_DnssdServiceInstanceName)(self.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_host_name(&self) -> Result<Option<ComPtr<super::super::HostName>>> { unsafe { 
+    #[inline] pub fn get_host_name(&self) -> Result<Option<super::super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_HostName)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::HostName::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_host_name(&self, value: &ComPtr<super::super::HostName>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_host_name(&self, value: &super::super::HostName) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_HostName)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -6156,33 +6156,33 @@ impl ComPtr<IDnssdServiceInstance> {
     #[inline] pub fn get_text_attributes(&self) -> Result<Option<ComPtr<foundation::collections::IMap<HString, HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TextAttributes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn register_stream_socket_listener_async1(&self, socket: &ComPtr<super::super::sockets::StreamSocketListener>) -> Result<ComPtr<foundation::IAsyncOperation<DnssdRegistrationResult>>> { unsafe { 
+    #[inline] pub fn register_stream_socket_listener_async1(&self, socket: &super::super::sockets::StreamSocketListener) -> Result<ComPtr<foundation::IAsyncOperation<DnssdRegistrationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RegisterStreamSocketListenerAsync1)(self.as_abi() as *const _ as *mut _, socket.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn register_stream_socket_listener_async2(&self, socket: &ComPtr<super::super::sockets::StreamSocketListener>, adapter: &ComPtr<super::super::connectivity::NetworkAdapter>) -> Result<ComPtr<foundation::IAsyncOperation<DnssdRegistrationResult>>> { unsafe { 
+    #[inline] pub fn register_stream_socket_listener_async2(&self, socket: &super::super::sockets::StreamSocketListener, adapter: &super::super::connectivity::NetworkAdapter) -> Result<ComPtr<foundation::IAsyncOperation<DnssdRegistrationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RegisterStreamSocketListenerAsync2)(self.as_abi() as *const _ as *mut _, socket.as_abi() as *const _ as *mut _, adapter.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn register_datagram_socket_async1(&self, socket: &ComPtr<super::super::sockets::DatagramSocket>) -> Result<ComPtr<foundation::IAsyncOperation<DnssdRegistrationResult>>> { unsafe { 
+    #[inline] pub fn register_datagram_socket_async1(&self, socket: &super::super::sockets::DatagramSocket) -> Result<ComPtr<foundation::IAsyncOperation<DnssdRegistrationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RegisterDatagramSocketAsync1)(self.as_abi() as *const _ as *mut _, socket.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn register_datagram_socket_async2(&self, socket: &ComPtr<super::super::sockets::DatagramSocket>, adapter: &ComPtr<super::super::connectivity::NetworkAdapter>) -> Result<ComPtr<foundation::IAsyncOperation<DnssdRegistrationResult>>> { unsafe { 
+    #[inline] pub fn register_datagram_socket_async2(&self, socket: &super::super::sockets::DatagramSocket, adapter: &super::super::connectivity::NetworkAdapter) -> Result<ComPtr<foundation::IAsyncOperation<DnssdRegistrationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RegisterDatagramSocketAsync2)(self.as_abi() as *const _ as *mut _, socket.as_abi() as *const _ as *mut _, adapter.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class DnssdServiceInstance: IDnssdServiceInstance}
 impl RtActivatable<IDnssdServiceInstanceFactory> for DnssdServiceInstance {}
 impl DnssdServiceInstance {
-    #[inline] pub fn create(dnssdServiceInstanceName: &HStringArg, hostName: &ComPtr<super::super::HostName>, port: u16) -> Result<ComPtr<DnssdServiceInstance>> {
+    #[inline] pub fn create(dnssdServiceInstanceName: &HStringArg, hostName: &super::super::HostName, port: u16) -> Result<DnssdServiceInstance> {
         <Self as RtActivatable<IDnssdServiceInstanceFactory>>::get_activation_factory().create(dnssdServiceInstanceName, hostName, port)
     }
 }
@@ -6190,13 +6190,13 @@ DEFINE_CLSID!(DnssdServiceInstance(&[87,105,110,100,111,119,115,46,78,101,116,11
 RT_CLASS!{class DnssdServiceInstanceCollection: foundation::collections::IVectorView<DnssdServiceInstance>}
 DEFINE_IID!(IID_IDnssdServiceInstanceFactory, 1823498657, 50296, 17201, 150, 132, 74, 242, 24, 108, 10, 43);
 RT_INTERFACE!{static interface IDnssdServiceInstanceFactory(IDnssdServiceInstanceFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDnssdServiceInstanceFactory] {
-    fn Create(&self, dnssdServiceInstanceName: HSTRING, hostName: *mut super::super::HostName, port: u16, out: *mut *mut DnssdServiceInstance) -> HRESULT
+    fn Create(&self, dnssdServiceInstanceName: HSTRING, hostName: <super::super::HostName as RtType>::Abi, port: u16, out: *mut <DnssdServiceInstance as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IDnssdServiceInstanceFactory> {
-    #[inline] pub fn create(&self, dnssdServiceInstanceName: &HStringArg, hostName: &ComPtr<super::super::HostName>, port: u16) -> Result<ComPtr<DnssdServiceInstance>> { unsafe { 
+    #[inline] pub fn create(&self, dnssdServiceInstanceName: &HStringArg, hostName: &super::super::HostName, port: u16) -> Result<DnssdServiceInstance> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, dnssdServiceInstanceName.get(), hostName.as_abi() as *const _ as *mut _, port, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DnssdServiceInstance::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IDnssdServiceWatcher, 3426015681, 56189, 19305, 152, 61, 198, 248, 63, 32, 86, 130);
@@ -6303,17 +6303,17 @@ impl ComPtr<IControlChannelTrigger> {
     #[inline] pub fn get_transport_object(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TransportObject)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_keep_alive_trigger(&self) -> Result<Option<ComPtr<super::super::applicationmodel::background::IBackgroundTrigger>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_KeepAliveTrigger)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_push_notification_trigger(&self) -> Result<Option<ComPtr<super::super::applicationmodel::background::IBackgroundTrigger>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PushNotificationTrigger)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn using_transport(&self, transport: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).UsingTransport)(self.as_abi() as *const _ as *mut _, transport.as_abi() as *const _ as *mut _);
@@ -6336,10 +6336,10 @@ impl ComPtr<IControlChannelTrigger> {
 RT_CLASS!{class ControlChannelTrigger: IControlChannelTrigger}
 impl RtActivatable<IControlChannelTriggerFactory> for ControlChannelTrigger {}
 impl ControlChannelTrigger {
-    #[inline] pub fn create_control_channel_trigger(channelId: &HStringArg, serverKeepAliveIntervalInMinutes: u32) -> Result<ComPtr<ControlChannelTrigger>> {
+    #[inline] pub fn create_control_channel_trigger(channelId: &HStringArg, serverKeepAliveIntervalInMinutes: u32) -> Result<ControlChannelTrigger> {
         <Self as RtActivatable<IControlChannelTriggerFactory>>::get_activation_factory().create_control_channel_trigger(channelId, serverKeepAliveIntervalInMinutes)
     }
-    #[inline] pub fn create_control_channel_trigger_ex(channelId: &HStringArg, serverKeepAliveIntervalInMinutes: u32, resourceRequestType: ControlChannelTriggerResourceType) -> Result<ComPtr<ControlChannelTrigger>> {
+    #[inline] pub fn create_control_channel_trigger_ex(channelId: &HStringArg, serverKeepAliveIntervalInMinutes: u32, resourceRequestType: ControlChannelTriggerResourceType) -> Result<ControlChannelTrigger> {
         <Self as RtActivatable<IControlChannelTriggerFactory>>::get_activation_factory().create_control_channel_trigger_ex(channelId, serverKeepAliveIntervalInMinutes, resourceRequestType)
     }
 }
@@ -6357,30 +6357,30 @@ impl ComPtr<IControlChannelTrigger2> {
 }
 DEFINE_IID!(IID_IControlChannelTriggerEventDetails, 456581191, 35259, 16950, 150, 172, 113, 208, 18, 187, 72, 105);
 RT_INTERFACE!{interface IControlChannelTriggerEventDetails(IControlChannelTriggerEventDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IControlChannelTriggerEventDetails] {
-    fn get_ControlChannelTrigger(&self, out: *mut *mut ControlChannelTrigger) -> HRESULT
+    fn get_ControlChannelTrigger(&self, out: *mut <ControlChannelTrigger as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IControlChannelTriggerEventDetails> {
-    #[inline] pub fn get_control_channel_trigger(&self) -> Result<Option<ComPtr<ControlChannelTrigger>>> { unsafe { 
+    #[inline] pub fn get_control_channel_trigger(&self) -> Result<Option<ControlChannelTrigger>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ControlChannelTrigger)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ControlChannelTrigger::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IControlChannelTriggerFactory, 3662380272, 36209, 17519, 136, 195, 185, 81, 132, 162, 214, 205);
 RT_INTERFACE!{static interface IControlChannelTriggerFactory(IControlChannelTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IControlChannelTriggerFactory] {
-    fn CreateControlChannelTrigger(&self, channelId: HSTRING, serverKeepAliveIntervalInMinutes: u32, out: *mut *mut ControlChannelTrigger) -> HRESULT,
-    fn CreateControlChannelTriggerEx(&self, channelId: HSTRING, serverKeepAliveIntervalInMinutes: u32, resourceRequestType: ControlChannelTriggerResourceType, out: *mut *mut ControlChannelTrigger) -> HRESULT
+    fn CreateControlChannelTrigger(&self, channelId: HSTRING, serverKeepAliveIntervalInMinutes: u32, out: *mut <ControlChannelTrigger as RtType>::Abi) -> HRESULT,
+    fn CreateControlChannelTriggerEx(&self, channelId: HSTRING, serverKeepAliveIntervalInMinutes: u32, resourceRequestType: ControlChannelTriggerResourceType, out: *mut <ControlChannelTrigger as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IControlChannelTriggerFactory> {
-    #[inline] pub fn create_control_channel_trigger(&self, channelId: &HStringArg, serverKeepAliveIntervalInMinutes: u32) -> Result<ComPtr<ControlChannelTrigger>> { unsafe { 
+    #[inline] pub fn create_control_channel_trigger(&self, channelId: &HStringArg, serverKeepAliveIntervalInMinutes: u32) -> Result<ControlChannelTrigger> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateControlChannelTrigger)(self.as_abi() as *const _ as *mut _, channelId.get(), serverKeepAliveIntervalInMinutes, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ControlChannelTrigger::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_control_channel_trigger_ex(&self, channelId: &HStringArg, serverKeepAliveIntervalInMinutes: u32, resourceRequestType: ControlChannelTriggerResourceType) -> Result<ComPtr<ControlChannelTrigger>> { unsafe { 
+    #[inline] pub fn create_control_channel_trigger_ex(&self, channelId: &HStringArg, serverKeepAliveIntervalInMinutes: u32, resourceRequestType: ControlChannelTriggerResourceType) -> Result<ControlChannelTrigger> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateControlChannelTriggerEx)(self.as_abi() as *const _ as *mut _, channelId.get(), serverKeepAliveIntervalInMinutes, resourceRequestType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ControlChannelTrigger::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IControlChannelTriggerResetEventDetails, 1750139790, 36548, 17150, 155, 178, 33, 233, 27, 123, 252, 177);
@@ -6417,71 +6417,71 @@ RT_ENUM! { enum ControlChannelTriggerStatus: i32 {
 }}
 DEFINE_IID!(IID_IDatagramSocket, 2145541051, 50108, 18039, 132, 70, 202, 40, 164, 101, 163, 175);
 RT_INTERFACE!{interface IDatagramSocket(IDatagramSocketVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocket] {
-    fn get_Control(&self, out: *mut *mut DatagramSocketControl) -> HRESULT,
-    fn get_Information(&self, out: *mut *mut DatagramSocketInformation) -> HRESULT,
+    fn get_Control(&self, out: *mut <DatagramSocketControl as RtType>::Abi) -> HRESULT,
+    fn get_Information(&self, out: *mut <DatagramSocketInformation as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_OutputStream(&self, out: *mut *mut super::super::storage::streams::IOutputStream) -> HRESULT,
-    fn ConnectAsync(&self, remoteHostName: *mut super::HostName, remoteServiceName: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn ConnectWithEndpointPairAsync(&self, endpointPair: *mut super::EndpointPair, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ConnectAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ConnectWithEndpointPairAsync(&self, endpointPair: <super::EndpointPair as RtType>::Abi, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn BindServiceNameAsync(&self, localServiceName: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn BindEndpointAsync(&self, localHostName: *mut super::HostName, localServiceName: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn JoinMulticastGroup(&self, host: *mut super::HostName) -> HRESULT,
+    fn BindEndpointAsync(&self, localHostName: <super::HostName as RtType>::Abi, localServiceName: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn JoinMulticastGroup(&self, host: <super::HostName as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy8(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetOutputStreamAsync(&self, remoteHostName: *mut super::HostName, remoteServiceName: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::storage::streams::IOutputStream>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn GetOutputStreamAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, out: *mut *mut foundation::IAsyncOperation<super::super::storage::streams::IOutputStream>) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy9(&self) -> (),
-    #[cfg(feature="windows-storage")] fn GetOutputStreamWithEndpointPairAsync(&self, endpointPair: *mut super::EndpointPair, out: *mut *mut foundation::IAsyncOperation<super::super::storage::streams::IOutputStream>) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn GetOutputStreamWithEndpointPairAsync(&self, endpointPair: <super::EndpointPair as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<super::super::storage::streams::IOutputStream>) -> HRESULT,
     fn add_MessageReceived(&self, eventHandler: *mut foundation::TypedEventHandler<DatagramSocket, DatagramSocketMessageReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_MessageReceived(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ComPtr<IDatagramSocket> {
-    #[inline] pub fn get_control(&self) -> Result<Option<ComPtr<DatagramSocketControl>>> { unsafe { 
+    #[inline] pub fn get_control(&self) -> Result<Option<DatagramSocketControl>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Control)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DatagramSocketControl::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_information(&self) -> Result<Option<ComPtr<DatagramSocketInformation>>> { unsafe { 
+    #[inline] pub fn get_information(&self) -> Result<Option<DatagramSocketInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Information)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DatagramSocketInformation::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IOutputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_OutputStream)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn connect_async(&self, remoteHostName: &ComPtr<super::HostName>, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn connect_async(&self, remoteHostName: &super::HostName, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConnectAsync)(self.as_abi() as *const _ as *mut _, remoteHostName.as_abi() as *const _ as *mut _, remoteServiceName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn connect_with_endpoint_pair_async(&self, endpointPair: &ComPtr<super::EndpointPair>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn connect_with_endpoint_pair_async(&self, endpointPair: &super::EndpointPair) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConnectWithEndpointPairAsync)(self.as_abi() as *const _ as *mut _, endpointPair.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn bind_service_name_async(&self, localServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).BindServiceNameAsync)(self.as_abi() as *const _ as *mut _, localServiceName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn bind_endpoint_async(&self, localHostName: &ComPtr<super::HostName>, localServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn bind_endpoint_async(&self, localHostName: &super::HostName, localServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).BindEndpointAsync)(self.as_abi() as *const _ as *mut _, localHostName.as_abi() as *const _ as *mut _, localServiceName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn join_multicast_group(&self, host: &ComPtr<super::HostName>) -> Result<()> { unsafe { 
+    #[inline] pub fn join_multicast_group(&self, host: &super::HostName) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).JoinMulticastGroup)(self.as_abi() as *const _ as *mut _, host.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream_async(&self, remoteHostName: &ComPtr<super::HostName>, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::streams::IOutputStream>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream_async(&self, remoteHostName: &super::HostName, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::streams::IOutputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetOutputStreamAsync)(self.as_abi() as *const _ as *mut _, remoteHostName.as_abi() as *const _ as *mut _, remoteServiceName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream_with_endpoint_pair_async(&self, endpointPair: &ComPtr<super::EndpointPair>) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::streams::IOutputStream>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream_with_endpoint_pair_async(&self, endpointPair: &super::EndpointPair) -> Result<ComPtr<foundation::IAsyncOperation<super::super::storage::streams::IOutputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetOutputStreamWithEndpointPairAsync)(self.as_abi() as *const _ as *mut _, endpointPair.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_message_received(&self, eventHandler: &ComPtr<foundation::TypedEventHandler<DatagramSocket, DatagramSocketMessageReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -6497,23 +6497,23 @@ RT_CLASS!{class DatagramSocket: IDatagramSocket}
 impl RtActivatable<IDatagramSocketStatics> for DatagramSocket {}
 impl RtActivatable<IActivationFactory> for DatagramSocket {}
 impl DatagramSocket {
-    #[inline] pub fn get_endpoint_pairs_async(remoteHostName: &ComPtr<super::HostName>, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> {
+    #[inline] pub fn get_endpoint_pairs_async(remoteHostName: &super::HostName, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> {
         <Self as RtActivatable<IDatagramSocketStatics>>::get_activation_factory().get_endpoint_pairs_async(remoteHostName, remoteServiceName)
     }
-    #[inline] pub fn get_endpoint_pairs_with_sort_options_async(remoteHostName: &ComPtr<super::HostName>, remoteServiceName: &HStringArg, sortOptions: super::HostNameSortOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> {
+    #[inline] pub fn get_endpoint_pairs_with_sort_options_async(remoteHostName: &super::HostName, remoteServiceName: &HStringArg, sortOptions: super::HostNameSortOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> {
         <Self as RtActivatable<IDatagramSocketStatics>>::get_activation_factory().get_endpoint_pairs_with_sort_options_async(remoteHostName, remoteServiceName, sortOptions)
     }
 }
 DEFINE_CLSID!(DatagramSocket(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,68,97,116,97,103,114,97,109,83,111,99,107,101,116,0]) [CLSID_DatagramSocket]);
 DEFINE_IID!(IID_IDatagramSocket2, 3627787092, 39581, 16773, 162, 10, 20, 36, 201, 194, 167, 205);
 RT_INTERFACE!{interface IDatagramSocket2(IDatagramSocket2Vtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocket2] {
-    fn BindServiceNameAndAdapterAsync(&self, localServiceName: HSTRING, adapter: *mut super::connectivity::NetworkAdapter, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+    fn BindServiceNameAndAdapterAsync(&self, localServiceName: HSTRING, adapter: <super::connectivity::NetworkAdapter as RtType>::Abi, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl ComPtr<IDatagramSocket2> {
-    #[inline] pub fn bind_service_name_and_adapter_async(&self, localServiceName: &HStringArg, adapter: &ComPtr<super::connectivity::NetworkAdapter>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn bind_service_name_and_adapter_async(&self, localServiceName: &HStringArg, adapter: &super::connectivity::NetworkAdapter) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).BindServiceNameAndAdapterAsync)(self.as_abi() as *const _ as *mut _, localServiceName.get(), adapter.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IDatagramSocket3, 928272137, 43922, 17158, 154, 193, 12, 56, 18, 131, 217, 198);
@@ -6522,14 +6522,14 @@ RT_INTERFACE!{interface IDatagramSocket3(IDatagramSocket3Vtbl): IInspectable(IIn
     fn EnableTransferOwnership(&self, taskId: Guid) -> HRESULT,
     fn EnableTransferOwnershipWithConnectedStandbyAction(&self, taskId: Guid, connectedStandbyAction: SocketActivityConnectedStandbyAction) -> HRESULT,
     fn TransferOwnership(&self, socketId: HSTRING) -> HRESULT,
-    fn TransferOwnershipWithContext(&self, socketId: HSTRING, data: *mut SocketActivityContext) -> HRESULT,
-    fn TransferOwnershipWithContextAndKeepAliveTime(&self, socketId: HSTRING, data: *mut SocketActivityContext, keepAliveTime: foundation::TimeSpan) -> HRESULT
+    fn TransferOwnershipWithContext(&self, socketId: HSTRING, data: <SocketActivityContext as RtType>::Abi) -> HRESULT,
+    fn TransferOwnershipWithContextAndKeepAliveTime(&self, socketId: HSTRING, data: <SocketActivityContext as RtType>::Abi, keepAliveTime: foundation::TimeSpan) -> HRESULT
 }}
 impl ComPtr<IDatagramSocket3> {
     #[inline] pub fn cancel_io_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CancelIOAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn enable_transfer_ownership(&self, taskId: Guid) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).EnableTransferOwnership)(self.as_abi() as *const _ as *mut _, taskId);
@@ -6543,11 +6543,11 @@ impl ComPtr<IDatagramSocket3> {
         let hr = ((*self.as_abi().lpVtbl).TransferOwnership)(self.as_abi() as *const _ as *mut _, socketId.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn transfer_ownership_with_context(&self, socketId: &HStringArg, data: &ComPtr<SocketActivityContext>) -> Result<()> { unsafe { 
+    #[inline] pub fn transfer_ownership_with_context(&self, socketId: &HStringArg, data: &SocketActivityContext) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).TransferOwnershipWithContext)(self.as_abi() as *const _ as *mut _, socketId.get(), data.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn transfer_ownership_with_context_and_keep_alive_time(&self, socketId: &HStringArg, data: &ComPtr<SocketActivityContext>, keepAliveTime: foundation::TimeSpan) -> Result<()> { unsafe { 
+    #[inline] pub fn transfer_ownership_with_context_and_keep_alive_time(&self, socketId: &HStringArg, data: &SocketActivityContext, keepAliveTime: foundation::TimeSpan) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).TransferOwnershipWithContextAndKeepAliveTime)(self.as_abi() as *const _ as *mut _, socketId.get(), data.as_abi() as *const _ as *mut _, keepAliveTime);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -6625,26 +6625,26 @@ impl ComPtr<IDatagramSocketControl3> {
 }
 DEFINE_IID!(IID_IDatagramSocketInformation, 1595561626, 22011, 18637, 151, 6, 122, 151, 79, 123, 21, 133);
 RT_INTERFACE!{interface IDatagramSocketInformation(IDatagramSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketInformation] {
-    fn get_LocalAddress(&self, out: *mut *mut super::HostName) -> HRESULT,
+    fn get_LocalAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_LocalPort(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_RemoteAddress(&self, out: *mut *mut super::HostName) -> HRESULT,
+    fn get_RemoteAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_RemotePort(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ComPtr<IDatagramSocketInformation> {
-    #[inline] pub fn get_local_address(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_local_address(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocalAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_local_port(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocalPort)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_remote_address(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_remote_address(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RemoteAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_remote_port(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -6655,74 +6655,74 @@ impl ComPtr<IDatagramSocketInformation> {
 RT_CLASS!{class DatagramSocketInformation: IDatagramSocketInformation}
 DEFINE_IID!(IID_IDatagramSocketMessageReceivedEventArgs, 2653805730, 5906, 19684, 177, 121, 140, 101, 44, 109, 16, 126);
 RT_INTERFACE!{interface IDatagramSocketMessageReceivedEventArgs(IDatagramSocketMessageReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketMessageReceivedEventArgs] {
-    fn get_RemoteAddress(&self, out: *mut *mut super::HostName) -> HRESULT,
+    fn get_RemoteAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_RemotePort(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_LocalAddress(&self, out: *mut *mut super::HostName) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn GetDataReader(&self, out: *mut *mut super::super::storage::streams::DataReader) -> HRESULT,
+    fn get_LocalAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn GetDataReader(&self, out: *mut <super::super::storage::streams::DataReader as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn GetDataStream(&self, out: *mut *mut super::super::storage::streams::IInputStream) -> HRESULT
 }}
 impl ComPtr<IDatagramSocketMessageReceivedEventArgs> {
-    #[inline] pub fn get_remote_address(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_remote_address(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RemoteAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_remote_port(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RemotePort)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_local_address(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_local_address(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocalAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_data_reader(&self) -> Result<Option<ComPtr<super::super::storage::streams::DataReader>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_data_reader(&self) -> Result<Option<super::super::storage::streams::DataReader>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDataReader)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::storage::streams::DataReader::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_data_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IInputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDataStream)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class DatagramSocketMessageReceivedEventArgs: IDatagramSocketMessageReceivedEventArgs}
 DEFINE_IID!(IID_IDatagramSocketStatics, 3922078446, 5268, 18977, 187, 126, 133, 137, 252, 117, 29, 157);
 RT_INTERFACE!{static interface IDatagramSocketStatics(IDatagramSocketStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketStatics] {
-    fn GetEndpointPairsAsync(&self, remoteHostName: *mut super::HostName, remoteServiceName: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>) -> HRESULT,
-    fn GetEndpointPairsWithSortOptionsAsync(&self, remoteHostName: *mut super::HostName, remoteServiceName: HSTRING, sortOptions: super::HostNameSortOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>) -> HRESULT
+    fn GetEndpointPairsAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>) -> HRESULT,
+    fn GetEndpointPairsWithSortOptionsAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, sortOptions: super::HostNameSortOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>) -> HRESULT
 }}
 impl ComPtr<IDatagramSocketStatics> {
-    #[inline] pub fn get_endpoint_pairs_async(&self, remoteHostName: &ComPtr<super::HostName>, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> { unsafe { 
+    #[inline] pub fn get_endpoint_pairs_async(&self, remoteHostName: &super::HostName, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetEndpointPairsAsync)(self.as_abi() as *const _ as *mut _, remoteHostName.as_abi() as *const _ as *mut _, remoteServiceName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_endpoint_pairs_with_sort_options_async(&self, remoteHostName: &ComPtr<super::HostName>, remoteServiceName: &HStringArg, sortOptions: super::HostNameSortOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> { unsafe { 
+    #[inline] pub fn get_endpoint_pairs_with_sort_options_async(&self, remoteHostName: &super::HostName, remoteServiceName: &HStringArg, sortOptions: super::HostNameSortOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetEndpointPairsWithSortOptionsAsync)(self.as_abi() as *const _ as *mut _, remoteHostName.as_abi() as *const _ as *mut _, remoteServiceName.get(), sortOptions, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMessageWebSocket, 863141128, 13525, 18246, 173, 123, 141, 222, 91, 194, 239, 136);
 RT_INTERFACE!{interface IMessageWebSocket(IMessageWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocket] {
-    fn get_Control(&self, out: *mut *mut MessageWebSocketControl) -> HRESULT,
-    fn get_Information(&self, out: *mut *mut MessageWebSocketInformation) -> HRESULT,
+    fn get_Control(&self, out: *mut <MessageWebSocketControl as RtType>::Abi) -> HRESULT,
+    fn get_Information(&self, out: *mut <MessageWebSocketInformation as RtType>::Abi) -> HRESULT,
     fn add_MessageReceived(&self, eventHandler: *mut foundation::TypedEventHandler<MessageWebSocket, MessageWebSocketMessageReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_MessageReceived(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ComPtr<IMessageWebSocket> {
-    #[inline] pub fn get_control(&self) -> Result<Option<ComPtr<MessageWebSocketControl>>> { unsafe { 
+    #[inline] pub fn get_control(&self) -> Result<Option<MessageWebSocketControl>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Control)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MessageWebSocketControl::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_information(&self) -> Result<Option<ComPtr<MessageWebSocketInformation>>> { unsafe { 
+    #[inline] pub fn get_information(&self) -> Result<Option<MessageWebSocketInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Information)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(MessageWebSocketInformation::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_message_received(&self, eventHandler: &ComPtr<foundation::TypedEventHandler<MessageWebSocket, MessageWebSocketMessageReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -6762,12 +6762,12 @@ impl ComPtr<IMessageWebSocket3> {
     #[cfg(feature="windows-storage")] #[inline] pub fn send_nonfinal_frame_async(&self, data: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u32, u32>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SendNonfinalFrameAsync)(self.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn send_final_frame_async(&self, data: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<foundation::IAsyncOperationWithProgress<u32, u32>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).SendFinalFrameAsync)(self.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IMessageWebSocketControl, 2165848202, 50729, 20234, 128, 251, 129, 252, 5, 83, 136, 98);
@@ -6805,8 +6805,8 @@ RT_INTERFACE!{interface IMessageWebSocketControl2(IMessageWebSocketControl2Vtbl)
     fn get_ActualUnsolicitedPongInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_ReceiveMode(&self, out: *mut MessageWebSocketReceiveMode) -> HRESULT,
     fn put_ReceiveMode(&self, value: MessageWebSocketReceiveMode) -> HRESULT,
-    #[cfg(feature="windows-security")] fn get_ClientCertificate(&self, out: *mut *mut super::super::security::cryptography::certificates::Certificate) -> HRESULT,
-    #[cfg(feature="windows-security")] fn put_ClientCertificate(&self, value: *mut super::super::security::cryptography::certificates::Certificate) -> HRESULT
+    #[cfg(feature="windows-security")] fn get_ClientCertificate(&self, out: *mut <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-security")] fn put_ClientCertificate(&self, value: <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IMessageWebSocketControl2> {
     #[inline] pub fn get_desired_unsolicited_pong_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
@@ -6832,12 +6832,12 @@ impl ComPtr<IMessageWebSocketControl2> {
         let hr = ((*self.as_abi().lpVtbl).put_ReceiveMode)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_client_certificate(&self) -> Result<Option<ComPtr<super::super::security::cryptography::certificates::Certificate>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_client_certificate(&self) -> Result<Option<super::super::security::cryptography::certificates::Certificate>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ClientCertificate)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::cryptography::certificates::Certificate::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_client_certificate(&self, value: &ComPtr<super::super::security::cryptography::certificates::Certificate>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn set_client_certificate(&self, value: &super::super::security::cryptography::certificates::Certificate) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_ClientCertificate)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -6846,7 +6846,7 @@ RT_CLASS!{class MessageWebSocketInformation: IWebSocketInformation}
 DEFINE_IID!(IID_IMessageWebSocketMessageReceivedEventArgs, 1200366252, 19531, 17133, 158, 215, 30, 249, 249, 79, 163, 213);
 RT_INTERFACE!{interface IMessageWebSocketMessageReceivedEventArgs(IMessageWebSocketMessageReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocketMessageReceivedEventArgs] {
     fn get_MessageType(&self, out: *mut SocketMessageType) -> HRESULT,
-    #[cfg(feature="windows-storage")] fn GetDataReader(&self, out: *mut *mut super::super::storage::streams::DataReader) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn GetDataReader(&self, out: *mut <super::super::storage::streams::DataReader as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn GetDataStream(&self, out: *mut *mut super::super::storage::streams::IInputStream) -> HRESULT
 }}
 impl ComPtr<IMessageWebSocketMessageReceivedEventArgs> {
@@ -6855,15 +6855,15 @@ impl ComPtr<IMessageWebSocketMessageReceivedEventArgs> {
         let hr = ((*self.as_abi().lpVtbl).get_MessageType)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_data_reader(&self) -> Result<Option<ComPtr<super::super::storage::streams::DataReader>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_data_reader(&self) -> Result<Option<super::super::storage::streams::DataReader>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDataReader)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::storage::streams::DataReader::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_data_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IInputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDataStream)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class MessageWebSocketMessageReceivedEventArgs: IMessageWebSocketMessageReceivedEventArgs}
@@ -6888,8 +6888,8 @@ DEFINE_IID!(IID_IServerMessageWebSocket, 3819737664, 33083, 24317, 126, 17, 174,
 RT_INTERFACE!{interface IServerMessageWebSocket(IServerMessageWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IServerMessageWebSocket] {
     fn add_MessageReceived(&self, value: *mut foundation::TypedEventHandler<ServerMessageWebSocket, MessageWebSocketMessageReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_MessageReceived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn get_Control(&self, out: *mut *mut ServerMessageWebSocketControl) -> HRESULT,
-    fn get_Information(&self, out: *mut *mut ServerMessageWebSocketInformation) -> HRESULT,
+    fn get_Control(&self, out: *mut <ServerMessageWebSocketControl as RtType>::Abi) -> HRESULT,
+    fn get_Information(&self, out: *mut <ServerMessageWebSocketInformation as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy4(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_OutputStream(&self, out: *mut *mut super::super::storage::streams::IOutputStream) -> HRESULT,
     fn add_Closed(&self, value: *mut foundation::TypedEventHandler<ServerMessageWebSocket, WebSocketClosedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -6906,20 +6906,20 @@ impl ComPtr<IServerMessageWebSocket> {
         let hr = ((*self.as_abi().lpVtbl).remove_MessageReceived)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_control(&self) -> Result<Option<ComPtr<ServerMessageWebSocketControl>>> { unsafe { 
+    #[inline] pub fn get_control(&self) -> Result<Option<ServerMessageWebSocketControl>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Control)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ServerMessageWebSocketControl::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_information(&self) -> Result<Option<ComPtr<ServerMessageWebSocketInformation>>> { unsafe { 
+    #[inline] pub fn get_information(&self) -> Result<Option<ServerMessageWebSocketInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Information)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ServerMessageWebSocketInformation::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IOutputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_OutputStream)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_closed(&self, value: &ComPtr<foundation::TypedEventHandler<ServerMessageWebSocket, WebSocketClosedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -6957,7 +6957,7 @@ DEFINE_IID!(IID_IServerMessageWebSocketInformation, 4231181407, 17480, 21765, 10
 RT_INTERFACE!{interface IServerMessageWebSocketInformation(IServerMessageWebSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IServerMessageWebSocketInformation] {
     fn get_BandwidthStatistics(&self, out: *mut BandwidthStatistics) -> HRESULT,
     fn get_Protocol(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_LocalAddress(&self, out: *mut *mut super::HostName) -> HRESULT
+    fn get_LocalAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IServerMessageWebSocketInformation> {
     #[inline] pub fn get_bandwidth_statistics(&self) -> Result<BandwidthStatistics> { unsafe { 
@@ -6970,16 +6970,16 @@ impl ComPtr<IServerMessageWebSocketInformation> {
         let hr = ((*self.as_abi().lpVtbl).get_Protocol)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_local_address(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_local_address(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocalAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ServerMessageWebSocketInformation: IServerMessageWebSocketInformation}
 DEFINE_IID!(IID_IServerStreamWebSocket, 753753023, 29942, 21988, 121, 223, 145, 50, 104, 13, 254, 232);
 RT_INTERFACE!{interface IServerStreamWebSocket(IServerStreamWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IServerStreamWebSocket] {
-    fn get_Information(&self, out: *mut *mut ServerStreamWebSocketInformation) -> HRESULT,
+    fn get_Information(&self, out: *mut <ServerStreamWebSocketInformation as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_InputStream(&self, out: *mut *mut super::super::storage::streams::IInputStream) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -6989,20 +6989,20 @@ RT_INTERFACE!{interface IServerStreamWebSocket(IServerStreamWebSocketVtbl): IIns
     fn CloseWithStatus(&self, code: u16, reason: HSTRING) -> HRESULT
 }}
 impl ComPtr<IServerStreamWebSocket> {
-    #[inline] pub fn get_information(&self) -> Result<Option<ComPtr<ServerStreamWebSocketInformation>>> { unsafe { 
+    #[inline] pub fn get_information(&self) -> Result<Option<ServerStreamWebSocketInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Information)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ServerStreamWebSocketInformation::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_input_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IInputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_InputStream)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IOutputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_OutputStream)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_closed(&self, value: &ComPtr<foundation::TypedEventHandler<ServerStreamWebSocket, WebSocketClosedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -7023,7 +7023,7 @@ DEFINE_IID!(IID_IServerStreamWebSocketInformation, 4231181407, 17480, 21765, 108
 RT_INTERFACE!{interface IServerStreamWebSocketInformation(IServerStreamWebSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IServerStreamWebSocketInformation] {
     fn get_BandwidthStatistics(&self, out: *mut BandwidthStatistics) -> HRESULT,
     fn get_Protocol(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_LocalAddress(&self, out: *mut *mut super::HostName) -> HRESULT
+    fn get_LocalAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IServerStreamWebSocketInformation> {
     #[inline] pub fn get_bandwidth_statistics(&self) -> Result<BandwidthStatistics> { unsafe { 
@@ -7036,10 +7036,10 @@ impl ComPtr<IServerStreamWebSocketInformation> {
         let hr = ((*self.as_abi().lpVtbl).get_Protocol)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_local_address(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_local_address(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocalAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class ServerStreamWebSocketInformation: IServerStreamWebSocketInformation}
@@ -7054,26 +7054,26 @@ impl ComPtr<ISocketActivityContext> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_data(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Data)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class SocketActivityContext: ISocketActivityContext}
 impl RtActivatable<ISocketActivityContextFactory> for SocketActivityContext {}
 impl SocketActivityContext {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(data: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<SocketActivityContext>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(data: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<SocketActivityContext> {
         <Self as RtActivatable<ISocketActivityContextFactory>>::get_activation_factory().create(data)
     }
 }
 DEFINE_CLSID!(SocketActivityContext(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,111,99,107,101,116,65,99,116,105,118,105,116,121,67,111,110,116,101,120,116,0]) [CLSID_SocketActivityContext]);
 DEFINE_IID!(IID_ISocketActivityContextFactory, 3114255299, 2188, 17288, 131, 174, 37, 37, 19, 142, 4, 154);
 RT_INTERFACE!{static interface ISocketActivityContextFactory(ISocketActivityContextFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISocketActivityContextFactory] {
-    #[cfg(feature="windows-storage")] fn Create(&self, data: *mut super::super::storage::streams::IBuffer, out: *mut *mut SocketActivityContext) -> HRESULT
+    #[cfg(feature="windows-storage")] fn Create(&self, data: *mut super::super::storage::streams::IBuffer, out: *mut <SocketActivityContext as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ISocketActivityContextFactory> {
-    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, data: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<ComPtr<SocketActivityContext>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create(&self, data: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<SocketActivityContext> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, data.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SocketActivityContext::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ISocketActivityInformation, 2374648548, 43134, 19316, 153, 104, 24, 91, 37, 17, 222, 254);
@@ -7081,10 +7081,10 @@ RT_INTERFACE!{interface ISocketActivityInformation(ISocketActivityInformationVtb
     fn get_TaskId(&self, out: *mut Guid) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SocketKind(&self, out: *mut SocketActivityKind) -> HRESULT,
-    fn get_Context(&self, out: *mut *mut SocketActivityContext) -> HRESULT,
-    fn get_DatagramSocket(&self, out: *mut *mut DatagramSocket) -> HRESULT,
-    fn get_StreamSocket(&self, out: *mut *mut StreamSocket) -> HRESULT,
-    fn get_StreamSocketListener(&self, out: *mut *mut StreamSocketListener) -> HRESULT
+    fn get_Context(&self, out: *mut <SocketActivityContext as RtType>::Abi) -> HRESULT,
+    fn get_DatagramSocket(&self, out: *mut <DatagramSocket as RtType>::Abi) -> HRESULT,
+    fn get_StreamSocket(&self, out: *mut <StreamSocket as RtType>::Abi) -> HRESULT,
+    fn get_StreamSocketListener(&self, out: *mut <StreamSocketListener as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ISocketActivityInformation> {
     #[inline] pub fn get_task_id(&self) -> Result<Guid> { unsafe { 
@@ -7102,25 +7102,25 @@ impl ComPtr<ISocketActivityInformation> {
         let hr = ((*self.as_abi().lpVtbl).get_SocketKind)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_context(&self) -> Result<Option<ComPtr<SocketActivityContext>>> { unsafe { 
+    #[inline] pub fn get_context(&self) -> Result<Option<SocketActivityContext>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Context)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SocketActivityContext::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_datagram_socket(&self) -> Result<Option<ComPtr<DatagramSocket>>> { unsafe { 
+    #[inline] pub fn get_datagram_socket(&self) -> Result<Option<DatagramSocket>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DatagramSocket)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DatagramSocket::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_stream_socket(&self) -> Result<Option<ComPtr<StreamSocket>>> { unsafe { 
+    #[inline] pub fn get_stream_socket(&self) -> Result<Option<StreamSocket>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_StreamSocket)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(StreamSocket::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_stream_socket_listener(&self) -> Result<Option<ComPtr<StreamSocketListener>>> { unsafe { 
+    #[inline] pub fn get_stream_socket_listener(&self) -> Result<Option<StreamSocketListener>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_StreamSocketListener)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(StreamSocketListener::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class SocketActivityInformation: ISocketActivityInformation}
@@ -7139,7 +7139,7 @@ impl ComPtr<ISocketActivityInformationStatics> {
     #[inline] pub fn get_all_sockets(&self) -> Result<Option<ComPtr<foundation::collections::IMapView<HString, SocketActivityInformation>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AllSockets)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum SocketActivityKind: i32 {
@@ -7148,7 +7148,7 @@ RT_ENUM! { enum SocketActivityKind: i32 {
 DEFINE_IID!(IID_ISocketActivityTriggerDetails, 1173620391, 64671, 20353, 172, 173, 53, 95, 239, 81, 230, 123);
 RT_INTERFACE!{interface ISocketActivityTriggerDetails(ISocketActivityTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ISocketActivityTriggerDetails] {
     fn get_Reason(&self, out: *mut SocketActivityTriggerReason) -> HRESULT,
-    fn get_SocketInformation(&self, out: *mut *mut SocketActivityInformation) -> HRESULT
+    fn get_SocketInformation(&self, out: *mut <SocketActivityInformation as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ISocketActivityTriggerDetails> {
     #[inline] pub fn get_reason(&self) -> Result<SocketActivityTriggerReason> { unsafe { 
@@ -7156,10 +7156,10 @@ impl ComPtr<ISocketActivityTriggerDetails> {
         let hr = ((*self.as_abi().lpVtbl).get_Reason)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_socket_information(&self) -> Result<Option<ComPtr<SocketActivityInformation>>> { unsafe { 
+    #[inline] pub fn get_socket_information(&self) -> Result<Option<SocketActivityInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SocketInformation)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(SocketActivityInformation::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class SocketActivityTriggerDetails: ISocketActivityTriggerDetails}
@@ -7202,86 +7202,86 @@ RT_ENUM! { enum SocketSslErrorSeverity: i32 {
 }}
 DEFINE_IID!(IID_IStreamSocket, 1772236019, 64635, 18519, 175, 56, 246, 231, 222, 106, 91, 73);
 RT_INTERFACE!{interface IStreamSocket(IStreamSocketVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocket] {
-    fn get_Control(&self, out: *mut *mut StreamSocketControl) -> HRESULT,
-    fn get_Information(&self, out: *mut *mut StreamSocketInformation) -> HRESULT,
+    fn get_Control(&self, out: *mut <StreamSocketControl as RtType>::Abi) -> HRESULT,
+    fn get_Information(&self, out: *mut <StreamSocketInformation as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_InputStream(&self, out: *mut *mut super::super::storage::streams::IInputStream) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_OutputStream(&self, out: *mut *mut super::super::storage::streams::IOutputStream) -> HRESULT,
-    fn ConnectWithEndpointPairAsync(&self, endpointPair: *mut super::EndpointPair, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn ConnectAsync(&self, remoteHostName: *mut super::HostName, remoteServiceName: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn ConnectWithEndpointPairAndProtectionLevelAsync(&self, endpointPair: *mut super::EndpointPair, protectionLevel: SocketProtectionLevel, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn ConnectWithProtectionLevelAsync(&self, remoteHostName: *mut super::HostName, remoteServiceName: HSTRING, protectionLevel: SocketProtectionLevel, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn UpgradeToSslAsync(&self, protectionLevel: SocketProtectionLevel, validationHostName: *mut super::HostName, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+    fn ConnectWithEndpointPairAsync(&self, endpointPair: <super::EndpointPair as RtType>::Abi, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ConnectAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ConnectWithEndpointPairAndProtectionLevelAsync(&self, endpointPair: <super::EndpointPair as RtType>::Abi, protectionLevel: SocketProtectionLevel, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ConnectWithProtectionLevelAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, protectionLevel: SocketProtectionLevel, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn UpgradeToSslAsync(&self, protectionLevel: SocketProtectionLevel, validationHostName: <super::HostName as RtType>::Abi, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl ComPtr<IStreamSocket> {
-    #[inline] pub fn get_control(&self) -> Result<Option<ComPtr<StreamSocketControl>>> { unsafe { 
+    #[inline] pub fn get_control(&self) -> Result<Option<StreamSocketControl>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Control)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(StreamSocketControl::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_information(&self) -> Result<Option<ComPtr<StreamSocketInformation>>> { unsafe { 
+    #[inline] pub fn get_information(&self) -> Result<Option<StreamSocketInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Information)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(StreamSocketInformation::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_input_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IInputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_InputStream)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IOutputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_OutputStream)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn connect_with_endpoint_pair_async(&self, endpointPair: &ComPtr<super::EndpointPair>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn connect_with_endpoint_pair_async(&self, endpointPair: &super::EndpointPair) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConnectWithEndpointPairAsync)(self.as_abi() as *const _ as *mut _, endpointPair.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn connect_async(&self, remoteHostName: &ComPtr<super::HostName>, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn connect_async(&self, remoteHostName: &super::HostName, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConnectAsync)(self.as_abi() as *const _ as *mut _, remoteHostName.as_abi() as *const _ as *mut _, remoteServiceName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn connect_with_endpoint_pair_and_protection_level_async(&self, endpointPair: &ComPtr<super::EndpointPair>, protectionLevel: SocketProtectionLevel) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn connect_with_endpoint_pair_and_protection_level_async(&self, endpointPair: &super::EndpointPair, protectionLevel: SocketProtectionLevel) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConnectWithEndpointPairAndProtectionLevelAsync)(self.as_abi() as *const _ as *mut _, endpointPair.as_abi() as *const _ as *mut _, protectionLevel, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn connect_with_protection_level_async(&self, remoteHostName: &ComPtr<super::HostName>, remoteServiceName: &HStringArg, protectionLevel: SocketProtectionLevel) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn connect_with_protection_level_async(&self, remoteHostName: &super::HostName, remoteServiceName: &HStringArg, protectionLevel: SocketProtectionLevel) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConnectWithProtectionLevelAsync)(self.as_abi() as *const _ as *mut _, remoteHostName.as_abi() as *const _ as *mut _, remoteServiceName.get(), protectionLevel, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn upgrade_to_ssl_async(&self, protectionLevel: SocketProtectionLevel, validationHostName: &ComPtr<super::HostName>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn upgrade_to_ssl_async(&self, protectionLevel: SocketProtectionLevel, validationHostName: &super::HostName) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).UpgradeToSslAsync)(self.as_abi() as *const _ as *mut _, protectionLevel, validationHostName.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class StreamSocket: IStreamSocket}
 impl RtActivatable<IStreamSocketStatics> for StreamSocket {}
 impl RtActivatable<IActivationFactory> for StreamSocket {}
 impl StreamSocket {
-    #[inline] pub fn get_endpoint_pairs_async(remoteHostName: &ComPtr<super::HostName>, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> {
+    #[inline] pub fn get_endpoint_pairs_async(remoteHostName: &super::HostName, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> {
         <Self as RtActivatable<IStreamSocketStatics>>::get_activation_factory().get_endpoint_pairs_async(remoteHostName, remoteServiceName)
     }
-    #[inline] pub fn get_endpoint_pairs_with_sort_options_async(remoteHostName: &ComPtr<super::HostName>, remoteServiceName: &HStringArg, sortOptions: super::HostNameSortOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> {
+    #[inline] pub fn get_endpoint_pairs_with_sort_options_async(remoteHostName: &super::HostName, remoteServiceName: &HStringArg, sortOptions: super::HostNameSortOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> {
         <Self as RtActivatable<IStreamSocketStatics>>::get_activation_factory().get_endpoint_pairs_with_sort_options_async(remoteHostName, remoteServiceName, sortOptions)
     }
 }
 DEFINE_CLSID!(StreamSocket(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,116,114,101,97,109,83,111,99,107,101,116,0]) [CLSID_StreamSocket]);
 DEFINE_IID!(IID_IStreamSocket2, 701556085, 62228, 19721, 173, 240, 15, 189, 150, 127, 189, 159);
 RT_INTERFACE!{interface IStreamSocket2(IStreamSocket2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocket2] {
-    fn ConnectWithProtectionLevelAndAdapterAsync(&self, remoteHostName: *mut super::HostName, remoteServiceName: HSTRING, protectionLevel: SocketProtectionLevel, adapter: *mut super::connectivity::NetworkAdapter, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+    fn ConnectWithProtectionLevelAndAdapterAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, protectionLevel: SocketProtectionLevel, adapter: <super::connectivity::NetworkAdapter as RtType>::Abi, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl ComPtr<IStreamSocket2> {
-    #[inline] pub fn connect_with_protection_level_and_adapter_async(&self, remoteHostName: &ComPtr<super::HostName>, remoteServiceName: &HStringArg, protectionLevel: SocketProtectionLevel, adapter: &ComPtr<super::connectivity::NetworkAdapter>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn connect_with_protection_level_and_adapter_async(&self, remoteHostName: &super::HostName, remoteServiceName: &HStringArg, protectionLevel: SocketProtectionLevel, adapter: &super::connectivity::NetworkAdapter) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConnectWithProtectionLevelAndAdapterAsync)(self.as_abi() as *const _ as *mut _, remoteHostName.as_abi() as *const _ as *mut _, remoteServiceName.get(), protectionLevel, adapter.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IStreamSocket3, 1061358336, 40232, 18516, 186, 195, 35, 1, 148, 30, 194, 35);
@@ -7290,14 +7290,14 @@ RT_INTERFACE!{interface IStreamSocket3(IStreamSocket3Vtbl): IInspectable(IInspec
     fn EnableTransferOwnership(&self, taskId: Guid) -> HRESULT,
     fn EnableTransferOwnershipWithConnectedStandbyAction(&self, taskId: Guid, connectedStandbyAction: SocketActivityConnectedStandbyAction) -> HRESULT,
     fn TransferOwnership(&self, socketId: HSTRING) -> HRESULT,
-    fn TransferOwnershipWithContext(&self, socketId: HSTRING, data: *mut SocketActivityContext) -> HRESULT,
-    fn TransferOwnershipWithContextAndKeepAliveTime(&self, socketId: HSTRING, data: *mut SocketActivityContext, keepAliveTime: foundation::TimeSpan) -> HRESULT
+    fn TransferOwnershipWithContext(&self, socketId: HSTRING, data: <SocketActivityContext as RtType>::Abi) -> HRESULT,
+    fn TransferOwnershipWithContextAndKeepAliveTime(&self, socketId: HSTRING, data: <SocketActivityContext as RtType>::Abi, keepAliveTime: foundation::TimeSpan) -> HRESULT
 }}
 impl ComPtr<IStreamSocket3> {
     #[inline] pub fn cancel_io_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CancelIOAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn enable_transfer_ownership(&self, taskId: Guid) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).EnableTransferOwnership)(self.as_abi() as *const _ as *mut _, taskId);
@@ -7311,11 +7311,11 @@ impl ComPtr<IStreamSocket3> {
         let hr = ((*self.as_abi().lpVtbl).TransferOwnership)(self.as_abi() as *const _ as *mut _, socketId.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn transfer_ownership_with_context(&self, socketId: &HStringArg, data: &ComPtr<SocketActivityContext>) -> Result<()> { unsafe { 
+    #[inline] pub fn transfer_ownership_with_context(&self, socketId: &HStringArg, data: &SocketActivityContext) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).TransferOwnershipWithContext)(self.as_abi() as *const _ as *mut _, socketId.get(), data.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn transfer_ownership_with_context_and_keep_alive_time(&self, socketId: &HStringArg, data: &ComPtr<SocketActivityContext>, keepAliveTime: foundation::TimeSpan) -> Result<()> { unsafe { 
+    #[inline] pub fn transfer_ownership_with_context_and_keep_alive_time(&self, socketId: &HStringArg, data: &SocketActivityContext, keepAliveTime: foundation::TimeSpan) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).TransferOwnershipWithContextAndKeepAliveTime)(self.as_abi() as *const _ as *mut _, socketId.get(), data.as_abi() as *const _ as *mut _, keepAliveTime);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -7389,15 +7389,15 @@ impl ComPtr<IStreamSocketControl2> {
     #[cfg(feature="windows-security")] #[inline] pub fn get_ignorable_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::security::cryptography::certificates::ChainValidationResult>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_IgnorableServerCertificateErrors)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IStreamSocketControl3, 3312075852, 20084, 16446, 137, 76, 179, 28, 174, 92, 115, 66);
 RT_INTERFACE!{interface IStreamSocketControl3(IStreamSocketControl3Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketControl3] {
     fn get_SerializeConnectionAttempts(&self, out: *mut bool) -> HRESULT,
     fn put_SerializeConnectionAttempts(&self, value: bool) -> HRESULT,
-    #[cfg(feature="windows-security")] fn get_ClientCertificate(&self, out: *mut *mut super::super::security::cryptography::certificates::Certificate) -> HRESULT,
-    #[cfg(feature="windows-security")] fn put_ClientCertificate(&self, value: *mut super::super::security::cryptography::certificates::Certificate) -> HRESULT
+    #[cfg(feature="windows-security")] fn get_ClientCertificate(&self, out: *mut <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-security")] fn put_ClientCertificate(&self, value: <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IStreamSocketControl3> {
     #[inline] pub fn get_serialize_connection_attempts(&self) -> Result<bool> { unsafe { 
@@ -7409,12 +7409,12 @@ impl ComPtr<IStreamSocketControl3> {
         let hr = ((*self.as_abi().lpVtbl).put_SerializeConnectionAttempts)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_client_certificate(&self) -> Result<Option<ComPtr<super::super::security::cryptography::certificates::Certificate>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_client_certificate(&self) -> Result<Option<super::super::security::cryptography::certificates::Certificate>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ClientCertificate)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::cryptography::certificates::Certificate::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_client_certificate(&self, value: &ComPtr<super::super::security::cryptography::certificates::Certificate>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn set_client_certificate(&self, value: &super::super::security::cryptography::certificates::Certificate) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_ClientCertificate)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -7437,10 +7437,10 @@ impl ComPtr<IStreamSocketControl4> {
 }
 DEFINE_IID!(IID_IStreamSocketInformation, 998288944, 24168, 16901, 136, 240, 220, 133, 210, 226, 93, 237);
 RT_INTERFACE!{interface IStreamSocketInformation(IStreamSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketInformation] {
-    fn get_LocalAddress(&self, out: *mut *mut super::HostName) -> HRESULT,
+    fn get_LocalAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_LocalPort(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_RemoteHostName(&self, out: *mut *mut super::HostName) -> HRESULT,
-    fn get_RemoteAddress(&self, out: *mut *mut super::HostName) -> HRESULT,
+    fn get_RemoteHostName(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
+    fn get_RemoteAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_RemoteServiceName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_RemotePort(&self, out: *mut HSTRING) -> HRESULT,
     fn get_RoundTripTimeStatistics(&self, out: *mut RoundTripTimeStatistics) -> HRESULT,
@@ -7449,25 +7449,25 @@ RT_INTERFACE!{interface IStreamSocketInformation(IStreamSocketInformationVtbl): 
     #[cfg(feature="windows-storage")] fn get_SessionKey(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
 }}
 impl ComPtr<IStreamSocketInformation> {
-    #[inline] pub fn get_local_address(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_local_address(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocalAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_local_port(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocalPort)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_remote_host_name(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_remote_host_name(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RemoteHostName)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_remote_address(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_remote_address(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RemoteAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_remote_service_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -7497,7 +7497,7 @@ impl ComPtr<IStreamSocketInformation> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_session_key(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SessionKey)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class StreamSocketInformation: IStreamSocketInformation}
@@ -7505,7 +7505,7 @@ DEFINE_IID!(IID_IStreamSocketInformation2, 314737746, 19420, 20196, 151, 106, 20
 RT_INTERFACE!{interface IStreamSocketInformation2(IStreamSocketInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketInformation2] {
     fn get_ServerCertificateErrorSeverity(&self, out: *mut SocketSslErrorSeverity) -> HRESULT,
     #[cfg(feature="windows-security")] fn get_ServerCertificateErrors(&self, out: *mut *mut foundation::collections::IVectorView<super::super::security::cryptography::certificates::ChainValidationResult>) -> HRESULT,
-    #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut *mut super::super::security::cryptography::certificates::Certificate) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-security")] fn get_ServerIntermediateCertificates(&self, out: *mut *mut foundation::collections::IVectorView<super::super::security::cryptography::certificates::Certificate>) -> HRESULT
 }}
 impl ComPtr<IStreamSocketInformation2> {
@@ -7517,48 +7517,48 @@ impl ComPtr<IStreamSocketInformation2> {
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::security::cryptography::certificates::ChainValidationResult>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerCertificateErrors)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate(&self) -> Result<Option<ComPtr<super::super::security::cryptography::certificates::Certificate>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate(&self) -> Result<Option<super::super::security::cryptography::certificates::Certificate>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerCertificate)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::cryptography::certificates::Certificate::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_intermediate_certificates(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::security::cryptography::certificates::Certificate>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerIntermediateCertificates)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IStreamSocketListener, 4283511863, 57247, 19952, 191, 130, 14, 197, 215, 179, 90, 174);
 RT_INTERFACE!{interface IStreamSocketListener(IStreamSocketListenerVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketListener] {
-    fn get_Control(&self, out: *mut *mut StreamSocketListenerControl) -> HRESULT,
-    fn get_Information(&self, out: *mut *mut StreamSocketListenerInformation) -> HRESULT,
+    fn get_Control(&self, out: *mut <StreamSocketListenerControl as RtType>::Abi) -> HRESULT,
+    fn get_Information(&self, out: *mut <StreamSocketListenerInformation as RtType>::Abi) -> HRESULT,
     fn BindServiceNameAsync(&self, localServiceName: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn BindEndpointAsync(&self, localHostName: *mut super::HostName, localServiceName: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn BindEndpointAsync(&self, localHostName: <super::HostName as RtType>::Abi, localServiceName: HSTRING, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn add_ConnectionReceived(&self, eventHandler: *mut foundation::TypedEventHandler<StreamSocketListener, StreamSocketListenerConnectionReceivedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ConnectionReceived(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
 impl ComPtr<IStreamSocketListener> {
-    #[inline] pub fn get_control(&self) -> Result<Option<ComPtr<StreamSocketListenerControl>>> { unsafe { 
+    #[inline] pub fn get_control(&self) -> Result<Option<StreamSocketListenerControl>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Control)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(StreamSocketListenerControl::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_information(&self) -> Result<Option<ComPtr<StreamSocketListenerInformation>>> { unsafe { 
+    #[inline] pub fn get_information(&self) -> Result<Option<StreamSocketListenerInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Information)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(StreamSocketListenerInformation::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn bind_service_name_async(&self, localServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).BindServiceNameAsync)(self.as_abi() as *const _ as *mut _, localServiceName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn bind_endpoint_async(&self, localHostName: &ComPtr<super::HostName>, localServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn bind_endpoint_async(&self, localHostName: &super::HostName, localServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).BindEndpointAsync)(self.as_abi() as *const _ as *mut _, localHostName.as_abi() as *const _ as *mut _, localServiceName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_connection_received(&self, eventHandler: &ComPtr<foundation::TypedEventHandler<StreamSocketListener, StreamSocketListenerConnectionReceivedEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -7576,18 +7576,18 @@ DEFINE_CLSID!(StreamSocketListener(&[87,105,110,100,111,119,115,46,78,101,116,11
 DEFINE_IID!(IID_IStreamSocketListener2, 1703788862, 47934, 17496, 178, 50, 237, 16, 136, 105, 75, 152);
 RT_INTERFACE!{interface IStreamSocketListener2(IStreamSocketListener2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketListener2] {
     fn BindServiceNameWithProtectionLevelAsync(&self, localServiceName: HSTRING, protectionLevel: SocketProtectionLevel, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn BindServiceNameWithProtectionLevelAndAdapterAsync(&self, localServiceName: HSTRING, protectionLevel: SocketProtectionLevel, adapter: *mut super::connectivity::NetworkAdapter, out: *mut *mut foundation::IAsyncAction) -> HRESULT
+    fn BindServiceNameWithProtectionLevelAndAdapterAsync(&self, localServiceName: HSTRING, protectionLevel: SocketProtectionLevel, adapter: <super::connectivity::NetworkAdapter as RtType>::Abi, out: *mut *mut foundation::IAsyncAction) -> HRESULT
 }}
 impl ComPtr<IStreamSocketListener2> {
     #[inline] pub fn bind_service_name_with_protection_level_async(&self, localServiceName: &HStringArg, protectionLevel: SocketProtectionLevel) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).BindServiceNameWithProtectionLevelAsync)(self.as_abi() as *const _ as *mut _, localServiceName.get(), protectionLevel, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn bind_service_name_with_protection_level_and_adapter_async(&self, localServiceName: &HStringArg, protectionLevel: SocketProtectionLevel, adapter: &ComPtr<super::connectivity::NetworkAdapter>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn bind_service_name_with_protection_level_and_adapter_async(&self, localServiceName: &HStringArg, protectionLevel: SocketProtectionLevel, adapter: &super::connectivity::NetworkAdapter) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).BindServiceNameWithProtectionLevelAndAdapterAsync)(self.as_abi() as *const _ as *mut _, localServiceName.get(), protectionLevel, adapter.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IStreamSocketListener3, 1201152028, 48632, 18713, 133, 66, 40, 212, 80, 231, 69, 7);
@@ -7596,13 +7596,13 @@ RT_INTERFACE!{interface IStreamSocketListener3(IStreamSocketListener3Vtbl): IIns
     fn EnableTransferOwnership(&self, taskId: Guid) -> HRESULT,
     fn EnableTransferOwnershipWithConnectedStandbyAction(&self, taskId: Guid, connectedStandbyAction: SocketActivityConnectedStandbyAction) -> HRESULT,
     fn TransferOwnership(&self, socketId: HSTRING) -> HRESULT,
-    fn TransferOwnershipWithContext(&self, socketId: HSTRING, data: *mut SocketActivityContext) -> HRESULT
+    fn TransferOwnershipWithContext(&self, socketId: HSTRING, data: <SocketActivityContext as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IStreamSocketListener3> {
     #[inline] pub fn cancel_io_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CancelIOAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn enable_transfer_ownership(&self, taskId: Guid) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).EnableTransferOwnership)(self.as_abi() as *const _ as *mut _, taskId);
@@ -7616,20 +7616,20 @@ impl ComPtr<IStreamSocketListener3> {
         let hr = ((*self.as_abi().lpVtbl).TransferOwnership)(self.as_abi() as *const _ as *mut _, socketId.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn transfer_ownership_with_context(&self, socketId: &HStringArg, data: &ComPtr<SocketActivityContext>) -> Result<()> { unsafe { 
+    #[inline] pub fn transfer_ownership_with_context(&self, socketId: &HStringArg, data: &SocketActivityContext) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).TransferOwnershipWithContext)(self.as_abi() as *const _ as *mut _, socketId.get(), data.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IStreamSocketListenerConnectionReceivedEventArgs, 205991593, 14143, 17531, 133, 177, 221, 212, 84, 136, 3, 186);
 RT_INTERFACE!{interface IStreamSocketListenerConnectionReceivedEventArgs(IStreamSocketListenerConnectionReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketListenerConnectionReceivedEventArgs] {
-    fn get_Socket(&self, out: *mut *mut StreamSocket) -> HRESULT
+    fn get_Socket(&self, out: *mut <StreamSocket as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IStreamSocketListenerConnectionReceivedEventArgs> {
-    #[inline] pub fn get_socket(&self) -> Result<Option<ComPtr<StreamSocket>>> { unsafe { 
+    #[inline] pub fn get_socket(&self) -> Result<Option<StreamSocket>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Socket)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(StreamSocket::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class StreamSocketListenerConnectionReceivedEventArgs: IStreamSocketListenerConnectionReceivedEventArgs}
@@ -7713,42 +7713,42 @@ impl ComPtr<IStreamSocketListenerInformation> {
 RT_CLASS!{class StreamSocketListenerInformation: IStreamSocketListenerInformation}
 DEFINE_IID!(IID_IStreamSocketStatics, 2753608778, 28206, 19189, 181, 86, 53, 90, 224, 205, 79, 41);
 RT_INTERFACE!{static interface IStreamSocketStatics(IStreamSocketStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketStatics] {
-    fn GetEndpointPairsAsync(&self, remoteHostName: *mut super::HostName, remoteServiceName: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>) -> HRESULT,
-    fn GetEndpointPairsWithSortOptionsAsync(&self, remoteHostName: *mut super::HostName, remoteServiceName: HSTRING, sortOptions: super::HostNameSortOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>) -> HRESULT
+    fn GetEndpointPairsAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>) -> HRESULT,
+    fn GetEndpointPairsWithSortOptionsAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, sortOptions: super::HostNameSortOptions, out: *mut *mut foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>) -> HRESULT
 }}
 impl ComPtr<IStreamSocketStatics> {
-    #[inline] pub fn get_endpoint_pairs_async(&self, remoteHostName: &ComPtr<super::HostName>, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> { unsafe { 
+    #[inline] pub fn get_endpoint_pairs_async(&self, remoteHostName: &super::HostName, remoteServiceName: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetEndpointPairsAsync)(self.as_abi() as *const _ as *mut _, remoteHostName.as_abi() as *const _ as *mut _, remoteServiceName.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_endpoint_pairs_with_sort_options_async(&self, remoteHostName: &ComPtr<super::HostName>, remoteServiceName: &HStringArg, sortOptions: super::HostNameSortOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> { unsafe { 
+    #[inline] pub fn get_endpoint_pairs_with_sort_options_async(&self, remoteHostName: &super::HostName, remoteServiceName: &HStringArg, sortOptions: super::HostNameSortOptions) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetEndpointPairsWithSortOptionsAsync)(self.as_abi() as *const _ as *mut _, remoteHostName.as_abi() as *const _ as *mut _, remoteServiceName.get(), sortOptions, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IStreamWebSocket, 3175762392, 45705, 17851, 151, 235, 199, 82, 82, 5, 168, 67);
 RT_INTERFACE!{interface IStreamWebSocket(IStreamWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IStreamWebSocket] {
-    fn get_Control(&self, out: *mut *mut StreamWebSocketControl) -> HRESULT,
-    fn get_Information(&self, out: *mut *mut StreamWebSocketInformation) -> HRESULT,
+    fn get_Control(&self, out: *mut <StreamWebSocketControl as RtType>::Abi) -> HRESULT,
+    fn get_Information(&self, out: *mut <StreamWebSocketInformation as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_InputStream(&self, out: *mut *mut super::super::storage::streams::IInputStream) -> HRESULT
 }}
 impl ComPtr<IStreamWebSocket> {
-    #[inline] pub fn get_control(&self) -> Result<Option<ComPtr<StreamWebSocketControl>>> { unsafe { 
+    #[inline] pub fn get_control(&self) -> Result<Option<StreamWebSocketControl>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Control)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(StreamWebSocketControl::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_information(&self) -> Result<Option<ComPtr<StreamWebSocketInformation>>> { unsafe { 
+    #[inline] pub fn get_information(&self) -> Result<Option<StreamWebSocketInformation>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Information)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(StreamWebSocketInformation::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_input_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IInputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_InputStream)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class StreamWebSocket: IStreamWebSocket}
@@ -7792,8 +7792,8 @@ RT_INTERFACE!{interface IStreamWebSocketControl2(IStreamWebSocketControl2Vtbl): 
     fn get_DesiredUnsolicitedPongInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_DesiredUnsolicitedPongInterval(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_ActualUnsolicitedPongInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
-    #[cfg(feature="windows-security")] fn get_ClientCertificate(&self, out: *mut *mut super::super::security::cryptography::certificates::Certificate) -> HRESULT,
-    #[cfg(feature="windows-security")] fn put_ClientCertificate(&self, value: *mut super::super::security::cryptography::certificates::Certificate) -> HRESULT
+    #[cfg(feature="windows-security")] fn get_ClientCertificate(&self, out: *mut <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-security")] fn put_ClientCertificate(&self, value: <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IStreamWebSocketControl2> {
     #[inline] pub fn get_desired_unsolicited_pong_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
@@ -7810,12 +7810,12 @@ impl ComPtr<IStreamWebSocketControl2> {
         let hr = ((*self.as_abi().lpVtbl).get_ActualUnsolicitedPongInterval)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_client_certificate(&self) -> Result<Option<ComPtr<super::super::security::cryptography::certificates::Certificate>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_client_certificate(&self) -> Result<Option<super::super::security::cryptography::certificates::Certificate>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ClientCertificate)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::cryptography::certificates::Certificate::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_client_certificate(&self, value: &ComPtr<super::super::security::cryptography::certificates::Certificate>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn set_client_certificate(&self, value: &super::super::security::cryptography::certificates::Certificate) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_ClientCertificate)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -7825,7 +7825,7 @@ DEFINE_IID!(IID_IWebSocket, 4168563055, 39345, 19992, 188, 8, 133, 12, 154, 223,
 RT_INTERFACE!{interface IWebSocket(IWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IWebSocket] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_OutputStream(&self, out: *mut *mut super::super::storage::streams::IOutputStream) -> HRESULT,
-    fn ConnectAsync(&self, uri: *mut foundation::Uri, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
+    fn ConnectAsync(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     fn SetRequestHeader(&self, headerName: HSTRING, headerValue: HSTRING) -> HRESULT,
     fn add_Closed(&self, eventHandler: *mut foundation::TypedEventHandler<IWebSocket, WebSocketClosedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Closed(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
@@ -7835,12 +7835,12 @@ impl ComPtr<IWebSocket> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream(&self) -> Result<Option<ComPtr<super::super::storage::streams::IOutputStream>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_OutputStream)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn connect_async(&self, uri: &ComPtr<foundation::Uri>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
+    #[inline] pub fn connect_async(&self, uri: &foundation::Uri) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConnectAsync)(self.as_abi() as *const _ as *mut _, uri.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_request_header(&self, headerName: &HStringArg, headerValue: &HStringArg) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).SetRequestHeader)(self.as_abi() as *const _ as *mut _, headerName.get(), headerValue.get());
@@ -7883,13 +7883,13 @@ RT_INTERFACE!{interface IWebSocketControl(IWebSocketControlVtbl): IInspectable(I
     fn get_OutboundBufferSizeInBytes(&self, out: *mut u32) -> HRESULT,
     fn put_OutboundBufferSizeInBytes(&self, value: u32) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy2(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ServerCredential(&self, out: *mut *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ServerCredential(&self, out: *mut <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-security")] fn put_ServerCredential(&self, value: *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn put_ServerCredential(&self, value: <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy4(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ProxyCredential(&self, out: *mut *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ProxyCredential(&self, out: *mut <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy5(&self) -> (),
-    #[cfg(feature="windows-security")] fn put_ProxyCredential(&self, value: *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn put_ProxyCredential(&self, value: <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
     fn get_SupportedProtocols(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT
 }}
 impl ComPtr<IWebSocketControl> {
@@ -7902,28 +7902,28 @@ impl ComPtr<IWebSocketControl> {
         let hr = ((*self.as_abi().lpVtbl).put_OutboundBufferSizeInBytes)(self.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_server_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_server_credential(&self) -> Result<Option<super::super::security::credentials::PasswordCredential>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerCredential)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::credentials::PasswordCredential::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_server_credential(&self, value: &ComPtr<super::super::security::credentials::PasswordCredential>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn set_server_credential(&self, value: &super::super::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_ServerCredential)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_proxy_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_proxy_credential(&self) -> Result<Option<super::super::security::credentials::PasswordCredential>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ProxyCredential)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::credentials::PasswordCredential::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn set_proxy_credential(&self, value: &ComPtr<super::super::security::credentials::PasswordCredential>) -> Result<()> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn set_proxy_credential(&self, value: &super::super::security::credentials::PasswordCredential) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_ProxyCredential)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_supported_protocols(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SupportedProtocols)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IWebSocketControl2, 2042871299, 62154, 17950, 175, 78, 150, 101, 188, 45, 6, 32);
@@ -7934,7 +7934,7 @@ impl ComPtr<IWebSocketControl2> {
     #[cfg(feature="windows-security")] #[inline] pub fn get_ignorable_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::super::security::cryptography::certificates::ChainValidationResult>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_IgnorableServerCertificateErrors)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{static class WebSocketError}
@@ -7958,15 +7958,15 @@ impl ComPtr<IWebSocketErrorStatics> {
 }
 DEFINE_IID!(IID_IWebSocketInformation, 1577181974, 51498, 18341, 178, 95, 7, 132, 118, 57, 209, 129);
 RT_INTERFACE!{interface IWebSocketInformation(IWebSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IWebSocketInformation] {
-    fn get_LocalAddress(&self, out: *mut *mut super::HostName) -> HRESULT,
+    fn get_LocalAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_BandwidthStatistics(&self, out: *mut BandwidthStatistics) -> HRESULT,
     fn get_Protocol(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ComPtr<IWebSocketInformation> {
-    #[inline] pub fn get_local_address(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_local_address(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocalAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bandwidth_statistics(&self) -> Result<BandwidthStatistics> { unsafe { 
         let mut out = zeroed();
@@ -7981,16 +7981,16 @@ impl ComPtr<IWebSocketInformation> {
 }
 DEFINE_IID!(IID_IWebSocketInformation2, 3458021838, 41399, 19779, 130, 105, 141, 91, 152, 27, 212, 122);
 RT_INTERFACE!{interface IWebSocketInformation2(IWebSocketInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebSocketInformation2] {
-    #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut *mut super::super::security::cryptography::certificates::Certificate) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
     fn get_ServerCertificateErrorSeverity(&self, out: *mut SocketSslErrorSeverity) -> HRESULT,
     #[cfg(feature="windows-security")] fn get_ServerCertificateErrors(&self, out: *mut *mut foundation::collections::IVectorView<super::super::security::cryptography::certificates::ChainValidationResult>) -> HRESULT,
     #[cfg(feature="windows-security")] fn get_ServerIntermediateCertificates(&self, out: *mut *mut foundation::collections::IVectorView<super::super::security::cryptography::certificates::Certificate>) -> HRESULT
 }}
 impl ComPtr<IWebSocketInformation2> {
-    #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate(&self) -> Result<Option<ComPtr<super::super::security::cryptography::certificates::Certificate>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate(&self) -> Result<Option<super::super::security::cryptography::certificates::Certificate>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerCertificate)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::cryptography::certificates::Certificate::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_server_certificate_error_severity(&self) -> Result<SocketSslErrorSeverity> { unsafe { 
         let mut out = zeroed();
@@ -8000,12 +8000,12 @@ impl ComPtr<IWebSocketInformation2> {
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::security::cryptography::certificates::ChainValidationResult>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerCertificateErrors)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_intermediate_certificates(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::security::cryptography::certificates::Certificate>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerIntermediateCertificates)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 #[cfg(feature="windows-applicationmodel")] RT_CLASS!{class WebSocketKeepAlive: super::super::applicationmodel::background::IBackgroundTask}
@@ -8015,20 +8015,20 @@ DEFINE_CLSID!(WebSocketKeepAlive(&[87,105,110,100,111,119,115,46,78,101,116,119,
 DEFINE_IID!(IID_IWebSocketServerCustomValidationRequestedEventArgs, 4293918280, 554, 19127, 139, 54, 225, 10, 244, 100, 14, 107);
 RT_INTERFACE!{interface IWebSocketServerCustomValidationRequestedEventArgs(IWebSocketServerCustomValidationRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebSocketServerCustomValidationRequestedEventArgs] {
     #[cfg(not(feature="windows-security"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut *mut super::super::security::cryptography::certificates::Certificate) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
     fn get_ServerCertificateErrorSeverity(&self, out: *mut SocketSslErrorSeverity) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy2(&self) -> (),
     #[cfg(feature="windows-security")] fn get_ServerCertificateErrors(&self, out: *mut *mut foundation::collections::IVectorView<super::super::security::cryptography::certificates::ChainValidationResult>) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy3(&self) -> (),
     #[cfg(feature="windows-security")] fn get_ServerIntermediateCertificates(&self, out: *mut *mut foundation::collections::IVectorView<super::super::security::cryptography::certificates::Certificate>) -> HRESULT,
     fn Reject(&self) -> HRESULT,
-    fn GetDeferral(&self, out: *mut *mut foundation::Deferral) -> HRESULT
+    fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IWebSocketServerCustomValidationRequestedEventArgs> {
-    #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate(&self) -> Result<Option<ComPtr<super::super::security::cryptography::certificates::Certificate>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate(&self) -> Result<Option<super::super::security::cryptography::certificates::Certificate>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerCertificate)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::cryptography::certificates::Certificate::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_server_certificate_error_severity(&self) -> Result<SocketSslErrorSeverity> { unsafe { 
         let mut out = zeroed();
@@ -8038,21 +8038,21 @@ impl ComPtr<IWebSocketServerCustomValidationRequestedEventArgs> {
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_certificate_errors(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::security::cryptography::certificates::ChainValidationResult>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerCertificateErrors)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-security")] #[inline] pub fn get_server_intermediate_certificates(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::super::security::cryptography::certificates::Certificate>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerIntermediateCertificates)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn reject(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Reject)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_deferral(&self) -> Result<Option<ComPtr<foundation::Deferral>>> { unsafe { 
+    #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetDeferral)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class WebSocketServerCustomValidationRequestedEventArgs: IWebSocketServerCustomValidationRequestedEventArgs}
@@ -8089,20 +8089,20 @@ impl ComPtr<IVpnAppId> {
 RT_CLASS!{class VpnAppId: IVpnAppId}
 impl RtActivatable<IVpnAppIdFactory> for VpnAppId {}
 impl VpnAppId {
-    #[inline] pub fn create(type_: VpnAppIdType, value: &HStringArg) -> Result<ComPtr<VpnAppId>> {
+    #[inline] pub fn create(type_: VpnAppIdType, value: &HStringArg) -> Result<VpnAppId> {
         <Self as RtActivatable<IVpnAppIdFactory>>::get_activation_factory().create(type_, value)
     }
 }
 DEFINE_CLSID!(VpnAppId(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,65,112,112,73,100,0]) [CLSID_VpnAppId]);
 DEFINE_IID!(IID_IVpnAppIdFactory, 1185807658, 2731, 20443, 130, 29, 211, 221, 201, 25, 120, 139);
 RT_INTERFACE!{static interface IVpnAppIdFactory(IVpnAppIdFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnAppIdFactory] {
-    fn Create(&self, type_: VpnAppIdType, value: HSTRING, out: *mut *mut VpnAppId) -> HRESULT
+    fn Create(&self, type_: VpnAppIdType, value: HSTRING, out: *mut <VpnAppId as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnAppIdFactory> {
-    #[inline] pub fn create(&self, type_: VpnAppIdType, value: &HStringArg) -> Result<ComPtr<VpnAppId>> { unsafe { 
+    #[inline] pub fn create(&self, type_: VpnAppIdType, value: &HStringArg) -> Result<VpnAppId> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, type_, value.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnAppId::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum VpnAppIdType: i32 {
@@ -8114,19 +8114,19 @@ RT_ENUM! { enum VpnAuthenticationMethod: i32 {
 DEFINE_IID!(IID_IVpnChannel, 1254591751, 53672, 17155, 160, 145, 200, 210, 224, 145, 91, 195);
 RT_INTERFACE!{interface IVpnChannel(IVpnChannelVtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannel] {
     fn AssociateTransport(&self, mainOuterTunnelTransport: *mut IInspectable, optionalOuterTunnelTransport: *mut IInspectable) -> HRESULT,
-    fn Start(&self, assignedClientIPv4list: *mut foundation::collections::IVectorView<super::HostName>, assignedClientIPv6list: *mut foundation::collections::IVectorView<super::HostName>, vpnInterfaceId: *mut VpnInterfaceId, routeScope: *mut VpnRouteAssignment, namespaceScope: *mut VpnNamespaceAssignment, mtuSize: u32, maxFrameSize: u32, optimizeForLowCostNetwork: bool, mainOuterTunnelTransport: *mut IInspectable, optionalOuterTunnelTransport: *mut IInspectable) -> HRESULT,
+    fn Start(&self, assignedClientIPv4list: *mut foundation::collections::IVectorView<super::HostName>, assignedClientIPv6list: *mut foundation::collections::IVectorView<super::HostName>, vpnInterfaceId: <VpnInterfaceId as RtType>::Abi, routeScope: <VpnRouteAssignment as RtType>::Abi, namespaceScope: <VpnNamespaceAssignment as RtType>::Abi, mtuSize: u32, maxFrameSize: u32, optimizeForLowCostNetwork: bool, mainOuterTunnelTransport: *mut IInspectable, optionalOuterTunnelTransport: *mut IInspectable) -> HRESULT,
     fn Stop(&self) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy3(&self) -> (),
-    #[cfg(feature="windows-security")] fn RequestCredentials(&self, credType: VpnCredentialType, isRetry: bool, isSingleSignOnCredential: bool, certificate: *mut super::super::security::cryptography::certificates::Certificate, out: *mut *mut VpnPickedCredential) -> HRESULT,
-    fn RequestVpnPacketBuffer(&self, type_: VpnDataPathType, vpnPacketBuffer: *mut *mut VpnPacketBuffer) -> HRESULT,
+    #[cfg(feature="windows-security")] fn RequestCredentials(&self, credType: VpnCredentialType, isRetry: bool, isSingleSignOnCredential: bool, certificate: <super::super::security::cryptography::certificates::Certificate as RtType>::Abi, out: *mut <VpnPickedCredential as RtType>::Abi) -> HRESULT,
+    fn RequestVpnPacketBuffer(&self, type_: VpnDataPathType, vpnPacketBuffer: *mut <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
     fn LogDiagnosticMessage(&self, message: HSTRING) -> HRESULT,
     fn get_Id(&self, out: *mut u32) -> HRESULT,
-    fn get_Configuration(&self, out: *mut *mut VpnChannelConfiguration) -> HRESULT,
+    fn get_Configuration(&self, out: *mut <VpnChannelConfiguration as RtType>::Abi) -> HRESULT,
     fn add_ActivityChange(&self, handler: *mut foundation::TypedEventHandler<VpnChannel, VpnChannelActivityEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ActivityChange(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn put_PlugInContext(&self, value: *mut IInspectable) -> HRESULT,
     fn get_PlugInContext(&self, out: *mut *mut IInspectable) -> HRESULT,
-    fn get_SystemHealth(&self, out: *mut *mut VpnSystemHealth) -> HRESULT,
+    fn get_SystemHealth(&self, out: *mut <VpnSystemHealth as RtType>::Abi) -> HRESULT,
     fn RequestCustomPrompt(&self, customPrompt: *mut foundation::collections::IVectorView<IVpnCustomPrompt>) -> HRESULT,
     fn SetErrorMessage(&self, message: HSTRING) -> HRESULT,
     fn SetAllowedSslTlsVersions(&self, tunnelTransport: *mut IInspectable, useTls12: bool) -> HRESULT
@@ -8136,7 +8136,7 @@ impl ComPtr<IVpnChannel> {
         let hr = ((*self.as_abi().lpVtbl).AssociateTransport)(self.as_abi() as *const _ as *mut _, mainOuterTunnelTransport.as_abi() as *const _ as *mut _, optionalOuterTunnelTransport.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn start(&self, assignedClientIPv4list: &ComPtr<foundation::collections::IVectorView<super::HostName>>, assignedClientIPv6list: &ComPtr<foundation::collections::IVectorView<super::HostName>>, vpnInterfaceId: &ComPtr<VpnInterfaceId>, routeScope: &ComPtr<VpnRouteAssignment>, namespaceScope: &ComPtr<VpnNamespaceAssignment>, mtuSize: u32, maxFrameSize: u32, optimizeForLowCostNetwork: bool, mainOuterTunnelTransport: &ComPtr<IInspectable>, optionalOuterTunnelTransport: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
+    #[inline] pub fn start(&self, assignedClientIPv4list: &ComPtr<foundation::collections::IVectorView<super::HostName>>, assignedClientIPv6list: &ComPtr<foundation::collections::IVectorView<super::HostName>>, vpnInterfaceId: &VpnInterfaceId, routeScope: &VpnRouteAssignment, namespaceScope: &VpnNamespaceAssignment, mtuSize: u32, maxFrameSize: u32, optimizeForLowCostNetwork: bool, mainOuterTunnelTransport: &ComPtr<IInspectable>, optionalOuterTunnelTransport: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Start)(self.as_abi() as *const _ as *mut _, assignedClientIPv4list.as_abi() as *const _ as *mut _, assignedClientIPv6list.as_abi() as *const _ as *mut _, vpnInterfaceId.as_abi() as *const _ as *mut _, routeScope.as_abi() as *const _ as *mut _, namespaceScope.as_abi() as *const _ as *mut _, mtuSize, maxFrameSize, optimizeForLowCostNetwork, mainOuterTunnelTransport.as_abi() as *const _ as *mut _, optionalOuterTunnelTransport.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -8144,15 +8144,15 @@ impl ComPtr<IVpnChannel> {
         let hr = ((*self.as_abi().lpVtbl).Stop)(self.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn request_credentials(&self, credType: VpnCredentialType, isRetry: bool, isSingleSignOnCredential: bool, certificate: &ComPtr<super::super::security::cryptography::certificates::Certificate>) -> Result<Option<ComPtr<VpnPickedCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn request_credentials(&self, credType: VpnCredentialType, isRetry: bool, isSingleSignOnCredential: bool, certificate: &super::super::security::cryptography::certificates::Certificate) -> Result<Option<VpnPickedCredential>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RequestCredentials)(self.as_abi() as *const _ as *mut _, credType, isRetry, isSingleSignOnCredential, certificate.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnPickedCredential::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn request_vpn_packet_buffer(&self, type_: VpnDataPathType) -> Result<Option<ComPtr<VpnPacketBuffer>>> { unsafe { 
+    #[inline] pub fn request_vpn_packet_buffer(&self, type_: VpnDataPathType) -> Result<Option<VpnPacketBuffer>> { unsafe { 
         let mut vpnPacketBuffer = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RequestVpnPacketBuffer)(self.as_abi() as *const _ as *mut _, type_, &mut vpnPacketBuffer);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(vpnPacketBuffer)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnPacketBuffer::wrap(vpnPacketBuffer)) } else { err(hr) }
     }}
     #[inline] pub fn log_diagnostic_message(&self, message: &HStringArg) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).LogDiagnosticMessage)(self.as_abi() as *const _ as *mut _, message.get());
@@ -8163,10 +8163,10 @@ impl ComPtr<IVpnChannel> {
         let hr = ((*self.as_abi().lpVtbl).get_Id)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_configuration(&self) -> Result<Option<ComPtr<VpnChannelConfiguration>>> { unsafe { 
+    #[inline] pub fn get_configuration(&self) -> Result<Option<VpnChannelConfiguration>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Configuration)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnChannelConfiguration::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_activity_change(&self, handler: &ComPtr<foundation::TypedEventHandler<VpnChannel, VpnChannelActivityEventArgs>>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
@@ -8184,12 +8184,12 @@ impl ComPtr<IVpnChannel> {
     #[inline] pub fn get_plug_in_context(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PlugInContext)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_system_health(&self) -> Result<Option<ComPtr<VpnSystemHealth>>> { unsafe { 
+    #[inline] pub fn get_system_health(&self) -> Result<Option<VpnSystemHealth>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_SystemHealth)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnSystemHealth::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_custom_prompt(&self, customPrompt: &ComPtr<foundation::collections::IVectorView<IVpnCustomPrompt>>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).RequestCustomPrompt)(self.as_abi() as *const _ as *mut _, customPrompt.as_abi() as *const _ as *mut _);
@@ -8214,26 +8214,26 @@ impl VpnChannel {
 DEFINE_CLSID!(VpnChannel(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,104,97,110,110,101,108,0]) [CLSID_VpnChannel]);
 DEFINE_IID!(IID_IVpnChannel2, 576049509, 39227, 17961, 173, 96, 241, 195, 243, 83, 127, 80);
 RT_INTERFACE!{interface IVpnChannel2(IVpnChannel2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannel2] {
-    fn StartWithMainTransport(&self, assignedClientIPv4list: *mut foundation::collections::IVectorView<super::HostName>, assignedClientIPv6list: *mut foundation::collections::IVectorView<super::HostName>, vpnInterfaceId: *mut VpnInterfaceId, assignedRoutes: *mut VpnRouteAssignment, assignedDomainName: *mut VpnDomainNameAssignment, mtuSize: u32, maxFrameSize: u32, reserved: bool, mainOuterTunnelTransport: *mut IInspectable) -> HRESULT,
-    fn StartExistingTransports(&self, assignedClientIPv4list: *mut foundation::collections::IVectorView<super::HostName>, assignedClientIPv6list: *mut foundation::collections::IVectorView<super::HostName>, vpnInterfaceId: *mut VpnInterfaceId, assignedRoutes: *mut VpnRouteAssignment, assignedDomainName: *mut VpnDomainNameAssignment, mtuSize: u32, maxFrameSize: u32, reserved: bool) -> HRESULT,
+    fn StartWithMainTransport(&self, assignedClientIPv4list: *mut foundation::collections::IVectorView<super::HostName>, assignedClientIPv6list: *mut foundation::collections::IVectorView<super::HostName>, vpnInterfaceId: <VpnInterfaceId as RtType>::Abi, assignedRoutes: <VpnRouteAssignment as RtType>::Abi, assignedDomainName: <VpnDomainNameAssignment as RtType>::Abi, mtuSize: u32, maxFrameSize: u32, reserved: bool, mainOuterTunnelTransport: *mut IInspectable) -> HRESULT,
+    fn StartExistingTransports(&self, assignedClientIPv4list: *mut foundation::collections::IVectorView<super::HostName>, assignedClientIPv6list: *mut foundation::collections::IVectorView<super::HostName>, vpnInterfaceId: <VpnInterfaceId as RtType>::Abi, assignedRoutes: <VpnRouteAssignment as RtType>::Abi, assignedDomainName: <VpnDomainNameAssignment as RtType>::Abi, mtuSize: u32, maxFrameSize: u32, reserved: bool) -> HRESULT,
     fn add_ActivityStateChange(&self, handler: *mut foundation::TypedEventHandler<VpnChannel, VpnChannelActivityStateChangedArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ActivityStateChange(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn GetVpnSendPacketBuffer(&self, out: *mut *mut VpnPacketBuffer) -> HRESULT,
-    fn GetVpnReceivePacketBuffer(&self, out: *mut *mut VpnPacketBuffer) -> HRESULT,
+    fn GetVpnSendPacketBuffer(&self, out: *mut <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
+    fn GetVpnReceivePacketBuffer(&self, out: *mut <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
     fn RequestCustomPromptAsync(&self, customPromptElement: *mut foundation::collections::IVectorView<IVpnCustomPromptElement>, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy7(&self) -> (),
-    #[cfg(feature="windows-security")] fn RequestCredentialsWithCertificateAsync(&self, credType: VpnCredentialType, credOptions: u32, certificate: *mut super::super::security::cryptography::certificates::Certificate, out: *mut *mut foundation::IAsyncOperation<VpnCredential>) -> HRESULT,
+    #[cfg(feature="windows-security")] fn RequestCredentialsWithCertificateAsync(&self, credType: VpnCredentialType, credOptions: u32, certificate: <super::super::security::cryptography::certificates::Certificate as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<VpnCredential>) -> HRESULT,
     fn RequestCredentialsWithOptionsAsync(&self, credType: VpnCredentialType, credOptions: u32, out: *mut *mut foundation::IAsyncOperation<VpnCredential>) -> HRESULT,
     fn RequestCredentialsSimpleAsync(&self, credType: VpnCredentialType, out: *mut *mut foundation::IAsyncOperation<VpnCredential>) -> HRESULT,
     fn TerminateConnection(&self, message: HSTRING) -> HRESULT,
-    fn StartWithTrafficFilter(&self, assignedClientIpv4List: *mut foundation::collections::IVectorView<super::HostName>, assignedClientIpv6List: *mut foundation::collections::IVectorView<super::HostName>, vpnInterfaceId: *mut VpnInterfaceId, assignedRoutes: *mut VpnRouteAssignment, assignedNamespace: *mut VpnDomainNameAssignment, mtuSize: u32, maxFrameSize: u32, reserved: bool, mainOuterTunnelTransport: *mut IInspectable, optionalOuterTunnelTransport: *mut IInspectable, assignedTrafficFilters: *mut VpnTrafficFilterAssignment) -> HRESULT
+    fn StartWithTrafficFilter(&self, assignedClientIpv4List: *mut foundation::collections::IVectorView<super::HostName>, assignedClientIpv6List: *mut foundation::collections::IVectorView<super::HostName>, vpnInterfaceId: <VpnInterfaceId as RtType>::Abi, assignedRoutes: <VpnRouteAssignment as RtType>::Abi, assignedNamespace: <VpnDomainNameAssignment as RtType>::Abi, mtuSize: u32, maxFrameSize: u32, reserved: bool, mainOuterTunnelTransport: *mut IInspectable, optionalOuterTunnelTransport: *mut IInspectable, assignedTrafficFilters: <VpnTrafficFilterAssignment as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnChannel2> {
-    #[inline] pub fn start_with_main_transport(&self, assignedClientIPv4list: &ComPtr<foundation::collections::IVectorView<super::HostName>>, assignedClientIPv6list: &ComPtr<foundation::collections::IVectorView<super::HostName>>, vpnInterfaceId: &ComPtr<VpnInterfaceId>, assignedRoutes: &ComPtr<VpnRouteAssignment>, assignedDomainName: &ComPtr<VpnDomainNameAssignment>, mtuSize: u32, maxFrameSize: u32, reserved: bool, mainOuterTunnelTransport: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
+    #[inline] pub fn start_with_main_transport(&self, assignedClientIPv4list: &ComPtr<foundation::collections::IVectorView<super::HostName>>, assignedClientIPv6list: &ComPtr<foundation::collections::IVectorView<super::HostName>>, vpnInterfaceId: &VpnInterfaceId, assignedRoutes: &VpnRouteAssignment, assignedDomainName: &VpnDomainNameAssignment, mtuSize: u32, maxFrameSize: u32, reserved: bool, mainOuterTunnelTransport: &ComPtr<IInspectable>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).StartWithMainTransport)(self.as_abi() as *const _ as *mut _, assignedClientIPv4list.as_abi() as *const _ as *mut _, assignedClientIPv6list.as_abi() as *const _ as *mut _, vpnInterfaceId.as_abi() as *const _ as *mut _, assignedRoutes.as_abi() as *const _ as *mut _, assignedDomainName.as_abi() as *const _ as *mut _, mtuSize, maxFrameSize, reserved, mainOuterTunnelTransport.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn start_existing_transports(&self, assignedClientIPv4list: &ComPtr<foundation::collections::IVectorView<super::HostName>>, assignedClientIPv6list: &ComPtr<foundation::collections::IVectorView<super::HostName>>, vpnInterfaceId: &ComPtr<VpnInterfaceId>, assignedRoutes: &ComPtr<VpnRouteAssignment>, assignedDomainName: &ComPtr<VpnDomainNameAssignment>, mtuSize: u32, maxFrameSize: u32, reserved: bool) -> Result<()> { unsafe { 
+    #[inline] pub fn start_existing_transports(&self, assignedClientIPv4list: &ComPtr<foundation::collections::IVectorView<super::HostName>>, assignedClientIPv6list: &ComPtr<foundation::collections::IVectorView<super::HostName>>, vpnInterfaceId: &VpnInterfaceId, assignedRoutes: &VpnRouteAssignment, assignedDomainName: &VpnDomainNameAssignment, mtuSize: u32, maxFrameSize: u32, reserved: bool) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).StartExistingTransports)(self.as_abi() as *const _ as *mut _, assignedClientIPv4list.as_abi() as *const _ as *mut _, assignedClientIPv6list.as_abi() as *const _ as *mut _, vpnInterfaceId.as_abi() as *const _ as *mut _, assignedRoutes.as_abi() as *const _ as *mut _, assignedDomainName.as_abi() as *const _ as *mut _, mtuSize, maxFrameSize, reserved);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -8246,41 +8246,41 @@ impl ComPtr<IVpnChannel2> {
         let hr = ((*self.as_abi().lpVtbl).remove_ActivityStateChange)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_vpn_send_packet_buffer(&self) -> Result<Option<ComPtr<VpnPacketBuffer>>> { unsafe { 
+    #[inline] pub fn get_vpn_send_packet_buffer(&self) -> Result<Option<VpnPacketBuffer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetVpnSendPacketBuffer)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnPacketBuffer::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_vpn_receive_packet_buffer(&self) -> Result<Option<ComPtr<VpnPacketBuffer>>> { unsafe { 
+    #[inline] pub fn get_vpn_receive_packet_buffer(&self) -> Result<Option<VpnPacketBuffer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetVpnReceivePacketBuffer)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnPacketBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_custom_prompt_async(&self, customPromptElement: &ComPtr<foundation::collections::IVectorView<IVpnCustomPromptElement>>) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RequestCustomPromptAsync)(self.as_abi() as *const _ as *mut _, customPromptElement.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn request_credentials_with_certificate_async(&self, credType: VpnCredentialType, credOptions: u32, certificate: &ComPtr<super::super::security::cryptography::certificates::Certificate>) -> Result<ComPtr<foundation::IAsyncOperation<VpnCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn request_credentials_with_certificate_async(&self, credType: VpnCredentialType, credOptions: u32, certificate: &super::super::security::cryptography::certificates::Certificate) -> Result<ComPtr<foundation::IAsyncOperation<VpnCredential>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RequestCredentialsWithCertificateAsync)(self.as_abi() as *const _ as *mut _, credType, credOptions, certificate.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_credentials_with_options_async(&self, credType: VpnCredentialType, credOptions: u32) -> Result<ComPtr<foundation::IAsyncOperation<VpnCredential>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RequestCredentialsWithOptionsAsync)(self.as_abi() as *const _ as *mut _, credType, credOptions, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_credentials_simple_async(&self, credType: VpnCredentialType) -> Result<ComPtr<foundation::IAsyncOperation<VpnCredential>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RequestCredentialsSimpleAsync)(self.as_abi() as *const _ as *mut _, credType, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn terminate_connection(&self, message: &HStringArg) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).TerminateConnection)(self.as_abi() as *const _ as *mut _, message.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn start_with_traffic_filter(&self, assignedClientIpv4List: &ComPtr<foundation::collections::IVectorView<super::HostName>>, assignedClientIpv6List: &ComPtr<foundation::collections::IVectorView<super::HostName>>, vpnInterfaceId: &ComPtr<VpnInterfaceId>, assignedRoutes: &ComPtr<VpnRouteAssignment>, assignedNamespace: &ComPtr<VpnDomainNameAssignment>, mtuSize: u32, maxFrameSize: u32, reserved: bool, mainOuterTunnelTransport: &ComPtr<IInspectable>, optionalOuterTunnelTransport: &ComPtr<IInspectable>, assignedTrafficFilters: &ComPtr<VpnTrafficFilterAssignment>) -> Result<()> { unsafe { 
+    #[inline] pub fn start_with_traffic_filter(&self, assignedClientIpv4List: &ComPtr<foundation::collections::IVectorView<super::HostName>>, assignedClientIpv6List: &ComPtr<foundation::collections::IVectorView<super::HostName>>, vpnInterfaceId: &VpnInterfaceId, assignedRoutes: &VpnRouteAssignment, assignedNamespace: &VpnDomainNameAssignment, mtuSize: u32, maxFrameSize: u32, reserved: bool, mainOuterTunnelTransport: &ComPtr<IInspectable>, optionalOuterTunnelTransport: &ComPtr<IInspectable>, assignedTrafficFilters: &VpnTrafficFilterAssignment) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).StartWithTrafficFilter)(self.as_abi() as *const _ as *mut _, assignedClientIpv4List.as_abi() as *const _ as *mut _, assignedClientIpv6List.as_abi() as *const _ as *mut _, vpnInterfaceId.as_abi() as *const _ as *mut _, assignedRoutes.as_abi() as *const _ as *mut _, assignedNamespace.as_abi() as *const _ as *mut _, mtuSize, maxFrameSize, reserved, mainOuterTunnelTransport.as_abi() as *const _ as *mut _, optionalOuterTunnelTransport.as_abi() as *const _ as *mut _, assignedTrafficFilters.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -8288,7 +8288,7 @@ impl ComPtr<IVpnChannel2> {
 DEFINE_IID!(IID_IVpnChannel4, 3609620190, 10551, 16797, 149, 112, 72, 106, 235, 184, 24, 3);
 RT_INTERFACE!{interface IVpnChannel4(IVpnChannel4Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannel4] {
     fn AddAndAssociateTransport(&self, transport: *mut IInspectable, context: *mut IInspectable) -> HRESULT,
-    fn StartWithMultipleTransports(&self, assignedClientIpv4Addresses: *mut foundation::collections::IIterable<super::HostName>, assignedClientIpv6Addresses: *mut foundation::collections::IIterable<super::HostName>, vpninterfaceId: *mut VpnInterfaceId, assignedRoutes: *mut VpnRouteAssignment, assignedNamespace: *mut VpnDomainNameAssignment, mtuSize: u32, maxFrameSize: u32, reserved: bool, transports: *mut foundation::collections::IIterable<IInspectable>, assignedTrafficFilters: *mut VpnTrafficFilterAssignment) -> HRESULT,
+    fn StartWithMultipleTransports(&self, assignedClientIpv4Addresses: *mut foundation::collections::IIterable<super::HostName>, assignedClientIpv6Addresses: *mut foundation::collections::IIterable<super::HostName>, vpninterfaceId: <VpnInterfaceId as RtType>::Abi, assignedRoutes: <VpnRouteAssignment as RtType>::Abi, assignedNamespace: <VpnDomainNameAssignment as RtType>::Abi, mtuSize: u32, maxFrameSize: u32, reserved: bool, transports: *mut foundation::collections::IIterable<IInspectable>, assignedTrafficFilters: <VpnTrafficFilterAssignment as RtType>::Abi) -> HRESULT,
     fn ReplaceAndAssociateTransport(&self, transport: *mut IInspectable, context: *mut IInspectable) -> HRESULT,
     fn StartReconnectingTransport(&self, transport: *mut IInspectable, context: *mut IInspectable) -> HRESULT,
     fn GetSlotTypeForTransportContext(&self, context: *mut IInspectable, out: *mut super::sockets::ControlChannelTriggerStatus) -> HRESULT,
@@ -8299,7 +8299,7 @@ impl ComPtr<IVpnChannel4> {
         let hr = ((*self.as_abi().lpVtbl).AddAndAssociateTransport)(self.as_abi() as *const _ as *mut _, transport.as_abi() as *const _ as *mut _, context.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn start_with_multiple_transports(&self, assignedClientIpv4Addresses: &ComPtr<foundation::collections::IIterable<super::HostName>>, assignedClientIpv6Addresses: &ComPtr<foundation::collections::IIterable<super::HostName>>, vpninterfaceId: &ComPtr<VpnInterfaceId>, assignedRoutes: &ComPtr<VpnRouteAssignment>, assignedNamespace: &ComPtr<VpnDomainNameAssignment>, mtuSize: u32, maxFrameSize: u32, reserved: bool, transports: &ComPtr<foundation::collections::IIterable<IInspectable>>, assignedTrafficFilters: &ComPtr<VpnTrafficFilterAssignment>) -> Result<()> { unsafe { 
+    #[inline] pub fn start_with_multiple_transports(&self, assignedClientIpv4Addresses: &ComPtr<foundation::collections::IIterable<super::HostName>>, assignedClientIpv6Addresses: &ComPtr<foundation::collections::IIterable<super::HostName>>, vpninterfaceId: &VpnInterfaceId, assignedRoutes: &VpnRouteAssignment, assignedNamespace: &VpnDomainNameAssignment, mtuSize: u32, maxFrameSize: u32, reserved: bool, transports: &ComPtr<foundation::collections::IIterable<IInspectable>>, assignedTrafficFilters: &VpnTrafficFilterAssignment) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).StartWithMultipleTransports)(self.as_abi() as *const _ as *mut _, assignedClientIpv4Addresses.as_abi() as *const _ as *mut _, assignedClientIpv6Addresses.as_abi() as *const _ as *mut _, vpninterfaceId.as_abi() as *const _ as *mut _, assignedRoutes.as_abi() as *const _ as *mut _, assignedNamespace.as_abi() as *const _ as *mut _, mtuSize, maxFrameSize, reserved, transports.as_abi() as *const _ as *mut _, assignedTrafficFilters.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -8319,7 +8319,7 @@ impl ComPtr<IVpnChannel4> {
     #[inline] pub fn get_current_request_transport_context(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CurrentRequestTransportContext)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IVpnChannelActivityEventArgs, 2741799154, 45020, 18293, 133, 93, 212, 172, 10, 53, 252, 85);
@@ -8364,7 +8364,7 @@ impl ComPtr<IVpnChannelConfiguration> {
     #[inline] pub fn get_server_host_name_list(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<super::HostName>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerHostNameList)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_custom_field(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -8381,7 +8381,7 @@ impl ComPtr<IVpnChannelConfiguration2> {
     #[inline] pub fn get_server_uris(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<foundation::Uri>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerUris)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum VpnChannelRequestCredentialsOptions: u32 {
@@ -8399,31 +8399,31 @@ impl ComPtr<IVpnChannelStatics> {
 }
 DEFINE_IID!(IID_IVpnCredential, 3085404915, 42093, 16459, 135, 41, 24, 50, 82, 40, 83, 172);
 RT_INTERFACE!{interface IVpnCredential(IVpnCredentialVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCredential] {
-    #[cfg(feature="windows-security")] fn get_PasskeyCredential(&self, out: *mut *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
-    #[cfg(feature="windows-security")] fn get_CertificateCredential(&self, out: *mut *mut super::super::security::cryptography::certificates::Certificate) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_PasskeyCredential(&self, out: *mut <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_CertificateCredential(&self, out: *mut <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
     fn get_AdditionalPin(&self, out: *mut HSTRING) -> HRESULT,
-    #[cfg(feature="windows-security")] fn get_OldPasswordCredential(&self, out: *mut *mut super::super::security::credentials::PasswordCredential) -> HRESULT
+    #[cfg(feature="windows-security")] fn get_OldPasswordCredential(&self, out: *mut <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnCredential> {
-    #[cfg(feature="windows-security")] #[inline] pub fn get_passkey_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_passkey_credential(&self) -> Result<Option<super::super::security::credentials::PasswordCredential>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PasskeyCredential)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::credentials::PasswordCredential::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_certificate_credential(&self) -> Result<Option<ComPtr<super::super::security::cryptography::certificates::Certificate>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_certificate_credential(&self) -> Result<Option<super::super::security::cryptography::certificates::Certificate>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CertificateCredential)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::cryptography::certificates::Certificate::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_additional_pin(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AdditionalPin)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_old_password_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_old_password_credential(&self) -> Result<Option<super::super::security::credentials::PasswordCredential>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_OldPasswordCredential)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::credentials::PasswordCredential::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class VpnCredential: IVpnCredential}
@@ -8469,7 +8469,7 @@ impl ComPtr<IVpnCustomComboBox> {
     #[inline] pub fn get_options_text(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_OptionsText)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_selected(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
@@ -8633,7 +8633,7 @@ impl ComPtr<IVpnCustomPromptOptionSelector> {
     #[inline] pub fn get_options(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Options)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_selected_index(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
@@ -8724,23 +8724,23 @@ RT_ENUM! { enum VpnDataPathType: i32 {
 DEFINE_IID!(IID_IVpnDomainNameAssignment, 1094037825, 52443, 18869, 148, 1, 3, 154, 138, 231, 103, 233);
 RT_INTERFACE!{interface IVpnDomainNameAssignment(IVpnDomainNameAssignmentVtbl): IInspectable(IInspectableVtbl) [IID_IVpnDomainNameAssignment] {
     fn get_DomainNameList(&self, out: *mut *mut foundation::collections::IVector<VpnDomainNameInfo>) -> HRESULT,
-    fn put_ProxyAutoConfigurationUri(&self, value: *mut foundation::Uri) -> HRESULT,
-    fn get_ProxyAutoConfigurationUri(&self, out: *mut *mut foundation::Uri) -> HRESULT
+    fn put_ProxyAutoConfigurationUri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT,
+    fn get_ProxyAutoConfigurationUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnDomainNameAssignment> {
     #[inline] pub fn get_domain_name_list(&self) -> Result<Option<ComPtr<foundation::collections::IVector<VpnDomainNameInfo>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DomainNameList)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_proxy_auto_configuration_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_proxy_auto_configuration_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_ProxyAutoConfigurationUri)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_proxy_auto_configuration_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_proxy_auto_configuration_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ProxyAutoConfigurationUri)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class VpnDomainNameAssignment: IVpnDomainNameAssignment}
@@ -8748,22 +8748,22 @@ impl RtActivatable<IActivationFactory> for VpnDomainNameAssignment {}
 DEFINE_CLSID!(VpnDomainNameAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,68,111,109,97,105,110,78,97,109,101,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnDomainNameAssignment]);
 DEFINE_IID!(IID_IVpnDomainNameInfo, 2905520175, 60046, 20346, 132, 62, 26, 135, 227, 46, 27, 154);
 RT_INTERFACE!{interface IVpnDomainNameInfo(IVpnDomainNameInfoVtbl): IInspectable(IInspectableVtbl) [IID_IVpnDomainNameInfo] {
-    fn put_DomainName(&self, value: *mut super::HostName) -> HRESULT,
-    fn get_DomainName(&self, out: *mut *mut super::HostName) -> HRESULT,
+    fn put_DomainName(&self, value: <super::HostName as RtType>::Abi) -> HRESULT,
+    fn get_DomainName(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn put_DomainNameType(&self, value: VpnDomainNameType) -> HRESULT,
     fn get_DomainNameType(&self, out: *mut VpnDomainNameType) -> HRESULT,
     fn get_DnsServers(&self, out: *mut *mut foundation::collections::IVector<super::HostName>) -> HRESULT,
     fn get_WebProxyServers(&self, out: *mut *mut foundation::collections::IVector<super::HostName>) -> HRESULT
 }}
 impl ComPtr<IVpnDomainNameInfo> {
-    #[inline] pub fn set_domain_name(&self, value: &ComPtr<super::HostName>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_domain_name(&self, value: &super::HostName) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_DomainName)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_domain_name(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_domain_name(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DomainName)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_domain_name_type(&self, value: VpnDomainNameType) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_DomainNameType)(self.as_abi() as *const _ as *mut _, value);
@@ -8777,18 +8777,18 @@ impl ComPtr<IVpnDomainNameInfo> {
     #[inline] pub fn get_dns_servers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::HostName>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DnsServers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_web_proxy_servers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::HostName>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_WebProxyServers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class VpnDomainNameInfo: IVpnDomainNameInfo}
 impl RtActivatable<IVpnDomainNameInfoFactory> for VpnDomainNameInfo {}
 impl VpnDomainNameInfo {
-    #[inline] pub fn create_vpn_domain_name_info(name: &HStringArg, nameType: VpnDomainNameType, dnsServerList: &ComPtr<foundation::collections::IIterable<super::HostName>>, proxyServerList: &ComPtr<foundation::collections::IIterable<super::HostName>>) -> Result<ComPtr<VpnDomainNameInfo>> {
+    #[inline] pub fn create_vpn_domain_name_info(name: &HStringArg, nameType: VpnDomainNameType, dnsServerList: &ComPtr<foundation::collections::IIterable<super::HostName>>, proxyServerList: &ComPtr<foundation::collections::IIterable<super::HostName>>) -> Result<VpnDomainNameInfo> {
         <Self as RtActivatable<IVpnDomainNameInfoFactory>>::get_activation_factory().create_vpn_domain_name_info(name, nameType, dnsServerList, proxyServerList)
     }
 }
@@ -8801,18 +8801,18 @@ impl ComPtr<IVpnDomainNameInfo2> {
     #[inline] pub fn get_web_proxy_uris(&self) -> Result<Option<ComPtr<foundation::collections::IVector<foundation::Uri>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_WebProxyUris)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IVpnDomainNameInfoFactory, 621263733, 655, 18056, 141, 58, 196, 83, 29, 243, 125, 168);
 RT_INTERFACE!{static interface IVpnDomainNameInfoFactory(IVpnDomainNameInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnDomainNameInfoFactory] {
-    fn CreateVpnDomainNameInfo(&self, name: HSTRING, nameType: VpnDomainNameType, dnsServerList: *mut foundation::collections::IIterable<super::HostName>, proxyServerList: *mut foundation::collections::IIterable<super::HostName>, out: *mut *mut VpnDomainNameInfo) -> HRESULT
+    fn CreateVpnDomainNameInfo(&self, name: HSTRING, nameType: VpnDomainNameType, dnsServerList: *mut foundation::collections::IIterable<super::HostName>, proxyServerList: *mut foundation::collections::IIterable<super::HostName>, out: *mut <VpnDomainNameInfo as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnDomainNameInfoFactory> {
-    #[inline] pub fn create_vpn_domain_name_info(&self, name: &HStringArg, nameType: VpnDomainNameType, dnsServerList: &ComPtr<foundation::collections::IIterable<super::HostName>>, proxyServerList: &ComPtr<foundation::collections::IIterable<super::HostName>>) -> Result<ComPtr<VpnDomainNameInfo>> { unsafe { 
+    #[inline] pub fn create_vpn_domain_name_info(&self, name: &HStringArg, nameType: VpnDomainNameType, dnsServerList: &ComPtr<foundation::collections::IIterable<super::HostName>>, proxyServerList: &ComPtr<foundation::collections::IIterable<super::HostName>>) -> Result<VpnDomainNameInfo> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateVpnDomainNameInfo)(self.as_abi() as *const _ as *mut _, name.get(), nameType, dnsServerList.as_abi() as *const _ as *mut _, proxyServerList.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnDomainNameInfo::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum VpnDomainNameType: i32 {
@@ -8832,20 +8832,20 @@ impl ComPtr<IVpnInterfaceId> {
 RT_CLASS!{class VpnInterfaceId: IVpnInterfaceId}
 impl RtActivatable<IVpnInterfaceIdFactory> for VpnInterfaceId {}
 impl VpnInterfaceId {
-    #[inline] pub fn create_vpn_interface_id(address: &[u8]) -> Result<ComPtr<VpnInterfaceId>> {
+    #[inline] pub fn create_vpn_interface_id(address: &[u8]) -> Result<VpnInterfaceId> {
         <Self as RtActivatable<IVpnInterfaceIdFactory>>::get_activation_factory().create_vpn_interface_id(address)
     }
 }
 DEFINE_CLSID!(VpnInterfaceId(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,73,110,116,101,114,102,97,99,101,73,100,0]) [CLSID_VpnInterfaceId]);
 DEFINE_IID!(IID_IVpnInterfaceIdFactory, 2653805730, 5906, 19684, 177, 121, 140, 101, 44, 109, 16, 0);
 RT_INTERFACE!{static interface IVpnInterfaceIdFactory(IVpnInterfaceIdFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnInterfaceIdFactory] {
-    fn CreateVpnInterfaceId(&self, addressSize: u32, address: *mut u8, out: *mut *mut VpnInterfaceId) -> HRESULT
+    fn CreateVpnInterfaceId(&self, addressSize: u32, address: *mut u8, out: *mut <VpnInterfaceId as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnInterfaceIdFactory> {
-    #[inline] pub fn create_vpn_interface_id(&self, address: &[u8]) -> Result<ComPtr<VpnInterfaceId>> { unsafe { 
+    #[inline] pub fn create_vpn_interface_id(&self, address: &[u8]) -> Result<VpnInterfaceId> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateVpnInterfaceId)(self.as_abi() as *const _ as *mut _, address.len() as u32, address.as_ptr() as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnInterfaceId::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum VpnIPProtocol: i32 {
@@ -8861,54 +8861,54 @@ RT_INTERFACE!{interface IVpnManagementAgent(IVpnManagementAgentVtbl): IInspectab
     fn DeleteProfileAsync(&self, profile: *mut IVpnProfile, out: *mut *mut foundation::IAsyncOperation<VpnManagementErrorStatus>) -> HRESULT,
     fn ConnectProfileAsync(&self, profile: *mut IVpnProfile, out: *mut *mut foundation::IAsyncOperation<VpnManagementErrorStatus>) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy7(&self) -> (),
-    #[cfg(feature="windows-security")] fn ConnectProfileWithPasswordCredentialAsync(&self, profile: *mut IVpnProfile, passwordCredential: *mut super::super::security::credentials::PasswordCredential, out: *mut *mut foundation::IAsyncOperation<VpnManagementErrorStatus>) -> HRESULT,
+    #[cfg(feature="windows-security")] fn ConnectProfileWithPasswordCredentialAsync(&self, profile: *mut IVpnProfile, passwordCredential: <super::super::security::credentials::PasswordCredential as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<VpnManagementErrorStatus>) -> HRESULT,
     fn DisconnectProfileAsync(&self, profile: *mut IVpnProfile, out: *mut *mut foundation::IAsyncOperation<VpnManagementErrorStatus>) -> HRESULT
 }}
 impl ComPtr<IVpnManagementAgent> {
     #[inline] pub fn add_profile_from_xml_async(&self, xml: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<VpnManagementErrorStatus>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).AddProfileFromXmlAsync)(self.as_abi() as *const _ as *mut _, xml.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_profile_from_object_async(&self, profile: &ComPtr<IVpnProfile>) -> Result<ComPtr<foundation::IAsyncOperation<VpnManagementErrorStatus>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).AddProfileFromObjectAsync)(self.as_abi() as *const _ as *mut _, profile.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn update_profile_from_xml_async(&self, xml: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<VpnManagementErrorStatus>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).UpdateProfileFromXmlAsync)(self.as_abi() as *const _ as *mut _, xml.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn update_profile_from_object_async(&self, profile: &ComPtr<IVpnProfile>) -> Result<ComPtr<foundation::IAsyncOperation<VpnManagementErrorStatus>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).UpdateProfileFromObjectAsync)(self.as_abi() as *const _ as *mut _, profile.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_profiles_async(&self) -> Result<ComPtr<foundation::IAsyncOperation<foundation::collections::IVectorView<IVpnProfile>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetProfilesAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_profile_async(&self, profile: &ComPtr<IVpnProfile>) -> Result<ComPtr<foundation::IAsyncOperation<VpnManagementErrorStatus>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).DeleteProfileAsync)(self.as_abi() as *const _ as *mut _, profile.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn connect_profile_async(&self, profile: &ComPtr<IVpnProfile>) -> Result<ComPtr<foundation::IAsyncOperation<VpnManagementErrorStatus>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConnectProfileAsync)(self.as_abi() as *const _ as *mut _, profile.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn connect_profile_with_password_credential_async(&self, profile: &ComPtr<IVpnProfile>, passwordCredential: &ComPtr<super::super::security::credentials::PasswordCredential>) -> Result<ComPtr<foundation::IAsyncOperation<VpnManagementErrorStatus>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn connect_profile_with_password_credential_async(&self, profile: &ComPtr<IVpnProfile>, passwordCredential: &super::super::security::credentials::PasswordCredential) -> Result<ComPtr<foundation::IAsyncOperation<VpnManagementErrorStatus>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ConnectProfileWithPasswordCredentialAsync)(self.as_abi() as *const _ as *mut _, profile.as_abi() as *const _ as *mut _, passwordCredential.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn disconnect_profile_async(&self, profile: &ComPtr<IVpnProfile>) -> Result<ComPtr<foundation::IAsyncOperation<VpnManagementErrorStatus>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).DisconnectProfileAsync)(self.as_abi() as *const _ as *mut _, profile.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class VpnManagementAgent: IVpnManagementAgent}
@@ -8924,8 +8924,8 @@ DEFINE_IID!(IID_IVpnNamespaceAssignment, 3623344920, 12413, 19470, 189, 98, 143,
 RT_INTERFACE!{interface IVpnNamespaceAssignment(IVpnNamespaceAssignmentVtbl): IInspectable(IInspectableVtbl) [IID_IVpnNamespaceAssignment] {
     fn put_NamespaceList(&self, value: *mut foundation::collections::IVector<VpnNamespaceInfo>) -> HRESULT,
     fn get_NamespaceList(&self, out: *mut *mut foundation::collections::IVector<VpnNamespaceInfo>) -> HRESULT,
-    fn put_ProxyAutoConfigUri(&self, value: *mut foundation::Uri) -> HRESULT,
-    fn get_ProxyAutoConfigUri(&self, out: *mut *mut foundation::Uri) -> HRESULT
+    fn put_ProxyAutoConfigUri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT,
+    fn get_ProxyAutoConfigUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnNamespaceAssignment> {
     #[inline] pub fn set_namespace_list(&self, value: &ComPtr<foundation::collections::IVector<VpnNamespaceInfo>>) -> Result<()> { unsafe { 
@@ -8935,16 +8935,16 @@ impl ComPtr<IVpnNamespaceAssignment> {
     #[inline] pub fn get_namespace_list(&self) -> Result<Option<ComPtr<foundation::collections::IVector<VpnNamespaceInfo>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NamespaceList)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_proxy_auto_config_uri(&self, value: &ComPtr<foundation::Uri>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_proxy_auto_config_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_ProxyAutoConfigUri)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_proxy_auto_config_uri(&self) -> Result<Option<ComPtr<foundation::Uri>>> { unsafe { 
+    #[inline] pub fn get_proxy_auto_config_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ProxyAutoConfigUri)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class VpnNamespaceAssignment: IVpnNamespaceAssignment}
@@ -8976,7 +8976,7 @@ impl ComPtr<IVpnNamespaceInfo> {
     #[inline] pub fn get_dns_servers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::HostName>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DnsServers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_web_proxy_servers(&self, value: &ComPtr<foundation::collections::IVector<super::HostName>>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_WebProxyServers)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -8985,26 +8985,26 @@ impl ComPtr<IVpnNamespaceInfo> {
     #[inline] pub fn get_web_proxy_servers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<super::HostName>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_WebProxyServers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class VpnNamespaceInfo: IVpnNamespaceInfo}
 impl RtActivatable<IVpnNamespaceInfoFactory> for VpnNamespaceInfo {}
 impl VpnNamespaceInfo {
-    #[inline] pub fn create_vpn_namespace_info(name: &HStringArg, dnsServerList: &ComPtr<foundation::collections::IVector<super::HostName>>, proxyServerList: &ComPtr<foundation::collections::IVector<super::HostName>>) -> Result<ComPtr<VpnNamespaceInfo>> {
+    #[inline] pub fn create_vpn_namespace_info(name: &HStringArg, dnsServerList: &ComPtr<foundation::collections::IVector<super::HostName>>, proxyServerList: &ComPtr<foundation::collections::IVector<super::HostName>>) -> Result<VpnNamespaceInfo> {
         <Self as RtActivatable<IVpnNamespaceInfoFactory>>::get_activation_factory().create_vpn_namespace_info(name, dnsServerList, proxyServerList)
     }
 }
 DEFINE_CLSID!(VpnNamespaceInfo(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,78,97,109,101,115,112,97,99,101,73,110,102,111,0]) [CLSID_VpnNamespaceInfo]);
 DEFINE_IID!(IID_IVpnNamespaceInfoFactory, 3409876250, 45262, 17451, 172, 187, 95, 153, 178, 2, 195, 28);
 RT_INTERFACE!{static interface IVpnNamespaceInfoFactory(IVpnNamespaceInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnNamespaceInfoFactory] {
-    fn CreateVpnNamespaceInfo(&self, name: HSTRING, dnsServerList: *mut foundation::collections::IVector<super::HostName>, proxyServerList: *mut foundation::collections::IVector<super::HostName>, out: *mut *mut VpnNamespaceInfo) -> HRESULT
+    fn CreateVpnNamespaceInfo(&self, name: HSTRING, dnsServerList: *mut foundation::collections::IVector<super::HostName>, proxyServerList: *mut foundation::collections::IVector<super::HostName>, out: *mut <VpnNamespaceInfo as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnNamespaceInfoFactory> {
-    #[inline] pub fn create_vpn_namespace_info(&self, name: &HStringArg, dnsServerList: &ComPtr<foundation::collections::IVector<super::HostName>>, proxyServerList: &ComPtr<foundation::collections::IVector<super::HostName>>) -> Result<ComPtr<VpnNamespaceInfo>> { unsafe { 
+    #[inline] pub fn create_vpn_namespace_info(&self, name: &HStringArg, dnsServerList: &ComPtr<foundation::collections::IVector<super::HostName>>, proxyServerList: &ComPtr<foundation::collections::IVector<super::HostName>>) -> Result<VpnNamespaceInfo> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateVpnNamespaceInfo)(self.as_abi() as *const _ as *mut _, name.get(), dnsServerList.as_abi() as *const _ as *mut _, proxyServerList.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnNamespaceInfo::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IVpnNativeProfile, 2762924702, 25623, 17203, 152, 66, 240, 166, 109, 182, 152, 2);
@@ -9025,7 +9025,7 @@ impl ComPtr<IVpnNativeProfile> {
     #[inline] pub fn get_servers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Servers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_routing_policy_type(&self) -> Result<VpnRoutingPolicyType> { unsafe { 
         let mut out = zeroed();
@@ -9104,17 +9104,17 @@ RT_ENUM! { enum VpnNativeProtocolType: i32 {
 DEFINE_IID!(IID_IVpnPacketBuffer, 3271070204, 19804, 19043, 183, 13, 78, 48, 126, 172, 206, 85);
 RT_INTERFACE!{interface IVpnPacketBuffer(IVpnPacketBufferVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBuffer] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
-    #[cfg(feature="windows-storage")] fn get_Buffer(&self, out: *mut *mut super::super::storage::streams::Buffer) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn get_Buffer(&self, out: *mut <super::super::storage::streams::Buffer as RtType>::Abi) -> HRESULT,
     fn put_Status(&self, value: VpnPacketBufferStatus) -> HRESULT,
     fn get_Status(&self, out: *mut VpnPacketBufferStatus) -> HRESULT,
     fn put_TransportAffinity(&self, value: u32) -> HRESULT,
     fn get_TransportAffinity(&self, out: *mut u32) -> HRESULT
 }}
 impl ComPtr<IVpnPacketBuffer> {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_buffer(&self) -> Result<Option<ComPtr<super::super::storage::streams::Buffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_buffer(&self) -> Result<Option<super::super::storage::streams::Buffer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Buffer)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::storage::streams::Buffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_status(&self, value: VpnPacketBufferStatus) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_Status)(self.as_abi() as *const _ as *mut _, value);
@@ -9138,20 +9138,20 @@ impl ComPtr<IVpnPacketBuffer> {
 RT_CLASS!{class VpnPacketBuffer: IVpnPacketBuffer}
 impl RtActivatable<IVpnPacketBufferFactory> for VpnPacketBuffer {}
 impl VpnPacketBuffer {
-    #[inline] pub fn create_vpn_packet_buffer(parentBuffer: &ComPtr<VpnPacketBuffer>, offset: u32, length: u32) -> Result<ComPtr<VpnPacketBuffer>> {
+    #[inline] pub fn create_vpn_packet_buffer(parentBuffer: &VpnPacketBuffer, offset: u32, length: u32) -> Result<VpnPacketBuffer> {
         <Self as RtActivatable<IVpnPacketBufferFactory>>::get_activation_factory().create_vpn_packet_buffer(parentBuffer, offset, length)
     }
 }
 DEFINE_CLSID!(VpnPacketBuffer(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,80,97,99,107,101,116,66,117,102,102,101,114,0]) [CLSID_VpnPacketBuffer]);
 DEFINE_IID!(IID_IVpnPacketBuffer2, 1717473776, 34821, 19445, 166, 25, 46, 132, 136, 46, 107, 79);
 RT_INTERFACE!{interface IVpnPacketBuffer2(IVpnPacketBuffer2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBuffer2] {
-    fn get_AppId(&self, out: *mut *mut VpnAppId) -> HRESULT
+    fn get_AppId(&self, out: *mut <VpnAppId as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnPacketBuffer2> {
-    #[inline] pub fn get_app_id(&self) -> Result<Option<ComPtr<VpnAppId>>> { unsafe { 
+    #[inline] pub fn get_app_id(&self) -> Result<Option<VpnAppId>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AppId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnAppId::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IVpnPacketBuffer3, 3797288751, 4219, 19520, 177, 39, 91, 197, 62, 10, 217, 96);
@@ -9167,49 +9167,49 @@ impl ComPtr<IVpnPacketBuffer3> {
     #[inline] pub fn get_transport_context(&self) -> Result<Option<ComPtr<IInspectable>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TransportContext)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IVpnPacketBufferFactory, 2653805730, 5906, 19684, 177, 121, 140, 101, 44, 109, 153, 153);
 RT_INTERFACE!{static interface IVpnPacketBufferFactory(IVpnPacketBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBufferFactory] {
-    fn CreateVpnPacketBuffer(&self, parentBuffer: *mut VpnPacketBuffer, offset: u32, length: u32, out: *mut *mut VpnPacketBuffer) -> HRESULT
+    fn CreateVpnPacketBuffer(&self, parentBuffer: <VpnPacketBuffer as RtType>::Abi, offset: u32, length: u32, out: *mut <VpnPacketBuffer as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnPacketBufferFactory> {
-    #[inline] pub fn create_vpn_packet_buffer(&self, parentBuffer: &ComPtr<VpnPacketBuffer>, offset: u32, length: u32) -> Result<ComPtr<VpnPacketBuffer>> { unsafe { 
+    #[inline] pub fn create_vpn_packet_buffer(&self, parentBuffer: &VpnPacketBuffer, offset: u32, length: u32) -> Result<VpnPacketBuffer> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateVpnPacketBuffer)(self.as_abi() as *const _ as *mut _, parentBuffer.as_abi() as *const _ as *mut _, offset, length, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnPacketBuffer::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IVpnPacketBufferList, 3271070204, 19804, 19043, 183, 13, 78, 48, 126, 172, 206, 119);
 RT_INTERFACE!{interface IVpnPacketBufferList(IVpnPacketBufferListVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBufferList] {
-    fn Append(&self, nextVpnPacketBuffer: *mut VpnPacketBuffer) -> HRESULT,
-    fn AddAtBegin(&self, nextVpnPacketBuffer: *mut VpnPacketBuffer) -> HRESULT,
-    fn RemoveAtEnd(&self, out: *mut *mut VpnPacketBuffer) -> HRESULT,
-    fn RemoveAtBegin(&self, out: *mut *mut VpnPacketBuffer) -> HRESULT,
+    fn Append(&self, nextVpnPacketBuffer: <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
+    fn AddAtBegin(&self, nextVpnPacketBuffer: <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
+    fn RemoveAtEnd(&self, out: *mut <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
+    fn RemoveAtBegin(&self, out: *mut <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
     fn Clear(&self) -> HRESULT,
     fn put_Status(&self, value: VpnPacketBufferStatus) -> HRESULT,
     fn get_Status(&self, out: *mut VpnPacketBufferStatus) -> HRESULT,
     fn get_Size(&self, out: *mut u32) -> HRESULT
 }}
 impl ComPtr<IVpnPacketBufferList> {
-    #[inline] pub fn append(&self, nextVpnPacketBuffer: &ComPtr<VpnPacketBuffer>) -> Result<()> { unsafe { 
+    #[inline] pub fn append(&self, nextVpnPacketBuffer: &VpnPacketBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Append)(self.as_abi() as *const _ as *mut _, nextVpnPacketBuffer.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn add_at_begin(&self, nextVpnPacketBuffer: &ComPtr<VpnPacketBuffer>) -> Result<()> { unsafe { 
+    #[inline] pub fn add_at_begin(&self, nextVpnPacketBuffer: &VpnPacketBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).AddAtBegin)(self.as_abi() as *const _ as *mut _, nextVpnPacketBuffer.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove_at_end(&self) -> Result<Option<ComPtr<VpnPacketBuffer>>> { unsafe { 
+    #[inline] pub fn remove_at_end(&self) -> Result<Option<VpnPacketBuffer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RemoveAtEnd)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnPacketBuffer::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn remove_at_begin(&self) -> Result<Option<ComPtr<VpnPacketBuffer>>> { unsafe { 
+    #[inline] pub fn remove_at_begin(&self) -> Result<Option<VpnPacketBuffer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RemoveAtBegin)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnPacketBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn clear(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Clear)(self.as_abi() as *const _ as *mut _);
@@ -9233,29 +9233,29 @@ impl ComPtr<IVpnPacketBufferList> {
 RT_CLASS!{class VpnPacketBufferList: IVpnPacketBufferList}
 DEFINE_IID!(IID_IVpnPacketBufferList2, 1048236005, 59934, 18474, 141, 152, 192, 101, 245, 125, 137, 234);
 RT_INTERFACE!{interface IVpnPacketBufferList2(IVpnPacketBufferList2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBufferList2] {
-    fn AddLeadingPacket(&self, nextVpnPacketBuffer: *mut VpnPacketBuffer) -> HRESULT,
-    fn RemoveLeadingPacket(&self, out: *mut *mut VpnPacketBuffer) -> HRESULT,
-    fn AddTrailingPacket(&self, nextVpnPacketBuffer: *mut VpnPacketBuffer) -> HRESULT,
-    fn RemoveTrailingPacket(&self, out: *mut *mut VpnPacketBuffer) -> HRESULT
+    fn AddLeadingPacket(&self, nextVpnPacketBuffer: <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
+    fn RemoveLeadingPacket(&self, out: *mut <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
+    fn AddTrailingPacket(&self, nextVpnPacketBuffer: <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
+    fn RemoveTrailingPacket(&self, out: *mut <VpnPacketBuffer as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnPacketBufferList2> {
-    #[inline] pub fn add_leading_packet(&self, nextVpnPacketBuffer: &ComPtr<VpnPacketBuffer>) -> Result<()> { unsafe { 
+    #[inline] pub fn add_leading_packet(&self, nextVpnPacketBuffer: &VpnPacketBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).AddLeadingPacket)(self.as_abi() as *const _ as *mut _, nextVpnPacketBuffer.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove_leading_packet(&self) -> Result<Option<ComPtr<VpnPacketBuffer>>> { unsafe { 
+    #[inline] pub fn remove_leading_packet(&self) -> Result<Option<VpnPacketBuffer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RemoveLeadingPacket)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnPacketBuffer::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn add_trailing_packet(&self, nextVpnPacketBuffer: &ComPtr<VpnPacketBuffer>) -> Result<()> { unsafe { 
+    #[inline] pub fn add_trailing_packet(&self, nextVpnPacketBuffer: &VpnPacketBuffer) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).AddTrailingPacket)(self.as_abi() as *const _ as *mut _, nextVpnPacketBuffer.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn remove_trailing_packet(&self) -> Result<Option<ComPtr<VpnPacketBuffer>>> { unsafe { 
+    #[inline] pub fn remove_trailing_packet(&self) -> Result<Option<VpnPacketBuffer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).RemoveTrailingPacket)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnPacketBuffer::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum VpnPacketBufferStatus: i32 {
@@ -9263,55 +9263,55 @@ RT_ENUM! { enum VpnPacketBufferStatus: i32 {
 }}
 DEFINE_IID!(IID_IVpnPickedCredential, 2591636167, 34900, 20050, 173, 151, 36, 221, 154, 132, 43, 206);
 RT_INTERFACE!{interface IVpnPickedCredential(IVpnPickedCredentialVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPickedCredential] {
-    #[cfg(feature="windows-security")] fn get_PasskeyCredential(&self, out: *mut *mut super::super::security::credentials::PasswordCredential) -> HRESULT,
+    #[cfg(feature="windows-security")] fn get_PasskeyCredential(&self, out: *mut <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
     fn get_AdditionalPin(&self, out: *mut HSTRING) -> HRESULT,
-    #[cfg(feature="windows-security")] fn get_OldPasswordCredential(&self, out: *mut *mut super::super::security::credentials::PasswordCredential) -> HRESULT
+    #[cfg(feature="windows-security")] fn get_OldPasswordCredential(&self, out: *mut <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnPickedCredential> {
-    #[cfg(feature="windows-security")] #[inline] pub fn get_passkey_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_passkey_credential(&self) -> Result<Option<super::super::security::credentials::PasswordCredential>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PasskeyCredential)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::credentials::PasswordCredential::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_additional_pin(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AdditionalPin)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-security")] #[inline] pub fn get_old_password_credential(&self) -> Result<Option<ComPtr<super::super::security::credentials::PasswordCredential>>> { unsafe { 
+    #[cfg(feature="windows-security")] #[inline] pub fn get_old_password_credential(&self) -> Result<Option<super::super::security::credentials::PasswordCredential>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_OldPasswordCredential)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::security::credentials::PasswordCredential::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class VpnPickedCredential: IVpnPickedCredential}
 DEFINE_IID!(IID_IVpnPlugIn, 3468135687, 53416, 18179, 160, 145, 200, 194, 192, 145, 91, 196);
 RT_INTERFACE!{interface IVpnPlugIn(IVpnPlugInVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPlugIn] {
-    fn Connect(&self, channel: *mut VpnChannel) -> HRESULT,
-    fn Disconnect(&self, channel: *mut VpnChannel) -> HRESULT,
-    fn GetKeepAlivePayload(&self, channel: *mut VpnChannel, keepAlivePacket: *mut *mut VpnPacketBuffer) -> HRESULT,
-    fn Encapsulate(&self, channel: *mut VpnChannel, packets: *mut VpnPacketBufferList, encapulatedPackets: *mut VpnPacketBufferList) -> HRESULT,
-    fn Decapsulate(&self, channel: *mut VpnChannel, encapBuffer: *mut VpnPacketBuffer, decapsulatedPackets: *mut VpnPacketBufferList, controlPacketsToSend: *mut VpnPacketBufferList) -> HRESULT
+    fn Connect(&self, channel: <VpnChannel as RtType>::Abi) -> HRESULT,
+    fn Disconnect(&self, channel: <VpnChannel as RtType>::Abi) -> HRESULT,
+    fn GetKeepAlivePayload(&self, channel: <VpnChannel as RtType>::Abi, keepAlivePacket: *mut <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
+    fn Encapsulate(&self, channel: <VpnChannel as RtType>::Abi, packets: <VpnPacketBufferList as RtType>::Abi, encapulatedPackets: <VpnPacketBufferList as RtType>::Abi) -> HRESULT,
+    fn Decapsulate(&self, channel: <VpnChannel as RtType>::Abi, encapBuffer: <VpnPacketBuffer as RtType>::Abi, decapsulatedPackets: <VpnPacketBufferList as RtType>::Abi, controlPacketsToSend: <VpnPacketBufferList as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnPlugIn> {
-    #[inline] pub fn connect(&self, channel: &ComPtr<VpnChannel>) -> Result<()> { unsafe { 
+    #[inline] pub fn connect(&self, channel: &VpnChannel) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Connect)(self.as_abi() as *const _ as *mut _, channel.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn disconnect(&self, channel: &ComPtr<VpnChannel>) -> Result<()> { unsafe { 
+    #[inline] pub fn disconnect(&self, channel: &VpnChannel) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Disconnect)(self.as_abi() as *const _ as *mut _, channel.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_keep_alive_payload(&self, channel: &ComPtr<VpnChannel>) -> Result<Option<ComPtr<VpnPacketBuffer>>> { unsafe { 
+    #[inline] pub fn get_keep_alive_payload(&self, channel: &VpnChannel) -> Result<Option<VpnPacketBuffer>> { unsafe { 
         let mut keepAlivePacket = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetKeepAlivePayload)(self.as_abi() as *const _ as *mut _, channel.as_abi() as *const _ as *mut _, &mut keepAlivePacket);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(keepAlivePacket)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnPacketBuffer::wrap(keepAlivePacket)) } else { err(hr) }
     }}
-    #[inline] pub fn encapsulate(&self, channel: &ComPtr<VpnChannel>, packets: &ComPtr<VpnPacketBufferList>, encapulatedPackets: &ComPtr<VpnPacketBufferList>) -> Result<()> { unsafe { 
+    #[inline] pub fn encapsulate(&self, channel: &VpnChannel, packets: &VpnPacketBufferList, encapulatedPackets: &VpnPacketBufferList) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Encapsulate)(self.as_abi() as *const _ as *mut _, channel.as_abi() as *const _ as *mut _, packets.as_abi() as *const _ as *mut _, encapulatedPackets.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn decapsulate(&self, channel: &ComPtr<VpnChannel>, encapBuffer: &ComPtr<VpnPacketBuffer>, decapsulatedPackets: &ComPtr<VpnPacketBufferList>, controlPacketsToSend: &ComPtr<VpnPacketBufferList>) -> Result<()> { unsafe { 
+    #[inline] pub fn decapsulate(&self, channel: &VpnChannel, encapBuffer: &VpnPacketBuffer, decapsulatedPackets: &VpnPacketBufferList, controlPacketsToSend: &VpnPacketBufferList) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).Decapsulate)(self.as_abi() as *const _ as *mut _, channel.as_abi() as *const _ as *mut _, encapBuffer.as_abi() as *const _ as *mut _, decapsulatedPackets.as_abi() as *const _ as *mut _, controlPacketsToSend.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -9328,7 +9328,7 @@ impl ComPtr<IVpnPlugInProfile> {
     #[inline] pub fn get_server_uris(&self) -> Result<Option<ComPtr<foundation::collections::IVector<foundation::Uri>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ServerUris)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_custom_configuration(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -9400,22 +9400,22 @@ impl ComPtr<IVpnProfile> {
     #[inline] pub fn get_app_triggers(&self) -> Result<Option<ComPtr<foundation::collections::IVector<VpnAppId>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AppTriggers)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_routes(&self) -> Result<Option<ComPtr<foundation::collections::IVector<VpnRoute>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Routes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_domain_name_info_list(&self) -> Result<Option<ComPtr<foundation::collections::IVector<VpnDomainNameInfo>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DomainNameInfoList)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_traffic_filters(&self) -> Result<Option<ComPtr<foundation::collections::IVector<VpnTrafficFilter>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TrafficFilters)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_remember_credentials(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
@@ -9438,20 +9438,20 @@ impl ComPtr<IVpnProfile> {
 }
 DEFINE_IID!(IID_IVpnRoute, 3044219779, 2409, 18073, 147, 142, 119, 118, 219, 41, 207, 179);
 RT_INTERFACE!{interface IVpnRoute(IVpnRouteVtbl): IInspectable(IInspectableVtbl) [IID_IVpnRoute] {
-    fn put_Address(&self, value: *mut super::HostName) -> HRESULT,
-    fn get_Address(&self, out: *mut *mut super::HostName) -> HRESULT,
+    fn put_Address(&self, value: <super::HostName as RtType>::Abi) -> HRESULT,
+    fn get_Address(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn put_PrefixSize(&self, value: u8) -> HRESULT,
     fn get_PrefixSize(&self, out: *mut u8) -> HRESULT
 }}
 impl ComPtr<IVpnRoute> {
-    #[inline] pub fn set_address(&self, value: &ComPtr<super::HostName>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_address(&self, value: &super::HostName) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_Address)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_address(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_address(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Address)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_prefix_size(&self, value: u8) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_PrefixSize)(self.as_abi() as *const _ as *mut _, value);
@@ -9466,7 +9466,7 @@ impl ComPtr<IVpnRoute> {
 RT_CLASS!{class VpnRoute: IVpnRoute}
 impl RtActivatable<IVpnRouteFactory> for VpnRoute {}
 impl VpnRoute {
-    #[inline] pub fn create_vpn_route(address: &ComPtr<super::HostName>, prefixSize: u8) -> Result<ComPtr<VpnRoute>> {
+    #[inline] pub fn create_vpn_route(address: &super::HostName, prefixSize: u8) -> Result<VpnRoute> {
         <Self as RtActivatable<IVpnRouteFactory>>::get_activation_factory().create_vpn_route(address, prefixSize)
     }
 }
@@ -9496,12 +9496,12 @@ impl ComPtr<IVpnRouteAssignment> {
     #[inline] pub fn get_ipv4_inclusion_routes(&self) -> Result<Option<ComPtr<foundation::collections::IVector<VpnRoute>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Ipv4InclusionRoutes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ipv6_inclusion_routes(&self) -> Result<Option<ComPtr<foundation::collections::IVector<VpnRoute>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Ipv6InclusionRoutes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_ipv4_exclusion_routes(&self, value: &ComPtr<foundation::collections::IVector<VpnRoute>>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_Ipv4ExclusionRoutes)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -9514,12 +9514,12 @@ impl ComPtr<IVpnRouteAssignment> {
     #[inline] pub fn get_ipv4_exclusion_routes(&self) -> Result<Option<ComPtr<foundation::collections::IVector<VpnRoute>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Ipv4ExclusionRoutes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ipv6_exclusion_routes(&self) -> Result<Option<ComPtr<foundation::collections::IVector<VpnRoute>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Ipv6ExclusionRoutes)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_exclude_local_subnets(&self, value: bool) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_ExcludeLocalSubnets)(self.as_abi() as *const _ as *mut _, value);
@@ -9536,13 +9536,13 @@ impl RtActivatable<IActivationFactory> for VpnRouteAssignment {}
 DEFINE_CLSID!(VpnRouteAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,82,111,117,116,101,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnRouteAssignment]);
 DEFINE_IID!(IID_IVpnRouteFactory, 3186275839, 17871, 19353, 131, 251, 219, 59, 194, 103, 43, 2);
 RT_INTERFACE!{static interface IVpnRouteFactory(IVpnRouteFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnRouteFactory] {
-    fn CreateVpnRoute(&self, address: *mut super::HostName, prefixSize: u8, out: *mut *mut VpnRoute) -> HRESULT
+    fn CreateVpnRoute(&self, address: <super::HostName as RtType>::Abi, prefixSize: u8, out: *mut <VpnRoute as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnRouteFactory> {
-    #[inline] pub fn create_vpn_route(&self, address: &ComPtr<super::HostName>, prefixSize: u8) -> Result<ComPtr<VpnRoute>> { unsafe { 
+    #[inline] pub fn create_vpn_route(&self, address: &super::HostName, prefixSize: u8) -> Result<VpnRoute> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateVpnRoute)(self.as_abi() as *const _ as *mut _, address.as_abi() as *const _ as *mut _, prefixSize, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnRoute::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum VpnRoutingPolicyType: i32 {
@@ -9550,20 +9550,20 @@ RT_ENUM! { enum VpnRoutingPolicyType: i32 {
 }}
 DEFINE_IID!(IID_IVpnSystemHealth, 2577987759, 49390, 20085, 129, 122, 242, 49, 174, 229, 18, 61);
 RT_INTERFACE!{interface IVpnSystemHealth(IVpnSystemHealthVtbl): IInspectable(IInspectableVtbl) [IID_IVpnSystemHealth] {
-    #[cfg(feature="windows-storage")] fn get_StatementOfHealth(&self, out: *mut *mut super::super::storage::streams::Buffer) -> HRESULT
+    #[cfg(feature="windows-storage")] fn get_StatementOfHealth(&self, out: *mut <super::super::storage::streams::Buffer as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnSystemHealth> {
-    #[cfg(feature="windows-storage")] #[inline] pub fn get_statement_of_health(&self) -> Result<Option<ComPtr<super::super::storage::streams::Buffer>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn get_statement_of_health(&self) -> Result<Option<super::super::storage::streams::Buffer>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_StatementOfHealth)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::super::storage::streams::Buffer::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class VpnSystemHealth: IVpnSystemHealth}
 DEFINE_IID!(IID_IVpnTrafficFilter, 795417440, 27807, 18421, 172, 54, 187, 27, 4, 46, 44, 80);
 RT_INTERFACE!{interface IVpnTrafficFilter(IVpnTrafficFilterVtbl): IInspectable(IInspectableVtbl) [IID_IVpnTrafficFilter] {
-    fn get_AppId(&self, out: *mut *mut VpnAppId) -> HRESULT,
-    fn put_AppId(&self, value: *mut VpnAppId) -> HRESULT,
+    fn get_AppId(&self, out: *mut <VpnAppId as RtType>::Abi) -> HRESULT,
+    fn put_AppId(&self, value: <VpnAppId as RtType>::Abi) -> HRESULT,
     fn get_AppClaims(&self, out: *mut *mut foundation::collections::IVector<HString>) -> HRESULT,
     fn get_Protocol(&self, out: *mut VpnIPProtocol) -> HRESULT,
     fn put_Protocol(&self, value: VpnIPProtocol) -> HRESULT,
@@ -9575,19 +9575,19 @@ RT_INTERFACE!{interface IVpnTrafficFilter(IVpnTrafficFilterVtbl): IInspectable(I
     fn put_RoutingPolicyType(&self, value: VpnRoutingPolicyType) -> HRESULT
 }}
 impl ComPtr<IVpnTrafficFilter> {
-    #[inline] pub fn get_app_id(&self) -> Result<Option<ComPtr<VpnAppId>>> { unsafe { 
+    #[inline] pub fn get_app_id(&self) -> Result<Option<VpnAppId>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AppId)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnAppId::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_app_id(&self, value: &ComPtr<VpnAppId>) -> Result<()> { unsafe { 
+    #[inline] pub fn set_app_id(&self, value: &VpnAppId) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_AppId)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_app_claims(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_AppClaims)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_protocol(&self) -> Result<VpnIPProtocol> { unsafe { 
         let mut out = zeroed();
@@ -9601,22 +9601,22 @@ impl ComPtr<IVpnTrafficFilter> {
     #[inline] pub fn get_local_port_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocalPortRanges)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_remote_port_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RemotePortRanges)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_local_address_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocalAddressRanges)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_remote_address_ranges(&self) -> Result<Option<ComPtr<foundation::collections::IVector<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RemoteAddressRanges)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_routing_policy_type(&self) -> Result<VpnRoutingPolicyType> { unsafe { 
         let mut out = zeroed();
@@ -9631,7 +9631,7 @@ impl ComPtr<IVpnTrafficFilter> {
 RT_CLASS!{class VpnTrafficFilter: IVpnTrafficFilter}
 impl RtActivatable<IVpnTrafficFilterFactory> for VpnTrafficFilter {}
 impl VpnTrafficFilter {
-    #[inline] pub fn create(appId: &ComPtr<VpnAppId>) -> Result<ComPtr<VpnTrafficFilter>> {
+    #[inline] pub fn create(appId: &VpnAppId) -> Result<VpnTrafficFilter> {
         <Self as RtActivatable<IVpnTrafficFilterFactory>>::get_activation_factory().create(appId)
     }
 }
@@ -9648,7 +9648,7 @@ impl ComPtr<IVpnTrafficFilterAssignment> {
     #[inline] pub fn get_traffic_filter_list(&self) -> Result<Option<ComPtr<foundation::collections::IVector<VpnTrafficFilter>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TrafficFilterList)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_allow_outbound(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
@@ -9674,13 +9674,13 @@ impl RtActivatable<IActivationFactory> for VpnTrafficFilterAssignment {}
 DEFINE_CLSID!(VpnTrafficFilterAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,84,114,97,102,102,105,99,70,105,108,116,101,114,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnTrafficFilterAssignment]);
 DEFINE_IID!(IID_IVpnTrafficFilterFactory, 1208828373, 32665, 18252, 134, 238, 150, 223, 22, 131, 24, 241);
 RT_INTERFACE!{static interface IVpnTrafficFilterFactory(IVpnTrafficFilterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnTrafficFilterFactory] {
-    fn Create(&self, appId: *mut VpnAppId, out: *mut *mut VpnTrafficFilter) -> HRESULT
+    fn Create(&self, appId: <VpnAppId as RtType>::Abi, out: *mut <VpnTrafficFilter as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IVpnTrafficFilterFactory> {
-    #[inline] pub fn create(&self, appId: &ComPtr<VpnAppId>) -> Result<ComPtr<VpnTrafficFilter>> { unsafe { 
+    #[inline] pub fn create(&self, appId: &VpnAppId) -> Result<VpnTrafficFilter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, appId.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(VpnTrafficFilter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 } // Windows.Networking.Vpn
@@ -9694,7 +9694,7 @@ RT_INTERFACE!{interface IXboxLiveDeviceAddress(IXboxLiveDeviceAddressVtbl): IIns
     #[cfg(not(feature="windows-storage"))] fn __Dummy3(&self) -> (),
     #[cfg(feature="windows-storage")] fn GetSnapshotAsBuffer(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT,
     fn GetSnapshotAsBytes(&self, bufferSize: u32, buffer: *mut u8, bytesWritten: *mut u32) -> HRESULT,
-    fn Compare(&self, otherDeviceAddress: *mut XboxLiveDeviceAddress, out: *mut i32) -> HRESULT,
+    fn Compare(&self, otherDeviceAddress: <XboxLiveDeviceAddress as RtType>::Abi, out: *mut i32) -> HRESULT,
     fn get_IsValid(&self, out: *mut bool) -> HRESULT,
     fn get_IsLocal(&self, out: *mut bool) -> HRESULT,
     fn get_NetworkAccessKind(&self, out: *mut XboxLiveNetworkAccessKind) -> HRESULT
@@ -9717,14 +9717,14 @@ impl ComPtr<IXboxLiveDeviceAddress> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_snapshot_as_buffer(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetSnapshotAsBuffer)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_snapshot_as_bytes(&self, buffer: &mut [u8]) -> Result<u32> { unsafe { 
         let mut bytesWritten = zeroed();
         let hr = ((*self.as_abi().lpVtbl).GetSnapshotAsBytes)(self.as_abi() as *const _ as *mut _, buffer.len() as u32, buffer.as_mut_ptr() as *mut _, &mut bytesWritten);
         if hr == S_OK { Ok(bytesWritten) } else { err(hr) }
     }}
-    #[inline] pub fn compare(&self, otherDeviceAddress: &ComPtr<XboxLiveDeviceAddress>) -> Result<i32> { unsafe { 
+    #[inline] pub fn compare(&self, otherDeviceAddress: &XboxLiveDeviceAddress) -> Result<i32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).Compare)(self.as_abi() as *const _ as *mut _, otherDeviceAddress.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -9748,16 +9748,16 @@ impl ComPtr<IXboxLiveDeviceAddress> {
 RT_CLASS!{class XboxLiveDeviceAddress: IXboxLiveDeviceAddress}
 impl RtActivatable<IXboxLiveDeviceAddressStatics> for XboxLiveDeviceAddress {}
 impl XboxLiveDeviceAddress {
-    #[inline] pub fn create_from_snapshot_base64(base64: &HStringArg) -> Result<Option<ComPtr<XboxLiveDeviceAddress>>> {
+    #[inline] pub fn create_from_snapshot_base64(base64: &HStringArg) -> Result<Option<XboxLiveDeviceAddress>> {
         <Self as RtActivatable<IXboxLiveDeviceAddressStatics>>::get_activation_factory().create_from_snapshot_base64(base64)
     }
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_snapshot_buffer(buffer: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<Option<ComPtr<XboxLiveDeviceAddress>>> {
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_snapshot_buffer(buffer: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<Option<XboxLiveDeviceAddress>> {
         <Self as RtActivatable<IXboxLiveDeviceAddressStatics>>::get_activation_factory().create_from_snapshot_buffer(buffer)
     }
-    #[inline] pub fn create_from_snapshot_bytes(buffer: &[u8]) -> Result<Option<ComPtr<XboxLiveDeviceAddress>>> {
+    #[inline] pub fn create_from_snapshot_bytes(buffer: &[u8]) -> Result<Option<XboxLiveDeviceAddress>> {
         <Self as RtActivatable<IXboxLiveDeviceAddressStatics>>::get_activation_factory().create_from_snapshot_bytes(buffer)
     }
-    #[inline] pub fn get_local() -> Result<Option<ComPtr<XboxLiveDeviceAddress>>> {
+    #[inline] pub fn get_local() -> Result<Option<XboxLiveDeviceAddress>> {
         <Self as RtActivatable<IXboxLiveDeviceAddressStatics>>::get_activation_factory().get_local()
     }
     #[inline] pub fn get_max_snapshot_bytes_size() -> Result<u32> {
@@ -9767,33 +9767,33 @@ impl XboxLiveDeviceAddress {
 DEFINE_CLSID!(XboxLiveDeviceAddress(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,88,98,111,120,76,105,118,101,46,88,98,111,120,76,105,118,101,68,101,118,105,99,101,65,100,100,114,101,115,115,0]) [CLSID_XboxLiveDeviceAddress]);
 DEFINE_IID!(IID_IXboxLiveDeviceAddressStatics, 1498720281, 19065, 18737, 130, 124, 127, 80, 62, 150, 50, 99);
 RT_INTERFACE!{static interface IXboxLiveDeviceAddressStatics(IXboxLiveDeviceAddressStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveDeviceAddressStatics] {
-    fn CreateFromSnapshotBase64(&self, base64: HSTRING, out: *mut *mut XboxLiveDeviceAddress) -> HRESULT,
+    fn CreateFromSnapshotBase64(&self, base64: HSTRING, out: *mut <XboxLiveDeviceAddress as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
-    #[cfg(feature="windows-storage")] fn CreateFromSnapshotBuffer(&self, buffer: *mut super::super::storage::streams::IBuffer, out: *mut *mut XboxLiveDeviceAddress) -> HRESULT,
-    fn CreateFromSnapshotBytes(&self, bufferSize: u32, buffer: *mut u8, out: *mut *mut XboxLiveDeviceAddress) -> HRESULT,
-    fn GetLocal(&self, out: *mut *mut XboxLiveDeviceAddress) -> HRESULT,
+    #[cfg(feature="windows-storage")] fn CreateFromSnapshotBuffer(&self, buffer: *mut super::super::storage::streams::IBuffer, out: *mut <XboxLiveDeviceAddress as RtType>::Abi) -> HRESULT,
+    fn CreateFromSnapshotBytes(&self, bufferSize: u32, buffer: *mut u8, out: *mut <XboxLiveDeviceAddress as RtType>::Abi) -> HRESULT,
+    fn GetLocal(&self, out: *mut <XboxLiveDeviceAddress as RtType>::Abi) -> HRESULT,
     fn get_MaxSnapshotBytesSize(&self, out: *mut u32) -> HRESULT
 }}
 impl ComPtr<IXboxLiveDeviceAddressStatics> {
-    #[inline] pub fn create_from_snapshot_base64(&self, base64: &HStringArg) -> Result<Option<ComPtr<XboxLiveDeviceAddress>>> { unsafe { 
+    #[inline] pub fn create_from_snapshot_base64(&self, base64: &HStringArg) -> Result<Option<XboxLiveDeviceAddress>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromSnapshotBase64)(self.as_abi() as *const _ as *mut _, base64.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveDeviceAddress::wrap(out)) } else { err(hr) }
     }}
-    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_snapshot_buffer(&self, buffer: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<Option<ComPtr<XboxLiveDeviceAddress>>> { unsafe { 
+    #[cfg(feature="windows-storage")] #[inline] pub fn create_from_snapshot_buffer(&self, buffer: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<Option<XboxLiveDeviceAddress>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromSnapshotBuffer)(self.as_abi() as *const _ as *mut _, buffer.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveDeviceAddress::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_from_snapshot_bytes(&self, buffer: &[u8]) -> Result<Option<ComPtr<XboxLiveDeviceAddress>>> { unsafe { 
+    #[inline] pub fn create_from_snapshot_bytes(&self, buffer: &[u8]) -> Result<Option<XboxLiveDeviceAddress>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateFromSnapshotBytes)(self.as_abi() as *const _ as *mut _, buffer.len() as u32, buffer.as_ptr() as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveDeviceAddress::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_local(&self) -> Result<Option<ComPtr<XboxLiveDeviceAddress>>> { unsafe { 
+    #[inline] pub fn get_local(&self) -> Result<Option<XboxLiveDeviceAddress>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetLocal)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveDeviceAddress::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_max_snapshot_bytes_size(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
@@ -9809,11 +9809,11 @@ RT_INTERFACE!{interface IXboxLiveEndpointPair(IXboxLiveEndpointPairVtbl): IInspe
     fn GetRemoteSocketAddressBytes(&self, socketAddressSize: u32, socketAddress: *mut u8) -> HRESULT,
     fn GetLocalSocketAddressBytes(&self, socketAddressSize: u32, socketAddress: *mut u8) -> HRESULT,
     fn get_State(&self, out: *mut XboxLiveEndpointPairState) -> HRESULT,
-    fn get_Template(&self, out: *mut *mut XboxLiveEndpointPairTemplate) -> HRESULT,
-    fn get_RemoteDeviceAddress(&self, out: *mut *mut XboxLiveDeviceAddress) -> HRESULT,
-    fn get_RemoteHostName(&self, out: *mut *mut super::HostName) -> HRESULT,
+    fn get_Template(&self, out: *mut <XboxLiveEndpointPairTemplate as RtType>::Abi) -> HRESULT,
+    fn get_RemoteDeviceAddress(&self, out: *mut <XboxLiveDeviceAddress as RtType>::Abi) -> HRESULT,
+    fn get_RemoteHostName(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_RemotePort(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_LocalHostName(&self, out: *mut *mut super::HostName) -> HRESULT,
+    fn get_LocalHostName(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_LocalPort(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ComPtr<IXboxLiveEndpointPair> {
@@ -9829,7 +9829,7 @@ impl ComPtr<IXboxLiveEndpointPair> {
     #[inline] pub fn delete_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).DeleteAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_remote_socket_address_bytes(&self, socketAddress: &mut [u8]) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).GetRemoteSocketAddressBytes)(self.as_abi() as *const _ as *mut _, socketAddress.len() as u32, socketAddress.as_mut_ptr() as *mut _);
@@ -9844,30 +9844,30 @@ impl ComPtr<IXboxLiveEndpointPair> {
         let hr = ((*self.as_abi().lpVtbl).get_State)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_template(&self) -> Result<Option<ComPtr<XboxLiveEndpointPairTemplate>>> { unsafe { 
+    #[inline] pub fn get_template(&self) -> Result<Option<XboxLiveEndpointPairTemplate>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Template)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveEndpointPairTemplate::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_remote_device_address(&self) -> Result<Option<ComPtr<XboxLiveDeviceAddress>>> { unsafe { 
+    #[inline] pub fn get_remote_device_address(&self) -> Result<Option<XboxLiveDeviceAddress>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RemoteDeviceAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveDeviceAddress::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_remote_host_name(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_remote_host_name(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RemoteHostName)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_remote_port(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_RemotePort)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_local_host_name(&self) -> Result<Option<ComPtr<super::HostName>>> { unsafe { 
+    #[inline] pub fn get_local_host_name(&self) -> Result<Option<super::HostName>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LocalHostName)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(super::HostName::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_local_port(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -9878,10 +9878,10 @@ impl ComPtr<IXboxLiveEndpointPair> {
 RT_CLASS!{class XboxLiveEndpointPair: IXboxLiveEndpointPair}
 impl RtActivatable<IXboxLiveEndpointPairStatics> for XboxLiveEndpointPair {}
 impl XboxLiveEndpointPair {
-    #[inline] pub fn find_endpoint_pair_by_socket_address_bytes(localSocketAddress: &[u8], remoteSocketAddress: &[u8]) -> Result<Option<ComPtr<XboxLiveEndpointPair>>> {
+    #[inline] pub fn find_endpoint_pair_by_socket_address_bytes(localSocketAddress: &[u8], remoteSocketAddress: &[u8]) -> Result<Option<XboxLiveEndpointPair>> {
         <Self as RtActivatable<IXboxLiveEndpointPairStatics>>::get_activation_factory().find_endpoint_pair_by_socket_address_bytes(localSocketAddress, remoteSocketAddress)
     }
-    #[inline] pub fn find_endpoint_pair_by_host_names_and_ports(localHostName: &ComPtr<super::HostName>, localPort: &HStringArg, remoteHostName: &ComPtr<super::HostName>, remotePort: &HStringArg) -> Result<Option<ComPtr<XboxLiveEndpointPair>>> {
+    #[inline] pub fn find_endpoint_pair_by_host_names_and_ports(localHostName: &super::HostName, localPort: &HStringArg, remoteHostName: &super::HostName, remotePort: &HStringArg) -> Result<Option<XboxLiveEndpointPair>> {
         <Self as RtActivatable<IXboxLiveEndpointPairStatics>>::get_activation_factory().find_endpoint_pair_by_host_names_and_ports(localHostName, localPort, remoteHostName, remotePort)
     }
 }
@@ -9891,16 +9891,16 @@ RT_ENUM! { enum XboxLiveEndpointPairCreationBehaviors: u32 {
 }}
 DEFINE_IID!(IID_IXboxLiveEndpointPairCreationResult, 3651713941, 10923, 19742, 151, 148, 51, 236, 192, 220, 240, 254);
 RT_INTERFACE!{interface IXboxLiveEndpointPairCreationResult(IXboxLiveEndpointPairCreationResultVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPairCreationResult] {
-    fn get_DeviceAddress(&self, out: *mut *mut XboxLiveDeviceAddress) -> HRESULT,
+    fn get_DeviceAddress(&self, out: *mut <XboxLiveDeviceAddress as RtType>::Abi) -> HRESULT,
     fn get_Status(&self, out: *mut XboxLiveEndpointPairCreationStatus) -> HRESULT,
     fn get_IsExistingPathEvaluation(&self, out: *mut bool) -> HRESULT,
-    fn get_EndpointPair(&self, out: *mut *mut XboxLiveEndpointPair) -> HRESULT
+    fn get_EndpointPair(&self, out: *mut <XboxLiveEndpointPair as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IXboxLiveEndpointPairCreationResult> {
-    #[inline] pub fn get_device_address(&self) -> Result<Option<ComPtr<XboxLiveDeviceAddress>>> { unsafe { 
+    #[inline] pub fn get_device_address(&self) -> Result<Option<XboxLiveDeviceAddress>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DeviceAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveDeviceAddress::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<XboxLiveEndpointPairCreationStatus> { unsafe { 
         let mut out = zeroed();
@@ -9912,10 +9912,10 @@ impl ComPtr<IXboxLiveEndpointPairCreationResult> {
         let hr = ((*self.as_abi().lpVtbl).get_IsExistingPathEvaluation)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_endpoint_pair(&self) -> Result<Option<ComPtr<XboxLiveEndpointPair>>> { unsafe { 
+    #[inline] pub fn get_endpoint_pair(&self) -> Result<Option<XboxLiveEndpointPair>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_EndpointPair)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveEndpointPair::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class XboxLiveEndpointPairCreationResult: IXboxLiveEndpointPairCreationResult}
@@ -9945,29 +9945,29 @@ impl ComPtr<IXboxLiveEndpointPairStateChangedEventArgs> {
 RT_CLASS!{class XboxLiveEndpointPairStateChangedEventArgs: IXboxLiveEndpointPairStateChangedEventArgs}
 DEFINE_IID!(IID_IXboxLiveEndpointPairStatics, 1680960304, 8570, 16963, 142, 225, 103, 41, 40, 29, 39, 219);
 RT_INTERFACE!{static interface IXboxLiveEndpointPairStatics(IXboxLiveEndpointPairStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPairStatics] {
-    fn FindEndpointPairBySocketAddressBytes(&self, localSocketAddressSize: u32, localSocketAddress: *mut u8, remoteSocketAddressSize: u32, remoteSocketAddress: *mut u8, out: *mut *mut XboxLiveEndpointPair) -> HRESULT,
-    fn FindEndpointPairByHostNamesAndPorts(&self, localHostName: *mut super::HostName, localPort: HSTRING, remoteHostName: *mut super::HostName, remotePort: HSTRING, out: *mut *mut XboxLiveEndpointPair) -> HRESULT
+    fn FindEndpointPairBySocketAddressBytes(&self, localSocketAddressSize: u32, localSocketAddress: *mut u8, remoteSocketAddressSize: u32, remoteSocketAddress: *mut u8, out: *mut <XboxLiveEndpointPair as RtType>::Abi) -> HRESULT,
+    fn FindEndpointPairByHostNamesAndPorts(&self, localHostName: <super::HostName as RtType>::Abi, localPort: HSTRING, remoteHostName: <super::HostName as RtType>::Abi, remotePort: HSTRING, out: *mut <XboxLiveEndpointPair as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IXboxLiveEndpointPairStatics> {
-    #[inline] pub fn find_endpoint_pair_by_socket_address_bytes(&self, localSocketAddress: &[u8], remoteSocketAddress: &[u8]) -> Result<Option<ComPtr<XboxLiveEndpointPair>>> { unsafe { 
+    #[inline] pub fn find_endpoint_pair_by_socket_address_bytes(&self, localSocketAddress: &[u8], remoteSocketAddress: &[u8]) -> Result<Option<XboxLiveEndpointPair>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FindEndpointPairBySocketAddressBytes)(self.as_abi() as *const _ as *mut _, localSocketAddress.len() as u32, localSocketAddress.as_ptr() as *mut _, remoteSocketAddress.len() as u32, remoteSocketAddress.as_ptr() as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveEndpointPair::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn find_endpoint_pair_by_host_names_and_ports(&self, localHostName: &ComPtr<super::HostName>, localPort: &HStringArg, remoteHostName: &ComPtr<super::HostName>, remotePort: &HStringArg) -> Result<Option<ComPtr<XboxLiveEndpointPair>>> { unsafe { 
+    #[inline] pub fn find_endpoint_pair_by_host_names_and_ports(&self, localHostName: &super::HostName, localPort: &HStringArg, remoteHostName: &super::HostName, remotePort: &HStringArg) -> Result<Option<XboxLiveEndpointPair>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FindEndpointPairByHostNamesAndPorts)(self.as_abi() as *const _ as *mut _, localHostName.as_abi() as *const _ as *mut _, localPort.get(), remoteHostName.as_abi() as *const _ as *mut _, remotePort.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveEndpointPair::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IXboxLiveEndpointPairTemplate, 1797811919, 13399, 16590, 185, 161, 192, 207, 224, 33, 62, 167);
 RT_INTERFACE!{interface IXboxLiveEndpointPairTemplate(IXboxLiveEndpointPairTemplateVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPairTemplate] {
     fn add_InboundEndpointPairCreated(&self, handler: *mut foundation::TypedEventHandler<XboxLiveEndpointPairTemplate, XboxLiveInboundEndpointPairCreatedEventArgs>, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_InboundEndpointPairCreated(&self, token: foundation::EventRegistrationToken) -> HRESULT,
-    fn CreateEndpointPairDefaultAsync(&self, deviceAddress: *mut XboxLiveDeviceAddress, out: *mut *mut foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>) -> HRESULT,
-    fn CreateEndpointPairWithBehaviorsAsync(&self, deviceAddress: *mut XboxLiveDeviceAddress, behaviors: XboxLiveEndpointPairCreationBehaviors, out: *mut *mut foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>) -> HRESULT,
-    fn CreateEndpointPairForPortsDefaultAsync(&self, deviceAddress: *mut XboxLiveDeviceAddress, initiatorPort: HSTRING, acceptorPort: HSTRING, out: *mut *mut foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>) -> HRESULT,
-    fn CreateEndpointPairForPortsWithBehaviorsAsync(&self, deviceAddress: *mut XboxLiveDeviceAddress, initiatorPort: HSTRING, acceptorPort: HSTRING, behaviors: XboxLiveEndpointPairCreationBehaviors, out: *mut *mut foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>) -> HRESULT,
+    fn CreateEndpointPairDefaultAsync(&self, deviceAddress: <XboxLiveDeviceAddress as RtType>::Abi, out: *mut *mut foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>) -> HRESULT,
+    fn CreateEndpointPairWithBehaviorsAsync(&self, deviceAddress: <XboxLiveDeviceAddress as RtType>::Abi, behaviors: XboxLiveEndpointPairCreationBehaviors, out: *mut *mut foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>) -> HRESULT,
+    fn CreateEndpointPairForPortsDefaultAsync(&self, deviceAddress: <XboxLiveDeviceAddress as RtType>::Abi, initiatorPort: HSTRING, acceptorPort: HSTRING, out: *mut *mut foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>) -> HRESULT,
+    fn CreateEndpointPairForPortsWithBehaviorsAsync(&self, deviceAddress: <XboxLiveDeviceAddress as RtType>::Abi, initiatorPort: HSTRING, acceptorPort: HSTRING, behaviors: XboxLiveEndpointPairCreationBehaviors, out: *mut *mut foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>) -> HRESULT,
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SocketKind(&self, out: *mut XboxLiveSocketKind) -> HRESULT,
     fn get_InitiatorBoundPortRangeLower(&self, out: *mut u16) -> HRESULT,
@@ -9986,25 +9986,25 @@ impl ComPtr<IXboxLiveEndpointPairTemplate> {
         let hr = ((*self.as_abi().lpVtbl).remove_InboundEndpointPairCreated)(self.as_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn create_endpoint_pair_default_async(&self, deviceAddress: &ComPtr<XboxLiveDeviceAddress>) -> Result<ComPtr<foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>>> { unsafe { 
+    #[inline] pub fn create_endpoint_pair_default_async(&self, deviceAddress: &XboxLiveDeviceAddress) -> Result<ComPtr<foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateEndpointPairDefaultAsync)(self.as_abi() as *const _ as *mut _, deviceAddress.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_endpoint_pair_with_behaviors_async(&self, deviceAddress: &ComPtr<XboxLiveDeviceAddress>, behaviors: XboxLiveEndpointPairCreationBehaviors) -> Result<ComPtr<foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>>> { unsafe { 
+    #[inline] pub fn create_endpoint_pair_with_behaviors_async(&self, deviceAddress: &XboxLiveDeviceAddress, behaviors: XboxLiveEndpointPairCreationBehaviors) -> Result<ComPtr<foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateEndpointPairWithBehaviorsAsync)(self.as_abi() as *const _ as *mut _, deviceAddress.as_abi() as *const _ as *mut _, behaviors, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_endpoint_pair_for_ports_default_async(&self, deviceAddress: &ComPtr<XboxLiveDeviceAddress>, initiatorPort: &HStringArg, acceptorPort: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>>> { unsafe { 
+    #[inline] pub fn create_endpoint_pair_for_ports_default_async(&self, deviceAddress: &XboxLiveDeviceAddress, initiatorPort: &HStringArg, acceptorPort: &HStringArg) -> Result<ComPtr<foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateEndpointPairForPortsDefaultAsync)(self.as_abi() as *const _ as *mut _, deviceAddress.as_abi() as *const _ as *mut _, initiatorPort.get(), acceptorPort.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_endpoint_pair_for_ports_with_behaviors_async(&self, deviceAddress: &ComPtr<XboxLiveDeviceAddress>, initiatorPort: &HStringArg, acceptorPort: &HStringArg, behaviors: XboxLiveEndpointPairCreationBehaviors) -> Result<ComPtr<foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>>> { unsafe { 
+    #[inline] pub fn create_endpoint_pair_for_ports_with_behaviors_async(&self, deviceAddress: &XboxLiveDeviceAddress, initiatorPort: &HStringArg, acceptorPort: &HStringArg, behaviors: XboxLiveEndpointPairCreationBehaviors) -> Result<ComPtr<foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateEndpointPairForPortsWithBehaviorsAsync)(self.as_abi() as *const _ as *mut _, deviceAddress.as_abi() as *const _ as *mut _, initiatorPort.get(), acceptorPort.get(), behaviors, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -10039,13 +10039,13 @@ impl ComPtr<IXboxLiveEndpointPairTemplate> {
     #[inline] pub fn get_endpoint_pairs(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<XboxLiveEndpointPair>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_EndpointPairs)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class XboxLiveEndpointPairTemplate: IXboxLiveEndpointPairTemplate}
 impl RtActivatable<IXboxLiveEndpointPairTemplateStatics> for XboxLiveEndpointPairTemplate {}
 impl XboxLiveEndpointPairTemplate {
-    #[inline] pub fn get_template_by_name(name: &HStringArg) -> Result<Option<ComPtr<XboxLiveEndpointPairTemplate>>> {
+    #[inline] pub fn get_template_by_name(name: &HStringArg) -> Result<Option<XboxLiveEndpointPairTemplate>> {
         <Self as RtActivatable<IXboxLiveEndpointPairTemplateStatics>>::get_activation_factory().get_template_by_name(name)
     }
     #[inline] pub fn get_templates() -> Result<Option<ComPtr<foundation::collections::IVectorView<XboxLiveEndpointPairTemplate>>>> {
@@ -10055,30 +10055,30 @@ impl XboxLiveEndpointPairTemplate {
 DEFINE_CLSID!(XboxLiveEndpointPairTemplate(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,88,98,111,120,76,105,118,101,46,88,98,111,120,76,105,118,101,69,110,100,112,111,105,110,116,80,97,105,114,84,101,109,112,108,97,116,101,0]) [CLSID_XboxLiveEndpointPairTemplate]);
 DEFINE_IID!(IID_IXboxLiveEndpointPairTemplateStatics, 504566651, 29563, 18979, 188, 100, 8, 112, 247, 86, 85, 186);
 RT_INTERFACE!{static interface IXboxLiveEndpointPairTemplateStatics(IXboxLiveEndpointPairTemplateStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPairTemplateStatics] {
-    fn GetTemplateByName(&self, name: HSTRING, out: *mut *mut XboxLiveEndpointPairTemplate) -> HRESULT,
+    fn GetTemplateByName(&self, name: HSTRING, out: *mut <XboxLiveEndpointPairTemplate as RtType>::Abi) -> HRESULT,
     fn get_Templates(&self, out: *mut *mut foundation::collections::IVectorView<XboxLiveEndpointPairTemplate>) -> HRESULT
 }}
 impl ComPtr<IXboxLiveEndpointPairTemplateStatics> {
-    #[inline] pub fn get_template_by_name(&self, name: &HStringArg) -> Result<Option<ComPtr<XboxLiveEndpointPairTemplate>>> { unsafe { 
+    #[inline] pub fn get_template_by_name(&self, name: &HStringArg) -> Result<Option<XboxLiveEndpointPairTemplate>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetTemplateByName)(self.as_abi() as *const _ as *mut _, name.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveEndpointPairTemplate::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_templates(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<XboxLiveEndpointPairTemplate>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Templates)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IXboxLiveInboundEndpointPairCreatedEventArgs, 3692575586, 8890, 18642, 128, 222, 194, 57, 104, 189, 25, 139);
 RT_INTERFACE!{interface IXboxLiveInboundEndpointPairCreatedEventArgs(IXboxLiveInboundEndpointPairCreatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveInboundEndpointPairCreatedEventArgs] {
-    fn get_EndpointPair(&self, out: *mut *mut XboxLiveEndpointPair) -> HRESULT
+    fn get_EndpointPair(&self, out: *mut <XboxLiveEndpointPair as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IXboxLiveInboundEndpointPairCreatedEventArgs> {
-    #[inline] pub fn get_endpoint_pair(&self) -> Result<Option<ComPtr<XboxLiveEndpointPair>>> { unsafe { 
+    #[inline] pub fn get_endpoint_pair(&self) -> Result<Option<XboxLiveEndpointPair>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_EndpointPair)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveEndpointPair::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class XboxLiveInboundEndpointPairCreatedEventArgs: IXboxLiveInboundEndpointPairCreatedEventArgs}
@@ -10088,10 +10088,10 @@ RT_ENUM! { enum XboxLiveNetworkAccessKind: i32 {
 DEFINE_IID!(IID_IXboxLiveQualityOfServiceMeasurement, 1298672590, 42454, 18406, 162, 54, 207, 222, 95, 189, 242, 237);
 RT_INTERFACE!{interface IXboxLiveQualityOfServiceMeasurement(IXboxLiveQualityOfServiceMeasurementVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveQualityOfServiceMeasurement] {
     fn MeasureAsync(&self, out: *mut *mut foundation::IAsyncAction) -> HRESULT,
-    fn GetMetricResultsForDevice(&self, deviceAddress: *mut XboxLiveDeviceAddress, out: *mut *mut foundation::collections::IVectorView<XboxLiveQualityOfServiceMetricResult>) -> HRESULT,
+    fn GetMetricResultsForDevice(&self, deviceAddress: <XboxLiveDeviceAddress as RtType>::Abi, out: *mut *mut foundation::collections::IVectorView<XboxLiveQualityOfServiceMetricResult>) -> HRESULT,
     fn GetMetricResultsForMetric(&self, metric: XboxLiveQualityOfServiceMetric, out: *mut *mut foundation::collections::IVectorView<XboxLiveQualityOfServiceMetricResult>) -> HRESULT,
-    fn GetMetricResult(&self, deviceAddress: *mut XboxLiveDeviceAddress, metric: XboxLiveQualityOfServiceMetric, out: *mut *mut XboxLiveQualityOfServiceMetricResult) -> HRESULT,
-    fn GetPrivatePayloadResult(&self, deviceAddress: *mut XboxLiveDeviceAddress, out: *mut *mut XboxLiveQualityOfServicePrivatePayloadResult) -> HRESULT,
+    fn GetMetricResult(&self, deviceAddress: <XboxLiveDeviceAddress as RtType>::Abi, metric: XboxLiveQualityOfServiceMetric, out: *mut <XboxLiveQualityOfServiceMetricResult as RtType>::Abi) -> HRESULT,
+    fn GetPrivatePayloadResult(&self, deviceAddress: <XboxLiveDeviceAddress as RtType>::Abi, out: *mut <XboxLiveQualityOfServicePrivatePayloadResult as RtType>::Abi) -> HRESULT,
     fn get_Metrics(&self, out: *mut *mut foundation::collections::IVector<XboxLiveQualityOfServiceMetric>) -> HRESULT,
     fn get_DeviceAddresses(&self, out: *mut *mut foundation::collections::IVector<XboxLiveDeviceAddress>) -> HRESULT,
     fn get_ShouldRequestPrivatePayloads(&self, out: *mut bool) -> HRESULT,
@@ -10108,37 +10108,37 @@ impl ComPtr<IXboxLiveQualityOfServiceMeasurement> {
     #[inline] pub fn measure_async(&self) -> Result<ComPtr<foundation::IAsyncAction>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).MeasureAsync)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_metric_results_for_device(&self, deviceAddress: &ComPtr<XboxLiveDeviceAddress>) -> Result<Option<ComPtr<foundation::collections::IVectorView<XboxLiveQualityOfServiceMetricResult>>>> { unsafe { 
+    #[inline] pub fn get_metric_results_for_device(&self, deviceAddress: &XboxLiveDeviceAddress) -> Result<Option<ComPtr<foundation::collections::IVectorView<XboxLiveQualityOfServiceMetricResult>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetMetricResultsForDevice)(self.as_abi() as *const _ as *mut _, deviceAddress.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_metric_results_for_metric(&self, metric: XboxLiveQualityOfServiceMetric) -> Result<Option<ComPtr<foundation::collections::IVectorView<XboxLiveQualityOfServiceMetricResult>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetMetricResultsForMetric)(self.as_abi() as *const _ as *mut _, metric, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_metric_result(&self, deviceAddress: &ComPtr<XboxLiveDeviceAddress>, metric: XboxLiveQualityOfServiceMetric) -> Result<Option<ComPtr<XboxLiveQualityOfServiceMetricResult>>> { unsafe { 
+    #[inline] pub fn get_metric_result(&self, deviceAddress: &XboxLiveDeviceAddress, metric: XboxLiveQualityOfServiceMetric) -> Result<Option<XboxLiveQualityOfServiceMetricResult>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetMetricResult)(self.as_abi() as *const _ as *mut _, deviceAddress.as_abi() as *const _ as *mut _, metric, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveQualityOfServiceMetricResult::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_private_payload_result(&self, deviceAddress: &ComPtr<XboxLiveDeviceAddress>) -> Result<Option<ComPtr<XboxLiveQualityOfServicePrivatePayloadResult>>> { unsafe { 
+    #[inline] pub fn get_private_payload_result(&self, deviceAddress: &XboxLiveDeviceAddress) -> Result<Option<XboxLiveQualityOfServicePrivatePayloadResult>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetPrivatePayloadResult)(self.as_abi() as *const _ as *mut _, deviceAddress.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveQualityOfServicePrivatePayloadResult::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_metrics(&self) -> Result<Option<ComPtr<foundation::collections::IVector<XboxLiveQualityOfServiceMetric>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Metrics)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_device_addresses(&self) -> Result<Option<ComPtr<foundation::collections::IVector<XboxLiveDeviceAddress>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DeviceAddresses)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_should_request_private_payloads(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
@@ -10175,12 +10175,12 @@ impl ComPtr<IXboxLiveQualityOfServiceMeasurement> {
     #[inline] pub fn get_metric_results(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<XboxLiveQualityOfServiceMetricResult>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_MetricResults)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_private_payload_results(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<XboxLiveQualityOfServicePrivatePayloadResult>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PrivatePayloadResults)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class XboxLiveQualityOfServiceMeasurement: IXboxLiveQualityOfServiceMeasurement}
@@ -10277,7 +10277,7 @@ impl ComPtr<IXboxLiveQualityOfServiceMeasurementStatics> {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_published_private_payload(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_PublishedPrivatePayload)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_published_private_payload(&self, value: &ComPtr<super::super::storage::streams::IBuffer>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_PublishedPrivatePayload)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -10298,7 +10298,7 @@ RT_ENUM! { enum XboxLiveQualityOfServiceMetric: i32 {
 DEFINE_IID!(IID_IXboxLiveQualityOfServiceMetricResult, 2934723537, 13665, 18306, 176, 207, 211, 174, 41, 217, 250, 135);
 RT_INTERFACE!{interface IXboxLiveQualityOfServiceMetricResult(IXboxLiveQualityOfServiceMetricResultVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveQualityOfServiceMetricResult] {
     fn get_Status(&self, out: *mut XboxLiveQualityOfServiceMeasurementStatus) -> HRESULT,
-    fn get_DeviceAddress(&self, out: *mut *mut XboxLiveDeviceAddress) -> HRESULT,
+    fn get_DeviceAddress(&self, out: *mut <XboxLiveDeviceAddress as RtType>::Abi) -> HRESULT,
     fn get_Metric(&self, out: *mut XboxLiveQualityOfServiceMetric) -> HRESULT,
     fn get_Value(&self, out: *mut u64) -> HRESULT
 }}
@@ -10308,10 +10308,10 @@ impl ComPtr<IXboxLiveQualityOfServiceMetricResult> {
         let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_device_address(&self) -> Result<Option<ComPtr<XboxLiveDeviceAddress>>> { unsafe { 
+    #[inline] pub fn get_device_address(&self) -> Result<Option<XboxLiveDeviceAddress>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DeviceAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveDeviceAddress::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_metric(&self) -> Result<XboxLiveQualityOfServiceMetric> { unsafe { 
         let mut out = zeroed();
@@ -10328,7 +10328,7 @@ RT_CLASS!{class XboxLiveQualityOfServiceMetricResult: IXboxLiveQualityOfServiceM
 DEFINE_IID!(IID_IXboxLiveQualityOfServicePrivatePayloadResult, 1516438190, 28472, 16832, 159, 204, 234, 108, 185, 120, 202, 252);
 RT_INTERFACE!{interface IXboxLiveQualityOfServicePrivatePayloadResult(IXboxLiveQualityOfServicePrivatePayloadResultVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveQualityOfServicePrivatePayloadResult] {
     fn get_Status(&self, out: *mut XboxLiveQualityOfServiceMeasurementStatus) -> HRESULT,
-    fn get_DeviceAddress(&self, out: *mut *mut XboxLiveDeviceAddress) -> HRESULT,
+    fn get_DeviceAddress(&self, out: *mut <XboxLiveDeviceAddress as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut *mut super::super::storage::streams::IBuffer) -> HRESULT
 }}
 impl ComPtr<IXboxLiveQualityOfServicePrivatePayloadResult> {
@@ -10337,15 +10337,15 @@ impl ComPtr<IXboxLiveQualityOfServicePrivatePayloadResult> {
         let hr = ((*self.as_abi().lpVtbl).get_Status)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_device_address(&self) -> Result<Option<ComPtr<XboxLiveDeviceAddress>>> { unsafe { 
+    #[inline] pub fn get_device_address(&self) -> Result<Option<XboxLiveDeviceAddress>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DeviceAddress)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(XboxLiveDeviceAddress::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_value(&self) -> Result<Option<ComPtr<super::super::storage::streams::IBuffer>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Value)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class XboxLiveQualityOfServicePrivatePayloadResult: IXboxLiveQualityOfServicePrivatePayloadResult}

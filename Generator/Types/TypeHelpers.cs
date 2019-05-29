@@ -197,25 +197,52 @@ namespace Generator.Types
 
                 if (!t.IsValueType)
                 {
-                    if (usage == TypeUsage.In)
+                    if (def.Type.IsClass && !TypeHelpers.IsDelegate(def.Type))
                     {
-                        name = $"&ComPtr<{ name }>";
+                        if (usage == TypeUsage.In)
+                        {
+                            name = $"&{ name }";
+                        }
+                        else if (usage == TypeUsage.GenericArg)
+                        {
+                            // leave name unchanged
+                        }
+                        else if (usage == TypeUsage.Raw)
+                        {
+                            name = $"<{ name } as RtType>::Abi";
+                        }
+                        else if (usage == TypeUsage.Out)
+                        {
+                            name = $"Option<{ name }>";
+                        }
+                        else if (usage == TypeUsage.OutNonNull)
+                        {
+                            // leave name unchanged
+                        }
                     }
-                    else if (usage == TypeUsage.GenericArg)
+                    else
                     {
-                        // leave name unchanged
-                    }
-                    else if (usage == TypeUsage.Raw)
-                    {
-                        name = $"*mut { name }";
-                    }
-                    else if (usage == TypeUsage.Out)
-                    {
-                        name = $"Option<ComPtr<{ name }>>";
-                    }
-                    else if (usage == TypeUsage.OutNonNull)
-                    {
-                        name = $"ComPtr<{ name }>";
+
+                        if (usage == TypeUsage.In)
+                        {
+                            name = $"&ComPtr<{ name }>";
+                        }
+                        else if (usage == TypeUsage.GenericArg)
+                        {
+                            // leave name unchanged
+                        }
+                        else if (usage == TypeUsage.Raw)
+                        {
+                            name = $"*mut { name }";
+                        }
+                        else if (usage == TypeUsage.Out)
+                        {
+                            name = $"Option<ComPtr<{ name }>>";
+                        }
+                        else if (usage == TypeUsage.OutNonNull)
+                        {
+                            name = $"ComPtr<{ name }>";
+                        }
                     }
                 }
 
@@ -377,10 +404,8 @@ namespace Generator.Types
             }
         }
 
-        public static string WrapOutputParameter(string name, TypeReference t, bool isNonNull)
+        public static string WrapOutputParameter(string name, TypeReference t, bool isNonNull, string typeName)
         {
-            string wrapFn = isNonNull ? "ComPtr::wrap" : "ComPtr::wrap_optional";
-
             if (t.IsGenericParameter)
             {
                 return $"{ t.Name }::wrap({ name })";
@@ -399,6 +424,7 @@ namespace Generator.Types
             }
             else if (t.FullName == "System.Object")
             {
+                string wrapFn = isNonNull ? "ComPtr::wrap_nonnull" : "ComPtr::wrap";
                 return $"{ wrapFn }({ name })";
             }
             else if (t.FullName == "System.Guid")
@@ -431,6 +457,17 @@ namespace Generator.Types
             }
             else // reference type
             {
+                if(!isNonNull)
+                {
+                    Assert(typeName.StartsWith("Option<"));
+                    typeName = typeName.Substring("Option<".Length, typeName.Length - "Option<>".Length);
+                }
+                var generic = typeName.IndexOf('<');
+                if (generic != -1)
+                {
+                    typeName = typeName.Substring(0, generic);
+                }
+                string wrapFn = isNonNull ? $"{ typeName }::wrap_nonnull" : $"{ typeName }::wrap";
                 return $"{ wrapFn }({ name })";
             }
         }

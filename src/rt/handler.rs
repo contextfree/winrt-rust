@@ -87,6 +87,6 @@ impl<T, Interface: ComInterface> IntoInterface<Interface> for T where T: ComClas
             refcount: std::sync::atomic::AtomicUsize::new(1),
             data: self
         });
-        unsafe { ComPtr::wrap(Box::into_raw(com) as *mut Interface) }
+        unsafe { ComPtr::wrap_nonnull(Box::into_raw(com) as *mut Interface) }
     }
 }
