@@ -1,6 +1,6 @@
 use std::sync::atomic;
 
-use crate::{IUnknown, IAgileObject, ComInterface, ComIid, ComPtr, Guid};
+use crate::{IUnknown, IAgileObject, ComInterface, ComIid, Guid};
 
 use w::shared::ntdef::{VOID, ULONG};
 use w::shared::winerror::S_OK;
@@ -18,7 +18,7 @@ pub struct ComRepr<T, Vtbl> {
 }
 
 /// This is a reusable implementation of AddRef that works for any ComRepr-based type
-pub unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut IUnknown) -> ULONG {
+pub unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut <IUnknown as ComInterface>::TAbi) -> ULONG {
     let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
     
     // Increment the reference count (count member).
@@ -30,7 +30,7 @@ pub unsafe extern "system" fn ComRepr_AddRef<T>(this: *mut IUnknown) -> ULONG {
 }
 
 /// This is a reusable implementation of Release that works for any ComRepr-based type
-pub unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG {
+pub unsafe extern "system" fn ComRepr_Release<T>(this: *mut <IUnknown as ComInterface>::TAbi) -> ULONG {
     let this = this as *mut _ as *mut ComRepr<T, IUnknownVtbl>;
     
     let old_size = (*this).refcount.fetch_sub(1, atomic::Ordering::Release);
@@ -45,7 +45,7 @@ pub unsafe extern "system" fn ComRepr_Release<T>(this: *mut IUnknown) -> ULONG {
     return 0;
 }
 
-pub unsafe extern "system" fn ComReprHandler_QueryInterface<T, I>(this_: *mut IUnknown, vTableGuid: REFIID, ppv: *mut *mut VOID) -> HRESULT
+pub unsafe extern "system" fn ComReprHandler_QueryInterface<T, I>(this_: *mut <IUnknown as ComInterface>::TAbi, vTableGuid: REFIID, ppv: *mut *mut VOID) -> HRESULT
     where T: ComClass<I>, I: ComInterface + ComIid
 {
     let this_ = this_ as *mut I;
@@ -58,7 +58,7 @@ pub unsafe extern "system" fn ComReprHandler_QueryInterface<T, I>(this_: *mut IU
         return E_NOINTERFACE;
     }
     *ppv = this_ as *mut _ as *mut VOID;
-    ComRepr_AddRef::<T>(this_ as *mut IUnknown);
+    ComRepr_AddRef::<T>(this_ as *mut <IUnknown as ComInterface>::TAbi);
     S_OK
 }
 
@@ -67,26 +67,26 @@ pub trait ComClass<Interface: ComInterface> where Self: Sized {
     unsafe fn from_interface<'a>(thing: *mut Interface) -> &'a mut Self {
         &mut (*(thing as *mut _ as *mut ComRepr<Self, Interface::Vtbl>)).data
     }
-    unsafe fn from_unknown<'a>(thing: *mut IUnknown) -> &'a mut Self {
+    unsafe fn from_unknown<'a>(thing: *mut <IUnknown as ComInterface>::TAbi) -> &'a mut Self {
         &mut (*(thing as *mut _ as *mut ComRepr<Self, Interface::Vtbl>)).data
     }
-    unsafe fn destroy(thing: *mut IUnknown) {
+    unsafe fn destroy(thing: *mut <IUnknown as ComInterface>::TAbi) {
         Box::from_raw(thing as *mut ComRepr<Self, Interface::Vtbl>);
     }
 }
 
-pub trait IntoInterface<Interface: ComInterface> {
-    fn into_interface(self) -> ComPtr<Interface>;
+pub trait IntoInterface<Interface: crate::ComInterface> {
+    fn into_interface(self) -> Interface;
 }
 
-impl<T, Interface: ComInterface> IntoInterface<Interface> for T where T: ComClass<Interface> + Sized {
+impl<T, Interface: crate::ComInterface> IntoInterface<Interface> for T where T: ComClass<Interface> + Sized {
     #[inline]
-    fn into_interface(self) -> ComPtr<Interface> {
+    fn into_interface(self) -> Interface {
         let com = Box::new(ComRepr {
             vtbl: Box::new(Self::get_vtbl()),
             refcount: std::sync::atomic::AtomicUsize::new(1),
             data: self
         });
-        unsafe { ComPtr::wrap_nonnull(Box::into_raw(com) as *mut Interface) }
+        unsafe { Interface::wrap_com(Box::into_raw(com) as *mut <Interface as ComInterface>::TAbi) }
     }
 }

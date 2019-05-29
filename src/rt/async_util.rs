@@ -2,7 +2,6 @@ use std::sync::{Arc, Mutex, Condvar};
 
 use crate::{
     RtType,
-    ComPtr,
     ComIid,
     Result
 };
@@ -18,6 +17,7 @@ use crate::windows::foundation::{
     IAsyncOperationWithProgress,
     AsyncOperationWithProgressCompletedHandler
 };
+
 
 /// Extension for `IAsyncAction` with helper method.
 pub trait RtAsyncAction {
@@ -45,7 +45,7 @@ macro_rules! impl_blocking_wait {
     ($handler:ident) => {
         #[inline]
         fn blocking_wait(&self) {
-            let info = crate::comptr::query_interface::<_, IAsyncInfo>(self.as_abi()).expect("query_interface failed");
+            let info = self.query_interface::<IAsyncInfo>().expect("query_interface failed");
             let status = info.get_status().expect("get_status failed");
 
             if status == crate::windows::foundation::AsyncStatus::Completed {
@@ -76,24 +76,24 @@ macro_rules! impl_blocking_wait {
     }
 }
 
-impl RtAsyncAction for ComPtr<IAsyncAction>
+impl RtAsyncAction for IAsyncAction
 {
     impl_blocking_wait!{ AsyncActionCompletedHandler }
 }
 
-impl<P: RtType + 'static> RtAsyncAction for ComPtr<IAsyncActionWithProgress<P>>
+impl<P: RtType + 'static> RtAsyncAction for IAsyncActionWithProgress<P>
     where AsyncActionWithProgressCompletedHandler<P>: ComIid
 {
     impl_blocking_wait!{ AsyncActionWithProgressCompletedHandler }
 }
 
-impl<T: RtType + 'static> RtAsyncAction for ComPtr<IAsyncOperation<T>>
+impl<T: RtType + 'static> RtAsyncAction for IAsyncOperation<T>
     where AsyncOperationCompletedHandler<T>: ComIid
 {
     impl_blocking_wait!{ AsyncOperationCompletedHandler }
 }
 
-impl<T: RtType + 'static> RtAsyncOperation for ComPtr<IAsyncOperation<T>>
+impl<T: RtType + 'static> RtAsyncOperation for IAsyncOperation<T>
     where AsyncOperationCompletedHandler<T>: ComIid
 {
     type TResult = <T as RtType>::Out;
@@ -104,13 +104,13 @@ impl<T: RtType + 'static> RtAsyncOperation for ComPtr<IAsyncOperation<T>>
     }
 }
 
-impl<T: RtType + 'static, P: RtType + 'static> RtAsyncAction for ComPtr<IAsyncOperationWithProgress<T, P>>
+impl<T: RtType + 'static, P: RtType + 'static> RtAsyncAction for IAsyncOperationWithProgress<T, P>
     where AsyncOperationWithProgressCompletedHandler<T, P>: ComIid
 {
     impl_blocking_wait!{ AsyncOperationWithProgressCompletedHandler }
 }
 
-impl<T: RtType + 'static, P: RtType + 'static> RtAsyncOperation for ComPtr<IAsyncOperationWithProgress<T, P>>
+impl<T: RtType + 'static, P: RtType + 'static> RtAsyncOperation for IAsyncOperationWithProgress<T, P>
     where AsyncOperationWithProgressCompletedHandler<T, P>: ComIid
 {
     type TResult = <T as RtType>::Out;
