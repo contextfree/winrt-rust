@@ -31,7 +31,7 @@ pub(crate) trait ComPtrHelpers {
 impl<T> ComPtrHelpers for T where T: ComInterface + Sized {
     #[inline]
     unsafe fn into_unchecked<Interface: ComInterface>(self) -> Interface {
-        let ptr = self.get_abi();
+        let ptr = self.get_abi() as *const _;
         std::mem::forget(self);
         Interface::wrap_com(ptr as *mut _)
     }
@@ -39,10 +39,6 @@ impl<T> ComPtrHelpers for T where T: ComInterface + Sized {
     unsafe fn as_unchecked<Interface: ComInterface>(&self) -> &Interface {
         std::mem::transmute(self)
     }
-}
-
-pub(crate) fn get_abi<Interface: crate::RtType<In=Interface> + ComInterface>(intf: &Interface) -> <Interface as crate::RtType>::Abi {
-    unsafe { Interface::unwrap(intf) }
 }
 
 impl<T: ComInterfaceAbi> ComPtr<T> {
@@ -77,25 +73,10 @@ impl<T: ComInterfaceAbi> ComPtr<T> {
     fn as_unknown(&self) -> &mut IUnknown {
         unsafe { &mut *(self.0.as_ptr() as *mut IUnknown) }
     }
-    
-    /*
-    /// Retrieves a `ComPtr` to the specified interface, if it is supported by the underlying object.
-    /// If the requested interface is not supported, `None` is returned.
-    #[inline]
-    pub fn query_interface<Target>(&self) -> Option<ComPtr<Target::TAbi>> where Target: ComIid + ComInterface {
-        query_interface::<_, Target>(&*self.as_abi())
-    }*/
 
-    // TODO: should be pub(crate)
     #[inline]
-    pub fn as_abi(&self) -> &T {
+    pub(crate) fn as_abi(&self) -> &T {
         unsafe { self.0.as_ref() }
-    }
-
-    // TODO: should be pub(crate)
-    #[inline]
-    pub fn as_abi_mut(&mut self) -> &mut T {
-        unsafe { self.0.as_mut() }
     }
 }
 

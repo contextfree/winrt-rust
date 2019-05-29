@@ -8,7 +8,7 @@ pub trait ComInterface {
     type Vtbl: Sized;
     type TAbi: Sized + ComInterfaceAbi;
     unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self;
-    fn get_abi(&self) -> *const Self::TAbi;
+    fn get_abi(&self) -> &Self::TAbi;
 }
 
 /// Marker trait for all COM-compatible interfaces.
@@ -41,7 +41,7 @@ impl ComInterface for IUnknown {
     type Vtbl = IUnknownVtbl;
     type TAbi = IUnknown_Abi;
     unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IUnknown(ComPtr::wrap_nonnull(ptr)) }
-    fn get_abi(&self) -> *const Self::TAbi { self.0.as_abi() as *const _ }
+    fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
 }
 
 impl IUnknown {
@@ -50,7 +50,7 @@ impl IUnknown {
         let iid: &'static Guid = Target::iid();
         let mut res = std::ptr::null_mut();
         unsafe {
-            match self.0.as_abi().QueryInterface(iid.as_ref(), &mut res as *mut _ as *mut *mut w::shared::ntdef::VOID) {
+            match self.get_abi().QueryInterface(iid.as_ref(), &mut res as *mut _ as *mut *mut w::shared::ntdef::VOID) {
                 w::shared::winerror::S_OK => Some(Target::wrap_com(res)),
                 _ => None
             }
@@ -72,7 +72,7 @@ impl ComInterface for IRestrictedErrorInfo {
     type Vtbl = IRestrictedErrorInfoVtbl;
     type TAbi = IRestrictedErrorInfo_Abi;
     unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IRestrictedErrorInfo(ComPtr::wrap_nonnull(ptr)) }
-    fn get_abi(&self) -> *const Self::TAbi { self.0.as_abi() as *const _ }
+    fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
 }
 
 DEFINE_IID!(IID_IAgileObject, 0x94EA2B94, 0xE9CC, 0x49E0, 0xC0, 0xFF, 0xEE, 0x64, 0xCA, 0x8F, 0x5B, 0x90);
@@ -106,5 +106,5 @@ impl ComInterface for IAgileObject {
     type Vtbl = IUnknownVtbl;
     type TAbi = IAgileObject_Abi;
     unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IAgileObject(ComPtr::wrap_nonnull(ptr)) }
-    fn get_abi(&self) -> *const Self::TAbi { self.0.as_abi() as *const _ }
+    fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
 }

@@ -26,17 +26,17 @@ RT_INTERFACE!{interface IDirect3D11CaptureFrame(IDirect3D11CaptureFrameVtbl, IDi
 impl IDirect3D11CaptureFrame {
     #[inline] pub fn get_surface(&self) -> Result<Option<super::directx::direct3d11::IDirect3DSurface>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Surface)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Surface)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::directx::direct3d11::IDirect3DSurface::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_relative_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SystemRelativeTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SystemRelativeTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_content_size(&self) -> Result<super::SizeInt32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ContentSize)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ContentSize)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -52,31 +52,31 @@ RT_INTERFACE!{interface IDirect3D11CaptureFramePool(IDirect3D11CaptureFramePoolV
 }}
 impl IDirect3D11CaptureFramePool {
     #[inline] pub fn recreate(&self, device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Recreate)(self.0.as_abi() as *const _ as *mut _, get_abi(device) as *const _ as *mut _, pixelFormat, numberOfBuffers, size);
+        let hr = ((*self.get_abi().lpVtbl).Recreate)(self.get_abi() as *const _ as *mut _, device.get_abi() as *const _ as *mut _, pixelFormat, numberOfBuffers, size);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn try_get_next_frame(&self) -> Result<Option<Direct3D11CaptureFrame>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TryGetNextFrame)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryGetNextFrame)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Direct3D11CaptureFrame::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_frame_arrived(&self, handler: &foundation::TypedEventHandler<Direct3D11CaptureFramePool, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_FrameArrived)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_FrameArrived)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_frame_arrived(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_FrameArrived)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_FrameArrived)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn create_capture_session(&self, item: &GraphicsCaptureItem) -> Result<Option<GraphicsCaptureSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateCaptureSession)(self.0.as_abi() as *const _ as *mut _, get_abi(item) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateCaptureSession)(self.get_abi() as *const _ as *mut _, item.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(GraphicsCaptureSession::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn get_dispatcher_queue(&self) -> Result<Option<super::super::system::DispatcherQueue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DispatcherQueue)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DispatcherQueue)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::system::DispatcherQueue::wrap(out)) } else { err(hr) }
     }}
 }
@@ -99,7 +99,7 @@ RT_INTERFACE!{static interface IDirect3D11CaptureFramePoolStatics(IDirect3D11Cap
 impl IDirect3D11CaptureFramePoolStatics {
     #[inline] pub fn create(&self, device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<Direct3D11CaptureFramePool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, get_abi(device) as *const _ as *mut _, pixelFormat, numberOfBuffers, size, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, device.get_abi() as *const _ as *mut _, pixelFormat, numberOfBuffers, size, &mut out);
         if hr == S_OK { Ok(Direct3D11CaptureFramePool::wrap(out)) } else { err(hr) }
     }}
 }
@@ -110,7 +110,7 @@ RT_INTERFACE!{static interface IDirect3D11CaptureFramePoolStatics2(IDirect3D11Ca
 impl IDirect3D11CaptureFramePoolStatics2 {
     #[inline] pub fn create_free_threaded(&self, device: &super::directx::direct3d11::IDirect3DDevice, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> Result<Option<Direct3D11CaptureFramePool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateFreeThreaded)(self.0.as_abi() as *const _ as *mut _, get_abi(device) as *const _ as *mut _, pixelFormat, numberOfBuffers, size, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateFreeThreaded)(self.get_abi() as *const _ as *mut _, device.get_abi() as *const _ as *mut _, pixelFormat, numberOfBuffers, size, &mut out);
         if hr == S_OK { Ok(Direct3D11CaptureFramePool::wrap(out)) } else { err(hr) }
     }}
 }
@@ -124,21 +124,21 @@ RT_INTERFACE!{interface IGraphicsCaptureItem(IGraphicsCaptureItemVtbl, IGraphics
 impl IGraphicsCaptureItem {
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_size(&self) -> Result<super::SizeInt32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Size)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Size)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_closed(&self, handler: &foundation::TypedEventHandler<GraphicsCaptureItem, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Closed)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Closed)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_closed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Closed)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Closed)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -157,7 +157,7 @@ RT_INTERFACE!{static interface IGraphicsCaptureItemStatics(IGraphicsCaptureItemS
 impl IGraphicsCaptureItemStatics {
     #[cfg(feature="windows-ui")] #[inline] pub fn create_from_visual(&self, visual: &super::super::ui::composition::Visual) -> Result<Option<GraphicsCaptureItem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateFromVisual)(self.0.as_abi() as *const _ as *mut _, get_abi(visual) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateFromVisual)(self.get_abi() as *const _ as *mut _, visual.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(GraphicsCaptureItem::wrap(out)) } else { err(hr) }
     }}
 }
@@ -168,7 +168,7 @@ RT_INTERFACE!{interface IGraphicsCapturePicker(IGraphicsCapturePickerVtbl, IGrap
 impl IGraphicsCapturePicker {
     #[inline] pub fn pick_single_item_async(&self) -> Result<foundation::IAsyncOperation<GraphicsCaptureItem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).PickSingleItemAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).PickSingleItemAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -181,7 +181,7 @@ RT_INTERFACE!{interface IGraphicsCaptureSession(IGraphicsCaptureSessionVtbl, IGr
 }}
 impl IGraphicsCaptureSession {
     #[inline] pub fn start_capture(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).StartCapture)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).StartCapture)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -200,7 +200,7 @@ RT_INTERFACE!{static interface IGraphicsCaptureSessionStatics(IGraphicsCaptureSe
 impl IGraphicsCaptureSessionStatics {
     #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -227,7 +227,7 @@ RT_INTERFACE!{interface IDirect3DDevice(IDirect3DDeviceVtbl, IDirect3DDevice_Abi
 }}
 impl IDirect3DDevice {
     #[inline] pub fn trim(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Trim)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Trim)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -241,7 +241,7 @@ RT_INTERFACE!{interface IDirect3DSurface(IDirect3DSurfaceVtbl, IDirect3DSurface_
 impl IDirect3DSurface {
     #[inline] pub fn get_description(&self) -> Result<Direct3DSurfaceDescription> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -272,57 +272,57 @@ RT_INTERFACE!{interface IAdvancedColorInfo(IAdvancedColorInfoVtbl, IAdvancedColo
 impl IAdvancedColorInfo {
     #[inline] pub fn get_current_advanced_color_kind(&self) -> Result<AdvancedColorKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CurrentAdvancedColorKind)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CurrentAdvancedColorKind)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_red_primary(&self) -> Result<foundation::Point> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RedPrimary)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RedPrimary)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_green_primary(&self) -> Result<foundation::Point> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_GreenPrimary)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_GreenPrimary)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_blue_primary(&self) -> Result<foundation::Point> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BluePrimary)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BluePrimary)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_white_point(&self) -> Result<foundation::Point> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WhitePoint)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WhitePoint)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_max_luminance_in_nits(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxLuminanceInNits)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxLuminanceInNits)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_min_luminance_in_nits(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MinLuminanceInNits)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MinLuminanceInNits)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_max_average_full_frame_luminance_in_nits(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxAverageFullFrameLuminanceInNits)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxAverageFullFrameLuminanceInNits)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_sdr_white_level_in_nits(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SdrWhiteLevelInNits)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SdrWhiteLevelInNits)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_hdr_metadata_format_currently_supported(&self, format: HdrMetadataFormat) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsHdrMetadataFormatCurrentlySupported)(self.0.as_abi() as *const _ as *mut _, format, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsHdrMetadataFormatCurrentlySupported)(self.get_abi() as *const _ as *mut _, format, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_advanced_color_kind_available(&self, kind: AdvancedColorKind) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsAdvancedColorKindAvailable)(self.0.as_abi() as *const _ as *mut _, kind, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsAdvancedColorKindAvailable)(self.get_abi() as *const _ as *mut _, kind, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -350,65 +350,65 @@ RT_INTERFACE!{interface IBrightnessOverride(IBrightnessOverrideVtbl, IBrightness
 impl IBrightnessOverride {
     #[inline] pub fn get_is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_override_active(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsOverrideActive)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsOverrideActive)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_brightness_level(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrightnessLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrightnessLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_brightness_level(&self, brightnessLevel: f64, options: DisplayBrightnessOverrideOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetBrightnessLevel)(self.0.as_abi() as *const _ as *mut _, brightnessLevel, options);
+        let hr = ((*self.get_abi().lpVtbl).SetBrightnessLevel)(self.get_abi() as *const _ as *mut _, brightnessLevel, options);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_brightness_scenario(&self, scenario: DisplayBrightnessScenario, options: DisplayBrightnessOverrideOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetBrightnessScenario)(self.0.as_abi() as *const _ as *mut _, scenario, options);
+        let hr = ((*self.get_abi().lpVtbl).SetBrightnessScenario)(self.get_abi() as *const _ as *mut _, scenario, options);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_level_for_scenario(&self, scenario: DisplayBrightnessScenario) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetLevelForScenario)(self.0.as_abi() as *const _ as *mut _, scenario, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetLevelForScenario)(self.get_abi() as *const _ as *mut _, scenario, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn start_override(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).StartOverride)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).StartOverride)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop_override(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).StopOverride)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).StopOverride)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_is_supported_changed(&self, handler: &foundation::TypedEventHandler<BrightnessOverride, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_IsSupportedChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_IsSupportedChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_is_supported_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_IsSupportedChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_IsSupportedChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_is_override_active_changed(&self, handler: &foundation::TypedEventHandler<BrightnessOverride, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_IsOverrideActiveChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_IsOverrideActiveChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_is_override_active_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_IsOverrideActiveChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_IsOverrideActiveChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_brightness_level_changed(&self, handler: &foundation::TypedEventHandler<BrightnessOverride, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_BrightnessLevelChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_BrightnessLevelChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_brightness_level_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_BrightnessLevelChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_BrightnessLevelChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -434,12 +434,12 @@ RT_INTERFACE!{interface IBrightnessOverrideSettings(IBrightnessOverrideSettingsV
 impl IBrightnessOverrideSettings {
     #[inline] pub fn get_desired_level(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DesiredLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DesiredLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_desired_nits(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DesiredNits)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DesiredNits)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -466,17 +466,17 @@ RT_INTERFACE!{static interface IBrightnessOverrideSettingsStatics(IBrightnessOve
 impl IBrightnessOverrideSettingsStatics {
     #[inline] pub fn create_from_level(&self, level: f64) -> Result<Option<BrightnessOverrideSettings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateFromLevel)(self.0.as_abi() as *const _ as *mut _, level, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateFromLevel)(self.get_abi() as *const _ as *mut _, level, &mut out);
         if hr == S_OK { Ok(BrightnessOverrideSettings::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_nits(&self, nits: f32) -> Result<Option<BrightnessOverrideSettings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateFromNits)(self.0.as_abi() as *const _ as *mut _, nits, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateFromNits)(self.get_abi() as *const _ as *mut _, nits, &mut out);
         if hr == S_OK { Ok(BrightnessOverrideSettings::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_from_display_brightness_override_scenario(&self, overrideScenario: DisplayBrightnessOverrideScenario) -> Result<Option<BrightnessOverrideSettings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateFromDisplayBrightnessOverrideScenario)(self.0.as_abi() as *const _ as *mut _, overrideScenario, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateFromDisplayBrightnessOverrideScenario)(self.get_abi() as *const _ as *mut _, overrideScenario, &mut out);
         if hr == S_OK { Ok(BrightnessOverrideSettings::wrap(out)) } else { err(hr) }
     }}
 }
@@ -489,17 +489,17 @@ RT_INTERFACE!{static interface IBrightnessOverrideStatics(IBrightnessOverrideSta
 impl IBrightnessOverrideStatics {
     #[inline] pub fn get_default_for_system(&self) -> Result<Option<BrightnessOverride>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDefaultForSystem)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDefaultForSystem)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(BrightnessOverride::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_for_current_view(&self) -> Result<Option<BrightnessOverride>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForCurrentView)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForCurrentView)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(BrightnessOverride::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn save_for_system_async(&self, value: &BrightnessOverride) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SaveForSystemAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SaveForSystemAsync)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -510,7 +510,7 @@ RT_INTERFACE!{interface IColorOverrideSettings(IColorOverrideSettingsVtbl, IColo
 impl IColorOverrideSettings {
     #[inline] pub fn get_desired_display_color_override_scenario(&self) -> Result<DisplayColorOverrideScenario> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DesiredDisplayColorOverrideScenario)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DesiredDisplayColorOverrideScenario)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -529,7 +529,7 @@ RT_INTERFACE!{static interface IColorOverrideSettingsStatics(IColorOverrideSetti
 impl IColorOverrideSettingsStatics {
     #[inline] pub fn create_from_display_color_override_scenario(&self, overrideScenario: DisplayColorOverrideScenario) -> Result<Option<ColorOverrideSettings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateFromDisplayColorOverrideScenario)(self.0.as_abi() as *const _ as *mut _, overrideScenario, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateFromDisplayColorOverrideScenario)(self.get_abi() as *const _ as *mut _, overrideScenario, &mut out);
         if hr == S_OK { Ok(ColorOverrideSettings::wrap(out)) } else { err(hr) }
     }}
 }
@@ -566,70 +566,70 @@ RT_INTERFACE!{interface IDisplayEnhancementOverride(IDisplayEnhancementOverrideV
 impl IDisplayEnhancementOverride {
     #[inline] pub fn get_color_override_settings(&self) -> Result<Option<ColorOverrideSettings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ColorOverrideSettings)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ColorOverrideSettings)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ColorOverrideSettings::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_color_override_settings(&self, value: &ColorOverrideSettings) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ColorOverrideSettings)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_ColorOverrideSettings)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_brightness_override_settings(&self) -> Result<Option<BrightnessOverrideSettings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrightnessOverrideSettings)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrightnessOverrideSettings)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(BrightnessOverrideSettings::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_brightness_override_settings(&self, value: &BrightnessOverrideSettings) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_BrightnessOverrideSettings)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_BrightnessOverrideSettings)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_can_override(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CanOverride)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CanOverride)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_override_active(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsOverrideActive)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsOverrideActive)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_current_display_enhancement_override_capabilities(&self) -> Result<Option<DisplayEnhancementOverrideCapabilities>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCurrentDisplayEnhancementOverrideCapabilities)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCurrentDisplayEnhancementOverrideCapabilities)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DisplayEnhancementOverrideCapabilities::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_override(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).RequestOverride)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).RequestOverride)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop_override(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).StopOverride)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).StopOverride)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_can_override_changed(&self, handler: &foundation::TypedEventHandler<DisplayEnhancementOverride, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_CanOverrideChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_CanOverrideChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_can_override_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_CanOverrideChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_CanOverrideChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_is_override_active_changed(&self, handler: &foundation::TypedEventHandler<DisplayEnhancementOverride, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_IsOverrideActiveChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_IsOverrideActiveChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_is_override_active_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_IsOverrideActiveChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_IsOverrideActiveChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_display_enhancement_override_capabilities_changed(&self, handler: &foundation::TypedEventHandler<DisplayEnhancementOverride, DisplayEnhancementOverrideCapabilitiesChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_DisplayEnhancementOverrideCapabilitiesChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_DisplayEnhancementOverrideCapabilitiesChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_display_enhancement_override_capabilities_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_DisplayEnhancementOverrideCapabilitiesChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_DisplayEnhancementOverrideCapabilitiesChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -650,17 +650,17 @@ RT_INTERFACE!{interface IDisplayEnhancementOverrideCapabilities(IDisplayEnhancem
 impl IDisplayEnhancementOverrideCapabilities {
     #[inline] pub fn get_is_brightness_control_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsBrightnessControlSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsBrightnessControlSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_brightness_nits_control_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsBrightnessNitsControlSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsBrightnessNitsControlSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_supported_nit_ranges(&self) -> Result<Option<foundation::collections::IVectorView<NitRange>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSupportedNitRanges)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSupportedNitRanges)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -672,7 +672,7 @@ RT_INTERFACE!{interface IDisplayEnhancementOverrideCapabilitiesChangedEventArgs(
 impl IDisplayEnhancementOverrideCapabilitiesChangedEventArgs {
     #[inline] pub fn get_capabilities(&self) -> Result<Option<DisplayEnhancementOverrideCapabilities>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Capabilities)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Capabilities)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DisplayEnhancementOverrideCapabilities::wrap(out)) } else { err(hr) }
     }}
 }
@@ -684,7 +684,7 @@ RT_INTERFACE!{static interface IDisplayEnhancementOverrideStatics(IDisplayEnhanc
 impl IDisplayEnhancementOverrideStatics {
     #[inline] pub fn get_for_current_view(&self) -> Result<Option<DisplayEnhancementOverride>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForCurrentView)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForCurrentView)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DisplayEnhancementOverride::wrap(out)) } else { err(hr) }
     }}
 }
@@ -711,78 +711,78 @@ RT_INTERFACE!{interface IDisplayInformation(IDisplayInformationVtbl, IDisplayInf
 impl IDisplayInformation {
     #[inline] pub fn get_current_orientation(&self) -> Result<DisplayOrientations> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CurrentOrientation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CurrentOrientation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_native_orientation(&self) -> Result<DisplayOrientations> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NativeOrientation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NativeOrientation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_orientation_changed(&self, handler: &foundation::TypedEventHandler<DisplayInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_OrientationChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_OrientationChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_orientation_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_OrientationChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_OrientationChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_resolution_scale(&self) -> Result<ResolutionScale> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResolutionScale)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResolutionScale)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_logical_dpi(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LogicalDpi)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LogicalDpi)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_raw_dpi_x(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RawDpiX)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RawDpiX)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_raw_dpi_y(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RawDpiY)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RawDpiY)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_dpi_changed(&self, handler: &foundation::TypedEventHandler<DisplayInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_DpiChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_DpiChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_dpi_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_DpiChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_DpiChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_stereo_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_StereoEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_StereoEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_stereo_enabled_changed(&self, handler: &foundation::TypedEventHandler<DisplayInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_StereoEnabledChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_StereoEnabledChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_stereo_enabled_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_StereoEnabledChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_StereoEnabledChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_color_profile_async(&self) -> Result<foundation::IAsyncOperation<super::super::storage::streams::IRandomAccessStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetColorProfileAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetColorProfileAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_color_profile_changed(&self, handler: &foundation::TypedEventHandler<DisplayInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_ColorProfileChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_ColorProfileChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_color_profile_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_ColorProfileChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_ColorProfileChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -813,7 +813,7 @@ RT_INTERFACE!{interface IDisplayInformation2(IDisplayInformation2Vtbl, IDisplayI
 impl IDisplayInformation2 {
     #[inline] pub fn get_raw_pixels_per_view_pixel(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RawPixelsPerViewPixel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RawPixelsPerViewPixel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -824,7 +824,7 @@ RT_INTERFACE!{interface IDisplayInformation3(IDisplayInformation3Vtbl, IDisplayI
 impl IDisplayInformation3 {
     #[inline] pub fn get_diagonal_size_in_inches(&self) -> Result<Option<foundation::IReference<f64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DiagonalSizeInInches)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DiagonalSizeInInches)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IReference::wrap(out)) } else { err(hr) }
     }}
 }
@@ -836,12 +836,12 @@ RT_INTERFACE!{interface IDisplayInformation4(IDisplayInformation4Vtbl, IDisplayI
 impl IDisplayInformation4 {
     #[inline] pub fn get_screen_width_in_raw_pixels(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ScreenWidthInRawPixels)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ScreenWidthInRawPixels)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_screen_height_in_raw_pixels(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ScreenHeightInRawPixels)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ScreenHeightInRawPixels)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -854,16 +854,16 @@ RT_INTERFACE!{interface IDisplayInformation5(IDisplayInformation5Vtbl, IDisplayI
 impl IDisplayInformation5 {
     #[inline] pub fn get_advanced_color_info(&self) -> Result<Option<AdvancedColorInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetAdvancedColorInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetAdvancedColorInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AdvancedColorInfo::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_advanced_color_info_changed(&self, handler: &foundation::TypedEventHandler<DisplayInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_AdvancedColorInfoChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_AdvancedColorInfoChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_advanced_color_info_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_AdvancedColorInfoChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_AdvancedColorInfoChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -878,25 +878,25 @@ RT_INTERFACE!{static interface IDisplayInformationStatics(IDisplayInformationSta
 impl IDisplayInformationStatics {
     #[inline] pub fn get_for_current_view(&self) -> Result<Option<DisplayInformation>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForCurrentView)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForCurrentView)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DisplayInformation::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_auto_rotation_preferences(&self) -> Result<DisplayOrientations> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AutoRotationPreferences)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AutoRotationPreferences)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_auto_rotation_preferences(&self, value: DisplayOrientations) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_AutoRotationPreferences)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_AutoRotationPreferences)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_display_contents_invalidated(&self, handler: &foundation::TypedEventHandler<DisplayInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_DisplayContentsInvalidated)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_DisplayContentsInvalidated)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_display_contents_invalidated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_DisplayContentsInvalidated)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_DisplayContentsInvalidated)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -968,7 +968,7 @@ RT_DELEGATE!{delegate DisplayPropertiesEventHandler(DisplayPropertiesEventHandle
 }}
 impl DisplayPropertiesEventHandler {
     #[inline] pub fn invoke(&self, sender: &IInspectable) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Invoke)(self.0.as_abi() as *const _ as *mut _, get_abi(sender) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Invoke)(self.get_abi() as *const _ as *mut _, sender.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -997,86 +997,86 @@ RT_INTERFACE!{static interface IDisplayPropertiesStatics(IDisplayPropertiesStati
 impl IDisplayPropertiesStatics {
     #[inline] pub fn get_current_orientation(&self) -> Result<DisplayOrientations> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CurrentOrientation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CurrentOrientation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_native_orientation(&self) -> Result<DisplayOrientations> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NativeOrientation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NativeOrientation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_auto_rotation_preferences(&self) -> Result<DisplayOrientations> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AutoRotationPreferences)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AutoRotationPreferences)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_auto_rotation_preferences(&self, value: DisplayOrientations) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_AutoRotationPreferences)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_AutoRotationPreferences)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_orientation_changed(&self, handler: &DisplayPropertiesEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_OrientationChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_OrientationChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_orientation_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_OrientationChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_OrientationChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_resolution_scale(&self) -> Result<ResolutionScale> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResolutionScale)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResolutionScale)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_logical_dpi(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LogicalDpi)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LogicalDpi)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_logical_dpi_changed(&self, handler: &DisplayPropertiesEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_LogicalDpiChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_LogicalDpiChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_logical_dpi_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_LogicalDpiChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_LogicalDpiChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_stereo_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_StereoEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_StereoEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_stereo_enabled_changed(&self, handler: &DisplayPropertiesEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_StereoEnabledChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_StereoEnabledChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_stereo_enabled_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_StereoEnabledChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_StereoEnabledChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_color_profile_async(&self) -> Result<foundation::IAsyncOperation<super::super::storage::streams::IRandomAccessStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetColorProfileAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetColorProfileAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_color_profile_changed(&self, handler: &DisplayPropertiesEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_ColorProfileChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_ColorProfileChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_color_profile_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_ColorProfileChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_ColorProfileChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_display_contents_invalidated(&self, handler: &DisplayPropertiesEventHandler) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_DisplayContentsInvalidated)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_DisplayContentsInvalidated)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_display_contents_invalidated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_DisplayContentsInvalidated)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_DisplayContentsInvalidated)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1114,41 +1114,41 @@ RT_INTERFACE!{interface IHdmiDisplayInformation(IHdmiDisplayInformationVtbl, IHd
 impl IHdmiDisplayInformation {
     #[inline] pub fn get_supported_display_modes(&self) -> Result<Option<foundation::collections::IVectorView<HdmiDisplayMode>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSupportedDisplayModes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSupportedDisplayModes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_display_mode(&self) -> Result<Option<HdmiDisplayMode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCurrentDisplayMode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCurrentDisplayMode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HdmiDisplayMode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_default_display_mode_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetDefaultDisplayModeAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetDefaultDisplayModeAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_set_current_display_mode_async(&self, mode: &HdmiDisplayMode) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestSetCurrentDisplayModeAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(mode) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestSetCurrentDisplayModeAsync)(self.get_abi() as *const _ as *mut _, mode.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_set_current_display_mode_with_hdr_async(&self, mode: &HdmiDisplayMode, hdrOption: HdmiDisplayHdrOption) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestSetCurrentDisplayModeWithHdrAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(mode) as *const _ as *mut _, hdrOption, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestSetCurrentDisplayModeWithHdrAsync)(self.get_abi() as *const _ as *mut _, mode.get_abi() as *const _ as *mut _, hdrOption, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_set_current_display_mode_with_hdr_and_metadata_async(&self, mode: &HdmiDisplayMode, hdrOption: HdmiDisplayHdrOption, hdrMetadata: HdmiDisplayHdr2086Metadata) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestSetCurrentDisplayModeWithHdrAndMetadataAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(mode) as *const _ as *mut _, hdrOption, hdrMetadata, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestSetCurrentDisplayModeWithHdrAndMetadataAsync)(self.get_abi() as *const _ as *mut _, mode.get_abi() as *const _ as *mut _, hdrOption, hdrMetadata, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_display_modes_changed(&self, value: &foundation::TypedEventHandler<HdmiDisplayInformation, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_DisplayModesChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_DisplayModesChanged)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_display_modes_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_DisplayModesChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_DisplayModesChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1167,7 +1167,7 @@ RT_INTERFACE!{static interface IHdmiDisplayInformationStatics(IHdmiDisplayInform
 impl IHdmiDisplayInformationStatics {
     #[inline] pub fn get_for_current_view(&self) -> Result<Option<HdmiDisplayInformation>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForCurrentView)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForCurrentView)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HdmiDisplayInformation::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1188,57 +1188,57 @@ RT_INTERFACE!{interface IHdmiDisplayMode(IHdmiDisplayModeVtbl, IHdmiDisplayMode_
 impl IHdmiDisplayMode {
     #[inline] pub fn get_resolution_width_in_raw_pixels(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResolutionWidthInRawPixels)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResolutionWidthInRawPixels)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_resolution_height_in_raw_pixels(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResolutionHeightInRawPixels)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResolutionHeightInRawPixels)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_refresh_rate(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RefreshRate)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RefreshRate)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_stereo_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_StereoEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_StereoEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_bits_per_pixel(&self) -> Result<u16> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BitsPerPixel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BitsPerPixel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_equal(&self, mode: &HdmiDisplayMode) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsEqual)(self.0.as_abi() as *const _ as *mut _, get_abi(mode) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsEqual)(self.get_abi() as *const _ as *mut _, mode.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_color_space(&self) -> Result<HdmiDisplayColorSpace> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ColorSpace)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ColorSpace)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_pixel_encoding(&self) -> Result<HdmiDisplayPixelEncoding> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PixelEncoding)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PixelEncoding)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_sdr_luminance_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsSdrLuminanceSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsSdrLuminanceSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_smpte_2084_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsSmpte2084Supported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsSmpte2084Supported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_2086_metadata_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Is2086MetadataSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Is2086MetadataSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1250,7 +1250,7 @@ RT_INTERFACE!{interface IHdmiDisplayMode2(IHdmiDisplayMode2Vtbl, IHdmiDisplayMod
 impl IHdmiDisplayMode2 {
     #[inline] pub fn get_is_dolby_vision_low_latency_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsDolbyVisionLowLatencySupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsDolbyVisionLowLatencySupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1269,11 +1269,11 @@ RT_INTERFACE!{interface IGraphicsEffect(IGraphicsEffectVtbl, IGraphicsEffect_Abi
 impl IGraphicsEffect {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_name(&self, name: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Name)(self.0.as_abi() as *const _ as *mut _, name.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Name)(self.get_abi() as *const _ as *mut _, name.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1300,34 +1300,34 @@ RT_INTERFACE!{interface IHolographicCamera(IHolographicCameraVtbl, IHolographicC
 impl IHolographicCamera {
     #[inline] pub fn get_render_target_size(&self) -> Result<foundation::Size> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RenderTargetSize)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RenderTargetSize)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_viewport_scale_factor(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ViewportScaleFactor)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ViewportScaleFactor)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_viewport_scale_factor(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ViewportScaleFactor)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ViewportScaleFactor)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_stereo(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsStereo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsStereo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_near_plane_distance(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetNearPlaneDistance)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).SetNearPlaneDistance)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_far_plane_distance(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetFarPlaneDistance)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).SetFarPlaneDistance)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1341,17 +1341,17 @@ RT_INTERFACE!{interface IHolographicCamera2(IHolographicCamera2Vtbl, IHolographi
 impl IHolographicCamera2 {
     #[inline] pub fn get_left_viewport_parameters(&self) -> Result<Option<HolographicCameraViewportParameters>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LeftViewportParameters)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LeftViewportParameters)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HolographicCameraViewportParameters::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_right_viewport_parameters(&self) -> Result<Option<HolographicCameraViewportParameters>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RightViewportParameters)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RightViewportParameters)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HolographicCameraViewportParameters::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display(&self) -> Result<Option<HolographicDisplay>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Display)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Display)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HolographicDisplay::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1365,21 +1365,21 @@ RT_INTERFACE!{interface IHolographicCamera3(IHolographicCamera3Vtbl, IHolographi
 impl IHolographicCamera3 {
     #[inline] pub fn get_is_primary_layer_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsPrimaryLayerEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsPrimaryLayerEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_primary_layer_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IsPrimaryLayerEnabled)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IsPrimaryLayerEnabled)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_max_quad_layer_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxQuadLayerCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxQuadLayerCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_quad_layers(&self) -> Result<Option<foundation::collections::IVector<HolographicQuadLayer>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_QuadLayers)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_QuadLayers)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1390,7 +1390,7 @@ RT_INTERFACE!{interface IHolographicCamera4(IHolographicCamera4Vtbl, IHolographi
 impl IHolographicCamera4 {
     #[inline] pub fn get_can_override_viewport(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CanOverrideViewport)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CanOverrideViewport)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1403,16 +1403,16 @@ RT_INTERFACE!{interface IHolographicCamera5(IHolographicCamera5Vtbl, IHolographi
 impl IHolographicCamera5 {
     #[inline] pub fn get_is_hardware_content_protection_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsHardwareContentProtectionSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsHardwareContentProtectionSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_hardware_content_protection_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsHardwareContentProtectionEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsHardwareContentProtectionEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_hardware_content_protection_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IsHardwareContentProtectionEnabled)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IsHardwareContentProtectionEnabled)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1433,42 +1433,42 @@ RT_INTERFACE!{interface IHolographicCameraPose(IHolographicCameraPoseVtbl, IHolo
 impl IHolographicCameraPose {
     #[inline] pub fn get_holographic_camera(&self) -> Result<Option<HolographicCamera>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HolographicCamera)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HolographicCamera)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HolographicCamera::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_viewport(&self) -> Result<foundation::Rect> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Viewport)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Viewport)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-perception")] #[inline] pub fn try_get_view_transform(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem) -> Result<Option<foundation::IReference<HolographicStereoTransform>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TryGetViewTransform)(self.0.as_abi() as *const _ as *mut _, get_abi(coordinateSystem) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryGetViewTransform)(self.get_abi() as *const _ as *mut _, coordinateSystem.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IReference::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_projection_transform(&self) -> Result<HolographicStereoTransform> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ProjectionTransform)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ProjectionTransform)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-perception")] #[inline] pub fn try_get_culling_frustum(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem) -> Result<Option<foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TryGetCullingFrustum)(self.0.as_abi() as *const _ as *mut _, get_abi(coordinateSystem) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryGetCullingFrustum)(self.get_abi() as *const _ as *mut _, coordinateSystem.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IReference::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-perception")] #[inline] pub fn try_get_visible_frustum(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem) -> Result<Option<foundation::IReference<super::super::perception::spatial::SpatialBoundingFrustum>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TryGetVisibleFrustum)(self.0.as_abi() as *const _ as *mut _, get_abi(coordinateSystem) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryGetVisibleFrustum)(self.get_abi() as *const _ as *mut _, coordinateSystem.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IReference::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_near_plane_distance(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NearPlaneDistance)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NearPlaneDistance)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_far_plane_distance(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FarPlaneDistance)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FarPlaneDistance)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1482,15 +1482,15 @@ RT_INTERFACE!{interface IHolographicCameraPose2(IHolographicCameraPose2Vtbl, IHo
 }}
 impl IHolographicCameraPose2 {
     #[cfg(feature="windows-perception")] #[inline] pub fn override_view_transform(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, coordinateSystemToViewTransform: HolographicStereoTransform) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).OverrideViewTransform)(self.0.as_abi() as *const _ as *mut _, get_abi(coordinateSystem) as *const _ as *mut _, coordinateSystemToViewTransform);
+        let hr = ((*self.get_abi().lpVtbl).OverrideViewTransform)(self.get_abi() as *const _ as *mut _, coordinateSystem.get_abi() as *const _ as *mut _, coordinateSystemToViewTransform);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn override_projection_transform(&self, projectionTransform: HolographicStereoTransform) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).OverrideProjectionTransform)(self.0.as_abi() as *const _ as *mut _, projectionTransform);
+        let hr = ((*self.get_abi().lpVtbl).OverrideProjectionTransform)(self.get_abi() as *const _ as *mut _, projectionTransform);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn override_viewport(&self, leftViewport: foundation::Rect, rightViewport: foundation::Rect) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).OverrideViewport)(self.0.as_abi() as *const _ as *mut _, leftViewport, rightViewport);
+        let hr = ((*self.get_abi().lpVtbl).OverrideViewport)(self.get_abi() as *const _ as *mut _, leftViewport, rightViewport);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1507,25 +1507,25 @@ RT_INTERFACE!{interface IHolographicCameraRenderingParameters(IHolographicCamera
 }}
 impl IHolographicCameraRenderingParameters {
     #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetFocusPoint)(self.0.as_abi() as *const _ as *mut _, get_abi(coordinateSystem) as *const _ as *mut _, position);
+        let hr = ((*self.get_abi().lpVtbl).SetFocusPoint)(self.get_abi() as *const _ as *mut _, coordinateSystem.get_abi() as *const _ as *mut _, position);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point_with_normal(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetFocusPointWithNormal)(self.0.as_abi() as *const _ as *mut _, get_abi(coordinateSystem) as *const _ as *mut _, position, normal);
+        let hr = ((*self.get_abi().lpVtbl).SetFocusPointWithNormal)(self.get_abi() as *const _ as *mut _, coordinateSystem.get_abi() as *const _ as *mut _, position, normal);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-perception")] #[inline] pub fn set_focus_point_with_normal_linear_velocity(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, normal: foundation::numerics::Vector3, linearVelocity: foundation::numerics::Vector3) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetFocusPointWithNormalLinearVelocity)(self.0.as_abi() as *const _ as *mut _, get_abi(coordinateSystem) as *const _ as *mut _, position, normal, linearVelocity);
+        let hr = ((*self.get_abi().lpVtbl).SetFocusPointWithNormalLinearVelocity)(self.get_abi() as *const _ as *mut _, coordinateSystem.get_abi() as *const _ as *mut _, position, normal, linearVelocity);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_direct3d11_device(&self) -> Result<Option<super::directx::direct3d11::IDirect3DDevice>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Direct3D11Device)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Direct3D11Device)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::directx::direct3d11::IDirect3DDevice::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_direct3d11_back_buffer(&self) -> Result<Option<super::directx::direct3d11::IDirect3DSurface>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Direct3D11BackBuffer)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Direct3D11BackBuffer)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::directx::direct3d11::IDirect3DSurface::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1539,15 +1539,15 @@ RT_INTERFACE!{interface IHolographicCameraRenderingParameters2(IHolographicCamer
 impl IHolographicCameraRenderingParameters2 {
     #[inline] pub fn get_reprojection_mode(&self) -> Result<HolographicReprojectionMode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ReprojectionMode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ReprojectionMode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_reprojection_mode(&self, value: HolographicReprojectionMode) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ReprojectionMode)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ReprojectionMode)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn commit_direct3d11_depth_buffer(&self, value: &super::directx::direct3d11::IDirect3DSurface) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).CommitDirect3D11DepthBuffer)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).CommitDirect3D11DepthBuffer)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1559,11 +1559,11 @@ RT_INTERFACE!{interface IHolographicCameraRenderingParameters3(IHolographicCamer
 impl IHolographicCameraRenderingParameters3 {
     #[inline] pub fn get_is_content_protection_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsContentProtectionEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsContentProtectionEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_content_protection_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IsContentProtectionEnabled)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IsContentProtectionEnabled)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1575,12 +1575,12 @@ RT_INTERFACE!{interface IHolographicCameraViewportParameters(IHolographicCameraV
 impl IHolographicCameraViewportParameters {
     #[inline] pub fn get_hidden_area_mesh(&self) -> Result<ComArray<foundation::numerics::Vector2>> { unsafe { 
         let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HiddenAreaMesh)(self.0.as_abi() as *const _ as *mut _, &mut outSize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HiddenAreaMesh)(self.get_abi() as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
     #[inline] pub fn get_visible_area_mesh(&self) -> Result<ComArray<foundation::numerics::Vector2>> { unsafe { 
         let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_VisibleAreaMesh)(self.0.as_abi() as *const _ as *mut _, &mut outSize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_VisibleAreaMesh)(self.get_abi() as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
@@ -1597,32 +1597,32 @@ RT_INTERFACE!{interface IHolographicDisplay(IHolographicDisplayVtbl, IHolographi
 impl IHolographicDisplay {
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_max_viewport_size(&self) -> Result<foundation::Size> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxViewportSize)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxViewportSize)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_stereo(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsStereo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsStereo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_opaque(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsOpaque)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsOpaque)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_adapter_id(&self) -> Result<HolographicAdapterId> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AdapterId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AdapterId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-perception")] #[inline] pub fn get_spatial_locator(&self) -> Result<Option<super::super::perception::spatial::SpatialLocator>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SpatialLocator)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SpatialLocator)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::perception::spatial::SpatialLocator::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1641,7 +1641,7 @@ RT_INTERFACE!{interface IHolographicDisplay2(IHolographicDisplay2Vtbl, IHolograp
 impl IHolographicDisplay2 {
     #[inline] pub fn get_refresh_rate(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RefreshRate)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RefreshRate)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1652,7 +1652,7 @@ RT_INTERFACE!{static interface IHolographicDisplayStatics(IHolographicDisplaySta
 impl IHolographicDisplayStatics {
     #[inline] pub fn get_default(&self) -> Result<Option<HolographicDisplay>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDefault)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDefault)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HolographicDisplay::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1671,45 +1671,45 @@ RT_INTERFACE!{interface IHolographicFrame(IHolographicFrameVtbl, IHolographicFra
 impl IHolographicFrame {
     #[inline] pub fn get_added_cameras(&self) -> Result<Option<foundation::collections::IVectorView<HolographicCamera>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AddedCameras)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AddedCameras)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_removed_cameras(&self) -> Result<Option<foundation::collections::IVectorView<HolographicCamera>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemovedCameras)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemovedCameras)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rendering_parameters(&self, cameraPose: &HolographicCameraPose) -> Result<Option<HolographicCameraRenderingParameters>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetRenderingParameters)(self.0.as_abi() as *const _ as *mut _, get_abi(cameraPose) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetRenderingParameters)(self.get_abi() as *const _ as *mut _, cameraPose.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HolographicCameraRenderingParameters::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Duration)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Duration)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_current_prediction(&self) -> Result<Option<HolographicFramePrediction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CurrentPrediction)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CurrentPrediction)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HolographicFramePrediction::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn update_current_prediction(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).UpdateCurrentPrediction)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).UpdateCurrentPrediction)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn present_using_current_prediction(&self) -> Result<HolographicFramePresentResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).PresentUsingCurrentPrediction)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).PresentUsingCurrentPrediction)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn present_using_current_prediction_with_behavior(&self, waitBehavior: HolographicFramePresentWaitBehavior) -> Result<HolographicFramePresentResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).PresentUsingCurrentPredictionWithBehavior)(self.0.as_abi() as *const _ as *mut _, waitBehavior, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).PresentUsingCurrentPredictionWithBehavior)(self.get_abi() as *const _ as *mut _, waitBehavior, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn wait_for_frame_to_finish(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).WaitForFrameToFinish)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).WaitForFrameToFinish)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1721,7 +1721,7 @@ RT_INTERFACE!{interface IHolographicFrame2(IHolographicFrame2Vtbl, IHolographicF
 impl IHolographicFrame2 {
     #[inline] pub fn get_quad_layer_update_parameters(&self, layer: &HolographicQuadLayer) -> Result<Option<HolographicQuadLayerUpdateParameters>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetQuadLayerUpdateParameters)(self.0.as_abi() as *const _ as *mut _, get_abi(layer) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetQuadLayerUpdateParameters)(self.get_abi() as *const _ as *mut _, layer.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HolographicQuadLayerUpdateParameters::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1733,12 +1733,12 @@ RT_INTERFACE!{interface IHolographicFramePrediction(IHolographicFramePredictionV
 impl IHolographicFramePrediction {
     #[inline] pub fn get_camera_poses(&self) -> Result<Option<foundation::collections::IVectorView<HolographicCameraPose>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CameraPoses)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CameraPoses)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-perception")] #[inline] pub fn get_timestamp(&self) -> Result<Option<super::super::perception::PerceptionTimestamp>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Timestamp)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Timestamp)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::perception::PerceptionTimestamp::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1750,7 +1750,7 @@ RT_INTERFACE!{interface IHolographicFramePresentationMonitor(IHolographicFramePr
 impl IHolographicFramePresentationMonitor {
     #[inline] pub fn read_reports(&self) -> Result<Option<foundation::collections::IVectorView<HolographicFramePresentationReport>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ReadReports)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ReadReports)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1766,27 +1766,27 @@ RT_INTERFACE!{interface IHolographicFramePresentationReport(IHolographicFramePre
 impl IHolographicFramePresentationReport {
     #[inline] pub fn get_compositor_gpu_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CompositorGpuDuration)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CompositorGpuDuration)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_app_gpu_duration(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppGpuDuration)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppGpuDuration)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_app_gpu_overrun(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppGpuOverrun)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppGpuOverrun)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_missed_presentation_opportunity_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MissedPresentationOpportunityCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MissedPresentationOpportunityCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_presentation_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PresentationCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PresentationCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1805,12 +1805,12 @@ RT_INTERFACE!{interface IHolographicQuadLayer(IHolographicQuadLayerVtbl, IHologr
 impl IHolographicQuadLayer {
     #[inline] pub fn get_pixel_format(&self) -> Result<super::directx::DirectXPixelFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PixelFormat)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PixelFormat)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_size(&self) -> Result<foundation::Size> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Size)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Size)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1833,12 +1833,12 @@ RT_INTERFACE!{static interface IHolographicQuadLayerFactory(IHolographicQuadLaye
 impl IHolographicQuadLayerFactory {
     #[inline] pub fn create(&self, size: foundation::Size) -> Result<HolographicQuadLayer> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, size, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, size, &mut out);
         if hr == S_OK { Ok(HolographicQuadLayer::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_pixel_format(&self, size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat) -> Result<HolographicQuadLayer> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithPixelFormat)(self.0.as_abi() as *const _ as *mut _, size, pixelFormat, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithPixelFormat)(self.get_abi() as *const _ as *mut _, size, pixelFormat, &mut out);
         if hr == S_OK { Ok(HolographicQuadLayer::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1855,27 +1855,27 @@ RT_INTERFACE!{interface IHolographicQuadLayerUpdateParameters(IHolographicQuadLa
 impl IHolographicQuadLayerUpdateParameters {
     #[inline] pub fn acquire_buffer_to_update_content(&self) -> Result<Option<super::directx::direct3d11::IDirect3DSurface>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AcquireBufferToUpdateContent)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AcquireBufferToUpdateContent)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::directx::direct3d11::IDirect3DSurface::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn update_viewport(&self, value: foundation::Rect) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).UpdateViewport)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).UpdateViewport)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn update_content_protection_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).UpdateContentProtectionEnabled)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).UpdateContentProtectionEnabled)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn update_extents(&self, value: foundation::numerics::Vector2) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).UpdateExtents)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).UpdateExtents)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-perception")] #[inline] pub fn update_location_with_stationary_mode(&self, coordinateSystem: &super::super::perception::spatial::SpatialCoordinateSystem, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).UpdateLocationWithStationaryMode)(self.0.as_abi() as *const _ as *mut _, get_abi(coordinateSystem) as *const _ as *mut _, position, orientation);
+        let hr = ((*self.get_abi().lpVtbl).UpdateLocationWithStationaryMode)(self.get_abi() as *const _ as *mut _, coordinateSystem.get_abi() as *const _ as *mut _, position, orientation);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn update_location_with_display_relative_mode(&self, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).UpdateLocationWithDisplayRelativeMode)(self.0.as_abi() as *const _ as *mut _, position, orientation);
+        let hr = ((*self.get_abi().lpVtbl).UpdateLocationWithDisplayRelativeMode)(self.get_abi() as *const _ as *mut _, position, orientation);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1888,12 +1888,12 @@ RT_INTERFACE!{interface IHolographicQuadLayerUpdateParameters2(IHolographicQuadL
 impl IHolographicQuadLayerUpdateParameters2 {
     #[inline] pub fn get_can_acquire_with_hardware_protection(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CanAcquireWithHardwareProtection)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CanAcquireWithHardwareProtection)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn acquire_buffer_to_update_content_with_hardware_protection(&self) -> Result<Option<super::directx::direct3d11::IDirect3DSurface>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AcquireBufferToUpdateContentWithHardwareProtection)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AcquireBufferToUpdateContentWithHardwareProtection)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::directx::direct3d11::IDirect3DSurface::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1913,34 +1913,34 @@ RT_INTERFACE!{interface IHolographicSpace(IHolographicSpaceVtbl, IHolographicSpa
 impl IHolographicSpace {
     #[inline] pub fn get_primary_adapter_id(&self) -> Result<HolographicAdapterId> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrimaryAdapterId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrimaryAdapterId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_direct3d11_device(&self, value: &super::directx::direct3d11::IDirect3DDevice) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetDirect3D11Device)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).SetDirect3D11Device)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_camera_added(&self, handler: &foundation::TypedEventHandler<HolographicSpace, HolographicSpaceCameraAddedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_CameraAdded)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_CameraAdded)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_camera_added(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_CameraAdded)(self.0.as_abi() as *const _ as *mut _, cookie);
+        let hr = ((*self.get_abi().lpVtbl).remove_CameraAdded)(self.get_abi() as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_camera_removed(&self, handler: &foundation::TypedEventHandler<HolographicSpace, HolographicSpaceCameraRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_CameraRemoved)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_CameraRemoved)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_camera_removed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_CameraRemoved)(self.0.as_abi() as *const _ as *mut _, cookie);
+        let hr = ((*self.get_abi().lpVtbl).remove_CameraRemoved)(self.get_abi() as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn create_next_frame(&self) -> Result<Option<HolographicFrame>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateNextFrame)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateNextFrame)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HolographicFrame::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1981,29 +1981,29 @@ RT_INTERFACE!{interface IHolographicSpace2(IHolographicSpace2Vtbl, IHolographicS
 impl IHolographicSpace2 {
     #[inline] pub fn get_user_presence(&self) -> Result<HolographicSpaceUserPresence> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UserPresence)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UserPresence)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_user_presence_changed(&self, handler: &foundation::TypedEventHandler<HolographicSpace, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_UserPresenceChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_UserPresenceChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_user_presence_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_UserPresenceChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_UserPresenceChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn wait_for_next_frame_ready(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).WaitForNextFrameReady)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).WaitForNextFrameReady)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn wait_for_next_frame_ready_with_head_start(&self, requestedHeadStartDuration: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).WaitForNextFrameReadyWithHeadStart)(self.0.as_abi() as *const _ as *mut _, requestedHeadStartDuration);
+        let hr = ((*self.get_abi().lpVtbl).WaitForNextFrameReadyWithHeadStart)(self.get_abi() as *const _ as *mut _, requestedHeadStartDuration);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn create_frame_presentation_monitor(&self, maxQueuedReports: u32) -> Result<Option<HolographicFramePresentationMonitor>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateFramePresentationMonitor)(self.0.as_abi() as *const _ as *mut _, maxQueuedReports, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateFramePresentationMonitor)(self.get_abi() as *const _ as *mut _, maxQueuedReports, &mut out);
         if hr == S_OK { Ok(HolographicFramePresentationMonitor::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2015,12 +2015,12 @@ RT_INTERFACE!{interface IHolographicSpaceCameraAddedEventArgs(IHolographicSpaceC
 impl IHolographicSpaceCameraAddedEventArgs {
     #[inline] pub fn get_camera(&self) -> Result<Option<HolographicCamera>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Camera)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Camera)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HolographicCamera::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDeferral)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDeferral)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2032,7 +2032,7 @@ RT_INTERFACE!{interface IHolographicSpaceCameraRemovedEventArgs(IHolographicSpac
 impl IHolographicSpaceCameraRemovedEventArgs {
     #[inline] pub fn get_camera(&self) -> Result<Option<HolographicCamera>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Camera)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Camera)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HolographicCamera::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2044,7 +2044,7 @@ RT_INTERFACE!{static interface IHolographicSpaceStatics(IHolographicSpaceStatics
 impl IHolographicSpaceStatics {
     #[cfg(feature="windows-ui")] #[inline] pub fn create_for_core_window(&self, window: &super::super::ui::core::CoreWindow) -> Result<Option<HolographicSpace>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateForCoreWindow)(self.0.as_abi() as *const _ as *mut _, get_abi(window) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateForCoreWindow)(self.get_abi() as *const _ as *mut _, window.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HolographicSpace::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2058,21 +2058,21 @@ RT_INTERFACE!{static interface IHolographicSpaceStatics2(IHolographicSpaceStatic
 impl IHolographicSpaceStatics2 {
     #[inline] pub fn get_is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_available(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsAvailable)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsAvailable)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_is_available_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_IsAvailableChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_IsAvailableChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_is_available_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_IsAvailableChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_IsAvailableChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2083,7 +2083,7 @@ RT_INTERFACE!{static interface IHolographicSpaceStatics3(IHolographicSpaceStatic
 impl IHolographicSpaceStatics3 {
     #[inline] pub fn get_is_configured(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsConfigured)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsConfigured)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2110,12 +2110,12 @@ RT_INTERFACE!{interface IBitmapBuffer(IBitmapBufferVtbl, IBitmapBuffer_Abi): IIn
 impl IBitmapBuffer {
     #[inline] pub fn get_plane_count(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPlaneCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPlaneCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_plane_description(&self, index: i32) -> Result<BitmapPlaneDescription> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPlaneDescription)(self.0.as_abi() as *const _ as *mut _, index, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPlaneDescription)(self.get_abi() as *const _ as *mut _, index, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2133,22 +2133,22 @@ RT_INTERFACE!{interface IBitmapCodecInformation(IBitmapCodecInformationVtbl, IBi
 impl IBitmapCodecInformation {
     #[inline] pub fn get_codec_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CodecId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CodecId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_file_extensions(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FileExtensions)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FileExtensions)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_friendly_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FriendlyName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FriendlyName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mime_types(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MimeTypes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MimeTypes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2164,27 +2164,27 @@ RT_INTERFACE!{interface IBitmapDecoder(IBitmapDecoderVtbl, IBitmapDecoder_Abi): 
 impl IBitmapDecoder {
     #[inline] pub fn get_bitmap_container_properties(&self) -> Result<Option<BitmapPropertiesView>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BitmapContainerProperties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BitmapContainerProperties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(BitmapPropertiesView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_decoder_information(&self) -> Result<Option<BitmapCodecInformation>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DecoderInformation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DecoderInformation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(BitmapCodecInformation::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_frame_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FrameCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FrameCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_preview_async(&self) -> Result<foundation::IAsyncOperation<ImageStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPreviewAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPreviewAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_frame_async(&self, frameIndex: u32) -> Result<foundation::IAsyncOperation<BitmapFrame>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetFrameAsync)(self.0.as_abi() as *const _ as *mut _, frameIndex, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetFrameAsync)(self.get_abi() as *const _ as *mut _, frameIndex, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2246,52 +2246,52 @@ RT_INTERFACE!{static interface IBitmapDecoderStatics(IBitmapDecoderStaticsVtbl, 
 impl IBitmapDecoderStatics {
     #[inline] pub fn get_bmp_decoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BmpDecoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BmpDecoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_jpeg_decoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_JpegDecoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_JpegDecoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_png_decoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PngDecoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PngDecoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_tiff_decoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TiffDecoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TiffDecoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_gif_decoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_GifDecoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_GifDecoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_jpeg_xr_decoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_JpegXRDecoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_JpegXRDecoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_ico_decoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IcoDecoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IcoDecoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_decoder_information_enumerator(&self) -> Result<Option<foundation::collections::IVectorView<BitmapCodecInformation>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDecoderInformationEnumerator)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDecoderInformationEnumerator)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_async(&self, stream: &super::super::storage::streams::IRandomAccessStream) -> Result<foundation::IAsyncOperation<BitmapDecoder>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(stream) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateAsync)(self.get_abi() as *const _ as *mut _, stream.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_with_id_async(&self, decoderId: Guid, stream: &super::super::storage::streams::IRandomAccessStream) -> Result<foundation::IAsyncOperation<BitmapDecoder>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithIdAsync)(self.0.as_abi() as *const _ as *mut _, decoderId, get_abi(stream) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithIdAsync)(self.get_abi() as *const _ as *mut _, decoderId, stream.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2303,12 +2303,12 @@ RT_INTERFACE!{static interface IBitmapDecoderStatics2(IBitmapDecoderStatics2Vtbl
 impl IBitmapDecoderStatics2 {
     #[inline] pub fn get_heif_decoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HeifDecoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HeifDecoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_webp_decoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WebpDecoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WebpDecoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2332,68 +2332,68 @@ RT_INTERFACE!{interface IBitmapEncoder(IBitmapEncoderVtbl, IBitmapEncoder_Abi): 
 impl IBitmapEncoder {
     #[inline] pub fn get_encoder_information(&self) -> Result<Option<BitmapCodecInformation>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EncoderInformation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EncoderInformation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(BitmapCodecInformation::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bitmap_properties(&self) -> Result<Option<BitmapProperties>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BitmapProperties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BitmapProperties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(BitmapProperties::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bitmap_container_properties(&self) -> Result<Option<BitmapProperties>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BitmapContainerProperties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BitmapContainerProperties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(BitmapProperties::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_thumbnail_generated(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsThumbnailGenerated)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsThumbnailGenerated)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_thumbnail_generated(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IsThumbnailGenerated)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IsThumbnailGenerated)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_generated_thumbnail_width(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_GeneratedThumbnailWidth)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_GeneratedThumbnailWidth)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_generated_thumbnail_width(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_GeneratedThumbnailWidth)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_GeneratedThumbnailWidth)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_generated_thumbnail_height(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_GeneratedThumbnailHeight)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_GeneratedThumbnailHeight)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_generated_thumbnail_height(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_GeneratedThumbnailHeight)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_GeneratedThumbnailHeight)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_bitmap_transform(&self) -> Result<Option<BitmapTransform>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BitmapTransform)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BitmapTransform)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(BitmapTransform::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_pixel_data(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, width: u32, height: u32, dpiX: f64, dpiY: f64, pixels: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetPixelData)(self.0.as_abi() as *const _ as *mut _, pixelFormat, alphaMode, width, height, dpiX, dpiY, pixels.len() as u32, pixels.as_ptr() as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).SetPixelData)(self.get_abi() as *const _ as *mut _, pixelFormat, alphaMode, width, height, dpiX, dpiY, pixels.len() as u32, pixels.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn go_to_next_frame_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GoToNextFrameAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GoToNextFrameAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn go_to_next_frame_with_encoding_options_async(&self, encodingOptions: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, BitmapTypedValue>>) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GoToNextFrameWithEncodingOptionsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(encodingOptions) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GoToNextFrameWithEncodingOptionsAsync)(self.get_abi() as *const _ as *mut _, encodingOptions.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn flush_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FlushAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FlushAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2459,57 +2459,57 @@ RT_INTERFACE!{static interface IBitmapEncoderStatics(IBitmapEncoderStaticsVtbl, 
 impl IBitmapEncoderStatics {
     #[inline] pub fn get_bmp_encoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BmpEncoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BmpEncoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_jpeg_encoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_JpegEncoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_JpegEncoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_png_encoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PngEncoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PngEncoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_tiff_encoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TiffEncoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TiffEncoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_gif_encoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_GifEncoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_GifEncoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_jpeg_xr_encoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_JpegXREncoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_JpegXREncoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_encoder_information_enumerator(&self) -> Result<Option<foundation::collections::IVectorView<BitmapCodecInformation>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetEncoderInformationEnumerator)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetEncoderInformationEnumerator)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_async(&self, encoderId: Guid, stream: &super::super::storage::streams::IRandomAccessStream) -> Result<foundation::IAsyncOperation<BitmapEncoder>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateAsync)(self.0.as_abi() as *const _ as *mut _, encoderId, get_abi(stream) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateAsync)(self.get_abi() as *const _ as *mut _, encoderId, stream.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_with_encoding_options_async(&self, encoderId: Guid, stream: &super::super::storage::streams::IRandomAccessStream, encodingOptions: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, BitmapTypedValue>>) -> Result<foundation::IAsyncOperation<BitmapEncoder>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithEncodingOptionsAsync)(self.0.as_abi() as *const _ as *mut _, encoderId, get_abi(stream) as *const _ as *mut _, get_abi(encodingOptions) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithEncodingOptionsAsync)(self.get_abi() as *const _ as *mut _, encoderId, stream.get_abi() as *const _ as *mut _, encodingOptions.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_for_transcoding_async(&self, stream: &super::super::storage::streams::IRandomAccessStream, bitmapDecoder: &BitmapDecoder) -> Result<foundation::IAsyncOperation<BitmapEncoder>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateForTranscodingAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(stream) as *const _ as *mut _, get_abi(bitmapDecoder) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateForTranscodingAsync)(self.get_abi() as *const _ as *mut _, stream.get_abi() as *const _ as *mut _, bitmapDecoder.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_for_in_place_property_encoding_async(&self, bitmapDecoder: &BitmapDecoder) -> Result<foundation::IAsyncOperation<BitmapEncoder>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateForInPlacePropertyEncodingAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(bitmapDecoder) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateForInPlacePropertyEncodingAsync)(self.get_abi() as *const _ as *mut _, bitmapDecoder.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2520,7 +2520,7 @@ RT_INTERFACE!{static interface IBitmapEncoderStatics2(IBitmapEncoderStatics2Vtbl
 impl IBitmapEncoderStatics2 {
     #[inline] pub fn get_heif_encoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HeifEncoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HeifEncoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2530,7 +2530,7 @@ RT_INTERFACE!{interface IBitmapEncoderWithSoftwareBitmap(IBitmapEncoderWithSoftw
 }}
 impl IBitmapEncoderWithSoftwareBitmap {
     #[inline] pub fn set_software_bitmap(&self, bitmap: &SoftwareBitmap) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetSoftwareBitmap)(self.0.as_abi() as *const _ as *mut _, get_abi(bitmap) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).SetSoftwareBitmap)(self.get_abi() as *const _ as *mut _, bitmap.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2555,62 +2555,62 @@ RT_INTERFACE!{interface IBitmapFrame(IBitmapFrameVtbl, IBitmapFrame_Abi): IInspe
 impl IBitmapFrame {
     #[inline] pub fn get_thumbnail_async(&self) -> Result<foundation::IAsyncOperation<ImageStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetThumbnailAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetThumbnailAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bitmap_properties(&self) -> Result<Option<BitmapPropertiesView>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BitmapProperties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BitmapProperties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(BitmapPropertiesView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bitmap_pixel_format(&self) -> Result<BitmapPixelFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BitmapPixelFormat)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BitmapPixelFormat)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_bitmap_alpha_mode(&self) -> Result<BitmapAlphaMode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BitmapAlphaMode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BitmapAlphaMode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_dpi_x(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DpiX)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DpiX)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_dpi_y(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DpiY)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DpiY)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_pixel_width(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PixelWidth)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PixelWidth)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_pixel_height(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PixelHeight)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PixelHeight)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_oriented_pixel_width(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OrientedPixelWidth)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OrientedPixelWidth)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_oriented_pixel_height(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OrientedPixelHeight)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OrientedPixelHeight)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_pixel_data_async(&self) -> Result<foundation::IAsyncOperation<PixelDataProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPixelDataAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPixelDataAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pixel_data_transformed_async(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, transform: &BitmapTransform, exifOrientationMode: ExifOrientationMode, colorManagementMode: ColorManagementMode) -> Result<foundation::IAsyncOperation<PixelDataProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPixelDataTransformedAsync)(self.0.as_abi() as *const _ as *mut _, pixelFormat, alphaMode, get_abi(transform) as *const _ as *mut _, exifOrientationMode, colorManagementMode, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPixelDataTransformedAsync)(self.get_abi() as *const _ as *mut _, pixelFormat, alphaMode, transform.get_abi() as *const _ as *mut _, exifOrientationMode, colorManagementMode, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2624,17 +2624,17 @@ RT_INTERFACE!{interface IBitmapFrameWithSoftwareBitmap(IBitmapFrameWithSoftwareB
 impl IBitmapFrameWithSoftwareBitmap {
     #[inline] pub fn get_software_bitmap_async(&self) -> Result<foundation::IAsyncOperation<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSoftwareBitmapAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSoftwareBitmapAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_software_bitmap_converted_async(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode) -> Result<foundation::IAsyncOperation<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSoftwareBitmapConvertedAsync)(self.0.as_abi() as *const _ as *mut _, pixelFormat, alphaMode, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSoftwareBitmapConvertedAsync)(self.get_abi() as *const _ as *mut _, pixelFormat, alphaMode, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_software_bitmap_transformed_async(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, transform: &BitmapTransform, exifOrientationMode: ExifOrientationMode, colorManagementMode: ColorManagementMode) -> Result<foundation::IAsyncOperation<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSoftwareBitmapTransformedAsync)(self.0.as_abi() as *const _ as *mut _, pixelFormat, alphaMode, get_abi(transform) as *const _ as *mut _, exifOrientationMode, colorManagementMode, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSoftwareBitmapTransformedAsync)(self.get_abi() as *const _ as *mut _, pixelFormat, alphaMode, transform.get_abi() as *const _ as *mut _, exifOrientationMode, colorManagementMode, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2654,7 +2654,7 @@ RT_INTERFACE!{interface IBitmapProperties(IBitmapPropertiesVtbl, IBitmapProperti
 impl IBitmapProperties {
     #[inline] pub fn set_properties_async(&self, propertiesToSet: &foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, BitmapTypedValue>>) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetPropertiesAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(propertiesToSet) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetPropertiesAsync)(self.get_abi() as *const _ as *mut _, propertiesToSet.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2666,7 +2666,7 @@ RT_INTERFACE!{interface IBitmapPropertiesView(IBitmapPropertiesViewVtbl, IBitmap
 impl IBitmapPropertiesView {
     #[inline] pub fn get_properties_async(&self, propertiesToRetrieve: &foundation::collections::IIterable<HString>) -> Result<foundation::IAsyncOperation<BitmapPropertySet>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPropertiesAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(propertiesToRetrieve) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPropertiesAsync)(self.get_abi() as *const _ as *mut _, propertiesToRetrieve.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2698,56 +2698,56 @@ RT_INTERFACE!{interface IBitmapTransform(IBitmapTransformVtbl, IBitmapTransform_
 impl IBitmapTransform {
     #[inline] pub fn get_scaled_width(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ScaledWidth)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ScaledWidth)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_scaled_width(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ScaledWidth)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ScaledWidth)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_scaled_height(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ScaledHeight)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ScaledHeight)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_scaled_height(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ScaledHeight)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ScaledHeight)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_interpolation_mode(&self) -> Result<BitmapInterpolationMode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_InterpolationMode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_InterpolationMode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_interpolation_mode(&self, value: BitmapInterpolationMode) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_InterpolationMode)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_InterpolationMode)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_flip(&self) -> Result<BitmapFlip> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Flip)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Flip)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_flip(&self, value: BitmapFlip) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Flip)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Flip)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_rotation(&self) -> Result<BitmapRotation> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Rotation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Rotation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_rotation(&self, value: BitmapRotation) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Rotation)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Rotation)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_bounds(&self) -> Result<BitmapBounds> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Bounds)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Bounds)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_bounds(&self, value: BitmapBounds) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Bounds)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Bounds)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2762,12 +2762,12 @@ RT_INTERFACE!{interface IBitmapTypedValue(IBitmapTypedValueVtbl, IBitmapTypedVal
 impl IBitmapTypedValue {
     #[inline] pub fn get_value(&self) -> Result<Option<IInspectable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Value)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Value)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IInspectable::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_type(&self) -> Result<foundation::PropertyType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Type)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Type)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2786,7 +2786,7 @@ RT_INTERFACE!{static interface IBitmapTypedValueFactory(IBitmapTypedValueFactory
 impl IBitmapTypedValueFactory {
     #[inline] pub fn create(&self, value: &IInspectable, type_: foundation::PropertyType) -> Result<BitmapTypedValue> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _, type_, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _, type_, &mut out);
         if hr == S_OK { Ok(BitmapTypedValue::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2808,7 +2808,7 @@ RT_INTERFACE!{interface IPixelDataProvider(IPixelDataProviderVtbl, IPixelDataPro
 impl IPixelDataProvider {
     #[inline] pub fn detach_pixel_data(&self) -> Result<ComArray<u8>> { unsafe { 
         let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).DetachPixelData)(self.0.as_abi() as *const _ as *mut _, &mut outSize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DetachPixelData)(self.get_abi() as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
 }
@@ -2838,67 +2838,67 @@ RT_INTERFACE!{interface ISoftwareBitmap(ISoftwareBitmapVtbl, ISoftwareBitmap_Abi
 impl ISoftwareBitmap {
     #[inline] pub fn get_bitmap_pixel_format(&self) -> Result<BitmapPixelFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BitmapPixelFormat)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BitmapPixelFormat)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_bitmap_alpha_mode(&self) -> Result<BitmapAlphaMode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BitmapAlphaMode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BitmapAlphaMode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_pixel_width(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PixelWidth)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PixelWidth)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_pixel_height(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PixelHeight)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PixelHeight)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_read_only(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsReadOnly)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsReadOnly)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_dpi_x(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_DpiX)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_DpiX)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_dpi_x(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DpiX)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DpiX)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_dpi_y(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_DpiY)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_DpiY)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_dpi_y(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DpiY)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DpiY)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn lock_buffer(&self, mode: BitmapBufferAccessMode) -> Result<Option<BitmapBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LockBuffer)(self.0.as_abi() as *const _ as *mut _, mode, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LockBuffer)(self.get_abi() as *const _ as *mut _, mode, &mut out);
         if hr == S_OK { Ok(BitmapBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn copy_to(&self, bitmap: &SoftwareBitmap) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).CopyTo)(self.0.as_abi() as *const _ as *mut _, get_abi(bitmap) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).CopyTo)(self.get_abi() as *const _ as *mut _, bitmap.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn copy_from_buffer(&self, buffer: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).CopyFromBuffer)(self.0.as_abi() as *const _ as *mut _, get_abi(buffer) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).CopyFromBuffer)(self.get_abi() as *const _ as *mut _, buffer.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn copy_to_buffer(&self, buffer: &super::super::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).CopyToBuffer)(self.0.as_abi() as *const _ as *mut _, get_abi(buffer) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).CopyToBuffer)(self.get_abi() as *const _ as *mut _, buffer.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_read_only_view(&self) -> Result<Option<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetReadOnlyView)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetReadOnlyView)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SoftwareBitmap::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2943,12 +2943,12 @@ RT_INTERFACE!{static interface ISoftwareBitmapFactory(ISoftwareBitmapFactoryVtbl
 impl ISoftwareBitmapFactory {
     #[inline] pub fn create(&self, format: BitmapPixelFormat, width: i32, height: i32) -> Result<SoftwareBitmap> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, format, width, height, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, format, width, height, &mut out);
         if hr == S_OK { Ok(SoftwareBitmap::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_alpha(&self, format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode) -> Result<SoftwareBitmap> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithAlpha)(self.0.as_abi() as *const _ as *mut _, format, width, height, alpha, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithAlpha)(self.get_abi() as *const _ as *mut _, format, width, height, alpha, &mut out);
         if hr == S_OK { Ok(SoftwareBitmap::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2967,37 +2967,37 @@ RT_INTERFACE!{static interface ISoftwareBitmapStatics(ISoftwareBitmapStaticsVtbl
 impl ISoftwareBitmapStatics {
     #[inline] pub fn copy(&self, source: &SoftwareBitmap) -> Result<Option<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Copy)(self.0.as_abi() as *const _ as *mut _, get_abi(source) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Copy)(self.get_abi() as *const _ as *mut _, source.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SoftwareBitmap::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn convert(&self, source: &SoftwareBitmap, format: BitmapPixelFormat) -> Result<Option<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Convert)(self.0.as_abi() as *const _ as *mut _, get_abi(source) as *const _ as *mut _, format, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Convert)(self.get_abi() as *const _ as *mut _, source.get_abi() as *const _ as *mut _, format, &mut out);
         if hr == S_OK { Ok(SoftwareBitmap::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn convert_with_alpha(&self, source: &SoftwareBitmap, format: BitmapPixelFormat, alpha: BitmapAlphaMode) -> Result<Option<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ConvertWithAlpha)(self.0.as_abi() as *const _ as *mut _, get_abi(source) as *const _ as *mut _, format, alpha, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ConvertWithAlpha)(self.get_abi() as *const _ as *mut _, source.get_abi() as *const _ as *mut _, format, alpha, &mut out);
         if hr == S_OK { Ok(SoftwareBitmap::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_copy_from_buffer(&self, source: &super::super::storage::streams::IBuffer, format: BitmapPixelFormat, width: i32, height: i32) -> Result<Option<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateCopyFromBuffer)(self.0.as_abi() as *const _ as *mut _, get_abi(source) as *const _ as *mut _, format, width, height, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateCopyFromBuffer)(self.get_abi() as *const _ as *mut _, source.get_abi() as *const _ as *mut _, format, width, height, &mut out);
         if hr == S_OK { Ok(SoftwareBitmap::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_copy_with_alpha_from_buffer(&self, source: &super::super::storage::streams::IBuffer, format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode) -> Result<Option<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateCopyWithAlphaFromBuffer)(self.0.as_abi() as *const _ as *mut _, get_abi(source) as *const _ as *mut _, format, width, height, alpha, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateCopyWithAlphaFromBuffer)(self.get_abi() as *const _ as *mut _, source.get_abi() as *const _ as *mut _, format, width, height, alpha, &mut out);
         if hr == S_OK { Ok(SoftwareBitmap::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_copy_from_surface_async(&self, surface: &super::directx::direct3d11::IDirect3DSurface) -> Result<foundation::IAsyncOperation<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateCopyFromSurfaceAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(surface) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateCopyFromSurfaceAsync)(self.get_abi() as *const _ as *mut _, surface.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_copy_with_alpha_from_surface_async(&self, surface: &super::directx::direct3d11::IDirect3DSurface, alpha: BitmapAlphaMode) -> Result<foundation::IAsyncOperation<SoftwareBitmap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateCopyWithAlphaFromSurfaceAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(surface) as *const _ as *mut _, alpha, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateCopyWithAlphaFromSurfaceAsync)(self.get_abi() as *const _ as *mut _, surface.get_abi() as *const _ as *mut _, alpha, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3037,11 +3037,11 @@ RT_INTERFACE!{interface IPrintManager(IPrintManagerVtbl, IPrintManager_Abi): IIn
 impl IPrintManager {
     #[inline] pub fn add_print_task_requested(&self, eventHandler: &foundation::TypedEventHandler<PrintManager, PrintTaskRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_PrintTaskRequested)(self.0.as_abi() as *const _ as *mut _, get_abi(eventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_PrintTaskRequested)(self.get_abi() as *const _ as *mut _, eventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_print_task_requested(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_PrintTaskRequested)(self.0.as_abi() as *const _ as *mut _, eventCookie);
+        let hr = ((*self.get_abi().lpVtbl).remove_PrintTaskRequested)(self.get_abi() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3068,12 +3068,12 @@ RT_INTERFACE!{static interface IPrintManagerStatic(IPrintManagerStaticVtbl, IPri
 impl IPrintManagerStatic {
     #[inline] pub fn get_for_current_view(&self) -> Result<Option<PrintManager>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForCurrentView)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForCurrentView)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintManager::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn show_print_ui_async(&self) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ShowPrintUIAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ShowPrintUIAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3084,7 +3084,7 @@ RT_INTERFACE!{static interface IPrintManagerStatic2(IPrintManagerStatic2Vtbl, IP
 impl IPrintManagerStatic2 {
     #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3115,48 +3115,48 @@ RT_INTERFACE!{interface IPrintPageInfo(IPrintPageInfoVtbl, IPrintPageInfo_Abi): 
 }}
 impl IPrintPageInfo {
     #[inline] pub fn set_media_size(&self, value: PrintMediaSize) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_MediaSize)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_MediaSize)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_media_size(&self) -> Result<PrintMediaSize> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MediaSize)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MediaSize)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_page_size(&self, value: foundation::Size) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_PageSize)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_PageSize)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_page_size(&self) -> Result<foundation::Size> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageSize)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageSize)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_dpi_x(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_DpiX)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_DpiX)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_dpi_x(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DpiX)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DpiX)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_dpi_y(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_DpiY)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_DpiY)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_dpi_y(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DpiY)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DpiY)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_orientation(&self, value: PrintOrientation) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Orientation)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Orientation)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_orientation(&self) -> Result<PrintOrientation> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Orientation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Orientation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3171,12 +3171,12 @@ RT_INTERFACE!{interface IPrintPageRange(IPrintPageRangeVtbl, IPrintPageRange_Abi
 impl IPrintPageRange {
     #[inline] pub fn get_first_page_number(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FirstPageNumber)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FirstPageNumber)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_last_page_number(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LastPageNumber)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LastPageNumber)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3199,12 +3199,12 @@ RT_INTERFACE!{static interface IPrintPageRangeFactory(IPrintPageRangeFactoryVtbl
 impl IPrintPageRangeFactory {
     #[inline] pub fn create(&self, firstPage: i32, lastPage: i32) -> Result<PrintPageRange> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, firstPage, lastPage, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, firstPage, lastPage, &mut out);
         if hr == S_OK { Ok(PrintPageRange::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_single_page(&self, page: i32) -> Result<PrintPageRange> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithSinglePage)(self.0.as_abi() as *const _ as *mut _, page, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithSinglePage)(self.get_abi() as *const _ as *mut _, page, &mut out);
         if hr == S_OK { Ok(PrintPageRange::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3219,30 +3219,30 @@ RT_INTERFACE!{interface IPrintPageRangeOptions(IPrintPageRangeOptionsVtbl, IPrin
 }}
 impl IPrintPageRangeOptions {
     #[inline] pub fn set_allow_all_pages(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_AllowAllPages)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_AllowAllPages)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_allow_all_pages(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AllowAllPages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AllowAllPages)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_allow_current_page(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_AllowCurrentPage)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_AllowCurrentPage)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_allow_current_page(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AllowCurrentPage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AllowCurrentPage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_allow_custom_set_of_pages(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_AllowCustomSetOfPages)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_AllowCustomSetOfPages)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_allow_custom_set_of_pages(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AllowCustomSetOfPages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AllowCustomSetOfPages)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3271,53 +3271,53 @@ RT_INTERFACE!{interface IPrintTask(IPrintTaskVtbl, IPrintTask_Abi): IInspectable
 impl IPrintTask {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_properties(&self) -> Result<Option<super::super::applicationmodel::datatransfer::DataPackagePropertySet>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Properties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Properties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::applicationmodel::datatransfer::DataPackagePropertySet::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_source(&self) -> Result<Option<IPrintDocumentSource>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Source)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Source)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IPrintDocumentSource::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_options(&self) -> Result<Option<PrintTaskOptions>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Options)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Options)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTaskOptions::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_previewing(&self, eventHandler: &foundation::TypedEventHandler<PrintTask, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Previewing)(self.0.as_abi() as *const _ as *mut _, get_abi(eventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Previewing)(self.get_abi() as *const _ as *mut _, eventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_previewing(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Previewing)(self.0.as_abi() as *const _ as *mut _, eventCookie);
+        let hr = ((*self.get_abi().lpVtbl).remove_Previewing)(self.get_abi() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_submitting(&self, eventHandler: &foundation::TypedEventHandler<PrintTask, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Submitting)(self.0.as_abi() as *const _ as *mut _, get_abi(eventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Submitting)(self.get_abi() as *const _ as *mut _, eventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_submitting(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Submitting)(self.0.as_abi() as *const _ as *mut _, eventCookie);
+        let hr = ((*self.get_abi().lpVtbl).remove_Submitting)(self.get_abi() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_progressing(&self, eventHandler: &foundation::TypedEventHandler<PrintTask, PrintTaskProgressingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Progressing)(self.0.as_abi() as *const _ as *mut _, get_abi(eventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Progressing)(self.get_abi() as *const _ as *mut _, eventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_progressing(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Progressing)(self.0.as_abi() as *const _ as *mut _, eventCookie);
+        let hr = ((*self.get_abi().lpVtbl).remove_Progressing)(self.get_abi() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_completed(&self, eventHandler: &foundation::TypedEventHandler<PrintTask, PrintTaskCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Completed)(self.0.as_abi() as *const _ as *mut _, get_abi(eventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Completed)(self.get_abi() as *const _ as *mut _, eventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_completed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Completed)(self.0.as_abi() as *const _ as *mut _, eventCookie);
+        let hr = ((*self.get_abi().lpVtbl).remove_Completed)(self.get_abi() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3329,12 +3329,12 @@ RT_INTERFACE!{interface IPrintTask2(IPrintTask2Vtbl, IPrintTask2_Abi): IInspecta
 }}
 impl IPrintTask2 {
     #[inline] pub fn set_is_preview_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IsPreviewEnabled)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IsPreviewEnabled)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_preview_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsPreviewEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsPreviewEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3345,7 +3345,7 @@ RT_INTERFACE!{interface IPrintTaskCompletedEventArgs(IPrintTaskCompletedEventArg
 impl IPrintTaskCompletedEventArgs {
     #[inline] pub fn get_completion(&self) -> Result<PrintTaskCompletion> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Completion)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Completion)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3361,17 +3361,17 @@ RT_INTERFACE!{interface IPrintTaskOptions(IPrintTaskOptionsVtbl, IPrintTaskOptio
 }}
 impl IPrintTaskOptions {
     #[inline] pub fn set_bordering(&self, value: PrintBordering) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Bordering)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Bordering)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_bordering(&self) -> Result<PrintBordering> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Bordering)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Bordering)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_page_print_ticket(&self, printPageInfo: &PrintPageInfo) -> Result<Option<super::super::storage::streams::IRandomAccessStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPagePrintTicket)(self.0.as_abi() as *const _ as *mut _, get_abi(printPageInfo) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPagePrintTicket)(self.get_abi() as *const _ as *mut _, printPageInfo.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IRandomAccessStream::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3384,12 +3384,12 @@ RT_INTERFACE!{interface IPrintTaskOptions2(IPrintTaskOptions2Vtbl, IPrintTaskOpt
 impl IPrintTaskOptions2 {
     #[inline] pub fn get_page_range_options(&self) -> Result<Option<PrintPageRangeOptions>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageRangeOptions)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageRangeOptions)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintPageRangeOptions::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_custom_page_ranges(&self) -> Result<Option<foundation::collections::IVector<PrintPageRange>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CustomPageRanges)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CustomPageRanges)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3400,7 +3400,7 @@ RT_INTERFACE!{interface IPrintTaskOptionsCore(IPrintTaskOptionsCoreVtbl, IPrintT
 impl IPrintTaskOptionsCore {
     #[inline] pub fn get_page_description(&self, jobPageNumber: u32) -> Result<PrintPageDescription> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPageDescription)(self.0.as_abi() as *const _ as *mut _, jobPageNumber, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPageDescription)(self.get_abi() as *const _ as *mut _, jobPageNumber, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3433,112 +3433,112 @@ RT_INTERFACE!{interface IPrintTaskOptionsCoreProperties(IPrintTaskOptionsCorePro
 }}
 impl IPrintTaskOptionsCoreProperties {
     #[inline] pub fn set_media_size(&self, value: PrintMediaSize) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_MediaSize)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_MediaSize)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_media_size(&self) -> Result<PrintMediaSize> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MediaSize)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MediaSize)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_media_type(&self, value: PrintMediaType) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_MediaType)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_MediaType)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_media_type(&self) -> Result<PrintMediaType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MediaType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MediaType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_orientation(&self, value: PrintOrientation) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Orientation)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Orientation)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_orientation(&self) -> Result<PrintOrientation> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Orientation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Orientation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_print_quality(&self, value: PrintQuality) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_PrintQuality)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_PrintQuality)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_print_quality(&self) -> Result<PrintQuality> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrintQuality)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrintQuality)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_color_mode(&self, value: PrintColorMode) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ColorMode)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ColorMode)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_color_mode(&self) -> Result<PrintColorMode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ColorMode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ColorMode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_duplex(&self, value: PrintDuplex) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Duplex)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Duplex)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_duplex(&self) -> Result<PrintDuplex> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Duplex)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Duplex)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_collation(&self, value: PrintCollation) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Collation)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Collation)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_collation(&self) -> Result<PrintCollation> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Collation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Collation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_staple(&self, value: PrintStaple) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Staple)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Staple)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_staple(&self) -> Result<PrintStaple> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Staple)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Staple)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_hole_punch(&self, value: PrintHolePunch) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_HolePunch)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_HolePunch)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_hole_punch(&self) -> Result<PrintHolePunch> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HolePunch)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HolePunch)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_binding(&self, value: PrintBinding) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Binding)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Binding)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_binding(&self) -> Result<PrintBinding> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Binding)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Binding)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_min_copies(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MinCopies)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MinCopies)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_max_copies(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxCopies)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxCopies)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_number_of_copies(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_NumberOfCopies)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_NumberOfCopies)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_number_of_copies(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NumberOfCopies)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NumberOfCopies)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3549,7 +3549,7 @@ RT_INTERFACE!{interface IPrintTaskOptionsCoreUIConfiguration(IPrintTaskOptionsCo
 impl IPrintTaskOptionsCoreUIConfiguration {
     #[inline] pub fn get_displayed_options(&self) -> Result<Option<foundation::collections::IVector<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayedOptions)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayedOptions)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3560,7 +3560,7 @@ RT_INTERFACE!{interface IPrintTaskProgressingEventArgs(IPrintTaskProgressingEven
 impl IPrintTaskProgressingEventArgs {
     #[inline] pub fn get_document_page_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentPageCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentPageCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3574,17 +3574,17 @@ RT_INTERFACE!{interface IPrintTaskRequest(IPrintTaskRequestVtbl, IPrintTaskReque
 impl IPrintTaskRequest {
     #[inline] pub fn get_deadline(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Deadline)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Deadline)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn create_print_task(&self, title: &HStringArg, handler: &PrintTaskSourceRequestedHandler) -> Result<Option<PrintTask>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreatePrintTask)(self.0.as_abi() as *const _ as *mut _, title.get(), get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreatePrintTask)(self.get_abi() as *const _ as *mut _, title.get(), handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTask::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<PrintTaskRequestedDeferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDeferral)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDeferral)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTaskRequestedDeferral::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3595,7 +3595,7 @@ RT_INTERFACE!{interface IPrintTaskRequestedDeferral(IPrintTaskRequestedDeferralV
 }}
 impl IPrintTaskRequestedDeferral {
     #[inline] pub fn complete(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Complete)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Complete)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3607,7 +3607,7 @@ RT_INTERFACE!{interface IPrintTaskRequestedEventArgs(IPrintTaskRequestedEventArg
 impl IPrintTaskRequestedEventArgs {
     #[inline] pub fn get_request(&self) -> Result<Option<PrintTaskRequest>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Request)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Request)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTaskRequest::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3621,16 +3621,16 @@ RT_INTERFACE!{interface IPrintTaskSourceRequestedArgs(IPrintTaskSourceRequestedA
 impl IPrintTaskSourceRequestedArgs {
     #[inline] pub fn get_deadline(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Deadline)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Deadline)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_source(&self, source: &IPrintDocumentSource) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetSource)(self.0.as_abi() as *const _ as *mut _, get_abi(source) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).SetSource)(self.get_abi() as *const _ as *mut _, source.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<PrintTaskSourceRequestedDeferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDeferral)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDeferral)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTaskSourceRequestedDeferral::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3641,7 +3641,7 @@ RT_INTERFACE!{interface IPrintTaskSourceRequestedDeferral(IPrintTaskSourceReques
 }}
 impl IPrintTaskSourceRequestedDeferral {
     #[inline] pub fn complete(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Complete)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Complete)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3652,7 +3652,7 @@ RT_DELEGATE!{delegate PrintTaskSourceRequestedHandler(PrintTaskSourceRequestedHa
 }}
 impl PrintTaskSourceRequestedHandler {
     #[inline] pub fn invoke(&self, args: &PrintTaskSourceRequestedArgs) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Invoke)(self.0.as_abi() as *const _ as *mut _, get_abi(args) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Invoke)(self.get_abi() as *const _ as *mut _, args.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3665,21 +3665,21 @@ RT_INTERFACE!{interface IPrintTaskTargetDeviceSupport(IPrintTaskTargetDeviceSupp
 }}
 impl IPrintTaskTargetDeviceSupport {
     #[inline] pub fn set_is_printer_target_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IsPrinterTargetEnabled)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IsPrinterTargetEnabled)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_printer_target_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsPrinterTargetEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsPrinterTargetEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_3d_manufacturing_target_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Is3DManufacturingTargetEnabled)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Is3DManufacturingTargetEnabled)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_3d_manufacturing_target_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Is3DManufacturingTargetEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Is3DManufacturingTargetEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3754,67 +3754,67 @@ RT_INTERFACE!{static interface IStandardPrintTaskOptionsStatic(IStandardPrintTas
 impl IStandardPrintTaskOptionsStatic {
     #[inline] pub fn get_media_size(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MediaSize)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MediaSize)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_media_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MediaType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MediaType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_orientation(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Orientation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Orientation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_print_quality(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrintQuality)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrintQuality)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_color_mode(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ColorMode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ColorMode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_duplex(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Duplex)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Duplex)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_collation(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Collation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Collation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_staple(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Staple)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Staple)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hole_punch(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HolePunch)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HolePunch)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_binding(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Binding)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Binding)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_copies(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Copies)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Copies)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_n_up(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NUp)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NUp)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_input_bin(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_InputBin)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_InputBin)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3825,7 +3825,7 @@ RT_INTERFACE!{static interface IStandardPrintTaskOptionsStatic2(IStandardPrintTa
 impl IStandardPrintTaskOptionsStatic2 {
     #[inline] pub fn get_bordering(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Bordering)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Bordering)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3836,7 +3836,7 @@ RT_INTERFACE!{static interface IStandardPrintTaskOptionsStatic3(IStandardPrintTa
 impl IStandardPrintTaskOptionsStatic3 {
     #[inline] pub fn get_custom_page_ranges(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CustomPageRanges)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CustomPageRanges)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3851,21 +3851,21 @@ RT_INTERFACE!{interface IPrintBindingOptionDetails(IPrintBindingOptionDetailsVtb
 }}
 impl IPrintBindingOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3879,21 +3879,21 @@ RT_INTERFACE!{interface IPrintBorderingOptionDetails(IPrintBorderingOptionDetail
 }}
 impl IPrintBorderingOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3907,21 +3907,21 @@ RT_INTERFACE!{interface IPrintCollationOptionDetails(IPrintCollationOptionDetail
 }}
 impl IPrintCollationOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3935,21 +3935,21 @@ RT_INTERFACE!{interface IPrintColorModeOptionDetails(IPrintColorModeOptionDetail
 }}
 impl IPrintColorModeOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3963,21 +3963,21 @@ RT_INTERFACE!{interface IPrintCopiesOptionDetails(IPrintCopiesOptionDetailsVtbl,
 }}
 impl IPrintCopiesOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3991,16 +3991,16 @@ RT_INTERFACE!{interface IPrintCustomItemDetails(IPrintCustomItemDetailsVtbl, IPr
 impl IPrintCustomItemDetails {
     #[inline] pub fn get_item_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ItemId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ItemId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_item_display_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ItemDisplayName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_ItemDisplayName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_item_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ItemDisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ItemDisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4011,7 +4011,7 @@ RT_INTERFACE!{interface IPrintCustomItemListOptionDetails(IPrintCustomItemListOp
 }}
 impl IPrintCustomItemListOptionDetails {
     #[inline] pub fn add_item(&self, itemId: &HStringArg, displayName: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).AddItem)(self.0.as_abi() as *const _ as *mut _, itemId.get(), displayName.get());
+        let hr = ((*self.get_abi().lpVtbl).AddItem)(self.get_abi() as *const _ as *mut _, itemId.get(), displayName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4022,7 +4022,7 @@ RT_INTERFACE!{interface IPrintCustomItemListOptionDetails2(IPrintCustomItemListO
 }}
 impl IPrintCustomItemListOptionDetails2 {
     #[cfg(feature="windows-storage")] #[inline] pub fn add_item(&self, itemId: &HStringArg, displayName: &HStringArg, description: &HStringArg, icon: &crate::windows::storage::streams::IRandomAccessStreamWithContentType) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).AddItem)(self.0.as_abi() as *const _ as *mut _, itemId.get(), displayName.get(), description.get(), get_abi(icon) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).AddItem)(self.get_abi() as *const _ as *mut _, itemId.get(), displayName.get(), description.get(), icon.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4035,21 +4035,21 @@ RT_INTERFACE!{interface IPrintCustomItemListOptionDetails3(IPrintCustomItemListO
 }}
 impl IPrintCustomItemListOptionDetails3 {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4060,12 +4060,12 @@ RT_INTERFACE!{interface IPrintCustomOptionDetails(IPrintCustomOptionDetailsVtbl,
 }}
 impl IPrintCustomOptionDetails {
     #[inline] pub fn set_display_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_DisplayName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_DisplayName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4076,12 +4076,12 @@ RT_INTERFACE!{interface IPrintCustomTextOptionDetails(IPrintCustomTextOptionDeta
 }}
 impl IPrintCustomTextOptionDetails {
     #[inline] pub fn set_max_characters(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_MaxCharacters)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_MaxCharacters)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_max_characters(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxCharacters)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxCharacters)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4095,21 +4095,21 @@ RT_INTERFACE!{interface IPrintCustomTextOptionDetails2(IPrintCustomTextOptionDet
 }}
 impl IPrintCustomTextOptionDetails2 {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4122,21 +4122,21 @@ RT_INTERFACE!{interface IPrintCustomToggleOptionDetails(IPrintCustomToggleOption
 }}
 impl IPrintCustomToggleOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4150,21 +4150,21 @@ RT_INTERFACE!{interface IPrintDuplexOptionDetails(IPrintDuplexOptionDetailsVtbl,
 }}
 impl IPrintDuplexOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4178,21 +4178,21 @@ RT_INTERFACE!{interface IPrintHolePunchOptionDetails(IPrintHolePunchOptionDetail
 }}
 impl IPrintHolePunchOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4204,7 +4204,7 @@ RT_INTERFACE!{interface IPrintItemListOptionDetails(IPrintItemListOptionDetailsV
 impl IPrintItemListOptionDetails {
     #[inline] pub fn get_items(&self) -> Result<Option<foundation::collections::IVectorView<IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Items)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Items)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4217,21 +4217,21 @@ RT_INTERFACE!{interface IPrintMediaSizeOptionDetails(IPrintMediaSizeOptionDetail
 }}
 impl IPrintMediaSizeOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4245,21 +4245,21 @@ RT_INTERFACE!{interface IPrintMediaTypeOptionDetails(IPrintMediaTypeOptionDetail
 }}
 impl IPrintMediaTypeOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4272,12 +4272,12 @@ RT_INTERFACE!{interface IPrintNumberOptionDetails(IPrintNumberOptionDetailsVtbl,
 impl IPrintNumberOptionDetails {
     #[inline] pub fn get_min_value(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MinValue)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MinValue)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_max_value(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxValue)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxValue)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4295,40 +4295,40 @@ RT_INTERFACE!{interface IPrintOptionDetails(IPrintOptionDetailsVtbl, IPrintOptio
 impl IPrintOptionDetails {
     #[inline] pub fn get_option_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OptionId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OptionId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_option_type(&self) -> Result<PrintOptionType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OptionType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OptionType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_error_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ErrorText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_ErrorText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_error_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ErrorText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ErrorText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_state(&self, value: PrintOptionStates) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_State)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_State)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_state(&self) -> Result<PrintOptionStates> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_State)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_State)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<Option<IInspectable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Value)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Value)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IInspectable::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_set_value(&self, value: &IInspectable) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).TrySetValue)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TrySetValue)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4347,21 +4347,21 @@ RT_INTERFACE!{interface IPrintOrientationOptionDetails(IPrintOrientationOptionDe
 }}
 impl IPrintOrientationOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4375,21 +4375,21 @@ RT_INTERFACE!{interface IPrintPageRangeOptionDetails(IPrintPageRangeOptionDetail
 }}
 impl IPrintPageRangeOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4403,21 +4403,21 @@ RT_INTERFACE!{interface IPrintQualityOptionDetails(IPrintQualityOptionDetailsVtb
 }}
 impl IPrintQualityOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4431,21 +4431,21 @@ RT_INTERFACE!{interface IPrintStapleOptionDetails(IPrintStapleOptionDetailsVtbl,
 }}
 impl IPrintStapleOptionDetails {
     #[inline] pub fn set_warning_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WarningText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WarningText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_warning_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WarningText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WarningText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Description)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Description)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4457,7 +4457,7 @@ RT_INTERFACE!{interface IPrintTaskOptionChangedEventArgs(IPrintTaskOptionChanged
 impl IPrintTaskOptionChangedEventArgs {
     #[inline] pub fn get_option_id(&self) -> Result<Option<IInspectable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OptionId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OptionId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IInspectable::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4475,35 +4475,35 @@ RT_INTERFACE!{interface IPrintTaskOptionDetails(IPrintTaskOptionDetailsVtbl, IPr
 impl IPrintTaskOptionDetails {
     #[inline] pub fn get_options(&self) -> Result<Option<foundation::collections::IMapView<HString, IPrintOptionDetails>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Options)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Options)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IMapView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_item_list_option(&self, optionId: &HStringArg, displayName: &HStringArg) -> Result<Option<PrintCustomItemListOptionDetails>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateItemListOption)(self.0.as_abi() as *const _ as *mut _, optionId.get(), displayName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateItemListOption)(self.get_abi() as *const _ as *mut _, optionId.get(), displayName.get(), &mut out);
         if hr == S_OK { Ok(PrintCustomItemListOptionDetails::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_text_option(&self, optionId: &HStringArg, displayName: &HStringArg) -> Result<Option<PrintCustomTextOptionDetails>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateTextOption)(self.0.as_abi() as *const _ as *mut _, optionId.get(), displayName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateTextOption)(self.get_abi() as *const _ as *mut _, optionId.get(), displayName.get(), &mut out);
         if hr == S_OK { Ok(PrintCustomTextOptionDetails::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_option_changed(&self, eventHandler: &foundation::TypedEventHandler<PrintTaskOptionDetails, PrintTaskOptionChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_OptionChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(eventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_OptionChanged)(self.get_abi() as *const _ as *mut _, eventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_option_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_OptionChanged)(self.0.as_abi() as *const _ as *mut _, eventCookie);
+        let hr = ((*self.get_abi().lpVtbl).remove_OptionChanged)(self.get_abi() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_begin_validation(&self, eventHandler: &foundation::TypedEventHandler<PrintTaskOptionDetails, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_BeginValidation)(self.0.as_abi() as *const _ as *mut _, get_abi(eventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_BeginValidation)(self.get_abi() as *const _ as *mut _, eventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_begin_validation(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_BeginValidation)(self.0.as_abi() as *const _ as *mut _, eventCookie);
+        let hr = ((*self.get_abi().lpVtbl).remove_BeginValidation)(self.get_abi() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4522,7 +4522,7 @@ RT_INTERFACE!{interface IPrintTaskOptionDetails2(IPrintTaskOptionDetails2Vtbl, I
 impl IPrintTaskOptionDetails2 {
     #[inline] pub fn create_toggle_option(&self, optionId: &HStringArg, displayName: &HStringArg) -> Result<Option<PrintCustomToggleOptionDetails>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateToggleOption)(self.0.as_abi() as *const _ as *mut _, optionId.get(), displayName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateToggleOption)(self.get_abi() as *const _ as *mut _, optionId.get(), displayName.get(), &mut out);
         if hr == S_OK { Ok(PrintCustomToggleOptionDetails::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4533,7 +4533,7 @@ RT_INTERFACE!{static interface IPrintTaskOptionDetailsStatic(IPrintTaskOptionDet
 impl IPrintTaskOptionDetailsStatic {
     #[inline] pub fn get_from_print_task_options(&self, printTaskOptions: &super::PrintTaskOptions) -> Result<Option<PrintTaskOptionDetails>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetFromPrintTaskOptions)(self.0.as_abi() as *const _ as *mut _, get_abi(printTaskOptions) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetFromPrintTaskOptions)(self.get_abi() as *const _ as *mut _, printTaskOptions.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTaskOptionDetails::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4544,7 +4544,7 @@ RT_INTERFACE!{interface IPrintTextOptionDetails(IPrintTextOptionDetailsVtbl, IPr
 impl IPrintTextOptionDetails {
     #[inline] pub fn get_max_characters(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxCharacters)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxCharacters)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4578,102 +4578,102 @@ RT_INTERFACE!{interface IPrintTicketCapabilities(IPrintTicketCapabilitiesVtbl, I
 impl IPrintTicketCapabilities {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_xml_namespace(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_XmlNamespace)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_XmlNamespace)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<crate::windows::data::xml::dom::IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_XmlNode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_XmlNode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::data::xml::dom::IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_binding_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentBindingFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentBindingFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_collate_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentCollateFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentCollateFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_duplex_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentDuplexFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentDuplexFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_hole_punch_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentHolePunchFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentHolePunchFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_input_bin_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentInputBinFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentInputBinFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_n_up_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentNUpFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentNUpFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_staple_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentStapleFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentStapleFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_job_passcode_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_JobPasscodeFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_JobPasscodeFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_borderless_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageBorderlessFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageBorderlessFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_media_size_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageMediaSizeFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageMediaSizeFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_media_type_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageMediaTypeFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageMediaTypeFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_orientation_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageOrientationFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageOrientationFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_output_color_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageOutputColorFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageOutputColorFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_output_quality_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageOutputQualityFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageOutputQualityFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_resolution_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageResolutionFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageResolutionFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_feature(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetFeature)(self.0.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetFeature)(self.get_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_parameter_definition(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketParameterDefinition>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetParameterDefinition)(self.0.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetParameterDefinition)(self.get_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
         if hr == S_OK { Ok(PrintTicketParameterDefinition::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4694,46 +4694,46 @@ RT_INTERFACE!{interface IPrintTicketFeature(IPrintTicketFeatureVtbl, IPrintTicke
 impl IPrintTicketFeature {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_xml_namespace(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_XmlNamespace)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_XmlNamespace)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<crate::windows::data::xml::dom::IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_XmlNode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_XmlNode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::data::xml::dom::IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_option(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketOption>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetOption)(self.0.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetOption)(self.get_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
         if hr == S_OK { Ok(PrintTicketOption::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_options(&self) -> Result<Option<foundation::collections::IVectorView<PrintTicketOption>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Options)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Options)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_selected_option(&self) -> Result<Option<PrintTicketOption>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSelectedOption)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSelectedOption)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketOption::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_selected_option(&self, value: &PrintTicketOption) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetSelectedOption)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).SetSelectedOption)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_selection_type(&self) -> Result<PrintTicketFeatureSelectionType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SelectionType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SelectionType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4758,42 +4758,42 @@ RT_INTERFACE!{interface IPrintTicketOption(IPrintTicketOptionVtbl, IPrintTicketO
 impl IPrintTicketOption {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_xml_namespace(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_XmlNamespace)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_XmlNamespace)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<crate::windows::data::xml::dom::IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_XmlNode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_XmlNode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::data::xml::dom::IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_property_node(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<crate::windows::data::xml::dom::IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPropertyNode)(self.0.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPropertyNode)(self.get_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
         if hr == S_OK { Ok(crate::windows::data::xml::dom::IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_scored_property_node(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<crate::windows::data::xml::dom::IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetScoredPropertyNode)(self.0.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetScoredPropertyNode)(self.get_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
         if hr == S_OK { Ok(crate::windows::data::xml::dom::IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_property_value(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPropertyValue)(self.0.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPropertyValue)(self.get_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
         if hr == S_OK { Ok(PrintTicketValue::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_scored_property_value(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetScoredPropertyValue)(self.0.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetScoredPropertyValue)(self.get_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
         if hr == S_OK { Ok(PrintTicketValue::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4815,37 +4815,37 @@ RT_INTERFACE!{interface IPrintTicketParameterDefinition(IPrintTicketParameterDef
 impl IPrintTicketParameterDefinition {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_xml_namespace(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_XmlNamespace)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_XmlNamespace)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<crate::windows::data::xml::dom::IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_XmlNode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_XmlNode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::data::xml::dom::IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_data_type(&self) -> Result<PrintTicketParameterDataType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DataType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DataType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_unit_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UnitType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UnitType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_range_min(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RangeMin)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RangeMin)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_range_max(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RangeMax)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RangeMax)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4862,26 +4862,26 @@ RT_INTERFACE!{interface IPrintTicketParameterInitializer(IPrintTicketParameterIn
 impl IPrintTicketParameterInitializer {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_xml_namespace(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_XmlNamespace)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_XmlNamespace)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<crate::windows::data::xml::dom::IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_XmlNode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_XmlNode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::data::xml::dom::IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_value(&self, value: &PrintTicketValue) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Value)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Value)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<Option<PrintTicketValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Value)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Value)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketValue::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4895,17 +4895,17 @@ RT_INTERFACE!{interface IPrintTicketValue(IPrintTicketValueVtbl, IPrintTicketVal
 impl IPrintTicketValue {
     #[inline] pub fn get_type(&self) -> Result<PrintTicketValueType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Type)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Type)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_value_as_integer(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetValueAsInteger)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetValueAsInteger)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_value_as_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetValueAsString)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetValueAsString)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4946,132 +4946,132 @@ RT_INTERFACE!{interface IWorkflowPrintTicket(IWorkflowPrintTicketVtbl, IWorkflow
 impl IWorkflowPrintTicket {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_xml_namespace(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_XmlNamespace)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_XmlNamespace)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-data")] #[inline] pub fn get_xml_node(&self) -> Result<Option<crate::windows::data::xml::dom::IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_XmlNode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_XmlNode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::data::xml::dom::IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_capabilities(&self) -> Result<Option<PrintTicketCapabilities>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCapabilities)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCapabilities)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketCapabilities::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_binding_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentBindingFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentBindingFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_collate_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentCollateFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentCollateFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_duplex_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentDuplexFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentDuplexFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_hole_punch_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentHolePunchFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentHolePunchFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_input_bin_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentInputBinFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentInputBinFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_n_up_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentNUpFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentNUpFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_staple_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentStapleFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentStapleFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_job_passcode_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_JobPasscodeFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_JobPasscodeFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_borderless_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageBorderlessFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageBorderlessFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_media_size_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageMediaSizeFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageMediaSizeFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_media_type_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageMediaTypeFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageMediaTypeFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_orientation_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageOrientationFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageOrientationFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_output_color_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageOutputColorFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageOutputColorFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_output_quality_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageOutputQualityFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageOutputQualityFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_resolution_feature(&self) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageResolutionFeature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageResolutionFeature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_feature(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketFeature>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetFeature)(self.0.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetFeature)(self.get_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
         if hr == S_OK { Ok(PrintTicketFeature::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn notify_xml_changed_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).NotifyXmlChangedAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).NotifyXmlChangedAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn validate_async(&self) -> Result<foundation::IAsyncOperation<WorkflowPrintTicketValidationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ValidateAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ValidateAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_parameter_initializer(&self, name: &HStringArg, xmlNamespace: &HStringArg) -> Result<Option<PrintTicketParameterInitializer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetParameterInitializer)(self.0.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetParameterInitializer)(self.get_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), &mut out);
         if hr == S_OK { Ok(PrintTicketParameterInitializer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_parameter_initializer_as_integer(&self, name: &HStringArg, xmlNamespace: &HStringArg, integerValue: i32) -> Result<Option<PrintTicketParameterInitializer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetParameterInitializerAsInteger)(self.0.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), integerValue, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetParameterInitializerAsInteger)(self.get_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), integerValue, &mut out);
         if hr == S_OK { Ok(PrintTicketParameterInitializer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_parameter_initializer_as_string(&self, name: &HStringArg, xmlNamespace: &HStringArg, stringValue: &HStringArg) -> Result<Option<PrintTicketParameterInitializer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetParameterInitializerAsString)(self.0.as_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), stringValue.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetParameterInitializerAsString)(self.get_abi() as *const _ as *mut _, name.get(), xmlNamespace.get(), stringValue.get(), &mut out);
         if hr == S_OK { Ok(PrintTicketParameterInitializer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn merge_and_validate_ticket(&self, deltaShemaTicket: &WorkflowPrintTicket) -> Result<Option<WorkflowPrintTicket>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).MergeAndValidateTicket)(self.0.as_abi() as *const _ as *mut _, get_abi(deltaShemaTicket) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).MergeAndValidateTicket)(self.get_abi() as *const _ as *mut _, deltaShemaTicket.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(WorkflowPrintTicket::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5084,12 +5084,12 @@ RT_INTERFACE!{interface IWorkflowPrintTicketValidationResult(IWorkflowPrintTicke
 impl IWorkflowPrintTicketValidationResult {
     #[inline] pub fn get_validated(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Validated)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Validated)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExtendedError)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExtendedError)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5109,29 +5109,29 @@ RT_INTERFACE!{interface IPrintWorkflowBackgroundSession(IPrintWorkflowBackground
 impl IPrintWorkflowBackgroundSession {
     #[inline] pub fn add_setup_requested(&self, setupEventHandler: &foundation::TypedEventHandler<PrintWorkflowBackgroundSession, PrintWorkflowBackgroundSetupRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_SetupRequested)(self.0.as_abi() as *const _ as *mut _, get_abi(setupEventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_SetupRequested)(self.get_abi() as *const _ as *mut _, setupEventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_setup_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_SetupRequested)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_SetupRequested)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_submitted(&self, submittedEventHandler: &foundation::TypedEventHandler<PrintWorkflowBackgroundSession, PrintWorkflowSubmittedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Submitted)(self.0.as_abi() as *const _ as *mut _, get_abi(submittedEventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Submitted)(self.get_abi() as *const _ as *mut _, submittedEventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_submitted(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Submitted)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Submitted)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<PrintWorkflowSessionStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Start)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Start)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5146,21 +5146,21 @@ RT_INTERFACE!{interface IPrintWorkflowBackgroundSetupRequestedEventArgs(IPrintWo
 impl IPrintWorkflowBackgroundSetupRequestedEventArgs {
     #[inline] pub fn get_user_print_ticket_async(&self) -> Result<foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetUserPrintTicketAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetUserPrintTicketAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_configuration(&self) -> Result<Option<PrintWorkflowConfiguration>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Configuration)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Configuration)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintWorkflowConfiguration::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_requires_ui(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetRequiresUI)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).SetRequiresUI)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDeferral)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDeferral)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5174,17 +5174,17 @@ RT_INTERFACE!{interface IPrintWorkflowConfiguration(IPrintWorkflowConfigurationV
 impl IPrintWorkflowConfiguration {
     #[inline] pub fn get_source_app_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SourceAppDisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SourceAppDisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_job_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_JobTitle)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_JobTitle)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_session_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SessionId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SessionId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5201,29 +5201,29 @@ RT_INTERFACE!{interface IPrintWorkflowForegroundSession(IPrintWorkflowForeground
 impl IPrintWorkflowForegroundSession {
     #[inline] pub fn add_setup_requested(&self, setupEventHandler: &foundation::TypedEventHandler<PrintWorkflowForegroundSession, PrintWorkflowForegroundSetupRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_SetupRequested)(self.0.as_abi() as *const _ as *mut _, get_abi(setupEventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_SetupRequested)(self.get_abi() as *const _ as *mut _, setupEventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_setup_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_SetupRequested)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_SetupRequested)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_xps_data_available(&self, xpsDataAvailableEventHandler: &foundation::TypedEventHandler<PrintWorkflowForegroundSession, PrintWorkflowXpsDataAvailableEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_XpsDataAvailable)(self.0.as_abi() as *const _ as *mut _, get_abi(xpsDataAvailableEventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_XpsDataAvailable)(self.get_abi() as *const _ as *mut _, xpsDataAvailableEventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_xps_data_available(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_XpsDataAvailable)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_XpsDataAvailable)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<PrintWorkflowSessionStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Start)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Start)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5237,17 +5237,17 @@ RT_INTERFACE!{interface IPrintWorkflowForegroundSetupRequestedEventArgs(IPrintWo
 impl IPrintWorkflowForegroundSetupRequestedEventArgs {
     #[inline] pub fn get_user_print_ticket_async(&self) -> Result<foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetUserPrintTicketAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetUserPrintTicketAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_configuration(&self) -> Result<Option<PrintWorkflowConfiguration>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Configuration)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Configuration)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintWorkflowConfiguration::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDeferral)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDeferral)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5274,17 +5274,17 @@ RT_INTERFACE!{interface IPrintWorkflowSourceContent(IPrintWorkflowSourceContentV
 impl IPrintWorkflowSourceContent {
     #[inline] pub fn get_job_print_ticket_async(&self) -> Result<foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetJobPrintTicketAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetJobPrintTicketAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_source_spool_data_as_stream_content(&self) -> Result<Option<PrintWorkflowSpoolStreamContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSourceSpoolDataAsStreamContent)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSourceSpoolDataAsStreamContent)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintWorkflowSpoolStreamContent::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_source_spool_data_as_xps_object_model(&self) -> Result<Option<PrintWorkflowObjectModelSourceFileContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSourceSpoolDataAsXpsObjectModel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSourceSpoolDataAsXpsObjectModel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintWorkflowObjectModelSourceFileContent::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5296,7 +5296,7 @@ RT_INTERFACE!{interface IPrintWorkflowSpoolStreamContent(IPrintWorkflowSpoolStre
 impl IPrintWorkflowSpoolStreamContent {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_input_stream(&self) -> Result<Option<crate::windows::storage::streams::IInputStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetInputStream)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetInputStream)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IInputStream::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5308,7 +5308,7 @@ RT_INTERFACE!{interface IPrintWorkflowStreamTarget(IPrintWorkflowStreamTargetVtb
 impl IPrintWorkflowStreamTarget {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_output_stream(&self) -> Result<Option<crate::windows::storage::streams::IOutputStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetOutputStream)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetOutputStream)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IOutputStream::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5322,17 +5322,17 @@ RT_INTERFACE!{interface IPrintWorkflowSubmittedEventArgs(IPrintWorkflowSubmitted
 impl IPrintWorkflowSubmittedEventArgs {
     #[inline] pub fn get_operation(&self) -> Result<Option<PrintWorkflowSubmittedOperation>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Operation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Operation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintWorkflowSubmittedOperation::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_target(&self, jobPrintTicket: &super::printticket::WorkflowPrintTicket) -> Result<Option<PrintWorkflowTarget>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetTarget)(self.0.as_abi() as *const _ as *mut _, get_abi(jobPrintTicket) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetTarget)(self.get_abi() as *const _ as *mut _, jobPrintTicket.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintWorkflowTarget::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDeferral)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDeferral)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5345,17 +5345,17 @@ RT_INTERFACE!{interface IPrintWorkflowSubmittedOperation(IPrintWorkflowSubmitted
 }}
 impl IPrintWorkflowSubmittedOperation {
     #[inline] pub fn complete(&self, status: PrintWorkflowSubmittedStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Complete)(self.0.as_abi() as *const _ as *mut _, status);
+        let hr = ((*self.get_abi().lpVtbl).Complete)(self.get_abi() as *const _ as *mut _, status);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_configuration(&self) -> Result<Option<PrintWorkflowConfiguration>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Configuration)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Configuration)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintWorkflowConfiguration::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_xps_content(&self) -> Result<Option<PrintWorkflowSourceContent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_XpsContent)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_XpsContent)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintWorkflowSourceContent::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5371,12 +5371,12 @@ RT_INTERFACE!{interface IPrintWorkflowTarget(IPrintWorkflowTargetVtbl, IPrintWor
 impl IPrintWorkflowTarget {
     #[inline] pub fn get_target_as_stream(&self) -> Result<Option<PrintWorkflowStreamTarget>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TargetAsStream)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TargetAsStream)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintWorkflowStreamTarget::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_target_as_xps_object_model_package(&self) -> Result<Option<PrintWorkflowObjectModelTargetPackage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TargetAsXpsObjectModelPackage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TargetAsXpsObjectModelPackage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintWorkflowObjectModelTargetPackage::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5388,7 +5388,7 @@ RT_INTERFACE!{interface IPrintWorkflowTriggerDetails(IPrintWorkflowTriggerDetail
 impl IPrintWorkflowTriggerDetails {
     #[inline] pub fn get_print_workflow_session(&self) -> Result<Option<PrintWorkflowBackgroundSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrintWorkflowSession)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrintWorkflowSession)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintWorkflowBackgroundSession::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5400,7 +5400,7 @@ RT_INTERFACE!{interface IPrintWorkflowUIActivatedEventArgs(IPrintWorkflowUIActiv
 impl IPrintWorkflowUIActivatedEventArgs {
     #[inline] pub fn get_print_workflow_session(&self) -> Result<Option<PrintWorkflowForegroundSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrintWorkflowSession)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrintWorkflowSession)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintWorkflowForegroundSession::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5413,12 +5413,12 @@ RT_INTERFACE!{interface IPrintWorkflowXpsDataAvailableEventArgs(IPrintWorkflowXp
 impl IPrintWorkflowXpsDataAvailableEventArgs {
     #[inline] pub fn get_operation(&self) -> Result<Option<PrintWorkflowSubmittedOperation>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Operation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Operation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PrintWorkflowSubmittedOperation::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDeferral)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDeferral)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5435,11 +5435,11 @@ RT_INTERFACE!{interface IPrint3DManager(IPrint3DManagerVtbl, IPrint3DManager_Abi
 impl IPrint3DManager {
     #[inline] pub fn add_task_requested(&self, eventHandler: &foundation::TypedEventHandler<Print3DManager, Print3DTaskRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_TaskRequested)(self.0.as_abi() as *const _ as *mut _, get_abi(eventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_TaskRequested)(self.get_abi() as *const _ as *mut _, eventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_task_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_TaskRequested)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_TaskRequested)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5462,12 +5462,12 @@ RT_INTERFACE!{static interface IPrint3DManagerStatics(IPrint3DManagerStaticsVtbl
 impl IPrint3DManagerStatics {
     #[inline] pub fn get_for_current_view(&self) -> Result<Option<Print3DManager>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForCurrentView)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForCurrentView)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Print3DManager::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn show_print_ui_async(&self) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ShowPrintUIAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ShowPrintUIAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5484,34 +5484,34 @@ RT_INTERFACE!{interface IPrint3DTask(IPrint3DTaskVtbl, IPrint3DTask_Abi): IInspe
 impl IPrint3DTask {
     #[inline] pub fn get_source(&self) -> Result<Option<Printing3D3MFPackage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Source)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Source)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3D3MFPackage::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_submitting(&self, eventHandler: &foundation::TypedEventHandler<Print3DTask, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Submitting)(self.0.as_abi() as *const _ as *mut _, get_abi(eventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Submitting)(self.get_abi() as *const _ as *mut _, eventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_submitting(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Submitting)(self.0.as_abi() as *const _ as *mut _, eventCookie);
+        let hr = ((*self.get_abi().lpVtbl).remove_Submitting)(self.get_abi() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_completed(&self, eventHandler: &foundation::TypedEventHandler<Print3DTask, Print3DTaskCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Completed)(self.0.as_abi() as *const _ as *mut _, get_abi(eventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Completed)(self.get_abi() as *const _ as *mut _, eventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_completed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Completed)(self.0.as_abi() as *const _ as *mut _, eventCookie);
+        let hr = ((*self.get_abi().lpVtbl).remove_Completed)(self.get_abi() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_source_changed(&self, eventHandler: &foundation::TypedEventHandler<Print3DTask, Print3DTaskSourceChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_SourceChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(eventHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_SourceChanged)(self.get_abi() as *const _ as *mut _, eventHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_source_changed(&self, eventCookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_SourceChanged)(self.0.as_abi() as *const _ as *mut _, eventCookie);
+        let hr = ((*self.get_abi().lpVtbl).remove_SourceChanged)(self.get_abi() as *const _ as *mut _, eventCookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5524,12 +5524,12 @@ RT_INTERFACE!{interface IPrint3DTaskCompletedEventArgs(IPrint3DTaskCompletedEven
 impl IPrint3DTaskCompletedEventArgs {
     #[inline] pub fn get_completion(&self) -> Result<Print3DTaskCompletion> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Completion)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Completion)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_status(&self) -> Result<Print3DTaskDetail> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExtendedStatus)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExtendedStatus)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5547,7 +5547,7 @@ RT_INTERFACE!{interface IPrint3DTaskRequest(IPrint3DTaskRequestVtbl, IPrint3DTas
 impl IPrint3DTaskRequest {
     #[inline] pub fn create_task(&self, title: &HStringArg, printerId: &HStringArg, handler: &Print3DTaskSourceRequestedHandler) -> Result<Option<Print3DTask>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateTask)(self.0.as_abi() as *const _ as *mut _, title.get(), printerId.get(), get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateTask)(self.get_abi() as *const _ as *mut _, title.get(), printerId.get(), handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Print3DTask::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5559,7 +5559,7 @@ RT_INTERFACE!{interface IPrint3DTaskRequestedEventArgs(IPrint3DTaskRequestedEven
 impl IPrint3DTaskRequestedEventArgs {
     #[inline] pub fn get_request(&self) -> Result<Option<Print3DTaskRequest>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Request)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Request)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Print3DTaskRequest::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5571,7 +5571,7 @@ RT_INTERFACE!{interface IPrint3DTaskSourceChangedEventArgs(IPrint3DTaskSourceCha
 impl IPrint3DTaskSourceChangedEventArgs {
     #[inline] pub fn get_source(&self) -> Result<Option<Printing3D3MFPackage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Source)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Source)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3D3MFPackage::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5582,7 +5582,7 @@ RT_INTERFACE!{interface IPrint3DTaskSourceRequestedArgs(IPrint3DTaskSourceReques
 }}
 impl IPrint3DTaskSourceRequestedArgs {
     #[inline] pub fn set_source(&self, source: &Printing3D3MFPackage) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetSource)(self.0.as_abi() as *const _ as *mut _, get_abi(source) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).SetSource)(self.get_abi() as *const _ as *mut _, source.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5593,7 +5593,7 @@ RT_DELEGATE!{delegate Print3DTaskSourceRequestedHandler(Print3DTaskSourceRequest
 }}
 impl Print3DTaskSourceRequestedHandler {
     #[inline] pub fn invoke(&self, args: &Print3DTaskSourceRequestedArgs) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Invoke)(self.0.as_abi() as *const _ as *mut _, get_abi(args) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Invoke)(self.get_abi() as *const _ as *mut _, args.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5619,49 +5619,49 @@ RT_INTERFACE!{interface IPrinting3D3MFPackage(IPrinting3D3MFPackageVtbl, IPrinti
 impl IPrinting3D3MFPackage {
     #[cfg(feature="windows-storage")] #[inline] pub fn save_async(&self) -> Result<foundation::IAsyncOperation<super::super::storage::streams::IRandomAccessStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SaveAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SaveAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_print_ticket(&self) -> Result<Option<super::super::storage::streams::IRandomAccessStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrintTicket)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrintTicket)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IRandomAccessStream::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_print_ticket(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_PrintTicket)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_PrintTicket)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_model_part(&self) -> Result<Option<super::super::storage::streams::IRandomAccessStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ModelPart)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ModelPart)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IRandomAccessStream::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_model_part(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ModelPart)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_ModelPart)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_thumbnail(&self) -> Result<Option<Printing3DTextureResource>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Thumbnail)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Thumbnail)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3DTextureResource::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_thumbnail(&self, value: &Printing3DTextureResource) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Thumbnail)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Thumbnail)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_textures(&self) -> Result<Option<foundation::collections::IVector<Printing3DTextureResource>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Textures)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Textures)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_model_from_package_async(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<foundation::IAsyncOperation<Printing3DModel>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LoadModelFromPackageAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LoadModelFromPackageAsync)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn save_model_to_package_async(&self, value: &Printing3DModel) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SaveModelToPackageAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SaveModelToPackageAsync)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5682,11 +5682,11 @@ RT_INTERFACE!{interface IPrinting3D3MFPackage2(IPrinting3D3MFPackage2Vtbl, IPrin
 impl IPrinting3D3MFPackage2 {
     #[inline] pub fn get_compression(&self) -> Result<Printing3DPackageCompression> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Compression)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Compression)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_compression(&self, value: Printing3DPackageCompression) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Compression)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Compression)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5697,7 +5697,7 @@ RT_INTERFACE!{static interface IPrinting3D3MFPackageStatics(IPrinting3D3MFPackag
 impl IPrinting3D3MFPackageStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn load_async(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<foundation::IAsyncOperation<Printing3D3MFPackage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LoadAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LoadAsync)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5711,20 +5711,20 @@ RT_INTERFACE!{interface IPrinting3DBaseMaterial(IPrinting3DBaseMaterialVtbl, IPr
 impl IPrinting3DBaseMaterial {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Name)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Name)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_color(&self) -> Result<Option<Printing3DColorMaterial>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Color)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Color)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3DColorMaterial::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_color(&self, value: &Printing3DColorMaterial) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Color)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Color)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5748,12 +5748,12 @@ RT_INTERFACE!{interface IPrinting3DBaseMaterialGroup(IPrinting3DBaseMaterialGrou
 impl IPrinting3DBaseMaterialGroup {
     #[inline] pub fn get_bases(&self) -> Result<Option<foundation::collections::IVector<Printing3DBaseMaterial>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Bases)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Bases)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaterialGroupId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaterialGroupId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5772,7 +5772,7 @@ RT_INTERFACE!{static interface IPrinting3DBaseMaterialGroupFactory(IPrinting3DBa
 impl IPrinting3DBaseMaterialGroupFactory {
     #[inline] pub fn create(&self, materialGroupId: u32) -> Result<Printing3DBaseMaterialGroup> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, materialGroupId, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, materialGroupId, &mut out);
         if hr == S_OK { Ok(Printing3DBaseMaterialGroup::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5784,12 +5784,12 @@ RT_INTERFACE!{static interface IPrinting3DBaseMaterialStatics(IPrinting3DBaseMat
 impl IPrinting3DBaseMaterialStatics {
     #[inline] pub fn get_abs(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Abs)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Abs)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pla(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Pla)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Pla)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5807,11 +5807,11 @@ RT_INTERFACE!{interface IPrinting3DColorMaterial(IPrinting3DColorMaterialVtbl, I
 impl IPrinting3DColorMaterial {
     #[inline] pub fn get_value(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Value)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Value)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_value(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Value)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Value)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5826,11 +5826,11 @@ RT_INTERFACE!{interface IPrinting3DColorMaterial2(IPrinting3DColorMaterial2Vtbl,
 impl IPrinting3DColorMaterial2 {
     #[cfg(feature="windows-ui")] #[inline] pub fn get_color(&self) -> Result<super::super::ui::Color> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Color)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Color)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn set_color(&self, value: super::super::ui::Color) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Color)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Color)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5842,12 +5842,12 @@ RT_INTERFACE!{interface IPrinting3DColorMaterialGroup(IPrinting3DColorMaterialGr
 impl IPrinting3DColorMaterialGroup {
     #[inline] pub fn get_colors(&self) -> Result<Option<foundation::collections::IVector<Printing3DColorMaterial>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Colors)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Colors)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaterialGroupId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaterialGroupId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5866,7 +5866,7 @@ RT_INTERFACE!{static interface IPrinting3DColorMaterialGroupFactory(IPrinting3DC
 impl IPrinting3DColorMaterialGroupFactory {
     #[inline] pub fn create(&self, materialGroupId: u32) -> Result<Printing3DColorMaterialGroup> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, materialGroupId, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, materialGroupId, &mut out);
         if hr == S_OK { Ok(Printing3DColorMaterialGroup::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5887,52 +5887,52 @@ RT_INTERFACE!{interface IPrinting3DComponent(IPrinting3DComponentVtbl, IPrinting
 impl IPrinting3DComponent {
     #[inline] pub fn get_mesh(&self) -> Result<Option<Printing3DMesh>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Mesh)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Mesh)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3DMesh::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_mesh(&self, value: &Printing3DMesh) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Mesh)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Mesh)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_components(&self) -> Result<Option<foundation::collections::IVector<Printing3DComponentWithMatrix>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Components)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Components)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_thumbnail(&self) -> Result<Option<Printing3DTextureResource>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Thumbnail)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Thumbnail)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3DTextureResource::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_thumbnail(&self, value: &Printing3DTextureResource) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Thumbnail)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Thumbnail)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_type(&self) -> Result<Printing3DObjectType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Type)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Type)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_type(&self, value: Printing3DObjectType) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Type)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Type)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Name)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Name)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_part_number(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PartNumber)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PartNumber)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_part_number(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_PartNumber)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_PartNumber)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5949,20 +5949,20 @@ RT_INTERFACE!{interface IPrinting3DComponentWithMatrix(IPrinting3DComponentWithM
 impl IPrinting3DComponentWithMatrix {
     #[inline] pub fn get_component(&self) -> Result<Option<Printing3DComponent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Component)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Component)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3DComponent::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_component(&self, value: &Printing3DComponent) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Component)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Component)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_matrix(&self) -> Result<foundation::numerics::Matrix4x4> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Matrix)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Matrix)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_matrix(&self, value: foundation::numerics::Matrix4x4) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Matrix)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Matrix)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5976,7 +5976,7 @@ RT_INTERFACE!{interface IPrinting3DCompositeMaterial(IPrinting3DCompositeMateria
 impl IPrinting3DCompositeMaterial {
     #[inline] pub fn get_values(&self) -> Result<Option<foundation::collections::IVector<f64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Values)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Values)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5992,17 +5992,17 @@ RT_INTERFACE!{interface IPrinting3DCompositeMaterialGroup(IPrinting3DCompositeMa
 impl IPrinting3DCompositeMaterialGroup {
     #[inline] pub fn get_composites(&self) -> Result<Option<foundation::collections::IVector<Printing3DCompositeMaterial>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Composites)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Composites)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaterialGroupId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaterialGroupId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_material_indices(&self) -> Result<Option<foundation::collections::IVector<u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaterialIndices)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaterialIndices)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6022,11 +6022,11 @@ RT_INTERFACE!{interface IPrinting3DCompositeMaterialGroup2(IPrinting3DCompositeM
 impl IPrinting3DCompositeMaterialGroup2 {
     #[inline] pub fn get_base_material_group(&self) -> Result<Option<Printing3DBaseMaterialGroup>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BaseMaterialGroup)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BaseMaterialGroup)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3DBaseMaterialGroup::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_base_material_group(&self, value: &Printing3DBaseMaterialGroup) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_BaseMaterialGroup)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_BaseMaterialGroup)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6037,7 +6037,7 @@ RT_INTERFACE!{static interface IPrinting3DCompositeMaterialGroupFactory(IPrintin
 impl IPrinting3DCompositeMaterialGroupFactory {
     #[inline] pub fn create(&self, materialGroupId: u32) -> Result<Printing3DCompositeMaterialGroup> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, materialGroupId, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, materialGroupId, &mut out);
         if hr == S_OK { Ok(Printing3DCompositeMaterialGroup::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6053,29 +6053,29 @@ RT_INTERFACE!{interface IPrinting3DFaceReductionOptions(IPrinting3DFaceReduction
 impl IPrinting3DFaceReductionOptions {
     #[inline] pub fn get_max_reduction_area(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxReductionArea)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxReductionArea)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_max_reduction_area(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_MaxReductionArea)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_MaxReductionArea)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_target_triangle_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TargetTriangleCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TargetTriangleCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_target_triangle_count(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_TargetTriangleCount)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_TargetTriangleCount)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_max_edge_length(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxEdgeLength)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxEdgeLength)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_max_edge_length(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_MaxEdgeLength)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_MaxEdgeLength)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6093,27 +6093,27 @@ RT_INTERFACE!{interface IPrinting3DMaterial(IPrinting3DMaterialVtbl, IPrinting3D
 impl IPrinting3DMaterial {
     #[inline] pub fn get_base_groups(&self) -> Result<Option<foundation::collections::IVector<Printing3DBaseMaterialGroup>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BaseGroups)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BaseGroups)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_color_groups(&self) -> Result<Option<foundation::collections::IVector<Printing3DColorMaterialGroup>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ColorGroups)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ColorGroups)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_texture2_coord_groups(&self) -> Result<Option<foundation::collections::IVector<Printing3DTexture2CoordMaterialGroup>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Texture2CoordGroups)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Texture2CoordGroups)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_composite_groups(&self) -> Result<Option<foundation::collections::IVector<Printing3DCompositeMaterialGroup>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CompositeGroups)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CompositeGroups)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_multiple_property_groups(&self) -> Result<Option<foundation::collections::IVector<Printing3DMultiplePropertyMaterialGroup>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MultiplePropertyGroups)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MultiplePropertyGroups)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6153,107 +6153,107 @@ RT_INTERFACE!{interface IPrinting3DMesh(IPrinting3DMeshVtbl, IPrinting3DMesh_Abi
 impl IPrinting3DMesh {
     #[inline] pub fn get_vertex_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_VertexCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_VertexCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_vertex_count(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_VertexCount)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_VertexCount)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_index_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IndexCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IndexCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_index_count(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IndexCount)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IndexCount)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_vertex_positions_description(&self) -> Result<Printing3DBufferDescription> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_VertexPositionsDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_VertexPositionsDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_vertex_positions_description(&self, value: Printing3DBufferDescription) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_VertexPositionsDescription)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_VertexPositionsDescription)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_vertex_normals_description(&self) -> Result<Printing3DBufferDescription> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_VertexNormalsDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_VertexNormalsDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_vertex_normals_description(&self, value: Printing3DBufferDescription) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_VertexNormalsDescription)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_VertexNormalsDescription)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_triangle_indices_description(&self) -> Result<Printing3DBufferDescription> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TriangleIndicesDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TriangleIndicesDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_triangle_indices_description(&self, value: Printing3DBufferDescription) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_TriangleIndicesDescription)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_TriangleIndicesDescription)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_triangle_material_indices_description(&self) -> Result<Printing3DBufferDescription> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TriangleMaterialIndicesDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TriangleMaterialIndicesDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_triangle_material_indices_description(&self, value: Printing3DBufferDescription) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_TriangleMaterialIndicesDescription)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_TriangleMaterialIndicesDescription)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_vertex_positions(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetVertexPositions)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetVertexPositions)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_vertex_positions(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).CreateVertexPositions)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).CreateVertexPositions)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_vertex_normals(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetVertexNormals)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetVertexNormals)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_vertex_normals(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).CreateVertexNormals)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).CreateVertexNormals)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_triangle_indices(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetTriangleIndices)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetTriangleIndices)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_triangle_indices(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).CreateTriangleIndices)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).CreateTriangleIndices)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_triangle_material_indices(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetTriangleMaterialIndices)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetTriangleMaterialIndices)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_triangle_material_indices(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).CreateTriangleMaterialIndices)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).CreateTriangleMaterialIndices)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_buffer_description_set(&self) -> Result<Option<foundation::collections::IPropertySet>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BufferDescriptionSet)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BufferDescriptionSet)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IPropertySet::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_buffer_set(&self) -> Result<Option<foundation::collections::IPropertySet>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BufferSet)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BufferSet)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IPropertySet::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn verify_async(&self, value: Printing3DMeshVerificationMode) -> Result<foundation::IAsyncOperation<Printing3DMeshVerificationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).VerifyAsync)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).VerifyAsync)(self.get_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6272,17 +6272,17 @@ RT_INTERFACE!{interface IPrinting3DMeshVerificationResult(IPrinting3DMeshVerific
 impl IPrinting3DMeshVerificationResult {
     #[inline] pub fn get_is_valid(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsValid)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsValid)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_nonmanifold_triangles(&self) -> Result<Option<foundation::collections::IVectorView<u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NonmanifoldTriangles)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NonmanifoldTriangles)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_reversed_normal_triangles(&self) -> Result<Option<foundation::collections::IVectorView<u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ReversedNormalTriangles)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ReversedNormalTriangles)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6308,73 +6308,73 @@ RT_INTERFACE!{interface IPrinting3DModel(IPrinting3DModelVtbl, IPrinting3DModel_
 impl IPrinting3DModel {
     #[inline] pub fn get_unit(&self) -> Result<Printing3DModelUnit> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Unit)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Unit)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_unit(&self, value: Printing3DModelUnit) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Unit)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Unit)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_textures(&self) -> Result<Option<foundation::collections::IVector<Printing3DModelTexture>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Textures)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Textures)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_meshes(&self) -> Result<Option<foundation::collections::IVector<Printing3DMesh>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Meshes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Meshes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_components(&self) -> Result<Option<foundation::collections::IVector<Printing3DComponent>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Components)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Components)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_material(&self) -> Result<Option<Printing3DMaterial>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Material)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Material)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3DMaterial::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_material(&self, value: &Printing3DMaterial) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Material)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Material)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_build(&self) -> Result<Option<Printing3DComponent>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Build)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Build)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3DComponent::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_build(&self, value: &Printing3DComponent) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Build)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Build)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_version(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Version)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Version)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_version(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Version)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Version)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_required_extensions(&self) -> Result<Option<foundation::collections::IVector<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RequiredExtensions)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RequiredExtensions)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_metadata(&self) -> Result<Option<foundation::collections::IMap<HString, HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Metadata)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Metadata)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IMap::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn repair_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RepairAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RepairAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn clone(&self) -> Result<Option<Printing3DModel>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Clone)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Clone)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3DModel::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6393,32 +6393,32 @@ RT_INTERFACE!{interface IPrinting3DModel2(IPrinting3DModel2Vtbl, IPrinting3DMode
 impl IPrinting3DModel2 {
     #[inline] pub fn try_partial_repair_async(&self) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TryPartialRepairAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryPartialRepairAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_partial_repair_with_time_async(&self, maxWaitTime: foundation::TimeSpan) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TryPartialRepairWithTimeAsync)(self.0.as_abi() as *const _ as *mut _, maxWaitTime, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryPartialRepairWithTimeAsync)(self.get_abi() as *const _ as *mut _, maxWaitTime, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_reduce_faces_async(&self) -> Result<foundation::IAsyncOperationWithProgress<bool, f64>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TryReduceFacesAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryReduceFacesAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_reduce_faces_with_options_async(&self, printing3DFaceReductionOptions: &Printing3DFaceReductionOptions) -> Result<foundation::IAsyncOperationWithProgress<bool, f64>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TryReduceFacesWithOptionsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(printing3DFaceReductionOptions) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryReduceFacesWithOptionsAsync)(self.get_abi() as *const _ as *mut _, printing3DFaceReductionOptions.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_reduce_faces_with_options_and_time_async(&self, printing3DFaceReductionOptions: &Printing3DFaceReductionOptions, maxWait: foundation::TimeSpan) -> Result<foundation::IAsyncOperationWithProgress<bool, f64>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TryReduceFacesWithOptionsAndTimeAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(printing3DFaceReductionOptions) as *const _ as *mut _, maxWait, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryReduceFacesWithOptionsAndTimeAsync)(self.get_abi() as *const _ as *mut _, printing3DFaceReductionOptions.get_abi() as *const _ as *mut _, maxWait, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn repair_with_progress_async(&self) -> Result<foundation::IAsyncOperationWithProgress<bool, f64>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RepairWithProgressAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RepairWithProgressAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6434,29 +6434,29 @@ RT_INTERFACE!{interface IPrinting3DModelTexture(IPrinting3DModelTextureVtbl, IPr
 impl IPrinting3DModelTexture {
     #[inline] pub fn get_texture_resource(&self) -> Result<Option<Printing3DTextureResource>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TextureResource)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TextureResource)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3DTextureResource::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_texture_resource(&self, value: &Printing3DTextureResource) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_TextureResource)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_TextureResource)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_tile_style_u(&self) -> Result<Printing3DTextureEdgeBehavior> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TileStyleU)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TileStyleU)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_tile_style_u(&self, value: Printing3DTextureEdgeBehavior) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_TileStyleU)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_TileStyleU)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_tile_style_v(&self) -> Result<Printing3DTextureEdgeBehavior> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TileStyleV)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TileStyleV)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_tile_style_v(&self, value: Printing3DTextureEdgeBehavior) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_TileStyleV)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_TileStyleV)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6473,7 +6473,7 @@ RT_INTERFACE!{interface IPrinting3DMultiplePropertyMaterial(IPrinting3DMultipleP
 impl IPrinting3DMultiplePropertyMaterial {
     #[inline] pub fn get_material_indices(&self) -> Result<Option<foundation::collections::IVector<u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaterialIndices)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaterialIndices)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6489,17 +6489,17 @@ RT_INTERFACE!{interface IPrinting3DMultiplePropertyMaterialGroup(IPrinting3DMult
 impl IPrinting3DMultiplePropertyMaterialGroup {
     #[inline] pub fn get_multiple_properties(&self) -> Result<Option<foundation::collections::IVector<Printing3DMultiplePropertyMaterial>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MultipleProperties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MultipleProperties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_material_group_indices(&self) -> Result<Option<foundation::collections::IVector<u32>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaterialGroupIndices)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaterialGroupIndices)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaterialGroupId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaterialGroupId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -6518,7 +6518,7 @@ RT_INTERFACE!{static interface IPrinting3DMultiplePropertyMaterialGroupFactory(I
 impl IPrinting3DMultiplePropertyMaterialGroupFactory {
     #[inline] pub fn create(&self, materialGroupId: u32) -> Result<Printing3DMultiplePropertyMaterialGroup> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, materialGroupId, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, materialGroupId, &mut out);
         if hr == S_OK { Ok(Printing3DMultiplePropertyMaterialGroup::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6540,29 +6540,29 @@ RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterial(IPrinting3DTexture2Coor
 impl IPrinting3DTexture2CoordMaterial {
     #[inline] pub fn get_texture(&self) -> Result<Option<Printing3DModelTexture>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Texture)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Texture)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3DModelTexture::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_texture(&self, value: &Printing3DModelTexture) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Texture)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Texture)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_u(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_U)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_U)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_u(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_U)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_U)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_v(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_V)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_V)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_v(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_V)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_V)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6577,12 +6577,12 @@ RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterialGroup(IPrinting3DTexture
 impl IPrinting3DTexture2CoordMaterialGroup {
     #[inline] pub fn get_texture2_coords(&self) -> Result<Option<foundation::collections::IVector<Printing3DTexture2CoordMaterial>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Texture2Coords)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Texture2Coords)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_material_group_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaterialGroupId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaterialGroupId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -6602,11 +6602,11 @@ RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterialGroup2(IPrinting3DTextur
 impl IPrinting3DTexture2CoordMaterialGroup2 {
     #[inline] pub fn get_texture(&self) -> Result<Option<Printing3DModelTexture>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Texture)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Texture)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Printing3DModelTexture::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_texture(&self, value: &Printing3DModelTexture) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Texture)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Texture)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6617,7 +6617,7 @@ RT_INTERFACE!{static interface IPrinting3DTexture2CoordMaterialGroupFactory(IPri
 impl IPrinting3DTexture2CoordMaterialGroupFactory {
     #[inline] pub fn create(&self, materialGroupId: u32) -> Result<Printing3DTexture2CoordMaterialGroup> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, materialGroupId, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, materialGroupId, &mut out);
         if hr == S_OK { Ok(Printing3DTexture2CoordMaterialGroup::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6636,20 +6636,20 @@ RT_INTERFACE!{interface IPrinting3DTextureResource(IPrinting3DTextureResourceVtb
 impl IPrinting3DTextureResource {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_texture_data(&self) -> Result<Option<super::super::storage::streams::IRandomAccessStreamWithContentType>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TextureData)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TextureData)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IRandomAccessStreamWithContentType::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_texture_data(&self, value: &super::super::storage::streams::IRandomAccessStreamWithContentType) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_TextureData)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_TextureData)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Name)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Name)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }

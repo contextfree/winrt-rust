@@ -323,7 +323,7 @@ macro_rules! RT_INTERFACE {
             type Vtbl = $vtbl;
             type TAbi = $abiname;
             unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap_nonnull(ptr)) }
-            fn get_abi(&self) -> *const Self::TAbi { self.0.as_abi() as *const _ }
+            fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl crate::RtType for $interface {
             type In = Self;
@@ -386,7 +386,7 @@ macro_rules! RT_INTERFACE {
             type Vtbl = $vtbl;
             type TAbi = $abiname;
             unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap_nonnull(ptr)) }
-            fn get_abi(&self) -> *const Self::TAbi { self.0.as_abi() as *const _ }
+            fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl crate::RtType for $interface {
             type In = Self;
@@ -446,7 +446,7 @@ macro_rules! RT_INTERFACE {
             type Vtbl = $vtbl<$t1>;
             type TAbi = $abiname<$t1>;
             unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap_nonnull(ptr)) }
-            fn get_abi(&self) -> *const Self::TAbi { self.0.as_abi() as *const _ }
+            fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl<$t1> crate::RtType for $interface<$t1> where $t1: RtType{
             type In = Self;
@@ -505,7 +505,7 @@ macro_rules! RT_INTERFACE {
             type Vtbl = $vtbl<$t1, $t2>;
             type TAbi = $abiname<$t1, $t2>;
             unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap_nonnull(ptr)) }
-            fn get_abi(&self) -> *const Self::TAbi { self.0.as_abi() as *const _ }
+            fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl<$t1, $t2> crate::RtType for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type In = Self;
@@ -693,7 +693,7 @@ macro_rules! RT_CLASS {
             type Vtbl = <$interface as ComInterface>::Vtbl;
             type TAbi = <$interface as ComInterface>::TAbi;
             unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $cls(ComPtr::wrap_nonnull(ptr)) }
-            fn get_abi(&self) -> *const Self::TAbi { self.0.as_abi() as *const _ }
+            fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl ComIid for $cls {
             #[inline] fn iid() -> &'static crate::Guid { <$interface as ComIid>::iid() }
@@ -795,7 +795,7 @@ impl IInspectable {
     pub fn get_iids(&self) -> ComArray<Guid> {
         let mut result = std::ptr::null_mut();
         let mut count = 0;
-        let hr = unsafe { ((*self.0.as_abi().lpVtbl).GetIids)(self.0.as_abi() as *const _ as *mut _, &mut count, &mut result) };
+        let hr = unsafe { ((*self.get_abi().lpVtbl).GetIids)(self.get_abi() as *const _ as *mut _, &mut count, &mut result) };
         assert_eq!(hr, S_OK);
         let result = result as *mut Guid; // convert from w::GUID to (binary compatible) Guid
         unsafe { ComArray::from_raw(count, result) }
@@ -805,7 +805,7 @@ impl IInspectable {
     #[inline]
     pub fn get_trust_level(&self) -> crate::TrustLevel {
         let mut result = unsafe { std::mem::zeroed() };
-        let hr = unsafe { ((*self.0.as_abi().lpVtbl).GetTrustLevel)(self.0.as_abi() as *const _ as *mut _, &mut result) };
+        let hr = unsafe { ((*self.get_abi().lpVtbl).GetTrustLevel)(self.get_abi() as *const _ as *mut _, &mut result) };
         assert_eq!(hr, S_OK);
         result
     }
@@ -813,7 +813,7 @@ impl IInspectable {
     /// Publically exposed via RtClassInterface
     pub(crate) fn get_runtime_class_name(&self) -> HString {
         let mut result = std::ptr::null_mut();
-        let hr = unsafe { ((*self.0.as_abi().lpVtbl).GetRuntimeClassName)(self.0.as_abi() as *const _ as *mut _, &mut result) };
+        let hr = unsafe { ((*self.get_abi().lpVtbl).GetRuntimeClassName)(self.get_abi() as *const _ as *mut _, &mut result) };
         assert_eq!(hr, S_OK);
         unsafe { HString::wrap(result) }
     }
@@ -832,7 +832,7 @@ impl IActivationFactory {
     #[inline]
     pub fn activate_instance(&self) -> IInspectable {
         let mut result = std::ptr::null_mut();
-        let hr = unsafe { ((*self.0.as_abi().lpVtbl).ActivateInstance)(self as *const _ as *mut _, &mut result) };
+        let hr = unsafe { ((*self.get_abi().lpVtbl).ActivateInstance)(self as *const _ as *mut _, &mut result) };
         assert_eq!(hr, S_OK);
         unsafe { IInspectable::wrap_com(result) }
     }
@@ -860,7 +860,7 @@ impl IMemoryBufferByteAccess {
     pub unsafe fn get_buffer(&self) -> &[u8] {
         let mut ptr = std::ptr::null_mut();
         let mut capacity: u32 = 0;
-        let hr = ((*self.0.as_abi().lpVtbl).GetBuffer)(self as *const _ as *mut _, &mut ptr, &mut capacity);
+        let hr = ((*self.get_abi().lpVtbl).GetBuffer)(self as *const _ as *mut _, &mut ptr, &mut capacity);
         assert_eq!(hr, S_OK);
         if capacity == 0 {
             ptr = 1 as *mut u8; // null pointer is not allowed
